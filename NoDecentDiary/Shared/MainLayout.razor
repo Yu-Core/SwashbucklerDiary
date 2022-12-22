@@ -1,0 +1,40 @@
+﻿@inherits LayoutComponentBase
+
+<MApp>
+    <MMain>
+        @if (MasaBlazor!.Breakpoint.SmAndUp)
+        {
+            <MNavigationDrawer App
+                           Permanent>
+                <MList Rounded>
+                    <MListItemGroup @bind-Value="SelectItem">
+                        @foreach (var navigationButton in NavigationButtons)
+                        {
+                            <MListItem OnClick="()=>ChangeView(navigationButton)">
+                                <MListItemIcon>
+                                    <MIcon>@GetIcon(navigationButton)</MIcon>
+                                </MListItemIcon>
+                                <MListItemTitle>@navigationButton.Title</MListItemTitle>
+                            </MListItem>
+                        }
+                    </MListItemGroup>
+                </MList>
+            </MNavigationDrawer>
+        }
+        <MContainer>
+            @Body
+        </MContainer>
+    </MMain>
+    <MBottomNavigation Class="d-flex justify-space-around d-sm-none "
+                       @bind-Value="SelectItem"
+                       App
+                       Shift>
+        @foreach (var navigationButton in NavigationButtons)
+        {
+            <MButton OnClick="()=>ChangeView(navigationButton)">
+                <span>@navigationButton.Title</span>
+                <MIcon>@GetIcon(navigationButton)</MIcon>
+            </MButton>
+        }
+    </MBottomNavigation>
+</MApp>
