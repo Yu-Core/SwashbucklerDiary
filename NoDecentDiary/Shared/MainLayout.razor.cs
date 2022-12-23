@@ -16,7 +16,7 @@ namespace NoDecentDiary.Shared
         [Inject]
         private NavigationManager? NavigationManager { get; set; }
 
-        StringNumber SelectItem = 0;
+        StringNumber SelectedItem = 0;
 
         readonly List<NavigationButton> NavigationButtons = new()
         {
@@ -50,7 +50,7 @@ namespace NoDecentDiary.Shared
 
         private string? GetIcon(NavigationButton navigationButton)
         {
-            return SelectItem == navigationButton.Id ? navigationButton.SelectIcon : navigationButton.Icon;
+            return SelectedItem == navigationButton.Id ? navigationButton.SelectIcon : navigationButton.Icon;
         }
 
         private void ChangeView(NavigationButton navigationButton)

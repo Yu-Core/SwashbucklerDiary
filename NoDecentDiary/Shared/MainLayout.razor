@@ -7,7 +7,7 @@
             <MNavigationDrawer App
                            Permanent>
                 <MList Rounded>
-                    <MListItemGroup @bind-Value="SelectItem">
+                    <MListItemGroup @bind-Value="SelectedItem">
                         @foreach (var navigationButton in NavigationButtons)
                         {
                             <MListItem OnClick="()=>ChangeView(navigationButton)">
@@ -25,8 +25,8 @@
             @Body
         </MContainer>
     </MMain>
-    <MBottomNavigation Class="d-flex justify-space-around d-sm-none "
-                       @bind-Value="SelectItem"
+    <MBottomNavigation @bind-Value="SelectedItem"
+                       Class="d-flex justify-space-around d-sm-none"
                        App
                        Shift>
         @foreach (var navigationButton in NavigationButtons)
