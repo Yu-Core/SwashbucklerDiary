@@ -1,4 +1,5 @@
-﻿using NoDecentDiary.StaticData;
+﻿using NoDecentDiary.IServices;
+using NoDecentDiary.StaticData;
 using SQLite;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.Maui;
+using NoDecentDiary.Extend;
 
 namespace NoDecentDiary;
 
@@ -18,7 +19,7 @@ public static class MauiProgram
 		#if DEBUG
 		builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
-
+		builder.Services.AddCustomIOC();
         builder.Services.AddMasaBlazor();
 
         return builder.Build();

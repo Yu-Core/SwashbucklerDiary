@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NoDecentDiary.Services
+namespace NoDecentDiary.IServices
 {
     public interface IBaseService<TEntity> where TEntity : class, new()
     {
