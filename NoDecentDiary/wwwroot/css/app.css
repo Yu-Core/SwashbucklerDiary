@@ -82,3 +82,48 @@ a, .btn-link {
 		padding-left: env(safe-area-inset-left);
 	}
 }
+
+@media (hover: none) {
+    *:hover *::before {
+        display: none;
+    }
+
+    *:hover i::before {
+        display: inline-block
+    }
+
+    *:hover .m-icon::before {
+        display: inline-block
+    }
+
+    * {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+@media (hover:hover) {
+    /*scrollbar*/
+    ::-webkit-scrollbar-track {
+        border-radius: 15px;
+        margin: 5px 0;
+    }
+
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+        margin: 5px 0;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        margin: 5px 0;
+        border-radius: 15px;
+        background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(170 168 168)), color-stop(0.72, rgb(170 168 168)), color-stop(0.86, rgb(170 168 168)));
+    }
+}
+
+

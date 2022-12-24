@@ -12,9 +12,11 @@ namespace NoDecentDiary.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public int UserId { get; set; }
-        public string? Text { get; set; }
+        public string? Title { get; set; }
+        public string? Content { get; set; }
         public string? Mood { get; set; }
         public string? Weather { get; set; }
+        public string? Location { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
     }

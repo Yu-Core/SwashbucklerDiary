@@ -1,0 +1,22 @@
+﻿<MCard Elevation="4"
+       Class="rounded-lg">
+    <MListItem Dense>
+        <MListItemContent>
+            <div class="text--secondary text-h6">
+                @(Date.ToString("MM/dd"))
+            </div>
+        </MListItemContent>
+        <MListItemAction>
+            <MButton Icon>
+                <MIcon>mdi-dots-horizontal</MIcon>
+            </MButton>
+        </MListItemAction>
+    </MListItem>
+    <MDivider Class="mx-4"></MDivider>
+    <MCardTitle Class="font-weight-bold" Style="font-size:initial">
+        @Title
+    </MCardTitle>
+    <MCardSubtitle>
+        @Text
+    </MCardSubtitle>
+</MCard>
