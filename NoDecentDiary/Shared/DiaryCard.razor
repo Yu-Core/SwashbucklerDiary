@@ -1,5 +1,8 @@
-﻿<MCard Elevation="4"
-       Class="rounded-lg">
+﻿<MCard Elevation="5"
+       Rounded="@("lg")"
+       Class="my-5"
+       @oncontextmenu="()=>showMenu=true"
+       __internal_preventDefault_oncontextmenu>
     <MListItem Dense>
         <MListItemContent>
             <div class="text--secondary text-h6">
@@ -7,16 +10,66 @@
             </div>
         </MListItemContent>
         <MListItemAction>
-            <MButton Icon>
-                <MIcon>mdi-dots-horizontal</MIcon>
-            </MButton>
+            @if(Top)
+            {
+                <MIcon>
+                    mdi-format-vertical-align-top
+                </MIcon>
+            }
+            <MMenu @bind-Value="showMenu"
+                   Bottom
+                   Left
+                   OffsetY
+                   Rounded="@("lg")"
+                   Transition="scroll-x-reverse-transition">
+                <ActivatorContent>
+                    <MButton Icon
+                             @attributes="@context.Attrs">
+                        <MIcon>mdi-dots-horizontal</MIcon>
+                    </MButton>
+                </ActivatorContent>
+
+                <ChildContent>
+                    <MList MinWidth="150">
+                        <MListItem Dense>
+                            <MListItemContent>
+                                标签
+                            </MListItemContent>
+                        </MListItem>
+                        <MListItem Dense OnClick="OnCopy">
+                            <MListItemContent>
+                                复制
+                            </MListItemContent>
+                        </MListItem>
+                        <MListItem Dense OnClick="OnDelete">
+                            <MListItemContent>
+                                删除
+                            </MListItemContent>
+                        </MListItem>
+                        <MListItem Dense OnClick="OnTopping">
+                            <MListItemContent>
+                                @(Top ? "取消置顶" : "置顶")
+                            </MListItemContent>
+                        </MListItem>
+                        <MListItem Dense>
+                            <MListItemContent>
+                                导出（txt、json、pdf）
+                            </MListItemContent>
+                        </MListItem>
+                    </MList>
+                </ChildContent>
+            </MMenu>
         </MListItemAction>
     </MListItem>
     <MDivider Class="mx-4"></MDivider>
-    <MCardTitle Class="font-weight-bold" Style="font-size:initial">
-        @Title
-    </MCardTitle>
-    <MCardSubtitle>
-        @Text
-    </MCardSubtitle>
+    <MListItem ThreeLine>
+        <MListItemContent>
+            <MListItemTitle>
+                <b>@Title</b>
+            </MListItemTitle>
+            <MListItemSubtitle>
+                @Text
+            </MListItemSubtitle>
+        </MListItemContent>
+    </MListItem>
 </MCard>

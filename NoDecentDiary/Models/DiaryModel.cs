@@ -17,6 +17,7 @@ namespace NoDecentDiary.Models
         public string? Mood { get; set; }
         public string? Weather { get; set; }
         public string? Location { get; set; }
+        public bool Top { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
     }

@@ -17,13 +17,9 @@
     <h3>早上好，又是全新的一天</h3>
 </div>
 
-@foreach (var item in Diaries)
-{
-    <DiaryCard Date="(item.CreateTime)"
-           Title="@(item.Title)"
-           Text="@(item.Content)">
-    </DiaryCard>
-}
+<DiaryCardList Value="Diaries">
+
+</DiaryCardList>
 
 <FabTransition>
     <MButton Color="black"

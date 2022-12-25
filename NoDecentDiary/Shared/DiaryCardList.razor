@@ -1,0 +1,22 @@
+﻿@foreach (var item in Value!)
+{
+    if (item.Top)
+    {
+        <DiaryCard Value="item"
+           OnCopy="()=>Copy(item)"
+           OnDelete="()=>Delete(item)"
+           OnTopping="()=>Topping(item)">
+        </DiaryCard>
+    }
+}
+@foreach (var item in Value)
+{
+    if (!item.Top)
+    {
+        <DiaryCard Value="item"
+           OnCopy="()=>Copy(item)"
+           OnDelete="()=>Delete(item)"
+           OnTopping="()=>Topping(item)">
+        </DiaryCard>
+    }
+}

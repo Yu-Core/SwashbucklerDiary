@@ -1,19 +1,32 @@
 ﻿using Microsoft.AspNetCore.Components;
+using NoDecentDiary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Util.Reflection.Expressions.IntelligentGeneration.Extensions;
 
 namespace NoDecentDiary.Shared
 {
     public partial class DiaryCard
     {
         [Parameter]
-        public DateTime Date { get; set; }
+        [EditorRequired]
+        public DiaryModel? Value { get; set; }
         [Parameter]
-        public string? Title { get; set; }
+        public EventCallback OnTopping { get; set; }
         [Parameter]
-        public string? Text { get; set; }
+        public EventCallback OnDelete { get; set; }
+        [Parameter]
+        public EventCallback OnCopy { get; set; }
+
+        private DateTime Date => Value!.CreateTime;
+        private string? Title => Value!.Title;
+        private string? Text => Value!.Content;
+        private bool Top => Value!.Top;
+        private bool showMenu = false;
+
+        
     }
 }

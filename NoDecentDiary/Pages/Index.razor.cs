@@ -15,7 +15,10 @@ namespace NoDecentDiary.Pages
         {
             Diaries = new List<DiaryModel>()
             {
-                new DiaryModel(){CreateTime=DateTime.Now, Title="伺机待发",Content="挖宝贷记卡悲剧啊开始播放借记卡"}
+                new DiaryModel(){CreateTime=DateTime.Now, Title="伺机待发",Content="挖宝贷记卡悲剧啊开始播放借记卡"},
+                new DiaryModel(){CreateTime=DateTime.Now, Title="dfkdsl",Content="挖宝贷记卡悲剧啊开始播放借记卡"},
+                new DiaryModel(){CreateTime=DateTime.Now, Title="阿斯顿撒",Content="挖宝贷记卡悲剧啊开始播放借记卡"},
+                new DiaryModel(){CreateTime=DateTime.Now, Title="我佛了",Content="挖宝贷记卡悲剧啊开始播放借记卡",Top=true}
             };
             return base.OnInitializedAsync();
         }
