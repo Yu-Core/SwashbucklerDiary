@@ -13,6 +13,11 @@ namespace NoDecentDiary.Shared
         [Inject]
         public MasaBlazor? MasaBlazor { get; set; }
 
+        [Parameter]
+        public RenderFragment? MobileContent { get; set; }
+        [Parameter]
+        public RenderFragment? DesktopContent { get; set; }
+
         protected override Task OnInitializedAsync()
         {
             MasaBlazor!.Breakpoint.OnUpdate += () => { return InvokeAsync(this.StateHasChanged); };
