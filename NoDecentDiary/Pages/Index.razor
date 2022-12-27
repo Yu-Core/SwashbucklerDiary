@@ -1,14 +1,7 @@
 ﻿@page "/"
 
-<MAppBar App
-         Elevation="0"
-         Dense
-         Color="transparent">
-    <MSpacer></MSpacer>
-    <MButton Large Icon>
-        <MIcon>mdi-magnify</MIcon>
-    </MButton>
-</MAppBar>
+
+<AppBar></AppBar>
 
 <div class="mb-8 px-2">
     <MSubheader Class="px-0">
@@ -21,13 +14,18 @@
 
 </DiaryCardList>
 
+<div class="py-10">
+</div>
+
+
 <FabTransition>
     <MButton Color="black"
-             Class="mb-10"
+             Class="mb-15 mb-sm-0"
              Dark
-             Absolute
              Bottom
              Right
+             Fixed
+             Href="/Log"
              Fab>
         <MIcon>
             mdi-pencil

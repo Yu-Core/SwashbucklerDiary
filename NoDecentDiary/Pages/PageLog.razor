@@ -1,0 +1,30 @@
+﻿@page "/Log"
+
+<MAppBar App>
+    <MButton Icon>
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MToolbarTitle>查看日志文件</MToolbarTitle>
+
+    <MSpacer></MSpacer>
+</MAppBar>
+@if (!LogTextList.Any())
+{
+    <div>
+        暂无日志
+    </div>
+}
+else
+{
+    @foreach (var item in LogTextList)
+    {
+        <div>
+            @item
+        </div>
+    }
+}
+
+

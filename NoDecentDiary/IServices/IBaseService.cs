@@ -8,9 +8,9 @@ namespace NoDecentDiary.IServices
 {
     public interface IBaseService<TEntity> where TEntity : class, new()
     {
-        Task<int> AddAsync(TEntity entity);
-        Task<int> DeleteAsync(TEntity entity);
-        Task<int> UpdateAsync(TEntity entity);
+        Task<bool> AddAsync(TEntity entity);
+        Task<bool> DeleteAsync(TEntity entity);
+        Task<bool> UpdateAsync(TEntity entity);
         Task<List<TEntity>> GetAllAsync();
     }
 }

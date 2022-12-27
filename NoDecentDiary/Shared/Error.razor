@@ -1,0 +1,17 @@
+﻿@using Microsoft.Extensions.Logging
+@using Serilog
+@inject ILogger<Error> Logger
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    public void ProcessError(Exception ex)
+    {
+        Log.Error(ex.Message);
+    }
+}

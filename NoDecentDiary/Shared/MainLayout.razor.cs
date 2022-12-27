@@ -44,7 +44,7 @@ namespace NoDecentDiary.Shared
 
         protected override Task OnInitializedAsync()
         {
-            MasaBlazor!.Breakpoint.OnUpdate += () => { return InvokeAsync(StateHasChanged); };
+            MasaBlazor!.Breakpoint.OnUpdate += () => { return InvokeAsync(this.StateHasChanged); };
             return base.OnInitializedAsync();
         }
 
