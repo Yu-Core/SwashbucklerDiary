@@ -41,6 +41,7 @@ public static class MauiProgram
             });
         builder.Services.AddCustomIOC();
         builder.Services.AddMasaBlazor();
+        builder.Services.AddMasaBlazor().AddI18nForMauiBlazor("i18n");
 
         return builder.Build();
     }

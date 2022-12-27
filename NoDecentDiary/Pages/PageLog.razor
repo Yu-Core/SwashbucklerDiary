@@ -22,21 +22,14 @@
         </MAppBar>
     </MobileContent>
 </AppBar>
-
-@if (!LogTextList.Any())
-{
-    <div>
-        暂无日志
-    </div>
-}
-else
-{
+<MList Dense>
     @foreach (var item in LogTextList)
     {
-        <div>
-            @item
-        </div>
+        <MListItem>
+            <MListItemContent>
+                @item
+            </MListItemContent>
+        </MListItem>
     }
-}
-
-
+</MList>
+   

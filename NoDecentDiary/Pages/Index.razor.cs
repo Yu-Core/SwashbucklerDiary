@@ -1,4 +1,5 @@
-﻿using Masa.Blazor;
+﻿using BlazorComponent.I18n;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using NoDecentDiary.Models;
 using NoDecentDiary.Shared;
@@ -12,6 +13,8 @@ namespace NoDecentDiary.Pages
 {
     public partial class Index
     {
+        [Inject]
+        public I18n? I18n { get; set; }
         [CascadingParameter]
         public Error? Error { get; set; }
         private List<DiaryModel> Diaries { get; set; } = new List<DiaryModel>();
