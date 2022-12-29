@@ -1,0 +1,7 @@
+﻿@media screen and (min-width:600px) {
+    .write-textarea{
+        border:1px solid;
+        border-radius:12px;
+        max-height:50vh;
+    }
+}

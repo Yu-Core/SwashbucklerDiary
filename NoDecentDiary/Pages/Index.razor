@@ -3,9 +3,11 @@
 <AppBar>
     <MobileContent>
         <MAppBar App
+                 Dense
                  Elevation="0"
                  Color="white">
             <MSpacer></MSpacer>
+
             <MButton Large Icon>
                 <MIcon>mdi-magnify</MIcon>
             </MButton>
@@ -17,6 +19,7 @@
     <MSubheader Class="px-0">
         @(DateTime.Now.ToString("MM/dd") + " 星期二")
     </MSubheader>
+
     <h3>早上好，又是全新的一天</h3>
 </div>
 
@@ -34,7 +37,7 @@
              Bottom
              Right
              Fixed
-             Href="/Log"
+             Href="/Write"
              Fab>
         <MIcon>
             mdi-pencil

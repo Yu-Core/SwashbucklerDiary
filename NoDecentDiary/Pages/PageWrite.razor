@@ -1,2 +1,87 @@
 ﻿@page "/Write"
 
+<MAppBar App
+         Dense
+         Elevation="0"
+         Color="white">
+    <MButton Icon Href="/">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MSpacer></MSpacer>
+
+    <MButton Class="d-sm-none" Icon>
+        <MIcon>
+            mdi-check
+        </MIcon>
+    </MButton>
+</MAppBar>
+
+<MContainer>
+    <div class="overflow-hidden" style="max-width:150px;">
+        <MTextField Value="@(DateTime.Now.ToString("yyyy/MM/dd"))"
+                    Class="font-weight-bold"
+                    Solo
+                    Dense
+                    Readonly
+                    HideDetails="@("auto")">
+        </MTextField>
+    </div>
+
+    <div class="overflow-hidden" style="max-width:150px;">
+        <MAutocomplete Solo
+                       Dense
+                       HideDetails="@("auto")"
+                       Items="_weathers"
+                       @bind-Value="_value"
+                       ItemText="r=>r"
+                       ItemValue="r=>r">
+        </MAutocomplete>
+    </div>
+
+    <div class="overflow-hidden">
+        <MAutocomplete Solo
+                       Dense
+                       Chips
+                       Multiple
+                       HideDetails="@("auto")"
+                       Items="_weathers"
+                       @bind-Value="_weathers2"
+                       ItemText="r=>r"
+                       ItemValue="r=>r">
+            <SelectionContent Context="data">
+                <MChip Class="ma-1"
+                       Close
+                       Small
+                       IsActive="@data.Selected"
+                       OnCloseClick="() => Remove(data.Item)"
+                       Color="indigo darken-3"
+                       Outlined>
+                    @(data.Item)
+                </MChip>
+            </SelectionContent>
+        </MAutocomplete>
+    </div>
+
+    <div class="overflow-hidden my-sm-4 write-textarea">
+        <MTextarea Solo
+                   HideDetails="@("auto")"
+                   AutoGrow
+                   Rows="6"
+                   RowHeight="30"
+                   Placeholder="请输入">
+        </MTextarea>
+    </div>
+
+    <div class="d-none d-sm-block">
+        <MButton Class="px-8" Rounded Dark>
+            保存
+        </MButton>
+        <MButton Class="px-8" Rounded Outlined>
+            清除
+        </MButton>
+    </div>
+</MContainer>
+
