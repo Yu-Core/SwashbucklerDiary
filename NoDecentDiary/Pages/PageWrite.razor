@@ -25,14 +25,15 @@
            Transition="scroll-x-reverse-transition">
         <ActivatorContent>
             <MButton Icon
-                Class="d-sm-none"
                      @attributes="@context.Attrs">
-                <MIcon>mdi-dots-vertical</MIcon>
-            </MButton>
-            <MButton Icon
-                     Class="d-none d-sm-block"
-                     @attributes="@context.Attrs">
-                <MIcon>mdi-dots-horizontal</MIcon>
+                <MultiDisplay>
+                    <DesktopContent>
+                        <MIcon>mdi-dots-horizontal</MIcon>
+                    </DesktopContent>
+                    <MobileContent>
+                        <MIcon>mdi-dots-vertical</MIcon>
+                    </MobileContent>
+                </MultiDisplay>
             </MButton>
         </ActivatorContent>
 
