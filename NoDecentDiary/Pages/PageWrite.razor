@@ -12,74 +12,115 @@
 
     <MSpacer></MSpacer>
 
-    <MButton Class="d-sm-none" Icon>
+    <MButton Class="d-sm-none"
+             Icon
+             Href="/Tag">
         <MIcon>
-            mdi-check
+            mdi-label-outline
         </MIcon>
     </MButton>
+
+    <MMenu @bind-Value="showMenu"
+           Rounded="@("lg")"
+           Transition="scroll-x-reverse-transition">
+        <ActivatorContent>
+            <MButton Icon
+                Class="d-sm-none"
+                     @attributes="@context.Attrs">
+                <MIcon>mdi-dots-vertical</MIcon>
+            </MButton>
+            <MButton Icon
+                     Class="d-none d-sm-block"
+                     @attributes="@context.Attrs">
+                <MIcon>mdi-dots-horizontal</MIcon>
+            </MButton>
+        </ActivatorContent>
+
+        <ChildContent>
+            <MList MinWidth="150">
+                <MListItem Class="d-none d-sm-block"
+                           Dense
+                           Href="/Tag">
+                    <MListItemContent>
+                        标签
+                    </MListItemContent>
+                </MListItem>
+                <MListItem Dense OnClick="()=>showTitle = !showTitle">
+                    <MListItemContent>
+                        @(showTitle ? "关闭标题" : "开启标题")
+                    </MListItemContent>
+                </MListItem>
+                <MListItem Dense>
+                    <MListItemContent>
+                        切换至富文本
+                    </MListItemContent>
+                </MListItem>
+            </MList>
+        </ChildContent>
+    </MMenu>
 </MAppBar>
 
 <MContainer>
-    <div class="overflow-hidden" style="max-width:150px;">
-        <MTextField Value="@(DateTime.Now.ToString("yyyy/MM/dd"))"
-                    Class="font-weight-bold"
-                    Solo
-                    Dense
-                    Readonly
-                    HideDetails="@("auto")">
-        </MTextField>
+    <div class="px-3 text-sm-h6 font-weight-bold">
+        @(DateTime.Now.ToString("yyyy/MM/dd"))
     </div>
 
-    <div class="overflow-hidden" style="max-width:150px;">
+    <div class="overflow-hidden" style="max-width:100px;">
         <MAutocomplete Solo
                        Dense
+                       Label="天气"
+                       Color="transparent"
                        HideDetails="@("auto")"
                        Items="_weathers"
-                       @bind-Value="_value"
+                       @bind-Value="_weather"
                        ItemText="r=>r"
                        ItemValue="r=>r">
         </MAutocomplete>
     </div>
 
-    <div class="overflow-hidden">
-        <MAutocomplete Solo
-                       Dense
-                       Chips
-                       Multiple
-                       HideDetails="@("auto")"
-                       Items="_weathers"
-                       @bind-Value="_weathers2"
-                       ItemText="r=>r"
-                       ItemValue="r=>r">
-            <SelectionContent Context="data">
-                <MChip Class="ma-1"
-                       Close
-                       Small
-                       IsActive="@data.Selected"
-                       OnCloseClick="() => Remove(data.Item)"
-                       Color="indigo darken-3"
-                       Outlined>
-                    @(data.Item)
-                </MChip>
-            </SelectionContent>
-        </MAutocomplete>
-    </div>
+    @if (showTitle)
+    {
+        <div class="my-sm-4 write-overflow">
+            <MTextField Solo
+                    TValue="string"
+                    HideDetails="@("auto")"
+                    Placeholder="请输入标题">
+            </MTextField>
+        </div>
+    }
 
-    <div class="overflow-hidden my-sm-4 write-textarea">
+    <div class="my-sm-4 write-overflow write-textarea">
         <MTextarea Solo
                    HideDetails="@("auto")"
                    AutoGrow
-                   Rows="6"
+                   Rows="8"
                    RowHeight="30"
-                   Placeholder="请输入">
+                   Placeholder="请输入内容">
         </MTextarea>
     </div>
+
+    <div class="mb-5">
+        <MChipGroup Column>
+            @foreach (var item in SelectedTags)
+            {
+                <MChip Label
+                   Close
+                   OnCloseClick="()=>RemoveSelectedTag(item)">
+                    <MIcon Left>
+                        mdi-label-outline
+                    </MIcon>
+                    @(item.Name)
+                </MChip>
+            }
+        </MChipGroup>
+    </div>
+
 
     <div class="d-none d-sm-block">
         <MButton Class="px-8" Rounded Dark>
             保存
         </MButton>
-        <MButton Class="px-8" Rounded Outlined>
+        <MButton Class="px-8" Rounded Color="error" Outlined>
             清除
         </MButton>
     </div>
