@@ -1,6 +1,6 @@
 ﻿@page "/Log"
 
-<AppBar>
+<MultiDisplay>
     <DesktopContent>
         <MBreadcrumbs Large>
             <MBreadcrumbsItem Href="/components/breadcrumbs">Dashboard</MBreadcrumbsItem>
@@ -21,7 +21,7 @@
             <MSpacer></MSpacer>
         </MAppBar>
     </MobileContent>
-</AppBar>
+</MultiDisplay>
 <MList Dense>
     @foreach (var item in LogTextList)
     {

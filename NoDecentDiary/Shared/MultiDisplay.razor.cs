@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Shared
 {
-    public partial class AppBar
+    public partial class MultiDisplay
     {
         [Inject]
         public MasaBlazor? MasaBlazor { get; set; }
