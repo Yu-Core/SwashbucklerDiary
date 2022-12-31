@@ -82,7 +82,8 @@
     @if (showTitle)
     {
         <div class="my-sm-4 write-overflow">
-            <MTextField Solo
+            <MTextField Solo="!IsDesktop"
+                    Outlined="IsDesktop"
                     TValue="string"
                     HideDetails="@("auto")"
                     Placeholder="请输入标题">
@@ -91,7 +92,8 @@
     }
 
     <div class="my-sm-4 write-overflow write-textarea">
-        <MTextarea Solo
+        <MTextarea Solo="!IsDesktop"
+                   Outlined="IsDesktop"
                    HideDetails="@("auto")"
                    AutoGrow
                    Rows="8"
