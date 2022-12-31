@@ -1,0 +1,32 @@
+﻿<MDialog Value="Value"
+         ValueChanged="InternalValueChanged"
+         MaxWidth="420">
+    <MCard>
+        <MCardTitle>
+            添加标签
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            <MTextField Value="Text" ValueChanged="TextChanged">
+
+            </MTextField>
+        </MCardText>
+        <MCardActions>
+            <MButton Text>
+                添加标签
+            </MButton>
+            <MSpacer></MSpacer>
+            <MButton Text OnClick="HandleOnCancel">
+                取消
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="HandleOnSave">
+                保存
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MDialog>
