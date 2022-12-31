@@ -10,14 +10,14 @@
             </MButton>
         </MCardTitle>
         <MCardText>
-            <MTextField Value="Text" ValueChanged="TextChanged">
-
+            <MTextField @bind-Value="Content"
+                        Dense
+                        HideDetails="@("auto")"
+                        Outlined
+                        Placeholder="请输入标签名称">
             </MTextField>
         </MCardText>
         <MCardActions>
-            <MButton Text>
-                添加标签
-            </MButton>
             <MSpacer></MSpacer>
             <MButton Text OnClick="HandleOnCancel">
                 取消

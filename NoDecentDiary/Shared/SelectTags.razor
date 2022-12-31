@@ -24,7 +24,7 @@
             </MChipGroup>
         </MCardText>
         <MCardActions>
-            <MButton Text>
+            <MButton Text OnClick="()=>DialogAddTag = true">
                 添加标签
             </MButton>
             <MSpacer></MSpacer>
@@ -39,3 +39,7 @@
         </MCardActions>
     </MCard>
 </MDialog>
+
+<AddTag @bind-Value="DialogAddTag"
+        @bind-Text="AddTagName"
+        OnSave="HandleOnSaveAddTag"></AddTag>

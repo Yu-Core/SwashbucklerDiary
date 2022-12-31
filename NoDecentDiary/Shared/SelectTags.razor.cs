@@ -29,8 +29,12 @@ namespace NoDecentDiary.Shared
         public List<TagModel> Items { get; set; } = new List<TagModel>();
         [Parameter]
         public EventCallback<List<TagModel>> ItemsChanged { get; set; }
+        [Parameter]
+        public EventCallback OnSave { get; set; }
 
         private bool value;
+        private bool DialogAddTag { get; set; }
+        private string? AddTagName;
         private List<StringNumber> SelectedTags { get; set; } = new List<StringNumber>();
         private List<TagModel> Tags { get; set; } = new List<TagModel>()
         {
@@ -60,11 +64,6 @@ namespace NoDecentDiary.Shared
 
         protected virtual async Task HandleOnSave(MouseEventArgs _)
         {
-            await InternalItemsChanged();
-        }
-
-        private async Task InternalItemsChanged()
-        {
             var TagModels = new List<TagModel>();
             foreach (var item in SelectedTags)
             {
@@ -75,10 +74,10 @@ namespace NoDecentDiary.Shared
 
             if (ItemsChanged.HasDelegate)
             {
-                await ItemsChanged.InvokeAsync(Items);
+                await ItemsChanged.InvokeAsync(TagModels);
             }
 
-            await InternalValueChanged(false);
+            await OnSave.InvokeAsync();
         }
 
         private void InitSelectedTags(bool value)
@@ -95,6 +94,16 @@ namespace NoDecentDiary.Shared
                     }
                 }
             }
+        }
+        private void HandleOnSaveAddTag()
+        {
+            DialogAddTag = false;
+            TagModel tagModel = new TagModel()
+            {
+                Name = AddTagName
+            };
+            AddTagName = string.Empty;
+            Tags.Add(tagModel);
         }
     }
 }

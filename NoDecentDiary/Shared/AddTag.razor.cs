@@ -24,11 +24,12 @@ namespace NoDecentDiary.Shared
         [Parameter]
         public string? Text { get; set; }
         [Parameter]
-        public EventCallback<string> TextChanged { get; set; }
+        public EventCallback<string?> TextChanged { get; set; }
         [Parameter]
         public EventCallback OnSave { get; set; } 
 
         private bool value;
+        private string? Content { get; set; }
 
         protected virtual async Task HandleOnCancel(MouseEventArgs _)
         {
@@ -47,7 +48,14 @@ namespace NoDecentDiary.Shared
 
         private async Task HandleOnSave()
         {
+            Text = Content;
+            
+            if (TextChanged.HasDelegate)
+            {
+                await TextChanged.InvokeAsync(Content);
+            }
             await OnSave.InvokeAsync();
+            Content = string.Empty;
         }
     }
 }

@@ -26,5 +26,10 @@ namespace NoDecentDiary.Pages
                 SelectedTags.RemoveAt(index);
             }
         }
+
+        private void HandOnSaveSelectTags()
+        {
+            showSelectTag = false;
+        }
     }
 }
