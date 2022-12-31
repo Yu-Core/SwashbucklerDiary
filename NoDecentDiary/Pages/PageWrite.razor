@@ -41,7 +41,7 @@
             <MList MinWidth="150">
                 <MListItem Class="d-none d-sm-block"
                            Dense
-                           Href="/Tag">
+                           OnClick="()=>showSelectTag = true">
                     <MListItemContent>
                         标签
                     </MListItemContent>
@@ -127,3 +127,6 @@
     </div>
 </MContainer>
 
+<SelectTags @bind-Value="showSelectTag"
+            @bind-Items="SelectedTags">
+</SelectTags>

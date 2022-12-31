@@ -1,4 +1,5 @@
 ﻿using NoDecentDiary.Models;
+using System.Diagnostics;
 
 namespace NoDecentDiary.Pages
 {
@@ -11,6 +12,7 @@ namespace NoDecentDiary.Pages
         private string? _weather;
         private bool showMenu;
         private bool showTitle;
+        private bool showSelectTag;
         private List<TagModel> SelectedTags = new List<TagModel>()
         {
             new TagModel(){Name="标签"}

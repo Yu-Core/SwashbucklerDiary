@@ -1,0 +1,41 @@
+﻿<MDialog Value="Value"
+         ValueChanged="InternalValueChanged"
+         MaxWidth="420"
+         Scrollable>
+    <MCard>
+        <MCardTitle>
+            选择标签
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Style="max-height:200px;">
+            <MChipGroup @bind-Values="SelectedTags"
+                        Column
+                        Multiple>
+                @foreach (var item in Tags)
+                {
+                    <MChip Filter
+                       Outlined>
+                        @(item.Name)
+                    </MChip>
+                }
+            </MChipGroup>
+        </MCardText>
+        <MCardActions>
+            <MButton Text>
+                添加标签
+            </MButton>
+            <MSpacer></MSpacer>
+            <MButton Text OnClick="HandleOnCancel">
+                取消
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="HandleOnSave">
+                保存
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MDialog>
