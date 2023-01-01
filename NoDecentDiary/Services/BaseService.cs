@@ -22,6 +22,12 @@ namespace NoDecentDiary.Services
             await Database.CreateTableAsync<TEntity>();
         }
 
+        public virtual async Task<List<TEntity>> QueryAsync()
+        {
+            await Init();
+            return await Database!.Table<TEntity>().ToListAsync();
+        }
+
         public virtual async Task<bool> AddAsync(TEntity entity)
         {
             await Init();
@@ -34,11 +40,7 @@ namespace NoDecentDiary.Services
             return await Database!.DeleteAsync(entity) > 0;
         }
 
-        public virtual async Task<List<TEntity>> GetAllAsync()
-        {
-            await Init();
-            return await Database!.Table<TEntity>().ToListAsync();
-        }
+        
 
         public virtual async Task<bool> UpdateAsync(TEntity entity)
         {
