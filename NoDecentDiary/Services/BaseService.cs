@@ -59,6 +59,12 @@ namespace NoDecentDiary.Services
             return await Database!.DeleteAsync(entity) > 0;
         }
 
+        public virtual async Task<bool> DeleteAsync(int id)
+        {
+            await Init();
+            return await Database!.DeleteAsync<TEntity>(id) > 0;
+        }
+
         public virtual async Task<bool> UpdateAsync(TEntity entity)
         {
             await Init();
