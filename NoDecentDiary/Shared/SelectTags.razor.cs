@@ -1,6 +1,8 @@
 ﻿using BlazorComponent;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using System;
 using System.Collections.Generic;
@@ -13,13 +15,18 @@ namespace NoDecentDiary.Shared
 {
     public partial class SelectTags
     {
+        [Inject]
+        public ITagService? TagService { get; set; }
+        [Inject]
+        public IPopupService? PopupService { get; set; }
+
         [Parameter]
         public bool Value
         {
             get => value;
             set
             {
-                this.value = value;
+                this.value = value; 
                 InitSelectedTags(value);
             }
         }
@@ -36,16 +43,12 @@ namespace NoDecentDiary.Shared
         private bool DialogAddTag { get; set; }
         private string? AddTagName;
         private List<StringNumber> SelectedTags { get; set; } = new List<StringNumber>();
-        private List<TagModel> Tags { get; set; } = new List<TagModel>()
-        {
-            new TagModel(){Name="标签1"},
-            new TagModel(){Name="标签2"},
-            new TagModel(){Name="标签3"},
-            new TagModel(){Name="标签4"},
-            new TagModel(){Name="标签5"},
-            new TagModel(){Name="标签6"},
-        };
+        private List<TagModel> Tags { get; set; } = new List<TagModel>();
 
+        protected override async Task OnInitializedAsync()
+        {
+            Tags = await TagService!.QueryAsync();
+        }
 
         protected virtual async Task HandleOnCancel(MouseEventArgs _)
         {
@@ -84,7 +87,7 @@ namespace NoDecentDiary.Shared
         {
             if (value)
             {
-                SelectedTags = new List<StringNumber>();
+                SelectedTags.Clear();
                 foreach (var item in Items)
                 {
                     int index = Tags.IndexOf(item);
@@ -95,7 +98,7 @@ namespace NoDecentDiary.Shared
                 }
             }
         }
-        private void HandleOnSaveAddTag()
+        private async void HandleOnSaveAddTag()
         {
             DialogAddTag = false;
             if(string.IsNullOrWhiteSpace(AddTagName))
@@ -107,7 +110,17 @@ namespace NoDecentDiary.Shared
             {
                 Name = AddTagName
             };
+            bool flag = await TagService!.AddAsync(tagModel);
+            if (!flag)
+            {
+                await PopupService!.AlertAsync("添加失败",AlertTypes.Error);
+                return;
+            }
+            await PopupService!.AlertAsync("添加成功", AlertTypes.Success);
+            tagModel = await TagService!.FindAsync(it => it.Name == tagModel.Name);
             Tags.Add(tagModel);
+            this.StateHasChanged();
         }
+
     }
 }
