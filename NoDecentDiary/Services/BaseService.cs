@@ -4,6 +4,7 @@ using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +29,24 @@ namespace NoDecentDiary.Services
             return await Database!.Table<TEntity>().ToListAsync();
         }
 
+        public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func)
+        {
+            await Init();
+            return await Database!.Table<TEntity>().Where(func).ToListAsync();
+        }
+
+        public virtual async Task<TEntity> FindAsync(int id)
+        {
+            await Init();
+            return await Database!.FindAsync<TEntity>(id);
+        }
+
+        public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func)
+        {
+            await Init();
+            return await Database!.FindAsync(func);
+        }
+
         public virtual async Task<bool> AddAsync(TEntity entity)
         {
             await Init();
@@ -39,8 +58,6 @@ namespace NoDecentDiary.Services
             await Init();
             return await Database!.DeleteAsync(entity) > 0;
         }
-
-        
 
         public virtual async Task<bool> UpdateAsync(TEntity entity)
         {
