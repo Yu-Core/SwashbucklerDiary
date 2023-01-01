@@ -98,11 +98,15 @@ namespace NoDecentDiary.Shared
         private void HandleOnSaveAddTag()
         {
             DialogAddTag = false;
+            if(string.IsNullOrWhiteSpace(AddTagName))
+            {
+                return;
+            }
+
             TagModel tagModel = new TagModel()
             {
                 Name = AddTagName
             };
-            AddTagName = string.Empty;
             Tags.Add(tagModel);
         }
     }

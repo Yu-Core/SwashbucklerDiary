@@ -29,7 +29,6 @@ namespace NoDecentDiary.Shared
         public EventCallback OnSave { get; set; } 
 
         private bool value;
-        private string? Content { get; set; }
 
         protected virtual async Task HandleOnCancel(MouseEventArgs _)
         {
@@ -44,18 +43,23 @@ namespace NoDecentDiary.Shared
             {
                 await ValueChanged.InvokeAsync(value);
             }
+
+            await ClearText();
         }
 
         private async Task HandleOnSave()
         {
-            Text = Content;
-            
+            await OnSave.InvokeAsync();
+            await ClearText();
+        }
+
+        private async Task ClearText()
+        {
+            Text = string.Empty;
             if (TextChanged.HasDelegate)
             {
-                await TextChanged.InvokeAsync(Content);
+                await TextChanged.InvokeAsync(Text);
             }
-            await OnSave.InvokeAsync();
-            Content = string.Empty;
         }
     }
 }
