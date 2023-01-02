@@ -42,7 +42,7 @@ namespace NoDecentDiary.Shared
         private bool value;
         private bool DialogAddTag { get; set; }
         private string? AddTagName;
-        private List<StringNumber> SelectedTags { get; set; } = new List<StringNumber>();
+        private List<StringNumber> SelectedTagIndices { get; set; } = new List<StringNumber>();
         private List<TagModel> Tags { get; set; } = new List<TagModel>();
 
         protected override async Task OnInitializedAsync()
@@ -68,7 +68,7 @@ namespace NoDecentDiary.Shared
         protected virtual async Task HandleOnSave(MouseEventArgs _)
         {
             var TagModels = new List<TagModel>();
-            foreach (var item in SelectedTags)
+            foreach (var item in SelectedTagIndices)
             {
                 var TagModel = Tags[item.ToInt32()];
                 TagModels.Add(TagModel);
@@ -87,13 +87,13 @@ namespace NoDecentDiary.Shared
         {
             if (value)
             {
-                SelectedTags.Clear();
+                SelectedTagIndices.Clear();
                 foreach (var item in Items)
                 {
                     int index = Tags.IndexOf(item);
                     if (index > -1)
                     {
-                        SelectedTags.Add(index);
+                        SelectedTagIndices.Add(index);
                     }
                 }
             }
@@ -103,6 +103,11 @@ namespace NoDecentDiary.Shared
             DialogAddTag = false;
             if(string.IsNullOrWhiteSpace(AddTagName))
             {
+                return;
+            }
+            if(Tags.Any(it=>it.Name == AddTagName))
+            {
+                await PopupService!.AlertAsync("标签已存在", AlertTypes.Warning);
                 return;
             }
 
@@ -116,6 +121,7 @@ namespace NoDecentDiary.Shared
                 await PopupService!.AlertAsync("添加失败",AlertTypes.Error);
                 return;
             }
+
             await PopupService!.AlertAsync("添加成功", AlertTypes.Success);
             tagModel = await TagService!.FindAsync(it => it.Name == tagModel.Name);
             Tags.Add(tagModel);
