@@ -31,16 +31,19 @@
             @Body
         </MContainer>
     </MMain>
-    <MBottomNavigation @bind-Value="SelectedItem"
-                       Class="d-flex justify-space-around d-sm-none"
+    @if (UriIsNavigationHref() && !MasaBlazor!.Breakpoint.SmAndUp)
+    {
+        <MBottomNavigation @bind-Value="SelectedItem"
+                       Class="d-flex justify-space-around"
                        App
                        Shift>
-        @foreach (var navigationButton in NavigationButtons)
-        {
-            <MButton OnClick="()=>ChangeView(navigationButton)">
-                <span>@navigationButton.Title</span>
-                <MIcon>@GetIcon(navigationButton)</MIcon>
-            </MButton>
-        }
-    </MBottomNavigation>
+            @foreach (var navigationButton in NavigationButtons)
+            {
+                <MButton OnClick="()=>ChangeView(navigationButton)">
+                    <span>@navigationButton.Title</span>
+                    <MIcon>@GetIcon(navigationButton)</MIcon>
+                </MButton>
+            }
+        </MBottomNavigation>
+    }
 </MApp>

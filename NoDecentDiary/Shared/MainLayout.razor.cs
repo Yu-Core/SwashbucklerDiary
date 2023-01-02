@@ -57,5 +57,10 @@ namespace NoDecentDiary.Shared
         {
             NavigationManager!.NavigateTo(navigationButton.Href);
         }
+
+        private bool UriIsNavigationHref()
+        {
+            return NavigationButtons.Any(it => NavigationManager!.Uri == NavigationManager.ToAbsoluteUri(it.Href).AbsoluteUri);
+        }
     }
 }
