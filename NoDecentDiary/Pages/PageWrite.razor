@@ -106,12 +106,10 @@
         <MChipGroup Column>
             @foreach (var item in SelectedTags)
             {
-                <MChip Label
-                   Close
+                <MChip Close
+                   Outlined="!IsDesktop"
+                   Color="@(IsDesktop?null:"black")"
                    OnCloseClick="()=>RemoveSelectedTag(item)">
-                    <MIcon Left>
-                        mdi-label-outline
-                    </MIcon>
                     @(item.Name)
                 </MChip>
             }
@@ -123,7 +121,7 @@
         <MButton Class="px-8" Rounded Dark>
             保存
         </MButton>
-        <MButton Class="px-8" Rounded Color="error" Outlined>
+        <MButton Class="px-8" Rounded Outlined>
             清除
         </MButton>
     </div>
