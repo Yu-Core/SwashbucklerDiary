@@ -17,5 +17,6 @@ namespace NoDecentDiary.IServices
         Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func);
         Task<TEntity> FindAsync(int id);
         Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func);
+        Task<int> GetLastInsertRowId();
     }
 }

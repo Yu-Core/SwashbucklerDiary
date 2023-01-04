@@ -70,5 +70,11 @@ namespace NoDecentDiary.Services
             await Init();
             return await Database!.UpdateAsync(entity) > 0;
         }
+
+        public virtual async Task<int> GetLastInsertRowId()
+        {
+            await Init();
+            return (int)SQLite3.LastInsertRowid(Database!.GetConnection().Handle);
+        }
     }
 }

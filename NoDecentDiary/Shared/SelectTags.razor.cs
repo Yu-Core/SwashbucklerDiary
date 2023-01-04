@@ -123,7 +123,7 @@ namespace NoDecentDiary.Shared
             }
 
             await PopupService!.AlertAsync("添加成功", AlertTypes.Success);
-            tagModel = await TagService!.FindAsync(it => it.Name == tagModel.Name);
+            tagModel.Id = await TagService!.GetLastInsertRowId();
             Tags.Add(tagModel);
             this.StateHasChanged();
         }
