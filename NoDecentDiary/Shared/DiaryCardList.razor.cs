@@ -2,6 +2,7 @@
 using Masa.Blazor;
 using Masa.Blazor.Popup.Components;
 using Microsoft.AspNetCore.Components;
+using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,10 @@ namespace NoDecentDiary.Shared
     {
         [Inject]
         public IPopupService? PopupService { get; set; }
+        [Inject]
+        public IDiaryService? DiaryService { get; set; }
+        [Inject]
+        public ITagService? TagService { get; set; }
 
         [Parameter]
         [EditorRequired]
@@ -25,30 +30,41 @@ namespace NoDecentDiary.Shared
             Value ??= new List<DiaryModel>();
         }
 
-        private void Topping(DiaryModel diaryModel)
+        private async Task Topping(DiaryModel diaryModel)
         {
             diaryModel.Top = !diaryModel.Top;
-            this.StateHasChanged();
+            await DiaryService!.UpdateAsync(diaryModel);
+            
         }
         private async Task Delete(DiaryModel diaryModel)
         {
-            var confirmed = await PopupService!.ConfirmAsync(param =>
+            //var confirmed = await PopupService!.ConfirmAsync(param =>
+            //{
+            //    param.Title = "删除日记";
+            //    param.TitleStyle = "font-weight:700;";
+            //    param.Content = "无法删除，因为每一篇日记都是珍贵的回忆。";
+            //    param.IconColor = "red";
+            //});
+            //if (confirmed)
+            //{
+            //    await PopupService!.AlertAsync(param =>
+            //    {
+            //        param.Content = "昨日之日不可追，今日之日须臾期。";
+            //        param.Rounded = true;
+            //    });
+            //}
+
+            bool flag = await DiaryService!.DeleteAsync(diaryModel);
+            if (flag)
             {
-                param.Title = "删除日记";
-                param.TitleStyle = "font-weight:700;";
-                param.Content = "无法删除，因为每一篇日记都是珍贵的回忆。";
-                param.IconColor = "red";
-            });
-            if (confirmed)
-            {
-                await PopupService!.AlertAsync(param =>
-                {
-                    param.Content = "昨日之日不可追，今日之日须臾期。";
-                    param.Rounded = true;
-                });
+                Value!.Remove(diaryModel);
+                await PopupService!.AlertAsync("删除成功", AlertTypes.Success);
+                this.StateHasChanged();
             }
-            //Value!.Remove(diaryModel);
-            //this.StateHasChanged();
+            else
+            {
+                await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
+            }
         }
         private async void Copy(DiaryModel diaryModel)
         {

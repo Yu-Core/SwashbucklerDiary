@@ -65,7 +65,7 @@
     <MListItem ThreeLine>
         <MListItemContent>
             <MListItemTitle>
-                <b>@Title</b>
+                <b>@(string.IsNullOrWhiteSpace(Title) ? "无标题" : Title)</b>
             </MListItemTitle>
             <MListItemSubtitle>
                 @Text

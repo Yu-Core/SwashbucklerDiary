@@ -17,7 +17,7 @@
 
 <div class="mb-8 px-2">
     <MSubheader Class="px-0">
-        @(DateTime.Now.ToString("MM/dd") + " 星期二")
+        @(DateTime.Now.ToString("yyyy/MM/dd") + " " + DateTime.Now.DayOfWeek.ToChinese2())
     </MSubheader>
 
     <h3>早上好，又是全新的一天</h3>

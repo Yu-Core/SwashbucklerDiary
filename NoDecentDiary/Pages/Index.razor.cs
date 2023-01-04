@@ -1,6 +1,7 @@
 ﻿using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using NoDecentDiary.Shared;
 using System;
@@ -15,28 +16,15 @@ namespace NoDecentDiary.Pages
     {
         [Inject]
         public I18n? I18n { get; set; }
+        [Inject]
+        public IDiaryService? DiaryService { get; set; }
         [CascadingParameter]
         public Error? Error { get; set; }
         private List<DiaryModel> Diaries { get; set; } = new List<DiaryModel>();
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
-            Diaries = new List<DiaryModel>()
-            {
-                new DiaryModel(){CreateTime=DateTime.Now, Title="伺机待发",Content="挖宝贷记卡悲剧啊开始播放借记卡"},
-                new DiaryModel(){CreateTime=DateTime.Now, Title="dfkdsl",Content="挖宝贷记卡悲剧啊开始播放借记卡"},
-                new DiaryModel(){CreateTime=DateTime.Now, Title="阿斯顿撒",Content="挖宝贷记卡悲剧啊开始播放借记卡"},
-                new DiaryModel(){CreateTime=DateTime.Now, Title="我佛了",Content="挖宝贷记卡悲剧啊开始播放借记卡",Top=true}
-            };
-            //try
-            //{
-            //    throw new Exception();
-            //}
-            //catch (Exception ex)
-            //{
-            //    Error!.ProcessError(ex);
-            //}
-            return base.OnInitializedAsync();
+            Diaries = (await DiaryService!.QueryAsync()).Take(50).ToList();
         }
     }
 }
