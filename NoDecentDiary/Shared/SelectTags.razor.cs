@@ -33,9 +33,9 @@ namespace NoDecentDiary.Shared
         [Parameter]
         public EventCallback<bool> ValueChanged { get; set; }
         [Parameter]
-        public List<TagModel> Items { get; set; } = new List<TagModel>();
+        public List<TagModel> Values { get; set; } = new List<TagModel>();
         [Parameter]
-        public EventCallback<List<TagModel>> ItemsChanged { get; set; }
+        public EventCallback<List<TagModel>> ValuesChanged { get; set; }
         [Parameter]
         public EventCallback OnSave { get; set; }
 
@@ -73,11 +73,11 @@ namespace NoDecentDiary.Shared
                 var TagModel = Tags[item.ToInt32()];
                 TagModels.Add(TagModel);
             }
-            Items = TagModels;
+            Values = TagModels;
 
-            if (ItemsChanged.HasDelegate)
+            if (ValuesChanged.HasDelegate)
             {
-                await ItemsChanged.InvokeAsync(TagModels);
+                await ValuesChanged.InvokeAsync(TagModels);
             }
 
             await OnSave.InvokeAsync();
@@ -88,7 +88,7 @@ namespace NoDecentDiary.Shared
             if (value)
             {
                 SelectedTagIndices.Clear();
-                foreach (var item in Items)
+                foreach (var item in Values)
                 {
                     int index = Tags.IndexOf(item);
                     if (index > -1)
