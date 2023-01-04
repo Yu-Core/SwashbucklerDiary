@@ -4,7 +4,7 @@
          Dense
          Elevation="0"
          Color="white">
-    <MButton Icon Href="/">
+    <MButton Icon OnClick="HandOnBack">
         <MIcon>
             mdi-arrow-left
         </MIcon>
@@ -73,7 +73,7 @@
                        Color="transparent"
                        HideDetails="@("auto")"
                        Items="_weathers"
-                       @bind-Value="_weather"
+                       @bind-Value="_diary.Weather"
                        ItemText="r=>r"
                        ItemValue="r=>r">
         </MAutocomplete>
@@ -82,17 +82,22 @@
     @if (showTitle)
     {
         <div class="my-sm-4 write-overflow">
-            <MTextField Solo="!IsDesktop"
+            <MTextField @bind-Value="_diary.Title"
+                    Solo="!IsDesktop"
                     Outlined="IsDesktop"
                     TValue="string"
                     HideDetails="@("auto")"
+                    Class="pb-0"
+                    Counter="20"
+                    maxlength="20"
                     Placeholder="请输入标题">
             </MTextField>
         </div>
     }
 
     <div class="my-sm-4 write-overflow write-textarea">
-        <MTextarea Solo="!IsDesktop"
+        <MTextarea @bind-Value="_diary.Content"
+                   Solo="!IsDesktop"
                    Outlined="IsDesktop"
                    HideDetails="@("auto")"
                    AutoGrow
@@ -118,10 +123,16 @@
 
 
     <div class="d-none d-sm-block">
-        <MButton Class="px-8" Rounded Dark>
+        <MButton Class="px-8"
+                 Rounded
+                 Dark
+                 OnClick="HandOnSave">
             保存
         </MButton>
-        <MButton Class="px-8" Rounded Outlined>
+        <MButton Class="px-8"
+                 Rounded
+                 Outlined
+                 OnClick="HandOnClear">
             清除
         </MButton>
     </div>
