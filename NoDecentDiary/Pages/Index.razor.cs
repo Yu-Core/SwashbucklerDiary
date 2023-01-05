@@ -24,7 +24,7 @@ namespace NoDecentDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            Diaries = (await DiaryService!.QueryAsync()).Take(50).ToList();
+            Diaries = (await DiaryService!.QueryAsync()).Take(50).OrderByDescending(it=>it.CreateTime).ToList();
         }
     }
 }

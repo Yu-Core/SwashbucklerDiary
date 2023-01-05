@@ -12,6 +12,7 @@ namespace NoDecentDiary.Services
     {
         public async Task<bool> AddTagsAsync(int diaryId, List<TagModel> tagModels)
         {
+            await Init();
             var DiaryTags = new List<DiaryTagModel>();
             foreach (var item in tagModels)
             {

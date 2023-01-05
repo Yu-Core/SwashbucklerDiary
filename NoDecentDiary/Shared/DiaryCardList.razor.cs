@@ -59,7 +59,17 @@ namespace NoDecentDiary.Shared
             //        param.Rounded = true;
             //    });
             //}
-
+            var confirmed = await PopupService!.ConfirmAsync(param =>
+            {
+                param.Title = "删除日记";
+                param.TitleStyle = "font-weight:700;";
+                param.Content = "请慎重删除，每一篇日记都是珍贵的回忆。";
+                param.IconColor = "red";
+            });
+            if (!confirmed)
+            {
+                return;
+            }
             bool flag = await DiaryService!.DeleteAsync(diaryModel);
             if (flag)
             {
@@ -87,20 +97,14 @@ namespace NoDecentDiary.Shared
         {
             SelectedDiaryId = diaryModel.Id;
             SelectedTags = await DiaryService!.GetTagsAsync(SelectedDiaryId);
+            StateHasChanged();
             showSelectTag = true;
         }
         private async Task HandOnSaveSelectTags()
         {
-
-            foreach (var item in SelectedTags)
-            {
-                var record = new DiaryTagModel()
-                {
-                    DiaryId = SelectedDiaryId,
-                    TagId = item.Id
-                };
-                await DiaryTagService!.AddAsync(record);
-            }
+            await DiaryTagService!.DeleteAsync(it=>it.DiaryId== SelectedDiaryId);
+            await DiaryTagService.AddTagsAsync(SelectedDiaryId, SelectedTags);
+            showSelectTag = false;
         }
     }
 }

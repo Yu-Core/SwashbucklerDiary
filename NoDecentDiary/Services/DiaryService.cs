@@ -13,11 +13,14 @@ namespace NoDecentDiary.Services
     {
         public async Task<List<TagModel>> GetTagsAsync(int id)
         {
-            var DiaryTags = await Database!.Table<DiaryTagModel>().Where(it=>it.DiaryId == id).ToListAsync();
+            await Init();
+            await Database!.CreateTableAsync<DiaryTagModel>();
+            await Database.CreateTableAsync<TagModel>();
+            var DiaryTags = await Database.Table<DiaryTagModel>().Where(it=>it.DiaryId == id).ToListAsync();
             var Tags = new List<TagModel>();
             foreach (var item in DiaryTags)
             {
-                var tag = await Database!.FindAsync<TagModel>(item.TagId);
+                var tag = await Database.FindAsync<TagModel>(item.TagId);
                 Tags.Add(tag);
             }
             return Tags;

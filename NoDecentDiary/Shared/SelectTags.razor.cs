@@ -90,7 +90,7 @@ namespace NoDecentDiary.Shared
                 SelectedTagIndices.Clear();
                 foreach (var item in Values)
                 {
-                    int index = Tags.IndexOf(item);
+                    int index = Tags.FindIndex(it => it.Id == item.Id); ;
                     if (index > -1)
                     {
                         SelectedTagIndices.Add(index);
