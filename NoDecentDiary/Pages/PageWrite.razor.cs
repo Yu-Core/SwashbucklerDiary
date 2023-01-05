@@ -85,15 +85,7 @@ namespace NoDecentDiary.Pages
             {
                 await PopupService!.AlertAsync("添加成功", AlertTypes.Success);
                 int id = await DiaryService.GetLastInsertRowId();
-                foreach (var item in SelectedTags)
-                {
-                    var record = new DiaryTagModel()
-                    {
-                        DiaryId = id,
-                        TagId = item.Id
-                    };
-                    await DiaryTagService!.AddAsync(record);
-                }
+                await DiaryTagService!.AddTagsAsync(id, SelectedTags);
             }
             else
             {

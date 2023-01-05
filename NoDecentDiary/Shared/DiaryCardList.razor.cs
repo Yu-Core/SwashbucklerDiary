@@ -20,10 +20,16 @@ namespace NoDecentDiary.Shared
         public IDiaryService? DiaryService { get; set; }
         [Inject]
         public ITagService? TagService { get; set; }
+        [Inject]
+        public IDiaryTagService? DiaryTagService { get; set; }
 
         [Parameter]
         [EditorRequired]
         public List<DiaryModel>? Value { get; set; }
+
+        private bool showSelectTag;
+        private int SelectedDiaryId;
+        private List<TagModel> SelectedTags = new List<TagModel>();
 
         public DiaryCardList()
         {
@@ -34,7 +40,7 @@ namespace NoDecentDiary.Shared
         {
             diaryModel.Top = !diaryModel.Top;
             await DiaryService!.UpdateAsync(diaryModel);
-            
+
         }
         private async Task Delete(DiaryModel diaryModel)
         {
@@ -76,6 +82,25 @@ namespace NoDecentDiary.Shared
                 param.Rounded = true;
                 param.Type = AlertTypes.Success;
             });
+        }
+        private async Task Tag(DiaryModel diaryModel)
+        {
+            SelectedDiaryId = diaryModel.Id;
+            SelectedTags = await DiaryService!.GetTagsAsync(SelectedDiaryId);
+            showSelectTag = true;
+        }
+        private async Task HandOnSaveSelectTags()
+        {
+
+            foreach (var item in SelectedTags)
+            {
+                var record = new DiaryTagModel()
+                {
+                    DiaryId = SelectedDiaryId,
+                    TagId = item.Id
+                };
+                await DiaryTagService!.AddAsync(record);
+            }
         }
     }
 }

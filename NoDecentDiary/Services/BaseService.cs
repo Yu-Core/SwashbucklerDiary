@@ -12,9 +12,9 @@ namespace NoDecentDiary.Services
 {
     public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class, new()
     {
-        private SQLiteAsyncConnection? Database;
+        protected SQLiteAsyncConnection? Database;
 
-        private async Task Init()
+        protected async Task Init()
         {
             if (Database is not null)
                 return;
