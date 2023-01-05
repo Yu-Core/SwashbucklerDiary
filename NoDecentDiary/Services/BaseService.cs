@@ -76,5 +76,44 @@ namespace NoDecentDiary.Services
             await Init();
             return (int)SQLite3.LastInsertRowid(Database!.GetConnection().Handle);
         }
+
+        public async Task<bool> AddAsync(List<TEntity> entities)
+        {
+            await Init();
+            if(entities.Count == 0)
+            {
+                return false;
+            }
+            var oldCount = await Database!.Table<TEntity>().CountAsync();
+            await Database!.RunInTransactionAsync(tran => {
+                foreach (var item in entities)
+                {
+                    tran.Insert(item);
+                }
+                tran.Commit();
+            });
+            var newCount = await Database!.Table<TEntity>().CountAsync();
+            return newCount > oldCount;
+        }
+
+        public async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func)
+        {
+            await Init();
+            var entities = await Database!.Table<TEntity>().Where(func).ToListAsync();
+            if(entities.Count == 0)
+            {
+                return false;
+            }
+
+            await Database.RunInTransactionAsync(tran => {
+                foreach (var item in entities)
+                {
+                    tran.Delete(item);
+                }
+                tran.Commit();
+            });
+            var entityCount = await Database!.Table<TEntity>().Where(func).CountAsync();
+            return entityCount < entities.Count;
+        }
     }
 }
