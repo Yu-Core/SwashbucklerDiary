@@ -3,6 +3,7 @@
     if (item.Top)
     {
         <DiaryCard Value="item"
+           OnTag="()=>Tag(item)"
            OnCopy="()=>Copy(item)"
            OnDelete="()=>Delete(item)"
            OnTopping="()=>Topping(item)">
