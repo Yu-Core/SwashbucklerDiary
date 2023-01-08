@@ -34,7 +34,7 @@
     @if (UriIsNavigationHref() && !MasaBlazor!.Breakpoint.SmAndUp)
     {
         <MBottomNavigation @bind-Value="SelectedItem"
-                       Class="d-flex justify-space-around"
+                       Class="d-flex justify-space-around d-sm-none"
                        App
                        Shift>
             @foreach (var navigationButton in NavigationButtons)
