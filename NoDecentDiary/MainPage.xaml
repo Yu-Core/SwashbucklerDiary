@@ -5,7 +5,8 @@
              x:Class="NoDecentDiary.MainPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
-    <BlazorWebView HostPage="wwwroot/index.html">
+    <BlazorWebView x:Name="_blazorWebView"
+                   HostPage="wwwroot/index.html">
         <BlazorWebView.RootComponents>
             <RootComponent Selector="#app" ComponentType="{x:Type local:Main}" />
         </BlazorWebView.RootComponents>

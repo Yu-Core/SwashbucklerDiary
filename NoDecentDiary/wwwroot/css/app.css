@@ -95,35 +95,15 @@ a, .btn-link {
     *:hover .m-icon::before {
         display: inline-block
     }
-
-    * {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-
-    ::-webkit-scrollbar {
-        display: none;
-    }
 }
 
-@media (hover:hover) {
-    /*scrollbar*/
-    ::-webkit-scrollbar-track {
-        border-radius: 15px;
-        margin: 5px 0;
-    }
+* {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 
-    ::-webkit-scrollbar {
-        width: 5px;
-        height: 5px;
-        margin: 5px 0;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        margin: 5px 0;
-        border-radius: 15px;
-        background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(170 168 168)), color-stop(0.72, rgb(170 168 168)), color-stop(0.86, rgb(170 168 168)));
-    }
+::-webkit-scrollbar {
+    display: none;
 }
 
 .m-tab-remove-hover::before {
