@@ -1,4 +1,5 @@
-﻿using BlazorComponent.I18n;
+﻿using BlazorComponent;
+using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
@@ -20,6 +21,7 @@ namespace NoDecentDiary.Pages
         public IDiaryService? DiaryService { get; set; }
         [CascadingParameter]
         public Error? Error { get; set; }
+        private StringNumber tabs = 0;
         private List<DiaryModel> Diaries { get; set; } = new List<DiaryModel>();
 
         protected override async Task OnInitializedAsync()

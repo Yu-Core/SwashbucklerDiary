@@ -1,5 +1,17 @@
 ﻿@page "/"
 
+<MTabs @bind-Value="tabs">
+    <MTab>全部</MTab>
+    <MTab>标签</MTab>
+</MTabs>
+<SwiperTabItems @bind-Value="tabs">
+    <SwiperTabItem>
+        123
+    </SwiperTabItem>
+    <SwiperTabItem>
+        456
+    </SwiperTabItem>
+</SwiperTabItems>
 <MultiDisplay>
     <MobileContent>
         <MAppBar App
