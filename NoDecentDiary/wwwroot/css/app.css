@@ -126,4 +126,7 @@ a, .btn-link {
     }
 }
 
+.m-tab-remove-hover::before {
+    opacity: 0 !important;
+}
 

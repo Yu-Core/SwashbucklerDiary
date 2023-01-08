@@ -1,8 +1,10 @@
 ﻿<div class="swiper-slide">
-    @ChildContent
+    <MContainer Style="box-sizing: border-box;">
+        @ChildContent
+    </MContainer>
 </div>
 
-@code{
+@code {
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 }

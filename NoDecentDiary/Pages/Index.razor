@@ -1,46 +1,64 @@
 ﻿@page "/"
 
-<MTabs @bind-Value="tabs">
-    <MTab>全部</MTab>
-    <MTab>标签</MTab>
-</MTabs>
+<MAppBar App
+         Elevation="0"
+         Color="white">
+    <MTabs @bind-Value="tabs"
+           ActiveClass="text-h6 font-weight-bold"
+           HideSlider
+           Color="black">
+        <MTab Class="m-tab-remove-hover">全部</MTab>
+        <MTab Class="m-tab-remove-hover">标签</MTab>
+    </MTabs>
+    <MSpacer></MSpacer>
+    <MButton Large Icon>
+        <MIcon>mdi-magnify</MIcon>
+    </MButton>
+</MAppBar>
+
 <SwiperTabItems @bind-Value="tabs">
     <SwiperTabItem>
-        123
+        <div class="mb-8 px-2">
+            <MSubheader Class="px-0">
+                @(DateTime.Now.ToString("yyyy/MM/dd") + " " + DateTime.Now.DayOfWeek.ToChinese2())
+            </MSubheader>
+
+            <h3>早上好，又是全新的一天</h3>
+        </div>
+
+        <DiaryCardList Value="Diaries">
+
+        </DiaryCardList>
+
+        <div class="py-10">
+        </div>
     </SwiperTabItem>
     <SwiperTabItem>
-        456
+        <div class="d-flex justify-space-between flex-wrap">
+            @foreach (var item in Tags)
+            {
+                <MCard Class="mb-5 tag-card"
+                   Rounded="@("lg")">
+                    <MListItem>
+                        <MListItemIcon>
+                            <MIcon>
+                                mdi-tag
+                            </MIcon>
+                        </MListItemIcon>
+
+                        <MListItemContent>
+                            @item.Name
+                        </MListItemContent>
+
+                        <MListItemAction>
+                            <MIcon>mdi-pencil</MIcon>
+                        </MListItemAction>
+                    </MListItem>
+                </MCard>
+            }
+        </div>
     </SwiperTabItem>
 </SwiperTabItems>
-<MultiDisplay>
-    <MobileContent>
-        <MAppBar App
-                 Dense
-                 Elevation="0"
-                 Color="white">
-            <MSpacer></MSpacer>
-
-            <MButton Large Icon>
-                <MIcon>mdi-magnify</MIcon>
-            </MButton>
-        </MAppBar>
-    </MobileContent>
-</MultiDisplay>
-
-<div class="mb-8 px-2">
-    <MSubheader Class="px-0">
-        @(DateTime.Now.ToString("yyyy/MM/dd") + " " + DateTime.Now.DayOfWeek.ToChinese2())
-    </MSubheader>
-
-    <h3>早上好，又是全新的一天</h3>
-</div>
-
-<DiaryCardList Value="Diaries">
-
-</DiaryCardList>
-
-<div class="py-10">
-</div>
 
 <FabTransition>
     <MButton Color="black"
