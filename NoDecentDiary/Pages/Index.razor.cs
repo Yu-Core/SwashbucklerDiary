@@ -22,7 +22,11 @@ namespace NoDecentDiary.Pages
         [Inject]
         public ITagService? TagService { get; set; }
         [Inject]
+        public IDiaryTagService? DiaryTagService { get; set; }
+        [Inject]
         public IPopupService? PopupService { get; set; }
+        [Inject]
+        public NavigationManager? NavigationManager { get; set; }
         [CascadingParameter]
         public Error? Error { get; set; }
         private StringNumber tabs = 0;
@@ -33,7 +37,18 @@ namespace NoDecentDiary.Pages
         private string? EditTagName;
         protected override async Task OnInitializedAsync()
         {
-            Diaries = (await DiaryService!.QueryAsync()).Take(50).OrderByDescending(it=>it.CreateTime).ToList();
+            await UpdateDiaries();
+            await UpdateTags();
+        }
+        private async Task UpdateDiaries()
+        {
+            var diaryModels = await DiaryService!.QueryAsync();
+            Diaries = diaryModels.Take(50)
+                .OrderByDescending(it => it.CreateTime)
+                .ToList();
+        }
+        private async Task UpdateTags()
+        {
             Tags = await TagService!.QueryAsync();
         }
         private void HandOnTagRename(TagModel tag)
@@ -68,6 +83,36 @@ namespace NoDecentDiary.Pages
                 await PopupService!.AlertAsync("修改失败", AlertTypes.Error);
             }
             showEditTag = false;
+        }
+        private async Task HandOnTagDelete(TagModel tag)
+        {
+            var confirmed = await PopupService!.ConfirmAsync(param =>
+            {
+                param.Title = "删除标签";
+                param.TitleStyle = "font-weight:700;";
+                param.Content = "请慎重删除";
+                param.IconColor = "red";
+            });
+            if (!confirmed)
+            {
+                return;
+            }
+            bool flag = await TagService!.DeleteAsync(tag);
+            if (flag)
+            {
+                Tags.Remove(tag);
+                await PopupService!.AlertAsync("删除成功", AlertTypes.Success);
+                this.StateHasChanged();
+                await DiaryTagService!.DeleteAsync(it=>it.TagId == tag.Id);
+            }
+            else
+            {
+                await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
+            }
+        }
+        private void HandOnTagClick()
+        {
+            NavigationManager!.NavigateTo("/Write");
         }
     }
 }
