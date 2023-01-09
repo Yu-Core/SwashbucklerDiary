@@ -106,7 +106,12 @@ a, .btn-link {
     display: none;
 }
 
-.m-tab-remove-hover::before {
+.m-tab-swiper::before {
     opacity: 0 !important;
 }
 
+@media screen and (max-width:600px){
+    .m-tab-swiper {
+        min-width: unset !important;
+    }
+}
