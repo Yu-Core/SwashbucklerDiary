@@ -42,7 +42,7 @@
                     <MListItem>
                         <MListItemIcon>
                             <MIcon>
-                                mdi-tag
+                                mdi-label-outline
                             </MIcon>
                         </MListItemIcon>
 
@@ -51,7 +51,28 @@
                         </MListItemContent>
 
                         <MListItemAction>
-                            <MIcon>mdi-pencil</MIcon>
+                            <MMenu>
+                                <ActivatorContent>
+                                    <MButton Icon
+                                         @attributes="@context.Attrs">
+                                        <MIcon>mdi-pencil</MIcon>
+                                    </MButton>
+                                </ActivatorContent>
+                                <ChildContent>
+                                    <MList MinWidth="150">
+                                        <MListItem Dense OnClick="()=>HandOnTagRename(item)">
+                                            <MListItemContent>
+                                                重命名
+                                            </MListItemContent>
+                                        </MListItem>
+                                        <MListItem Dense>
+                                            <MListItemContent>
+                                                删除
+                                            </MListItemContent>
+                                        </MListItem>
+                                    </MList>
+                                </ChildContent>
+                            </MMenu>
                         </MListItemAction>
                     </MListItem>
                 </MCard>
@@ -74,3 +95,10 @@
         </MIcon>
     </MButton>
 </FabTransition>
+
+<InputTag @bind-Value="showEditTag"
+          @bind-Text="EditTagName"
+          Title="重命名标签"
+          OnSave="HandOnSaveEditTag">
+
+</InputTag>

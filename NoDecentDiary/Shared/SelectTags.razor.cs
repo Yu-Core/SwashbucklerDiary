@@ -105,6 +105,7 @@ namespace NoDecentDiary.Shared
             {
                 return;
             }
+
             if(Tags.Any(it=>it.Name == AddTagName))
             {
                 await PopupService!.AlertAsync("标签已存在", AlertTypes.Warning);
