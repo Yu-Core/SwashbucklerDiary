@@ -21,7 +21,10 @@ namespace NoDecentDiary.Services
             foreach (var item in DiaryTags)
             {
                 var tag = await Database.FindAsync<TagModel>(item.TagId);
-                Tags.Add(tag);
+                if (tag != null) 
+                {
+                    Tags.Add(tag);
+                }
             }
             return Tags;
         }
