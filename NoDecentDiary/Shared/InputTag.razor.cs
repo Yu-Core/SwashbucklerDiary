@@ -8,27 +8,20 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Shared
 {
-    public partial class AddTag
+    public partial class InputTag
     {
         [Parameter]
-        public bool Value
-        {
-            get => value;
-            set
-            {
-                this.value = value;
-            }
-        }
+        public bool Value { get; set; }
         [Parameter]
         public EventCallback<bool> ValueChanged { get; set; }
+        [Parameter]
+        public string? Title { get; set; }
         [Parameter]
         public string? Text { get; set; }
         [Parameter]
         public EventCallback<string?> TextChanged { get; set; }
         [Parameter]
         public EventCallback OnSave { get; set; } 
-
-        private bool value;
 
         protected virtual async Task HandleOnCancel(MouseEventArgs _)
         {
