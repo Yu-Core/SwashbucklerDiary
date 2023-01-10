@@ -23,11 +23,14 @@ namespace NoDecentDiary.Shared
         [Parameter]
         public bool Value
         {
-            get => value;
+            get => _value;
             set
             {
-                this.value = value; 
-                InitSelectedTags(value);
+                if(_value != value)
+                {
+                    _value = value;
+                    InitSelectedTags(value);
+                }
             }
         }
         [Parameter]
@@ -39,7 +42,7 @@ namespace NoDecentDiary.Shared
         [Parameter]
         public EventCallback OnSave { get; set; }
 
-        private bool value;
+        private bool _value;
         private bool DialogAddTag { get; set; }
         private string? AddTagName;
         private List<StringNumber> SelectedTagIndices { get; set; } = new List<StringNumber>();
@@ -83,10 +86,11 @@ namespace NoDecentDiary.Shared
             await OnSave.InvokeAsync();
         }
 
-        private void InitSelectedTags(bool value)
+        private async void InitSelectedTags(bool value)
         {
             if (value)
             {
+                Tags = await TagService!.QueryAsync();
                 SelectedTagIndices.Clear();
                 foreach (var item in Values)
                 {

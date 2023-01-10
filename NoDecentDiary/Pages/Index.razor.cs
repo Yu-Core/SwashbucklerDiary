@@ -37,6 +37,8 @@ namespace NoDecentDiary.Pages
         private bool showEditTag;
         private int EditTagId;
         private string? EditTagName;
+        private bool showAddTag;
+        private string? AddTagName;
         protected override async Task OnInitializedAsync()
         {
             await UpdateDiaries();
@@ -66,6 +68,7 @@ namespace NoDecentDiary.Pages
         }
         private async Task HandOnSaveEditTag()
         {
+            showEditTag = false;
             if (string.IsNullOrWhiteSpace(EditTagName))
             {
                 return;
@@ -88,7 +91,6 @@ namespace NoDecentDiary.Pages
             {
                 await PopupService!.AlertAsync("修改失败", AlertTypes.Error);
             }
-            showEditTag = false;
         }
         private async Task HandOnTagDelete(TagModel tag)
         {
@@ -131,6 +133,36 @@ namespace NoDecentDiary.Pages
             {
                 await UpdateTags();
             }
+        }
+        private async Task HandOnSaveAddTag()
+        {
+            showAddTag = false;
+            if (string.IsNullOrWhiteSpace(AddTagName))
+            {
+                return;
+            }
+
+            if (Tags.Any(it => it.Name == AddTagName))
+            {
+                await PopupService!.AlertAsync("标签已存在", AlertTypes.Warning);
+                return;
+            }
+
+            TagModel tagModel = new TagModel()
+            {
+                Name = AddTagName
+            };
+            bool flag = await TagService!.AddAsync(tagModel);
+            if (!flag)
+            {
+                await PopupService!.AlertAsync("添加失败", AlertTypes.Error);
+                return;
+            }
+
+            await PopupService!.AlertAsync("添加成功", AlertTypes.Success);
+            tagModel.Id = await TagService!.GetLastInsertRowId();
+            Tags.Add(tagModel);
+            this.StateHasChanged();
         }
     }
 }
