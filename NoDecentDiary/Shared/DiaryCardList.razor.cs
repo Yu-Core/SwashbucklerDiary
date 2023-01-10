@@ -44,21 +44,6 @@ namespace NoDecentDiary.Shared
         }
         private async Task Delete(DiaryModel diaryModel)
         {
-            //var confirmed = await PopupService!.ConfirmAsync(param =>
-            //{
-            //    param.Title = "删除日记";
-            //    param.TitleStyle = "font-weight:700;";
-            //    param.Content = "无法删除，因为每一篇日记都是珍贵的回忆。";
-            //    param.IconColor = "red";
-            //});
-            //if (confirmed)
-            //{
-            //    await PopupService!.AlertAsync(param =>
-            //    {
-            //        param.Content = "昨日之日不可追，今日之日须臾期。";
-            //        param.Rounded = true;
-            //    });
-            //}
             var confirmed = await PopupService!.ConfirmAsync(param =>
             {
                 param.Title = "删除日记";

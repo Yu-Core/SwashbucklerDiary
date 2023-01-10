@@ -25,6 +25,7 @@ namespace NoDecentDiary.Shared
                     _value = value;
                     if(AfterFirstRender)
                     {
+                        RefreshData.InvokeAsync(value);
                         UpdateSwiper(value);
                     }
                 }
@@ -34,6 +35,8 @@ namespace NoDecentDiary.Shared
         public EventCallback<StringNumber> ValueChanged { get; set; }
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
+        [Parameter]
+        public EventCallback<StringNumber> RefreshData { get; set; }
 
         private StringNumber _value = 0;
         private bool AfterFirstRender;

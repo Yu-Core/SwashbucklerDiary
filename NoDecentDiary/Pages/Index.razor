@@ -8,13 +8,11 @@
            HideSlider
            Color="black">
         <MTab Class="m-tab-swiper"
-              Ripple="false"
-              OnClick="UpdateDiaries">
+              Ripple="false">
             全部
         </MTab>
         <MTab Class="m-tab-swiper"
-              Ripple="false"
-              OnClick="UpdateTags">
+              Ripple="false">
             标签
         </MTab>
     </MTabs>
@@ -24,7 +22,7 @@
     </MButton>
 </MAppBar>
 
-<SwiperTabItems @bind-Value="tabs">
+<SwiperTabItems @bind-Value="tabs" RefreshData="HandOnRefreshData">
     <SwiperTabItem>
         <div class="mb-8 px-2">
             <MSubheader Class="px-0">

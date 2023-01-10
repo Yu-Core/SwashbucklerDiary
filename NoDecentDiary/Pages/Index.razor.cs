@@ -121,5 +121,16 @@ namespace NoDecentDiary.Pages
         {
             NavigationManager!.NavigateTo("/Write");
         }
+        private async Task HandOnRefreshData(StringNumber value)
+        {
+            if(value == 0)
+            {
+                await UpdateDiaries();
+            }
+            else if(value == 1)
+            {
+                await UpdateTags();
+            }
+        }
     }
 }
