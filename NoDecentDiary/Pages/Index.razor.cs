@@ -41,7 +41,7 @@ namespace NoDecentDiary.Pages
         {
             await UpdateDiaries();
             await UpdateTags();
-            if(Tab == "tag")
+            if(Tab == "tags")
             {
                 tabs = 1;
             }
@@ -98,6 +98,7 @@ namespace NoDecentDiary.Pages
                 param.TitleStyle = "font-weight:700;";
                 param.Content = "请慎重删除";
                 param.IconColor = "red";
+                param.ActionsStyle = "justify-content: flex-end;";
             });
             if (!confirmed)
             {

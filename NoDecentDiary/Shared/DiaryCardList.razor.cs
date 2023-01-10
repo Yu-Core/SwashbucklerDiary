@@ -65,6 +65,7 @@ namespace NoDecentDiary.Shared
                 param.TitleStyle = "font-weight:700;";
                 param.Content = "请慎重删除，每一篇日记都是珍贵的回忆。";
                 param.IconColor = "red";
+                param.ActionsStyle = "justify-content: flex-end;";
             });
             if (!confirmed)
             {
