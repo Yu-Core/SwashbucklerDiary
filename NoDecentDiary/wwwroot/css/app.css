@@ -115,3 +115,12 @@ a, .btn-link {
         min-width: unset !important;
     }
 }
+
+.swiper-slide{
+    min-height:calc(100vh - 120px);
+}
+@media screen and (min-width:600px) {
+    .swiper-slide {
+        min-height: calc(100vh - 64px);
+    }
+}
