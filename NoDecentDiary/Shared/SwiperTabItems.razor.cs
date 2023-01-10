@@ -23,7 +23,10 @@ namespace NoDecentDiary.Shared
                 if (_value != value)
                 {
                     _value = value;
-                    UpdateSwiper(value);
+                    if(AfterFirstRender)
+                    {
+                        UpdateSwiper(value);
+                    }
                 }
             }
         }
@@ -33,6 +36,7 @@ namespace NoDecentDiary.Shared
         public RenderFragment? ChildContent { get; set; }
 
         private StringNumber _value = 0;
+        private bool AfterFirstRender;
         private string Id = "swiper" + Guid.NewGuid().ToString();
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -40,13 +44,9 @@ namespace NoDecentDiary.Shared
             if (firstRender && ChildContent is not null)
             {
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
-                await JSRuntime!.InvokeVoidAsync("swiperInit", new object[3] { dotNetCallbackRef, "UpdateValue", Id });
+                await JSRuntime!.InvokeVoidAsync("swiperInit", new object[4] { dotNetCallbackRef, "UpdateValue", Id, Value.ToInt32() });
+                AfterFirstRender = true;
             }
-            //else
-            //{
-            //    await JSRuntime!.InvokeVoidAsync($"{Id}.update", null);
-            //    await JSRuntime!.InvokeVoidAsync("console.log", new object[1] { "update" });
-            //}
         }
         private async void UpdateSwiper(StringNumber value)
         {

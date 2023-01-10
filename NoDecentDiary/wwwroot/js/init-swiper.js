@@ -1,4 +1,4 @@
-function swiperInit(dotNetCallbackRef, callbackMethod,id) {
+function swiperInit(dotNetCallbackRef, callbackMethod,id,index) {
     console.log('Entered initSwiper!');
     let className = "." + id;
     window[id] = new Swiper(className, {
@@ -6,6 +6,7 @@ function swiperInit(dotNetCallbackRef, callbackMethod,id) {
         observeParents: true,
         observeSlideChildren: true,
         autoHeight: true,
+        initialSlide: index,
         on: {
             slideChangeTransitionEnd: function () {
                 dotNetCallbackRef.invokeMethodAsync(callbackMethod, this.activeIndex);

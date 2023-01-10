@@ -27,6 +27,8 @@ namespace NoDecentDiary.Pages
         public IPopupService? PopupService { get; set; }
         [Inject]
         public NavigationManager? NavigationManager { get; set; }
+        [Parameter]
+        public string? Tab { get; set; }
         [CascadingParameter]
         public Error? Error { get; set; }
         private StringNumber tabs = 0;
@@ -39,6 +41,10 @@ namespace NoDecentDiary.Pages
         {
             await UpdateDiaries();
             await UpdateTags();
+            if(Tab == "tag")
+            {
+                tabs = 1;
+            }
         }
         private async Task UpdateDiaries()
         {
