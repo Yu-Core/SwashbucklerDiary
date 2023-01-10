@@ -103,7 +103,7 @@ a, .btn-link {
 }
 
 ::-webkit-scrollbar {
-    display: none;
+    display: none; /*去除滚动条*/
 }
 
 .m-tab-swiper::before {
@@ -123,4 +123,11 @@ a, .btn-link {
     .swiper-slide {
         min-height: calc(100vh - 64px);
     }
+}
+
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; /*禁止选中内容*/
 }
