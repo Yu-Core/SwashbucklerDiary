@@ -28,7 +28,7 @@ namespace NoDecentDiary.Pages
         [Inject]
         public NavigationManager? NavigationManager { get; set; }
         [Parameter]
-        public string? Tab { get; set; }
+        public int Tab { get; set; }
         [CascadingParameter]
         public Error? Error { get; set; }
         private StringNumber tabs = 0;
@@ -43,10 +43,7 @@ namespace NoDecentDiary.Pages
         {
             await UpdateDiaries();
             await UpdateTags();
-            if(Tab == "tags")
-            {
-                tabs = 1;
-            }
+            SetTab();
         }
         private async Task UpdateDiaries()
         {
@@ -58,6 +55,10 @@ namespace NoDecentDiary.Pages
         private async Task UpdateTags()
         {
             Tags = await TagService!.QueryAsync();
+        }
+        private void SetTab()
+        {
+            tabs = Tab;
         }
         private void HandOnTagRename(TagModel tag)
         {
