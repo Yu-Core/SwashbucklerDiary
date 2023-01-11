@@ -3,10 +3,15 @@
 }
 
 @media screen and (min-width:600px) {
-    .write-textarea{
-        max-height:50vh;
-    }
+    
     .write-overflow{
         overflow:inherit;
     }
+}
+
+.write-overflow ::deep * {
+    -moz-user-select: text;
+    -ms-user-select: text;
+    -webkit-user-select: text;
+    user-select: text;
 }

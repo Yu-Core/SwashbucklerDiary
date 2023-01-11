@@ -1,9 +1,0 @@
-﻿.scroll-height {
-    max-height: calc(100vh - 120px);
-}
-
-@media screen and (min-width:600px) {
-    .scroll-height {
-        max-height: calc(100vh - 64px);
-    }
-}

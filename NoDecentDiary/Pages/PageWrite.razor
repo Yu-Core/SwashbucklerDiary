@@ -2,8 +2,9 @@
 
 <MAppBar App
          Dense
-         Elevation="0"
-         Color="white">
+         ElevateOnScroll
+         Color="white"
+         ScrollTarget="#scrolling-write">
     <MButton Icon OnClick="HandOnBack">
         <MIcon>
             mdi-arrow-left
@@ -61,82 +62,84 @@
     </MMenu>
 </MAppBar>
 
-<MContainer>
-    <div class="px-3 text-sm-h6 font-weight-bold">
-        @(DateTime.Now.ToString("yyyy/MM/dd"))
-    </div>
-
-    <div class="overflow-hidden" style="max-width:100px;">
-        <MAutocomplete Solo
-                       Dense
-                       Label="天气"
-                       Color="transparent"
-                       HideDetails="@("auto")"
-                       Items="_weathers"
-                       @bind-Value="_diary.Weather"
-                       ItemText="r=>r"
-                       ItemValue="r=>r">
-        </MAutocomplete>
-    </div>
-
-    @if (showTitle)
-    {
-        <div class="my-sm-4 write-overflow">
-            <MTextField @bind-Value="_diary.Title"
-                    Solo="!IsDesktop"
-                    Outlined="IsDesktop"
-                    TValue="string"
-                    HideDetails="@("auto")"
-                    Class="pb-0"
-                    Dense
-                    maxlength="20"
-                    Placeholder="请输入标题">
-            </MTextField>
+<ScrollContainer Id="scrolling-write">
+    <MContainer>
+        <div class="px-3 text-sm-h6 font-weight-bold">
+            @(DateTime.Now.ToString("yyyy/MM/dd"))
         </div>
-    }
 
-    <div class="my-sm-4 write-overflow write-textarea">
-        <MTextarea @bind-Value="_diary.Content"
-                   Solo="!IsDesktop"
-                   Outlined="IsDesktop"
-                   HideDetails="@("auto")"
-                   AutoGrow
-                   Rows="8"
-                   RowHeight="30"
-                   Placeholder="请输入内容">
-        </MTextarea>
-    </div>
+        <div class="overflow-hidden" style="max-width:100px;">
+            <MAutocomplete Solo
+                           Dense
+                           Label="天气"
+                           Color="transparent"
+                           HideDetails="@("auto")"
+                           Items="_weathers"
+                           @bind-Value="_diary.Weather"
+                           ItemText="r=>r"
+                           ItemValue="r=>r">
+            </MAutocomplete>
+        </div>
 
-    <div class="mb-5">
-        <MChipGroup Column>
-            @foreach (var item in SelectedTags)
-            {
-                <MChip Close
-                   Outlined="!IsDesktop"
-                   Color="@(IsDesktop?null:"black")"
-                   OnCloseClick="()=>RemoveSelectedTag(item)">
-                    @(item.Name)
-                </MChip>
-            }
-        </MChipGroup>
-    </div>
+        @if (showTitle)
+        {
+            <div class="my-sm-4 write-overflow">
+                <MTextField @bind-Value="_diary.Title"
+                        Solo="!IsDesktop"
+                        Outlined="IsDesktop"
+                        TValue="string"
+                        HideDetails="@("auto")"
+                        Class="pb-0"
+                        Dense
+                        maxlength="20"
+                        Placeholder="请输入标题">
+                </MTextField>
+            </div>
+        }
+
+        <div class="my-sm-4 write-overflow">
+            <MTextarea @bind-Value="_diary.Content"
+                       Solo="!IsDesktop"
+                       Outlined="IsDesktop"
+                       HideDetails="@("auto")"
+                       AutoGrow
+                       Rows="8"
+                       RowHeight="30"
+                       Placeholder="请输入内容">
+            </MTextarea>
+        </div>
+
+        <div class="mb-5">
+            <MChipGroup Column>
+                @foreach (var item in SelectedTags)
+                {
+                    <MChip Close
+                       Outlined="!IsDesktop"
+                       Color="@(IsDesktop?null:"black")"
+                       OnCloseClick="()=>RemoveSelectedTag(item)">
+                        @(item.Name)
+                    </MChip>
+                }
+            </MChipGroup>
+        </div>
 
 
-    <div class="d-none d-sm-block">
-        <MButton Class="px-8"
-                 Rounded
-                 Dark
-                 OnClick="HandOnSave">
-            保存
-        </MButton>
-        <MButton Class="px-8"
-                 Rounded
-                 Outlined
-                 OnClick="HandOnClear">
-            清除
-        </MButton>
-    </div>
-</MContainer>
+        <div class="d-none d-sm-block">
+            <MButton Class="px-8"
+                     Rounded
+                     Dark
+                     OnClick="HandOnSave">
+                保存
+            </MButton>
+            <MButton Class="px-8"
+                     Rounded
+                     Outlined
+                     OnClick="HandOnClear">
+                清除
+            </MButton>
+        </div>
+    </MContainer>
+</ScrollContainer>
 
 <SelectTags @bind-Value="showSelectTag"
             @bind-Values="SelectedTags"
