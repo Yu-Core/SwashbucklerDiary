@@ -3,46 +3,48 @@ using NoDecentDiary.Extend;
 using NoDecentDiary.StaticData;
 using Serilog;
 
-namespace NoDecentDiary;
-
-public static class MauiProgram
+namespace NoDecentDiary
 {
-    public static MauiApp CreateMauiApp()
-    {
-        var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-            });
 
-        builder.Services.AddMauiBlazorWebView();
+    public static class MauiProgram
+    {
+        public static MauiApp CreateMauiApp()
+        {
+            var builder = MauiApp.CreateBuilder();
+            builder
+                .UseMauiApp<App>()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                });
+
+            builder.Services.AddMauiBlazorWebView();
 #if DEBUG
-        builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
 
-        #region Log
-        if (!Directory.Exists(SerilogConstants.folderPath))
-        {
-            Directory.CreateDirectory(SerilogConstants.folderPath);
-        }
-
-        Log.Logger = new LoggerConfiguration()
-             .Enrich.FromLogContext()
-             .WriteTo.Debug()
-             .WriteTo.File(path: SerilogConstants.filePath)
-             .CreateLogger();
-        #endregion
-
-        builder.Services.AddLogging(logging =>
+            #region Log
+            if (!Directory.Exists(SerilogConstants.folderPath))
             {
-                logging.AddSerilog(dispose: true);
-            });
-        builder.Services.AddCustomIOC();
-        builder.Services.AddMasaBlazor();
-        builder.Services.AddMasaBlazor().AddI18nForMauiBlazor("i18n");
+                Directory.CreateDirectory(SerilogConstants.folderPath);
+            }
 
-        return builder.Build();
+            Log.Logger = new LoggerConfiguration()
+                 .Enrich.FromLogContext()
+                 .WriteTo.Debug()
+                 .WriteTo.File(path: SerilogConstants.filePath)
+                 .CreateLogger();
+            #endregion
+
+            builder.Services.AddLogging(logging =>
+                {
+                    logging.AddSerilog(dispose: true);
+                });
+            builder.Services.AddCustomIOC();
+            builder.Services.AddMasaBlazor();
+            builder.Services.AddMasaBlazor().AddI18nForMauiBlazor("i18n");
+
+            return builder.Build();
+        }
     }
 }
