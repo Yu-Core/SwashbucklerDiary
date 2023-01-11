@@ -1,0 +1,13 @@
+﻿<MSheet Id="Id"
+        Class="overflow-y-auto scroll-height">
+    <MContainer>
+        @ChildContent
+    </MContainer>
+</MSheet>
+
+@code{
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    [Parameter]
+    public string? Id { get; set; }
+}
