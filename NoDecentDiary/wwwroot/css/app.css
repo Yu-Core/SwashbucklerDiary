@@ -131,3 +131,21 @@ a, .btn-link {
     -ms-user-select: none;
     user-select: none; /*禁止选中内容*/
 }
+
+.scroll-show::-webkit-scrollbar-track {
+    border-radius: 15px;
+    margin: 5px 0;
+}
+
+.scroll-show::-webkit-scrollbar {
+    display:initial;
+    width: 5px;
+    height: 5px;
+    margin: 5px 0;
+}
+
+.scroll-show::-webkit-scrollbar-thumb {
+    margin: 5px 0;
+    border-radius: 15px;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(170 168 168)), color-stop(0.72, rgb(170 168 168)), color-stop(0.86, rgb(170 168 168)));
+}
