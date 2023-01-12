@@ -26,9 +26,7 @@ namespace NoDecentDiary.Pages
         [Inject]
         public IPopupService? PopupService { get; set; }
         [Inject]
-        public NavigationManager? NavigationManager { get; set; }
-        [Parameter]
-        public int Tab { get; set; }
+        public NavigationManager? Navigation { get; set; }
         [CascadingParameter]
         public Error? Error { get; set; }
         private StringNumber tabs = 0;
@@ -58,7 +56,11 @@ namespace NoDecentDiary.Pages
         }
         private void SetTab()
         {
-            tabs = Tab;
+            var url = Navigation!.ToAbsoluteUri("/tags").AbsoluteUri;
+            if (Navigation.Uri == url)
+            {
+                tabs = 1;
+            }
         }
         private void HandOnTagRename(TagModel tag)
         {
@@ -120,9 +122,9 @@ namespace NoDecentDiary.Pages
                 await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
             }
         }
-        private void HandOnTagClick()
+        private void HandOnTagClick(int id)
         {
-            NavigationManager!.NavigateTo("/Write");
+            Navigation!.NavigateTo($"/tag/{id}");
         }
         private async Task HandOnRefreshData(StringNumber value)
         {

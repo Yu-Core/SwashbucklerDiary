@@ -1,5 +1,5 @@
 ﻿@page "/"
-@page "/tab/{tab:int}"
+@page "/tags"
 
 <MAppBar App
          ElevateOnScroll
@@ -48,7 +48,7 @@
                 {
                     <MCard Class="mb-5 tag-card"
                        Rounded="@("lg")">
-                        <MListItem OnClick="HandOnTagClick" Ripple="false">
+                        <MListItem OnClick="()=>HandOnTagClick(item.Id)" Ripple="false">
                             <MListItemIcon>
                                 <MIcon>
                                     mdi-label-outline

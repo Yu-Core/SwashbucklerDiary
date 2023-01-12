@@ -1,6 +1,7 @@
 ﻿using BlazorComponent;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Maui.Controls;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using NoDecentDiary.Services;
@@ -19,7 +20,12 @@ namespace NoDecentDiary.Pages
         [Inject]
         public IDiaryTagService? DiaryTagService { get; set; }
         [Inject]
-        public NavigationManager? NavigationManager { get; set; }
+        public ITagService? TagService { get; set; }
+        [Inject]
+        public NavigationManager? Navigation { get; set; }
+        [Parameter]
+        [SupplyParameterFromQuery]
+        public int? TagId { get; set; }
         private readonly List<string> _weathers = new List<string>()
         {
             "晴","阴","小雨","中雨","大雨","小雪","中雪","大雪","雾",
@@ -31,10 +37,10 @@ namespace NoDecentDiary.Pages
         private bool IsDesktop => MasaBlazor!.Breakpoint.SmAndUp;
         private List<TagModel> SelectedTags = new List<TagModel>();
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             MasaBlazor!.Breakpoint.OnUpdate += () => { return InvokeAsync(this.StateHasChanged); };
-            return base.OnInitializedAsync();
+            await SetTag();
         }
 
         private void RemoveSelectedTag(TagModel tag)
@@ -64,7 +70,15 @@ namespace NoDecentDiary.Pages
         {
             if (string.IsNullOrWhiteSpace(_diary.Content))
             {
-                NavigationManager!.NavigateTo("/");
+                if (TagId != null)
+                {
+                    Navigation!.NavigateTo($"/Tag/{TagId}");
+                }
+                else
+                {
+                    Navigation!.NavigateTo("/");
+                }
+                    
                 return;
             }
             await AddDiary();
@@ -91,7 +105,18 @@ namespace NoDecentDiary.Pages
             {
                 await PopupService!.AlertAsync("添加失败", AlertTypes.Error);
             }
-            NavigationManager!.NavigateTo("/");
+            Navigation!.NavigateTo("/");
+        }
+        private async Task SetTag()
+        {
+            if(TagId != null)
+            {
+                var tag = await TagService!.FindAsync((int)TagId);
+                if (tag != null)
+                {
+                    SelectedTags.Add(tag);
+                }
+            }
         }
     }
 }
