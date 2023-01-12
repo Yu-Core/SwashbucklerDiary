@@ -11,22 +11,25 @@ namespace NoDecentDiary.Services
 {
     public class DiaryService : BaseService<DiaryModel>, IDiaryService
     {
-        public async Task<List<TagModel>> GetTagsAsync(int id)
+        public async Task<List<DiaryModel>> GetDiariesByTagAsync(int tagId)
         {
             await Init();
-            await Database!.CreateTableAsync<DiaryTagModel>();
-            await Database.CreateTableAsync<TagModel>();
-            var DiaryTags = await Database.Table<DiaryTagModel>().Where(it=>it.DiaryId == id).ToListAsync();
-            var Tags = new List<TagModel>();
-            foreach (var item in DiaryTags)
-            {
-                var tag = await Database.FindAsync<TagModel>(item.TagId);
-                if (tag != null) 
-                {
-                    Tags.Add(tag);
-                }
-            }
-            return Tags;
+            await Database!.CreateTableAsync<TagModel>();
+            await Database.CreateTableAsync<DiaryTagModel>();
+
+            var diaryTag = await Database
+                .Table<DiaryTagModel>()
+                .Where(it => it.TagId == tagId)
+                .ToListAsync();
+
+            var diaryIds = diaryTag.Select(it => it.DiaryId).ToList();
+
+            var Diaries = await Database
+                .Table<DiaryModel>()
+                .Where(it => diaryIds.Contains(it.Id))
+                .ToListAsync();
+
+            return Diaries;
         }
     }
 }

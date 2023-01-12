@@ -13,17 +13,16 @@ namespace NoDecentDiary.Services
         public async Task<bool> AddTagsAsync(int diaryId, List<TagModel> tagModels)
         {
             await Init();
-            var DiaryTags = new List<DiaryTagModel>();
-            foreach (var item in tagModels)
-            {
-                var diaryTag = new DiaryTagModel()
+
+            var diaryTags = tagModels
+                .Select(it => new DiaryTagModel()
                 {
                     DiaryId = diaryId,
-                    TagId = item.Id
-                };
-                DiaryTags.Add(diaryTag);
-            }
-            return await AddAsync(DiaryTags);
+                    TagId = it.Id
+                })
+                .ToList();
+
+            return await AddAsync(diaryTags);
         }
     }
 }

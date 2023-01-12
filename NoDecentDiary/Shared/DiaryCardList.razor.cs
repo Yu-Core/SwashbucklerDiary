@@ -82,13 +82,13 @@ namespace NoDecentDiary.Shared
         private async Task Tag(DiaryModel diaryModel)
         {
             SelectedDiaryId = diaryModel.Id;
-            SelectedTags = await DiaryService!.GetTagsAsync(SelectedDiaryId);
+            SelectedTags = await TagService!.GetDiaryTagsAsync(SelectedDiaryId);
             StateHasChanged();
             showSelectTag = true;
         }
         private async Task HandOnSaveSelectTags()
         {
-            await DiaryTagService!.DeleteAsync(it=>it.DiaryId== SelectedDiaryId);
+            await DiaryTagService!.DeleteAsync(it => it.DiaryId == SelectedDiaryId);
             await DiaryTagService.AddTagsAsync(SelectedDiaryId, SelectedTags);
             showSelectTag = false;
         }

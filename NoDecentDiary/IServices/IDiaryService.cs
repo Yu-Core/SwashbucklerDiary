@@ -10,6 +10,6 @@ namespace NoDecentDiary.IServices
 {
     public interface IDiaryService : IBaseService<DiaryModel>
     {
-        Task<List<TagModel>> GetTagsAsync(int id);
+        Task<List<DiaryModel>> GetDiariesByTagAsync(int tagId);
     }
 }
