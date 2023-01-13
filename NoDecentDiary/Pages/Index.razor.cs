@@ -29,6 +29,9 @@ namespace NoDecentDiary.Pages
         public NavigationManager? Navigation { get; set; }
         [CascadingParameter]
         public Error? Error { get; set; }
+        [Parameter]
+        [SupplyParameterFromQuery]
+        public string? Type { get; set; }
         private StringNumber tabs = 0;
         private List<DiaryModel> Diaries { get; set; } = new List<DiaryModel>();
         private List<TagModel> Tags { get; set; } = new List<TagModel>();
@@ -37,11 +40,26 @@ namespace NoDecentDiary.Pages
         private string? EditTagName;
         private bool showAddTag;
         private string? AddTagName;
+        private List<string> Types = new()
+        {
+            "All", "Tags"
+        };
         protected override async Task OnInitializedAsync()
         {
-            await UpdateDiaries();
-            await UpdateTags();
-            SetTab();
+            Redirect();
+            await SetTab();
+        }
+        private void Redirect()
+        {
+            if (string.IsNullOrEmpty(Type) || !Types.Contains(Type))
+            {
+                Type = "All";
+            }
+            string url = Navigation!.ToBaseRelativePath(Navigation.BaseUri);
+            if (url == "")
+            {
+                Navigation!.NavigateTo("/Diaries");
+            }
         }
         private async Task UpdateDiaries()
         {
@@ -54,12 +72,16 @@ namespace NoDecentDiary.Pages
         {
             Tags = await TagService!.QueryAsync();
         }
-        private void SetTab()
+        private async Task SetTab()
         {
-            var url = Navigation!.ToAbsoluteUri("/tags").AbsoluteUri;
-            if (Navigation.Uri == url)
+            tabs = Types.IndexOf(Type!);
+            if (tabs == 1)
             {
-                tabs = 1;
+                await UpdateTags();
+            }
+            else
+            {
+                await UpdateDiaries();
             }
         }
         private void HandOnTagRename(TagModel tag)

@@ -29,7 +29,7 @@ namespace NoDecentDiary.Pages
             var tagModel = await TagService!.FindAsync(Id);
             if (tagModel == null)
             {
-                Navigation!.NavigateTo("/tags");
+                Navigation!.NavigateTo("/?Type=Tags");
                 return;
             }
             Tag = tagModel;
@@ -38,7 +38,7 @@ namespace NoDecentDiary.Pages
         }
         private void HandOnBack()
         {
-            Navigation!.NavigateTo("/tags");
+            Navigation!.NavigateTo("/?Type=Tags");
         }
         private void HandOnToWrite()
         {

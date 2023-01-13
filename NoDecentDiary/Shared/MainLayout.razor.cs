@@ -14,15 +14,15 @@ namespace NoDecentDiary.Shared
         [Inject]
         private MasaBlazor? MasaBlazor { get; set; }
         [Inject]
-        private NavigationManager? NavigationManager { get; set; }
+        private NavigationManager? Navigation { get; set; }
 
         StringNumber SelectedItem = 0;
 
         readonly List<NavigationButton> NavigationButtons = new()
         {
-            new NavigationButton(0,"日记","mdi-notebook-outline","mdi-notebook","/"),
-            new NavigationButton(1,"回忆","mdi-clock-outline","mdi-clock","/History"),
-            new NavigationButton(2,"我的","mdi-account-outline","mdi-account","/Mine")
+            new NavigationButton(0,"日记","mdi-notebook-outline","mdi-notebook","Diaries"),
+            new NavigationButton(1,"回忆","mdi-clock-outline","mdi-clock","History"),
+            new NavigationButton(2,"我的","mdi-account-outline","mdi-account","Mine")
         };
 
         private class NavigationButton
@@ -55,12 +55,14 @@ namespace NoDecentDiary.Shared
 
         private void ChangeView(NavigationButton navigationButton)
         {
-            NavigationManager!.NavigateTo(navigationButton.Href);
+            Navigation!.NavigateTo(navigationButton.Href);
         }
 
-        private bool UriIsNavigationHref()
+        private bool ShowBottomNavigation()
         {
-            return NavigationButtons.Any(it => NavigationManager!.Uri == NavigationManager.ToAbsoluteUri(it.Href).AbsoluteUri);
+            var z = Navigation!.ToBaseRelativePath(Navigation.Uri);
+            var x = NavigationButtons.Any(it => it.Href == z.Split("?")[0]);
+            return x;
         }
     }
 }

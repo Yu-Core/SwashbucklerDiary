@@ -23,7 +23,7 @@
         }
         @Body
     </MMain>
-    @if (UriIsNavigationHref() && !MasaBlazor!.Breakpoint.SmAndUp)
+    @if (ShowBottomNavigation() && !MasaBlazor!.Breakpoint.SmAndUp)
     {
         <MBottomNavigation @bind-Value="SelectedItem"
                        Class="d-flex justify-space-around d-sm-none"
