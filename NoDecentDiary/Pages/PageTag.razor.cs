@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageTag
+    public partial class PageTag : IDisposable
     {
         [Inject]
         private ITagService? TagService { get; set; }
@@ -34,7 +34,7 @@ namespace NoDecentDiary.Pages
             }
             Tag = tagModel;
             Diaries = await DiaryService!.GetDiariesByTagAsync(Id);
-            MasaBlazor!.Breakpoint.OnUpdate += () => { return InvokeAsync(this.StateHasChanged); };
+            MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
         }
         private void HandOnBack()
         {
@@ -43,6 +43,16 @@ namespace NoDecentDiary.Pages
         private void HandOnToWrite()
         {
             Navigation!.NavigateTo($"/Write?TagId={Id}");
+        }
+        private async Task InvokeStateHasChangedAsync()
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void Dispose()
+        {
+            MasaBlazor!.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+            GC.SuppressFinalize(this);
         }
     }
 }

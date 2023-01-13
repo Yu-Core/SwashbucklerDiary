@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Shared
 {
-    public partial class MainLayout
+    public partial class MainLayout : IDisposable
     {
         [Inject]
         private MasaBlazor? MasaBlazor { get; set; }
@@ -44,7 +44,7 @@ namespace NoDecentDiary.Shared
 
         protected override Task OnInitializedAsync()
         {
-            MasaBlazor!.Breakpoint.OnUpdate += () => { return InvokeAsync(this.StateHasChanged); };
+            MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             return base.OnInitializedAsync();
         }
 
@@ -62,6 +62,16 @@ namespace NoDecentDiary.Shared
         {
             var url = Navigation!.ToBaseRelativePath(Navigation.Uri);
             return NavigationButtons.Any(it => it.Href == url.Split("?")[0]);
+        }
+        private async Task InvokeStateHasChangedAsync()
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void Dispose()
+        {
+            MasaBlazor!.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+            GC.SuppressFinalize(this);
         }
     }
 }

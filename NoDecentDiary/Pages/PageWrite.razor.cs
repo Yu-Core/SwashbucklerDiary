@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageWrite
+    public partial class PageWrite : IDisposable
     {
         [Inject]
         public MasaBlazor? MasaBlazor { get; set; }
@@ -39,7 +39,7 @@ namespace NoDecentDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            MasaBlazor!.Breakpoint.OnUpdate += () => { return InvokeAsync(this.StateHasChanged); };
+            MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             await SetTag();
         }
 
@@ -120,6 +120,16 @@ namespace NoDecentDiary.Pages
             {
                 Navigation!.NavigateTo("/");
             }
+        }
+        private async Task InvokeStateHasChangedAsync()
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void Dispose()
+        {
+            MasaBlazor!.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+            GC.SuppressFinalize(this);
         }
     }
 }

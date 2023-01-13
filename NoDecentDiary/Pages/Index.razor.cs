@@ -40,7 +40,7 @@ namespace NoDecentDiary.Pages
         private string? EditTagName;
         private bool showAddTag;
         private string? AddTagName;
-        private List<string> Types = new()
+        private readonly List<string> Types = new()
         {
             "All", "Tags"
         };

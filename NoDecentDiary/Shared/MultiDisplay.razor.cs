@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Shared
 {
-    public partial class MultiDisplay
+    public partial class MultiDisplay : IDisposable
     {
         [Inject]
         public MasaBlazor? MasaBlazor { get; set; }
@@ -18,10 +18,20 @@ namespace NoDecentDiary.Shared
         [Parameter]
         public RenderFragment? DesktopContent { get; set; }
 
+        public void Dispose()
+        {
+            MasaBlazor!.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+            GC.SuppressFinalize(this);
+        }
+
         protected override Task OnInitializedAsync()
         {
-            MasaBlazor!.Breakpoint.OnUpdate += () => { return InvokeAsync(this.StateHasChanged); };
+            MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             return base.OnInitializedAsync();
+        }
+        private async Task InvokeStateHasChangedAsync()
+        {
+            await InvokeAsync(StateHasChanged);
         }
     }
 }
