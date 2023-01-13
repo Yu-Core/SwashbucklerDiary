@@ -11,6 +11,16 @@ namespace NoDecentDiary.Services
 {
     public class DiaryService : BaseService<DiaryModel>, IDiaryService
     {
+        public override async Task<List<DiaryModel>> QueryAsync()
+        {
+            var diaries = await base.QueryAsync();
+            return diaries.OrderByDescending(it => it.Id).ToList();
+        }
+        public override async Task<List<DiaryModel>> QueryAsync(Expression<Func<DiaryModel, bool>> func)
+        {
+            var diaries = await base.QueryAsync(func);
+            return diaries.OrderByDescending(it => it.Id).ToList();
+        }
         public async Task<List<DiaryModel>> GetDiariesByTagAsync(int tagId)
         {
             await Init();
@@ -24,10 +34,7 @@ namespace NoDecentDiary.Services
 
             var diaryIds = diaryTag.Select(it => it.DiaryId).ToList();
 
-            var Diaries = await Database
-                .Table<DiaryModel>()
-                .Where(it => diaryIds.Contains(it.Id))
-                .ToListAsync();
+            var Diaries = await QueryAsync(it => diaryIds.Contains(it.Id));
 
             return Diaries;
         }

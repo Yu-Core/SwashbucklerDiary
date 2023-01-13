@@ -23,10 +23,7 @@ namespace NoDecentDiary.Services
 
             var tagIds = diaryTags.Select(it => it.TagId).ToList();
 
-            var Tags = await Database
-                .Table<TagModel>()
-                .Where(it => tagIds.Contains(it.Id))
-                .ToListAsync();
+            var Tags = await QueryAsync(it => tagIds.Contains(it.Id));
 
             return Tags;
         }

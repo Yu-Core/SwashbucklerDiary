@@ -64,9 +64,7 @@ namespace NoDecentDiary.Pages
         private async Task UpdateDiaries()
         {
             var diaryModels = await DiaryService!.QueryAsync();
-            Diaries = diaryModels.Take(50)
-                .OrderByDescending(it => it.CreateTime)
-                .ToList();
+            Diaries = diaryModels.Take(50).ToList();
         }
         private async Task UpdateTags()
         {
