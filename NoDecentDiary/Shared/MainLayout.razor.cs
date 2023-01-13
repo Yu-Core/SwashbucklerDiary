@@ -60,9 +60,8 @@ namespace NoDecentDiary.Shared
 
         private bool ShowBottomNavigation()
         {
-            var z = Navigation!.ToBaseRelativePath(Navigation.Uri);
-            var x = NavigationButtons.Any(it => it.Href == z.Split("?")[0]);
-            return x;
+            var url = Navigation!.ToBaseRelativePath(Navigation.Uri);
+            return NavigationButtons.Any(it => it.Href == url.Split("?")[0]);
         }
     }
 }

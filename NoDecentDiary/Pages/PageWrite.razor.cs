@@ -70,15 +70,7 @@ namespace NoDecentDiary.Pages
         {
             if (string.IsNullOrWhiteSpace(_diary.Content))
             {
-                if (TagId != null)
-                {
-                    Navigation!.NavigateTo($"/Tag/{TagId}");
-                }
-                else
-                {
-                    Navigation!.NavigateTo("/");
-                }
-                    
+                NavigationBack();
                 return;
             }
             await AddDiary();
@@ -105,7 +97,7 @@ namespace NoDecentDiary.Pages
             {
                 await PopupService!.AlertAsync("添加失败", AlertTypes.Error);
             }
-            Navigation!.NavigateTo("/");
+            NavigationBack();
         }
         private async Task SetTag()
         {
@@ -116,6 +108,17 @@ namespace NoDecentDiary.Pages
                 {
                     SelectedTags.Add(tag);
                 }
+            }
+        }
+        private void NavigationBack()
+        {
+            if (TagId != null)
+            {
+                Navigation!.NavigateTo($"/Tag/{TagId}");
+            }
+            else
+            {
+                Navigation!.NavigateTo("/");
             }
         }
     }
