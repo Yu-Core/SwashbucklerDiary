@@ -47,7 +47,9 @@ namespace NoDecentDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             Redirect();
-            await SetTab();
+            SetTab();
+            await UpdateTags();
+            await UpdateDiaries();
         }
         private void Redirect()
         {
@@ -70,17 +72,9 @@ namespace NoDecentDiary.Pages
         {
             Tags = await TagService!.QueryAsync();
         }
-        private async Task SetTab()
+        private void SetTab()
         {
             tabs = Types.IndexOf(Type!);
-            if (tabs == 1)
-            {
-                await UpdateTags();
-            }
-            else
-            {
-                await UpdateDiaries();
-            }
         }
         private void HandOnTagRename(TagModel tag)
         {
