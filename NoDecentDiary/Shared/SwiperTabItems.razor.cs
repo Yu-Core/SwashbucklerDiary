@@ -49,6 +49,7 @@ namespace NoDecentDiary.Shared
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
                 await JSRuntime!.InvokeVoidAsync("swiperInit", new object[4] { dotNetCallbackRef, "UpdateValue", Id, Value.ToInt32() });
                 AfterFirstRender = true;
+                StateHasChanged();
             }
         }
         private async void UpdateSwiper(StringNumber value)
@@ -70,6 +71,7 @@ namespace NoDecentDiary.Shared
         public async void Dispose()
         {
             await JSRuntime!.InvokeVoidAsync($"{Id}.destroy", new object[2] { true, true });
+            GC.SuppressFinalize(this);
         }
     }
 }

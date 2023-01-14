@@ -78,8 +78,8 @@ namespace NoDecentDiary.Pages
         }
         private void HandOnTagRename(TagModel tag)
         {
-            EditTagId= tag.Id;
-            EditTagName= tag.Name;
+            EditTagId = tag.Id;
+            EditTagName = tag.Name;
             StateHasChanged();
             showEditTag = true;
         }
@@ -97,7 +97,7 @@ namespace NoDecentDiary.Pages
                 return;
             }
 
-            var tag = Tags.FirstOrDefault(it=>it.Id == EditTagId);
+            var tag = Tags.FirstOrDefault(it => it.Id == EditTagId);
             tag!.Name = EditTagName;
             bool flag = await TagService!.UpdateAsync(tag);
             if (flag)
@@ -129,7 +129,7 @@ namespace NoDecentDiary.Pages
                 Tags.Remove(tag);
                 await PopupService!.AlertAsync("删除成功", AlertTypes.Success);
                 this.StateHasChanged();
-                await DiaryTagService!.DeleteAsync(it=>it.TagId == tag.Id);
+                await DiaryTagService!.DeleteAsync(it => it.TagId == tag.Id);
             }
             else
             {
@@ -142,11 +142,11 @@ namespace NoDecentDiary.Pages
         }
         private async Task HandOnRefreshData(StringNumber value)
         {
-            if(value == 0)
+            if (value == 0)
             {
                 await UpdateDiaries();
             }
-            else if(value == 1)
+            else if (value == 1)
             {
                 await UpdateTags();
             }
