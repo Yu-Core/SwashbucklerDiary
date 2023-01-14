@@ -41,17 +41,20 @@
             <MList MinWidth="150">
                 <MListItem Class="d-none d-sm-block"
                            Dense
+                           Ripple="false"
                            OnClick="()=>showSelectTag = true">
                     <MListItemContent>
                         标签
                     </MListItemContent>
                 </MListItem>
-                <MListItem Dense OnClick="()=>showTitle = !showTitle">
+                <MListItem Dense
+                           Ripple="false" 
+                           OnClick="()=>showTitle = !showTitle">
                     <MListItemContent>
                         @(showTitle ? "关闭标题" : "开启标题")
                     </MListItemContent>
                 </MListItem>
-                <MListItem Dense>
+                <MListItem Dense Ripple="false">
                     <MListItemContent>
                         切换至富文本
                     </MListItemContent>

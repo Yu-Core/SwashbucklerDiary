@@ -68,12 +68,16 @@
                                         </ActivatorContent>
                                         <ChildContent>
                                             <MList MinWidth="150">
-                                                <MListItem Dense OnClick="()=>HandOnTagRename(item)">
+                                                <MListItem Dense
+                                                       Ripple="false"
+                                                       OnClick="()=>HandOnTagRename(item)">
                                                     <MListItemContent>
                                                         重命名
                                                     </MListItemContent>
                                                 </MListItem>
-                                                <MListItem Dense OnClick="()=>HandOnTagDelete(item)">
+                                                <MListItem Dense
+                                                       Ripple="false"
+                                                       OnClick="()=>HandOnTagDelete(item)">
                                                     <MListItemContent>
                                                         删除
                                                     </MListItemContent>

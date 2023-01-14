@@ -10,7 +10,7 @@
             </div>
         </MListItemContent>
         <MListItemAction>
-            @if(Top)
+            @if (Top)
             {
                 <MIcon>
                     mdi-format-vertical-align-top
@@ -30,27 +30,35 @@
 
                 <ChildContent>
                     <MList MinWidth="150">
-                        <MListItem Dense OnClick="OnTag">
+                        <MListItem Dense
+                                   Ripple="false"
+                                   OnClick="OnTag">
                             <MListItemContent>
                                 标签
                             </MListItemContent>
                         </MListItem>
-                        <MListItem Dense OnClick="OnCopy">
+                        <MListItem Dense
+                                   Ripple="false"
+                                   OnClick="OnCopy">
                             <MListItemContent>
                                 复制
                             </MListItemContent>
                         </MListItem>
-                        <MListItem Dense OnClick="OnDelete">
+                        <MListItem Dense
+                                   Ripple="false"
+                                   OnClick="OnDelete">
                             <MListItemContent>
                                 删除
                             </MListItemContent>
                         </MListItem>
-                        <MListItem Dense OnClick="OnTopping">
+                        <MListItem Dense
+                                   Ripple="false"
+                                   OnClick="OnTopping">
                             <MListItemContent>
                                 @(Top ? "取消置顶" : "置顶")
                             </MListItemContent>
                         </MListItem>
-                        <MListItem Dense>
+                        <MListItem Dense Ripple="false">
                             <MListItemContent>
                                 导出（txt、json、pdf）
                             </MListItemContent>
