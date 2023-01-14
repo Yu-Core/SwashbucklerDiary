@@ -24,6 +24,7 @@ namespace NoDecentDiary.Pages
         public int Id { get; set; }
         private TagModel Tag = new TagModel();
         private List<DiaryModel> Diaries = new List<DiaryModel>();
+        private bool Prominent => MasaBlazor!.Breakpoint.SmAndUp && Diaries.Any();
         protected override async Task OnInitializedAsync()
         {
             var tagModel = await TagService!.FindAsync(Id);
