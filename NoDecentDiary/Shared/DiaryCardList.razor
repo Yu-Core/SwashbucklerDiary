@@ -1,29 +1,33 @@
-﻿@foreach (var item in Value!)
-{
-    if (item.Top)
+﻿<div class="d-flex justify-space-between flex-wrap">
+    @foreach (var item in Value!)
     {
-        <DiaryCard Value="item"
-           OnTag="()=>Tag(item)"
-           OnCopy="()=>Copy(item)"
-           OnDelete="()=>Delete(item)"
-           OnTopping="()=>Topping(item)">
-        </DiaryCard>
+        if (item.Top)
+        {
+            <DiaryCard Value="item"
+               Class="diary-card"
+               OnTag="()=>Tag(item)"
+               OnCopy="()=>Copy(item)"
+               OnDelete="()=>Delete(item)"
+               OnTopping="()=>Topping(item)">
+            </DiaryCard>
+        }
     }
-}
-@foreach (var item in Value)
-{
-    if (!item.Top)
+    @foreach (var item in Value)
     {
-        <DiaryCard Value="item"
-           OnTag="()=>Tag(item)"
-           OnCopy="()=>Copy(item)"
-           OnDelete="()=>Delete(item)"
-           OnTopping="()=>Topping(item)">
-        </DiaryCard>
+        if (!item.Top)
+        {
+            <DiaryCard Value="item"
+               Class="diary-card"
+               OnTag="()=>Tag(item)"
+               OnCopy="()=>Copy(item)"
+               OnDelete="()=>Delete(item)"
+               OnTopping="()=>Topping(item)">
+            </DiaryCard>
+        }
     }
-}
+</div>
 
-@if(!Value.Any())
+@if (!Value.Any())
 {
     <div class=" d-flex justify-center" style="padding-top:20vh;">
         <div class="text-h6 text--secondary font-weight-bold-table">

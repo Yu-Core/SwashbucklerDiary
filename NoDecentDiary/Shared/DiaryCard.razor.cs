@@ -15,6 +15,8 @@ namespace NoDecentDiary.Shared
         [EditorRequired]
         public DiaryModel? Value { get; set; }
         [Parameter]
+        public string? Class { get; set; }
+        [Parameter]
         public EventCallback OnTopping { get; set; }
         [Parameter]
         public EventCallback OnDelete { get; set; }

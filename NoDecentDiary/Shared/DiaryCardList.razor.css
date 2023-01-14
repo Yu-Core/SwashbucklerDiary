@@ -3,3 +3,13 @@
         font-weight: 700!important;
     }
 }
+
+::deep .diary-card {
+    width: 100%;
+}
+
+@media screen and (min-width:960px) {
+    ::deep .diary-card {
+        width: 48%;
+    }
+}
