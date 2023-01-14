@@ -1,0 +1,30 @@
+﻿@page "/Search"
+
+<MAppBar App
+         Color="white"
+         ElevateOnScroll
+         ScrollTarget="#scrolling-search">
+    <MButton Icon OnClick="HandOnBack">
+        <MIcon>mdi-arrow-left</MIcon>
+    </MButton>
+
+    <div class="overflow-hidden flex-grow-1">
+        <MTextField TValue="string"
+                    Value="_search"
+                    ValueChanged="HandOnTextChanged"
+                    Solo
+                    Clearable
+                    Placeholder="请输入日记关键词"
+                    HideDetails="@("auto")">
+
+        </MTextField>
+    </div>
+
+</MAppBar>
+<ScrollContainer Id="scrolling-search">
+    <MContainer>
+        <DiaryCardList Value="Diaries"></DiaryCardList>
+    </MContainer>
+</ScrollContainer>
+
+
