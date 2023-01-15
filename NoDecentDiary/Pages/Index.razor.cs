@@ -138,7 +138,7 @@ namespace NoDecentDiary.Pages
         }
         private void HandOnTagClick(int id)
         {
-            Navigation!.NavigateTo($"/tag/{id}");
+            Navigation!.NavigateTo($"/Tag/{id}?Href=/?Type={Types[tabs.ToInt32()]}");
         }
         private async Task HandOnRefreshData(StringNumber value)
         {
@@ -180,6 +180,11 @@ namespace NoDecentDiary.Pages
             tagModel.Id = await TagService!.GetLastInsertRowId();
             Tags.Add(tagModel);
             this.StateHasChanged();
+        }
+        private void NavigateToSearch()
+        {
+            var url = "/Search?Href=" + "/?Type=" + Types[tabs.ToInt32()];
+            Navigation!.NavigateTo(url);
         }
     }
 }

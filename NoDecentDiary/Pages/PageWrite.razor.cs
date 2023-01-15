@@ -2,6 +2,7 @@
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Maui.Controls;
+using NoDecentDiary.Interface;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using NoDecentDiary.Services;
@@ -9,7 +10,7 @@ using System.Diagnostics;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageWrite : IDisposable
+    public partial class PageWrite : INavigateToBack, IDisposable
     {
         [Inject]
         public MasaBlazor? MasaBlazor { get; set; }
@@ -26,6 +27,9 @@ namespace NoDecentDiary.Pages
         [Parameter]
         [SupplyParameterFromQuery]
         public int? TagId { get; set; }
+        [Parameter]
+        [SupplyParameterFromQuery]
+        public string? Href { get; set; }
         private readonly List<string> _weathers = new List<string>()
         {
             "晴","阴","小雨","中雨","大雨","小雪","中雪","大雪","雾",
@@ -70,7 +74,7 @@ namespace NoDecentDiary.Pages
         {
             if (string.IsNullOrWhiteSpace(_diary.Content))
             {
-                NavigationBack();
+                NavigateToBack();
                 return;
             }
             await AddDiary();
@@ -97,7 +101,7 @@ namespace NoDecentDiary.Pages
             {
                 await PopupService!.AlertAsync("添加失败", AlertTypes.Error);
             }
-            NavigationBack();
+            NavigateToBack();
         }
         private async Task SetTag()
         {
@@ -110,16 +114,9 @@ namespace NoDecentDiary.Pages
                 }
             }
         }
-        private void NavigationBack()
+        public void NavigateToBack()
         {
-            if (TagId != null)
-            {
-                Navigation!.NavigateTo($"/Tag/{TagId}");
-            }
-            else
-            {
-                Navigation!.NavigateTo("/");
-            }
+            this.DefaultNavigateToBack();
         }
         private async Task InvokeStateHasChangedAsync()
         {
