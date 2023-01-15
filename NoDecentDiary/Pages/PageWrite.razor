@@ -104,6 +104,7 @@
                        Solo="!IsDesktop"
                        Outlined="IsDesktop"
                        HideDetails="@("auto")"
+                       Autofocus
                        AutoGrow
                        Rows="8"
                        RowHeight="30"
@@ -117,7 +118,6 @@
                 {
                     <MChip Close
                        Outlined="!IsDesktop"
-                       Color="@(IsDesktop?null:"black")"
                        OnCloseClick="()=>RemoveSelectedTag(item)">
                         @(item.Name)
                     </MChip>

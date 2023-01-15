@@ -9,7 +9,7 @@ function swiperInit(dotNetCallbackRef, callbackMethod,id,index) {
         simulateTouch: false,//禁止鼠标模拟
         initialSlide: index,//设定初始化时slide的索引
         on: {
-            slideChangeTransitionStart: function () {
+            slideChangeTransitionEnd: function () {
                 dotNetCallbackRef.invokeMethodAsync(callbackMethod, this.activeIndex);
             },
         }

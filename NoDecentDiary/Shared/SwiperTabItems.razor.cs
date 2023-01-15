@@ -65,7 +65,6 @@ namespace NoDecentDiary.Shared
                 await ValueChanged.InvokeAsync(value);
             }
             await RefreshData.InvokeAsync(value);
-            StateHasChanged();
         }
 
         public async void Dispose()
