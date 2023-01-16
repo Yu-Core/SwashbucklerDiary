@@ -5,10 +5,11 @@
         {
             <DiaryCard Value="item"
                Class="diary-card"
-               OnTag="()=>Tag(item)"
-               OnCopy="()=>Copy(item)"
+               OnTag="()=>Tag(item.Id)"
+               OnCopy="()=>Copy(item.Content)"
                OnDelete="()=>Delete(item)"
-               OnTopping="()=>Topping(item)">
+               OnTopping="()=>Topping(item)"
+               OnClick="()=>HandOnClick(item.Id)">
             </DiaryCard>
         }
     }
@@ -18,10 +19,11 @@
         {
             <DiaryCard Value="item"
                Class="diary-card"
-               OnTag="()=>Tag(item)"
-               OnCopy="()=>Copy(item)"
+               OnTag="()=>Tag(item.Id)"
+               OnCopy="()=>Copy(item.Content)"
                OnDelete="()=>Delete(item)"
-               OnTopping="()=>Topping(item)">
+               OnTopping="()=>Topping(item)"
+               OnClick="()=>HandOnClick(item.Id)">
             </DiaryCard>
         }
     }

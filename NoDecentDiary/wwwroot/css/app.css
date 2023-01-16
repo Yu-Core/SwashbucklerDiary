@@ -150,3 +150,21 @@ a, .btn-link {
     border-radius: 15px;
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(170 168 168)), color-stop(0.72, rgb(170 168 168)), color-stop(0.86, rgb(170 168 168)));
 }
+
+.overflow-hidden-mobile {
+    overflow: hidden;
+}
+
+@media screen and (min-width:600px) {
+
+    .overflow-hidden-mobile {
+        overflow: inherit;
+    }
+}
+
+.user-select * {
+    -moz-user-select: text;
+    -ms-user-select: text;
+    -webkit-user-select: text;
+    user-select: text;
+}

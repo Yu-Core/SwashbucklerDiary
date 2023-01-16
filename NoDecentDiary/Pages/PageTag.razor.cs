@@ -21,6 +21,7 @@ namespace NoDecentDiary.Pages
         public NavigationManager? Navigation { get; set; }
         [Inject]
         private MasaBlazor? MasaBlazor { get; set; }
+
         [Parameter]
         public int Id { get; set; }
         [Parameter]

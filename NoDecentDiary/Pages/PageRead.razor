@@ -1,0 +1,120 @@
+﻿@page "/Read/{id:int}"
+
+<MAppBar App
+         ElevateOnScroll
+         Color="white"
+         ScrollTarget="#scrolling-read">
+    <MButton Icon OnClick="HandOnBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MSpacer></MSpacer>
+    <MButton Icon
+             Href="/Write">
+        <MIcon>
+            mdi-share-variant-outline
+        </MIcon>
+    </MButton>
+    <MButton Icon
+             OnClick="HandOnDelete">
+        <MIcon>
+            mdi-delete-outline
+        </MIcon>
+    </MButton>
+    <MButton Icon
+             Href="/Write">
+        <MIcon>
+            mdi-pencil
+        </MIcon>
+    </MButton>
+
+    <MMenu @bind-Value="showMenu"
+           Rounded="@("lg")"
+           Transition="scroll-x-reverse-transition">
+        <ActivatorContent>
+            <MButton Icon
+                     @attributes="@context.Attrs">
+                <MultiDisplay>
+                    <DesktopContent>
+                        <MIcon>mdi-dots-horizontal</MIcon>
+                    </DesktopContent>
+                    <MobileContent>
+                        <MIcon>mdi-dots-vertical</MIcon>
+                    </MobileContent>
+                </MultiDisplay>
+            </MButton>
+        </ActivatorContent>
+
+        <ChildContent>
+            <MList MinWidth="150">
+                <MListItem Dense Ripple="false">
+                    <MListItemContent>
+                        切换至富文本
+                    </MListItemContent>
+                </MListItem>
+            </MList>
+        </ChildContent>
+    </MMenu>
+</MAppBar>
+
+<ScrollContainer Id="scrolling-read">
+    <MContainer>
+        <div class="px-3 text-h6 font-weight-bold">
+            @(DateTime.Now.ToString("yyyy/MM/dd"))
+        </div>
+
+        @if(ShowWeather)
+        {
+            <div class="overflow-hidden" style="max-width:100px;">
+                <MTextField Solo
+                        Dense
+                        Readonly
+                        Color="transparent"
+                        HideDetails="@("auto")"
+                        Value="_diary.Weather">
+                </MTextField>
+            </div>
+        }
+
+        @if (ShowTitle)
+        {
+            <div class="my-sm-4 overflow-hidden-mobile user-select">
+                <MTextField Value="@(_diary.Title)"
+                        Solo="!IsDesktop"
+                        Outlined="IsDesktop"
+                        TValue="string"
+                        HideDetails="@("auto")"
+                        Class="pb-0"
+                        Dense
+                        Readonly
+                        maxlength="20">
+                </MTextField>
+            </div>
+        }
+
+        <div class="my-sm-4 overflow-hidden-mobile user-select">
+            <MTextarea Value="@(_diary.Content)"
+                       Solo="!IsDesktop"
+                       Outlined="IsDesktop"
+                       HideDetails="@("auto")"
+                       AutoGrow
+                       Readonly
+                       Rows="8"
+                       RowHeight="30">
+            </MTextarea>
+        </div>
+
+        <div class="mb-5">
+            <MChipGroup Column>
+                @foreach (var item in SelectedTags)
+                {
+                    <MChip Outlined="!IsDesktop">
+                        @(item.Name)
+                    </MChip>
+                }
+            </MChipGroup>
+        </div>
+    </MContainer>
+</ScrollContainer>

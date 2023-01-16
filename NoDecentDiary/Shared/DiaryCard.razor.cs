@@ -24,6 +24,8 @@ namespace NoDecentDiary.Shared
         public EventCallback OnCopy { get; set; }
         [Parameter]
         public EventCallback OnTag { get; set; }
+        [Parameter]
+        public EventCallback OnClick { get; set; }
 
         private DateTime Date => Value!.CreateTime;
         private string? Title => Value!.Title;

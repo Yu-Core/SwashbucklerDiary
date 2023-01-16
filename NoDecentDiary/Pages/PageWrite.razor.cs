@@ -24,6 +24,7 @@ namespace NoDecentDiary.Pages
         public ITagService? TagService { get; set; }
         [Inject]
         public NavigationManager? Navigation { get; set; }
+
         [Parameter]
         [SupplyParameterFromQuery]
         public int? TagId { get; set; }

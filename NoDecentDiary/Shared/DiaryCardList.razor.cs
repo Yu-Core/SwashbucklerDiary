@@ -22,6 +22,8 @@ namespace NoDecentDiary.Shared
         public ITagService? TagService { get; set; }
         [Inject]
         public IDiaryTagService? DiaryTagService { get; set; }
+        [Inject]
+        public NavigationManager? Navigation { get; set; }
 
         [Parameter]
         [EditorRequired]
@@ -68,9 +70,9 @@ namespace NoDecentDiary.Shared
                 await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
             }
         }
-        private async void Copy(DiaryModel diaryModel)
+        private async void Copy(string? text)
         {
-            await Clipboard.Default.SetTextAsync(diaryModel.Content);
+            await Clipboard.Default.SetTextAsync(text);
 
             await PopupService!.AlertAsync(param =>
             {
@@ -79,9 +81,9 @@ namespace NoDecentDiary.Shared
                 param.Type = AlertTypes.Success;
             });
         }
-        private async Task Tag(DiaryModel diaryModel)
+        private async Task Tag(int id)
         {
-            SelectedDiaryId = diaryModel.Id;
+            SelectedDiaryId = id;
             SelectedTags = await TagService!.GetDiaryTagsAsync(SelectedDiaryId);
             StateHasChanged();
             showSelectTag = true;
@@ -91,6 +93,10 @@ namespace NoDecentDiary.Shared
             await DiaryTagService!.DeleteAsync(it => it.DiaryId == SelectedDiaryId);
             await DiaryTagService.AddTagsAsync(SelectedDiaryId, SelectedTags);
             showSelectTag = false;
+        }
+        private void HandOnClick(int id)
+        {
+            Navigation!.NavigateTo($"/Read/{id}?Href={Navigation.ToBaseRelativePath(Navigation.Uri)}");
         }
     }
 }
