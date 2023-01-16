@@ -6,6 +6,7 @@ using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,8 @@ namespace NoDecentDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            Debug.WriteLine(Href);
+            Debug.WriteLine(Navigation!.Uri);
             await UpdateDiary();
             await UpdateTag();
             MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;

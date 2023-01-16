@@ -2,6 +2,7 @@
 using Masa.Blazor;
 using Masa.Blazor.Popup.Components;
 using Microsoft.AspNetCore.Components;
+using NoDecentDiary.Extend;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using System;
@@ -96,7 +97,8 @@ namespace NoDecentDiary.Shared
         }
         private void HandOnClick(int id)
         {
-            Navigation!.NavigateTo($"/Read/{id}?Href={Navigation.ToBaseRelativePath(Navigation.Uri)}");
+            var href = Navigation!.ToBaseRelativePath(Navigation.Uri).ToHistoryHref();
+            Navigation!.NavigateTo($"/Read/{id}?Href={href}");
         }
     }
 }

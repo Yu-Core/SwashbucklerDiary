@@ -21,22 +21,34 @@ namespace NoDecentDiary.Pages
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Href { get; set; }
-        private string? _search;
+        [Parameter]
+        [SupplyParameterFromQuery]
+        public string? Search { get; set; }
         private List<DiaryModel> Diaries = new();
-
-        private async Task HandOnTextChanged(string value)
+        protected override async Task OnInitializedAsync()
         {
-            _search = value;
-            if(!string.IsNullOrWhiteSpace(_search))
+            await UpdateDiaries();
+        }
+        private async Task UpdateDiaries()
+        {
+            if (!string.IsNullOrWhiteSpace(Search))
             {
                 Diaries = await DiaryService!.QueryAsync(it =>
-                    it.Title!.Contains(_search)||
-                    it.Content!.Contains(_search));
+                    it.Title!.Contains(Search) ||
+                    it.Content!.Contains(Search));
             }
             else
             {
                 Diaries = new();
             }
+        }
+
+        private async Task HandOnTextChanged(string value)
+        {
+            Search = value;
+            await UpdateDiaries();
+            var url = Navigation!.GetUriWithQueryParameter("Search", value);
+            Navigation!.NavigateTo(url);
         }
         private void HandOnBack()
         {

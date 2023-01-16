@@ -183,7 +183,7 @@ namespace NoDecentDiary.Pages
         }
         private void NavigateToSearch()
         {
-            var url = "/Search?Href=" + "/?Type=" + Types[tabs.ToInt32()];
+            var url = "/Search?Href=/Diaries?Type=" + Types[tabs.ToInt32()];
             Navigation!.NavigateTo(url);
         }
     }

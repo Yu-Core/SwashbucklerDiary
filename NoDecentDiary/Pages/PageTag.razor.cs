@@ -1,5 +1,6 @@
 ﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using NoDecentDiary.Extend;
 using NoDecentDiary.Interface;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
@@ -48,7 +49,8 @@ namespace NoDecentDiary.Pages
         }
         private void HandOnToWrite()
         {
-            Navigation!.NavigateTo($"/Write?TagId={Id}&Href={Navigation.ToBaseRelativePath(Navigation.Uri)}");
+            var href = Navigation!.ToBaseRelativePath(Navigation.Uri).ToHistoryHref();
+            Navigation!.NavigateTo($"/Write?TagId={Id}&Href={href}");
         }
         private async Task InvokeStateHasChangedAsync()
         {
