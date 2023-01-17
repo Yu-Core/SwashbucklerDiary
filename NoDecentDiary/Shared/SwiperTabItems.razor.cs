@@ -23,7 +23,7 @@ namespace NoDecentDiary.Shared
                 if (_value != value)
                 {
                     _value = value;
-                    if(AfterFirstRender)
+                    if(Show)
                     {
                         RefreshData.InvokeAsync(value);
                         UpdateSwiper(value);
@@ -40,7 +40,7 @@ namespace NoDecentDiary.Shared
 
         private IJSObjectReference? module;
         private StringNumber _value = 0;
-        private bool AfterFirstRender;
+        private bool Show;
         private readonly string Id = "swiper" + Guid.NewGuid().ToString();
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -50,7 +50,7 @@ namespace NoDecentDiary.Shared
                 module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/init-swiper.js");
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
                 await module.InvokeVoidAsync("swiperInit", new object[4] { dotNetCallbackRef, "UpdateValue", Id, Value.ToInt32() });
-                AfterFirstRender = true;
+                Show = true;
                 StateHasChanged();
             }
         }
@@ -76,6 +76,7 @@ namespace NoDecentDiary.Shared
             {
                 await module.DisposeAsync();
             }
+
             GC.SuppressFinalize(this);
         }
     }

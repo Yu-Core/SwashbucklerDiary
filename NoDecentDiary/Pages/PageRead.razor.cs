@@ -1,6 +1,7 @@
 ﻿using BlazorComponent;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using NoDecentDiary.Interface;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
@@ -10,11 +11,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageRead : INavigateToBack, IDisposable
+    public partial class PageRead : INavigateToBack, IAsyncDisposable
     {
         [Inject]
         public MasaBlazor? MasaBlazor { get; set; }
@@ -28,6 +28,8 @@ namespace NoDecentDiary.Pages
         public ITagService? TagService { get; set; }
         [Inject]
         public NavigationManager? Navigation { get; set; }
+        [Inject]
+        public IJSRuntime? JS { get; set; }
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -43,6 +45,8 @@ namespace NoDecentDiary.Pages
         private string DiaryContent => _diary.Title + "\n" + _diary.Content;
         private List<TagModel> SelectedTags = new List<TagModel>();
         private bool Top => _diary.Top;
+        private bool Readonly = true;
+        private IJSObjectReference? module;
 
         protected override async Task OnInitializedAsync()
         {
@@ -50,7 +54,10 @@ namespace NoDecentDiary.Pages
             await UpdateTag();
             MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
         }
-
+        protected async override Task OnAfterRenderAsync(bool firstRender)
+        {
+            module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/screenshot.js");
+        }
         private async Task UpdateDiary()
         {
             var diaryModel = await DiaryService!.FindAsync(Id);
@@ -77,10 +84,14 @@ namespace NoDecentDiary.Pages
         {
             await InvokeAsync(StateHasChanged);
         }
-
-        public void Dispose()
+        async ValueTask IAsyncDisposable.DisposeAsync()
         {
             MasaBlazor!.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+            if (module is not null)
+            {
+                await module.DisposeAsync();
+            }
+
             GC.SuppressFinalize(this);
         }
         public async Task HandOnDelete()
@@ -134,9 +145,23 @@ namespace NoDecentDiary.Pages
                 Title = "分享"
             });
         }
-        private void ImageShare()
+        private async Task ImageShare()
         {
-            
+            showShare = false;
+
+            var base64 = await module!.InvokeAsync<string>("getScreenshotBase64", new object[1] { "#screenshot" });
+            base64 = base64.Substring(base64.IndexOf(",") + 1);
+
+            string fn = "Screenshot.png";
+            string file = Path.Combine(FileSystem.CacheDirectory, fn);
+
+            File.WriteAllBytes(file, Convert.FromBase64String(base64));
+
+            await Share.Default.RequestAsync(new ShareFileRequest
+            {
+                Title = "分享",
+                File = new ShareFile(file)
+            });
         }
     }
 }

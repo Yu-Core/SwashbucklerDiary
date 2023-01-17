@@ -74,7 +74,7 @@
 </MAppBar>
 
 <ScrollContainer Id="scrolling-read">
-    <MContainer>
+    <MContainer Id="screenshot">
         <div class="px-3 text-h6 font-weight-bold">
             @(DateTime.Now.ToString("yyyy/MM/dd"))
         </div>
@@ -114,7 +114,7 @@
                        Outlined="IsDesktop"
                        HideDetails="@("auto")"
                        AutoGrow
-                       Readonly
+                       Readonly="Readonly"
                        Rows="8"
                        RowHeight="30">
             </MTextarea>
