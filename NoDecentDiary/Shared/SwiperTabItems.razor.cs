@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Shared
 {
-    public partial class SwiperTabItems : IDisposable
+    public partial class SwiperTabItems : IAsyncDisposable
     {
         [Inject]
-        private IJSRuntime? JSRuntime { get; set; }
+        private IJSRuntime? JS { get; set; }
         [Parameter]
         public StringNumber Value
         {
@@ -38,23 +38,25 @@ namespace NoDecentDiary.Shared
         [Parameter]
         public EventCallback<StringNumber> RefreshData { get; set; }
 
+        private IJSObjectReference? module;
         private StringNumber _value = 0;
         private bool AfterFirstRender;
-        private string Id = "swiper" + Guid.NewGuid().ToString();
+        private readonly string Id = "swiper" + Guid.NewGuid().ToString();
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender && ChildContent is not null)
+            if (firstRender)
             {
+                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/init-swiper.js");
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
-                await JSRuntime!.InvokeVoidAsync("swiperInit", new object[4] { dotNetCallbackRef, "UpdateValue", Id, Value.ToInt32() });
+                await module.InvokeVoidAsync("swiperInit", new object[4] { dotNetCallbackRef, "UpdateValue", Id, Value.ToInt32() });
                 AfterFirstRender = true;
                 StateHasChanged();
             }
         }
         private async void UpdateSwiper(StringNumber value)
         {
-            await JSRuntime!.InvokeVoidAsync($"{Id}.slideTo", new object[1] { value.ToInt32() });
+            await JS!.InvokeVoidAsync($"{Id}.slideTo", new object[1] { value.ToInt32() });
         }
         [JSInvokable]
         public async Task UpdateValue(int value)
@@ -67,9 +69,13 @@ namespace NoDecentDiary.Shared
             await RefreshData.InvokeAsync(value);
         }
 
-        public async void Dispose()
+        async ValueTask IAsyncDisposable.DisposeAsync()
         {
-            await JSRuntime!.InvokeVoidAsync($"{Id}.destroy", new object[2] { true, true });
+            await JS!.InvokeVoidAsync($"{Id}.destroy", new object[2] { true, true });
+            if (module is not null)
+            {
+                await module.DisposeAsync();
+            }
             GC.SuppressFinalize(this);
         }
     }
