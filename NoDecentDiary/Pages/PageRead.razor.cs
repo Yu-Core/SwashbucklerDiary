@@ -39,13 +39,13 @@ namespace NoDecentDiary.Pages
         private DiaryModel _diary = new DiaryModel();
         private bool showMenu;
         private bool showShare;
+        private bool showLoading;
         private bool ShowTitle => !string.IsNullOrEmpty(_diary.Title);
         private bool ShowWeather => !string.IsNullOrEmpty(_diary.Weather);
         private bool IsDesktop => MasaBlazor!.Breakpoint.SmAndUp;
         private string DiaryContent => _diary.Title + "\n" + _diary.Content;
         private List<TagModel> SelectedTags = new List<TagModel>();
         private bool Top => _diary.Top;
-        private bool Readonly = true;
         private IJSObjectReference? module;
 
         protected override async Task OnInitializedAsync()
@@ -148,6 +148,7 @@ namespace NoDecentDiary.Pages
         private async Task ImageShare()
         {
             showShare = false;
+            showLoading = true;
 
             var base64 = await module!.InvokeAsync<string>("getScreenshotBase64", new object[1] { "#screenshot" });
             base64 = base64.Substring(base64.IndexOf(",") + 1);
@@ -155,7 +156,8 @@ namespace NoDecentDiary.Pages
             string fn = "Screenshot.png";
             string file = Path.Combine(FileSystem.CacheDirectory, fn);
 
-            File.WriteAllBytes(file, Convert.FromBase64String(base64));
+            await File.WriteAllBytesAsync(file, Convert.FromBase64String(base64));
+            showLoading = false;
 
             await Share.Default.RequestAsync(new ShareFileRequest
             {

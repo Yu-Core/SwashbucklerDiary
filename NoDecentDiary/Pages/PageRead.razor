@@ -114,7 +114,6 @@
                        Outlined="IsDesktop"
                        HideDetails="@("auto")"
                        AutoGrow
-                       Readonly="Readonly"
                        Rows="8"
                        RowHeight="30">
             </MTextarea>
@@ -166,3 +165,8 @@
         </MCardText>
     </MCard>
 </MDialog>
+
+<MOverlay Value="showLoading" ZIndex="99">
+    <MProgressCircular Indeterminate
+                       Size="64"></MProgressCircular>
+</MOverlay>
