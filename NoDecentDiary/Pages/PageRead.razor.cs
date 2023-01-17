@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace NoDecentDiary.Pages
 {
@@ -33,17 +34,18 @@ namespace NoDecentDiary.Pages
         public string? Href { get; set; }
         [Parameter]
         public int Id { get; set; }
+        private DiaryModel _diary = new DiaryModel();
         private bool showMenu;
+        private bool showShare;
         private bool ShowTitle => !string.IsNullOrEmpty(_diary.Title);
         private bool ShowWeather => !string.IsNullOrEmpty(_diary.Weather);
-        private DiaryModel _diary = new DiaryModel();
         private bool IsDesktop => MasaBlazor!.Breakpoint.SmAndUp;
+        private string DiaryContent => _diary.Title + "\n" + _diary.Content;
         private List<TagModel> SelectedTags = new List<TagModel>();
+        private bool Top => _diary.Top;
 
         protected override async Task OnInitializedAsync()
         {
-            Debug.WriteLine(Href);
-            Debug.WriteLine(Navigation!.Uri);
             await UpdateDiary();
             await UpdateTag();
             MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
@@ -105,6 +107,36 @@ namespace NoDecentDiary.Pages
                 await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
             }
             NavigateToBack();
+        }
+        private async Task Topping(DiaryModel diaryModel)
+        {
+            diaryModel.Top = !diaryModel.Top;
+            await DiaryService!.UpdateAsync(diaryModel);
+
+        }
+        private async void Copy(string text)
+        {
+            await Clipboard.Default.SetTextAsync(text);
+
+            await PopupService!.AlertAsync(param =>
+            {
+                param.Content = "复制成功";
+                param.Rounded = true;
+                param.Type = AlertTypes.Success;
+            });
+        }
+        private async Task TextShare(string text)
+        {
+            showShare = false;
+            await Share.Default.RequestAsync(new ShareTextRequest
+            {
+                Text = text,
+                Title = "分享"
+            });
+        }
+        private void ImageShare()
+        {
+            
         }
     }
 }

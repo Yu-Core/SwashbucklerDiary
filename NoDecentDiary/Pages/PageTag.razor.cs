@@ -49,7 +49,7 @@ namespace NoDecentDiary.Pages
         }
         private void HandOnToWrite()
         {
-            var href = Navigation!.ToBaseRelativePath(Navigation.Uri).ToHistoryHref();
+            var href = Navigation!.ToHistoryHref();
             Navigation!.NavigateTo($"/Write?TagId={Id}&Href={href}");
         }
         private async Task InvokeStateHasChangedAsync()

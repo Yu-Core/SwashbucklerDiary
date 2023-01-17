@@ -12,7 +12,7 @@
 
     <MSpacer></MSpacer>
     <MButton Icon
-             Href="/Write">
+             OnClick="()=>showShare=true">
         <MIcon>
             mdi-share-variant-outline
         </MIcon>
@@ -49,9 +49,23 @@
 
         <ChildContent>
             <MList MinWidth="150">
+                <MListItem Dense
+                           Ripple="false"
+                           OnClick="()=>Copy(DiaryContent)">
+                    <MListItemContent>
+                        复制
+                    </MListItemContent>
+                </MListItem>
+                <MListItem Dense
+                           Ripple="false"
+                           OnClick="()=>Topping(_diary)">
+                    <MListItemContent>
+                        @(Top ? "取消置顶" : "置顶")
+                    </MListItemContent>
+                </MListItem>
                 <MListItem Dense Ripple="false">
                     <MListItemContent>
-                        切换至富文本
+                        导出
                     </MListItemContent>
                 </MListItem>
             </MList>
@@ -65,7 +79,7 @@
             @(DateTime.Now.ToString("yyyy/MM/dd"))
         </div>
 
-        @if(ShowWeather)
+        @if (ShowWeather)
         {
             <div class="overflow-hidden" style="max-width:100px;">
                 <MTextField Solo
@@ -118,3 +132,37 @@
         </div>
     </MContainer>
 </ScrollContainer>
+
+<MDialog @bind-Value="showShare" MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            选择分享方式
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>showShare = false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            <MListItem OnClick="()=>TextShare(DiaryContent)">
+                <MListItemIcon>
+                    <MIcon>
+                        mdi-format-text
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <MListItemTitle>文字分享</MListItemTitle>
+                </MListItemContent>
+            </MListItem>
+            <MListItem OnClick="ImageShare">
+                <MListItemIcon>
+                    <MIcon>
+                        mdi-image-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <MListItemTitle>图片分享</MListItemTitle>
+                </MListItemContent>
+            </MListItem>
+        </MCardText>
+    </MCard>
+</MDialog>

@@ -71,8 +71,9 @@ namespace NoDecentDiary.Shared
                 await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
             }
         }
-        private async void Copy(string? text)
+        private async void Copy(DiaryModel diaryModel)
         {
+            var text = diaryModel.Title + "\n" + diaryModel.Content;
             await Clipboard.Default.SetTextAsync(text);
 
             await PopupService!.AlertAsync(param =>
@@ -97,7 +98,7 @@ namespace NoDecentDiary.Shared
         }
         private void HandOnClick(int id)
         {
-            var href = Navigation!.ToBaseRelativePath(Navigation.Uri).ToHistoryHref();
+            var href = Navigation!.ToHistoryHref();
             Navigation!.NavigateTo($"/Read/{id}?Href={href}");
         }
     }
