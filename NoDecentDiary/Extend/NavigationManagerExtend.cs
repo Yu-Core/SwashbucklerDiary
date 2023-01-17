@@ -11,7 +11,7 @@ namespace NoDecentDiary.Extend
     {
         public static string ToHistoryHref(this NavigationManager navigation)
         {
-            return navigation.ToBaseRelativePath(navigation.Uri).Replace("&", "%26");
+            return navigation.ToHistoryHref(navigation.Uri);
         }
         public static string ToHistoryHref(this NavigationManager navigation,string uri)
         {

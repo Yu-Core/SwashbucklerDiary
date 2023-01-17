@@ -24,7 +24,7 @@
         </MIcon>
     </MButton>
     <MButton Icon
-             Href="/Write">
+             OnClick="HandOnEdit">
         <MIcon>
             mdi-pencil
         </MIcon>
@@ -76,7 +76,7 @@
 <ScrollContainer Id="scrolling-read">
     <MContainer Id="screenshot">
         <div class="px-3 text-h6 font-weight-bold">
-            @(DateTime.Now.ToString("yyyy/MM/dd"))
+            @(_diary.CreateTime.ToString("yyyy/MM/dd"))
         </div>
 
         @if (ShowWeather)

@@ -2,6 +2,7 @@
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using NoDecentDiary.Extend;
 using NoDecentDiary.Interface;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
@@ -118,6 +119,11 @@ namespace NoDecentDiary.Pages
                 await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
             }
             NavigateToBack();
+        }
+        public void HandOnEdit()
+        {
+            var href = Navigation!.ToHistoryHref();
+            Navigation!.NavigateTo($"/Write?DiaryId={Id}&Href={href}");
         }
         private async Task Topping(DiaryModel diaryModel)
         {

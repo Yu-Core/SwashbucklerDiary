@@ -12,8 +12,7 @@
 
     <MSpacer></MSpacer>
 
-    <MButton Class="d-sm-none"
-             Icon
+    <MButton Icon
              OnClick="()=>showSelectTag = true">
         <MIcon>
             mdi-label-outline
@@ -39,14 +38,6 @@
 
         <ChildContent>
             <MList MinWidth="150">
-                <MListItem Class="d-none d-sm-block"
-                           Dense
-                           Ripple="false"
-                           OnClick="()=>showSelectTag = true">
-                    <MListItemContent>
-                        标签
-                    </MListItemContent>
-                </MListItem>
                 <MListItem Dense
                            Ripple="false" 
                            OnClick="()=>showTitle = !showTitle">
@@ -67,7 +58,7 @@
 <ScrollContainer Id="scrolling-write">
     <MContainer>
         <div class="px-3 text-h6 font-weight-bold">
-            @(DateTime.Now.ToString("yyyy/MM/dd"))
+            @(Diary.CreateTime.ToString("yyyy/MM/dd"))
         </div>
 
         <div class="overflow-hidden" style="max-width:100px;">
@@ -77,7 +68,7 @@
                            Color="transparent"
                            HideDetails="@("auto")"
                            Items="_weathers"
-                           @bind-Value="_diary.Weather"
+                           @bind-Value="Diary.Weather"
                            ItemText="r=>r"
                            ItemValue="r=>r">
             </MAutocomplete>
@@ -86,7 +77,7 @@
         @if (showTitle)
         {
             <div class="my-sm-4 overflow-hidden-mobile user-select">
-                <MTextField @bind-Value="_diary.Title"
+                <MTextField @bind-Value="Diary.Title"
                         Solo="!IsDesktop"
                         Outlined="IsDesktop"
                         TValue="string"
@@ -100,7 +91,7 @@
         }
 
         <div class="my-sm-4 overflow-hidden-mobile user-select">
-            <MTextarea @bind-Value="_diary.Content"
+            <MTextarea @bind-Value="Diary.Content"
                        Solo="!IsDesktop"
                        Outlined="IsDesktop"
                        HideDetails="@("auto")"
