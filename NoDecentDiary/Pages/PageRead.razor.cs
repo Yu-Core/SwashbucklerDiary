@@ -3,7 +3,6 @@ using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using NoDecentDiary.Extend;
-using NoDecentDiary.Interface;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using System;
@@ -15,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageRead : INavigateToBack, IAsyncDisposable
+    public partial class PageRead : IAsyncDisposable
     {
         [Inject]
         public MasaBlazor? MasaBlazor { get; set; }
@@ -28,13 +27,10 @@ namespace NoDecentDiary.Pages
         [Inject]
         public ITagService? TagService { get; set; }
         [Inject]
-        public NavigationManager? Navigation { get; set; }
+        public INavigateService? NavigateService { get; set; }
         [Inject]
         public IJSRuntime? JS { get; set; }
 
-        [Parameter]
-        [SupplyParameterFromQuery]
-        public string? Href { get; set; }
         [Parameter]
         public int Id { get; set; }
         private DiaryModel _diary = new DiaryModel();
@@ -79,7 +75,7 @@ namespace NoDecentDiary.Pages
         }
         public void NavigateToBack()
         {
-            this.DefaultNavigateToBack();
+            NavigateService!.NavigateToBack();
         }
         private async Task InvokeStateHasChangedAsync()
         {
@@ -122,8 +118,7 @@ namespace NoDecentDiary.Pages
         }
         public void HandOnEdit()
         {
-            var href = Navigation!.ToHistoryHref();
-            Navigation!.NavigateTo($"/Write?DiaryId={Id}&Href={href}");
+            NavigateService!.NavigateTo($"/Write?DiaryId={Id}");
         }
         private async Task Topping(DiaryModel diaryModel)
         {

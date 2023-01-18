@@ -1,7 +1,6 @@
 ﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using NoDecentDiary.Extend;
-using NoDecentDiary.Interface;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using System;
@@ -12,22 +11,19 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageTag : INavigateToBack, IDisposable
+    public partial class PageTag : IDisposable
     {
         [Inject]
         private ITagService? TagService { get; set; }
         [Inject]
         private IDiaryService? DiaryService { get; set; }
         [Inject]
-        public NavigationManager? Navigation { get; set; }
+        public INavigateService? NavigateService { get; set; }
         [Inject]
         private MasaBlazor? MasaBlazor { get; set; }
 
         [Parameter]
         public int Id { get; set; }
-        [Parameter]
-        [SupplyParameterFromQuery]
-        public string? Href { get; set; }
         private TagModel Tag = new TagModel();
         private List<DiaryModel> Diaries = new List<DiaryModel>();
         private bool Prominent => MasaBlazor!.Breakpoint.SmAndUp && Diaries.Any();
@@ -49,8 +45,7 @@ namespace NoDecentDiary.Pages
         }
         private void HandOnToWrite()
         {
-            var href = Navigation!.ToHistoryHref();
-            Navigation!.NavigateTo($"/Write?TagId={Id}&Href={href}");
+            NavigateService!.NavigateTo($"/Write?TagId={Id}");
         }
         private async Task InvokeStateHasChangedAsync()
         {
@@ -65,7 +60,7 @@ namespace NoDecentDiary.Pages
 
         public void NavigateToBack()
         {
-            this.DefaultNavigateToBack();
+            NavigateService!.NavigateToBack();
         }
     }
 }

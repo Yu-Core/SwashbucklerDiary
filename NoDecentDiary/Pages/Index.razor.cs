@@ -26,6 +26,8 @@ namespace NoDecentDiary.Pages
         [Inject]
         public IPopupService? PopupService { get; set; }
         [Inject]
+        public INavigateService? NavigateService { get; set; }
+        [Inject]
         public NavigationManager? Navigation { get; set; }
         [CascadingParameter]
         public Error? Error { get; set; }
@@ -138,7 +140,7 @@ namespace NoDecentDiary.Pages
         }
         private void HandOnTagClick(int id)
         {
-            Navigation!.NavigateTo($"/Tag/{id}?Href=/?Type={Types[tabs.ToInt32()]}");
+            NavigateService!.NavigateTo($"/Tag/{id}");
         }
         private async Task HandOnRefreshData(StringNumber value)
         {
@@ -150,6 +152,8 @@ namespace NoDecentDiary.Pages
             {
                 await UpdateTags();
             }
+            var url = Navigation!.GetUriWithQueryParameter("Type", Types[tabs.ToInt32()]);
+            Navigation!.NavigateTo(url);
         }
         private async Task HandOnSaveAddTag()
         {
@@ -183,8 +187,7 @@ namespace NoDecentDiary.Pages
         }
         private void NavigateToSearch()
         {
-            var url = "/Search?Href=/Diaries?Type=" + Types[tabs.ToInt32()];
-            Navigation!.NavigateTo(url);
+            NavigateService!.NavigateTo("/Search");
         }
     }
 }

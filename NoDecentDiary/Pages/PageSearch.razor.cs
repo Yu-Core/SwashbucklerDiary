@@ -1,7 +1,6 @@
 ﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using NoDecentDiary.Interface;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using System;
@@ -12,15 +11,14 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageSearch : INavigateToBack
+    public partial class PageSearch
     {
         [Inject]
         private IDiaryService? DiaryService { get; set; }
         [Inject]
+        private INavigateService? NavigateService { get; set; }
+        [Inject]
         public NavigationManager? Navigation { get; set; }
-        [Parameter]
-        [SupplyParameterFromQuery]
-        public string? Href { get; set; }
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Search { get; set; }
@@ -57,7 +55,7 @@ namespace NoDecentDiary.Pages
 
         public void NavigateToBack()
         {
-            this.DefaultNavigateToBack();
+            NavigateService!.NavigateToBack();
         }
     }
 }

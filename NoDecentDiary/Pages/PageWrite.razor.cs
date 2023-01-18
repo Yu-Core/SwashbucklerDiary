@@ -2,7 +2,6 @@
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Maui.Controls;
-using NoDecentDiary.Interface;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using NoDecentDiary.Services;
@@ -10,7 +9,7 @@ using System.Diagnostics;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageWrite : INavigateToBack, IDisposable
+    public partial class PageWrite : IDisposable
     {
         [Inject]
         public MasaBlazor? MasaBlazor { get; set; }
@@ -23,7 +22,7 @@ namespace NoDecentDiary.Pages
         [Inject]
         public ITagService? TagService { get; set; }
         [Inject]
-        public NavigationManager? Navigation { get; set; }
+        public INavigateService? NavigateService { get; set; }
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -31,9 +30,6 @@ namespace NoDecentDiary.Pages
         [Parameter]
         [SupplyParameterFromQuery]
         public int? DiaryId { get; set; }
-        [Parameter]
-        [SupplyParameterFromQuery]
-        public string? Href { get; set; }
         private readonly List<string> _weathers = new List<string>()
         {
             "晴","阴","小雨","中雨","大雨","小雪","中雪","大雪","雾",
@@ -157,7 +153,7 @@ namespace NoDecentDiary.Pages
 
         public void NavigateToBack()
         {
-            this.DefaultNavigateToBack();
+            NavigateService!.NavigateToBack();
         }
         private async Task InvokeStateHasChangedAsync()
         {

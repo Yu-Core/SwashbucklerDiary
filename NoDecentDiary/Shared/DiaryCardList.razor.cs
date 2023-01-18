@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using NoDecentDiary.Extend;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
+using NoDecentDiary.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace NoDecentDiary.Shared
         [Inject]
         public IDiaryTagService? DiaryTagService { get; set; }
         [Inject]
-        public NavigationManager? Navigation { get; set; }
+        public INavigateService? NavigateService { get; set; }
 
         [Parameter]
         [EditorRequired]
@@ -98,8 +99,7 @@ namespace NoDecentDiary.Shared
         }
         private void HandOnClick(int id)
         {
-            var href = Navigation!.ToHistoryHref();
-            Navigation!.NavigateTo($"/Read/{id}?Href={href}");
+            NavigateService!.NavigateTo($"/Read/{id}");
         }
     }
 }
