@@ -14,15 +14,15 @@
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
 
         <!-- Display name -->
-        <ApplicationTitle>NoDecentDiary</ApplicationTitle>
+        <ApplicationTitle>反派日记</ApplicationTitle>
 
         <!-- App Identifier -->
-        <ApplicationId>com.companyname.nodecentdiary</ApplicationId>
+        <ApplicationId>com.yucore.nodecentdiary</ApplicationId>
         <ApplicationIdGuid>DBFF20FC-EF94-4EE2-A049-931177D2CB18</ApplicationIdGuid>
 
         <!-- Versions -->
-        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-        <ApplicationVersion>1</ApplicationVersion>
+        <ApplicationDisplayVersion>0.8.6</ApplicationDisplayVersion>
+        <ApplicationVersion>86</ApplicationVersion>
 
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
