@@ -34,7 +34,7 @@ namespace NoDecentDiary.Shared
         private bool showSelectTag;
         private int SelectedDiaryId;
         private List<TagModel> SelectedTags = new List<TagModel>();
-
+        
         public DiaryCardList()
         {
             Value ??= new List<DiaryModel>();
@@ -74,7 +74,7 @@ namespace NoDecentDiary.Shared
         }
         private async void Copy(DiaryModel diaryModel)
         {
-            var text = diaryModel.Title + "\n" + diaryModel.Content;
+            var text = DiaryCopyContent(diaryModel);
             await Clipboard.Default.SetTextAsync(text);
 
             await PopupService!.AlertAsync(param =>
@@ -100,6 +100,14 @@ namespace NoDecentDiary.Shared
         private void HandOnClick(int id)
         {
             NavigateService!.NavigateTo($"/Read/{id}");
+        }
+        private string DiaryCopyContent(DiaryModel diary)
+        {
+            if (string.IsNullOrEmpty(diary.Title))
+            {
+                return diary.Content!;
+            }
+            return diary.Title + "\n" + diary.Content;
         }
     }
 }

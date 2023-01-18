@@ -51,7 +51,7 @@
             <MList MinWidth="150">
                 <MListItem Dense
                            Ripple="false"
-                           OnClick="()=>Copy(DiaryContent)">
+                           OnClick="Copy">
                     <MListItemContent>
                         复制
                     </MListItemContent>
@@ -143,7 +143,7 @@
             </MButton>
         </MCardTitle>
         <MCardText>
-            <MListItem OnClick="()=>TextShare(DiaryContent)">
+            <MListItem OnClick="TextShare">
                 <MListItemIcon>
                     <MIcon>
                         mdi-format-text

@@ -40,7 +40,17 @@ namespace NoDecentDiary.Pages
         private bool ShowTitle => !string.IsNullOrEmpty(_diary.Title);
         private bool ShowWeather => !string.IsNullOrEmpty(_diary.Weather);
         private bool IsDesktop => MasaBlazor!.Breakpoint.SmAndUp;
-        private string DiaryContent => _diary.Title + "\n" + _diary.Content;
+        private string DiaryCopyContent
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_diary.Title))
+                {
+                    return _diary.Content!;
+                }
+                return _diary.Title + "\n" + _diary.Content;
+            }
+        }
         private List<TagModel> SelectedTags = new List<TagModel>();
         private bool Top => _diary.Top;
         private IJSObjectReference? module;
@@ -126,9 +136,9 @@ namespace NoDecentDiary.Pages
             await DiaryService!.UpdateAsync(diaryModel);
 
         }
-        private async void Copy(string text)
+        private async void Copy()
         {
-            await Clipboard.Default.SetTextAsync(text);
+            await Clipboard.Default.SetTextAsync(DiaryCopyContent);
 
             await PopupService!.AlertAsync(param =>
             {
@@ -137,12 +147,12 @@ namespace NoDecentDiary.Pages
                 param.Type = AlertTypes.Success;
             });
         }
-        private async Task TextShare(string text)
+        private async Task TextShare()
         {
             showShare = false;
             await Share.Default.RequestAsync(new ShareTextRequest
             {
-                Text = text,
+                Text = DiaryCopyContent,
                 Title = "分享"
             });
         }
