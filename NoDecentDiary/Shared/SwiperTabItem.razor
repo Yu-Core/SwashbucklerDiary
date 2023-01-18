@@ -1,10 +1,29 @@
-﻿<div class="swiper-slide">
+﻿<div class="swiper-slide overflow-y-auto" style="@($"max-height:{Height}px;min-height:{Height}px;")">
     <MContainer Style="box-sizing: border-box;">
         @ChildContent
     </MContainer>
 </div>
 
 @code {
+    [Inject]
+    public MasaBlazor? MasaBlazor { get; set; }
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
+
+    private double Height => MasaBlazor!.Breakpoint.Height - MasaBlazor.Application.Top - MasaBlazor.Application.Bottom;
+    public void Dispose()
+    {
+        MasaBlazor!.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+        GC.SuppressFinalize(this);
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
+        return base.OnInitializedAsync();
+    }
+    private async Task InvokeStateHasChangedAsync()
+    {
+        await InvokeAsync(StateHasChanged);
+    }
 }

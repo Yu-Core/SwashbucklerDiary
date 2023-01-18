@@ -23,74 +23,72 @@
     </MButton>
 </MAppBar>
 
-<ScrollContainer Id="scrolling-index">
-    <SwiperTabItems @bind-Value="tabs" RefreshData="HandOnRefreshData">
-        <SwiperTabItem>
-            <div class="mb-8 px-2">
-                <MSubheader Class="px-0">
-                    @(DateTime.Now.ToString("yyyy/MM/dd") + " " + DateTime.Now.DayOfWeek.ToChinese2())
-                </MSubheader>
+<SwiperTabItems @bind-Value="tabs" RefreshData="HandOnRefreshData">
+    <SwiperTabItem>
+        <div class="mb-8 px-2">
+            <MSubheader Class="px-0">
+                @(DateTime.Now.ToString("yyyy/MM/dd") + " " + DateTime.Now.DayOfWeek.ToChinese2())
+            </MSubheader>
 
-                <h3>早上好，又是全新的一天</h3>
-            </div>
+            <h3>早上好，又是全新的一天</h3>
+        </div>
 
-            <DiaryCardList Value="Diaries"></DiaryCardList>
-        </SwiperTabItem>
-        <SwiperTabItem>
-            <div class="d-flex justify-space-between flex-wrap">
-                @foreach (var item in Tags)
-                {
-                    <MCard Class="mb-5 tag-card"
-                       Rounded="@("lg")">
-                        <MListItem OnClick="()=>HandOnTagClick(item.Id)">
-                            <MListItemIcon>
-                                <MIcon>
-                                    mdi-label-outline
-                                </MIcon>
-                            </MListItemIcon>
+        <DiaryCardList Value="Diaries"></DiaryCardList>
+    </SwiperTabItem>
+    <SwiperTabItem>
+        <div class="d-flex justify-space-between flex-wrap">
+            @foreach (var item in Tags)
+            {
+                <MCard Class="mb-5 tag-card"
+                   Rounded="@("lg")">
+                    <MListItem OnClick="()=>HandOnTagClick(item.Id)">
+                        <MListItemIcon>
+                            <MIcon>
+                                mdi-label-outline
+                            </MIcon>
+                        </MListItemIcon>
 
-                            <MListItemContent>
-                                @item.Name
-                            </MListItemContent>
+                        <MListItemContent>
+                            @item.Name
+                        </MListItemContent>
 
-                            <MListItemAction>
-                                <div @onclick:stopPropagation="true">
-                                    <MMenu Rounded="@("lg")"
-                                       Bottom
-                                       Left
-                                       Transition="scroll-x-reverse-transition">
-                                        <ActivatorContent>
-                                            <MButton Icon
-                                                 @attributes="@context.Attrs">
-                                                <MIcon>mdi-pencil</MIcon>
-                                            </MButton>
-                                        </ActivatorContent>
-                                        <ChildContent>
-                                            <MList MinWidth="150">
-                                                <MListItem Dense
-                                                       OnClick="()=>HandOnTagRename(item)">
-                                                    <MListItemContent>
-                                                        重命名
-                                                    </MListItemContent>
-                                                </MListItem>
-                                                <MListItem Dense
-                                                       OnClick="()=>HandOnTagDelete(item)">
-                                                    <MListItemContent>
-                                                        删除
-                                                    </MListItemContent>
-                                                </MListItem>
-                                            </MList>
-                                        </ChildContent>
-                                    </MMenu>
-                                </div>
-                            </MListItemAction>
-                        </MListItem>
-                    </MCard>
-                }
-            </div>
-        </SwiperTabItem>
-    </SwiperTabItems>
-</ScrollContainer>
+                        <MListItemAction>
+                            <div @onclick:stopPropagation="true">
+                                <MMenu Rounded="@("lg")"
+                                   Bottom
+                                   Left
+                                   Transition="scroll-x-reverse-transition">
+                                    <ActivatorContent>
+                                        <MButton Icon
+                                             @attributes="@context.Attrs">
+                                            <MIcon>mdi-pencil</MIcon>
+                                        </MButton>
+                                    </ActivatorContent>
+                                    <ChildContent>
+                                        <MList MinWidth="150">
+                                            <MListItem Dense
+                                                   OnClick="()=>HandOnTagRename(item)">
+                                                <MListItemContent>
+                                                    重命名
+                                                </MListItemContent>
+                                            </MListItem>
+                                            <MListItem Dense
+                                                   OnClick="()=>HandOnTagDelete(item)">
+                                                <MListItemContent>
+                                                    删除
+                                                </MListItemContent>
+                                            </MListItem>
+                                        </MList>
+                                    </ChildContent>
+                                </MMenu>
+                            </div>
+                        </MListItemAction>
+                    </MListItem>
+                </MCard>
+            }
+        </div>
+    </SwiperTabItem>
+</SwiperTabItems>
 
 @if (tabs == 0)
 {
