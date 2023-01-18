@@ -50,20 +50,18 @@
         <ChildContent>
             <MList MinWidth="150">
                 <MListItem Dense
-                           Ripple="false"
                            OnClick="Copy">
                     <MListItemContent>
                         复制
                     </MListItemContent>
                 </MListItem>
                 <MListItem Dense
-                           Ripple="false"
                            OnClick="()=>Topping(_diary)">
                     <MListItemContent>
                         @(Top ? "取消置顶" : "置顶")
                     </MListItemContent>
                 </MListItem>
-                <MListItem Dense Ripple="false">
+                <MListItem Dense>
                     <MListItemContent>
                         导出
                     </MListItemContent>

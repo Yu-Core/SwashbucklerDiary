@@ -26,7 +26,6 @@
                        Transition="scroll-x-reverse-transition">
                     <ActivatorContent>
                         <MButton Icon
-                                 Ripple="false"
                                  @attributes="@context.Attrs">
                             <MIcon>mdi-dots-horizontal</MIcon>
                         </MButton>
@@ -35,34 +34,30 @@
                     <ChildContent>
                         <MList MinWidth="150">
                             <MListItem Dense
-                                       Ripple="false"
                                        OnClick="OnTag">
                                 <MListItemContent>
                                     标签
                                 </MListItemContent>
                             </MListItem>
                             <MListItem Dense
-                                       Ripple="false"
                                        OnClick="OnCopy">
                                 <MListItemContent>
                                     复制
                                 </MListItemContent>
                             </MListItem>
                             <MListItem Dense
-                                       Ripple="false"
                                        OnClick="OnDelete">
                                 <MListItemContent>
                                     删除
                                 </MListItemContent>
                             </MListItem>
                             <MListItem Dense
-                                       Ripple="false"
                                        OnClick="OnTopping">
                                 <MListItemContent>
                                     @(Top ? "取消置顶" : "置顶")
                                 </MListItemContent>
                             </MListItem>
-                            <MListItem Dense Ripple="false">
+                            <MListItem Dense>
                                 <MListItemContent>
                                     导出（txt、json、pdf）
                                 </MListItemContent>

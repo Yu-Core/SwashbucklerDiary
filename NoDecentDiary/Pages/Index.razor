@@ -2,9 +2,8 @@
 @page "/Diaries"
 
 <MAppBar App
-         ElevateOnScroll
-         Color="white"
-         ScrollTarget="#scrolling-index">
+         Elevation="0"
+         Color="white">
     <MTabs @bind-Value="tabs"
            ActiveClass="text-h6 font-weight-bold"
            HideSlider
@@ -43,7 +42,7 @@
                 {
                     <MCard Class="mb-5 tag-card"
                        Rounded="@("lg")">
-                        <MListItem OnClick="()=>HandOnTagClick(item.Id)" Ripple="false">
+                        <MListItem OnClick="()=>HandOnTagClick(item.Id)">
                             <MListItemIcon>
                                 <MIcon>
                                     mdi-label-outline
@@ -69,14 +68,12 @@
                                         <ChildContent>
                                             <MList MinWidth="150">
                                                 <MListItem Dense
-                                                       Ripple="false"
                                                        OnClick="()=>HandOnTagRename(item)">
                                                     <MListItemContent>
                                                         重命名
                                                     </MListItemContent>
                                                 </MListItem>
                                                 <MListItem Dense
-                                                       Ripple="false"
                                                        OnClick="()=>HandOnTagDelete(item)">
                                                     <MListItemContent>
                                                         删除
