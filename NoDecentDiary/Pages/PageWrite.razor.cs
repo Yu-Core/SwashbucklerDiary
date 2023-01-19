@@ -34,9 +34,25 @@ namespace NoDecentDiary.Pages
         {
             "晴","阴","小雨","中雨","大雨","小雪","中雪","大雪","雾",
         };
-        private bool showMenu;
         private bool showTitle;
-        private bool showSelectTag;
+        private bool _showMenu;
+        private bool ShowMenu
+        {
+            get => _showMenu;
+            set
+            {
+                SetShowMenu(value);
+            }
+        }
+        private bool _showSelectTag;
+        private bool ShowSelectTag
+        {
+            get => _showSelectTag;
+            set
+            {
+                SetShowSelectTag(value);
+            }
+        }
         private DiaryModel Diary = new DiaryModel()
         {
             CreateTime = DateTime.Now,
@@ -48,6 +64,7 @@ namespace NoDecentDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
+            NavigateService!.Action += HandOnBack;
             await SetTag();
             await SetDiary();
         }
@@ -89,7 +106,7 @@ namespace NoDecentDiary.Pages
 
         private void HandOnSaveSelectTags()
         {
-            showSelectTag = false;
+            ShowSelectTag = false;
         }
 
         private async Task HandOnSave()
@@ -101,14 +118,15 @@ namespace NoDecentDiary.Pages
             await SaveDiary();
         }
 
-        private async Task HandOnBack()
+        private void HandOnBack()
         {
             if (string.IsNullOrWhiteSpace(Diary.Content))
             {
                 NavigateToBack();
                 return;
             }
-            await SaveDiary();
+
+            Task.Run(()=> SaveDiary());
         }
 
         private void HandOnClear()
@@ -159,10 +177,58 @@ namespace NoDecentDiary.Pages
         {
             await InvokeAsync(StateHasChanged);
         }
-
+        private void SetShowMenu(bool value)
+        {
+            if (_showMenu != value)
+            {
+                _showMenu = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseMenu;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseMenu;
+                }
+            }
+        }
+        private void CloseMenu()
+        {
+            ShowMenu = false;
+            StateHasChanged();
+        }
+        private void SetShowSelectTag(bool value)
+        {
+            if (_showSelectTag != value)
+            {
+                _showSelectTag = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseSelectTag;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseSelectTag;
+                }
+            }
+        }
+        private void CloseSelectTag()
+        {
+            ShowSelectTag = false;
+            StateHasChanged();
+        }
         public void Dispose()
         {
             MasaBlazor!.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+            if (ShowMenu)
+            {
+                NavigateService!.Action -= CloseMenu;
+            }
+            if (ShowSelectTag)
+            {
+                NavigateService!.Action -= CloseSelectTag;
+            }
+            NavigateService!.Action -= HandOnBack;
             GC.SuppressFinalize(this);
         }
     }

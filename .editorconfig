@@ -61,6 +61,9 @@ csharp_style_expression_bodied_lambdas = true:silent
 csharp_style_expression_bodied_local_functions = false:silent
 csharp_style_conditional_delegate_call = true:suggestion
 
+# BL0007: Component parameters should be auto properties
+dotnet_diagnostic.BL0007.severity = none
+
 [*.vb]
 #### 命名样式 ####
 

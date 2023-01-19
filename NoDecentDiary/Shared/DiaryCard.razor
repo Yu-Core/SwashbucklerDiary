@@ -3,7 +3,7 @@
        Class="@("my-5 " + Class)"
        OnClick="OnClick"
        Ripple="false"
-       @oncontextmenu="()=>showMenu=true"
+       @oncontextmenu="()=>ShowMenu=true"
        __internal_preventDefault_oncontextmenu>
     <MListItem Dense>
         <MListItemContent>
@@ -19,7 +19,7 @@
                 </MIcon>
             }
             <div @onclick:stopPropagation="true">
-                <MMenu @bind-Value="showMenu"
+                <MMenu @bind-Value="ShowMenu"
                        Bottom
                        Left
                        Rounded="@("lg")"

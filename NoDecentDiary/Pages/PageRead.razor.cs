@@ -34,8 +34,24 @@ namespace NoDecentDiary.Pages
         [Parameter]
         public int Id { get; set; }
         private DiaryModel _diary = new DiaryModel();
-        private bool showMenu;
-        private bool showShare;
+        private bool _showMenu;
+        private bool ShowMenu
+        {
+            get => _showMenu;
+            set
+            {
+                SetShowMenu(value);
+            }
+        }
+        private bool _showShare;
+        private bool ShowShare
+        {
+            get => _showShare;
+            set
+            {
+                SetShowShare(value);
+            }
+        }
         private bool showLoading;
         private bool ShowTitle => !string.IsNullOrEmpty(_diary.Title);
         private bool ShowWeather => !string.IsNullOrEmpty(_diary.Weather);
@@ -98,7 +114,14 @@ namespace NoDecentDiary.Pages
             {
                 await module.DisposeAsync();
             }
-
+            if(ShowMenu)
+            {
+                NavigateService!.Action -= CloseMenu;
+            }
+            if(ShowShare)
+            {
+                NavigateService!.Action -= CloseShare;
+            }
             GC.SuppressFinalize(this);
         }
         public async Task HandOnDelete()
@@ -149,7 +172,7 @@ namespace NoDecentDiary.Pages
         }
         private async Task TextShare()
         {
-            showShare = false;
+            ShowShare = false;
             await Share.Default.RequestAsync(new ShareTextRequest
             {
                 Text = DiaryCopyContent,
@@ -158,7 +181,7 @@ namespace NoDecentDiary.Pages
         }
         private async Task ImageShare()
         {
-            showShare = false;
+            ShowShare = false;
             showLoading = true;
 
             var base64 = await module!.InvokeAsync<string>("getScreenshotBase64", new object[1] { "#screenshot" });
@@ -175,6 +198,46 @@ namespace NoDecentDiary.Pages
                 Title = "分享",
                 File = new ShareFile(file)
             });
+        }
+        private void SetShowMenu(bool value)
+        {
+            if (_showMenu != value)
+            {
+                _showMenu = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseMenu;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseMenu;
+                }
+            }
+        }
+        private void CloseMenu()
+        {
+            ShowMenu = false;
+            StateHasChanged();
+        }
+        private void SetShowShare(bool value)
+        {
+            if (_showShare != value)
+            {
+                _showShare = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseShare;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseShare;
+                }
+            }
+        }
+        private void CloseShare()
+        {
+            ShowShare = false;
+            StateHasChanged();
         }
     }
 }

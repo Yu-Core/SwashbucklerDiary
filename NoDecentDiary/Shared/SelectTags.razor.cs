@@ -13,13 +13,14 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Shared
 {
-    public partial class SelectTags
+    public partial class SelectTags : IDisposable
     {
         [Inject]
         public ITagService? TagService { get; set; }
         [Inject]
         public IPopupService? PopupService { get; set; }
-
+        [Inject]
+        public INavigateService? NavigateService { get; set; }
         [Parameter]
         public bool Value
         {
@@ -43,7 +44,15 @@ namespace NoDecentDiary.Shared
         public EventCallback OnSave { get; set; }
 
         private bool _value;
-        private bool DialogAddTag { get; set; }
+        private bool _showAddTag;
+        private bool ShowAddTag
+        {
+            get => _showAddTag;
+            set
+            {
+                SetShowAddTag(value);
+            }
+        }
         private string? AddTagName;
         private List<StringNumber> SelectedTagIndices { get; set; } = new List<StringNumber>();
         private List<TagModel> Tags { get; set; } = new List<TagModel>();
@@ -104,7 +113,7 @@ namespace NoDecentDiary.Shared
         }
         private async void HandleOnSaveAddTag()
         {
-            DialogAddTag = false;
+            ShowAddTag = false;
             if(string.IsNullOrWhiteSpace(AddTagName))
             {
                 return;
@@ -132,6 +141,33 @@ namespace NoDecentDiary.Shared
             Tags.Add(tagModel);
             this.StateHasChanged();
         }
-
+        private void SetShowAddTag(bool value)
+        {
+            if (_showAddTag != value)
+            {
+                _showAddTag = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseAddTag;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseAddTag;
+                }
+            }
+        }
+        private void CloseAddTag()
+        {
+            ShowAddTag = false;
+            StateHasChanged();
+        }
+        public void Dispose()
+        {
+            if (ShowAddTag)
+            {
+                NavigateService!.Action -= CloseAddTag;
+            }
+            GC.SuppressFinalize(this);
+        }
     }
 }

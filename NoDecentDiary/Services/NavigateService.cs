@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Util.Common;
 
 namespace NoDecentDiary.Services
 {
     public class NavigateService : INavigateService
     {
         public NavigationManager? Navigation { get; set; }
-        private byte BackPressCounter;
+        private byte BackPressCounter = 0;
 
         public event Action? Action;
 
@@ -41,11 +42,8 @@ namespace NoDecentDiary.Services
         {
             if (Action != null && Action?.GetInvocationList().Length> 0)
             {
-                Action?.Invoke();
-                foreach (var item in Action!.GetInvocationList())
-                {
-                    Action -= item as Action;
-                }
+                var delegates = Action!.GetInvocationList();
+                (delegates.Last() as Action)!.Invoke();
             }
             else
             {
@@ -78,14 +76,15 @@ namespace NoDecentDiary.Services
             }
             else if (BackPressCounter == 0)
             {
-
-#if ANDROID
                 BackPressCounter++;
+#if ANDROID
+#pragma warning disable CS8602 // 解引用可能出现空引用。
                 Android.Widget.Toast.MakeText(Android.App.Application.Context, "再按一次退出", Android.Widget.ToastLength.Long).Show();
                 Task.Run(async ()=>{
                     await Task.Delay(2000);
                     BackPressCounter = 0;
                 });
+#pragma warning restore CS8602 // 解引用可能出现空引用。
 #endif
             }
         }

@@ -12,7 +12,7 @@
 
     <MSpacer></MSpacer>
     <MButton Icon
-             OnClick="()=>showShare=true">
+             OnClick="()=>ShowShare=true">
         <MIcon>
             mdi-share-variant-outline
         </MIcon>
@@ -30,7 +30,7 @@
         </MIcon>
     </MButton>
 
-    <MMenu @bind-Value="showMenu"
+    <MMenu @bind-Value="ShowMenu"
            Rounded="@("lg")"
            Transition="scroll-x-reverse-transition">
         <ActivatorContent>
@@ -131,12 +131,12 @@
     </MContainer>
 </ScrollContainer>
 
-<MDialog @bind-Value="showShare" MaxWidth="420">
+<MDialog @bind-Value="ShowShare" MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             选择分享方式
             <MSpacer></MSpacer>
-            <MButton Icon OnClick="()=>showShare = false">
+            <MButton Icon OnClick="()=>ShowShare = false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>

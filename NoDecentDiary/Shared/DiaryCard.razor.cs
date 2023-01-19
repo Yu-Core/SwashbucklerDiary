@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,11 @@ using Util.Reflection.Expressions.IntelligentGeneration.Extensions;
 
 namespace NoDecentDiary.Shared
 {
-    public partial class DiaryCard
+    public partial class DiaryCard : IDisposable
     {
+        [Inject]
+        public INavigateService? NavigateService { get; set; }
+
         [Parameter]
         [EditorRequired]
         public DiaryModel? Value { get; set; }
@@ -31,8 +35,42 @@ namespace NoDecentDiary.Shared
         private string? Title => Value!.Title;
         private string? Text => Value!.Content;
         private bool Top => Value!.Top;
-        private bool showMenu = false;
-
-        
+        private bool _showMenu;
+        private bool ShowMenu
+        {
+            get => _showMenu;
+            set
+            {
+                SetShowMenu(value);
+            }
+        }
+        private void SetShowMenu(bool value)
+        {
+            if (_showMenu != value)
+            {
+                _showMenu = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseMenu;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseMenu;
+                }
+            }
+        }
+        private void CloseMenu()
+        {
+            ShowMenu = false;
+            StateHasChanged();
+        }
+        public void Dispose()
+        {
+            if (ShowMenu)
+            {
+                NavigateService!.Action -= CloseMenu;
+            }
+            GC.SuppressFinalize(this);
+        }
     }
 }

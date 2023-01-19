@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Shared
 {
-    public partial class DiaryCardList
+    public partial class DiaryCardList : IDisposable
     {
         [Inject]
         public IPopupService? PopupService { get; set; }
@@ -31,7 +31,15 @@ namespace NoDecentDiary.Shared
         [EditorRequired]
         public List<DiaryModel>? Value { get; set; }
 
-        private bool showSelectTag;
+        private bool _showSelectTag;
+        private bool ShowSelectTag
+        {
+            get => _showSelectTag;
+            set
+            {
+                SetShowSelectTag(value);
+            }
+        }
         private int SelectedDiaryId;
         private List<TagModel> SelectedTags = new List<TagModel>();
         
@@ -74,7 +82,7 @@ namespace NoDecentDiary.Shared
         }
         private async void Copy(DiaryModel diaryModel)
         {
-            var text = DiaryCopyContent(diaryModel);
+            var text = DiaryCardList.DiaryCopyContent(diaryModel);
             await Clipboard.Default.SetTextAsync(text);
 
             await PopupService!.AlertAsync(param =>
@@ -89,25 +97,54 @@ namespace NoDecentDiary.Shared
             SelectedDiaryId = id;
             SelectedTags = await TagService!.GetDiaryTagsAsync(SelectedDiaryId);
             StateHasChanged();
-            showSelectTag = true;
+            ShowSelectTag = true;
         }
         private async Task HandOnSaveSelectTags()
         {
             await DiaryTagService!.DeleteAsync(it => it.DiaryId == SelectedDiaryId);
             await DiaryTagService.AddTagsAsync(SelectedDiaryId, SelectedTags);
-            showSelectTag = false;
+            ShowSelectTag = false;
         }
         private void HandOnClick(int id)
         {
             NavigateService!.NavigateTo($"/Read/{id}");
         }
-        private string DiaryCopyContent(DiaryModel diary)
+        private static string DiaryCopyContent(DiaryModel diary)
         {
             if (string.IsNullOrEmpty(diary.Title))
             {
                 return diary.Content!;
             }
             return diary.Title + "\n" + diary.Content;
+        }
+        private void SetShowSelectTag(bool value)
+        {
+            if (_showSelectTag != value)
+            {
+                _showSelectTag = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseSelectTag;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseSelectTag;
+                }
+            }
+        }
+        private void CloseSelectTag()
+        {
+            ShowSelectTag= false;
+            StateHasChanged();
+        }
+
+        public void Dispose()
+        {
+            if (ShowSelectTag)
+            {
+                NavigateService!.Action -= CloseSelectTag;
+            }
+            GC.SuppressFinalize(this);
         }
     }
 }

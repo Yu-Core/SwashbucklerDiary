@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class Index
+    public partial class Index : IDisposable
     {
         [Inject]
         public I18n? I18n { get; set; }
@@ -35,17 +35,35 @@ namespace NoDecentDiary.Pages
         [SupplyParameterFromQuery]
         public string? Type { get; set; }
         private StringNumber tabs = 0;
-        private List<DiaryModel> Diaries { get; set; } = new List<DiaryModel>();
-        private List<TagModel> Tags { get; set; } = new List<TagModel>();
-        private bool showEditTag;
         private int EditTagId;
         private string? EditTagName;
-        private bool showAddTag;
         private string? AddTagName;
+
+        private bool _showEditTag;
+        private bool ShowEditTag
+        {
+            get => _showEditTag;
+            set
+            {
+                SetShowEditTag(value);
+            }
+        }
+        private bool _showAddTag;
+        private bool ShowAddTag
+        {
+            get => _showAddTag;
+            set
+            {
+                SetShowAddTag(value);
+            }
+        }
+        private List<DiaryModel> Diaries { get; set; } = new List<DiaryModel>();
+        private List<TagModel> Tags { get; set; } = new List<TagModel>();
         private readonly List<string> Types = new()
         {
             "All", "Tags"
         };
+
         protected override async Task OnInitializedAsync()
         {
             SetTab();
@@ -63,6 +81,10 @@ namespace NoDecentDiary.Pages
         }
         private void SetTab()
         {
+            if(string.IsNullOrEmpty(Type))
+            {
+                Type = Types[0];
+            }
             tabs = Types.IndexOf(Type!);
         }
         private void HandOnTagRename(TagModel tag)
@@ -70,11 +92,11 @@ namespace NoDecentDiary.Pages
             EditTagId = tag.Id;
             EditTagName = tag.Name;
             StateHasChanged();
-            showEditTag = true;
+            ShowEditTag = true;
         }
         private async Task HandOnSaveEditTag()
         {
-            showEditTag = false;
+            ShowEditTag = false;
             if (string.IsNullOrWhiteSpace(EditTagName))
             {
                 return;
@@ -144,7 +166,7 @@ namespace NoDecentDiary.Pages
         }
         private async Task HandOnSaveAddTag()
         {
-            showAddTag = false;
+            ShowAddTag = false;
             if (string.IsNullOrWhiteSpace(AddTagName))
             {
                 return;
@@ -175,6 +197,62 @@ namespace NoDecentDiary.Pages
         private void NavigateToSearch()
         {
             NavigateService!.NavigateTo("/Search");
+        }
+        private void NavigateToWrite()
+        {
+            NavigateService!.NavigateTo("/Write");
+        }
+        private void SetShowEditTag(bool value)
+        {
+            if (_showEditTag != value)
+            {
+                _showEditTag = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseEditTag;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseEditTag;
+                }
+            }
+        }
+        private void CloseEditTag()
+        {
+            ShowEditTag = false;
+            StateHasChanged();
+        }
+        private void SetShowAddTag(bool value)
+        {
+            if (_showAddTag != value)
+            {
+                _showAddTag = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseAddTag;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseAddTag;
+                }
+            }
+        }
+        private void CloseAddTag()
+        {
+            ShowAddTag = false;
+            StateHasChanged();
+        }
+        public void Dispose()
+        {
+            if(ShowAddTag)
+            {
+                NavigateService!.Action -= CloseAddTag;
+            }
+            if (ShowEditTag)
+            {
+                NavigateService!.Action -= CloseEditTag;
+            }
+            GC.SuppressFinalize(this);
         }
     }
 }

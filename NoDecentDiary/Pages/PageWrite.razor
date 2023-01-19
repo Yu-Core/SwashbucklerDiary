@@ -13,13 +13,13 @@
     <MSpacer></MSpacer>
 
     <MButton Icon
-             OnClick="()=>showSelectTag = true">
+             OnClick="()=>ShowSelectTag = true">
         <MIcon>
             mdi-label-outline
         </MIcon>
     </MButton>
 
-    <MMenu @bind-Value="showMenu"
+    <MMenu @bind-Value="ShowMenu"
            Rounded="@("lg")"
            Transition="scroll-x-reverse-transition">
         <ActivatorContent>
@@ -133,7 +133,7 @@
     </MContainer>
 </ScrollContainer>
 
-<SelectTags @bind-Value="showSelectTag"
+<SelectTags @bind-Value="ShowSelectTag"
             @bind-Values="SelectedTags"
             OnSave="HandOnSaveSelectTags">
 </SelectTags>
