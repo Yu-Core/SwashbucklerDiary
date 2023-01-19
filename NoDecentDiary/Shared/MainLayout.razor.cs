@@ -1,6 +1,7 @@
 ﻿using BlazorComponent;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using NoDecentDiary.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,14 @@ namespace NoDecentDiary.Shared
         private MasaBlazor? MasaBlazor { get; set; }
         [Inject]
         private NavigationManager? Navigation { get; set; }
+        [Inject]
+        public INavigateService? NavigateService { get; set; }
 
         StringNumber SelectedItem = 0;
 
         readonly List<NavigationButton> NavigationButtons = new()
         {
-            new NavigationButton(0,"日记","mdi-notebook-outline","mdi-notebook","Diaries"),
+            new NavigationButton(0,"日记","mdi-notebook-outline","mdi-notebook",""),
             new NavigationButton(1,"回忆","mdi-clock-outline","mdi-clock","History"),
             new NavigationButton(2,"我的","mdi-account-outline","mdi-account","Mine")
         };
@@ -44,6 +47,7 @@ namespace NoDecentDiary.Shared
 
         protected override Task OnInitializedAsync()
         {
+            NavigateService!.Navigation = Navigation;
             MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             return base.OnInitializedAsync();
         }

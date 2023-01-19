@@ -10,18 +10,18 @@ namespace NoDecentDiary.Services
 {
     public class NavigateService : INavigateService
     {
-        NavigationManager _navigation { get; set; }
-        public NavigateService(NavigationManager navigation) 
-        {
-            _navigation = navigation;
-        }
+        public NavigationManager? Navigation { get; set; }
+        private byte BackPressCounter;
+
+        public event Action? Action;
+
         public List<string> HistoryHref { get; set; } = new List<string>();
 
         public void NavigateTo(string url)
         {
-            var href = _navigation.ToBaseRelativePath(_navigation.Uri);
+            var href = Navigation!.ToBaseRelativePath(Navigation.Uri);
             HistoryHref.Add(href);
-            _navigation.NavigateTo(url);
+            Navigation.NavigateTo(url);
         }
         public void NavigateToBack()
         {
@@ -30,12 +30,36 @@ namespace NoDecentDiary.Services
             {
                 href = HistoryHref.Last();
             }
-            _navigation.NavigateTo(href);
+            Navigation!.NavigateTo(href);
             if (HistoryHref.Count > 0)
             {
                 HistoryHref.RemoveAt(HistoryHref.Count - 1);
             }
         }
+
+        public void OnBackButtonPressed()
+        {
+            if (Action != null && Action?.GetInvocationList().Length> 0)
+            {
+                Action?.Invoke();
+                foreach (var item in Action!.GetInvocationList())
+                {
+                    Action -= item as Action;
+                }
+            }
+            else
+            {
+                if (HistoryHref.Count > 0)
+                {
+                    NavigateToBack();
+                }
+                else
+                {
+                    QuitApp();
+                }
+            }
+        }
+
         public void UpdateLastHistoryHref(string href)
         {
             if (HistoryHref.Count > 0)
@@ -43,6 +67,27 @@ namespace NoDecentDiary.Services
                 HistoryHref.RemoveAt(HistoryHref.Count - 1);
             }
             HistoryHref.Add(href);
+        }
+        private void QuitApp()
+        {
+            if (BackPressCounter == 1)
+            {
+#if ANDROID
+                Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
+#endif
+            }
+            else if (BackPressCounter == 0)
+            {
+
+#if ANDROID
+                BackPressCounter++;
+                Android.Widget.Toast.MakeText(Android.App.Application.Context, "再按一次退出", Android.Widget.ToastLength.Long).Show();
+                Task.Run(async ()=>{
+                    await Task.Delay(2000);
+                    BackPressCounter = 0;
+                });
+#endif
+            }
         }
     }
 }

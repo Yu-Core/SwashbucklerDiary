@@ -16,7 +16,7 @@ namespace NoDecentDiary.Extend
             services.AddSingleton<ITagService, TagService>();
             services.AddSingleton<IDiaryService, DiaryService>();
             services.AddSingleton<IDiaryTagService, DiaryTagService>();
-            services.AddScoped<INavigateService, NavigateService>();
+            services.AddSingleton<INavigateService, NavigateService>();
             return services;
         }
     }

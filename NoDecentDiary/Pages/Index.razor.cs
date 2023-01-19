@@ -48,22 +48,9 @@ namespace NoDecentDiary.Pages
         };
         protected override async Task OnInitializedAsync()
         {
-            Redirect();
             SetTab();
             await UpdateTags();
             await UpdateDiaries();
-        }
-        private void Redirect()
-        {
-            if (string.IsNullOrEmpty(Type) || !Types.Contains(Type))
-            {
-                Type = "All";
-            }
-            string url = Navigation!.ToBaseRelativePath(Navigation.BaseUri);
-            if (url == "")
-            {
-                Navigation!.NavigateTo("/Diaries");
-            }
         }
         private async Task UpdateDiaries()
         {
