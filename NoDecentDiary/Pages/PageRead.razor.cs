@@ -34,6 +34,19 @@ namespace NoDecentDiary.Pages
         [Parameter]
         public int Id { get; set; }
         private DiaryModel _diary = new DiaryModel();
+        private bool _showDelete;
+        private bool ShowDelete
+        {
+            get => _showDelete;
+            set
+            {
+                _showDelete = value;
+                if (!value)
+                {
+                    HandOnOKDelete = null;
+                }
+            }
+        }
         private bool _showMenu;
         private bool ShowMenu
         {
@@ -70,6 +83,7 @@ namespace NoDecentDiary.Pages
         private List<TagModel> SelectedTags = new List<TagModel>();
         private bool Top => _diary.Top;
         private IJSObjectReference? module;
+        private Action? HandOnOKDelete;
 
         protected override async Task OnInitializedAsync()
         {
@@ -124,30 +138,24 @@ namespace NoDecentDiary.Pages
             }
             GC.SuppressFinalize(this);
         }
-        public async Task HandOnDelete()
+        public void HandOnDelete()
         {
-            var confirmed = await PopupService!.ConfirmAsync(param =>
+            HandOnOKDelete += async () =>
             {
-                param.Title = "删除日记";
-                param.TitleStyle = "font-weight:700;";
-                param.Content = "请慎重删除，每一篇日记都是珍贵的回忆。";
-                param.IconColor = "red";
-                param.ActionsStyle = "justify-content: flex-end;";
-            });
-            if (!confirmed)
-            {
-                return;
-            }
-            bool flag = await DiaryService!.DeleteAsync(Id);
-            if (flag)
-            {
-                await PopupService!.AlertAsync("删除成功", AlertTypes.Success);
-            }
-            else
-            {
-                await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
-            }
-            NavigateToBack();
+                ShowDelete = false;
+                bool flag = await DiaryService!.DeleteAsync(Id);
+                if (flag)
+                {
+                    await PopupService!.AlertAsync("删除成功", AlertTypes.Success);
+                }
+                else
+                {
+                    await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
+                }
+                NavigateToBack();
+            };
+            ShowDelete = true;
+            StateHasChanged();
         }
         public void HandOnEdit()
         {

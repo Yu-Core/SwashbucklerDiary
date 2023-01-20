@@ -42,3 +42,10 @@
             @bind-Values="SelectedTags"
             OnSave="HandOnSaveSelectTags">
 </SelectTags>
+
+<DeleteDialog @bind-Value="ShowDeleteDiary"
+              Title="删除日记"
+              Content="请慎重删除，每一篇日记都是珍贵的回忆。"
+              OnOK="()=>HandOnOKDelete?.Invoke()">
+
+</DeleteDialog>

@@ -169,3 +169,10 @@
     <MProgressCircular Indeterminate
                        Size="64"></MProgressCircular>
 </MOverlay>
+
+<DeleteDialog @bind-Value="ShowDelete"
+              Title="删除日记"
+              Content="请慎重删除，每一篇日记都是珍贵的回忆。"
+              OnOK="()=>HandOnOKDelete?.Invoke()">
+
+</DeleteDialog>

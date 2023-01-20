@@ -3,11 +3,6 @@ using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoDecentDiary.Shared
 {
@@ -18,22 +13,36 @@ namespace NoDecentDiary.Shared
         [Inject]
         public ITagService? TagService { get; set; }
         [Inject]
-        public IDiaryTagService? DiaryTagService { get; set;}
+        public IDiaryTagService? DiaryTagService { get; set; }
         [Inject]
         public INavigateService? NavigateService { get; set; }
 
         [Parameter]
         [EditorRequired]
         public List<TagModel>? Value { get; set; }
-        private int EditTagId;
-        private string? EditTagName;
-        private bool _showEditTag;
-        private bool ShowEditTag
+        private int RenameTagId;
+        private string? RenameTagName;
+        private Action? HandOnOKDeleteTag { get; set; }
+        private bool _showDeleteTag;
+        private bool ShowDeleteTag
         {
-            get => _showEditTag;
+            get => _showDeleteTag;
             set
             {
-                SetShowEditTag(value);
+                _showDeleteTag = value;
+                if (!value)
+                {
+                    HandOnOKDeleteTag = null;
+                }
+            }
+        }
+        private bool _showRenameTag;
+        private bool ShowRenameTag
+        {
+            get => _showRenameTag;
+            set
+            {
+                SetShowRenameTag(value);
             }
         }
 
@@ -43,54 +52,49 @@ namespace NoDecentDiary.Shared
         }
         private void HandOnTagRename(TagModel tag)
         {
-            EditTagId = tag.Id;
-            EditTagName = tag.Name;
+            RenameTagId = tag.Id;
+            RenameTagName = tag.Name;
             StateHasChanged();
-            ShowEditTag = true;
+            ShowRenameTag = true;
         }
-        private async Task HandOnTagDelete(TagModel tag)
+
+        private void HandOnTagDelete(TagModel tag)
         {
-            var confirmed = await PopupService!.ConfirmAsync(param =>
+            HandOnOKDeleteTag += async () =>
             {
-                param.Title = "删除标签";
-                param.TitleStyle = "font-weight:700;";
-                param.Content = "请慎重删除";
-                param.IconColor = "red";
-                param.ActionsStyle = "justify-content: flex-end;";
-            });
-            if (!confirmed)
-            {
-                return;
-            }
-            bool flag = await TagService!.DeleteAsync(tag);
-            if (flag)
-            {
-                Value!.Remove(tag);
-                await PopupService!.AlertAsync("删除成功", AlertTypes.Success);
-                this.StateHasChanged();
-                await DiaryTagService!.DeleteAsync(it => it.TagId == tag.Id);
-            }
-            else
-            {
-                await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
-            }
+                ShowDeleteTag = false;
+                bool flag = await TagService!.DeleteAsync(tag);
+                if (flag)
+                {
+                    Value!.Remove(tag);
+                    await PopupService!.AlertAsync("删除成功", AlertTypes.Success);
+                    this.StateHasChanged();
+                    await DiaryTagService!.DeleteAsync(it => it.TagId == tag.Id);
+                }
+                else
+                {
+                    await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
+                }
+            };
+            ShowDeleteTag = true;
+            StateHasChanged();
         }
-        private async Task HandOnSaveEditTag()
+        private async Task HandOnSaveRenameTag()
         {
-            ShowEditTag = false;
-            if (string.IsNullOrWhiteSpace(EditTagName))
+            ShowRenameTag = false;
+            if (string.IsNullOrWhiteSpace(RenameTagName))
             {
                 return;
             }
 
-            if (Value!.Any(it => it.Name == EditTagName))
+            if (Value!.Any(it => it.Name == RenameTagName))
             {
                 await PopupService!.AlertAsync("标签已存在", AlertTypes.Warning);
                 return;
             }
 
-            var tag = Value!.FirstOrDefault(it => it.Id == EditTagId);
-            tag!.Name = EditTagName;
+            var tag = Value!.FirstOrDefault(it => it.Id == RenameTagId);
+            tag!.Name = RenameTagName;
             bool flag = await TagService!.UpdateAsync(tag);
             if (flag)
             {
@@ -105,31 +109,31 @@ namespace NoDecentDiary.Shared
         {
             NavigateService!.NavigateTo($"/Tag/{id}");
         }
-        private void SetShowEditTag(bool value)
+        private void SetShowRenameTag(bool value)
         {
-            if (_showEditTag != value)
+            if (_showRenameTag != value)
             {
-                _showEditTag = value;
+                _showRenameTag = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseEditTag;
+                    NavigateService!.Action += CloseRenameTag;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseEditTag;
+                    NavigateService!.Action -= CloseRenameTag;
                 }
             }
         }
-        private void CloseEditTag()
+        private void CloseRenameTag()
         {
-            ShowEditTag = false;
+            ShowRenameTag = false;
             StateHasChanged();
         }
         public void Dispose()
         {
-            if (ShowEditTag)
+            if (ShowRenameTag)
             {
-                NavigateService!.Action -= CloseEditTag;
+                NavigateService!.Action -= CloseRenameTag;
             }
             GC.SuppressFinalize(this);
         }

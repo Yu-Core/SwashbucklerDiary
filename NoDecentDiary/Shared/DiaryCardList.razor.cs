@@ -23,6 +23,19 @@ namespace NoDecentDiary.Shared
         [EditorRequired]
         public List<DiaryModel>? Value { get; set; }
 
+        private bool _showDeleteDiary;
+        private bool ShowDeleteDiary
+        {
+            get => _showDeleteDiary;
+            set
+            {
+                _showDeleteDiary = value;
+                if (!value)
+                {
+                    HandOnOKDelete = null;
+                }
+            }
+        }
         private bool _showSelectTag;
         private bool ShowSelectTag
         {
@@ -34,7 +47,8 @@ namespace NoDecentDiary.Shared
         }
         private int SelectedDiaryId;
         private List<TagModel> SelectedTags = new List<TagModel>();
-        
+        private Action? HandOnOKDelete;
+
         public DiaryCardList()
         {
             Value ??= new List<DiaryModel>();
@@ -46,31 +60,25 @@ namespace NoDecentDiary.Shared
             await DiaryService!.UpdateAsync(diaryModel);
 
         }
-        private async Task Delete(DiaryModel diaryModel)
+        private void Delete(DiaryModel diaryModel)
         {
-            var confirmed = await PopupService!.ConfirmAsync(param =>
+            HandOnOKDelete += async () =>
             {
-                param.Title = "删除日记";
-                param.TitleStyle = "font-weight:700;";
-                param.Content = "请慎重删除，每一篇日记都是珍贵的回忆。";
-                param.IconColor = "red";
-                param.ActionsStyle = "justify-content: flex-end;";
-            });
-            if (!confirmed)
-            {
-                return;
-            }
-            bool flag = await DiaryService!.DeleteAsync(diaryModel);
-            if (flag)
-            {
-                Value!.Remove(diaryModel);
-                await PopupService!.AlertAsync("删除成功", AlertTypes.Success);
-                this.StateHasChanged();
-            }
-            else
-            {
-                await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
-            }
+                ShowDeleteDiary = false;
+                bool flag = await DiaryService!.DeleteAsync(diaryModel);
+                if (flag)
+                {
+                    Value!.Remove(diaryModel);
+                    await PopupService!.AlertAsync("删除成功", AlertTypes.Success);
+                    this.StateHasChanged();
+                }
+                else
+                {
+                    await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
+                }
+            };
+            ShowDeleteDiary= true;
+            StateHasChanged();
         }
         private async void Copy(DiaryModel diaryModel)
         {
@@ -126,7 +134,7 @@ namespace NoDecentDiary.Shared
         }
         private void CloseSelectTag()
         {
-            ShowSelectTag= false;
+            ShowSelectTag = false;
             StateHasChanged();
         }
 

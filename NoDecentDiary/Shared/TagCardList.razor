@@ -18,9 +18,16 @@
     </div>
 }
 
-<InputTag @bind-Value="ShowEditTag"
-          @bind-Text="EditTagName"
+<InputTag @bind-Value="ShowRenameTag"
+          @bind-Text="RenameTagName"
           Title="重命名标签"
-          OnSave="HandOnSaveEditTag">
+          OnSave="HandOnSaveRenameTag">
 
 </InputTag>
+
+<DeleteDialog @bind-Value="ShowDeleteTag"
+              Title="删除标签"
+              Content="请慎重删除，一旦删除，不可恢复"
+              OnOK="()=>HandOnOKDeleteTag?.Invoke()">
+
+</DeleteDialog>

@@ -1,0 +1,23 @@
+﻿<MDialog Value="Value"
+         ValueChanged="InternalValueChanged"
+         MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @Title
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            @Content
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text OnClick="HandleOnCancel">
+                取消
+            </MButton>
+            <MButton Text
+                     Color="red"
+                     OnClick="OnOK">
+                确认
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MDialog>
