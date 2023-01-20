@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using NoDecentDiary.Shared;
+using System;
 
 namespace NoDecentDiary.Pages
 {
@@ -140,6 +141,31 @@ namespace NoDecentDiary.Pages
         {
             ShowAddTag = false;
             StateHasChanged();
+        }
+        private string GetWelcomeText()
+        {
+            int hour = Convert.ToInt16(DateTime.Now.ToString("HH"));
+            if(hour >= 6 && hour < 11)
+            {
+                return "早上好，又是全新的一天";
+            }
+            else if(hour >= 11 && hour < 13)
+            {
+                return "中午好，吃午饭了吗";
+            }
+            else if (hour >= 13 && hour < 18)
+            {
+                return "下午好，享受美好的下午时光";
+            }
+            else if (hour >= 18 && hour < 23)
+            {
+                return "晚上好，该到了休息的时候";
+            }
+            else if (hour >= 23 || hour < 6)
+            {
+                return "凌晨好，愿你好梦";
+            }
+            return "Hello World";
         }
         public void Dispose()
         {

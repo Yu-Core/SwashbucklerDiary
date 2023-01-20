@@ -29,7 +29,9 @@
                 @(DateTime.Now.ToString("yyyy/MM/dd") + " " + DateTime.Now.DayOfWeek.ToChinese2())
             </MSubheader>
 
-            <div class="text-h6 font-weight-bold">早上好，又是全新的一天</div>
+            <div class="text-h6 font-weight-bold">
+                @GetWelcomeText()
+            </div>
         </div>
 
         <DiaryCardList Value="Diaries"></DiaryCardList>
