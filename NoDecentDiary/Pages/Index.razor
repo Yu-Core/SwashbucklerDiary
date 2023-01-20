@@ -35,59 +35,7 @@
         <DiaryCardList Value="Diaries"></DiaryCardList>
     </SwiperTabItem>
     <SwiperTabItem>
-        <div class="d-flex justify-space-between flex-wrap">
-            @foreach (var item in Tags)
-            {
-                <MCard Class="mb-5 tag-card"
-                   Ripple="false"
-                   Rounded="@("lg")"
-                   OnClick="()=>HandOnTagClick(item.Id)">
-                    <MListItem>
-                        <MListItemIcon>
-                            <MIcon>
-                                mdi-label-outline
-                            </MIcon>
-                        </MListItemIcon>
-
-                        <MListItemContent>
-                            @item.Name
-                        </MListItemContent>
-
-                        <MListItemAction>
-                            <div @onclick:stopPropagation="true">
-                                <MMenu Rounded="@("lg")"
-                                   Bottom
-                                   Left
-                                   Transition="scroll-x-reverse-transition">
-                                    <ActivatorContent>
-                                        <MButton Icon
-                                             @attributes="@context.Attrs">
-                                            <MIcon>mdi-pencil</MIcon>
-                                        </MButton>
-                                    </ActivatorContent>
-                                    <ChildContent>
-                                        <MList MinWidth="150">
-                                            <MListItem Dense
-                                                   OnClick="()=>HandOnTagRename(item)">
-                                                <MListItemContent>
-                                                    重命名
-                                                </MListItemContent>
-                                            </MListItem>
-                                            <MListItem Dense
-                                                   OnClick="()=>HandOnTagDelete(item)">
-                                                <MListItemContent>
-                                                    删除
-                                                </MListItemContent>
-                                            </MListItem>
-                                        </MList>
-                                    </ChildContent>
-                                </MMenu>
-                            </div>
-                        </MListItemAction>
-                    </MListItem>
-                </MCard>
-            }
-        </div>
+        <TagCardList Value="Tags"></TagCardList>
     </SwiperTabItem>
 </SwiperTabItems>
 
@@ -127,12 +75,6 @@
     </FabTransition>
 }
 
-<InputTag @bind-Value="ShowEditTag"
-          @bind-Text="EditTagName"
-          Title="重命名标签"
-          OnSave="HandOnSaveEditTag">
-
-</InputTag>
 <InputTag @bind-Value="ShowAddTag"
           @bind-Text="AddTagName"
           Title="添加标签"

@@ -1,0 +1,26 @@
+﻿<div class="d-flex justify-space-between flex-wrap">
+    @foreach (var item in Value!)
+    {
+        <TagCard Value="item"
+             OnDelete="()=>HandOnTagDelete(item)"
+             OnRename="()=>HandOnTagRename(item)"
+             OnClick="()=>HandOnTagClick(item.Id)">
+        </TagCard>
+    }
+</div>
+
+@if (!Value.Any())
+{
+    <div class="d-flex justify-center" style="padding-top:20vh;">
+        <div class="text-h6 text--secondary font-weight-bold-table">
+            暂无日记
+        </div>
+    </div>
+}
+
+<InputTag @bind-Value="ShowEditTag"
+          @bind-Text="EditTagName"
+          Title="重命名标签"
+          OnSave="HandOnSaveEditTag">
+
+</InputTag>

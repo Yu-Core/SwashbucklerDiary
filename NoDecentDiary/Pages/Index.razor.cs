@@ -5,11 +5,6 @@ using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using NoDecentDiary.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
@@ -35,19 +30,7 @@ namespace NoDecentDiary.Pages
         [SupplyParameterFromQuery]
         public string? Type { get; set; }
         private StringNumber tabs = 0;
-        private int EditTagId;
-        private string? EditTagName;
         private string? AddTagName;
-
-        private bool _showEditTag;
-        private bool ShowEditTag
-        {
-            get => _showEditTag;
-            set
-            {
-                SetShowEditTag(value);
-            }
-        }
         private bool _showAddTag;
         private bool ShowAddTag
         {
@@ -86,70 +69,6 @@ namespace NoDecentDiary.Pages
                 Type = Types[0];
             }
             tabs = Types.IndexOf(Type!);
-        }
-        private void HandOnTagRename(TagModel tag)
-        {
-            EditTagId = tag.Id;
-            EditTagName = tag.Name;
-            StateHasChanged();
-            ShowEditTag = true;
-        }
-        private async Task HandOnSaveEditTag()
-        {
-            ShowEditTag = false;
-            if (string.IsNullOrWhiteSpace(EditTagName))
-            {
-                return;
-            }
-
-            if (Tags.Any(it => it.Name == EditTagName))
-            {
-                await PopupService!.AlertAsync("标签已存在", AlertTypes.Warning);
-                return;
-            }
-
-            var tag = Tags.FirstOrDefault(it => it.Id == EditTagId);
-            tag!.Name = EditTagName;
-            bool flag = await TagService!.UpdateAsync(tag);
-            if (flag)
-            {
-                await PopupService!.AlertAsync("修改成功", AlertTypes.Success);
-            }
-            else
-            {
-                await PopupService!.AlertAsync("修改失败", AlertTypes.Error);
-            }
-        }
-        private async Task HandOnTagDelete(TagModel tag)
-        {
-            var confirmed = await PopupService!.ConfirmAsync(param =>
-            {
-                param.Title = "删除标签";
-                param.TitleStyle = "font-weight:700;";
-                param.Content = "请慎重删除";
-                param.IconColor = "red";
-                param.ActionsStyle = "justify-content: flex-end;";
-            });
-            if (!confirmed)
-            {
-                return;
-            }
-            bool flag = await TagService!.DeleteAsync(tag);
-            if (flag)
-            {
-                Tags.Remove(tag);
-                await PopupService!.AlertAsync("删除成功", AlertTypes.Success);
-                this.StateHasChanged();
-                await DiaryTagService!.DeleteAsync(it => it.TagId == tag.Id);
-            }
-            else
-            {
-                await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
-            }
-        }
-        private void HandOnTagClick(int id)
-        {
-            NavigateService!.NavigateTo($"/Tag/{id}");
         }
         private async Task HandOnRefreshData(StringNumber value)
         {
@@ -202,26 +121,6 @@ namespace NoDecentDiary.Pages
         {
             NavigateService!.NavigateTo("/Write");
         }
-        private void SetShowEditTag(bool value)
-        {
-            if (_showEditTag != value)
-            {
-                _showEditTag = value;
-                if (value)
-                {
-                    NavigateService!.Action += CloseEditTag;
-                }
-                else
-                {
-                    NavigateService!.Action -= CloseEditTag;
-                }
-            }
-        }
-        private void CloseEditTag()
-        {
-            ShowEditTag = false;
-            StateHasChanged();
-        }
         private void SetShowAddTag(bool value)
         {
             if (_showAddTag != value)
@@ -247,10 +146,6 @@ namespace NoDecentDiary.Pages
             if(ShowAddTag)
             {
                 NavigateService!.Action -= CloseAddTag;
-            }
-            if (ShowEditTag)
-            {
-                NavigateService!.Action -= CloseEditTag;
             }
             GC.SuppressFinalize(this);
         }

@@ -1,0 +1,49 @@
+﻿<MCard Class="mb-5 tag-card"
+       Ripple="false"
+       Rounded="@("lg")"
+       OnClick="OnClick">
+    <MListItem>
+        <MListItemIcon>
+            <MIcon>
+                mdi-label-outline
+            </MIcon>
+        </MListItemIcon>
+
+        <MListItemContent>
+            @(Value!.Name)
+        </MListItemContent>
+
+        <MListItemAction>
+            <div @onclick:stopPropagation="true">
+                <MMenu @bind-Value="ShowMenu"
+                       Rounded="@("lg")"
+                       Bottom
+                       Left
+                       Transition="scroll-x-reverse-transition">
+                    <ActivatorContent>
+                        <MButton Icon
+                                 @attributes="@context.Attrs">
+                            <MIcon>mdi-pencil</MIcon>
+                        </MButton>
+                    </ActivatorContent>
+                    <ChildContent>
+                        <MList MinWidth="150">
+                            <MListItem Dense
+                                       OnClick="OnRename">
+                                <MListItemContent>
+                                    重命名
+                                </MListItemContent>
+                            </MListItem>
+                            <MListItem Dense
+                                       OnClick="OnDelete">
+                                <MListItemContent>
+                                    删除
+                                </MListItemContent>
+                            </MListItem>
+                        </MList>
+                    </ChildContent>
+                </MMenu>
+            </div>
+        </MListItemAction>
+    </MListItem>
+</MCard>

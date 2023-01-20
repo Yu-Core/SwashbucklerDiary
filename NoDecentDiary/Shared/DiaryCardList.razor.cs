@@ -1,16 +1,8 @@
 ﻿using BlazorComponent;
 using Masa.Blazor;
-using Masa.Blazor.Popup.Components;
 using Microsoft.AspNetCore.Components;
-using NoDecentDiary.Extend;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
-using NoDecentDiary.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoDecentDiary.Shared
 {
