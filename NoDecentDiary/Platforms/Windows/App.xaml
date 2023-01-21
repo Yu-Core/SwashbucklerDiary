@@ -4,5 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:maui="using:Microsoft.Maui"
     xmlns:local="using:NoDecentDiary.WinUI">
-
+    <Application.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="WindowCaptionBackground">Transparent</SolidColorBrush>
+        </ResourceDictionary>
+    </Application.Resources>
 </maui:MauiWinUIApplication>
