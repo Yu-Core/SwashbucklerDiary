@@ -2,9 +2,11 @@
 
 <MApp>
     <MMain>
+        <MDivider></MDivider>
         @if (MasaBlazor!.Breakpoint.SmAndUp)
         {
             <MNavigationDrawer App
+                           Style="max-height:unset;"
                            Permanent>
                 <MList Rounded>
                     <MListItemGroup @bind-Value="SelectedItem">

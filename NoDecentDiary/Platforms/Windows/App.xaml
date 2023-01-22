@@ -6,7 +6,8 @@
     xmlns:local="using:NoDecentDiary.WinUI">
     <Application.Resources>
         <ResourceDictionary>
-            <SolidColorBrush x:Key="WindowCaptionBackground">Transparent</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowCaptionBackground">#fff</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">#fff</SolidColorBrush>
         </ResourceDictionary>
     </Application.Resources>
 </maui:MauiWinUIApplication>
