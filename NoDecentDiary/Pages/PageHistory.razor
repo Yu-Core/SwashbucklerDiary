@@ -1,2 +1,15 @@
 ﻿@page "/History"
-<h2>History</h2>
+
+<MContainer>
+    <MDatePicker @bind-Value="Picker"
+                 FullWidth
+                 NoTitle
+                 AllowedDates="AllowedDates"
+                 ShowCurrent="false"
+                 Events="ArrayEvents"
+                 EventColor='"green lighten-1"'
+                 Locale="zh-CN">
+
+    </MDatePicker>
+    <DiaryCardList Value="Diaries"></DiaryCardList>
+</MContainer>

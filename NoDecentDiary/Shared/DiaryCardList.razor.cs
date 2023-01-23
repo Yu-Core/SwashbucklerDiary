@@ -20,7 +20,6 @@ namespace NoDecentDiary.Shared
         public INavigateService? NavigateService { get; set; }
 
         [Parameter]
-        [EditorRequired]
         public List<DiaryModel>? Value { get; set; }
 
         private bool _showDeleteDiary;
@@ -82,7 +81,7 @@ namespace NoDecentDiary.Shared
         }
         private async void Copy(DiaryModel diaryModel)
         {
-            var text = DiaryCardList.DiaryCopyContent(diaryModel);
+            var text = DiaryCopyContent(diaryModel);
             await Clipboard.Default.SetTextAsync(text);
 
             await PopupService!.AlertAsync(param =>
