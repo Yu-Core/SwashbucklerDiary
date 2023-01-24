@@ -24,7 +24,7 @@ namespace NoDecentDiary.Pages
                 UpdateDiaries();
             }
         }
-        private readonly Func<DateOnly, bool> AllowedDates = value => value <= DateOnly.FromDateTime(DateTime.Now);
+        private Func<DateOnly, bool> AllowedDates = value => value <= DateOnly.FromDateTime(DateTime.Now);
         private DateOnly[] ArrayEvents = Array.Empty<DateOnly>();
         private List<DiaryModel> Diaries { get; set; } = new List<DiaryModel>();
         protected override void OnInitialized()
