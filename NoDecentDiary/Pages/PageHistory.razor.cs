@@ -20,12 +20,14 @@ namespace NoDecentDiary.Pages
             get => _picker;
             set
             {
-                _picker= value;
-                UpdateDiaries();
+                if (_picker != value)
+                {
+                    _picker = value;
+                    UpdateDiaries();
+                }
             }
         }
-        private Func<DateOnly, bool> AllowedDates = value => value <= DateOnly.FromDateTime(DateTime.Now);
-        private DateOnly[] ArrayEvents = Array.Empty<DateOnly>();
+        private Func<DateOnly, bool>? AllowedDates;
         private List<DiaryModel> Diaries { get; set; } = new List<DiaryModel>();
         protected override void OnInitialized()
         {
@@ -35,9 +37,10 @@ namespace NoDecentDiary.Pages
         {
             var diaries = await DiaryService!.QueryAsync();
             Diaries = diaries.Where(it => DateOnly.FromDateTime(it.CreateTime) == Picker).ToList();
-            ArrayEvents = diaries.Select(it => DateOnly.FromDateTime(it.CreateTime))
-                .Distinct()
-                .ToArray();
+            var dateOnly = diaries.Select(it => DateOnly.FromDateTime(it.CreateTime))
+                .Distinct();
+                
+            AllowedDates = value => dateOnly.Contains(value);
             StateHasChanged();
         }
     }

@@ -1,4 +1,6 @@
-﻿using NoDecentDiary.StaticData;
+﻿using Microsoft.AspNetCore.Components;
+using NoDecentDiary.IServices;
+using NoDecentDiary.StaticData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,8 @@ namespace NoDecentDiary.Pages
 {
     public partial class PageLog
     {
+        [Inject]
+        public INavigateService? NavigateService { get; set; }
         private List<string> LogTextList = new List<string>();
         protected override Task OnInitializedAsync()
         {
@@ -29,6 +33,10 @@ namespace NoDecentDiary.Pages
             {
                 LogTextList.Add(Line);
             }
+        }
+        private void HandOnBack()
+        {
+            NavigateService!.NavigateToBack();
         }
     }
 }

@@ -1,35 +1,32 @@
 ﻿@page "/Log"
 
-<MultiDisplay>
-    <DesktopContent>
-        <MBreadcrumbs Large>
-            <MBreadcrumbsItem Href="/components/breadcrumbs">Dashboard</MBreadcrumbsItem>
-            <MBreadcrumbsItem Href="/components/breadcrumbs" Text="Link 1"></MBreadcrumbsItem>
-            <MBreadcrumbsItem Href="/components/breadcrumbs" Disabled>Link 2</MBreadcrumbsItem>
-        </MBreadcrumbs>
-    </DesktopContent>
-    <MobileContent>
-        <MAppBar App>
-            <MButton Icon>
-                <MIcon>
-                    mdi-arrow-left
-                </MIcon>
-            </MButton>
 
-            <MToolbarTitle>查看日志文件</MToolbarTitle>
+<MAppBar App
+         ElevateOnScroll
+         Color="white"
+         ScrollTarget="#scrolling-log">
+    <MButton Icon OnClick="HandOnBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
 
-            <MSpacer></MSpacer>
-        </MAppBar>
-    </MobileContent>
-</MultiDisplay>
-<MList Dense>
-    @foreach (var item in LogTextList)
-    {
-        <MListItem>
-            <MListItemContent>
-                @item
-            </MListItemContent>
-        </MListItem>
-    }
-</MList>
-   
+    <MToolbarTitle>查看日志文件</MToolbarTitle>
+
+    <MSpacer></MSpacer>
+</MAppBar>
+<ScrollContainer Id="scrolling-log">
+    <MContainer>
+        <MList Dense>
+            @foreach (var item in LogTextList)
+            {
+                <MListItem>
+                    <MListItemContent>
+                        @item
+                    </MListItemContent>
+                </MListItem>
+            }
+        </MList>
+    </MContainer>
+</ScrollContainer>
+
