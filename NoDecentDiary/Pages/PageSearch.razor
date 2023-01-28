@@ -8,18 +8,16 @@
         <MIcon>mdi-arrow-left</MIcon>
     </MButton>
 
-    <div class="overflow-hidden flex-grow-1">
-        <MTextField TValue="string"
-                    Value="Search"
-                    ValueChanged="HandOnTextChanged"
-                    Solo
-                    Autofocus
-                    Clearable
-                    Placeholder="请输入日记关键词"
-                    HideDetails="@("auto")">
-
-        </MTextField>
-    </div>
+    <MTextField TValue="string"
+                Value="Search"
+                ValueChanged="HandOnTextChanged"
+                Solo
+                Flat
+                Autofocus
+                Clearable
+                Placeholder="请输入日记关键词"
+                HideDetails="@("auto")">
+    </MTextField>
 
 </MAppBar>
 <ScrollContainer Id="scrolling-search">

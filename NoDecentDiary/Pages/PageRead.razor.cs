@@ -5,6 +5,7 @@ using Microsoft.JSInterop;
 using NoDecentDiary.Extend;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
+using NoDecentDiary.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,10 +31,12 @@ namespace NoDecentDiary.Pages
         public INavigateService? NavigateService { get; set; }
         [Inject]
         public IJSRuntime? JS { get; set; }
+        [Inject]
+        public IconService? IconService { get; set; }
 
         [Parameter]
         public int Id { get; set; }
-        private DiaryModel _diary = new DiaryModel();
+        private DiaryModel Diary = new DiaryModel();
         private bool _showDelete;
         private bool ShowDelete
         {
@@ -66,22 +69,25 @@ namespace NoDecentDiary.Pages
             }
         }
         private bool showLoading;
-        private bool ShowTitle => !string.IsNullOrEmpty(_diary.Title);
-        private bool ShowWeather => !string.IsNullOrEmpty(_diary.Weather);
-        private bool IsDesktop => MasaBlazor!.Breakpoint.SmAndUp;
+        private bool ShowTitle => !string.IsNullOrEmpty(Diary.Title);
+        private bool ShowWeather => !string.IsNullOrEmpty(Diary.Weather);
+        private bool ShowMood => !string.IsNullOrEmpty(Diary.Mood);
+        private bool ShowLocation => !string.IsNullOrEmpty(Diary.Location);
+        private bool Desktop => MasaBlazor!.Breakpoint.SmAndUp;
+        private bool Mobile => !MasaBlazor!.Breakpoint.SmAndUp;
         private string DiaryCopyContent
         {
             get
             {
-                if (string.IsNullOrEmpty(_diary.Title))
+                if (string.IsNullOrEmpty(Diary.Title))
                 {
-                    return _diary.Content!;
+                    return Diary.Content!;
                 }
-                return _diary.Title + "\n" + _diary.Content;
+                return Diary.Title + "\n" + Diary.Content;
             }
         }
         private List<TagModel> SelectedTags = new List<TagModel>();
-        private bool Top => _diary.Top;
+        private bool Top => Diary.Top;
         private IJSObjectReference? module;
         private Action? HandOnOKDelete;
 
@@ -103,7 +109,7 @@ namespace NoDecentDiary.Pages
                 NavigateToBack();
                 return;
             }
-            _diary = diaryModel;
+            Diary = diaryModel;
         }
         private async Task UpdateTag()
         {
@@ -206,6 +212,22 @@ namespace NoDecentDiary.Pages
                 Title = "分享",
                 File = new ShareFile(file)
             });
+        }
+        private string GetWeatherIcon(string? key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return "mdi-weather-cloudy";
+            }
+            return IconService!.GetWeatherIcon(key);
+        }
+        private string GetMoodIcon(string? key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return "mdi-emoticon-outline";
+            }
+            return IconService!.GetMoodIcon(key);
         }
         private void SetShowMenu(bool value)
         {

@@ -57,57 +57,77 @@
 <ScrollContainer Id="scrolling-write">
     <MContainer>
         <div class="px-3 text-h6 font-weight-bold">
-            @(Diary.CreateTime.ToString("yyyy/MM/dd"))
+            <span>@(Diary.CreateTime.ToString("yyyy/MM/dd"))</span>
+            <span class="pl-5 text-subtitle-1">@(Diary.CreateTime.DayOfWeek.ToChinese2())</span>
         </div>
-
-        <div class="overflow-hidden" style="max-width:100px;">
-            <MAutocomplete Solo
-                           Dense
-                           Placeholder="天气"
-                           Color="transparent"
-                           HideDetails="@("auto")"
-                           Items="_weathers"
-                           @bind-Value="Diary.Weather"
-                           ItemText="r=>r"
-                           ItemValue="r=>r">
-            </MAutocomplete>
+        <div class="px-2">
+            <MChip Class="my-2 mr-2"
+                   Outlined="Mobile"
+                   Small="Mobile"
+                   OnClick="()=>ShowWeather=true">
+                <MIcon Left Small="Mobile">
+                    @(GetWeatherIcon(Diary.Weather))
+                </MIcon>
+                @(string.IsNullOrEmpty(Diary.Weather) ? "天气" : Diary.Weather)
+            </MChip>
+            <MChip Class="my-2 mr-2"
+                   Outlined="Mobile"
+                   Small="Mobile"
+                   OnClick="()=>ShowMood=true">
+                <MIcon Left Small="Mobile">
+                    @(GetMoodIcon(Diary.Mood))
+                </MIcon>
+                @(string.IsNullOrEmpty(Diary.Mood) ? "心情" : Diary.Mood)
+            </MChip>
+            <MChip Class="my-2 mr-2"
+                   Outlined="Mobile"
+                   Small="Mobile"
+                   OnClick="()=>ShowLocation=true">
+                <MIcon Left Small="Mobile">
+                    mdi-map-marker-outline
+                </MIcon>
+                @(string.IsNullOrEmpty(Diary.Location) ? "位置" : Diary.Location)
+            </MChip>
         </div>
 
         @if (showTitle)
         {
-            <div class="my-sm-4 overflow-hidden-mobile user-select">
-                <MTextField @bind-Value="Diary.Title"
-                        Solo="!IsDesktop"
-                        Outlined="IsDesktop"
-                        TValue="string"
-                        HideDetails="@("auto")"
-                        Class="pb-0"
-                        Dense
-                        maxlength="20"
-                        Placeholder="请输入标题">
-                </MTextField>
-            </div>
+            <MTextField @bind-Value="Diary.Title"
+                    Class="pb-0 my-sm-4 user-select"
+                    Solo="Mobile"
+                    Flat="Mobile"
+                    Outlined="Desktop"
+                    TValue="string"
+                    HideDetails="@("auto")"
+                    Dense
+                    maxlength="20"
+                    Placeholder="请输入标题">
+            </MTextField>
         }
 
-        <div class="my-sm-4 overflow-hidden-mobile user-select">
-            <MTextarea @bind-Value="Diary.Content"
-                       Solo="!IsDesktop"
-                       Outlined="IsDesktop"
-                       HideDetails="@("auto")"
-                       Autofocus
-                       AutoGrow
-                       Rows="8"
-                       RowHeight="30"
-                       Placeholder="请输入内容">
-            </MTextarea>
-        </div>
+        <MTextarea @bind-Value="Diary.Content"
+                   Class="my-sm-4 user-select"
+                   Solo="Mobile"
+                   Flat="Mobile"
+                   Outlined="Desktop"
+                   HideDetails="@("auto")"
+                   Autofocus
+                   AutoGrow
+                   Rows="8"
+                   RowHeight="30"
+                   Counter="true"
+                   Placeholder="请输入内容">
+            <CounterContent>
+                <MCounter Value="@((Diary.Content??"").Length + "字")"></MCounter>
+            </CounterContent>
+        </MTextarea>
 
         <div class="mb-5">
             <MChipGroup Column>
                 @foreach (var item in SelectedTags)
                 {
                     <MChip Close
-                       Outlined="!IsDesktop"
+                       Outlined="Mobile"
                        OnCloseClick="()=>RemoveSelectedTag(item)">
                         @(item.Name)
                     </MChip>
@@ -137,3 +157,82 @@
             @bind-Values="SelectedTags"
             OnSave="HandOnSaveSelectTags">
 </SelectTags>
+
+<MDialog @bind-Value="ShowWeather"
+         MaxWidth="420"
+         Scrollable>
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            选择天气
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowWeather=false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="scroll-show" Style="max-height:200px;">
+            <MChipGroup @bind-Value="WeatherIndex" Column>
+                @foreach (var item in WeatherIcons)
+                {
+                    <MChip Filter
+                       Outlined>
+                        <MIcon Left>
+                            @(item.Value)
+                        </MIcon>
+                        @(item.Key)
+                    </MChip>
+                }
+            </MChipGroup>
+        </MCardText>
+    </MCard>
+</MDialog>
+<MDialog @bind-Value="ShowMood"
+         MaxWidth="420"
+         Scrollable>
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            选择心情
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowMood=false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="scroll-show" Style="max-height:200px;">
+            <MChipGroup @bind-Value="MoodIndex" Column>
+                @foreach (var item in MoodIcons)
+                {
+                    <MChip Filter
+                       Outlined>
+                        <MIcon Left>
+                            @(item.Value)
+                        </MIcon>
+                        @(item.Key)
+                    </MChip>
+                }
+            </MChipGroup>
+        </MCardText>
+    </MCard>
+</MDialog>
+
+<MDialog @bind-Value="ShowLocation"
+         MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            输入位置
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowLocation=false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            <MTextField @bind-Value="Diary.Location"
+                        Dense
+                        Autofocus
+                        HideDetails="@("auto")"
+                        Outlined
+                        Counter="50"
+                        maxlength="50"
+                        Placeholder="请输入位置">
+            </MTextField>
+        </MCardText>
+    </MCard>
+</MDialog>

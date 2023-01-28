@@ -23,6 +23,8 @@ namespace NoDecentDiary.Pages
         public ITagService? TagService { get; set; }
         [Inject]
         public INavigateService? NavigateService { get; set; }
+        [Inject]
+        public IconService? IconService { get; set; }
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -30,36 +32,91 @@ namespace NoDecentDiary.Pages
         [Parameter]
         [SupplyParameterFromQuery]
         public int? DiaryId { get; set; }
-        private readonly List<string> _weathers = new List<string>()
-        {
-            "晴","阴","小雨","中雨","大雨","小雪","中雪","大雪","雾",
-        };
         private bool showTitle;
         private bool _showMenu;
         private bool ShowMenu
         {
             get => _showMenu;
-            set
-            {
-                SetShowMenu(value);
-            }
+            set => SetShowMenu(value);
         }
         private bool _showSelectTag;
         private bool ShowSelectTag
         {
             get => _showSelectTag;
-            set
-            {
-                SetShowSelectTag(value);
-            }
+            set => SetShowSelectTag(value);
+        }
+        private bool _showWeather;
+        private bool ShowWeather
+        {
+            get => _showWeather;
+            set => SetShowWeather(value);
+        }
+        private bool _showMood;
+        private bool ShowMood
+        {
+            get => _showMood;
+            set => SetShowMood(value);
+        }
+        private bool _showLocation;
+        private bool ShowLocation
+        {
+            get => _showLocation;
+            set => SetShowLocation(value);
         }
         private DiaryModel Diary = new DiaryModel()
         {
             CreateTime = DateTime.Now,
             UpdateTime = DateTime.Now
         };
-        private bool IsDesktop => MasaBlazor!.Breakpoint.SmAndUp;
+        private bool Desktop => MasaBlazor!.Breakpoint.SmAndUp;
+        private bool Mobile => !MasaBlazor!.Breakpoint.SmAndUp;
         private List<TagModel> SelectedTags = new List<TagModel>();
+        private Dictionary<string, string> WeatherIcons => IconService!.WeatherIcon;
+        private Dictionary<string, string> MoodIcons => IconService!.MoodIcon;
+        private StringNumber WeatherIndex
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Diary.Weather))
+                {
+                    return -1;
+                }
+                return WeatherIcons.Keys.ToList().IndexOf(Diary.Weather);
+            }
+            set
+            {
+                if (value != null)
+                {
+                    Diary.Weather = WeatherIcons.ElementAt(value.ToInt32()).Key;
+                }
+                else
+                {
+                    Diary.Weather = string.Empty;
+                }
+            }
+        }
+        private StringNumber MoodIndex
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Diary.Mood))
+                {
+                    return -1;
+                }
+                return MoodIcons.Keys.ToList().IndexOf(Diary.Mood);
+            }
+            set
+            {
+                if (value != null)
+                {
+                    Diary.Mood = MoodIcons.ElementAt(value.ToInt32()).Key;
+                }
+                else
+                {
+                    Diary.Mood = string.Empty;
+                }
+            }
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -94,7 +151,6 @@ namespace NoDecentDiary.Pages
                 }
             }
         }
-
         private void RemoveSelectedTag(TagModel tag)
         {
             int index = SelectedTags.IndexOf(tag);
@@ -103,12 +159,10 @@ namespace NoDecentDiary.Pages
                 SelectedTags.RemoveAt(index);
             }
         }
-
         private void HandOnSaveSelectTags()
         {
             ShowSelectTag = false;
         }
-
         private async Task HandOnSave()
         {
             if (string.IsNullOrWhiteSpace(Diary.Content))
@@ -117,7 +171,6 @@ namespace NoDecentDiary.Pages
             }
             await SaveDiary();
         }
-
         private void HandOnBack()
         {
             if (string.IsNullOrWhiteSpace(Diary.Content))
@@ -126,15 +179,13 @@ namespace NoDecentDiary.Pages
                 return;
             }
 
-            Task.Run(()=> SaveDiary());
+            Task.Run(() => SaveDiary());
         }
-
         private void HandOnClear()
         {
             Diary.Content = string.Empty;
             this.StateHasChanged();
         }
-
         private async Task SaveDiary()
         {
             if (DiaryId == null)
@@ -165,10 +216,9 @@ namespace NoDecentDiary.Pages
                     await PopupService!.AlertAsync("修改失败", AlertTypes.Error);
                 }
             }
-            
+
             NavigateToBack();
         }
-
         public void NavigateToBack()
         {
             NavigateService!.NavigateToBack();
@@ -176,6 +226,22 @@ namespace NoDecentDiary.Pages
         private async Task InvokeStateHasChangedAsync()
         {
             await InvokeAsync(StateHasChanged);
+        }
+        private string GetWeatherIcon(string? key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return "mdi-weather-cloudy";
+            }
+            return IconService!.GetWeatherIcon(key);
+        }
+        private string GetMoodIcon(string? key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return "mdi-emoticon-outline";
+            }
+            return IconService!.GetMoodIcon(key);
         }
         private void SetShowMenu(bool value)
         {
@@ -215,6 +281,66 @@ namespace NoDecentDiary.Pages
         private void CloseSelectTag()
         {
             ShowSelectTag = false;
+            StateHasChanged();
+        }
+        private void SetShowWeather(bool value)
+        {
+            if (_showWeather != value)
+            {
+                _showWeather = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseWeather;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseWeather;
+                }
+            }
+        }
+        private void CloseWeather()
+        {
+            ShowWeather = false;
+            StateHasChanged();
+        }
+        private void SetShowMood(bool value)
+        {
+            if (_showMood != value)
+            {
+                _showMood = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseMood;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseMood;
+                }
+            }
+        }
+        private void CloseMood()
+        {
+            ShowMood = false;
+            StateHasChanged();
+        }
+        private void SetShowLocation(bool value)
+        {
+            if (_showLocation != value)
+            {
+                _showLocation = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseLocation;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseLocation;
+                }
+            }
+        }
+        private void CloseLocation()
+        {
+            ShowLocation = false;
             StateHasChanged();
         }
         public void Dispose()
