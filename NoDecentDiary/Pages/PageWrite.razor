@@ -93,13 +93,14 @@
         @if (showTitle)
         {
             <MTextField @bind-Value="Diary.Title"
-                    Class="pb-0 my-sm-4 user-select"
+                    Class="pb-0 my-sm-4 user-select font-weight-bold"
                     Solo="Mobile"
                     Flat="Mobile"
                     Outlined="Desktop"
                     TValue="string"
                     HideDetails="@("auto")"
                     Dense
+                    spellcheck="false"
                     maxlength="20"
                     Placeholder="请输入标题">
             </MTextField>
@@ -116,6 +117,7 @@
                    Rows="8"
                    RowHeight="30"
                    Counter="true"
+                   spellcheck="false"
                    Placeholder="请输入内容">
             <CounterContent>
                 <MCounter Value="@((Diary.Content??"").Length + "字")"></MCounter>

@@ -118,8 +118,9 @@
         @if (ShowTitle)
         {
             <MTextField Value="@(Diary.Title)"
-                    Class="pb-0 my-sm-4 user-select"
-                    Solo="!Desktop"
+                    Class="pb-0 my-sm-4 user-select font-weight-bold"
+                    Solo="Mobile"
+                    Flat="Mobile"
                     Outlined="Desktop"
                     TValue="string"
                     HideDetails="@("auto")"
@@ -131,7 +132,8 @@
 
         <MTextarea Value="@(Diary.Content)"
                    Class="my-sm-4 user-select"
-                   Solo="!Desktop"
+                   Solo="Mobile"
+                   Flat="Mobile"
                    Outlined="Desktop"
                    HideDetails="@("auto")"
                    Readonly
@@ -144,7 +146,7 @@
             <MChipGroup Column>
                 @foreach (var item in SelectedTags)
                 {
-                    <MChip Outlined="!Desktop">
+                    <MChip Outlined="Mobile">
                         @(item.Name)
                     </MChip>
                 }
