@@ -1,13 +1,59 @@
 ﻿@page "/History"
 
-<MContainer>
-    <MDatePicker @bind-Value="Picker"
-                 FullWidth
-                 NoTitle
-                 AllowedDates="AllowedDates"
-                 ShowCurrent="false"
-                 Locale="zh-CN">
+<MAppBar App
+         Elevation="0"
+         Color="white">
+    <MTabs @bind-Value="tabs"
+           ActiveClass="text-h6 font-weight-bold"
+           HideSlider
+           Color="black">
+        <MTab Class="m-tab-swiper"
+              Ripple="false">
+            日历
+        </MTab>
+        <MTab Class="m-tab-swiper"
+              Ripple="false">
+            树状
+        </MTab>
+    </MTabs>
+    <MSpacer></MSpacer>
+    <MButton Large Icon OnClick="NavigateToSearch">
+        <MIcon>mdi-magnify</MIcon>
+    </MButton>
+</MAppBar>
 
-    </MDatePicker>
-    <DiaryCardList Value="Diaries"></DiaryCardList>
-</MContainer>
+<SwiperTabItems @bind-Value="tabs">
+    <SwiperTabItem>
+        <MDatePicker @bind-Value="Picker"
+                     FullWidth
+                     NoTitle
+                     AllowedDates="AllowedDates"
+                     ShowCurrent="false"
+                     Locale="zh-CN">
+        </MDatePicker>
+        <DiaryCardList Value="CalendarDiaries"></DiaryCardList>
+    </SwiperTabItem>
+    <SwiperTabItem>
+        <div class="d-md-flex">
+            <div class="flex-grow-1 tree-container">
+                <MTreeview @bind-Active="_active"
+                           TItem="Tree"
+                           TKey="int"
+                           Items="Trees"
+                           ItemText="r=>r.Name"
+                           ItemChildren="r=>r.Children"
+                           ItemKey="r=>r.Id"
+                           Activatable
+                           OpenOnClick
+                           OnActiveUpdate="OnActiveUpdate"
+                           Rounded
+                           ExpandIcon="mdi-chevron-down">
+                </MTreeview>
+            </div>
+            <div class="flex-grow-1 px-5">
+                <DiaryCardList Value="TreeDiaries"></DiaryCardList>
+            </div>
+        </div>
+    </SwiperTabItem>
+</SwiperTabItems>
+
