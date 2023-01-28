@@ -50,7 +50,7 @@ namespace NoDecentDiary.Shared
                 module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/init-swiper.js");
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
                 await module.InvokeVoidAsync("swiperInit", new object[4] { dotNetCallbackRef, "UpdateValue", Id, Value.ToInt32() });
-                await Task.Delay(200);
+                await Task.Delay(100);
                 Show = true;
                 StateHasChanged();
             }

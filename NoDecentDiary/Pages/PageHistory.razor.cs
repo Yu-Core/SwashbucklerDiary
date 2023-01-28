@@ -16,7 +16,12 @@ namespace NoDecentDiary.Pages
         public IDiaryService? DiaryService { get; set; }
         [Inject]
         public INavigateService? NavigateService { get; set; }
+        [Inject]
+        public NavigationManager? Navigation { get; set; }
 
+        [Parameter]
+        [SupplyParameterFromQuery]
+        public string? Type { get; set; }
         private DateOnly _picker = DateOnly.FromDateTime(DateTime.Now);
         private DateOnly Picker
         {
@@ -43,6 +48,10 @@ namespace NoDecentDiary.Pages
         private StringNumber tabs = 0;
         private List<Tree> Trees => GetTrees();
         private List<int>? _active;
+        private readonly List<string> Types = new()
+        {
+            "Calendar", "Tree"
+        };
         private List<DiaryModel> TreeDiaries
         {
             get
@@ -63,12 +72,28 @@ namespace NoDecentDiary.Pages
         }
         protected override void OnInitialized()
         {
+            SetTab();
             UpDiaries();
         }
         private async void UpDiaries()
         {
             Diaries = await DiaryService!.QueryAsync();
             StateHasChanged();
+        }
+        private void SetTab()
+        {
+            if (string.IsNullOrEmpty(Type))
+            {
+                Type = Types[0];
+            }
+            tabs = Types.IndexOf(Type!);
+        }
+        private async Task HandOnRefreshData(StringNumber value)
+        {
+            Diaries = await DiaryService!.QueryAsync();
+            StateHasChanged();
+            var url = Navigation!.GetUriWithQueryParameter("Type", Types[tabs.ToInt32()]);
+            Navigation!.NavigateTo(url);
         }
         private List<Tree> GetTrees()
         {
