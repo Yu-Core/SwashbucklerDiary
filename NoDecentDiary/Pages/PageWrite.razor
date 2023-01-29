@@ -63,27 +63,24 @@
         <div class="px-2">
             <MChip Class="my-2 mr-2"
                    Outlined="Mobile"
-                   Small="Mobile"
                    OnClick="()=>ShowWeather=true">
-                <MIcon Left Small="Mobile">
+                <MIcon Left>
                     @(GetWeatherIcon(Diary.Weather))
                 </MIcon>
                 @(string.IsNullOrEmpty(Diary.Weather) ? "天气" : Diary.Weather)
             </MChip>
             <MChip Class="my-2 mr-2"
                    Outlined="Mobile"
-                   Small="Mobile"
                    OnClick="()=>ShowMood=true">
-                <MIcon Left Small="Mobile">
+                <MIcon Left>
                     @(GetMoodIcon(Diary.Mood))
                 </MIcon>
                 @(string.IsNullOrEmpty(Diary.Mood) ? "心情" : Diary.Mood)
             </MChip>
             <MChip Class="my-2 mr-2"
                    Outlined="Mobile"
-                   Small="Mobile"
                    OnClick="()=>ShowLocation=true">
-                <MIcon Left Small="Mobile">
+                <MIcon Left>
                     mdi-map-marker-outline
                 </MIcon>
                 @(string.IsNullOrEmpty(Diary.Location) ? "位置" : Diary.Location)

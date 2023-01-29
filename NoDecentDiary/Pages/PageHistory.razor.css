@@ -4,3 +4,7 @@
         max-width:256px;
     }
 }
+
+::deep .m-treeview-node--active:hover::before{
+    display:inline-block;
+}

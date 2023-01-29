@@ -80,10 +80,8 @@
         <div class="px-2">
             @if(ShowWeather)
             {
-                <MChip Class="my-2 mr-2"
-                   Outlined="Mobile"
-                   Small="Mobile">
-                    <MIcon Left Small="Mobile">
+                <MChip Class="my-2 mr-2" Outlined="Mobile">
+                    <MIcon Left>
                         @(GetWeatherIcon(Diary.Weather))
                     </MIcon>
                     @(Diary.Weather)
@@ -92,10 +90,8 @@
 
             @if(ShowMood)
             {
-                <MChip Class="my-2 mr-2"
-                   Outlined="Mobile"
-                   Small="Mobile">
-                    <MIcon Left Small="Mobile">
+                <MChip Class="my-2 mr-2" Outlined="Mobile">
+                    <MIcon Left>
                         @(GetMoodIcon(Diary.Mood))
                     </MIcon>
                     @(Diary.Mood)
@@ -104,10 +100,8 @@
            
             @if(ShowLocation)
             {
-                <MChip Class="my-2 mr-2"
-                   Outlined="Mobile"
-                   Small="Mobile">
-                    <MIcon Left Small="Mobile">
+                <MChip Class="my-2 mr-2" Outlined="Mobile">
+                    <MIcon Left>
                         mdi-map-marker-outline
                     </MIcon>
                     @(Diary.Location)
@@ -164,28 +158,30 @@
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
-       <MList>
-            <MListItem OnClick="TextShare">
-                <MListItemIcon>
-                    <MIcon>
-                        mdi-format-text
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    <MListItemTitle>文字分享</MListItemTitle>
-                </MListItemContent>
-            </MListItem>
-            <MListItem OnClick="ImageShare">
-                <MListItemIcon>
-                    <MIcon>
-                        mdi-image-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    <MListItemTitle>图片分享</MListItemTitle>
-                </MListItemContent>
-            </MListItem>
-       </MList>
+        <MCardText>
+            <MList>
+                <MListItem OnClick="TextShare">
+                    <MListItemIcon>
+                        <MIcon>
+                            mdi-format-text
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        <MListItemTitle>文字分享</MListItemTitle>
+                    </MListItemContent>
+                </MListItem>
+                <MListItem OnClick="ImageShare">
+                    <MListItemIcon>
+                        <MIcon>
+                            mdi-image-outline
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        <MListItemTitle>图片分享</MListItemTitle>
+                    </MListItemContent>
+                </MListItem>
+            </MList>
+        </MCardText>
     </MCard>
 </MDialog>
 

@@ -84,7 +84,7 @@ a, .btn-link {
 }
 
 @media (hover: none) {
-    *:hover *::before {
+    *:hover::before {
         display: none;
     }
 

@@ -52,7 +52,7 @@ namespace NoDecentDiary.Shared
                 await module.InvokeVoidAsync("swiperInit", new object[4] { dotNetCallbackRef, "UpdateValue", Id, Value.ToInt32() });
                 await Task.Delay(100);
                 Show = true;
-                StateHasChanged();
+                StateHasChanged();              
             }
         }
         private async void UpdateSwiper(StringNumber value)
