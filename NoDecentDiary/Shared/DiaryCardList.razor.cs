@@ -21,6 +21,8 @@ namespace NoDecentDiary.Shared
 
         [Parameter]
         public List<DiaryModel>? Value { get; set; }
+        [Parameter]
+        public string? Class { get; set; }
 
         private bool _showDeleteDiary;
         private bool ShowDeleteDiary

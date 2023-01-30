@@ -1,0 +1,23 @@
+﻿.mine-title {
+    display: none;
+    font-weight: 700 !important;
+    padding-bottom:20px;
+    padding-left:4px;
+}
+
+::deep + .mine-card {
+    margin-bottom: 20px;
+}
+
+@media screen and (min-width:960px) {
+    .mine-title {
+        display: block;
+    }
+    ::deep .mine-info{
+        width:50%;
+    }
+}
+
+::deep + .mine-card .mine-item-icon.theme--light.m-icon {
+    color: #000000;
+}

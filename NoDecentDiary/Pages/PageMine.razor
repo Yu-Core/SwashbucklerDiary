@@ -1,11 +1,215 @@
 ﻿@page "/Mine"
+<MAppBar App
+         Elevation="0"
+         Color="white">
+    <div class="text-h6 font-weight-bold">
+        我的空间
+    </div>
+    <MSpacer></MSpacer>
+    <MButton Large Icon>
+        <MIcon>mdi-magnify</MIcon>
+    </MButton>
+</MAppBar>
 
 <MContainer>
-    <MCard>
+    <div class="d-md-flex flex-md-row justify-space-between">
+        <MCard Class="mine-info mb-5 py-sm-3"
+               Elevation="4"
+               Rounded="@("lg")">
+            <MList>
+                <MListItem>
+                    <MListItemAvatar Tile Size="75">
+                        <MImage Src="./logo/logo.svg"></MImage>
+                    </MListItemAvatar>
+                    <MListItemContent>
+                        <MListItemTitle Class="text-h6 font-weight-bold">
+                            反派日记
+                        </MListItemTitle>
+                        <MListItemSubtitle>
+                            做命运的反派，与苦难斗争
+                        </MListItemSubtitle>
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+            </MList>
+        </MCard>
+
+        <MCard Class="mine-info mb-5 ml-md-5 d-flex"
+               Elevation="4"
+               Rounded="@("lg")">
+            <MList Class="d-flex flex-grow-1">
+                <MListItem>
+                    <MListItemContent Class="justify-space-around text-center">
+                        <div style="flex:unset">
+                            <MListItemSubtitle>日记数</MListItemSubtitle>
+                            <MListItemTitle Class="mt-2 font-weight-bold text-h6">
+                                30
+                            </MListItemTitle>
+                        </div>
+                        <div style="flex:unset">
+                            <MListItemSubtitle>总字数</MListItemSubtitle>
+                            <MListItemTitle Class="mt-2 font-weight-bold text-h6">
+                                459934
+                            </MListItemTitle>
+                        </div>
+                        <div style="flex:unset">
+                            <MListItemSubtitle>活跃天数</MListItemSubtitle>
+                            <MListItemTitle Class="mt-2 font-weight-bold text-h6">
+                                30
+                            </MListItemTitle>
+                        </div>
+                    </MListItemContent>
+                </MListItem>
+            </MList>
+        </MCard>
+    </div>
+
+    <div class="text-h6 mine-title">
+        数据
+    </div>
+
+    <MCard Class="mine-card"
+           Elevation="4"
+           Rounded="@("lg")">
         <MList>
-            <MListItem OnClick="ToLog">
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="mine-item-icon">
+                        mdi-folder-sync-outline
+                    </MIcon>
+                </MListItemIcon>
                 <MListItemContent>
-                    日志
+                    备份
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="mine-item-icon">
+                        mdi-import
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    导入
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="mine-item-icon">
+                        mdi-chart-line
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    统计
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <div class="text-h6 mine-title">
+        设置
+    </div>
+
+    <MCard Class="mine-card"
+           Elevation="4"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="mine-item-icon">
+                        mdi-cog-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    设置
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="mine-item-icon">
+                        mdi-web
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    语言
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="mine-item-icon">
+                        mdi-weather-night
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    深色模式
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <div class="text-h6 mine-title">
+        其他
+    </div>
+
+    <MCard Class="mine-card"
+           Elevation="4"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="mine-item-icon">
+                        mdi-email-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    联系我们
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="mine-item-icon">
+                        mdi-information-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    关于
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>

@@ -13,9 +13,6 @@ namespace NoDecentDiary.Pages
     {
         [Inject]
         public INavigateService? NavigateService { get; set; }
-        private void ToLog()
-        {
-            NavigateService!.NavigateTo("/Log");
-        }
+        
     }
 }

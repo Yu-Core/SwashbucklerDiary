@@ -5,6 +5,8 @@
     }
 }
 
-::deep .m-treeview-node--active:hover::before{
-    display:inline-block;
+@media (hover: none) {
+    ::deep .m-treeview-node--active:hover::before {
+        display: inline-block;
+    }
 }
