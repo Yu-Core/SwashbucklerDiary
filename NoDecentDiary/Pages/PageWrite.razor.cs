@@ -171,7 +171,7 @@ namespace NoDecentDiary.Pages
             }
             await SaveDiary();
         }
-        private void HandOnBack()
+        private async void HandOnBack()
         {
             if (string.IsNullOrWhiteSpace(Diary.Content))
             {
@@ -179,7 +179,7 @@ namespace NoDecentDiary.Pages
                 return;
             }
 
-            Task.Run(() => SaveDiary());
+            await SaveDiary();
         }
         private void HandOnClear()
         {
@@ -193,13 +193,21 @@ namespace NoDecentDiary.Pages
                 bool flag = await DiaryService!.AddAsync(Diary);
                 if (flag)
                 {
-                    await PopupService!.AlertAsync("添加成功", AlertTypes.Success);
                     int id = await DiaryService.GetLastInsertRowId();
                     await DiaryTagService!.AddTagsAsync(id, SelectedTags);
+                    await PopupService!.ToastAsync(it =>
+                    {
+                        it.Type = AlertTypes.Success;
+                        it.Title = "添加成功";
+                    });
                 }
                 else
                 {
-                    await PopupService!.AlertAsync("添加失败", AlertTypes.Error);
+                    await PopupService!.ToastAsync(it => 
+                    { 
+                        it.Type = AlertTypes.Error;
+                        it.Title = "添加失败"; 
+                    });
                 }
             }
             else
@@ -207,13 +215,22 @@ namespace NoDecentDiary.Pages
                 bool flag = await DiaryService!.UpdateAsync(Diary);
                 if (flag)
                 {
-                    await PopupService!.AlertAsync("修改成功", AlertTypes.Success);
                     await DiaryTagService!.DeleteAsync(it => it.DiaryId == DiaryId);
                     await DiaryTagService!.AddTagsAsync((int)DiaryId, SelectedTags);
+                    await PopupService!.ToastAsync(it =>
+                    {
+                        it.Type = AlertTypes.Success;
+                        it.Title = "修改成功";
+                    });
+
                 }
                 else
                 {
-                    await PopupService!.AlertAsync("修改失败", AlertTypes.Error);
+                    await PopupService!.ToastAsync(it => 
+                    { 
+                        it.Type = AlertTypes.Error;
+                        it.Title = "修改失败"; 
+                    });
                 }
             }
 

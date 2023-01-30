@@ -20,5 +20,6 @@ namespace NoDecentDiary.IServices
         Task<TEntity> FindAsync(int id);
         Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func);
         Task<int> GetLastInsertRowId();
+        Task<int> CountAsync();
     }
 }

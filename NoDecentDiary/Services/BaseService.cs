@@ -115,5 +115,10 @@ namespace NoDecentDiary.Services
             var entityCount = await Database!.Table<TEntity>().Where(func).CountAsync();
             return entityCount < entities.Count;
         }
+
+        public async Task<int> CountAsync()
+        {
+            return await Database!.Table<TEntity>().CountAsync();
+        }
     }
 }

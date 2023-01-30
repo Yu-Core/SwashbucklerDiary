@@ -152,11 +152,19 @@ namespace NoDecentDiary.Pages
                 bool flag = await DiaryService!.DeleteAsync(Id);
                 if (flag)
                 {
-                    await PopupService!.AlertAsync("删除成功", AlertTypes.Success);
+                    await PopupService!.ToastAsync(it => 
+                    { 
+                        it.Type = AlertTypes.Success;
+                        it.Title = "删除成功"; 
+                    });
                 }
                 else
                 {
-                    await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
+                    await PopupService!.ToastAsync(it => 
+                    { 
+                        it.Type = AlertTypes.Error; 
+                        it.Title = "删除失败"; 
+                    });
                 }
                 NavigateToBack();
             };
@@ -177,11 +185,10 @@ namespace NoDecentDiary.Pages
         {
             await Clipboard.Default.SetTextAsync(DiaryCopyContent);
 
-            await PopupService!.AlertAsync(param =>
+            await PopupService!.ToastAsync(it =>
             {
-                param.Content = "复制成功";
-                param.Rounded = true;
-                param.Type = AlertTypes.Success;
+                it.Type = AlertTypes.Success;
+                it.Title = "复制成功";
             });
         }
         private async Task TextShare()

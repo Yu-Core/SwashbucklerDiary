@@ -67,13 +67,21 @@ namespace NoDecentDiary.Shared
                 if (flag)
                 {
                     Value!.Remove(tag);
-                    await PopupService!.AlertAsync("删除成功", AlertTypes.Success);
+                    await PopupService!.ToastAsync(it => 
+                    { 
+                        it.Type = AlertTypes.Success;
+                        it.Title = "删除成功"; 
+                    });
                     this.StateHasChanged();
                     await DiaryTagService!.DeleteAsync(it => it.TagId == tag.Id);
                 }
                 else
                 {
-                    await PopupService!.AlertAsync("删除失败", AlertTypes.Error);
+                    await PopupService!.ToastAsync(it => 
+                    { 
+                        it.Type = AlertTypes.Error; 
+                        it.Title = "删除失败"; 
+                    });
                 }
             };
             ShowDeleteTag = true;
@@ -89,7 +97,12 @@ namespace NoDecentDiary.Shared
 
             if (Value!.Any(it => it.Name == RenameTagName))
             {
-                await PopupService!.AlertAsync("标签已存在", AlertTypes.Warning);
+                await PopupService!.ToastAsync(it =>
+                {
+                    it.Type = AlertTypes.Warning;
+                    it.Title = "标签已存在";
+                    it.Content = "请勿重复添加";
+                });
                 return;
             }
 
@@ -98,11 +111,19 @@ namespace NoDecentDiary.Shared
             bool flag = await TagService!.UpdateAsync(tag);
             if (flag)
             {
-                await PopupService!.AlertAsync("修改成功", AlertTypes.Success);
+                await PopupService!.ToastAsync(it => 
+                { 
+                    it.Type = AlertTypes.Success;
+                    it.Title = "修改成功"; 
+                });
             }
             else
             {
-                await PopupService!.AlertAsync("修改失败", AlertTypes.Error);
+                await PopupService!.ToastAsync(it => 
+                { 
+                    it.Type = AlertTypes.Error;
+                    it.Title = "修改失败"; 
+                });
             }
         }
         private void HandOnTagClick(int id)

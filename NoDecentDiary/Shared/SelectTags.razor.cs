@@ -121,7 +121,12 @@ namespace NoDecentDiary.Shared
 
             if(Tags.Any(it=>it.Name == AddTagName))
             {
-                await PopupService!.AlertAsync("标签已存在", AlertTypes.Warning);
+                await PopupService!.ToastAsync(it => 
+                { 
+                    it.Type = AlertTypes.Warning; 
+                    it.Title = "标签已存在";
+                    it.Content = "请勿重复添加";
+                });
                 return;
             }
 
@@ -132,11 +137,19 @@ namespace NoDecentDiary.Shared
             bool flag = await TagService!.AddAsync(tagModel);
             if (!flag)
             {
-                await PopupService!.AlertAsync("添加失败",AlertTypes.Error);
+                await PopupService!.ToastAsync(it => 
+                { 
+                    it.Type = AlertTypes.Error; 
+                    it.Title = "添加失败"; 
+                });
                 return;
             }
 
-            await PopupService!.AlertAsync("添加成功", AlertTypes.Success);
+            await PopupService!.ToastAsync(it => 
+            { 
+                it.Type = AlertTypes.Success; 
+                it.Title = "添加成功"; 
+            });
             tagModel.Id = await TagService!.GetLastInsertRowId();
             Tags.Add(tagModel);
             this.StateHasChanged();

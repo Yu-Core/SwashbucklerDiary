@@ -6,7 +6,7 @@
         我的空间
     </div>
     <MSpacer></MSpacer>
-    <MButton Large Icon>
+    <MButton Large Icon OnClick="NavigateToSearch">
         <MIcon>mdi-magnify</MIcon>
     </MButton>
 </MAppBar>
@@ -45,19 +45,19 @@
                         <div style="flex:unset">
                             <MListItemSubtitle>日记数</MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
-                                30
+                                @DiaryCount
                             </MListItemTitle>
                         </div>
                         <div style="flex:unset">
                             <MListItemSubtitle>总字数</MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
-                                459934
+                                @WordCount
                             </MListItemTitle>
                         </div>
                         <div style="flex:unset">
                             <MListItemSubtitle>活跃天数</MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
-                                30
+                                @ActiveDayCount
                             </MListItemTitle>
                         </div>
                     </MListItemContent>
@@ -162,7 +162,7 @@
 
             <MDivider Class="mx-3 mx-sm-0"></MDivider>
 
-            <MListItem>
+            <MListItem OnClick="ToDo">
                 <MListItemIcon>
                     <MIcon Class="mine-item-icon">
                         mdi-weather-night
