@@ -52,18 +52,18 @@
                 <MListItem Dense
                            OnClick="Copy">
                     <MListItemContent>
-                        复制
+                        @(I18n!.T("Share.Copy"))
                     </MListItemContent>
                 </MListItem>
                 <MListItem Dense
                            OnClick="()=>Topping(Diary)">
                     <MListItemContent>
-                        @(Top ? "取消置顶" : "置顶")
+                        @(Top ? I18n!.T("Diary.CancelTop") : I18n!.T("Diary.Top"))
                     </MListItemContent>
                 </MListItem>
                 <MListItem Dense>
                     <MListItemContent>
-                        导出
+                        @(I18n!.T("Diary.Export"))
                     </MListItemContent>
                 </MListItem>
             </MList>
@@ -86,7 +86,7 @@
                     <MIcon Left>
                         @(GetWeatherIcon(Diary.Weather))
                     </MIcon>
-                    @(Diary.Weather)
+                    @(I18n!.T("Weather." + Diary.Weather))
                 </MChip>
             }
 
@@ -96,7 +96,7 @@
                     <MIcon Left>
                         @(GetMoodIcon(Diary.Mood))
                     </MIcon>
-                    @(Diary.Mood)
+                    @(I18n!.T("Mood." + Diary.Mood))
                 </MChip>
             }
 
@@ -154,7 +154,7 @@
 <MDialog @bind-Value="ShowShare" MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            选择分享方式
+            @(I18n!.T("Read.SelectShare"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="()=>ShowShare = false">
                 <MIcon>mdi-close</MIcon>
@@ -169,7 +169,7 @@
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
-                        <MListItemTitle>文字分享</MListItemTitle>
+                        <MListItemTitle>@(I18n!.T("Read.TextShare"))</MListItemTitle>
                     </MListItemContent>
                 </MListItem>
                 <MListItem OnClick="ImageShare">
@@ -179,7 +179,7 @@
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
-                        <MListItemTitle>图片分享</MListItemTitle>
+                            <MListItemTitle>@(I18n!.T("Read.ImageShare"))</MListItemTitle>
                     </MListItemContent>
                 </MListItem>
             </MList>
@@ -193,8 +193,8 @@
 </MOverlay>
 
 <DeleteDialog @bind-Value="ShowDelete"
-              Title="删除日记"
-              Content="请慎重删除，每一篇日记都是珍贵的回忆。"
+              Title="@(I18n!.T("Diary.Delete.Title"))"
+              Content="@(I18n!.T("Diary.Delete.Content"))"
               OnOK="()=>HandOnOKDelete?.Invoke()">
 
 </DeleteDialog>

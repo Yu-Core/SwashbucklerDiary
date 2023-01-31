@@ -158,7 +158,7 @@ namespace NoDecentDiary.Pages
                     await PopupService!.ToastAsync(it => 
                     { 
                         it.Type = AlertTypes.Success;
-                        it.Title = "删除成功"; 
+                        it.Title = I18n!.T("Share.DeleteSuccess"); 
                     });
                 }
                 else
@@ -166,7 +166,7 @@ namespace NoDecentDiary.Pages
                     await PopupService!.ToastAsync(it => 
                     { 
                         it.Type = AlertTypes.Error; 
-                        it.Title = "删除失败"; 
+                        it.Title = I18n!.T("Share.DeleteFail");
                     });
                 }
                 NavigateToBack();
@@ -191,7 +191,7 @@ namespace NoDecentDiary.Pages
             await PopupService!.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Success;
-                it.Title = "复制成功";
+                it.Title = I18n!.T("Share.CopySuccess");
             });
         }
         private async Task TextShare()
@@ -200,8 +200,8 @@ namespace NoDecentDiary.Pages
             await Share.Default.RequestAsync(new ShareTextRequest
             {
                 Text = DiaryCopyContent,
-                Title = "分享"
-            });
+                Title = I18n!.T("Read.Share")
+        });
         }
         private async Task ImageShare()
         {
@@ -219,7 +219,7 @@ namespace NoDecentDiary.Pages
 
             await Share.Default.RequestAsync(new ShareFileRequest
             {
-                Title = "分享",
+                Title = I18n!.T("Read.Share"),
                 File = new ShareFile(file)
             });
         }

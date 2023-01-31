@@ -10,7 +10,10 @@
     "CopySuccess": "CopySuccess",
     "Rename": "Rename",
     "EditSuccess": "Edit Success",
-    "EditFail": "Edit Fail"
+    "EditFail": "Edit Fail",
+    "AddSuccess": "Successfully added",
+    "AddFail": "Add failed",
+    "Clear": "Clear"
   },
   "Main": {
     "Diary": "Diary",
@@ -30,8 +33,6 @@
   },
   "Tag": {
     "Add": "Add Tag",
-    "Success": "Successfully added",
-    "Fail": "Add failed",
     "Repeat": {
       "Title": "Tag already exists",
       "Content": "Do not add again"
@@ -59,7 +60,7 @@
     "Top": "Top",
     "CancelTop": "Cancel Top",
     "Export": "Export",
-    "Untitled": "Untitled",
+    "Untitled": "No Title",
     "NoDiary": "No Diary",
     "Delete": {
       "Title": "Delete Diary",
@@ -72,5 +73,78 @@
   "History": {
     "Calendar": "Calendar",
     "Catalogue": "Catalogue"
+  },
+  "Write": {
+    "OpenTitle": "Open Title",
+    "CloseTitle": "Close Title",
+    "RichText": "RichText",
+    "Weather": "Weather",
+    "Mood": "Mood",
+    "Location": "Location",
+    "TitlePlace": "Please enter a title",
+    "ContentPlace": "Please enter content",
+    "Word": "1",
+    "Character": "0",
+    "CountUnit": "words",
+    "SelectWeather": "Select Weather",
+    "SelectMood": "Select Mood",
+    "InputLocation": "Enter location",
+    "LocationPlace": "Please enter the location"
+  },
+  "Weather": {
+    "sunny": "sunny",
+    "cloudy": "cloudy",
+    "rainy": "rainy",
+    "lightning-rainy": "lightning-rainy",
+    "sleet": "sleet",
+    "snow": "snow",
+    "windy": "windy",
+    "fog": "fog"
+  },
+  "Mood": {
+    "happy": "happy",
+    "excited": "excited",
+    "neutral": "neutral",
+    "cool": "cool",
+    "sad": "sad",
+    "lol": "lol",
+    "cry": "cry",
+    "kiss": "kiss",
+    "dead": "dead",
+    "angry": "angry",
+    "devil": "devil",
+    "confused": "confused",
+    "wink": "wink",
+    "poop": "poop",
+    "sick": "sick"
+  },
+  "Read": {
+    "Share": "Share",
+    "SelectShare": "Select sharing method",
+    "TextShare": "Text Share",
+    "ImageShare": "Image Share"
+  },
+  "AppName": "NoDecentDiary",
+  "Mine": {
+    "MySpace": "My Space",
+    "Sign": "Be the villain of fate and fight against suffering",
+    "DiaryCount": "Diary Count",
+    "WordCount": "Word Count",
+    "ActiveDayCount": "Active Day Count",
+    "Data": "Data",
+    "Backups": "Backups",
+    "Import": "Import",
+    "Statistics": "Statistics",
+    "Settings": "Setting",
+    "Languages": "Language",
+    "Night": "Night Mode",
+    "Other": "Other",
+    "Feedback": "Feedback",
+    "About": "About",
+    "SelectLanguage": "Select Language"
+  },
+  "ToDo": {
+    "Title": "This function is not open for the time being",
+    "Content": "Coming soon"
   }
 }

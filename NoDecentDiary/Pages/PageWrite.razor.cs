@@ -120,7 +120,11 @@ namespace NoDecentDiary.Pages
                 }
             }
         }
-
+        private string Weather =>
+            string.IsNullOrEmpty(Diary.Weather) ? I18n!.T("Write.Weather") : I18n!.T("Weather." + Diary.Weather);
+        private string Mood =>
+            string.IsNullOrEmpty(Diary.Mood) ? I18n!.T("Write.Mood") : I18n!.T("Mood." + Diary.Mood);
+        
         protected override async Task OnInitializedAsync()
         {
             MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
@@ -140,7 +144,6 @@ namespace NoDecentDiary.Pages
                 }
             }
         }
-
         private async Task SetDiary()
         {
             if (DiaryId != null)
@@ -201,7 +204,7 @@ namespace NoDecentDiary.Pages
                     await PopupService!.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Success;
-                        it.Title = "添加成功";
+                        it.Title = I18n!.T("Share.AddSuccess");
                     });
                 }
                 else
@@ -209,7 +212,7 @@ namespace NoDecentDiary.Pages
                     await PopupService!.ToastAsync(it => 
                     { 
                         it.Type = AlertTypes.Error;
-                        it.Title = "添加失败"; 
+                        it.Title = I18n!.T("Share.AddFail");
                     });
                 }
             }
@@ -223,7 +226,7 @@ namespace NoDecentDiary.Pages
                     await PopupService!.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Success;
-                        it.Title = "修改成功";
+                        it.Title = I18n!.T("Share.EditSuccess");
                     });
 
                 }
@@ -232,7 +235,7 @@ namespace NoDecentDiary.Pages
                     await PopupService!.ToastAsync(it => 
                     { 
                         it.Type = AlertTypes.Error;
-                        it.Title = "修改失败"; 
+                        it.Title = I18n!.T("Share.EditFail");
                     });
                 }
             }
@@ -262,6 +265,27 @@ namespace NoDecentDiary.Pages
                 return "mdi-emoticon-outline";
             }
             return IconService!.GetMoodIcon(key);
+        }
+        private string CounterValue(string? value)
+        {
+            int len = 0;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return len + " " + I18n!.T("Write.CountUnit");
+            }
+
+            value = value.Trim();
+            if(I18n!.T("Write.Word") == "1")
+            {
+                len = value.Split(' ').Length;
+            }
+
+            if(I18n!.T("Write.Character") == "1")
+            {
+                len = value.Length;
+            }
+
+            return len + " " + I18n!.T("Write.CountUnit");
         }
         private void SetShowMenu(bool value)
         {

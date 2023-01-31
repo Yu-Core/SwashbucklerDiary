@@ -11,7 +11,10 @@
     "CopySuccess": "复制成功",
     "Rename": "重命名",
     "EditSuccess": "修改成功",
-    "EditFail": "修改失败"
+    "EditFail": "修改失败",
+    "AddSuccess": "添加成功",
+    "AddFail": "添加失败",
+    "Clear": "清除"
   },
   "Main": {
     "Diary": "日记",
@@ -31,8 +34,6 @@
   },
   "Tag": {
     "Add": "添加标签",
-    "Success": "添加成功",
-    "Fail": "添加失败",
     "Repeat": {
       "Title": "标签已存在",
       "Content": "请勿重复添加"
@@ -73,5 +74,78 @@
   "History": {
     "Calendar": "日历模式",
     "Catalogue": "目录模式"
+  },
+  "Write": {
+    "OpenTitle": "打开标题",
+    "CloseTitle": "关闭标题",
+    "RichText": "切换富文本",
+    "Weather": "天气",
+    "Mood": "心情",
+    "Location": "位置",
+    "TitlePlace": "请输入标题",
+    "ContentPlace": "请输入内容",
+    "Word": "0",
+    "Character": "1",
+    "CountUnit": "字",
+    "SelectWeather": "选择天气",
+    "SelectMood": "选择心情",
+    "InputLocation": "输入位置",
+    "LocationPlace": "请输入位置"
+  },
+  "Weather": {
+    "sunny": "晴",
+    "cloudy": "多云",
+    "rainy": "雨",
+    "lightning-rainy": "雷阵雨",
+    "sleet": "雨夹雪",
+    "snow": "雪",
+    "windy": "风",
+    "fog": "雾"
+  },
+  "Mood": {
+    "happy": "高兴",
+    "excited": "兴奋",
+    "neutral": "中立",
+    "cool": "酷",
+    "sad": "悲伤",
+    "lol": "哈哈",
+    "cry": "哭泣",
+    "kiss": "吻",
+    "dead": "等死",
+    "angry": "愤怒",
+    "devil": "恶魔",
+    "confused": "困惑",
+    "wink": "眨眼",
+    "poop": "便便",
+    "sick": "生病"
+  },
+  "Read": {
+    "Share": "分享",
+    "SelectShare": "选择分享方式",
+    "TextShare": "文字分享",
+    "ImageShare": "图片分享"
+  },
+  "AppName": "反派日记",
+  "Mine": {
+    "MySpace": "我的空间",
+    "Sign": "做命运的反派，与苦难斗争",
+    "DiaryCount": "日记数",
+    "WordCount": "总字数",
+    "ActiveDayCount": "活跃天数",
+    "Data": "数据",
+    "Backups": "备份",
+    "Import": "导入",
+    "Statistics": "统计",
+    "Settings": "设置",
+    "Languages": "语言",
+    "Night": "深色模式",
+    "Other": "其他",
+    "Feedback": "联系我们",
+    "About": "关于",
+    "SelectLanguage": "选择语言"
+  },
+  "ToDo": {
+    "Title": "该功能暂未开放",
+    "Content": "敬请期待"
   }
 }

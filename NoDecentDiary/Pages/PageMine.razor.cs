@@ -60,8 +60,8 @@ namespace NoDecentDiary.Pages
             return PopupService!.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Info;
-                it.Title = "该功能暂未开放";
-                it.Content = "敬请期待";
+                it.Title = I18n!.T("ToDo.Title");
+                it.Content = I18n!.T("ToDo.Content");
             });
         }
         private void NavigateToSearch()

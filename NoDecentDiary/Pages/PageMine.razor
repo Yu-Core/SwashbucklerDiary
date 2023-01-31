@@ -3,7 +3,7 @@
          Elevation="0"
          Color="white">
     <div class="text-h6 font-weight-bold">
-        我的空间
+        @(I18n!.T("Mine.MySpace"))
     </div>
     <MSpacer></MSpacer>
     <MButton Large Icon OnClick="NavigateToSearch">
@@ -23,10 +23,10 @@
                     </MListItemAvatar>
                     <MListItemContent>
                         <MListItemTitle Class="text-h6 font-weight-bold">
-                            反派日记
+                            @(I18n!.T("AppName"))
                         </MListItemTitle>
                         <MListItemSubtitle>
-                            做命运的反派，与苦难斗争
+                            @(I18n!.T("Mine.Sign"))
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
@@ -43,19 +43,25 @@
                 <MListItem>
                     <MListItemContent Class="justify-space-around text-center">
                         <div style="flex:unset">
-                            <MListItemSubtitle>日记数</MListItemSubtitle>
+                            <MListItemSubtitle>
+                                @(I18n!.T("Mine.DiaryCount"))
+                            </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
                                 @DiaryCount
                             </MListItemTitle>
                         </div>
                         <div style="flex:unset">
-                            <MListItemSubtitle>总字数</MListItemSubtitle>
+                            <MListItemSubtitle>
+                                @(I18n!.T("Mine.WordCount"))
+                            </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
                                 @WordCount
                             </MListItemTitle>
                         </div>
                         <div style="flex:unset">
-                            <MListItemSubtitle>活跃天数</MListItemSubtitle>
+                            <MListItemSubtitle>
+                                @(I18n!.T("Mine.ActiveDayCount"))
+                            </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
                                 @ActiveDayCount
                             </MListItemTitle>
@@ -67,7 +73,7 @@
     </div>
 
     <div class="text-h6 mine-title">
-        数据
+        @(I18n!.T("Mine.Data"))
     </div>
 
     <MCard Class="mine-card"
@@ -81,7 +87,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    备份
+                    @(I18n!.T("Mine.Backups"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -97,7 +103,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    导入
+                    @(I18n!.T("Mine.Import"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -113,7 +119,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    统计
+                    @(I18n!.T("Mine.Statistics"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -123,7 +129,7 @@
     </MCard>
 
     <div class="text-h6 mine-title">
-        设置
+        @(I18n!.T("Mine.Settings"))
     </div>
 
     <MCard Class="mine-card"
@@ -137,7 +143,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    设置
+                    @(I18n!.T("Mine.Settings"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -153,7 +159,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    语言
+                    @(I18n!.T("Mine.Languages"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -169,7 +175,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    深色模式
+                    @(I18n!.T("Mine.Night"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -179,7 +185,7 @@
     </MCard>
 
     <div class="text-h6 mine-title">
-        其他
+        @(I18n!.T("Mine.Other"))
     </div>
 
     <MCard Class="mine-card"
@@ -193,7 +199,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    联系我们
+                    @(I18n!.T("Mine.Feedback"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -209,7 +215,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    关于
+                    @(I18n!.T("Mine.About"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -221,14 +227,15 @@
 
 <MDialog MaxWidth="420"
          @bind-Value="ShowLanguage">
-    <MCard Rounded="@("lg")">
+    <MCard>
         <MCardTitle Class="font-weight-bold">
-            更改语言
+            @(I18n!.T("Mine.SelectLanguage"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="()=>ShowLanguage= false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
+        <MDivider></MDivider>
         <MCardText>
             <MRadioGroup Value="SelectLanguage"
                          TValue="string"
@@ -237,6 +244,7 @@
                 @foreach (var item in Languages)
                 {
                     <MRadio Label="@(item.Key)"
+                        Class="mt-2"
                         Value="@(item.Value)">
                     </MRadio>
                 }
