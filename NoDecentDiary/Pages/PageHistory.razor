@@ -9,11 +9,11 @@
            Color="black">
         <MTab Class="m-tab-swiper"
               Ripple="false">
-            日历模式
+            @(I18n!.T("History.Calendar"))
         </MTab>
         <MTab Class="m-tab-swiper"
               Ripple="false">
-            目录模式
+            @(I18n!.T("History.Catalogue"))
         </MTab>
     </MTabs>
     <MSpacer></MSpacer>
@@ -29,7 +29,7 @@
                      NoTitle
                      AllowedDates="AllowedDates"
                      ShowCurrent="false"
-                     Locale="zh-CN">
+                     Locale="@(I18n!.Culture.Name)">
         </MDatePicker>
         <DiaryCardList Value="CalendarDiaries"></DiaryCardList>
     </SwiperTabItem>

@@ -1,4 +1,5 @@
 ﻿using BlazorComponent;
+using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -21,6 +22,8 @@ namespace NoDecentDiary.Shared
         public IPopupService? PopupService { get; set; }
         [Inject]
         public INavigateService? NavigateService { get; set; }
+        [Inject]
+        private I18n? I18n { get; set; }
         [Parameter]
         public bool Value
         {
@@ -124,8 +127,8 @@ namespace NoDecentDiary.Shared
                 await PopupService!.ToastAsync(it => 
                 { 
                     it.Type = AlertTypes.Warning; 
-                    it.Title = "标签已存在";
-                    it.Content = "请勿重复添加";
+                    it.Title = I18n!.T("Tag.Repeat.Title");
+                    it.Content = I18n!.T("Tag.Repeat.Content");
                 });
                 return;
             }
@@ -140,7 +143,7 @@ namespace NoDecentDiary.Shared
                 await PopupService!.ToastAsync(it => 
                 { 
                     it.Type = AlertTypes.Error; 
-                    it.Title = "添加失败"; 
+                    it.Title = I18n!.T("Tag.Fail");
                 });
                 return;
             }
@@ -148,7 +151,7 @@ namespace NoDecentDiary.Shared
             await PopupService!.ToastAsync(it => 
             { 
                 it.Type = AlertTypes.Success; 
-                it.Title = "添加成功"; 
+                it.Title = I18n!.T("Tag.Success"); 
             });
             tagModel.Id = await TagService!.GetLastInsertRowId();
             Tags.Add(tagModel);

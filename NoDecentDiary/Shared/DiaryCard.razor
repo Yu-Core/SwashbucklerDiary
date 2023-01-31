@@ -36,30 +36,30 @@
                             <MListItem Dense
                                        OnClick="OnTag">
                                 <MListItemContent>
-                                    标签
+                                    @(I18n!.T("Diary.Tag"))
                                 </MListItemContent>
                             </MListItem>
                             <MListItem Dense
                                        OnClick="OnCopy">
                                 <MListItemContent>
-                                    复制
+                                    @(I18n!.T("Share.Copy"))
                                 </MListItemContent>
                             </MListItem>
                             <MListItem Dense
                                        OnClick="OnDelete">
                                 <MListItemContent>
-                                    删除
+                                    @(I18n!.T("Share.Delete"))
                                 </MListItemContent>
                             </MListItem>
                             <MListItem Dense
                                        OnClick="OnTopping">
                                 <MListItemContent>
-                                    @(Top ? "取消置顶" : "置顶")
+                                    @(Top ? I18n!.T("Diary.CancelTop") : I18n!.T("Diary.Top"))
                                 </MListItemContent>
                             </MListItem>
                             <MListItem Dense>
                                 <MListItemContent>
-                                    导出（txt、json、pdf）
+                                    @(I18n!.T("Export") + "（txt、json、pdf）")
                                 </MListItemContent>
                             </MListItem>
                         </MList>
@@ -72,7 +72,7 @@
     <MListItem ThreeLine>
         <MListItemContent>
             <MListItemTitle>
-                <b>@(string.IsNullOrWhiteSpace(Title) ? "无标题" : Title)</b>
+                <b>@(string.IsNullOrWhiteSpace(Title) ? I18n!.T("Diary.Untitled") : Title)</b>
             </MListItemTitle>
             <MListItemSubtitle>
                 @Text

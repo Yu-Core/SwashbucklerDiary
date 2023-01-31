@@ -75,10 +75,12 @@
     <MContainer Id="screenshot">
         <div class="px-3 text-h6 font-weight-bold">
             <span>@(Diary.CreateTime.ToString("yyyy/MM/dd"))</span>
-            <span class="pl-5 text-subtitle-1">@(Diary.CreateTime.DayOfWeek.ToChinese2())</span>
+            <span class="pl-5 text-subtitle-1">
+                @(Diary.CreateTime.ToWeek(I18n))
+            </span>
         </div>
         <div class="px-2">
-            @if(ShowWeather)
+            @if (ShowWeather)
             {
                 <MChip Class="my-2 mr-2" Outlined="Mobile">
                     <MIcon Left>
@@ -88,7 +90,7 @@
                 </MChip>
             }
 
-            @if(ShowMood)
+            @if (ShowMood)
             {
                 <MChip Class="my-2 mr-2" Outlined="Mobile">
                     <MIcon Left>
@@ -97,8 +99,8 @@
                     @(Diary.Mood)
                 </MChip>
             }
-           
-            @if(ShowLocation)
+
+            @if (ShowLocation)
             {
                 <MChip Class="my-2 mr-2" Outlined="Mobile">
                     <MIcon Left>

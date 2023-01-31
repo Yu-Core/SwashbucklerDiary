@@ -1,4 +1,5 @@
 ﻿using BlazorComponent;
+using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
@@ -16,6 +17,8 @@ namespace NoDecentDiary.Shared
         public IDiaryTagService? DiaryTagService { get; set; }
         [Inject]
         public INavigateService? NavigateService { get; set; }
+        [Inject]
+        private I18n? I18n { get; set; }
 
         [Parameter]
         [EditorRequired]
@@ -70,7 +73,7 @@ namespace NoDecentDiary.Shared
                     await PopupService!.ToastAsync(it => 
                     { 
                         it.Type = AlertTypes.Success;
-                        it.Title = "删除成功"; 
+                        it.Title = I18n!.T("Share.DeleteSuccess"); 
                     });
                     this.StateHasChanged();
                     await DiaryTagService!.DeleteAsync(it => it.TagId == tag.Id);
@@ -79,8 +82,8 @@ namespace NoDecentDiary.Shared
                 {
                     await PopupService!.ToastAsync(it => 
                     { 
-                        it.Type = AlertTypes.Error; 
-                        it.Title = "删除失败"; 
+                        it.Type = AlertTypes.Error;
+                        it.Title = I18n!.T("Share.DeleteFail");
                     });
                 }
             };
@@ -100,8 +103,8 @@ namespace NoDecentDiary.Shared
                 await PopupService!.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Warning;
-                    it.Title = "标签已存在";
-                    it.Content = "请勿重复添加";
+                    it.Title = I18n!.T("Tag.Repeat.Title");
+                    it.Content = I18n!.T("Tag.Repeat.Content");
                 });
                 return;
             }
@@ -114,7 +117,7 @@ namespace NoDecentDiary.Shared
                 await PopupService!.ToastAsync(it => 
                 { 
                     it.Type = AlertTypes.Success;
-                    it.Title = "修改成功"; 
+                    it.Title = I18n!.T("Share.EditSuccess");
                 });
             }
             else
@@ -122,7 +125,7 @@ namespace NoDecentDiary.Shared
                 await PopupService!.ToastAsync(it => 
                 { 
                     it.Type = AlertTypes.Error;
-                    it.Title = "修改失败"; 
+                    it.Title = I18n!.T("Share.EditFail");
                 });
             }
         }

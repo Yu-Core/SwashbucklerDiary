@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorComponent.I18n;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace NoDecentDiary.Shared
 {
     public partial class InputTag
     {
+        [Inject]
+        private I18n? I18n { get; set; }
         [Parameter]
         public bool Value { get; set; }
         [Parameter]

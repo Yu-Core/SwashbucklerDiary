@@ -1,4 +1,5 @@
 ﻿using BlazorComponent;
+using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
@@ -18,14 +19,16 @@ namespace NoDecentDiary.Shared
         private NavigationManager? Navigation { get; set; }
         [Inject]
         public INavigateService? NavigateService { get; set; }
+        [Inject]
+        private I18n? I18n { get; set; }
 
         StringNumber SelectedItem = 0;
 
         readonly List<NavigationButton> NavigationButtons = new()
         {
-            new NavigationButton(0,"日记","mdi-notebook-outline","mdi-notebook",""),
-            new NavigationButton(1,"回忆","mdi-clock-outline","mdi-clock","History"),
-            new NavigationButton(2,"我的","mdi-account-outline","mdi-account","Mine")
+            new NavigationButton(0,"Main.Diary","mdi-notebook-outline","mdi-notebook",""),
+            new NavigationButton(1,"Main.History","mdi-clock-outline","mdi-clock","History"),
+            new NavigationButton(2,"Main.Mine","mdi-account-outline","mdi-account","Mine")
         };
 
         private class NavigationButton

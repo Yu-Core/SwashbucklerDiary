@@ -1,4 +1,5 @@
 ﻿using BlazorComponent;
+using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Maui.Controls;
@@ -25,6 +26,8 @@ namespace NoDecentDiary.Pages
         public INavigateService? NavigateService { get; set; }
         [Inject]
         public IconService? IconService { get; set; }
+        [Inject]
+        private I18n? I18n { get; set; }
 
         [Parameter]
         [SupplyParameterFromQuery]

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorComponent.I18n;
+using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 
@@ -8,6 +9,8 @@ namespace NoDecentDiary.Shared
     {
         [Inject]
         public INavigateService? NavigateService { get; set; }
+        [Inject]
+        private I18n? I18n { get; set; }
 
         [Parameter]
         [EditorRequired]

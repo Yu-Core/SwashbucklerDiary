@@ -1,4 +1,5 @@
 ﻿using BlazorComponent;
+using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
@@ -18,6 +19,8 @@ namespace NoDecentDiary.Shared
         public IDiaryTagService? DiaryTagService { get; set; }
         [Inject]
         public INavigateService? NavigateService { get; set; }
+        [Inject]
+        private I18n? I18n { get; set; }
 
         [Parameter]
         public List<DiaryModel>? Value { get; set; }
@@ -73,7 +76,7 @@ namespace NoDecentDiary.Shared
                     await PopupService!.ToastAsync(it => 
                     { 
                         it.Type = AlertTypes.Success; 
-                        it.Title = "删除成功"; 
+                        it.Title = I18n!.T("Share.DeleteSuccess"); 
                     });
                     this.StateHasChanged();
                 }
@@ -81,8 +84,8 @@ namespace NoDecentDiary.Shared
                 {
                     await PopupService!.ToastAsync(it => 
                     { 
-                        it.Type = AlertTypes.Error; 
-                        it.Title = "删除失败"; 
+                        it.Type = AlertTypes.Error;
+                        it.Title = I18n!.T("Share.DeleteFail");
                     });
                 }
             };
@@ -97,7 +100,7 @@ namespace NoDecentDiary.Shared
             await PopupService!.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Success;
-                it.Title = "复制成功";
+                it.Title = I18n!.T("Share.CopySuccess");
             });
         }
         private async Task Tag(int id)

@@ -1,3 +1,76 @@
 {
-  "Language": "I am English"
+  "Share": {
+    "OK": "OK",
+    "Cancel": "Cancel",
+    "Save": "Save",
+    "Delete": "Delete",
+    "DeleteSuccess": "Delete Success",
+    "DeleteFail": "Delete Fail",
+    "Copy": "Copy",
+    "CopySuccess": "CopySuccess",
+    "Rename": "Rename",
+    "EditSuccess": "Edit Success",
+    "EditFail": "Edit Fail"
+  },
+  "Main": {
+    "Diary": "Diary",
+    "History": "History",
+    "Mine": "Mine"
+  },
+  "Index": {
+    "All": "All",
+    "Tag": "Tag",
+    "Welcome": {
+      "Morning": "Good morning, another new day",
+      "Noon": "Good afternoon. Have you had lunch?",
+      "Afternoon": "Good afternoon, enjoy a wonderful afternoon",
+      "Night": "Good evening. It's time to rest",
+      "BeforeDawn": "Good before dawn, may you dream"
+    }
+  },
+  "Tag": {
+    "Add": "Add Tag",
+    "Success": "Successfully added",
+    "Fail": "Add failed",
+    "Repeat": {
+      "Title": "Tag already exists",
+      "Content": "Do not add again"
+    },
+    "Placeholder": "Please enter a tag name",
+    "Select": "Select Tag",
+    "Delete": {
+      "Title": "Delete Tag",
+      "Content": "Only the tag is deleted, and diaries of the tag will not be deleted"
+    },
+    "Rename": "Rename Tag",
+    "NoTag": "No Tag"
+  },
+  "Week": {
+    "0": "Sunday",
+    "1": "Monday",
+    "2": "Tuesday",
+    "3": "Wednesday",
+    "4": "Thursday",
+    "5": "Friday",
+    "6": "Saturday"
+  },
+  "Diary": {
+    "Tag": "Tag",
+    "Top": "Top",
+    "CancelTop": "Cancel Top",
+    "Export": "Export",
+    "Untitled": "Untitled",
+    "NoDiary": "No Diary",
+    "Delete": {
+      "Title": "Delete Diary",
+      "Content": "Please delete carefully. Every diary is a precious memory."
+    }
+  },
+  "Search": {
+    "Placeholder": "Please enter diary keywords"
+  },
+  "History": {
+    "Calendar": "Calendar",
+    "Catalogue": "Catalogue"
+  }
 }

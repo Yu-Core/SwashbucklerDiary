@@ -16,7 +16,9 @@
                                 <MListItemIcon>
                                     <MIcon>@GetIcon(navigationButton)</MIcon>
                                 </MListItemIcon>
-                                <MListItemTitle>@navigationButton.Title</MListItemTitle>
+                                <MListItemTitle>
+                                    @(I18n!.T(navigationButton.Title))
+                                </MListItemTitle>
                             </MListItem>
                         }
                     </MListItemGroup>
@@ -34,7 +36,7 @@
             @foreach (var navigationButton in NavigationButtons)
             {
                 <MButton OnClick="()=>ChangeView(navigationButton)">
-                    <span>@navigationButton.Title</span>
+                    <span>@(I18n!.T(navigationButton.Title))</span>
                     <MIcon>@GetIcon(navigationButton)</MIcon>
                 </MButton>
             }

@@ -1,4 +1,5 @@
-﻿using Masa.Blazor;
+﻿using BlazorComponent.I18n;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using NoDecentDiary.IServices;
@@ -19,6 +20,8 @@ namespace NoDecentDiary.Pages
         private INavigateService? NavigateService { get; set; }
         [Inject]
         public NavigationManager? Navigation { get; set; }
+        [Inject]
+        private I18n? I18n { get; set; }
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Search { get; set; }

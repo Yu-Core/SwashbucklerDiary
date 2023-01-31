@@ -11,12 +11,12 @@
         <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text OnClick="HandleOnCancel">
-                取消
+                @(I18n!.T("Share.Cancel"))
             </MButton>
             <MButton Text
                      Color="red"
                      OnClick="OnOK">
-                确认
+                @(I18n!.T("Share.OK"))
             </MButton>
         </MCardActions>
     </MCard>

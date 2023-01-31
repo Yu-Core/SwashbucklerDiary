@@ -9,11 +9,11 @@
            Color="black">
         <MTab Class="m-tab-swiper"
               Ripple="false">
-            全部
+            @(I18n!.T("Index.All"))
         </MTab>
         <MTab Class="m-tab-swiper"
               Ripple="false">
-            标签
+            @(I18n!.T("Index.Tag"))
         </MTab>
     </MTabs>
     <MSpacer></MSpacer>
@@ -26,7 +26,7 @@
     <SwiperTabItem>
         <div class="mb-8 px-2">
             <MSubheader Class="px-0">
-                @(DateTime.Now.ToString("yyyy/MM/dd") + " " + DateTime.Now.DayOfWeek.ToChinese2())
+                @(DateTime.Now.ToString("yyyy/MM/dd") + " " + DateTime.Now.ToWeek(I18n))
             </MSubheader>
 
             <div class="text-h6 font-weight-bold">
@@ -79,7 +79,7 @@
 
 <InputTag @bind-Value="ShowAddTag"
           @bind-Text="AddTagName"
-          Title="添加标签"
+          Title="@(I18n!.T("Tag.Add"))"
           OnSave="HandOnSaveAddTag">
 
 </InputTag>

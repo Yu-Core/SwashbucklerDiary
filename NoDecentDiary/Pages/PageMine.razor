@@ -146,7 +146,7 @@
 
             <MDivider Class="mx-3 mx-sm-0"></MDivider>
 
-            <MListItem>
+            <MListItem OnClick="()=>ShowLanguage=true">
                 <MListItemIcon>
                     <MIcon Class="mine-item-icon">
                         mdi-web
@@ -218,3 +218,29 @@
         </MList>
     </MCard>
 </MContainer>
+
+<MDialog MaxWidth="420"
+         @bind-Value="ShowLanguage">
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            更改语言
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowLanguage= false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            <MRadioGroup Value="SelectLanguage"
+                         TValue="string"
+                         ValueChanged="OnChangeLanguage"
+                         Mandatory>
+                @foreach (var item in Languages)
+                {
+                    <MRadio Label="@(item.Key)"
+                        Value="@(item.Value)">
+                    </MRadio>
+                }
+            </MRadioGroup>
+        </MCardText>
+    </MCard>
+</MDialog>

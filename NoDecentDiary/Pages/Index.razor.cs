@@ -97,8 +97,8 @@ namespace NoDecentDiary.Pages
                 await PopupService!.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Warning;
-                    it.Title = "标签已存在";
-                    it.Content = "请勿重复添加";
+                    it.Title = I18n!.T("Tag.Repeat.Title");
+                    it.Content = I18n!.T("Tag.Repeat.Content");
                 });
                 return;
             }
@@ -113,7 +113,7 @@ namespace NoDecentDiary.Pages
                 await PopupService!.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Error;
-                    it.Title = "添加失败";
+                    it.Title = I18n!.T("Tag.Success");
                 });
                 return;
             }
@@ -121,7 +121,7 @@ namespace NoDecentDiary.Pages
             await PopupService!.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Success;
-                it.Title = "添加成功";
+                it.Title = I18n!.T("Tag.Fail");
             });
             tagModel.Id = await TagService!.GetLastInsertRowId();
             Tags.Add(tagModel);
@@ -160,23 +160,23 @@ namespace NoDecentDiary.Pages
             int hour = Convert.ToInt16(DateTime.Now.ToString("HH"));
             if(hour >= 6 && hour < 11)
             {
-                return "早上好，又是全新的一天";
+                return I18n!.T("Index.Welcome.Morning");
             }
             else if(hour >= 11 && hour < 13)
             {
-                return "中午好，吃午饭了吗";
+                return I18n!.T("Index.Welcome.Noon");
             }
             else if (hour >= 13 && hour < 18)
             {
-                return "下午好，享受美好的下午时光";
+                return I18n!.T("Index.Welcome.Afternoon");
             }
             else if (hour >= 18 && hour < 23)
             {
-                return "晚上好，该到了休息的时候";
+                return I18n!.T("Index.Welcome.Night");
             }
             else if (hour >= 23 || hour < 6)
             {
-                return "凌晨好，愿你好梦";
+                return I18n!.T("Index.Welcome.BeforeDawn");
             }
             return "Hello World";
         }

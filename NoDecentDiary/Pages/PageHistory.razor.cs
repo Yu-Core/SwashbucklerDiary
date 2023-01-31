@@ -1,4 +1,5 @@
 ﻿using BlazorComponent;
+using BlazorComponent.I18n;
 using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
@@ -18,6 +19,8 @@ namespace NoDecentDiary.Pages
         public INavigateService? NavigateService { get; set; }
         [Inject]
         public NavigationManager? Navigation { get; set; }
+        [Inject]
+        private I18n? I18n { get; set; }
 
         [Parameter]
         [SupplyParameterFromQuery]

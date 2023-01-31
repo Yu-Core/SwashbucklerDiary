@@ -1,4 +1,77 @@
 {
   "$DefaultCulture": "true",
-  "Language": "我是中文"
+  "Share": {
+    "OK": "确认",
+    "Cancel": "取消",
+    "Save": "保存",
+    "Delete": "删除",
+    "DeleteSuccess": "删除成功",
+    "DeleteFail": "删除失败",
+    "Copy": "复制",
+    "CopySuccess": "复制成功",
+    "Rename": "重命名",
+    "EditSuccess": "修改成功",
+    "EditFail": "修改失败"
+  },
+  "Main": {
+    "Diary": "日记",
+    "History": "回忆",
+    "Mine": "我的"
+  },
+  "Index": {
+    "All": "全部",
+    "Tag": "标签",
+    "Welcome": {
+      "Morning": "早上好，又是全新的一天",
+      "Noon": "中午好，吃午饭了吗",
+      "Afternoon": "下午好，享受美好的下午时光",
+      "Night": "晚上好，该到了休息的时候",
+      "BeforeDawn": "凌晨好，愿你好梦"
+    }
+  },
+  "Tag": {
+    "Add": "添加标签",
+    "Success": "添加成功",
+    "Fail": "添加失败",
+    "Repeat": {
+      "Title": "标签已存在",
+      "Content": "请勿重复添加"
+    },
+    "Placeholder": "请输入标签名称",
+    "Select": "选择标签",
+    "Delete": {
+      "Title": "删除标签",
+      "Content": "仅删除标签，不会删除标签下的日记"
+    },
+    "Rename": "重命名标签",
+    "NoTag": "暂无日记"
+  },
+  "Week": {
+    "0": "星期日",
+    "1": "星期一",
+    "2": "星期二",
+    "3": "星期三",
+    "4": "星期四",
+    "5": "星期五",
+    "6": "星期六"
+  },
+  "Diary": {
+    "Tag": "标签",
+    "Top": "置顶",
+    "CancelTop": "取消置顶",
+    "Export": "导出",
+    "Untitled": "无标题",
+    "NoDiary": "暂无日记",
+    "Delete": {
+      "Title": "删除日记",
+      "Content": "请慎重删除，每一篇日记都是珍贵的回忆。"
+    }
+  },
+  "Search": {
+    "Placeholder": "请输入日记关键词"
+  },
+  "History": {
+    "Calendar": "日历模式",
+    "Catalogue": "目录模式"
+  }
 }

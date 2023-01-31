@@ -13,21 +13,21 @@
 {
     <div class="d-flex justify-center" style="padding-top:20vh;">
         <div class="text-h6 text--secondary font-weight-bold-table">
-            暂无标签
+            @(I18n!.T("Tag.NoTag"))
         </div>
     </div>
 }
 
 <InputTag @bind-Value="ShowRenameTag"
           @bind-Text="RenameTagName"
-          Title="重命名标签"
+          Title="@(I18n!.T("Tag.Rename"))"
           OnSave="HandOnSaveRenameTag">
 
 </InputTag>
 
 <DeleteDialog @bind-Value="ShowDeleteTag"
-              Title="删除标签"
-              Content="请慎重删除，一旦删除，不可恢复"
+              Title="@(I18n!.T("Tag.Delete.Title"))"
+              Content="@(I18n!.T("Tag.Delete.Content"))"
               OnOK="()=>HandOnOKDeleteTag?.Invoke()">
 
 </DeleteDialog>

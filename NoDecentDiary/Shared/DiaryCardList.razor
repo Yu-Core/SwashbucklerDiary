@@ -33,7 +33,7 @@
 {
     <div class="d-flex justify-center" style="padding-top:20vh;">
         <div class="text-h6 text--secondary font-weight-bold-table">
-            暂无日记
+            @(I18n!.T("Diary.NoDiary"))
         </div>
     </div>
 }
@@ -44,8 +44,8 @@
 </SelectTags>
 
 <DeleteDialog @bind-Value="ShowDeleteDiary"
-              Title="删除日记"
-              Content="请慎重删除，每一篇日记都是珍贵的回忆。"
+              Title="@(I18n!.T("Diary.Delete.Title"))"
+              Content="@(I18n!.T("Diary.Delete.Content"))"
               OnOK="()=>HandOnOKDelete?.Invoke()">
 
 </DeleteDialog>

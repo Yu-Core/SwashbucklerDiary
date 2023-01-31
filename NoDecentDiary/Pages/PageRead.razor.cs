@@ -1,4 +1,5 @@
 ﻿using BlazorComponent;
+using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -33,6 +34,8 @@ namespace NoDecentDiary.Pages
         public IJSRuntime? JS { get; set; }
         [Inject]
         public IconService? IconService { get; set; }
+        [Inject]
+        private I18n? I18n { get; set; }
 
         [Parameter]
         public int Id { get; set; }
