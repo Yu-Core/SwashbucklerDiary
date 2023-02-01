@@ -1,8 +1,8 @@
 # NoDecentDiary
 
-English | [简体中文](./README.zh-CN.md)
+English | [绠�浣撲腑鏂嘳(./README.zh-CN.md)
 
-「NoDecentDiary」is an open source cross-platform application focused on diary.
+"NoDecentDiary" is an open source cross-platform application focused on diary.
 
 <img src="./Images/Windows.jpeg" />
 
@@ -10,7 +10,7 @@ English | [简体中文](./README.zh-CN.md)
 
 ## Supported platforms
 - Windows (Windows 10/11)
-- Android (Android 7.0以上)
+- Android (Android 7.0脪脭脡脧)
 - ~~iOS/Mac~~ (No test, whether it can run is unknown)
 
 ## Thanks to the following Open Source Projects
