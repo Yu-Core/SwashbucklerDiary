@@ -1,19 +1,19 @@
-# NoDecentDiary
+# NoDecentDiary(反派日记)
 
-English | [简体中文](./README.zh-CN.md)
+[English](./README.md) | 简体中文
 
-「NoDecentDiary」is an open source cross-platform application focused on diary.
+「NoDecentDiary」是一个开源跨平台的、专注于日记的应用。
 
 <img src="./Images/Windows.jpeg" />
 
 <img src="./Images/Android.jpeg" />
 
-## Supported platforms
+## 支持的平台
 - Windows (Windows 10/11)
 - Android (Android 7.0以上)
-- ~~iOS/Mac~~ (No test, whether it can run is unknown)
+- ~~iOS/Mac~~ (没有测试，能否运行未知)
 
-## Thanks to the following Open Source Projects
+## 感谢以下开源项目
 - [.NET MAUI](https://github.com/dotnet/maui)
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
 - [html2canvas](https://github.com/niklasvh/html2canvas)
