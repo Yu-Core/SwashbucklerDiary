@@ -10,7 +10,7 @@ English | [简体中文](./README.zh-CN.md)
 
 ## Supported platforms
 - Windows (Windows 10/11)
-- Android (Android 7.0ÒÔÉÏ)
+- Android (Android 7.0 or higher)
 - ~~iOS/Mac~~ (No test, whether it can run is unknown)
 
 ## Thanks to the following Open Source Projects
