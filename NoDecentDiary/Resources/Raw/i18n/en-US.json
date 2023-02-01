@@ -128,9 +128,9 @@
   "Mine": {
     "MySpace": "My Space",
     "Sign": "Be the villain of fate and fight against suffering",
-    "DiaryCount": "Diary Count",
-    "WordCount": "Word Count",
-    "ActiveDayCount": "Active Day Count",
+    "DiaryCount": "Diaries",
+    "WordCount": "Words",
+    "ActiveDayCount": "Days",
     "Data": "Data",
     "Backups": "Backups",
     "Import": "Import",

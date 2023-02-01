@@ -147,3 +147,10 @@ a, .btn-link {
     -webkit-user-select: text;
     user-select: text;
 }
+
+@media screen and (max-width:960px) {
+    .m-toast-container {
+        left: 0px !important;
+        right: 0px !important;
+    }
+}
