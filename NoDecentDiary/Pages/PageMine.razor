@@ -15,18 +15,19 @@
     <div class="d-md-flex flex-md-row justify-space-between">
         <MCard Class="mine-info mb-5 py-sm-3"
                Elevation="4"
-               Rounded="@("lg")">
+               Rounded="@("lg")"
+               OnClick="NavigateToUser">
             <MList>
                 <MListItem>
                     <MListItemAvatar Tile Size="75">
-                        <MImage Src="./logo/logo.svg"></MImage>
+                        <MImage Src="@(Avatar)"></MImage>
                     </MListItemAvatar>
                     <MListItemContent>
                         <MListItemTitle Class="text-h6 font-weight-bold">
-                            @(I18n!.T("AppName"))
+                            @UserName
                         </MListItemTitle>
                         <MListItemSubtitle>
-                            @(I18n!.T("Mine.Sign"))
+                            @Sign
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
@@ -82,7 +83,7 @@
         <MList>
             <MListItem>
                 <MListItemIcon>
-                    <MIcon Class="mine-item-icon">
+                    <MIcon Class="list-item-icon">
                         mdi-folder-sync-outline
                     </MIcon>
                 </MListItemIcon>
@@ -98,7 +99,7 @@
 
             <MListItem>
                 <MListItemIcon>
-                    <MIcon Class="mine-item-icon">
+                    <MIcon Class="list-item-icon">
                         mdi-import
                     </MIcon>
                 </MListItemIcon>
@@ -114,7 +115,7 @@
 
             <MListItem>
                 <MListItemIcon>
-                    <MIcon Class="mine-item-icon">
+                    <MIcon Class="list-item-icon">
                         mdi-chart-line
                     </MIcon>
                 </MListItemIcon>
@@ -138,7 +139,7 @@
         <MList>
             <MListItem>
                 <MListItemIcon>
-                    <MIcon Class="mine-item-icon">
+                    <MIcon Class="list-item-icon">
                         mdi-cog-outline
                     </MIcon>
                 </MListItemIcon>
@@ -154,7 +155,7 @@
 
             <MListItem OnClick="()=>ShowLanguage=true">
                 <MListItemIcon>
-                    <MIcon Class="mine-item-icon">
+                    <MIcon Class="list-item-icon">
                         mdi-web
                     </MIcon>
                 </MListItemIcon>
@@ -170,7 +171,7 @@
 
             <MListItem OnClick="ToDo">
                 <MListItemIcon>
-                    <MIcon Class="mine-item-icon">
+                    <MIcon Class="list-item-icon">
                         mdi-weather-night
                     </MIcon>
                 </MListItemIcon>
@@ -194,7 +195,7 @@
         <MList>
             <MListItem>
                 <MListItemIcon>
-                    <MIcon Class="mine-item-icon">
+                    <MIcon Class="list-item-icon">
                         mdi-email-outline
                     </MIcon>
                 </MListItemIcon>
@@ -210,7 +211,7 @@
 
             <MListItem>
                 <MListItemIcon>
-                    <MIcon Class="mine-item-icon">
+                    <MIcon Class="list-item-icon">
                         mdi-information-outline
                     </MIcon>
                 </MListItemIcon>

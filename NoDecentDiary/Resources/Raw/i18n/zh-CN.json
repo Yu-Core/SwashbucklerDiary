@@ -147,5 +147,15 @@
   "ToDo": {
     "Title": "该功能暂未开放",
     "Content": "敬请期待"
+  },
+  "User": {
+    "Title": "用户设置",
+    "Avatar": "头像",
+    "UserName": "昵称",
+    "Sign": "签名",
+    "EditUserName": "修改昵称",
+    "UserNamePlace": "请输入昵称",
+    "EditSign": "修改签名",
+    "SignPlace": "请输入签名"
   }
 }

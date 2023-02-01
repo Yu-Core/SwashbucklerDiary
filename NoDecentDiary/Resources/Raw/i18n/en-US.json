@@ -146,5 +146,15 @@
   "ToDo": {
     "Title": "This function is not open for the time being",
     "Content": "Coming soon"
+  },
+  "User": {
+    "Title": "User Settings",
+    "Avatar": "Avatar",
+    "UserName": "Nickname",
+    "Sign": "Sign",
+    "EditUserName": "Edit UserName",
+    "UserNamePlace": "Please enter a nickname",
+    "EditSign": "Edit Sign",
+    "SignPlace": "Please enter your signature"
   }
 }

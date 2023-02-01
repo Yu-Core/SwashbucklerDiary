@@ -60,8 +60,12 @@ namespace NoDecentDiary.Shared
         }
         private async Task LoadSettings()
         {
-            var language = await SettingsService!.Get("Language", "zh-CN");
-            I18n!.SetCulture(new CultureInfo(language));
+            if (Preferences.Default.ContainsKey("Language"))
+            {
+                var language = await SettingsService!.Get("Language", string.Empty);
+                I18n!.SetCulture(new CultureInfo(language));
+            }
+            
         }
         private string? GetIcon(NavigationButton navigationButton)
         {

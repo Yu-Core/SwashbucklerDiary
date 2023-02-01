@@ -17,7 +17,3 @@
         width:50%;
     }
 }
-
-::deep + .mine-card .mine-item-icon.theme--light.m-icon {
-    color: #000000;
-}

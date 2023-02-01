@@ -29,7 +29,10 @@ namespace NoDecentDiary.Pages
         private int DiaryCount { get; set; }
         private long WordCount { get; set; }
         private int ActiveDayCount { get; set; }
-        private string? Language { get; set; } 
+        private string? Language { get; set; }
+        private string? UserName { get; set; }
+        private string? Sign { get; set; }
+        private string? Avatar { get; set; }
         private bool _showLanguage;
         private bool ShowLanguage
         {
@@ -52,11 +55,12 @@ namespace NoDecentDiary.Pages
         {
             DiaryCount = await DiaryService!.CountAsync();
             var diaries = await DiaryService!.QueryAsync();
+            var wordCount = 0;
             if (I18n!.T("Write.Word") == "1")
             {
                 foreach (var item in diaries)
                 {
-                    WordCount += item.Content?.Split(' ').Length ?? 0;
+                    wordCount += item.Content?.Split(' ').Length ?? 0;
                 }
             }
 
@@ -64,15 +68,18 @@ namespace NoDecentDiary.Pages
             {
                 foreach (var item in diaries)
                 {
-                    WordCount += item.Content?.Length ?? 0;
+                    wordCount += item.Content?.Length ?? 0;
                 }
             }
-            
+            WordCount = wordCount;
             ActiveDayCount = diaries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
         }
         private async Task LoadSettings()
         {
             Language = await SettingsService!.Get(nameof(Language), Languages.First().Value);
+            UserName = await SettingsService!.Get(nameof(UserName), I18n!.T("AppName"));
+            Sign = await SettingsService!.Get(nameof(Sign), I18n!.T("Mine.Sign"));
+            Avatar = await SettingsService!.Get(nameof(Avatar), "./logo/logo.svg");
         }
         private Task ToDo()
         {
@@ -87,12 +94,17 @@ namespace NoDecentDiary.Pages
         {
             NavigateService!.NavigateTo("/Search");
         }
+        private void NavigateToUser()
+        {
+            NavigateService!.NavigateTo("/User");
+        }
         private async Task OnChangeLanguage(string value)
         {
             ShowLanguage = false;
             Language = value;
             I18n!.SetCulture(new CultureInfo(value));
             await SettingsService!.Save(nameof(Language), Language);
+            await SetCount();
         }
         private void SetShowLanguage(bool value)
         {

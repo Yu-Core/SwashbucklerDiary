@@ -1,0 +1,164 @@
+﻿@page "/User"
+<MAppBar App
+         Elevation="0"
+         Color="white">
+    <MButton Icon OnClick="HandOnBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+    <MToolbarTitle Class="font-weight-bold">
+        @(I18n!.T("User.Title"))
+    </MToolbarTitle>
+</MAppBar>
+
+<MContainer>
+    <MCard Elevation="4"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-account-circle-outline
+                    </MIcon>
+                </MListItemIcon>
+
+                <MListItemContent>
+                    @(I18n!.T("User.Avatar"))
+                </MListItemContent>
+
+                <MListItemAction>
+                    <MAvatar Size="32" Tile>
+                        <MImage Src="@Avatar"></MImage>
+                    </MAvatar>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+            <MListItem OnClick="()=>ShowUserName=true">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-account-details-outline
+                    </MIcon>
+                </MListItemIcon>
+
+                <MListItemContent>
+                    @(I18n!.T("User.UserName"))
+                </MListItemContent>
+
+                <MListItemContent>
+                    <MListItemSubtitle Class="text-right">
+                        @UserName
+                    </MListItemSubtitle>
+                </MListItemContent>
+
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+            <MListItem OnClick="()=>ShowSign = true">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-sign-text
+                    </MIcon>
+                </MListItemIcon>
+
+                <MListItemContent>
+                    <MListItemTitle>
+                        @(I18n!.T("User.Sign"))
+                    </MListItemTitle>
+                    
+                </MListItemContent>
+
+                <MListItemContent>
+                    <MListItemSubtitle Class="text-right">
+                        @Sign
+                    </MListItemSubtitle>
+                </MListItemContent>
+
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+</MContainer>
+
+<MDialog MaxWidth="420"
+         @bind-Value="ShowUserName">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @(I18n!.T("User.EditUserName"))
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowUserName= false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MDivider></MDivider>
+        <MCardText Class="pb-0">
+            <MTextField @bind-Value="InputUserName"
+                        Dense
+                        Autofocus
+                        HideDetails="@("auto")"
+                        Outlined
+                        Counter="20"
+                        maxlength="20"
+                        spellcheck="false"
+                        Placeholder="@(I18n!.T("User.UserNamePlace"))">
+            </MTextField>
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text OnClick="()=>ShowUserName=false">
+                @(I18n!.T("Share.Cancel"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="OnSaveUserName">
+                @(I18n!.T("Share.Save"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MDialog>
+
+<MDialog MaxWidth="420"
+         @bind-Value="ShowSign">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @(I18n!.T("User.EditSign"))
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowSign= false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MDivider></MDivider>
+        <MCardText Class="pb-0">
+            <MTextField @bind-Value="InputSign"
+                        Dense
+                        Autofocus
+                        HideDetails="@("auto")"
+                        Outlined
+                        Counter="20"
+                        maxlength="20"
+                        spellcheck="false"
+                        Placeholder="@(I18n!.T("User.SignPlace"))">
+            </MTextField>
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text OnClick="()=>ShowSign=false">
+                @(I18n!.T("Share.Cancel"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="OnSaveSign">
+                @(I18n!.T("Share.Save"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MDialog>

@@ -154,3 +154,7 @@ a, .btn-link {
         right: 0px !important;
     }
 }
+
+.list-item-icon.theme--light.m-icon {
+    color: #000000;
+}
