@@ -18,6 +18,7 @@ namespace NoDecentDiary.Extend
             services.AddSingleton<IDiaryTagService, DiaryTagService>();
             services.AddSingleton<INavigateService, NavigateService>();
             services.AddSingleton<IconService>();
+            services.AddSingleton<ISettingsService, SettingsService>();
             return services;
         }
     }

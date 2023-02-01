@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace NoDecentDiary.Shared
         public INavigateService? NavigateService { get; set; }
         [Inject]
         private I18n? I18n { get; set; }
+        [Inject]
+        private ISettingsService? SettingsService { get; set; }
 
         StringNumber SelectedItem = 0;
 
@@ -48,13 +51,18 @@ namespace NoDecentDiary.Shared
             public string Href { get; set; }
         }
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             NavigateService!.Navigation = Navigation;
+            await LoadSettings();
             MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
-            return base.OnInitializedAsync();
+            await base.OnInitializedAsync();
         }
-
+        private async Task LoadSettings()
+        {
+            var language = await SettingsService!.Get("Language", "zh-CN");
+            I18n!.SetCulture(new CultureInfo(language));
+        }
         private string? GetIcon(NavigationButton navigationButton)
         {
             return SelectedItem == navigationButton.Id ? navigationButton.SelectIcon : navigationButton.Icon;

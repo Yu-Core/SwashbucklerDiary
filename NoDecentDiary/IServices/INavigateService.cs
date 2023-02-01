@@ -9,12 +9,12 @@ namespace NoDecentDiary.IServices
 {
     public interface INavigateService
     {
-        public NavigationManager? Navigation { get; set; }
+        NavigationManager? Navigation { get; set; }
         List<string> HistoryHref { get; protected set; }
-        public event Action Action;
-        public void NavigateTo(string url);
-        public void NavigateToBack();
-        public void UpdateLastHistoryHref(string href);
-        public void OnBackButtonPressed();
+        event Action Action;
+        void NavigateTo(string url);
+        void NavigateToBack();
+        void UpdateLastHistoryHref(string href);
+        void OnBackButtonPressed();
     }
 }

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageMine
+    public partial class PageMine : IDisposable
     {
         [Inject]
         public INavigateService? NavigateService { get; set; }
@@ -23,11 +23,13 @@ namespace NoDecentDiary.Pages
         private IPopupService? PopupService { get; set; }
         [Inject]
         private I18n? I18n { get; set; }
+        [Inject]
+        private ISettingsService? SettingsService { get; set; }
 
         private int DiaryCount { get; set; }
         private long WordCount { get; set; }
         private int ActiveDayCount { get; set; }
-        private string SelectLanguage { get; set; } = Languages.First().Value;
+        private string? Language { get; set; } 
         private bool _showLanguage;
         private bool ShowLanguage
         {
@@ -43,17 +45,34 @@ namespace NoDecentDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             await SetCount();
+            await LoadSettings();
         }
 
         private async Task SetCount()
         {
             DiaryCount = await DiaryService!.CountAsync();
             var diaries = await DiaryService!.QueryAsync();
-            foreach (var item in diaries)
+            if (I18n!.T("Write.Word") == "1")
             {
-                WordCount += item.Content?.Length ?? 0;
+                foreach (var item in diaries)
+                {
+                    WordCount += item.Content?.Split(' ').Length ?? 0;
+                }
             }
+
+            if (I18n!.T("Write.Character") == "1")
+            {
+                foreach (var item in diaries)
+                {
+                    WordCount += item.Content?.Length ?? 0;
+                }
+            }
+            
             ActiveDayCount = diaries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
+        }
+        private async Task LoadSettings()
+        {
+            Language = await SettingsService!.Get(nameof(Language), Languages.First().Value);
         }
         private Task ToDo()
         {
@@ -68,11 +87,12 @@ namespace NoDecentDiary.Pages
         {
             NavigateService!.NavigateTo("/Search");
         }
-        private void OnChangeLanguage(string value)
+        private async Task OnChangeLanguage(string value)
         {
-            SelectLanguage = value;
-            I18n!.SetCulture(new CultureInfo(value));
             ShowLanguage = false;
+            Language = value;
+            I18n!.SetCulture(new CultureInfo(value));
+            await SettingsService!.Save(nameof(Language), Language);
         }
         private void SetShowLanguage(bool value)
         {

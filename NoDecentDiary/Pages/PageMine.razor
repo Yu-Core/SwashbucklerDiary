@@ -2,9 +2,9 @@
 <MAppBar App
          Elevation="0"
          Color="white">
-    <div class="text-h6 font-weight-bold">
+    <MToolbarTitle Class="font-weight-bold">
         @(I18n!.T("Mine.MySpace"))
-    </div>
+    </MToolbarTitle>
     <MSpacer></MSpacer>
     <MButton Large Icon OnClick="NavigateToSearch">
         <MIcon>mdi-magnify</MIcon>
@@ -237,7 +237,7 @@
         </MCardTitle>
         <MDivider></MDivider>
         <MCardText>
-            <MRadioGroup Value="SelectLanguage"
+            <MRadioGroup Value="Language"
                          TValue="string"
                          ValueChanged="OnChangeLanguage"
                          Mandatory>
