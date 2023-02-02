@@ -102,7 +102,10 @@ namespace NoDecentDiary.Pages
         }
         protected async override Task OnAfterRenderAsync(bool firstRender)
         {
-            module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/screenshot.js");
+            if(firstRender)
+            {
+                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/screenshot.js");
+            }
         }
         private async Task UpdateDiary()
         {

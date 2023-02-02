@@ -60,7 +60,8 @@ namespace NoDecentDiary.Shared
         }
         private async Task LoadSettings()
         {
-            if (Preferences.Default.ContainsKey("Language"))
+            var flag = await SettingsService!.ContainsKey("Language");
+            if (flag)
             {
                 var language = await SettingsService!.Get("Language", string.Empty);
                 I18n!.SetCulture(new CultureInfo(language));

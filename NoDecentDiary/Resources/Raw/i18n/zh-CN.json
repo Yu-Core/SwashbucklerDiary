@@ -153,9 +153,13 @@
     "Avatar": "头像",
     "UserName": "昵称",
     "Sign": "签名",
+    "EditAvatar": "修改头像",
+    "Photos": "相册",
+    "Capture": "相机",
     "EditUserName": "修改昵称",
     "UserNamePlace": "请输入昵称",
     "EditSign": "修改签名",
-    "SignPlace": "请输入签名"
+    "SignPlace": "请输入签名",
+    "NoCapture": "您的设备不支持拍照"
   }
 }

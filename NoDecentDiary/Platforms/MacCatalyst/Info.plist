@@ -30,5 +30,13 @@
 	<string>This app needs access to the photo gallery to save photos and videos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access to the photo gallery to save photos and videos.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to the camera to take photos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs access to microphone for taking videos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app needs access to the photo gallery for picking photos and videos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to photos gallery for picking photos and videos.</string>
 </dict>
 </plist>

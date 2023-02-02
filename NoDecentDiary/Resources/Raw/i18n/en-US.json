@@ -152,9 +152,13 @@
     "Avatar": "Avatar",
     "UserName": "Nickname",
     "Sign": "Sign",
+    "EditAvatar": "Edit Avatar",
+    "Photos": "Photos",
+    "Capture": "Capture",
     "EditUserName": "Edit UserName",
     "UserNamePlace": "Please enter a nickname",
     "EditSign": "Edit Sign",
-    "SignPlace": "Please enter your signature"
+    "SignPlace": "Please enter your signature",
+    "NoCapture": "Your device does not support taking pictures"
   }
 }

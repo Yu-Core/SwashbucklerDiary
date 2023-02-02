@@ -16,7 +16,7 @@
     <MCard Elevation="4"
            Rounded="@("lg")">
         <MList>
-            <MListItem>
+            <MListItem OnClick="()=>ShowAvatar=true">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-account-circle-outline
@@ -72,7 +72,7 @@
                     <MListItemTitle>
                         @(I18n!.T("User.Sign"))
                     </MListItemTitle>
-                    
+
                 </MListItemContent>
 
                 <MListItemContent>
@@ -88,6 +88,37 @@
         </MList>
     </MCard>
 </MContainer>
+
+<MDialog MaxWidth="420"
+         @bind-Value="ShowAvatar">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @(I18n!.T("User.EditAvatar"))
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowAvatar=false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            <MList>
+                <MListItem OnClick="OnPickPhoto">
+                    <MListItemContent>
+                        <MListItemTitle>
+                            @(I18n!.T("User.Photos"))
+                        </MListItemTitle>
+                    </MListItemContent>
+                </MListItem>
+                <MListItem OnClick="OnCapture">
+                    <MListItemContent>
+                        <MListItemTitle>
+                            @(I18n!.T("User.Capture"))
+                        </MListItemTitle>
+                    </MListItemContent>
+                </MListItem>
+            </MList>
+        </MCardText>
+    </MCard>
+</MDialog>
 
 <MDialog MaxWidth="420"
          @bind-Value="ShowUserName">
