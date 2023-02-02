@@ -100,9 +100,8 @@ namespace NoDecentDiary.Pages
         private async Task LoadSettings()
         {
             Language = await SettingsService!.Get(nameof(Language), Languages.First().Value);
-            UserName = await SettingsService!.Get(nameof(UserName), I18n!.T("AppName"));
-            Sign = await SettingsService!.Get(nameof(Sign), I18n!.T("Mine.Sign"));
-            //Avatar = await SettingsService!.Get(nameof(Avatar), "./logo/logo.svg");
+            UserName = await SettingsService!.Get<string?>(nameof(UserName), null);
+            Sign = await SettingsService!.Get<string?>(nameof(Sign), null);
         }
         private Task ToDo()
         {

@@ -19,15 +19,15 @@
                OnClick="NavigateToUser">
             <MList>
                 <MListItem>
-                    <MListItemAvatar Tile Size="75">
+                    <MListItemAvatar Rounded="@("lg")" Size="75">
                         <MImage Src="@(Avatar)"></MImage>
                     </MListItemAvatar>
                     <MListItemContent>
                         <MListItemTitle Class="text-h6 font-weight-bold">
-                            @UserName
+                            @(UserName ?? I18n!.T("AppName"))
                         </MListItemTitle>
                         <MListItemSubtitle>
-                            @Sign
+                            @(Sign ?? I18n!.T("Mine.Sign"))
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>

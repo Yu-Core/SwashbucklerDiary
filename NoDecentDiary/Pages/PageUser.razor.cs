@@ -75,9 +75,8 @@ namespace NoDecentDiary.Pages
         }
         private async Task LoadSettings()
         {
-            UserName = await SettingsService!.Get(nameof(UserName), I18n!.T("AppName"));
-            Sign = await SettingsService!.Get(nameof(Sign), I18n!.T("Mine.Sign"));
-
+            UserName = await SettingsService!.Get<string?>(nameof(UserName), I18n!.T("AppName"));
+            Sign = await SettingsService!.Get<string?>(nameof(Sign), I18n!.T("Mine.Sign"));
         }
         private void HandOnBack()
         {
