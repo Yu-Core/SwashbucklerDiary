@@ -112,7 +112,11 @@ namespace NoDecentDiary.Pages
             ShowAvatar = false;
             if (MediaPicker.Default.IsCaptureSupported)
             {
+#if WINDOWS
+                FileResult? photo = await WindowsMediaPicker.CapturePhotoAsync();
+#else
                 FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
+#endif
                 await SavePhoto(photo);
             }
             else
@@ -120,20 +124,23 @@ namespace NoDecentDiary.Pages
                 await PopupService!.ToastErrorAsync(I18n!.T("User.NoCapture"));
             }
         }
-        private async Task SavePhoto(FileResult photo)
+        private async Task SavePhoto(FileResult? photo)
         {
             if (photo != null)
             {
                 // save the file into local storage
                 string localFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, nameof(Avatar) + Path.GetExtension(photo.FullPath));
 
-                using (Stream sourceStream = await photo.OpenReadAsync())
-                {
-                    using(FileStream localFileStream = File.OpenWrite(localFilePath))
+#if WINDOWS
+				// on Windows file.OpenReadAsync() throws an exception
+				using Stream sourceStream = File.OpenRead(photo.FullPath);
+#else
+                using Stream sourceStream = await photo.OpenReadAsync();
+#endif
+                using (FileStream localFileStream = File.OpenWrite(localFilePath))
                     {
                         await sourceStream.CopyToAsync(localFileStream);
                     };
-                };
 
                 await SettingsService!.Save(nameof(Avatar), localFilePath);
                 await SetAvatar(localFilePath);
