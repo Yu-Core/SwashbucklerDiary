@@ -19,7 +19,7 @@
             <MListItem OnClick="()=>ShowAvatar=true">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
-                        mdi-account-circle-outline
+                        mdi-account-circle
                     </MIcon>
                 </MListItemIcon>
 
@@ -40,7 +40,7 @@
             <MListItem OnClick="()=>ShowUserName=true">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
-                        mdi-account-details-outline
+                        mdi-account-details
                     </MIcon>
                 </MListItemIcon>
 
@@ -99,23 +99,31 @@
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
-        <MCardText Class="pb-0">
-            <MList>
-                <MListItem OnClick="OnPickPhoto">
-                    <MListItemContent>
-                        <MListItemTitle>
-                            @(I18n!.T("User.Photos"))
-                        </MListItemTitle>
-                    </MListItemContent>
-                </MListItem>
-                <MListItem OnClick="OnCapture">
-                    <MListItemContent>
-                        <MListItemTitle>
-                            @(I18n!.T("User.Capture"))
-                        </MListItemTitle>
-                    </MListItemContent>
-                </MListItem>
-            </MList>
+        <MCardText>
+            <MListItem OnClick="OnPickPhoto">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-image-multiple
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <MListItemTitle>
+                        @(I18n!.T("User.Photos"))
+                    </MListItemTitle>
+                </MListItemContent>
+            </MListItem>
+            <MListItem OnClick="OnCapture">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-camera
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <MListItemTitle>
+                        @(I18n!.T("User.Capture"))
+                    </MListItemTitle>
+                </MListItemContent>
+            </MListItem>
         </MCardText>
     </MCard>
 </MDialog>

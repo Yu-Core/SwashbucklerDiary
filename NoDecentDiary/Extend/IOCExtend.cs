@@ -19,6 +19,7 @@ namespace NoDecentDiary.Extend
             services.AddSingleton<INavigateService, NavigateService>();
             services.AddSingleton<IconService>();
             services.AddSingleton<ISettingsService, SettingsService>();
+            services.AddSingleton<ISystemService, SystemService>();
             return services;
         }
     }

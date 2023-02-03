@@ -29,6 +29,8 @@ namespace NoDecentDiary.Pages
         private ISettingsService? SettingsService { get; set; }
         [Inject]
         public IJSRuntime? JS { get; set; }
+        [Inject]
+        private ISystemService? SystemService { get; set; }
 
         [CascadingParameter]
         public Error? Error { get; set; }
@@ -147,20 +149,15 @@ namespace NoDecentDiary.Pages
         {
             //There are some problems in Windows. https://github.com/microsoft/microsoft-ui-xaml/issues/7300
             var mail = "yu-core@qq.com";
-            if (Email.Default.IsComposeSupported)
+            if (SystemService!.CheckMail())
             {
-                string[] recipients = new[] { mail };
+                List<string> recipients = new() { mail };
 
-                var message = new EmailMessage
-                {
-                    To = new List<string>(recipients)
-                };
-
-                await Email.Default.ComposeAsync(message);
+                await SystemService!.SendEmail(recipients);
             }
             else
             {
-                await Clipboard.Default.SetTextAsync(mail);
+                await SystemService!.SetClipboard(mail);
                 await PopupService!.ToastSuccessAsync(I18n!.T("Mine.MailCopy"));
             }
         }

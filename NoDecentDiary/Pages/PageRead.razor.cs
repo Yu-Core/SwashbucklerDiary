@@ -36,6 +36,8 @@ namespace NoDecentDiary.Pages
         public IconService? IconService { get; set; }
         [Inject]
         private I18n? I18n { get; set; }
+        [Inject]
+        private ISystemService? SystemService { get; set; }
 
         [Parameter]
         public int Id { get; set; }
@@ -102,7 +104,7 @@ namespace NoDecentDiary.Pages
         }
         protected async override Task OnAfterRenderAsync(bool firstRender)
         {
-            if(firstRender)
+            if (firstRender)
             {
                 module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/screenshot.js");
             }
@@ -140,11 +142,11 @@ namespace NoDecentDiary.Pages
             {
                 await module.DisposeAsync();
             }
-            if(ShowMenu)
+            if (ShowMenu)
             {
                 NavigateService!.Action -= CloseMenu;
             }
-            if(ShowShare)
+            if (ShowShare)
             {
                 NavigateService!.Action -= CloseShare;
             }
@@ -158,17 +160,17 @@ namespace NoDecentDiary.Pages
                 bool flag = await DiaryService!.DeleteAsync(Id);
                 if (flag)
                 {
-                    await PopupService!.ToastAsync(it => 
-                    { 
+                    await PopupService!.ToastAsync(it =>
+                    {
                         it.Type = AlertTypes.Success;
-                        it.Title = I18n!.T("Share.DeleteSuccess"); 
+                        it.Title = I18n!.T("Share.DeleteSuccess");
                     });
                 }
                 else
                 {
-                    await PopupService!.ToastAsync(it => 
-                    { 
-                        it.Type = AlertTypes.Error; 
+                    await PopupService!.ToastAsync(it =>
+                    {
+                        it.Type = AlertTypes.Error;
                         it.Title = I18n!.T("Share.DeleteFail");
                     });
                 }
@@ -189,7 +191,7 @@ namespace NoDecentDiary.Pages
         }
         private async void Copy()
         {
-            await Clipboard.Default.SetTextAsync(DiaryCopyContent);
+            await SystemService!.SetClipboard(DiaryCopyContent);
 
             await PopupService!.ToastAsync(it =>
             {
@@ -200,11 +202,7 @@ namespace NoDecentDiary.Pages
         private async Task TextShare()
         {
             ShowShare = false;
-            await Share.Default.RequestAsync(new ShareTextRequest
-            {
-                Text = DiaryCopyContent,
-                Title = I18n!.T("Read.Share")
-        });
+            await SystemService!.ShareText(I18n!.T("Read.Share"), DiaryCopyContent);
         }
         private async Task ImageShare()
         {
@@ -220,11 +218,7 @@ namespace NoDecentDiary.Pages
             await File.WriteAllBytesAsync(file, Convert.FromBase64String(base64));
             showLoading = false;
 
-            await Share.Default.RequestAsync(new ShareFileRequest
-            {
-                Title = I18n!.T("Read.Share"),
-                File = new ShareFile(file)
-            });
+            await SystemService!.ShareFile(I18n!.T("Read.Share"), file);
         }
         private string GetWeatherIcon(string? key)
         {

@@ -23,6 +23,8 @@ namespace NoDecentDiary.Pages
         public IJSRuntime? JS { get; set; }
         [Inject]
         private IPopupService? PopupService { get; set; }
+        [Inject]
+        private ISystemService? SystemService { get; set; }
 
         private IJSObjectReference? module;
         private const string DefaultAvatar = "./logo/logo.svg";
@@ -103,43 +105,30 @@ namespace NoDecentDiary.Pages
         private async Task OnPickPhoto()
         {
             ShowAvatar = false;
-            FileResult photo = await MediaPicker.Default.PickPhotoAsync();
-            await SavePhoto(photo);
+            string? photoPath = await SystemService!.PickPhotoAsync();
+            await SavePhoto(photoPath);
         }
         private async Task OnCapture()
         {
             ShowAvatar = false;
-            if (MediaPicker.Default.IsCaptureSupported)
+            if (SystemService!.CheckCapture())
             {
-#if WINDOWS
-                FileResult? photo = await WindowsMediaPicker.CapturePhotoAsync();
-#else
-                FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
-#endif
-                await SavePhoto(photo);
+                string? photoPath = await SystemService!.CapturePhotoAsync();
+                await SavePhoto(photoPath);
             }
             else
             {
                 await PopupService!.ToastErrorAsync(I18n!.T("User.NoCapture"));
             }
         }
-        private async Task SavePhoto(FileResult? photo)
+        private async Task SavePhoto(string? filePath)
         {
-            if (photo != null)
+            if (File.Exists(filePath))
             {
                 // save the file into local storage
-                string localFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, nameof(Avatar) + Path.GetExtension(photo.FullPath));
+                string localFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, nameof(Avatar) + Path.GetExtension(filePath));
 
-#if WINDOWS
-				// on Windows file.OpenReadAsync() throws an exception
-				using Stream sourceStream = File.OpenRead(photo.FullPath);
-#else
-                using Stream sourceStream = await photo.OpenReadAsync();
-#endif
-                using (FileStream localFileStream = File.OpenWrite(localFilePath))
-                    {
-                        await sourceStream.CopyToAsync(localFileStream);
-                    };
+                await SystemService!.FileCopy(filePath, localFilePath);
 
                 await SettingsService!.Save(nameof(Avatar), localFilePath);
                 await SetAvatar(localFilePath);

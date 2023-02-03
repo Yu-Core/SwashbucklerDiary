@@ -21,6 +21,8 @@ namespace NoDecentDiary.Shared
         public INavigateService? NavigateService { get; set; }
         [Inject]
         private I18n? I18n { get; set; }
+        [Inject]
+        private ISystemService? SystemService { get; set; }
 
         [Parameter]
         public List<DiaryModel>? Value { get; set; }
@@ -95,7 +97,7 @@ namespace NoDecentDiary.Shared
         private async void Copy(DiaryModel diaryModel)
         {
             var text = DiaryCopyContent(diaryModel);
-            await Clipboard.Default.SetTextAsync(text);
+            await SystemService!.SetClipboard(text);
 
             await PopupService!.ToastAsync(it =>
             {
