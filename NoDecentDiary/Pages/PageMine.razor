@@ -193,7 +193,7 @@
            Elevation="4"
            Rounded="@("lg")">
         <MList>
-            <MListItem>
+            <MListItem OnClick="()=>ShowFeedback=true">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-email-outline
@@ -236,20 +236,61 @@
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
-        <MDivider></MDivider>
         <MCardText>
             <MRadioGroup Value="Language"
                          TValue="string"
                          ValueChanged="OnChangeLanguage"
+                         Class="mt-0"
+                         HideDetails="@("auto")"
                          Mandatory>
                 @foreach (var item in Languages)
                 {
                     <MRadio Label="@(item.Key)"
-                        Class="mt-2"
+                        Class="my-3"
                         Value="@(item.Value)">
                     </MRadio>
                 }
             </MRadioGroup>
+        </MCardText>
+    </MCard>
+</MDialog>
+
+<MDialog MaxWidth="420"
+         @bind-Value="ShowFeedback">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @(I18n!.T("Mine.ContactWay"))
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowFeedback=false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            <MListItem OnClick="SendMail">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-email-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <MListItemTitle>
+                        Email
+                    </MListItemTitle>
+                </MListItemContent>
+            </MListItem>
+
+            <MListItem OnClick="ToGithub">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-github
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <MListItemTitle>
+                        Github
+                    </MListItemTitle>
+                </MListItemContent>
+            </MListItem>
         </MCardText>
     </MCard>
 </MDialog>

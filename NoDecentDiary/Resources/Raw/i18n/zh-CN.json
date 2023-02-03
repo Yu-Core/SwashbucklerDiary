@@ -142,7 +142,9 @@
     "Other": "其他",
     "Feedback": "联系我们",
     "About": "关于",
-    "SelectLanguage": "选择语言"
+    "SelectLanguage": "选择语言",
+    "ContactWay": "联系方式",
+    "MailCopy": "邮箱地址已复制到剪贴板"
   },
   "ToDo": {
     "Title": "该功能暂未开放",

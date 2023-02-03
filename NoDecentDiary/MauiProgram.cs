@@ -2,6 +2,7 @@
 using NoDecentDiary.Extend;
 using NoDecentDiary.StaticData;
 using Serilog;
+using Serilog.Events;
 
 namespace NoDecentDiary
 {
@@ -30,9 +31,14 @@ namespace NoDecentDiary
             }
 
             Log.Logger = new LoggerConfiguration()
+#if DEBUG
+                            .MinimumLevel.Debug()
+#else
+                            .MinimumLevel.Information()
+#endif
+                            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                  .Enrich.FromLogContext()
-                 .WriteTo.Debug()
-                 .WriteTo.File(path: SerilogConstants.filePath)
+                 .WriteTo.Async(c => c.File(SerilogConstants.filePath,rollingInterval:RollingInterval.Day))
                  .CreateLogger();
             #endregion
 

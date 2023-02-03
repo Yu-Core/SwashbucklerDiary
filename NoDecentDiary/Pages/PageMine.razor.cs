@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Services;
+using NoDecentDiary.Shared;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -29,6 +30,8 @@ namespace NoDecentDiary.Pages
         [Inject]
         public IJSRuntime? JS { get; set; }
 
+        [CascadingParameter]
+        public Error? Error { get; set; }
         private IJSObjectReference? module;
         private const string DefaultAvatar = "./logo/logo.svg";
         private int DiaryCount { get; set; }
@@ -43,6 +46,12 @@ namespace NoDecentDiary.Pages
         {
             get => _showLanguage;
             set => SetShowLanguage(value);
+        }
+        private bool _showFeedback;
+        private bool ShowFeedback
+        {
+            get => _showFeedback;
+            set => SetShowFeedback(value);
         }
         private readonly static Dictionary<string, string> Languages = new()
         {
@@ -134,6 +143,40 @@ namespace NoDecentDiary.Pages
             var dotnetImageStream = new DotNetStreamReference(imageStream);
             Avatar = await module!.InvokeAsync<string>("streamToUrl", new object[1] { dotnetImageStream });
         }
+        private async Task SendMail()
+        {
+            //There are some problems in Windows. https://github.com/microsoft/microsoft-ui-xaml/issues/7300
+            var mail = "yu-core@qq.com";
+            if (Email.Default.IsComposeSupported)
+            {
+                string[] recipients = new[] { mail };
+
+                var message = new EmailMessage
+                {
+                    To = new List<string>(recipients)
+                };
+
+                await Email.Default.ComposeAsync(message);
+            }
+            else
+            {
+                await Clipboard.Default.SetTextAsync(mail);
+                await PopupService!.ToastSuccessAsync(I18n!.T("Mine.MailCopy"));
+            }
+        }
+        private async Task ToGithub()
+        {
+            try
+            {
+                Uri uri = new Uri("https://github.com/Yu-Core/NoDecentDiary");
+                await Browser.Default.OpenAsync(uri, BrowserLaunchMode.External);
+            }
+            catch (Exception ex)
+            {
+                // An unexpected error occured. No browser may be installed on the device.
+                Error!.ProcessError(ex);
+            }
+        }
         private void SetShowLanguage(bool value)
         {
             if (_showLanguage != value)
@@ -152,6 +195,26 @@ namespace NoDecentDiary.Pages
         private void CloseLanguage()
         {
             ShowLanguage = false;
+            StateHasChanged();
+        }
+        private void SetShowFeedback(bool value)
+        {
+            if (_showFeedback != value)
+            {
+                _showFeedback = value;
+                if (value)
+                {
+                    NavigateService!.Action += CloseFeedback;
+                }
+                else
+                {
+                    NavigateService!.Action -= CloseFeedback;
+                }
+            }
+        }
+        private void CloseFeedback()
+        {
+            ShowFeedback = false;
             StateHasChanged();
         }
         async ValueTask IAsyncDisposable.DisposeAsync()

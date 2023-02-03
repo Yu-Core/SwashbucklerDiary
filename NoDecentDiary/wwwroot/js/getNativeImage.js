@@ -1,5 +1,5 @@
 ﻿/*出自 https://www.cnblogs.com/hejiale010426/p/17073079.html，有修改*/
-/** 将byte转url对象 */
+/** 将stream转url对象 */
 export async function streamToUrl(imageStream) {
     // 适配webview和web 
     const arrayBuffer = await imageStream.arrayBuffer();

@@ -141,7 +141,9 @@
     "Other": "Other",
     "Feedback": "Feedback",
     "About": "About",
-    "SelectLanguage": "Select Language"
+    "SelectLanguage": "Select Language",
+    "ContactWay": "Contact Way",
+    "MailCopy": "The email address has been copied to the clipboard"
   },
   "ToDo": {
     "Title": "This function is not open for the time being",
