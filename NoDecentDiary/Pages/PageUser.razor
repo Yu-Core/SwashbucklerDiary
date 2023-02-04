@@ -40,7 +40,7 @@
             <MListItem OnClick="()=>ShowUserName=true">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
-                        mdi-account-details
+                        mdi-square-edit-outline
                     </MIcon>
                 </MListItemIcon>
 
@@ -138,7 +138,6 @@
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
-        <MDivider></MDivider>
         <MCardText Class="pb-0">
             <MTextField @bind-Value="InputUserName"
                         Dense
@@ -175,15 +174,14 @@
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
-        <MDivider></MDivider>
         <MCardText Class="pb-0">
             <MTextField @bind-Value="InputSign"
                         Dense
                         Autofocus
                         HideDetails="@("auto")"
                         Outlined
-                        Counter="20"
-                        maxlength="20"
+                        Counter="50"
+                        maxlength="50"
                         spellcheck="false"
                         Placeholder="@(I18n!.T("User.SignPlace"))">
             </MTextField>

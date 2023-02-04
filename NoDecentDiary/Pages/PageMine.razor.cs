@@ -147,8 +147,11 @@ namespace NoDecentDiary.Pages
         }
         private async Task SendMail()
         {
+            ShowFeedback = false;
             //There are some problems in Windows. https://github.com/microsoft/microsoft-ui-xaml/issues/7300
             var mail = "yu-core@qq.com";
+            try
+            {
             if (SystemService!.CheckMail())
             {
                 List<string> recipients = new() { mail };
@@ -161,8 +164,15 @@ namespace NoDecentDiary.Pages
                 await PopupService!.ToastSuccessAsync(I18n!.T("Mine.MailCopy"));
             }
         }
+            catch (Exception ex)
+            {
+                Error!.ProcessError(ex);
+            }
+            
+        }
         private async Task ToGithub()
         {
+            ShowFeedback = false;
             try
             {
                 Uri uri = new Uri("https://github.com/Yu-Core/NoDecentDiary");
