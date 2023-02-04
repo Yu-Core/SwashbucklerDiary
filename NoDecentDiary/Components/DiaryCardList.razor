@@ -1,15 +1,17 @@
-﻿<div class="d-flex justify-space-between flex-wrap @(Class)">
+﻿@inherits MyComponentBase
+
+<div class="d-flex justify-space-between flex-wrap @(Class)">
     @foreach (var item in Value!)
     {
         if (item.Top)
         {
             <DiaryCard Value="item"
                Class="diary-card"
-               OnTag="()=>Tag(item.Id)"
-               OnCopy="()=>Copy(item)"
-               OnDelete="()=>Delete(item)"
-               OnTopping="()=>Topping(item)"
-               OnClick="()=>HandOnClick(item.Id)">
+               OnTag="()=>OnTag(item.Id)"
+               OnCopy="()=>OnCopy(item)"
+               OnDelete="()=>OpenDeleteDialog(item)"
+               OnTopping="()=>OnTopping(item)"
+               OnClick="()=>OnClick(item.Id)">
             </DiaryCard>
         }
     }
@@ -19,11 +21,11 @@
         {
             <DiaryCard Value="item"
                Class="diary-card"
-               OnTag="()=>Tag(item.Id)"
-               OnCopy="()=>Copy(item)"
-               OnDelete="()=>Delete(item)"
-               OnTopping="()=>Topping(item)"
-               OnClick="()=>HandOnClick(item.Id)">
+               OnTag="()=>OnTag(item.Id)"
+               OnCopy="()=>OnCopy(item)"
+               OnDelete="()=>OpenDeleteDialog(item)"
+               OnTopping="()=>OnTopping(item)"
+               OnClick="()=>OnClick(item.Id)">
             </DiaryCard>
         }
     }
@@ -40,12 +42,12 @@
 
 <SelectTags @bind-Value="ShowSelectTag"
             @bind-Values="SelectedTags"
-            OnSave="HandOnSaveSelectTags">
+            OnSave="SaveSelectTags">
 </SelectTags>
 
 <DeleteDialog @bind-Value="ShowDeleteDiary"
               Title="@(I18n!.T("Diary.Delete.Title"))"
               Content="@(I18n!.T("Diary.Delete.Content"))"
-              OnOK="()=>HandOnOKDelete?.Invoke()">
+              OnOK="()=>OnDelete?.Invoke()">
 
 </DeleteDialog>

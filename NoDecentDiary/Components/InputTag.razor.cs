@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Components
 {
-    public partial class InputTag
+    public partial class InputTag : MyComponentBase
     {
-        [Inject]
-        private I18n? I18n { get; set; }
         [Parameter]
         public bool Value { get; set; }
         [Parameter]

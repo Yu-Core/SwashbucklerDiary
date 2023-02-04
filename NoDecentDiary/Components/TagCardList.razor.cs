@@ -1,32 +1,35 @@
 ﻿using BlazorComponent;
-using BlazorComponent.I18n;
-using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 
 namespace NoDecentDiary.Components
 {
-    public partial class TagCardList : IDisposable
+    public partial class TagCardList : MyComponentBase, IDisposable
     {
-        [Inject]
-        public IPopupService? PopupService { get; set; }
-        [Inject]
-        public ITagService? TagService { get; set; }
-        [Inject]
-        public IDiaryTagService? DiaryTagService { get; set; }
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        [Inject]
-        private I18n? I18n { get; set; }
-
-        [Parameter]
-        [EditorRequired]
-        public List<TagModel>? Value { get; set; }
         private int RenameTagId;
         private string? RenameTagName;
-        private Action? HandOnOKDeleteTag { get; set; }
+        private Action? OnDelete{ get; set; }
         private bool _showDeleteTag;
+        private bool _showRenameTag;
+
+        [Inject]
+        public ITagService TagService { get; set; } = default!;
+        [Inject]
+        public IDiaryTagService DiaryTagService { get; set; } = default!;
+
+        [Parameter]
+        public List<TagModel>? Value { get; set; } = new();
+
+        public void Dispose()
+        {
+            if (ShowRenameTag)
+            {
+                NavigateService.Action -= CloseRenameTag;
+            }
+            GC.SuppressFinalize(this);
+        }
+
         private bool ShowDeleteTag
         {
             get => _showDeleteTag;
@@ -35,11 +38,10 @@ namespace NoDecentDiary.Components
                 _showDeleteTag = value;
                 if (!value)
                 {
-                    HandOnOKDeleteTag = null;
+                    OnDelete = null;
                 }
             }
         }
-        private bool _showRenameTag;
         private bool ShowRenameTag
         {
             get => _showRenameTag;
@@ -49,11 +51,7 @@ namespace NoDecentDiary.Components
             }
         }
 
-        public TagCardList()
-        {
-            Value ??= new List<TagModel>();
-        }
-        private void HandOnTagRename(TagModel tag)
+        private void OnRename(TagModel tag)
         {
             RenameTagId = tag.Id;
             RenameTagName = tag.Name;
@@ -61,16 +59,16 @@ namespace NoDecentDiary.Components
             ShowRenameTag = true;
         }
 
-        private void HandOnTagDelete(TagModel tag)
+        private void OpenDeleteDialog(TagModel tag)
         {
-            HandOnOKDeleteTag += async () =>
+            OnDelete += async () =>
             {
                 ShowDeleteTag = false;
                 bool flag = await TagService!.DeleteAsync(tag);
                 if (flag)
                 {
                     Value!.Remove(tag);
-                    await PopupService!.ToastAsync(it =>
+                    await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Success;
                         it.Title = I18n!.T("Share.DeleteSuccess");
@@ -80,7 +78,7 @@ namespace NoDecentDiary.Components
                 }
                 else
                 {
-                    await PopupService!.ToastAsync(it =>
+                    await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Error;
                         it.Title = I18n!.T("Share.DeleteFail");
@@ -90,7 +88,8 @@ namespace NoDecentDiary.Components
             ShowDeleteTag = true;
             StateHasChanged();
         }
-        private async Task HandOnSaveRenameTag()
+
+        private async Task SaveRenameTag()
         {
             ShowRenameTag = false;
             if (string.IsNullOrWhiteSpace(RenameTagName))
@@ -100,7 +99,7 @@ namespace NoDecentDiary.Components
 
             if (Value!.Any(it => it.Name == RenameTagName))
             {
-                await PopupService!.ToastAsync(it =>
+                await PopupService.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Warning;
                     it.Title = I18n!.T("Tag.Repeat.Title");
@@ -114,7 +113,7 @@ namespace NoDecentDiary.Components
             bool flag = await TagService!.UpdateAsync(tag);
             if (flag)
             {
-                await PopupService!.ToastAsync(it =>
+                await PopupService.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Success;
                     it.Title = I18n!.T("Share.EditSuccess");
@@ -122,17 +121,19 @@ namespace NoDecentDiary.Components
             }
             else
             {
-                await PopupService!.ToastAsync(it =>
+                await PopupService.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Error;
                     it.Title = I18n!.T("Share.EditFail");
                 });
             }
         }
-        private void HandOnTagClick(int id)
+
+        private void OnClick(int id)
         {
-            NavigateService!.NavigateTo($"/Tag/{id}");
+            NavigateService.NavigateTo($"/tag/{id}");
         }
+
         private void SetShowRenameTag(bool value)
         {
             if (_showRenameTag != value)
@@ -140,26 +141,20 @@ namespace NoDecentDiary.Components
                 _showRenameTag = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseRenameTag;
+                    NavigateService.Action += CloseRenameTag;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseRenameTag;
+                    NavigateService.Action -= CloseRenameTag;
                 }
             }
         }
+
         private void CloseRenameTag()
         {
             ShowRenameTag = false;
             StateHasChanged();
         }
-        public void Dispose()
-        {
-            if (ShowRenameTag)
-            {
-                NavigateService!.Action -= CloseRenameTag;
-            }
-            GC.SuppressFinalize(this);
-        }
+        
     }
 }

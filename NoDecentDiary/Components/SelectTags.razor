@@ -1,4 +1,6 @@
-﻿<MDialog Value="Value"
+﻿@inherits MyComponentBase
+
+<MDialog Value="Value"
          ValueChanged="InternalValueChanged"
          MaxWidth="420"
          Scrollable>
@@ -43,5 +45,5 @@
 <InputTag @bind-Value="ShowAddTag"
           @bind-Text="AddTagName"
           Title="@(I18n!.T("Tag.Add"))"
-          OnSave="HandleOnSaveAddTag">
+          OnSave="SaveAddTag">
 </InputTag>

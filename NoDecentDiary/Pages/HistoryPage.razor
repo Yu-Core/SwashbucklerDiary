@@ -1,4 +1,5 @@
-﻿@page "/History"
+﻿@page "/history"
+@inherits PageComponentBase
 
 <MAppBar App
          Elevation="0"
@@ -22,9 +23,11 @@
     </MButton>
 </MAppBar>
 
-<SwiperTabItems @bind-Value="tabs" RefreshData="HandOnRefreshData">
+<SwiperTabItems @bind-Value="tabs" OnRefresh="RefreshData">
     <SwiperTabItem>
-        <MDatePicker @bind-Value="Picker"
+        <MDatePicker Value="PickedDate"
+                     TValue="DateOnly"
+                     ValueChanged="PickedDateChanged"
                      FullWidth
                      NoTitle
                      AllowedDates="AllowedDates"
@@ -35,8 +38,10 @@
     </SwiperTabItem>
     <SwiperTabItem>
         <div class="d-md-flex">
-            <div class="flex-grow-1 tree-container">
-                <MTreeview @bind-Active="_active"
+            @if (Diaries.Any())
+            {
+                <div class="flex-grow-1 tree-container">
+                    <MTreeview @bind-Active="_active"
                            TItem="Tree"
                            TKey="int"
                            Items="Trees"
@@ -48,8 +53,9 @@
                            OnActiveUpdate="OnActiveUpdate"
                            Rounded
                            ExpandIcon="mdi-chevron-down">
-                </MTreeview>
-            </div>
+                    </MTreeview>
+                </div>
+            }
             <div class="flex-grow-1 ml-md-2">
                 <DiaryCardList Value="TreeDiaries">
                 </DiaryCardList>

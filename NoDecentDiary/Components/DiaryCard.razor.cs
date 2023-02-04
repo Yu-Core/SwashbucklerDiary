@@ -11,15 +11,11 @@ using Util.Reflection.Expressions.IntelligentGeneration.Extensions;
 
 namespace NoDecentDiary.Components
 {
-    public partial class DiaryCard : IDisposable
+    public partial class DiaryCard : MyComponentBase, IDisposable
     {
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        [Inject]
-        private I18n? I18n { get; set; }
+        private bool _showMenu;
 
         [Parameter]
-        [EditorRequired]
         public DiaryModel? Value { get; set; }
         [Parameter]
         public string? Class { get; set; }
@@ -34,11 +30,19 @@ namespace NoDecentDiary.Components
         [Parameter]
         public EventCallback OnClick { get; set; }
 
+        public void Dispose()
+        {
+            if (ShowMenu)
+            {
+                NavigateService.Action -= CloseMenu;
+            }
+            GC.SuppressFinalize(this);
+        }
+
         private DateTime Date => Value!.CreateTime;
         private string? Title => Value!.Title;
         private string? Text => Value!.Content;
-        private bool Top => Value!.Top;
-        private bool _showMenu;
+        private bool IsTop => Value!.Top;
         private bool ShowMenu
         {
             get => _showMenu;
@@ -47,6 +51,7 @@ namespace NoDecentDiary.Components
                 SetShowMenu(value);
             }
         }
+
         private void SetShowMenu(bool value)
         {
             if (_showMenu != value)
@@ -54,26 +59,19 @@ namespace NoDecentDiary.Components
                 _showMenu = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseMenu;
+                    NavigateService.Action += CloseMenu;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseMenu;
+                    NavigateService.Action -= CloseMenu;
                 }
             }
         }
+
         private void CloseMenu()
         {
             ShowMenu = false;
             StateHasChanged();
-        }
-        public void Dispose()
-        {
-            if (ShowMenu)
-            {
-                NavigateService!.Action -= CloseMenu;
-            }
-            GC.SuppressFinalize(this);
         }
     }
 }

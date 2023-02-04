@@ -12,8 +12,14 @@ namespace NoDecentDiary.Components
 {
     public partial class SwiperTabItems : IAsyncDisposable
     {
+        private IJSObjectReference? module;
+        private StringNumber _value = 0;
+        private bool Show;
+        private readonly string Id = "swiper" + Guid.NewGuid().ToString();
+
         [Inject]
         private IJSRuntime? JS { get; set; }
+
         [Parameter]
         public StringNumber Value
         {
@@ -25,7 +31,7 @@ namespace NoDecentDiary.Components
                     _value = value;
                     if (Show)
                     {
-                        RefreshData.InvokeAsync(value);
+                        OnRefresh.InvokeAsync(value);
                         UpdateSwiper(value);
                     }
                 }
@@ -36,12 +42,18 @@ namespace NoDecentDiary.Components
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
         [Parameter]
-        public EventCallback<StringNumber> RefreshData { get; set; }
+        public EventCallback<StringNumber> OnRefresh { get; set; }
 
-        private IJSObjectReference? module;
-        private StringNumber _value = 0;
-        private bool Show;
-        private readonly string Id = "swiper" + Guid.NewGuid().ToString();
+        [JSInvokable]
+        public async Task UpdateValue(int value)
+        {
+            _value = value;
+            if (ValueChanged.HasDelegate)
+            {
+                await ValueChanged.InvokeAsync(value);
+            }
+            await OnRefresh.InvokeAsync(value);
+        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -55,19 +67,10 @@ namespace NoDecentDiary.Components
                 StateHasChanged();
             }
         }
+
         private async void UpdateSwiper(StringNumber value)
         {
             await JS!.InvokeVoidAsync($"{Id}.slideTo", new object[1] { value.ToInt32() });
-        }
-        [JSInvokable]
-        public async Task UpdateValue(int value)
-        {
-            _value = value;
-            if (ValueChanged.HasDelegate)
-            {
-                await ValueChanged.InvokeAsync(value);
-            }
-            await RefreshData.InvokeAsync(value);
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()

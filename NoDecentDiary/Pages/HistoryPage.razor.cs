@@ -1,6 +1,7 @@
 ﻿using BlazorComponent;
 using BlazorComponent.I18n;
 using Microsoft.AspNetCore.Components;
+using NoDecentDiary.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using System;
@@ -11,33 +12,37 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class HistoryPage
+    public partial class HistoryPage : PageComponentBase
     {
+        private DateOnly PickedDate = DateOnly.FromDateTime(DateTime.Now);
+        private List<DiaryModel> Diaries = new();
+        private StringNumber tabs = 0;
+        private List<int>? _active;
+        private readonly List<string> Types = new() { "Calendar", "Tree" };
+
         [Inject]
-        public IDiaryService? DiaryService { get; set; }
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        [Inject]
-        public NavigationManager? Navigation { get; set; }
-        [Inject]
-        private I18n? I18n { get; set; }
+        public IDiaryService DiaryService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Type { get; set; }
-        private DateOnly _picker = DateOnly.FromDateTime(DateTime.Now);
-        private DateOnly Picker
+
+        protected override async Task OnInitializedAsync()
         {
-            get => _picker;
-            set
-            {
-                if (_picker != value)
-                {
-                    _picker = value;
-                    UpDiaries();
-                }
-            }
+            SetTab();
+            await UpdateDiaries();
+            await base.OnInitializedAsync();
         }
+
+        private class Tree
+        {
+            public int Id { get; set; }
+            public string? Name { get; set; }
+            public List<Tree>? Children { get; set; }
+        }
+
+        private List<Tree> Trees => GetTrees();
+        private List<DiaryModel> CalendarDiaries => Diaries.Where(it => DateOnly.FromDateTime(it.CreateTime) == PickedDate).ToList();
         private Func<DateOnly, bool>? AllowedDates
         {
             get
@@ -46,15 +51,6 @@ namespace NoDecentDiary.Pages
                 return value => dateOnly.Contains(value);
             }
         }
-        private List<DiaryModel> Diaries { get; set; } = new List<DiaryModel>();
-        private List<DiaryModel> CalendarDiaries => Diaries.Where(it => DateOnly.FromDateTime(it.CreateTime) == Picker).ToList();
-        private StringNumber tabs = 0;
-        private List<Tree> Trees => GetTrees();
-        private List<int>? _active;
-        private readonly List<string> Types = new()
-        {
-            "Calendar", "Tree"
-        };
         private List<DiaryModel> TreeDiaries
         {
             get
@@ -67,22 +63,22 @@ namespace NoDecentDiary.Pages
                 return Diaries.Where(it => it.CreateTime.ToString("yyyyMMdd") == id.ToString()).ToList();
             }
         }
-        private class Tree
+
+        private async Task PickedDateChanged(DateOnly value)
         {
-            public int Id { get; set; }
-            public string? Name { get; set; }
-            public List<Tree>? Children { get; set; }
+            if (PickedDate != value)
+            {
+                PickedDate = value;
+                await UpdateDiaries();
+            }
         }
-        protected override void OnInitialized()
-        {
-            SetTab();
-            UpDiaries();
-        }
-        private async void UpDiaries()
+
+        private async Task UpdateDiaries()
         {
             Diaries = await DiaryService!.QueryAsync();
             StateHasChanged();
         }
+
         private void SetTab()
         {
             if (string.IsNullOrEmpty(Type))
@@ -91,13 +87,15 @@ namespace NoDecentDiary.Pages
             }
             tabs = Types.IndexOf(Type!);
         }
-        private async Task HandOnRefreshData(StringNumber value)
+
+        private async Task RefreshData(StringNumber value)
         {
             Diaries = await DiaryService!.QueryAsync();
             StateHasChanged();
             var url = Navigation!.GetUriWithQueryParameter("Type", Types[tabs.ToInt32()]);
             Navigation!.NavigateTo(url);
         }
+
         private List<Tree> GetTrees()
         {
             var years = Diaries.Select(it => it.CreateTime.Year).Distinct();
@@ -137,10 +135,12 @@ namespace NoDecentDiary.Pages
             }
             return yearTrees;
         }
+
         private void NavigateToSearch()
         {
-            NavigateService!.NavigateTo("/Search");
+            NavigateService.NavigateTo("/search");
         }
+
         private async Task OnActiveUpdate(List<Tree> trees)
         {
             Diaries = await DiaryService!.QueryAsync();

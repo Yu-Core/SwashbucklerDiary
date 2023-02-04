@@ -3,6 +3,7 @@ using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using NoDecentDiary.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Services;
 using NoDecentDiary.Shared;
@@ -15,57 +16,37 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class MinePage : IAsyncDisposable
+    public partial class MinePage : PageComponentBase, IAsyncDisposable
     {
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        [Inject]
-        private IDiaryService? DiaryService { get; set; }
-        [Inject]
-        private IPopupService? PopupService { get; set; }
-        [Inject]
-        private I18n? I18n { get; set; }
-        [Inject]
-        private ISettingsService? SettingsService { get; set; }
-        [Inject]
-        public IJSRuntime? JS { get; set; }
-        [Inject]
-        private ISystemService? SystemService { get; set; }
-
-        [CascadingParameter]
-        public Error? Error { get; set; }
         private IJSObjectReference? module;
         private const string DefaultAvatar = "./logo/logo.svg";
-        private int DiaryCount { get; set; }
-        private long WordCount { get; set; }
-        private int ActiveDayCount { get; set; }
-        private string? Language { get; set; }
-        private string? UserName { get; set; }
-        private string? Sign { get; set; }
-        private string? Avatar { get; set; }
+        private int DiaryCount;
+        private long WordCount;
+        private int ActiveDayCount;
+        private string? Language;
+        private string? UserName;
+        private string? Sign;
+        private string? Avatar;
         private bool _showLanguage;
-        private bool ShowLanguage
-        {
-            get => _showLanguage;
-            set => SetShowLanguage(value);
-        }
         private bool _showFeedback;
-        private bool ShowFeedback
-        {
-            get => _showFeedback;
-            set => SetShowFeedback(value);
-        }
         private readonly static Dictionary<string, string> Languages = new()
         {
             {"中文","zh-CN" },
             {"English","en-US" }
         };
 
+        [Inject]
+        private IDiaryService? DiaryService { get; set; }
+
+        [CascadingParameter]
+        public Error Error { get; set; } = default!;
+
         protected override async Task OnInitializedAsync()
         {
             await SetCount();
             await LoadSettings();
         }
+
         protected async override Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -83,6 +64,18 @@ namespace NoDecentDiary.Pages
                 }
                 StateHasChanged();
             }
+        }
+
+        private bool ShowLanguage
+        {
+            get => _showLanguage;
+            set => SetShowLanguage(value);
+        }
+        
+        private bool ShowFeedback
+        {
+            get => _showFeedback;
+            set => SetShowFeedback(value);
         }
 
         private async Task SetCount()
@@ -108,33 +101,29 @@ namespace NoDecentDiary.Pages
             WordCount = wordCount;
             ActiveDayCount = diaries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
         }
+
         private async Task LoadSettings()
         {
             Language = await SettingsService!.Get(nameof(Language), Languages.First().Value);
             UserName = await SettingsService!.Get<string?>(nameof(UserName), null);
             Sign = await SettingsService!.Get<string?>(nameof(Sign), null);
         }
-        private Task ToDo()
-        {
-            return PopupService!.ToastAsync(it =>
-            {
-                it.Type = AlertTypes.Info;
-                it.Title = I18n!.T("ToDo.Title");
-                it.Content = I18n!.T("ToDo.Content");
-            });
-        }
+
         private void NavigateToSearch()
         {
-            NavigateService!.NavigateTo("/Search");
+            NavigateService.NavigateTo("/search");
         }
+
         private void NavigateToUser()
         {
-            NavigateService!.NavigateTo("/User");
+            NavigateService.NavigateTo("/user");
         }
+
         private void NavigateToAbout()
         {
-            NavigateService!.NavigateTo("/About");
+            NavigateService.NavigateTo("/about");
         }
+
         private async Task OnChangeLanguage(string value)
         {
             ShowLanguage = false;
@@ -143,12 +132,14 @@ namespace NoDecentDiary.Pages
             await SettingsService!.Save(nameof(Language), Language);
             await SetCount();
         }
+
         private async Task SetAvatar(string path)
         {
             using var imageStream = File.OpenRead(path);
             var dotnetImageStream = new DotNetStreamReference(imageStream);
             Avatar = await module!.InvokeAsync<string>("streamToUrl", new object[1] { dotnetImageStream });
         }
+
         private async Task SendMail()
         {
             ShowFeedback = false;
@@ -156,16 +147,16 @@ namespace NoDecentDiary.Pages
             var mail = "yu-core@qq.com";
             try
             {
-                if (SystemService!.IsMailSupported())
+                if (SystemService.IsMailSupported())
                 {
                     List<string> recipients = new() { mail };
 
-                    await SystemService!.SendEmail(recipients);
+                    await SystemService.SendEmail(recipients);
                 }
                 else
                 {
-                    await SystemService!.SetClipboard(mail);
-                    await PopupService!.ToastSuccessAsync(I18n!.T("Mine.MailCopy"));
+                    await SystemService.SetClipboard(mail);
+                    await PopupService.ToastSuccessAsync(I18n!.T("Mine.MailCopy"));
                 }
             }
             catch (Exception ex)
@@ -174,20 +165,22 @@ namespace NoDecentDiary.Pages
             }
             
         }
+
         private async Task ToGithub()
         {
             ShowFeedback = false;
             try
             {
-                Uri uri = new Uri("https://github.com/Yu-Core/NoDecentDiary");
+                Uri uri = new("https://github.com/Yu-Core/NoDecentDiary");
                 await Browser.Default.OpenAsync(uri, BrowserLaunchMode.External);
             }
             catch (Exception ex)
             {
                 // An unexpected error occured. No browser may be installed on the device.
-                Error!.ProcessError(ex);
+                Error.ProcessError(ex);
             }
         }
+
         private void SetShowLanguage(bool value)
         {
             if (_showLanguage != value)
@@ -195,19 +188,21 @@ namespace NoDecentDiary.Pages
                 _showLanguage = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseLanguage;
+                    NavigateService.Action += CloseLanguage;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseLanguage;
+                    NavigateService.Action -= CloseLanguage;
                 }
             }
         }
+
         private void CloseLanguage()
         {
             ShowLanguage = false;
             StateHasChanged();
         }
+
         private void SetShowFeedback(bool value)
         {
             if (_showFeedback != value)
@@ -215,19 +210,21 @@ namespace NoDecentDiary.Pages
                 _showFeedback = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseFeedback;
+                    NavigateService.Action += CloseFeedback;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseFeedback;
+                    NavigateService.Action -= CloseFeedback;
                 }
             }
         }
+
         private void CloseFeedback()
         {
             ShowFeedback = false;
             StateHasChanged();
         }
+        
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
             if (!string.IsNullOrEmpty(Avatar) && Avatar != DefaultAvatar)
@@ -241,7 +238,7 @@ namespace NoDecentDiary.Pages
             }
             if (ShowLanguage)
             {
-                NavigateService!.Action -= CloseLanguage;
+                NavigateService.Action -= CloseLanguage;
             }
             GC.SuppressFinalize(this);
         }

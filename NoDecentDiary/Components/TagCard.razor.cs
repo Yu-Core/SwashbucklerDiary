@@ -5,15 +5,11 @@ using NoDecentDiary.Models;
 
 namespace NoDecentDiary.Components
 {
-    public partial class TagCard : IDisposable
+    public partial class TagCard : MyComponentBase, IDisposable
     {
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        [Inject]
-        private I18n? I18n { get; set; }
+        private bool _showMenu;
 
         [Parameter]
-        [EditorRequired]
         public TagModel? Value { get; set; }
         [Parameter]
         public EventCallback OnDelete { get; set; }
@@ -22,7 +18,15 @@ namespace NoDecentDiary.Components
         [Parameter]
         public EventCallback OnClick { get; set; }
 
-        private bool _showMenu;
+        public void Dispose()
+        {
+            if (ShowMenu)
+            {
+                NavigateService.Action -= CloseMenu;
+            }
+            GC.SuppressFinalize(this);
+        }
+
         private bool ShowMenu
         {
             get => _showMenu;
@@ -31,6 +35,7 @@ namespace NoDecentDiary.Components
                 SetShowMenu(value);
             }
         }
+
         private void SetShowMenu(bool value)
         {
             if (_showMenu != value)
@@ -38,26 +43,19 @@ namespace NoDecentDiary.Components
                 _showMenu = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseMenu;
+                    NavigateService.Action += CloseMenu;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseMenu;
+                    NavigateService.Action -= CloseMenu;
                 }
             }
         }
+
         private void CloseMenu()
         {
             ShowMenu = false;
             StateHasChanged();
-        }
-        public void Dispose()
-        {
-            if (ShowMenu)
-            {
-                NavigateService!.Action -= CloseMenu;
-            }
-            GC.SuppressFinalize(this);
         }
     }
 }

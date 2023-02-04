@@ -1,10 +1,12 @@
-﻿<div class="d-flex justify-space-between flex-wrap">
+﻿@inherits MyComponentBase
+
+<div class="d-flex justify-space-between flex-wrap">
     @foreach (var item in Value!)
     {
         <TagCard Value="item"
-             OnDelete="()=>HandOnTagDelete(item)"
-             OnRename="()=>HandOnTagRename(item)"
-             OnClick="()=>HandOnTagClick(item.Id)">
+             OnDelete="()=>OpenDeleteDialog(item)"
+             OnRename="()=>OnRename(item)"
+             OnClick="()=>OnClick(item.Id)">
         </TagCard>
     }
 </div>
@@ -21,13 +23,13 @@
 <InputTag @bind-Value="ShowRenameTag"
           @bind-Text="RenameTagName"
           Title="@(I18n!.T("Tag.Rename"))"
-          OnSave="HandOnSaveRenameTag">
+          OnSave="SaveRenameTag">
 
 </InputTag>
 
 <DeleteDialog @bind-Value="ShowDeleteTag"
               Title="@(I18n!.T("Tag.Delete.Title"))"
               Content="@(I18n!.T("Tag.Delete.Content"))"
-              OnOK="()=>HandOnOKDeleteTag?.Invoke()">
+              OnOK="()=>OnDelete?.Invoke()">
 
 </DeleteDialog>

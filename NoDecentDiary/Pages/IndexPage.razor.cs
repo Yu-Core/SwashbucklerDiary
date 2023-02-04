@@ -2,6 +2,7 @@
 using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using NoDecentDiary.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using NoDecentDiary.Shared;
@@ -9,30 +10,45 @@ using System;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class IndexPage : IDisposable
+    public partial class IndexPage : PageComponentBase, IDisposable
     {
+        private StringNumber tabs = 0;
+        private string? AddTagName;
+        private bool _showAddTag;
+        private List<DiaryModel> Diaries = new();
+        private List<TagModel> Tags = new();
+        private readonly List<string> Types = new() { "All", "Tags" };
+
         [Inject]
-        public I18n? I18n { get; set; }
+        public IDiaryService DiaryService { get; set; } = default!;
         [Inject]
-        public IDiaryService? DiaryService { get; set; }
+        public ITagService TagService { get; set; } = default!;
         [Inject]
-        public ITagService? TagService { get; set; }
-        [Inject]
-        public IDiaryTagService? DiaryTagService { get; set; }
-        [Inject]
-        public IPopupService? PopupService { get; set; }
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        [Inject]
-        public NavigationManager? Navigation { get; set; }
+        public IDiaryTagService DiaryTagService { get; set; } = default!;
+
         [CascadingParameter]
         public Error? Error { get; set; }
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Type { get; set; }
-        private StringNumber tabs = 0;
-        private string? AddTagName;
-        private bool _showAddTag;
+
+        public void Dispose()
+        {
+            if (ShowAddTag)
+            {
+                NavigateService.Action -= CloseAddTag;
+            }
+            GC.SuppressFinalize(this);
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            SetTab();
+            await UpdateTags();
+            await UpdateDiaries();
+            await base.OnInitializedAsync();
+        }
+
         private bool ShowAddTag
         {
             get => _showAddTag;
@@ -41,37 +57,28 @@ namespace NoDecentDiary.Pages
                 SetShowAddTag(value);
             }
         }
-        private List<DiaryModel> Diaries { get; set; } = new List<DiaryModel>();
-        private List<TagModel> Tags { get; set; } = new List<TagModel>();
-        private readonly List<string> Types = new()
-        {
-            "All", "Tags"
-        };
 
-        protected override async Task OnInitializedAsync()
-        {
-            SetTab();
-            await UpdateTags();
-            await UpdateDiaries();
-        }
         private async Task UpdateDiaries()
         {
             var diaryModels = await DiaryService!.QueryAsync();
             Diaries = diaryModels.Take(50).ToList();
         }
+
         private async Task UpdateTags()
         {
             Tags = await TagService!.QueryAsync();
         }
+
         private void SetTab()
         {
-            if(string.IsNullOrEmpty(Type))
+            if (string.IsNullOrEmpty(Type))
             {
                 Type = Types[0];
             }
             tabs = Types.IndexOf(Type!);
         }
-        private async Task HandOnRefreshData(StringNumber value)
+
+        private async Task RefreshData(StringNumber value)
         {
             if (value == 0)
             {
@@ -84,7 +91,8 @@ namespace NoDecentDiary.Pages
             var url = Navigation!.GetUriWithQueryParameter("Type", Types[tabs.ToInt32()]);
             Navigation!.NavigateTo(url);
         }
-        private async Task HandOnSaveAddTag()
+
+        private async Task SaveAddTag()
         {
             ShowAddTag = false;
             if (string.IsNullOrWhiteSpace(AddTagName))
@@ -94,7 +102,7 @@ namespace NoDecentDiary.Pages
 
             if (Tags.Any(it => it.Name == AddTagName))
             {
-                await PopupService!.ToastAsync(it =>
+                await PopupService.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Warning;
                     it.Title = I18n!.T("Tag.Repeat.Title");
@@ -103,14 +111,14 @@ namespace NoDecentDiary.Pages
                 return;
             }
 
-            TagModel tagModel = new TagModel()
+            TagModel tagModel = new()
             {
                 Name = AddTagName
             };
             bool flag = await TagService!.AddAsync(tagModel);
             if (!flag)
             {
-                await PopupService!.ToastAsync(it =>
+                await PopupService.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Error;
                     it.Title = I18n!.T("Share.AddSuccess");
@@ -118,7 +126,7 @@ namespace NoDecentDiary.Pages
                 return;
             }
 
-            await PopupService!.ToastAsync(it =>
+            await PopupService.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Success;
                 it.Title = I18n!.T("Share.AddFail");
@@ -127,42 +135,25 @@ namespace NoDecentDiary.Pages
             Tags.Add(tagModel);
             this.StateHasChanged();
         }
+
         private void NavigateToSearch()
         {
-            NavigateService!.NavigateTo("/Search");
+            NavigateService.NavigateTo("/search");
         }
+
         private void NavigateToWrite()
         {
-            NavigateService!.NavigateTo("/Write");
+            NavigateService.NavigateTo("/write");
         }
-        private void SetShowAddTag(bool value)
-        {
-            if (_showAddTag != value)
-            {
-                _showAddTag = value;
-                if (value)
-                {
-                    NavigateService!.Action += CloseAddTag;
-                }
-                else
-                {
-                    NavigateService!.Action -= CloseAddTag;
-                }
-            }
-        }
-        private void CloseAddTag()
-        {
-            ShowAddTag = false;
-            StateHasChanged();
-        }
+
         private string GetWelcomeText()
         {
             int hour = Convert.ToInt16(DateTime.Now.ToString("HH"));
-            if(hour >= 6 && hour < 11)
+            if (hour >= 6 && hour < 11)
             {
                 return I18n!.T("Index.Welcome.Morning");
             }
-            else if(hour >= 11 && hour < 13)
+            else if (hour >= 11 && hour < 13)
             {
                 return I18n!.T("Index.Welcome.Noon");
             }
@@ -180,13 +171,28 @@ namespace NoDecentDiary.Pages
             }
             return "Hello World";
         }
-        public void Dispose()
+
+        private void SetShowAddTag(bool value)
         {
-            if(ShowAddTag)
+            if (_showAddTag != value)
             {
-                NavigateService!.Action -= CloseAddTag;
+                _showAddTag = value;
+                if (value)
+                {
+                    NavigateService.Action += CloseAddTag;
+                }
+                else
+                {
+                    NavigateService.Action -= CloseAddTag;
+                }
             }
-            GC.SuppressFinalize(this);
         }
+
+        private void CloseAddTag()
+        {
+            ShowAddTag = false;
+            StateHasChanged();
+        }
+
     }
 }

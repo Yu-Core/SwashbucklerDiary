@@ -2,7 +2,7 @@
 
 <MApp>
     <MMain>
-        @if (MasaBlazor!.Breakpoint.SmAndUp)
+        @if (MasaBlazor.Breakpoint.SmAndUp)
         {
             <MNavigationDrawer App
                            Floating
@@ -27,7 +27,7 @@
         }
         @Body
     </MMain>
-    @if (ShowBottomNavigation() && !MasaBlazor!.Breakpoint.SmAndUp)
+    @if (ShowBottomNavigation() && !MasaBlazor.Breakpoint.SmAndUp)
     {
         <MBottomNavigation @bind-Value="SelectedItem"
                        Class="d-flex justify-space-around d-sm-none"

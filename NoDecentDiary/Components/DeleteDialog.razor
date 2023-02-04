@@ -1,4 +1,6 @@
-﻿<MDialog Value="Value"
+﻿@inherits MyComponentBase
+
+<MDialog Value="Value"
          ValueChanged="InternalValueChanged"
          MaxWidth="420">
     <MCard>
@@ -10,7 +12,7 @@
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
-            <MButton Text OnClick="HandleOnCancel">
+            <MButton Text OnClick="OnCancel">
                 @(I18n!.T("Share.Cancel"))
             </MButton>
             <MButton Text

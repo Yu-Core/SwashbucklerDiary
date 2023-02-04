@@ -3,6 +3,7 @@ using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Maui.Controls;
+using NoDecentDiary.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using NoDecentDiary.Services;
@@ -10,24 +11,31 @@ using System.Diagnostics;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class WritePage : IDisposable
+    public partial class WritePage : PageComponentBase, IDisposable
     {
+        private bool showTitle;
+        private bool _showMenu;
+        private bool _showSelectTag;
+        private bool _showWeather;
+        private bool _showMood;
+        private bool _showLocation;
+        private DiaryModel Diary = new ()
+        {
+            CreateTime = DateTime.Now,
+            UpdateTime = DateTime.Now
+        };
+        private List<TagModel> SelectedTags = new ();
+
         [Inject]
-        public MasaBlazor? MasaBlazor { get; set; }
+        public MasaBlazor MasaBlazor { get; set; } = default!;
         [Inject]
-        public IDiaryService? DiaryService { get; set; }
+        public IDiaryService DiaryService { get; set; } = default!;
         [Inject]
-        public IPopupService? PopupService { get; set; }
+        public IDiaryTagService DiaryTagService { get; set; } = default!;
         [Inject]
-        public IDiaryTagService? DiaryTagService { get; set; }
+        public ITagService TagService { get; set; } = default!;
         [Inject]
-        public ITagService? TagService { get; set; }
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        [Inject]
-        public IconService? IconService { get; set; }
-        [Inject]
-        private I18n? I18n { get; set; }
+        public IconService IconService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -35,45 +43,57 @@ namespace NoDecentDiary.Pages
         [Parameter]
         [SupplyParameterFromQuery]
         public int? DiaryId { get; set; }
-        private bool showTitle;
-        private bool _showMenu;
+
+        public void Dispose()
+        {
+            MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+            if (ShowMenu)
+            {
+                NavigateService.Action -= CloseMenu;
+            }
+            if (ShowSelectTag)
+            {
+                NavigateService.Action -= CloseSelectTag;
+            }
+            NavigateService.Action -= OnBack;
+            GC.SuppressFinalize(this);
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
+            NavigateService.Action += OnBack;
+            await SetTag();
+            await SetDiary();
+        }
+
         private bool ShowMenu
         {
             get => _showMenu;
             set => SetShowMenu(value);
         }
-        private bool _showSelectTag;
         private bool ShowSelectTag
         {
             get => _showSelectTag;
             set => SetShowSelectTag(value);
         }
-        private bool _showWeather;
         private bool ShowWeather
         {
             get => _showWeather;
             set => SetShowWeather(value);
         }
-        private bool _showMood;
         private bool ShowMood
         {
             get => _showMood;
             set => SetShowMood(value);
         }
-        private bool _showLocation;
         private bool ShowLocation
         {
             get => _showLocation;
             set => SetShowLocation(value);
         }
-        private DiaryModel Diary = new DiaryModel()
-        {
-            CreateTime = DateTime.Now,
-            UpdateTime = DateTime.Now
-        };
-        private bool Desktop => MasaBlazor!.Breakpoint.SmAndUp;
-        private bool Mobile => !MasaBlazor!.Breakpoint.SmAndUp;
-        private List<TagModel> SelectedTags = new List<TagModel>();
+        private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
+        private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
         private Dictionary<string, string> WeatherIcons => IconService!.WeatherIcon;
         private Dictionary<string, string> MoodIcons => IconService!.MoodIcon;
         private StringNumber WeatherIndex
@@ -125,14 +145,6 @@ namespace NoDecentDiary.Pages
         private string Mood =>
             string.IsNullOrEmpty(Diary.Mood) ? I18n!.T("Write.Mood") : I18n!.T("Mood." + Diary.Mood);
         
-        protected override async Task OnInitializedAsync()
-        {
-            MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
-            NavigateService!.Action += HandOnBack;
-            await SetTag();
-            await SetDiary();
-        }
-
         private async Task SetTag()
         {
             if (TagId != null)
@@ -144,6 +156,7 @@ namespace NoDecentDiary.Pages
                 }
             }
         }
+
         private async Task SetDiary()
         {
             if (DiaryId != null)
@@ -157,6 +170,7 @@ namespace NoDecentDiary.Pages
                 }
             }
         }
+
         private void RemoveSelectedTag(TagModel tag)
         {
             int index = SelectedTags.IndexOf(tag);
@@ -165,11 +179,13 @@ namespace NoDecentDiary.Pages
                 SelectedTags.RemoveAt(index);
             }
         }
-        private void HandOnSaveSelectTags()
+
+        private void SaveSelectTags()
         {
             ShowSelectTag = false;
         }
-        private async Task HandOnSave()
+
+        private async Task OnSave()
         {
             if (string.IsNullOrWhiteSpace(Diary.Content))
             {
@@ -177,7 +193,8 @@ namespace NoDecentDiary.Pages
             }
             await SaveDiary();
         }
-        private async void HandOnBack()
+
+        private async void OnBack()
         {
             if (string.IsNullOrWhiteSpace(Diary.Content))
             {
@@ -187,11 +204,13 @@ namespace NoDecentDiary.Pages
 
             await SaveDiary();
         }
-        private void HandOnClear()
+
+        private void OnClear()
         {
             Diary.Content = string.Empty;
             this.StateHasChanged();
         }
+
         private async Task SaveDiary()
         {
             if (DiaryId == null)
@@ -201,7 +220,7 @@ namespace NoDecentDiary.Pages
                 {
                     int id = await DiaryService.GetLastInsertRowId();
                     await DiaryTagService!.AddTagsAsync(id, SelectedTags);
-                    await PopupService!.ToastAsync(it =>
+                    await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Success;
                         it.Title = I18n!.T("Share.AddSuccess");
@@ -209,7 +228,7 @@ namespace NoDecentDiary.Pages
                 }
                 else
                 {
-                    await PopupService!.ToastAsync(it => 
+                    await PopupService.ToastAsync(it => 
                     { 
                         it.Type = AlertTypes.Error;
                         it.Title = I18n!.T("Share.AddFail");
@@ -223,7 +242,7 @@ namespace NoDecentDiary.Pages
                 {
                     await DiaryTagService!.DeleteAsync(it => it.DiaryId == DiaryId);
                     await DiaryTagService!.AddTagsAsync((int)DiaryId, SelectedTags);
-                    await PopupService!.ToastAsync(it =>
+                    await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Success;
                         it.Title = I18n!.T("Share.EditSuccess");
@@ -232,7 +251,7 @@ namespace NoDecentDiary.Pages
                 }
                 else
                 {
-                    await PopupService!.ToastAsync(it => 
+                    await PopupService.ToastAsync(it => 
                     { 
                         it.Type = AlertTypes.Error;
                         it.Title = I18n!.T("Share.EditFail");
@@ -242,14 +261,12 @@ namespace NoDecentDiary.Pages
 
             NavigateToBack();
         }
-        public void NavigateToBack()
-        {
-            NavigateService!.NavigateToBack();
-        }
+
         private async Task InvokeStateHasChangedAsync()
         {
             await InvokeAsync(StateHasChanged);
         }
+
         private string GetWeatherIcon(string? key)
         {
             if (string.IsNullOrWhiteSpace(key))
@@ -258,6 +275,7 @@ namespace NoDecentDiary.Pages
             }
             return IconService!.GetWeatherIcon(key);
         }
+
         private string GetMoodIcon(string? key)
         {
             if (string.IsNullOrWhiteSpace(key))
@@ -266,6 +284,7 @@ namespace NoDecentDiary.Pages
             }
             return IconService!.GetMoodIcon(key);
         }
+
         private string CounterValue(string? value)
         {
             int len = 0;
@@ -287,6 +306,7 @@ namespace NoDecentDiary.Pages
 
             return len + " " + I18n!.T("Write.CountUnit");
         }
+
         private void SetShowMenu(bool value)
         {
             if (_showMenu != value)
@@ -294,19 +314,21 @@ namespace NoDecentDiary.Pages
                 _showMenu = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseMenu;
+                    NavigateService.Action += CloseMenu;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseMenu;
+                    NavigateService.Action -= CloseMenu;
                 }
             }
         }
+
         private void CloseMenu()
         {
             ShowMenu = false;
             StateHasChanged();
         }
+        
         private void SetShowSelectTag(bool value)
         {
             if (_showSelectTag != value)
@@ -314,19 +336,21 @@ namespace NoDecentDiary.Pages
                 _showSelectTag = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseSelectTag;
+                    NavigateService.Action += CloseSelectTag;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseSelectTag;
+                    NavigateService.Action -= CloseSelectTag;
                 }
             }
         }
+
         private void CloseSelectTag()
         {
             ShowSelectTag = false;
             StateHasChanged();
         }
+
         private void SetShowWeather(bool value)
         {
             if (_showWeather != value)
@@ -334,19 +358,21 @@ namespace NoDecentDiary.Pages
                 _showWeather = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseWeather;
+                    NavigateService.Action += CloseWeather;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseWeather;
+                    NavigateService.Action -= CloseWeather;
                 }
             }
         }
+
         private void CloseWeather()
         {
             ShowWeather = false;
             StateHasChanged();
         }
+
         private void SetShowMood(bool value)
         {
             if (_showMood != value)
@@ -354,19 +380,21 @@ namespace NoDecentDiary.Pages
                 _showMood = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseMood;
+                    NavigateService.Action += CloseMood;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseMood;
+                    NavigateService.Action -= CloseMood;
                 }
             }
         }
+
         private void CloseMood()
         {
             ShowMood = false;
             StateHasChanged();
         }
+
         private void SetShowLocation(bool value)
         {
             if (_showLocation != value)
@@ -374,32 +402,19 @@ namespace NoDecentDiary.Pages
                 _showLocation = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseLocation;
+                    NavigateService.Action += CloseLocation;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseLocation;
+                    NavigateService.Action -= CloseLocation;
                 }
             }
         }
+
         private void CloseLocation()
         {
             ShowLocation = false;
             StateHasChanged();
-        }
-        public void Dispose()
-        {
-            MasaBlazor!.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
-            if (ShowMenu)
-            {
-                NavigateService!.Action -= CloseMenu;
-            }
-            if (ShowSelectTag)
-            {
-                NavigateService!.Action -= CloseSelectTag;
-            }
-            NavigateService!.Action -= HandOnBack;
-            GC.SuppressFinalize(this);
         }
     }
 }

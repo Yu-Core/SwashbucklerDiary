@@ -10,12 +10,10 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Components
 {
-    public partial class DeleteDialog : IDisposable
+    public partial class DeleteDialog : MyComponentBase, IDisposable
     {
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        [Inject]
-        private I18n? I18n { get; set; }
+        private bool _value;
+
         [Parameter]
         public bool Value
         {
@@ -34,8 +32,16 @@ namespace NoDecentDiary.Components
         [Parameter]
         public EventCallback OnOK { get; set; }
 
-        private bool _value;
-        protected virtual async Task HandleOnCancel(MouseEventArgs _)
+        public void Dispose()
+        {
+            if (Value)
+            {
+                NavigateService.Action -= Close;
+            }
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual async Task OnCancel(MouseEventArgs _)
         {
             await InternalValueChanged(false);
         }
@@ -49,6 +55,7 @@ namespace NoDecentDiary.Components
                 await ValueChanged.InvokeAsync(value);
             }
         }
+
         private void SetValue(bool value)
         {
             if (_value != value)
@@ -56,26 +63,20 @@ namespace NoDecentDiary.Components
                 _value = value;
                 if (value)
                 {
-                    NavigateService!.Action += Close;
+                    NavigateService.Action += Close;
                 }
                 else
                 {
-                    NavigateService!.Action -= Close;
+                    NavigateService.Action -= Close;
                 }
             }
         }
+
         private async void Close()
         {
             await InternalValueChanged(false);
             StateHasChanged();
         }
-        public void Dispose()
-        {
-            if (Value)
-            {
-                NavigateService!.Action -= Close;
-            }
-            GC.SuppressFinalize(this);
-        }
+        
     }
 }

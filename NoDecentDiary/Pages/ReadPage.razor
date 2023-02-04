@@ -1,10 +1,11 @@
-﻿@page "/Read/{id:int}"
+﻿@page "/read/{id:int}"
+@inherits PageComponentBase
 
 <MAppBar App
          ElevateOnScroll
          Color="white"
          ScrollTarget="#scrolling-read">
-    <MButton Icon OnClick="HandOnBack">
+    <MButton Icon OnClick="OnBack">
         <MIcon>
             mdi-arrow-left
         </MIcon>
@@ -18,13 +19,13 @@
         </MIcon>
     </MButton>
     <MButton Icon
-             OnClick="HandOnDelete">
+             OnClick="OpenDeleteDialog">
         <MIcon>
             mdi-delete-outline
         </MIcon>
     </MButton>
     <MButton Icon
-             OnClick="HandOnEdit">
+             OnClick="OnEdit">
         <MIcon>
             mdi-pencil
         </MIcon>
@@ -50,15 +51,15 @@
         <ChildContent>
             <MList MinWidth="150">
                 <MListItem Dense
-                           OnClick="Copy">
+                           OnClick="OnCopy">
                     <MListItemContent>
                         @(I18n!.T("Share.Copy"))
                     </MListItemContent>
                 </MListItem>
                 <MListItem Dense
-                           OnClick="()=>Topping(Diary)">
+                           OnClick="()=>OnTopping(Diary)">
                     <MListItemContent>
-                        @(Top ? I18n!.T("Diary.CancelTop") : I18n!.T("Diary.Top"))
+                        @(IsTop ? I18n!.T("Diary.CancelTop") : I18n!.T("Diary.Top"))
                     </MListItemContent>
                 </MListItem>
                 <MListItem Dense>
@@ -82,7 +83,7 @@
         <div class="px-2">
             @if (ShowWeather)
             {
-                <MChip Class="my-2 mr-2" Outlined="Mobile">
+                <MChip Class="my-2 mr-2" Outlined="IsMobile">
                     <MIcon Left>
                         @(GetWeatherIcon(Diary.Weather))
                     </MIcon>
@@ -92,7 +93,7 @@
 
             @if (ShowMood)
             {
-                <MChip Class="my-2 mr-2" Outlined="Mobile">
+                <MChip Class="my-2 mr-2" Outlined="IsMobile">
                     <MIcon Left>
                         @(GetMoodIcon(Diary.Mood))
                     </MIcon>
@@ -102,7 +103,7 @@
 
             @if (ShowLocation)
             {
-                <MChip Class="my-2 mr-2" Outlined="Mobile">
+                <MChip Class="my-2 mr-2" Outlined="IsMobile">
                     <MIcon Left>
                         mdi-map-marker-outline
                     </MIcon>
@@ -115,9 +116,9 @@
         {
             <MTextField Value="@(Diary.Title)"
                     Class="pb-0 my-sm-4 user-select font-weight-bold"
-                    Solo="Mobile"
-                    Flat="Mobile"
-                    Outlined="Desktop"
+                    Solo="IsMobile"
+                    Flat="IsMobile"
+                    Outlined="IsDesktop"
                     TValue="string"
                     HideDetails="@("auto")"
                     Dense
@@ -128,9 +129,9 @@
 
         <MTextarea Value="@(Diary.Content)"
                    Class="my-sm-4 user-select"
-                   Solo="Mobile"
-                   Flat="Mobile"
-                   Outlined="Desktop"
+                   Solo="IsMobile"
+                   Flat="IsMobile"
+                   Outlined="IsDesktop"
                    HideDetails="@("auto")"
                    Readonly
                    AutoGrow
@@ -142,7 +143,7 @@
             <MChipGroup Column>
                 @foreach (var item in SelectedTags)
                 {
-                    <MChip Outlined="Mobile">
+                    <MChip Outlined="IsMobile">
                         @(item.Name)
                     </MChip>
                 }
@@ -162,7 +163,7 @@
         </MCardTitle>
         <MCardText>
             <MList>
-                <MListItem OnClick="TextShare">
+                <MListItem OnClick="ShareText">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             mdi-format-text
@@ -174,7 +175,7 @@
                         </MListItemTitle>
                     </MListItemContent>
                 </MListItem>
-                <MListItem OnClick="ImageShare">
+                <MListItem OnClick="ShareImage">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             mdi-image-outline
@@ -199,6 +200,6 @@
 <DeleteDialog @bind-Value="ShowDelete"
               Title="@(I18n!.T("Diary.Delete.Title"))"
               Content="@(I18n!.T("Diary.Delete.Content"))"
-              OnOK="()=>HandOnOKDelete?.Invoke()">
+              OnOK="()=>OnDelete?.Invoke()">
 
 </DeleteDialog>

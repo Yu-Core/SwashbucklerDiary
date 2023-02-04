@@ -2,6 +2,7 @@
 using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using NoDecentDiary.Components;
 using NoDecentDiary.IServices;
 using System;
 using System.Collections.Generic;
@@ -12,27 +13,40 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Shared
 {
-    public partial class MainLayout : IDisposable
+    public partial class MainLayout :IDisposable
     {
-        [Inject]
-        private MasaBlazor? MasaBlazor { get; set; }
-        [Inject]
-        private NavigationManager? Navigation { get; set; }
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        [Inject]
-        private I18n? I18n { get; set; }
-        [Inject]
-        private ISettingsService? SettingsService { get; set; }
-
         StringNumber SelectedItem = 0;
-
         readonly List<NavigationButton> NavigationButtons = new()
         {
             new NavigationButton(0,"Main.Diary","mdi-notebook-outline","mdi-notebook",""),
             new NavigationButton(1,"Main.History","mdi-clock-outline","mdi-clock","History"),
             new NavigationButton(2,"Main.Mine","mdi-account-outline","mdi-account","Mine")
         };
+
+        [Inject]
+        private MasaBlazor MasaBlazor { get; set; } = default!;
+        [Inject]
+        private NavigationManager Navigation { get; set; } = default!;
+        [Inject]
+        public INavigateService NavigateService { get; set; } = default!;
+        [Inject]
+        private I18n I18n { get; set; } = default!;
+        [Inject]
+        private ISettingsService SettingsService { get; set; } = default!;
+
+        public void Dispose()
+        {
+            MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+            GC.SuppressFinalize(this);
+        }
+        
+        protected override async Task OnInitializedAsync()
+        {
+            NavigateService.Navigation = Navigation;
+            await LoadSettings();
+            MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
+            await base.OnInitializedAsync();
+        }
 
         private class NavigationButton
         {
@@ -51,13 +65,6 @@ namespace NoDecentDiary.Shared
             public string Href { get; set; }
         }
 
-        protected override async Task OnInitializedAsync()
-        {
-            NavigateService!.Navigation = Navigation;
-            await LoadSettings();
-            MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
-            await base.OnInitializedAsync();
-        }
         private async Task LoadSettings()
         {
             var flag = await SettingsService!.ContainsKey("Language");
@@ -68,6 +75,7 @@ namespace NoDecentDiary.Shared
             }
             
         }
+
         private string? GetIcon(NavigationButton navigationButton)
         {
             return SelectedItem == navigationButton.Id ? navigationButton.SelectIcon : navigationButton.Icon;
@@ -83,15 +91,10 @@ namespace NoDecentDiary.Shared
             var url = Navigation!.ToBaseRelativePath(Navigation.Uri);
             return NavigationButtons.Any(it => it.Href == url.Split("?")[0]);
         }
+
         private async Task InvokeStateHasChangedAsync()
         {
             await InvokeAsync(StateHasChanged);
-        }
-
-        public void Dispose()
-        {
-            MasaBlazor!.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
-            GC.SuppressFinalize(this);
         }
     }
 }

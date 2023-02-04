@@ -14,16 +14,17 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Components
 {
-    public partial class SelectTags : IDisposable
+    public partial class SelectTags : MyComponentBase, IDisposable
     {
+        private bool _value;
+        private bool _showAddTag;
+        private string? AddTagName;
+        private List<StringNumber> SelectedTagIndices = new ();
+        private List<TagModel> Tags = new();
+
         [Inject]
-        public ITagService? TagService { get; set; }
-        [Inject]
-        public IPopupService? PopupService { get; set; }
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        [Inject]
-        private I18n? I18n { get; set; }
+        public ITagService TagService { get; set; } = default!;
+
         [Parameter]
         public bool Value
         {
@@ -46,19 +47,14 @@ namespace NoDecentDiary.Components
         [Parameter]
         public EventCallback OnSave { get; set; }
 
-        private bool _value;
-        private bool _showAddTag;
-        private bool ShowAddTag
+        public void Dispose()
         {
-            get => _showAddTag;
-            set
+            if (ShowAddTag)
             {
-                SetShowAddTag(value);
+                NavigateService.Action -= CloseAddTag;
             }
+            GC.SuppressFinalize(this);
         }
-        private string? AddTagName;
-        private List<StringNumber> SelectedTagIndices { get; set; } = new List<StringNumber>();
-        private List<TagModel> Tags { get; set; } = new List<TagModel>();
 
         protected override async Task OnInitializedAsync()
         {
@@ -68,16 +64,6 @@ namespace NoDecentDiary.Components
         protected virtual async Task HandleOnCancel(MouseEventArgs _)
         {
             await InternalValueChanged(false);
-        }
-
-        private async Task InternalValueChanged(bool value)
-        {
-            Value = value;
-
-            if (ValueChanged.HasDelegate)
-            {
-                await ValueChanged.InvokeAsync(value);
-            }
         }
 
         protected virtual async Task HandleOnSave(MouseEventArgs _)
@@ -98,6 +84,25 @@ namespace NoDecentDiary.Components
             await OnSave.InvokeAsync();
         }
 
+        private async Task InternalValueChanged(bool value)
+        {
+            Value = value;
+
+            if (ValueChanged.HasDelegate)
+            {
+                await ValueChanged.InvokeAsync(value);
+            }
+        }
+
+        private bool ShowAddTag
+        {
+            get => _showAddTag;
+            set
+            {
+                SetShowAddTag(value);
+            }
+        }
+
         private async void InitSelectedTags(bool value)
         {
             if (value)
@@ -114,7 +119,8 @@ namespace NoDecentDiary.Components
                 }
             }
         }
-        private async void HandleOnSaveAddTag()
+
+        private async void SaveAddTag()
         {
             ShowAddTag = false;
             if (string.IsNullOrWhiteSpace(AddTagName))
@@ -124,7 +130,7 @@ namespace NoDecentDiary.Components
 
             if (Tags.Any(it => it.Name == AddTagName))
             {
-                await PopupService!.ToastAsync(it =>
+                await PopupService.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Warning;
                     it.Title = I18n!.T("Tag.Repeat.Title");
@@ -133,14 +139,14 @@ namespace NoDecentDiary.Components
                 return;
             }
 
-            TagModel tagModel = new TagModel()
+            TagModel tagModel = new ()
             {
                 Name = AddTagName
             };
             bool flag = await TagService!.AddAsync(tagModel);
             if (!flag)
             {
-                await PopupService!.ToastAsync(it =>
+                await PopupService.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Error;
                     it.Title = I18n!.T("Share.AddFail");
@@ -148,7 +154,7 @@ namespace NoDecentDiary.Components
                 return;
             }
 
-            await PopupService!.ToastAsync(it =>
+            await PopupService.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Success;
                 it.Title = I18n!.T("Share.AddSuccess");
@@ -157,6 +163,7 @@ namespace NoDecentDiary.Components
             Tags.Add(tagModel);
             StateHasChanged();
         }
+
         private void SetShowAddTag(bool value)
         {
             if (_showAddTag != value)
@@ -164,26 +171,19 @@ namespace NoDecentDiary.Components
                 _showAddTag = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseAddTag;
+                    NavigateService.Action += CloseAddTag;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseAddTag;
+                    NavigateService.Action -= CloseAddTag;
                 }
             }
         }
+
         private void CloseAddTag()
         {
             ShowAddTag = false;
             StateHasChanged();
-        }
-        public void Dispose()
-        {
-            if (ShowAddTag)
-            {
-                NavigateService!.Action -= CloseAddTag;
-            }
-            GC.SuppressFinalize(this);
         }
     }
 }

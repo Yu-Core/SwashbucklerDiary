@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using NoDecentDiary.Components;
 using NoDecentDiary.Config;
 using NoDecentDiary.IServices;
 using System;
@@ -9,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class LogPage
+    public partial class LogPage : PageComponentBase
     {
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        private List<string> LogTextList = new List<string>();
+        private List<string> LogTextList = new();
+
         protected override Task OnInitializedAsync()
         {
             InitLogText();
             return base.OnInitializedAsync();
         }
+
         private void InitLogText()
         {
             if(!File.Exists(SerilogConstants.filePath))
@@ -32,10 +33,6 @@ namespace NoDecentDiary.Pages
             {
                 LogTextList.Add(Line);
             }
-        }
-        private void HandOnBack()
-        {
-            NavigateService!.NavigateToBack();
         }
     }
 }

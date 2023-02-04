@@ -1,11 +1,12 @@
-﻿@page "/Tag/{id:int}"
+﻿@page "/tag/{id:int}"
+@inherits PageComponentBase
 
 <MAppBar App
          Color="white"
          ElevateOnScroll
          Prominent="Prominent"
          ScrollTarget="#scrolling-tag">
-    <MButton Icon OnClick="HandOnBack">
+    <MButton Icon OnClick="NavigateToBack">
         <MIcon>
             mdi-arrow-left
         </MIcon>
@@ -33,7 +34,7 @@
              Bottom
              Right
              Fixed
-             OnClick="HandOnToWrite"
+             OnClick="NavigateToWrite"
              Fab>
         <MIcon>
             mdi-pencil

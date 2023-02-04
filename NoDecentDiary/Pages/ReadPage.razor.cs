@@ -3,6 +3,7 @@ using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using NoDecentDiary.Components;
 using NoDecentDiary.Extend;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
@@ -16,33 +17,45 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class ReadPage : IAsyncDisposable
+    public partial class ReadPage : PageComponentBase, IAsyncDisposable
     {
+        private DiaryModel Diary = new();
+        private bool _showDelete;
+        private bool _showMenu;
+        private bool _showShare;
+        private bool showLoading;
+        private List<TagModel> SelectedTags = new();
+        private IJSObjectReference? module;
+        private Action? OnDelete;
+
         [Inject]
-        public MasaBlazor? MasaBlazor { get; set; }
+        public MasaBlazor MasaBlazor { get; set; } = default!;
         [Inject]
-        public IDiaryService? DiaryService { get; set; }
+        public IDiaryService DiaryService { get; set; } = default!;
         [Inject]
-        public IPopupService? PopupService { get; set; }
+        public IDiaryTagService DiaryTagService { get; set; } = default!;
         [Inject]
-        public IDiaryTagService? DiaryTagService { get; set; }
+        public ITagService TagService { get; set; } = default!;
         [Inject]
-        public ITagService? TagService { get; set; }
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        [Inject]
-        public IJSRuntime? JS { get; set; }
-        [Inject]
-        public IconService? IconService { get; set; }
-        [Inject]
-        private I18n? I18n { get; set; }
-        [Inject]
-        private ISystemService? SystemService { get; set; }
+        public IconService IconService { get; set; } = default!;
 
         [Parameter]
         public int Id { get; set; }
-        private DiaryModel Diary = new DiaryModel();
-        private bool _showDelete;
+
+        protected override async Task OnInitializedAsync()
+        {
+            await UpdateDiary();
+            await UpdateTag();
+            MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
+        }
+        protected async override Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/screenshot.js");
+            }
+        }
+
         private bool ShowDelete
         {
             get => _showDelete;
@@ -51,11 +64,10 @@ namespace NoDecentDiary.Pages
                 _showDelete = value;
                 if (!value)
                 {
-                    HandOnOKDelete = null;
+                    OnDelete = null;
                 }
             }
         }
-        private bool _showMenu;
         private bool ShowMenu
         {
             get => _showMenu;
@@ -64,7 +76,6 @@ namespace NoDecentDiary.Pages
                 SetShowMenu(value);
             }
         }
-        private bool _showShare;
         private bool ShowShare
         {
             get => _showShare;
@@ -73,13 +84,13 @@ namespace NoDecentDiary.Pages
                 SetShowShare(value);
             }
         }
-        private bool showLoading;
+        private bool IsTop => Diary.Top;
         private bool ShowTitle => !string.IsNullOrEmpty(Diary.Title);
         private bool ShowWeather => !string.IsNullOrEmpty(Diary.Weather);
         private bool ShowMood => !string.IsNullOrEmpty(Diary.Mood);
         private bool ShowLocation => !string.IsNullOrEmpty(Diary.Location);
-        private bool Desktop => MasaBlazor!.Breakpoint.SmAndUp;
-        private bool Mobile => !MasaBlazor!.Breakpoint.SmAndUp;
+        private bool IsDesktop => MasaBlazor.Breakpoint.SmAndUp;
+        private bool IsMobile => !MasaBlazor.Breakpoint.SmAndUp;
         private string DiaryCopyContent
         {
             get
@@ -91,24 +102,7 @@ namespace NoDecentDiary.Pages
                 return Diary.Title + "\n" + Diary.Content;
             }
         }
-        private List<TagModel> SelectedTags = new List<TagModel>();
-        private bool Top => Diary.Top;
-        private IJSObjectReference? module;
-        private Action? HandOnOKDelete;
 
-        protected override async Task OnInitializedAsync()
-        {
-            await UpdateDiary();
-            await UpdateTag();
-            MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
-        }
-        protected async override Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
-            {
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/screenshot.js");
-            }
-        }
         private async Task UpdateDiary()
         {
             var diaryModel = await DiaryService!.FindAsync(Id);
@@ -119,48 +113,49 @@ namespace NoDecentDiary.Pages
             }
             Diary = diaryModel;
         }
+
         private async Task UpdateTag()
         {
             SelectedTags = await TagService!.GetDiaryTagsAsync(Id);
         }
-        private void HandOnBack()
+
+        private void OnBack()
         {
             NavigateToBack();
         }
-        public void NavigateToBack()
-        {
-            NavigateService!.NavigateToBack();
-        }
+
         private async Task InvokeStateHasChangedAsync()
         {
             await InvokeAsync(StateHasChanged);
         }
+
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
-            MasaBlazor!.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+            MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
             if (module is not null)
             {
                 await module.DisposeAsync();
             }
             if (ShowMenu)
             {
-                NavigateService!.Action -= CloseMenu;
+                NavigateService.Action -= CloseMenu;
             }
             if (ShowShare)
             {
-                NavigateService!.Action -= CloseShare;
+                NavigateService.Action -= CloseShare;
             }
             GC.SuppressFinalize(this);
         }
-        public void HandOnDelete()
+
+        private void OpenDeleteDialog()
         {
-            HandOnOKDelete += async () =>
+            OnDelete += async () =>
             {
                 ShowDelete = false;
                 bool flag = await DiaryService!.DeleteAsync(Id);
                 if (flag)
                 {
-                    await PopupService!.ToastAsync(it =>
+                    await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Success;
                         it.Title = I18n!.T("Share.DeleteSuccess");
@@ -168,7 +163,7 @@ namespace NoDecentDiary.Pages
                 }
                 else
                 {
-                    await PopupService!.ToastAsync(it =>
+                    await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Error;
                         it.Title = I18n!.T("Share.DeleteFail");
@@ -179,32 +174,37 @@ namespace NoDecentDiary.Pages
             ShowDelete = true;
             StateHasChanged();
         }
-        public void HandOnEdit()
+
+        private void OnEdit()
         {
-            NavigateService!.NavigateTo($"/Write?DiaryId={Id}");
+            NavigateService.NavigateTo($"/write?DiaryId={Id}");
         }
-        private async Task Topping(DiaryModel diaryModel)
+
+        private async Task OnTopping(DiaryModel diaryModel)
         {
             diaryModel.Top = !diaryModel.Top;
             await DiaryService!.UpdateAsync(diaryModel);
 
         }
-        private async void Copy()
-        {
-            await SystemService!.SetClipboard(DiaryCopyContent);
 
-            await PopupService!.ToastAsync(it =>
+        private async Task OnCopy()
+        {
+            await SystemService.SetClipboard(DiaryCopyContent);
+
+            await PopupService.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Success;
                 it.Title = I18n!.T("Share.CopySuccess");
             });
         }
-        private async Task TextShare()
+
+        private async Task ShareText()
         {
             ShowShare = false;
-            await SystemService!.ShareText(I18n!.T("Read.Share"), DiaryCopyContent);
+            await SystemService.ShareText(I18n!.T("Read.Share"), DiaryCopyContent);
         }
-        private async Task ImageShare()
+
+        private async Task ShareImage()
         {
             ShowShare = false;
             showLoading = true;
@@ -218,8 +218,9 @@ namespace NoDecentDiary.Pages
             await File.WriteAllBytesAsync(file, Convert.FromBase64String(base64));
             showLoading = false;
 
-            await SystemService!.ShareFile(I18n!.T("Read.Share"), file);
+            await SystemService.ShareFile(I18n!.T("Read.Share"), file);
         }
+
         private string GetWeatherIcon(string? key)
         {
             if (string.IsNullOrWhiteSpace(key))
@@ -228,6 +229,7 @@ namespace NoDecentDiary.Pages
             }
             return IconService!.GetWeatherIcon(key);
         }
+
         private string GetMoodIcon(string? key)
         {
             if (string.IsNullOrWhiteSpace(key))
@@ -236,6 +238,7 @@ namespace NoDecentDiary.Pages
             }
             return IconService!.GetMoodIcon(key);
         }
+
         private void SetShowMenu(bool value)
         {
             if (_showMenu != value)
@@ -243,19 +246,21 @@ namespace NoDecentDiary.Pages
                 _showMenu = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseMenu;
+                    NavigateService.Action += CloseMenu;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseMenu;
+                    NavigateService.Action -= CloseMenu;
                 }
             }
         }
+
         private void CloseMenu()
         {
             ShowMenu = false;
             StateHasChanged();
         }
+
         private void SetShowShare(bool value)
         {
             if (_showShare != value)
@@ -263,14 +268,15 @@ namespace NoDecentDiary.Pages
                 _showShare = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseShare;
+                    NavigateService.Action += CloseShare;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseShare;
+                    NavigateService.Action -= CloseShare;
                 }
             }
         }
+
         private void CloseShare()
         {
             ShowShare = false;

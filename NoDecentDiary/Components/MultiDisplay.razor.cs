@@ -11,7 +11,7 @@ namespace NoDecentDiary.Components
     public partial class MultiDisplay : IDisposable
     {
         [Inject]
-        public MasaBlazor? MasaBlazor { get; set; }
+        public MasaBlazor MasaBlazor { get; set; } = default!;
 
         [Parameter]
         public RenderFragment? MobileContent { get; set; }
@@ -20,15 +20,16 @@ namespace NoDecentDiary.Components
 
         public void Dispose()
         {
-            MasaBlazor!.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+            MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
             GC.SuppressFinalize(this);
         }
 
         protected override Task OnInitializedAsync()
         {
-            MasaBlazor!.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
+            MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             return base.OnInitializedAsync();
         }
+
         private async Task InvokeStateHasChangedAsync()
         {
             await InvokeAsync(StateHasChanged);

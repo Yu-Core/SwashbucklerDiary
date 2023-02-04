@@ -7,29 +7,37 @@ using NoDecentDiary.Models;
 
 namespace NoDecentDiary.Components
 {
-    public partial class DiaryCardList : IDisposable
+    public partial class DiaryCardList : MyComponentBase, IDisposable
     {
+        private bool _showDeleteDiary;
+        private bool _showSelectTag;
+        private int SelectedDiaryId;
+        private List<TagModel> SelectedTags = new();
+        private Action? OnDelete;
+
         [Inject]
-        public IPopupService? PopupService { get; set; }
+        public IDiaryService DiaryService { get; set; } = default!;
         [Inject]
-        public IDiaryService? DiaryService { get; set; }
+        public ITagService TagService { get; set; } = default!;
+        [Inject] 
+        public IDiaryTagService DiaryTagService { get; set; } = default!;
         [Inject]
-        public ITagService? TagService { get; set; }
-        [Inject]
-        public IDiaryTagService? DiaryTagService { get; set; }
-        [Inject]
-        public INavigateService? NavigateService { get; set; }
-        [Inject]
-        private I18n? I18n { get; set; }
-        [Inject]
-        private ISystemService? SystemService { get; set; }
+        private ISystemService SystemService { get; set; } = default!;
 
         [Parameter]
-        public List<DiaryModel>? Value { get; set; }
+        public List<DiaryModel>? Value { get; set; } = new List<DiaryModel>();
         [Parameter]
         public string? Class { get; set; }
 
-        private bool _showDeleteDiary;
+        public void Dispose()
+        {
+            if (ShowSelectTag)
+            {
+                NavigateService.Action -= CloseSelectTag;
+            }
+            GC.SuppressFinalize(this);
+        }
+
         private bool ShowDeleteDiary
         {
             get => _showDeleteDiary;
@@ -38,11 +46,10 @@ namespace NoDecentDiary.Components
                 _showDeleteDiary = value;
                 if (!value)
                 {
-                    HandOnOKDelete = null;
+                    OnDelete = null;
                 }
             }
         }
-        private bool _showSelectTag;
         private bool ShowSelectTag
         {
             get => _showSelectTag;
@@ -51,31 +58,24 @@ namespace NoDecentDiary.Components
                 SetShowSelectTag(value);
             }
         }
-        private int SelectedDiaryId;
-        private List<TagModel> SelectedTags = new List<TagModel>();
-        private Action? HandOnOKDelete;
 
-        public DiaryCardList()
-        {
-            Value ??= new List<DiaryModel>();
-        }
-
-        private async Task Topping(DiaryModel diaryModel)
+        private async Task OnTopping(DiaryModel diaryModel)
         {
             diaryModel.Top = !diaryModel.Top;
             await DiaryService!.UpdateAsync(diaryModel);
 
         }
-        private void Delete(DiaryModel diaryModel)
+
+        private void OpenDeleteDialog(DiaryModel diaryModel)
         {
-            HandOnOKDelete += async () =>
+            OnDelete += async () =>
             {
                 ShowDeleteDiary = false;
                 bool flag = await DiaryService!.DeleteAsync(diaryModel);
                 if (flag)
                 {
                     Value!.Remove(diaryModel);
-                    await PopupService!.ToastAsync(it =>
+                    await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Success;
                         it.Title = I18n!.T("Share.DeleteSuccess");
@@ -84,7 +84,7 @@ namespace NoDecentDiary.Components
                 }
                 else
                 {
-                    await PopupService!.ToastAsync(it =>
+                    await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Error;
                         it.Title = I18n!.T("Share.DeleteFail");
@@ -94,34 +94,39 @@ namespace NoDecentDiary.Components
             ShowDeleteDiary = true;
             StateHasChanged();
         }
-        private async void Copy(DiaryModel diaryModel)
+
+        private async Task OnCopy(DiaryModel diaryModel)
         {
             var text = DiaryCopyContent(diaryModel);
-            await SystemService!.SetClipboard(text);
+            await SystemService.SetClipboard(text);
 
-            await PopupService!.ToastAsync(it =>
+            await PopupService.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Success;
                 it.Title = I18n!.T("Share.CopySuccess");
             });
         }
-        private async Task Tag(int id)
+
+        private async Task OnTag(int id)
         {
             SelectedDiaryId = id;
             SelectedTags = await TagService!.GetDiaryTagsAsync(SelectedDiaryId);
             StateHasChanged();
             ShowSelectTag = true;
         }
-        private async Task HandOnSaveSelectTags()
+
+        private async Task SaveSelectTags()
         {
             await DiaryTagService!.DeleteAsync(it => it.DiaryId == SelectedDiaryId);
             await DiaryTagService.AddTagsAsync(SelectedDiaryId, SelectedTags);
             ShowSelectTag = false;
         }
-        private void HandOnClick(int id)
+
+        private void OnClick(int id)
         {
-            NavigateService!.NavigateTo($"/Read/{id}");
+            NavigateService.NavigateTo($"/read/{id}");
         }
+
         private static string DiaryCopyContent(DiaryModel diary)
         {
             if (string.IsNullOrEmpty(diary.Title))
@@ -130,6 +135,7 @@ namespace NoDecentDiary.Components
             }
             return diary.Title + "\n" + diary.Content;
         }
+
         private void SetShowSelectTag(bool value)
         {
             if (_showSelectTag != value)
@@ -137,27 +143,19 @@ namespace NoDecentDiary.Components
                 _showSelectTag = value;
                 if (value)
                 {
-                    NavigateService!.Action += CloseSelectTag;
+                    NavigateService.Action += CloseSelectTag;
                 }
                 else
                 {
-                    NavigateService!.Action -= CloseSelectTag;
+                    NavigateService.Action -= CloseSelectTag;
                 }
             }
         }
+
         private void CloseSelectTag()
         {
             ShowSelectTag = false;
             StateHasChanged();
-        }
-
-        public void Dispose()
-        {
-            if (ShowSelectTag)
-            {
-                NavigateService!.Action -= CloseSelectTag;
-            }
-            GC.SuppressFinalize(this);
         }
     }
 }

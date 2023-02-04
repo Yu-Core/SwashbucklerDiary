@@ -1,8 +1,10 @@
-﻿@page "/User"
+﻿@page "/user"
+@inherits PageComponentBase
+
 <MAppBar App
          Elevation="0"
          Color="white">
-    <MButton Icon OnClick="HandOnBack">
+    <MButton Icon OnClick="NavigateToBack">
         <MIcon>
             mdi-arrow-left
         </MIcon>
@@ -100,7 +102,7 @@
             </MButton>
         </MCardTitle>
         <MCardText>
-            <MListItem OnClick="OnPickPhoto">
+            <MListItem OnClick="PickPhoto">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-image-multiple-outline
@@ -157,7 +159,7 @@
             </MButton>
             <MButton Text
                      Color="primary"
-                     OnClick="OnSaveUserName">
+                     OnClick="SaveUserName">
                 @(I18n!.T("Share.Save"))
             </MButton>
         </MCardActions>
@@ -193,7 +195,7 @@
             </MButton>
             <MButton Text
                      Color="primary"
-                     OnClick="OnSaveSign">
+                     OnClick="SaveSign">
                 @(I18n!.T("Share.Save"))
             </MButton>
         </MCardActions>

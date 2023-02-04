@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inherits PageComponentBase
 
 <MAppBar App
          Elevation="0"
@@ -22,7 +23,7 @@
     </MButton>
 </MAppBar>
 
-<SwiperTabItems @bind-Value="tabs" RefreshData="HandOnRefreshData">
+<SwiperTabItems @bind-Value="tabs" OnRefresh="RefreshData">
     <SwiperTabItem>
         <div class="mb-8 px-2">
             <MSubheader Class="px-0">
@@ -80,6 +81,6 @@
 <InputTag @bind-Value="ShowAddTag"
           @bind-Text="AddTagName"
           Title="@(I18n!.T("Tag.Add"))"
-          OnSave="HandOnSaveAddTag">
+          OnSave="SaveAddTag">
 
 </InputTag>

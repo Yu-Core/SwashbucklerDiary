@@ -1,16 +1,17 @@
-﻿@page "/Search"
+﻿@page "/search"
+@inherits PageComponentBase
 
 <MAppBar App
          Color="white"
          ElevateOnScroll
          ScrollTarget="#scrolling-search">
-    <MButton Icon OnClick="HandOnBack">
+    <MButton Icon OnClick="NavigateToBack">
         <MIcon>mdi-arrow-left</MIcon>
     </MButton>
 
     <MTextField TValue="string"
                 Value="Search"
-                ValueChanged="HandOnTextChanged"
+                ValueChanged="TextChanged"
                 Solo
                 Flat
                 Autofocus

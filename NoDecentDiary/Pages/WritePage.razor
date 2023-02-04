@@ -1,10 +1,11 @@
-﻿@page "/Write"
+﻿@page "/write"
+@inherits PageComponentBase
 
 <MAppBar App
          ElevateOnScroll
          Color="white"
          ScrollTarget="#scrolling-write">
-    <MButton Icon OnClick="HandOnBack">
+    <MButton Icon OnClick="OnBack">
         <MIcon>
             mdi-arrow-left
         </MIcon>
@@ -141,13 +142,13 @@
             <MButton Class="px-8"
                      Rounded
                      Dark
-                     OnClick="HandOnSave">
+                     OnClick="OnSave">
                 @(I18n!.T("Share.Save"))
             </MButton>
             <MButton Class="px-8"
                      Rounded
                      Outlined
-                     OnClick="HandOnClear">
+                     OnClick="OnClear">
                 @(I18n!.T("Share.Clear"))
             </MButton>
         </div>
@@ -156,7 +157,7 @@
 
 <SelectTags @bind-Value="ShowSelectTag"
             @bind-Values="SelectedTags"
-            OnSave="HandOnSaveSelectTags">
+            OnSave="SaveSelectTags">
 </SelectTags>
 
 <MDialog @bind-Value="ShowWeather"
