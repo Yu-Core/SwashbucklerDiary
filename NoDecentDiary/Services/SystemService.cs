@@ -137,6 +137,9 @@ namespace NoDecentDiary.Services
             return true;
         }
 
-
+        public string GetAppVersion()
+        {
+            return VersionTracking.Default.CurrentVersion.ToString();
+        }
     }
 }

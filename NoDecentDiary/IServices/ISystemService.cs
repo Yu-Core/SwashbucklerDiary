@@ -21,5 +21,6 @@ namespace NoDecentDiary.IServices
         Task FileCopy(string source, string target);
         Task<bool> CheckCameraPermission();
         Task<bool> CheckStorageWritePermission();
+        string GetAppVersion();
     }
 }
