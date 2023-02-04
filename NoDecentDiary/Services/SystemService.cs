@@ -25,7 +25,7 @@ namespace NoDecentDiary.Services
             return MediaPicker.Default.IsCaptureSupported;
         }
 
-        public bool CheckMail()
+        public bool IsMailSupported()
         {
             return Email.Default.IsComposeSupported;
         }

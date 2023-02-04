@@ -14,7 +14,7 @@ namespace NoDecentDiary.IServices
         Task<string?> PickPhotoAsync();
         bool IsCaptureSupported();
         Task<string?> CapturePhotoAsync();
-        bool CheckMail();
+        bool IsMailSupported();
         Task SendEmail(List<string>? recipients);
         Task SendEmail(string? subject, string? body, List<string>? recipients);
         Task OpenBrowser(string url);

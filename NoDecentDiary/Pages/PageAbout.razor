@@ -1,0 +1,103 @@
+﻿@page "/About"
+
+<MAppBar App
+         Color="white"
+         Elevation="0">
+    <MButton Icon OnClick="HandOnBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MAppBarTitle Class="font-weight-bold">
+        @(I18n!.T("Mine.About"))
+    </MAppBarTitle>
+
+    <MSpacer></MSpacer>
+</MAppBar>
+
+<MContainer>
+    <MCard Class="mb-5 py-sm-3"
+           Elevation="4"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemAvatar Rounded="@("lg")" Size="75">
+                    <MImage Src="./logo/logo.svg"></MImage>
+                </MListItemAvatar>
+                <MListItemContent>
+                    <MListItemTitle Class="text-h6 font-weight-bold">
+                        @(I18n!.T("AppName"))
+                    </MListItemTitle>
+                    <MListItemSubtitle>
+                        version 1.2.4
+                    </MListItemSubtitle>
+                </MListItemContent>
+            </MListItem>
+        </MList>
+    </MCard>
+    <MCard Elevation="4"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-file-document-multiple-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    用户协议
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-lock-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    隐私政策
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-update
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    更新日志
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-xml
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    开源相关
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+</MContainer>

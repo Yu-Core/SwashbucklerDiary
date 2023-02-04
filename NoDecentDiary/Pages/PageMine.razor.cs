@@ -131,6 +131,10 @@ namespace NoDecentDiary.Pages
         {
             NavigateService!.NavigateTo("/User");
         }
+        private void NavigateToAbout()
+        {
+            NavigateService!.NavigateTo("/About");
+        }
         private async Task OnChangeLanguage(string value)
         {
             ShowLanguage = false;
@@ -152,18 +156,18 @@ namespace NoDecentDiary.Pages
             var mail = "yu-core@qq.com";
             try
             {
-            if (SystemService!.CheckMail())
-            {
-                List<string> recipients = new() { mail };
+                if (SystemService!.IsMailSupported())
+                {
+                    List<string> recipients = new() { mail };
 
-                await SystemService!.SendEmail(recipients);
+                    await SystemService!.SendEmail(recipients);
+                }
+                else
+                {
+                    await SystemService!.SetClipboard(mail);
+                    await PopupService!.ToastSuccessAsync(I18n!.T("Mine.MailCopy"));
+                }
             }
-            else
-            {
-                await SystemService!.SetClipboard(mail);
-                await PopupService!.ToastSuccessAsync(I18n!.T("Mine.MailCopy"));
-            }
-        }
             catch (Exception ex)
             {
                 Error!.ProcessError(ex);
