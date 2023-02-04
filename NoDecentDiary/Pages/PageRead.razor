@@ -164,22 +164,26 @@
             <MList>
                 <MListItem OnClick="TextShare">
                     <MListItemIcon>
-                        <MIcon>
+                        <MIcon Class="list-item-icon">
                             mdi-format-text
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
-                        <MListItemTitle>@(I18n!.T("Read.TextShare"))</MListItemTitle>
+                        <MListItemTitle>
+                            @(I18n!.T("Read.TextShare"))
+                        </MListItemTitle>
                     </MListItemContent>
                 </MListItem>
                 <MListItem OnClick="ImageShare">
                     <MListItemIcon>
-                        <MIcon>
+                        <MIcon Class="list-item-icon">
                             mdi-image-outline
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
-                            <MListItemTitle>@(I18n!.T("Read.ImageShare"))</MListItemTitle>
+                        <MListItemTitle>
+                            @(I18n!.T("Read.ImageShare"))
+                        </MListItemTitle>
                     </MListItemContent>
                 </MListItem>
             </MList>
