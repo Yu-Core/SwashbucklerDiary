@@ -20,7 +20,7 @@ namespace NoDecentDiary.Services
             return photo?.FullPath;
         }
 
-        public bool CheckCapture()
+        public bool IsCaptureSupported()
         {
             return MediaPicker.Default.IsCaptureSupported;
         }
@@ -98,5 +98,45 @@ namespace NoDecentDiary.Services
                 Text = text
             });
         }
+
+        public async Task<bool> CheckCameraPermission()
+        {
+            return await CheckPermission<Permissions.Camera>();
+        }
+
+        public async Task<bool> CheckStorageWritePermission()
+        {
+            return await CheckPermission<Permissions.StorageWrite>();
+        }
+
+        private async Task<bool> CheckPermission<T>() where T : Permissions.BasePermission, new()
+        {
+            PermissionStatus status = await Permissions.CheckStatusAsync<T>();
+
+            if (status == PermissionStatus.Granted)
+                return true;
+
+            if (status == PermissionStatus.Denied)
+            {
+                if (DeviceInfo.Platform == DevicePlatform.iOS ||
+                    DeviceInfo.Platform == DevicePlatform.macOS ||
+                    DeviceInfo.Platform == DevicePlatform.MacCatalyst)
+                    return false;
+            }
+
+            status = await Permissions.RequestAsync<T>();
+
+            if (status == PermissionStatus.Granted)
+                return true;
+
+            if (status == PermissionStatus.Denied)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
     }
 }

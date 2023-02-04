@@ -162,5 +162,9 @@
     "EditSign": "Edit Sign",
     "SignPlace": "Please enter your signature",
     "NoCapture": "Your device does not support taking pictures"
+  },
+  "Permission": {
+    "OpenCamera": "Please enable camera permissions",
+    "OpenStorageWrite": "Please enable storage write permission"
   }
 }

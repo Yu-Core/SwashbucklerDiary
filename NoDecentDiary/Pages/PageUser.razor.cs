@@ -111,15 +111,28 @@ namespace NoDecentDiary.Pages
         private async Task OnCapture()
         {
             ShowAvatar = false;
-            if (SystemService!.CheckCapture())
-            {
-                string? photoPath = await SystemService!.CapturePhotoAsync();
-                await SavePhoto(photoPath);
-            }
-            else
+            if (!SystemService!.IsCaptureSupported())
             {
                 await PopupService!.ToastErrorAsync(I18n!.T("User.NoCapture"));
+                return;
             }
+
+            var cameraPermission = await SystemService!.CheckCameraPermission();
+            if (!cameraPermission)
+            {
+                await PopupService!.ToastErrorAsync(I18n!.T("Permission.OpenCamera"));
+                return;
+            }
+
+            var writePermission = await SystemService!.CheckStorageWritePermission();
+            if(!writePermission)
+            {
+                await PopupService!.ToastErrorAsync(I18n!.T("Permission.OpenStorageWrite"));
+                return;
+            }
+
+            string? photoPath = await SystemService!.CapturePhotoAsync();
+            await SavePhoto(photoPath);
         }
         private async Task SavePhoto(string? filePath)
         {
@@ -137,6 +150,7 @@ namespace NoDecentDiary.Pages
         }
         private async Task SetAvatar(string path)
         {
+            //Here is a provisional approach.Because https://github.com/dotnet/maui/issues/2907
             using var imageStream = File.OpenRead(path);
             var dotnetImageStream = new DotNetStreamReference(imageStream);
             Avatar = await module!.InvokeAsync<string>("streamToUrl", new object[1] { dotnetImageStream });
