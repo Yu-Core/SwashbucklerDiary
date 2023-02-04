@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageSearch
+    public partial class SearchPage
     {
         [Inject]
         private IDiaryService? DiaryService { get; set; }

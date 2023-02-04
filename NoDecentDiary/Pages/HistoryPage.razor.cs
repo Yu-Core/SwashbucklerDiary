@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageHistory
+    public partial class HistoryPage
     {
         [Inject]
         public IDiaryService? DiaryService { get; set; }

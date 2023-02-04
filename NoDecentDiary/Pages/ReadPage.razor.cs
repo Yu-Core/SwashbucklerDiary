@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageRead : IAsyncDisposable
+    public partial class ReadPage : IAsyncDisposable
     {
         [Inject]
         public MasaBlazor? MasaBlazor { get; set; }

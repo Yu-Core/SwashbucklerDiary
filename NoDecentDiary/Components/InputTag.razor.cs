@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NoDecentDiary.Shared
+namespace NoDecentDiary.Components
 {
     public partial class InputTag
     {
@@ -24,7 +24,7 @@ namespace NoDecentDiary.Shared
         [Parameter]
         public EventCallback<string?> TextChanged { get; set; }
         [Parameter]
-        public EventCallback OnSave { get; set; } 
+        public EventCallback OnSave { get; set; }
 
         protected virtual async Task HandleOnCancel(MouseEventArgs _)
         {

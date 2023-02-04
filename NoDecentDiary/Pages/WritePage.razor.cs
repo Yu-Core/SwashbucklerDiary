@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageWrite : IDisposable
+    public partial class WritePage : IDisposable
     {
         [Inject]
         public MasaBlazor? MasaBlazor { get; set; }

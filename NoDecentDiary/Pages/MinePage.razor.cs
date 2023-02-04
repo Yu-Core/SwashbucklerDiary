@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageMine : IAsyncDisposable
+    public partial class MinePage : IAsyncDisposable
     {
         [Inject]
         public INavigateService? NavigateService { get; set; }

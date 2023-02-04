@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 
-namespace NoDecentDiary.Shared
+namespace NoDecentDiary.Components
 {
     public partial class DiaryCardList : IDisposable
     {
@@ -75,23 +75,23 @@ namespace NoDecentDiary.Shared
                 if (flag)
                 {
                     Value!.Remove(diaryModel);
-                    await PopupService!.ToastAsync(it => 
-                    { 
-                        it.Type = AlertTypes.Success; 
-                        it.Title = I18n!.T("Share.DeleteSuccess"); 
+                    await PopupService!.ToastAsync(it =>
+                    {
+                        it.Type = AlertTypes.Success;
+                        it.Title = I18n!.T("Share.DeleteSuccess");
                     });
-                    this.StateHasChanged();
+                    StateHasChanged();
                 }
                 else
                 {
-                    await PopupService!.ToastAsync(it => 
-                    { 
+                    await PopupService!.ToastAsync(it =>
+                    {
                         it.Type = AlertTypes.Error;
                         it.Title = I18n!.T("Share.DeleteFail");
                     });
                 }
             };
-            ShowDeleteDiary= true;
+            ShowDeleteDiary = true;
             StateHasChanged();
         }
         private async void Copy(DiaryModel diaryModel)

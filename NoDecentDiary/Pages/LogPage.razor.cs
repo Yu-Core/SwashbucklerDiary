@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
+using NoDecentDiary.Config;
 using NoDecentDiary.IServices;
-using NoDecentDiary.StaticData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageLog
+    public partial class LogPage
     {
         [Inject]
         public INavigateService? NavigateService { get; set; }

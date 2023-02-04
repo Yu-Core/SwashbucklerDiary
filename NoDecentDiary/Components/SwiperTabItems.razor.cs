@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NoDecentDiary.Shared
+namespace NoDecentDiary.Components
 {
     public partial class SwiperTabItems : IAsyncDisposable
     {
@@ -23,7 +23,7 @@ namespace NoDecentDiary.Shared
                 if (_value != value)
                 {
                     _value = value;
-                    if(Show)
+                    if (Show)
                     {
                         RefreshData.InvokeAsync(value);
                         UpdateSwiper(value);
@@ -52,7 +52,7 @@ namespace NoDecentDiary.Shared
                 await module.InvokeVoidAsync("swiperInit", new object[4] { dotNetCallbackRef, "UpdateValue", Id, Value.ToInt32() });
                 await Task.Delay(100);
                 Show = true;
-                StateHasChanged();              
+                StateHasChanged();
             }
         }
         private async void UpdateSwiper(StringNumber value)

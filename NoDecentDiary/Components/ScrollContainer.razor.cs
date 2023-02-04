@@ -6,17 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NoDecentDiary.Shared
+namespace NoDecentDiary.Components
 {
-    public partial class MultiDisplay : IDisposable
+    public partial class ScrollContainer : IDisposable
     {
         [Inject]
         public MasaBlazor? MasaBlazor { get; set; }
-
         [Parameter]
-        public RenderFragment? MobileContent { get; set; }
+        public RenderFragment? ChildContent { get; set; }
         [Parameter]
-        public RenderFragment? DesktopContent { get; set; }
+        public string? Id { get; set; }
+        private double MaxHeight => MasaBlazor!.Breakpoint.Height - MasaBlazor.Application.Top;
 
         public void Dispose()
         {

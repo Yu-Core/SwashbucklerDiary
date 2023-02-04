@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 
-namespace NoDecentDiary.Shared
+namespace NoDecentDiary.Components
 {
     public partial class TagCard : IDisposable
     {

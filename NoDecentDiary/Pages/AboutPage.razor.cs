@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageAbout
+    public partial class AboutPage
     {
         [Inject]
         private INavigateService? NavigateService { get; set; }

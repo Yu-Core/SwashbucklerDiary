@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Util.Reflection.Expressions.IntelligentGeneration.Extensions;
 
-namespace NoDecentDiary.Shared
+namespace NoDecentDiary.Components
 {
     public partial class DiaryCard : IDisposable
     {

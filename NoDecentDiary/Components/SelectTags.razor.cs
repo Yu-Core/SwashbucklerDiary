@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NoDecentDiary.Shared
+namespace NoDecentDiary.Components
 {
     public partial class SelectTags : IDisposable
     {
@@ -30,7 +30,7 @@ namespace NoDecentDiary.Shared
             get => _value;
             set
             {
-                if(_value != value)
+                if (_value != value)
                 {
                     _value = value;
                     InitSelectedTags(value);
@@ -117,16 +117,16 @@ namespace NoDecentDiary.Shared
         private async void HandleOnSaveAddTag()
         {
             ShowAddTag = false;
-            if(string.IsNullOrWhiteSpace(AddTagName))
+            if (string.IsNullOrWhiteSpace(AddTagName))
             {
                 return;
             }
 
-            if(Tags.Any(it=>it.Name == AddTagName))
+            if (Tags.Any(it => it.Name == AddTagName))
             {
-                await PopupService!.ToastAsync(it => 
-                { 
-                    it.Type = AlertTypes.Warning; 
+                await PopupService!.ToastAsync(it =>
+                {
+                    it.Type = AlertTypes.Warning;
                     it.Title = I18n!.T("Tag.Repeat.Title");
                     it.Content = I18n!.T("Tag.Repeat.Content");
                 });
@@ -140,22 +140,22 @@ namespace NoDecentDiary.Shared
             bool flag = await TagService!.AddAsync(tagModel);
             if (!flag)
             {
-                await PopupService!.ToastAsync(it => 
-                { 
-                    it.Type = AlertTypes.Error; 
+                await PopupService!.ToastAsync(it =>
+                {
+                    it.Type = AlertTypes.Error;
                     it.Title = I18n!.T("Share.AddFail");
                 });
                 return;
             }
 
-            await PopupService!.ToastAsync(it => 
-            { 
-                it.Type = AlertTypes.Success; 
-                it.Title = I18n!.T("Share.AddSuccess"); 
+            await PopupService!.ToastAsync(it =>
+            {
+                it.Type = AlertTypes.Success;
+                it.Title = I18n!.T("Share.AddSuccess");
             });
             tagModel.Id = await TagService!.GetLastInsertRowId();
             Tags.Add(tagModel);
-            this.StateHasChanged();
+            StateHasChanged();
         }
         private void SetShowAddTag(bool value)
         {

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class PageTag : IDisposable
+    public partial class TagPage : IDisposable
     {
         [Inject]
         private ITagService? TagService { get; set; }

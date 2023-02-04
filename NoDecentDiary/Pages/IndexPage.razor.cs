@@ -9,7 +9,7 @@ using System;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class Index : IDisposable
+    public partial class IndexPage : IDisposable
     {
         [Inject]
         public I18n? I18n { get; set; }

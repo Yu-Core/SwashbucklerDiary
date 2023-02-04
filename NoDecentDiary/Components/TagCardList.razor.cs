@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 
-namespace NoDecentDiary.Shared
+namespace NoDecentDiary.Components
 {
     public partial class TagCardList : IDisposable
     {
@@ -70,18 +70,18 @@ namespace NoDecentDiary.Shared
                 if (flag)
                 {
                     Value!.Remove(tag);
-                    await PopupService!.ToastAsync(it => 
-                    { 
+                    await PopupService!.ToastAsync(it =>
+                    {
                         it.Type = AlertTypes.Success;
-                        it.Title = I18n!.T("Share.DeleteSuccess"); 
+                        it.Title = I18n!.T("Share.DeleteSuccess");
                     });
-                    this.StateHasChanged();
+                    StateHasChanged();
                     await DiaryTagService!.DeleteAsync(it => it.TagId == tag.Id);
                 }
                 else
                 {
-                    await PopupService!.ToastAsync(it => 
-                    { 
+                    await PopupService!.ToastAsync(it =>
+                    {
                         it.Type = AlertTypes.Error;
                         it.Title = I18n!.T("Share.DeleteFail");
                     });
@@ -114,16 +114,16 @@ namespace NoDecentDiary.Shared
             bool flag = await TagService!.UpdateAsync(tag);
             if (flag)
             {
-                await PopupService!.ToastAsync(it => 
-                { 
+                await PopupService!.ToastAsync(it =>
+                {
                     it.Type = AlertTypes.Success;
                     it.Title = I18n!.T("Share.EditSuccess");
                 });
             }
             else
             {
-                await PopupService!.ToastAsync(it => 
-                { 
+                await PopupService!.ToastAsync(it =>
+                {
                     it.Type = AlertTypes.Error;
                     it.Title = I18n!.T("Share.EditFail");
                 });
