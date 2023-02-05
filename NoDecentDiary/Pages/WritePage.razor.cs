@@ -19,12 +19,8 @@ namespace NoDecentDiary.Pages
         private bool _showWeather;
         private bool _showMood;
         private bool _showLocation;
-        private DiaryModel Diary = new ()
-        {
-            CreateTime = DateTime.Now,
-            UpdateTime = DateTime.Now
-        };
-        private List<TagModel> SelectedTags = new ();
+        private DiaryModel Diary = new();
+        private List<TagModel> SelectedTags = new();
 
         [Inject]
         public MasaBlazor MasaBlazor { get; set; } = default!;
@@ -144,7 +140,7 @@ namespace NoDecentDiary.Pages
             string.IsNullOrEmpty(Diary.Weather) ? I18n!.T("Write.Weather") : I18n!.T("Weather." + Diary.Weather);
         private string Mood =>
             string.IsNullOrEmpty(Diary.Mood) ? I18n!.T("Write.Mood") : I18n!.T("Mood." + Diary.Mood);
-        
+
         private async Task SetTag()
         {
             if (TagId != null)
@@ -215,6 +211,7 @@ namespace NoDecentDiary.Pages
         {
             if (DiaryId == null)
             {
+                Diary.CreateTime = Diary.UpdateTime = DateTime.Now;
                 bool flag = await DiaryService!.AddAsync(Diary);
                 if (flag)
                 {
@@ -228,8 +225,8 @@ namespace NoDecentDiary.Pages
                 }
                 else
                 {
-                    await PopupService.ToastAsync(it => 
-                    { 
+                    await PopupService.ToastAsync(it =>
+                    {
                         it.Type = AlertTypes.Error;
                         it.Title = I18n!.T("Share.AddFail");
                     });
@@ -237,6 +234,7 @@ namespace NoDecentDiary.Pages
             }
             else
             {
+                Diary.UpdateTime = DateTime.Now;
                 bool flag = await DiaryService!.UpdateAsync(Diary);
                 if (flag)
                 {
@@ -251,8 +249,8 @@ namespace NoDecentDiary.Pages
                 }
                 else
                 {
-                    await PopupService.ToastAsync(it => 
-                    { 
+                    await PopupService.ToastAsync(it =>
+                    {
                         it.Type = AlertTypes.Error;
                         it.Title = I18n!.T("Share.EditFail");
                     });
@@ -294,12 +292,12 @@ namespace NoDecentDiary.Pages
             }
 
             value = value.Trim();
-            if(I18n!.T("Write.Word") == "1")
+            if (I18n!.T("Write.Word") == "1")
             {
                 len = value.Split(' ').Length;
             }
 
-            if(I18n!.T("Write.Character") == "1")
+            if (I18n!.T("Write.Character") == "1")
             {
                 len = value.Length;
             }
@@ -328,7 +326,7 @@ namespace NoDecentDiary.Pages
             ShowMenu = false;
             StateHasChanged();
         }
-        
+
         private void SetShowSelectTag(bool value)
         {
             if (_showSelectTag != value)
