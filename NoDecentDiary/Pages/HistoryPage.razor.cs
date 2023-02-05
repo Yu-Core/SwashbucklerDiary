@@ -43,7 +43,7 @@ namespace NoDecentDiary.Pages
 
         private List<Tree> Trees => GetTrees();
         private List<DiaryModel> CalendarDiaries => Diaries.Where(it => DateOnly.FromDateTime(it.CreateTime) == PickedDate).ToList();
-        private Func<DateOnly, bool>? AllowedDates
+        private Func<DateOnly, bool> AllowedDates
         {
             get
             {
