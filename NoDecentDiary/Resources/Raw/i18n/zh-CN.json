@@ -167,5 +167,13 @@
   "Permission": {
     "OpenCamera": "请开启相机权限",
     "OpenStorageWrite": "请开启存储写入权限"
+  },
+  "About": {
+    "SourceCode": "查看源码",
+    "Agreement": "用户协议",
+    "Privacy": "隐私政策",
+    "UpdateLog": "更新日志",
+    "Evaluation": "应用评价",
+    "Related": "开源相关"
   }
 }

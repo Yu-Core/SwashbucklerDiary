@@ -37,17 +37,33 @@
             </MListItem>
         </MList>
     </MCard>
-    <MCard Elevation="4"
+    <MCard Class="mb-5"
+           Elevation="4"
            Rounded="@("lg")">
         <MList>
-            <MListItem>
+            <MListItem OnClick="()=>ShowSourceCode=true">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-book-open-page-variant-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n!.T("About.SourceCode"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+            <MListItem OnClick="ToDo">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-file-document-multiple-outline
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    用户协议
+                    @(I18n!.T("About.Agreement"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -56,14 +72,14 @@
 
             <MDivider Class="mx-3 mx-sm-0"></MDivider>
 
-            <MListItem>
+            <MListItem OnClick="ToDo">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-lock-outline
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    隐私政策
+                    @(I18n!.T("About.Privacy"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -71,14 +87,34 @@
             </MListItem>
 
             <MDivider Class="mx-3 mx-sm-0"></MDivider>
-            <MListItem>
+            <MListItem OnClick="ToDo">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-update
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    更新日志
+                    @(I18n!.T("About.UpdateLog"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <MCard Class="mb-5"
+           Elevation="4"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem OnClick="ToDo">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-star-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n!.T("About.Evaluation"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -86,14 +122,14 @@
             </MListItem>
 
             <MDivider Class="mx-3 mx-sm-0"></MDivider>
-            <MListItem>
+            <MListItem OnClick="NavigateToRelatedOSP">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-xml
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    开源相关
+                    @(I18n!.T("About.Related"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -102,3 +138,33 @@
         </MList>
     </MCard>
 </MContainer>
+
+<MyDialog MaxWidth="420"
+          @bind-MyValue="ShowSourceCode">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @(I18n!.T("About.SourceCode"))
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowSourceCode=false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            @foreach (var item in CodeSources)
+            {
+                <MListItem OnClick="()=>OpenBrowser(item.Url!)">
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            @(item.Icon)
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        <MListItemTitle>
+                            @(item.Name)
+                        </MListItemTitle>
+                    </MListItemContent>
+                </MListItem>
+            }
+        </MCardText>
+    </MCard>
+</MyDialog>
