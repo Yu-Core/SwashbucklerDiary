@@ -52,7 +52,7 @@ namespace NoDecentDiary.Components
 
         private async void Close()
         {
-            Value = false;
+            MyValue = false;
             if (MyValueChanged.HasDelegate)
             {
                 await MyValueChanged.InvokeAsync(false);
