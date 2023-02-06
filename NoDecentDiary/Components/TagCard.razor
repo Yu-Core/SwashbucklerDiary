@@ -17,7 +17,7 @@
 
         <MListItemAction>
             <div @onclick:stopPropagation="true">
-                <MMenu @bind-Value="ShowMenu"
+                <MyMenu @bind-MyValue="ShowMenu"
                        Rounded="@("lg")"
                        Bottom
                        Left
@@ -44,7 +44,7 @@
                             </MListItem>
                         </MList>
                     </ChildContent>
-                </MMenu>
+                </MyMenu>
             </div>
         </MListItemAction>
     </MListItem>

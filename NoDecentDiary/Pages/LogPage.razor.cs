@@ -1,12 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
-using NoDecentDiary.Components;
+﻿using NoDecentDiary.Components;
 using NoDecentDiary.Config;
-using NoDecentDiary.IServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {

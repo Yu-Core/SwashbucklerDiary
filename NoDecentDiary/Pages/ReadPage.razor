@@ -31,7 +31,7 @@
         </MIcon>
     </MButton>
 
-    <MMenu @bind-Value="ShowMenu"
+    <MyMenu @bind-MyValue="ShowMenu"
            Rounded="@("lg")"
            Transition="scroll-x-reverse-transition">
         <ActivatorContent>
@@ -69,7 +69,7 @@
                 </MListItem>
             </MList>
         </ChildContent>
-    </MMenu>
+    </MyMenu>
 </MAppBar>
 
 <ScrollContainer Id="scrolling-read">
@@ -152,7 +152,7 @@
     </MContainer>
 </ScrollContainer>
 
-<MDialog @bind-Value="ShowShare" MaxWidth="420">
+<MyDialog @bind-MyValue="ShowShare" MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n!.T("Read.SelectShare"))
@@ -190,7 +190,7 @@
             </MList>
         </MCardText>
     </MCard>
-</MDialog>
+</MyDialog>
 
 <MOverlay Value="showLoading" ZIndex="99">
     <MProgressCircular Indeterminate

@@ -1,20 +1,16 @@
 ﻿using BlazorComponent;
-using BlazorComponent.I18n;
-using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using NoDecentDiary.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using NoDecentDiary.Shared;
-using System;
 
 namespace NoDecentDiary.Pages
 {
-    public partial class IndexPage : PageComponentBase, IDisposable
+    public partial class IndexPage : PageComponentBase
     {
         private StringNumber tabs = 0;
         private string? AddTagName;
-        private bool _showAddTag;
         private List<DiaryModel> Diaries = new();
         private List<TagModel> Tags = new();
         private readonly List<string> Types = new() { "All", "Tags" };
@@ -32,14 +28,14 @@ namespace NoDecentDiary.Pages
         [SupplyParameterFromQuery]
         public string? Type { get; set; }
 
-        public void Dispose()
-        {
-            if (ShowAddTag)
-            {
-                NavigateService.Action -= CloseAddTag;
-            }
-            GC.SuppressFinalize(this);
-        }
+        //public void Dispose()
+        //{
+        //    if (ShowAddTag)
+        //    {
+        //        NavigateService.Action -= CloseAddTag;
+        //    }
+        //    GC.SuppressFinalize(this);
+        //}
 
         protected override async Task OnInitializedAsync()
         {
@@ -49,14 +45,7 @@ namespace NoDecentDiary.Pages
             await base.OnInitializedAsync();
         }
 
-        private bool ShowAddTag
-        {
-            get => _showAddTag;
-            set
-            {
-                SetShowAddTag(value);
-            }
-        }
+        private bool ShowAddTag { get; set; }
 
         private async Task UpdateDiaries()
         {
@@ -172,27 +161,27 @@ namespace NoDecentDiary.Pages
             return "Hello World";
         }
 
-        private void SetShowAddTag(bool value)
-        {
-            if (_showAddTag != value)
-            {
-                _showAddTag = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseAddTag;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseAddTag;
-                }
-            }
-        }
+        //private void SetShowAddTag(bool value)
+        //{
+        //    if (_showAddTag != value)
+        //    {
+        //        _showAddTag = value;
+        //        if (value)
+        //        {
+        //            NavigateService.Action += CloseAddTag;
+        //        }
+        //        else
+        //        {
+        //            NavigateService.Action -= CloseAddTag;
+        //        }
+        //    }
+        //}
 
-        private void CloseAddTag()
-        {
-            ShowAddTag = false;
-            StateHasChanged();
-        }
+        //private void CloseAddTag()
+        //{
+        //    ShowAddTag = false;
+        //    StateHasChanged();
+        //}
 
     }
 }

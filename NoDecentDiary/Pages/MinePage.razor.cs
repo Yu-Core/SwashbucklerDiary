@@ -1,18 +1,9 @@
-﻿using BlazorComponent;
-using BlazorComponent.I18n;
-using Masa.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using NoDecentDiary.Components;
 using NoDecentDiary.IServices;
-using NoDecentDiary.Services;
 using NoDecentDiary.Shared;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
@@ -27,8 +18,8 @@ namespace NoDecentDiary.Pages
         private string? UserName;
         private string? Sign;
         private string? Avatar;
-        private bool _showLanguage;
-        private bool _showFeedback;
+        private bool ShowLanguage;
+        private bool ShowFeedback;
         private readonly static Dictionary<string, string> Languages = new()
         {
             {"中文","zh-CN" },
@@ -64,18 +55,6 @@ namespace NoDecentDiary.Pages
                 }
                 StateHasChanged();
             }
-        }
-
-        private bool ShowLanguage
-        {
-            get => _showLanguage;
-            set => SetShowLanguage(value);
-        }
-        
-        private bool ShowFeedback
-        {
-            get => _showFeedback;
-            set => SetShowFeedback(value);
         }
 
         private async Task SetCount()
@@ -180,50 +159,6 @@ namespace NoDecentDiary.Pages
                 Error.ProcessError(ex);
             }
         }
-
-        private void SetShowLanguage(bool value)
-        {
-            if (_showLanguage != value)
-            {
-                _showLanguage = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseLanguage;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseLanguage;
-                }
-            }
-        }
-
-        private void CloseLanguage()
-        {
-            ShowLanguage = false;
-            StateHasChanged();
-        }
-
-        private void SetShowFeedback(bool value)
-        {
-            if (_showFeedback != value)
-            {
-                _showFeedback = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseFeedback;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseFeedback;
-                }
-            }
-        }
-
-        private void CloseFeedback()
-        {
-            ShowFeedback = false;
-            StateHasChanged();
-        }
         
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
@@ -235,10 +170,6 @@ namespace NoDecentDiary.Pages
             if (module is not null)
             {
                 await module.DisposeAsync();
-            }
-            if (ShowLanguage)
-            {
-                NavigateService.Action -= CloseLanguage;
             }
             GC.SuppressFinalize(this);
         }

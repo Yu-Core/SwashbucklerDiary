@@ -20,9 +20,9 @@
         </MIcon>
     </MButton>
 
-    <MMenu @bind-Value="ShowMenu"
-           Rounded="@("lg")"
-           Transition="scroll-x-reverse-transition">
+    <MyMenu @bind-MyValue="ShowMenu"
+            Rounded="@("lg")"
+            Transition="scroll-x-reverse-transition">
         <ActivatorContent>
             <MButton Icon
                      @attributes="@context.Attrs">
@@ -40,9 +40,9 @@
         <ChildContent>
             <MList MinWidth="150">
                 <MListItem Dense
-                           OnClick="()=>showTitle = !showTitle">
+                           OnClick="()=>ShowTitle = !ShowTitle">
                     <MListItemContent>
-                        @(showTitle ? I18n!.T("Write.CloseTitle") : I18n!.T("Write.OpenTitle"))
+                        @(ShowTitle ? I18n!.T("Write.CloseTitle") : I18n!.T("Write.OpenTitle"))
                     </MListItemContent>
                 </MListItem>
                 <MListItem Dense>
@@ -52,7 +52,7 @@
                 </MListItem>
             </MList>
         </ChildContent>
-    </MMenu>
+    </MyMenu>
 </MAppBar>
 
 <ScrollContainer Id="scrolling-write">
@@ -90,7 +90,7 @@
             </MChip>
         </div>
 
-        @if (showTitle)
+        @if (ShowTitle)
         {
             <MTextField @bind-Value="Diary.Title"
                     Class="pb-0 my-sm-4 user-select font-weight-bold"
@@ -160,9 +160,8 @@
             OnSave="SaveSelectTags">
 </SelectTags>
 
-<MDialog @bind-Value="ShowWeather"
-         MaxWidth="420"
-         Scrollable>
+<MyDialog @bind-MyValue="ShowWeather"
+          Scrollable>
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n!.T("Write.SelectWeather"))
@@ -186,10 +185,9 @@
             </MChipGroup>
         </MCardText>
     </MCard>
-</MDialog>
-<MDialog @bind-Value="ShowMood"
-         MaxWidth="420"
-         Scrollable>
+</MyDialog>
+<MyDialog @bind-MyValue="ShowMood"
+          Scrollable>
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n!.T("Write.SelectMood"))
@@ -213,10 +211,9 @@
             </MChipGroup>
         </MCardText>
     </MCard>
-</MDialog>
+</MyDialog>
 
-<MDialog @bind-Value="ShowLocation"
-         MaxWidth="420">
+<MyDialog @bind-MyValue="ShowLocation">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n!.T("Write.InputLocation"))
@@ -237,4 +234,4 @@
             </MTextField>
         </MCardText>
     </MCard>
-</MDialog>
+</MyDialog>

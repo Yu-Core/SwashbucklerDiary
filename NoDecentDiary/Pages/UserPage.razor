@@ -91,8 +91,8 @@
     </MCard>
 </MContainer>
 
-<MDialog MaxWidth="420"
-         @bind-Value="ShowAvatar">
+<MyDialog MaxWidth="420"
+         @bind-MyValue="ShowAvatar">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n!.T("User.EditAvatar"))
@@ -128,10 +128,10 @@
             </MListItem>
         </MCardText>
     </MCard>
-</MDialog>
+</MyDialog>
 
-<MDialog MaxWidth="420"
-         @bind-Value="ShowUserName">
+<MyDialog MaxWidth="420"
+         @bind-MyValue="ShowUserName">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n!.T("User.EditUserName"))
@@ -164,10 +164,10 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MDialog>
+</MyDialog>
 
-<MDialog MaxWidth="420"
-         @bind-Value="ShowSign">
+<MyDialog MaxWidth="420"
+         @bind-MyValue="ShowSign">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n!.T("User.EditSign"))
@@ -200,4 +200,4 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MDialog>
+</MyDialog>

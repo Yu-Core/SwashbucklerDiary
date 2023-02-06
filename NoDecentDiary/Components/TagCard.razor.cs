@@ -5,9 +5,9 @@ using NoDecentDiary.Models;
 
 namespace NoDecentDiary.Components
 {
-    public partial class TagCard : MyComponentBase, IDisposable
+    public partial class TagCard : MyComponentBase
     {
-        private bool _showMenu;
+        private bool ShowMenu;
 
         [Parameter]
         public TagModel? Value { get; set; }
@@ -17,45 +17,5 @@ namespace NoDecentDiary.Components
         public EventCallback OnRename { get; set; }
         [Parameter]
         public EventCallback OnClick { get; set; }
-
-        public void Dispose()
-        {
-            if (ShowMenu)
-            {
-                NavigateService.Action -= CloseMenu;
-            }
-            GC.SuppressFinalize(this);
-        }
-
-        private bool ShowMenu
-        {
-            get => _showMenu;
-            set
-            {
-                SetShowMenu(value);
-            }
-        }
-
-        private void SetShowMenu(bool value)
-        {
-            if (_showMenu != value)
-            {
-                _showMenu = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseMenu;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseMenu;
-                }
-            }
-        }
-
-        private void CloseMenu()
-        {
-            ShowMenu = false;
-            StateHasChanged();
-        }
     }
 }

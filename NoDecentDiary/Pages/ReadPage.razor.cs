@@ -1,19 +1,11 @@
 ﻿using BlazorComponent;
-using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using NoDecentDiary.Components;
-using NoDecentDiary.Extend;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using NoDecentDiary.Services;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
@@ -21,8 +13,8 @@ namespace NoDecentDiary.Pages
     {
         private DiaryModel Diary = new();
         private bool _showDelete;
-        private bool _showMenu;
-        private bool _showShare;
+        private bool ShowMenu;
+        private bool ShowShare;
         private bool showLoading;
         private List<TagModel> SelectedTags = new();
         private IJSObjectReference? module;
@@ -66,22 +58,6 @@ namespace NoDecentDiary.Pages
                 {
                     OnDelete = null;
                 }
-            }
-        }
-        private bool ShowMenu
-        {
-            get => _showMenu;
-            set
-            {
-                SetShowMenu(value);
-            }
-        }
-        private bool ShowShare
-        {
-            get => _showShare;
-            set
-            {
-                SetShowShare(value);
             }
         }
         private bool IsTop => Diary.Top;
@@ -135,14 +111,6 @@ namespace NoDecentDiary.Pages
             if (module is not null)
             {
                 await module.DisposeAsync();
-            }
-            if (ShowMenu)
-            {
-                NavigateService.Action -= CloseMenu;
-            }
-            if (ShowShare)
-            {
-                NavigateService.Action -= CloseShare;
             }
             GC.SuppressFinalize(this);
         }
@@ -237,50 +205,6 @@ namespace NoDecentDiary.Pages
                 return "mdi-emoticon-outline";
             }
             return IconService!.GetMoodIcon(key);
-        }
-
-        private void SetShowMenu(bool value)
-        {
-            if (_showMenu != value)
-            {
-                _showMenu = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseMenu;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseMenu;
-                }
-            }
-        }
-
-        private void CloseMenu()
-        {
-            ShowMenu = false;
-            StateHasChanged();
-        }
-
-        private void SetShowShare(bool value)
-        {
-            if (_showShare != value)
-            {
-                _showShare = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseShare;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseShare;
-                }
-            }
-        }
-
-        private void CloseShare()
-        {
-            ShowShare = false;
-            StateHasChanged();
         }
     }
 }

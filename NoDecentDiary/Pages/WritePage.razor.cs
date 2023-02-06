@@ -1,24 +1,21 @@
 ﻿using BlazorComponent;
-using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Maui.Controls;
 using NoDecentDiary.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using NoDecentDiary.Services;
-using System.Diagnostics;
 
 namespace NoDecentDiary.Pages
 {
     public partial class WritePage : PageComponentBase, IDisposable
     {
-        private bool showTitle;
-        private bool _showMenu;
-        private bool _showSelectTag;
-        private bool _showWeather;
-        private bool _showMood;
-        private bool _showLocation;
+        private bool ShowTitle;
+        private bool ShowMenu;
+        private bool ShowSelectTag;
+        private bool ShowWeather;
+        private bool ShowMood;
+        private bool ShowLocation;
         private DiaryModel Diary = new();
         private List<TagModel> SelectedTags = new();
 
@@ -43,14 +40,6 @@ namespace NoDecentDiary.Pages
         public void Dispose()
         {
             MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
-            if (ShowMenu)
-            {
-                NavigateService.Action -= CloseMenu;
-            }
-            if (ShowSelectTag)
-            {
-                NavigateService.Action -= CloseSelectTag;
-            }
             NavigateService.Action -= OnBack;
             GC.SuppressFinalize(this);
         }
@@ -63,31 +52,6 @@ namespace NoDecentDiary.Pages
             await SetDiary();
         }
 
-        private bool ShowMenu
-        {
-            get => _showMenu;
-            set => SetShowMenu(value);
-        }
-        private bool ShowSelectTag
-        {
-            get => _showSelectTag;
-            set => SetShowSelectTag(value);
-        }
-        private bool ShowWeather
-        {
-            get => _showWeather;
-            set => SetShowWeather(value);
-        }
-        private bool ShowMood
-        {
-            get => _showMood;
-            set => SetShowMood(value);
-        }
-        private bool ShowLocation
-        {
-            get => _showLocation;
-            set => SetShowLocation(value);
-        }
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
         private Dictionary<string, string> WeatherIcons => IconService!.WeatherIcon;
@@ -161,7 +125,7 @@ namespace NoDecentDiary.Pages
                 if (diary != null)
                 {
                     Diary = diary;
-                    showTitle = !string.IsNullOrEmpty(diary.Title);
+                    ShowTitle = !string.IsNullOrEmpty(diary.Title);
                     SelectedTags = await TagService!.GetDiaryTagsAsync((int)DiaryId);
                 }
             }
@@ -303,116 +267,6 @@ namespace NoDecentDiary.Pages
             }
 
             return len + " " + I18n!.T("Write.CountUnit");
-        }
-
-        private void SetShowMenu(bool value)
-        {
-            if (_showMenu != value)
-            {
-                _showMenu = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseMenu;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseMenu;
-                }
-            }
-        }
-
-        private void CloseMenu()
-        {
-            ShowMenu = false;
-            StateHasChanged();
-        }
-
-        private void SetShowSelectTag(bool value)
-        {
-            if (_showSelectTag != value)
-            {
-                _showSelectTag = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseSelectTag;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseSelectTag;
-                }
-            }
-        }
-
-        private void CloseSelectTag()
-        {
-            ShowSelectTag = false;
-            StateHasChanged();
-        }
-
-        private void SetShowWeather(bool value)
-        {
-            if (_showWeather != value)
-            {
-                _showWeather = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseWeather;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseWeather;
-                }
-            }
-        }
-
-        private void CloseWeather()
-        {
-            ShowWeather = false;
-            StateHasChanged();
-        }
-
-        private void SetShowMood(bool value)
-        {
-            if (_showMood != value)
-            {
-                _showMood = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseMood;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseMood;
-                }
-            }
-        }
-
-        private void CloseMood()
-        {
-            ShowMood = false;
-            StateHasChanged();
-        }
-
-        private void SetShowLocation(bool value)
-        {
-            if (_showLocation != value)
-            {
-                _showLocation = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseLocation;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseLocation;
-                }
-            }
-        }
-
-        private void CloseLocation()
-        {
-            ShowLocation = false;
-            StateHasChanged();
         }
     }
 }

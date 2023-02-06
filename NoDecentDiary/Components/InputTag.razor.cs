@@ -1,20 +1,18 @@
-﻿using BlazorComponent.I18n;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Components;
 
 namespace NoDecentDiary.Components
 {
-    public partial class InputTag : MyComponentBase
+    public partial class InputTag : DialogComponentBase
     {
+        private bool _value;
+        private string? InputText;
+
         [Parameter]
-        public bool Value { get; set; }
-        [Parameter]
-        public EventCallback<bool> ValueChanged { get; set; }
+        public override bool Value
+        {
+            get => _value;
+            set => SetValue(value);
+        }
         [Parameter]
         public string? Title { get; set; }
         [Parameter]
@@ -24,36 +22,27 @@ namespace NoDecentDiary.Components
         [Parameter]
         public EventCallback OnSave { get; set; }
 
-        protected virtual async Task HandleOnCancel(MouseEventArgs _)
+        private void SetValue(bool value)
         {
-            await InternalValueChanged(false);
-        }
-
-        private async Task InternalValueChanged(bool value)
-        {
-            Value = value;
-
-            if (ValueChanged.HasDelegate)
+            if (value != Value)
             {
-                await ValueChanged.InvokeAsync(value);
+                if (value)
+                {
+                    InputText = Text;
+                }
+                _value = value;
             }
-
-            await ClearText();
         }
 
         private async Task HandleOnSave()
         {
-            await OnSave.InvokeAsync();
-            await ClearText();
-        }
-
-        private async Task ClearText()
-        {
-            Text = string.Empty;
+            Text = InputText;
             if (TextChanged.HasDelegate)
             {
                 await TextChanged.InvokeAsync(Text);
             }
+            await OnSave.InvokeAsync();
         }
+
     }
 }

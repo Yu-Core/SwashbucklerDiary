@@ -1,9 +1,8 @@
-﻿@inherits MyComponentBase
+﻿@inherits DialogComponentBase
 
-<MDialog Value="Value"
-         ValueChanged="InternalValueChanged"
-         MaxWidth="420"
-         Scrollable>
+<MyDialog MyValue="Value"
+          MyValueChanged="InternalValueChanged"
+          Scrollable>
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n!.T("Tag.Select"))
@@ -40,7 +39,7 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MDialog>
+</MyDialog>
 
 <InputTag @bind-Value="ShowAddTag"
           @bind-Text="AddTagName"

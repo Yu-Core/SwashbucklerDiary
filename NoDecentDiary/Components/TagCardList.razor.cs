@@ -5,13 +5,13 @@ using NoDecentDiary.Models;
 
 namespace NoDecentDiary.Components
 {
-    public partial class TagCardList : MyComponentBase, IDisposable
+    public partial class TagCardList : MyComponentBase
     {
+        private bool ShowDeleteTag;
+        private bool ShowRenameTag;
         private int RenameTagId;
         private string? RenameTagName;
         private Action? OnDelete{ get; set; }
-        private bool _showDeleteTag;
-        private bool _showRenameTag;
 
         [Inject]
         public ITagService TagService { get; set; } = default!;
@@ -20,36 +20,6 @@ namespace NoDecentDiary.Components
 
         [Parameter]
         public List<TagModel>? Value { get; set; } = new();
-
-        public void Dispose()
-        {
-            if (ShowRenameTag)
-            {
-                NavigateService.Action -= CloseRenameTag;
-            }
-            GC.SuppressFinalize(this);
-        }
-
-        private bool ShowDeleteTag
-        {
-            get => _showDeleteTag;
-            set
-            {
-                _showDeleteTag = value;
-                if (!value)
-                {
-                    OnDelete = null;
-                }
-            }
-        }
-        private bool ShowRenameTag
-        {
-            get => _showRenameTag;
-            set
-            {
-                SetShowRenameTag(value);
-            }
-        }
 
         private void OnRename(TagModel tag)
         {
@@ -133,28 +103,5 @@ namespace NoDecentDiary.Components
         {
             NavigateService.NavigateTo($"/tag/{id}");
         }
-
-        private void SetShowRenameTag(bool value)
-        {
-            if (_showRenameTag != value)
-            {
-                _showRenameTag = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseRenameTag;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseRenameTag;
-                }
-            }
-        }
-
-        private void CloseRenameTag()
-        {
-            ShowRenameTag = false;
-            StateHasChanged();
-        }
-        
     }
 }

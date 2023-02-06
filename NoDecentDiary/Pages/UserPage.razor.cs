@@ -21,7 +21,7 @@ namespace NoDecentDiary.Pages
         private string? Avatar;
         private string? InputSign;
         private string? InputUserName;
-        private bool _showAvatar;
+        private bool ShowAvatar;
         private bool _showUserName;
         private bool _showSign;
 
@@ -49,12 +49,6 @@ namespace NoDecentDiary.Pages
             }
         }
 
-        private bool ShowAvatar
-        {
-            get => _showAvatar;
-            set => SetShowAvatar(value);
-        }
-        
         private bool ShowUserName
         {
             get => _showUserName;
@@ -150,28 +144,6 @@ namespace NoDecentDiary.Pages
             Avatar = await module!.InvokeAsync<string>("streamToUrl", new object[1] { dotnetImageStream });
         }
 
-        private void SetShowAvatar(bool value)
-        {
-            if (_showAvatar != value)
-            {
-                _showAvatar = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseAvatar;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseAvatar;
-                }
-            }
-        }
-
-        private void CloseAvatar()
-        {
-            ShowAvatar = false;
-            StateHasChanged();
-        }
-
         private void SetShowUserName(bool value)
         {
             if (_showUserName != value)
@@ -179,20 +151,9 @@ namespace NoDecentDiary.Pages
                 if (value)
                 {
                     InputUserName = UserName;
-                    NavigateService.Action += CloseUserName;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseUserName;
                 }
                 _showUserName = value;
             }
-        }
-        
-        private void CloseUserName()
-        {
-            ShowUserName = false;
-            StateHasChanged();
         }
 
         private void SetShowSign(bool value)
@@ -202,20 +163,9 @@ namespace NoDecentDiary.Pages
                 if (value)
                 {
                     InputSign = Sign;
-                    NavigateService.Action += CloseSign;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseSign;
                 }
                 _showSign = value;
             }
-        }
-
-        private void CloseSign()
-        {
-            ShowSign = false;
-            StateHasChanged();
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()
@@ -228,18 +178,6 @@ namespace NoDecentDiary.Pages
             if (module is not null)
             {
                 await module.DisposeAsync();
-            }
-            if (ShowAvatar)
-            {
-                NavigateService.Action -= CloseAvatar;
-            }
-            if (ShowUserName)
-            {
-                NavigateService.Action -= CloseUserName;
-            }
-            if (ShowSign)
-            {
-                NavigateService.Action -= CloseSign;
             }
             GC.SuppressFinalize(this);
         }

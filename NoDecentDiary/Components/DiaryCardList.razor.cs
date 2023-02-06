@@ -1,16 +1,14 @@
 ﻿using BlazorComponent;
-using BlazorComponent.I18n;
-using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 
 namespace NoDecentDiary.Components
 {
-    public partial class DiaryCardList : MyComponentBase, IDisposable
+    public partial class DiaryCardList : MyComponentBase
     {
-        private bool _showDeleteDiary;
-        private bool _showSelectTag;
+        private bool ShowDeleteDiary;
+        private bool ShowSelectTag;
         private int SelectedDiaryId;
         private List<TagModel> SelectedTags = new();
         private Action? OnDelete;
@@ -28,36 +26,6 @@ namespace NoDecentDiary.Components
         public List<DiaryModel>? Value { get; set; } = new List<DiaryModel>();
         [Parameter]
         public string? Class { get; set; }
-
-        public void Dispose()
-        {
-            if (ShowSelectTag)
-            {
-                NavigateService.Action -= CloseSelectTag;
-            }
-            GC.SuppressFinalize(this);
-        }
-
-        private bool ShowDeleteDiary
-        {
-            get => _showDeleteDiary;
-            set
-            {
-                _showDeleteDiary = value;
-                if (!value)
-                {
-                    OnDelete = null;
-                }
-            }
-        }
-        private bool ShowSelectTag
-        {
-            get => _showSelectTag;
-            set
-            {
-                SetShowSelectTag(value);
-            }
-        }
 
         private async Task OnTopping(DiaryModel diaryModel)
         {
@@ -134,28 +102,6 @@ namespace NoDecentDiary.Components
                 return diary.Content!;
             }
             return diary.Title + "\n" + diary.Content;
-        }
-
-        private void SetShowSelectTag(bool value)
-        {
-            if (_showSelectTag != value)
-            {
-                _showSelectTag = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseSelectTag;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseSelectTag;
-                }
-            }
-        }
-
-        private void CloseSelectTag()
-        {
-            ShowSelectTag = false;
-            StateHasChanged();
         }
     }
 }

@@ -1,70 +1,34 @@
 ﻿using BlazorComponent;
-using BlazorComponent.I18n;
-using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoDecentDiary.Components
 {
-    public partial class SelectTags : MyComponentBase, IDisposable
+    public partial class SelectTags : DialogComponentBase
     {
         private bool _value;
-        private bool _showAddTag;
+        private bool ShowAddTag;
         private string? AddTagName;
-        private List<StringNumber> SelectedTagIndices = new ();
+        private List<StringNumber> SelectedTagIndices = new();
         private List<TagModel> Tags = new();
 
         [Inject]
         public ITagService TagService { get; set; } = default!;
 
         [Parameter]
-        public bool Value
+        public override bool Value
         {
             get => _value;
-            set
-            {
-                if (_value != value)
-                {
-                    _value = value;
-                    InitSelectedTags(value);
-                }
-            }
+            set => SetValue(value);
         }
-        [Parameter]
-        public EventCallback<bool> ValueChanged { get; set; }
         [Parameter]
         public List<TagModel> Values { get; set; } = new List<TagModel>();
         [Parameter]
         public EventCallback<List<TagModel>> ValuesChanged { get; set; }
         [Parameter]
         public EventCallback OnSave { get; set; }
-
-        public void Dispose()
-        {
-            if (ShowAddTag)
-            {
-                NavigateService.Action -= CloseAddTag;
-            }
-            GC.SuppressFinalize(this);
-        }
-
-        protected override async Task OnInitializedAsync()
-        {
-            Tags = await TagService!.QueryAsync();
-        }
-
-        protected virtual async Task HandleOnCancel(MouseEventArgs _)
-        {
-            await InternalValueChanged(false);
-        }
 
         protected virtual async Task HandleOnSave(MouseEventArgs _)
         {
@@ -84,43 +48,28 @@ namespace NoDecentDiary.Components
             await OnSave.InvokeAsync();
         }
 
-        private async Task InternalValueChanged(bool value)
+        private async void SetValue(bool value)
         {
-            Value = value;
-
-            if (ValueChanged.HasDelegate)
+            if (_value != value)
             {
-                await ValueChanged.InvokeAsync(value);
-            }
-        }
-
-        private bool ShowAddTag
-        {
-            get => _showAddTag;
-            set
-            {
-                SetShowAddTag(value);
-            }
-        }
-
-        private async void InitSelectedTags(bool value)
-        {
-            if (value)
-            {
-                Tags = await TagService!.QueryAsync();
-                SelectedTagIndices.Clear();
-                foreach (var item in Values)
+                if (value)
                 {
-                    int index = Tags.FindIndex(it => it.Id == item.Id); ;
-                    if (index > -1)
+                    Tags = await TagService!.QueryAsync();
+                    SelectedTagIndices.Clear();
+                    foreach (var item in Values)
                     {
-                        SelectedTagIndices.Add(index);
+                        int index = Tags.FindIndex(it => it.Id == item.Id); ;
+                        if (index > -1)
+                        {
+                            SelectedTagIndices.Add(index);
+                        }
                     }
                 }
+                _value = value;
             }
         }
 
-        private async void SaveAddTag()
+        private async Task SaveAddTag()
         {
             ShowAddTag = false;
             if (string.IsNullOrWhiteSpace(AddTagName))
@@ -139,7 +88,7 @@ namespace NoDecentDiary.Components
                 return;
             }
 
-            TagModel tagModel = new ()
+            TagModel tagModel = new()
             {
                 Name = AddTagName
             };
@@ -161,28 +110,6 @@ namespace NoDecentDiary.Components
             });
             tagModel.Id = await TagService!.GetLastInsertRowId();
             Tags.Add(tagModel);
-            StateHasChanged();
-        }
-
-        private void SetShowAddTag(bool value)
-        {
-            if (_showAddTag != value)
-            {
-                _showAddTag = value;
-                if (value)
-                {
-                    NavigateService.Action += CloseAddTag;
-                }
-                else
-                {
-                    NavigateService.Action -= CloseAddTag;
-                }
-            }
-        }
-
-        private void CloseAddTag()
-        {
-            ShowAddTag = false;
             StateHasChanged();
         }
     }
