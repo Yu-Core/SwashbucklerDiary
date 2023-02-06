@@ -10,8 +10,7 @@ namespace NoDecentDiary.Components
         private bool ShowDeleteTag;
         private bool ShowRenameTag;
         private int RenameTagId;
-        private string? RenameTagName;
-        private Action? OnDelete{ get; set; }
+        private Action? OnDelete { get; set; }
 
         [Inject]
         public ITagService TagService { get; set; } = default!;
@@ -28,6 +27,8 @@ namespace NoDecentDiary.Components
             StateHasChanged();
             ShowRenameTag = true;
         }
+
+        private string? RenameTagName { get; set; }
 
         private void OpenDeleteDialog(TagModel tag)
         {
@@ -60,15 +61,15 @@ namespace NoDecentDiary.Components
             StateHasChanged();
         }
 
-        private async Task SaveRenameTag()
+        private async Task SaveRenameTag(string tagName)
         {
             ShowRenameTag = false;
-            if (string.IsNullOrWhiteSpace(RenameTagName))
+            if (string.IsNullOrWhiteSpace(tagName))
             {
                 return;
             }
 
-            if (Value!.Any(it => it.Name == RenameTagName))
+            if (Value!.Any(it => it.Name == tagName))
             {
                 await PopupService.ToastAsync(it =>
                 {
@@ -80,7 +81,7 @@ namespace NoDecentDiary.Components
             }
 
             var tag = Value!.FirstOrDefault(it => it.Id == RenameTagId);
-            tag!.Name = RenameTagName;
+            tag!.Name = RenameTagName = tagName;
             bool flag = await TagService!.UpdateAsync(tag);
             if (flag)
             {

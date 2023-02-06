@@ -21,7 +21,7 @@ namespace NoDecentDiary.Components
         [Parameter]
         public EventCallback<string?> TextChanged { get; set; }
         [Parameter]
-        public EventCallback OnOK { get; set; }
+        public EventCallback<string> OnOK { get; set; }
         [Parameter]
         public string? Placeholder { get; set; }
         [Parameter]
@@ -41,12 +41,7 @@ namespace NoDecentDiary.Components
 
         private async Task HandleOnOK()
         {
-            Text = InputText;
-            if (TextChanged.HasDelegate)
-            {
-                await TextChanged.InvokeAsync(Text);
-            }
-            await OnOK.InvokeAsync();
+            await OnOK.InvokeAsync(InputText);
         }
 
     }

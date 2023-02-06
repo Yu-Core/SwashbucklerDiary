@@ -131,14 +131,14 @@
 </MyDialog>
 
 <InputDialog @bind-Value="ShowUserName"
-             @bind-Text="InputUserName"
+             @bind-Text="UserName"
              Title="@(I18n!.T("User.EditUserName"))"
              Placeholder="@(I18n!.T("User.UserNamePlace"))"
              OnOK="SaveUserName">
 </InputDialog>
 
 <InputDialog @bind-Value="ShowSign"
-             @bind-Text="InputUserName"
+             @bind-Text="Sign"
              Title="@(I18n!.T("User.EditSign"))"
              MaxLength="50"
              Placeholder="@(I18n!.T("User.SignPlace"))"

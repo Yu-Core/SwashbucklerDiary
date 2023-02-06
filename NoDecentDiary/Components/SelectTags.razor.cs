@@ -10,7 +10,6 @@ namespace NoDecentDiary.Components
     {
         private bool _value;
         private bool ShowAddTag;
-        private string? AddTagName;
         private List<StringNumber> SelectedTagIndices = new();
         private List<TagModel> Tags = new();
 
@@ -48,6 +47,8 @@ namespace NoDecentDiary.Components
             await OnSave.InvokeAsync();
         }
 
+        private string? AddTagName { get; set; }
+
         private async void SetValue(bool value)
         {
             if (_value != value)
@@ -70,15 +71,15 @@ namespace NoDecentDiary.Components
             }
         }
 
-        private async Task SaveAddTag()
+        private async Task SaveAddTag(string tagName)
         {
             ShowAddTag = false;
-            if (string.IsNullOrWhiteSpace(AddTagName))
+            if (string.IsNullOrWhiteSpace(tagName))
             {
                 return;
             }
 
-            if (Tags.Any(it => it.Name == AddTagName))
+            if (Tags.Any(it => it.Name == tagName))
             {
                 await PopupService.ToastAsync(it =>
                 {
@@ -91,9 +92,8 @@ namespace NoDecentDiary.Components
 
             TagModel tagModel = new()
             {
-                Name = AddTagName
+                Name = tagName
             };
-            AddTagName = string.Empty;
             bool flag = await TagService!.AddAsync(tagModel);
             if (!flag)
             {

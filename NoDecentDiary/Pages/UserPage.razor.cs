@@ -19,11 +19,7 @@ namespace NoDecentDiary.Pages
         private string? UserName;
         private string? Sign;
         private string? Avatar;
-        private string? InputSign;
-        private string? InputUserName;
         private bool ShowAvatar;
-        private bool _showUserName;
-        private bool _showSign;
 
         protected override async Task OnInitializedAsync()
         {
@@ -49,17 +45,9 @@ namespace NoDecentDiary.Pages
             }
         }
 
-        private bool ShowUserName
-        {
-            get => _showUserName;
-            set => SetShowUserName(value);
-        }
+        private bool ShowUserName { get; set; }
         
-        private bool ShowSign
-        {
-            get => _showSign;
-            set => SetShowSign(value);
-        }
+        private bool ShowSign { get; set; }
 
         private async Task LoadSettings()
         {
@@ -67,22 +55,22 @@ namespace NoDecentDiary.Pages
             Sign = await SettingsService!.Get<string?>(nameof(Sign), I18n!.T("Mine.Sign"));
         }
 
-        private async Task SaveSign()
+        private async Task SaveSign(string tagName)
         {
             ShowSign = false;
-            if (!string.IsNullOrWhiteSpace(InputSign) && InputSign != Sign)
+            if (!string.IsNullOrWhiteSpace(tagName) && tagName != Sign)
             {
-                Sign = InputSign;
+                Sign = tagName;
                 await SettingsService!.Save(nameof(Sign), Sign);
             }
         }
 
-        private async Task SaveUserName()
+        private async Task SaveUserName(string tagName)
         {
             ShowUserName = false;
-            if (!string.IsNullOrWhiteSpace(InputUserName) && InputUserName != UserName)
+            if (!string.IsNullOrWhiteSpace(tagName) && tagName != UserName)
             {
-                UserName = InputUserName;
+                UserName = tagName;
                 await SettingsService!.Save(nameof(UserName), UserName);
             }
         }
@@ -142,30 +130,6 @@ namespace NoDecentDiary.Pages
             using var imageStream = File.OpenRead(path);
             var dotnetImageStream = new DotNetStreamReference(imageStream);
             Avatar = await module!.InvokeAsync<string>("streamToUrl", new object[1] { dotnetImageStream });
-        }
-
-        private void SetShowUserName(bool value)
-        {
-            if (_showUserName != value)
-            {
-                if (value)
-                {
-                    InputUserName = UserName;
-                }
-                _showUserName = value;
-            }
-        }
-
-        private void SetShowSign(bool value)
-        {
-            if (_showSign != value)
-            {
-                if (value)
-                {
-                    InputSign = Sign;
-                }
-                _showSign = value;
-            }
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()

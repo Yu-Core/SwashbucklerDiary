@@ -72,15 +72,15 @@ namespace NoDecentDiary.Pages
             Navigation!.NavigateTo(url);
         }
 
-        private async Task SaveAddTag()
+        private async Task SaveAddTag(string tagName)
         {
             ShowAddTag = false;
-            if (string.IsNullOrWhiteSpace(AddTagName))
+            if (string.IsNullOrWhiteSpace(tagName))
             {
                 return;
             }
 
-            if (Tags.Any(it => it.Name == AddTagName))
+            if (Tags.Any(it => it.Name == tagName))
             {
                 await PopupService.ToastAsync(it =>
                 {
@@ -93,9 +93,8 @@ namespace NoDecentDiary.Pages
 
             TagModel tagModel = new()
             {
-                Name = AddTagName
+                Name = tagName
             };
-            AddTagName = string.Empty;
             bool flag = await TagService!.AddAsync(tagModel);
             if (!flag)
             {
