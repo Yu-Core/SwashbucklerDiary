@@ -33,18 +33,21 @@ namespace NoDecentDiary.Components
 
         private void SetValue(bool value)
         {
-            base.Value = value;
-            Task.Run(() =>
+            if(base.Value != value)
             {
-                if (value)
+                base.Value = value;
+                Task.Run(() =>
                 {
-                    NavigateService.Action += Close;
-                }
-                else
-                {
-                    NavigateService.Action -= Close;
-                }
-            });
+                    if (value)
+                    {
+                        NavigateService.Action += Close;
+                    }
+                    else
+                    {
+                        NavigateService.Action -= Close;
+                    }
+                });
+            }
         }
 
         private async void Close()
