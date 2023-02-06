@@ -31,6 +31,7 @@ namespace NoDecentDiary.Components
 
         private void OpenDeleteDialog(TagModel tag)
         {
+            OnDelete = null;
             OnDelete += async () =>
             {
                 ShowDeleteTag = false;

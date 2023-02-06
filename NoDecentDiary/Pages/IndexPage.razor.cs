@@ -28,15 +28,6 @@ namespace NoDecentDiary.Pages
         [SupplyParameterFromQuery]
         public string? Type { get; set; }
 
-        //public void Dispose()
-        //{
-        //    if (ShowAddTag)
-        //    {
-        //        NavigateService.Action -= CloseAddTag;
-        //    }
-        //    GC.SuppressFinalize(this);
-        //}
-
         protected override async Task OnInitializedAsync()
         {
             SetTab();
@@ -104,6 +95,7 @@ namespace NoDecentDiary.Pages
             {
                 Name = AddTagName
             };
+            AddTagName = string.Empty;
             bool flag = await TagService!.AddAsync(tagModel);
             if (!flag)
             {
@@ -160,28 +152,5 @@ namespace NoDecentDiary.Pages
             }
             return "Hello World";
         }
-
-        //private void SetShowAddTag(bool value)
-        //{
-        //    if (_showAddTag != value)
-        //    {
-        //        _showAddTag = value;
-        //        if (value)
-        //        {
-        //            NavigateService.Action += CloseAddTag;
-        //        }
-        //        else
-        //        {
-        //            NavigateService.Action -= CloseAddTag;
-        //        }
-        //    }
-        //}
-
-        //private void CloseAddTag()
-        //{
-        //    ShowAddTag = false;
-        //    StateHasChanged();
-        //}
-
     }
 }

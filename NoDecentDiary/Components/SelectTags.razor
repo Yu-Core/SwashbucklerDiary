@@ -2,6 +2,7 @@
 
 <MyDialog MyValue="Value"
           MyValueChanged="InternalValueChanged"
+          MaxWidth="420"
           Scrollable>
     <MCard>
         <MCardTitle Class="font-weight-bold">
@@ -41,8 +42,9 @@
     </MCard>
 </MyDialog>
 
-<InputTag @bind-Value="ShowAddTag"
-          @bind-Text="AddTagName"
-          Title="@(I18n!.T("Tag.Add"))"
-          OnSave="SaveAddTag">
-</InputTag>
+<InputDialog @bind-Value="ShowAddTag"
+             @bind-Text="AddTagName"
+             Title="@(I18n!.T("Tag.Add"))"
+             Placeholder="@(I18n!.T("Tag.Placeholder"))"
+             OnOK="SaveAddTag">
+</InputDialog>

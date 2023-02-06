@@ -1,7 +1,9 @@
-﻿@inherits DialogComponentBase
+﻿@namespace NoDecentDiary.Components
+@inherits DialogFocusComponentBase
 
 <MyDialog MyValue="Value"
-          MyValueChanged="InternalValueChanged">
+          MyValueChanged="InternalValueChanged"
+          MaxWidth="420">
     <MCard>
         <MCardTitle>
             @Title
@@ -12,13 +14,14 @@
         </MCardTitle>
         <MCardText Class="pb-0">
             <MTextField @bind-Value="InputText"
+                        @ref="TextField"
                         Dense
                         HideDetails="@("auto")"
                         Outlined
-                        Counter="20"
-                        maxlength="20"
+                        Counter="@MaxLength"
+                        maxlength="@MaxLength"
                         spellcheck="false"
-                        Placeholder="@(I18n!.T("Tag.Placeholder"))">
+                        Placeholder="@Placeholder">
             </MTextField>
         </MCardText>
         <MCardActions>
@@ -28,7 +31,7 @@
             </MButton>
             <MButton Text
                      Color="primary"
-                     OnClick="HandleOnSave">
+                     OnClick="HandleOnOK">
                 @(I18n!.T("Share.Save"))
             </MButton>
         </MCardActions>

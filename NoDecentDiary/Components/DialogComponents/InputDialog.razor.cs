@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
 
 namespace NoDecentDiary.Components
 {
-    public partial class InputTag : DialogComponentBase
+    public partial class InputDialog : DialogFocusComponentBase
     {
         private bool _value;
         private string? InputText;
@@ -20,7 +21,11 @@ namespace NoDecentDiary.Components
         [Parameter]
         public EventCallback<string?> TextChanged { get; set; }
         [Parameter]
-        public EventCallback OnSave { get; set; }
+        public EventCallback OnOK { get; set; }
+        [Parameter]
+        public string? Placeholder { get; set; }
+        [Parameter]
+        public int MaxLength { get; set; } = 20;
 
         private void SetValue(bool value)
         {
@@ -34,14 +39,14 @@ namespace NoDecentDiary.Components
             }
         }
 
-        private async Task HandleOnSave()
+        private async Task HandleOnOK()
         {
             Text = InputText;
             if (TextChanged.HasDelegate)
             {
                 await TextChanged.InvokeAsync(Text);
             }
-            await OnSave.InvokeAsync();
+            await OnOK.InvokeAsync();
         }
 
     }

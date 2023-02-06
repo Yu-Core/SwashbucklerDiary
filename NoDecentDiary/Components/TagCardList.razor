@@ -20,12 +20,13 @@
     </div>
 }
 
-<InputTag @bind-Value="ShowRenameTag"
-          @bind-Text="RenameTagName"
-          Title="@(I18n!.T("Tag.Rename"))"
-          OnSave="SaveRenameTag">
+<InputDialog @bind-Value="ShowRenameTag"
+             @bind-Text="RenameTagName"
+             Title="@(I18n!.T("Tag.Rename"))"
+             Placeholder="@(I18n!.T("Tag.Placeholder"))"
+             OnOK="SaveRenameTag">
 
-</InputTag>
+</InputDialog>
 
 <DeleteDialog @bind-Value="ShowDeleteTag"
               Title="@(I18n!.T("Tag.Delete.Title"))"

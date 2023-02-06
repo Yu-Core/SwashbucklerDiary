@@ -13,11 +13,7 @@ namespace NoDecentDiary.Components
         public bool MyValue
         {
             get => base.Value;
-            set
-            {
-                base.Value = value;
-                SetValue(value);
-            }
+            set => SetValue(value);
         }
         [Parameter]
         public EventCallback<bool> MyValueChanged
@@ -37,6 +33,7 @@ namespace NoDecentDiary.Components
 
         private void SetValue(bool value)
         {
+            base.Value = value;
             Task.Run(() =>
             {
                 if (value)

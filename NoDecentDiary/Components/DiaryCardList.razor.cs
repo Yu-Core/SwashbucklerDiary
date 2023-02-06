@@ -36,6 +36,7 @@ namespace NoDecentDiary.Components
 
         private void OpenDeleteDialog(DiaryModel diaryModel)
         {
+            OnDelete = null;
             OnDelete += async () =>
             {
                 ShowDeleteDiary = false;

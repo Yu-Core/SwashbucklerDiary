@@ -66,6 +66,7 @@ namespace NoDecentDiary.Components
                     }
                 }
                 _value = value;
+                StateHasChanged();
             }
         }
 
@@ -92,6 +93,7 @@ namespace NoDecentDiary.Components
             {
                 Name = AddTagName
             };
+            AddTagName = string.Empty;
             bool flag = await TagService!.AddAsync(tagModel);
             if (!flag)
             {
