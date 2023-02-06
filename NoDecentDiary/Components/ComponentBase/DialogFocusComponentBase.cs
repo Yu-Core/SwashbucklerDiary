@@ -1,11 +1,5 @@
 ﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoDecentDiary.Components
 {
@@ -21,7 +15,7 @@ namespace NoDecentDiary.Components
                 {
                     if(FirstOpen)
                     {
-                        await Task.Delay(800);
+                        await Task.Delay(500);
                         FirstOpen = false;
                     }
                     else
