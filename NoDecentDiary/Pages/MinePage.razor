@@ -13,24 +13,117 @@
     </MButton>
 </MAppBar>
 
-<MContainer>
-    <div class="d-md-flex flex-md-row justify-space-between">
-        <MCard Class="mine-info mb-5 py-sm-3"
+<ScrollContainer>
+    <MContainer>
+        <div class="d-md-flex flex-md-row justify-space-between">
+            <MCard Class="mine-info mb-5 py-sm-3"
+                   Elevation="4"
+                   Rounded="@("lg")"
+                   OnClick="NavigateToUser">
+                <MList>
+                    <MListItem>
+                        <MListItemAvatar Rounded="@("lg")" Size="75">
+                            <MImage Src="@(Avatar)"></MImage>
+                        </MListItemAvatar>
+                        <MListItemContent>
+                            <MListItemTitle Class="text-h6 font-weight-bold">
+                                @(UserName ?? I18n!.T("AppName"))
+                            </MListItemTitle>
+                            <MListItemSubtitle>
+                                @(Sign ?? I18n!.T("Mine.Sign"))
+                            </MListItemSubtitle>
+                        </MListItemContent>
+                        <MListItemAction>
+                            <MIcon>mdi-chevron-right</MIcon>
+                        </MListItemAction>
+                    </MListItem>
+                </MList>
+            </MCard>
+
+            <MCard Class="mine-info mb-5 ml-md-5 d-flex"
+                   Elevation="4"
+                   Rounded="@("lg")">
+                <MList Class="d-flex flex-grow-1">
+                    <MListItem>
+                        <MListItemContent Class="justify-space-around text-center">
+                            <div style="flex:unset">
+                                <MListItemSubtitle>
+                                    @(I18n!.T("Mine.DiaryCount"))
+                                </MListItemSubtitle>
+                                <MListItemTitle Class="mt-2 font-weight-bold text-h6">
+                                    @DiaryCount
+                                </MListItemTitle>
+                            </div>
+                            <div style="flex:unset">
+                                <MListItemSubtitle>
+                                    @(I18n!.T("Mine.WordCount"))
+                                </MListItemSubtitle>
+                                <MListItemTitle Class="mt-2 font-weight-bold text-h6">
+                                    @WordCount
+                                </MListItemTitle>
+                            </div>
+                            <div style="flex:unset">
+                                <MListItemSubtitle>
+                                    @(I18n!.T("Mine.ActiveDayCount"))
+                                </MListItemSubtitle>
+                                <MListItemTitle Class="mt-2 font-weight-bold text-h6">
+                                    @ActiveDayCount
+                                </MListItemTitle>
+                            </div>
+                        </MListItemContent>
+                    </MListItem>
+                </MList>
+            </MCard>
+        </div>
+
+        <div class="text-h6 mine-title">
+            @(I18n!.T("Mine.Data"))
+        </div>
+
+        <MCard Class="mine-card"
                Elevation="4"
-               Rounded="@("lg")"
-               OnClick="NavigateToUser">
+               Rounded="@("lg")">
             <MList>
                 <MListItem>
-                    <MListItemAvatar Rounded="@("lg")" Size="75">
-                        <MImage Src="@(Avatar)"></MImage>
-                    </MListItemAvatar>
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-folder-sync-outline
+                        </MIcon>
+                    </MListItemIcon>
                     <MListItemContent>
-                        <MListItemTitle Class="text-h6 font-weight-bold">
-                            @(UserName ?? I18n!.T("AppName"))
-                        </MListItemTitle>
-                        <MListItemSubtitle>
-                            @(Sign ?? I18n!.T("Mine.Sign"))
-                        </MListItemSubtitle>
+                        @(I18n!.T("Mine.Backups"))
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+
+                <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+                <MListItem>
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-import
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n!.T("Mine.Import"))
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+
+                <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+                <MListItem>
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-chart-line
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n!.T("Mine.Statistics"))
                     </MListItemContent>
                     <MListItemAction>
                         <MIcon>mdi-chevron-right</MIcon>
@@ -39,197 +132,106 @@
             </MList>
         </MCard>
 
-        <MCard Class="mine-info mb-5 ml-md-5 d-flex"
+        <div class="text-h6 mine-title">
+            @(I18n!.T("Mine.Settings"))
+        </div>
+
+        <MCard Class="mine-card"
                Elevation="4"
                Rounded="@("lg")">
-            <MList Class="d-flex flex-grow-1">
+            <MList>
                 <MListItem>
-                    <MListItemContent Class="justify-space-around text-center">
-                        <div style="flex:unset">
-                            <MListItemSubtitle>
-                                @(I18n!.T("Mine.DiaryCount"))
-                            </MListItemSubtitle>
-                            <MListItemTitle Class="mt-2 font-weight-bold text-h6">
-                                @DiaryCount
-                            </MListItemTitle>
-                        </div>
-                        <div style="flex:unset">
-                            <MListItemSubtitle>
-                                @(I18n!.T("Mine.WordCount"))
-                            </MListItemSubtitle>
-                            <MListItemTitle Class="mt-2 font-weight-bold text-h6">
-                                @WordCount
-                            </MListItemTitle>
-                        </div>
-                        <div style="flex:unset">
-                            <MListItemSubtitle>
-                                @(I18n!.T("Mine.ActiveDayCount"))
-                            </MListItemSubtitle>
-                            <MListItemTitle Class="mt-2 font-weight-bold text-h6">
-                                @ActiveDayCount
-                            </MListItemTitle>
-                        </div>
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-cog-outline
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n!.T("Mine.Settings"))
                     </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+
+                <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+                <MListItem OnClick="()=>ShowLanguage=true">
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-web
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n!.T("Mine.Languages"))
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+
+                <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+                <MListItem OnClick="ToDo">
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-weather-night
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n!.T("Mine.Night"))
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
                 </MListItem>
             </MList>
         </MCard>
-    </div>
 
-    <div class="text-h6 mine-title">
-        @(I18n!.T("Mine.Data"))
-    </div>
+        <div class="text-h6 mine-title">
+            @(I18n!.T("Mine.Other"))
+        </div>
 
-    <MCard Class="mine-card"
-           Elevation="4"
-           Rounded="@("lg")">
-        <MList>
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-folder-sync-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Backups"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
+        <MCard Class="mine-card"
+               Elevation="4"
+               Rounded="@("lg")">
+            <MList>
+                <MListItem OnClick="()=>ShowFeedback=true">
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-email-outline
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n!.T("Mine.Feedback"))
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
 
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+                <MDivider Class="mx-3 mx-sm-0"></MDivider>
 
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-import
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Import"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-chart-line
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Statistics"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
-
-    <div class="text-h6 mine-title">
-        @(I18n!.T("Mine.Settings"))
-    </div>
-
-    <MCard Class="mine-card"
-           Elevation="4"
-           Rounded="@("lg")">
-        <MList>
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-cog-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Settings"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem OnClick="()=>ShowLanguage=true">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-web
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Languages"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem OnClick="ToDo">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-weather-night
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Night"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
-
-    <div class="text-h6 mine-title">
-        @(I18n!.T("Mine.Other"))
-    </div>
-
-    <MCard Class="mine-card"
-           Elevation="4"
-           Rounded="@("lg")">
-        <MList>
-            <MListItem OnClick="()=>ShowFeedback=true">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-email-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Feedback"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem OnClick="NavigateToAbout">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-information-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.About"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
-</MContainer>
+                <MListItem OnClick="NavigateToAbout">
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-information-outline
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n!.T("Mine.About"))
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+            </MList>
+        </MCard>
+    </MContainer>
+</ScrollContainer>
 
 <MyDialog MaxWidth="420"
-         @bind-MyValue="ShowLanguage">
+          @bind-MyValue="ShowLanguage">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n!.T("Mine.SelectLanguage"))
@@ -258,7 +260,7 @@
 </MyDialog>
 
 <MyDialog MaxWidth="420"
-         @bind-MyValue="ShowFeedback">
+          @bind-MyValue="ShowFeedback">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n!.T("Mine.ContactWay"))

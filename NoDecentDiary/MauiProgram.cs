@@ -42,7 +42,7 @@ namespace NoDecentDiary
 #endif
                             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                  .Enrich.FromLogContext()
-                 .WriteTo.Async(c => c.File(SerilogConstants.filePath,rollingInterval:RollingInterval.Day))
+                 .WriteTo.Async(c => c.File(SerilogConstants.filePath, rollingInterval: RollingInterval.Day))
                  .CreateLogger();
             #endregion
 

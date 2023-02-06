@@ -1,14 +1,5 @@
-﻿using BlazorComponent.I18n;
-using Masa.Blazor;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
 using NoDecentDiary.Components;
-using NoDecentDiary.IServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoDecentDiary.Pages
 {
@@ -46,7 +37,6 @@ namespace NoDecentDiary.Pages
         }
 
         private bool ShowUserName { get; set; }
-        
         private bool ShowSign { get; set; }
 
         private async Task LoadSettings()
