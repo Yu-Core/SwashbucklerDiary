@@ -104,7 +104,7 @@ namespace NoDecentDiary.Pages
             if (File.Exists(filePath))
             {
                 // save the file into local storage
-                string localFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, nameof(Avatar) + Path.GetExtension(filePath));
+                string localFilePath = Path.Combine(FileSystem.AppDataDirectory, nameof(Avatar) + Path.GetExtension(filePath));
 
                 await SystemService.FileCopy(filePath, localFilePath);
 

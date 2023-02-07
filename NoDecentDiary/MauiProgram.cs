@@ -51,7 +51,7 @@ namespace NoDecentDiary
                 });
             builder.Services.AddCustomIOC();
             builder.Services.AddMasaBlazor();
-            builder.Services.AddMasaBlazor().AddI18nForMauiBlazor("i18n");
+            builder.Services.AddMasaBlazor().AddI18nForMauiBlazor("wwwroot/i18n");
 
             return builder.Build();
         }
