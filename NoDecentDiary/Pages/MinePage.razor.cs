@@ -122,7 +122,6 @@ namespace NoDecentDiary.Pages
         private async Task SendMail()
         {
             ShowFeedback = false;
-            //There are some problems in Windows. https://github.com/microsoft/microsoft-ui-xaml/issues/7300
             var mail = "yu-core@qq.com";
             try
             {
@@ -142,7 +141,6 @@ namespace NoDecentDiary.Pages
             {
                 Error!.ProcessError(ex);
             }
-            
         }
 
         private async Task ToGithub()
@@ -150,8 +148,8 @@ namespace NoDecentDiary.Pages
             ShowFeedback = false;
             try
             {
-                Uri uri = new("https://github.com/Yu-Core/NoDecentDiary");
-                await Browser.Default.OpenAsync(uri, BrowserLaunchMode.External);
+                var url = "https://github.com/Yu-Core/NoDecentDiary";
+                await SystemService.OpenBrowser(url);
             }
             catch (Exception ex)
             {

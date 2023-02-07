@@ -1,9 +1,6 @@
-﻿using NoDecentDiary.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Components;
+using NoDecentDiary.Components;
+using NoDecentDiary.Shared;
 
 namespace NoDecentDiary.Pages
 {
@@ -27,10 +24,25 @@ namespace NoDecentDiary.Pages
                 License = license;
                 Url = url;
             }
-            public string? Name { get; set; }
-            public string? License { get; set; }
-            public string? Url { get; set; }
+            public string Name { get; set; }
+            public string License { get; set; }
+            public string Url { get; set; }
         }
-        private Task OpenBrowser(string url) => SystemService.OpenBrowser(url);
+
+        [CascadingParameter]
+        public Error Error { get; set; } = default!;
+
+        private async Task OpenBrowser(string url)
+        {
+            try
+            {
+                await SystemService.OpenBrowser(url);
+            }
+            catch (Exception ex)
+            {
+                // An unexpected error occured. No browser may be installed on the device.
+                Error.ProcessError(ex);
+            }
+        }
     }
 }

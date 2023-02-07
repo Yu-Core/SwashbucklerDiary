@@ -73,7 +73,17 @@ namespace NoDecentDiary.Services
 
         public Task SendEmail(List<string>? recipients)
         {
+            //There are some problems in Windows. https://github.com/microsoft/microsoft-ui-xaml/issues/7300
+#if WINDOWS
+            string email = "mailto:" + recipients!.First();
+            for (int i = 1; i < recipients!.Count; i++)
+            {
+                email += "," + recipients[i];
+            }
+            return OpenBrowser(email);
+#else
             return SendEmail(null, null, recipients);
+#endif
         }
 
         public async Task SetClipboard(string text)
