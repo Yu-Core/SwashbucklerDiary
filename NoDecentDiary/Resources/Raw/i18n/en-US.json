@@ -24,11 +24,11 @@
     "All": "All",
     "Tag": "Tag",
     "Welcome": {
-      "Morning": "Good morning, another new day",
-      "Noon": "Good afternoon. Have you had lunch?",
-      "Afternoon": "Good afternoon, enjoy a wonderful afternoon",
-      "Night": "Good evening. It's time to rest",
-      "BeforeDawn": "Good before dawn, may you dream"
+      "Morning": "Good morning, another new day.",
+      "Noon": "Good noon. Have you had lunch?",
+      "Afternoon": "Good afternoon, enjoy a wonderful afternoon.",
+      "Night": "Good evening. It's time to rest.",
+      "BeforeDawn": "Good before dawn, may you dream."
     }
   },
   "Tag": {
@@ -146,7 +146,7 @@
     "MailCopy": "The email address has been copied to the clipboard"
   },
   "ToDo": {
-    "Title": "This function is not open for the time being",
+    "Title": "This function is not developed",
     "Content": "Coming soon"
   },
   "User": {
