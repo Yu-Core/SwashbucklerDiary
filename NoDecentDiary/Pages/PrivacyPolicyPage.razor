@@ -1,0 +1,22 @@
+﻿@page "/privacy-policy"
+@inherits PageComponentBase
+
+<MAppBar App
+         Color="white"
+         Elevation="0">
+    <MButton Icon OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MAppBarTitle Class="font-weight-bold">
+        @(I18n!.T("About.Privacy"))
+    </MAppBarTitle>
+
+    <MSpacer></MSpacer>
+</MAppBar>
+
+<MContainer>
+    <MarkdownDisplay Value="@Content" />
+</MContainer>

@@ -1,0 +1,32 @@
+﻿<div @ref="element"></div>
+
+@code {
+    public ElementReference element;
+    private string _value = default!;
+    private Dictionary<string, object> _options = new();
+
+    [Inject]
+    IJSRuntime JS { get; set; } = default!;
+
+    [Parameter]
+    public string Value
+    {
+        get => _value;
+        set => SetValue(value);
+    }
+
+    private void SetValue(string value)
+    {
+        if(_value != value)
+        {
+            _value = value;
+            RenderingMarkdown(value);
+        }
+    }
+
+    private async void RenderingMarkdown(string value)
+    {
+        _options.Add("mode", "light");
+        await JS.InvokeVoidAsync("Vditor.preview", new object[3] { element, value, _options });
+    }
+}

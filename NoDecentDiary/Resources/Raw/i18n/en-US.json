@@ -169,10 +169,14 @@
   },
   "About": {
     "SourceCode": "View Source Code",
-    "UserAgreement": "User Agreement",
-    "PrivacyPolicy": "Privacy Policy",
+    "Agreement": "User Agreement",
+    "Privacy": "Privacy Policy",
     "UpdateLog": "Update Log",
     "Evaluation": "App Evaluation",
     "Related": "Related Open Source Project"
+  },
+  "FilePath": {
+    "UserAgreement": "wwwroot/docs/user-agreement/en-US.md",
+    "PrivacyPolicy": "wwwroot/docs/privacy-policy/en-US.md"
   }
 }

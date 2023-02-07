@@ -39,5 +39,15 @@ namespace NoDecentDiary.Pages
         {
             NavigateService.NavigateTo("/relatedOSP");
         }
+
+        private void NavigateToUserAgreement()
+        {
+            NavigateService.NavigateTo("/user-agreement");
+        }
+
+        private void NavigateToPrivacyPolicy()
+        {
+            NavigateService.NavigateTo("/privacy-policy");
+        }
     }
 }
