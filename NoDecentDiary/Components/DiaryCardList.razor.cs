@@ -17,7 +17,7 @@ namespace NoDecentDiary.Components
         public IDiaryService DiaryService { get; set; } = default!;
         [Inject]
         public ITagService TagService { get; set; } = default!;
-        [Inject] 
+        [Inject]
         public IDiaryTagService DiaryTagService { get; set; } = default!;
         [Inject]
         private ISystemService SystemService { get; set; } = default!;

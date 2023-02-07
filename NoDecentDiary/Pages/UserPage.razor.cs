@@ -89,7 +89,7 @@ namespace NoDecentDiary.Pages
             }
 
             var writePermission = await SystemService.CheckStorageWritePermission();
-            if(!writePermission)
+            if (!writePermission)
             {
                 await PopupService.ToastErrorAsync(I18n!.T("Permission.OpenStorageWrite"));
                 return;

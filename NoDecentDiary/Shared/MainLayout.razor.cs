@@ -2,18 +2,12 @@
 using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using NoDecentDiary.Components;
 using NoDecentDiary.IServices;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoDecentDiary.Shared
 {
-    public partial class MainLayout :IDisposable
+    public partial class MainLayout : IDisposable
     {
         StringNumber SelectedItem = 0;
         readonly List<NavigationButton> NavigationButtons = new()
@@ -39,7 +33,7 @@ namespace NoDecentDiary.Shared
             MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
             GC.SuppressFinalize(this);
         }
-        
+
         protected override async Task OnInitializedAsync()
         {
             NavigateService.Navigation = Navigation;
@@ -73,7 +67,7 @@ namespace NoDecentDiary.Shared
                 var language = await SettingsService!.Get("Language", string.Empty);
                 I18n!.SetCulture(new CultureInfo(language));
             }
-            
+
         }
 
         private string? GetIcon(NavigationButton navigationButton)

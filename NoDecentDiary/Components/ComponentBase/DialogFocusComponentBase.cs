@@ -13,7 +13,7 @@ namespace NoDecentDiary.Components
             {
                 Task.Run(async () =>
                 {
-                    if(FirstOpen)
+                    if (FirstOpen)
                     {
                         await Task.Delay(500);
                         FirstOpen = false;
@@ -22,7 +22,7 @@ namespace NoDecentDiary.Components
                     {
                         await Task.Delay(200);
                     }
-                    
+
                     if (TextField != null && !TextField.IsFocused)
                     {
                         await TextField.InputElement.FocusAsync();

@@ -41,6 +41,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mailto</string>
+		<string>itms-apps</string>
 	</array>
 </dict>
 </plist>

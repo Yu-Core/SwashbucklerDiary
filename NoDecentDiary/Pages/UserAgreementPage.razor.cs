@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using NoDecentDiary.Components;
 using NoDecentDiary.Shared;
-using System.Net.NetworkInformation;
-using static System.Net.WebRequestMethods;
 
 namespace NoDecentDiary.Pages
 {

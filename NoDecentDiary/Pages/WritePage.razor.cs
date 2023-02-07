@@ -16,7 +16,10 @@ namespace NoDecentDiary.Pages
         private bool ShowWeather;
         private bool ShowMood;
         private bool ShowLocation;
-        private DiaryModel Diary = new();
+        private DiaryModel Diary = new()
+        {
+            CreateTime = DateTime.Now
+        };
         private List<TagModel> SelectedTags = new();
 
         [Inject]

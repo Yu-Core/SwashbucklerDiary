@@ -15,7 +15,7 @@ namespace NoDecentDiary.Pages
 
         private void InitLogText()
         {
-            if(!File.Exists(SerilogConstants.filePath))
+            if (!File.Exists(SerilogConstants.filePath))
             {
                 return;
             }

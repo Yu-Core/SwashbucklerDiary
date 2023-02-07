@@ -15,7 +15,7 @@ namespace NoDecentDiary.Pages
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Search { get; set; }
-        
+
         protected override async Task OnInitializedAsync()
         {
             await UpdateDiaries();

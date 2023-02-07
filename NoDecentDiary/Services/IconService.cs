@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NoDecentDiary.Services
+﻿namespace NoDecentDiary.Services
 {
     public class IconService
     {
         private readonly string ErrorIcon = "mdi-close";
-        public readonly Dictionary<string,string> WeatherIcon = new()
+        public readonly Dictionary<string, string> WeatherIcon = new()
         {
             {"sunny","mdi-weather-sunny" },
             {"cloudy","mdi-weather-cloudy" },
@@ -41,7 +35,7 @@ namespace NoDecentDiary.Services
         };
         public string GetWeatherIcon(string key)
         {
-            if(string.IsNullOrEmpty(key)|| !WeatherIcon.ContainsKey(key))
+            if (string.IsNullOrEmpty(key) || !WeatherIcon.ContainsKey(key))
             {
                 return ErrorIcon;
             }

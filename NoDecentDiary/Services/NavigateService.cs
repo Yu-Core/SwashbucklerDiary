@@ -1,11 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Util.Common;
 
 namespace NoDecentDiary.Services
 {
@@ -40,7 +34,7 @@ namespace NoDecentDiary.Services
 
         public void OnBackButtonPressed()
         {
-            if (Action != null && Action?.GetInvocationList().Length> 0)
+            if (Action != null && Action?.GetInvocationList().Length > 0)
             {
                 var delegates = Action!.GetInvocationList();
                 (delegates.Last() as Action)!.Invoke();
@@ -80,7 +74,8 @@ namespace NoDecentDiary.Services
 #if ANDROID
 #pragma warning disable CS8602 // 解引用可能出现空引用。
                 Android.Widget.Toast.MakeText(Android.App.Application.Context, "再按一次退出", Android.Widget.ToastLength.Long).Show();
-                Task.Run(async ()=>{
+                Task.Run(async () =>
+                {
                     await Task.Delay(2000);
                     BackPressCounter = 0;
                 });

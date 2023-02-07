@@ -1,11 +1,4 @@
-﻿using BlazorComponent.I18n;
-using NoDecentDiary.IServices;
-using NoDecentDiary.WinUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NoDecentDiary.IServices;
 
 namespace NoDecentDiary.Services
 {
@@ -39,8 +32,8 @@ namespace NoDecentDiary.Services
             }
             var file = new FileResult(source);
 #if WINDOWS
-				// on Windows file.OpenReadAsync() throws an exception
-				using Stream sourceStream = File.OpenRead(source);
+            // on Windows file.OpenReadAsync() throws an exception
+            using Stream sourceStream = File.OpenRead(source);
 #else
             using Stream sourceStream = await file.OpenReadAsync();
 #endif
@@ -166,10 +159,9 @@ namespace NoDecentDiary.Services
 #elif ANDROID
             uri = $"market://details?id={appId}";
 #elif IOS || MACCATALYST
-            uri = $"itms-apps://itunes.apple.com/app/id{appId}"
+            uri = $"itms-apps://itunes.apple.com/app/id{appId}";
 #endif
             return await Launcher.Default.TryOpenAsync(uri);
-
         }
     }
 }

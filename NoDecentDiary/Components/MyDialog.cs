@@ -33,7 +33,7 @@ namespace NoDecentDiary.Components
 
         private void SetValue(bool value)
         {
-            if(base.Value != value)
+            if (base.Value != value)
             {
                 base.Value = value;
                 Task.Run(() =>

@@ -13,7 +13,8 @@ namespace NoDecentDiary.Components
         public bool MyValue
         {
             get => base.Value;
-            set {
+            set
+            {
                 base.Value = value;
                 SetValue(value);
             }

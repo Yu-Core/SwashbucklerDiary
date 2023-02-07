@@ -157,7 +157,7 @@ namespace NoDecentDiary.Pages
                 Error.ProcessError(ex);
             }
         }
-        
+
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
             if (!string.IsNullOrEmpty(Avatar) && Avatar != DefaultAvatar)

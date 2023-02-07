@@ -1,12 +1,7 @@
-﻿using NoDecentDiary.IServices;
-using NoDecentDiary.StaticData;
+﻿using NoDecentDiary.Config;
+using NoDecentDiary.IServices;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoDecentDiary.Services
 {
@@ -80,12 +75,13 @@ namespace NoDecentDiary.Services
         public async Task<bool> AddAsync(List<TEntity> entities)
         {
             await Init();
-            if(entities.Count == 0)
+            if (entities.Count == 0)
             {
                 return false;
             }
             var oldCount = await Database!.Table<TEntity>().CountAsync();
-            await Database!.RunInTransactionAsync(tran => {
+            await Database!.RunInTransactionAsync(tran =>
+            {
                 foreach (var item in entities)
                 {
                     tran.Insert(item);
@@ -100,12 +96,13 @@ namespace NoDecentDiary.Services
         {
             await Init();
             var entities = await Database!.Table<TEntity>().Where(func).ToListAsync();
-            if(entities.Count == 0)
+            if (entities.Count == 0)
             {
                 return false;
             }
 
-            await Database.RunInTransactionAsync(tran => {
+            await Database.RunInTransactionAsync(tran =>
+            {
                 foreach (var item in entities)
                 {
                     tran.Delete(item);

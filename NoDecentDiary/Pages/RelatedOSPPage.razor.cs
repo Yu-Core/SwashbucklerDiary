@@ -18,8 +18,8 @@ namespace NoDecentDiary.Pages
         };
         private class OSP
         {
-            public OSP(string name,string license,string url) 
-            { 
+            public OSP(string name, string license, string url)
+            {
                 Name = name;
                 License = license;
                 Url = url;
