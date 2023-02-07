@@ -174,7 +174,8 @@
     "Privacy": "隐私政策",
     "UpdateLog": "更新日志",
     "Evaluation": "应用评价",
-    "Related": "开源相关"
+    "Related": "开源相关",
+    "OpenAppStoreFail": "打开应用商店失败"
   },
   "FilePath": {
     "UserAgreement": "wwwroot/docs/user-agreement/zh-CN.md",

@@ -23,7 +23,7 @@ namespace NoDecentDiary.Pages
         {
             try
             {
-                var url = I18n.T("FilePath.PrivacyPolicy");
+                var url = I18n.T("FilePath.UserAgreement");
                 using var stream = await FileSystem.OpenAppPackageFileAsync(url);
                 using var sr = new StreamReader(stream);
                 Content = sr.ReadToEnd();

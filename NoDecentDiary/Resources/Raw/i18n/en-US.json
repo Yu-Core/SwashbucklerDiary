@@ -173,7 +173,8 @@
     "Privacy": "Privacy Policy",
     "UpdateLog": "Update Log",
     "Evaluation": "App Evaluation",
-    "Related": "Related Open Source Project"
+    "Related": "Related Open Source Project",
+    "OpenAppStoreFail": "Failed to open the store"
   },
   "FilePath": {
     "UserAgreement": "wwwroot/docs/user-agreement/en-US.md",

@@ -1,5 +1,6 @@
 ﻿using BlazorComponent.I18n;
 using NoDecentDiary.IServices;
+using NoDecentDiary.WinUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,9 +79,9 @@ namespace NoDecentDiary.Services
             string email = "mailto:" + recipients!.First();
             for (int i = 1; i < recipients!.Count; i++)
             {
-                email += "," + recipients[i];
+                email += ";" + recipients[i];
             }
-            return OpenBrowser(email);
+            return Launcher.Default.OpenAsync(email);
 #else
             return SendEmail(null, null, recipients);
 #endif
@@ -150,6 +151,25 @@ namespace NoDecentDiary.Services
         public string GetAppVersion()
         {
             return VersionTracking.Default.CurrentVersion.ToString();
+        }
+
+        public Task<bool> OpenStoreAppDetails()
+        {
+            return OpenStoreAppDetails(AppInfo.PackageName);
+        }
+
+        public async Task<bool> OpenStoreAppDetails(string appId)
+        {
+            string uri = string.Empty;
+#if WINDOWS
+            uri = $"ms-windows-store://pdp/?ProductId={appId}";
+#elif ANDROID
+            uri = $"market://details?id={appId}";
+#elif IOS || MACCATALYST
+            uri = $"itms-apps://itunes.apple.com/app/id{appId}"
+#endif
+            return await Launcher.Default.TryOpenAsync(uri);
+
         }
     }
 }

@@ -49,5 +49,14 @@ namespace NoDecentDiary.Pages
         {
             NavigateService.NavigateTo("/privacy-policy");
         }
+
+        private async Task OpenAppDetails()
+        {
+            bool flag = await SystemService.OpenStoreAppDetails();
+            if (!flag)
+            {
+                await PopupService.ToastErrorAsync(I18n.T("About.OpenAppStoreFail"));
+            }
+        }
     }
 }

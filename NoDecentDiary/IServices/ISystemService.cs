@@ -22,5 +22,7 @@ namespace NoDecentDiary.IServices
         Task<bool> CheckCameraPermission();
         Task<bool> CheckStorageWritePermission();
         string GetAppVersion();
+        Task<bool> OpenStoreAppDetails();
+        Task<bool> OpenStoreAppDetails(string appId);
     }
 }
