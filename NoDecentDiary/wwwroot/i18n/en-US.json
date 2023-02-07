@@ -171,13 +171,23 @@
     "SourceCode": "View Source Code",
     "Agreement": "User Agreement",
     "Privacy": "Privacy Policy",
-    "UpdateLog": "Update Log",
-    "Evaluation": "App Evaluation",
+    "UpdateRecords": "Update Records",
+    "Evaluation": "Give a favorable comment",
     "Related": "Related Open Source Project",
-    "OpenAppStoreFail": "Failed to open the store"
+    "OpenAppStoreFail": "Failed to open the store",
+    "LogFile": "Log File",
+    "Sponsor": "Sponsor We"
   },
   "FilePath": {
     "UserAgreement": "wwwroot/docs/user-agreement/en-US.md",
     "PrivacyPolicy": "wwwroot/docs/privacy-policy/en-US.md"
+  },
+  "Amount": {
+    "Custom": "Custom",
+    "CustomPlace": "Please enter the amount you want to donate",
+    "CurrencySymbol": "$",
+    "Thank": "Thank",
+    "ThankContent": "Thank you, my friend, for your kindness. Don't really donate it to me.",
+    "ThankContent2": "I hope you can record your wonderful life every day, and you can see it when you are old. This is my original intention of making this software"
   }
 }

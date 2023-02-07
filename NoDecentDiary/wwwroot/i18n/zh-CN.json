@@ -172,13 +172,23 @@
     "SourceCode": "查看源码",
     "Agreement": "用户协议",
     "Privacy": "隐私政策",
-    "UpdateLog": "更新日志",
-    "Evaluation": "应用评价",
+    "UpdateRecords": "更新记录",
+    "Evaluation": "给个好评",
     "Related": "开源相关",
-    "OpenAppStoreFail": "打开应用商店失败"
+    "OpenAppStoreFail": "打开应用商店失败",
+    "LogFile": "日志文件",
+    "Sponsor": "捐助我们"
   },
   "FilePath": {
     "UserAgreement": "wwwroot/docs/user-agreement/zh-CN.md",
     "PrivacyPolicy": "wwwroot/docs/privacy-policy/zh-CN.md"
+  },
+  "Amount": {
+    "Custom": "自定义",
+    "CustomPlace": "请输入你要捐助的金额",
+    "CurrencySymbol": "￥",
+    "Thank": "感谢",
+    "ThankContent": "谢谢你朋友，你的好意我心领了，不必真的捐赠给我。",
+    "ThankContent2": "希望你每天能记录下自己精彩的生活，当老的一天还能看到，这就是我制作这款软件的初衷。"
   }
 }

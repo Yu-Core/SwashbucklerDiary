@@ -161,6 +161,7 @@
 </SelectTags>
 
 <MyDialog @bind-MyValue="ShowWeather"
+          MaxWidth="420"
           Scrollable>
     <MCard>
         <MCardTitle Class="font-weight-bold">
@@ -187,6 +188,7 @@
     </MCard>
 </MyDialog>
 <MyDialog @bind-MyValue="ShowMood"
+          MaxWidth="420"
           Scrollable>
     <MCard>
         <MCardTitle Class="font-weight-bold">
@@ -213,7 +215,8 @@
     </MCard>
 </MyDialog>
 
-<MyDialog @bind-MyValue="ShowLocation">
+<MyDialog @bind-MyValue="ShowLocation"
+          MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n!.T("Write.InputLocation"))

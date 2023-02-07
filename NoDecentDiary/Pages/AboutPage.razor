@@ -56,6 +56,7 @@
             </MListItem>
 
             <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
             <MListItem OnClick="NavigateToUserAgreement">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
@@ -87,6 +88,7 @@
             </MListItem>
 
             <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
             <MListItem OnClick="ToDo">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
@@ -94,7 +96,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n!.T("About.UpdateLog"))
+                    @(I18n!.T("About.UpdateRecords"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -107,6 +109,38 @@
            Elevation="4"
            Rounded="@("lg")">
         <MList>
+            <MListItem OnClick="NavigateToRelatedOSP">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-xml
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n!.T("About.Related"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+            <MListItem OnClick="NavigateToLog">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-file-document-edit-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n!.T("About.LogFile"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
             <MListItem OnClick="OpenAppDetails">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
@@ -121,15 +155,18 @@
                 </MListItemAction>
             </MListItem>
 
+
+
             <MDivider Class="mx-3 mx-sm-0"></MDivider>
-            <MListItem OnClick="NavigateToRelatedOSP">
+
+            <MListItem OnClick="()=>{ShowSponsor=true;Amount=0;}">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
-                        mdi-xml
+                        mdi-hand-heart-outline
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n!.T("About.Related"))
+                    @(I18n!.T("About.Sponsor"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -139,8 +176,8 @@
     </MCard>
 </MContainer>
 
-<MyDialog MaxWidth="420"
-          @bind-MyValue="ShowSourceCode">
+<MyDialog @bind-MyValue="ShowSourceCode"
+          MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n!.T("About.SourceCode"))
@@ -165,6 +202,76 @@
                     </MListItemContent>
                 </MListItem>
             }
+        </MCardText>
+    </MCard>
+</MyDialog>
+
+<MyDialog @bind-MyValue="ShowSponsor"
+          MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @(I18n!.T("About.Sponsor"))
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowSponsor=false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            <MChipGroup @bind-Value="Amount"
+                        Mandatory
+                        Column
+                        ActiveClass="primary--text">
+                @foreach (var item in Amounts)
+                {
+                    <MChip Outlined
+                       Filter
+                       OnClick="()=>ShowCustomAmount=false">
+                        @(item + I18n.T("Amount.CurrencySymbol"))
+                    </MChip>
+                }
+                <MChip Outlined
+                       OnClick="()=>ShowCustomAmount=true">
+                    @(I18n.T("Amount.Custom"))
+                </MChip>
+            </MChipGroup>
+            @if (ShowCustomAmount)
+            {
+                <MTextField TValue="string"
+                        Outlined
+                        Dense
+                        HideDetails="@("auto")"
+                        Placeholder="@(I18n.T("Amount.CustomPlace"))"
+                        Suffix="@(I18n.T("Amount.CurrencySymbol"))">
+
+                </MTextField>
+            }
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text OnClick="()=>ShowSponsor=false">
+                @(I18n!.T("Share.Cancel"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="OnSponsor">
+                @(I18n!.T("Share.OK"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MyDialog>
+
+<MyDialog @bind-MyValue="ShowThank" MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @(I18n!.T("Amount.Thank"))
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowThank=false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            <div class="mb-1">@(I18n!.T("Amount.ThankContent"))</div>
+            <div>@(I18n!.T("Amount.ThankContent2"))</div>
         </MCardText>
     </MCard>
 </MyDialog>
