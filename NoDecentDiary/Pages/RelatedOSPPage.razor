@@ -1,21 +1,9 @@
 ﻿@page "/relatedOSP"
 @inherits PageComponentBase
 
-<MAppBar App
-         Color="white"
-         Elevation="0">
-    <MButton Icon OnClick="NavigateToBack">
-        <MIcon>
-            mdi-arrow-left
-        </MIcon>
-    </MButton>
-
-    <MAppBarTitle Class="font-weight-bold">
-        @(I18n!.T("About.Related"))
-    </MAppBarTitle>
-
-    <MSpacer></MSpacer>
-</MAppBar>
+<MyAppBar Title="@(I18n!.T("About.Related"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
 
 <MContainer>
     @foreach (var item in OSPs)

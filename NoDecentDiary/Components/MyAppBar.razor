@@ -1,0 +1,22 @@
+﻿<MAppBar App
+         Color="white"
+         Elevation="0">
+    <MButton Icon OnClick="OnClick">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MAppBarTitle Class="font-weight-bold">
+        @Title
+    </MAppBarTitle>
+
+    <MSpacer></MSpacer>
+</MAppBar>
+
+@code {
+    [Parameter]
+    public string? Title { get; set; }
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+}

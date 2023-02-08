@@ -1,18 +1,9 @@
 ﻿@page "/user"
 @inherits PageComponentBase
 
-<MAppBar App
-         Elevation="0"
-         Color="white">
-    <MButton Icon OnClick="NavigateToBack">
-        <MIcon>
-            mdi-arrow-left
-        </MIcon>
-    </MButton>
-    <MToolbarTitle Class="font-weight-bold">
-        @(I18n!.T("User.Title"))
-    </MToolbarTitle>
-</MAppBar>
+<MyAppBar Title="@(I18n!.T("User.Title"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
 
 <MContainer>
     <MCard Elevation="4"

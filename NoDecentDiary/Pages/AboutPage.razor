@@ -1,21 +1,9 @@
 ﻿@page "/about"
 @inherits PageComponentBase
 
-<MAppBar App
-         Color="white"
-         Elevation="0">
-    <MButton Icon OnClick="NavigateToBack">
-        <MIcon>
-            mdi-arrow-left
-        </MIcon>
-    </MButton>
-
-    <MAppBarTitle Class="font-weight-bold">
-        @(I18n!.T("Mine.About"))
-    </MAppBarTitle>
-
-    <MSpacer></MSpacer>
-</MAppBar>
+<MyAppBar Title="@(I18n!.T("Mine.About"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
 
 <MContainer>
     <MCard Class="mb-5 py-sm-3"
