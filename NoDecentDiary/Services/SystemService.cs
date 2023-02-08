@@ -105,15 +105,15 @@ namespace NoDecentDiary.Services
 
         public async Task<bool> CheckCameraPermission()
         {
-            return await CheckPermission<Permissions.Camera>();
+            return await SystemService.CheckPermission<Permissions.Camera>();
         }
 
         public async Task<bool> CheckStorageWritePermission()
         {
-            return await CheckPermission<Permissions.StorageWrite>();
+            return await SystemService.CheckPermission<Permissions.StorageWrite>();
         }
 
-        private async Task<bool> CheckPermission<T>() where T : Permissions.BasePermission, new()
+        private static async Task<bool> CheckPermission<T>() where T : Permissions.BasePermission, new()
         {
             PermissionStatus status = await Permissions.CheckStatusAsync<T>();
 
@@ -146,6 +146,7 @@ namespace NoDecentDiary.Services
             return VersionTracking.Default.CurrentVersion.ToString();
         }
 
+        //打开本应用的应用商店详情页
         public Task<bool> OpenStoreAppDetails()
         {
             return OpenStoreAppDetails(AppInfo.PackageName);

@@ -4,6 +4,11 @@
 dotnet_diagnostic.BL0005.severity = none
 
 [*.cs]
+
+# BL0007: Component parameter should be auto property.
+dotnet_diagnostic.BL0007.severity = none
+
+[*.cs]
 #### 命名样式 ####
 
 # 命名规则
@@ -60,9 +65,6 @@ csharp_style_expression_bodied_accessors = true:silent
 csharp_style_expression_bodied_lambdas = true:silent
 csharp_style_expression_bodied_local_functions = false:silent
 csharp_style_conditional_delegate_call = true:suggestion
-
-# BL0007: Component parameters should be auto properties
-dotnet_diagnostic.BL0007.severity = none
 
 [*.vb]
 #### 命名样式 ####
