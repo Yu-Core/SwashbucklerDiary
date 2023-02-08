@@ -40,6 +40,7 @@ namespace NoDecentDiary.Pages
             await UpdateTag();
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
         }
+
         protected async override Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -60,6 +61,7 @@ namespace NoDecentDiary.Pages
                 }
             }
         }
+
         private bool IsTop => Diary.Top;
         private bool ShowTitle => !string.IsNullOrEmpty(Diary.Title);
         private bool ShowWeather => !string.IsNullOrEmpty(Diary.Weather);
@@ -93,11 +95,6 @@ namespace NoDecentDiary.Pages
         private async Task UpdateTag()
         {
             SelectedTags = await TagService!.GetDiaryTagsAsync(Id);
-        }
-
-        private void OnBack()
-        {
-            NavigateToBack();
         }
 
         private async Task InvokeStateHasChangedAsync()
