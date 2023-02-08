@@ -32,12 +32,14 @@
             </MChipGroup>
             @if (ShowCustomAmount)
             {
-                <MTextField TValue="string"
+                <MTextField TValue="int"
+                        Type="number"
                         Outlined
                         Dense
                         HideDetails="@("auto")"
                         Placeholder="@(I18n.T("Amount.CustomPlace"))"
-                        Prefix="@(I18n.T("Amount.CurrencySymbol"))">
+                        Prefix="@(I18n.T("Amount.CurrencySymbol"))"
+                        NumberProps="@(prop=> { prop.Min = 10; prop.HideControl = true; })">
                 </MTextField>
             }
         </MCardText>
