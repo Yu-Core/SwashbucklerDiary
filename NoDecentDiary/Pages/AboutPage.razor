@@ -214,7 +214,7 @@
                     <MChip Outlined
                        Filter
                        OnClick="()=>ShowCustomAmount=false">
-                        @(item + I18n.T("Amount.CurrencySymbol"))
+                        @(I18n.T("Amount.CurrencySymbol") +item)
                     </MChip>
                 }
                 <MChip Outlined
@@ -229,8 +229,7 @@
                         Dense
                         HideDetails="@("auto")"
                         Placeholder="@(I18n.T("Amount.CustomPlace"))"
-                        Suffix="@(I18n.T("Amount.CurrencySymbol"))">
-
+                        Prefix="@(I18n.T("Amount.CurrencySymbol"))">
                 </MTextField>
             }
         </MCardText>

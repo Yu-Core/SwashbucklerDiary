@@ -21,7 +21,7 @@ namespace NoDecentDiary.Pages
         };
         private readonly static List<string> Amounts = new()
         {
-            "10","20","100"
+            "5","20","99"
         };
 
         private class CodeSource
