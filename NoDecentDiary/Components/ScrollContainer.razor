@@ -1,5 +1,5 @@
-﻿<MSheet Id="@Id"
-        Class="overflow-y-auto"
-        MaxHeight="@MaxHeight">
-    @ChildContent
-</MSheet>
+﻿<div id="@Id" class="overflow-y-auto" style="@($"max-height:{Height}px;min-height:{Height}px;")">
+    <MContainer Style="box-sizing: border-box;">
+        @ChildContent
+    </MContainer>
+</div>

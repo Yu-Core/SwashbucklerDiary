@@ -56,103 +56,101 @@
 </MAppBar>
 
 <ScrollContainer Id="scrolling-write">
-    <MContainer>
-        <div class="px-3 text-h6 font-weight-bold">
-            <span>@(Diary.CreateTime.ToString("yyyy/MM/dd"))</span>
-            <span class="pl-5 text-subtitle-1">
-                @(Diary.CreateTime.ToWeek(I18n))
-            </span>
-        </div>
-        <div class="px-2">
-            <MChip Class="my-2 mr-2"
+    <div class="px-3 text-h6 font-weight-bold">
+        <span>@(Diary.CreateTime.ToString("yyyy/MM/dd"))</span>
+        <span class="pl-5 text-subtitle-1">
+            @(Diary.CreateTime.ToWeek(I18n))
+        </span>
+    </div>
+    <div class="px-2">
+        <MChip Class="my-2 mr-2"
+               Outlined="Mobile"
+               OnClick="()=>ShowWeather=true">
+            <MIcon Left>
+                @(GetWeatherIcon(Diary.Weather))
+            </MIcon>
+            @Weather
+        </MChip>
+        <MChip Class="my-2 mr-2"
+               Outlined="Mobile"
+               OnClick="()=>ShowMood=true">
+            <MIcon Left>
+                @(GetMoodIcon(Diary.Mood))
+            </MIcon>
+            @Mood
+        </MChip>
+        <MChip Class="my-2 mr-2"
+               Outlined="Mobile"
+               OnClick="()=>ShowLocation=true">
+            <MIcon Left>
+                mdi-map-marker-outline
+            </MIcon>
+            @(Diary.Location ?? I18n!.T("Write.Location"))
+        </MChip>
+    </div>
+
+    @if (ShowTitle)
+    {
+        <MTextField @bind-Value="Diary.Title"
+                Class="pb-0 my-sm-4 user-select font-weight-bold"
+                Solo="Mobile"
+                Flat="Mobile"
+                Outlined="Desktop"
+                TValue="string"
+                HideDetails="@("auto")"
+                Dense
+                spellcheck="false"
+                maxlength="20"
+                Placeholder="@(I18n!.T("Write.TitlePlace"))">
+        </MTextField>
+    }
+
+    <MTextarea @bind-Value="Diary.Content"
+               Class="my-sm-4 user-select"
+               Solo="Mobile"
+               Flat="Mobile"
+               Outlined="Desktop"
+               HideDetails="@("auto")"
+               Autofocus
+               AutoGrow
+               Rows="8"
+               RowHeight="30"
+               Counter="true"
+               spellcheck="false"
+               Placeholder="@(I18n!.T("Write.ContentPlace"))">
+        <CounterContent>
+            <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
+        </CounterContent>
+    </MTextarea>
+
+    <div class="mb-5">
+        <MChipGroup Column>
+            @foreach (var item in SelectedTags)
+            {
+                <MChip Close
                    Outlined="Mobile"
-                   OnClick="()=>ShowWeather=true">
-                <MIcon Left>
-                    @(GetWeatherIcon(Diary.Weather))
-                </MIcon>
-                @Weather
-            </MChip>
-            <MChip Class="my-2 mr-2"
-                   Outlined="Mobile"
-                   OnClick="()=>ShowMood=true">
-                <MIcon Left>
-                    @(GetMoodIcon(Diary.Mood))
-                </MIcon>
-                @Mood
-            </MChip>
-            <MChip Class="my-2 mr-2"
-                   Outlined="Mobile"
-                   OnClick="()=>ShowLocation=true">
-                <MIcon Left>
-                    mdi-map-marker-outline
-                </MIcon>
-                @(Diary.Location ?? I18n!.T("Write.Location"))
-            </MChip>
-        </div>
-
-        @if (ShowTitle)
-        {
-            <MTextField @bind-Value="Diary.Title"
-                    Class="pb-0 my-sm-4 user-select font-weight-bold"
-                    Solo="Mobile"
-                    Flat="Mobile"
-                    Outlined="Desktop"
-                    TValue="string"
-                    HideDetails="@("auto")"
-                    Dense
-                    spellcheck="false"
-                    maxlength="20"
-                    Placeholder="@(I18n!.T("Write.TitlePlace"))">
-            </MTextField>
-        }
-
-        <MTextarea @bind-Value="Diary.Content"
-                   Class="my-sm-4 user-select"
-                   Solo="Mobile"
-                   Flat="Mobile"
-                   Outlined="Desktop"
-                   HideDetails="@("auto")"
-                   Autofocus
-                   AutoGrow
-                   Rows="8"
-                   RowHeight="30"
-                   Counter="true"
-                   spellcheck="false"
-                   Placeholder="@(I18n!.T("Write.ContentPlace"))">
-            <CounterContent>
-                <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
-            </CounterContent>
-        </MTextarea>
-
-        <div class="mb-5">
-            <MChipGroup Column>
-                @foreach (var item in SelectedTags)
-                {
-                    <MChip Close
-                       Outlined="Mobile"
-                       OnCloseClick="()=>RemoveSelectedTag(item)">
-                        @(item.Name)
-                    </MChip>
-                }
-            </MChipGroup>
-        </div>
+                   OnCloseClick="()=>RemoveSelectedTag(item)">
+                    @(item.Name)
+                </MChip>
+            }
+        </MChipGroup>
+    </div>
 
 
-        <div class="d-none d-sm-block">
-            <MButton Class="px-8"
-                     Rounded
-                     Dark
-                     OnClick="OnSave">
-                @(I18n!.T("Share.Save"))
-            </MButton>
-            <MButton Class="px-8"
-                     Rounded
-                     Outlined
-                     OnClick="OnClear">
-                @(I18n!.T("Share.Clear"))
-            </MButton>
-        </div>
-    </MContainer>
+    <div class="d-none d-sm-block">
+        <MButton Class="px-8"
+                 Rounded
+                 Dark
+                 OnClick="OnSave">
+            @(I18n!.T("Share.Save"))
+        </MButton>
+        <MButton Class="px-8"
+                 Rounded
+                 Outlined
+                 OnClick="OnClear">
+            @(I18n!.T("Share.Clear"))
+        </MButton>
+    </div>
 </ScrollContainer>
 
 <SelectTags @bind-Value="ShowSelectTag"

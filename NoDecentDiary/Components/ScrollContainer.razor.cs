@@ -25,7 +25,7 @@ namespace NoDecentDiary.Components
             return base.OnInitializedAsync();
         }
 
-        private double MaxHeight => MasaBlazor.Breakpoint.Height - MasaBlazor.Application.Top;
+        private double Height => MasaBlazor.Breakpoint.Height - MasaBlazor.Application.Top - MasaBlazor.Application.Bottom;
 
         private async Task InvokeStateHasChangedAsync()
         {

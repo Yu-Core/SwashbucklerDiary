@@ -11,22 +11,22 @@
         </MIcon>
     </MButton>
 
-    <MToolbarTitle>@(I18n.T("About.LogFile"))</MToolbarTitle>
+    <MToolbarTitle>
+        @(I18n.T("About.LogFile"))
+    </MToolbarTitle>
 
     <MSpacer></MSpacer>
 </MAppBar>
 <ScrollContainer Id="scrolling-log">
-    <MContainer>
-        <MList Dense>
-            @foreach (var item in LogTextList)
-            {
-                <MListItem>
-                    <MListItemContent>
-                        @item
-                    </MListItemContent>
-                </MListItem>
-            }
-        </MList>
-    </MContainer>
+    <MList Dense>
+        @foreach (var item in LogTextList)
+        {
+            <MListItem>
+                <MListItemContent>
+                    @item
+                </MListItemContent>
+            </MListItem>
+        }
+    </MList>
 </ScrollContainer>
 

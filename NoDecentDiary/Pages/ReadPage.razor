@@ -73,7 +73,7 @@
 </MAppBar>
 
 <ScrollContainer Id="scrolling-read">
-    <MContainer Id="screenshot">
+    <div id="screenshot">
         <div class="px-3 text-h6 font-weight-bold">
             <span>@(Diary.CreateTime.ToString("yyyy/MM/dd"))</span>
             <span class="pl-5 text-subtitle-1">
@@ -149,7 +149,7 @@
                 }
             </MChipGroup>
         </div>
-    </MContainer>
+    </div>
 </ScrollContainer>
 
 <MyDialog @bind-MyValue="ShowShare" MaxWidth="420">
