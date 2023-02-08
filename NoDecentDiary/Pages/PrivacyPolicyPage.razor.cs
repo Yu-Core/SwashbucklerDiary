@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using NoDecentDiary.Components;
 using NoDecentDiary.Shared;
+using System;
 
 namespace NoDecentDiary.Pages
 {
@@ -22,10 +23,8 @@ namespace NoDecentDiary.Pages
         {
             try
             {
-                var url = I18n.T("FilePath.PrivacyPolicy");
-                using var stream = await FileSystem.OpenAppPackageFileAsync(url);
-                using var sr = new StreamReader(stream);
-                Content = sr.ReadToEnd();
+                var uri = I18n.T("FilePath.PrivacyPolicy");
+                Content = await SystemService.ReadMarkdown(uri);
             }
             catch (Exception ex)
             {

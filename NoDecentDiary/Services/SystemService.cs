@@ -1,4 +1,7 @@
-﻿using NoDecentDiary.IServices;
+﻿using Microsoft.Maui.Platform;
+using NoDecentDiary.IServices;
+using System;
+using System.Net.Http;
 
 namespace NoDecentDiary.Services
 {
@@ -163,6 +166,26 @@ namespace NoDecentDiary.Services
             uri = $"itms-apps://itunes.apple.com/app/id{appId}";
 #endif
             return await Launcher.Default.TryOpenAsync(uri);
+        }
+
+        public async Task<string> ReadMarkdown(string path)
+        {
+            bool exist = await FileSystem.AppPackageFileExistsAsync(path);
+            if (exist)
+            {
+                using var stream = await FileSystem.OpenAppPackageFileAsync(path);
+                using var sr = new StreamReader(stream);
+                var content = sr.ReadToEnd();
+                return content;
+            }
+            else
+            {
+                using var httpClient = new HttpClient();
+                await using var stream = await httpClient.GetStreamAsync(path);
+                using StreamReader sr = new (stream);
+                var content = sr.ReadToEnd();
+                return content;
+            }
         }
     }
 }

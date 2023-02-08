@@ -21,10 +21,8 @@ namespace NoDecentDiary.Pages
         {
             try
             {
-                var url = I18n.T("FilePath.UserAgreement");
-                using var stream = await FileSystem.OpenAppPackageFileAsync(url);
-                using var sr = new StreamReader(stream);
-                Content = sr.ReadToEnd();
+                var uri = I18n.T("FilePath.UserAgreement");
+                Content = await SystemService.ReadMarkdown(uri);
             }
             catch (Exception ex)
             {

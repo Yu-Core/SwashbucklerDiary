@@ -18,5 +18,6 @@
         string GetAppVersion();
         Task<bool> OpenStoreAppDetails();
         Task<bool> OpenStoreAppDetails(string appId);
+        Task<string> ReadMarkdown(string path);
     }
 }
