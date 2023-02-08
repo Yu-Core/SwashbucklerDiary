@@ -1,7 +1,4 @@
-﻿using NoDecentDiary.Config;
-using NoDecentDiary.Extend;
-using Serilog;
-using Serilog.Events;
+﻿using NoDecentDiary.Extend;
 
 namespace NoDecentDiary
 {
@@ -27,28 +24,7 @@ namespace NoDecentDiary
             builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
 
-            #region Log
-            if (!Directory.Exists(SerilogConstants.folderPath))
-            {
-                Directory.CreateDirectory(SerilogConstants.folderPath);
-            }
-
-            Log.Logger = new LoggerConfiguration()
-#if DEBUG
-                            .MinimumLevel.Debug()
-#else
-                            .MinimumLevel.Information()
-#endif
-                            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-                 .Enrich.FromLogContext()
-                 .WriteTo.Async(c => c.File(SerilogConstants.filePath, rollingInterval: RollingInterval.Day))
-                 .CreateLogger();
-            #endregion
-
-            builder.Services.AddLogging(logging =>
-                {
-                    logging.AddSerilog(dispose: true);
-                });
+            builder.Services.AddLog();
             builder.Services.AddCustomIOC();
             builder.Services.AddMasaBlazor();
             builder.Services.AddMasaBlazor().AddI18nForMauiBlazor("wwwroot/i18n");
