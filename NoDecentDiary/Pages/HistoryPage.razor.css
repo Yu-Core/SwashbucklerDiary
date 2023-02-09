@@ -4,9 +4,3 @@
         max-width:256px;
     }
 }
-
-@media (hover: none) {
-    ::deep .m-treeview-node--active:hover::before {
-        display: inline-block;
-    }
-}

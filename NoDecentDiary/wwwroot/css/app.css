@@ -83,16 +83,8 @@ a, .btn-link {
 }
 
 @media (hover: none) {
-    *:hover::before {
-        display: none;
-    }
-
-    *:hover i::before {
-        display: inline-block
-    }
-
-    *:hover .m-icon::before {
-        display: inline-block
+    button:hover::before {
+        display:none;
     }
 }
 
