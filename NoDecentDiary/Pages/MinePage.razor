@@ -75,157 +75,42 @@
         </MCard>
     </div>
 
-    <div class="text-h6 mine-title">
-        @(I18n!.T("Mine.Data"))
-    </div>
+    @foreach (var list in ViewLists)
+    {
+        <div class="text-h6 mine-title">
+            @(I18n!.T(list.Key))
+        </div>
 
-    <MCard Class="mine-card"
+        <MCard Class="mine-card"
            Elevation="4"
            Rounded="@("lg")">
-        <MList>
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-folder-sync-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Backups"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
+            <MList>
+                @foreach (var item in list.Value)
+                {
+                    <MListItem OnClick="@(item.Action)">
+                        <MListItemIcon>
+                            <MIcon Class="list-item-icon">
+                                @(item.Icon)
+                            </MIcon>
+                        </MListItemIcon>
+                        <MListItemContent>
+                            @(I18n!.T(item.Text))
+                        </MListItemContent>
+                        <MListItemAction>
+                            <MIcon>mdi-chevron-right</MIcon>
+                        </MListItemAction>
+                    </MListItem>
 
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+                    if(list.Value.Last() != item)
+                    {
+                        <MDivider Class="mx-3 mx-sm-0"></MDivider>
+                    }
+                }
 
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-import
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Import"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
+            </MList>
+        </MCard>
+    }
 
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-chart-line
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Statistics"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
-
-    <div class="text-h6 mine-title">
-        @(I18n!.T("Mine.Settings"))
-    </div>
-
-    <MCard Class="mine-card"
-           Elevation="4"
-           Rounded="@("lg")">
-        <MList>
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-cog-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Settings"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem OnClick="()=>ShowLanguage=true">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-web
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Languages"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem OnClick="ToDo">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-weather-night
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Night"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
-
-    <div class="text-h6 mine-title">
-        @(I18n!.T("Mine.Other"))
-    </div>
-
-    <MCard Class="mine-card"
-           Elevation="4"
-           Rounded="@("lg")">
-        <MList>
-            <MListItem OnClick="()=>ShowFeedback=true">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-email-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.Feedback"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem OnClick="NavigateToAbout">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-information-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("Mine.About"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
 </ScrollContainer>
 
 <MyDialog MaxWidth="420"

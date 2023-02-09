@@ -1,6 +1,7 @@
 ﻿using BlazorComponent;
 using BlazorComponent.I18n;
 using NoDecentDiary.Components;
+using NoDecentDiary.Models.View;
 
 namespace NoDecentDiary.Pages
 {
@@ -16,6 +17,34 @@ namespace NoDecentDiary.Pages
             new CodeSource("Github",githubUrl,"mdi-github"),
             new CodeSource("Gitee",giteeUrl,mdi_gitee)
         };
+        private List<List<ViewListItem>> ViewLists = new ();
+
+        protected override void OnInitialized()
+        {
+            LoadView();
+            base.OnInitialized();
+        }
+
+        private void LoadView()
+        {
+            ViewLists = new()
+            {
+                new()
+                {
+                    new("About.SourceCode","mdi-book-open-page-variant-outline",()=>ShowSourceCode=true),
+                    new("About.Agreement","mdi-file-document-multiple-outline",()=>NavigateToUserAgreement()),
+                    new("About.Privacy","mdi-lock-outline",()=>NavigateToPrivacyPolicy()),
+                    new("About.UpdateRecords","mdi-update",()=>ToDo()),
+                },
+                new()
+                {
+                    new("About.Related","mdi-xml",()=>NavigateToRelatedOSP()),
+                    new("About.LogFile","mdi-file-document-edit-outline",()=>NavigateToLog()),
+                    new("About.Evaluation","mdi-star-outline",async()=>await OpenAppDetails()),
+                    new("About.Sponsor","mdi-hand-heart-outline",()=>ShowSponsor=true),
+                }
+            };
+        }
 
         private class CodeSource
         {

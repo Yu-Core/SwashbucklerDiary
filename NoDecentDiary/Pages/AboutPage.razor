@@ -25,143 +25,39 @@
             </MListItem>
         </MList>
     </MCard>
-    <MCard Class="mb-5"
+
+    @foreach (var list in ViewLists)
+    {
+        <MCard Class="mb-5"
            Elevation="4"
            Rounded="@("lg")">
-        <MList>
-            <MListItem OnClick="()=>ShowSourceCode=true">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-book-open-page-variant-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("About.SourceCode"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
+            <MList>
+                @foreach (var item in list)
+                {
+                    <MListItem OnClick="@(item.Action)">
+                        <MListItemIcon>
+                            <MIcon Class="list-item-icon">
+                                @(item.Icon)
+                            </MIcon>
+                        </MListItemIcon>
+                        <MListItemContent>
+                            @(I18n!.T(item.Text))
+                        </MListItemContent>
+                        <MListItemAction>
+                            <MIcon>mdi-chevron-right</MIcon>
+                        </MListItemAction>
+                    </MListItem>
 
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+                    if (list.Last() != item)
+                    {
+                        <MDivider Class="mx-3 mx-sm-0"></MDivider>
+                    }
+                }
+                
+            </MList>
+        </MCard>
+    }
 
-            <MListItem OnClick="NavigateToUserAgreement">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-file-document-multiple-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("About.Agreement"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem OnClick="NavigateToPrivacyPolicy">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-lock-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("About.Privacy"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem OnClick="ToDo">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-update
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("About.UpdateRecords"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
-
-    <MCard Class="mb-5"
-           Elevation="4"
-           Rounded="@("lg")">
-        <MList>
-            <MListItem OnClick="NavigateToRelatedOSP">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-xml
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("About.Related"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem OnClick="NavigateToLog">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-file-document-edit-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("About.LogFile"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem OnClick="OpenAppDetails">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-star-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("About.Evaluation"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-
-
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-            <MListItem OnClick="()=>ShowSponsor=true">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-hand-heart-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n!.T("About.Sponsor"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
 </ScrollContainer>
 
 <MyDialog @bind-MyValue="ShowSourceCode"

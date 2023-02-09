@@ -2,6 +2,7 @@
 using Microsoft.JSInterop;
 using NoDecentDiary.Components;
 using NoDecentDiary.IServices;
+using NoDecentDiary.Models.View;
 using NoDecentDiary.Shared;
 using System.Globalization;
 
@@ -25,6 +26,8 @@ namespace NoDecentDiary.Pages
             {"中文","zh-CN" },
             {"English","en-US" }
         };
+        private Dictionary<string, List<ViewListItem>> ViewLists = new();
+
 
         [Inject]
         private IDiaryService? DiaryService { get; set; }
@@ -34,6 +37,7 @@ namespace NoDecentDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            LoadView();
             await SetCount();
             await LoadSettings();
         }
@@ -79,6 +83,39 @@ namespace NoDecentDiary.Pages
             }
             WordCount = wordCount;
             ActiveDayCount = diaries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
+        }
+
+        private void LoadView()
+        {
+            ViewLists = new()
+            {
+                { 
+                    "Mine.Data",
+                    new()
+                    {
+                        new("Mine.Backups","mdi-folder-sync-outline",()=>ToDo()),
+                        new("Mine.Import","mdi-import",()=>ToDo()),
+                        new("Mine.Statistics","mdi-chart-line",()=>ToDo()),
+                    }
+                },
+                {
+                    "Mine.Settings",
+                    new()
+                    {
+                        new("Mine.Settings","mdi-cog-outline",()=>ToDo()),
+                        new("Mine.Languages","mdi-web",()=>ShowLanguage=true),
+                        new("Mine.Night","mdi-weather-night",()=>ToDo()),
+                    }
+                },
+                {
+                    "Mine.Other",
+                    new()
+                    {
+                        new("Mine.Feedback","mdi-email-outline",()=>ShowFeedback=true),
+                        new("Mine.About","mdi-information-outline",()=>NavigateToAbout()),
+                    }
+                }
+            };
         }
 
         private async Task LoadSettings()
