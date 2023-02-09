@@ -86,6 +86,9 @@ a, .btn-link {
     button:hover::before {
         display:none;
     }
+    .m-icon:hover::before {
+        display: inline-block;
+    }
 }
 
 * {
