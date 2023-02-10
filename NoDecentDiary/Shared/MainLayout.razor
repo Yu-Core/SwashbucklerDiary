@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
 <MApp>
-    <MMain>
+    <MMain Style="@(ShowBottomNavigation?"":"padding-bottom:0px;")">
         @if (MasaBlazor.Breakpoint.SmAndUp)
         {
             <MNavigationDrawer App
@@ -27,19 +27,17 @@
         }
         @Body
     </MMain>
-    @if (ShowBottomNavigation() && !MasaBlazor.Breakpoint.SmAndUp)
-    {
-        <MBottomNavigation @bind-Value="SelectedItem"
+    <MBottomNavigation @bind-Value="SelectedItem"
+                       InputValue="ShowBottomNavigation"
                        Class="d-flex justify-space-around d-sm-none"
                        App
                        Shift>
-            @foreach (var navigationButton in NavigationButtons)
-            {
-                <MButton OnClick="()=>ChangeView(navigationButton)">
-                    <span>@(I18n!.T(navigationButton.Title))</span>
-                    <MIcon>@GetIcon(navigationButton)</MIcon>
-                </MButton>
-            }
-        </MBottomNavigation>
-    }
+        @foreach (var navigationButton in NavigationButtons)
+        {
+            <MButton OnClick="()=>ChangeView(navigationButton)">
+                <span>@(I18n!.T(navigationButton.Title))</span>
+                <MIcon>@GetIcon(navigationButton)</MIcon>
+            </MButton>
+        }
+    </MBottomNavigation>
 </MApp>

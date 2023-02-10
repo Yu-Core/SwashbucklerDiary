@@ -12,6 +12,8 @@ namespace NoDecentDiary.Components
         public RenderFragment? ChildContent { get; set; }
         [Parameter]
         public string? Id { get; set; }
+        [Parameter]
+        public bool Bottom { get; set; }
 
         public void Dispose()
         {
@@ -25,7 +27,7 @@ namespace NoDecentDiary.Components
             return base.OnInitializedAsync();
         }
 
-        private double Height => MasaBlazor.Breakpoint.Height - MasaBlazor.Application.Top - MasaBlazor.Application.Bottom;
+        private double Height => MasaBlazor.Breakpoint.Height - MasaBlazor.Application.Top - (Bottom ? MasaBlazor.Application.Bottom : 0);
 
         private async Task InvokeStateHasChangedAsync()
         {

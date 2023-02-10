@@ -70,6 +70,19 @@ namespace NoDecentDiary.Shared
 
         }
 
+        private bool ShowBottomNavigation
+        {
+            get
+            {
+                if(MasaBlazor.Breakpoint.SmAndUp)
+                {
+                    return true;
+                }
+                var url = Navigation!.ToBaseRelativePath(Navigation.Uri);
+                return NavigationButtons.Any(it => it.Href == url.Split("?")[0]);
+            }
+        }
+
         private string? GetIcon(NavigationButton navigationButton)
         {
             return SelectedItem == navigationButton.Id ? navigationButton.SelectIcon : navigationButton.Icon;
@@ -78,12 +91,6 @@ namespace NoDecentDiary.Shared
         private void ChangeView(NavigationButton navigationButton)
         {
             Navigation!.NavigateTo(navigationButton.Href);
-        }
-
-        private bool ShowBottomNavigation()
-        {
-            var url = Navigation!.ToBaseRelativePath(Navigation.Uri);
-            return NavigationButtons.Any(it => it.Href == url.Split("?")[0]);
         }
 
         private async Task InvokeStateHasChangedAsync()
