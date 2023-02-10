@@ -22,7 +22,7 @@ namespace NoDecentDiary.Components
         [Parameter]
         public EventCallback OnClick { get; set; }
 
-        private DateTime Date => Value!.CreateTime;
+        private DateTime Time => Value!.CreateTime;
         private string? Title => Value!.Title;
         private string? Text => Value!.Content;
         private bool IsTop => Value!.Top;

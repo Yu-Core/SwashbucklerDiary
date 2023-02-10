@@ -9,7 +9,7 @@
     <MListItem Dense>
         <MListItemContent>
             <div class="text--secondary text-h6">
-                @(Date.ToString("MM/dd"))
+                @(Time.ToString("MM/dd"))
             </div>
         </MListItemContent>
         <MListItemAction>
@@ -73,7 +73,7 @@
     <MListItem ThreeLine>
         <MListItemContent>
             <MListItemTitle>
-                <b>@(string.IsNullOrWhiteSpace(Title) ? I18n!.T("Diary.Untitled") : Title)</b>
+                <b>@(string.IsNullOrWhiteSpace(Title) ? Text?.Split("\n")[0] : Title)</b>
             </MListItemTitle>
             <MListItemSubtitle>
                 @Text
