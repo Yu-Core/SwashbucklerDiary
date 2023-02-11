@@ -177,7 +177,8 @@
     "Related": "开源相关",
     "OpenAppStoreFail": "打开应用商店失败",
     "LogFile": "日志文件",
-    "Sponsor": "捐助我们"
+    "Sponsor": "捐助我们",
+    "Introduction": "一款开源、跨平台的本地日记APP"
   },
   "FilePath": {
     "UserAgreement": "wwwroot/docs/user-agreement/zh-CN.md",

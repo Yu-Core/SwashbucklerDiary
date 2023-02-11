@@ -59,6 +59,8 @@ namespace NoDecentDiary.Pages
             public string? Icon { get; set; }
         }
 
+        private string? AppVersion => SystemService.GetAppVersion();
+
         private async Task OpenBrowser(string url)
         {
             ShowSourceCode = false;

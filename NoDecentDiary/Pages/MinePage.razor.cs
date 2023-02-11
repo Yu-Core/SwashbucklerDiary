@@ -27,6 +27,7 @@ namespace NoDecentDiary.Pages
             {"English","en-US" }
         };
         private Dictionary<string, List<ViewListItem>> ViewLists = new();
+        private List<FeedbackType> FeedbackTypes = new();
 
 
         [Inject]
@@ -61,6 +62,19 @@ namespace NoDecentDiary.Pages
             }
         }
 
+        private class FeedbackType
+        {
+            public FeedbackType(string name, string icon, Action action)
+            {
+                Name = name;
+                Icon = icon;
+                Action = action;
+            }
+            public string Name { get; set; }
+            public string Icon { get; set; }
+            public Action Action { get; set; }
+        }
+
         private async Task SetCount()
         {
             DiaryCount = await DiaryService!.CountAsync();
@@ -89,7 +103,7 @@ namespace NoDecentDiary.Pages
         {
             ViewLists = new()
             {
-                { 
+                {
                     "Mine.Data",
                     new()
                     {
@@ -115,6 +129,11 @@ namespace NoDecentDiary.Pages
                         new("Mine.About","mdi-information-outline",()=>NavigateToAbout()),
                     }
                 }
+            };
+            FeedbackTypes = new()
+            {
+                new("Email","mdi-email-outline",async()=>await SendMail()),
+                new("Github","mdi-github",async()=>await ToGithub()),
             };
         }
 

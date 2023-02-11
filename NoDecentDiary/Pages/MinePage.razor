@@ -133,7 +133,7 @@
                 @foreach (var item in Languages)
                 {
                     <MRadio Label="@(item.Key)"
-                        Class="my-3"
+                        Class="my-2"
                         Value="@(item.Value)">
                     </MRadio>
                 }
@@ -153,31 +153,21 @@
             </MButton>
         </MCardTitle>
         <MCardText>
-            <MListItem OnClick="SendMail">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-email-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    <MListItemTitle>
-                        Email
-                    </MListItemTitle>
-                </MListItemContent>
-            </MListItem>
-
-            <MListItem OnClick="ToGithub">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-github
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    <MListItemTitle>
-                        Github
-                    </MListItemTitle>
-                </MListItemContent>
-            </MListItem>
+            @foreach (var item in FeedbackTypes)
+            {
+                <MListItem Class="px-0" OnClick="@(item.Action)">
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            @(item.Icon)
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        <MListItemTitle>
+                            @(item.Name)
+                        </MListItemTitle>
+                    </MListItemContent>
+                </MListItem>
+            }
         </MCardText>
     </MCard>
 </MyDialog>

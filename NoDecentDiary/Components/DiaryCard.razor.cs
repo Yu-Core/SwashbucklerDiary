@@ -23,7 +23,24 @@ namespace NoDecentDiary.Components
         public EventCallback OnClick { get; set; }
 
         private DateTime Time => Value!.CreateTime;
-        private string? Title => Value!.Title;
+        private string? Title
+        {
+            get
+            {
+                if(!string.IsNullOrWhiteSpace(Value!.Title))
+                {
+                    return Value!.Title;
+                }
+                foreach (var item in Text!.Split("\n"))
+                {
+                    if(!string.IsNullOrWhiteSpace(item))
+                    {
+                        return item;
+                    }
+                }
+                return I18n.T("Diary.Untitled");
+            }
+        }
         private string? Text => Value!.Content;
         private bool IsTop => Value!.Top;
     }

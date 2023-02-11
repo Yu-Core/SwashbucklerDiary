@@ -67,7 +67,6 @@ namespace NoDecentDiary.Pages
         private bool ShowWeather => !string.IsNullOrEmpty(Diary.Weather);
         private bool ShowMood => !string.IsNullOrEmpty(Diary.Mood);
         private bool ShowLocation => !string.IsNullOrEmpty(Diary.Location);
-        private bool IsDesktop => MasaBlazor.Breakpoint.SmAndUp;
         private bool IsMobile => !MasaBlazor.Breakpoint.SmAndUp;
         private string DiaryCopyContent
         {

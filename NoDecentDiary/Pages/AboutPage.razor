@@ -6,20 +6,23 @@
 </MyAppBar>
 
 <ScrollContainer>
-    <MCard Class="mb-5 py-sm-3"
+    <MCard Class="mb-5 py-sm-3 pl-4"
            Elevation="4"
            Rounded="@("lg")">
         <MList>
             <MListItem>
-                <MListItemAvatar Rounded="@("lg")" Size="75">
+                <MListItemAvatar Rounded="@("lg")" Size="75" Class="pr-4 hidden-sm-and-down">
                     <MImage Src="./logo/logo.svg"></MImage>
                 </MListItemAvatar>
                 <MListItemContent>
-                    <MListItemTitle Class="text-h6 font-weight-bold">
+                    <MListItemTitle Class="text-h5 my-2 font-weight-bold">
                         @(I18n!.T("AppName"))
                     </MListItemTitle>
+                    <MListItemSubtitle Class="mb-2">
+                        version @AppVersion
+                    </MListItemSubtitle>
                     <MListItemSubtitle>
-                        version @(SystemService.GetAppVersion())
+                        @(I18n!.T("About.Introduction"))
                     </MListItemSubtitle>
                 </MListItemContent>
             </MListItem>
@@ -53,7 +56,7 @@
                         <MDivider Class="mx-3 mx-sm-0"></MDivider>
                     }
                 }
-                
+
             </MList>
         </MCard>
     }
@@ -73,7 +76,7 @@
         <MCardText>
             @foreach (var item in CodeSources)
             {
-                <MListItem OnClick="()=>OpenBrowser(item.Url!)">
+                <MListItem Class="px-0" OnClick="()=>OpenBrowser(item.Url!)">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             @(item.Icon)

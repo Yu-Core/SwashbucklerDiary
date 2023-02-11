@@ -176,7 +176,8 @@
     "Related": "Related Open Source Project",
     "OpenAppStoreFail": "Failed to open the store",
     "LogFile": "Log File",
-    "Sponsor": "Sponsor We"
+    "Sponsor": "Sponsor We",
+    "Introduction": "An open source, cross-platform local diary app"
   },
   "FilePath": {
     "UserAgreement": "wwwroot/docs/user-agreement/en-US.md",
