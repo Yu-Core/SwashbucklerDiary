@@ -1,6 +1,6 @@
 ﻿# User Agreement
 
-_Yu-Core_(hereinafter referred to as "We") provides _to the User (hereinafter referred to as "You") under this Agreement NoDecentDiary_ Service. This Agreement is legally binding on you and on us.
+_Yu-Core_(hereinafter referred to as "We") provides to the User (hereinafter referred to as "You") under this Agreement _NoDecentDiary_ Service. This Agreement is legally binding on you and on us.
 
 #### 1. Functions of this service
 
