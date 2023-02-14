@@ -17,10 +17,9 @@ namespace NoDecentDiary.Extend
             using Stream streamCultures = FileSystem.OpenAppPackageFileAsync(supportedCulturesPath).Result;
             using StreamReader readerCultures = new(streamCultures);
             string contents = readerCultures.ReadToEnd();
-            string[] cultures = JsonSerializer.Deserialize<string[]>(contents) ?? throw new Exception("Failed to read supportedCultures json file data!"); ;
+            string[] cultures = JsonSerializer.Deserialize<string[]>(contents) ?? throw new Exception("Failed to read supportedCultures json file data!");
             List<(string culture, Dictionary<string, string>)> locales = new();
-            string[] array = cultures;
-            foreach (string culture in array)
+            foreach (string culture in cultures)
             {
                 string culturePath = localesDirectory + "/" + culture + ".json";
                 bool existsCulture = FileSystem.AppPackageFileExistsAsync(culturePath).Result;

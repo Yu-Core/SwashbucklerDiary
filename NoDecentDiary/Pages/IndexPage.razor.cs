@@ -30,7 +30,7 @@ namespace NoDecentDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            SetTab();
+            InitTab();
             await UpdateTags();
             await UpdateDiaries();
             await base.OnInitializedAsync();
@@ -49,7 +49,7 @@ namespace NoDecentDiary.Pages
             Tags = await TagService!.QueryAsync();
         }
 
-        private void SetTab()
+        private void InitTab()
         {
             if (string.IsNullOrEmpty(Type))
             {
