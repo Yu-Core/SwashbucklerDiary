@@ -182,7 +182,8 @@
   },
   "FilePath": {
     "UserAgreement": "wwwroot/docs/user-agreement/zh-CN.md",
-    "PrivacyPolicy": "wwwroot/docs/privacy-policy/zh-CN.md"
+    "PrivacyPolicy": "wwwroot/docs/privacy-policy/zh-CN.md",
+    "FunctionalDescription": "wwwroot/docs/functional-description/zh-CN.md"
   },
   "Amount": {
     "Custom": "自定义",
@@ -191,5 +192,6 @@
     "Thank": "感谢",
     "ThankContent": "谢谢你朋友，你的好意我心领了，不必真的捐赠给我。",
     "ThankContent2": "希望你每天能过得充实，并且记录下自己精彩的生活，当老的一天还能看到，这就是我制作这款软件的初衷。"
-  }
+  },
+  "FunctionalDescription": "功能说明"
 }

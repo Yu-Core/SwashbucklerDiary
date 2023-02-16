@@ -187,5 +187,10 @@ namespace NoDecentDiary.Services
                 return content;
             }
         }
+
+        public bool IsFirstLaunch()
+        {
+            return VersionTracking.Default.IsFirstLaunchEver;
+        }
     }
 }

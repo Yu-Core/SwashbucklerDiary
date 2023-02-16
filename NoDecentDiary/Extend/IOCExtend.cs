@@ -7,7 +7,6 @@ namespace NoDecentDiary.Extend
     {
         public static IServiceCollection AddCustomIOC(this IServiceCollection services)
         {
-            services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<ITagService, TagService>();
             services.AddSingleton<IDiaryService, DiaryService>();
             services.AddSingleton<IDiaryTagService, DiaryTagService>();

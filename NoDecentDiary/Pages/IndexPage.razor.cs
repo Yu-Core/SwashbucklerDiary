@@ -23,7 +23,7 @@ namespace NoDecentDiary.Pages
         public IDiaryTagService DiaryTagService { get; set; } = default!;
 
         [CascadingParameter]
-        public Error? Error { get; set; }
+        public Error Error { get; set; } = default!;
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Type { get; set; }
@@ -32,6 +32,11 @@ namespace NoDecentDiary.Pages
         {
             InitTab();
             await UpdateTags();
+            if (SystemService.IsFirstLaunch())
+            {
+                await Task.Delay(500);
+            }
+
             await UpdateDiaries();
             await base.OnInitializedAsync();
         }

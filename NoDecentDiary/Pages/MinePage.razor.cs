@@ -2,7 +2,7 @@
 using Microsoft.JSInterop;
 using NoDecentDiary.Components;
 using NoDecentDiary.IServices;
-using NoDecentDiary.Models.View;
+using NoDecentDiary.Models;
 using NoDecentDiary.Shared;
 using System.Globalization;
 

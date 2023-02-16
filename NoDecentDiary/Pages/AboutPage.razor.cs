@@ -1,7 +1,7 @@
 ﻿using BlazorComponent;
 using BlazorComponent.I18n;
 using NoDecentDiary.Components;
-using NoDecentDiary.Models.View;
+using NoDecentDiary.Models;
 
 namespace NoDecentDiary.Pages
 {

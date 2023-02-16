@@ -181,7 +181,8 @@
   },
   "FilePath": {
     "UserAgreement": "wwwroot/docs/user-agreement/en-US.md",
-    "PrivacyPolicy": "wwwroot/docs/privacy-policy/en-US.md"
+    "PrivacyPolicy": "wwwroot/docs/privacy-policy/en-US.md",
+    "FunctionalDescription": "wwwroot/docs/functional-description/en-US.md"
   },
   "Amount": {
     "Custom": "Custom",
@@ -190,5 +191,6 @@
     "Thank": "Thank",
     "ThankContent": "Thank you, my friend, for your kindness. Don't really donate it to me.",
     "ThankContent2": "I hope you can live a full life every day and record your wonderful life. I can see it when I am old. That is the original intention of making this software."
-  }
+  },
+  "FunctionalDescription": "Functional Description"
 }

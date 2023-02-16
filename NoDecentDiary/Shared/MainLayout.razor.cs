@@ -3,6 +3,7 @@ using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using NoDecentDiary.IServices;
+using NoDecentDiary.Models;
 using System.Globalization;
 
 namespace NoDecentDiary.Shared
@@ -27,6 +28,13 @@ namespace NoDecentDiary.Shared
         private I18n I18n { get; set; } = default!;
         [Inject]
         private ISettingsService SettingsService { get; set; } = default!;
+        [Inject]
+        private ISystemService SystemService { get; set; } = default!;
+        [Inject]
+        private IDiaryService DiaryService { get; set; } = default!;
+
+        [CascadingParameter]
+        private Error Error { get; set; } = default!;
 
         public void Dispose()
         {
@@ -36,8 +44,9 @@ namespace NoDecentDiary.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            NavigateService.Navigation = Navigation;
+            await FirstLaunch();
             await LoadSettings();
+            NavigateService.Navigation = Navigation;
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             await base.OnInitializedAsync();
         }
@@ -74,7 +83,7 @@ namespace NoDecentDiary.Shared
         {
             get
             {
-                if(MasaBlazor.Breakpoint.SmAndUp)
+                if (MasaBlazor.Breakpoint.SmAndUp)
                 {
                     return true;
                 }
@@ -96,6 +105,32 @@ namespace NoDecentDiary.Shared
         private async Task InvokeStateHasChangedAsync()
         {
             await InvokeAsync(StateHasChanged);
+        }
+
+        private async Task FirstLaunch()
+        {
+            try
+            {
+                bool flag = SystemService.IsFirstLaunch();
+                if (flag)
+                {
+                    var uri = I18n.T("FilePath.FunctionalDescription");
+                    string content = await SystemService.ReadMarkdown(uri);
+                    var diary = new DiaryModel()
+                    {
+                        Title = I18n.T("FunctionalDescription"),
+                        Content = content,
+                        CreateTime = DateTime.Now,
+                        UpdateTime = DateTime.Now,
+                    };
+                    await DiaryService.AddAsync(diary);
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.ProcessError(ex);
+            }
+
         }
     }
 }
