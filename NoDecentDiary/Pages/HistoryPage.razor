@@ -37,10 +37,10 @@
         <DiaryCardList Value="CalendarDiaries"></DiaryCardList>
     </SwiperTabItem>
     <SwiperTabItem>
-        <div class="d-md-flex">
+        <div class="d-md-flex tree-wrap">
             @if (Diaries.Any())
             {
-                <div class="flex-grow-1 tree-container">
+                <div>
                     <MTreeview @bind-Active="_active"
                            TItem="Tree"
                            TKey="int"
@@ -50,14 +50,16 @@
                            ItemKey="r=>r.Id"
                            Activatable
                            OpenOnClick
-                           OnActiveUpdate="OnActiveUpdate"
                            Rounded
                            ExpandIcon="mdi-chevron-down">
                     </MTreeview>
                 </div>
             }
-            <div class="flex-grow-1 ml-md-2">
-                <DiaryCardList Value="TreeDiaries">
+            <div class="ml-md-5">
+                <DiaryCardList Value="TreeDiaries"
+                               Class="flex-md-column"
+                               CardClass="tree-card"
+                               OnDeleted="UpdateDiaries">
                 </DiaryCardList>
             </div>
         </div>

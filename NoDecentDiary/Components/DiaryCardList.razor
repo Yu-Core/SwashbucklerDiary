@@ -6,7 +6,7 @@
         if (item.Top)
         {
             <DiaryCard Value="item"
-               Class="diary-card"
+               Class="@($"diary-card {CardClass}")"
                OnTag="()=>OnTag(item.Id)"
                OnCopy="()=>OnCopy(item)"
                OnDelete="()=>OpenDeleteDialog(item)"
@@ -20,7 +20,7 @@
         if (!item.Top)
         {
             <DiaryCard Value="item"
-               Class="diary-card"
+               Class="@($"diary-card {CardClass}")"
                OnTag="()=>OnTag(item.Id)"
                OnCopy="()=>OnCopy(item)"
                OnDelete="()=>OpenDeleteDialog(item)"

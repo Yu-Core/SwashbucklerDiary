@@ -1,6 +1,8 @@
-﻿@media screen and (min-width:960px)
-{
-    .tree-container{
-        max-width:256px;
+﻿@media screen and (min-width:960px) {
+    .tree-wrap > div {
+        width: 50%;
+    }
+    ::deep .tree-card {
+        width: 100%;
     }
 }

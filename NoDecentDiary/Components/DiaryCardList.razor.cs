@@ -23,9 +23,13 @@ namespace NoDecentDiary.Components
         private ISystemService SystemService { get; set; } = default!;
 
         [Parameter]
-        public List<DiaryModel>? Value { get; set; } = new List<DiaryModel>();
+        public List<DiaryModel> Value { get; set; } = new List<DiaryModel>();
         [Parameter]
         public string? Class { get; set; }
+        [Parameter]
+        public string? CardClass { get; set; }
+        [Parameter]
+        public EventCallback OnDeleted { get; set; }
 
         private async Task OnTopping(DiaryModel diaryModel)
         {
@@ -58,6 +62,7 @@ namespace NoDecentDiary.Components
                         it.Title = I18n!.T("Share.DeleteFail");
                     });
                 }
+                await OnDeleted.InvokeAsync();
             };
             ShowDeleteDiary = true;
             StateHasChanged();

@@ -134,11 +134,5 @@ namespace NoDecentDiary.Pages
         {
             NavigateService.NavigateTo("/search");
         }
-
-        private async Task OnActiveUpdate(List<Tree> trees)
-        {
-            Diaries = await DiaryService!.QueryAsync();
-            StateHasChanged();
-        }
     }
 }
