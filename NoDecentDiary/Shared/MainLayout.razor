@@ -25,7 +25,28 @@
                 </MList>
             </MNavigationDrawer>
         }
-        @Body
+        <ErrorBoundary>
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent>
+                <MDialog Value="true"
+                         Persistent
+                         MaxWidth="420">
+                    <MCard>
+                        <MCardTitle Class="font-weight-bold">
+                            <MIcon Class="error--text mr-2">
+                                mdi-close-circle-outline
+                            </MIcon>
+                            @(I18n.T("ErrorHandle.Title"))
+                        </MCardTitle>
+                        <MCardText>
+                            @(I18n.T("ErrorHandle.Content"))
+                        </MCardText>
+                    </MCard>
+                </MDialog>
+            </ErrorContent>
+        </ErrorBoundary>
     </MMain>
     <MBottomNavigation @bind-Value="SelectedItem"
                        InputValue="ShowBottomNavigation"

@@ -31,7 +31,6 @@ namespace NoDecentDiary.Components
         {
             diaryModel.Top = !diaryModel.Top;
             await DiaryService!.UpdateAsync(diaryModel);
-
         }
 
         private void OpenDeleteDialog(DiaryModel diaryModel)

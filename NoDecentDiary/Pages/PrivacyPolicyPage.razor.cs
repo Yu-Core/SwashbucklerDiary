@@ -9,10 +9,6 @@ namespace NoDecentDiary.Pages
     {
         private string? Content { get; set; }
 
-
-        [CascadingParameter]
-        public Error Error { get; set; } = default!;
-
         protected override async Task OnInitializedAsync()
         {
             await LoadingData();
@@ -21,15 +17,8 @@ namespace NoDecentDiary.Pages
 
         private async Task LoadingData()
         {
-            try
-            {
-                var uri = I18n.T("FilePath.PrivacyPolicy");
-                Content = await SystemService.ReadMarkdown(uri);
-            }
-            catch (Exception ex)
-            {
-                Error.ProcessError(ex);
-            }
+            var uri = I18n.T("FilePath.PrivacyPolicy");
+            Content = await SystemService.ReadMarkdown(uri);
         }
     }
 }

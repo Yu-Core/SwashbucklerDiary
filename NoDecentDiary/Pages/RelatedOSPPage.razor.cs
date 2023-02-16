@@ -29,20 +29,9 @@ namespace NoDecentDiary.Pages
             public string Url { get; set; }
         }
 
-        [CascadingParameter]
-        public Error Error { get; set; } = default!;
-
         private async Task OpenBrowser(string url)
         {
-            try
-            {
-                await SystemService.OpenBrowser(url);
-            }
-            catch (Exception ex)
-            {
-                // An unexpected error occured. No browser may be installed on the device.
-                Error.ProcessError(ex);
-            }
+            await SystemService.OpenBrowser(url);
         }
     }
 }

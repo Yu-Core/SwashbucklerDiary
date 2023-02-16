@@ -163,7 +163,7 @@ namespace NoDecentDiary.Services
 #elif ANDROID
             uri = $"market://details?id={appId}";
 #elif IOS || MACCATALYST
-            uri = $"itms-apps://itunes.apple.com/app/id{appId}";
+            uri = $"itms-apps://itunes.apple.com/app/id{appId}?action=write-review";
 #endif
             return await Launcher.Default.TryOpenAsync(uri);
         }

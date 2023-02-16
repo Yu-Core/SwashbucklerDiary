@@ -1,23 +1,10 @@
 ﻿@page "/log"
 @inherits PageComponentBase
 
-<MAppBar App
-         ElevateOnScroll
-         Color="white"
-         ScrollTarget="#scrolling-log">
-    <MButton Icon OnClick="NavigateToBack">
-        <MIcon>
-            mdi-arrow-left
-        </MIcon>
-    </MButton>
+<MyAppBar Title="@(I18n.T("About.LogFile"))" OnClick="NavigateToBack">
 
-    <MToolbarTitle>
-        @(I18n.T("About.LogFile"))
-    </MToolbarTitle>
-
-    <MSpacer></MSpacer>
-</MAppBar>
-<ScrollContainer Id="scrolling-log">
+</MyAppBar>
+<ScrollContainer>
     <MList Dense>
         @foreach (var item in LogTextList)
         {

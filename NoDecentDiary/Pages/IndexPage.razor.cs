@@ -22,8 +22,6 @@ namespace NoDecentDiary.Pages
         [Inject]
         public IDiaryTagService DiaryTagService { get; set; } = default!;
 
-        [CascadingParameter]
-        public Error Error { get; set; } = default!;
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Type { get; set; }

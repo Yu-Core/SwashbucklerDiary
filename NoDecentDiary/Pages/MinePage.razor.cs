@@ -33,9 +33,6 @@ namespace NoDecentDiary.Pages
         [Inject]
         private IDiaryService? DiaryService { get; set; }
 
-        [CascadingParameter]
-        public Error Error { get; set; } = default!;
-
         protected override async Task OnInitializedAsync()
         {
             LoadView();
@@ -180,25 +177,17 @@ namespace NoDecentDiary.Pages
                     await PopupService.ToastSuccessAsync(I18n!.T("Mine.MailCopy"));
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Error!.ProcessError(ex);
+                throw new Exception("SendMailError");
             }
         }
 
         private async Task ToGithub()
         {
             ShowFeedback = false;
-            try
-            {
-                var url = "https://github.com/Yu-Core/NoDecentDiary";
-                await SystemService.OpenBrowser(url);
-            }
-            catch (Exception ex)
-            {
-                // An unexpected error occured. No browser may be installed on the device.
-                Error.ProcessError(ex);
-            }
+            var url = "https://github.com/Yu-Core/NoDecentDiary";
+            await SystemService.OpenBrowser(url);
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()

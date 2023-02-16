@@ -2,6 +2,7 @@
 using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using NoDecentDiary.IServices;
 using NoDecentDiary.Models;
 using System.Globalization;
@@ -32,9 +33,6 @@ namespace NoDecentDiary.Shared
         private ISystemService SystemService { get; set; } = default!;
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
-
-        [CascadingParameter]
-        private Error Error { get; set; } = default!;
 
         public void Dispose()
         {
@@ -109,28 +107,20 @@ namespace NoDecentDiary.Shared
 
         private async Task FirstLaunch()
         {
-            try
+            bool flag = SystemService.IsFirstLaunch();
+            if (flag)
             {
-                bool flag = SystemService.IsFirstLaunch();
-                if (flag)
+                var uri = I18n.T("FilePath.FunctionalDescription");
+                string content = await SystemService.ReadMarkdown(uri);
+                var diary = new DiaryModel()
                 {
-                    var uri = I18n.T("FilePath.FunctionalDescription");
-                    string content = await SystemService.ReadMarkdown(uri);
-                    var diary = new DiaryModel()
-                    {
-                        Title = I18n.T("FunctionalDescription"),
-                        Content = content,
-                        CreateTime = DateTime.Now,
-                        UpdateTime = DateTime.Now,
-                    };
-                    await DiaryService.AddAsync(diary);
-                }
+                    Title = I18n.T("FunctionalDescription"),
+                    Content = content,
+                    CreateTime = DateTime.Now,
+                    UpdateTime = DateTime.Now,
+                };
+                await DiaryService.AddAsync(diary);
             }
-            catch (Exception ex)
-            {
-                Error.ProcessError(ex);
-            }
-
         }
     }
 }
