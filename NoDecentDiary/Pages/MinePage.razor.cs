@@ -27,7 +27,7 @@ namespace NoDecentDiary.Pages
             {"English","en-US" }
         };
         private Dictionary<string, List<ViewListItem>> ViewLists = new();
-        private List<FeedbackType> FeedbackTypes = new();
+        private List<ViewListItem> FeedbackTypes = new();
 
 
         [Inject]
@@ -60,19 +60,6 @@ namespace NoDecentDiary.Pages
                 }
                 StateHasChanged();
             }
-        }
-
-        private class FeedbackType
-        {
-            public FeedbackType(string name, string icon, Action action)
-            {
-                Name = name;
-                Icon = icon;
-                Action = action;
-            }
-            public string Name { get; set; }
-            public string Icon { get; set; }
-            public Action Action { get; set; }
         }
 
         private async Task SetCount()

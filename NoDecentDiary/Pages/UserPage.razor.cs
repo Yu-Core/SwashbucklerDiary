@@ -1,5 +1,6 @@
 ﻿using Microsoft.JSInterop;
 using NoDecentDiary.Components;
+using NoDecentDiary.Models;
 
 namespace NoDecentDiary.Pages
 {
