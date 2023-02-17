@@ -72,7 +72,7 @@
     </MyMenu>
 </MAppBar>
 
-<ScrollContainer Id="scrolling-read">
+<ScrollContainer Id="scrolling-read" OnContextmenu="()=>ShowMenu = true">
     <div id="screenshot">
         <div class="px-3 text-h6 font-weight-bold">
             <span>@(Diary.CreateTime.ToString("yyyy/MM/dd"))</span>
@@ -161,7 +161,7 @@
         </MCardTitle>
         <MCardText>
             <MList>
-                <MListItem OnClick="ShareText">
+                <MListItem Class="px-0" OnClick="ShareText">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             mdi-format-text
@@ -173,7 +173,7 @@
                         </MListItemTitle>
                     </MListItemContent>
                 </MListItem>
-                <MListItem OnClick="ShareImage">
+                <MListItem Class="px-0" OnClick="ShareImage">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             mdi-image-outline

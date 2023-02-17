@@ -14,6 +14,8 @@ namespace NoDecentDiary.Components
         public string? Id { get; set; }
         [Parameter]
         public bool Bottom { get; set; }
+        [Parameter]
+        public EventCallback OnContextmenu { get; set; }
 
         public void Dispose()
         {

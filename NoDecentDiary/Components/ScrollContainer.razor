@@ -1,4 +1,4 @@
-﻿<div id="@Id" class="overflow-y-auto" style="@($"max-height:{Height}px;min-height:{Height}px;")">
+﻿<div id="@Id" class="overflow-y-auto" style="@($"max-height:{Height}px;min-height:{Height}px;")" @oncontextmenu="OnContextmenu">
     <MContainer Style="box-sizing: border-box;">
         @ChildContent
     </MContainer>
