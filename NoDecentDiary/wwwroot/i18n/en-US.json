@@ -65,7 +65,9 @@
     "Delete": {
       "Title": "Delete Diary",
       "Content": "Please delete carefully. Every diary is a precious memory."
-    }
+    },
+    "Markdown": "Markdown Mode",
+    "Text": "Text Mode"
   },
   "Search": {
     "Placeholder": "Please enter diary keywords"
@@ -77,7 +79,6 @@
   "Write": {
     "OpenTitle": "Open Title",
     "CloseTitle": "Close Title",
-    "RichText": "RichText",
     "Weather": "Weather",
     "Mood": "Mood",
     "Location": "Location",

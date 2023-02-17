@@ -16,12 +16,13 @@ namespace NoDecentDiary.Pages
         private bool ShowWeather;
         private bool ShowMood;
         private bool ShowLocation;
+        private bool Markdown;
         private DiaryModel Diary = new()
         {
             CreateTime = DateTime.Now
         };
         private List<TagModel> SelectedTags = new();
-
+        
         [Inject]
         public MasaBlazor MasaBlazor { get; set; } = default!;
         [Inject]
@@ -51,6 +52,7 @@ namespace NoDecentDiary.Pages
         {
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             NavigateService.Action += OnBack;
+            await LoadSettings();
             await SetTag();
             await SetDiary();
         }
@@ -132,6 +134,11 @@ namespace NoDecentDiary.Pages
                     SelectedTags = await TagService!.GetDiaryTagsAsync((int)DiaryId);
                 }
             }
+        }
+
+        private async Task LoadSettings()
+        {
+            Markdown = await SettingsService.Get(nameof(Markdown), false);
         }
 
         private void RemoveSelectedTag(TagModel tag)
@@ -270,6 +277,12 @@ namespace NoDecentDiary.Pages
             }
 
             return len + " " + I18n!.T("Write.CountUnit");
+        }
+
+        private async Task MarkdownChanged()
+        {
+            Markdown = !Markdown;
+            await SettingsService!.Save(nameof(Markdown), Markdown);
         }
     }
 }

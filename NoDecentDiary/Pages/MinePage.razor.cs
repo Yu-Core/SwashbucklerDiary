@@ -123,9 +123,9 @@ namespace NoDecentDiary.Pages
 
         private async Task LoadSettings()
         {
-            Language = await SettingsService!.Get(nameof(Language), Languages.First().Value);
-            UserName = await SettingsService!.Get<string?>(nameof(UserName), null);
-            Sign = await SettingsService!.Get<string?>(nameof(Sign), null);
+            Language = await SettingsService.Get(nameof(Language), Languages.First().Value);
+            UserName = await SettingsService.Get<string?>(nameof(UserName), null);
+            Sign = await SettingsService.Get<string?>(nameof(Sign), null);
         }
 
         private void NavigateToSearch()
@@ -143,7 +143,7 @@ namespace NoDecentDiary.Pages
             NavigateService.NavigateTo("/about");
         }
 
-        private async Task OnChangeLanguage(string value)
+        private async Task LanguageChanged(string value)
         {
             ShowLanguage = false;
             Language = value;

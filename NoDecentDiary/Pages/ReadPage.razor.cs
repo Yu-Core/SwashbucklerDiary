@@ -19,6 +19,7 @@ namespace NoDecentDiary.Pages
         private List<TagModel> SelectedTags = new();
         private IJSObjectReference? module;
         private Action? OnDelete;
+        private bool Markdown;
 
         [Inject]
         public MasaBlazor MasaBlazor { get; set; } = default!;
@@ -36,6 +37,7 @@ namespace NoDecentDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            await LoadSettings();
             await UpdateDiary();
             await UpdateTag();
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
@@ -94,6 +96,11 @@ namespace NoDecentDiary.Pages
         private async Task UpdateTag()
         {
             SelectedTags = await TagService!.GetDiaryTagsAsync(Id);
+        }
+
+        private async Task LoadSettings()
+        {
+            Markdown = await SettingsService.Get(nameof(Markdown), false);
         }
 
         private async Task InvokeStateHasChangedAsync()
@@ -201,6 +208,12 @@ namespace NoDecentDiary.Pages
                 return "mdi-emoticon-outline";
             }
             return IconService!.GetMoodIcon(key);
+        }
+
+        private async Task MarkdownChanged()
+        {
+            Markdown = !Markdown;
+            await SettingsService!.Save(nameof(Markdown), Markdown);
         }
     }
 }

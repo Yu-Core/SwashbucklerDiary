@@ -1,0 +1,42 @@
+﻿::deep .vditor {
+    --textarea-background-color:#fff;
+}
+
+::deep .vditor-toolbar {
+    background-color: transparent;
+    padding-left:0px !important;
+}
+
+::deep .vditor-reset{
+    padding-left:0px !important;
+    padding-right:0px !important;
+}
+
+@media screen and (max-width:600px) {
+    ::deep .vditor {
+        border:none;
+    }
+    /*::deep .vditor-toolbar {
+        overflow-x: auto;
+        display: flex;
+        flex-wrap:wrap;
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        padding-left: 12px !important;
+        border-top: 1px solid grey;
+        border-bottom:none;
+        z-index: 10;
+        background-color: white;
+    }*/
+    ::deep .vditor-toolbar .vditor-toolbar__item {
+        padding:0px 8px !important;
+    }
+    ::deep .vditor-reset p {
+        margin-bottom:8px;
+    }
+}
+/*::deep .vditor-hint {
+    position: fixed;
+    left: -1000px;
+}*/

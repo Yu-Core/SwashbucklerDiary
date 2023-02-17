@@ -66,7 +66,9 @@
     "Delete": {
       "Title": "删除日记",
       "Content": "请慎重删除，每一篇日记都是珍贵的回忆。"
-    }
+    },
+    "Markdown": "Markdown模式",
+    "Text": "文本模式"
   },
   "Search": {
     "Placeholder": "请输入日记关键词"
@@ -78,7 +80,6 @@
   "Write": {
     "OpenTitle": "打开标题",
     "CloseTitle": "关闭标题",
-    "RichText": "切换富文本",
     "Weather": "天气",
     "Mood": "心情",
     "Location": "位置",

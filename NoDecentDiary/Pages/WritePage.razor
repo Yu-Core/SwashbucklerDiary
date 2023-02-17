@@ -45,9 +45,9 @@
                         @(ShowTitle ? I18n!.T("Write.CloseTitle") : I18n!.T("Write.OpenTitle"))
                     </MListItemContent>
                 </MListItem>
-                <MListItem Dense>
+                <MListItem Dense OnClick="()=>MarkdownChanged()">
                     <MListItemContent>
-                        @(I18n!.T("Write.RichText"))
+                        @(Markdown ? I18n!.T("Diary.Text") : I18n!.T("Diary.Markdown"))
                     </MListItemContent>
                 </MListItem>
             </MList>
@@ -105,7 +105,14 @@
         </MTextField>
     }
 
-    <MTextarea @bind-Value="Diary.Content"
+    @if (Markdown)
+    {
+        <MyMarkdown @bind-Value="Diary.Content" Class="my-sm-4 px-3">
+        </MyMarkdown>
+    }
+    else
+    {
+        <MTextarea @bind-Value="Diary.Content"
                Class="my-sm-4 user-select"
                Solo="Mobile"
                Flat="Mobile"
@@ -118,10 +125,11 @@
                Counter="true"
                spellcheck="false"
                Placeholder="@(I18n!.T("Write.ContentPlace"))">
-        <CounterContent>
-            <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
-        </CounterContent>
-    </MTextarea>
+            <CounterContent>
+                <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
+            </CounterContent>
+        </MTextarea>
+    }
 
     <div class="mb-5">
         <MChipGroup Column>

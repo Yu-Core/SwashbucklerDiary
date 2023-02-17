@@ -32,8 +32,8 @@
     </MButton>
 
     <MyMenu @bind-MyValue="ShowMenu"
-           Rounded="@("lg")"
-           Transition="scroll-x-reverse-transition">
+            Rounded="@("lg")"
+            Transition="scroll-x-reverse-transition">
         <ActivatorContent>
             <MButton Icon
                      @attributes="@context.Attrs">
@@ -65,6 +65,11 @@
                 <MListItem Dense>
                     <MListItemContent>
                         @(I18n!.T("Diary.Export"))
+                    </MListItemContent>
+                </MListItem>
+                <MListItem Dense OnClick="()=>MarkdownChanged()">
+                    <MListItemContent>
+                        @(Markdown ? I18n!.T("Diary.Text") : I18n!.T("Diary.Markdown"))
                     </MListItemContent>
                 </MListItem>
             </MList>
@@ -125,8 +130,14 @@
                     maxlength="20">
             </MTextField>
         }
-
-        <MTextarea Value="@(Diary.Content)"
+        @if (Markdown)
+        {
+            <MMarkdownIt Source="@(Diary.Content)" Class="my-sm-4 px-3">
+            </MMarkdownIt>
+        }
+        else
+        {
+            <MTextarea Value="@(Diary.Content)"
                    Class="my-sm-4 user-select"
                    Solo
                    Flat
@@ -135,7 +146,8 @@
                    AutoGrow
                    Rows="8"
                    RowHeight="30">
-        </MTextarea>
+            </MTextarea>
+        }
 
         <div class="mb-5">
             <MChipGroup Column>
