@@ -1,8 +1,8 @@
-# NoDecentDiary(反派日记)
+# SwashbucklerDiary(侠客日记)
 
 [English](./README.md) | 简体中文
 
-「NoDecentDiary」是一个开源跨平台的、专注于日记的应用。
+「SwashbucklerDiary」是一个开源跨平台的、专注于日记的应用。
 
 <img src="./Images/Windows.jpeg" />
 
@@ -11,7 +11,8 @@
 ## 支持的平台
 - Windows (Windows 10/11)
 - Android (Android 7.0以上)
-- ~~iOS/Mac~~ (没有测试，能否运行未知)
+- iOS (iOS 14以上)
+- macOS (macOS 11以上)
 
 ## 感谢以下开源项目
 - [.NET MAUI](https://github.com/dotnet/maui)

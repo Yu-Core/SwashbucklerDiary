@@ -1,0 +1,12 @@
+﻿@namespace SwashbucklerDiary.Components
+
+<div class="@("swiper " + Id)" style="@(Show?"":"display:none;")">
+    <div class="swiper-wrapper">
+        @ChildContent
+    </div>
+</div>
+<div class="justify-center" style="@($"padding-top:30vh;{(Show?"display:none;":"display:flex;")}")">
+    <MProgressCircular Indeterminate
+                       Size="48"></MProgressCircular>
+</div>
+<link href="css/swiper-bundle.min.css" rel="stylesheet" />

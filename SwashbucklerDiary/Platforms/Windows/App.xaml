@@ -1,0 +1,13 @@
+﻿<maui:MauiWinUIApplication
+    x:Class="SwashbucklerDiary.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:maui="using:Microsoft.Maui"
+    xmlns:local="using:SwashbucklerDiary.WinUI">
+    <Application.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="WindowCaptionBackground">#fff</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">#fff</SolidColorBrush>
+        </ResourceDictionary>
+    </Application.Resources>
+</maui:MauiWinUIApplication>

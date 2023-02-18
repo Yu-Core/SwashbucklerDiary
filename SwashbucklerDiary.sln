@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31611.283
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{F0B9BBF7-E653-454E-8B4B-C043F6AAEBA2}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+		README.zh-CN.md = README.zh-CN.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F33D825F-2DE5-41BC-A2E2-3C3E298C1A04}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwashbucklerDiary", "SwashbucklerDiary\SwashbucklerDiary.csproj", "{8E2DC3A2-214E-4F87-B65F-AC79607927EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E2DC3A2-214E-4F87-B65F-AC79607927EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E2DC3A2-214E-4F87-B65F-AC79607927EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E2DC3A2-214E-4F87-B65F-AC79607927EA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8E2DC3A2-214E-4F87-B65F-AC79607927EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E2DC3A2-214E-4F87-B65F-AC79607927EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E2DC3A2-214E-4F87-B65F-AC79607927EA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+	EndGlobalSection
+EndGlobal
