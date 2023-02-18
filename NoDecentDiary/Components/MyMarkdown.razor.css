@@ -32,9 +32,6 @@
     ::deep .vditor-toolbar .vditor-toolbar__item {
         padding:0px 8px !important;
     }
-    ::deep .vditor-reset p {
-        margin-bottom:8px;
-    }
 }
 /*::deep .vditor-hint {
     position: fixed;
