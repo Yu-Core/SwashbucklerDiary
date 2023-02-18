@@ -16,7 +16,7 @@ namespace NoDecentDiary.Components
             set
             {
                 base.Value = value;
-                SetValue(value);
+                //SetValue(value);
             }
         }
         [Parameter]
@@ -26,14 +26,14 @@ namespace NoDecentDiary.Components
             set => base.ValueChanged = value;
         }
 
-        public new async ValueTask DisposeAsync()
-        {
-            if (Value)
-            {
-                NavigateService.Action -= Close;
-            }
-            await base.DisposeAsync();
-        }
+        //public new async ValueTask DisposeAsync()
+        //{
+        //    if (Value)
+        //    {
+        //        NavigateService.Action -= Close;
+        //    }
+        //    await base.DisposeAsync();
+        //}
 
         private void SetValue(bool value)
         {
