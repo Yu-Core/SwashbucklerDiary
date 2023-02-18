@@ -71,7 +71,7 @@ namespace NoDecentDiary.Shared
             var flag = await SettingsService!.ContainsKey("Language");
             if (flag)
             {
-                var language = await SettingsService!.Get("Language", string.Empty);
+                var language = await SettingsService!.GetLanguage();
                 I18n!.SetCulture(new CultureInfo(language));
             }
 

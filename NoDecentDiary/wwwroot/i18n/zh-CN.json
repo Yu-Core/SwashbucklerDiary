@@ -68,7 +68,7 @@
       "Content": "请慎重删除，每一篇日记都是珍贵的回忆。"
     },
     "Markdown": "Markdown模式",
-    "Text": "文本模式"
+    "Text": "纯文本模式"
   },
   "Search": {
     "Placeholder": "请输入日记关键词"

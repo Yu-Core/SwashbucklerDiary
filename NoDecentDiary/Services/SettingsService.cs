@@ -21,5 +21,10 @@ namespace NoDecentDiary.Services
             Preferences.Default.Set(key, value);
             return Task.CompletedTask;
         }
+
+        public Task<string> GetLanguage()
+        {
+            return Get("Language", "zh-CN");
+        }
     }
 }

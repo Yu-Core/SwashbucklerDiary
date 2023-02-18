@@ -123,7 +123,7 @@ namespace NoDecentDiary.Pages
 
         private async Task LoadSettings()
         {
-            Language = await SettingsService.Get(nameof(Language), Languages.First().Value);
+            Language = await SettingsService.GetLanguage();
             UserName = await SettingsService.Get<string?>(nameof(UserName), null);
             Sign = await SettingsService.Get<string?>(nameof(Sign), null);
         }

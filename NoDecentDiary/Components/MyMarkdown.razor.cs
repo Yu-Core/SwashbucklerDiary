@@ -1,15 +1,17 @@
-﻿using Masa.Blazor;
+﻿using BlazorComponent.I18n;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+using NoDecentDiary.IServices;
 
 namespace NoDecentDiary.Components
 {
     public partial class MyMarkdown
     {
-        private MMarkdown? mMarkdown;
+        private Dictionary<string, object> _options = new();
 
         [Inject]
-        IJSRuntime JS { get; set; } = default!;
+        private I18n I18n { get; set; } = default!;
+        [Inject]
+        private ISettingsService SettingsService { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
@@ -18,41 +20,21 @@ namespace NoDecentDiary.Components
         [Parameter]
         public string? Class { get; set; }
 
-        private Dictionary<string, object> _options = new()
+        protected async override Task OnInitializedAsync()
         {
-            {"mode","ir" },
-            {"counter",
-                new
-                {
-                    enable = true,
-                    type = "type"
-                }
-            },
-            {"minHeight",240},
-            {"toolbar",
-                new List<string>()
-                {
-                    "headings", "bold", "italic", "strike", "line", "quote",
-                    "list", "ordered-list" , "check", "indent","code","inline-code",
-                    "link","emoji","edit-mode"
-                } 
-            }
-        };
-
-//        private async Task OnFocus(string value)
-//        {
-//#if ! __MOBILE__
-//            return;
-//#endif
-//            await JS.InvokeVoidAsync("raiseToolBar",new object[1] { mMarkdown!.Ref });
-//        }
-
-//        private async Task OnBlur(string value)
-//        {
-//#if !__MOBILE__
-//            return;
-//#endif
-//            await JS.InvokeVoidAsync("reduceToolBar", new object[1] { mMarkdown!.Ref });
-//        }
+            var Language = await SettingsService.GetLanguage();
+            Language = Language.Replace("-", "_");
+            _options = new()
+            {
+                {"mode","ir" },
+                {"counter",new{enable = true,type = "type"}},
+                {"minHeight",240},
+                {"toolbar",new List<string>(){"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "indent","code","inline-code","link","emoji","edit-mode"}},
+                {"placeholder",I18n!.T("Write.ContentPlace")! },
+                {"cdn","npm/vditor/3.9.0" },
+                {"lang",Language }
+            };
+            base.OnInitialized();
+        }
     }
 }
