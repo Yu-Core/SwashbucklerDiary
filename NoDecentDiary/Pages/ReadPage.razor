@@ -88,7 +88,7 @@
         <div class="px-2">
             @if (ShowWeather)
             {
-                <MChip Class="my-2 mr-2" Outlined="IsMobile">
+                <MChip Class="my-2 mr-2" Outlined>
                     <MIcon Left>
                         @(GetWeatherIcon(Diary.Weather))
                     </MIcon>
@@ -98,7 +98,7 @@
 
             @if (ShowMood)
             {
-                <MChip Class="my-2 mr-2" Outlined="IsMobile">
+                <MChip Class="my-2 mr-2" Outlined>
                     <MIcon Left>
                         @(GetMoodIcon(Diary.Mood))
                     </MIcon>
@@ -108,7 +108,7 @@
 
             @if (ShowLocation)
             {
-                <MChip Class="my-2 mr-2" Outlined="IsMobile">
+                <MChip Class="my-2 mr-2" Outlined>
                     <MIcon Left>
                         mdi-map-marker-outline
                     </MIcon>
@@ -153,7 +153,7 @@
             <MChipGroup Column>
                 @foreach (var item in SelectedTags)
                 {
-                    <MChip Outlined="IsMobile">
+                    <MChip Outlined>
                         @(item.Name)
                     </MChip>
                 }

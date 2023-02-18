@@ -55,7 +55,7 @@
                        Shift>
         @foreach (var navigationButton in NavigationButtons)
         {
-            <MButton OnClick="()=>ChangeView(navigationButton)">
+            <MButton Ripple="false" OnClick="()=>ChangeView(navigationButton)">
                 <span>@(I18n!.T(navigationButton.Title))</span>
                 <MIcon>@GetIcon(navigationButton)</MIcon>
             </MButton>

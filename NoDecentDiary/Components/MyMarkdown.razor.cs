@@ -33,7 +33,7 @@ namespace NoDecentDiary.Components
                 new List<string>()
                 {
                     "headings", "bold", "italic", "strike", "line", "quote",
-                    "list", "ordered-list", "indent","code","inline-code",
+                    "list", "ordered-list" , "check", "indent","code","inline-code",
                     "link","emoji","edit-mode"
                 } 
             }

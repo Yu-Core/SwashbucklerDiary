@@ -7,6 +7,10 @@
     padding-left:0px !important;
 }
 
+    ::deep .vditor-toolbar .vditor-toolbar__item {
+        padding: 0px 8px !important;
+    }
+
 ::deep .vditor-reset{
     padding-left:0px !important;
     padding-right:0px !important;
@@ -29,9 +33,9 @@
         z-index: 10;
         background-color: white;
     }*/
-    ::deep .vditor-toolbar .vditor-toolbar__item {
+    /*::deep .vditor-toolbar .vditor-toolbar__item {
         padding:0px 8px !important;
-    }
+    }*/
 }
 /*::deep .vditor-hint {
     position: fixed;

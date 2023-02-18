@@ -1,5 +1,4 @@
 ﻿using BlazorComponent;
-using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using NoDecentDiary.Components;
@@ -22,8 +21,6 @@ namespace NoDecentDiary.Pages
         private bool Markdown;
 
         [Inject]
-        public MasaBlazor MasaBlazor { get; set; } = default!;
-        [Inject]
         public IDiaryService DiaryService { get; set; } = default!;
         [Inject]
         public IDiaryTagService DiaryTagService { get; set; } = default!;
@@ -40,7 +37,6 @@ namespace NoDecentDiary.Pages
             await LoadSettings();
             await UpdateDiary();
             await UpdateTag();
-            MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
         }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -69,7 +65,6 @@ namespace NoDecentDiary.Pages
         private bool ShowWeather => !string.IsNullOrEmpty(Diary.Weather);
         private bool ShowMood => !string.IsNullOrEmpty(Diary.Mood);
         private bool ShowLocation => !string.IsNullOrEmpty(Diary.Location);
-        private bool IsMobile => !MasaBlazor.Breakpoint.SmAndUp;
         private string DiaryCopyContent
         {
             get
@@ -103,14 +98,8 @@ namespace NoDecentDiary.Pages
             Markdown = await SettingsService.Get(nameof(Markdown), false);
         }
 
-        private async Task InvokeStateHasChangedAsync()
-        {
-            await InvokeAsync(StateHasChanged);
-        }
-
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
-            MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
             if (module is not null)
             {
                 await module.DisposeAsync();
