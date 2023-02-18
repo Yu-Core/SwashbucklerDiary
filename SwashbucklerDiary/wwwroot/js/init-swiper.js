@@ -1,4 +1,4 @@
-import '/js/swiper-bundle.min.js';
+import '/npm/swiper/7.4.1/swiper-bundle.min.js';
 export function swiperInit(dotNetCallbackRef, callbackMethod, id, index) {
     let className = "." + id;
     window[id] = new Swiper(className, {

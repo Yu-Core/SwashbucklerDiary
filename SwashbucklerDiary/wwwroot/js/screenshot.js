@@ -1,4 +1,4 @@
-﻿import '/js/html2canvas.min.js';
+﻿import '/npm/html2canvas/1.4.1/dist/html2canvas.min.js';
 export function getScreenshotBase64(element) {
     return new Promise((resolve, reject) => {
         html2canvas(document.querySelector(element), {
