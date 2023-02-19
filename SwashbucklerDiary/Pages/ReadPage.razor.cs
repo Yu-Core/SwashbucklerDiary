@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Pages
         {
             if (firstRender)
             {
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/screenshot.js");
+                module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/screenshot.js");
             }
         }
 
