@@ -1,18 +1,17 @@
-﻿using SQLite;
+﻿using SqlSugar;
 
 namespace SwashbucklerDiary.Models
 {
-    public class DiaryModel
+    public class DiaryModel : BaseModel
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
         public string? Title { get; set; }
         public string? Content { get; set; }
         public string? Mood { get; set; }
         public string? Weather { get; set; }
         public string? Location { get; set; }
         public bool Top { get; set; }
-        public DateTime CreateTime { get; set; }
-        public DateTime UpdateTime { get; set; }
+
+        [Navigate(typeof(DiaryTagModel), nameof(DiaryTagModel.DiaryId), nameof(DiaryTagModel.TagId))]
+        public List<TagModel>? Tags { get; set; }
     }
 }

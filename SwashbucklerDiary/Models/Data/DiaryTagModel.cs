@@ -1,11 +1,7 @@
-﻿using SQLite;
-
-namespace SwashbucklerDiary.Models
+﻿namespace SwashbucklerDiary.Models
 {
-    public class DiaryTagModel
+    public class DiaryTagModel : BaseModel
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
         public int DiaryId { get; set; }
         public int TagId { get; set; }
     }

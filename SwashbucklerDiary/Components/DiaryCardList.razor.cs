@@ -9,16 +9,11 @@ namespace SwashbucklerDiary.Components
     {
         private bool ShowDeleteDiary;
         private bool ShowSelectTag;
-        private int SelectedDiaryId;
-        private List<TagModel> SelectedTags = new();
+        private DiaryModel SelectDiary = new();
         private Action? OnDelete;
 
         [Inject]
         public IDiaryService DiaryService { get; set; } = default!;
-        [Inject]
-        public ITagService TagService { get; set; } = default!;
-        [Inject]
-        public IDiaryTagService DiaryTagService { get; set; } = default!;
         [Inject]
         private ISystemService SystemService { get; set; } = default!;
 
@@ -31,10 +26,16 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public EventCallback OnDeleted { get; set; }
 
+        private List<TagModel> SelectedTags
+        {
+            get=> SelectDiary.Tags ?? new ();
+            set => SelectDiary.Tags = value;
+        }
+
         private async Task OnTopping(DiaryModel diaryModel)
         {
             diaryModel.Top = !diaryModel.Top;
-            await DiaryService!.UpdateAsync(diaryModel);
+            await DiaryService.UpdateAsync(diaryModel);
         }
 
         private void OpenDeleteDialog(DiaryModel diaryModel)
@@ -43,14 +44,14 @@ namespace SwashbucklerDiary.Components
             OnDelete += async () =>
             {
                 ShowDeleteDiary = false;
-                bool flag = await DiaryService!.DeleteAsync(diaryModel);
+                bool flag = await DiaryService.DeleteAsync(diaryModel);
                 if (flag)
                 {
                     Value!.Remove(diaryModel);
                     await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Success;
-                        it.Title = I18n!.T("Share.DeleteSuccess");
+                        it.Title = I18n.T("Share.DeleteSuccess");
                     });
                     StateHasChanged();
                 }
@@ -59,7 +60,7 @@ namespace SwashbucklerDiary.Components
                     await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Error;
-                        it.Title = I18n!.T("Share.DeleteFail");
+                        it.Title = I18n.T("Share.DeleteFail");
                     });
                 }
                 await OnDeleted.InvokeAsync();
@@ -76,22 +77,21 @@ namespace SwashbucklerDiary.Components
             await PopupService.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Success;
-                it.Title = I18n!.T("Share.CopySuccess");
+                it.Title = I18n.T("Share.CopySuccess");
             });
         }
 
-        private async Task OnTag(int id)
+        private async Task OnTag(DiaryModel diary)
         {
-            SelectedDiaryId = id;
-            SelectedTags = await TagService!.GetDiaryTagsAsync(SelectedDiaryId);
+            SelectDiary = diary;
+            SelectedTags = await DiaryService.GetTagsAsync(SelectDiary.Id);
             StateHasChanged();
             ShowSelectTag = true;
         }
 
         private async Task SaveSelectTags()
         {
-            await DiaryTagService!.DeleteAsync(it => it.DiaryId == SelectedDiaryId);
-            await DiaryTagService.AddTagsAsync(SelectedDiaryId, SelectedTags);
+            await DiaryService.UpdateTagsAsync(SelectDiary);
             ShowSelectTag = false;
         }
 

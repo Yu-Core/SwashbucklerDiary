@@ -42,12 +42,12 @@
                 <MListItem Dense
                            OnClick="()=>ShowTitle = !ShowTitle">
                     <MListItemContent>
-                        @(ShowTitle ? I18n!.T("Write.CloseTitle") : I18n!.T("Write.OpenTitle"))
+                        @(ShowTitle ? I18n.T("Write.CloseTitle") : I18n.T("Write.OpenTitle"))
                     </MListItemContent>
                 </MListItem>
                 <MListItem Dense OnClick="()=>MarkdownChanged()">
                     <MListItemContent>
-                        @(Markdown ? I18n!.T("Diary.Text") : I18n!.T("Diary.Markdown"))
+                        @(Markdown ? I18n.T("Diary.Text") : I18n.T("Diary.Markdown"))
                     </MListItemContent>
                 </MListItem>
             </MList>
@@ -85,7 +85,7 @@
             <MIcon Left>
                 mdi-map-marker-outline
             </MIcon>
-            @(Diary.Location ?? I18n!.T("Write.Location"))
+            @(Diary.Location ?? I18n.T("Write.Location"))
         </MChip>
     </div>
 
@@ -101,7 +101,7 @@
                 Dense
                 spellcheck="false"
                 maxlength="20"
-                Placeholder="@(I18n!.T("Write.TitlePlace"))">
+                Placeholder="@(I18n.T("Write.TitlePlace"))">
         </MTextField>
     }
 
@@ -124,7 +124,7 @@
                RowHeight="30"
                Counter="true"
                spellcheck="false"
-               Placeholder="@(I18n!.T("Write.ContentPlace"))">
+               Placeholder="@(I18n.T("Write.ContentPlace"))">
             <CounterContent>
                 <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
             </CounterContent>
@@ -150,13 +150,13 @@
                  Rounded
                  Dark
                  OnClick="OnSave">
-            @(I18n!.T("Share.Save"))
+            @(I18n.T("Share.Save"))
         </MButton>
         <MButton Class="px-8"
                  Rounded
                  Outlined
                  OnClick="OnClear">
-            @(I18n!.T("Share.Clear"))
+            @(I18n.T("Share.Clear"))
         </MButton>
     </div>
 </ScrollContainer>
@@ -171,7 +171,7 @@
           Scrollable>
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n!.T("Write.SelectWeather"))
+            @(I18n.T("Write.SelectWeather"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="()=>ShowWeather=false">
                 <MIcon>mdi-close</MIcon>
@@ -186,7 +186,7 @@
                         <MIcon Left>
                             @(item.Value)
                         </MIcon>
-                        @(I18n!.T("Weather." + item.Key))
+                        @(I18n.T("Weather." + item.Key))
                     </MChip>
                 }
             </MChipGroup>
@@ -198,7 +198,7 @@
           Scrollable>
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n!.T("Write.SelectMood"))
+            @(I18n.T("Write.SelectMood"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="()=>ShowMood=false">
                 <MIcon>mdi-close</MIcon>
@@ -213,7 +213,7 @@
                         <MIcon Left>
                             @(item.Value)
                         </MIcon>
-                        @(I18n!.T("Mood." + item.Key))
+                        @(I18n.T("Mood." + item.Key))
                     </MChip>
                 }
             </MChipGroup>
@@ -225,7 +225,7 @@
           MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n!.T("Write.InputLocation"))
+            @(I18n.T("Write.InputLocation"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="()=>ShowLocation=false">
                 <MIcon>mdi-close</MIcon>
@@ -239,7 +239,7 @@
                         Outlined
                         Counter="50"
                         maxlength="50"
-                        Placeholder="@(I18n!.T("Write.LocationPlace"))">
+                        Placeholder="@(I18n.T("Write.LocationPlace"))">
             </MTextField>
         </MCardText>
     </MCard>

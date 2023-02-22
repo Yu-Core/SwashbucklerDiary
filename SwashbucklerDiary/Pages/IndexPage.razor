@@ -10,11 +10,11 @@
            Color="black">
         <MTab Class="m-tab-swiper"
               Ripple="false">
-            @(I18n!.T("Index.All"))
+            @(I18n.T("Index.All"))
         </MTab>
         <MTab Class="m-tab-swiper"
               Ripple="false">
-            @(I18n!.T("Index.Tag"))
+            @(I18n.T("Index.Tag"))
         </MTab>
     </MTabs>
     <MSpacer></MSpacer>
@@ -80,7 +80,7 @@
 
 <InputDialog @bind-Value="ShowAddTag"
              @bind-Text="AddTagName"
-             Title="@(I18n!.T("Tag.Add"))"
-             Placeholder="@(I18n!.T("Tag.Placeholder"))"
+             Title="@(I18n.T("Tag.Add"))"
+             Placeholder="@(I18n.T("Tag.Placeholder"))"
              OnOK="SaveAddTag">
 </InputDialog>

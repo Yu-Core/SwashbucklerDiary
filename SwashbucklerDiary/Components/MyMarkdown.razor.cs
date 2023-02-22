@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.Components
                 {"counter",new{enable = true,type = "type"}},
                 {"minHeight",240},
                 {"toolbar",new List<string>(){"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "indent","code","inline-code","link","emoji","edit-mode"}},
-                {"placeholder",I18n!.T("Write.ContentPlace")! },
+                {"placeholder",I18n.T("Write.ContentPlace")! },
                 {"cdn","npm/vditor/3.9.0" },
                 {"lang",Language }
             };

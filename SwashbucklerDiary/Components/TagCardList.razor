@@ -15,22 +15,22 @@
 {
     <div class="d-flex justify-center" style="padding-top:20vh;">
         <div class="text-h6 text--secondary font-weight-bold-table">
-            @(I18n!.T("Tag.NoTag"))
+            @(I18n.T("Tag.NoTag"))
         </div>
     </div>
 }
 
 <InputDialog @bind-Value="ShowRenameTag"
              @bind-Text="RenameTagName"
-             Title="@(I18n!.T("Tag.Rename"))"
-             Placeholder="@(I18n!.T("Tag.Placeholder"))"
+             Title="@(I18n.T("Tag.Rename"))"
+             Placeholder="@(I18n.T("Tag.Placeholder"))"
              OnOK="SaveRenameTag">
 
 </InputDialog>
 
 <DeleteDialog @bind-Value="ShowDeleteTag"
-              Title="@(I18n!.T("Tag.Delete.Title"))"
-              Content="@(I18n!.T("Tag.Delete.Content"))"
+              Title="@(I18n.T("Tag.Delete.Title"))"
+              Content="@(I18n.T("Tag.Delete.Content"))"
               OnOK="()=>OnDelete?.Invoke()">
 
 </DeleteDialog>

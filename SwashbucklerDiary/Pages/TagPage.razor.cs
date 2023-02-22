@@ -9,12 +9,9 @@ namespace SwashbucklerDiary.Pages
     public partial class TagPage : PageComponentBase, IDisposable
     {
         private TagModel Tag = new();
-        private List<DiaryModel> Diaries = new();
 
         [Inject]
         private ITagService TagService { get; set; } = default!;
-        [Inject]
-        private IDiaryService DiaryService { get; set; } = default!;
         [Inject]
         private MasaBlazor MasaBlazor { get; set; } = default!;
 
@@ -29,17 +26,18 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            var tagModel = await TagService!.FindAsync(Id);
+            var tagModel = await TagService.FindIncludesAsync(Id);
             if (tagModel == null)
             {
                 NavigateToBack();
                 return;
             }
             Tag = tagModel;
-            Diaries = await DiaryService!.GetDiariesByTagAsync(Id);
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
         }
 
+
+        private List<DiaryModel> Diaries => Tag.Diaries ?? new();
         private bool Prominent => MasaBlazor.Breakpoint.SmAndUp && Diaries.Any();
 
         private void NavigateToWrite()

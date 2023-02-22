@@ -1,7 +1,7 @@
 ﻿@page "/about"
 @inherits PageComponentBase
 
-<MyAppBar Title="@(I18n!.T("Mine.About"))"
+<MyAppBar Title="@(I18n.T("Mine.About"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -16,13 +16,13 @@
                 </MListItemAvatar>
                 <MListItemContent>
                     <MListItemTitle Class="text-h5 my-2 font-weight-bold">
-                        @(I18n!.T("AppName"))
+                        @(I18n.T("AppName"))
                     </MListItemTitle>
                     <MListItemSubtitle Class="mb-2">
                         version @AppVersion
                     </MListItemSubtitle>
                     <MListItemSubtitle>
-                        @(I18n!.T("About.Introduction"))
+                        @(I18n.T("About.Introduction"))
                     </MListItemSubtitle>
                 </MListItemContent>
             </MListItem>
@@ -44,7 +44,7 @@
                             </MIcon>
                         </MListItemIcon>
                         <MListItemContent>
-                            @(I18n!.T(item.Text))
+                            @(I18n.T(item.Text))
                         </MListItemContent>
                         <MListItemAction>
                             <MIcon>mdi-chevron-right</MIcon>
@@ -67,7 +67,7 @@
           MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n!.T("About.SourceCode"))
+            @(I18n.T("About.SourceCode"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="()=>ShowSourceCode=false">
                 <MIcon>mdi-close</MIcon>

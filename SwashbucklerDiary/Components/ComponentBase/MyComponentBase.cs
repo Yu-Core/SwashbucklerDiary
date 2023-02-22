@@ -22,8 +22,8 @@ namespace SwashbucklerDiary.Components
             return PopupService.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Info;
-                it.Title = I18n!.T("ToDo.Title");
-                it.Content = I18n!.T("ToDo.Content");
+                it.Title = I18n.T("ToDo.Title");
+                it.Content = I18n.T("ToDo.Content");
             });
         }
     }

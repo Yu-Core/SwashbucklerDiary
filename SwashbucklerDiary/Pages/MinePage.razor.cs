@@ -3,7 +3,6 @@ using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Shared;
 using System.Globalization;
 
 namespace SwashbucklerDiary.Pages
@@ -31,7 +30,7 @@ namespace SwashbucklerDiary.Pages
 
 
         [Inject]
-        private IDiaryService? DiaryService { get; set; }
+        private IDiaryService DiaryService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -61,10 +60,10 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SetCount()
         {
-            DiaryCount = await DiaryService!.CountAsync();
-            var diaries = await DiaryService!.QueryAsync();
+            DiaryCount = await DiaryService.CountAsync();
+            var diaries = await DiaryService.QueryAsync();
             var wordCount = 0;
-            if (I18n!.T("Write.Word") == "1")
+            if (I18n.T("Write.Word") == "1")
             {
                 foreach (var item in diaries)
                 {
@@ -72,7 +71,7 @@ namespace SwashbucklerDiary.Pages
                 }
             }
 
-            if (I18n!.T("Write.Character") == "1")
+            if (I18n.T("Write.Character") == "1")
             {
                 foreach (var item in diaries)
                 {
@@ -147,7 +146,7 @@ namespace SwashbucklerDiary.Pages
         {
             ShowLanguage = false;
             Language = value;
-            I18n!.SetCulture(new CultureInfo(value));
+            I18n.SetCulture(new CultureInfo(value));
             await SettingsService!.Save(nameof(Language), Language);
             await SetCount();
         }
@@ -174,7 +173,7 @@ namespace SwashbucklerDiary.Pages
                 else
                 {
                     await SystemService.SetClipboard(mail);
-                    await PopupService.ToastSuccessAsync(I18n!.T("Mine.MailCopy"));
+                    await PopupService.ToastSuccessAsync(I18n.T("Mine.MailCopy"));
                 }
             }
             catch (Exception)

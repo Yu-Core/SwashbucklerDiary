@@ -6,7 +6,7 @@
           MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n!.T("About.Sponsor"))
+            @(I18n.T("About.Sponsor"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="HandleOnCancel">
                 <MIcon>mdi-close</MIcon>
@@ -47,12 +47,12 @@
         <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text OnClick="HandleOnCancel">
-                @(I18n!.T("Share.Cancel"))
+                @(I18n.T("Share.Cancel"))
             </MButton>
             <MButton Text
                      Color="primary"
                      OnClick="OnSponsor">
-                @(I18n!.T("Share.OK"))
+                @(I18n.T("Share.OK"))
             </MButton>
         </MCardActions>
     </MCard>
@@ -61,15 +61,15 @@
 <MyDialog @bind-MyValue="ShowThank" MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n!.T("Amount.Thank"))
+            @(I18n.T("Amount.Thank"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="()=>ShowThank=false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
         <MCardText>
-            <div class="mb-1">@(I18n!.T("Amount.ThankContent"))</div>
-            <div>@(I18n!.T("Amount.ThankContent2"))</div>
+            <div class="mb-1">@(I18n.T("Amount.ThankContent"))</div>
+            <div>@(I18n.T("Amount.ThankContent2"))</div>
         </MCardText>
     </MCard>
 </MyDialog>

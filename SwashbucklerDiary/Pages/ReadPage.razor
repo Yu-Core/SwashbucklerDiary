@@ -53,23 +53,23 @@
                 <MListItem Dense
                            OnClick="OnCopy">
                     <MListItemContent>
-                        @(I18n!.T("Share.Copy"))
+                        @(I18n.T("Share.Copy"))
                     </MListItemContent>
                 </MListItem>
                 <MListItem Dense
                            OnClick="()=>OnTopping(Diary)">
                     <MListItemContent>
-                        @(IsTop ? I18n!.T("Diary.CancelTop") : I18n!.T("Diary.Top"))
+                        @(IsTop ? I18n.T("Diary.CancelTop") : I18n.T("Diary.Top"))
                     </MListItemContent>
                 </MListItem>
                 <MListItem Dense>
                     <MListItemContent>
-                        @(I18n!.T("Diary.Export"))
+                        @(I18n.T("Diary.Export"))
                     </MListItemContent>
                 </MListItem>
                 <MListItem Dense OnClick="()=>MarkdownChanged()">
                     <MListItemContent>
-                        @(Markdown ? I18n!.T("Diary.Text") : I18n!.T("Diary.Markdown"))
+                        @(Markdown ? I18n.T("Diary.Text") : I18n.T("Diary.Markdown"))
                     </MListItemContent>
                 </MListItem>
             </MList>
@@ -92,7 +92,7 @@
                     <MIcon Left>
                         @(GetWeatherIcon(Diary.Weather))
                     </MIcon>
-                    @(I18n!.T("Weather." + Diary.Weather))
+                    @(I18n.T("Weather." + Diary.Weather))
                 </MChip>
             }
 
@@ -102,7 +102,7 @@
                     <MIcon Left>
                         @(GetMoodIcon(Diary.Mood))
                     </MIcon>
-                    @(I18n!.T("Mood." + Diary.Mood))
+                    @(I18n.T("Mood." + Diary.Mood))
                 </MChip>
             }
 
@@ -151,7 +151,7 @@
 
         <div class="mb-5">
             <MChipGroup Column>
-                @foreach (var item in SelectedTags)
+                @foreach (var item in Tags)
                 {
                     <MChip Outlined>
                         @(item.Name)
@@ -165,7 +165,7 @@
 <MyDialog @bind-MyValue="ShowShare" MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n!.T("Read.SelectShare"))
+            @(I18n.T("Read.SelectShare"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="()=>ShowShare = false">
                 <MIcon>mdi-close</MIcon>
@@ -181,7 +181,7 @@
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n!.T("Read.TextShare"))
+                            @(I18n.T("Read.TextShare"))
                         </MListItemTitle>
                     </MListItemContent>
                 </MListItem>
@@ -193,7 +193,7 @@
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n!.T("Read.ImageShare"))
+                            @(I18n.T("Read.ImageShare"))
                         </MListItemTitle>
                     </MListItemContent>
                 </MListItem>
@@ -208,8 +208,8 @@
 </MOverlay>
 
 <DeleteDialog @bind-Value="ShowDelete"
-              Title="@(I18n!.T("Diary.Delete.Title"))"
-              Content="@(I18n!.T("Diary.Delete.Content"))"
+              Title="@(I18n.T("Diary.Delete.Title"))"
+              Content="@(I18n.T("Diary.Delete.Content"))"
               OnOK="()=>OnDelete?.Invoke()">
 
 </DeleteDialog>

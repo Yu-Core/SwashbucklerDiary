@@ -1,8 +1,10 @@
-﻿namespace SwashbucklerDiary.Config
+﻿using Microsoft.Data.Sqlite;
+
+namespace SwashbucklerDiary.Config
 {
     public static class SQLiteConstants
     {
-        public const string DatabaseFilename = "SwashbucklerDiary.db3";
+        private const string DatabaseFilename = "SwashbucklerDiary.db3";
 
         public const SQLite.SQLiteOpenFlags Flags =
             // open the database in read/write mode
@@ -14,5 +16,12 @@
 
         public static string DatabasePath =>
             Path.Combine(FileSystem.AppDataDirectory, DatabaseFilename);
+        public static string ConnectionString = new SqliteConnectionStringBuilder()
+        {
+            DataSource = DatabasePath,
+            Mode = SqliteOpenMode.ReadWriteCreate,
+            Cache = SqliteCacheMode.Shared
+            
+        }.ToString();
     }
 }

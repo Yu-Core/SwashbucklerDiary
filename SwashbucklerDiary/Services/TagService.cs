@@ -1,26 +1,27 @@
-﻿using SwashbucklerDiary.IServices;
+﻿using SwashbucklerDiary.IRepository;
+using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Services
 {
     public class TagService : BaseService<TagModel>, ITagService
     {
-        public async Task<List<TagModel>> GetDiaryTagsAsync(int diaryId)
+        private readonly ITagRepository _tagRepository;
+        public TagService(ITagRepository tagRepository)
         {
-            await Init();
-            await Database!.CreateTableAsync<DiaryModel>();
-            await Database.CreateTableAsync<DiaryTagModel>();
+            base._iBaseRepository = tagRepository;
+            _tagRepository = tagRepository;
+        }
 
-            var diaryTags = await Database
-                .Table<DiaryTagModel>()
-                .Where(it => it.DiaryId == diaryId)
-                .ToListAsync();
+        public Task<TagModel> FindIncludesAsync(int id)
+        {
+            return _tagRepository.GetByIdIncludesAsync(id);
+        }
 
-            var tagIds = diaryTags.Select(it => it.TagId).ToList();
-
-            var Tags = await QueryAsync(it => tagIds.Contains(it.Id));
-
-            return Tags;
+        public Task<TagModel> FindIncludesAsync(Expression<Func<TagModel, bool>> func)
+        {
+            return _tagRepository.GetByIdIncludesAsync(func);
         }
     }
 }

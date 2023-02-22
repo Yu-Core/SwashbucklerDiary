@@ -5,7 +5,7 @@
          Elevation="0"
          Color="white">
     <MToolbarTitle Class="font-weight-bold">
-        @(I18n!.T("Mine.MySpace"))
+        @(I18n.T("Mine.MySpace"))
     </MToolbarTitle>
     <MSpacer></MSpacer>
     <MButton Large Icon OnClick="NavigateToSearch">
@@ -27,10 +27,10 @@
                     </MListItemAvatar>
                     <MListItemContent>
                         <MListItemTitle Class="text-h6 font-weight-bold">
-                            @(UserName ?? I18n!.T("AppName"))
+                            @(UserName ?? I18n.T("AppName"))
                         </MListItemTitle>
                         <MListItemSubtitle>
-                            @(Sign ?? I18n!.T("Mine.Sign"))
+                            @(Sign ?? I18n.T("Mine.Sign"))
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction Style="align-self:unset;">
@@ -48,7 +48,7 @@
                     <MListItemContent Class="justify-space-around text-center">
                         <div style="flex:unset">
                             <MListItemSubtitle>
-                                @(I18n!.T("Mine.DiaryCount"))
+                                @(I18n.T("Mine.DiaryCount"))
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
                                 @DiaryCount
@@ -56,7 +56,7 @@
                         </div>
                         <div style="flex:unset">
                             <MListItemSubtitle>
-                                @(I18n!.T("Mine.WordCount"))
+                                @(I18n.T("Mine.WordCount"))
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
                                 @WordCount
@@ -64,7 +64,7 @@
                         </div>
                         <div style="flex:unset">
                             <MListItemSubtitle>
-                                @(I18n!.T("Mine.ActiveDayCount"))
+                                @(I18n.T("Mine.ActiveDayCount"))
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
                                 @ActiveDayCount
@@ -79,7 +79,7 @@
     @foreach (var list in ViewLists)
     {
         <div class="text-h6 mine-title">
-            @(I18n!.T(list.Key))
+            @(I18n.T(list.Key))
         </div>
 
         <MCard Class="mine-card"
@@ -95,7 +95,7 @@
                             </MIcon>
                         </MListItemIcon>
                         <MListItemContent>
-                            @(I18n!.T(item.Text))
+                            @(I18n.T(item.Text))
                         </MListItemContent>
                         <MListItemAction>
                             <MIcon>mdi-chevron-right</MIcon>
@@ -118,7 +118,7 @@
           @bind-MyValue="ShowLanguage">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n!.T("Mine.SelectLanguage"))
+            @(I18n.T("Mine.SelectLanguage"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="()=>ShowLanguage= false">
                 <MIcon>mdi-close</MIcon>
@@ -147,7 +147,7 @@
           @bind-MyValue="ShowFeedback">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n!.T("Mine.ContactWay"))
+            @(I18n.T("Mine.ContactWay"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="()=>ShowFeedback=false">
                 <MIcon>mdi-close</MIcon>

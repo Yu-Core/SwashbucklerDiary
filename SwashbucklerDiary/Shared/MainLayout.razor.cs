@@ -72,7 +72,7 @@ namespace SwashbucklerDiary.Shared
             if (flag)
             {
                 var language = await SettingsService!.GetLanguage();
-                I18n!.SetCulture(new CultureInfo(language));
+                I18n.SetCulture(new CultureInfo(language));
             }
 
         }

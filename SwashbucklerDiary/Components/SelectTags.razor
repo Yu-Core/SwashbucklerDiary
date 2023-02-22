@@ -6,7 +6,7 @@
           Scrollable>
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n!.T("Tag.Select"))
+            @(I18n.T("Tag.Select"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="HandleOnCancel">
                 <MIcon>mdi-close</MIcon>
@@ -27,16 +27,16 @@
         </MCardText>
         <MCardActions>
             <MButton Text OnClick="()=>ShowAddTag = true">
-                @(I18n!.T("Tag.Add"))
+                @(I18n.T("Tag.Add"))
             </MButton>
             <MSpacer></MSpacer>
             <MButton Text OnClick="HandleOnCancel">
-                @(I18n!.T("Share.Cancel"))
+                @(I18n.T("Share.Cancel"))
             </MButton>
             <MButton Text
                      Color="primary"
                      OnClick="HandleOnSave">
-                @(I18n!.T("Share.Save"))
+                @(I18n.T("Share.Save"))
             </MButton>
         </MCardActions>
     </MCard>
@@ -44,7 +44,7 @@
 
 <InputDialog @bind-Value="ShowAddTag"
              @bind-Text="AddTagName"
-             Title="@(I18n!.T("Tag.Add"))"
-             Placeholder="@(I18n!.T("Tag.Placeholder"))"
+             Title="@(I18n.T("Tag.Add"))"
+             Placeholder="@(I18n.T("Tag.Placeholder"))"
              OnOK="SaveAddTag">
 </InputDialog>

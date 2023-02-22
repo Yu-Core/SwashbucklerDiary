@@ -21,14 +21,11 @@ namespace SwashbucklerDiary.Pages
         {
             CreateTime = DateTime.Now
         };
-        private List<TagModel> SelectedTags = new();
-        
+
         [Inject]
         public MasaBlazor MasaBlazor { get; set; } = default!;
         [Inject]
         public IDiaryService DiaryService { get; set; } = default!;
-        [Inject]
-        public IDiaryTagService DiaryTagService { get; set; } = default!;
         [Inject]
         public ITagService TagService { get; set; } = default!;
         [Inject]
@@ -57,6 +54,11 @@ namespace SwashbucklerDiary.Pages
             await SetDiary();
         }
 
+        private List<TagModel> SelectedTags
+        {
+            get => Diary.Tags ?? new();
+            set => Diary.Tags = value;
+        }
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
         private Dictionary<string, string> WeatherIcons => IconService!.WeatherIcon;
@@ -106,15 +108,15 @@ namespace SwashbucklerDiary.Pages
             }
         }
         private string Weather =>
-            string.IsNullOrEmpty(Diary.Weather) ? I18n!.T("Write.Weather") : I18n!.T("Weather." + Diary.Weather);
+            string.IsNullOrEmpty(Diary.Weather) ? I18n.T("Write.Weather") : I18n.T("Weather." + Diary.Weather);
         private string Mood =>
-            string.IsNullOrEmpty(Diary.Mood) ? I18n!.T("Write.Mood") : I18n!.T("Mood." + Diary.Mood);
+            string.IsNullOrEmpty(Diary.Mood) ? I18n.T("Write.Mood") : I18n.T("Mood." + Diary.Mood);
 
         private async Task SetTag()
         {
             if (TagId != null)
             {
-                var tag = await TagService!.FindAsync((int)TagId);
+                var tag = await TagService.FindAsync((int)TagId);
                 if (tag != null)
                 {
                     SelectedTags.Add(tag);
@@ -124,16 +126,19 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SetDiary()
         {
-            if (DiaryId != null)
+            if (DiaryId == null)
             {
-                var diary = await DiaryService!.FindAsync((int)DiaryId);
-                if (diary != null)
-                {
-                    Diary = diary;
-                    ShowTitle = !string.IsNullOrEmpty(diary.Title);
-                    SelectedTags = await TagService!.GetDiaryTagsAsync((int)DiaryId);
-                }
+                return;
             }
+
+            var diary = await DiaryService.FindIncludesAsync((int)DiaryId);
+            if (diary == null)
+            {
+                return;
+            }
+
+            Diary = diary;
+            ShowTitle = !string.IsNullOrEmpty(diary.Title);
         }
 
         private async Task LoadSettings()
@@ -185,16 +190,13 @@ namespace SwashbucklerDiary.Pages
         {
             if (DiaryId == null)
             {
-                Diary.CreateTime = Diary.UpdateTime = DateTime.Now;
-                bool flag = await DiaryService!.AddAsync(Diary);
+                bool flag = await DiaryService.AddAsync(Diary);
                 if (flag)
                 {
-                    int id = await DiaryService.GetLastInsertRowId();
-                    await DiaryTagService!.AddTagsAsync(id, SelectedTags);
                     await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Success;
-                        it.Title = I18n!.T("Share.AddSuccess");
+                        it.Title = I18n.T("Share.AddSuccess");
                     });
                 }
                 else
@@ -202,22 +204,19 @@ namespace SwashbucklerDiary.Pages
                     await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Error;
-                        it.Title = I18n!.T("Share.AddFail");
+                        it.Title = I18n.T("Share.AddFail");
                     });
                 }
             }
             else
             {
-                Diary.UpdateTime = DateTime.Now;
-                bool flag = await DiaryService!.UpdateAsync(Diary);
+                bool flag = await DiaryService.UpdateIncludesAsync(Diary);
                 if (flag)
                 {
-                    await DiaryTagService!.DeleteAsync(it => it.DiaryId == DiaryId);
-                    await DiaryTagService!.AddTagsAsync((int)DiaryId, SelectedTags);
                     await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Success;
-                        it.Title = I18n!.T("Share.EditSuccess");
+                        it.Title = I18n.T("Share.EditSuccess");
                     });
 
                 }
@@ -226,7 +225,7 @@ namespace SwashbucklerDiary.Pages
                     await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Error;
-                        it.Title = I18n!.T("Share.EditFail");
+                        it.Title = I18n.T("Share.EditFail");
                     });
                 }
             }
@@ -262,21 +261,21 @@ namespace SwashbucklerDiary.Pages
             int len = 0;
             if (string.IsNullOrWhiteSpace(value))
             {
-                return len + " " + I18n!.T("Write.CountUnit");
+                return len + " " + I18n.T("Write.CountUnit");
             }
 
             value = value.Trim();
-            if (I18n!.T("Write.Word") == "1")
+            if (I18n.T("Write.Word") == "1")
             {
                 len = value.Split(' ').Length;
             }
 
-            if (I18n!.T("Write.Character") == "1")
+            if (I18n.T("Write.Character") == "1")
             {
                 len = value.Length;
             }
 
-            return len + " " + I18n!.T("Write.CountUnit");
+            return len + " " + I18n.T("Write.CountUnit");
         }
 
         private async Task MarkdownChanged()

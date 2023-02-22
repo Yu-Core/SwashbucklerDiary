@@ -69,7 +69,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task UpdateDiaries()
         {
-            Diaries = await DiaryService!.QueryAsync();
+            Diaries = await DiaryService.QueryAsync();
             StateHasChanged();
         }
 
@@ -84,8 +84,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task RefreshData(StringNumber value)
         {
-            Diaries = await DiaryService!.QueryAsync();
-            StateHasChanged();
+            await UpdateDiaries();
             var url = Navigation!.GetUriWithQueryParameter("Type", Types[tabs.ToInt32()]);
             Navigation!.NavigateTo(url);
         }

@@ -55,7 +55,7 @@ namespace SwashbucklerDiary.Components
             {
                 if (value)
                 {
-                    Tags = await TagService!.QueryAsync();
+                    Tags = await TagService.QueryAsync();
                     SelectedTagIndices.Clear();
                     foreach (var item in Values)
                     {
@@ -84,8 +84,8 @@ namespace SwashbucklerDiary.Components
                 await PopupService.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Warning;
-                    it.Title = I18n!.T("Tag.Repeat.Title");
-                    it.Content = I18n!.T("Tag.Repeat.Content");
+                    it.Title = I18n.T("Tag.Repeat.Title");
+                    it.Content = I18n.T("Tag.Repeat.Content");
                 });
                 return;
             }
@@ -94,13 +94,13 @@ namespace SwashbucklerDiary.Components
             {
                 Name = tagName
             };
-            bool flag = await TagService!.AddAsync(tagModel);
-            if (!flag)
+            tagModel = await TagService.AddReturnEntityAsync(tagModel);
+            if (tagModel.Id == default)
             {
                 await PopupService.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Error;
-                    it.Title = I18n!.T("Share.AddFail");
+                    it.Title = I18n.T("Share.AddFail");
                 });
                 return;
             }
@@ -108,9 +108,8 @@ namespace SwashbucklerDiary.Components
             await PopupService.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Success;
-                it.Title = I18n!.T("Share.AddSuccess");
+                it.Title = I18n.T("Share.AddSuccess");
             });
-            tagModel.Id = await TagService!.GetLastInsertRowId();
             Tags.Add(tagModel);
             StateHasChanged();
         }

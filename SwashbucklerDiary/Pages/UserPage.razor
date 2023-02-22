@@ -1,7 +1,7 @@
 ﻿@page "/user"
 @inherits PageComponentBase
 
-<MyAppBar Title="@(I18n!.T("User.Title"))"
+<MyAppBar Title="@(I18n.T("User.Title"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -17,7 +17,7 @@
                 </MListItemIcon>
 
                 <MListItemContent>
-                    @(I18n!.T("User.Avatar"))
+                    @(I18n.T("User.Avatar"))
                 </MListItemContent>
 
                 <MListItemAction>
@@ -38,7 +38,7 @@
                 </MListItemIcon>
 
                 <MListItemContent>
-                    @(I18n!.T("User.UserName"))
+                    @(I18n.T("User.UserName"))
                 </MListItemContent>
 
                 <MListItemContent>
@@ -63,7 +63,7 @@
 
                 <MListItemContent>
                     <MListItemTitle>
-                        @(I18n!.T("User.Sign"))
+                        @(I18n.T("User.Sign"))
                     </MListItemTitle>
 
                 </MListItemContent>
@@ -86,7 +86,7 @@
           @bind-MyValue="ShowAvatar">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n!.T("User.EditAvatar"))
+            @(I18n.T("User.EditAvatar"))
             <MSpacer></MSpacer>
             <MButton Icon OnClick="()=>ShowAvatar=false">
                 <MIcon>mdi-close</MIcon>
@@ -101,7 +101,7 @@
                 </MListItemIcon>
                 <MListItemContent>
                     <MListItemTitle>
-                        @(I18n!.T("User.Photos"))
+                        @(I18n.T("User.Photos"))
                     </MListItemTitle>
                 </MListItemContent>
             </MListItem>
@@ -113,7 +113,7 @@
                 </MListItemIcon>
                 <MListItemContent>
                     <MListItemTitle>
-                        @(I18n!.T("User.Capture"))
+                        @(I18n.T("User.Capture"))
                     </MListItemTitle>
                 </MListItemContent>
             </MListItem>
@@ -123,15 +123,15 @@
 
 <InputDialog @bind-Value="ShowUserName"
              @bind-Text="UserName"
-             Title="@(I18n!.T("User.EditUserName"))"
-             Placeholder="@(I18n!.T("User.UserNamePlace"))"
+             Title="@(I18n.T("User.EditUserName"))"
+             Placeholder="@(I18n.T("User.UserNamePlace"))"
              OnOK="SaveUserName">
 </InputDialog>
 
 <InputDialog @bind-Value="ShowSign"
              @bind-Text="Sign"
-             Title="@(I18n!.T("User.EditSign"))"
+             Title="@(I18n.T("User.EditSign"))"
              MaxLength="100"
-             Placeholder="@(I18n!.T("User.SignPlace"))"
+             Placeholder="@(I18n.T("User.SignPlace"))"
              OnOK="SaveSign">
 </InputDialog>

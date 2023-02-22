@@ -10,11 +10,11 @@
            Color="black">
         <MTab Class="m-tab-swiper"
               Ripple="false">
-            @(I18n!.T("History.Calendar"))
+            @(I18n.T("History.Calendar"))
         </MTab>
         <MTab Class="m-tab-swiper"
               Ripple="false">
-            @(I18n!.T("History.Catalogue"))
+            @(I18n.T("History.Catalogue"))
         </MTab>
     </MTabs>
     <MSpacer></MSpacer>
@@ -32,7 +32,7 @@
                      NoTitle
                      AllowedDates="AllowedDates"
                      ShowCurrent="false"
-                     Locale="@(I18n!.Culture.Name)">
+                     Locale="@(I18n.Culture.Name)">
         </MDatePicker>
         <DiaryCardList Value="CalendarDiaries"></DiaryCardList>
     </SwiperTabItem>

@@ -24,10 +24,10 @@ namespace SwashbucklerDiary
             builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
 
-            builder.Services.AddLog();
-            builder.Services.AddCustomIOC();
-            builder.Services.AddMasaBlazor();
+            builder.Services.AddSerilog();
+            builder.Services.AddSqlsugar();
             builder.Services.AddMasaBlazor().AddI18nForMauiBlazor("wwwroot/i18n");
+            builder.Services.AddCustomIOC();
 
             return builder.Build();
         }

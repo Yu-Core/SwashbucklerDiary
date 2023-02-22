@@ -15,17 +15,12 @@ namespace SwashbucklerDiary.Pages
         private bool ShowMenu;
         private bool ShowShare;
         private bool showLoading;
-        private List<TagModel> SelectedTags = new();
         private IJSObjectReference? module;
         private Action? OnDelete;
         private bool Markdown;
 
         [Inject]
         public IDiaryService DiaryService { get; set; } = default!;
-        [Inject]
-        public IDiaryTagService DiaryTagService { get; set; } = default!;
-        [Inject]
-        public ITagService TagService { get; set; } = default!;
         [Inject]
         public IconService IconService { get; set; } = default!;
 
@@ -36,7 +31,6 @@ namespace SwashbucklerDiary.Pages
         {
             await LoadSettings();
             await UpdateDiary();
-            await UpdateTag();
         }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -47,6 +41,7 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
+        private List<TagModel> Tags => Diary.Tags ?? new();
         private bool ShowDelete
         {
             get => _showDelete;
@@ -59,7 +54,6 @@ namespace SwashbucklerDiary.Pages
                 }
             }
         }
-
         private bool IsTop => Diary.Top;
         private bool ShowTitle => !string.IsNullOrEmpty(Diary.Title);
         private bool ShowWeather => !string.IsNullOrEmpty(Diary.Weather);
@@ -79,18 +73,13 @@ namespace SwashbucklerDiary.Pages
 
         private async Task UpdateDiary()
         {
-            var diaryModel = await DiaryService!.FindAsync(Id);
-            if (diaryModel == null)
+            var diary = await DiaryService.FindIncludesAsync(Id);
+            if (diary == null)
             {
                 NavigateToBack();
                 return;
             }
-            Diary = diaryModel;
-        }
-
-        private async Task UpdateTag()
-        {
-            SelectedTags = await TagService!.GetDiaryTagsAsync(Id);
+            Diary = diary;
         }
 
         private async Task LoadSettings()
@@ -112,13 +101,13 @@ namespace SwashbucklerDiary.Pages
             OnDelete += async () =>
             {
                 ShowDelete = false;
-                bool flag = await DiaryService!.DeleteAsync(Id);
+                bool flag = await DiaryService.DeleteAsync(Diary);
                 if (flag)
                 {
                     await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Success;
-                        it.Title = I18n!.T("Share.DeleteSuccess");
+                        it.Title = I18n.T("Share.DeleteSuccess");
                     });
                 }
                 else
@@ -126,7 +115,7 @@ namespace SwashbucklerDiary.Pages
                     await PopupService.ToastAsync(it =>
                     {
                         it.Type = AlertTypes.Error;
-                        it.Title = I18n!.T("Share.DeleteFail");
+                        it.Title = I18n.T("Share.DeleteFail");
                     });
                 }
                 NavigateToBack();
@@ -143,8 +132,7 @@ namespace SwashbucklerDiary.Pages
         private async Task OnTopping(DiaryModel diaryModel)
         {
             diaryModel.Top = !diaryModel.Top;
-            await DiaryService!.UpdateAsync(diaryModel);
-
+            await DiaryService.UpdateAsync(diaryModel);
         }
 
         private async Task OnCopy()
@@ -154,14 +142,14 @@ namespace SwashbucklerDiary.Pages
             await PopupService.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Success;
-                it.Title = I18n!.T("Share.CopySuccess");
+                it.Title = I18n.T("Share.CopySuccess");
             });
         }
 
         private async Task ShareText()
         {
             ShowShare = false;
-            await SystemService.ShareText(I18n!.T("Read.Share"), DiaryCopyContent);
+            await SystemService.ShareText(I18n.T("Read.Share"), DiaryCopyContent);
         }
 
         private async Task ShareImage()
@@ -178,7 +166,7 @@ namespace SwashbucklerDiary.Pages
             await File.WriteAllBytesAsync(file, Convert.FromBase64String(base64));
             showLoading = false;
 
-            await SystemService.ShareFile(I18n!.T("Read.Share"), file);
+            await SystemService.ShareFile(I18n.T("Read.Share"), file);
         }
 
         private string GetWeatherIcon(string? key)

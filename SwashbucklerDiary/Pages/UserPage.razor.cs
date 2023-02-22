@@ -42,8 +42,8 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LoadSettings()
         {
-            UserName = await SettingsService!.Get<string?>(nameof(UserName), I18n!.T("AppName"));
-            Sign = await SettingsService!.Get<string?>(nameof(Sign), I18n!.T("Mine.Sign"));
+            UserName = await SettingsService!.Get<string?>(nameof(UserName), I18n.T("AppName"));
+            Sign = await SettingsService!.Get<string?>(nameof(Sign), I18n.T("Mine.Sign"));
         }
 
         private async Task SaveSign(string tagName)
@@ -78,21 +78,21 @@ namespace SwashbucklerDiary.Pages
             ShowAvatar = false;
             if (!SystemService.IsCaptureSupported())
             {
-                await PopupService.ToastErrorAsync(I18n!.T("User.NoCapture"));
+                await PopupService.ToastErrorAsync(I18n.T("User.NoCapture"));
                 return;
             }
 
             var cameraPermission = await SystemService.CheckCameraPermission();
             if (!cameraPermission)
             {
-                await PopupService.ToastErrorAsync(I18n!.T("Permission.OpenCamera"));
+                await PopupService.ToastErrorAsync(I18n.T("Permission.OpenCamera"));
                 return;
             }
 
             var writePermission = await SystemService.CheckStorageWritePermission();
             if (!writePermission)
             {
-                await PopupService.ToastErrorAsync(I18n!.T("Permission.OpenStorageWrite"));
+                await PopupService.ToastErrorAsync(I18n.T("Permission.OpenStorageWrite"));
                 return;
             }
 
@@ -111,7 +111,7 @@ namespace SwashbucklerDiary.Pages
 
                 await SettingsService!.Save(nameof(Avatar), localFilePath);
                 await SetAvatar(localFilePath);
-                await PopupService.ToastSuccessAsync(I18n!.T("Share.EditSuccess"));
+                await PopupService.ToastSuccessAsync(I18n.T("Share.EditSuccess"));
             }
         }
 

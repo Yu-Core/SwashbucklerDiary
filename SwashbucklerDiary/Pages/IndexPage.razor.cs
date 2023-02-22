@@ -19,8 +19,6 @@ namespace SwashbucklerDiary.Pages
         public IDiaryService DiaryService { get; set; } = default!;
         [Inject]
         public ITagService TagService { get; set; } = default!;
-        [Inject]
-        public IDiaryTagService DiaryTagService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -43,13 +41,12 @@ namespace SwashbucklerDiary.Pages
 
         private async Task UpdateDiaries()
         {
-            var diaryModels = await DiaryService!.QueryAsync();
-            Diaries = diaryModels.Take(50).ToList();
+            Diaries = await DiaryService.QueryTakeAsync(50);
         }
 
         private async Task UpdateTags()
         {
-            Tags = await TagService!.QueryAsync();
+            Tags = await TagService.QueryAsync();
         }
 
         private void InitTab()
@@ -88,8 +85,8 @@ namespace SwashbucklerDiary.Pages
                 await PopupService.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Warning;
-                    it.Title = I18n!.T("Tag.Repeat.Title");
-                    it.Content = I18n!.T("Tag.Repeat.Content");
+                    it.Title = I18n.T("Tag.Repeat.Title");
+                    it.Content = I18n.T("Tag.Repeat.Content");
                 });
                 return;
             }
@@ -98,13 +95,13 @@ namespace SwashbucklerDiary.Pages
             {
                 Name = tagName
             };
-            bool flag = await TagService!.AddAsync(tagModel);
-            if (!flag)
+            var tag = await TagService.AddReturnEntityAsync(tagModel);
+            if (tag.Id == default)
             {
                 await PopupService.ToastAsync(it =>
                 {
                     it.Type = AlertTypes.Error;
-                    it.Title = I18n!.T("Share.AddFail");
+                    it.Title = I18n.T("Share.AddFail");
                 });
                 return;
             }
@@ -112,9 +109,8 @@ namespace SwashbucklerDiary.Pages
             await PopupService.ToastAsync(it =>
             {
                 it.Type = AlertTypes.Success;
-                it.Title = I18n!.T("Share.AddSuccess");
+                it.Title = I18n.T("Share.AddSuccess");
             });
-            tagModel.Id = await TagService!.GetLastInsertRowId();
             Tags.Add(tagModel);
             this.StateHasChanged();
         }
@@ -134,23 +130,23 @@ namespace SwashbucklerDiary.Pages
             int hour = Convert.ToInt16(DateTime.Now.ToString("HH"));
             if (hour >= 6 && hour < 11)
             {
-                return I18n!.T("Index.Welcome.Morning");
+                return I18n.T("Index.Welcome.Morning");
             }
             else if (hour >= 11 && hour < 13)
             {
-                return I18n!.T("Index.Welcome.Noon");
+                return I18n.T("Index.Welcome.Noon");
             }
             else if (hour >= 13 && hour < 18)
             {
-                return I18n!.T("Index.Welcome.Afternoon");
+                return I18n.T("Index.Welcome.Afternoon");
             }
             else if (hour >= 18 && hour < 23)
             {
-                return I18n!.T("Index.Welcome.Night");
+                return I18n.T("Index.Welcome.Night");
             }
             else if (hour >= 23 || hour < 6)
             {
-                return I18n!.T("Index.Welcome.BeforeDawn");
+                return I18n.T("Index.Welcome.BeforeDawn");
             }
             return "Hello World";
         }

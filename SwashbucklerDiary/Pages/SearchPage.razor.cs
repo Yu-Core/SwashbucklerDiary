@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Pages
         private List<DiaryModel> Diaries = new();
 
         [Inject]
-        private IDiaryService? DiaryService { get; set; }
+        private IDiaryService DiaryService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Pages
         {
             if (!string.IsNullOrWhiteSpace(Search))
             {
-                Diaries = await DiaryService!.QueryAsync(it =>
+                Diaries = await DiaryService.QueryAsync(it =>
                     it.Title!.Contains(Search) ||
                     it.Content!.Contains(Search));
             }

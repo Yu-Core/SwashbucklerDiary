@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.IServices;
+﻿using SwashbucklerDiary.IRepository;
+using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using System.Linq.Expressions;
 
@@ -6,32 +7,47 @@ namespace SwashbucklerDiary.Services
 {
     public class DiaryService : BaseService<DiaryModel>, IDiaryService
     {
-        public override async Task<List<DiaryModel>> QueryAsync()
+        private readonly IDiaryRepository _iDiaryRepository;
+
+        public DiaryService(IDiaryRepository iDiaryRepository)
         {
-            var diaries = await base.QueryAsync();
-            return diaries.OrderByDescending(it => it.Id).ToList();
+            base._iBaseRepository = iDiaryRepository;
+            _iDiaryRepository = iDiaryRepository;
         }
-        public override async Task<List<DiaryModel>> QueryAsync(Expression<Func<DiaryModel, bool>> func)
+
+        public Task<DiaryModel> FindIncludesAsync(int id)
         {
-            var diaries = await base.QueryAsync(func);
-            return diaries.OrderByDescending(it => it.Id).ToList();
+            return _iDiaryRepository.GetByIdIncludesAsync(id);
         }
-        public async Task<List<DiaryModel>> GetDiariesByTagAsync(int tagId)
+
+        public Task<DiaryModel> FindIncludesAsync(Expression<Func<DiaryModel, bool>> func)
         {
-            await Init();
-            await Database!.CreateTableAsync<TagModel>();
-            await Database.CreateTableAsync<DiaryTagModel>();
+            return _iDiaryRepository.GetFirstIncludesAsync(func);
+        }
 
-            var diaryTag = await Database
-                .Table<DiaryTagModel>()
-                .Where(it => it.TagId == tagId)
-                .ToListAsync();
+        public Task<List<DiaryModel>> QueryIncludesAsync()
+        {
+            return _iDiaryRepository.GetListIncludesAsync();
+        }
 
-            var diaryIds = diaryTag.Select(it => it.DiaryId).ToList();
+        public Task<List<DiaryModel>> QueryIncludesAsync(Expression<Func<DiaryModel, bool>> func)
+        {
+            return _iDiaryRepository.GetListIncludesAsync(func);
+        }
 
-            var Diaries = await QueryAsync(it => diaryIds.Contains(it.Id));
+        public Task<List<TagModel>> GetTagsAsync(int id)
+        {
+            return _iDiaryRepository.GetTagsAsync(id);
+        }
 
-            return Diaries;
+        public Task<bool> UpdateIncludesAsync(DiaryModel model)
+        {
+            return _iDiaryRepository.UpdateIncludesAsync(model);
+        }
+
+        public Task<bool> UpdateTagsAsync(DiaryModel model)
+        {
+            return _iDiaryRepository.UpdateTagsAsync(model);
         }
     }
 }

@@ -1,121 +1,86 @@
-﻿using SwashbucklerDiary.Config;
+﻿using SwashbucklerDiary.IRepository;
 using SwashbucklerDiary.IServices;
-using SQLite;
 using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Services
 {
     public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class, new()
     {
-        protected SQLiteAsyncConnection? Database;
+        protected IBaseRepository<TEntity> _iBaseRepository = default!;
 
-        protected async Task Init()
+        public virtual Task<bool> AddAsync(TEntity entity)
         {
-            if (Database is not null)
-                return;
-
-            Database = new SQLiteAsyncConnection(SQLiteConstants.DatabasePath, SQLiteConstants.Flags);
-            await Database.CreateTableAsync<TEntity>();
+            return _iBaseRepository.InsertAsync(entity);
         }
 
-        public virtual async Task<List<TEntity>> QueryAsync()
+        public virtual Task<bool> AddAsync(List<TEntity> entities)
         {
-            await Init();
-            return await Database!.Table<TEntity>().ToListAsync();
+            return _iBaseRepository.InsertRangeAsync(entities);
         }
 
-        public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func)
+        public virtual Task<int> AddReturnIdAsync(TEntity entity)
         {
-            await Init();
-            return await Database!.Table<TEntity>().Where(func).ToListAsync();
+            return _iBaseRepository.InsertReturnIdentityAsync(entity);
         }
 
-        public virtual async Task<TEntity> FindAsync(int id)
+        public virtual Task<TEntity> AddReturnEntityAsync(TEntity entity)
         {
-            await Init();
-            return await Database!.FindAsync<TEntity>(id);
+            return _iBaseRepository.InsertReturnEntityAsync(entity);
         }
 
-        public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func)
+        public virtual Task<int> CountAsync()
         {
-            await Init();
-            return await Database!.FindAsync(func);
+            return _iBaseRepository.CountAsync();
         }
 
-        public virtual async Task<bool> AddAsync(TEntity entity)
+        public virtual Task<int> CountAsync(Expression<Func<TEntity, bool>> func)
         {
-            await Init();
-            return await Database!.InsertAsync(entity) > 0;
+            return _iBaseRepository.CountAsync(func);
         }
 
-        public virtual async Task<bool> DeleteAsync(TEntity entity)
+        public virtual Task<bool> DeleteAsync(TEntity entity)
         {
-            await Init();
-            return await Database!.DeleteAsync(entity) > 0;
+            return _iBaseRepository.DeleteAsync(entity);
         }
 
-        public virtual async Task<bool> DeleteAsync(int id)
+        public virtual Task<bool> DeleteAsync(int id)
         {
-            await Init();
-            return await Database!.DeleteAsync<TEntity>(id) > 0;
+            return _iBaseRepository.DeleteByIdAsync(id);
         }
 
-        public virtual async Task<bool> UpdateAsync(TEntity entity)
+        public virtual Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func)
         {
-            await Init();
-            return await Database!.UpdateAsync(entity) > 0;
+            return _iBaseRepository.DeleteAsync(func);
         }
 
-        public virtual async Task<int> GetLastInsertRowId()
+        public virtual Task<TEntity> FindAsync(int id)
         {
-            await Init();
-            return (int)SQLite3.LastInsertRowid(Database!.GetConnection().Handle);
+            return _iBaseRepository.GetByIdAsync(id);
         }
 
-        public async Task<bool> AddAsync(List<TEntity> entities)
+        public virtual Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func)
         {
-            await Init();
-            if (entities.Count == 0)
-            {
-                return false;
-            }
-            var oldCount = await Database!.Table<TEntity>().CountAsync();
-            await Database!.RunInTransactionAsync(tran =>
-            {
-                foreach (var item in entities)
-                {
-                    tran.Insert(item);
-                }
-                tran.Commit();
-            });
-            var newCount = await Database!.Table<TEntity>().CountAsync();
-            return newCount > oldCount;
+            return _iBaseRepository.GetFirstAsync(func);
         }
 
-        public async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func)
+        public virtual Task<List<TEntity>> QueryAsync()
         {
-            await Init();
-            var entities = await Database!.Table<TEntity>().Where(func).ToListAsync();
-            if (entities.Count == 0)
-            {
-                return false;
-            }
-
-            await Database.RunInTransactionAsync(tran =>
-            {
-                foreach (var item in entities)
-                {
-                    tran.Delete(item);
-                }
-                tran.Commit();
-            });
-            var entityCount = await Database!.Table<TEntity>().Where(func).CountAsync();
-            return entityCount < entities.Count;
+            return _iBaseRepository.GetListAsync();
         }
 
-        public async Task<int> CountAsync()
+        public virtual Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func)
         {
-            return await Database!.Table<TEntity>().CountAsync();
+            return _iBaseRepository.GetListAsync(func);
+        }
+
+        public virtual Task<bool> UpdateAsync(TEntity entity)
+        {
+            return _iBaseRepository.UpdateAsync(entity);
+        }
+
+        public Task<List<TEntity>> QueryTakeAsync(int count)
+        {
+            return _iBaseRepository.GetListTakeAsync(count);
         }
     }
 }

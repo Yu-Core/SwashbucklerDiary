@@ -7,7 +7,7 @@
         {
             <DiaryCard Value="item"
                Class="@($"diary-card {CardClass}")"
-               OnTag="()=>OnTag(item.Id)"
+               OnTag="()=>OnTag(item)"
                OnCopy="()=>OnCopy(item)"
                OnDelete="()=>OpenDeleteDialog(item)"
                OnTopping="()=>OnTopping(item)"
@@ -21,7 +21,7 @@
         {
             <DiaryCard Value="item"
                Class="@($"diary-card {CardClass}")"
-               OnTag="()=>OnTag(item.Id)"
+               OnTag="()=>OnTag(item)"
                OnCopy="()=>OnCopy(item)"
                OnDelete="()=>OpenDeleteDialog(item)"
                OnTopping="()=>OnTopping(item)"
@@ -35,7 +35,7 @@
 {
     <div class="d-flex justify-center" style="padding-top:20vh;">
         <div class="text-h6 text--secondary font-weight-bold-table">
-            @(I18n!.T("Diary.NoDiary"))
+            @(I18n.T("Diary.NoDiary"))
         </div>
     </div>
 }
@@ -46,8 +46,8 @@
 </SelectTags>
 
 <DeleteDialog @bind-Value="ShowDeleteDiary"
-              Title="@(I18n!.T("Diary.Delete.Title"))"
-              Content="@(I18n!.T("Diary.Delete.Content"))"
+              Title="@(I18n.T("Diary.Delete.Title"))"
+              Content="@(I18n.T("Diary.Delete.Content"))"
               OnOK="()=>OnDelete?.Invoke()">
 
 </DeleteDialog>
