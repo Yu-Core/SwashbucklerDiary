@@ -68,8 +68,8 @@ namespace SwashbucklerDiary.Pages
             {
                 await UpdateTags();
             }
-            var url = Navigation!.GetUriWithQueryParameter("Type", Types[tabs.ToInt32()]);
-            Navigation!.NavigateTo(url);
+            var url = Navigation.GetUriWithQueryParameter("Type", Types[tabs.ToInt32()]);
+            Navigation.NavigateTo(url);
         }
 
         private async Task SaveAddTag(string tagName)
@@ -113,16 +113,6 @@ namespace SwashbucklerDiary.Pages
             });
             Tags.Add(tagModel);
             this.StateHasChanged();
-        }
-
-        private void NavigateToSearch()
-        {
-            NavigateService.NavigateTo("/search");
-        }
-
-        private void NavigateToWrite()
-        {
-            NavigateService.NavigateTo("/write");
         }
 
         private string GetWelcomeText()

@@ -92,7 +92,7 @@ namespace SwashbucklerDiary.Pages
                     {
                         new("Mine.Backups","mdi-folder-sync-outline",()=>ToDo()),
                         new("Mine.Import","mdi-import",()=>ToDo()),
-                        new("Mine.Statistics","mdi-chart-line",()=>ToDo()),
+                        new("Mine.Statistics","mdi-chart-line",()=>To("/statistics")),
                     }
                 },
                 {
@@ -109,7 +109,7 @@ namespace SwashbucklerDiary.Pages
                     new()
                     {
                         new("Mine.Feedback","mdi-email-outline",()=>ShowFeedback=true),
-                        new("Mine.About","mdi-information-outline",()=>NavigateToAbout()),
+                        new("Mine.About","mdi-information-outline",()=>To("/about")),
                     }
                 }
             };
@@ -125,21 +125,6 @@ namespace SwashbucklerDiary.Pages
             Language = await SettingsService.GetLanguage();
             UserName = await SettingsService.Get<string?>(nameof(UserName), null);
             Sign = await SettingsService.Get<string?>(nameof(Sign), null);
-        }
-
-        private void NavigateToSearch()
-        {
-            NavigateService.NavigateTo("/search");
-        }
-
-        private void NavigateToUser()
-        {
-            NavigateService.NavigateTo("/user");
-        }
-
-        private void NavigateToAbout()
-        {
-            NavigateService.NavigateTo("/about");
         }
 
         private async Task LanguageChanged(string value)

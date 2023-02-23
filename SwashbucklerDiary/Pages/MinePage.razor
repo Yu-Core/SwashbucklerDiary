@@ -8,7 +8,7 @@
         @(I18n.T("Mine.MySpace"))
     </MToolbarTitle>
     <MSpacer></MSpacer>
-    <MButton Large Icon OnClick="NavigateToSearch">
+    <MButton Large Icon OnClick="@(()=>To("/search"))">
         <MIcon>mdi-magnify</MIcon>
     </MButton>
 </MAppBar>
@@ -19,7 +19,7 @@
                Elevation="4"
                Rounded="@("lg")"
                Ripple="false"
-               OnClick="NavigateToUser">
+               OnClick="@(()=>To("/user"))">
             <MList>
                 <MListItem ThreeLine>
                     <MListItemAvatar Class="ml-md-2" Rounded="@("lg")" Size="70">

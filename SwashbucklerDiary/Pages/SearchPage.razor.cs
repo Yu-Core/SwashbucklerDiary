@@ -39,8 +39,8 @@ namespace SwashbucklerDiary.Pages
         {
             Search = value;
             await UpdateDiaries();
-            var url = Navigation!.GetUriWithQueryParameter("Search", value);
-            Navigation!.NavigateTo(url);
+            var url = Navigation.GetUriWithQueryParameter("Search", value);
+            Navigation.NavigateTo(url);
         }
     }
 }

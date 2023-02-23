@@ -97,7 +97,7 @@ namespace SwashbucklerDiary.Shared
 
         private void ChangeView(NavigationButton navigationButton)
         {
-            Navigation!.NavigateTo(navigationButton.Href);
+            Navigation.NavigateTo(navigationButton.Href);
         }
 
         private async Task InvokeStateHasChangedAsync()

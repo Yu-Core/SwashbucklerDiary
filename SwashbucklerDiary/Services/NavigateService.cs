@@ -5,7 +5,7 @@ namespace SwashbucklerDiary.Services
 {
     public class NavigateService : INavigateService
     {
-        public NavigationManager? Navigation { get; set; }
+        public NavigationManager Navigation { get; set; } = default!;
         private byte BackPressCounter = 0;
 
         public event Action? Action;
@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Services
             {
                 href = HistoryHref.Last();
             }
-            Navigation!.NavigateTo(href);
+            Navigation.NavigateTo(href);
             if (HistoryHref.Count > 0)
             {
                 HistoryHref.RemoveAt(HistoryHref.Count - 1);

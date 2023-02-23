@@ -86,7 +86,7 @@ namespace SwashbucklerDiary.Pages
         {
             await UpdateDiaries();
             var url = Navigation!.GetUriWithQueryParameter("Type", Types[tabs.ToInt32()]);
-            Navigation!.NavigateTo(url);
+            Navigation.NavigateTo(url);
         }
 
         private List<Tree> GetTrees()

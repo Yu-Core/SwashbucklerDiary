@@ -26,5 +26,10 @@ namespace SwashbucklerDiary.Components
                 it.Content = I18n.T("ToDo.Content");
             });
         }
+
+        protected void To(string url)
+        {
+            NavigateService.NavigateTo(url);
+        }
     }
 }

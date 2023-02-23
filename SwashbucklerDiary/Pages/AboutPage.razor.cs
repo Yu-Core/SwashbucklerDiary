@@ -32,14 +32,14 @@ namespace SwashbucklerDiary.Pages
                 new()
                 {
                     new("About.SourceCode","mdi-book-open-page-variant-outline",()=>ShowSourceCode=true),
-                    new("About.Agreement","mdi-file-document-multiple-outline",()=>NavigateToUserAgreement()),
-                    new("About.Privacy","mdi-lock-outline",()=>NavigateToPrivacyPolicy()),
+                    new("About.Agreement","mdi-file-document-multiple-outline",()=>To("/user-agreement")),
+                    new("About.Privacy","mdi-lock-outline",()=>To("/privacy-policy")),
                     new("About.UpdateRecords","mdi-update",()=>ToDo()),
                 },
                 new()
                 {
-                    new("About.Related","mdi-xml",()=>NavigateToRelatedOSP()),
-                    new("About.LogFile","mdi-file-document-edit-outline",()=>NavigateToLog()),
+                    new("About.Related","mdi-xml",()=>To("/relatedOSP")),
+                    new("About.LogFile","mdi-file-document-edit-outline",()=>To("/log")),
                     new("About.Evaluation","mdi-star-outline",async()=>await OpenAppDetails()),
                     new("About.Sponsor","mdi-hand-heart-outline",()=>ShowSponsor=true),
                 }
@@ -65,26 +65,6 @@ namespace SwashbucklerDiary.Pages
         {
             ShowSourceCode = false;
             await SystemService.OpenBrowser(url);
-        }
-
-        private void NavigateToRelatedOSP()
-        {
-            NavigateService.NavigateTo("/relatedOSP");
-        }
-
-        private void NavigateToUserAgreement()
-        {
-            NavigateService.NavigateTo("/user-agreement");
-        }
-
-        private void NavigateToPrivacyPolicy()
-        {
-            NavigateService.NavigateTo("/privacy-policy");
-        }
-
-        private void NavigateToLog()
-        {
-            NavigateService.NavigateTo("/log");
         }
 
         private async Task OpenAppDetails()
