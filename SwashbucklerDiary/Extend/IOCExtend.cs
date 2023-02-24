@@ -12,6 +12,9 @@ namespace SwashbucklerDiary.Extend
             services.AddSingleton<IDiaryRepository,DiaryRepository>();
             services.AddSingleton<ITagRepository,TagRepository>();
             services.AddSingleton<IDiaryTagRepository,DiaryTagRepository>();
+            services.AddSingleton<IUserAchievementRepository, UserAchievementRepository>();
+            services.AddSingleton<IUserStateModelRepository, UserStateModelRepository>();
+
             services.AddSingleton<ITagService, TagService>();
             services.AddSingleton<IDiaryService, DiaryService>();
             services.AddSingleton<IDiaryTagService, DiaryTagService>();
@@ -19,6 +22,7 @@ namespace SwashbucklerDiary.Extend
             services.AddSingleton<IconService>();
             services.AddSingleton<ISettingsService, SettingsService>();
             services.AddSingleton<ISystemService, SystemService>();
+            services.AddSingleton<IAchievementService, AchievementService>();
             return services;
         }
     }

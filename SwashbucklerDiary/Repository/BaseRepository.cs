@@ -2,6 +2,7 @@
 using SqlSugar;
 using SwashbucklerDiary.IRepository;
 using SwashbucklerDiary.Models;
+using SwashbucklerDiary.Models.Data;
 
 namespace SwashbucklerDiary.Repository
 {
@@ -11,7 +12,13 @@ namespace SwashbucklerDiary.Repository
         {
             base.Context = context;
             // 创建表
-            Type[] types = { typeof(DiaryModel),typeof(TagModel),typeof(DiaryTagModel) };
+            Type[] types = {
+                typeof(DiaryModel),
+                typeof(TagModel),
+                typeof(DiaryTagModel),
+                typeof(UserAchievementModel),
+                typeof(UserStateModel),
+            };
             base.Context!.CodeFirst.InitTables(types);
         }
 

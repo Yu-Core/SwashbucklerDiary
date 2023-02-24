@@ -1,5 +1,4 @@
 ﻿using SqlSugar;
-using System.Security.Principal;
 
 namespace SwashbucklerDiary.Models
 {

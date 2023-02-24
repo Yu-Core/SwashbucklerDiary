@@ -30,6 +30,8 @@ namespace SwashbucklerDiary.Pages
         public ITagService TagService { get; set; } = default!;
         [Inject]
         public IconService IconService { get; set; } = default!;
+        [Inject]
+        public IAchievementService AchievementService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -198,6 +200,16 @@ namespace SwashbucklerDiary.Pages
                         it.Type = AlertTypes.Success;
                         it.Title = I18n.T("Share.AddSuccess");
                     });
+                    var messages = await AchievementService.UpdateUserState(Models.Data.AchievementType.Diary);
+                    foreach (var item in messages)
+                    {
+                        await PopupService.ToastAsync(it =>
+                        {
+                            it.Type = AlertTypes.Success;
+                            it.Title = "达成成就";
+                            it.Content = item;
+                        });
+                    }
                 }
                 else
                 {
