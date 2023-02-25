@@ -41,7 +41,6 @@ namespace SwashbucklerDiary.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            await FirstLaunch();
             await LoadSettings();
             NavigateService.Navigation = Navigation;
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
@@ -102,24 +101,6 @@ namespace SwashbucklerDiary.Shared
         private async Task InvokeStateHasChangedAsync()
         {
             await InvokeAsync(StateHasChanged);
-        }
-
-        private async Task FirstLaunch()
-        {
-            bool flag = SystemService.IsFirstLaunch();
-            if (flag)
-            {
-                var uri = I18n.T("FilePath.FunctionalDescription")!;
-                string content = await SystemService.ReadMarkdown(uri);
-                var diary = new DiaryModel()
-                {
-                    Title = I18n.T("FunctionalDescription"),
-                    Content = content,
-                    CreateTime = DateTime.Now,
-                    UpdateTime = DateTime.Now,
-                };
-                await DiaryService.AddAsync(diary);
-            }
         }
     }
 }

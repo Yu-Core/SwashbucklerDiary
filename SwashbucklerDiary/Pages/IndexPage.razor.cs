@@ -28,12 +28,8 @@ namespace SwashbucklerDiary.Pages
         {
             InitTab();
             await UpdateTags();
-            if (SystemService.IsFirstLaunch())
-            {
-                await Task.Delay(500);
-            }
-
             await UpdateDiaries();
+            await FirstLaunch();
             await base.OnInitializedAsync();
         }
 
@@ -139,6 +135,29 @@ namespace SwashbucklerDiary.Pages
                 return I18n.T("Index.Welcome.BeforeDawn")!;
             }
             return "Hello World";
+        }
+
+        private async Task FirstLaunch()
+        {
+            if(Diaries.Count > 0)
+            {
+                return;
+            }
+            bool flag = SystemService.IsFirstLaunch();
+            if (flag)
+            {
+                var uri = I18n.T("FilePath.FunctionalDescription")!;
+                string content = await SystemService.ReadMarkdown(uri);
+                var diary = new DiaryModel()
+                {
+                    Title = I18n.T("FunctionalDescription"),
+                    Content = content,
+                    CreateTime = DateTime.Now,
+                    UpdateTime = DateTime.Now,
+                };
+                await DiaryService.AddAsync(diary);
+                await UpdateDiaries();
+            }
         }
     }
 }
