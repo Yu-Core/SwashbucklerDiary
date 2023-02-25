@@ -6,5 +6,6 @@ namespace SwashbucklerDiary.IServices
     {
         Task<List<string>> UpdateUserState(AchievementType type);
         Task<List<string>> UpdateUserState(AchievementType type, int count);
+        Task<List<AchievementModel>> GetAchievements();
     }
 }

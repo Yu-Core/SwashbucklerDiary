@@ -1,0 +1,9 @@
+﻿::deep .achievement-card {
+    width: 100%;
+}
+
+@media screen and (min-width:960px) {
+    ::deep .achievement-card {
+        width: 48%;
+    }
+}

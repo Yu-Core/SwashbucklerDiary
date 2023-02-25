@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Services
             new(14, AchievementType.Export, 1),
         };
 
-        public AchievementService(IUserAchievementRepository userAchievementRepository, 
+        public AchievementService(IUserAchievementRepository userAchievementRepository,
             IUserStateModelRepository userStateModelRepository)
         {
             _userAchievementRepository = userAchievementRepository;
@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Services
 
         public async Task<List<string>> UpdateUserState(AchievementType type, int count)
         {
-            var userState = await _userStateModelRepository.InsertOrUpdateAsync(type,count);
+            var userState = await _userStateModelRepository.InsertOrUpdateAsync(type, count);
             return await CheckAchievement(userState!);
         }
 
@@ -67,7 +67,7 @@ namespace SwashbucklerDiary.Services
                     continue;
                 }
 
-                if(userAchievement.CompleteRate == userState.Count)
+                if (userAchievement.CompleteRate == userState.Count)
                 {
                     continue;
                 }
@@ -83,6 +83,17 @@ namespace SwashbucklerDiary.Services
                 await _userAchievementRepository.UpdateAsync(userAchievement);
             }
             return messages;
+        }
+
+        public async Task<List<AchievementModel>> GetAchievements()
+        {
+            var userAchievements = await _userAchievementRepository.GetListAsync();
+            foreach (var item in Achievements)
+            {
+                item.UserAchievement = userAchievements.FirstOrDefault(it => it.AchievementId == item.Id) ?? new();
+            }
+
+            return Achievements;
         }
     }
 }

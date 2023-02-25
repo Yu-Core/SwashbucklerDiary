@@ -28,10 +28,6 @@ namespace SwashbucklerDiary.Shared
         private I18n I18n { get; set; } = default!;
         [Inject]
         private ISettingsService SettingsService { get; set; } = default!;
-        [Inject]
-        private ISystemService SystemService { get; set; } = default!;
-        [Inject]
-        private IDiaryService DiaryService { get; set; } = default!;
 
         public void Dispose()
         {

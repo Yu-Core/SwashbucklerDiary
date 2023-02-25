@@ -290,7 +290,7 @@ namespace SwashbucklerDiary.Pages
             var messages = await AchievementService.UpdateUserState(AchievementType.Diary);
             var wordCountType = (WordCountType)Enum.Parse(typeof(WordCountType), I18n.T("Write.WordCountType")!);
             var wordCount = await DiaryService.GetWordCount(wordCountType);
-            var messages2 = await AchievementService.UpdateUserState(AchievementType.Diary, wordCount);
+            var messages2 = await AchievementService.UpdateUserState(AchievementType.Word, wordCount);
             messages.AddRange(messages2);
             foreach (var item in messages)
             {

@@ -6,66 +6,42 @@
 </MyAppBar>
 
 <MContainer>
-    <div class="d-flex flex-wrap justify-space-between">
-        <MCard Elevation="4"
-               Class="m-2"
-               Style="width:49%;"
+    <div class="d-flex justify-space-between flex-wrap">
+        @foreach (var item in Achievements)
+        {
+            <MCard Elevation="4"
+               Class="my-5 achievement-card"
                Rounded="@("lg")"
                Ripple="false">
-            <MList>
-                <MListItem>
-                    <MListItemAvatar>
-                        <MIcon XLarge>
-                            mdi-star-outline
-                        </MIcon>
-                    </MListItemAvatar>
+                <MList>
+                    <MListItem>
+                        <MListItemAvatar>
+                            <MIcon XLarge Color="@StatisticsPage.GetIconColor(item)">
+                            @(StatisticsPage.GetIcon(item))
+                            </MIcon>
+                        </MListItemAvatar>
 
-                    <MListItemContent>
-                        <MListItemTitle Class="mb-4 font-weight-bold">
-                            记忆的开始
-                        </MListItemTitle>
+                        <MListItemContent>
+                            <MListItemTitle Class="mb-4 font-weight-bold">
+                                @(I18n.T(item.Name))
+                            </MListItemTitle>
 
-                        <MListItemSubtitle Class="mb-4">
-                            第一次记日记
-                        </MListItemSubtitle>
+                            <MListItemSubtitle Class="mb-4">
+                                @(I18n.T(item.Description))
+                            </MListItemSubtitle>
 
-                        <MProgressLinear Value="50" Rounded Color="grey" Height="20">
-                            <strong>@("0/100")</strong>
-                        </MProgressLinear>
-                    </MListItemContent>
-                    
-                </MListItem>
-            </MList>
-        </MCard>
-        <MCard Elevation="4"
-               Class="m-2"
-               Style="width:49%;"
-               Rounded="@("lg")"
-               Ripple="false">
-            <MList>
-                <MListItem>
-                    <MListItemAvatar>
-                        <MIcon XLarge>
-                            mdi-trophy-award
-                        </MIcon>
-                    </MListItemAvatar>
-
-                    <MListItemContent>
-                        <MListItemTitle Class="mb-4 font-weight-bold">
-                            记忆的开始
-                        </MListItemTitle>
-
-                        <MListItemSubtitle Class="mb-4">
-                            第一次记日记
-                        </MListItemSubtitle>
-
-                        <MProgressLinear Value="50" Rounded Color="grey" Height="20">
-                            <strong>@("0/100")</strong>
-                        </MProgressLinear>
-                    </MListItemContent>
-
-                </MListItem>
-            </MList>
-        </MCard>
+                            <MProgressLinear Value="StatisticsPage.GetProgressRate(item)"
+                                         Color="@(StatisticsPage.GetProgressRateColor(item))"
+                                         Rounded
+                                         Height="20">
+                            <strong class="@StatisticsPage.GetProgressRateTextColor(item)">
+                                @(GetProgressRateText(item))
+                                </strong>
+                            </MProgressLinear>
+                        </MListItemContent>
+                    </MListItem>
+                </MList>
+            </MCard>
+        }
     </div>
 </MContainer>
