@@ -26,5 +26,10 @@ namespace SwashbucklerDiary.Services
         {
             return Get("Language", "zh-CN");
         }
+
+        public Task<bool> GetPrivacy()
+        {
+            return Get("Privacy", true);
+        }
     }
 }

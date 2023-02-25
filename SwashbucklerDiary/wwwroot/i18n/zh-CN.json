@@ -229,7 +229,7 @@
         "Description": "累计写日记10000字"
       },
       "100000": {
-        "Name": "下笔如有神",
+        "Name": "笔下有神",
         "Description": "累计写日记100000字"
       }
     },
@@ -247,7 +247,7 @@
     },
     "NickName": {
       "1": {
-        "Name": "改名换姓",
+        "Name": "更名改姓",
         "Description": "第一次更改昵称"
       }
     },
@@ -274,6 +274,19 @@
         "Name": "有备无患",
         "Description": "第一次导出"
       }
+    }
+  },
+  "Setting": {
+    "Diary": {
+      "Name": "日记",
+      "Title": "标题",
+      "Markdown": "Markdown"
+    },
+    "Safe": {
+      "Name": "安全",
+      "DisplayPrivacy": "隐私开关",
+      "PrivacyLibrary": "隐私库",
+      "Mask": "清除所有数据"
     }
   }
 }

@@ -274,5 +274,18 @@
         "Description": "First export"
       }
     }
+  },
+  "Setting": {
+    "Diary": {
+      "Name": "Diary",
+      "Title": "Title",
+      "Markdown": "Markdown"
+    },
+    "Safe": {
+      "Name": "Safe",
+      "DisplayPrivacy": "Display Privacy",
+      "PrivacyLibrary": "Privacy Library",
+      "Mask": "Invalidate Data"
+    }
   }
 }

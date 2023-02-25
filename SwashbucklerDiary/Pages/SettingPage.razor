@@ -1,0 +1,106 @@
+﻿@page "/setting"
+@inherits PageComponentBase
+
+<MyAppBar Title="@(I18n.T("Mine.Settings"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <div class="text-h6 setting-title">
+        @(I18n.T("Setting.Diary.Name"))
+    </div>
+
+    <MCard Class="setting-card"
+           Elevation="4"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-format-title
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Diary.Title"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch Value="Title"
+                             TValue="bool"
+                             ValueChanged="TitleChanged"
+                             Dense
+                             Inset>
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-language-markdown-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Diary.Markdown"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch Value="Markdown"
+                             TValue="bool"
+                             ValueChanged="MarkdownChanged"
+                             Dense
+                             Inset>
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <div class="text-h6 setting-title">
+        @(GetSafeName())
+    </div>
+
+    <MCard Class="setting-card"
+           Elevation="4"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        @(Privacy ? "mdi-lock-outline" : "mdi-database-remove-outline")
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(GetDisplayPrivacy())
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch Value="Privacy"
+                             TValue="bool"
+                             ValueChanged="PrivacyChanged"
+                             Dense
+                             Inset>
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            @if (Privacy)
+            {
+                <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+                <MListItem OnClick="()=>ToDo()">
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-safe
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n.T("Setting.Safe.PrivacyLibrary"))
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+            }
+        </MList>
+    </MCard>
+</ScrollContainer>

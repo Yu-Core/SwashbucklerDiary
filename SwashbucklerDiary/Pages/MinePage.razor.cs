@@ -84,7 +84,7 @@ namespace SwashbucklerDiary.Pages
                     "Mine.Settings",
                     new()
                     {
-                        new("Mine.Settings","mdi-cog-outline",()=>ToDo()),
+                        new("Mine.Settings","mdi-cog-outline",()=>To("/setting")),
                         new("Mine.Languages","mdi-web",()=>ShowLanguage=true),
                         new("Mine.Night","mdi-weather-night",()=>ToDo()),
                     }

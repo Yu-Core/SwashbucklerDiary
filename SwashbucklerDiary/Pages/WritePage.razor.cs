@@ -143,6 +143,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LoadSettings()
         {
+            ShowTitle = await SettingsService.Get("Title", false);
             Markdown = await SettingsService.Get(nameof(Markdown), false);
         }
 
@@ -301,6 +302,12 @@ namespace SwashbucklerDiary.Pages
                     it.Content = I18n.T(item);
                 });
             }
+        }
+
+        private async Task ShowTitleChanged()
+        {
+            ShowTitle = !ShowTitle;
+            await SettingsService.Save("Title", ShowTitle);
         }
     }
 }

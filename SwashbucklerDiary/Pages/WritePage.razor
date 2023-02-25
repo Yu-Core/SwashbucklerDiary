@@ -40,7 +40,7 @@
         <ChildContent>
             <MList MinWidth="150">
                 <MListItem Dense
-                           OnClick="()=>ShowTitle = !ShowTitle">
+                           OnClick="ShowTitleChanged">
                     <MListItemContent>
                         @(ShowTitle ? I18n.T("Write.CloseTitle") : I18n.T("Write.OpenTitle"))
                     </MListItemContent>
