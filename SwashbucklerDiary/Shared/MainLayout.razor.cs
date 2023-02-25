@@ -2,7 +2,6 @@
 using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using System.Globalization;
@@ -110,7 +109,7 @@ namespace SwashbucklerDiary.Shared
             bool flag = SystemService.IsFirstLaunch();
             if (flag)
             {
-                var uri = I18n.T("FilePath.FunctionalDescription");
+                var uri = I18n.T("FilePath.FunctionalDescription")!;
                 string content = await SystemService.ReadMarkdown(uri);
                 var diary = new DiaryModel()
                 {

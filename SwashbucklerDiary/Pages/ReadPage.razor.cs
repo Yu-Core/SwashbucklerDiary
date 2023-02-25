@@ -149,7 +149,7 @@ namespace SwashbucklerDiary.Pages
         private async Task ShareText()
         {
             ShowShare = false;
-            await SystemService.ShareText(I18n.T("Read.Share"), DiaryCopyContent);
+            await SystemService.ShareText(I18n.T("Read.Share")!, DiaryCopyContent);
             await HandleAchievements(AchievementType.Share);
         }
 
@@ -167,7 +167,7 @@ namespace SwashbucklerDiary.Pages
             await File.WriteAllBytesAsync(file, Convert.FromBase64String(base64));
             showLoading = false;
 
-            await SystemService.ShareFile(I18n.T("Read.Share"), file);
+            await SystemService.ShareFile(I18n.T("Read.Share")!, file);
             await HandleAchievements(AchievementType.Share);
         }
 

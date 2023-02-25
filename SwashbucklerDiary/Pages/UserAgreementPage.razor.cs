@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LoadingData()
         {
-            var uri = I18n.T("FilePath.UserAgreement");
+            var uri = I18n.T("FilePath.UserAgreement")!;
             Content = await SystemService.ReadMarkdown(uri);
         }
     }

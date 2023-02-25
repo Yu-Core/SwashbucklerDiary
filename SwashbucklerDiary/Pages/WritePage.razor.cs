@@ -108,9 +108,9 @@ namespace SwashbucklerDiary.Pages
             }
         }
         private string Weather =>
-            string.IsNullOrEmpty(Diary.Weather) ? I18n.T("Write.Weather") : I18n.T("Weather." + Diary.Weather);
+            string.IsNullOrEmpty(Diary.Weather) ? I18n.T("Write.Weather")! : I18n.T("Weather." + Diary.Weather)!;
         private string Mood =>
-            string.IsNullOrEmpty(Diary.Mood) ? I18n.T("Write.Mood") : I18n.T("Mood." + Diary.Mood);
+            string.IsNullOrEmpty(Diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + Diary.Mood)!;
 
         private async Task SetTag()
         {
@@ -288,7 +288,7 @@ namespace SwashbucklerDiary.Pages
         protected async Task HandleAchievements()
         {
             var messages = await AchievementService.UpdateUserState(AchievementType.Diary);
-            var wordCountType = (WordCountType)Enum.Parse(typeof(WordCountType), I18n.T("Write.WordCountType"));
+            var wordCountType = (WordCountType)Enum.Parse(typeof(WordCountType), I18n.T("Write.WordCountType")!);
             var wordCount = await DiaryService.GetWordCount(wordCountType);
             var messages2 = await AchievementService.UpdateUserState(AchievementType.Diary, wordCount);
             messages.AddRange(messages2);
