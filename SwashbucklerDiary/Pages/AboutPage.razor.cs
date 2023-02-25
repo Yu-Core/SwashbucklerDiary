@@ -1,5 +1,4 @@
-﻿using BlazorComponent;
-using BlazorComponent.I18n;
+﻿using BlazorComponent.I18n;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Models;
 
@@ -61,10 +60,11 @@ namespace SwashbucklerDiary.Pages
 
         private string? AppVersion => SystemService.GetAppVersion();
 
-        private async Task OpenBrowser(string url)
+        private async Task ViewSourceCode(string url)
         {
             ShowSourceCode = false;
             await SystemService.OpenBrowser(url);
+            await HandleAchievements(AchievementType.SourceCode);
         }
 
         private async Task OpenAppDetails()

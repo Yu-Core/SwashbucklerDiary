@@ -49,5 +49,26 @@ namespace SwashbucklerDiary.Services
         {
             return _iDiaryRepository.UpdateTagsAsync(model);
         }
+
+        public async Task<int> GetWordCount(WordCountType type)
+        {
+            var diaries = await QueryAsync();
+            var wordCount = 0;
+            if (type == WordCountType.Word)
+            {
+                foreach (var item in diaries)
+                {
+                    wordCount += item.Content?.Split(' ').Length ?? 0;
+                }
+            }
+            if(type == WordCountType.Character)
+            {
+                foreach (var item in diaries)
+                {
+                    wordCount += item.Content?.Length ?? 0;
+                }
+            }
+            return wordCount;
+        }
     }
 }

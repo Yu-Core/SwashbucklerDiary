@@ -84,8 +84,7 @@
     "Location": "Location",
     "TitlePlace": "Please enter a title",
     "ContentPlace": "Please enter content",
-    "Word": "1",
-    "Character": "0",
+    "WordCountType": "Word",
     "CountUnit": "words",
     "SelectWeather": "Select Weather",
     "SelectMood": "Select Mood",
@@ -197,5 +196,82 @@
   "ErrorHandle": {
     "Title": "Error",
     "Content": "An exception occurred. It has been saved to the log. Please exit the application"
+  },
+  "Achievement": {
+    "AchieveAchievements": "Achieve Achievements",
+    "Diary": {
+      "1": {
+        "Name": "Memory start",
+        "Description": "Write a diary for the first time"
+      },
+      "30": {
+        "Name": "Less to more",
+        "Description": "Write 30 diaries in total"
+      },
+      "100": {
+        "Name": "Have a niche in history",
+        "Description": "Write 100 diaries in total"
+      },
+      "1000": {
+        "Name": "The past is gone",
+        "Description": "Write 1000 diaries in total"
+      }
+    },
+    "Word": {
+      "3000": {
+        "Name": "First display talent",
+        "Description": "Accumulated 3000 words in diary"
+      },
+      "10000": {
+        "Name": "Beautiful writings",
+        "Description": "Accumulated 10000 words in diary"
+      },
+      "100000": {
+        "Name": "Write like a god",
+        "Description": "Accumulated 100000 words in diary"
+      }
+    },
+    "SourceCode": {
+      "1": {
+        "Name": "The source of everything",
+        "Description": "View source code for the first time"
+      }
+    },
+    "Avatar": {
+      "1": {
+        "Name": "Make only superficial changes",
+        "Description": "The first change of avatar"
+      }
+    },
+    "NickName": {
+      "1": {
+        "Name": "change name and surname",
+        "Description": "Change the nickname for the first time"
+      }
+    },
+    "Sign": {
+      "1": {
+        "Name": "Have high ambitions",
+        "Description": "Change signature for the first time"
+      }
+    },
+    "Log": {
+      "1": {
+        "Name": "Exclude difficulty and anxiety",
+        "Description": "View the log for the first time"
+      }
+    },
+    "Share": {
+      "1": {
+        "Name": "Show capabilities",
+        "Description": "Share for the first time"
+      }
+    },
+    "Export": {
+      "1": {
+        "Name": "Be prepared against want",
+        "Description": "First export"
+      }
+    }
   }
 }

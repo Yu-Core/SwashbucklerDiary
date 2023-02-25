@@ -1,8 +1,6 @@
-﻿using BlazorComponent.I18n;
-using SqlSugar;
+﻿using SqlSugar;
 using SwashbucklerDiary.IRepository;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Models.Data;
 
 namespace SwashbucklerDiary.Repository
 {

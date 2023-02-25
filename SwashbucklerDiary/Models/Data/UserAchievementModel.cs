@@ -1,7 +1,6 @@
 ﻿using SqlSugar;
-using System.Security.Principal;
 
-namespace SwashbucklerDiary.Models.Data
+namespace SwashbucklerDiary.Models
 {
     public class UserAchievementModel
     {

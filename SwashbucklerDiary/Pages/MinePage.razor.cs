@@ -61,24 +61,9 @@ namespace SwashbucklerDiary.Pages
         private async Task SetCount()
         {
             DiaryCount = await DiaryService.CountAsync();
+            var wordCountType = (WordCountType)Enum.Parse(typeof(WordCountType), I18n.T("Write.WordCountType"));
+            WordCount = await DiaryService.GetWordCount(wordCountType);
             var diaries = await DiaryService.QueryAsync();
-            var wordCount = 0;
-            if (I18n.T("Write.Word") == "1")
-            {
-                foreach (var item in diaries)
-                {
-                    wordCount += item.Content?.Split(' ').Length ?? 0;
-                }
-            }
-
-            if (I18n.T("Write.Character") == "1")
-            {
-                foreach (var item in diaries)
-                {
-                    wordCount += item.Content?.Length ?? 0;
-                }
-            }
-            WordCount = wordCount;
             ActiveDayCount = diaries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
         }
 

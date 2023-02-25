@@ -7,10 +7,11 @@ namespace SwashbucklerDiary.Pages
     {
         private List<string> LogTextList = new();
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             InitLogText();
-            return base.OnInitializedAsync();
+            await HandleAchievements(Models.AchievementType.Log);
+            await base.OnInitializedAsync();
         }
 
         private void InitLogText()

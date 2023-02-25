@@ -76,7 +76,7 @@
         <MCardText>
             @foreach (var item in CodeSources)
             {
-                <MListItem Class="px-0" OnClick="()=>OpenBrowser(item.Url!)">
+                <MListItem Class="px-0" OnClick="()=>ViewSourceCode(item.Url!)">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             @(item.Icon)

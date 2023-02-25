@@ -1,11 +1,7 @@
-﻿using SqlSugar;
-
-namespace SwashbucklerDiary.Models.Data
+﻿namespace SwashbucklerDiary.Models
 {
-    public class UserStateModel
+    public class UserStateModel : BaseModel
     {
-        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-        public int Id { get; set; }
         public AchievementType Type { get; set; }
         public int Count { get; set; }
     }

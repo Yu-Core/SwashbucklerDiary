@@ -1,4 +1,4 @@
-﻿namespace SwashbucklerDiary.Models.Data
+﻿namespace SwashbucklerDiary.Models
 {
     public class AchievementModel
     {
@@ -9,18 +9,13 @@
         public int Steps { get; set; }
         public UserAchievementModel? UserAchievement { get; set; }
 
-        public AchievementModel(int id, string name, AchievementType type, string description, int steps)
+        public AchievementModel(int id, AchievementType type, int steps)
         {
             Id = id;
-            Name = name;
+            Name = $"Achievement.{Enum.GetName(typeof(AchievementType), type)}.{steps}.Name";
             Type = type;
-            Description = description;
+            Description = $"Achievement.{Enum.GetName(typeof(AchievementType), type)}.{steps}.Description";
             Steps = steps;
         }
-    }
-
-    public enum AchievementType
-    {
-        Diary, Word, Tag, Avatar, NickName, Sign, SourceCode, Log, Share, Export
     }
 }

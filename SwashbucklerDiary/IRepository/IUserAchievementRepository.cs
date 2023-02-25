@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Models.Data;
+﻿using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.IRepository
 {

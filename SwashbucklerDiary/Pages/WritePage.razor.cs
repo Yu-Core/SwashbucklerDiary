@@ -30,8 +30,6 @@ namespace SwashbucklerDiary.Pages
         public ITagService TagService { get; set; } = default!;
         [Inject]
         public IconService IconService { get; set; } = default!;
-        [Inject]
-        public IAchievementService AchievementService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -200,16 +198,7 @@ namespace SwashbucklerDiary.Pages
                         it.Type = AlertTypes.Success;
                         it.Title = I18n.T("Share.AddSuccess");
                     });
-                    var messages = await AchievementService.UpdateUserState(Models.Data.AchievementType.Diary);
-                    foreach (var item in messages)
-                    {
-                        await PopupService.ToastAsync(it =>
-                        {
-                            it.Type = AlertTypes.Success;
-                            it.Title = "达成成就";
-                            it.Content = item;
-                        });
-                    }
+                    await HandleAchievements();
                 }
                 else
                 {
@@ -277,12 +266,12 @@ namespace SwashbucklerDiary.Pages
             }
 
             value = value.Trim();
-            if (I18n.T("Write.Word") == "1")
+            if (I18n.T("Write.WordCountType") == WordCountType.Word.ToString())
             {
                 len = value.Split(' ').Length;
             }
 
-            if (I18n.T("Write.Character") == "1")
+            if (I18n.T("Write.WordCountType") == WordCountType.Character.ToString())
             {
                 len = value.Length;
             }
@@ -294,6 +283,24 @@ namespace SwashbucklerDiary.Pages
         {
             Markdown = !Markdown;
             await SettingsService!.Save(nameof(Markdown), Markdown);
+        }
+
+        protected async Task HandleAchievements()
+        {
+            var messages = await AchievementService.UpdateUserState(AchievementType.Diary);
+            var wordCountType = (WordCountType)Enum.Parse(typeof(WordCountType), I18n.T("Write.WordCountType"));
+            var wordCount = await DiaryService.GetWordCount(wordCountType);
+            var messages2 = await AchievementService.UpdateUserState(AchievementType.Diary, wordCount);
+            messages.AddRange(messages2);
+            foreach (var item in messages)
+            {
+                await PopupService.ToastAsync(it =>
+                {
+                    it.Type = AlertTypes.Success;
+                    it.Title = I18n.T("Achievement.AchieveAchievements");
+                    it.Content = I18n.T(item);
+                });
+            }
         }
     }
 }

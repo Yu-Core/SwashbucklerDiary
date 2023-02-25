@@ -85,8 +85,7 @@
     "Location": "位置",
     "TitlePlace": "请输入标题",
     "ContentPlace": "请输入内容",
-    "Word": "0",
-    "Character": "1",
+    "WordCountType": "Character",
     "CountUnit": "字",
     "SelectWeather": "选择天气",
     "SelectMood": "选择心情",
@@ -198,5 +197,82 @@
   "ErrorHandle": {
     "Title": "错误",
     "Content": "出现异常，已保存到日志，请退出应用"
+  },
+  "Achievement": {
+    "AchieveAchievements": "达成成就",
+    "Diary": {
+      "1": {
+        "Name": "记忆开始",
+        "Description": "第一次写日记"
+      },
+      "30": {
+        "Name": "积少成多",
+        "Description": "累计写30篇日记"
+      },
+      "100": {
+        "Name": "青史留名",
+        "Description": "累计写100篇日记"
+      },
+      "1000": {
+        "Name": "过眼云烟",
+        "Description": "累计写1000篇日记"
+      }
+    },
+    "Word": {
+      "3000": {
+        "Name": "初露锋芒",
+        "Description": "累计写日记3000字"
+      },
+      "10000": {
+        "Name": "妙笔生花",
+        "Description": "累计写日记10000字"
+      },
+      "100000": {
+        "Name": "下笔如有神",
+        "Description": "累计写日记100000字"
+      }
+    },
+    "SourceCode": {
+      "1": {
+        "Name": "万物之源",
+        "Description": "第一次查看源代码"
+      }
+    },
+    "Avatar": {
+      "1": {
+        "Name": "改头换面",
+        "Description": "第一次更换头像"
+      }
+    },
+    "NickName": {
+      "1": {
+        "Name": "改名换姓",
+        "Description": "第一次更改昵称"
+      }
+    },
+    "Sign": {
+      "1": {
+        "Name": "青云之志",
+        "Description": "第一次更改签名"
+      }
+    },
+    "Log": {
+      "1": {
+        "Name": "排忧解难",
+        "Description": "第一次查看日志"
+      }
+    },
+    "Share": {
+      "1": {
+        "Name": "大展身手",
+        "Description": "第一次分享"
+      }
+    },
+    "Export": {
+      "1": {
+        "Name": "有备无患",
+        "Description": "第一次导出"
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 ﻿using SwashbucklerDiary.IRepository;
 using SwashbucklerDiary.IServices;
-using SwashbucklerDiary.Models.Data;
+using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Services
 {
@@ -10,9 +10,20 @@ namespace SwashbucklerDiary.Services
         private readonly IUserStateModelRepository _userStateModelRepository;
         private readonly List<AchievementModel> Achievements = new()
         {
-            new(1,"Memory start",AchievementType.Diary,"Keep a diary for the first time",1),
-            new(2,"Unremitting",AchievementType.Diary,"Keep a diary for 30 days in total",30),
-            new(3,"Many a little make a mickle",AchievementType.Diary,"Keep 30 diaries in total",30),
+            new(1,AchievementType.Diary,1),
+            new(2,AchievementType.Diary,30),
+            new(3, AchievementType.Diary, 100),
+            new(4, AchievementType.Diary, 1000),
+            new(5, AchievementType.Word, 3000),
+            new(6, AchievementType.Word, 10000),
+            new(7, AchievementType.Word, 100000),
+            new(8, AchievementType.SourceCode, 1),
+            new(9, AchievementType.Avatar, 1),
+            new(10, AchievementType.NickName, 1),
+            new(11, AchievementType.Sign, 1),
+            new(12, AchievementType.Log, 1),
+            new(13, AchievementType.Share, 1),
+            new(14, AchievementType.Export, 1),
         };
 
         public AchievementService(IUserAchievementRepository userAchievementRepository, 
@@ -28,10 +39,10 @@ namespace SwashbucklerDiary.Services
             return await CheckAchievement(userState!);
         }
 
-        public async Task<List<string>> UpdateUserState(UserStateModel userState)
+        public async Task<List<string>> UpdateUserState(AchievementType type, int count)
         {
-            var newUserState = await _userStateModelRepository.InsertOrUpdateAsync(userState);
-            return await CheckAchievement(newUserState!);
+            var userState = await _userStateModelRepository.InsertOrUpdateAsync(type,count);
+            return await CheckAchievement(userState!);
         }
 
         private async Task<List<string>> CheckAchievement(UserStateModel userState)

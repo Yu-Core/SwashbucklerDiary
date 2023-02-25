@@ -1,7 +1,6 @@
 ﻿using SqlSugar;
 using SwashbucklerDiary.IRepository;
-using SwashbucklerDiary.Models.Data;
-using static Masa.Blazor.Presets.Message;
+using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Repository
 {
@@ -13,19 +12,22 @@ namespace SwashbucklerDiary.Repository
 
         public async Task<UserStateModel> InsertOrUpdateAsync(AchievementType type)
         {
-            UserStateModel newUserState = new()
-            {
-                Type = type,
-                Count = 1
-            };
             var userState = await base.GetFirstAsync(it => it.Type == type);
-            if(userState == null)
+            if (userState == null)
             {
+                UserStateModel newUserState = new()
+                {
+                    Type = type,
+                    Count = 1,
+                    CreateTime = DateTime.Now,
+                    UpdateTime = DateTime.Now
+                };
                 await base.InsertAsync(newUserState);
                 return newUserState;
             }
             else
             {
+                userState.UpdateTime = DateTime.Now;
                 await base.Context.Updateable<UserStateModel>()
                 .SetColumns(it => it.Count == it.Count + 1)
                 .Where(it => it.Type == type)
@@ -39,9 +41,15 @@ namespace SwashbucklerDiary.Repository
 
         }
 
-        public new async Task<UserStateModel> InsertOrUpdateAsync(UserStateModel userState)
+        public async Task<UserStateModel> InsertOrUpdateAsync(AchievementType type,int count)
         {
-            var type = userState.Type;
+            UserStateModel userState = new()
+            {
+                Type = type,
+                Count = count,
+                CreateTime = DateTime.Now,
+                UpdateTime = DateTime.Now
+            };
             var oldUserState = await base.GetFirstAsync(it => it.Type == type);
             if (oldUserState == null)
             {
@@ -50,8 +58,9 @@ namespace SwashbucklerDiary.Repository
             else
             {
                 await base.Context.Updateable(userState)
-                .Where(it => it.Type == type)
-                .ExecuteCommandAsync();
+                    .UpdateColumns(it => new { it.Count, it.UpdateTime })
+                    .Where(it => it.Type == type)
+                    .ExecuteCommandAsync();
             }
 
             return userState;

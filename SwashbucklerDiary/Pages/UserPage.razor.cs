@@ -1,5 +1,8 @@
-﻿using Microsoft.JSInterop;
+﻿using BlazorComponent;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
+using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
@@ -54,6 +57,7 @@ namespace SwashbucklerDiary.Pages
                 Sign = tagName;
                 await SettingsService!.Save(nameof(Sign), Sign);
             }
+            await HandleAchievements(AchievementType.Sign);
         }
 
         private async Task SaveUserName(string tagName)
@@ -64,6 +68,7 @@ namespace SwashbucklerDiary.Pages
                 UserName = tagName;
                 await SettingsService!.Save(nameof(UserName), UserName);
             }
+            await HandleAchievements(AchievementType.NickName);
         }
 
         private async Task PickPhoto()
@@ -112,6 +117,7 @@ namespace SwashbucklerDiary.Pages
                 await SettingsService!.Save(nameof(Avatar), localFilePath);
                 await SetAvatar(localFilePath);
                 await PopupService.ToastSuccessAsync(I18n.T("Share.EditSuccess"));
+                await HandleAchievements(AchievementType.Avatar);
             }
         }
 

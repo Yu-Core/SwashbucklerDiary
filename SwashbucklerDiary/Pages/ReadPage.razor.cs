@@ -150,6 +150,7 @@ namespace SwashbucklerDiary.Pages
         {
             ShowShare = false;
             await SystemService.ShareText(I18n.T("Read.Share"), DiaryCopyContent);
+            await HandleAchievements(AchievementType.Share);
         }
 
         private async Task ShareImage()
@@ -167,6 +168,7 @@ namespace SwashbucklerDiary.Pages
             showLoading = false;
 
             await SystemService.ShareFile(I18n.T("Read.Share"), file);
+            await HandleAchievements(AchievementType.Share);
         }
 
         private string GetWeatherIcon(string? key)

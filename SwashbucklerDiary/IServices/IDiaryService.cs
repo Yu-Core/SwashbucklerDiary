@@ -12,5 +12,6 @@ namespace SwashbucklerDiary.IServices
         Task<bool> UpdateTagsAsync(DiaryModel model);
         Task<List<TagModel>> GetTagsAsync(int id);
         Task<bool> UpdateIncludesAsync(DiaryModel model);
+        Task<int> GetWordCount(WordCountType type);
     }
 }
