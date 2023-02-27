@@ -83,11 +83,16 @@ a, .btn-link {
 }
 
 @media (hover: none) {
-    button:hover::before {
-        display:none;
+    .m-btn:hover::before {
+        display: none;
     }
+
+    .m-input--selection-controls__input:hover .m-input--selection-controls__ripple:before {
+        display: none;
+    }
+
     .m-icon:hover::before {
-        display: inline-block;
+        display: inline-block !important;
     }
 }
 
@@ -104,9 +109,9 @@ a, .btn-link {
     text-transform: none !important;
 }
 
-.m-tab-swiper::before {
-    opacity: 0 !important;
-}
+    .m-tab-swiper::before {
+        opacity: 0 !important;
+    }
 
 @media screen and (max-width:600px) {
     .m-tab-swiper {

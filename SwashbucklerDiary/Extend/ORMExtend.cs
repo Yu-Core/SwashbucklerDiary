@@ -27,16 +27,17 @@ namespace SwashbucklerDiary.Extend
                         }
                     }
                 }
-            },
+            }
 #if DEBUG
-                db =>
+            ,
+            db =>
+            {
+                //单例参数配置，所有上下文生效
+                db.Aop.OnLogExecuting = (sql, pars) =>
                 {
-                    //单例参数配置，所有上下文生效
-                    db.Aop.OnLogExecuting = (sql, pars) =>
-                    {
-                        Console.WriteLine(sql);//输出sql
-                    };
-                }
+                    Console.WriteLine(sql);//输出sql
+                };
+            }
 #endif
             );
 

@@ -22,7 +22,7 @@ namespace SwashbucklerDiary.Pages
 
         private static string GetIconColor(AchievementModel achievement)
         {
-            return achievement.UserAchievement.IsCompleted ? "black" : "";
+            return achievement.UserAchievement.IsCompleted ? "indigo darken-4" : "";
         }
 
         private static string GetIcon(AchievementModel achievement)
@@ -38,7 +38,7 @@ namespace SwashbucklerDiary.Pages
 
         private static string GetProgressRateColor(AchievementModel achievement)
         {
-            return achievement.UserAchievement.IsCompleted ? "grey darken-4" : "grey lighten-1";
+            return achievement.UserAchievement.IsCompleted ? "indigo darken-4" : "grey lighten-1";
         }
 
         private static string GetProgressRateTextColor(AchievementModel achievement)

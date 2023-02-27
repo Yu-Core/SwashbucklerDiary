@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SetCount()
         {
-            DiaryCount = await DiaryService.CountAsync();
+            DiaryCount = await DiaryService.CountAsync(it=>!it.Private);
             var wordCountType = (WordCountType)Enum.Parse(typeof(WordCountType), I18n.T("Write.WordCountType")!);
             WordCount = await DiaryService.GetWordCount(wordCountType);
             var diaries = await DiaryService.QueryAsync(it => !it.Private);

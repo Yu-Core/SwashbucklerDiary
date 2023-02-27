@@ -52,7 +52,7 @@ namespace SwashbucklerDiary.Services
 
         public async Task<int> GetWordCount(WordCountType type)
         {
-            var diaries = await QueryAsync();
+            var diaries = await QueryAsync(it=>!it.Private);
             var wordCount = 0;
             if (type == WordCountType.Word)
             {
