@@ -82,5 +82,10 @@ namespace SwashbucklerDiary.Services
         {
             return _iBaseRepository.GetListTakeAsync(count);
         }
+
+        public Task<List<TEntity>> QueryTakeAsync(int count, Expression<Func<TEntity, bool>> func)
+        {
+            return _iBaseRepository.GetListTakeAsync(count,func);
+        }
     }
 }

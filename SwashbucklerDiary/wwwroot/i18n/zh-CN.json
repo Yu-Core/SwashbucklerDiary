@@ -123,7 +123,9 @@
     "Share": "分享",
     "SelectShare": "选择分享方式",
     "TextShare": "文字分享",
-    "ImageShare": "图片分享"
+    "ImageShare": "图片分享",
+    "OpenPrivacy": "移入隐私库",
+    "ClosePrivacy": "移出隐私库"
   },
   "AppName": "侠客日记",
   "Mine": {
@@ -284,9 +286,19 @@
     },
     "Safe": {
       "Name": "安全",
-      "DisplayPrivacy": "隐私开关",
+      "DisplayPrivacy": "隐私模式",
       "PrivacyLibrary": "隐私库",
-      "Mask": "清除所有数据"
+      "PrivacyPassword": "隐私密码",
+      "Mask": "清除所有数据",
+      "CamouflageSuccess": "伪装成功",
+      "PrivatePasswordSetSuccess": "密码设置成功",
+      "SetPassword": "设置密码",
+      "ValidatePassword": "验证密码",
+      "Placeholder": "请输入密码",
+      "PasswordError": "密码错误"
     }
-  }
+  },
+  "Password must be at most 20 characters long": "密码不得超过20个字符",
+  "Password must be at least 6 characters long": "密码不能少于6个字符",
+  "The two passwords are inconsistent": "两次密码不一致"
 }

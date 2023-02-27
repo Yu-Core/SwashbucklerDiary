@@ -34,6 +34,15 @@ namespace SwashbucklerDiary.Repository
                 .ToListAsync();
         }
 
+        public override Task<List<DiaryModel>> GetListTakeAsync(int count, Expression<Func<DiaryModel, bool>> func)
+        {
+            return base.Context.Queryable<DiaryModel>()
+                .Where(func)
+                .OrderByDescending(it => it.Id)
+                .Take(count)
+                .ToListAsync();
+        }
+
         public override Task<bool> InsertAsync(DiaryModel model)
         {
             model.CreateTime = DateTime.Now;

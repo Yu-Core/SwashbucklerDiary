@@ -18,6 +18,7 @@ namespace SwashbucklerDiary.Pages
         private IJSObjectReference? module;
         private Action? OnDelete;
         private bool Markdown;
+        private bool Private;
 
         [Inject]
         public IDiaryService DiaryService { get; set; } = default!;
@@ -55,6 +56,7 @@ namespace SwashbucklerDiary.Pages
             }
         }
         private bool IsTop => Diary.Top;
+        private bool IsPrivate => Diary.Private;
         private bool ShowTitle => !string.IsNullOrEmpty(Diary.Title);
         private bool ShowWeather => !string.IsNullOrEmpty(Diary.Weather);
         private bool ShowMood => !string.IsNullOrEmpty(Diary.Mood);
@@ -85,6 +87,7 @@ namespace SwashbucklerDiary.Pages
         private async Task LoadSettings()
         {
             Markdown = await SettingsService.Get(nameof(Markdown), false);
+            Private = await SettingsService.GetPrivacy();
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()
@@ -193,6 +196,12 @@ namespace SwashbucklerDiary.Pages
         {
             Markdown = !Markdown;
             await SettingsService!.Save(nameof(Markdown), Markdown);
+        }
+
+        private async Task DiaryPrivacyChanged()
+        {
+            Diary.Private = !Diary.Private;
+            await DiaryService.UpdateAsync(Diary);
         }
     }
 }

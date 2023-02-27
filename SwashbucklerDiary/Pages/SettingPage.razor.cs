@@ -1,4 +1,6 @@
-﻿using SwashbucklerDiary.Components;
+﻿using BlazorComponent;
+using Masa.Blazor;
+using SwashbucklerDiary.Components;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -7,6 +9,9 @@ namespace SwashbucklerDiary.Pages
         private bool Title;
         private bool Markdown;
         private bool Privacy;
+        private bool PrivacyConfirm;
+        private bool ShowPPSet;
+        private bool ShowPPInput;
 
         protected override async Task OnInitializedAsync()
         {
@@ -21,22 +26,27 @@ namespace SwashbucklerDiary.Pages
             Privacy = await SettingsService.GetPrivacy();
         }
 
-        private async Task TitleChanged(bool value)
+        private async Task TitleChange(bool value)
         {
-            Title = value;
             await SettingsService.Save("Title",value);
         }
 
-        private async Task MarkdownChanged(bool value)
+        private async Task MarkdownChange(bool value)
         {
-            Markdown = value;
             await SettingsService.Save("Markdown", value);
         }
 
-        private async Task PrivacyChanged(bool value)
+        private async Task PrivacyChange(bool value)
         {
-            Privacy = value;
             await SettingsService.Save("Privacy", value);
+            if (!value)
+            {
+                await PopupService.ToastAsync(it =>
+                {
+                    it.Type = AlertTypes.Success;
+                    it.Title = I18n.T("Setting.Safe.CamouflageSuccess");
+                });
+            }
         }
 
         private string? GetSafeName()
@@ -47,6 +57,37 @@ namespace SwashbucklerDiary.Pages
         private string? GetDisplayPrivacy()
         {
             return Privacy ? I18n.T("Setting.Safe.DisplayPrivacy") : I18n.T("Setting.Safe.Mask");
+        }
+
+        private async Task SetPassword(string value)
+        {
+            ShowPPSet = false;
+            await SettingsService.Save("PrivatePassword", value);
+            await PopupService.ToastSuccessAsync("PrivatePasswordSetSuccess");
+        }
+
+        private async Task InputPassword(string value)
+        {
+            ShowPPInput = false;
+            var password = await SettingsService.Get("PrivatePassword", "");
+            if(password != value)
+            {
+                await PopupService.ToastErrorAsync(I18n.T("Setting.Safe.PasswordError"));
+                return;
+            }
+            Privacy = true;
+        }
+
+        private async Task PrivacyClick()
+        {
+            var password = await SettingsService.Get("PrivatePassword", "");
+            if (!string.IsNullOrEmpty(password) && !Privacy)
+            {
+                ShowPPInput = true;
+                return;
+            }
+
+            Privacy = !Privacy;
         }
     }
 }

@@ -19,6 +19,7 @@ namespace SwashbucklerDiary.Pages
         private bool Markdown;
         private DiaryModel Diary = new()
         {
+            Tags = new(),
             CreateTime = DateTime.Now
         };
 
@@ -56,7 +57,7 @@ namespace SwashbucklerDiary.Pages
 
         private List<TagModel> SelectedTags
         {
-            get => Diary.Tags ?? new();
+            get => Diary.Tags!;
             set => Diary.Tags = value;
         }
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;

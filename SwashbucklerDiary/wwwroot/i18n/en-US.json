@@ -122,7 +122,9 @@
     "Share": "Share",
     "SelectShare": "Select sharing method",
     "TextShare": "Text Share",
-    "ImageShare": "Image Share"
+    "ImageShare": "Image Share",
+    "OpenPrivacy": "Open Privacy",
+    "ClosePrivacy": "Close Privacy"
   },
   "AppName": "SwashbucklerDiary",
   "Mine": {
@@ -283,9 +285,19 @@
     },
     "Safe": {
       "Name": "Safe",
-      "DisplayPrivacy": "Display Privacy",
+      "DisplayPrivacy": "Privacy Mode",
       "PrivacyLibrary": "Privacy Library",
-      "Mask": "Invalidate Data"
+      "PrivacyPassword": "Privacy Password",
+      "Mask": "Invalidate Data",
+      "CamouflageSuccess": "Camouflage Success",
+      "PrivatePasswordSetSuccess": "PrivatePassword set success",
+      "SetPassword": "Set Password",
+      "ValidatePassword": "Validate Password",
+      "Placeholder": "Please input a password",
+      "PasswordError": "Password Error"
     }
-  }
+  },
+  "Password must be at most 20 characters long": "Password must be at most 20 characters long",
+  "Password must be at least 6 characters long": "Password must be at least 6 characters long",
+  "The two passwords are inconsistent": "The two passwords are inconsistent"
 }

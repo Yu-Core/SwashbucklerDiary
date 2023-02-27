@@ -67,11 +67,19 @@
                         @(I18n.T("Diary.Export"))
                     </MListItemContent>
                 </MListItem>
-                <MListItem Dense OnClick="()=>MarkdownChanged()">
+                <MListItem Dense OnClick="MarkdownChanged">
                     <MListItemContent>
                         @(Markdown ? I18n.T("Diary.Text") : I18n.T("Diary.Markdown"))
                     </MListItemContent>
                 </MListItem>
+                @if (Private)
+                {
+                    <MListItem Dense OnClick="DiaryPrivacyChanged">
+                        <MListItemContent>
+                        @(IsPrivate ? I18n.T("Read.ClosePrivacy") : I18n.T("Read.OpenPrivacy"))
+                        </MListItemContent>
+                    </MListItem>
+                }
             </MList>
         </ChildContent>
     </MyMenu>

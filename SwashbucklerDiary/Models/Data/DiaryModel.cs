@@ -10,6 +10,7 @@ namespace SwashbucklerDiary.Models
         public string? Weather { get; set; }
         public string? Location { get; set; }
         public bool Top { get; set; }
+        public bool Private { get; set; }
 
         [Navigate(typeof(DiaryTagModel), nameof(DiaryTagModel.DiaryId), nameof(DiaryTagModel.TagId))]
         public List<TagModel>? Tags { get; set; }

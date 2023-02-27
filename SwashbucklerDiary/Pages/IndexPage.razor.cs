@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Pages
 {
     public partial class IndexPage : PageComponentBase
     {
         private StringNumber tabs = 0;
-        private string? AddTagName;
         private List<DiaryModel> Diaries = new();
         private List<TagModel> Tags = new();
         private readonly List<string> Types = new() { "All", "Tags" };
@@ -37,7 +35,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task UpdateDiaries()
         {
-            Diaries = await DiaryService.QueryTakeAsync(50);
+            Diaries = await DiaryService.QueryTakeAsync(50, it => !it.Private);
         }
 
         private async Task UpdateTags()
@@ -139,7 +137,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task FirstLaunch()
         {
-            if(Diaries.Count > 0)
+            if (Diaries.Count > 0)
             {
                 return;
             }

@@ -38,7 +38,6 @@ namespace SwashbucklerDiary.Pages
 
 
         private List<DiaryModel> Diaries => Tag.Diaries ?? new();
-        private bool Prominent => MasaBlazor.Breakpoint.SmAndUp && Diaries.Any();
 
         private void NavigateToWrite()
         {

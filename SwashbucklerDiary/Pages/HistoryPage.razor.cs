@@ -69,7 +69,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task UpdateDiaries()
         {
-            Diaries = await DiaryService.QueryAsync();
+            Diaries = await DiaryService.QueryAsync(it => !it.Private);
             StateHasChanged();
         }
 
@@ -127,11 +127,6 @@ namespace SwashbucklerDiary.Pages
                 });
             }
             return yearTrees;
-        }
-
-        private void NavigateToSearch()
-        {
-            NavigateService.NavigateTo("/search");
         }
     }
 }

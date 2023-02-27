@@ -1,25 +1,11 @@
 ﻿@page "/tag/{id:int}"
 @inherits PageComponentBase
 
-<MAppBar App
-         Color="white"
-         ElevateOnScroll
-         Prominent="Prominent"
-         ScrollTarget="#scrolling-tag">
-    <MButton Icon OnClick="NavigateToBack">
-        <MIcon>
-            mdi-arrow-left
-        </MIcon>
-    </MButton>
+<MyAppBar Title="@(Tag.Name)"
+          OnClick="NavigateToBack">
+</MyAppBar>
 
-    <MAppBarTitle Class="font-weight-bold">
-        @Tag.Name
-    </MAppBarTitle>
-
-    <MSpacer></MSpacer>
-</MAppBar>
-
-<ScrollContainer Id="scrolling-tag">
+<ScrollContainer>
     <DiaryCardList Value="Diaries" />
 </ScrollContainer>
 

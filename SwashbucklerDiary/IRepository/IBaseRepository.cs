@@ -1,4 +1,5 @@
 ﻿using SqlSugar;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.IRepository
 {
@@ -6,5 +7,6 @@ namespace SwashbucklerDiary.IRepository
     {
         Task<int> CountAsync();
         Task<List<T>> GetListTakeAsync(int count);
+        Task<List<T>> GetListTakeAsync(int count, Expression<Func<T, bool>> func);
     }
 }

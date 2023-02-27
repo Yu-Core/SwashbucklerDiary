@@ -15,6 +15,7 @@ namespace SwashbucklerDiary.IServices
         Task<List<TEntity>> QueryAsync();
         Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func);
         Task<List<TEntity>> QueryTakeAsync(int count);
+        Task<List<TEntity>> QueryTakeAsync(int count, Expression<Func<TEntity, bool>> func);
         Task<TEntity> FindAsync(int id);
         Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func);
         Task<int> CountAsync();

@@ -1,6 +1,7 @@
 ﻿using SqlSugar;
 using SwashbucklerDiary.IRepository;
 using SwashbucklerDiary.Models;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Repository
 {
@@ -28,6 +29,14 @@ namespace SwashbucklerDiary.Repository
         public virtual Task<List<T>> GetListTakeAsync(int count)
         {
             return base.Context.Queryable<T>().Take(count).ToListAsync();
+        }
+
+        public virtual Task<List<T>> GetListTakeAsync(int count, Expression<Func<T, bool>> func)
+        {
+            return base.Context.Queryable<T>()
+                .Where(func)
+                .Take(count)
+                .ToListAsync();
         }
     }
 }

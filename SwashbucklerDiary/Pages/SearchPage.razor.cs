@@ -25,9 +25,8 @@ namespace SwashbucklerDiary.Pages
         {
             if (!string.IsNullOrWhiteSpace(Search))
             {
-                Diaries = await DiaryService.QueryAsync(it =>
-                    it.Title!.Contains(Search) ||
-                    it.Content!.Contains(Search));
+                Diaries = await DiaryService.QueryAsync(it => !it.Private &&
+                    (it.Title!.Contains(Search) || it.Content!.Contains(Search)));
             }
             else
             {
