@@ -294,12 +294,13 @@
       "PrivatePasswordSetSuccess": "密码设置成功",
       "SetPassword": "设置密码",
       "ValidatePassword": "验证密码",
-      "Placeholder": "请输入密码",
       "PasswordError": "密码错误"
     }
   },
   "Password must be at most 20 characters long": "密码不得超过20个字符",
   "Password must be at least 6 characters long": "密码不能少于6个字符",
   "The two passwords are inconsistent": "两次密码不一致",
-  "Experimental features": "警告！该功能处于实验中"
+  "Experimental features": "警告！该功能处于实验中",
+  "Please input a password": "请输入密码",
+  "Please enter the password again": "请再次输入密码"
 }

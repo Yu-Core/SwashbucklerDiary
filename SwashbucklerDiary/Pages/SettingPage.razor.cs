@@ -1,6 +1,7 @@
 ﻿using BlazorComponent;
 using Masa.Blazor;
 using SwashbucklerDiary.Components;
+using SwashbucklerDiary.Extend;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -61,15 +62,19 @@ namespace SwashbucklerDiary.Pages
         private async Task SetPassword(string value)
         {
             ShowPPSet = false;
-            await SettingsService.Save("PrivatePassword", value);
-            await PopupService.ToastSuccessAsync("PrivatePasswordSetSuccess");
+            await SettingsService.Save("PrivatePassword", value.MD5Encrytp32());
+            await PopupService.ToastSuccessAsync(I18n.T("Setting.Safe.PrivatePasswordSetSuccess"));
         }
 
         private async Task InputPassword(string value)
         {
             ShowPPInput = false;
+            if(string.IsNullOrWhiteSpace(value))
+            {
+                return;
+            }
             var password = await SettingsService.Get("PrivatePassword", "");
-            if(password != value)
+            if(password != value.MD5Encrytp32())
             {
                 await PopupService.ToastErrorAsync(I18n.T("Setting.Safe.PasswordError"));
                 return;

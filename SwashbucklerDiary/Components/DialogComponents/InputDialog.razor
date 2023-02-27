@@ -15,6 +15,7 @@
         <MCardText Class="pb-0">
             <MTextField @bind-Value="InputText"
                         @ref="TextField"
+                        OnKeyDown="HandleOnEnter"
                         Dense
                         HideDetails="@("auto")"
                         Outlined

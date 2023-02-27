@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace SwashbucklerDiary.Components
 {
@@ -38,10 +39,17 @@ namespace SwashbucklerDiary.Components
             }
         }
 
-        private async Task HandleOnOK()
+        protected virtual async Task HandleOnEnter(KeyboardEventArgs args)
+        {
+            if (args.Key == "Enter")
+            {
+                await HandleOnOK();
+            }
+        }
+
+        protected async Task HandleOnOK()
         {
             await OnOK.InvokeAsync(InputText);
         }
-
     }
 }

@@ -125,14 +125,13 @@
 
 <PasswordDialog @bind-Value="ShowPPSet"
                 Title="@(I18n.T("Setting.Safe.SetPassword"))"
-                Placeholder="@(I18n.T("Setting.Safe.Placeholder"))"
                 MaxLength="20"
                 OnOK="SetPassword">
 </PasswordDialog>
 
 <InputDialog @bind-Value="ShowPPInput"
              Title="@(I18n.T("Setting.Safe.ValidatePassword"))"
-             Placeholder="@(I18n.T("Setting.Safe.Placeholder"))"
+             Placeholder="@(I18n.T("Please input a password"))"
              MaxLength="20"
              OnOK="InputPassword">
 </InputDialog>

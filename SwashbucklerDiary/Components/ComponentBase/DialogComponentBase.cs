@@ -9,6 +9,7 @@ namespace SwashbucklerDiary.Components
         public virtual bool Value { get; set; }
         [Parameter]
         public EventCallback<bool> ValueChanged { get; set; }
+
         protected virtual async Task HandleOnCancel(MouseEventArgs _)
         {
             await InternalValueChanged(false);
