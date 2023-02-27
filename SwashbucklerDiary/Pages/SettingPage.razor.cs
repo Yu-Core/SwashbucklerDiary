@@ -9,7 +9,6 @@ namespace SwashbucklerDiary.Pages
         private bool Title;
         private bool Markdown;
         private bool Privacy;
-        private bool PrivacyConfirm;
         private bool ShowPPSet;
         private bool ShowPPInput;
 

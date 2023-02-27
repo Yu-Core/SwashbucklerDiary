@@ -136,7 +136,7 @@
     "Data": "Data",
     "Backups": "Backups",
     "Import": "Import",
-    "Statistics": "Statistics",
+    "Achievement": "Achievement",
     "Settings": "Setting",
     "Languages": "Language",
     "Night": "Night Mode",
@@ -299,5 +299,6 @@
   },
   "Password must be at most 20 characters long": "Password must be at most 20 characters long",
   "Password must be at least 6 characters long": "Password must be at least 6 characters long",
-  "The two passwords are inconsistent": "The two passwords are inconsistent"
+  "The two passwords are inconsistent": "The two passwords are inconsistent",
+  "Experimental features": "Warn! Experimental features"
 }

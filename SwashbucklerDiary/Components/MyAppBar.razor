@@ -7,9 +7,10 @@
         </MIcon>
     </MButton>
 
-    <MAppBarTitle Class="font-weight-bold">
+    <MToolbarTitle Class="font-weight-bold">
         @Title
-    </MAppBarTitle>
+        @ChildContent
+    </MToolbarTitle>
 
     <MSpacer></MSpacer>
 </MAppBar>
@@ -19,4 +20,6 @@
     public string? Title { get; set; }
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 }

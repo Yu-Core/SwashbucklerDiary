@@ -1,8 +1,8 @@
-﻿@page "/statistics"
+﻿@page "/achievement"
 @inherits PageComponentBase
 
-<MyAppBar Title="@(I18n!.T("Mine.Statistics"))"
-          OnClick="NavigateToBack">
+<MyAppBar Title="@(I18n!.T("Mine.Achievement"))" OnClick="NavigateToBack">
+    <BetaTooltip></BetaTooltip>
 </MyAppBar>
 
 <MContainer>
@@ -16,8 +16,8 @@
                 <MList>
                     <MListItem>
                         <MListItemAvatar>
-                            <MIcon XLarge Color="@StatisticsPage.GetIconColor(item)">
-                            @(StatisticsPage.GetIcon(item))
+                            <MIcon XLarge Color="@AchievementPage.GetIconColor(item)">
+                            @(AchievementPage.GetIcon(item))
                             </MIcon>
                         </MListItemAvatar>
 
@@ -30,11 +30,11 @@
                                 @(I18n.T(item.Description))
                             </MListItemSubtitle>
 
-                            <MProgressLinear Value="StatisticsPage.GetProgressRate(item)"
-                                         Color="@(StatisticsPage.GetProgressRateColor(item))"
+                            <MProgressLinear Value="AchievementPage.GetProgressRate(item)"
+                                         Color="@(AchievementPage.GetProgressRateColor(item))"
                                          Rounded
                                          Height="20">
-                            <strong class="@StatisticsPage.GetProgressRateTextColor(item)">
+                            <strong class="@AchievementPage.GetProgressRateTextColor(item)">
                                 @(GetProgressRateText(item))
                                 </strong>
                             </MProgressLinear>

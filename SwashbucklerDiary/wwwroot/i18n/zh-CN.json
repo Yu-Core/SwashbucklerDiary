@@ -137,7 +137,7 @@
     "Data": "数据",
     "Backups": "备份",
     "Import": "导入",
-    "Statistics": "统计",
+    "Achievement": "成就",
     "Settings": "设置",
     "Languages": "语言",
     "Night": "深色模式",
@@ -300,5 +300,6 @@
   },
   "Password must be at most 20 characters long": "密码不得超过20个字符",
   "Password must be at least 6 characters long": "密码不能少于6个字符",
-  "The two passwords are inconsistent": "两次密码不一致"
+  "The two passwords are inconsistent": "两次密码不一致",
+  "Experimental features": "警告！该功能处于实验中"
 }

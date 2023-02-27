@@ -1,0 +1,31 @@
+﻿@using BlazorComponent.I18n;
+
+<MTooltip @bind-Value="show" Right>
+    <ActivatorContent>
+        <MIcon @attributes="@context.Attrs">
+            mdi-alert-circle-outline
+        </MIcon>
+    </ActivatorContent>
+    <ChildContent>
+        <span>
+            @(I18n!.T("Experimental features"))
+        </span>
+    </ChildContent>
+</MTooltip>
+
+@code {
+    private bool show;
+
+    [Inject]
+    protected I18n I18n { get; set; } = default!;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            show = true;
+            StateHasChanged();
+        }
+        base.OnAfterRender(firstRender);
+    }
+}

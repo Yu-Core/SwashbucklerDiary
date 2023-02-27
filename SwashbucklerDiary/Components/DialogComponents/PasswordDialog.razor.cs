@@ -30,8 +30,8 @@ namespace SwashbucklerDiary.Components
         class Model
         {
             [Required]
-            [MaxLength(10, ErrorMessage = "Password must be at most 20 characters long")]
-            [MinLength(10, ErrorMessage = "Password must be at least 6 characters long")]
+            [MaxLength(20, ErrorMessage = "Password must be at most 20 characters long")]
+            [MinLength(6, ErrorMessage = "Password must be at least 6 characters long")]
             public string? Password { get; set; }
             [Required]
             [Compare("Password",ErrorMessage = "The two passwords are inconsistent")]

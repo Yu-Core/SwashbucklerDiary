@@ -4,7 +4,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class StatisticsPage : PageComponentBase
+    public partial class AchievementPage : PageComponentBase
     {
         private List<AchievementModel> Achievements = new();
 
