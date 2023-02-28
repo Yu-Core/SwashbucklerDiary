@@ -10,20 +10,20 @@ namespace SwashbucklerDiary.Services
         private readonly IUserStateModelRepository _userStateModelRepository;
         private readonly List<AchievementModel> Achievements = new()
         {
-            new(1,AchievementType.Diary,1),
-            new(2,AchievementType.Diary,30),
-            new(3, AchievementType.Diary, 100),
-            new(4, AchievementType.Diary, 1000),
-            new(5, AchievementType.Word, 3000),
-            new(6, AchievementType.Word, 10000),
-            new(7, AchievementType.Word, 100000),
-            new(8, AchievementType.SourceCode, 1),
-            new(9, AchievementType.Avatar, 1),
-            new(10, AchievementType.NickName, 1),
-            new(11, AchievementType.Sign, 1),
-            new(12, AchievementType.Log, 1),
-            new(13, AchievementType.Share, 1),
-            new(14, AchievementType.Export, 1),
+            new(AchievementType.Diary,1),
+            new(AchievementType.Diary,30),
+            new(AchievementType.Diary, 100),
+            new(AchievementType.Diary, 1000),
+            new(AchievementType.Word, 3000),
+            new(AchievementType.Word, 10000),
+            new(AchievementType.Word, 100000),
+            new(AchievementType.SourceCode, 1),
+            new(AchievementType.Avatar, 1),
+            new(AchievementType.NickName, 1),
+            new(AchievementType.Sign, 1),
+            new(AchievementType.Log, 1),
+            new(AchievementType.Share, 1),
+            new(AchievementType.Export, 1),
         };
 
         public AchievementService(IUserAchievementRepository userAchievementRepository,
@@ -52,12 +52,12 @@ namespace SwashbucklerDiary.Services
             List<string> messages = new();
             foreach (var item in achievements)
             {
-                var userAchievement = await _userAchievementRepository.GetFirstAsync(it => it.AchievementId == item.Id);
+                var userAchievement = await _userAchievementRepository.GetFirstAsync(it => it.AchievementName == item.Name);
                 if (userAchievement == null)
                 {
                     userAchievement = new UserAchievementModel()
                     {
-                        AchievementId = item.Id
+                        AchievementName = item.Name
                     };
                     userAchievement = await _userAchievementRepository.InsertReturnEntityAsync(userAchievement);
                 }
@@ -90,7 +90,7 @@ namespace SwashbucklerDiary.Services
             var userAchievements = await _userAchievementRepository.GetListAsync();
             foreach (var item in Achievements)
             {
-                item.UserAchievement = userAchievements.FirstOrDefault(it => it.AchievementId == item.Id) ?? new();
+                item.UserAchievement = userAchievements.FirstOrDefault(it => it.AchievementName == item.Name) ?? new();
             }
 
             return Achievements;

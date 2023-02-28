@@ -301,5 +301,15 @@
   "The two passwords are inconsistent": "The two passwords are inconsistent",
   "Experimental features": "Warn! Experimental features",
   "Please input a password": "Please input a password",
-  "Please enter the password again": "Please enter the password again"
+  "Please enter the password again": "Please enter the password again",
+  "Backups": {
+    "Local": "Local Backups",
+    "WebDAV": "WebDAV",
+    "Backups": "Backups",
+    "Restore": "Restore",
+    "SelectFolder": "Please select your backup folder",
+    "LocalPointer": "The data will be saved to the folder ",
+    "BackupsSuccess": "Backups success",
+    "Invalid backup folder": "Invalid backup folder"
+  }
 }

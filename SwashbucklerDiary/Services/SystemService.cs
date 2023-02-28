@@ -1,7 +1,7 @@
-﻿using Microsoft.Maui.Platform;
+﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Storage;
 using SwashbucklerDiary.IServices;
-using System;
-using System.Net.Http;
+using System.Threading;
 
 namespace SwashbucklerDiary.Services
 {
@@ -191,6 +191,19 @@ namespace SwashbucklerDiary.Services
         public bool IsFirstLaunch()
         {
             return VersionTracking.Default.IsFirstLaunchEver;
+        }
+
+        public async Task<string?> PickFolderAsync()
+        {
+            try
+            {
+                var folder = await FolderPicker.Default.PickAsync(default);
+                return folder?.Path;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

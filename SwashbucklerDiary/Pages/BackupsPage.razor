@@ -1,0 +1,96 @@
+﻿@page "/backups"
+@inherits PageComponentBase
+
+<MAppBar App
+         Elevation="0"
+         Color="white">
+    <MButton Icon OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+    <MTabs @bind-Value="tabs"
+           ActiveClass="text-h6 font-weight-bold"
+           HideSlider
+           Color="black">
+        <MTab Class="m-tab-swiper"
+              Ripple="false">
+            @(I18n.T("Backups.Local"))
+        </MTab>
+        <MTab Class="m-tab-swiper"
+              Ripple="false">
+            @(I18n.T("Backups.WebDAV"))
+        </MTab>
+    </MTabs>
+    <MSpacer></MSpacer>
+</MAppBar>
+
+<SwiperTabItems @bind-Value="tabs">
+    <SwiperTabItem>
+        <MCard Elevation="4"
+               Rounded="@("lg")">
+            <MList>
+                <MListItem OnClick="()=>ShowBackups=true">
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-folder-arrow-down-outline
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n.T("Backups.Backups"))
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+
+                <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+                <MListItem OnClick="Restore">
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-folder-arrow-up-outline
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n.T("Backups.Restore"))
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+            </MList>
+        </MCard>
+    </SwiperTabItem>
+    <SwiperTabItem>
+
+    </SwiperTabItem>
+</SwiperTabItems>
+
+<MyDialog MaxWidth="420"
+          @bind-MyValue="ShowBackups">
+    <MCard MaxWidth="420">
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Backups.Local"))
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowBackups=false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+            </MCardTitle>
+
+            <MCardText>
+            @GetLocalPointer()
+            </MCardText>
+            <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text OnClick="()=>ShowBackups=false">
+                @(I18n.T("Share.Cancel"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="Backups">
+                @(I18n.T("Share.OK"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MyDialog>

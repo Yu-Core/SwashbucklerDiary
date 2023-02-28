@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.IRepository;
+﻿using CommunityToolkit.Maui.Storage;
+using SwashbucklerDiary.IRepository;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Repository;
 using SwashbucklerDiary.Services;
@@ -9,6 +10,8 @@ namespace SwashbucklerDiary.Extend
     {
         public static IServiceCollection AddCustomIOC(this IServiceCollection services)
         {
+            services.AddSingleton<IFolderPicker>(FolderPicker.Default);
+
             services.AddSingleton<IDiaryRepository,DiaryRepository>();
             services.AddSingleton<ITagRepository,TagRepository>();
             services.AddSingleton<IDiaryTagRepository,DiaryTagRepository>();

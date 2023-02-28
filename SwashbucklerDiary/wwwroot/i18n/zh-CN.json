@@ -302,5 +302,15 @@
   "The two passwords are inconsistent": "两次密码不一致",
   "Experimental features": "警告！该功能处于实验中",
   "Please input a password": "请输入密码",
-  "Please enter the password again": "请再次输入密码"
+  "Please enter the password again": "请再次输入密码",
+  "Backups": {
+    "Local": "本地备份",
+    "WebDAV": "WebDAV",
+    "Backups": "备份",
+    "Restore": "还原",
+    "SelectFolder": "请选择你的备份文件夹",
+    "LocalPointer": "数据会被保存到文件夹",
+    "BackupsSuccess": "备份成功",
+    "Invalid backup folder": "无效的备份文件夹"
+  }
 }

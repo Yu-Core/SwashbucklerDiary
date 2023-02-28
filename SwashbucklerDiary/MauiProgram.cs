@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Extend;
+﻿using CommunityToolkit.Maui.Core;
+using SwashbucklerDiary.Extend;
 
 namespace SwashbucklerDiary
 {
@@ -10,6 +11,7 @@ namespace SwashbucklerDiary
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkitCore()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

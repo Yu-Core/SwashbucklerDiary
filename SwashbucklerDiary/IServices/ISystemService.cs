@@ -20,5 +20,6 @@
         Task<bool> OpenStoreAppDetails(string appId);
         Task<string> ReadMarkdown(string path);
         bool IsFirstLaunch();
+        Task<string?> PickFolderAsync();
     }
 }
