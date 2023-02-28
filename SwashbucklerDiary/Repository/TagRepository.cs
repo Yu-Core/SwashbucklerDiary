@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Repository
         public override Task<List<TagModel>> GetListAsync()
         {
             return base.Context.Queryable<TagModel>()
-                .OrderByDescending(it => it.Id)
+                .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
 
@@ -22,25 +22,25 @@ namespace SwashbucklerDiary.Repository
         {
             return base.Context.Queryable<TagModel>()
                 .Where(whereExpression)
-                .OrderByDescending(it => it.Id)
+                .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
 
         public override Task<bool> InsertAsync(TagModel model)
         {
-            model.CreateTime = model.UpdateTime = DateTime.Now;
+            model.UpdateTime = DateTime.Now;
             return base.InsertAsync(model);
         }
 
         public override Task<int> InsertReturnIdentityAsync(TagModel model)
         {
-            model.CreateTime = model.UpdateTime = DateTime.Now;
+            model.UpdateTime = DateTime.Now;
             return base.InsertReturnIdentityAsync(model);
         }
 
         public override Task<TagModel> InsertReturnEntityAsync(TagModel model)
         {
-            model.CreateTime = model.UpdateTime = DateTime.Now;
+            model.UpdateTime = DateTime.Now;
             return base.InsertReturnEntityAsync(model);
         }
 

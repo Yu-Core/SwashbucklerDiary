@@ -95,7 +95,7 @@ namespace SwashbucklerDiary.Components
             ShowSelectTag = false;
         }
 
-        private void OnClick(int id)
+        private void OnClick(Guid id)
         {
             NavigateService.NavigateTo($"/read/{id}");
         }

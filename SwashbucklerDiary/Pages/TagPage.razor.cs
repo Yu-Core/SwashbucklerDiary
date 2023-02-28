@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Pages
         private MasaBlazor MasaBlazor { get; set; } = default!;
 
         [Parameter]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public void Dispose()
         {

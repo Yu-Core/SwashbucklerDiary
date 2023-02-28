@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Pages
         public IconService IconService { get; set; } = default!;
 
         [Parameter]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

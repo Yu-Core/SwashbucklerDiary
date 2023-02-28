@@ -2,7 +2,7 @@
 {
     public class DiaryTagModel : BaseModel
     {
-        public int DiaryId { get; set; }
-        public int TagId { get; set; }
+        public Guid DiaryId { get; set; }
+        public Guid TagId { get; set; }
     }
 }

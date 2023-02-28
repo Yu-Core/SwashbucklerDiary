@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Components
     {
         private bool ShowDeleteTag;
         private bool ShowRenameTag;
-        private int RenameTagId;
+        private Guid RenameTagId;
         private Action? OnDelete { get; set; }
 
         [Inject]
@@ -98,7 +98,7 @@ namespace SwashbucklerDiary.Components
             }
         }
 
-        private void OnClick(int id)
+        private void OnClick(Guid id)
         {
             NavigateService.NavigateTo($"/tag/{id}");
         }

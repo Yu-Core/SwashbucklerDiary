@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Services
             _iDiaryRepository = iDiaryRepository;
         }
 
-        public Task<DiaryModel> FindIncludesAsync(int id)
+        public Task<DiaryModel> FindIncludesAsync(Guid id)
         {
             return _iDiaryRepository.GetByIdIncludesAsync(id);
         }
@@ -35,7 +35,7 @@ namespace SwashbucklerDiary.Services
             return _iDiaryRepository.GetListIncludesAsync(func);
         }
 
-        public Task<List<TagModel>> GetTagsAsync(int id)
+        public Task<List<TagModel>> GetTagsAsync(Guid id)
         {
             return _iDiaryRepository.GetTagsAsync(id);
         }

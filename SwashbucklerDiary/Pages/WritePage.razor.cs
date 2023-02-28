@@ -34,10 +34,10 @@ namespace SwashbucklerDiary.Pages
 
         [Parameter]
         [SupplyParameterFromQuery]
-        public int? TagId { get; set; }
+        public Guid? TagId { get; set; }
         [Parameter]
         [SupplyParameterFromQuery]
-        public int? DiaryId { get; set; }
+        public Guid? DiaryId { get; set; }
 
         public void Dispose()
         {
@@ -117,7 +117,7 @@ namespace SwashbucklerDiary.Pages
         {
             if (TagId != null)
             {
-                var tag = await TagService.FindAsync((int)TagId);
+                var tag = await TagService.FindAsync((Guid)TagId);
                 if (tag != null)
                 {
                     SelectedTags.Add(tag);
@@ -132,7 +132,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            var diary = await DiaryService.FindIncludesAsync((int)DiaryId);
+            var diary = await DiaryService.FindIncludesAsync((Guid)DiaryId);
             if (diary == null)
             {
                 return;

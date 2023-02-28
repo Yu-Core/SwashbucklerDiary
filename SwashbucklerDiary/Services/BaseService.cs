@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Services
             return _iBaseRepository.DeleteAsync(entity);
         }
 
-        public virtual Task<bool> DeleteAsync(int id)
+        public virtual Task<bool> DeleteAsync(Guid id)
         {
             return _iBaseRepository.DeleteByIdAsync(id);
         }
@@ -53,7 +53,7 @@ namespace SwashbucklerDiary.Services
             return _iBaseRepository.DeleteAsync(func);
         }
 
-        public virtual Task<TEntity> FindAsync(int id)
+        public virtual Task<TEntity> FindAsync(Guid id)
         {
             return _iBaseRepository.GetByIdAsync(id);
         }

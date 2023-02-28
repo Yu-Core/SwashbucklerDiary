@@ -89,8 +89,8 @@ namespace SwashbucklerDiary.Pages
             {
                 Name = tagName
             };
-            var tag = await TagService.AddReturnEntityAsync(tagModel);
-            if (tag.Id == default)
+            var flag = await TagService.AddAsync(tagModel);
+            if (!flag)
             {
                 await PopupService.ToastAsync(it =>
                 {

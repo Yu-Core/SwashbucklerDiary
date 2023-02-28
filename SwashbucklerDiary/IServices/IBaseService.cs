@@ -9,14 +9,14 @@ namespace SwashbucklerDiary.IServices
         Task<bool> AddAsync(List<TEntity> entities);
         Task<TEntity> AddReturnEntityAsync(TEntity entity);
         Task<bool> DeleteAsync(TEntity entity);
-        Task<bool> DeleteAsync(int id);
+        Task<bool> DeleteAsync(Guid id);
         Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func);
         Task<bool> UpdateAsync(TEntity entity);
         Task<List<TEntity>> QueryAsync();
         Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func);
         Task<List<TEntity>> QueryTakeAsync(int count);
         Task<List<TEntity>> QueryTakeAsync(int count, Expression<Func<TEntity, bool>> func);
-        Task<TEntity> FindAsync(int id);
+        Task<TEntity> FindAsync(Guid id);
         Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func);
         Task<int> CountAsync();
         Task<int> CountAsync(Expression<Func<TEntity, bool>> func);

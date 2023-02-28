@@ -90,12 +90,12 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            TagModel tagModel = new()
+            TagModel tag = new()
             {
                 Name = tagName
             };
-            tagModel = await TagService.AddReturnEntityAsync(tagModel);
-            if (tagModel.Id == default)
+            var flag = await TagService.AddAsync(tag);
+            if (!flag)
             {
                 await PopupService.ToastAsync(it =>
                 {
@@ -110,7 +110,7 @@ namespace SwashbucklerDiary.Components
                 it.Type = AlertTypes.Success;
                 it.Title = I18n.T("Share.AddSuccess");
             });
-            Tags.Add(tagModel);
+            Tags.Add(tag);
             StateHasChanged();
         }
     }

@@ -4,8 +4,9 @@ namespace SwashbucklerDiary.Models
 {
     public class BaseModel
     {
-        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-        public int Id { get; set; }
+        [SugarColumn(IsPrimaryKey = true)]
+        public Guid Id { get; set; }
+        [SugarColumn(InsertServerTime = true, IsOnlyIgnoreUpdate = true)]// getdate() now() sysdate
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
     }

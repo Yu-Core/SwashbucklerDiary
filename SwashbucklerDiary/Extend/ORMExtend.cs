@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Extend
     {
         public static void AddSqlsugar(this IServiceCollection services)
         {
-            SqlSugarScope sqlSugar = new SqlSugarScope(new ConnectionConfig()
+            SqlSugarScope sqlSugar = new (new ConnectionConfig()
             {
                 DbType = DbType.Sqlite,
                 ConnectionString = SQLiteConstants.ConnectionString,

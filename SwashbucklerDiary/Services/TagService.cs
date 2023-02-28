@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Services
             _tagRepository = tagRepository;
         }
 
-        public Task<TagModel> FindIncludesAsync(int id)
+        public Task<TagModel> FindIncludesAsync(Guid id)
         {
             return _tagRepository.GetByIdIncludesAsync(id);
         }

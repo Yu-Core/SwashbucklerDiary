@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Repository
         public override Task<List<DiaryModel>> GetListAsync()
         {
             return base.Context.Queryable<DiaryModel>()
-                .OrderByDescending(it => it.Id)
+                .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
 
@@ -22,14 +22,14 @@ namespace SwashbucklerDiary.Repository
         {
             return base.Context.Queryable<DiaryModel>()
                 .Where(whereExpression)
-                .OrderByDescending(it => it.Id)
+                .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
 
         public override Task<List<DiaryModel>> GetListTakeAsync(int count)
         {
             return base.Context.Queryable<DiaryModel>()
-                .OrderByDescending(it => it.Id)
+                .OrderByDescending(it => it.CreateTime)
                 .Take(count)
                 .ToListAsync();
         }
@@ -38,14 +38,13 @@ namespace SwashbucklerDiary.Repository
         {
             return base.Context.Queryable<DiaryModel>()
                 .Where(func)
-                .OrderByDescending(it => it.Id)
+                .OrderByDescending(it => it.CreateTime)
                 .Take(count)
                 .ToListAsync();
         }
 
         public override Task<bool> InsertAsync(DiaryModel model)
         {
-            model.CreateTime = DateTime.Now;
             model.UpdateTime = DateTime.Now;
             return base.Context.InsertNav(model)
             .Include(it => it.Tags)
@@ -54,13 +53,13 @@ namespace SwashbucklerDiary.Repository
 
         public override Task<int> InsertReturnIdentityAsync(DiaryModel model)
         {
-            model.CreateTime = model.UpdateTime = DateTime.Now;
+            model.UpdateTime = DateTime.Now;
             return base.InsertReturnIdentityAsync(model);
         }
 
         public override Task<DiaryModel> InsertReturnEntityAsync(DiaryModel model)
         {
-            model.CreateTime = model.UpdateTime = DateTime.Now;
+            model.UpdateTime = DateTime.Now;
             return base.InsertReturnEntityAsync(model);
         }
 
@@ -80,7 +79,7 @@ namespace SwashbucklerDiary.Repository
                 .ExecuteCommandAsync();
         }
 
-        public Task<DiaryModel> GetByIdIncludesAsync(int id)
+        public Task<DiaryModel> GetByIdIncludesAsync(Guid id)
         {
             return Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
@@ -94,7 +93,7 @@ namespace SwashbucklerDiary.Repository
                 .FirstAsync(whereExpression);
         }
 
-        public Task<List<TagModel>> GetTagsAsync(int id)
+        public Task<List<TagModel>> GetTagsAsync(Guid id)
         {
             return base.Context.Queryable<DiaryModel>()
                 .LeftJoin<DiaryTagModel>((d, dt) => d.Id == dt.DiaryId)
@@ -108,7 +107,7 @@ namespace SwashbucklerDiary.Repository
         {
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
-                .OrderByDescending(it => it.Id)
+                .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
 
@@ -117,7 +116,7 @@ namespace SwashbucklerDiary.Repository
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
                 .Where(func)
-                .OrderByDescending(it => it.Id)
+                .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
 
