@@ -18,28 +18,11 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            await SetAvatar();
             await LoadSettings();
             await base.OnInitializedAsync();
         }
-        protected async override Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
-            {
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/getNativeImage.js");
-                bool flag = await SettingsService!.ContainsKey(nameof(Avatar));
-                if (!flag)
-                {
-                    Avatar = DefaultAvatar;
-                }
-                else
-                {
-                    var avatar = await SettingsService!.Get(nameof(Avatar), DefaultAvatar);
-                    await SetAvatar(avatar);
-                }
-                StateHasChanged();
-            }
-        }
-
+        
         private bool ShowUserName { get; set; }
         private bool ShowSign { get; set; }
 
@@ -115,13 +98,28 @@ namespace SwashbucklerDiary.Pages
                 await SystemService.FileCopy(filePath, localFilePath);
 
                 await SettingsService!.Save(nameof(Avatar), localFilePath);
-                await SetAvatar(localFilePath);
+                await UpdateAvatar(localFilePath);
                 await PopupService.ToastSuccessAsync(I18n.T("Share.EditSuccess"));
                 await HandleAchievements(AchievementType.Avatar);
             }
         }
 
-        private async Task SetAvatar(string path)
+        private async Task SetAvatar()
+        {
+            module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/getNativeImage.js");
+            bool flag = await SettingsService!.ContainsKey(nameof(Avatar));
+            if (!flag)
+            {
+                Avatar = DefaultAvatar;
+            }
+            else
+            {
+                var avatar = await SettingsService!.Get(nameof(Avatar), DefaultAvatar);
+                await UpdateAvatar(avatar);
+            }
+        }
+
+        private async Task UpdateAvatar(string path)
         {
             //Here is a provisional approach.Because https://github.com/dotnet/maui/issues/2907
             using var imageStream = File.OpenRead(path);

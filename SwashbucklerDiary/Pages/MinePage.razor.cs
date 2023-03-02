@@ -35,27 +35,9 @@ namespace SwashbucklerDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             LoadView();
+            await SetAvatar();
             await SetCount();
             await LoadSettings();
-        }
-
-        protected async override Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
-            {
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/getNativeImage.js");
-                bool flag = await SettingsService!.ContainsKey(nameof(Avatar));
-                if (!flag)
-                {
-                    Avatar = DefaultAvatar;
-                }
-                else
-                {
-                    var avatar = await SettingsService!.Get(nameof(Avatar), DefaultAvatar);
-                    await SetAvatar(avatar);
-                }
-                StateHasChanged();
-            }
         }
 
         private async Task SetCount()
@@ -121,11 +103,22 @@ namespace SwashbucklerDiary.Pages
             await SetCount();
         }
 
-        private async Task SetAvatar(string path)
+        private async Task SetAvatar()
         {
-            using var imageStream = File.OpenRead(path);
-            var dotnetImageStream = new DotNetStreamReference(imageStream);
-            Avatar = await module!.InvokeAsync<string>("streamToUrl", new object[1] { dotnetImageStream });
+            module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/getNativeImage.js");
+            bool flag = await SettingsService!.ContainsKey(nameof(Avatar));
+            if (!flag)
+            {
+                Avatar = DefaultAvatar;
+            }
+            else
+            {
+                var avatar = await SettingsService!.Get(nameof(Avatar), DefaultAvatar);
+                using var imageStream = File.OpenRead(avatar);
+                var dotnetImageStream = new DotNetStreamReference(imageStream);
+                Avatar = await module!.InvokeAsync<string>("streamToUrl", new object[1] { dotnetImageStream });
+            }
+            
         }
 
         private async Task SendMail()
