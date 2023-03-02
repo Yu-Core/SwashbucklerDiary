@@ -16,6 +16,8 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
+        private bool ShowEditButton => string.IsNullOrEmpty(BackupsFolderPath);
+
         private async Task SetBackupsFolderPath()
         {
             BackupsFolderPath = await SettingsService.Get("BackupsPath", string.Empty);
@@ -42,36 +44,21 @@ namespace SwashbucklerDiary.Pages
             }
 
             var folderPath = await SettingsService.Get("BackupsPath", string.Empty);
-            bool flag = false;
+            if (!string.IsNullOrEmpty(folderPath) && !Directory.Exists(folderPath))
+            {
+                BackupsFolderPath = string.Empty;
+                await SettingsService.Save("BackupsPath", string.Empty);
+                await PopupService.ToastErrorAsync("Backups.Invalid backup folder");
+                return;
+            }
+
             if (string.IsNullOrEmpty(folderPath))
             {
-                flag = true;
-            }
-            else
-            {
-                if (!Directory.Exists(folderPath))
-                {
-                    flag = true;
-                    await PopupService.ToastErrorAsync("Invalid backup folder");
-                }
-            }
-            
-            if (flag)
-            {
-                folderPath = await SystemService.PickFolderAsync();
-                if (!Directory.Exists(folderPath))
+                var flag = await PickBackupsFolderPath();
+                if (!flag)
                 {
                     return;
                 }
-
-                folderPath = Path.Combine(folderPath, "SwashbucklerDiaryBackups");
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                BackupsFolderPath = folderPath;
-                await SettingsService.Save("BackupsPath", folderPath);
             }
 
             var sourceFile = SQLiteConstants.DatabasePath;
@@ -83,7 +70,7 @@ namespace SwashbucklerDiary.Pages
             var destFileName = "SwashbucklerDiaryBackups" +
                 DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") +
                 SystemService.GetAppVersion() + ".db3";
-            var destFile = Path.Combine(folderPath, destFileName);
+            var destFile = Path.Combine(BackupsFolderPath!, destFileName);
             File.Copy(sourceFile, destFile, true);
             await PopupService.ToastSuccessAsync(I18n.T("Backups.BackupsSuccess"));
         }
@@ -100,9 +87,44 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private void Restore()
+        private Task EditBackupsFolderPath()
         {
+            return PickBackupsFolderPath();
+        }
 
+        private async Task<bool> PickBackupsFolderPath()
+        {
+            var folderPath = await SystemService.PickFolderAsync();
+            if (string.IsNullOrEmpty(folderPath))
+            {
+                return false;
+            }
+
+            if (!Directory.Exists(folderPath))
+            {
+                return false;
+            }
+
+            folderPath = Path.Combine(folderPath, "SwashbucklerDiaryBackups");
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            BackupsFolderPath = folderPath;
+            await SettingsService.Save("BackupsPath", folderPath);
+            return true;
+        }
+
+        private async Task Restore()
+        {
+            var dbFilePath = await SystemService.PickDBFileAsync();
+            if (string.IsNullOrEmpty(dbFilePath))
+            {
+                return;
+            }
+            File.Copy(dbFilePath, SQLiteConstants.DatabasePath,true);
+            await PopupService.ToastSuccessAsync(I18n.T("Backups.RestoreSuccess"));
         }
     }
 }

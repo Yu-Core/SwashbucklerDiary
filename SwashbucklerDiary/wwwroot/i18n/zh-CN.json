@@ -10,6 +10,7 @@
     "Copy": "复制",
     "CopySuccess": "复制成功",
     "Rename": "重命名",
+    "Edit": "修改",
     "EditSuccess": "修改成功",
     "EditFail": "修改失败",
     "AddSuccess": "添加成功",
@@ -311,6 +312,7 @@
     "SelectFolder": "请选择你的备份文件夹",
     "LocalPointer": "数据会被保存到文件夹",
     "BackupsSuccess": "备份成功",
-    "Invalid backup folder": "无效的备份文件夹"
+    "Invalid backup folder": "无效的备份文件夹",
+    "RestoreSuccess": "还原成功"
   }
 }

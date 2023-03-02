@@ -9,6 +9,7 @@
     "Copy": "Copy",
     "CopySuccess": "CopySuccess",
     "Rename": "Rename",
+    "Edit": "Edit",
     "EditSuccess": "Edit Success",
     "EditFail": "Edit Fail",
     "AddSuccess": "Successfully added",
@@ -310,6 +311,7 @@
     "SelectFolder": "Please select your backup folder",
     "LocalPointer": "The data will be saved to the folder ",
     "BackupsSuccess": "Backups success",
-    "Invalid backup folder": "Invalid backup folder"
+    "Invalid backup folder": "Invalid backup folder",
+    "RestoreSuccess": "Restore success"
   }
 }

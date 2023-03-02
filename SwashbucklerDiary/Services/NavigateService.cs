@@ -10,25 +10,25 @@ namespace SwashbucklerDiary.Services
 
         public event Action? Action;
 
-        public List<string> HistoryHref { get; set; } = new List<string>();
+        public List<string> HistoryUrl { get; set; } = new List<string>();
 
         public void NavigateTo(string url)
         {
             var href = Navigation!.ToBaseRelativePath(Navigation.Uri);
-            HistoryHref.Add(href);
+            HistoryUrl.Add(href);
             Navigation.NavigateTo(url);
         }
         public void NavigateToBack()
         {
             string href = string.Empty;
-            if (HistoryHref.Count > 0)
+            if (HistoryUrl.Count > 0)
             {
-                href = HistoryHref.Last();
+                href = HistoryUrl.Last();
             }
             Navigation.NavigateTo(href);
-            if (HistoryHref.Count > 0)
+            if (HistoryUrl.Count > 0)
             {
-                HistoryHref.RemoveAt(HistoryHref.Count - 1);
+                HistoryUrl.RemoveAt(HistoryUrl.Count - 1);
             }
         }
 
@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Services
             }
             else
             {
-                if (HistoryHref.Count > 0)
+                if (HistoryUrl.Count > 0)
                 {
                     NavigateToBack();
                 }
@@ -52,14 +52,6 @@ namespace SwashbucklerDiary.Services
             }
         }
 
-        public void UpdateLastHistoryHref(string href)
-        {
-            if (HistoryHref.Count > 0)
-            {
-                HistoryHref.RemoveAt(HistoryHref.Count - 1);
-            }
-            HistoryHref.Add(href);
-        }
         private void QuitApp()
         {
             if (BackPressCounter == 1)

@@ -21,5 +21,6 @@
         Task<string> ReadMarkdown(string path);
         bool IsFirstLaunch();
         Task<string?> PickFolderAsync();
+        Task<string?> PickDBFileAsync();
     }
 }

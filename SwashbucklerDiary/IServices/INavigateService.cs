@@ -4,12 +4,11 @@ namespace SwashbucklerDiary.IServices
 {
     public interface INavigateService
     {
-        NavigationManager Navigation { get; set; }
-        List<string> HistoryHref { get; protected set; }
         event Action Action;
+        NavigationManager Navigation { get; set; }
+        List<string> HistoryUrl { get; protected set; }
         void NavigateTo(string url);
         void NavigateToBack();
-        void UpdateLastHistoryHref(string href);
         void OnBackButtonPressed();
     }
 }

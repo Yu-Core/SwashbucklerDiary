@@ -67,21 +67,24 @@
     </SwiperTabItem>
 </SwiperTabItems>
 
-<MyDialog MaxWidth="420"
-          @bind-MyValue="ShowBackups">
+<MyDialog @bind-MyValue="ShowBackups" MaxWidth="420">
     <MCard MaxWidth="420">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Backups.Local"))
             <MSpacer></MSpacer>
-            <MButton Icon OnClick="()=>ShowBackups=false">
+            <MButton Icon OnClick="@(()=>ShowBackups=false)">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-            </MCardTitle>
-
-            <MCardText>
+        </MCardTitle>
+        <MCardText Class="pb-0">
             @GetLocalPointer()
-            </MCardText>
-            <MCardActions>
+        </MCardText>
+        <MCardActions>
+            <MButton Text
+                     Disabled="ShowEditButton"
+                OnClick="EditBackupsFolderPath">
+                @(I18n.T("Share.Edit"))
+            </MButton>
             <MSpacer></MSpacer>
             <MButton Text OnClick="()=>ShowBackups=false">
                 @(I18n.T("Share.Cancel"))

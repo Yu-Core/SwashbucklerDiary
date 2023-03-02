@@ -205,5 +205,39 @@ namespace SwashbucklerDiary.Services
                 return null;
             }
         }
+
+        public async Task<string?> PickDBFileAsync()
+        {
+            var customFileType = new FilePickerFileType(
+                new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                    { DevicePlatform.iOS, new[] { "public.database" } }, // UTType values
+                    { DevicePlatform.Android, new[] { "application/db3" } }, // MIME type
+                    { DevicePlatform.WinUI, new[] { ".db3" } }, // file extension
+                    { DevicePlatform.Tizen, new[] { "*/*" } },
+                    { DevicePlatform.macOS, new[] { "public.database" } }, // UTType values
+                });
+
+            PickOptions options = new()
+            {
+                FileTypes = customFileType,
+            };
+            try
+            {
+                var result = await FilePicker.Default.PickAsync(options);
+                if(result != null)
+                {
+                    return result.FullPath;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return null;
+            
+        }
     }
 }
