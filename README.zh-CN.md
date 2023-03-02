@@ -17,8 +17,10 @@
 ## 感谢以下开源项目
 - [.NET MAUI](https://github.com/dotnet/maui)
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
+- [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)
 - [html2canvas](https://github.com/niklasvh/html2canvas)
 - [MASA.Blazor](https://github.com/BlazorComponent/MASA.Blazor)
 - [Serilog](https://github.com/serilog/serilog)
 - [SQLite-net](https://github.com/praeclarum/sqlite-net)
+- [SqlSugar](https://github.com/DotNetNext/SqlSugar)
 - [Swiper](https://github.com/nolimits4web/swiper)
