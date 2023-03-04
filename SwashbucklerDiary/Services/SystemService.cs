@@ -116,6 +116,11 @@ namespace SwashbucklerDiary.Services
             return await SystemService.CheckPermission<Permissions.StorageWrite>();
         }
 
+        public async Task<bool> CheckStorageReadPermission()
+        {
+            return await SystemService.CheckPermission<Permissions.StorageRead>();
+        }
+
         private static async Task<bool> CheckPermission<T>() where T : Permissions.BasePermission, new()
         {
             PermissionStatus status = await Permissions.CheckStatusAsync<T>();
@@ -182,7 +187,7 @@ namespace SwashbucklerDiary.Services
             {
                 using var httpClient = new HttpClient();
                 await using var stream = await httpClient.GetStreamAsync(path);
-                using StreamReader sr = new (stream);
+                using StreamReader sr = new(stream);
                 var content = sr.ReadToEnd();
                 return content;
             }
@@ -198,7 +203,14 @@ namespace SwashbucklerDiary.Services
             try
             {
                 var folder = await FolderPicker.Default.PickAsync(default);
-                return folder?.Path;
+                if (folder.IsSuccessful)
+                {
+                    return folder.Folder.Path;
+                }
+                else
+                { 
+                    return null;
+                }
             }
             catch (Exception)
             {
@@ -225,7 +237,7 @@ namespace SwashbucklerDiary.Services
             try
             {
                 var result = await FilePicker.Default.PickAsync(options);
-                if(result != null)
+                if (result != null)
                 {
                     return result.FullPath;
                 }
@@ -237,7 +249,7 @@ namespace SwashbucklerDiary.Services
             }
 
             return null;
-            
+
         }
     }
 }

@@ -168,7 +168,8 @@
   },
   "Permission": {
     "OpenCamera": "Please enable camera permissions",
-    "OpenStorageWrite": "Please enable storage write permission"
+    "OpenStorageWrite": "Please enable storage write permission",
+    "OpenStorageRead": "Please enable storage read permission"
   },
   "About": {
     "SourceCode": "View Source Code",

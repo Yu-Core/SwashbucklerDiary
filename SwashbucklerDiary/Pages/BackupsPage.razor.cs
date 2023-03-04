@@ -36,6 +36,13 @@ namespace SwashbucklerDiary.Pages
         private async Task Backups()
         {
             ShowBackups = false;
+            var readPermission = await SystemService.CheckStorageReadPermission();
+            if (!readPermission)
+            {
+                await PopupService.ToastErrorAsync(I18n.T("Permission.OpenStorageRead"));
+                return;
+            }
+
             var writePermission = await SystemService.CheckStorageWritePermission();
             if (!writePermission)
             {

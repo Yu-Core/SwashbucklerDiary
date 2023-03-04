@@ -15,6 +15,7 @@
         Task FileCopy(string source, string target);
         Task<bool> CheckCameraPermission();
         Task<bool> CheckStorageWritePermission();
+        Task<bool> CheckStorageReadPermission();
         string GetAppVersion();
         Task<bool> OpenStoreAppDetails();
         Task<bool> OpenStoreAppDetails(string appId);

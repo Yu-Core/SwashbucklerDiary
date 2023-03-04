@@ -22,8 +22,8 @@
         <ApplicationIdGuid>DBFF20FC-EF94-4EE2-A049-931177D2CB18</ApplicationIdGuid>
 
         <!-- Versions -->
-        <ApplicationDisplayVersion>1.18.6</ApplicationDisplayVersion>
-        <ApplicationVersion>186</ApplicationVersion>
+        <ApplicationDisplayVersion>0.20.0</ApplicationDisplayVersion>
+        <ApplicationVersion>200</ApplicationVersion>
 
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -74,7 +74,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui.Core" Version="4.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui.Core" Version="5.0.0" />
 		<PackageReference Include="Masa.Blazor" Version="1.0.0-preview.3" />
 		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />

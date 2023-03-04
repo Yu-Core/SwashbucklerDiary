@@ -169,7 +169,8 @@
   },
   "Permission": {
     "OpenCamera": "请开启相机权限",
-    "OpenStorageWrite": "请开启存储写入权限"
+    "OpenStorageWrite": "请开启存储写入权限",
+    "OpenStorageRead": "请开启存储读取权限"
   },
   "About": {
     "SourceCode": "查看源码",
