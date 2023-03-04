@@ -66,21 +66,21 @@ namespace SwashbucklerDiary.Pages
             ShowAvatar = false;
             if (!SystemService.IsCaptureSupported())
             {
-                await PopupService.ToastErrorAsync(I18n.T("User.NoCapture"));
+                await AlertService.Error(I18n.T("User.NoCapture"));
                 return;
             }
 
             var cameraPermission = await SystemService.CheckCameraPermission();
             if (!cameraPermission)
             {
-                await PopupService.ToastErrorAsync(I18n.T("Permission.OpenCamera"));
+                await AlertService.Error(I18n.T("Permission.OpenCamera"));
                 return;
             }
 
             var writePermission = await SystemService.CheckStorageWritePermission();
             if (!writePermission)
             {
-                await PopupService.ToastErrorAsync(I18n.T("Permission.OpenStorageWrite"));
+                await AlertService.Error(I18n.T("Permission.OpenStorageWrite"));
                 return;
             }
 
@@ -99,7 +99,7 @@ namespace SwashbucklerDiary.Pages
 
                 await SettingsService!.Save(nameof(Avatar), localFilePath);
                 await UpdateAvatar(localFilePath);
-                await PopupService.ToastSuccessAsync(I18n.T("Share.EditSuccess"));
+                await AlertService.Success(I18n.T("Share.EditSuccess"));
                 await HandleAchievements(AchievementType.Avatar);
             }
         }

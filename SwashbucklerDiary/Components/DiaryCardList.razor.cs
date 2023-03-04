@@ -48,20 +48,12 @@ namespace SwashbucklerDiary.Components
                 if (flag)
                 {
                     Value!.Remove(diaryModel);
-                    await PopupService.ToastAsync(it =>
-                    {
-                        it.Type = AlertTypes.Success;
-                        it.Title = I18n.T("Share.DeleteSuccess");
-                    });
+                    await AlertService.Success(I18n.T("Share.DeleteSuccess"));
                     StateHasChanged();
                 }
                 else
                 {
-                    await PopupService.ToastAsync(it =>
-                    {
-                        it.Type = AlertTypes.Error;
-                        it.Title = I18n.T("Share.DeleteFail");
-                    });
+                    await AlertService.Error(I18n.T("Share.DeleteFail"));
                 }
                 await OnDeleted.InvokeAsync();
             };
@@ -74,11 +66,7 @@ namespace SwashbucklerDiary.Components
             var text = DiaryCopyContent(diaryModel);
             await SystemService.SetClipboard(text);
 
-            await PopupService.ToastAsync(it =>
-            {
-                it.Type = AlertTypes.Success;
-                it.Title = I18n.T("Share.CopySuccess");
-            });
+            await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
 
         private async Task OnTag(DiaryModel diary)

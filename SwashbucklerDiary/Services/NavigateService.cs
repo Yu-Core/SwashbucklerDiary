@@ -10,6 +10,11 @@ namespace SwashbucklerDiary.Services
 
         public event Action? Action;
 
+        public void Initialize(NavigationManager navigation)
+        {
+            Navigation = navigation;
+        }
+
         public List<string> HistoryUrl { get; set; } = new List<string>();
 
         public void NavigateTo(string url)

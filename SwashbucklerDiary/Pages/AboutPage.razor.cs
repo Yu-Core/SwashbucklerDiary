@@ -72,7 +72,7 @@ namespace SwashbucklerDiary.Pages
             bool flag = await SystemService.OpenStoreAppDetails();
             if (!flag)
             {
-                await PopupService.ToastErrorAsync(I18n.T("About.OpenAppStoreFail"));
+                await AlertService.Error(I18n.T("About.OpenAppStoreFail"));
             }
         }
     }

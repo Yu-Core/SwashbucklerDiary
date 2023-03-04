@@ -39,14 +39,14 @@ namespace SwashbucklerDiary.Pages
             var readPermission = await SystemService.CheckStorageReadPermission();
             if (!readPermission)
             {
-                await PopupService.ToastErrorAsync(I18n.T("Permission.OpenStorageRead"));
+                await AlertService.Success(I18n.T("Permission.OpenStorageRead"));
                 return;
             }
 
             var writePermission = await SystemService.CheckStorageWritePermission();
             if (!writePermission)
             {
-                await PopupService.ToastErrorAsync(I18n.T("Permission.OpenStorageWrite"));
+                await AlertService.Error(I18n.T("Permission.OpenStorageWrite"));
                 return;
             }
 
@@ -55,7 +55,7 @@ namespace SwashbucklerDiary.Pages
             {
                 BackupsFolderPath = string.Empty;
                 await SettingsService.Save("BackupsPath", string.Empty);
-                await PopupService.ToastErrorAsync("Backups.Invalid backup folder");
+                await AlertService.Error(I18n.T("Backups.Invalid backup folder"));
                 return;
             }
 
@@ -79,7 +79,7 @@ namespace SwashbucklerDiary.Pages
                 SystemService.GetAppVersion() + ".db3";
             var destFile = Path.Combine(BackupsFolderPath!, destFileName);
             File.Copy(sourceFile, destFile, true);
-            await PopupService.ToastSuccessAsync(I18n.T("Backups.BackupsSuccess"));
+            await AlertService.Success(I18n.T("Backups.BackupsSuccess"));
         }
 
         private string? GetLocalPointer()
@@ -130,8 +130,8 @@ namespace SwashbucklerDiary.Pages
             {
                 return;
             }
-            File.Copy(dbFilePath, SQLiteConstants.DatabasePath,true);
-            await PopupService.ToastSuccessAsync(I18n.T("Backups.RestoreSuccess"));
+            File.Copy(dbFilePath, SQLiteConstants.DatabasePath, true);
+            await AlertService.Success(I18n.T("Backups.RestoreSuccess"));
         }
     }
 }

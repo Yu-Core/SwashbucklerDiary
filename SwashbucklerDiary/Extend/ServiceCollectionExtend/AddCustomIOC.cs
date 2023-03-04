@@ -6,26 +6,28 @@ using SwashbucklerDiary.Services;
 
 namespace SwashbucklerDiary.Extend
 {
-    public static class IOCExtend
+    public static partial class ServiceCollectionExtend
     {
         public static IServiceCollection AddCustomIOC(this IServiceCollection services)
         {
-            services.AddSingleton<IFolderPicker>(FolderPicker.Default);
-
+            //仓储相关
             services.AddSingleton<IDiaryRepository,DiaryRepository>();
             services.AddSingleton<ITagRepository,TagRepository>();
             services.AddSingleton<IDiaryTagRepository,DiaryTagRepository>();
             services.AddSingleton<IUserAchievementRepository, UserAchievementRepository>();
             services.AddSingleton<IUserStateModelRepository, UserStateModelRepository>();
-
+            //数据服务相关
             services.AddSingleton<ITagService, TagService>();
             services.AddSingleton<IDiaryService, DiaryService>();
             services.AddSingleton<IDiaryTagService, DiaryTagService>();
+            services.AddSingleton<IAchievementService, AchievementService>();
+            //功能服务相关
             services.AddSingleton<INavigateService, NavigateService>();
             services.AddSingleton<IconService>();
             services.AddSingleton<ISettingsService, SettingsService>();
             services.AddSingleton<ISystemService, SystemService>();
-            services.AddSingleton<IAchievementService, AchievementService>();
+            services.AddSingleton<IFolderPicker>(FolderPicker.Default);
+            services.AddSingleton<IAlertService, AlertService>();
             return services;
         }
     }

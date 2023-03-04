@@ -195,20 +195,12 @@ namespace SwashbucklerDiary.Pages
                 bool flag = await DiaryService.AddAsync(Diary);
                 if (flag)
                 {
-                    await PopupService.ToastAsync(it =>
-                    {
-                        it.Type = AlertTypes.Success;
-                        it.Title = I18n.T("Share.AddSuccess");
-                    });
+                    await AlertService.Success(I18n.T("Share.AddSuccess"));
                     await HandleAchievements();
                 }
                 else
                 {
-                    await PopupService.ToastAsync(it =>
-                    {
-                        it.Type = AlertTypes.Error;
-                        it.Title = I18n.T("Share.AddFail");
-                    });
+                    await AlertService.Error(I18n.T("Share.AddFail"));
                 }
             }
             else
@@ -216,20 +208,11 @@ namespace SwashbucklerDiary.Pages
                 bool flag = await DiaryService.UpdateIncludesAsync(Diary);
                 if (flag)
                 {
-                    await PopupService.ToastAsync(it =>
-                    {
-                        it.Type = AlertTypes.Success;
-                        it.Title = I18n.T("Share.EditSuccess");
-                    });
-
+                    await AlertService.Success(I18n.T("Share.EditSuccess"));
                 }
                 else
                 {
-                    await PopupService.ToastAsync(it =>
-                    {
-                        it.Type = AlertTypes.Error;
-                        it.Title = I18n.T("Share.EditFail");
-                    });
+                    await AlertService.Error(I18n.T("Share.EditFail"));
                 }
             }
 
@@ -296,12 +279,7 @@ namespace SwashbucklerDiary.Pages
             messages.AddRange(messages2);
             foreach (var item in messages)
             {
-                await PopupService.ToastAsync(it =>
-                {
-                    it.Type = AlertTypes.Success;
-                    it.Title = I18n.T("Achievement.AchieveAchievements");
-                    it.Content = I18n.T(item);
-                });
+                await AlertService.Success(I18n.T("Achievement.AchieveAchievements"),I18n.T(item));
             }
         }
 

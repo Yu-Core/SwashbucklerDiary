@@ -81,12 +81,7 @@ namespace SwashbucklerDiary.Components
 
             if (Tags.Any(it => it.Name == tagName))
             {
-                await PopupService.ToastAsync(it =>
-                {
-                    it.Type = AlertTypes.Warning;
-                    it.Title = I18n.T("Tag.Repeat.Title");
-                    it.Content = I18n.T("Tag.Repeat.Content");
-                });
+                await AlertService.Warning(I18n.T("Tag.Repeat.Title"), I18n.T("Tag.Repeat.Content"));
                 return;
             }
 
@@ -97,19 +92,11 @@ namespace SwashbucklerDiary.Components
             var flag = await TagService.AddAsync(tag);
             if (!flag)
             {
-                await PopupService.ToastAsync(it =>
-                {
-                    it.Type = AlertTypes.Error;
-                    it.Title = I18n.T("Share.AddFail");
-                });
+                await AlertService.Error(I18n.T("Share.AddFail"));
                 return;
             }
 
-            await PopupService.ToastAsync(it =>
-            {
-                it.Type = AlertTypes.Success;
-                it.Title = I18n.T("Share.AddSuccess");
-            });
+            await AlertService.Success(I18n.T("Share.AddSuccess"));
             Tags.Add(tag);
             StateHasChanged();
         }

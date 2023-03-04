@@ -38,20 +38,12 @@ namespace SwashbucklerDiary.Components
                 if (flag)
                 {
                     Value!.Remove(tag);
-                    await PopupService.ToastAsync(it =>
-                    {
-                        it.Type = AlertTypes.Success;
-                        it.Title = I18n.T("Share.DeleteSuccess");
-                    });
+                    await AlertService.Success(I18n.T("Share.DeleteSuccess"));
                     StateHasChanged();
                 }
                 else
                 {
-                    await PopupService.ToastAsync(it =>
-                    {
-                        it.Type = AlertTypes.Error;
-                        it.Title = I18n.T("Share.DeleteFail");
-                    });
+                    await AlertService.Error(I18n.T("Share.DeleteFail"));
                 }
             };
             ShowDeleteTag = true;
@@ -68,12 +60,7 @@ namespace SwashbucklerDiary.Components
 
             if (Value!.Any(it => it.Name == tagName))
             {
-                await PopupService.ToastAsync(it =>
-                {
-                    it.Type = AlertTypes.Warning;
-                    it.Title = I18n.T("Tag.Repeat.Title");
-                    it.Content = I18n.T("Tag.Repeat.Content");
-                });
+                await AlertService.Warning(I18n.T("Tag.Repeat.Title"),I18n.T("Tag.Repeat.Content"));
                 return;
             }
 
@@ -82,19 +69,11 @@ namespace SwashbucklerDiary.Components
             bool flag = await TagService.UpdateAsync(tag);
             if (flag)
             {
-                await PopupService.ToastAsync(it =>
-                {
-                    it.Type = AlertTypes.Success;
-                    it.Title = I18n.T("Share.EditSuccess");
-                });
+                await AlertService.Success(I18n.T("Share.EditSuccess"));
             }
             else
             {
-                await PopupService.ToastAsync(it =>
-                {
-                    it.Type = AlertTypes.Error;
-                    it.Title = I18n.T("Share.EditFail");
-                });
+                await AlertService.Error(I18n.T("Share.EditFail"));
             }
         }
 

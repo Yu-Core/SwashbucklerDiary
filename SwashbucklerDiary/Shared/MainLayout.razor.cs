@@ -18,16 +18,20 @@ namespace SwashbucklerDiary.Shared
             new NavigationButton(2,"Main.Mine","mdi-account-outline","mdi-account","Mine")
         };
 
+        [Inject] 
+        MasaBlazor MasaBlazor { get; set; } = default!;
+        [Inject] 
+        NavigationManager Navigation { get; set; } = default!;
         [Inject]
-        private MasaBlazor MasaBlazor { get; set; } = default!;
+        INavigateService NavigateService { get; set; } = default!;
+        [Inject] 
+        I18n I18n { get; set; } = default!;
         [Inject]
-        private NavigationManager Navigation { get; set; } = default!;
+        ISettingsService SettingsService { get; set; } = default!;
         [Inject]
-        public INavigateService NavigateService { get; set; } = default!;
+        IPopupService PopupService { get; set; } = default!;
         [Inject]
-        private I18n I18n { get; set; } = default!;
-        [Inject]
-        private ISettingsService SettingsService { get; set; } = default!;
+        IAlertService AlertService { get; set; } = default!;
 
         public void Dispose()
         {
@@ -38,7 +42,8 @@ namespace SwashbucklerDiary.Shared
         protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
-            NavigateService.Navigation = Navigation;
+            NavigateService.Initialize(Navigation);
+            AlertService.Initialize(PopupService);
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             await base.OnInitializedAsync();
         }

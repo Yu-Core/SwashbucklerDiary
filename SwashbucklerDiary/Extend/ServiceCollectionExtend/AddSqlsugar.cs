@@ -4,9 +4,9 @@ using System.Reflection;
 
 namespace SwashbucklerDiary.Extend
 {
-    public static class ORMExtend
+    public static partial class ServiceCollectionExtend
     {
-        public static void AddSqlsugar(this IServiceCollection services)
+        public static IServiceCollection AddSqlsugarConfig(this IServiceCollection services)
         {
             SqlSugarScope sqlSugar = new (new ConnectionConfig()
             {
@@ -42,6 +42,7 @@ namespace SwashbucklerDiary.Extend
             );
 
             services.AddSingleton<ISqlSugarClient>(sqlSugar);//这边是SqlSugarScope用AddSingleton
+            return services;
         }
     }
 }

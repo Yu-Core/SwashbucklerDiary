@@ -4,9 +4,9 @@ using Serilog.Events;
 
 namespace SwashbucklerDiary.Extend
 {
-    public static class LogExtend
+    public static partial class ServiceCollectionExtend
     {
-        public static IServiceCollection AddSerilog(this IServiceCollection services)
+        public static IServiceCollection AddSerilogConfig(this IServiceCollection services)
         {
             if (!Directory.Exists(SerilogConstants.folderPath))
             {

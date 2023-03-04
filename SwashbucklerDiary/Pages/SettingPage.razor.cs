@@ -41,11 +41,7 @@ namespace SwashbucklerDiary.Pages
             await SettingsService.Save("Privacy", value);
             if (!value)
             {
-                await PopupService.ToastAsync(it =>
-                {
-                    it.Type = AlertTypes.Success;
-                    it.Title = I18n.T("Setting.Safe.CamouflageSuccess");
-                });
+                await AlertService.Success(I18n.T("Setting.Safe.CamouflageSuccess"));
             }
         }
 
@@ -63,7 +59,7 @@ namespace SwashbucklerDiary.Pages
         {
             ShowPPSet = false;
             await SettingsService.Save("PrivatePassword", value.MD5Encrytp32());
-            await PopupService.ToastSuccessAsync(I18n.T("Setting.Safe.PrivatePasswordSetSuccess"));
+            await AlertService.Success(I18n.T("Setting.Safe.PrivatePasswordSetSuccess"));
         }
 
         private async Task InputPassword(string value)
@@ -76,7 +72,7 @@ namespace SwashbucklerDiary.Pages
             var password = await SettingsService.Get("PrivatePassword", "");
             if(password != value.MD5Encrytp32())
             {
-                await PopupService.ToastErrorAsync(I18n.T("Setting.Safe.PasswordError"));
+                await AlertService.Error(I18n.T("Setting.Safe.PasswordError"));
                 return;
             }
             Privacy = true;

@@ -136,7 +136,7 @@ namespace SwashbucklerDiary.Pages
                 else
                 {
                     await SystemService.SetClipboard(mail);
-                    await PopupService.ToastSuccessAsync(I18n.T("Mine.MailCopy"));
+                    await AlertService.Success(I18n.T("Mine.MailCopy"));
                 }
             }
             catch (Exception)

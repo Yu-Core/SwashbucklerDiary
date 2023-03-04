@@ -107,19 +107,11 @@ namespace SwashbucklerDiary.Pages
                 bool flag = await DiaryService.DeleteAsync(Diary);
                 if (flag)
                 {
-                    await PopupService.ToastAsync(it =>
-                    {
-                        it.Type = AlertTypes.Success;
-                        it.Title = I18n.T("Share.DeleteSuccess");
-                    });
+                    await AlertService.Success(I18n.T("Share.DeleteSuccess"));
                 }
                 else
                 {
-                    await PopupService.ToastAsync(it =>
-                    {
-                        it.Type = AlertTypes.Error;
-                        it.Title = I18n.T("Share.DeleteFail");
-                    });
+                    await AlertService.Error(I18n.T("Share.DeleteFail"));
                 }
                 NavigateToBack();
             };
@@ -142,11 +134,7 @@ namespace SwashbucklerDiary.Pages
         {
             await SystemService.SetClipboard(DiaryCopyContent);
 
-            await PopupService.ToastAsync(it =>
-            {
-                it.Type = AlertTypes.Success;
-                it.Title = I18n.T("Share.CopySuccess");
-            });
+            await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
 
         private async Task ShareText()

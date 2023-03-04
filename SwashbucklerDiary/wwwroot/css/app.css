@@ -151,13 +151,6 @@ a, .btn-link {
     user-select: text;
 }
 
-@media screen and (max-width:960px) {
-    .m-toast-container {
-        left: 0px !important;
-        right: 0px !important;
-    }
-}
-
 .list-item-icon.theme--light.m-icon {
     color: #000000;
 }
