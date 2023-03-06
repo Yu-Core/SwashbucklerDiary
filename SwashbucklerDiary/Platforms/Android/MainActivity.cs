@@ -3,6 +3,7 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Views;
 using SwashbucklerDiary.IServices;
+using SwashbucklerDiary.Platforms.Android;
 
 namespace SwashbucklerDiary
 {
@@ -41,6 +42,7 @@ namespace SwashbucklerDiary
 #pragma warning restore CA1422 // 验证平台兼容性
             }
 #pragma warning restore CA1416 // 验证平台兼容性
+            GlobalLayoutUtil.AssistActivity(this);
         }
     }
 }

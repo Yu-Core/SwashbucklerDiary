@@ -1,6 +1,7 @@
 ﻿using BlazorComponent;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;

@@ -2,9 +2,8 @@
 @inherits PageComponentBase
 
 <MAppBar App
-         ElevateOnScroll
-         Color="white"
-         ScrollTarget="#scrolling-write">
+         Elevation="0"
+         Color="white">
     <MButton Icon OnClick="OnBack">
         <MIcon>
             mdi-arrow-left
@@ -55,7 +54,7 @@
     </MyMenu>
 </MAppBar>
 
-<ScrollContainer Id="scrolling-write">
+<ScrollContainer>
     <div class="px-3 text-h6 font-weight-bold">
         <span>@(Diary.CreateTime.ToString("yyyy/MM/dd"))</span>
         <span class="pl-5 text-subtitle-1">
@@ -108,27 +107,26 @@
     @if (Markdown)
     {
         <MyMarkdown @bind-Value="Diary.Content" Class="my-sm-4 px-3">
-        </MyMarkdown>
+    </MyMarkdown>
     }
     else
     {
-        <MTextarea @bind-Value="Diary.Content"
-               Class="my-sm-4 user-select"
+    <MTextarea @bind-Value="Diary.Content"
+               Class="@($"my-sm-4 user-select {(Markdown?"d-none":"")}")"
                Solo="Mobile"
                Flat="Mobile"
                Outlined="Desktop"
                HideDetails="@("auto")"
-                  Autofocus
-                  AutoGrow
+               AutoGrow="true"
                Rows="8"
                RowHeight="30"
                Counter="true"
-                       spellcheck="false"
+               spellcheck="false"
                Placeholder="@(I18n.T("Write.ContentPlace"))">
         <CounterContent>
             <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
         </CounterContent>
-        </MTextarea>
+    </MTextarea>
     }
 
     <div class="mb-5">
