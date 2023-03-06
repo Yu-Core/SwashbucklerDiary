@@ -7,6 +7,30 @@
 
 <ScrollContainer>
     <div class="text-h6 setting-title">
+        @(I18n.T("Setting.Location.Name"))
+    </div>
+
+    <MCard Class="setting-card"
+           Elevation="4"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem OnClick="@(()=>To("/location"))">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-map-marker-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Location.Location management"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <div class="text-h6 setting-title">
         @(I18n.T("Setting.Diary.Name"))
     </div>
 
@@ -97,6 +121,11 @@
                     </MListItemIcon>
                     <MListItemContent>
                         @(I18n.T("Setting.Safe.PrivacyPassword"))
+                    </MListItemContent>
+                    <MListItemContent>
+                        <MListItemSubtitle Class="text-right">
+                            @GetPrivatePasswordSetState()
+                        </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
                         <MIcon>mdi-chevron-right</MIcon>

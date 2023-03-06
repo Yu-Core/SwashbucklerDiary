@@ -1,6 +1,4 @@
-﻿using BlazorComponent;
-using Masa.Blazor;
-using SwashbucklerDiary.Components;
+﻿using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extend;
 
 namespace SwashbucklerDiary.Pages
@@ -12,23 +10,25 @@ namespace SwashbucklerDiary.Pages
         private bool Privacy;
         private bool ShowPPSet;
         private bool ShowPPInput;
+        private string? PrivatePassword;
 
         protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
+            await UpdatePrivatePassword();
             await base.OnInitializedAsync();
         }
 
         private async Task LoadSettings()
         {
-            Title = await SettingsService.Get("Title",false);
+            Title = await SettingsService.Get("Title", false);
             Markdown = await SettingsService.Get("Markdown", false);
             Privacy = await SettingsService.GetPrivacy();
         }
 
         private async Task TitleChange(bool value)
         {
-            await SettingsService.Save("Title",value);
+            await SettingsService.Save("Title", value);
         }
 
         private async Task MarkdownChange(bool value)
@@ -58,6 +58,7 @@ namespace SwashbucklerDiary.Pages
         private async Task SetPassword(string value)
         {
             ShowPPSet = false;
+            PrivatePassword = value;
             await SettingsService.Save("PrivatePassword", value.MD5Encrytp32());
             await AlertService.Success(I18n.T("Setting.Safe.PrivatePasswordSetSuccess"));
         }
@@ -65,12 +66,12 @@ namespace SwashbucklerDiary.Pages
         private async Task InputPassword(string value)
         {
             ShowPPInput = false;
-            if(string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
                 return;
             }
-            var password = await SettingsService.Get("PrivatePassword", "");
-            if(password != value.MD5Encrytp32())
+            await UpdatePrivatePassword();
+            if (PrivatePassword != value.MD5Encrytp32())
             {
                 await AlertService.Error(I18n.T("Setting.Safe.PasswordError"));
                 return;
@@ -80,8 +81,8 @@ namespace SwashbucklerDiary.Pages
 
         private async Task PrivacyClick()
         {
-            var password = await SettingsService.Get("PrivatePassword", "");
-            if (!string.IsNullOrEmpty(password) && !Privacy)
+            await UpdatePrivatePassword();
+            if (!string.IsNullOrEmpty(PrivatePassword) && !Privacy)
             {
                 ShowPPInput = true;
                 return;
@@ -89,5 +90,13 @@ namespace SwashbucklerDiary.Pages
 
             Privacy = !Privacy;
         }
+
+        private async Task UpdatePrivatePassword()
+        {
+            PrivatePassword = await SettingsService.Get("PrivatePassword", "");
+        }
+
+        private string? GetPrivatePasswordSetState()
+            => string.IsNullOrEmpty(PrivatePassword) ? I18n.T("Setting.Safe.NotSetPassword") : null;
     }
 }

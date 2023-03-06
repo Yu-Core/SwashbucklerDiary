@@ -85,7 +85,7 @@
             <MIcon Left>
                 mdi-map-marker-outline
             </MIcon>
-            @(Diary.Location ?? I18n.T("Write.Location"))
+            @(Location ?? I18n.T("Write.Location"))
         </MChip>
     </div>
 
@@ -98,9 +98,9 @@
                 Outlined="Desktop"
                 TValue="string"
                 HideDetails="@("auto")"
-                Dense
-                spellcheck="false"
-                maxlength="20"
+                    Dense
+                        spellcheck="false"
+                        maxlength="20"
                 Placeholder="@(I18n.T("Write.TitlePlace"))">
         </MTextField>
     }
@@ -118,16 +118,16 @@
                Flat="Mobile"
                Outlined="Desktop"
                HideDetails="@("auto")"
-               Autofocus
-               AutoGrow
+                  Autofocus
+                  AutoGrow
                Rows="8"
                RowHeight="30"
                Counter="true"
-               spellcheck="false"
+                       spellcheck="false"
                Placeholder="@(I18n.T("Write.ContentPlace"))">
-            <CounterContent>
-                <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
-            </CounterContent>
+        <CounterContent>
+            <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
+        </CounterContent>
         </MTextarea>
     }
 
@@ -138,7 +138,7 @@
                 <MChip Close
                    Outlined="Mobile"
                    OnCloseClick="()=>RemoveSelectedTag(item)">
-                    @(item.Name)
+                @(item.Name)
                 </MChip>
             }
         </MChipGroup>
@@ -147,14 +147,14 @@
 
     <div class="d-none d-sm-block">
         <MButton Class="px-8"
-                 Rounded
-                 Dark
+                  Rounded
+                  Dark
                  OnClick="OnSave">
             @(I18n.T("Share.Save"))
         </MButton>
         <MButton Class="px-8"
-                 Rounded
-                 Outlined
+                  Rounded
+                  Outlined
                  OnClick="OnClear">
             @(I18n.T("Share.Clear"))
         </MButton>
@@ -176,15 +176,16 @@
             <MButton Icon OnClick="()=>ShowWeather=false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-        </MCardTitle>
-        <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:200px;">
+            </MCardTitle>
+            <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:200px;">
             <MChipGroup @bind-Value="WeatherIndex" Column>
                 @foreach (var item in WeatherIcons)
                 {
                     <MChip Filter
-                       Outlined>
-                        <MIcon Left>
-                            @(item.Value)
+                       Outlined
+                       OnClick="()=>ShowWeather=false">
+                    <MIcon Left>
+                        @(item.Value)
                         </MIcon>
                         @(I18n.T("Weather." + item.Key))
                     </MChip>
@@ -203,15 +204,16 @@
             <MButton Icon OnClick="()=>ShowMood=false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-        </MCardTitle>
-        <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:200px;">
+            </MCardTitle>
+            <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:200px;">
             <MChipGroup @bind-Value="MoodIndex" Column>
                 @foreach (var item in MoodIcons)
                 {
                     <MChip Filter
-                       Outlined>
-                        <MIcon Left>
-                            @(item.Value)
+                       Outlined
+                       OnClick="()=>ShowMood=false">
+                    <MIcon Left>
+                        @(item.Value)
                         </MIcon>
                         @(I18n.T("Mood." + item.Key))
                     </MChip>
@@ -221,26 +223,6 @@
     </MCard>
 </MyDialog>
 
-<MyDialog @bind-MyValue="ShowLocation"
-          MaxWidth="420">
-    <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Write.InputLocation"))
-            <MSpacer></MSpacer>
-            <MButton Icon OnClick="()=>ShowLocation=false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText>
-            <MTextField @bind-Value="Diary.Location"
-                        Dense
-                        Autofocus
-                        HideDetails="@("auto")"
-                        Outlined
-                        Counter="50"
-                        maxlength="50"
-                        Placeholder="@(I18n.T("Write.LocationPlace"))">
-            </MTextField>
-        </MCardText>
-    </MCard>
-</MyDialog>
+<SelectLocation @bind-Value="ShowLocation"
+                @bind-Location="Location">
+</SelectLocation>

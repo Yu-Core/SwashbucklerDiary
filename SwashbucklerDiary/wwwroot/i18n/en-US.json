@@ -295,7 +295,12 @@
       "PrivatePasswordSetSuccess": "PrivatePassword set success",
       "SetPassword": "Set Password",
       "ValidatePassword": "Validate Password",
-      "PasswordError": "Password Error"
+      "PasswordError": "Password Error",
+      "NotSetPassword": "No password set"
+    },
+    "Location": {
+      "Name": "Location",
+      "Location management": "Location management"
     }
   },
   "Password must be at most 20 characters long": "Password must be at most 20 characters long",
@@ -314,5 +319,20 @@
     "BackupsSuccess": "Backups success",
     "Invalid backup folder": "Invalid backup folder",
     "RestoreSuccess": "Restore success"
+  },
+  "Location": {
+    "Add": "Add Location",
+    "Repeat": {
+      "Title": "Location already exists",
+      "Content": "Do not add again"
+    },
+    "Placeholder": "Please enter the location name",
+    "Select": "Select location",
+    "Delete": {
+      "Title": "Delete Location",
+      "Content": "Only delete this location. The location of the previous journal will not be deleted"
+    },
+    "Rename": "Rename Location",
+    "NoLocation": "No location"
   }
 }

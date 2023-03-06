@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Extend
                         PopupComponents.SNACKBAR, new Dictionary<string, object?>()
                         {
                             { nameof(PEnqueuedSnackbars.Closeable), true },
-                            { nameof(PEnqueuedSnackbars.Position), SnackPosition.BottomRight }
+                            { nameof(PEnqueuedSnackbars.Position), SnackPosition.BottomCenter }
                         }
                     }
                 };

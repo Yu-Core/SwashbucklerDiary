@@ -18,6 +18,8 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public List<TagModel>? Value { get; set; } = new();
 
+        private string? RenameTagName { get; set; }
+
         private void OnRename(TagModel tag)
         {
             RenameTagId = tag.Id;
@@ -25,8 +27,6 @@ namespace SwashbucklerDiary.Components
             StateHasChanged();
             ShowRenameTag = true;
         }
-
-        private string? RenameTagName { get; set; }
 
         private void OpenDeleteDialog(TagModel tag)
         {

@@ -17,6 +17,7 @@ namespace SwashbucklerDiary.Repository
                 typeof(DiaryTagModel),
                 typeof(UserAchievementModel),
                 typeof(UserStateModel),
+                typeof(LocationModel),
             };
             base.Context!.CodeFirst.InitTables(types);
         }

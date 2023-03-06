@@ -60,6 +60,11 @@ namespace SwashbucklerDiary.Pages
             get => Diary.Tags!;
             set => Diary.Tags = value;
         }
+        private string? Location
+        {
+            get => Diary.Location;
+            set => Diary.Location = value;
+        }
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
         private Dictionary<string, string> WeatherIcons => IconService!.WeatherIcon;
@@ -279,7 +284,7 @@ namespace SwashbucklerDiary.Pages
             messages.AddRange(messages2);
             foreach (var item in messages)
             {
-                await AlertService.Success(I18n.T("Achievement.AchieveAchievements"),I18n.T(item));
+                await AlertService.Success(I18n.T("Achievement.AchieveAchievements"), I18n.T(item));
             }
         }
 

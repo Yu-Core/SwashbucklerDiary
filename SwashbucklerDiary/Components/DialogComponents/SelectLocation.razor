@@ -1,0 +1,58 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits DialogComponentBase
+
+<MyDialog MyValue="Value"
+          MyValueChanged="InternalValueChanged"
+          MaxWidth="420"
+          Scrollable>
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Location.Select"))
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+            </MCardTitle>
+
+            <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:200px;">
+            @foreach (var item in Locations)
+            {
+                <MListItem Class="px-0" OnClick="()=>SetSelectedLocation(item)">
+                    <MListItemIcon>
+                        <MIcon>
+                            mdi-map-marker-outline
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(item.Name)
+                    </MListItemContent>
+
+                    <MListItemAction>
+                        @if (item.Name == Location)
+                        {
+                            <MIcon>
+                                mdi-check-bold
+                            </MIcon>
+                        }
+                    </MListItemAction>
+                </MListItem>
+            }
+            <MListItem Class="px-0" OnClick="()=>ShowAdd = true">
+                <MListItemIcon>
+                    <MIcon>
+                        mdi-plus
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Location.Add"))
+                </MListItemContent>
+            </MListItem>
+        </MCardText>
+    </MCard>
+</MyDialog>
+
+<InputDialog @bind-Value="ShowAdd"
+             Title="@(I18n.T("Location.Add"))"
+             Placeholder="@(I18n.T("Location.Placeholder"))"
+             OnOK="SaveAdd">
+</InputDialog>

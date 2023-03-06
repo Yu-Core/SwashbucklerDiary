@@ -296,7 +296,12 @@
       "PrivatePasswordSetSuccess": "密码设置成功",
       "SetPassword": "设置密码",
       "ValidatePassword": "验证密码",
-      "PasswordError": "密码错误"
+      "PasswordError": "密码错误",
+      "NotSetPassword": "未设置密码"
+    },
+    "Location": {
+      "Name": "位置",
+      "Location management": "位置管理"
     }
   },
   "Password must be at most 20 characters long": "密码不得超过20个字符",
@@ -315,5 +320,20 @@
     "BackupsSuccess": "备份成功",
     "Invalid backup folder": "无效的备份文件夹",
     "RestoreSuccess": "还原成功"
+  },
+  "Location": {
+    "Add": "添加位置",
+    "Repeat": {
+      "Title": "位置已存在",
+      "Content": "请勿重复添加"
+    },
+    "Placeholder": "请输入位置名称",
+    "Select": "选择位置",
+    "Delete": {
+      "Title": "删除位置",
+      "Content": "仅删除该位置，以前日记的位置不会被删除"
+    },
+    "Rename": "重命名位置",
+    "NoLocation": "暂无位置"
   }
 }
