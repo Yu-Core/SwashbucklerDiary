@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SwashbucklerDiary.Extend
 {
@@ -14,6 +15,29 @@ namespace SwashbucklerDiary.Extend
                 sb.Append(newBuffer[i].ToString("X2"));
             }
             return sb.ToString();
+        }
+
+        public static int WordCount(this string s)
+        {
+            string englishExpression = @"[\S]+";
+            MatchCollection collection = Regex.Matches(s, englishExpression);
+            return collection.Count;
+        }
+
+        public static int CharacterCount(this string s)
+        {
+            string asianExpression = @"[\u3001-\uFFFF]";
+            MatchCollection asiancollection = Regex.Matches(s, asianExpression);
+            var count = asiancollection.Count; //Asian Character Count
+            s = Regex.Replace(s, asianExpression, " ");
+
+            string englishExpression = @"[\S]+";
+            MatchCollection collection = Regex.Matches(s, englishExpression);
+            foreach (Match word in collection)
+            {
+                count += word.Value.Length;
+            }
+            return count;
         }
     }
 }

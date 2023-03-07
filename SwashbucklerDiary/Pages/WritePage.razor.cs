@@ -3,6 +3,7 @@ using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
+using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using SwashbucklerDiary.Services;
@@ -259,12 +260,12 @@ namespace SwashbucklerDiary.Pages
             value = value.Trim();
             if (I18n.T("Write.WordCountType") == WordCountType.Word.ToString())
             {
-                len = value.Split(' ').Length;
+                len = value.WordCount();
             }
 
             if (I18n.T("Write.WordCountType") == WordCountType.Character.ToString())
             {
-                len = value.Length;
+                len = value.CharacterCount();
             }
 
             return len + " " + I18n.T("Write.CountUnit");

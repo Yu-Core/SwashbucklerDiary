@@ -85,7 +85,7 @@
     </MyMenu>
 </MAppBar>
 
-<ScrollContainer Id="scrolling-read" OnContextmenu="()=>ShowMenu = true">
+<ScrollContainer Id="scrolling-read">
     <div id="screenshot">
         <div class="px-3 text-h6 font-weight-bold">
             <span>@(Diary.CreateTime.ToString("yyyy/MM/dd"))</span>
@@ -140,7 +140,7 @@
         }
         @if (Markdown)
         {
-            <MMarkdownIt Source="@(Diary.Content)" Class="my-sm-4 px-3" Style="padding-top:10px">
+            <MMarkdownIt Source="@(Diary.Content)" Class="my-sm-4 px-3 user-select" Style="padding-top:10px">
             </MMarkdownIt>
         }
         else

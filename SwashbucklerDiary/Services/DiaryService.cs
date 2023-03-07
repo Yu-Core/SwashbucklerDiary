@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.IRepository;
+﻿using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.IRepository;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using System.Linq.Expressions;
@@ -58,14 +59,14 @@ namespace SwashbucklerDiary.Services
             {
                 foreach (var item in diaries)
                 {
-                    wordCount += item.Content?.Split(' ').Length ?? 0;
+                    wordCount += item.Content?.WordCount() ?? 0;
                 }
             }
             if(type == WordCountType.Character)
             {
                 foreach (var item in diaries)
                 {
-                    wordCount += item.Content?.Length ?? 0;
+                    wordCount += item.Content?.CharacterCount() ?? 0;
                 }
             }
             return wordCount;
