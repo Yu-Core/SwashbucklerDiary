@@ -300,7 +300,7 @@
     },
     "Location": {
       "Name": "Location",
-      "Location management": "Location management"
+      "Location": "Location"
     }
   },
   "Password must be at most 20 characters long": "Password must be at most 20 characters long",

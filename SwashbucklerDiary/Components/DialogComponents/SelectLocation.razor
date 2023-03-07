@@ -14,12 +14,12 @@
             </MButton>
             </MCardTitle>
 
-            <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:200px;">
+            <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
             @foreach (var item in Locations)
             {
                 <MListItem Class="px-0" OnClick="()=>SetSelectedLocation(item)">
                     <MListItemIcon>
-                        <MIcon>
+                        <MIcon Class="list-item-icon">
                             mdi-map-marker-outline
                         </MIcon>
                     </MListItemIcon>
@@ -39,7 +39,7 @@
             }
             <MListItem Class="px-0" OnClick="()=>ShowAdd = true">
                 <MListItemIcon>
-                    <MIcon>
+                    <MIcon Class="list-item-icon">
                         mdi-plus
                     </MIcon>
                 </MListItemIcon>

@@ -301,7 +301,7 @@
     },
     "Location": {
       "Name": "位置",
-      "Location management": "位置管理"
+      "Location": "位置"
     }
   },
   "Password must be at most 20 characters long": "密码不得超过20个字符",

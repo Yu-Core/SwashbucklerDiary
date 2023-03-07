@@ -23,7 +23,7 @@ namespace SwashbucklerDiary.Services
             {
                 Title = title,
                 Content = message,
-                Type = type
+                Type = AlertTypes.None
             });
         }
 

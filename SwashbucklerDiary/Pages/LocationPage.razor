@@ -1,7 +1,7 @@
 ﻿@page "/location"
 @inherits PageComponentBase
 
-<MyAppBar Title="@(I18n.T("Setting.Location.Location management"))"
+<MyAppBar Title="@(I18n.T("Setting.Location.Location"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -17,6 +17,10 @@
                               OnRename="()=>RenameLocation(item)"
                               OnDelete="()=>DeleteLocation(item)">
                     </LocationListItem>
+                    if (Locations.Last() != item)
+                    {
+                        <MDivider Class="mx-3 mx-sm-0"></MDivider>
+                    }
                 }
             </MList>
         </MCard>
