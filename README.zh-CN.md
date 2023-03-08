@@ -19,6 +19,7 @@
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
 - [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)
 - [html2canvas](https://github.com/niklasvh/html2canvas)
+- [Markdown Guide](https://github.com/mattcone/markdown-guide)
 - [MASA.Blazor](https://github.com/BlazorComponent/MASA.Blazor)
 - [Serilog](https://github.com/serilog/serilog)
 - [SQLite-net](https://github.com/praeclarum/sqlite-net)

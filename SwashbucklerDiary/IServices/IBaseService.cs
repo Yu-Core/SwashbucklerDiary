@@ -5,8 +5,8 @@ namespace SwashbucklerDiary.IServices
     public interface IBaseService<TEntity> where TEntity : class, new()
     {
         Task<bool> AddAsync(TEntity entity);
-        Task<int> AddReturnIdAsync(TEntity entity);
         Task<bool> AddAsync(List<TEntity> entities);
+        Task<int> AddReturnIdAsync(TEntity entity);
         Task<TEntity> AddReturnEntityAsync(TEntity entity);
         Task<bool> DeleteAsync(TEntity entity);
         Task<bool> DeleteAsync(Guid id);

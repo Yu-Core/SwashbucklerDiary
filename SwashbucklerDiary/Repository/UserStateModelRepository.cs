@@ -19,15 +19,12 @@ namespace SwashbucklerDiary.Repository
                 {
                     Type = type,
                     Count = 1,
-                    CreateTime = DateTime.Now,
-                    UpdateTime = DateTime.Now
                 };
                 await base.InsertAsync(newUserState);
                 return newUserState;
             }
             else
             {
-                userState.UpdateTime = DateTime.Now;
                 await base.Context.Updateable<UserStateModel>()
                 .SetColumns(it => it.Count == it.Count + 1)
                 .Where(it => it.Type == type)
@@ -41,14 +38,12 @@ namespace SwashbucklerDiary.Repository
 
         }
 
-        public async Task<UserStateModel> InsertOrUpdateAsync(AchievementType type,int count)
+        public async Task<UserStateModel> InsertOrUpdateAsync(AchievementType type, int count)
         {
             UserStateModel userState = new()
             {
                 Type = type,
-                Count = count,
-                CreateTime = DateTime.Now,
-                UpdateTime = DateTime.Now
+                Count = count
             };
             var oldUserState = await base.GetFirstAsync(it => it.Type == type);
             if (oldUserState == null)
@@ -58,7 +53,7 @@ namespace SwashbucklerDiary.Repository
             else
             {
                 await base.Context.Updateable(userState)
-                    .UpdateColumns(it => new { it.Count, it.UpdateTime })
+                    .UpdateColumns(it => new { it.Count })
                     .Where(it => it.Type == type)
                     .ExecuteCommandAsync();
             }

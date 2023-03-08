@@ -187,7 +187,9 @@
   "FilePath": {
     "UserAgreement": "wwwroot/docs/user-agreement/zh-CN.md",
     "PrivacyPolicy": "wwwroot/docs/privacy-policy/zh-CN.md",
-    "FunctionalDescription": "wwwroot/docs/functional-description/zh-CN.md"
+    "Functional Description": "wwwroot/docs/functional-description/zh-CN.md",
+    "Diary Meaning": "wwwroot/docs/diary-meaning/zh-CN.md",
+    "Markdown Syntax": "wwwroot/docs/markdown-syntax/zh-CN.md"
   },
   "Amount": {
     "Custom": "自定义",

@@ -131,18 +131,27 @@ namespace SwashbucklerDiary.Pages
             bool flag = SystemService.IsFirstLaunch();
             if (flag)
             {
-                var uri = I18n.T("FilePath.FunctionalDescription")!;
-                string content = await SystemService.ReadMarkdown(uri);
-                var diary = new DiaryModel()
-                {
-                    Title = I18n.T("FunctionalDescription"),
-                    Content = content,
-                    CreateTime = DateTime.Now,
-                    UpdateTime = DateTime.Now,
-                };
-                await DiaryService.AddAsync(diary);
+                string[] defaultdiaries = { "FilePath.Functional Description", 
+                    "FilePath.Diary Meaning", "FilePath.Markdown Syntax" };
+                var diaries = await GetDefaultDiaries(defaultdiaries);
+                await DiaryService.AddAsync(diaries);
                 await UpdateDiaries();
             }
+        }
+
+        async Task<List<DiaryModel>> GetDefaultDiaries(string[] keys)
+        {
+            List<DiaryModel> diaries = new List<DiaryModel>();
+            foreach (string key in keys)
+            {
+                var content = await SystemService.ReadMarkdown(I18n.T(key)!);
+                var diary = new DiaryModel()
+                {
+                    Content = content,
+                };
+                diaries.Add(diary);
+            }
+            return diaries;
         }
     }
 }

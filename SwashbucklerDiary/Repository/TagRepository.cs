@@ -28,25 +28,21 @@ namespace SwashbucklerDiary.Repository
 
         public override Task<bool> InsertAsync(TagModel model)
         {
-            model.UpdateTime = DateTime.Now;
             return base.InsertAsync(model);
         }
 
         public override Task<int> InsertReturnIdentityAsync(TagModel model)
         {
-            model.UpdateTime = DateTime.Now;
             return base.InsertReturnIdentityAsync(model);
         }
 
         public override Task<TagModel> InsertReturnEntityAsync(TagModel model)
         {
-            model.UpdateTime = DateTime.Now;
             return base.InsertReturnEntityAsync(model);
         }
 
         public override Task<bool> UpdateAsync(TagModel model)
         {
-            model.UpdateTime = DateTime.Now;
             return base.UpdateAsync(model);
         }
 

@@ -12,6 +12,7 @@ namespace SwashbucklerDiary.Pages
             new OSP("ASP.NET Core","MIT license","https://github.com/dotnet/aspnetcore"),
             new OSP("CommunityToolkit.Maui","MIT license","https://github.com/CommunityToolkit/Maui"),
             new OSP("html2canvas","MIT license","https://github.com/niklasvh/html2canvas"),
+            new OSP("Markdown Guide","MIT license","https://github.com/mattcone/markdown-guide"),
             new OSP("MASA.Blazor","MIT license","https://github.com/BlazorComponent/MASA.Blazor"),
             new OSP("Serilog","Apache-2.0 license","https://github.com/serilog/serilog"),
             new OSP("SQLite-net","MIT license","https://github.com/praeclarum/sqlite-net"),

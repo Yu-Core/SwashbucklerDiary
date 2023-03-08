@@ -1,3 +1,7 @@
-﻿The SwashbucklerDiary is an open source, cross-platform, local diary APP. I wish you a fulfilling life every day and a record of your own different life.
+﻿Function description
 
-ToDo
+SwashbucklerDiary is an open source, cross-platform local diary app.
+
+The function is very simple. I believe that you can use it very quickly if you are smart.
+
+Emphasize!!! This is a special diary application, not a notepad, not a memo. Generally speaking, a diary should record important events of the day.

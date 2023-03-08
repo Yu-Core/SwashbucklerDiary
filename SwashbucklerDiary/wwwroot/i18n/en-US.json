@@ -186,7 +186,9 @@
   "FilePath": {
     "UserAgreement": "wwwroot/docs/user-agreement/en-US.md",
     "PrivacyPolicy": "wwwroot/docs/privacy-policy/en-US.md",
-    "FunctionalDescription": "wwwroot/docs/functional-description/en-US.md"
+    "Functional Description": "wwwroot/docs/functional-description/en-US.md",
+    "Diary Meaning": "wwwroot/docs/diary-meaning/en-US.md",
+    "Markdown Syntax": "wwwroot/docs/markdown-syntax/en-US.md"
   },
   "Amount": {
     "Custom": "Custom",

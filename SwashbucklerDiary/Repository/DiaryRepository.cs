@@ -45,7 +45,6 @@ namespace SwashbucklerDiary.Repository
 
         public override Task<bool> InsertAsync(DiaryModel model)
         {
-            model.UpdateTime = DateTime.Now;
             return base.Context.InsertNav(model)
             .Include(it => it.Tags)
             .ExecuteCommandAsync();
@@ -53,19 +52,16 @@ namespace SwashbucklerDiary.Repository
 
         public override Task<int> InsertReturnIdentityAsync(DiaryModel model)
         {
-            model.UpdateTime = DateTime.Now;
             return base.InsertReturnIdentityAsync(model);
         }
 
         public override Task<DiaryModel> InsertReturnEntityAsync(DiaryModel model)
         {
-            model.UpdateTime = DateTime.Now;
             return base.InsertReturnEntityAsync(model);
         }
 
         public override Task<bool> UpdateAsync(DiaryModel model)
         {
-            model.UpdateTime = DateTime.Now;
             return base.UpdateAsync(model);
         }
 
@@ -122,7 +118,6 @@ namespace SwashbucklerDiary.Repository
 
         public Task<bool> UpdateIncludesAsync(DiaryModel model)
         {
-            model.UpdateTime = DateTime.Now;
             return base.Context.UpdateNav(model)
             .Include(it => it.Tags, new UpdateNavOptions
             {
@@ -133,7 +128,6 @@ namespace SwashbucklerDiary.Repository
 
         public Task<bool> UpdateTagsAsync(DiaryModel model)
         {
-            model.UpdateTime = DateTime.Now;
             return base.Context.UpdateNav(model)
             .Include(it => it.Tags)
             .ExecuteCommandAsync();
