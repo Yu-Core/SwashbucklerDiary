@@ -13,7 +13,11 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public string? Id { get; set; }
         [Parameter]
+        public string? Class { get; set; }
+        [Parameter]
         public bool Bottom { get; set; }
+        [Parameter]
+        public double OccupyHeight { get; set; }
         [Parameter]
         public EventCallback OnContextmenu { get; set; }
 
@@ -29,7 +33,17 @@ namespace SwashbucklerDiary.Components
             return base.OnInitializedAsync();
         }
 
-        private double Height => MasaBlazor.Breakpoint.Height - MasaBlazor.Application.Top - (Bottom ? MasaBlazor.Application.Bottom : 0);
+        private double Height
+        {
+            get
+            {
+                var height = MasaBlazor.Breakpoint.Height;
+                var top = MasaBlazor.Application.Top;
+                var bottom = Bottom ? MasaBlazor.Application.Bottom : 0;
+                return height - top - bottom - OccupyHeight;
+            }
+        }
+            
 
         private async Task InvokeStateHasChangedAsync()
         {

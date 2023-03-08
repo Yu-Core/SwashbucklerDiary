@@ -19,6 +19,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowMood;
         private bool ShowLocation;
         private bool Markdown;
+        private double MdToolBarHeight = 75;
         private DiaryModel Diary = new()
         {
             Tags = new(),
@@ -67,6 +68,7 @@ namespace SwashbucklerDiary.Pages
             get => Diary.Location;
             set => Diary.Location = value;
         }
+        private double OccupyHeight => Markdown && Mobile ? MdToolBarHeight : 0;
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
         private Dictionary<string, string> WeatherIcons => IconService!.WeatherIcon;

@@ -54,7 +54,7 @@
     </MyMenu>
 </MAppBar>
 
-<ScrollContainer>
+<ScrollContainer OccupyHeight="OccupyHeight">
     <div class="px-3 text-h6 font-weight-bold">
         <span>@(Diary.CreateTime.ToString("yyyy/MM/dd"))</span>
         <span class="pl-5 text-subtitle-1">
@@ -107,26 +107,25 @@
     @if (Markdown)
     {
         <MyMarkdown @bind-Value="Diary.Content" Class="my-sm-4 px-3">
-    </MyMarkdown>
+        </MyMarkdown>
     }
     else
     {
-    <MTextarea @bind-Value="Diary.Content"
+        <MTextarea @bind-Value="Diary.Content"
                Class="@($"my-sm-4 user-select {(Markdown?"d-none":"")}")"
                Solo="Mobile"
                Flat="Mobile"
                Outlined="Desktop"
                HideDetails="@("auto")"
-               AutoGrow="true"
-               Rows="8"
-               RowHeight="30"
+               AutoGrow
+               Height="240"
                Counter="true"
-               spellcheck="false"
+                   spellcheck="false"
                Placeholder="@(I18n.T("Write.ContentPlace"))">
-        <CounterContent>
-            <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
-        </CounterContent>
-    </MTextarea>
+            <CounterContent>
+                <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
+            </CounterContent>
+        </MTextarea>
     }
 
     <div class="mb-5">
