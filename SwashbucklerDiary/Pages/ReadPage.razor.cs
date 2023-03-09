@@ -1,4 +1,6 @@
 ﻿using BlazorComponent;
+using BlazorComponent.I18n;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
@@ -19,7 +21,7 @@ namespace SwashbucklerDiary.Pages
         private Action? OnDelete;
         private bool Markdown;
         private bool Private;
-
+        
         [Inject]
         public IDiaryService DiaryService { get; set; } = default!;
         [Inject]
@@ -32,6 +34,7 @@ namespace SwashbucklerDiary.Pages
         {
             await LoadSettings();
             await UpdateDiary();
+            await base.OnInitializedAsync();
         }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -61,6 +64,11 @@ namespace SwashbucklerDiary.Pages
         private bool ShowWeather => !string.IsNullOrEmpty(Diary.Weather);
         private bool ShowMood => !string.IsNullOrEmpty(Diary.Mood);
         private bool ShowLocation => !string.IsNullOrEmpty(Diary.Location);
+        private string TopText => IsTop ? "Diary.CancelTop" : "Diary.Top";
+        private string MarkdownText => Markdown ? "Diary.Text" : "Diary.Markdown";
+        private string MarkdownIcon => Markdown ? "mdi-format-text" : "mdi-language-markdown-outline";
+        private string PrivateText => IsPrivate ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
+        private string PrivateIcon => IsPrivate ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
         private string DiaryCopyContent
         {
             get
@@ -70,6 +78,25 @@ namespace SwashbucklerDiary.Pages
                     return Diary.Content!;
                 }
                 return Diary.Title + "\n" + Diary.Content;
+            }
+        }
+        private List<ViewListItem> ViewListItems
+        {
+            get
+            {
+                var viewListItems = new List<ViewListItem>()
+                {
+                    new("Share.Copy","mdi-content-copy",async()=>await OnCopy()),
+                    new(TopText,"mdi-format-vertical-align-top",async ()=>await OnTopping()),
+                    new("Diary.Export","mdi-export",()=>ToDo()),
+                    new(MarkdownText,MarkdownIcon,async ()=>await MarkdownChanged()),
+                };
+                if (Private)
+                {
+                    viewListItems.Add(new(PrivateText, PrivateIcon, async () => await DiaryPrivacyChanged()));
+                }
+
+                return viewListItems;
             }
         }
 
@@ -86,7 +113,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LoadSettings()
         {
-            Markdown = await SettingsService.Get(nameof(Markdown), false);
+            Markdown = await SettingsService.GetMarkdown();
             Private = await SettingsService.GetPrivacy();
         }
 
@@ -124,10 +151,11 @@ namespace SwashbucklerDiary.Pages
             NavigateService.NavigateTo($"/write?DiaryId={Id}");
         }
 
-        private async Task OnTopping(DiaryModel diaryModel)
+        private async Task OnTopping()
         {
-            diaryModel.Top = !diaryModel.Top;
-            await DiaryService.UpdateAsync(diaryModel);
+            Diary.Top = !Diary.Top;
+            await DiaryService.UpdateAsync(Diary);
+            StateHasChanged();
         }
 
         private async Task OnCopy()
@@ -184,6 +212,7 @@ namespace SwashbucklerDiary.Pages
         {
             Markdown = !Markdown;
             await SettingsService!.Save(nameof(Markdown), Markdown);
+            StateHasChanged();
         }
 
         private async Task DiaryPrivacyChanged()

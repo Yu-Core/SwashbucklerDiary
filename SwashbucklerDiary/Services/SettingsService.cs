@@ -31,5 +31,10 @@ namespace SwashbucklerDiary.Services
         {
             return Get("Privacy", true);
         }
+
+        public Task<bool> GetMarkdown()
+        {
+            return Get("Markdown", true);
+        }
     }
 }

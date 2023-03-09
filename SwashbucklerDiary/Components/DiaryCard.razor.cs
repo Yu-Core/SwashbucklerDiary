@@ -27,13 +27,13 @@ namespace SwashbucklerDiary.Components
         {
             get
             {
-                if(!string.IsNullOrWhiteSpace(Value!.Title))
+                if (!string.IsNullOrWhiteSpace(Value!.Title))
                 {
                     return Value!.Title;
                 }
                 foreach (var item in Text!.Split("\n"))
                 {
-                    if(!string.IsNullOrWhiteSpace(item))
+                    if (!string.IsNullOrWhiteSpace(item))
                     {
                         return item;
                     }
@@ -43,5 +43,15 @@ namespace SwashbucklerDiary.Components
         }
         private string? Text => Value!.Content;
         private bool IsTop => Value!.Top;
+        private string TopText => IsTop ? "Diary.CancelTop" : "Diary.Top";
+
+        private List<ViewListItem> ViewListItems => new()
+        {
+            new("Diary.Tag","mdi-label-outline",()=>OnTag.InvokeAsync()),
+            new("Share.Copy","mdi-content-copy",()=>OnCopy.InvokeAsync()),
+            new("Share.Delete","mdi-delete-outline",()=>OnDelete.InvokeAsync()),
+            new(TopText,"mdi-format-vertical-align-top",()=>OnTopping.InvokeAsync()),
+            new("Diary.Export","mdi-export",()=>ToDo())
+        };
     }
 }

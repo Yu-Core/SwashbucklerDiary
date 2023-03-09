@@ -4,7 +4,7 @@ using SwashbucklerDiary.IServices;
 
 namespace SwashbucklerDiary.Components
 {
-    public class MyMenu : MMenu
+    public class MyBottomSheet : MBottomSheet
     {
         [Inject]
         protected INavigateService NavigateService { get; set; } = default!;
@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Components
             set
             {
                 base.Value = value;
-                //SetValue(value);
+                SetValue(value);
             }
         }
         [Parameter]
@@ -26,14 +26,14 @@ namespace SwashbucklerDiary.Components
             set => base.ValueChanged = value;
         }
 
-        //public new async ValueTask DisposeAsync()
-        //{
-        //    if (Value)
-        //    {
-        //        NavigateService.Action -= Close;
-        //    }
-        //    await base.DisposeAsync();
-        //}
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (Value)
+            {
+                NavigateService.Action -= Close;
+            }
+        }
 
         private void SetValue(bool value)
         {

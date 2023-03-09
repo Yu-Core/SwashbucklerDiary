@@ -12,6 +12,8 @@ namespace SwashbucklerDiary.Components
         public RenderFragment? MobileContent { get; set; }
         [Parameter]
         public RenderFragment? DesktopContent { get; set; }
+        [Parameter]
+        public bool Tablet { get; set; }
 
         public void Dispose()
         {

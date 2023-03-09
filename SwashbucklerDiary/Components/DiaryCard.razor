@@ -20,51 +20,10 @@
                 </MIcon>
             }
             <div @onclick:stopPropagation="true">
-                <MyMenu @bind-MyValue="ShowMenu"
-                       Bottom
-                       Left
-                       Rounded="@("lg")"
-                       Transition="scroll-x-reverse-transition">
-                    <ActivatorContent>
-                        <MButton Icon
-                                 @attributes="@context.Attrs">
-                            <MIcon>mdi-dots-horizontal</MIcon>
-                        </MButton>
-                    </ActivatorContent>
-
-                    <ChildContent>
-                        <MList MinWidth="150">
-                            <MListItem Dense
-                                       OnClick="OnTag">
-                                <MListItemContent>
-                                    @(I18n.T("Diary.Tag"))
-                                </MListItemContent>
-                            </MListItem>
-                            <MListItem Dense
-                                       OnClick="OnCopy">
-                                <MListItemContent>
-                                    @(I18n.T("Share.Copy"))
-                                </MListItemContent>
-                            </MListItem>
-                            <MListItem Dense
-                                       OnClick="OnDelete">
-                                <MListItemContent>
-                                    @(I18n.T("Share.Delete"))
-                                </MListItemContent>
-                            </MListItem>
-                            <MListItem Dense
-                                       OnClick="OnTopping">
-                                <MListItemContent>
-                                    @(IsTop ? I18n.T("Diary.CancelTop") : I18n.T("Diary.Top"))
-                                </MListItemContent>
-                            </MListItem>
-                            <MListItem Dense>
-                                <MListItemContent>
-                                    @(I18n.T("Diary.Export") + "（txt、json、pdf）")
-                                </MListItemContent>
-                            </MListItem>
-                        </MList>
-                    </ChildContent>
+                <MyMenu @bind-Value="ShowMenu" ViewListItems="ViewListItems">
+                    <ButtonContent>
+                        <MIcon>mdi-dots-horizontal</MIcon>
+                    </ButtonContent>
                 </MyMenu>
             </div>
         </MListItemAction>

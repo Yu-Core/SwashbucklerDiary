@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowMood;
         private bool ShowLocation;
         private bool Markdown;
-        private double MdToolBarHeight = 75;
+        private readonly double MdToolBarHeight = 75;
         private DiaryModel Diary = new()
         {
             Tags = new(),
@@ -73,6 +73,9 @@ namespace SwashbucklerDiary.Pages
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
         private Dictionary<string, string> WeatherIcons => IconService!.WeatherIcon;
         private Dictionary<string, string> MoodIcons => IconService!.MoodIcon;
+        private string ShowTitleText => ShowTitle ? "Write.CloseTitle" : "Write.OpenTitle";
+        private string MarkdownText => Markdown ? "Diary.Text" : "Diary.Markdown";
+        private string MarkdownIcon => Markdown ? "mdi-format-text" : "mdi-language-markdown-outline";
         private StringNumber WeatherIndex
         {
             get
@@ -122,6 +125,11 @@ namespace SwashbucklerDiary.Pages
         private string Mood =>
             string.IsNullOrEmpty(Diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + Diary.Mood)!;
 
+        private List<ViewListItem> ViewListItems => new()
+        {
+            new(ShowTitleText,"mdi-format-title",async()=>await ShowTitleChanged()),
+            new(MarkdownText,MarkdownIcon,async ()=>await MarkdownChanged())
+        };
         private async Task SetTag()
         {
             if (TagId != null)
@@ -154,7 +162,7 @@ namespace SwashbucklerDiary.Pages
         private async Task LoadSettings()
         {
             ShowTitle = await SettingsService.Get("Title", false);
-            Markdown = await SettingsService.Get(nameof(Markdown), false);
+            Markdown = await SettingsService.GetMarkdown();
         }
 
         private void RemoveSelectedTag(TagModel tag)
@@ -277,6 +285,7 @@ namespace SwashbucklerDiary.Pages
         {
             Markdown = !Markdown;
             await SettingsService!.Save(nameof(Markdown), Markdown);
+            StateHasChanged();
         }
 
         protected async Task HandleAchievements()
@@ -296,6 +305,7 @@ namespace SwashbucklerDiary.Pages
         {
             ShowTitle = !ShowTitle;
             await SettingsService.Save("Title", ShowTitle);
+            StateHasChanged();
         }
     }
 }

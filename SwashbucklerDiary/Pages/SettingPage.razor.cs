@@ -22,7 +22,7 @@ namespace SwashbucklerDiary.Pages
         private async Task LoadSettings()
         {
             Title = await SettingsService.Get("Title", false);
-            Markdown = await SettingsService.Get("Markdown", false);
+            Markdown = await SettingsService.GetMarkdown();
             Privacy = await SettingsService.GetPrivacy();
         }
 

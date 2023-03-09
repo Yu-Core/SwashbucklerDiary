@@ -7,5 +7,6 @@
         Task<bool> ContainsKey(string key);
         Task<string> GetLanguage();
         Task<bool> GetPrivacy();
+        Task<bool> GetMarkdown();
     }
 }

@@ -31,57 +31,17 @@
         </MIcon>
     </MButton>
 
-    <MyMenu @bind-MyValue="ShowMenu"
-            Rounded="@("lg")"
-            Transition="scroll-x-reverse-transition">
-        <ActivatorContent>
-            <MButton Icon
-                     @attributes="@context.Attrs">
-                <MultiDisplay>
-                    <DesktopContent>
-                        <MIcon>mdi-dots-horizontal</MIcon>
-                    </DesktopContent>
-                    <MobileContent>
-                        <MIcon>mdi-dots-vertical</MIcon>
-                    </MobileContent>
-                </MultiDisplay>
-            </MButton>
-        </ActivatorContent>
-
-        <ChildContent>
-            <MList MinWidth="150">
-                <MListItem Dense
-                           OnClick="OnCopy">
-                    <MListItemContent>
-                        @(I18n.T("Share.Copy"))
-                    </MListItemContent>
-                </MListItem>
-                <MListItem Dense
-                           OnClick="()=>OnTopping(Diary)">
-                    <MListItemContent>
-                        @(IsTop ? I18n.T("Diary.CancelTop") : I18n.T("Diary.Top"))
-                    </MListItemContent>
-                </MListItem>
-                <MListItem Dense>
-                    <MListItemContent>
-                        @(I18n.T("Diary.Export"))
-                    </MListItemContent>
-                </MListItem>
-                <MListItem Dense OnClick="MarkdownChanged">
-                    <MListItemContent>
-                        @(Markdown ? I18n.T("Diary.Text") : I18n.T("Diary.Markdown"))
-                    </MListItemContent>
-                </MListItem>
-                @if (Private)
-                {
-                    <MListItem Dense OnClick="DiaryPrivacyChanged">
-                        <MListItemContent>
-                        @(IsPrivate ? I18n.T("Read.ClosePrivacy") : I18n.T("Read.OpenPrivacy"))
-                        </MListItemContent>
-                    </MListItem>
-                }
-            </MList>
-        </ChildContent>
+    <MyMenu @bind-Value="ShowMenu" ViewListItems="ViewListItems">
+        <ButtonContent>
+            <MultiDisplay>
+                <DesktopContent>
+                    <MIcon>mdi-dots-horizontal</MIcon>
+                </DesktopContent>
+                <MobileContent>
+                    <MIcon>mdi-dots-vertical</MIcon>
+                </MobileContent>
+            </MultiDisplay>
+        </ButtonContent>
     </MyMenu>
 </MAppBar>
 

@@ -17,33 +17,10 @@
 
         <MListItemAction>
             <div @onclick:stopPropagation="true">
-                <MyMenu @bind-MyValue="ShowMenu"
-                       Rounded="@("lg")"
-                       Bottom
-                       Left
-                       Transition="scroll-x-reverse-transition">
-                    <ActivatorContent>
-                        <MButton Icon
-                                 @attributes="@context.Attrs">
-                            <MIcon>mdi-pencil</MIcon>
-                        </MButton>
-                    </ActivatorContent>
-                    <ChildContent>
-                        <MList MinWidth="150">
-                            <MListItem Dense
-                                       OnClick="OnRename">
-                                <MListItemContent>
-                                    @(I18n.T("Share.Rename"))
-                                </MListItemContent>
-                            </MListItem>
-                            <MListItem Dense
-                                       OnClick="OnDelete">
-                                <MListItemContent>
-                                    @(I18n.T("Share.Delete"))
-                                </MListItemContent>
-                            </MListItem>
-                        </MList>
-                    </ChildContent>
+                <MyMenu @bind-Value="ShowMenu" ViewListItems="ViewListItems">
+                    <ButtonContent>
+                        <MIcon>mdi-pencil</MIcon>
+                    </ButtonContent>
                 </MyMenu>
             </div>
         </MListItemAction>

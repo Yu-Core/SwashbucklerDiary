@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class SwiperTabItem
+    public partial class SwiperTabItem : IDisposable
     {
         [Inject]
         public MasaBlazor MasaBlazor { get; set; } = default!;

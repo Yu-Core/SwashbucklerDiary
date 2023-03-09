@@ -1,0 +1,71 @@
+﻿@inherits DialogComponentBase
+
+<MultiDisplay Tablet>
+    <MobileContent>
+        <MyBottomSheet MyValue="Value" 
+                       MyValueChanged="ValueChanged">
+            <ActivatorContent>
+                <MButton Icon
+                         @attributes="@context.Attrs">
+                    @ButtonContent
+                </MButton>
+            </ActivatorContent>
+            <ChildContent>
+                <MList Class="rounded-t-lg py-4">
+                    @foreach (var item in ViewListItems)
+                    {
+                        <MListItem OnClick="()=>OnClick(item.Action)">
+                            <MListItemIcon >
+                                <MIcon>
+                                    @(item.Icon)
+                                </MIcon>
+                            </MListItemIcon>
+                            <MListItemContent>
+                                @(I18n.T(item.Text))
+                            </MListItemContent>
+                        </MListItem>
+                        if (ViewListItems.Last() != item)
+                        {
+                            <MDivider></MDivider>
+                        }
+                    }
+                    <MListItem>
+                        <MButton Rounded Block Depressed Large
+                                 Class="text-subtitle-1"
+                                 OnClick="HandleOnCancel">
+                            @(I18n.T("Share.Cancel"))
+                        </MButton>
+                    </MListItem>
+                </MList>
+                
+            </ChildContent>
+        </MyBottomSheet>
+    </MobileContent>
+    <DesktopContent>
+        <MMenu Value="Value"
+               ValueChanged="ValueChanged"
+               Rounded="@("lg")"
+               Bottom
+               Left
+               Transition="scroll-x-reverse-transition">
+            <ActivatorContent>
+                <MButton Icon
+                         @attributes="@context.Attrs">
+                    @ButtonContent
+                </MButton>
+            </ActivatorContent>
+            <ChildContent>
+                <MList MinWidth="150">
+                    @foreach (var item in ViewListItems)
+                    {
+                        <MListItem Dense OnClick="()=>OnClick(item.Action)">
+                            <MListItemContent>
+                                @(I18n.T(item.Text))
+                            </MListItemContent>
+                        </MListItem>
+                    }
+                </MList>
+            </ChildContent>
+        </MMenu>
+    </DesktopContent>
+</MultiDisplay>
