@@ -6,6 +6,7 @@ namespace SwashbucklerDiary.Components
     public partial class DiaryCard : MyComponentBase
     {
         private bool ShowMenu;
+        private List<ViewListItem> ViewListItems = new();
 
         [Parameter]
         public DiaryModel? Value { get; set; }
@@ -21,6 +22,12 @@ namespace SwashbucklerDiary.Components
         public EventCallback OnTag { get; set; }
         [Parameter]
         public EventCallback OnClick { get; set; }
+
+        protected override void OnInitialized()
+        {
+            LoadView();
+            base.OnInitialized();
+        }
 
         private DateTime Time => Value!.CreateTime;
         private string? Title
@@ -43,15 +50,18 @@ namespace SwashbucklerDiary.Components
         }
         private string? Text => Value!.Content;
         private bool IsTop => Value!.Top;
-        private string TopText => IsTop ? "Diary.CancelTop" : "Diary.Top";
+        private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
 
-        private List<ViewListItem> ViewListItems => new()
+        private void LoadView()
         {
-            new("Diary.Tag","mdi-label-outline",()=>OnTag.InvokeAsync()),
-            new("Share.Copy","mdi-content-copy",()=>OnCopy.InvokeAsync()),
-            new("Share.Delete","mdi-delete-outline",()=>OnDelete.InvokeAsync()),
-            new(TopText,"mdi-format-vertical-align-top",()=>OnTopping.InvokeAsync()),
-            new("Diary.Export","mdi-export",()=>ToDo())
-        };
+            ViewListItems = new()
+            {
+                new("Diary.Tag","mdi-label-outline",()=>OnTag.InvokeAsync()),
+                new("Share.Copy","mdi-content-copy",()=>OnCopy.InvokeAsync()),
+                new("Share.Delete","mdi-delete-outline",()=>OnDelete.InvokeAsync()),
+                new(TopText(),"mdi-format-vertical-align-top",()=>OnTopping.InvokeAsync()),
+                new("Diary.Export","mdi-export",()=>ToDo())
+            };
+        }
     }
 }

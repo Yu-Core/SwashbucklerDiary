@@ -20,6 +20,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowLocation;
         private bool Markdown;
         private readonly double MdToolBarHeight = 75;
+        private List<ViewListItem> ViewListItems = new();
         private DiaryModel Diary = new()
         {
             Tags = new(),
@@ -53,6 +54,7 @@ namespace SwashbucklerDiary.Pages
         {
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             NavigateService.Action += OnBack;
+            LoadView();
             await LoadSettings();
             await SetTag();
             await SetDiary();
@@ -73,9 +75,6 @@ namespace SwashbucklerDiary.Pages
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
         private Dictionary<string, string> WeatherIcons => IconService!.WeatherIcon;
         private Dictionary<string, string> MoodIcons => IconService!.MoodIcon;
-        private string ShowTitleText => ShowTitle ? "Write.CloseTitle" : "Write.OpenTitle";
-        private string MarkdownText => Markdown ? "Diary.Text" : "Diary.Markdown";
-        private string MarkdownIcon => Markdown ? "mdi-format-text" : "mdi-language-markdown-outline";
         private StringNumber WeatherIndex
         {
             get
@@ -124,12 +123,13 @@ namespace SwashbucklerDiary.Pages
             string.IsNullOrEmpty(Diary.Weather) ? I18n.T("Write.Weather")! : I18n.T("Weather." + Diary.Weather)!;
         private string Mood =>
             string.IsNullOrEmpty(Diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + Diary.Mood)!;
+        
+        private string ShowTitleText() => ShowTitle ? "Write.CloseTitle" : "Write.OpenTitle";
 
-        private List<ViewListItem> ViewListItems => new()
-        {
-            new(ShowTitleText,"mdi-format-title",async()=>await ShowTitleChanged()),
-            new(MarkdownText,MarkdownIcon,async ()=>await MarkdownChanged())
-        };
+        private string MarkdownText() => Markdown ? "Diary.Text" : "Diary.Markdown";
+
+        private string MarkdownIcon() => Markdown ? "mdi-format-text" : "mdi-language-markdown-outline";
+        
         private async Task SetTag()
         {
             if (TagId != null)
@@ -164,6 +164,15 @@ namespace SwashbucklerDiary.Pages
             ShowTitle = await SettingsService.Get("Title", false);
             Markdown = await SettingsService.GetMarkdown();
         }
+
+        private void LoadView()
+        {
+             ViewListItems = new()
+            {
+                new(ShowTitleText(),"mdi-format-title",async()=>await ShowTitleChanged()),
+                new(MarkdownText(),MarkdownIcon(),async ()=>await MarkdownChanged())
+            };
+        } 
 
         private void RemoveSelectedTag(TagModel tag)
         {

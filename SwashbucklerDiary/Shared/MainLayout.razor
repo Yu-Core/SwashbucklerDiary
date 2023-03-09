@@ -5,22 +5,27 @@
         @if (MasaBlazor.Breakpoint.SmAndUp)
         {
             <MNavigationDrawer App
-                           Floating
+                                      Floating
                            Style="max-height:unset;"
-                           Permanent>
-                <MList Rounded>
-                    <MListItemGroup @bind-Value="SelectedItem">
-                        @foreach (var navigationButton in NavigationButtons)
-                        {
-                            <MListItem OnClick="()=>ChangeView(navigationButton)">
-                                <MListItemIcon>
-                                    <MIcon>@GetIcon(navigationButton)</MIcon>
-                                </MListItemIcon>
-                                <MListItemTitle>
-                                    @(I18n.T(navigationButton.Title))
-                                </MListItemTitle>
-                            </MListItem>
-                        }
+                                      Permanent>
+            <MList Rounded Flat>
+                <MListItemGroup @bind-Value="SelectedItemIndex"
+                                        Mandatory>
+                    @foreach (var (item, i) in NavigationButtons.Select((v, i) => (v, i)))
+                    {
+                        var activated = SelectedItemIndex == i;
+
+                            <MListItem Ripple="false" OnClick="item.Action">
+                            <MListItemIcon>
+                                    <MIcon>
+                                        @(activated ? item.SelectedIcon : item.Icon)
+                                    </MIcon>
+                            </MListItemIcon>
+                                <MListItemTitle Class="@(activated?"text-h5 font-weight-bold":"")" Style="transition: font-size 0.15s;">
+                                @(I18n.T(item.Text))
+                            </MListItemTitle>
+                        </MListItem>
+                    }
                     </MListItemGroup>
                 </MList>
             </MNavigationDrawer>
@@ -31,7 +36,7 @@
             </ChildContent>
             <ErrorContent>
                 <MDialog Value="true"
-                         Persistent
+                          Persistent
                          MaxWidth="420">
                     <MCard>
                         <MCardTitle Class="font-weight-bold">
@@ -48,16 +53,19 @@
             </ErrorContent>
         </ErrorBoundary>
     </MMain>
-    <MBottomNavigation @bind-Value="SelectedItem"
+    <MBottomNavigation @bind-Value="SelectedItemIndex"
                        InputValue="ShowBottomNavigation"
                        Class="d-flex justify-space-around d-sm-none"
+                       Mandatory
                        App
                        Shift>
-        @foreach (var navigationButton in NavigationButtons)
+        @foreach (var (item, i) in NavigationButtons.Select((v, i) => (v, i)))
         {
-            <MButton Ripple="false" OnClick="()=>ChangeView(navigationButton)">
-                <span>@(I18n.T(navigationButton.Title))</span>
-                <MIcon>@GetIcon(navigationButton)</MIcon>
+            <MButton Ripple="false" OnClick="item.Action">
+                <span>@(I18n.T(item.Text))</span>
+                <MIcon>
+                    @(SelectedItemIndex == i ? item.SelectedIcon : item.Icon)
+                </MIcon>
             </MButton>
         }
     </MBottomNavigation>

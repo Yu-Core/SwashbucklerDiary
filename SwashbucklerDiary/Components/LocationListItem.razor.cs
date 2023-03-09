@@ -6,6 +6,7 @@ namespace SwashbucklerDiary.Components
     public partial class LocationListItem : MyComponentBase
     {
         private bool ShowMenu;
+        private List<ViewListItem> ViewListItems = new();
 
         [Parameter]
         public LocationModel? Value { get; set; }
@@ -14,10 +15,19 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public EventCallback OnRename { get; set; }
 
-        private List<ViewListItem> ViewListItems => new()
+        protected override void OnInitialized()
         {
-            new("Share.Rename","mdi-rename-outline",()=>OnRename.InvokeAsync()),
-            new("Share.Delete","mdi-delete-outline",()=>OnDelete.InvokeAsync()),
-        };
+            LoadView();
+            base.OnInitialized();
+        }
+
+        void LoadView()
+        {
+            ViewListItems = new()
+            {
+                new("Share.Rename","mdi-rename-outline",()=>OnRename.InvokeAsync()),
+                new("Share.Delete","mdi-delete-outline",()=>OnDelete.InvokeAsync()),
+            };
+        }
     }
 }

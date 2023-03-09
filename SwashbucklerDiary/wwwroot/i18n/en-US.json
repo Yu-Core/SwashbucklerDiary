@@ -195,8 +195,7 @@
     "CustomPlace": "Please enter the amount you want to donate",
     "CurrencySymbol": "$",
     "Thank": "Thank",
-    "ThankContent": "Thank you, my friend, for your kindness. Don't really donate it to me.",
-    "ThankContent2": "I hope you can live a full life every day and record your wonderful life. I can see it when I am old. That is the original intention of making this software."
+    "ThankContent": "Thank you, my friend, for your kindness. Don't really donate it to me.\nI hope you can live a full life every day and record your life. I can see it when I am old. That is the original intention of making this software."
   },
   "FunctionalDescription": "Functional Description",
   "ErrorHandle": {

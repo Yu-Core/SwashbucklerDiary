@@ -10,21 +10,16 @@ namespace SwashbucklerDiary.Shared
 {
     public partial class MainLayout : IDisposable
     {
-        StringNumber SelectedItem = 0;
-        readonly List<NavigationButton> NavigationButtons = new()
-        {
-            new NavigationButton(0,"Main.Diary","mdi-notebook-outline","mdi-notebook",""),
-            new NavigationButton(1,"Main.History","mdi-clock-outline","mdi-clock","History"),
-            new NavigationButton(2,"Main.Mine","mdi-account-outline","mdi-account","Mine")
-        };
+        StringNumber SelectedItemIndex = 0;
+        List<NavigationButton> NavigationButtons = new();
 
-        [Inject] 
+        [Inject]
         MasaBlazor MasaBlazor { get; set; } = default!;
-        [Inject] 
+        [Inject]
         NavigationManager Navigation { get; set; } = default!;
         [Inject]
         INavigateService NavigateService { get; set; } = default!;
-        [Inject] 
+        [Inject]
         I18n I18n { get; set; } = default!;
         [Inject]
         ISettingsService SettingsService { get; set; } = default!;
@@ -41,6 +36,7 @@ namespace SwashbucklerDiary.Shared
 
         protected override async Task OnInitializedAsync()
         {
+            LoadView();
             await LoadSettings();
             NavigateService.Initialize(Navigation);
             AlertService.Initialize(PopupService);
@@ -48,21 +44,14 @@ namespace SwashbucklerDiary.Shared
             await base.OnInitializedAsync();
         }
 
-        private class NavigationButton
+        private class NavigationButton : ViewListItem
         {
-            public NavigationButton(int id, string title, string icon, string selectIcon, string href)
+            public string? SelectedIcon { get; set; }
+
+            public NavigationButton(string text, string icon, string selectedIcon, Action action) : base(text, icon, action)
             {
-                Id = id;
-                Title = title;
-                Icon = icon;
-                SelectIcon = selectIcon;
-                Href = href;
+                SelectedIcon = selectedIcon;
             }
-            public int Id;
-            public string Title { get; set; }
-            public string Icon { get; set; }
-            public string SelectIcon { get; set; }
-            public string Href { get; set; }
         }
 
         private async Task LoadSettings()
@@ -73,7 +62,16 @@ namespace SwashbucklerDiary.Shared
                 var language = await SettingsService!.GetLanguage();
                 I18n.SetCulture(new CultureInfo(language));
             }
+        }
 
+        private void LoadView()
+        {
+            NavigationButtons = new()
+            {
+                new ( "Main.Diary", "mdi-notebook-outline", "mdi-notebook", ()=>To("")),
+                new ( "Main.History", "mdi-clock-outline", "mdi-clock", ()=>To("history")),
+                new ( "Main.Mine", "mdi-account-outline", "mdi-account", ()=>To("mine"))
+            };
         }
 
         private bool ShowBottomNavigation
@@ -82,26 +80,22 @@ namespace SwashbucklerDiary.Shared
             {
                 if (MasaBlazor.Breakpoint.SmAndUp)
                 {
-                    return true;
+                    return false;
                 }
+                string[] links = { "", "history", "mine" };
                 var url = Navigation!.ToBaseRelativePath(Navigation.Uri);
-                return NavigationButtons.Any(it => it.Href == url.Split("?")[0]);
+                return links.Any(it => it == url.Split("?")[0]);
             }
-        }
-
-        private string? GetIcon(NavigationButton navigationButton)
-        {
-            return SelectedItem == navigationButton.Id ? navigationButton.SelectIcon : navigationButton.Icon;
-        }
-
-        private void ChangeView(NavigationButton navigationButton)
-        {
-            Navigation.NavigateTo(navigationButton.Href);
         }
 
         private async Task InvokeStateHasChangedAsync()
         {
             await InvokeAsync(StateHasChanged);
+        }
+
+        protected void To(string url)
+        {
+            NavigateService.NavigateTo(url);
         }
     }
 }
