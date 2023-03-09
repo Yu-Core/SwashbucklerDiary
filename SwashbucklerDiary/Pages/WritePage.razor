@@ -31,9 +31,9 @@
             </MultiDisplay>
         </ButtonContent>
     </MyMenu>
-</MAppBar>
+    </MAppBar>
 
-<ScrollContainer OccupyHeight="OccupyHeight">
+    <ScrollContainer OccupyHeight="OccupyHeight">
     <div class="px-3 text-h6 font-weight-bold">
         <span>@(Diary.CreateTime.ToString("yyyy/MM/dd"))</span>
         <span class="pl-5 text-subtitle-1">
@@ -63,7 +63,7 @@
             <MIcon Left>
                 mdi-map-marker-outline
             </MIcon>
-            @(Location ?? I18n.T("Write.Location"))
+            @(string.IsNullOrEmpty(Location) ? I18n.T("Write.Location") : Location)
         </MChip>
     </div>
 
@@ -96,14 +96,14 @@
                Flat="Mobile"
                Outlined="Desktop"
                HideDetails="@("auto")"
-               AutoGrow
+                  AutoGrow
                Height="240"
                Counter="true"
-                   spellcheck="false"
+                       spellcheck="false"
                Placeholder="@(I18n.T("Write.ContentPlace"))">
-            <CounterContent>
-                <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
-            </CounterContent>
+        <CounterContent>
+            <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
+        </CounterContent>
         </MTextarea>
     }
 
@@ -145,7 +145,7 @@
 <MyDialog @bind-MyValue="ShowWeather"
           MaxWidth="420"
           Scrollable>
-    <MCard>
+    <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Write.SelectWeather"))
             <MSpacer></MSpacer>
@@ -173,7 +173,7 @@
 <MyDialog @bind-MyValue="ShowMood"
           MaxWidth="420"
           Scrollable>
-    <MCard>
+    <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Write.SelectMood"))
             <MSpacer></MSpacer>

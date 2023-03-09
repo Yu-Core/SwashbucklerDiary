@@ -4,7 +4,7 @@
 <MyDialog MyValue="Value"
           MyValueChanged="InternalValueChanged"
           MaxWidth="420">
-    <MCard>
+    <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("About.Sponsor"))
             <MSpacer></MSpacer>
@@ -59,7 +59,7 @@
 </MyDialog>
 
 <MyDialog @bind-MyValue="ShowThank" MaxWidth="420">
-    <MCard>
+    <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Amount.Thank"))
             <MSpacer></MSpacer>

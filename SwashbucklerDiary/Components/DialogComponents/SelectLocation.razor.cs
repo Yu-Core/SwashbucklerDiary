@@ -41,11 +41,13 @@ namespace SwashbucklerDiary.Components
 
         async Task SetSelectedLocation(LocationModel location)
         {
-            Location = location.Name;
+            var name = Location == location.Name ? string.Empty : location.Name;
+            Location = name;
             if (LocationChanged.HasDelegate)
             {
-                await LocationChanged.InvokeAsync(location.Name);
+                await LocationChanged.InvokeAsync(name);
             }
+
             await InternalValueChanged(false);
         }
 

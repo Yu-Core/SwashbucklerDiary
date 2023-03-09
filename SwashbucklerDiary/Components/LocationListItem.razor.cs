@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Components
         private List<ViewListItem> ViewListItems => new()
         {
             new("Share.Rename","mdi-rename-outline",()=>OnRename.InvokeAsync()),
-            new("Share.Delete","mmdi-delete-outline",()=>OnDelete.InvokeAsync()),
+            new("Share.Delete","mdi-delete-outline",()=>OnDelete.InvokeAsync()),
         };
     }
 }
