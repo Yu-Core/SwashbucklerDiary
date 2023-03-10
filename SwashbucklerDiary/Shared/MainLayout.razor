@@ -17,11 +17,12 @@
 
                             <MListItem Ripple="false" OnClick="item.Action">
                             <MListItemIcon>
-                                    <MIcon>
+                                    <MIcon Large="activated">
                                         @(activated ? item.SelectedIcon : item.Icon)
                                     </MIcon>
                             </MListItemIcon>
-                                <MListItemTitle Class="@(activated?"text-h5 font-weight-bold":"")" Style="transition: font-size 0.15s;">
+                                <MListItemTitle Class="@(activated?"text-h6 font-weight-bold":"")" 
+                                                Style="transition: font-size 0.3s ease;">
                                 @(I18n.T(item.Text))
                             </MListItemTitle>
                         </MListItem>

@@ -169,8 +169,8 @@ namespace SwashbucklerDiary.Pages
         {
              ViewListItems = new()
             {
-                new(ShowTitleText(),"mdi-format-title",async()=>await ShowTitleChanged()),
-                new(MarkdownText(),MarkdownIcon(),async ()=>await MarkdownChanged())
+                new(ShowTitleText,"mdi-format-title",async()=>await ShowTitleChanged()),
+                new(MarkdownText,MarkdownIcon,async ()=>await MarkdownChanged())
             };
         } 
 

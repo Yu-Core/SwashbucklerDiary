@@ -58,7 +58,7 @@ namespace SwashbucklerDiary.Pages
                     new()
                     {
                         new("Mine.Backups","mdi-folder-sync-outline",()=>To("/backups")),
-                        new("Mine.Import","mdi-import",()=>ToDo()),
+                        new("Mine.Export","mdi-export",()=>ToDo()),
                         new("Mine.Achievement","mdi-chart-line",()=>To("/achievement")),
                     }
                 },

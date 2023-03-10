@@ -59,7 +59,7 @@ namespace SwashbucklerDiary.Components
                 new("Diary.Tag","mdi-label-outline",()=>OnTag.InvokeAsync()),
                 new("Share.Copy","mdi-content-copy",()=>OnCopy.InvokeAsync()),
                 new("Share.Delete","mdi-delete-outline",()=>OnDelete.InvokeAsync()),
-                new(TopText(),"mdi-format-vertical-align-top",()=>OnTopping.InvokeAsync()),
+                new(TopText,"mdi-format-vertical-align-top",()=>OnTopping.InvokeAsync()),
                 new("Diary.Export","mdi-export",()=>ToDo())
             };
         }

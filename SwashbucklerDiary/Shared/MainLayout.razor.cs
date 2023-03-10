@@ -95,7 +95,7 @@ namespace SwashbucklerDiary.Shared
 
         protected void To(string url)
         {
-            NavigateService.NavigateTo(url);
+            Navigation.NavigateTo(url);
         }
     }
 }

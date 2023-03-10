@@ -20,7 +20,6 @@ namespace SwashbucklerDiary.Pages
         private IJSObjectReference? module;
         private Action? OnDelete;
         private bool Markdown;
-        private bool Private;
         private List<ViewListItem> ViewListItems = new();
 
         [Inject]
@@ -98,22 +97,21 @@ namespace SwashbucklerDiary.Pages
         private async Task LoadSettings()
         {
             Markdown = await SettingsService.GetMarkdown();
-            Private = await SettingsService.GetPrivacy();
         }
 
         async Task LoadView()
         {
             ViewListItems = new List<ViewListItem>()
-                {
-                    new("Share.Copy","mdi-content-copy",async()=>await OnCopy()),
-                    new(TopText(),"mdi-format-vertical-align-top",async ()=>await OnTopping()),
-                    new("Diary.Export","mdi-export",()=>ToDo()),
-                    new(MarkdownText(),MarkdownIcon(),async ()=>await MarkdownChanged()),
-                };
-            var privat = await SettingsService.GetPrivacy();
-            if (privat)
             {
-                ViewListItems.Add(new(PrivateText(), PrivateIcon(), async () => await DiaryPrivacyChanged()));
+                new("Share.Copy","mdi-content-copy",async()=>await OnCopy()),
+                new(TopText,"mdi-format-vertical-align-top",async ()=>await OnTopping()),
+                new("Diary.Export","mdi-export",()=>ToDo()),
+                new(MarkdownText,MarkdownIcon,async ()=>await MarkdownChanged()),
+            };
+            var privacy = await SettingsService.GetPrivacy();
+            if (privacy)
+            {
+                ViewListItems.Add(new(PrivateText, PrivateIcon, async () => await DiaryPrivacyChanged()));
             }
         }
 

@@ -46,5 +46,12 @@
             IconFunc = icon;
             Action = action;
         }
+
+        public ViewListItem(Func<string> text, string icon, Action action)
+        {
+            TextFunc = text;
+            _icon = icon;
+            Action = action;
+        }
     }
 }

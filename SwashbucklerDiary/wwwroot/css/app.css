@@ -154,3 +154,30 @@ a, .btn-link {
 .list-item-icon.theme--light.m-icon {
     color: #000000;
 }
+
+/*优化消息提示*/
+.m-alert__title {
+    margin-bottom: 8px;
+    font-size:1rem!important;
+    font-weight: 700 !important;
+}
+
+.m-snack__wrapper {
+    border-radius: 8px !important;
+}
+
+.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:first-of-type, .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type {
+    margin-left: -12px
+}
+
+.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:first-child, .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type {
+    margin-right: -12px
+}
+
+.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:last-of-type, .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:last-of-type {
+    margin-right: -12px
+}
+
+.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:last-of-type, .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:last-of-type {
+    margin-left: -12px
+}
