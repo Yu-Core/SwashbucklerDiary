@@ -2,11 +2,41 @@
 
 English | [简体中文](./README.zh-CN.md)
 
-"SwashbucklerDiary" is an open source cross-platform application focused on diary.
+"SwashbucklerDiary" is an open source, cross-platform local diary application.
 
-<img src="./Images/Windows.jpeg" />
+## Screenshot
 
-<img src="./Images/Android.jpeg" />
+ <table>
+    <tr>
+        <td><img src="./Images/Windows1.png"/></td>
+        <td><img src="./Images/Windows2.png"/></td>
+        <td><img src="./Images/Windows3.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="./Images/Windows4.png"/></td>
+        <td><img src="./Images/Windows5.png"/></td>
+        <td><img src="./Images/Windows6.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="./Images/Windows7.png"/></td>
+        <td><img src="./Images/Windows8.png"/></td>
+    </tr>
+ </table>
+
+  <table>
+    <tr>
+        <td><img src="./Images/Android1.png"/></td>
+        <td><img src="./Images/Android2.png"/></td>
+        <td><img src="./Images/Android3.png"/></td>
+        <td><img src="./Images/Android4.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="./Images/Android5.png"/></td>
+        <td><img src="./Images/Android6.png"/></td>
+        <td><img src="./Images/Android7.png"/></td>
+        <td><img src="./Images/Android8.png"/></td>
+    </tr>
+ </table>
 
 ## Supported platforms
 - Windows (Windows 10/11)
