@@ -320,7 +320,12 @@
     "LocalPointer": "数据会被保存到文件夹",
     "BackupsSuccess": "备份成功",
     "Invalid backup folder": "无效的备份文件夹",
-    "RestoreSuccess": "还原成功"
+    "RestoreSuccess": "还原成功",
+    "RestoreFail": "还原失败",
+    "ConfirmRestore": {
+      "Title": "确认还原",
+      "Content": "数据库文件会被覆盖，是否继续？"
+    }
   },
   "Location": {
     "Add": "添加位置",

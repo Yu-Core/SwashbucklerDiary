@@ -75,14 +75,14 @@
             <MButton Icon OnClick="@(()=>ShowBackups=false)">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-        </MCardTitle>
-        <MCardText Class="pb-0">
+            </MCardTitle>
+            <MCardText Class="pb-0">
             @GetLocalPointer()
-        </MCardText>
-        <MCardActions>
+            </MCardText>
+            <MCardActions>
             <MButton Text
                      Disabled="ShowEditButton"
-                OnClick="EditBackupsFolderPath">
+                     OnClick="EditBackupsFolderPath">
                 @(I18n.T("Share.Edit"))
             </MButton>
             <MSpacer></MSpacer>
@@ -92,6 +92,32 @@
             <MButton Text
                      Color="primary"
                      OnClick="Backups">
+                @(I18n.T("Share.OK"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MyDialog>
+
+<MyDialog @bind-MyValue="ShowRestore" MaxWidth="420">
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Backups.ConfirmRestore.Title"))
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="@(()=>ShowRestore=false)">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+            </MCardTitle>
+            <MCardText Class="pb-0">
+            @(I18n.T("Backups.ConfirmRestore.Content"))
+            </MCardText>
+            <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text OnClick="()=>ShowRestore=false">
+                @(I18n.T("Share.Cancel"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="ConfirmRestore">
                 @(I18n.T("Share.OK"))
             </MButton>
         </MCardActions>

@@ -8,7 +8,9 @@ namespace SwashbucklerDiary.Pages
     {
         private StringNumber tabs = 0;
         private bool ShowBackups;
+        private bool ShowRestore;
         private string? BackupsFolderPath;
+        private string? RestoreFilePath;
 
         protected override async Task OnInitializedAsync()
         {
@@ -125,12 +127,25 @@ namespace SwashbucklerDiary.Pages
 
         private async Task Restore()
         {
-            var dbFilePath = await SystemService.PickDBFileAsync();
-            if (string.IsNullOrEmpty(dbFilePath))
+            RestoreFilePath = string.Empty;
+            RestoreFilePath = await SystemService.PickDBFileAsync();
+            if (string.IsNullOrEmpty(RestoreFilePath))
             {
                 return;
             }
-            File.Copy(dbFilePath, SQLiteConstants.DatabasePath, true);
+            ShowRestore = true;
+        }
+
+        private async Task ConfirmRestore()
+        {
+            ShowRestore = false;
+            if (string.IsNullOrEmpty(RestoreFilePath))
+            {
+                await AlertService.Success(I18n.T("Backups.RestoreFail"));
+                return;
+            }
+            
+            File.Copy(RestoreFilePath, SQLiteConstants.DatabasePath, true);
             await AlertService.Success(I18n.T("Backups.RestoreSuccess"));
         }
     }

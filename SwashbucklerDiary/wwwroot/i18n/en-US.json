@@ -319,7 +319,12 @@
     "LocalPointer": "The data will be saved to the folder ",
     "BackupsSuccess": "Backups success",
     "Invalid backup folder": "Invalid backup folder",
-    "RestoreSuccess": "Restore success"
+    "RestoreSuccess": "Restore success",
+    "RestoreFail": "Restore fail",
+    "ConfirmRestore": {
+      "Title": "Confirm restore",
+      "Content": "The database file will be overwritten. Do you want to continue?"
+    }
   },
   "Location": {
     "Add": "Add Location",
