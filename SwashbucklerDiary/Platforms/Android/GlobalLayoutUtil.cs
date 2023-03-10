@@ -54,12 +54,12 @@ namespace SwashbucklerDiary.Platforms.Android
                     // 设置布局高度为：屏幕高度 - 高度差
                     frameLayoutParams.Height = usableHeightSansKeyboard - heightDifference;
                 }
-                else if (heightDifference >= GetNavigationBarHeight(activity))
-                {
-                    // keyboard probably just became hidden
-                    // 虚拟导航栏显示
-                    frameLayoutParams.Height = usableHeightSansKeyboard - GetNavigationBarHeight(activity);
-                }
+                //else if (heightDifference >= GetNavigationBarHeight(activity))
+                //{
+                //    // keyboard probably just became hidden
+                //    // 虚拟导航栏显示
+                //    frameLayoutParams.Height = usableHeightNow - GetNavigationBarHeight(activity);
+                //}
                 else
                 {// 其他情况直接设置为可视高度即可
                     frameLayoutParams.Height = usableHeightNow;
