@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Storage;
 using SwashbucklerDiary.IServices;
+using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SwashbucklerDiary.Services
 {
@@ -218,22 +220,8 @@ namespace SwashbucklerDiary.Services
             }
         }
 
-        public async Task<string?> PickDBFileAsync()
+        public async Task<string?> PickFileAsync(PickOptions options)
         {
-            var customFileType = new FilePickerFileType(
-                new Dictionary<DevicePlatform, IEnumerable<string>>
-                {
-                    { DevicePlatform.iOS, new[] { "public.database" } }, // UTType values
-                    { DevicePlatform.Android, new[] { "application/db3" } }, // MIME type
-                    { DevicePlatform.WinUI, new[] { ".db3" } }, // file extension
-                    { DevicePlatform.Tizen, new[] { "*/*" } },
-                    { DevicePlatform.macOS, new[] { "public.database" } }, // UTType values
-                });
-
-            PickOptions options = new()
-            {
-                FileTypes = customFileType,
-            };
             try
             {
                 var result = await FilePicker.Default.PickAsync(options);
@@ -249,7 +237,59 @@ namespace SwashbucklerDiary.Services
             }
 
             return null;
+        }
 
+        public Task<string?> PickDBFileAsync()
+        {
+            var customFileType = new FilePickerFileType(
+                new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                    { DevicePlatform.iOS, new[] { "public.database" } }, // UTType values
+                    { DevicePlatform.Android, new[] { "application/db3" } }, // MIME type
+                    { DevicePlatform.WinUI, new[] { ".db3" } }, // file extension
+                    { DevicePlatform.Tizen, new[] { "*/*" } },
+                    { DevicePlatform.macOS, new[] { "public.database" } }, // UTType values
+                });
+
+            PickOptions options = new()
+            {
+                FileTypes = customFileType,
+            };
+            return PickFileAsync(options);
+        }
+
+        public Task<string?> SaveFileAsync(string name, Stream stream)
+        {
+            return SaveFileAsync(string.Empty, name, stream);
+        }
+        public async Task<string?> SaveFileAsync(string path, string name, Stream stream)
+        {
+            try
+            {
+                FileSaverResult? fileSaverResult;
+                if (File.Exists(path))
+                {
+                    fileSaverResult = await FileSaver.Default.SaveAsync(path, name, stream, default);
+                }
+                else
+                {
+                    fileSaverResult = await FileSaver.Default.SaveAsync(name, stream, default);
+                }
+                
+                if (fileSaverResult.IsSuccessful)
+                {
+                    return fileSaverResult.FilePath;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
