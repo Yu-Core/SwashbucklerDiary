@@ -1,8 +1,6 @@
-﻿using BlazorComponent;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.IServices;
+using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
@@ -10,7 +8,6 @@ namespace SwashbucklerDiary.Pages
     public partial class UserPage : PageComponentBase, IAsyncDisposable
     {
         private IJSObjectReference? module;
-        private const string DefaultAvatar = "./logo/logo.svg";
         private string? UserName;
         private string? Sign;
         private string? Avatar;
@@ -22,14 +19,14 @@ namespace SwashbucklerDiary.Pages
             await LoadSettings();
             await base.OnInitializedAsync();
         }
-        
+
         private bool ShowUserName { get; set; }
         private bool ShowSign { get; set; }
 
         private async Task LoadSettings()
         {
-            UserName = await SettingsService!.Get<string?>(nameof(UserName), I18n.T("AppName"));
-            Sign = await SettingsService!.Get<string?>(nameof(Sign), I18n.T("Mine.Sign"));
+            UserName = await SettingsService.Get(SettingType.UserName, I18n.T("AppName"));
+            Sign = await SettingsService.Get(SettingType.Sign, I18n.T("Mine.Sign"));
         }
 
         private async Task SaveSign(string tagName)
@@ -38,7 +35,7 @@ namespace SwashbucklerDiary.Pages
             if (!string.IsNullOrWhiteSpace(tagName) && tagName != Sign)
             {
                 Sign = tagName;
-                await SettingsService!.Save(nameof(Sign), Sign);
+                await SettingsService.Save(SettingType.Sign, Sign);
             }
             await HandleAchievements(AchievementType.Sign);
         }
@@ -49,7 +46,7 @@ namespace SwashbucklerDiary.Pages
             if (!string.IsNullOrWhiteSpace(tagName) && tagName != UserName)
             {
                 UserName = tagName;
-                await SettingsService!.Save(nameof(UserName), UserName);
+                await SettingsService.Save(SettingType.UserName, UserName);
             }
             await HandleAchievements(AchievementType.NickName);
         }
@@ -97,7 +94,7 @@ namespace SwashbucklerDiary.Pages
 
                 await SystemService.FileCopy(filePath, localFilePath);
 
-                await SettingsService!.Save(nameof(Avatar), localFilePath);
+                await SettingsService.Save(SettingType.Avatar, localFilePath);
                 await UpdateAvatar(localFilePath);
                 await AlertService.Success(I18n.T("Share.EditSuccess"));
                 await HandleAchievements(AchievementType.Avatar);
@@ -107,14 +104,14 @@ namespace SwashbucklerDiary.Pages
         private async Task SetAvatar()
         {
             module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/getNativeImage.js");
-            bool flag = await SettingsService!.ContainsKey(nameof(Avatar));
-            if (!flag)
+
+            string avatar = await SettingsService.Get(SettingType.Avatar);
+            if (avatar.IsRelativePath())
             {
-                Avatar = DefaultAvatar;
+                Avatar = avatar;
             }
             else
             {
-                var avatar = await SettingsService!.Get(nameof(Avatar), DefaultAvatar);
                 await UpdateAvatar(avatar);
             }
         }
@@ -129,7 +126,7 @@ namespace SwashbucklerDiary.Pages
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
-            if (!string.IsNullOrEmpty(Avatar) && Avatar != DefaultAvatar)
+            if (!string.IsNullOrEmpty(Avatar) && !Avatar.IsRelativePath())
             {
                 await module!.InvokeVoidAsync("revokeUrl", new object[1] { Avatar });
             }

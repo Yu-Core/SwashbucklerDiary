@@ -161,8 +161,8 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LoadSettings()
         {
-            ShowTitle = await SettingsService.Get("Title", false);
-            Markdown = await SettingsService.GetMarkdown();
+            ShowTitle = await SettingsService.Get(SettingType.Title);
+            Markdown = await SettingsService.Get(SettingType.Markdown);
         }
 
         private void LoadView()
@@ -293,7 +293,7 @@ namespace SwashbucklerDiary.Pages
         private async Task MarkdownChanged()
         {
             Markdown = !Markdown;
-            await SettingsService!.Save(nameof(Markdown), Markdown);
+            await SettingsService.Save(SettingType.Markdown, Markdown);
             StateHasChanged();
         }
 
@@ -313,7 +313,7 @@ namespace SwashbucklerDiary.Pages
         private async Task ShowTitleChanged()
         {
             ShowTitle = !ShowTitle;
-            await SettingsService.Save("Title", ShowTitle);
+            await SettingsService.Save(SettingType.Title, ShowTitle);
             StateHasChanged();
         }
     }

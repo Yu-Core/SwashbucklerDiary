@@ -1,5 +1,6 @@
 ﻿using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -21,24 +22,24 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LoadSettings()
         {
-            Title = await SettingsService.Get("Title", false);
-            Markdown = await SettingsService.GetMarkdown();
-            Privacy = await SettingsService.GetPrivacy();
+            Title = await SettingsService.Get(SettingType.Title);
+            Markdown = await SettingsService.Get(SettingType.Markdown);
+            Privacy = await SettingsService.Get(SettingType.Privacy);
         }
 
         private async Task TitleChange(bool value)
         {
-            await SettingsService.Save("Title", value);
+            await SettingsService.Save(SettingType.Title, value);
         }
 
         private async Task MarkdownChange(bool value)
         {
-            await SettingsService.Save("Markdown", value);
+            await SettingsService.Save(SettingType.Markdown, value);
         }
 
         private async Task PrivacyChange(bool value)
         {
-            await SettingsService.Save("Privacy", value);
+            await SettingsService.Save(SettingType.Privacy, value);
             if (!value)
             {
                 await AlertService.Success(I18n.T("Setting.Safe.CamouflageSuccess"));
@@ -59,7 +60,7 @@ namespace SwashbucklerDiary.Pages
         {
             ShowPPSet = false;
             PrivatePassword = value;
-            await SettingsService.Save("PrivatePassword", value.MD5Encrytp32());
+            await SettingsService.Save(SettingType.PrivatePassword, value.MD5Encrytp32());
             await AlertService.Success(I18n.T("Setting.Safe.PrivatePasswordSetSuccess"));
         }
 
@@ -93,7 +94,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task UpdatePrivatePassword()
         {
-            PrivatePassword = await SettingsService.Get("PrivatePassword", "");
+            PrivatePassword = await SettingsService.Get(SettingType.PrivatePassword);
         }
 
         private string? GetPrivatePasswordSetState()

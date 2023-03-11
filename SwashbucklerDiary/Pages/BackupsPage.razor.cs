@@ -1,6 +1,7 @@
 ﻿using BlazorComponent;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Config;
+using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -20,7 +21,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SetBackupsFolderPath()
         {
-            BackupsFolderPath = await SettingsService.Get("BackupsPath", string.Empty);
+            BackupsFolderPath = await SettingsService.Get(SettingType.BackupsPath);
             if (string.IsNullOrEmpty(BackupsFolderPath))
             {
                 return;
@@ -29,7 +30,7 @@ namespace SwashbucklerDiary.Pages
             if (!Directory.Exists(BackupsFolderPath))
             {
                 BackupsFolderPath = string.Empty;
-                await SettingsService.Save("BackupsPath", BackupsFolderPath);
+                await SettingsService.Save(SettingType.BackupsPath, BackupsFolderPath);
             }
         }
 
@@ -50,7 +51,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            BackupsFolderPath = await SettingsService.Get("BackupsPath", string.Empty);
+            BackupsFolderPath = await SettingsService.Get(SettingType.BackupsPath);
 
             var sourceFile = SQLiteConstants.DatabasePath;
             if (!File.Exists(sourceFile))
@@ -75,7 +76,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
             BackupsFolderPath = Path.GetDirectoryName(filePath);
-            await SettingsService.Save("BackupsPath", BackupsFolderPath);
+            await SettingsService.Save(SettingType.BackupsPath, BackupsFolderPath);
 
             await AlertService.Success(I18n.T("Backups.BackupsSuccess"));
         }

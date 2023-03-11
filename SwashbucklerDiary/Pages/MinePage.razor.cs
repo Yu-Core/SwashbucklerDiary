@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
+using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using System.Globalization;
 
 namespace SwashbucklerDiary.Pages
 {
     public partial class MinePage : PageComponentBase, IAsyncDisposable
     {
         private IJSObjectReference? module;
-        private const string DefaultAvatar = "./logo/logo.svg";
         private int DiaryCount;
         private long WordCount;
         private int ActiveDayCount;
@@ -89,35 +88,32 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LoadSettings()
         {
-            Language = await SettingsService.GetLanguage();
-            UserName = await SettingsService.Get<string?>(nameof(UserName), null);
-            Sign = await SettingsService.Get<string?>(nameof(Sign), null);
+            Language = await SettingsService.Get(SettingType.Language);
+            UserName = await SettingsService.Get(SettingType.UserName);
+            Sign = await SettingsService.Get(SettingType.Sign);
         }
 
         private async Task LanguageChanged(string value)
         {
             Language = value;
             I18n.SetCulture(value);
-            await SettingsService!.Save(nameof(Language), Language);
+            await SettingsService.Save(SettingType.Language, Language);
             await SetCount();
         }
 
         private async Task SetAvatar()
         {
             module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/getNativeImage.js");
-            bool flag = await SettingsService!.ContainsKey(nameof(Avatar));
-            if (!flag)
+
+            string avatar = await SettingsService.Get(SettingType.Avatar);
+            if (avatar.IsRelativePath())
             {
-                Avatar = DefaultAvatar;
+                Avatar = avatar;
+                return;
             }
-            else
-            {
-                var avatar = await SettingsService!.Get(nameof(Avatar), DefaultAvatar);
-                using var imageStream = File.OpenRead(avatar);
-                var dotnetImageStream = new DotNetStreamReference(imageStream);
-                Avatar = await module!.InvokeAsync<string>("streamToUrl", new object[1] { dotnetImageStream });
-            }
-            
+            using var imageStream = File.OpenRead(avatar);
+            var dotnetImageStream = new DotNetStreamReference(imageStream);
+            Avatar = await module!.InvokeAsync<string>("streamToUrl", new object[1] { dotnetImageStream });
         }
 
         private async Task SendMail()
@@ -153,7 +149,7 @@ namespace SwashbucklerDiary.Pages
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
-            if (!string.IsNullOrEmpty(Avatar) && Avatar != DefaultAvatar)
+            if (!string.IsNullOrEmpty(Avatar) && !Avatar.IsRelativePath())
             {
                 await module!.InvokeVoidAsync("revokeUrl", new object[1] { Avatar });
             }

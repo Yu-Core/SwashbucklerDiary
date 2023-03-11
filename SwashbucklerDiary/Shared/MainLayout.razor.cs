@@ -38,11 +38,11 @@ namespace SwashbucklerDiary.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            LoadView();
-            await LoadSettings();
             NavigateService.Initialize(Navigation);
             AlertService.Initialize(PopupService);
             I18nService.Initialize(I18n);
+            LoadView();
+            await LoadSettings();
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             await base.OnInitializedAsync();
         }
@@ -59,11 +59,11 @@ namespace SwashbucklerDiary.Shared
 
         private async Task LoadSettings()
         {
-            var flag = await SettingsService!.ContainsKey("Language");
+            var flag = await SettingsService.ContainsKey("Language");
             if (flag)
             {
-                var language = await SettingsService!.GetLanguage();
-                I18n.SetCulture(new CultureInfo(language));
+                var language = await SettingsService.Get<string>(SettingType.Language);
+                I18nService.SetCulture(language);
             }
         }
 

@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.IServices
         I18n I18n { get; protected set; }
         CultureInfo Culture { get; }
         void Initialize(I18n i18n);
-        string T(string key);
+        string T(string? key);
         void SetCulture(string culture);
         string ToWeek(DateTime? dateTime = null);
     }

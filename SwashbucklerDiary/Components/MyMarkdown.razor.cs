@@ -1,6 +1,7 @@
 ﻿using BlazorComponent.I18n;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
+using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
@@ -22,7 +23,7 @@ namespace SwashbucklerDiary.Components
 
         protected async override Task OnInitializedAsync()
         {
-            var Language = await SettingsService.GetLanguage();
+            string Language = await SettingsService.Get(SettingType.Language);
             Language = Language.Replace("-", "_");
             _options = new()
             {

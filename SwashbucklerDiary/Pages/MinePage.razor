@@ -11,9 +11,9 @@
     <MButton Large Icon OnClick="@(()=>To("/search"))">
         <MIcon>mdi-magnify</MIcon>
     </MButton>
-</MAppBar>
+    </MAppBar>
 
-<ScrollContainer Bottom>
+    <ScrollContainer Bottom>
     <div class="d-md-flex flex-md-row justify-space-between">
         <MCard Class="mine-info mb-5 py-sm-3"
                Elevation="4"
@@ -28,10 +28,10 @@
                     </MListItemAvatar>
                     <MListItemContent>
                         <MListItemTitle Class="text-h6 font-weight-bold">
-                            @(UserName ?? I18n.T("AppName"))
+                            @(string.IsNullOrEmpty(UserName) ? I18n.T("AppName") : "")
                         </MListItemTitle>
                         <MListItemSubtitle>
-                            @(Sign ?? I18n.T("Mine.Sign"))
+                            @(string.IsNullOrEmpty(Sign) ? I18n.T("Mine.Sign") : "")
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction Style="align-self:unset;">
@@ -103,7 +103,7 @@
                         </MListItemAction>
                     </MListItem>
 
-                    if(list.Value.Last() != item)
+                    if (list.Value.Last() != item)
                     {
                         <MDivider Class="mx-3 mx-sm-0"></MDivider>
                     }
@@ -124,15 +124,15 @@
             <MButton Icon OnClick="()=>ShowLanguage= false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-        </MCardTitle>
-        <MCardText>
+            </MCardTitle>
+            <MCardText>
             <MRadioGroup Value="Language"
                          TValue="string"
                          ValueChanged="LanguageChanged"
                          Class="mt-0 pb-1"
                          OnClick="()=>ShowLanguage=false"
                          HideDetails="@("auto")"
-                         Mandatory>
+                          Mandatory>
                 @foreach (var item in Languages)
                 {
                     <MRadio Label="@(item.Key)"
@@ -154,8 +154,8 @@
             <MButton Icon OnClick="()=>ShowFeedback=false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-        </MCardTitle>
-        <MCardText>
+            </MCardTitle>
+            <MCardText>
             @foreach (var item in FeedbackTypes)
             {
                 <MListItem Class="px-0" OnClick="@(item.Action)">

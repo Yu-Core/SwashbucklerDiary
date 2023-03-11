@@ -96,7 +96,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LoadSettings()
         {
-            Markdown = await SettingsService.GetMarkdown();
+            Markdown = await SettingsService.Get(SettingType.Markdown);
         }
 
         async Task LoadView()
@@ -108,7 +108,7 @@ namespace SwashbucklerDiary.Pages
                 new("Diary.Export","mdi-export",()=>ToDo()),
                 new(MarkdownText,MarkdownIcon,async ()=>await MarkdownChanged()),
             };
-            var privacy = await SettingsService.GetPrivacy();
+            bool privacy = await SettingsService.Get(SettingType.Privacy);
             if (privacy)
             {
                 ViewListItems.Add(new(PrivateText, PrivateIcon, async () => await DiaryPrivacyChanged()));
@@ -209,7 +209,7 @@ namespace SwashbucklerDiary.Pages
         private async Task MarkdownChanged()
         {
             Markdown = !Markdown;
-            await SettingsService!.Save(nameof(Markdown), Markdown);
+            await SettingsService.Save(SettingType.Markdown, Markdown);
             StateHasChanged();
         }
 

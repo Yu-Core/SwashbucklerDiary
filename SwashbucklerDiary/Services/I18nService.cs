@@ -19,8 +19,18 @@ namespace SwashbucklerDiary.Services
             I18n.SetCulture(new CultureInfo(culture));
         }
 
-        public string T(string key)
+        public string T(string? key)
         {
+            if (key == null)
+            {
+                return string.Empty;
+            }
+
+            if(I18n is null)
+            {
+                return string.Empty;
+            }
+
             return I18n.T(key) ?? key;
         }
 

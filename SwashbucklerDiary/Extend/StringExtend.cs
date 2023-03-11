@@ -33,11 +33,16 @@ namespace SwashbucklerDiary.Extend
 
             string englishExpression = @"[\S]+";
             MatchCollection collection = Regex.Matches(s, englishExpression);
-            foreach (Match word in collection)
+            foreach (Match word in collection.Cast<Match>())
             {
                 count += word.Value.Length;
             }
             return count;
+        }
+
+        public static bool IsRelativePath(this string uri)
+        {
+            return Uri.IsWellFormedUriString(uri, UriKind.Relative);
         }
     }
 }
