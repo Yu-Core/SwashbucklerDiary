@@ -239,7 +239,7 @@ namespace SwashbucklerDiary.Services
             return null;
         }
 
-        public Task<string?> PickDBFileAsync()
+        public async Task<string?> PickDBFileAsync()
         {
             var customFileType = new FilePickerFileType(
                 new Dictionary<DevicePlatform, IEnumerable<string>>
@@ -255,14 +255,28 @@ namespace SwashbucklerDiary.Services
             {
                 FileTypes = customFileType,
             };
-            return PickFileAsync(options);
+            try
+            {
+                var result = await FilePicker.Default.PickAsync(options);
+                if (result != null)
+                {
+                    return result.FullPath;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return null;
         }
 
         public Task<string?> SaveFileAsync(string name, Stream stream)
         {
             return SaveFileAsync(string.Empty, name, stream);
         }
-        public async Task<string?> SaveFileAsync(string path, string name, Stream stream)
+        public async Task<string?> SaveFileAsync(string? path, string name, Stream stream)
         {
             try
             {
