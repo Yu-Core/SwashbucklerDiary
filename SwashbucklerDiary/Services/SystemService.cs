@@ -245,7 +245,7 @@ namespace SwashbucklerDiary.Services
                 new Dictionary<DevicePlatform, IEnumerable<string>>
                 {
                     { DevicePlatform.iOS, new[] { "public.database" } }, // UTType values
-                    { DevicePlatform.Android, new[] { "application/db3" } }, // MIME type
+                    { DevicePlatform.Android, new[] { "application/x-sqlite3", "application/vnd.sqlite3", "application/octet-stream" } }, // MIME type
                     { DevicePlatform.WinUI, new[] { ".db3" } }, // file extension
                     { DevicePlatform.Tizen, new[] { "*/*" } },
                     { DevicePlatform.macOS, new[] { "public.database" } }, // UTType values

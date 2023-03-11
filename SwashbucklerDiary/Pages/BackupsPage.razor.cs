@@ -18,8 +18,6 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
-        private bool ShowEditButton => string.IsNullOrEmpty(BackupsFolderPath);
-
         private async Task SetBackupsFolderPath()
         {
             BackupsFolderPath = await SettingsService.Get("BackupsPath", string.Empty);
@@ -53,7 +51,7 @@ namespace SwashbucklerDiary.Pages
             }
 
             BackupsFolderPath = await SettingsService.Get("BackupsPath", string.Empty);
-            
+
             var sourceFile = SQLiteConstants.DatabasePath;
             if (!File.Exists(sourceFile))
             {
@@ -94,24 +92,19 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private Task EditBackupsFolderPath()
-        {
-            return PickBackupsFolderPath();
-        }
+        //private async Task<bool> PickBackupsFolderPath()
+        //{
+        //    var folderPath = await SystemService.PickFolderAsync();
 
-        private async Task<bool> PickBackupsFolderPath()
-        {
-            var folderPath = await SystemService.PickFolderAsync();
+        //    if (string.IsNullOrEmpty(folderPath))
+        //    {
+        //        return false;
+        //    }
 
-            if (string.IsNullOrEmpty(folderPath))
-            {
-                return false;
-            }
-
-            BackupsFolderPath = folderPath;
-            await SettingsService.Save("BackupsPath", folderPath);
-            return true;
-        }
+        //    BackupsFolderPath = folderPath;
+        //    await SettingsService.Save("BackupsPath", folderPath);
+        //    return true;
+        //}
 
         private async Task Restore()
         {
@@ -132,7 +125,7 @@ namespace SwashbucklerDiary.Pages
                 await AlertService.Success(I18n.T("Backups.RestoreFail"));
                 return;
             }
-            
+
             File.Copy(RestoreFilePath, SQLiteConstants.DatabasePath, true);
             await AlertService.Success(I18n.T("Backups.RestoreSuccess"));
         }
