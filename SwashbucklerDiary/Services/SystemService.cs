@@ -267,13 +267,13 @@ namespace SwashbucklerDiary.Services
             try
             {
                 FileSaverResult? fileSaverResult;
-                if (File.Exists(path))
+                if (string.IsNullOrEmpty(path))
                 {
-                    fileSaverResult = await FileSaver.Default.SaveAsync(path, name, stream, default);
+                    fileSaverResult = await FileSaver.Default.SaveAsync(name, stream, default);
                 }
                 else
                 {
-                    fileSaverResult = await FileSaver.Default.SaveAsync(name, stream, default);
+                    fileSaverResult = await FileSaver.Default.SaveAsync(path, name, stream, default);
                 }
                 
                 if (fileSaverResult.IsSuccessful)

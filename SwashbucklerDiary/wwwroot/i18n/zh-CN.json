@@ -325,7 +325,8 @@
     "ConfirmRestore": {
       "Title": "确认还原",
       "Content": "数据库文件会被覆盖，是否继续？"
-    }
+    },
+    "No diary": "暂无日记"
   },
   "Location": {
     "Add": "添加位置",

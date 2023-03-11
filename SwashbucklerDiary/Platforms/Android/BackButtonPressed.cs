@@ -1,7 +1,6 @@
 ﻿using Android.OS;
 using Android.Views;
 using Android.Widget;
-using BlazorComponent.I18n;
 using SwashbucklerDiary.IServices;
 using Application = Android.App.Application;
 

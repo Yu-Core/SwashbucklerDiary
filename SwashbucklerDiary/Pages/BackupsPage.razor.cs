@@ -1,6 +1,7 @@
 ﻿using BlazorComponent;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Config;
+using System.Diagnostics;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -53,14 +54,7 @@ namespace SwashbucklerDiary.Pages
             }
 
             var folderPath = await SettingsService.Get("BackupsPath", string.Empty);
-            if (!string.IsNullOrEmpty(folderPath) && !Directory.Exists(folderPath))
-            {
-                BackupsFolderPath = string.Empty;
-                await SettingsService.Save("BackupsPath", string.Empty);
-                await AlertService.Error(I18n.T("Backups.Invalid backup folder"));
-                return;
-            }
-
+            
             if (string.IsNullOrEmpty(folderPath))
             {
                 var flag = await PickBackupsFolderPath();
@@ -70,17 +64,52 @@ namespace SwashbucklerDiary.Pages
                 }
             }
 
+            if (!Directory.Exists(BackupsFolderPath))
+            {
+                BackupsFolderPath = string.Empty;
+                await SettingsService.Save("BackupsPath", string.Empty);
+                await AlertService.Error(I18n.T("Backups.Invalid backup folder"));
+                return;
+            }
+
             var sourceFile = SQLiteConstants.DatabasePath;
             if (!File.Exists(sourceFile))
             {
+                await AlertService.Alert(I18n.T("Backups.No diary"));
                 return;
             }
 
             var destFileName = "SwashbucklerDiaryBackups" +
                 DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") +
+                "v" +
                 SystemService.GetAppVersion() + ".db3";
-            var destFile = Path.Combine(BackupsFolderPath!, destFileName);
-            File.Copy(sourceFile, destFile, true);
+            var destFile = Path.Combine(BackupsFolderPath, destFileName);
+            bool copyFlag;
+            try
+            {
+                File.Copy(sourceFile, destFile, true);
+                copyFlag = true;
+            }
+            catch (Exception)
+            {
+                copyFlag = false;
+            }
+
+            //There are bugs in Android saved files
+            //https://github.com/dotnet/maui/issues/5295
+            //https://learn.microsoft.com/en-us/answers/questions/1183152/open-a-file-get-its-path-save-the-file-maui-androi
+            if (!copyFlag)
+            {
+                using var stream = File.OpenRead(sourceFile);
+                var filePath = await SystemService.SaveFileAsync(BackupsFolderPath, destFileName, stream);
+                if (filePath == null)
+                {
+                    return;
+                }
+                BackupsFolderPath = Path.GetDirectoryName(filePath);
+                await SettingsService.Save("BackupsPath", BackupsFolderPath);
+            }
+            
             await AlertService.Success(I18n.T("Backups.BackupsSuccess"));
         }
 
@@ -104,20 +133,10 @@ namespace SwashbucklerDiary.Pages
         private async Task<bool> PickBackupsFolderPath()
         {
             var folderPath = await SystemService.PickFolderAsync();
-            if (string.IsNullOrEmpty(folderPath))
-            {
-                return false;
-            }
 
             if (!Directory.Exists(folderPath))
             {
                 return false;
-            }
-
-            folderPath = Path.Combine(folderPath, "SwashbucklerDiaryBackups");
-            if (!Directory.Exists(folderPath))
-            {
-                Directory.CreateDirectory(folderPath);
             }
 
             BackupsFolderPath = folderPath;
