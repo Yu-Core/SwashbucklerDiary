@@ -96,7 +96,6 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LanguageChanged(string value)
         {
-            ShowLanguage = false;
             Language = value;
             I18n.SetCulture(new CultureInfo(value));
             await SettingsService!.Save(nameof(Language), Language);
