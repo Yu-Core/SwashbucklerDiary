@@ -30,6 +30,7 @@ namespace SwashbucklerDiary.Extend
             services.AddSingleton<ISystemService, SystemService>();
             services.AddSingleton<IFolderPicker>(FolderPicker.Default);
             services.AddSingleton<IAlertService, AlertService>();
+            services.AddSingleton<II18nService, I18nService>();
             return services;
         }
     }

@@ -37,7 +37,7 @@
     <div class="px-3 text-h6 font-weight-bold">
         <span>@(Diary.CreateTime.ToString("yyyy/MM/dd"))</span>
         <span class="pl-5 text-subtitle-1">
-            @(Diary.CreateTime.ToWeek(I18n))
+            @(I18n.ToWeek(Diary.CreateTime))
         </span>
     </div>
     <div class="px-2">

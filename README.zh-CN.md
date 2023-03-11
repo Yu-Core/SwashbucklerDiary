@@ -1,8 +1,8 @@
-# SwashbucklerDiary(侠客日记)
+# 侠客日记
 
 [English](./README.md) | 简体中文
 
-「SwashbucklerDiary」是一个开源、跨平台的本地日记App。
+「 侠客日记 」是一个开源、跨平台的本地日记App。
 
 ## 截图
 

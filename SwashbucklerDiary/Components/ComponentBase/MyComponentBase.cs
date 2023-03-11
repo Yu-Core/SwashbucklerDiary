@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Components
         [Inject]
         protected INavigateService NavigateService { get; set; } = default!;
         [Inject]
-        protected I18n I18n { get; set; } = default!;
+        protected II18nService I18n { get; set; } = default!;
         [Inject]
         protected IAlertService AlertService { get; set; } = default!;
 

@@ -1,6 +1,7 @@
 ﻿using Android.OS;
 using Android.Views;
 using Android.Widget;
+using BlazorComponent.I18n;
 using SwashbucklerDiary.IServices;
 using Application = Android.App.Application;
 
@@ -8,6 +9,7 @@ namespace SwashbucklerDiary.Platforms.Android
 {
     public static class BackButtonPressed
     {
+        private static II18nService I18n = default!;
         private static byte BackPressCounter;
 
         public static bool OnBackButtonPressed(KeyEvent e)
@@ -30,6 +32,8 @@ namespace SwashbucklerDiary.Platforms.Android
 
         public static void QuitApp()
         {
+            I18n ??= MauiApplication.Current.Services.GetRequiredService<II18nService>();
+
             if (BackPressCounter == 1)
             {
                 Process.KillProcess(Process.MyPid());
@@ -37,7 +41,7 @@ namespace SwashbucklerDiary.Platforms.Android
             else if (BackPressCounter == 0)
             {
                 BackPressCounter++;
-                Toast.MakeText(Application.Context, "再按一次退出", ToastLength.Long)!.Show();
+                Toast.MakeText(Application.Context, I18n.T("Press again to exit"), ToastLength.Long)!.Show();
                 Task.Run(async () =>
                 {
                     await Task.Delay(2000);
