@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowWeather;
         private bool ShowMood;
         private bool ShowLocation;
-        private bool Markdown;
+        private bool Markdown = true;
         private readonly double MdToolBarHeight = 75;
         private List<ViewListItem> ViewListItems = new();
         private DiaryModel Diary = new()
