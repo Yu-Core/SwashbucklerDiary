@@ -19,9 +19,11 @@
 	<shortcut-list />
 	<privileges>
 		<privilege>http://tizen.org/privilege/internet</privilege>
+		<privilege>http://tizen.org/privilege/mediastorage</privilege>
+		<privilege>http://tizen.org/privilege/externalstorage</privilege>
+		<privilege>http://tizen.org/privilege/externalstorage.appdata</privilege>
+		<privilege>http://tizen.org/privilege/appdir.shareddata</privilege>
 	</privileges>
-	<privilege>http://tizen.org/privilege/mediastorage</privilege>
-	<privilege>http://tizen.org/privilege/externalstorage</privilege>
 	<dependencies />
 	<provides-appdefined-privileges />
 </manifest>
