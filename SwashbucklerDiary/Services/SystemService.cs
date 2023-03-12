@@ -220,14 +220,33 @@ namespace SwashbucklerDiary.Services
             }
         }
 
-        public async Task<string?> PickFileAsync(PickOptions options)
+        public Task<string?> PickFileAsync(PickOptions options, string suffixName)
+        {
+            string[] suffixNames = { suffixName };
+            return PickFileAsync(options, suffixNames);
+        }
+
+        public async Task<string?> PickFileAsync(PickOptions options,string[] suffixNames)
         {
             try
             {
                 var result = await FilePicker.Default.PickAsync(options);
                 if (result != null)
                 {
-                    return result.FullPath;
+                    bool flag = false;
+                    foreach (var suffixName in suffixNames)
+                    {
+                        if(result.FileName.EndsWith(suffixName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+
+                    if (flag)
+                    {
+                        return result.FullPath;
+                    }
                 }
             }
             catch (Exception)
@@ -239,7 +258,7 @@ namespace SwashbucklerDiary.Services
             return null;
         }
 
-        public async Task<string?> PickDBFileAsync()
+        public Task<string?> PickDBFileAsync()
         {
             var customFileType = new FilePickerFileType(
                 new Dictionary<DevicePlatform, IEnumerable<string>>
@@ -255,21 +274,7 @@ namespace SwashbucklerDiary.Services
             {
                 FileTypes = customFileType,
             };
-            try
-            {
-                var result = await FilePicker.Default.PickAsync(options);
-                if (result != null)
-                {
-                    return result.FullPath;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-            return null;
+            return PickFileAsync(options,"db3");
         }
 
         public Task<string?> SaveFileAsync(string name, Stream stream)
