@@ -175,7 +175,7 @@ namespace SwashbucklerDiary.Services
             return await Launcher.Default.TryOpenAsync(uri);
         }
 
-        public async Task<string> ReadMarkdown(string path)
+        public async Task<string> ReadMarkdownFile(string path)
         {
             bool exist = await FileSystem.AppPackageFileExistsAsync(path);
             if (exist)

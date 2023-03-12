@@ -19,7 +19,7 @@
         string GetAppVersion();
         Task<bool> OpenStoreAppDetails();
         Task<bool> OpenStoreAppDetails(string appId);
-        Task<string> ReadMarkdown(string path);
+        Task<string> ReadMarkdownFile(string path);
         bool IsFirstLaunch();
         Task<string?> PickFolderAsync();
         Task<string?> PickDBFileAsync();
