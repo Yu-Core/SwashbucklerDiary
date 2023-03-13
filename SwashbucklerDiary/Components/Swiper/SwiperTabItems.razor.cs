@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Components
     {
         private IJSObjectReference? module;
         private StringNumber _value = 0;
-        private bool Show;
+        private bool Show = true;
         private readonly string Id = "swiper" + Guid.NewGuid().ToString();
 
         [Inject]
@@ -56,9 +56,6 @@ namespace SwashbucklerDiary.Components
                 module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/init-swiper.js");
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
                 await module.InvokeVoidAsync("swiperInit", new object[4] { dotNetCallbackRef, "UpdateValue", Id, Value.ToInt32() });
-                await Task.Delay(100);
-                Show = true;
-                StateHasChanged();
             }
         }
 
