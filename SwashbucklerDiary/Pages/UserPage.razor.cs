@@ -1,17 +1,19 @@
-﻿using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
     public partial class UserPage : PageComponentBase, IAsyncDisposable
     {
-        private IJSObjectReference? module;
         private string? UserName;
         private string? Sign;
         private string? Avatar;
         private bool ShowAvatar;
+
+        [Inject]
+        private ILocalImageService LocalImageService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -94,8 +96,10 @@ namespace SwashbucklerDiary.Pages
 
                 await SystemService.FileCopy(filePath, localFilePath);
 
+                localFilePath = await LocalImageService.AddFlag(filePath);
+
                 await SettingsService.Save(SettingType.Avatar, localFilePath);
-                await UpdateAvatar(localFilePath);
+                await SetAvatar();
                 await AlertService.Success(I18n.T("Share.EditSuccess"));
                 await HandleAchievements(AchievementType.Avatar);
             }
@@ -103,38 +107,13 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SetAvatar()
         {
-            module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/getNativeImage.js");
-
             string avatar = await SettingsService.Get(SettingType.Avatar);
-            if (avatar.IsRelativePath())
-            {
-                Avatar = avatar;
-            }
-            else
-            {
-                await UpdateAvatar(avatar);
-            }
-        }
-
-        private async Task UpdateAvatar(string path)
-        {
-            //Here is a provisional approach.Because https://github.com/dotnet/maui/issues/2907
-            using var imageStream = File.OpenRead(path);
-            var dotnetImageStream = new DotNetStreamReference(imageStream);
-            Avatar = await module!.InvokeAsync<string>("streamToUrl", new object[1] { dotnetImageStream });
+            Avatar = await LocalImageService.ToUrl(avatar);
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
-            if (!string.IsNullOrEmpty(Avatar) && !Avatar.IsRelativePath())
-            {
-                await module!.InvokeVoidAsync("revokeUrl", new object[1] { Avatar });
-            }
-
-            if (module is not null)
-            {
-                await module.DisposeAsync();
-            }
+            await LocalImageService.RevokeUrl(Avatar!);
             GC.SuppressFinalize(this);
         }
     }

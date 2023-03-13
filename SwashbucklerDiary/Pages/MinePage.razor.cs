@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
@@ -9,7 +7,6 @@ namespace SwashbucklerDiary.Pages
 {
     public partial class MinePage : PageComponentBase, IAsyncDisposable
     {
-        private IJSObjectReference? module;
         private int DiaryCount;
         private long WordCount;
         private int ActiveDayCount;
@@ -26,10 +23,13 @@ namespace SwashbucklerDiary.Pages
         };
         private Dictionary<string, List<ViewListItem>> ViewLists = new();
         private List<ViewListItem> FeedbackTypes = new();
-
+        private const string githubUrl = "https://github.com/Yu-Core/SwashbucklerDiary";
+        private const string mail = "yu-core@qq.com";
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
+        [Inject]
+        private ILocalImageService LocalImageService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -57,7 +57,7 @@ namespace SwashbucklerDiary.Pages
                     new()
                     {
                         new("Mine.Backups","mdi-folder-sync-outline",()=>To("/backups")),
-                        new("Mine.Export","mdi-export",()=>ToDo()),
+                        new("Mine.Export","mdi-export",()=>To("/export")),
                         new("Mine.Achievement","mdi-chart-line",()=>To("/achievement")),
                     }
                 },
@@ -103,23 +103,13 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SetAvatar()
         {
-            module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/getNativeImage.js");
-
             string avatar = await SettingsService.Get(SettingType.Avatar);
-            if (avatar.IsRelativePath())
-            {
-                Avatar = avatar;
-                return;
-            }
-            using var imageStream = File.OpenRead(avatar);
-            var dotnetImageStream = new DotNetStreamReference(imageStream);
-            Avatar = await module!.InvokeAsync<string>("streamToUrl", new object[1] { dotnetImageStream });
+            Avatar = await LocalImageService.ToUrl(avatar);
         }
 
         private async Task SendMail()
         {
             ShowFeedback = false;
-            var mail = "yu-core@qq.com";
             try
             {
                 if (SystemService.IsMailSupported())
@@ -143,21 +133,12 @@ namespace SwashbucklerDiary.Pages
         private async Task ToGithub()
         {
             ShowFeedback = false;
-            var url = "https://github.com/Yu-Core/SwashbucklerDiary";
-            await SystemService.OpenBrowser(url);
+            await SystemService.OpenBrowser(githubUrl);
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
-            if (!string.IsNullOrEmpty(Avatar) && !Avatar.IsRelativePath())
-            {
-                await module!.InvokeVoidAsync("revokeUrl", new object[1] { Avatar });
-            }
-
-            if (module is not null)
-            {
-                await module.DisposeAsync();
-            }
+            await LocalImageService.RevokeUrl(Avatar!);
             GC.SuppressFinalize(this);
         }
     }

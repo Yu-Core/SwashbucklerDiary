@@ -30,6 +30,7 @@ namespace SwashbucklerDiary.Extend
             services.AddSingleton<ISystemService, SystemService>();
             services.AddSingleton<IAlertService, AlertService>();
             services.AddSingleton<II18nService, I18nService>();
+            services.AddScoped<ILocalImageService, LocalImageService>();
             return services;
         }
     }
