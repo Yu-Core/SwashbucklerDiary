@@ -29,7 +29,7 @@
     <SwiperTabItem>
         <MCard Elevation="4"
                Rounded="@("lg")">
-            <MList>
+            <MList TwoLine>
                 <MListItem OnClick="()=>ShowBackups=true">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
@@ -37,7 +37,12 @@
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
-                        @(I18n.T("Backups.Backups"))
+                        <MListItemTitle>
+                            @(I18n.T("Backups.Backups"))
+                        </MListItemTitle>
+                        <MListItemSubtitle>
+                            @(I18n.T("Backups.BackupsSubtitle"))
+                        </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
                         <MIcon>mdi-chevron-right</MIcon>
@@ -53,7 +58,12 @@
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
-                        @(I18n.T("Backups.Restore"))
+                        <MListItemTitle>
+                            @(I18n.T("Backups.Restore"))
+                        </MListItemTitle>
+                        <MListItemSubtitle>
+                            @(I18n.T("Backups.RestoreSubtitle"))
+                        </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
                         <MIcon>mdi-chevron-right</MIcon>

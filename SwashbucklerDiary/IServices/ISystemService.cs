@@ -4,7 +4,7 @@
     {
         Task SetClipboard(string text);
         Task ShareText(string title, string text);
-        Task ShareFile(string title, string text);
+        Task ShareFile(string title, string path);
         Task<string?> PickPhotoAsync();
         bool IsCaptureSupported();
         Task<string?> CapturePhotoAsync();

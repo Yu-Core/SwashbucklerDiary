@@ -22,32 +22,24 @@ namespace SwashbucklerDiary.Pages
         private async Task SetBackupsFolderPath()
         {
             BackupsFolderPath = await SettingsService.Get(SettingType.BackupsPath);
-            if (string.IsNullOrEmpty(BackupsFolderPath))
-            {
-                return;
-            }
+            //if (string.IsNullOrEmpty(BackupsFolderPath))
+            //{
+            //    return;
+            //}
 
-            if (!Directory.Exists(BackupsFolderPath))
-            {
-                BackupsFolderPath = string.Empty;
-                await SettingsService.Save(SettingType.BackupsPath, BackupsFolderPath);
-            }
+            //if (!Directory.Exists(BackupsFolderPath))
+            //{
+            //    BackupsFolderPath = string.Empty;
+            //    await SettingsService.Save(SettingType.BackupsPath, BackupsFolderPath);
+            //}
         }
 
         private async Task Backups()
         {
             ShowBackups = false;
-            var readPermission = await SystemService.CheckStorageReadPermission();
-            if (!readPermission)
+            var flag = await CheckPermission();
+            if(!flag)
             {
-                await AlertService.Success(I18n.T("Permission.OpenStorageRead"));
-                return;
-            }
-
-            var writePermission = await SystemService.CheckStorageWritePermission();
-            if (!writePermission)
-            {
-                await AlertService.Error(I18n.T("Permission.OpenStorageWrite"));
                 return;
             }
 
@@ -109,6 +101,12 @@ namespace SwashbucklerDiary.Pages
 
         private async Task Restore()
         {
+            var flag = await CheckPermission();
+            if (!flag)
+            {
+                return;
+            }
+
             RestoreFilePath = string.Empty;
             RestoreFilePath = await SystemService.PickDBFileAsync();
             if (string.IsNullOrEmpty(RestoreFilePath))
@@ -129,6 +127,25 @@ namespace SwashbucklerDiary.Pages
 
             File.Copy(RestoreFilePath, SQLiteConstants.DatabasePath, true);
             await AlertService.Success(I18n.T("Backups.RestoreSuccess"));
+        }
+
+        private async Task<bool> CheckPermission()
+        {
+            var readPermission = await SystemService.CheckStorageReadPermission();
+            if (!readPermission)
+            {
+                await AlertService.Success(I18n.T("Permission.OpenStorageRead"));
+                return false;
+            }
+
+            var writePermission = await SystemService.CheckStorageWritePermission();
+            if (!writePermission)
+            {
+                await AlertService.Error(I18n.T("Permission.OpenStorageWrite"));
+                return false;
+            }
+
+            return true;
         }
     }
 }
