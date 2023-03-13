@@ -21,6 +21,8 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public EventCallback OnTag { get; set; }
         [Parameter]
+        public EventCallback OnExport { get; set; }
+        [Parameter]
         public EventCallback OnClick { get; set; }
 
         protected override void OnInitialized()
@@ -60,7 +62,7 @@ namespace SwashbucklerDiary.Components
                 new("Share.Copy","mdi-content-copy",()=>OnCopy.InvokeAsync()),
                 new("Share.Delete","mdi-delete-outline",()=>OnDelete.InvokeAsync()),
                 new(TopText,"mdi-format-vertical-align-top",()=>OnTopping.InvokeAsync()),
-                new("Diary.Export","mdi-export",()=>ToDo())
+                new("Diary.Export","mdi-export",()=>OnExport.InvokeAsync())
             };
         }
     }

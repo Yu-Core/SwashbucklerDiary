@@ -1,0 +1,33 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits DialogComponentBase
+
+<MyDialog MyValue="Value"
+          MyValueChanged="InternalValueChanged"
+          MaxWidth="420">
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Export.SelectType"))
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            @foreach (var item in ViewListItems)
+            {
+                <MListItem Class="px-0" OnClick="@(item.Action)">
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            @(item.Icon)
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        <MListItemTitle>
+                            @(item.Text)
+                        </MListItemTitle>
+                    </MListItemContent>
+                </MListItem>
+            }
+        </MCardText>
+    </MCard>
+</MyDialog>

@@ -1,5 +1,4 @@
-﻿using BlazorComponent;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
@@ -9,8 +8,9 @@ namespace SwashbucklerDiary.Components
     {
         private bool ShowDeleteDiary;
         private bool ShowSelectTag;
+        private bool ShowExport;
         private DiaryModel SelectDiary = new();
-        private Action? OnDelete;
+        private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
         public IDiaryService DiaryService { get; set; } = default!;
@@ -32,7 +32,7 @@ namespace SwashbucklerDiary.Components
             set => SelectDiary.Tags = value;
         }
 
-        private async Task OnTopping(DiaryModel diaryModel)
+        private async Task HandleTopping(DiaryModel diaryModel)
         {
             diaryModel.Top = !diaryModel.Top;
             await DiaryService.UpdateAsync(diaryModel);
@@ -40,28 +40,28 @@ namespace SwashbucklerDiary.Components
 
         private void OpenDeleteDialog(DiaryModel diaryModel)
         {
-            OnDelete = null;
-            OnDelete += async () =>
-            {
-                ShowDeleteDiary = false;
-                bool flag = await DiaryService.DeleteAsync(diaryModel);
-                if (flag)
-                {
-                    Value!.Remove(diaryModel);
-                    await AlertService.Success(I18n.T("Share.DeleteSuccess"));
-                    StateHasChanged();
-                }
-                else
-                {
-                    await AlertService.Error(I18n.T("Share.DeleteFail"));
-                }
-                await OnDeleted.InvokeAsync();
-            };
+            SelectDiary = diaryModel;
             ShowDeleteDiary = true;
-            StateHasChanged();
         }
 
-        private async Task OnCopy(DiaryModel diaryModel)
+        private async Task HandleDelete(DiaryModel diaryModel)
+        {
+            ShowDeleteDiary = false;
+            bool flag = await DiaryService.DeleteAsync(diaryModel);
+            if (flag)
+            {
+                Value!.Remove(diaryModel);
+                await AlertService.Success(I18n.T("Share.DeleteSuccess"));
+                StateHasChanged();
+            }
+            else
+            {
+                await AlertService.Error(I18n.T("Share.DeleteFail"));
+            }
+            await OnDeleted.InvokeAsync();
+        }
+
+        private async Task HandleCopy(DiaryModel diaryModel)
         {
             var text = DiaryCopyContent(diaryModel);
             await SystemService.SetClipboard(text);
@@ -69,7 +69,7 @@ namespace SwashbucklerDiary.Components
             await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
 
-        private async Task OnTag(DiaryModel diary)
+        private async Task HandleTag(DiaryModel diary)
         {
             SelectDiary = diary;
             SelectedTags = await DiaryService.GetTagsAsync(SelectDiary.Id);
@@ -83,7 +83,7 @@ namespace SwashbucklerDiary.Components
             ShowSelectTag = false;
         }
 
-        private void OnClick(Guid id)
+        private void HandleClick(Guid id)
         {
             NavigateService.NavigateTo($"/read/{id}");
         }
@@ -96,5 +96,12 @@ namespace SwashbucklerDiary.Components
             }
             return diary.Title + "\n" + diary.Content;
         }
+
+        private void OpenExportDialog(DiaryModel diary)
+        {
+            ExportDiaries = new() { diary };
+            ShowExport = true;
+        }
+        
     }
 }

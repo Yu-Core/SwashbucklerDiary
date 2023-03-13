@@ -7,11 +7,12 @@
         {
             <DiaryCard Value="item"
                Class="@($"diary-card {CardClass}")"
-               OnTag="()=>OnTag(item)"
-               OnCopy="()=>OnCopy(item)"
+               OnTag="()=>HandleTag(item)"
+               OnCopy="()=>HandleCopy(item)"
                OnDelete="()=>OpenDeleteDialog(item)"
-               OnTopping="()=>OnTopping(item)"
-               OnClick="()=>OnClick(item.Id)">
+               OnTopping="()=>HandleTopping(item)"
+               OnExport="()=>OpenExportDialog(item)"
+               OnClick="()=>HandleClick(item.Id)">
             </DiaryCard>
         }
     }
@@ -21,11 +22,12 @@
         {
             <DiaryCard Value="item"
                Class="@($"diary-card {CardClass}")"
-               OnTag="()=>OnTag(item)"
-               OnCopy="()=>OnCopy(item)"
+               OnTag="()=>HandleTag(item)"
+               OnCopy="()=>HandleCopy(item)"
                OnDelete="()=>OpenDeleteDialog(item)"
-               OnTopping="()=>OnTopping(item)"
-               OnClick="()=>OnClick(item.Id)">
+               OnTopping="()=>HandleTopping(item)"
+               OnExport="()=>OpenExportDialog(item)"
+               OnClick="()=>HandleClick(item.Id)">
             </DiaryCard>
         }
     }
@@ -48,6 +50,9 @@
 <DeleteDialog @bind-Value="ShowDeleteDiary"
               Title="@(I18n.T("Diary.Delete.Title"))"
               Content="@(I18n.T("Diary.Delete.Content"))"
-              OnOK="()=>OnDelete?.Invoke()">
-
+              OnOK="()=>HandleDelete(SelectDiary)">
 </DeleteDialog>
+
+<ExportDialog @bind-Value="ShowExport" Diaries="ExportDiaries">
+
+</ExportDialog>

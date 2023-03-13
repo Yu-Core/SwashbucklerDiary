@@ -316,7 +316,9 @@
     "WebDAV": "WebDAV",
     "Backups": "备份",
     "Restore": "还原",
-    "SelectFolder": "请选择你的备份文件夹",
+    "BackupsSubtitle": "保存为db3格式的数据库文件",
+    "RestoreSubtitle": "选择db3格式的数据库文件",
+    "SelectFolder": "请选择你的备份文件夹,并保存",
     "LocalPointer": "数据会被保存到文件夹",
     "BackupsSuccess": "备份成功",
     "Invalid backup folder": "无效的备份文件夹",
@@ -343,5 +345,19 @@
     "Rename": "重命名位置",
     "NoLocation": "暂无位置"
   },
-  "Press again to exit": "再按一次退出"
+  "Press again to exit": "再按一次退出",
+  "Export": {
+    "Export": "导出",
+    "Import": "导入",
+    "ExportSubtitle": "保存为txt、json、pdf等格式文件",
+    "ImportSubtitle": "导入json文件",
+    "ExportSuccess": "导出成功",
+    "SelectType": "选择导出文件格式",
+    "ImportSuccess": "导入成功",
+    "ImportFail": "导入失败",
+    "ConfirmImport": {
+      "Title": "确认导入",
+      "Content": "确认导入这些日记？"
+    }
+  }
 }

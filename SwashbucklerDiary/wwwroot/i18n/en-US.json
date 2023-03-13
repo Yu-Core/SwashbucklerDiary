@@ -315,7 +315,9 @@
     "WebDAV": "WebDAV",
     "Backups": "Backups",
     "Restore": "Restore",
-    "SelectFolder": "Please select your backup folder",
+    "BackupsSubtitle": "Save as a database file in db3 type",
+    "RestoreSubtitle": "Select a database file in db3 type",
+    "SelectFolder": "Please select your backup folder and save it",
     "LocalPointer": "The data will be saved to the folder ",
     "BackupsSuccess": "Backups success",
     "Invalid backup folder": "Invalid backup folder",
@@ -342,5 +344,19 @@
     "Rename": "Rename Location",
     "NoLocation": "No location"
   },
-  "Press again to exit": "Press again to exit"
+  "Press again to exit": "Press again to exit",
+  "Export": {
+    "Export": "Export",
+    "Import": "Import",
+    "ExportSubtitle": "Save as txt, json, PDF type files",
+    "ImportSubtitle": "Import json file",
+    "ExportSuccess": "Export success",
+    "SelectType": "Select export file type",
+    "ImportSuccess": "Import success",
+    "ImportFail": "Import fail",
+    "ConfirmImport": {
+      "Title": "Confirm import",
+      "Content": "Confirm importing these diaries？"
+    }
+  }
 }

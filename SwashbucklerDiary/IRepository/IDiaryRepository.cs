@@ -12,5 +12,6 @@ namespace SwashbucklerDiary.IRepository
         Task<List<DiaryModel>> GetListIncludesAsync();
         Task<List<DiaryModel>> GetListIncludesAsync(Expression<Func<DiaryModel, bool>> func);
         Task<bool> UpdateIncludesAsync(DiaryModel model);
+        Task<bool> ExportAsync(List<DiaryModel> diaries);
     }
 }

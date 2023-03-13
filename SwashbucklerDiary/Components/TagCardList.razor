@@ -5,8 +5,8 @@
     {
         <TagCard Value="item"
              OnDelete="()=>OpenDeleteDialog(item)"
-             OnRename="()=>OnRename(item)"
-             OnClick="()=>OnClick(item.Id)">
+             OnRename="()=>HandleRename(item)"
+             OnClick="()=>HandleClick(item.Id)">
         </TagCard>
     }
 </div>
@@ -25,12 +25,10 @@
              Title="@(I18n.T("Tag.Rename"))"
              Placeholder="@(I18n.T("Tag.Placeholder"))"
              OnOK="SaveRenameTag">
-
 </InputDialog>
 
 <DeleteDialog @bind-Value="ShowDeleteTag"
               Title="@(I18n.T("Tag.Delete.Title"))"
               Content="@(I18n.T("Tag.Delete.Content"))"
-              OnOK="()=>OnDelete?.Invoke()">
-
+              OnOK="()=>HandleDelete(SelectedTag)">
 </DeleteDialog>

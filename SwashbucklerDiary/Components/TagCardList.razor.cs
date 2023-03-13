@@ -1,5 +1,4 @@
-﻿using BlazorComponent;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
@@ -10,7 +9,7 @@ namespace SwashbucklerDiary.Components
         private bool ShowDeleteTag;
         private bool ShowRenameTag;
         private Guid RenameTagId;
-        private Action? OnDelete { get; set; }
+        private TagModel SelectedTag = new();
 
         [Inject]
         public ITagService TagService { get; set; } = default!;
@@ -20,7 +19,7 @@ namespace SwashbucklerDiary.Components
 
         private string? RenameTagName { get; set; }
 
-        private void OnRename(TagModel tag)
+        private void HandleRename(TagModel tag)
         {
             RenameTagId = tag.Id;
             RenameTagName = tag.Name;
@@ -30,24 +29,24 @@ namespace SwashbucklerDiary.Components
 
         private void OpenDeleteDialog(TagModel tag)
         {
-            OnDelete = null;
-            OnDelete += async () =>
-            {
-                ShowDeleteTag = false;
-                bool flag = await TagService.DeleteAsync(tag);
-                if (flag)
-                {
-                    Value!.Remove(tag);
-                    await AlertService.Success(I18n.T("Share.DeleteSuccess"));
-                    StateHasChanged();
-                }
-                else
-                {
-                    await AlertService.Error(I18n.T("Share.DeleteFail"));
-                }
-            };
+            SelectedTag = tag;
             ShowDeleteTag = true;
-            StateHasChanged();
+        }
+
+        private async Task HandleDelete(TagModel tag)
+        {
+            ShowDeleteTag = false;
+            bool flag = await TagService.DeleteAsync(tag);
+            if (flag)
+            {
+                Value!.Remove(tag);
+                await AlertService.Success(I18n.T("Share.DeleteSuccess"));
+                StateHasChanged();
+            }
+            else
+            {
+                await AlertService.Error(I18n.T("Share.DeleteFail"));
+            }
         }
 
         private async Task SaveRenameTag(string tagName)
@@ -77,7 +76,7 @@ namespace SwashbucklerDiary.Components
             }
         }
 
-        private void OnClick(Guid id)
+        private void HandleClick(Guid id)
         {
             NavigateService.NavigateTo($"/tag/{id}");
         }
