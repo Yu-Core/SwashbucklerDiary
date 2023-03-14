@@ -87,6 +87,7 @@
     "ContentPlace": "Please enter content",
     "WordCountType": "Word",
     "CountUnit": "words",
+    "Count": "WordCount",
     "SelectWeather": "Select Weather",
     "SelectMood": "Select Mood",
     "InputLocation": "Enter location",

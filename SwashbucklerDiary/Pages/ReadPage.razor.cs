@@ -4,6 +4,7 @@ using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
+using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using SwashbucklerDiary.Services;
@@ -217,6 +218,29 @@ namespace SwashbucklerDiary.Pages
         {
             Diary.Private = !Diary.Private;
             await DiaryService.UpdateAsync(Diary);
+        }
+
+        private string CounterValue()
+        {
+            string? value = Diary.Content;
+            int len = 0;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return len + " " + I18n.T("Write.CountUnit");
+            }
+
+            value = value.Trim();
+            if (I18n.T("Write.WordCountType") == WordCountType.Word.ToString())
+            {
+                len = value.WordCount();
+            }
+
+            if (I18n.T("Write.WordCountType") == WordCountType.Character.ToString())
+            {
+                len = value.CharacterCount();
+            }
+
+            return len + " " + I18n.T("Write.CountUnit");
         }
     }
 }

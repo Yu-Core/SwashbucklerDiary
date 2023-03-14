@@ -24,6 +24,8 @@ namespace SwashbucklerDiary.Components
         public EventCallback<string> ValueChanged { get; set; }
         [Parameter]
         public string? Class { get; set; }
+        [Parameter]
+        public string? WrapClass { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
@@ -34,7 +36,7 @@ namespace SwashbucklerDiary.Components
             {
                 {"mode","ir" },
                 //{"counter",new{enable = true,type = "type"}},
-                {"minHeight",240},
+                //{"minHeight",240},
                 {"toolbar",new List<string>(){"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "outdent", "indent","code","inline-code","link","emoji","edit-mode"}},
                 {"placeholder",I18n.T("Write.ContentPlace")! },
                 {"cdn","npm/vditor/3.9.0" },

@@ -15,6 +15,8 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public string? Class { get; set; }
         [Parameter]
+        public string? ContentClass { get; set; }
+        [Parameter]
         public bool Bottom { get; set; }
         [Parameter]
         public double OccupyHeight { get; set; }

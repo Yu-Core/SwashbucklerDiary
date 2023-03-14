@@ -1,0 +1,30 @@
+﻿::deep .m-input__control {
+    flex-grow: 1;
+}
+
+::deep .m-input__slot {
+    flex-grow: 1;
+}
+
+::deep .m-text-field__details {
+    flex-grow: 0;
+}
+
+.write-input-wrap{
+    display:flex;
+    flex-grow:1;
+    flex-direction:column;
+}
+
+::deep .write-markdown-wrap {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    min-height:0;
+}
+
+::deep .write-markdown {
+    flex-grow:1;
+    min-height: 0;
+    overflow: visible;
+}

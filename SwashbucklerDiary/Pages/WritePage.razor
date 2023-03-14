@@ -4,69 +4,80 @@
 <MAppBar App
          Elevation="0"
          Color="white">
-    <MButton Icon OnClick="OnBack">
-        <MIcon>
-            mdi-arrow-left
-        </MIcon>
-    </MButton>
+    <ChildContent>
+        <MButton Icon OnClick="OnBack">
+            <MIcon>
+                mdi-arrow-left
+            </MIcon>
+        </MButton>
 
-    <MSpacer></MSpacer>
+        <MSpacer></MSpacer>
 
-    <MButton Icon
-             OnClick="()=>ShowSelectTag = true">
-        <MIcon>
-            mdi-label-outline
-        </MIcon>
-    </MButton>
+        <MButton Icon
+                 OnClick="()=>ShowSelectTag = true">
+            <MIcon>
+                mdi-label-outline
+            </MIcon>
+        </MButton>
 
-    <MyMenu @bind-Value="ShowMenu" ViewListItems="ViewListItems">
-        <ButtonContent>
-            <MultiDisplay>
-                <DesktopContent>
-                    <MIcon>mdi-dots-horizontal</MIcon>
-                </DesktopContent>
-                <MobileContent>
-                    <MIcon>mdi-dots-vertical</MIcon>
-                </MobileContent>
-            </MultiDisplay>
-        </ButtonContent>
-    </MyMenu>
-    </MAppBar>
+        <MyMenu @bind-Value="ShowMenu" ViewListItems="ViewListItems">
+            <ButtonContent>
+                <MultiDisplay>
+                    <DesktopContent>
+                        <MIcon>mdi-dots-horizontal</MIcon>
+                    </DesktopContent>
+                    <MobileContent>
+                        <MIcon>mdi-dots-vertical</MIcon>
+                    </MobileContent>
+                </MultiDisplay>
+            </ButtonContent>
+        </MyMenu>
+    </ChildContent>
+</MAppBar>
 
-    <ScrollContainer OccupyHeight="OccupyHeight">
-    <div class="px-3 text-h6 font-weight-bold">
-        <span>@(Diary.CreateTime.ToString("yyyy/MM/dd"))</span>
-        <span class="pl-5 text-subtitle-1">
-            @(I18n.ToWeek(Diary.CreateTime))
-        </span>
+<ScrollContainer Class="d-flex" 
+                 ContentClass="d-flex flex-column flex-grow-1" 
+                 OccupyHeight="OccupyHeight">
+    <div>
+        <div class="px-3 d-flex align-end">
+            <span class="text-h6 font-weight-bold">
+                @(Diary.CreateTime.ToString("yyyy/MM/dd"))
+            </span>
+            <span class="pl-5 text-subtitle-1">
+                @(I18n.ToWeek(Diary.CreateTime))
+            </span>
+            <MSpacer></MSpacer>
+            <span class="text-subtitle-1">
+                @(CounterValue())
+            </span>
+        </div>
+        <div class="px-2">
+            <MChip Class="my-2 mr-2"
+                      Outlined
+                   OnClick="()=>ShowWeather=true">
+                <MIcon Left>
+                    @(GetWeatherIcon(Diary.Weather))
+                </MIcon>
+                @Weather
+            </MChip>
+            <MChip Class="my-2 mr-2"
+                      Outlined
+                   OnClick="()=>ShowMood=true">
+                <MIcon Left>
+                    @(GetMoodIcon(Diary.Mood))
+                </MIcon>
+                @Mood
+            </MChip>
+            <MChip Class="my-2 mr-2"
+                      Outlined
+                   OnClick="()=>ShowLocation=true">
+                <MIcon Left>
+                    mdi-map-marker-outline
+                </MIcon>
+                @(string.IsNullOrEmpty(Location) ? I18n.T("Write.Location") : Location)
+            </MChip>
+        </div>
     </div>
-    <div class="px-2">
-        <MChip Class="my-2 mr-2"
-               Outlined
-               OnClick="()=>ShowWeather=true">
-            <MIcon Left>
-                @(GetWeatherIcon(Diary.Weather))
-            </MIcon>
-            @Weather
-        </MChip>
-        <MChip Class="my-2 mr-2"
-               Outlined
-               OnClick="()=>ShowMood=true">
-            <MIcon Left>
-                @(GetMoodIcon(Diary.Mood))
-            </MIcon>
-            @Mood
-        </MChip>
-        <MChip Class="my-2 mr-2"
-               Outlined
-               OnClick="()=>ShowLocation=true">
-            <MIcon Left>
-                mdi-map-marker-outline
-            </MIcon>
-            @(string.IsNullOrEmpty(Location) ? I18n.T("Write.Location") : Location)
-        </MChip>
-    </div>
-
     @if (ShowTitle)
     {
         <MTextField @bind-Value="Diary.Title"
@@ -83,31 +94,30 @@
         </MTextField>
     }
 
-    @if (Markdown)
-    {
-        <MyMarkdown @bind-Value="Diary.Content" Class="my-sm-4 px-3">
-        </MyMarkdown>
-    }
-    else
-    {
-        <MTextarea @bind-Value="Diary.Content"
-               Class="@($"my-sm-4 user-select {(Markdown?"d-none":"")}")"
-               Solo="Mobile"
-               Flat="Mobile"
-               Outlined="Desktop"
-               HideDetails="@("auto")"
-                  AutoGrow
-               Height="240"
-               Counter="true"
-                       spellcheck="false"
-               Placeholder="@(I18n.T("Write.ContentPlace"))">
-        <CounterContent>
-            <MCounter Value="@CounterValue(Diary.Content)"></MCounter>
-        </CounterContent>
-        </MTextarea>
-    }
+    <div class="write-input-wrap" style="min-height:0;">
+        @if (Markdown)
+        {
+            <MyMarkdown @bind-Value="Diary.Content"
+                    WrapClass="write-markdown-wrap"
+                    Class="my-sm-4 px-3 write-markdown">
+            </MyMarkdown>
+        }
+        else
+        {
+            <MTextarea @bind-Value="Diary.Content"
+                   Class="@($"my-sm-4 user-select flex-grow-1 flex-column {(Markdown?"d-none":"")}")"
+                   Solo="Mobile"
+                   Flat="Mobile"
+                   Outlined="Desktop"
+                   HideDetails="@("auto")"
+                          NoResize
+                           spellcheck="false"
+                   Placeholder="@(I18n.T("Write.ContentPlace"))">
+            </MTextarea>
+        }
+    </div>
 
-    <div class="mb-5">
+    <div class="mb-sm-5">
         <MChipGroup Column>
             @foreach (var item in SelectedTags)
             {

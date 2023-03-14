@@ -268,8 +268,9 @@ namespace SwashbucklerDiary.Pages
             return IconService!.GetMoodIcon(key);
         }
 
-        private string CounterValue(string? value)
+        private string CounterValue()
         {
+            string? value = Diary.Content;
             int len = 0;
             if (string.IsNullOrWhiteSpace(value))
             {

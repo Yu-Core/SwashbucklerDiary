@@ -88,6 +88,7 @@
     "ContentPlace": "请输入内容",
     "WordCountType": "Character",
     "CountUnit": "字",
+    "Count": "字数",
     "SelectWeather": "选择天气",
     "SelectMood": "选择心情",
     "InputLocation": "输入位置",
