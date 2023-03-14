@@ -1,5 +1,6 @@
 ﻿namespace SwashbucklerDiary.IServices
 {
+    //https://github.com/dotnet/maui/issues/2907
     public interface ILocalImageService
     {
         /// <summary>

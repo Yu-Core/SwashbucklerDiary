@@ -1,5 +1,6 @@
 ﻿using Microsoft.JSInterop;
 using SwashbucklerDiary.IServices;
+using System.Collections.Generic;
 
 namespace SwashbucklerDiary.Services
 {
@@ -7,8 +8,8 @@ namespace SwashbucklerDiary.Services
     {
         private readonly IJSRuntime JS = default!;
         private IJSObjectReference module = default!;
-        private const string flag = "local:";
-        private List<string> urls = new ();
+        private const string flag = "local:///";
+        private Dictionary<string, string> uriToUrl = new ();
 
         public LocalImageService(IJSRuntime jS) 
         {
@@ -35,19 +36,25 @@ namespace SwashbucklerDiary.Services
             }
 
             uri = uri.Substring(flag.Length);
+
+            if (uriToUrl.ContainsKey(uri))
+            {
+                return uriToUrl[uri];
+            }
+
             using var imageStream = File.OpenRead(uri);
             var dotnetImageStream = new DotNetStreamReference(imageStream);
             var url = await module.InvokeAsync<string>("streamToUrl", new object[1] { dotnetImageStream });
-            urls.Add(url);
+            uriToUrl.Add(uri,url);
             return url;
         }
 
         public async Task RevokeUrl(string url)
         {
             await InitModule();
-            if(urls.Any(it=>it == url))
+            if(uriToUrl.ContainsValue(url))
             {
-                urls.Remove(url);
+                uriToUrl.Remove(uriToUrl.FirstOrDefault(it=>it.Value == url).Value);
                 await module.InvokeVoidAsync("revokeUrl", new object[1] { url });
             }
         }
