@@ -1,12 +1,11 @@
 ﻿using Microsoft.JSInterop;
 using SwashbucklerDiary.IServices;
-using System.Collections.Generic;
 
 namespace SwashbucklerDiary.Services
 {
     public class LocalImageService : ILocalImageService
     {
-        private readonly IJSRuntime JS = default!;
+        private readonly IJSRuntime JS;
         private IJSObjectReference module = default!;
         private const string flag = "local:///";
         private Dictionary<string, string> uriToUrl = new ();
@@ -37,9 +36,9 @@ namespace SwashbucklerDiary.Services
 
             uri = uri.Substring(flag.Length);
 
-            if (uriToUrl.ContainsKey(uri))
+            if (uriToUrl.TryGetValue(uri, out string? value))
             {
-                return uriToUrl[uri];
+                return value;
             }
 
             using var imageStream = File.OpenRead(uri);
@@ -61,7 +60,7 @@ namespace SwashbucklerDiary.Services
 
         private async Task InitModule()
         {
-            module ??= await JS!.InvokeAsync<IJSObjectReference>("import", "./js/getNativeImage.js");
+            module ??= await JS!.InvokeAsync<IJSObjectReference>("import", "./js/getLocalImage.js");
         }
     }
 }

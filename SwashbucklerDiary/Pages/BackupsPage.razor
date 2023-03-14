@@ -31,11 +31,11 @@
                Rounded="@("lg")">
             <MList TwoLine>
                 <MListItem OnClick="()=>ShowBackups=true">
-                    <MListItemIcon>
-                        <MIcon Class="list-item-icon">
+                    <MListItemAvatar>
+                        <MIcon Class="list-item-icon" Size="28">
                             mdi-folder-arrow-down-outline
                         </MIcon>
-                    </MListItemIcon>
+                    </MListItemAvatar>
                     <MListItemContent>
                         <MListItemTitle>
                             @(I18n.T("Backups.Backups"))
@@ -52,11 +52,11 @@
                 <MDivider Class="mx-3 mx-sm-0"></MDivider>
 
                 <MListItem OnClick="Restore">
-                    <MListItemIcon>
-                        <MIcon Class="list-item-icon">
+                    <MListItemAvatar>
+                        <MIcon Class="list-item-icon" Size="28">
                             mdi-folder-arrow-up-outline
                         </MIcon>
-                    </MListItemIcon>
+                    </MListItemAvatar>
                     <MListItemContent>
                         <MListItemTitle>
                             @(I18n.T("Backups.Restore"))

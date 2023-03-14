@@ -5,28 +5,27 @@
         @if (MasaBlazor.Breakpoint.SmAndUp)
         {
             <MNavigationDrawer App
-                                      Floating
-                           Style="max-height:unset;"
-                                      Permanent>
-            <MList Rounded Flat>
-                <MListItemGroup @bind-Value="SelectedItemIndex"
-                                        Mandatory>
-                    @foreach (var (item, i) in NavigationButtons.Select((v, i) => (v, i)))
-                    {
-                        var activated = SelectedItemIndex == i;
+                               Floating
+                               Style="max-height:unset;"
+                               Permanent>
+                <MList Rounded Flat>
+                    <MListItemGroup @bind-Value="SelectedItemIndex" Mandatory>
+                        @foreach (var (item, i) in NavigationButtons.Select((v, i) => (v, i)))
+                        {
+                            var activated = SelectedItemIndex == i;
 
                             <MListItem Ripple="false" OnClick="item.Action">
-                            <MListItemIcon>
+                                <MListItemIcon>
                                     <MIcon Large="activated">
                                         @(activated ? item.SelectedIcon : item.Icon)
                                     </MIcon>
-                            </MListItemIcon>
-                                <MListItemTitle Class="@(activated?"text-h6 font-weight-bold":"")" 
-                                                Style="transition: font-size 0.3s ease;">
-                                @(I18n.T(item.Text))
-                            </MListItemTitle>
-                        </MListItem>
-                    }
+                                </MListItemIcon>
+                                <MListItemTitle Class="@(activated?"text-h6 font-weight-bold":"")"
+                                        Style="transition: font-size 0.3s ease;">
+                                    @(I18n.T(item.Text))
+                                </MListItemTitle>
+                            </MListItem>
+                        }
                     </MListItemGroup>
                 </MList>
             </MNavigationDrawer>
@@ -37,7 +36,7 @@
             </ChildContent>
             <ErrorContent>
                 <MDialog Value="true"
-                          Persistent
+                         Persistent
                          MaxWidth="420">
                     <MCard>
                         <MCardTitle Class="font-weight-bold">
@@ -54,20 +53,23 @@
             </ErrorContent>
         </ErrorBoundary>
     </MMain>
-    <MBottomNavigation @bind-Value="SelectedItemIndex"
-                       InputValue="ShowBottomNavigation"
-                       Class="d-flex justify-space-around d-sm-none"
-                       Mandatory
-                       App
-                       Shift>
+    @if (ShowBottomNavigation)
+    {
+        <MBottomNavigation @bind-Value="SelectedItemIndex"
+                           InputValue="ShowBottomNavigation"
+                           Class="d-flex justify-space-around d-sm-none"
+                           Mandatory
+                           App
+                           Shift>
         @foreach (var (item, i) in NavigationButtons.Select((v, i) => (v, i)))
-        {
-            <MButton Ripple="false" OnClick="item.Action">
-                <span>@(I18n.T(item.Text))</span>
-                <MIcon>
-                    @(SelectedItemIndex == i ? item.SelectedIcon : item.Icon)
-                </MIcon>
-            </MButton>
-        }
-    </MBottomNavigation>
+            {
+                <MButton Ripple="false" OnClick="item.Action">
+                    <span>@(I18n.T(item.Text))</span>
+                    <MIcon>
+                        @(SelectedItemIndex == i ? item.SelectedIcon : item.Icon)
+                    </MIcon>
+                </MButton>
+            }
+        </MBottomNavigation>
+    }
 </MApp>

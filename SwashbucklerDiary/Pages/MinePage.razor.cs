@@ -5,7 +5,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class MinePage : PageComponentBase, IAsyncDisposable
+    public partial class MinePage : PageComponentBase
     {
         private int DiaryCount;
         private long WordCount;
@@ -58,7 +58,7 @@ namespace SwashbucklerDiary.Pages
                     {
                         new("Mine.Backups","mdi-folder-sync-outline",()=>To("/backups")),
                         new("Mine.Export","mdi-export",()=>To("/export")),
-                        new("Mine.Achievement","mdi-chart-line",()=>To("/achievement")),
+                        new("Mine.Achievement","mdi-star-outline",()=>To("/achievement")),
                     }
                 },
                 {
@@ -134,12 +134,6 @@ namespace SwashbucklerDiary.Pages
         {
             ShowFeedback = false;
             await SystemService.OpenBrowser(githubUrl);
-        }
-
-        async ValueTask IAsyncDisposable.DisposeAsync()
-        {
-            await LocalImageService.RevokeUrl(Avatar!);
-            GC.SuppressFinalize(this);
         }
     }
 }

@@ -5,7 +5,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class UserPage : PageComponentBase, IAsyncDisposable
+    public partial class UserPage : PageComponentBase
     {
         private string? UserName;
         private string? Sign;
@@ -99,7 +99,9 @@ namespace SwashbucklerDiary.Pages
                 localFilePath = await LocalImageService.AddFlag(filePath);
 
                 await SettingsService.Save(SettingType.Avatar, localFilePath);
+                var oldAvatar = Avatar;
                 await SetAvatar();
+                await LocalImageService.RevokeUrl(oldAvatar!);
                 await AlertService.Success(I18n.T("Share.EditSuccess"));
                 await HandleAchievements(AchievementType.Avatar);
             }
@@ -109,12 +111,6 @@ namespace SwashbucklerDiary.Pages
         {
             string avatar = await SettingsService.Get(SettingType.Avatar);
             Avatar = await LocalImageService.ToUrl(avatar);
-        }
-
-        async ValueTask IAsyncDisposable.DisposeAsync()
-        {
-            await LocalImageService.RevokeUrl(Avatar!);
-            GC.SuppressFinalize(this);
         }
     }
 }
