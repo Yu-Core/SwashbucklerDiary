@@ -5,31 +5,23 @@ namespace SwashbucklerDiary.Components
 {
     public abstract class DialogFocusComponentBase : DialogComponentBase
     {
-        private bool FirstOpen = true;
         protected MTextField<string?> TextField = default!;
-        protected override void OnAfterRender(bool firstRender)
+        protected MyDialog? myDialog;
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (Value)
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
             {
-                Task.Run(async () =>
-                {
-                    if (FirstOpen)
-                    {
-                        await Task.Delay(500);
-                        FirstOpen = false;
-                    }
-                    else
-                    {
-                        await Task.Delay(200);
-                    }
-
-                    if (TextField != null && !TextField.IsFocused)
-                    {
-                        await TextField.InputElement.FocusAsync();
-                    }
-                });
+                myDialog!.AfterShowContent = async _ => await FocusAsync();
             }
-            base.OnAfterRender(firstRender);
+        }
+
+        private async Task FocusAsync()
+        {
+            if (TextField != null && !TextField.IsFocused)
+            {
+                await TextField.InputElement.FocusAsync();
+            }
         }
     }
 }
