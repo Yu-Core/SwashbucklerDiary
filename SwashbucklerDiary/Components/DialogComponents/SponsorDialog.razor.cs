@@ -5,42 +5,20 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class SponsorDialog : DialogComponentBase, IDisposable
+    public partial class SponsorDialog : DialogComponentBase
     {
-        private bool ShowCustomAmount;
+        private bool ShowCustomAmount => selection == Amounts.Count;
         private bool ShowThank;
+        StringNumber selection = 0;
         private readonly static List<string> Amounts = new()
         {
             "5","20","99"
         };
 
-        [Inject]
-        public MasaBlazor MasaBlazor { get; set; } = default!;
-
-        public void Dispose()
-        {
-            MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
-            GC.SuppressFinalize(this);
-        }
-
-        protected override Task OnInitializedAsync()
-        {
-            MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
-            return base.OnInitializedAsync();
-        }
-
-        private bool IsDesktop => MasaBlazor.Breakpoint.SmAndUp;
-
         private async Task OnSponsor(MouseEventArgs mouseEventArgs)
         {
             await HandleOnCancel(mouseEventArgs);
             ShowThank = true;
-        }
-
-
-        private async Task InvokeStateHasChangedAsync()
-        {
-            await InvokeAsync(StateHasChanged);
         }
     }
 }

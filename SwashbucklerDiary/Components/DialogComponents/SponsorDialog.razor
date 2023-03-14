@@ -13,21 +13,20 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
-            <MChipGroup Mandatory
-                        Column
+            <MChipGroup @bind-Value="selection"
+                        Mandatory
                         ActiveClass="primary--text">
                 @foreach (var item in Amounts)
                 {
                     <MChip Outlined
-                       Filter="IsDesktop"
-                       OnClick="()=>ShowCustomAmount=false">
+                       Filter>
                         @(I18n.T("Amount.CurrencySymbol") + item)
                     </MChip>
                 }
-                <MChip Outlined
-                       Filter="IsDesktop"
-                       OnClick="()=>ShowCustomAmount=true">
-                    @(I18n.T("Amount.Custom"))
+                <MChip Outlined>
+                    <MIcon>
+                        mdi-pencil-outline
+                    </MIcon>
                 </MChip>
             </MChipGroup>
             @if (ShowCustomAmount)
@@ -39,7 +38,7 @@
                         Dense
                         HideDetails="@("auto")"
                         Placeholder="@(I18n.T("Amount.CustomPlace"))"
-                        Prefix="@(I18n.T("Amount.CurrencySymbol"))"
+                        Prefix="$"
                         NumberProps="@(prop=> { prop.Min = 10; prop.HideControl = true; })">
                 </MTextField>
             }
