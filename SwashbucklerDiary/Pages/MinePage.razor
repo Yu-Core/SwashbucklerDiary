@@ -24,6 +24,13 @@
                 <MListItem ThreeLine>
                     <MListItemAvatar Class="ml-md-2" Rounded="@("lg")" Size="70">
                         <MImage Src="@(Avatar)">
+                            <PlaceholderContent>
+                                <MRow Class="fill-height ma-0"
+                                      Align="@AlignTypes.Center"
+                                      Justify="@JustifyTypes.Center">
+                                    <MProgressCircular Indeterminate></MProgressCircular>
+                                </MRow>
+                            </PlaceholderContent>
                         </MImage>
                     </MListItemAvatar>
                     <MListItemContent>

@@ -4,15 +4,15 @@
     "Cancel": "Cancel",
     "Save": "Save",
     "Delete": "Delete",
-    "DeleteSuccess": "Delete Success",
+    "DeleteSuccess": "Delete success",
     "DeleteFail": "Delete Fail",
     "Copy": "Copy",
-    "CopySuccess": "CopySuccess",
+    "CopySuccess": "Copy success",
     "Rename": "Rename",
     "Edit": "Edit",
-    "EditSuccess": "Edit Success",
+    "EditSuccess": "Edit success",
     "EditFail": "Edit Fail",
-    "AddSuccess": "Successfully added",
+    "AddSuccess": "Add success",
     "AddFail": "Add failed",
     "Clear": "Clear"
   },
@@ -59,15 +59,15 @@
   "Diary": {
     "Tag": "Tag",
     "Top": "Top",
-    "CancelTop": "Cancel Top",
+    "CancelTop": "Cancel top",
     "Export": "Export",
-    "Untitled": "No Title",
-    "NoDiary": "No Diary",
+    "Untitled": "No title",
+    "NoDiary": "No diary",
     "Delete": {
-      "Title": "Delete Diary",
+      "Title": "Delete diary",
       "Content": "Please delete carefully. Every diary is a precious memory."
     },
-    "Markdown": "Markdown Mode",
+    "Markdown": "Markdown mode",
     "Text": "Text Mode"
   },
   "Search": {
@@ -78,8 +78,8 @@
     "Catalogue": "Catalogue"
   },
   "Write": {
-    "OpenTitle": "Open Title",
-    "CloseTitle": "Close Title",
+    "OpenTitle": "Open title",
+    "CloseTitle": "Close title",
     "Weather": "Weather",
     "Mood": "Mood",
     "Location": "Location",
@@ -87,9 +87,8 @@
     "ContentPlace": "Please enter content",
     "WordCountType": "Word",
     "CountUnit": "words",
-    "Count": "WordCount",
-    "SelectWeather": "Select Weather",
-    "SelectMood": "Select Mood",
+    "SelectWeather": "Select weather",
+    "SelectMood": "Select mood",
     "InputLocation": "Enter location",
     "LocationPlace": "Please enter the location"
   },
@@ -101,7 +100,8 @@
     "sleet": "sleet",
     "snow": "snow",
     "windy": "windy",
-    "fog": "fog"
+    "fog": "fog",
+    "dust": "dust"
   },
   "Mood": {
     "happy": "happy",
@@ -123,10 +123,10 @@
   "Read": {
     "Share": "Share",
     "SelectShare": "Select sharing method",
-    "TextShare": "Text Share",
-    "ImageShare": "Image Share",
-    "OpenPrivacy": "Open Privacy",
-    "ClosePrivacy": "Close Privacy"
+    "TextShare": "Text share",
+    "ImageShare": "Image share",
+    "OpenPrivacy": "Open privacy",
+    "ClosePrivacy": "Close privacy"
   },
   "AppName": "SwashbucklerDiary",
   "Mine": {
@@ -141,12 +141,12 @@
     "Achievement": "Achievement",
     "Settings": "Setting",
     "Languages": "Language",
-    "Night": "Night Mode",
+    "Night": "Night mode",
     "Other": "Other",
     "Feedback": "Feedback",
     "About": "About",
-    "SelectLanguage": "Select Language",
-    "ContactWay": "Contact Way",
+    "SelectLanguage": "Select language",
+    "ContactWay": "Contact way",
     "MailCopy": "The email address has been copied to the clipboard"
   },
   "ToDo": {
@@ -154,14 +154,14 @@
     "Content": "Coming soon"
   },
   "User": {
-    "Title": "User Settings",
+    "Title": "User settings",
     "Avatar": "Avatar",
     "UserName": "Nickname",
     "Sign": "Sign",
-    "EditAvatar": "Edit Avatar",
+    "EditAvatar": "Edit avatar",
     "Photos": "Photos",
     "Capture": "Capture",
-    "EditUserName": "Edit UserName",
+    "EditUserName": "Edit nickname",
     "UserNamePlace": "Please enter a nickname",
     "EditSign": "Edit Sign",
     "SignPlace": "Please enter your signature",
@@ -173,15 +173,15 @@
     "OpenStorageRead": "Please enable storage read permission"
   },
   "About": {
-    "SourceCode": "View Source Code",
-    "Agreement": "User Agreement",
-    "Privacy": "Privacy Policy",
-    "UpdateRecords": "Update Records",
+    "SourceCode": "View source code",
+    "Agreement": "User agreement",
+    "Privacy": "Privacy policy",
+    "UpdateRecords": "Update records",
     "Evaluation": "Give a favorable comment",
-    "Related": "Related Open Source Project",
+    "Related": "Related open source project",
     "OpenAppStoreFail": "Failed to open the store",
-    "LogFile": "Log File",
-    "Sponsor": "Sponsor We",
+    "LogFile": "Log file",
+    "Sponsor": "Sponsor we",
     "Introduction": "An open source, cross-platform local diary app"
   },
   "FilePath": {
@@ -196,7 +196,7 @@
     "CustomPlace": "Please enter the amount you want to donate",
     "CurrencySymbol": "$",
     "Thank": "Thank",
-    "ThankContent": "Thank you, my friend, for your kindness. Don't really donate it to me.\nI hope you can live a full life every day and record your life. I can see it when I am old. That is the original intention of making this software."
+    "ThankContent": "Thank you, my friend, for your kindness. Don't really donate it to me.\n\nI hope you can live a full life every day and record your life. I can see it when I am old. That is the original intention of making this software."
   },
   "FunctionalDescription": "Functional Description",
   "ErrorHandle": {
@@ -204,7 +204,7 @@
     "Content": "An exception occurred. It has been saved to the log. Please exit the application"
   },
   "Achievement": {
-    "AchieveAchievements": "Achieve Achievements",
+    "AchieveAchievements": "Achieve achievements",
     "Completed": "Completed",
     "Diary": {
       "1": {
@@ -289,15 +289,15 @@
     },
     "Safe": {
       "Name": "Safe",
-      "DisplayPrivacy": "Privacy Mode",
-      "PrivacyLibrary": "Privacy Library",
-      "PrivacyPassword": "Privacy Password",
-      "Mask": "Invalidate Data",
-      "CamouflageSuccess": "Camouflage Success",
+      "DisplayPrivacy": "Privacy mode",
+      "PrivacyLibrary": "Privacy library",
+      "PrivacyPassword": "Privacy password",
+      "Mask": "Invalidate data",
+      "CamouflageSuccess": "Camouflage success",
       "PrivatePasswordSetSuccess": "PrivatePassword set success",
-      "SetPassword": "Set Password",
-      "ValidatePassword": "Validate Password",
-      "PasswordError": "Password Error",
+      "SetPassword": "Set password",
+      "ValidatePassword": "Validate password",
+      "PasswordError": "Password error",
       "NotSetPassword": "No password set"
     },
     "Location": {
@@ -312,7 +312,7 @@
   "Please input a password": "Please input a password",
   "Please enter the password again": "Please enter the password again",
   "Backups": {
-    "Local": "Local Backups",
+    "Local": "Local backups",
     "WebDAV": "WebDAV",
     "Backups": "Backups",
     "Restore": "Restore",
@@ -331,7 +331,7 @@
     "No diary": "暂无日记"
   },
   "Location": {
-    "Add": "Add Location",
+    "Add": "Add location",
     "Repeat": {
       "Title": "Location already exists",
       "Content": "Do not add again"
@@ -339,10 +339,10 @@
     "Placeholder": "Please enter the location name",
     "Select": "Select location",
     "Delete": {
-      "Title": "Delete Location",
+      "Title": "Delete location",
       "Content": "Only delete this location. The location of the previous journal will not be deleted"
     },
-    "Rename": "Rename Location",
+    "Rename": "Rename location",
     "NoLocation": "No location"
   },
   "Press again to exit": "Press again to exit",

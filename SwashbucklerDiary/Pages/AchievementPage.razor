@@ -32,7 +32,7 @@
 
                             <MProgressLinear Value="AchievementPage.GetProgressRate(item)"
                                          Color="@(AchievementPage.GetProgressRateColor(item))"
-                                         Rounded
+                                         Class="rounded-pill"
                                          Height="20">
                             <strong class="@AchievementPage.GetProgressRateTextColor(item)">
                                 @(GetProgressRateText(item))
@@ -45,3 +45,10 @@
         }
     </div>
 </ScrollContainer>
+
+<MSnackbar Value>
+    <MIcon>
+        mdi-alert-outline
+    </MIcon>
+    @(I18n!.T("Experimental features"))
+</MSnackbar>

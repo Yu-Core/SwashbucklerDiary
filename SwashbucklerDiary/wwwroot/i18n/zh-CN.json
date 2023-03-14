@@ -88,7 +88,6 @@
     "ContentPlace": "请输入内容",
     "WordCountType": "Character",
     "CountUnit": "字",
-    "Count": "字数",
     "SelectWeather": "选择天气",
     "SelectMood": "选择心情",
     "InputLocation": "输入位置",
@@ -102,7 +101,8 @@
     "sleet": "雨夹雪",
     "snow": "雪",
     "windy": "风",
-    "fog": "雾"
+    "fog": "雾",
+    "dust": "沙尘暴"
   },
   "Mood": {
     "happy": "高兴",
@@ -197,7 +197,7 @@
     "CustomPlace": "请输入你要捐助的金额",
     "CurrencySymbol": "￥",
     "Thank": "感谢",
-    "ThankContent": "谢谢你朋友，你的好意我心领了，不必真的捐赠给我。\n希望你每天能过得充实，并且记录下自己的生活，当老的一天还能看到，这就是我制作这款软件的初衷。"
+    "ThankContent": "谢谢你朋友，你的好意我心领了，不必真的捐赠给我。\n\n希望你每天能过得充实，并且记录下自己的生活，当老的一天还能看到，这就是我制作这款软件的初衷。"
   },
   "FunctionalDescription": "功能说明",
   "ErrorHandle": {

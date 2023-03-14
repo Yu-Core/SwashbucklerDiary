@@ -34,9 +34,9 @@ namespace SwashbucklerDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             LoadView();
-            await SetAvatar();
             await SetCount();
             await LoadSettings();
+            await SetAvatar();
         }
 
         private async Task SetCount()

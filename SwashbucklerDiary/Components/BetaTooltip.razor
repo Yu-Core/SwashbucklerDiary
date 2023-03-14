@@ -1,6 +1,6 @@
 ﻿@using BlazorComponent.I18n;
 
-<MTooltip @bind-Value="show" Right>
+<MTooltip Right>
     <ActivatorContent>
         <MIcon @attributes="@context.Attrs">
             mdi-alert-circle-outline
@@ -14,18 +14,7 @@
 </MTooltip>
 
 @code {
-    private bool show;
 
     [Inject]
     protected I18n I18n { get; set; } = default!;
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
-        {
-            show = true;
-            StateHasChanged();
-        }
-        base.OnAfterRender(firstRender);
-    }
 }

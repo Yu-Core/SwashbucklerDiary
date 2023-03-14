@@ -13,7 +13,7 @@
             {"snow","mdi-snowflake" },
             {"windy","mdi-weather-windy" },
             {"fog","mdi-weather-fog" },
-            //{"dust","mdi-weather-dust" },
+            {"dust","mdi-weather-dust" },
         };
         public readonly Dictionary<string, string> MoodIcon = new()
         {

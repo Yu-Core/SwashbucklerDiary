@@ -73,8 +73,8 @@ namespace SwashbucklerDiary.Pages
         private double OccupyHeight => Markdown && Mobile ? MdToolBarHeight : 0;
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
-        private Dictionary<string, string> WeatherIcons => IconService!.WeatherIcon;
-        private Dictionary<string, string> MoodIcons => IconService!.MoodIcon;
+        private Dictionary<string, string> WeatherIcons => IconService.WeatherIcon;
+        private Dictionary<string, string> MoodIcons => IconService.MoodIcon;
         private StringNumber WeatherIndex
         {
             get

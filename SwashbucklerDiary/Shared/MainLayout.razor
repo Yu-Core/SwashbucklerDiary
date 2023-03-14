@@ -1,12 +1,12 @@
 ﻿@inherits LayoutComponentBase
 
 <MApp>
-    <MMain Style="@(ShowBottomNavigation?"":"padding-bottom:0px;")">
+    <MMain Style="@($"transition: padding-left ease 0.3s !important; {(ShowBottomNavigation?"":"padding-bottom:0px;")}")">
         @if (MasaBlazor.Breakpoint.SmAndUp)
         {
             <MNavigationDrawer App
                                Floating
-                               Style="max-height:unset;"
+                               Style="max-height:unset;transition: width ease 0.3s;"
                                Permanent>
                 <MList Rounded Flat>
                     <MListItemGroup @bind-Value="SelectedItemIndex" Mandatory>

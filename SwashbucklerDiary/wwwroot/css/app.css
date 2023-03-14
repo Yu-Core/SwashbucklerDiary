@@ -181,3 +181,7 @@ a, .btn-link {
 .m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:last-of-type, .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:last-of-type {
     margin-left: -12px
 }
+
+.transition {
+    transition: all ease 0.3s !important;
+}
