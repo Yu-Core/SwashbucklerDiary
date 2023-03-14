@@ -4,7 +4,8 @@
 <MyDialog MyValue="Value"
           MyValueChanged="InternalValueChanged"
           MaxWidth="420"
-          Scrollable>
+          Scrollable
+          @ref="myDialog">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Location.Select"))
@@ -12,9 +13,19 @@
             <MButton Icon OnClick="HandleOnCancel">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-            </MCardTitle>
+        </MCardTitle>
 
-            <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
+        <MCardText @ref="mCardText" Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
+            <MListItem Class="px-0" OnClick="()=>ShowAdd = true">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-plus
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Location.Add"))
+                </MListItemContent>
+            </MListItem>
             @foreach (var item in Locations)
             {
                 <MListItem Class="px-0" OnClick="()=>SetSelectedLocation(item)">
@@ -37,16 +48,6 @@
                     </MListItemAction>
                 </MListItem>
             }
-            <MListItem Class="px-0" OnClick="()=>ShowAdd = true">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-plus
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Location.Add"))
-                </MListItemContent>
-            </MListItem>
         </MCardText>
     </MCard>
 </MyDialog>

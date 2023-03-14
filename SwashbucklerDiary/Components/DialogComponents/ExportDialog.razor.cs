@@ -28,8 +28,8 @@ namespace SwashbucklerDiary.Components
         {
             ViewListItems = new()
             {
-                new("Txt","mdi-format-text",async()=>await CreateTxtFile()),
-                new("Json","mdi-code-json",async()=>await CreateJsonFile()),
+                new("TXT","mdi-format-text",async()=>await CreateTxtFile()),
+                new("JSON","mdi-code-json",async()=>await CreateJsonFile()),
                 new("PDF","mdi-file-pdf-box",()=>ToDo()),
             };
         }

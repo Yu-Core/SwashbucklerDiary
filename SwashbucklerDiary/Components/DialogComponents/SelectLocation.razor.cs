@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Models;
+﻿using BlazorComponent.JSInterop;
+using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.IServices;
-using Microsoft.Maui.Devices.Sensors;
+using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
@@ -10,9 +12,13 @@ namespace SwashbucklerDiary.Components
         private bool _value;
         private bool ShowAdd;
         private List<LocationModel> Locations = new();
+        private MCardText? mCardText;
+        private MyDialog? myDialog;
 
         [Inject]
         ILocationService LocationService { get; set; } = default!;
+        [Inject]
+        IJSRuntime JS { get; set; } = default!;
 
         [Parameter]
         public override bool Value
@@ -24,6 +30,16 @@ namespace SwashbucklerDiary.Components
         public string? Location { get; set; }
         [Parameter]
         public EventCallback<string> LocationChanged { get; set; }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
+            {
+                myDialog!.AfterShowContent = async _ => { await ScrollToTop(); };
+            }
+            
+        }
 
         private async void SetValue(bool value)
         {
@@ -81,6 +97,14 @@ namespace SwashbucklerDiary.Components
                 await LocationChanged.InvokeAsync(location.Name);
             }
             StateHasChanged();
+        }
+
+        private async Task ScrollToTop()
+        {
+            if (mCardText?.Ref != null)
+            {
+                await JS.ScrollTo(mCardText.Ref, 0);
+            }
         }
     }
 }
