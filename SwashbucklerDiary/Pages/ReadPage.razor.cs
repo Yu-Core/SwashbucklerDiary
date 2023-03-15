@@ -173,8 +173,9 @@ namespace SwashbucklerDiary.Pages
 
         private async Task ShareImage()
         {
-            ShowShare = false;
             showLoading = true;
+            ShowShare = false;
+            await Task.Delay(1000);
 
             var base64 = await module!.InvokeAsync<string>("getScreenshotBase64", new object[1] { "#screenshot" });
             base64 = base64.Substring(base64.IndexOf(",") + 1);
