@@ -30,6 +30,7 @@ namespace SwashbucklerDiary
             builder.Services.AddSqlsugarConfig();
             builder.Services.AddMasaBlazorConfig();
             builder.Services.AddCustomIOC();
+            builder.Services.AddMauiExceptionHandle();
 
             return builder.Build();
         }
