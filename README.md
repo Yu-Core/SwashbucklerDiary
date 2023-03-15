@@ -1,8 +1,8 @@
-# SwashbucklerDiary
+# Swashbuckler Diary
 
 English | [简体中文](./README.zh-CN.md)
 
-"SwashbucklerDiary" is an open source, cross-platform local diary application.
+"Swashbuckler Diary" is an open source, cross-platform local diary application.
 
 ## Screenshot
 
@@ -39,10 +39,11 @@ English | [简体中文](./README.zh-CN.md)
  </table>
 
 ## Supported platforms
-- Windows (Windows 10/11)
-- Android (Android 7.0 or higher)
+- Windows (Windows 11 and Windows 10 version 1809 or higher)
+- Android (Android 7.0 (API 24) or higher)
 - iOS (iOS 14 or higher)
 - macOS (macOS 11 or higher)
+- ~~Tizen (Not supported temporarily)~~
 
 ## Thanks to the following Open Source Projects
 - [.NET MAUI](https://github.com/dotnet/maui)

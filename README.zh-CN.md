@@ -39,10 +39,11 @@
  </table>
 
 ## 支持的平台
-- Windows (Windows 10/11)
-- Android (Android 7.0以上)
-- iOS (iOS 14以上)
-- macOS (macOS 11以上)
+- Windows (Windows 11和Windows 10版本 1809 或更高版本)
+- Android (Android 7.0 (API 24) 或更高版本)
+- iOS (iOS 14 或更高版本)
+- macOS (macOS 11 或更高版本)
+- ~~Tizen (暂不支持)~~
 
 ## 感谢以下开源项目
 - [.NET MAUI](https://github.com/dotnet/maui)
