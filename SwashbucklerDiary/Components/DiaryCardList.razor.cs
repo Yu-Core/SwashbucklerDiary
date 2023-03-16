@@ -55,7 +55,7 @@ namespace SwashbucklerDiary.Components
             bool flag = await DiaryService.DeleteAsync(diaryModel);
             if (flag)
             {
-                Value!.Remove(diaryModel);
+                _value.Remove(diaryModel);
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
                 StateHasChanged();
             }
