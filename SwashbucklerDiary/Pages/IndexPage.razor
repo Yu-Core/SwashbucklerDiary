@@ -24,7 +24,7 @@
 </MAppBar>
 
 <SwiperTabItems @bind-Value="tab">
-    <SwiperTabItem>
+    <SwiperTabItem Bottom>
         <div class="mb-8 px-2">
             <MSubheader Class="px-0">
                 @(DateTime.Now.ToString("yyyy/MM/dd") + " " + I18n.ToWeek())
@@ -37,7 +37,7 @@
 
         <DiaryCardList Value="Diaries"></DiaryCardList>
     </SwiperTabItem>
-    <SwiperTabItem>
+    <SwiperTabItem Bottom>
         <TagCardList Value="Tags"></TagCardList>
     </SwiperTabItem>
 </SwiperTabItems>

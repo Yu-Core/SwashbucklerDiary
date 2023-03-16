@@ -24,7 +24,7 @@
 </MAppBar>
 
 <SwiperTabItems @bind-Value="tab">
-    <SwiperTabItem>
+    <SwiperTabItem Bottom>
         <MDatePicker @bind-Value="PickedDate"
                      TValue="DateOnly"
                      FullWidth
@@ -37,7 +37,7 @@
        
     </SwiperTabItem>
 
-    <SwiperTabItem>
+    <SwiperTabItem Bottom>
         <div class="d-md-flex tree-wrap">
             @if (Diaries.Any())
             {
