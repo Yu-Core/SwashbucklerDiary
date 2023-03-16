@@ -51,9 +51,9 @@ namespace SwashbucklerDiary.Services
             return _iDiaryRepository.UpdateTagsAsync(model);
         }
 
-        public Task<bool> ExportAsync(List<DiaryModel> diaries)
+        public Task<bool> ImportAsync(List<DiaryModel> diaries)
         {
-            return _iDiaryRepository.ExportAsync(diaries);
+            return _iDiaryRepository.ImportAsync(diaries);
         }
 
         public async Task<int> GetWordCount(WordCountType type)

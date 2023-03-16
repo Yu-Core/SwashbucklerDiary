@@ -2,7 +2,6 @@
 using SwashbucklerDiary.IRepository;
 using SwashbucklerDiary.Models;
 using System.Linq.Expressions;
-using static Masa.Blazor.Presets.Message;
 
 namespace SwashbucklerDiary.Repository
 {
@@ -134,7 +133,7 @@ namespace SwashbucklerDiary.Repository
             .ExecuteCommandAsync();
         }
 
-        public Task<bool> ExportAsync(List<DiaryModel> diaries)
+        public Task<bool> ImportAsync(List<DiaryModel> diaries)
         {
             return base.Context.UpdateNav(diaries, new UpdateNavRootOptions()
             {

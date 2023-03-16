@@ -86,7 +86,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            await DiaryService.ExportAsync(diaries);
+            await DiaryService.ImportAsync(diaries);
             await AlertService.Success(I18n.T("Export.ImportSuccess"));
         }
     }

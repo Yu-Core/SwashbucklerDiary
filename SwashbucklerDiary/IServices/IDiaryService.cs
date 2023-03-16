@@ -13,6 +13,6 @@ namespace SwashbucklerDiary.IServices
         Task<List<TagModel>> GetTagsAsync(Guid id);
         Task<bool> UpdateIncludesAsync(DiaryModel model);
         Task<int> GetWordCount(WordCountType type);
-        Task<bool> ExportAsync(List<DiaryModel> diaries);
+        Task<bool> ImportAsync(List<DiaryModel> diaries);
     }
 }

@@ -6,9 +6,9 @@ namespace SwashbucklerDiary.Models
     {
         [SugarColumn(IsPrimaryKey = true)]
         public Guid Id { get; set; }
-        [SugarColumn(InsertServerTime = true, IsOnlyIgnoreUpdate = true)]// getdate() now() sysdate
+        [SugarColumn(InsertSql = "DATETIME('now','localtime')", IsOnlyIgnoreUpdate = true)]// getdate() now() sysdate
         public DateTime CreateTime { get; set; }
-        [SugarColumn(InsertServerTime = true, UpdateServerTime = true)]// getdate() now() sysdate
+        [SugarColumn(InsertSql = "DATETIME('now','localtime')", UpdateSql = "DATETIME('now','localtime')")]// getdate() now() sysdate
         public DateTime UpdateTime { get; set; }
     }
 }
