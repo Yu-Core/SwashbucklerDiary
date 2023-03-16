@@ -6,6 +6,7 @@ namespace SwashbucklerDiary.Components
 {
     public partial class DiaryCardList : MyComponentBase
     {
+        private List<DiaryModel> _value = new();
         private bool ShowDeleteDiary;
         private bool ShowSelectTag;
         private bool ShowExport;
@@ -18,7 +19,11 @@ namespace SwashbucklerDiary.Components
         private ISystemService SystemService { get; set; } = default!;
 
         [Parameter]
-        public List<DiaryModel> Value { get; set; } = new List<DiaryModel>();
+        public List<DiaryModel> Value
+        {
+            get => _value.OrderByDescending(it => it.Top).ToList();
+            set => _value = value;
+        }
         [Parameter]
         public string? Class { get; set; }
         [Parameter]
@@ -28,7 +33,7 @@ namespace SwashbucklerDiary.Components
 
         private List<TagModel> SelectedTags
         {
-            get=> SelectDiary.Tags ?? new ();
+            get => SelectDiary.Tags ?? new();
             set => SelectDiary.Tags = value;
         }
 
@@ -102,6 +107,6 @@ namespace SwashbucklerDiary.Components
             ExportDiaries = new() { diary };
             ShowExport = true;
         }
-        
+
     }
 }

@@ -111,11 +111,11 @@
             <MButton Icon OnClick="@(()=>ShowRestore=false)">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-            </MCardTitle>
-            <MCardText Class="pb-0">
+        </MCardTitle>
+        <MCardText Class="pb-0">
             @(I18n.T("Backups.ConfirmRestore.Content"))
-            </MCardText>
-            <MCardActions>
+        </MCardText>
+        <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text OnClick="()=>ShowRestore=false">
                 @(I18n.T("Share.Cancel"))

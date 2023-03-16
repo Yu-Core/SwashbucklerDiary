@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Services
     public class NavigateService : INavigateService
     {
         public NavigationManager Navigation { get; set; } = default!;
-
+        public event Func<string>? CurrentUrl;
         public event Action? Action;
 
         public void Initialize(NavigationManager navigation)
@@ -18,8 +18,17 @@ namespace SwashbucklerDiary.Services
 
         public void NavigateTo(string url)
         {
-            var href = Navigation.ToBaseRelativePath(Navigation.Uri);
-            HistoryUrl.Add(href);
+            string oldUrl = string.Empty;
+            if(CurrentUrl == null)
+            {
+                oldUrl = Navigation.ToBaseRelativePath(Navigation.Uri);
+            }
+            else
+            {
+                oldUrl = CurrentUrl.Invoke();
+                CurrentUrl = null;
+            }
+            HistoryUrl.Add(oldUrl);
             Navigation.NavigateTo(url);
         }
         public void NavigateToBack()

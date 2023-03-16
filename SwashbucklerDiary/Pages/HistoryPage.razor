@@ -4,7 +4,7 @@
 <MAppBar App
          Elevation="0"
          Color="white">
-    <MTabs @bind-Value="tabs"
+    <MTabs @bind-Value="tab"
            ActiveClass="text-h6 font-weight-bold"
            HideSlider
            Color="black">
@@ -23,18 +23,17 @@
     </MButton>
 </MAppBar>
 
-<SwiperTabItems @bind-Value="tabs" OnRefresh="RefreshData">
+<SwiperTabItems @bind-Value="tab">
     <SwiperTabItem>
-        <MDatePicker Value="PickedDate"
+        <MDatePicker @bind-Value="PickedDate"
                      TValue="DateOnly"
-                     ValueChanged="PickedDateChanged"
                      FullWidth
                      NoTitle
                      AllowedDates="AllowedDates"
                      ShowCurrent="false"
                      Locale="@(I18n.Culture.Name)">
         </MDatePicker>
-        <DiaryCardList Value="CalendarDiaries"></DiaryCardList>
+        <DiaryCardList Value="CalendarDiaries" OnDeleted="Update"></DiaryCardList>
     </SwiperTabItem>
     <SwiperTabItem>
         <div class="d-md-flex tree-wrap">
@@ -59,7 +58,7 @@
                 <DiaryCardList Value="TreeDiaries"
                                Class="flex-md-column"
                                CardClass="tree-card"
-                               OnDeleted="UpdateDiaries">
+                               OnDeleted="Update">
                 </DiaryCardList>
             </div>
         </div>

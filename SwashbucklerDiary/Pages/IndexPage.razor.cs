@@ -1,5 +1,6 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -8,7 +9,7 @@ namespace SwashbucklerDiary.Pages
 {
     public partial class IndexPage : PageComponentBase
     {
-        private StringNumber tabs = 0;
+        private StringNumber tab = 0;
         private List<DiaryModel> Diaries = new();
         private List<TagModel> Tags = new();
         private readonly List<string> Types = new() { "All", "Tags" };
@@ -25,6 +26,7 @@ namespace SwashbucklerDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             InitTab();
+            SetCurrentUrl();
             await UpdateTags();
             await UpdateDiaries();
             await FirstLaunch();
@@ -49,21 +51,14 @@ namespace SwashbucklerDiary.Pages
             {
                 Type = Types[0];
             }
-            tabs = Types.IndexOf(Type!);
+            tab = Types.IndexOf(Type!);
         }
 
-        private async Task RefreshData(StringNumber value)
+        private void SetCurrentUrl()
         {
-            if (value == 0)
-            {
-                await UpdateDiaries();
-            }
-            else if (value == 1)
-            {
-                await UpdateTags();
-            }
-            var url = Navigation.GetUriWithQueryParameter("Type", Types[tabs.ToInt32()]);
-            Navigation.NavigateTo(url);
+            NavigateService.CurrentUrl += () => {
+                return Navigation.GetUriWithQueryParameter("Type", Types[tab.ToInt32()]);
+            };
         }
 
         private async Task SaveAddTag(string tagName)

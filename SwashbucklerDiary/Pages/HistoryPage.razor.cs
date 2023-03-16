@@ -1,5 +1,6 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -10,8 +11,10 @@ namespace SwashbucklerDiary.Pages
     {
         private DateOnly PickedDate = DateOnly.FromDateTime(DateTime.Now);
         private List<DiaryModel> Diaries = new();
-        private StringNumber tabs = 0;
+        private StringNumber tab = 0;
         private List<int>? _active;
+        private List<Tree> Trees = new();
+        private Func<DateOnly, bool> AllowedDates = PickedDate => true;
         private readonly List<string> Types = new() { "Calendar", "Tree" };
 
         [Inject]
@@ -23,8 +26,9 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            SetTab();
-            await UpdateDiaries();
+            InitTab();
+            SetCurrentUrl();
+            await Update();
             await base.OnInitializedAsync();
         }
 
@@ -35,16 +39,7 @@ namespace SwashbucklerDiary.Pages
             public List<Tree>? Children { get; set; }
         }
 
-        private List<Tree> Trees => GetTrees();
         private List<DiaryModel> CalendarDiaries => Diaries.Where(it => DateOnly.FromDateTime(it.CreateTime) == PickedDate).ToList();
-        private Func<DateOnly, bool> AllowedDates
-        {
-            get
-            {
-                var dateOnly = Diaries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct();
-                return value => dateOnly.Contains(value);
-            }
-        }
         private List<DiaryModel> TreeDiaries
         {
             get
@@ -58,38 +53,29 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private async Task PickedDateChanged(DateOnly value)
-        {
-            if (PickedDate != value)
-            {
-                PickedDate = value;
-                await UpdateDiaries();
-            }
-        }
-
         private async Task UpdateDiaries()
         {
             Diaries = await DiaryService.QueryAsync(it => !it.Private);
             StateHasChanged();
         }
 
-        private void SetTab()
+        private void InitTab()
         {
             if (string.IsNullOrEmpty(Type))
             {
                 Type = Types[0];
             }
-            tabs = Types.IndexOf(Type!);
+            tab = Types.IndexOf(Type!);
         }
 
-        private async Task RefreshData(StringNumber value)
+        private void SetCurrentUrl()
         {
-            await UpdateDiaries();
-            var url = Navigation!.GetUriWithQueryParameter("Type", Types[tabs.ToInt32()]);
-            Navigation.NavigateTo(url);
+            NavigateService.CurrentUrl += () => {
+                return Navigation.GetUriWithQueryParameter("Type", Types[tab.ToInt32()]);
+            };
         }
 
-        private List<Tree> GetTrees()
+        private void UpdateTrees()
         {
             var years = Diaries.Select(it => it.CreateTime.Year).Distinct();
             List<Tree> yearTrees = new();
@@ -126,7 +112,20 @@ namespace SwashbucklerDiary.Pages
                     Children = monthTrees
                 });
             }
-            return yearTrees;
+            Trees = yearTrees;
+        }
+
+        private async Task Update()
+        {
+            await UpdateDiaries();
+            UpdateTrees();
+            UpdateAllowDates();
+        }
+
+        private void UpdateAllowDates()
+        {
+            var dateOnly = Diaries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct();
+            AllowedDates = value => dateOnly.Contains(value);
         }
     }
 }

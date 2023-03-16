@@ -4,6 +4,7 @@ namespace SwashbucklerDiary.IServices
 {
     public interface INavigateService
     {
+        event Func<string> CurrentUrl;
         /// <summary>
         /// 存储想要返回时触发的方法
         /// </summary>

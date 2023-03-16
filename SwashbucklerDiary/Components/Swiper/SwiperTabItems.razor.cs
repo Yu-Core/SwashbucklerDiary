@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Components
     {
         private IJSObjectReference? module;
         private StringNumber _value = 0;
-        private bool Show = true;
+        private bool Show;
         private readonly string Id = "swiper" + Guid.NewGuid().ToString();
 
         [Inject]
@@ -25,7 +25,6 @@ namespace SwashbucklerDiary.Components
                     _value = value;
                     if (Show)
                     {
-                        OnRefresh.InvokeAsync(value);
                         UpdateSwiper(value);
                     }
                 }
@@ -35,8 +34,6 @@ namespace SwashbucklerDiary.Components
         public EventCallback<StringNumber> ValueChanged { get; set; }
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
-        [Parameter]
-        public EventCallback<StringNumber> OnRefresh { get; set; }
 
         [JSInvokable]
         public async Task UpdateValue(int value)
@@ -46,7 +43,12 @@ namespace SwashbucklerDiary.Components
             {
                 await ValueChanged.InvokeAsync(value);
             }
-            await OnRefresh.InvokeAsync(value);
+        }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            Show = Value == 0;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -56,6 +58,8 @@ namespace SwashbucklerDiary.Components
                 module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/init-swiper.js");
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
                 await module.InvokeVoidAsync("swiperInit", new object[4] { dotNetCallbackRef, "UpdateValue", Id, Value.ToInt32() });
+                Show = true;
+                StateHasChanged();
             }
         }
 
@@ -66,9 +70,9 @@ namespace SwashbucklerDiary.Components
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
-            await JS!.InvokeVoidAsync($"{Id}.destroy", new object[2] { true, true });
             if (module is not null)
             {
+                await JS!.InvokeVoidAsync($"{Id}.destroy", new object[2] { true, true });
                 await module.DisposeAsync();
             }
 

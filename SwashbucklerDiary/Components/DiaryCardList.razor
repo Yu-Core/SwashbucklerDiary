@@ -1,26 +1,9 @@
 ﻿@inherits MyComponentBase
 
 <div class="d-flex justify-space-between flex-wrap @(Class)">
-    @foreach (var item in Value!)
-    {
-        if (item.Top)
-        {
-            <DiaryCard Value="item"
-               Class="@($"diary-card {CardClass}")"
-               OnTag="()=>HandleTag(item)"
-               OnCopy="()=>HandleCopy(item)"
-               OnDelete="()=>OpenDeleteDialog(item)"
-               OnTopping="()=>HandleTopping(item)"
-               OnExport="()=>OpenExportDialog(item)"
-               OnClick="()=>HandleClick(item.Id)">
-            </DiaryCard>
-        }
-    }
     @foreach (var item in Value)
     {
-        if (!item.Top)
-        {
-            <DiaryCard Value="item"
+        <DiaryCard Value="item"
                Class="@($"diary-card {CardClass}")"
                OnTag="()=>HandleTag(item)"
                OnCopy="()=>HandleCopy(item)"
@@ -28,8 +11,7 @@
                OnTopping="()=>HandleTopping(item)"
                OnExport="()=>OpenExportDialog(item)"
                OnClick="()=>HandleClick(item.Id)">
-            </DiaryCard>
-        }
+        </DiaryCard>
     }
 </div>
 
