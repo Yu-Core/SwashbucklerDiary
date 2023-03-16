@@ -4,7 +4,6 @@ using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using System.Globalization;
 
 namespace SwashbucklerDiary.Shared
 {
@@ -47,13 +46,17 @@ namespace SwashbucklerDiary.Shared
             await base.OnInitializedAsync();
         }
 
-        private class NavigationButton : ViewListItem
+        private string MainStyle
         {
-            public string? SelectedIcon { get; set; }
-
-            public NavigationButton(string text, string icon, string selectedIcon, Action action) : base(text, icon, action)
+            get
             {
-                SelectedIcon = selectedIcon;
+                string style = string.Empty;
+                style += "transition:padding-left ease 0.3s !important;";
+                if(ShowBottomNavigation)
+                {
+                    style += "padding-bottom:0px;";
+                }
+                return style;
             }
         }
 

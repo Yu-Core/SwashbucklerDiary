@@ -1,0 +1,23 @@
+﻿@using SwashbucklerDiary.IServices
+@namespace SwashbucklerDiary.Components
+
+<MDialog Value="true"
+         Persistent
+         MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            <MIcon Class="error--text mr-2">
+                mdi-close-circle-outline
+            </MIcon>
+            @(I18n.T("ErrorHandle.Title"))
+        </MCardTitle>
+        <MCardText>
+            @(I18n.T("ErrorHandle.Content"))
+        </MCardText>
+    </MCard>
+</MDialog>
+
+@code{
+    [Inject]
+    private II18nService I18n { get; set; } = default!;
+}

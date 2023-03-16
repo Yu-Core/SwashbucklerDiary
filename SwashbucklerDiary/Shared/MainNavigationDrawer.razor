@@ -1,0 +1,38 @@
+﻿@using SwashbucklerDiary.IServices
+@using SwashbucklerDiary.Models
+
+<MNavigationDrawer App Floating Permanent
+                   Style="max-height:unset;transition: width ease 0.3s;">
+    <MList Rounded Flat>
+        <MListItemGroup Value="Value" ValueChanged="ValueChanged" Mandatory>
+            @foreach (var (item, i) in Items.Select((v, i) => (v, i)))
+            {
+                var activated = Value == i;
+
+                <MListItem Ripple="false" OnClick="item.Action">
+                    <MListItemIcon>
+                        <MIcon Size="@(activated?30:24)">
+                            @(activated ? item.SelectedIcon : item.Icon)
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemTitle Class="@(activated?"text-h6 font-weight-bold":"")"
+                                Style="transition: font-size 0.3s ease;">
+                        @(I18n.T(item.Text))
+                    </MListItemTitle>
+                </MListItem>
+            }
+        </MListItemGroup>
+    </MList>
+</MNavigationDrawer>
+
+@code {
+    [Inject]
+    private II18nService I18n { get; set; } = default!;
+
+    [Parameter]
+    public StringNumber Value { get; set; } = 0;
+    [Parameter]
+    public EventCallback<StringNumber> ValueChanged { get; set; }
+    [Parameter]
+    public List<NavigationButton> Items { get; set; } = new();
+}

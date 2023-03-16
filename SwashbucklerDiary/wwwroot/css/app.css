@@ -185,3 +185,12 @@ a, .btn-link {
 .transition {
     transition: all ease 0.3s !important;
 }
+
+.m-main__wrap{
+    display:flex;
+    flex-direction:column;
+}
+
+.swiper{
+    width:100%;
+}
