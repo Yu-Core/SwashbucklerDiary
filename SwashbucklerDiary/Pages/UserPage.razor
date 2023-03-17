@@ -22,7 +22,15 @@
 
                 <MListItemAction>
                     <MAvatar Rounded="@("lg")" Size="32">
-                        <MImage Src="@Avatar"></MImage>
+                        <MImage Src="@Avatar">
+                            <PlaceholderContent>
+                                <MRow Class="fill-height ma-0"
+                                      Align="@AlignTypes.Center"
+                                      Justify="@JustifyTypes.Center">
+                                    <MProgressCircular Indeterminate></MProgressCircular>
+                                </MRow>
+                            </PlaceholderContent>
+                        </MImage>
                     </MAvatar>
                     <MIcon>mdi-chevron-right</MIcon>
                 </MListItemAction>
@@ -135,3 +143,7 @@
              Placeholder="@(I18n.T("User.SignPlace"))"
              OnOK="SaveSign">
 </InputDialog>
+
+<MOverlay Value="showLoading" ZIndex="99">
+    <MProgressCircular Indeterminate Size="48"></MProgressCircular>
+</MOverlay>

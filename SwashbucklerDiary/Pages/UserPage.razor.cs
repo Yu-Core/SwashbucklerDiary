@@ -11,15 +11,16 @@ namespace SwashbucklerDiary.Pages
         private string? Sign;
         private string? Avatar;
         private bool ShowAvatar;
+        private bool showLoading;
 
         [Inject]
         private ILocalImageService LocalImageService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
-            await SetAvatar();
-            await LoadSettings();
             await base.OnInitializedAsync();
+            await LoadSettings();
+            await SetAvatar();
         }
 
         private bool ShowUserName { get; set; }
@@ -89,28 +90,35 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SavePhoto(string? filePath)
         {
-            if (File.Exists(filePath))
+            if (string.IsNullOrWhiteSpace(filePath))
             {
-                // save the file into local storage
-                string localFilePath = Path.Combine(FileSystem.AppDataDirectory, nameof(Avatar) + Path.GetExtension(filePath));
-
-                await SystemService.FileCopy(filePath, localFilePath);
-
-                localFilePath = await LocalImageService.AddFlag(filePath);
-
-                await SettingsService.Save(SettingType.Avatar, localFilePath);
-                var oldAvatar = Avatar;
-                await SetAvatar();
-                await LocalImageService.RevokeUrl(oldAvatar!);
-                await AlertService.Success(I18n.T("Share.EditSuccess"));
-                await HandleAchievements(AchievementType.Avatar);
+                return;
             }
+
+            showLoading = true;
+            StateHasChanged();
+
+            // save the file into local storage
+            string localFilePath = Path.Combine(FileSystem.AppDataDirectory, nameof(Avatar) + Path.GetExtension(filePath));
+            await SystemService.FileCopy(filePath, localFilePath);
+
+            localFilePath = await LocalImageService.AddFlag(localFilePath);
+            string oldAvatar = await SettingsService.Get(SettingType.Avatar);
+            await SettingsService.Save(SettingType.Avatar, localFilePath);
+
+            await LocalImageService.RevokeUrl(oldAvatar);
+            await SetAvatar(localFilePath);
+
+            showLoading = false;
+            StateHasChanged();
+            await AlertService.Success(I18n.T("Share.EditSuccess"));
+            await HandleAchievements(AchievementType.Avatar);
         }
 
-        private async Task SetAvatar()
+        private async Task SetAvatar(string? uri = null)
         {
-            string avatar = await SettingsService.Get(SettingType.Avatar);
-            Avatar = await LocalImageService.ToUrl(avatar);
+            uri ??= await SettingsService.Get(SettingType.Avatar);
+            Avatar = await LocalImageService.ToUrl(uri);
         }
     }
 }
