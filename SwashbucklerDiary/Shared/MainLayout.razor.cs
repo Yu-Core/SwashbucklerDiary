@@ -52,7 +52,7 @@ namespace SwashbucklerDiary.Shared
             {
                 string style = string.Empty;
                 style += "transition:padding-left ease 0.3s !important;";
-                if(ShowBottomNavigation)
+                if(!ShowBottomNavigation)
                 {
                     style += "padding-bottom:0px;";
                 }

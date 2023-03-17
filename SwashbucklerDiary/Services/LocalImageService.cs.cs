@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Services
                 semaphore.Release();
             }
         }
-
+        //调用js，生成图片的blob
         private async Task<string> GenerateImageUrl(string uri)
         {
             using var imageStream = File.OpenRead(uri);
