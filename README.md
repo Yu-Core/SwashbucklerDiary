@@ -39,7 +39,7 @@ English | [简体中文](./README.zh-CN.md)
  </table>
 
 ## Supported platforms
-- Windows (Windows 11 and Windows 10 version 1809 or higher)
+- Windows (Windows 11 and Windows 10 version 1904 or higher)
 - Android (Android 7.0 (API 24) or higher)
 - iOS (iOS 14 or higher)
 - macOS (macOS 11 or higher)

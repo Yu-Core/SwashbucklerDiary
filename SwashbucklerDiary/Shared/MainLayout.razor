@@ -6,7 +6,9 @@
             <MMain Style="@MainStyle">
                 @if (MasaBlazor.Breakpoint.SmAndUp)
                 {
-                    <MainNavigationDrawer @bind-Value="SelectedItemIndex" Items="NavigationButtons">
+                    <MainNavigationDrawer @bind-Value="SelectedItemIndex"
+                                      Items="NavigationButtons"
+                                      MiniVariant="Mini">
                     </MainNavigationDrawer>
                 }
                 @Body

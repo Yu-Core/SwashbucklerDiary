@@ -1,4 +1,4 @@
-﻿@using BlazorComponent.I18n;
+﻿@using SwashbucklerDiary.IServices;
 
 <MTooltip Right>
     <ActivatorContent>
@@ -8,7 +8,7 @@
     </ActivatorContent>
     <ChildContent>
         <span>
-            @(I18n!.T("Experimental features"))
+            @(I18n.T("Experimental features"))
         </span>
     </ChildContent>
 </MTooltip>
@@ -16,5 +16,16 @@
 @code {
 
     [Inject]
-    protected I18n I18n { get; set; } = default!;
+    protected II18nService I18n { get; set; } = default!;
+    [Inject]
+    private IAlertService Alert { get; set; } = default!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await Alert.Warning(I18n.T("Experimental features"));
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
 }

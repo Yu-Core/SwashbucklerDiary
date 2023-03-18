@@ -2,9 +2,14 @@
 @using SwashbucklerDiary.Models
 
 <MNavigationDrawer App Floating Permanent
+                   MiniVariant="MiniVariant"
+                   MiniVariantChanged="MiniVariantChanged"
                    Style="max-height:unset;transition: width ease 0.3s;">
-    <MList Rounded Flat>
-        <MListItemGroup Value="Value" ValueChanged="ValueChanged" Mandatory>
+    <MList Shaped Flat>
+        <MListItemGroup Value="Value"
+                        ValueChanged="ValueChanged"
+                        Mandatory="true"
+                        ActiveClass="@(MiniVariant?"":"grey lighten-4")">
             @foreach (var (item, i) in Items.Select((v, i) => (v, i)))
             {
                 var activated = Value == i;
@@ -35,4 +40,8 @@
     public EventCallback<StringNumber> ValueChanged { get; set; }
     [Parameter]
     public List<NavigationButton> Items { get; set; } = new();
+    [Parameter]
+    public bool MiniVariant { get; set; }
+    [Parameter]
+    public EventCallback<bool> MiniVariantChanged { get; set; }
 }

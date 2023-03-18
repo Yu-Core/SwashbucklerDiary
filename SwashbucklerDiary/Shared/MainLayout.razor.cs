@@ -46,6 +46,22 @@ namespace SwashbucklerDiary.Shared
             await base.OnInitializedAsync();
         }
 
+        private bool Mini => MasaBlazor.Breakpoint.Sm;
+
+        private bool ShowBottomNavigation
+        {
+            get
+            {
+                if (MasaBlazor.Breakpoint.SmAndUp)
+                {
+                    return false;
+                }
+                string[] links = { "", "history", "mine" };
+                var url = Navigation!.ToBaseRelativePath(Navigation.Uri);
+                return links.Any(it => it == url.Split("?")[0]);
+            }
+        }
+
         private string MainStyle
         {
             get
@@ -78,20 +94,6 @@ namespace SwashbucklerDiary.Shared
                 new ( "Main.History", "mdi-clock-outline", "mdi-clock", ()=>To("history")),
                 new ( "Main.Mine", "mdi-account-outline", "mdi-account", ()=>To("mine"))
             };
-        }
-
-        private bool ShowBottomNavigation
-        {
-            get
-            {
-                if (MasaBlazor.Breakpoint.SmAndUp)
-                {
-                    return false;
-                }
-                string[] links = { "", "history", "mine" };
-                var url = Navigation!.ToBaseRelativePath(Navigation.Uri);
-                return links.Any(it => it == url.Split("?")[0]);
-            }
         }
 
         private async Task InvokeStateHasChangedAsync()

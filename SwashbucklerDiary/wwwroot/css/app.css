@@ -194,3 +194,25 @@ a, .btn-link {
 .swiper{
     width:100%;
 }
+
+.theme--light.m-picker__body {
+    background: #FEFEFE !important;
+}
+
+.theme--light.m-app-bar.m-toolbar.m-sheet {
+    background: #fff !important;
+}
+
+@media screen and (min-width:600px) {
+    .theme--light.m-app-bar.m-toolbar.m-sheet {
+        background: #fefeff !important;
+    }
+}
+
+.theme--light.m-navigation-drawer {
+    background: #fefeff !important;
+}
+
+.theme--light.m-application {
+    background: #fefeff !important;
+}
