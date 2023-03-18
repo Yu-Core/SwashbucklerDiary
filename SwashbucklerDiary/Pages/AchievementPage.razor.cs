@@ -1,5 +1,7 @@
 ﻿using BlazorComponent.I18n;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
+using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
@@ -8,11 +10,16 @@ namespace SwashbucklerDiary.Pages
     {
         private List<AchievementModel> Achievements = new();
 
+        [Inject]
+        private IThemeService ThemeService { get; set; } = default!;
+
         protected override async Task OnInitializedAsync()
         {
             await SetAchievements();
             await base.OnInitializedAsync();
         }
+
+        private bool Light => ThemeService.Light;
 
         private async Task SetAchievements()
         {
@@ -20,9 +27,9 @@ namespace SwashbucklerDiary.Pages
             Achievements = achievements.OrderByDescending(it => it.UserAchievement.IsCompleted).ToList();
         }
 
-        private static string GetIconColor(AchievementModel achievement)
+        private string GetIconColor(AchievementModel achievement)
         {
-            return achievement.UserAchievement.IsCompleted ? "indigo darken-4" : "";
+            return achievement.UserAchievement.IsCompleted && Light ? "black" : "";
         }
 
         private static string GetIcon(AchievementModel achievement)
@@ -36,14 +43,14 @@ namespace SwashbucklerDiary.Pages
             return (int)percent;
         }
 
-        private static string GetProgressRateColor(AchievementModel achievement)
+        private string GetProgressRateColor(AchievementModel achievement)
         {
-            return achievement.UserAchievement.IsCompleted ? "indigo darken-4" : "grey lighten-1";
+            return achievement.UserAchievement.IsCompleted && Light ? "black" : "grey lighten-1";
         }
 
-        private static string GetProgressRateTextColor(AchievementModel achievement)
+        private string GetProgressRateTextColor(AchievementModel achievement)
         {
-            return achievement.UserAchievement.IsCompleted ? "white--text" : "";
+            return achievement.UserAchievement.IsCompleted && Light ? "white--text" : "";
         }
 
         private string GetProgressRateText(AchievementModel achievement)

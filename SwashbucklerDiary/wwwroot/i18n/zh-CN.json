@@ -360,5 +360,10 @@
       "Title": "确认导入",
       "Content": "确认导入这些日记？"
     }
+  },
+  "ThemeState": {
+    "System": "跟随系统",
+    "Light": "浅色",
+    "Dark": "深色"
   }
 }

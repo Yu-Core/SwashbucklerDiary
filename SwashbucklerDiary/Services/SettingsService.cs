@@ -12,10 +12,11 @@ namespace SwashbucklerDiary.Services
             {SettingType.Markdown,true },
             {SettingType.UserName,"" },
             {SettingType.Sign,"" },
-            {SettingType.Avatar,"./logo/logo.svg" },
+            {SettingType.Avatar,"./logo/logo.jpg" },
             {SettingType.Privacy,true },
             {SettingType.PrivatePassword,"" },
             {SettingType.BackupsPath,"" },
+            {SettingType.ThemeState,ThemeState.Light },
         };
         public Task<bool> ContainsKey(string key)
         {

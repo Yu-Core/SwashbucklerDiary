@@ -28,6 +28,8 @@ namespace SwashbucklerDiary.Shared
         private IPopupService PopupService { get; set; } = default!;
         [Inject]
         private IAlertService AlertService { get; set; } = default!;
+        [Inject]
+        private IThemeService ThemeService { get; set; } = default!;
 
         public void Dispose()
         {
@@ -43,9 +45,11 @@ namespace SwashbucklerDiary.Shared
             LoadView();
             await LoadSettings();
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
+            ThemeService.OnChanged += ThemeChanged;
             await base.OnInitializedAsync();
         }
 
+        private bool Dark => ThemeService.Dark;
         private bool Mini => MasaBlazor.Breakpoint.Sm;
 
         private bool ShowBottomNavigation
@@ -84,6 +88,8 @@ namespace SwashbucklerDiary.Shared
                 var language = await SettingsService.Get<string>(SettingType.Language);
                 I18nService.SetCulture(language);
             }
+            ThemeState themeState = await SettingsService.Get(SettingType.ThemeState);
+            ThemeService.ThemeState = themeState;
         }
 
         private void LoadView()
@@ -104,6 +110,11 @@ namespace SwashbucklerDiary.Shared
         protected void To(string url)
         {
             Navigation.NavigateTo(url);
+        }
+
+        private void ThemeChanged(ThemeState state)
+        {
+            StateHasChanged();
         }
     }
 }

@@ -113,6 +113,14 @@ a, .btn-link {
         opacity: 0 !important;
     }
 
+.theme--light .m-tab--active {
+    color: #000 !important;
+}
+
+.theme--dark .m-tab--active {
+    color: #fff !important;
+}
+
 @media screen and (max-width:600px) {
     .m-tab-swiper {
         min-width: unset !important;
@@ -196,7 +204,11 @@ a, .btn-link {
 }
 
 .theme--light.m-picker__body {
-    background: #FEFEFE !important;
+    background: #fefeff !important;
+}
+
+.theme--dark.m-picker__body+.m-picker__actions {
+    background: #424242 !important;
 }
 
 .theme--light.m-app-bar.m-toolbar.m-sheet {
@@ -207,12 +219,37 @@ a, .btn-link {
     .theme--light.m-app-bar.m-toolbar.m-sheet {
         background: #fefeff !important;
     }
+
+    .theme--dark.m-app-bar.m-toolbar.m-sheet {
+        background: #121212 !important;
+    }
 }
 
 .theme--light.m-navigation-drawer {
     background: #fefeff !important;
 }
 
+.theme--dark.m-navigation-drawer {
+    background: #121212 !important;
+}
+
 .theme--light.m-application {
     background: #fefeff !important;
+}
+
+.theme--light.navigation-active {
+    background: #F5F5F5 !important;
+}
+
+.theme--dark.navigation-active {
+    background: #424242 !important;
+}
+
+.vditor-reset {
+    border-radius: 8px;
+    background-color: var(--panel-background-color) !important;
+}
+
+.theme--dark .vditor-reset{
+    color:#fff;
 }

@@ -11,15 +11,23 @@ namespace SwashbucklerDiary.Pages
         private long WordCount;
         private int ActiveDayCount;
         private string? Language;
+        private ThemeState ThemeState;
         private string? UserName;
         private string? Sign;
         private string? Avatar;
         private bool ShowLanguage;
+        private bool ShowThemeState;
         private bool ShowFeedback;
         private readonly static Dictionary<string, string> Languages = new()
         {
             {"中文","zh-CN" },
             {"English","en-US" }
+        };
+        private readonly static Dictionary<string, ThemeState> ThemeStates = new()
+        {
+            {"ThemeState.System",ThemeState.System },
+            {"ThemeState.Light",ThemeState.Light },
+            {"ThemeState.Dark",ThemeState.Dark },
         };
         private Dictionary<string, List<ViewListItem>> ViewLists = new();
         private List<ViewListItem> FeedbackTypes = new();
@@ -30,6 +38,8 @@ namespace SwashbucklerDiary.Pages
         private IDiaryService DiaryService { get; set; } = default!;
         [Inject]
         private ILocalImageService LocalImageService { get; set; } = default!;
+        [Inject]
+        private IThemeService ThemeService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -38,6 +48,8 @@ namespace SwashbucklerDiary.Pages
             await LoadSettings();
             await SetAvatar();
         }
+
+        private string MRadioColor => ThemeService.Dark ? "white" : "black";
 
         private async Task SetCount()
         {
@@ -67,7 +79,7 @@ namespace SwashbucklerDiary.Pages
                     {
                         new("Mine.Settings","mdi-cog-outline",()=>To("/setting")),
                         new("Mine.Languages","mdi-web",()=>ShowLanguage=true),
-                        new("Mine.Night","mdi-weather-night",()=>ToDo()),
+                        new("Mine.Night","mdi-weather-night",()=>ShowThemeState=true),
                     }
                 },
                 {
@@ -91,6 +103,7 @@ namespace SwashbucklerDiary.Pages
             Language = await SettingsService.Get(SettingType.Language);
             UserName = await SettingsService.Get(SettingType.UserName);
             Sign = await SettingsService.Get(SettingType.Sign);
+            ThemeState = await SettingsService.Get(SettingType.ThemeState);
         }
 
         private async Task LanguageChanged(string value)
@@ -134,6 +147,13 @@ namespace SwashbucklerDiary.Pages
         {
             ShowFeedback = false;
             await SystemService.OpenBrowser(githubUrl);
+        }
+
+        private async Task ThemeStateChanged(ThemeState themeState)
+        {
+            ThemeState = themeState;
+            ThemeService.ThemeState = ThemeState;
+            await SettingsService.Save(SettingType.ThemeState, (int)ThemeState);
         }
     }
 }

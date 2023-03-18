@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Models;
+using Util.Reflection.Expressions.IntelligentGeneration.Extensions;
 
 namespace SwashbucklerDiary.Components
 {
@@ -40,13 +41,18 @@ namespace SwashbucklerDiary.Components
                 {
                     return Value!.Title;
                 }
-                foreach (var item in Text!.Split("\n"))
+
+                if (!string.IsNullOrWhiteSpace(Text))
                 {
-                    if (!string.IsNullOrWhiteSpace(item))
+                    foreach (var item in Text!.Split("\n"))
                     {
-                        return item;
+                        if (!string.IsNullOrWhiteSpace(item))
+                        {
+                            return item;
+                        }
                     }
                 }
+                
                 return I18n.T("Diary.Untitled");
             }
         }

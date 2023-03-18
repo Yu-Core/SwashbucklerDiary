@@ -359,5 +359,10 @@
       "Title": "Confirm import",
       "Content": "Confirm importing these diaries？"
     }
+  },
+  "ThemeState": {
+    "System": "Follow system",
+    "Light": "Light",
+    "Dark": "Dark"
   }
 }

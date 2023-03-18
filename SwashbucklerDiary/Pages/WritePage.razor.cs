@@ -1,7 +1,6 @@
 ﻿using BlazorComponent;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
@@ -10,7 +9,7 @@ using SwashbucklerDiary.Services;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class WritePage : PageComponentBase, IDisposable
+    public partial class WritePage : PageComponentBase, IAsyncDisposable
     {
         private bool ShowTitle;
         private bool ShowMenu;
@@ -19,6 +18,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowMood;
         private bool ShowLocation;
         private bool Markdown = true;
+        private bool IsSaved;
         private readonly double MdToolBarHeight = 75;
         private List<ViewListItem> ViewListItems = new();
         private DiaryModel Diary = new()
@@ -43,10 +43,14 @@ namespace SwashbucklerDiary.Pages
         [SupplyParameterFromQuery]
         public Guid? DiaryId { get; set; }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
             MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
             NavigateService.Action -= OnBack;
+            if(!IsSaved)
+            {
+                await SaveDiary();
+            }
             GC.SuppressFinalize(this);
         }
 
@@ -188,13 +192,9 @@ namespace SwashbucklerDiary.Pages
             ShowSelectTag = false;
         }
 
-        private async Task OnSave()
+        private Task OnSave()
         {
-            if (string.IsNullOrWhiteSpace(Diary.Content))
-            {
-                return;
-            }
-            await SaveDiary();
+            return SaveDiaryAndToBack();
         }
 
         private async void OnBack()
@@ -205,7 +205,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            await SaveDiary();
+            await SaveDiaryAndToBack();
         }
 
         private void OnClear()
@@ -216,6 +216,11 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SaveDiary()
         {
+            if (string.IsNullOrWhiteSpace(Diary.Content))
+            {
+                return;
+            }
+
             if (DiaryId == null)
             {
                 bool flag = await DiaryService.AddAsync(Diary);
@@ -242,6 +247,12 @@ namespace SwashbucklerDiary.Pages
                 }
             }
 
+            IsSaved = true;
+        }
+
+        private async Task SaveDiaryAndToBack()
+        {
+            await SaveDiary();
             NavigateToBack();
         }
 

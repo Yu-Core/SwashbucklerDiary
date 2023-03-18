@@ -16,7 +16,7 @@
                 <MList>
                     <MListItem>
                         <MListItemAvatar>
-                            <MIcon XLarge Color="@AchievementPage.GetIconColor(item)">
+                            <MIcon XLarge Color="@GetIconColor(item)">
                             @(AchievementPage.GetIcon(item))
                             </MIcon>
                         </MListItemAvatar>
@@ -31,10 +31,10 @@
                             </MListItemSubtitle>
 
                             <MProgressLinear Value="AchievementPage.GetProgressRate(item)"
-                                         Color="@(AchievementPage.GetProgressRateColor(item))"
+                                         Color="@(GetProgressRateColor(item))"
                                          Class="rounded-pill"
                                          Height="20">
-                            <strong class="@AchievementPage.GetProgressRateTextColor(item)">
+                            <strong class="@GetProgressRateTextColor(item)">
                                 @(GetProgressRateText(item))
                                 </strong>
                             </MProgressLinear>

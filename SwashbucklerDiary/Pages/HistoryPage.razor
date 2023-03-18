@@ -2,12 +2,10 @@
 @inherits PageComponentBase
 
 <MAppBar App
-         Elevation="0"
-         Color="white">
+         Elevation="0">
     <MTabs @bind-Value="tab"
            ActiveClass="text-h6 font-weight-bold"
-           HideSlider
-           Color="black">
+           HideSlider>
         <MTab Class="m-tab-swiper"
               Ripple="false">
             @(I18n.T("History.Calendar"))
@@ -21,20 +19,21 @@
     <MButton Large Icon OnClick="@(()=>To("/search"))">
         <MIcon>mdi-magnify</MIcon>
     </MButton>
-</MAppBar>
+    </MAppBar>
 
-<SwiperTabItems @bind-Value="tab">
+    <SwiperTabItems @bind-Value="tab">
     <SwiperTabItem Bottom>
         <MDatePicker @bind-Value="PickedDate"
+                     Class="rounded-lg"
                      TValue="DateOnly"
-                     FullWidth
-                     NoTitle
-                     AllowedDates="AllowedDates"
                      ShowCurrent="false"
+                     FullWidth="true"
+                     NoTitle="true"
+                     AllowedDates="AllowedDates"
                      Locale="@(I18n.Culture.Name)">
         </MDatePicker>
         <DiaryCardList Value="CalendarDiaries" OnDeleted="Update"></DiaryCardList>
-       
+
     </SwiperTabItem>
 
     <SwiperTabItem Bottom>
@@ -49,9 +48,9 @@
                            ItemText="r=>r.Name"
                            ItemChildren="r=>r.Children"
                            ItemKey="r=>r.Id"
-                           Activatable
-                           OpenOnClick
-                           Rounded
+                                      Activatable
+                                      OpenOnClick
+                                      Rounded
                            ExpandIcon="mdi-chevron-down">
                     </MTreeview>
                 </div>

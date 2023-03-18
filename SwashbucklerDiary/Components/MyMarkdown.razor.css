@@ -1,6 +1,6 @@
-﻿::deep .vditor {
+﻿/*::deep .vditor {
     --textarea-background-color: #fff;
-}
+}*/
 
 ::deep .vditor-toolbar {
     background-color: transparent;

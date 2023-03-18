@@ -11,5 +11,6 @@
         Privacy, 
         PrivatePassword,
         BackupsPath,
+        ThemeState
     }
 }

@@ -9,7 +9,7 @@
         <MListItemGroup Value="Value"
                         ValueChanged="ValueChanged"
                         Mandatory="true"
-                        ActiveClass="@(MiniVariant?"":"grey lighten-4")">
+                        ActiveClass="@(MiniVariant?"":"navigation-active")">
             @foreach (var (item, i) in Items.Select((v, i) => (v, i)))
             {
                 var activated = Value == i;

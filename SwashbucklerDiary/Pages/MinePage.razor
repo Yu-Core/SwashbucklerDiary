@@ -1,9 +1,9 @@
 ﻿@page "/mine"
+@using SwashbucklerDiary.Models
 @inherits PageComponentBase
 
 <MAppBar App
-         Elevation="0"
-         Color="white">
+         Elevation="0">
     <MToolbarTitle Class="font-weight-bold">
         @(I18n.T("Mine.MySpace"))
     </MToolbarTitle>
@@ -144,7 +144,39 @@
                 {
                     <MRadio Label="@(item.Key)"
                         Class="my-2"
-                        Value="@(item.Value)">
+                        Value="@(item.Value)"
+                        Color="@MRadioColor">
+                    </MRadio>
+                }
+            </MRadioGroup>
+        </MCardText>
+    </MCard>
+</MyDialog>
+
+<MyDialog MaxWidth="420"
+          @bind-MyValue="ShowThemeState">
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Mine.Night"))
+            <MSpacer></MSpacer>
+            <MButton Icon OnClick="()=>ShowThemeState= false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+            </MCardTitle>
+            <MCardText>
+            <MRadioGroup Value="ThemeState"
+                         TValue="ThemeState"
+                         ValueChanged="ThemeStateChanged"
+                         Class="mt-0 pb-1"
+                         OnClick="()=>ShowThemeState=false"
+                         HideDetails="@("auto")"
+                          Mandatory>
+                @foreach (var item in ThemeStates)
+                {
+                    <MRadio Label="@(I18n.T(item.Key))"
+                        Class="my-2"
+                        Value="@(item.Value)"
+                        Color="@MRadioColor">
                     </MRadio>
                 }
             </MRadioGroup>

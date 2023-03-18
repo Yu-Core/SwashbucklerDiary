@@ -17,6 +17,8 @@ namespace SwashbucklerDiary.Components
         private ISettingsService SettingsService { get; set; } = default!;
         [Inject]
         private IJSRuntime? JS { get; set; }
+        [Inject]
+        private IThemeService ThemeService { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
@@ -41,13 +43,14 @@ namespace SwashbucklerDiary.Components
                 {"placeholder",I18n.T("Write.ContentPlace")! },
                 {"cdn","npm/vditor/3.9.0" },
                 {"lang",Language },
-                {"icon","material" }
+                {"icon","material" },
+                { "theme", ThemeService.Dark?"dark":"" }
             };
             base.OnInitialized();
         }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if(firstRender)
+            if (firstRender)
             {
                 await PreventInputLoseFocus();
             }
