@@ -103,7 +103,8 @@ namespace SwashbucklerDiary.Pages
             Language = await SettingsService.Get(SettingType.Language);
             UserName = await SettingsService.Get(SettingType.UserName);
             Sign = await SettingsService.Get(SettingType.Sign);
-            ThemeState = await SettingsService.Get(SettingType.ThemeState);
+            int themeState = await SettingsService.Get(SettingType.ThemeState);
+            ThemeState = (ThemeState)themeState;
         }
 
         private async Task LanguageChanged(string value)

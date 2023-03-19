@@ -45,5 +45,7 @@
 		<string>mailto</string>
 		<string>itms-apps</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

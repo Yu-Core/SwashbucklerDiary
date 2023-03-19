@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Storage;
 using SwashbucklerDiary.IServices;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
+using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Services
 {
@@ -210,7 +208,7 @@ namespace SwashbucklerDiary.Services
                     return folder.Folder.Path;
                 }
                 else
-                { 
+                {
                     return null;
                 }
             }
@@ -226,7 +224,7 @@ namespace SwashbucklerDiary.Services
             return PickFileAsync(options, suffixNames);
         }
 
-        public async Task<string?> PickFileAsync(PickOptions options,string[] suffixNames)
+        public async Task<string?> PickFileAsync(PickOptions options, string[] suffixNames)
         {
             try
             {
@@ -236,7 +234,7 @@ namespace SwashbucklerDiary.Services
                     bool flag = false;
                     foreach (var suffixName in suffixNames)
                     {
-                        if(result.FileName.EndsWith(suffixName, StringComparison.OrdinalIgnoreCase))
+                        if (result.FileName.EndsWith(suffixName, StringComparison.OrdinalIgnoreCase))
                         {
                             flag = true;
                             break;
@@ -274,7 +272,7 @@ namespace SwashbucklerDiary.Services
             {
                 FileTypes = customFileType,
             };
-            return PickFileAsync(options,"db3");
+            return PickFileAsync(options, "db3");
         }
 
         public Task<string?> PickJsonFileAsync()
@@ -313,7 +311,7 @@ namespace SwashbucklerDiary.Services
                 {
                     fileSaverResult = await FileSaver.Default.SaveAsync(path, name, stream, default);
                 }
-                
+
                 if (fileSaverResult.IsSuccessful)
                 {
                     return fileSaverResult.FilePath;
@@ -328,6 +326,16 @@ namespace SwashbucklerDiary.Services
 
                 throw;
             }
+        }
+
+#pragma warning disable CA1416 // 验证平台兼容性
+        public void SetStatusBar(ThemeState themeState)
+        {
+            var Dark = themeState == ThemeState.Dark;
+            Color statusBarColor = Dark ? Colors.Black : Colors.White;
+            CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(statusBarColor);
+            StatusBarStyle statusBarStyle = Dark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
+            CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(statusBarStyle);
         }
     }
 }

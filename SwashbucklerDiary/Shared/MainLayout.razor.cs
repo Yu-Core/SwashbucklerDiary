@@ -4,6 +4,7 @@ using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using System.Diagnostics;
 
 namespace SwashbucklerDiary.Shared
 {
@@ -30,6 +31,10 @@ namespace SwashbucklerDiary.Shared
         private IAlertService AlertService { get; set; } = default!;
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
+#if ANDROID || IOS
+        [Inject]
+        private ISystemService SystemService { get; set; } = default!;
+#endif
 
         public void Dispose()
         {
@@ -43,9 +48,9 @@ namespace SwashbucklerDiary.Shared
             AlertService.Initialize(PopupService);
             I18nService.Initialize(I18n);
             LoadView();
+            ThemeService.OnChanged += ThemeChanged;
             await LoadSettings();
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
-            ThemeService.OnChanged += ThemeChanged;
             await base.OnInitializedAsync();
         }
 
@@ -88,8 +93,11 @@ namespace SwashbucklerDiary.Shared
                 var language = await SettingsService.Get<string>(SettingType.Language);
                 I18nService.SetCulture(language);
             }
-            ThemeState themeState = await SettingsService.Get(SettingType.ThemeState);
-            ThemeService.ThemeState = themeState;
+            int themeState = await SettingsService.Get(SettingType.ThemeState);
+            ThemeService.ThemeState = (ThemeState)themeState;
+#if ANDROID || IOS
+            SystemService.SetStatusBar((ThemeState)themeState);
+#endif
         }
 
         private void LoadView()
@@ -115,6 +123,9 @@ namespace SwashbucklerDiary.Shared
         private void ThemeChanged(ThemeState state)
         {
             StateHasChanged();
+#if ANDROID || IOS
+            SystemService.SetStatusBar(state);
+#endif
         }
     }
 }

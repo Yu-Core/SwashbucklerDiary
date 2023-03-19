@@ -3,8 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SwashbucklerDiary"
              x:Class="SwashbucklerDiary.MainPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
-
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="White" StatusBarStyle="LightContent" />
+    </ContentPage.Behaviors>
     <BlazorWebView x:Name="_blazorWebView"
                    HostPage="wwwroot/index.html">
         <BlazorWebView.RootComponents>

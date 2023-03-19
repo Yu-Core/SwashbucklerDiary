@@ -1,4 +1,6 @@
-﻿namespace SwashbucklerDiary.IServices
+﻿using SwashbucklerDiary.Models;
+
+namespace SwashbucklerDiary.IServices
 {
     public interface ISystemService
     {
@@ -26,5 +28,6 @@
         Task<string?> PickJsonFileAsync();
         Task<string?> SaveFileAsync(string name, Stream stream);
         Task<string?> SaveFileAsync(string? path,string name,Stream stream);
+        void SetStatusBar(ThemeState themeState);
     }
 }

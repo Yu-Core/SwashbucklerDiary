@@ -24,7 +24,7 @@ namespace SwashbucklerDiary
         {
             base.OnCreate(savedInstanceState);
 
-            StatusBarSetting.SetStatusBar(Window);
+            //StatusBarSetting.SetStatusBar(Window);
             GlobalLayoutUtil.AssistActivity(this);
         }
     }

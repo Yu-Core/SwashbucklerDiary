@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Services
             {SettingType.Privacy,true },
             {SettingType.PrivatePassword,"" },
             {SettingType.BackupsPath,"" },
-            {SettingType.ThemeState,ThemeState.Light },
+            {SettingType.ThemeState,(int)ThemeState.Light },
         };
         public Task<bool> ContainsKey(string key)
         {

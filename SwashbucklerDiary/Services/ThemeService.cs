@@ -1,19 +1,20 @@
 ﻿using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using System.Diagnostics;
 
 namespace SwashbucklerDiary.Services
 {
     public class ThemeService : IThemeService
     {
+        private bool AlreadySet;
         private ThemeState _themeState = ThemeState.Light;
         public ThemeState ThemeState
         {
             get => GetThemeState();
             set => SetThemeState(value);
         }
-        public bool System => _themeState == ThemeState.System;
-        public bool Light => _themeState == ThemeState.Light;
-        public bool Dark => _themeState == ThemeState.Dark;
+        public bool Light => ThemeState == ThemeState.Light;
+        public bool Dark => ThemeState == ThemeState.Dark;
 
         public event Action<ThemeState>? OnChanged;
 
@@ -32,7 +33,13 @@ namespace SwashbucklerDiary.Services
         /// </summary>
         private void SetThemeState(ThemeState themeState)
         {
+            if(AlreadySet == true && _themeState == themeState)
+            {
+                return;
+            }
+
             _themeState = themeState;
+            AlreadySet = true;
             if (themeState == ThemeState.System)
             {
                 Application.Current!.RequestedThemeChanged += HandlerAppThemeChanged;
@@ -41,6 +48,7 @@ namespace SwashbucklerDiary.Services
             {
                 Application.Current!.RequestedThemeChanged -= HandlerAppThemeChanged;
             }
+
             OnChanged?.Invoke(ThemeState);
         }
 

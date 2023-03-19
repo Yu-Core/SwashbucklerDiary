@@ -15,9 +15,9 @@ namespace SwashbucklerDiary.Pages
         private readonly List<string> Types = new() { "All", "Tags" };
 
         [Inject]
-        public IDiaryService DiaryService { get; set; } = default!;
+        private IDiaryService DiaryService { get; set; } = default!;
         [Inject]
-        public ITagService TagService { get; set; } = default!;
+        private ITagService TagService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -34,7 +34,6 @@ namespace SwashbucklerDiary.Pages
         }
 
         private bool ShowAddTag { get; set; }
-
         private async Task UpdateDiaries()
         {
             Diaries = await DiaryService.QueryTakeAsync(50, it => !it.Private);
