@@ -1,29 +1,33 @@
 ﻿@inherits MyComponentBase
 
-<MCard Class="mb-5 tag-card"
-       Ripple="false"
-       Rounded="@("lg")"
-       @oncontextmenu="()=>ShowMenu=true"
-       OnClick="OnClick">
-    <MListItem>
-        <MListItemIcon>
-            <MIcon>
-                mdi-label-outline
-            </MIcon>
-        </MListItemIcon>
+<MHover>
+    <MCard @attributes="context.Attrs"
+           Class="mb-5 tag-card"
+           Elevation="@(context.Hover?"4":"2")"
+           Ripple="false"
+           Rounded="@("lg")"
+           @oncontextmenu="()=>ShowMenu=true"
+           OnClick="OnClick">
+        <MListItem>
+            <MListItemIcon>
+                <MIcon>
+                    mdi-label-outline
+                </MIcon>
+            </MListItemIcon>
 
-        <MListItemContent>
-            @(Value!.Name)
-        </MListItemContent>
+            <MListItemContent>
+                @(Value!.Name)
+            </MListItemContent>
 
-        <MListItemAction>
-            <div @onclick:stopPropagation="true">
-                <MyMenu @bind-Value="ShowMenu" ViewListItems="ViewListItems">
-                    <ButtonContent>
-                        <MIcon>mdi-pencil</MIcon>
-                    </ButtonContent>
-                </MyMenu>
-            </div>
-        </MListItemAction>
-    </MListItem>
-</MCard>
+            <MListItemAction>
+                <div @onclick:stopPropagation="true">
+                    <MyMenu @bind-Value="ShowMenu" ViewListItems="ViewListItems">
+                        <ButtonContent>
+                            <MIcon>mdi-pencil</MIcon>
+                        </ButtonContent>
+                    </MyMenu>
+                </div>
+            </MListItemAction>
+        </MListItem>
+    </MCard>
+</MHover>

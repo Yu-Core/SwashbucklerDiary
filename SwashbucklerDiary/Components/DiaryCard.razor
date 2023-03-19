@@ -1,42 +1,46 @@
 ﻿@inherits MyComponentBase
-<MCard Rounded="@("lg")"
-       Elevation="4"
-       Class="@("my-5 " + Class)"
-       OnClick="OnClick"
-       Ripple="false"
-       @oncontextmenu="()=>ShowMenu=true"
-       __internal_preventDefault_oncontextmenu>
-    <MListItem Dense>
-        <MListItemContent>
-            <div class="text--secondary text-h6">
-                @(Time.ToString("MM/dd"))
-            </div>
-        </MListItemContent>
-        <MListItemAction>
-            @if (IsTop)
-            {
-                <MIcon>
-                    mdi-format-vertical-align-top
-                </MIcon>
-            }
-            <div @onclick:stopPropagation="true">
-                <MyMenu @bind-Value="ShowMenu" ViewListItems="ViewListItems">
-                    <ButtonContent>
-                        <MIcon>mdi-dots-horizontal</MIcon>
-                    </ButtonContent>
-                </MyMenu>
-            </div>
-        </MListItemAction>
-    </MListItem>
-    <MDivider Class="mx-4"></MDivider>
-    <MListItem ThreeLine>
-        <MListItemContent>
-            <MListItemTitle>
-                <b>@Title</b>
-            </MListItemTitle>
-            <MListItemSubtitle>
-                @Text
-            </MListItemSubtitle>
-        </MListItemContent>
-    </MListItem>
-</MCard>
+
+<MHover>
+    <MCard @attributes="context.Attrs"
+           Class="@("my-5 " + Class)" 
+           Elevation="@(context.Hover?"4":"2")"
+           OnClick="OnClick"
+           Ripple="false"
+           Rounded="@("lg")"
+           @oncontextmenu="()=>ShowMenu=true"
+           __internal_preventDefault_oncontextmenu>
+        <MListItem Dense>
+            <MListItemContent>
+                <div class="text--secondary text-h6">
+                    @(Time.ToString("MM/dd"))
+                </div>
+            </MListItemContent>
+            <MListItemAction>
+                @if (IsTop)
+                {
+                    <MIcon>
+                        mdi-format-vertical-align-top
+                    </MIcon>
+                }
+                <div @onclick:stopPropagation="true">
+                    <MyMenu @bind-Value="ShowMenu" ViewListItems="ViewListItems">
+                        <ButtonContent>
+                            <MIcon>mdi-dots-horizontal</MIcon>
+                        </ButtonContent>
+                    </MyMenu>
+                </div>
+            </MListItemAction>
+        </MListItem>
+        <MDivider Class="mx-4"></MDivider>
+        <MListItem ThreeLine>
+            <MListItemContent>
+                <MListItemTitle>
+                    <b>@Title</b>
+                </MListItemTitle>
+                <MListItemSubtitle>
+                    @Text
+                </MListItemSubtitle>
+            </MListItemContent>
+        </MListItem>
+    </MCard>
+</MHover>

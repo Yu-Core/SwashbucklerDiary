@@ -20,6 +20,11 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
+        private string? MSwitchTrackColor(bool value)
+        {
+            return value && Light ? "black" : null;
+        }
+
         private async Task LoadSettings()
         {
             Title = await SettingsService.Get(SettingType.Title);

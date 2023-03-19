@@ -11,7 +11,7 @@
     </div>
 
     <MCard Class="setting-card"
-           Elevation="4"
+           Elevation="2"
            Rounded="@("lg")">
         <MList>
             <MListItem OnClick="@(()=>To("/location"))">
@@ -35,7 +35,7 @@
     </div>
 
     <MCard Class="setting-card"
-           Elevation="4"
+           Elevation="2"
            Rounded="@("lg")">
         <MList>
             <MListItem>
@@ -52,7 +52,9 @@
                              TValue="bool"
                              OnChange="TitleChange"
                              Dense
-                             Inset>
+                             Inset
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(Title)">
                     </MSwitch>
                 </MListItemAction>
             </MListItem>
@@ -69,11 +71,13 @@
                     @(I18n.T("Setting.Diary.Markdown"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch Value="Markdown"
+                    <MSwitch @bind-Value="Markdown"
                              TValue="bool"
                              OnChange="MarkdownChange"
                              Dense
-                             Inset>
+                             Inset
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(Markdown)">
                     </MSwitch>
                 </MListItemAction>
             </MListItem>
@@ -85,7 +89,7 @@
     </div>
 
     <MCard Class="setting-card"
-           Elevation="4"
+           Elevation="2"
            Rounded="@("lg")">
         <MList>
             <MListItem>
@@ -104,6 +108,8 @@
                              Readonly
                              OnClick="PrivacyClick"
                              Dense
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(Privacy)"
                              Inset>
                     </MSwitch>
                 </MListItemAction>

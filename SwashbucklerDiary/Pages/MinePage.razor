@@ -15,41 +15,44 @@
 
     <ScrollContainer Bottom>
     <div class="d-md-flex flex-md-row justify-space-between">
-        <MCard Class="mine-info mb-5 py-sm-3"
-               Elevation="4"
-               Rounded="@("lg")"
-               Ripple="false"
-               OnClick="@(()=>To("/user"))">
-            <MList>
-                <MListItem ThreeLine>
-                    <MListItemAvatar Class="ml-md-2" Rounded="@("lg")" Size="70">
-                        <MImage Src="@(Avatar)">
-                            <PlaceholderContent>
-                                <MRow Class="fill-height ma-0"
-                                      Align="@AlignTypes.Center"
-                                      Justify="@JustifyTypes.Center">
-                                    <MProgressCircular Indeterminate></MProgressCircular>
-                                </MRow>
-                            </PlaceholderContent>
-                        </MImage>
-                    </MListItemAvatar>
-                    <MListItemContent>
-                        <MListItemTitle Class="text-h6 font-weight-bold">
-                            @(string.IsNullOrEmpty(UserName) ? I18n.T("AppName") : UserName)
-                        </MListItemTitle>
-                        <MListItemSubtitle>
-                            @(string.IsNullOrEmpty(Sign) ? I18n.T("Mine.Sign") : Sign)
-                        </MListItemSubtitle>
-                    </MListItemContent>
-                    <MListItemAction Style="align-self:unset;">
-                        <MIcon>mdi-chevron-right</MIcon>
-                    </MListItemAction>
-                </MListItem>
-            </MList>
-        </MCard>
+        <MHover>
+            <MCard @attributes="context.Attrs"
+                   Class="mine-info mb-5 py-sm-3"
+                   Elevation="@(context.Hover?"4":"2")"
+                   Rounded="@("lg")"
+                   Ripple="false"
+                   OnClick="@(()=>To("/user"))">
+                <MList>
+                    <MListItem ThreeLine>
+                        <MListItemAvatar Class="ml-md-2" Rounded="@("lg")" Size="70">
+                            <MImage Src="@(Avatar)">
+                                <PlaceholderContent>
+                                    <MRow Class="fill-height ma-0"
+                                          Align="@AlignTypes.Center"
+                                          Justify="@JustifyTypes.Center">
+                                        <MProgressCircular Indeterminate></MProgressCircular>
+                                    </MRow>
+                                </PlaceholderContent>
+                            </MImage>
+                        </MListItemAvatar>
+                        <MListItemContent>
+                            <MListItemTitle Class="text-h6 font-weight-bold">
+                                @(string.IsNullOrEmpty(UserName) ? I18n.T("AppName") : UserName)
+                            </MListItemTitle>
+                            <MListItemSubtitle>
+                                @(string.IsNullOrEmpty(Sign) ? I18n.T("Mine.Sign") : Sign)
+                            </MListItemSubtitle>
+                        </MListItemContent>
+                        <MListItemAction Style="align-self:unset;">
+                            <MIcon>mdi-chevron-right</MIcon>
+                        </MListItemAction>
+                    </MListItem>
+                </MList>
+            </MCard>
+        </MHover>
 
         <MCard Class="mine-info mb-5 ml-md-5 d-flex"
-               Elevation="4"
+               Elevation="2"
                Rounded="@("lg")">
             <MList Class="d-flex flex-grow-1">
                 <MListItem>
@@ -91,7 +94,7 @@
         </div>
 
         <MCard Class="mine-card"
-           Elevation="4"
+           Elevation="2"
            Rounded="@("lg")">
             <MList>
                 @foreach (var item in list.Value)

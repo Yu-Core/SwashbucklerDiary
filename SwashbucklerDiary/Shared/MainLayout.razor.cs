@@ -44,14 +44,14 @@ namespace SwashbucklerDiary.Shared
 
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync();
             NavigateService.Initialize(Navigation);
             AlertService.Initialize(PopupService);
             I18nService.Initialize(I18n);
             LoadView();
+            MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             ThemeService.OnChanged += ThemeChanged;
             await LoadSettings();
-            MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
-            await base.OnInitializedAsync();
         }
 
         private bool Dark => ThemeService.Dark;
@@ -122,10 +122,10 @@ namespace SwashbucklerDiary.Shared
 
         private void ThemeChanged(ThemeState state)
         {
-            StateHasChanged();
 #if ANDROID || IOS
             SystemService.SetStatusBar(state);
 #endif
+            InvokeAsync(StateHasChanged);
         }
     }
 }

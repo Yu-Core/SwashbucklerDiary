@@ -204,8 +204,11 @@ a, .btn-link {
 }
 
 .theme--light.m-picker__body {
-    background: #fefeff !important;
+    background: #f9fafd !important;
 }
+    .theme--light.m-picker__body + .m-picker__actions {
+        background: #f9fafd !important;
+    }
 
 .theme--dark.m-picker__body {
     background: #1e1e1e !important;
@@ -216,21 +219,21 @@ a, .btn-link {
     }
 
 .theme--light.m-app-bar.m-toolbar.m-sheet {
-    background: #fff !important;
+    background: #f9fafd !important;
 }
 
 .theme--dark.m-app-bar.m-toolbar.m-sheet {
-    background: #000 !important;
+    background: #121212 !important;
 }
 
-@media screen and (min-width:600px) {
+/*@media screen and (max-width:600px) {
     .theme--light.m-app-bar.m-toolbar.m-sheet {
-        background: #fefeff !important;
+        background: #fff !important;
     }
-}
+}*/
 
 .theme--light.m-navigation-drawer {
-    background: #fefeff !important;
+    background: #f9fafd !important;
 }
 
 .theme--dark.m-navigation-drawer {
@@ -238,11 +241,11 @@ a, .btn-link {
 }
 
 .theme--light.m-application {
-    background: #fefeff !important;
+    background: #f9fafd !important;
 }
 
 .theme--light.navigation-active {
-    background: #F5F5F5 !important;
+    background: #eef0f4 !important;
 }
 
 .theme--dark.navigation-active {
@@ -264,6 +267,7 @@ a, .btn-link {
 }
 
 .theme--dark .icon-btn {
-    background: #424242 !important;
+    background: #2e2e2e !important;
     color: #fff !important;
 }
+

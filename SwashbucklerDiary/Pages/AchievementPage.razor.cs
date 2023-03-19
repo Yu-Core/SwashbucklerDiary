@@ -10,16 +10,11 @@ namespace SwashbucklerDiary.Pages
     {
         private List<AchievementModel> Achievements = new();
 
-        [Inject]
-        private IThemeService ThemeService { get; set; } = default!;
-
         protected override async Task OnInitializedAsync()
         {
             await SetAchievements();
             await base.OnInitializedAsync();
         }
-
-        private bool Light => ThemeService.Light;
 
         private async Task SetAchievements()
         {

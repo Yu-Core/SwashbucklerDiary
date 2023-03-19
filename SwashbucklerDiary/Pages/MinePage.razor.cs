@@ -38,8 +38,6 @@ namespace SwashbucklerDiary.Pages
         private IDiaryService DiaryService { get; set; } = default!;
         [Inject]
         private ILocalImageService LocalImageService { get; set; } = default!;
-        [Inject]
-        private IThemeService ThemeService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {

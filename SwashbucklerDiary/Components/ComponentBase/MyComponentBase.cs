@@ -12,8 +12,12 @@ namespace SwashbucklerDiary.Components
         protected II18nService I18n { get; set; } = default!;
         [Inject]
         protected IAlertService AlertService { get; set; } = default!;
+        [Inject]
+        protected IThemeService ThemeService { get; set; } = default!;
 
         protected NavigationManager Navigation => NavigateService.Navigation!;
+        protected bool Dark => ThemeService.Dark;
+        protected bool Light => ThemeService.Light;
 
         protected Task ToDo()
         {
