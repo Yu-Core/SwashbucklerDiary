@@ -166,7 +166,7 @@ a, .btn-link {
 /*优化消息提示*/
 .m-alert__title {
     margin-bottom: 8px;
-    font-size:1rem!important;
+    font-size: 1rem !important;
     font-weight: 700 !important;
 }
 
@@ -194,18 +194,19 @@ a, .btn-link {
     transition: all ease 0.3s !important;
 }
 
-.m-main__wrap{
-    display:flex;
-    flex-direction:column;
+.m-main__wrap {
+    display: flex;
+    flex-direction: column;
 }
 
-.swiper{
-    width:100%;
+.swiper {
+    width: 100%;
 }
 
 .theme--light.m-picker__body {
     background: #f9fafd !important;
 }
+
     .theme--light.m-picker__body + .m-picker__actions {
         background: #f9fafd !important;
     }
@@ -257,7 +258,7 @@ a, .btn-link {
 }
 
 .theme--light .vditor-reset {
-    background-color: #f9fafd !important;
+    background-color: #fafaff !important;
 }
 
 .theme--dark .vditor-reset {
@@ -265,7 +266,7 @@ a, .btn-link {
     color: #fff;
 }
 
-.theme--light .icon-btn{
+.theme--light .icon-btn {
     background: #000 !important;
     color: #fff !important;
 }
@@ -275,3 +276,18 @@ a, .btn-link {
     color: #fff !important;
 }
 
+.theme--light.m-card {
+    background: #fdfdff !important;
+}
+
+.theme--light.m-list {
+    background: #fdfdff !important;
+}
+
+.m-navigation-drawer .theme--light.m-list {
+    background-color: #f9fafd !important;
+}
+
+.theme--light.m-text-field .m-input__slot {
+    background-color: #fafaff !important;
+}
