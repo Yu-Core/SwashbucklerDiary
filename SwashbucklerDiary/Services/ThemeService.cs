@@ -1,6 +1,5 @@
 ﻿using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using System.Diagnostics;
 
 namespace SwashbucklerDiary.Services
 {
@@ -33,13 +32,19 @@ namespace SwashbucklerDiary.Services
         /// </summary>
         private void SetThemeState(ThemeState themeState)
         {
-            if(AlreadySet == true && _themeState == themeState)
+            if(AlreadySet == false)
             {
-                return;
+                AlreadySet = true;
+            }
+            else
+            {
+                if(_themeState == themeState)
+                {
+                    return;
+                }
             }
 
             _themeState = themeState;
-            AlreadySet = true;
             if (themeState == ThemeState.System)
             {
                 Application.Current!.RequestedThemeChanged += HandlerAppThemeChanged;
