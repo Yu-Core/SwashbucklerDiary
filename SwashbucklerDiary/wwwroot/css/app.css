@@ -254,11 +254,15 @@ a, .btn-link {
 
 .vditor-reset {
     border-radius: 8px;
-    background-color: var(--panel-background-color) !important;
 }
 
-.theme--dark .vditor-reset{
-    color:#fff;
+.theme--light .vditor-reset {
+    background-color: #f9fafd !important;
+}
+
+.theme--dark .vditor-reset {
+    background-color: #2e2e2e !important;
+    color: #fff;
 }
 
 .theme--light .icon-btn{

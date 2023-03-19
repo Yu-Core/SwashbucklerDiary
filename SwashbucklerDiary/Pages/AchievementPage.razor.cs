@@ -40,7 +40,7 @@ namespace SwashbucklerDiary.Pages
 
         private string GetProgressRateColor(AchievementModel achievement)
         {
-            return achievement.UserAchievement.IsCompleted && Light ? "black" : "grey lighten-1";
+            return achievement.UserAchievement.IsCompleted && Light ? "#2e2e2e" : "grey lighten-1";
         }
 
         private string GetProgressRateTextColor(AchievementModel achievement)
