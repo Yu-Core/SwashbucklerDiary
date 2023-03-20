@@ -6,6 +6,7 @@ using Application = Android.App.Application;
 
 namespace SwashbucklerDiary.Platforms.Android
 {
+#pragma warning disable CA1416 // 验证平台兼容性
     public static class BackButtonPressed
     {
         private static II18nService I18n = default!;
@@ -40,13 +41,21 @@ namespace SwashbucklerDiary.Platforms.Android
             else if (BackPressCounter == 0)
             {
                 BackPressCounter++;
-                Toast.MakeText(Application.Context, I18n.T("Press again to exit"), ToastLength.Long)!.Show();
-                Task.Run(async () =>
-                {
-                    await Task.Delay(2000);
-                    BackPressCounter = 0;
-                });
+                Toast toast = Toast.MakeText(Application.Context, I18n.T("Press again to exit"), ToastLength.Long)!;
+                toast.AddCallback(new MyToastCallBack());
+                toast.Show();
+            }
+        }
+
+        public class MyToastCallBack : Toast.Callback
+        {
+            public override void OnToastHidden()
+            {
+                BackPressCounter = 0;
+                base.OnToastHidden();
             }
         }
     }
 }
+
+
