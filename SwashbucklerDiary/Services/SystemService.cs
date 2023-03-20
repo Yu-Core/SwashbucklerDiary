@@ -330,14 +330,14 @@ namespace SwashbucklerDiary.Services
 
         private static readonly Color statusBarColorLight = Color.FromRgb(249, 250, 253);
         private static readonly Color statusBarColorDark = Color.FromRgb(18, 18, 18);
-#pragma warning disable CA1416 // 验证平台兼容性
+
         public void SetStatusBar(ThemeState themeState)
         {
             var Dark = themeState == ThemeState.Dark;
             Color statusBarColor = Dark ? statusBarColorDark : statusBarColorLight;
 #if WINDOWS
             TitleBar.SetColorForWindows(statusBarColor);
-#else
+#elif ANDROID || IOS
             CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(statusBarColor);
             StatusBarStyle statusBarStyle = Dark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
             CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(statusBarStyle);

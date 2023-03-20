@@ -31,10 +31,8 @@ namespace SwashbucklerDiary.Shared
         private IAlertService AlertService { get; set; } = default!;
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
-#if ANDROID || IOS
         [Inject]
         private ISystemService SystemService { get; set; } = default!;
-#endif
 
         public void Dispose()
         {
@@ -95,9 +93,7 @@ namespace SwashbucklerDiary.Shared
             }
             int themeState = await SettingsService.Get(SettingType.ThemeState);
             ThemeService.ThemeState = (ThemeState)themeState;
-#if ANDROID || IOS
             SystemService.SetStatusBar((ThemeState)themeState);
-#endif
         }
 
         private void LoadView()
@@ -122,9 +118,7 @@ namespace SwashbucklerDiary.Shared
 
         private void ThemeChanged(ThemeState state)
         {
-#if ANDROID || IOS
             SystemService.SetStatusBar(state);
-#endif
             InvokeAsync(StateHasChanged);
         }
     }
