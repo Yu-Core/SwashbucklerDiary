@@ -47,6 +47,8 @@
 - macOS (macOS 11 或更高版本)
 - ~~Tizen (暂不支持)~~
 
+> Windows 10暂不支持更改标题栏颜色
+
 ## 感谢以下开源项目
 - [.NET MAUI](https://github.com/dotnet/maui)
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)

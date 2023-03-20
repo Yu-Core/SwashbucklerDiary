@@ -218,13 +218,13 @@ namespace SwashbucklerDiary.Services
             }
         }
 
-        public Task<string?> PickFileAsync(PickOptions options, string suffixName)
+        private static Task<string?> PickFileAsync(PickOptions options, string suffixName)
         {
             string[] suffixNames = { suffixName };
             return PickFileAsync(options, suffixNames);
         }
 
-        public async Task<string?> PickFileAsync(PickOptions options, string[] suffixNames)
+        private async static Task<string?> PickFileAsync(PickOptions options, string[] suffixNames)
         {
             try
             {

@@ -1,9 +1,7 @@
 ﻿@page "/read/{id:guid}"
 @inherits PageComponentBase
 
-<MAppBar App
-         ElevateOnScroll
-         ScrollTarget="#scrolling-read">
+<MAppBar App Elevation="0">
     <MButton Icon OnClick="NavigateToBack">
         <MIcon>
             mdi-arrow-left
@@ -44,7 +42,7 @@
     </MyMenu>
 </MAppBar>
 
-<ScrollContainer Id="scrolling-read">
+<ScrollContainer>
     <div id="screenshot">
         <div class="px-3 d-flex align-end">
             <span class="text-h6 font-weight-bold">

@@ -81,7 +81,7 @@ a, .btn-link {
         padding-left: env(safe-area-inset-left);
     }
 }
-
+/*解决移动端悬停问题*/
 @media (hover: none) {
     .m-btn:hover::before {
         display: none;
@@ -100,9 +100,9 @@ a, .btn-link {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
-
+/*去除滚动条*/
 ::-webkit-scrollbar {
-    display: none; /*去除滚动条*/
+    display: none; 
 }
 
 .m-tab-swiper {
@@ -112,14 +112,6 @@ a, .btn-link {
     .m-tab-swiper::before {
         opacity: 0 !important;
     }
-
-.theme--light .m-tab--active {
-    color: #000 !important;
-}
-
-.theme--dark .m-tab--active {
-    color: #fff !important;
-}
 
 @media screen and (max-width:600px) {
     .m-tab-swiper {
@@ -133,7 +125,7 @@ a, .btn-link {
     -ms-user-select: none;
     user-select: none; /*禁止选中内容*/
 }
-
+/*滚动条*/
 .scroll-show::-webkit-scrollbar-track {
     border-radius: 15px;
     margin: 5px 0;
@@ -173,7 +165,7 @@ a, .btn-link {
 .m-snack__wrapper {
     border-radius: 8px !important;
 }
-
+/*修复应用栏中最前最后的位置，使用包裹的组件边距不正确*/
 .m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:first-of-type, .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type {
     margin-left: -12px
 }
@@ -202,6 +194,14 @@ a, .btn-link {
 .swiper {
     width: 100%;
 }
+/*配色调整*/
+.theme--light .m-tab--active {
+    color: #000 !important;
+}
+
+.theme--dark .m-tab--active {
+    color: #fff !important;
+}
 
 .theme--light.m-picker__body {
     background: #f9fafd !important;
@@ -226,12 +226,6 @@ a, .btn-link {
 .theme--dark.m-app-bar.m-toolbar.m-sheet {
     background: #121212 !important;
 }
-
-/*@media screen and (max-width:600px) {
-    .theme--light.m-app-bar.m-toolbar.m-sheet {
-        background: #fff !important;
-    }
-}*/
 
 .theme--light.m-navigation-drawer {
     background: #f9fafd !important;
@@ -289,5 +283,9 @@ a, .btn-link {
 }
 
 .theme--light.m-text-field .m-input__slot {
-    background-color: #fafaff !important;
+    background-color: transparent !important;
+}
+
+.theme--light.m-input--switch__track.black--text{
+    opacity:.8;
 }

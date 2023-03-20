@@ -9,9 +9,9 @@ namespace SwashbucklerDiary.Pages
         private bool Title;
         private bool Markdown;
         private bool Privacy;
+        private string? PrivatePassword;
         private bool ShowPPSet;
         private bool ShowPPInput;
-        private string? PrivatePassword;
 
         protected override async Task OnInitializedAsync()
         {

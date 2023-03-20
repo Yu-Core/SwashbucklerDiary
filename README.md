@@ -47,6 +47,8 @@ Adhere to minimalism, support page adaptation, support Markdown, no need for net
 - macOS (macOS 11 or higher)
 - ~~Tizen (Not supported temporarily)~~
 
+> Windows 10 does not currently support changing the title bar color
+
 ## Thanks to the following Open Source Projects
 - [.NET MAUI](https://github.com/dotnet/maui)
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
