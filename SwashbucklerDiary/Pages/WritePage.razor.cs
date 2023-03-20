@@ -69,6 +69,16 @@ namespace SwashbucklerDiary.Pages
             get => Diary.Tags!;
             set => Diary.Tags = value;
         }
+        private string? Weather
+        {
+            get => Diary.Weather;
+            set => Diary.Weather = value;
+        }
+        private string? Mood
+        {
+            get => Diary.Mood;
+            set => Diary.Mood = value;
+        }
         private string? Location
         {
             get => Diary.Location;
@@ -123,9 +133,9 @@ namespace SwashbucklerDiary.Pages
                 }
             }
         }
-        private string Weather =>
+        private string WeatherText =>
             string.IsNullOrEmpty(Diary.Weather) ? I18n.T("Write.Weather")! : I18n.T("Weather." + Diary.Weather)!;
-        private string Mood =>
+        private string MoodText =>
             string.IsNullOrEmpty(Diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + Diary.Mood)!;
         
         private string ShowTitleText() => ShowTitle ? "Write.CloseTitle" : "Write.OpenTitle";

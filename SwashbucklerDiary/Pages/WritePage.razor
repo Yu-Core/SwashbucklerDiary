@@ -32,10 +32,10 @@
             </ButtonContent>
         </MyMenu>
     </ChildContent>
-</MAppBar>
+    </MAppBar>
 
-<ScrollContainer Class="d-flex" 
-                 ContentClass="d-flex flex-column flex-grow-1" 
+    <ScrollContainer Class="d-flex"
+                 ContentClass="d-flex flex-column flex-grow-1"
                  OccupyHeight="OccupyHeight">
     <div>
         <div class="px-3 d-flex align-end">
@@ -57,7 +57,7 @@
                 <MIcon Left>
                     @(GetWeatherIcon(Diary.Weather))
                 </MIcon>
-                @Weather
+                @WeatherText
             </MChip>
             <MChip Class="my-2 mr-2"
                       Outlined
@@ -65,7 +65,7 @@
                 <MIcon Left>
                     @(GetMoodIcon(Diary.Mood))
                 </MIcon>
-                @Mood
+                @MoodText
             </MChip>
             <MChip Class="my-2 mr-2"
                       Outlined
@@ -121,7 +121,7 @@
             @foreach (var item in SelectedTags)
             {
                 <MChip Close
-                   Outlined
+                      Outlined
                    OnCloseClick="()=>RemoveSelectedTag(item)">
                 @(item.Name)
                 </MChip>
@@ -151,62 +151,19 @@
             OnSave="SaveSelectTags">
 </SelectTags>
 
-<MyDialog @bind-MyValue="ShowWeather"
-          MaxWidth="420"
-          Scrollable>
-    <MCard Rounded="@("lg")">
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Write.SelectWeather"))
-            <MSpacer></MSpacer>
-            <MButton Icon OnClick="()=>ShowWeather=false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-            </MCardTitle>
-            <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:200px;">
-            <MChipGroup @bind-Value="WeatherIndex" Column>
-                @foreach (var item in WeatherIcons)
-                {
-                    <MChip Filter
-                       Outlined
-                       OnClick="()=>ShowWeather=false">
-                    <MIcon Left>
-                        @(item.Value)
-                        </MIcon>
-                        @(I18n.T("Weather." + item.Key))
-                    </MChip>
-                }
-            </MChipGroup>
-        </MCardText>
-    </MCard>
-</MyDialog>
-<MyDialog @bind-MyValue="ShowMood"
-          MaxWidth="420"
-          Scrollable>
-    <MCard Rounded="@("lg")">
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Write.SelectMood"))
-            <MSpacer></MSpacer>
-            <MButton Icon OnClick="()=>ShowMood=false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-            </MCardTitle>
-            <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:200px;">
-            <MChipGroup @bind-Value="MoodIndex" Column>
-                @foreach (var item in MoodIcons)
-                {
-                    <MChip Filter
-                       Outlined
-                       OnClick="()=>ShowMood=false">
-                    <MIcon Left>
-                        @(item.Value)
-                        </MIcon>
-                        @(I18n.T("Mood." + item.Key))
-                    </MChip>
-                }
-            </MChipGroup>
-        </MCardText>
-    </MCard>
-</MyDialog>
+<SelectIconDialog @bind-Value="ShowWeather"
+                  @bind-Item="@Weather"
+                  Title="@(I18n.T("Write.SelectWeather"))"
+                  Items="WeatherIcons"
+                  Text="@(item=>I18n.T("Weather." + item.Key))">
+</SelectIconDialog>
+
+<SelectIconDialog @bind-Value="ShowMood"
+                  @bind-Item="@Mood"
+                  Title="@(I18n.T("Write.SelectMood"))"
+                  Items="MoodIcons"
+                  Text="@(item=>I18n.T("Mood." + item.Key))">
+</SelectIconDialog>
 
 <SelectLocation @bind-Value="ShowLocation"
                 @bind-Location="Location">

@@ -70,6 +70,7 @@ namespace SwashbucklerDiary.Components
         async Task SaveAdd(string name)
         {
             ShowAdd = false;
+            await InternalValueChanged(false);
             if (string.IsNullOrWhiteSpace(name))
             {
                 return;

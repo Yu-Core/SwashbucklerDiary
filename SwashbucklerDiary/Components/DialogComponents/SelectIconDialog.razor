@@ -1,0 +1,34 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits DialogComponentBase
+
+<MyDialog MyValue="Value"
+          MyValueChanged="InternalValueChanged"
+          MaxWidth="420"
+          Scrollable>
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            @(Title)
+            <MSpacer></MSpacer>
+            <MButton Icon="true" OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:200px;">
+            <MChipGroup Value="GetSelectedIndex()"
+                        ValueChanged="SelectedIndexChanged"
+                        Column>
+                @foreach (var item in Items)
+                {
+                    <MChip Filter="true"
+                       Outlined="true"
+                       OnClick="HandleOnCancel">
+                        <MIcon Left="true">
+                            @(item.Value)
+                        </MIcon>
+                        @(Text?.Invoke(item))
+                    </MChip>
+                }
+            </MChipGroup>
+        </MCardText>
+    </MCard>
+</MyDialog>
