@@ -56,18 +56,18 @@
                              Color="white"
                              TrackColor="@MSwitchTrackColor(Title)">
                     </MSwitch>
-                </MListItemAction>
-            </MListItem>
+                    </MListItemAction>
+                    </MListItem>
 
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+                    <MDivider Class="mx-3 mx-sm-0"></MDivider>
 
-            <MListItem>
-                <MListItemIcon>
+                    <MListItem>
+                    <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-language-markdown-outline
                     </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
+                    </MListItemIcon>
+                    <MListItemContent>
                     @(I18n.T("Setting.Diary.Markdown"))
                 </MListItemContent>
                 <MListItemAction>
@@ -79,13 +79,13 @@
                              Color="white"
                              TrackColor="@MSwitchTrackColor(Markdown)">
                     </MSwitch>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
+                    </MListItemAction>
+                    </MListItem>
+                    </MList>
+                    </MCard>
 
-    <div class="text-h6 setting-title">
-        @(GetSafeName())
+                    <div class="text-h6 setting-title">
+                        @(GetSafeName())
     </div>
 
     <MCard Class="setting-card"
@@ -104,7 +104,6 @@
                 <MListItemAction>
                     <MSwitch @bind-Value="Privacy"
                              TValue="bool"
-                             OnChange="PrivacyChange"
                              Readonly
                              OnClick="PrivacyClick"
                              Dense
@@ -168,5 +167,6 @@
              Title="@(I18n.T("Setting.Safe.ValidatePassword"))"
              Placeholder="@(I18n.T("Please input a password"))"
              MaxLength="20"
-             OnOK="InputPassword">
+             OnOK="InputPassword"
+             OKText="@(I18n.T("Share.OK"))">
 </InputDialog>

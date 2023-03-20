@@ -44,6 +44,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task PrivacyChange(bool value)
         {
+            Privacy = value;
             await SettingsService.Save(SettingType.Privacy, value);
             if (!value)
             {
@@ -82,7 +83,7 @@ namespace SwashbucklerDiary.Pages
                 await AlertService.Error(I18n.T("Setting.Safe.PasswordError"));
                 return;
             }
-            Privacy = true;
+            await PrivacyChange(true);
         }
 
         private async Task PrivacyClick()
@@ -94,7 +95,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            Privacy = !Privacy;
+            await PrivacyChange(!Privacy);
         }
 
         private async Task UpdatePrivatePassword()
