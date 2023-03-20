@@ -102,7 +102,7 @@ namespace SwashbucklerDiary.Pages
             string localFilePath = Path.Combine(FileSystem.AppDataDirectory, nameof(Avatar) + Path.GetExtension(filePath));
             await SystemService.FileCopy(filePath, localFilePath);
 
-            localFilePath = await LocalImageService.AddFlag(localFilePath);
+            //localFilePath = await LocalImageService.AddFlag(localFilePath);
             string oldAvatar = await SettingsService.Get(SettingType.Avatar);
             await SettingsService.Save(SettingType.Avatar, localFilePath);
 
