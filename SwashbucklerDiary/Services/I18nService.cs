@@ -9,6 +9,8 @@ namespace SwashbucklerDiary.Services
         public I18n I18n { get; set; } = default!;
         public CultureInfo Culture => I18n.Culture;
 
+        public event Action? OnChanged;
+
         public void Initialize(I18n i18n)
         {
             I18n = i18n;
@@ -17,6 +19,7 @@ namespace SwashbucklerDiary.Services
         public void SetCulture(string culture)
         {
             I18n.SetCulture(new CultureInfo(culture));
+            OnChanged?.Invoke();
         }
 
         public string T(string? key)

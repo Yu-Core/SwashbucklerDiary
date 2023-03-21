@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace SwashbucklerDiary.Shared
 {
@@ -49,6 +50,7 @@ namespace SwashbucklerDiary.Shared
             LoadView();
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             ThemeService.OnChanged += ThemeChanged;
+            I18nService.OnChanged += StateHasChanged;
             await LoadSettings();
         }
 

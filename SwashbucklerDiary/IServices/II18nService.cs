@@ -14,6 +14,7 @@ namespace SwashbucklerDiary.IServices
     /// </summary>
     public interface II18nService
     {
+        event Action OnChanged;
         I18n I18n { get; protected set; }
         CultureInfo Culture { get; }
         void Initialize(I18n i18n);
