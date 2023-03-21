@@ -328,7 +328,7 @@ namespace SwashbucklerDiary.Services
             }
         }
 
-        private static readonly Color statusBarColorLight = Color.FromRgb(249, 250, 253);
+        private static readonly Color statusBarColorLight = Color.FromRgb(253, 253, 253);
         private static readonly Color statusBarColorDark = Color.FromRgb(18, 18, 18);
 
         public void SetStatusBar(ThemeState themeState)

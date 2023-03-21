@@ -204,11 +204,11 @@ a, .btn-link {
 }
 
 .theme--light.m-picker__body {
-    background: #f9fafd !important;
+    background: #fdfdfd !important;
 }
 
     .theme--light.m-picker__body + .m-picker__actions {
-        background: #f9fafd !important;
+        background: #fdfdfd !important;
     }
 
 .theme--dark.m-picker__body {
@@ -220,7 +220,7 @@ a, .btn-link {
     }
 
 .theme--light.m-app-bar.m-toolbar.m-sheet {
-    background: #f9fafd !important;
+    background: #fdfdfd !important;
 }
 
 .theme--dark.m-app-bar.m-toolbar.m-sheet {
@@ -228,7 +228,7 @@ a, .btn-link {
 }
 
 .theme--light.m-navigation-drawer {
-    background: #f9fafd !important;
+    background: #fdfdfd !important;
 }
 
 .theme--dark.m-navigation-drawer {
@@ -236,11 +236,11 @@ a, .btn-link {
 }
 
 .theme--light.m-application {
-    background: #f9fafd !important;
+    background: #fdfdfd !important;
 }
 
 .theme--light.navigation-active {
-    background: #eef0f4 !important;
+    background: #f5f5f5 !important;
 }
 
 .theme--dark.navigation-active {
@@ -252,7 +252,7 @@ a, .btn-link {
 }
 
 .theme--light .vditor-reset {
-    background-color: #fafaff !important;
+    background-color: #fefefe !important;
 }
 
 .theme--dark .vditor-reset {
@@ -270,7 +270,7 @@ a, .btn-link {
     color: #fff !important;
 }
 
-.theme--light.m-card {
+/*.theme--light.m-card {
     background: #fdfdff !important;
 }
 
@@ -279,11 +279,11 @@ a, .btn-link {
 }
 
 .m-navigation-drawer .theme--light.m-list {
-    background-color: #f9fafd !important;
-}
+    background-color: #fdfdfd !important;
+}*/
 
 .theme--light.m-text-field .m-input__slot {
-    background-color: transparent !important;
+    background-color: #fefefe !important;
 }
 
 .theme--light.m-input--switch__track.black--text{
