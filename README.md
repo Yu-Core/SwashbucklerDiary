@@ -1,6 +1,6 @@
 # Swashbuckler Diary
 
-English | [简体中文](./README.zh-CN.md)
+English | [简体中文](./README.zh-cn.md)
 
 "Swashbuckler Diary" is an open source, cross platform local diary application. Half a lifetime of wind and rain, half a lifetime of travel, one's Jianghu, always needs to be recorded to be wonderful.
 
@@ -40,8 +40,25 @@ Adhere to minimalism, support page adaptation, support Markdown, no need for net
     </tr>
  </table>
 
+ ## Development environment
+
+[Visual Studio 2022](https://learn.microsoft.com/en-us/visualstudio/install/install-visual-studio?view=vs-2022) 或 [Visual Studio 2022 for Mac](https://learn.microsoft.com/en-us/visualstudio/mac/installation?view=vsmac-2022)
+
+- System requirements
+
+    - Windows 10 version 1909 or higher: Home, Professional, Education, and Enterprise
+    - macOS Monterey 12.0 or higher
+
+- Workload
+
+    - Web and Cloud
+        - ASP.NET and Web Development
+    - Desktop and mobile apps
+        - Mobile development using .NET / .NET Multi platform App UI development
+        - .NET Desktop Development
+
 ## Supported platforms
-- Windows (Windows 11 and Windows 10 version 1904 or higher)
+- Windows (Windows 11 and Windows 10 version 1809 or higher)
 - Android (Android 7.0 (API 24) or higher)
 - iOS (iOS 14 or higher)
 - macOS (macOS 11 or higher)

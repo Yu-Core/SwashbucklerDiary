@@ -41,13 +41,30 @@
  </table>
 
 ## 支持的平台
-- Windows (Windows 11和Windows 10版本 1904 或更高版本)
+- Windows (Windows 11和Windows 10版本 1809 或更高版本)
 - Android (Android 7.0 (API 24) 或更高版本)
 - iOS (iOS 14 或更高版本)
 - macOS (macOS 11 或更高版本)
 - ~~Tizen (暂不支持)~~
 
 > Windows 10暂不支持更改标题栏颜色
+
+## 开发环境
+
+[Visual Studio 2022](https://learn.microsoft.com/zh-cn/visualstudio/install/install-visual-studio?view=vs-2022) 或 [Visual Studio 2022 for Mac](https://learn.microsoft.com/zh-cn/visualstudio/mac/installation?view=vsmac-2022)
+
+- 系统要求
+
+    - Windows 10 版本 1909 或更高版本：家庭版、专业版、教育版和企业版。
+    - macOS Monterey 12.0 或更高版本
+
+- 工作负荷
+
+    - Web 和云
+        - ASP.NET 和 Web 开发
+    - 桌面应用和移动应用
+        - 使用 .NET 的移动开发 / .NET Multi-platform App UI 开发
+        - .NET 桌面开发
 
 ## 感谢以下开源项目
 - [.NET MAUI](https://github.com/dotnet/maui)
