@@ -16,6 +16,14 @@ If you have any questions about this Privacy Policy or related matters, please p
 
 The following information about you may be collected, stored and used when we or our third-party partners provide services. If you do not provide relevant information, you may not be able to register as our user or enjoy some of the services we provide, or you may not be able to achieve the desired effect of the related services.
 
+- Camera permissions
+
+	When you use our service to change your avatar or take pictures, with your authorization, we will enable your camera permissions. You can deny or turn off this permission through permission management.
+
+- Storage Permissions
+
+	When you use our service data to backup, import, export, and take pictures, we will enable your storage permissions with your authorization. You can deny or turn off this permission through permission management.
+
 ## 2\. Storage of information
 
 **2.1 How and when information is stored**

@@ -70,14 +70,14 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            var cameraPermission = await SystemService.CheckCameraPermission();
+            var cameraPermission = await SystemService.TryCameraPermission();
             if (!cameraPermission)
             {
                 await AlertService.Error(I18n.T("Permission.OpenCamera"));
                 return;
             }
 
-            var writePermission = await SystemService.CheckStorageWritePermission();
+            var writePermission = await SystemService.TryStorageWritePermission();
             if (!writePermission)
             {
                 await AlertService.Error(I18n.T("Permission.OpenStorageWrite"));

@@ -7,30 +7,6 @@
 
 <ScrollContainer>
     <div class="text-h6 setting-title">
-        @(I18n.T("Setting.Location.Name"))
-    </div>
-
-    <MCard Class="setting-card"
-           Elevation="2"
-           Rounded="@("lg")">
-        <MList>
-            <MListItem OnClick="@(()=>To("/location"))">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-map-marker-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Setting.Location.Location"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
-
-    <div class="text-h6 setting-title">
         @(I18n.T("Setting.Diary.Name"))
     </div>
 
@@ -51,47 +27,79 @@
                     <MSwitch @bind-Value="Title"
                              TValue="bool"
                              OnChange="TitleChange"
-                             Dense
-                             Inset
+                             Dense="true"
+                             Inset="true"
                              Color="white"
                              TrackColor="@MSwitchTrackColor(Title)">
                     </MSwitch>
-                    </MListItemAction>
-                    </MListItem>
+                </MListItemAction>
+            </MListItem>
 
-                    <MDivider Class="mx-3 mx-sm-0"></MDivider>
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
 
-                    <MListItem>
-                    <MListItemIcon>
+            <MListItem>
+                <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-language-markdown-outline
                     </MIcon>
-                    </MListItemIcon>
-                    <MListItemContent>
+                </MListItemIcon>
+                <MListItemContent>
                     @(I18n.T("Setting.Diary.Markdown"))
                 </MListItemContent>
                 <MListItemAction>
                     <MSwitch @bind-Value="Markdown"
                              TValue="bool"
                              OnChange="MarkdownChange"
-                             Dense
-                             Inset
+                             Dense="true"
+                             Inset="true"
                              Color="white"
                              TrackColor="@MSwitchTrackColor(Markdown)">
                     </MSwitch>
-                    </MListItemAction>
-                    </MListItem>
-                    </MList>
-                    </MCard>
+                </MListItemAction>
+            </MListItem>
 
-                    <div class="text-h6 setting-title">
-                        @(GetSafeName())
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+            <MListItem OnClick="@(()=>To("/location"))">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-map-marker-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Diary.Location"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <div class="text-h6 setting-title">
+        @(I18n.T("Setting.Safe.Name"))
     </div>
 
     <MCard Class="setting-card"
            Elevation="2"
            Rounded="@("lg")">
         <MList>
+            <MListItem OnClick="@(()=>To("/permission"))">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-account-cog-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Safe.Permission"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
             <MListItem>
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
@@ -104,12 +112,12 @@
                 <MListItemAction>
                     <MSwitch @bind-Value="Privacy"
                              TValue="bool"
-                             Readonly
+                             Readonly="true"
                              OnClick="PrivacyClick"
-                             Dense
+                             Dense="true"
+                             Inset="true"
                              Color="white"
-                             TrackColor="@MSwitchTrackColor(Privacy)"
-                             Inset>
+                             TrackColor="@MSwitchTrackColor(Privacy)">
                     </MSwitch>
                 </MListItemAction>
             </MListItem>

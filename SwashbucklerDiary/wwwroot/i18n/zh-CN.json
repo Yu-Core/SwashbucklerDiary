@@ -169,9 +169,13 @@
     "NoCapture": "您的设备不支持拍照"
   },
   "Permission": {
+    "Camera": "相机权限",
+    "Storage": "存储权限",
     "OpenCamera": "请开启相机权限",
     "OpenStorageWrite": "请开启存储写入权限",
-    "OpenStorageRead": "请开启存储读取权限"
+    "OpenStorageRead": "请开启存储读取权限",
+    "Enable": "已开启",
+    "Disable": "未开启"
   },
   "About": {
     "SourceCode": "查看源码",
@@ -286,7 +290,8 @@
     "Diary": {
       "Name": "日记",
       "Title": "标题",
-      "Markdown": "Markdown"
+      "Markdown": "Markdown",
+      "Location": "位置"
     },
     "Safe": {
       "Name": "安全",
@@ -299,11 +304,8 @@
       "SetPassword": "设置密码",
       "ValidatePassword": "验证密码",
       "PasswordError": "密码错误",
-      "NotSetPassword": "未设置密码"
-    },
-    "Location": {
-      "Name": "位置",
-      "Location": "位置"
+      "NotSetPassword": "未设置密码",
+      "Permission": "权限"
     }
   },
   "Password must be at most 20 characters long": "密码不得超过20个字符",

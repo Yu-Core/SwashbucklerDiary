@@ -1,12 +1,22 @@
-﻿namespace SwashbucklerDiary
+﻿using SwashbucklerDiary.IServices;
+
+namespace SwashbucklerDiary
 {
     public partial class App : Application
     {
-        public App()
+        private ISystemService SystemService { get; set; }
+        public App(ISystemService systemService)
         {
             InitializeComponent();
 
             MainPage = new MainPage();
+            SystemService = systemService;
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            SystemService.OnResume();
         }
     }
 }

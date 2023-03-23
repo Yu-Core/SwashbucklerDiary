@@ -7,6 +7,11 @@ namespace SwashbucklerDiary.Services
 {
     public class SystemService : ISystemService
     {
+        public event Action? Resumed;
+        public void OnResume()
+        {
+            Resumed?.Invoke();
+        }
         public async Task<string?> CapturePhotoAsync()
         {
 #if WINDOWS
@@ -108,20 +113,44 @@ namespace SwashbucklerDiary.Services
 
         public async Task<bool> CheckCameraPermission()
         {
-            return await SystemService.CheckPermission<Permissions.Camera>();
+            return await CheckPermission<Permissions.Camera>();
         }
 
         public async Task<bool> CheckStorageWritePermission()
         {
-            return await SystemService.CheckPermission<Permissions.StorageWrite>();
+            return await CheckPermission<Permissions.StorageWrite>();
         }
 
         public async Task<bool> CheckStorageReadPermission()
         {
-            return await SystemService.CheckPermission<Permissions.StorageRead>();
+            return await CheckPermission<Permissions.StorageRead>();
         }
 
         private static async Task<bool> CheckPermission<T>() where T : Permissions.BasePermission, new()
+        {
+            PermissionStatus status = await Permissions.CheckStatusAsync<T>();
+
+            if (status == PermissionStatus.Granted)
+                return true;
+            return false;
+        }
+
+        public async Task<bool> TryCameraPermission()
+        {
+            return await TryPermission<Permissions.Camera>();
+        }
+
+        public async Task<bool> TryStorageWritePermission()
+        {
+            return await TryPermission<Permissions.StorageWrite>();
+        }
+
+        public async Task<bool> TryStorageReadPermission()
+        {
+            return await TryPermission<Permissions.StorageRead>();
+        }
+
+        private static async Task<bool> TryPermission<T>() where T : Permissions.BasePermission, new()
         {
             PermissionStatus status = await Permissions.CheckStatusAsync<T>();
 
@@ -344,6 +373,11 @@ namespace SwashbucklerDiary.Services
             StatusBarStyle statusBarStyle = Dark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
             CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(statusBarStyle);
 #endif
+        }
+
+        public void OpenSystemSetting()
+        {
+            AppInfo.Current.ShowSettingsUI();
         }
     }
 }

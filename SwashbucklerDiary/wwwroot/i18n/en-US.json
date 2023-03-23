@@ -168,7 +168,9 @@
     "NoCapture": "Your device does not support taking pictures"
   },
   "Permission": {
-    "OpenCamera": "Please enable camera permissions",
+    "Camera": "Camera permission",
+    "Storage": "Storage permission",
+    "OpenCamera": "Please enable camera permission",
     "OpenStorageWrite": "Please enable storage write permission",
     "OpenStorageRead": "Please enable storage read permission"
   },
@@ -285,7 +287,8 @@
     "Diary": {
       "Name": "Diary",
       "Title": "Title",
-      "Markdown": "Markdown"
+      "Markdown": "Markdown",
+      "Location": "Location"
     },
     "Safe": {
       "Name": "Safe",
@@ -298,11 +301,8 @@
       "SetPassword": "Set password",
       "ValidatePassword": "Validate password",
       "PasswordError": "Password error",
-      "NotSetPassword": "No password set"
-    },
-    "Location": {
-      "Name": "Location",
-      "Location": "Location"
+      "NotSetPassword": "No password set",
+      "Permission": "Permission"
     }
   },
   "Password must be at most 20 characters long": "Password must be at most 20 characters long",

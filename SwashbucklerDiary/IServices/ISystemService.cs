@@ -4,6 +4,8 @@ namespace SwashbucklerDiary.IServices
 {
     public interface ISystemService
     {
+        event Action Resumed;
+        void OnResume();
         Task SetClipboard(string text);
         Task ShareText(string title, string text);
         Task ShareFile(string title, string path);
@@ -18,6 +20,9 @@ namespace SwashbucklerDiary.IServices
         Task<bool> CheckCameraPermission();
         Task<bool> CheckStorageWritePermission();
         Task<bool> CheckStorageReadPermission();
+        Task<bool> TryCameraPermission();
+        Task<bool> TryStorageWritePermission();
+        Task<bool> TryStorageReadPermission();
         string GetAppVersion();
         Task<bool> OpenStoreAppDetails();
         Task<bool> OpenStoreAppDetails(string appId);
@@ -29,5 +34,6 @@ namespace SwashbucklerDiary.IServices
         Task<string?> SaveFileAsync(string name, Stream stream);
         Task<string?> SaveFileAsync(string? path,string name,Stream stream);
         void SetStatusBar(ThemeState themeState);
+        void OpenSystemSetting();
     }
 }

@@ -52,11 +52,6 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private string? GetSafeName()
-        {
-            return Privacy ? I18n.T("Setting.Safe.Name") : I18n.T("Mine.Data");
-        }
-
         private string? GetDisplayPrivacy()
         {
             return Privacy ? I18n.T("Setting.Safe.DisplayPrivacy") : I18n.T("Setting.Safe.Mask");

@@ -1,0 +1,59 @@
+﻿@page "/permission"
+@inherits PageComponentBase
+
+<MyAppBar Title="@(I18n.T("Setting.Safe.Permission"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MCard Elevation="2"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem OnClick="OpenSystemPermissionSetting">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-camera-outline
+                    </MIcon>
+                </MListItemIcon>
+
+                <MListItemContent>
+                    @(I18n.T("Permission.Camera"))
+                </MListItemContent>
+
+                <MListItemContent>
+                    <MListItemSubtitle Class="text-right">
+                        @CameraPermission
+                    </MListItemSubtitle>
+                </MListItemContent>
+
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+            <MListItem OnClick="OpenSystemPermissionSetting">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-sd
+                    </MIcon>
+                </MListItemIcon>
+
+                <MListItemContent>
+                    @(I18n.T("Permission.Storage"))
+                </MListItemContent>
+
+                <MListItemContent>
+                    <MListItemSubtitle Class="text-right">
+                        @StoragePermission
+                    </MListItemSubtitle>
+                </MListItemContent>
+
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+</ScrollContainer>
