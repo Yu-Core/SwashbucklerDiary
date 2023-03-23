@@ -35,5 +35,6 @@ namespace SwashbucklerDiary.IServices
         Task<string?> SaveFileAsync(string? path,string name,Stream stream);
         void SetStatusBar(ThemeState themeState);
         void OpenSystemSetting();
+        void QuitApp();
     }
 }

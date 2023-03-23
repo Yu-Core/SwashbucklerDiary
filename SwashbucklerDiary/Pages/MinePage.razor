@@ -2,18 +2,20 @@
 @using SwashbucklerDiary.Models
 @inherits PageComponentBase
 
-<MAppBar App
+<MAppBar App="true"
          Elevation="0">
     <MToolbarTitle Class="font-weight-bold">
         @(I18n.T("Mine.MySpace"))
     </MToolbarTitle>
     <MSpacer></MSpacer>
-    <MButton Large Icon OnClick="@(()=>To("/search"))">
+    <MButton Large="true"
+             Icon="true"
+             OnClick="@(()=>To("/search"))">
         <MIcon>mdi-magnify</MIcon>
     </MButton>
-    </MAppBar>
+</MAppBar>
 
-    <ScrollContainer Bottom>
+<ScrollContainer Bottom>
     <div class="d-md-flex flex-md-row justify-space-between">
         <MHover>
             <MCard @attributes="context.Attrs"
@@ -131,11 +133,11 @@
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Mine.SelectLanguage"))
             <MSpacer></MSpacer>
-            <MButton Icon OnClick="()=>ShowLanguage= false">
+            <MButton Icon="true" OnClick="()=>ShowLanguage= false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-            </MCardTitle>
-            <MCardText>
+        </MCardTitle>
+        <MCardText>
             <MRadioGroup Value="Language"
                          TValue="string"
                          ValueChanged="LanguageChanged"
@@ -162,11 +164,11 @@
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Mine.Night"))
             <MSpacer></MSpacer>
-            <MButton Icon OnClick="()=>ShowThemeState= false">
+            <MButton Icon="true" OnClick="()=>ShowThemeState= false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-            </MCardTitle>
-            <MCardText>
+        </MCardTitle>
+        <MCardText>
             <MRadioGroup Value="ThemeState"
                          TValue="ThemeState"
                          ValueChanged="ThemeStateChanged"
@@ -194,11 +196,11 @@
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Mine.ContactWay"))
             <MSpacer></MSpacer>
-            <MButton Icon OnClick="()=>ShowFeedback=false">
+            <MButton Icon="true" OnClick="()=>ShowFeedback=false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-            </MCardTitle>
-            <MCardText>
+        </MCardTitle>
+        <MCardText>
             @foreach (var item in FeedbackTypes)
             {
                 <MListItem Class="px-0" OnClick="@(item.Action)">

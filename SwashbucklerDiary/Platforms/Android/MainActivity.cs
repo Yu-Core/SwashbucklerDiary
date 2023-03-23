@@ -23,8 +23,6 @@ namespace SwashbucklerDiary
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            //StatusBarSetting.SetStatusBar(Window);
             GlobalLayoutUtil.AssistActivity(this);
         }
     }

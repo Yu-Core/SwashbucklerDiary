@@ -11,6 +11,8 @@
         Privacy, 
         PrivatePassword,
         BackupsPath,
-        ThemeState
+        ThemeState,
+        FirstSetLanguage,
+        FirstAgree
     }
 }

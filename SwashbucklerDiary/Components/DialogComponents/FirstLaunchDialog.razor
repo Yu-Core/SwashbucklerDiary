@@ -1,0 +1,55 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits DialogComponentBase
+
+<MDialog Value="Value"
+         ValueChanged="ValueChanged"
+         Fullscreen="true"
+         Transition="null">
+    <MCard Class="d-flex align-center fdfdfd">
+        @if (!FirstLaunchLanguage)
+        {
+            <MList Class="text-center" Style="width:100%;">
+                <MListItemGroup Value="0"
+                            Mandatory="true"
+                            Color="indigo">
+                    @foreach (var item in Languages)
+                    {
+                        <MListItem OnClick="()=>SetLanguage(item.Value)">
+                            <MListItemContent>
+                                <MListItemTitle>
+                                    @(item.Key)
+                                </MListItemTitle>
+                            </MListItemContent>
+                        </MListItem>
+                    }
+                </MListItemGroup>
+            </MList>
+        }
+        else
+        {
+            <div class="d-flex justify-center" style="width:100%;">
+                <MCard Rounded="@("lg")" Elevation="4" MaxWidth="420">
+                    <MCardTitle Class="font-weight-bold justify-center">
+                        @(I18n.T("AgreementAndPolicy.Title"))
+                    </MCardTitle>
+                    <MCardText Class="pb-0">
+                        <MMarkdownIt Source="@(I18n.T("AgreementAndPolicy.Content"))" Breaks="true">
+
+                        </MMarkdownIt>
+                    </MCardText>
+                    <MCardActions>
+                        <MButton Class="flex-grow-1" Text="true" OnClick="OnDisagree">
+                            @(I18n.T("AgreementAndPolicy.Disagree"))
+                        </MButton>
+                        <MButton Class="flex-grow-1"
+                             Text="true"
+                             Color="primary"
+                             OnClick="OnArgee">
+                            @(I18n.T("AgreementAndPolicy.Agree"))
+                        </MButton>
+                    </MCardActions>
+                </MCard>
+            </div>
+        }
+    </MCard>
+</MDialog>

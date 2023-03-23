@@ -4,13 +4,12 @@ using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using System.Diagnostics;
-using System.Globalization;
 
 namespace SwashbucklerDiary.Shared
 {
     public partial class MainLayout : IDisposable
     {
+        bool ShowFirstLaunch = true;
         StringNumber SelectedItemIndex = 0;
         List<NavigationButton> NavigationButtons = new();
 
@@ -87,12 +86,8 @@ namespace SwashbucklerDiary.Shared
 
         private async Task LoadSettings()
         {
-            var flag = await SettingsService.ContainsKey("Language");
-            if (flag)
-            {
-                var language = await SettingsService.Get<string>(SettingType.Language);
-                I18nService.SetCulture(language);
-            }
+            var language = await SettingsService.Get<string>(SettingType.Language);
+            I18nService.SetCulture(language);
             int themeState = await SettingsService.Get(SettingType.ThemeState);
             ThemeService.ThemeState = (ThemeState)themeState;
             SystemService.SetStatusBar((ThemeState)themeState);

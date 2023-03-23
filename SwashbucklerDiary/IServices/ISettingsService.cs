@@ -4,6 +4,8 @@ namespace SwashbucklerDiary.IServices
 {
     public interface ISettingsService
     {
+        Task InitDefault<T>(SettingType type);
+        T GetDefault<T>(SettingType type);
         Task<dynamic> Get(SettingType type);
         Task<T> Get<T>(SettingType type);
         Task<T> Get<T>(SettingType type, T defaultValue);

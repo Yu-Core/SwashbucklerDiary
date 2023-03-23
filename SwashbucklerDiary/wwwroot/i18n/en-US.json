@@ -172,7 +172,9 @@
     "Storage": "Storage permission",
     "OpenCamera": "Please enable camera permission",
     "OpenStorageWrite": "Please enable storage write permission",
-    "OpenStorageRead": "Please enable storage read permission"
+    "OpenStorageRead": "Please enable storage read permission",
+    "Enable": "Enable",
+    "Disable": "Disable"
   },
   "About": {
     "SourceCode": "View source code",
@@ -364,5 +366,11 @@
     "System": "Follow system",
     "Light": "Light",
     "Dark": "Dark"
+  },
+  "AgreementAndPolicy": {
+    "Title": "User agreement and privacy policy",
+    "Content": "You need to agree to the user agreement and privacy policy before using this app.If you do not agree, we regret that we are unable to provide you with services.\n\nYou can read [user agreement](https://github.com/Yu-Core/SwashbucklerDiary/blob/master/SwashbucklerDiary/wwwroot/docs/user-agreement/en-US.md) and [privacy policy](https://github.com/Yu-Core/SwashbucklerDiary/blob/master/SwashbucklerDiary/wwwroot/docs/privacy-policy/en-US.md) for more information. If you agree, please click\"Agree\"to start our service.",
+    "Agree": "Agree",
+    "Disagree": "Disagree"
   }
 }

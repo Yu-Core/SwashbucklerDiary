@@ -9,6 +9,12 @@ namespace SwashbucklerDiary.Services
         public I18n I18n { get; set; } = default!;
         public CultureInfo Culture => I18n.Culture;
 
+        public Dictionary<string, string> Languages { get; } = new()
+        {
+            {"简体中文","zh-CN" },
+            {"English","en-US" }
+        };
+
         public event Action? OnChanged;
 
         public void Initialize(I18n i18n)

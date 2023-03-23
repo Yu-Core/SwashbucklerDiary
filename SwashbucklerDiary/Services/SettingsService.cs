@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.IServices;
+﻿using SqlSugar;
+using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Services
@@ -17,7 +18,11 @@ namespace SwashbucklerDiary.Services
             {SettingType.PrivatePassword,"" },
             {SettingType.BackupsPath,"" },
             {SettingType.ThemeState,(int)ThemeState.Light },
+            {SettingType.FirstSetLanguage,false },
+            {SettingType.FirstAgree,false },
         };
+        private Dictionary<SettingType, object> DefalutSettings = new();
+
         public Task<bool> ContainsKey(string key)
         {
             var result = Preferences.Default.ContainsKey(key);
@@ -46,6 +51,17 @@ namespace SwashbucklerDiary.Services
         {
             var key = Enum.GetName(typeof(SettingType), type);
             return Get(key!, defaultValue);
+        }
+
+        public T GetDefault<T>(SettingType type)
+        {
+            return (T)DefalutSettings[type];
+        }
+
+        public async Task InitDefault<T>(SettingType type)
+        {
+            T value = await Get<T>(type);
+            DefalutSettings.Add(type, value!);
         }
 
         public Task Save<T>(string key, T value)

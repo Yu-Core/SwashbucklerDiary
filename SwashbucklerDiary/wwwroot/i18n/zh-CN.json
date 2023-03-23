@@ -367,5 +367,11 @@
     "System": "跟随系统",
     "Light": "浅色",
     "Dark": "深色"
+  },
+  "AgreementAndPolicy": {
+    "Title": "用户协议与隐私政策",
+    "Content": "您需要同意用户协议与隐私政策后才能使用本应用。如果您不同意，很遗憾我们无法为您提供服务。\n\n您可以阅读 [用户协议](https://gitee.com/Yu-core/SwashbucklerDiary/blob/master/SwashbucklerDiary/wwwroot/docs/user-agreement/zh-CN.md) 和 [隐私政策](https://gitee.com/Yu-core/SwashbucklerDiary/blob/master/SwashbucklerDiary/wwwroot/docs/privacy-policy/zh-CN.md) 了解详细信息。如您同意，请点击“同意”开始我们的服务。",
+    "Agree": "同意",
+    "Disagree": "不同意"
   }
 }

@@ -270,22 +270,14 @@ a, .btn-link {
     color: #fff !important;
 }
 
-/*.theme--light.m-card {
-    background: #fdfdff !important;
-}
-
-.theme--light.m-list {
-    background: #fdfdff !important;
-}
-
-.m-navigation-drawer .theme--light.m-list {
-    background-color: #fdfdfd !important;
-}*/
-
 .theme--light.m-text-field .m-input__slot {
     background-color: #fefefe !important;
 }
 
 .theme--light.m-input--switch__track.black--text{
     opacity:.8;
+}
+
+.theme--light .fdfdfd {
+    background: #fdfdfd !important;
 }

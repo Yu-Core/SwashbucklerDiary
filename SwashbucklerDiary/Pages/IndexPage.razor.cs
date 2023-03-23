@@ -1,6 +1,5 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -29,7 +28,6 @@ namespace SwashbucklerDiary.Pages
             SetCurrentUrl();
             await UpdateTags();
             await UpdateDiaries();
-            await FirstLaunch();
             await base.OnInitializedAsync();
         }
 
@@ -114,38 +112,6 @@ namespace SwashbucklerDiary.Pages
                 return I18n.T("Index.Welcome.BeforeDawn")!;
             }
             return "Hello World";
-        }
-
-        private async Task FirstLaunch()
-        {
-            if (Diaries.Count > 0)
-            {
-                return;
-            }
-            bool flag = SystemService.IsFirstLaunch();
-            if (flag)
-            {
-                string[] defaultdiaries = { "FilePath.Functional Description", 
-                    "FilePath.Diary Meaning", "FilePath.Markdown Syntax" };
-                var diaries = await GetDefaultDiaries(defaultdiaries);
-                await DiaryService.AddAsync(diaries);
-                await UpdateDiaries();
-            }
-        }
-
-        async Task<List<DiaryModel>> GetDefaultDiaries(string[] keys)
-        {
-            List<DiaryModel> diaries = new List<DiaryModel>();
-            foreach (string key in keys)
-            {
-                var content = await SystemService.ReadMarkdownFile(I18n.T(key)!);
-                var diary = new DiaryModel()
-                {
-                    Content = content,
-                };
-                diaries.Add(diary);
-            }
-            return diaries;
         }
     }
 }

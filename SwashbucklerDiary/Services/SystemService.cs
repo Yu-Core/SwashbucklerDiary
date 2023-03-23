@@ -379,5 +379,19 @@ namespace SwashbucklerDiary.Services
         {
             AppInfo.Current.ShowSettingsUI();
         }
+
+        public void QuitApp()
+        {
+            App.Current!.Quit();
+//#if ANDROID
+//            Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
+//#elif IOS
+//            Thread.CurrentThread.Abort();
+//#elif WINDOWS
+//            System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
+//#else
+//            Environment.Exit(0);
+//#endif
+        }
     }
 }

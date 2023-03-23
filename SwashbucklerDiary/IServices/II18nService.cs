@@ -17,6 +17,7 @@ namespace SwashbucklerDiary.IServices
         event Action OnChanged;
         I18n I18n { get; protected set; }
         CultureInfo Culture { get; }
+        Dictionary<string, string> Languages { get; }
         void Initialize(I18n i18n);
         string T(string? key);
         void SetCulture(string culture);

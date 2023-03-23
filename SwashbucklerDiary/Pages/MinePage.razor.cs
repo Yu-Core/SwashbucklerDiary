@@ -18,11 +18,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowLanguage;
         private bool ShowThemeState;
         private bool ShowFeedback;
-        private readonly static Dictionary<string, string> Languages = new()
-        {
-            {"中文","zh-CN" },
-            {"English","en-US" }
-        };
+        private Dictionary<string, string> Languages => I18n.Languages;
         private readonly static Dictionary<string, ThemeState> ThemeStates = new()
         {
             {"ThemeState.System",ThemeState.System },
