@@ -16,9 +16,6 @@ namespace SwashbucklerDiary.Components
         [Inject]
         private ISystemService SystemService { get; set; } = default!;
 
-        [Parameter]
-        public EventCallback Agreed { get; set; }
-
         protected override void OnInitialized()
         {
             LoadSettings();
@@ -55,10 +52,6 @@ namespace SwashbucklerDiary.Components
         private async Task OnArgee()
         {
             await SettingsService.Save(SettingType.FirstAgree, true);
-            if (Agreed.HasDelegate)
-            {
-                await Agreed.InvokeAsync();
-            }
 
             await InternalValueChanged(false);
         }

@@ -82,7 +82,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
-		<PackageReference Include="Masa.Blazor" Version="1.0.0-preview.9" />
+		<PackageReference Include="Masa.Blazor" Version="1.0.0-preview.10" />
 		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.141-beta" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.4" />
