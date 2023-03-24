@@ -2,9 +2,9 @@
 
 English | [简体中文](./README.zh-cn.md)
 
-"Swashbuckler Diary" is an open source, cross platform local diary application. Half a lifetime of wind and rain, half a lifetime of travel, one's Jianghu, always needs to be recorded to be wonderful.
+"Swashbuckler Diary" is an open source, cross platform local diary application. Half a lifetime of wind and rain, half a lifetime of travel, one's Jianghu, always needs to leave something to be wonderful.
 
-Adhere to minimalism, support page adaptation, support Markdown, no need for networking, and all data is stored locally.
+Adhere to minimalism style, support page adaptation(Refers to multiple device sizes), support Markdown, no need for networking, and all data is stored locally.
 
 ## Screenshot
 
@@ -64,7 +64,7 @@ Adhere to minimalism, support page adaptation, support Markdown, no need for net
 - macOS (macOS 11 or higher)
 - ~~Tizen (Not supported temporarily)~~
 
-> Windows 10 does not currently support changing the title bar color
+> Windows 10 and macOS does not currently support changing the title bar color
 
 ## Thanks to the following Open Source Projects
 - [.NET MAUI](https://github.com/dotnet/maui)
