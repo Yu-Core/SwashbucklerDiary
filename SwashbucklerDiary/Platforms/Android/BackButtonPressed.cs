@@ -1,5 +1,4 @@
-﻿using Android.OS;
-using Android.Views;
+﻿using Android.Views;
 using Android.Widget;
 using SwashbucklerDiary.IServices;
 using Application = Android.App.Application;
@@ -36,7 +35,7 @@ namespace SwashbucklerDiary.Platforms.Android
 
             if (BackPressCounter == 1)
             {
-                Process.KillProcess(Process.MyPid());
+                App.Current!.Quit();
             }
             else if (BackPressCounter == 0)
             {

@@ -29,7 +29,7 @@ namespace SwashbucklerDiary.Pages
 
         private static string GetIcon(AchievementModel achievement)
         {
-            return achievement.UserAchievement.IsCompleted ? "mdi-star-check" : "mdi-star-outline";
+            return achievement.UserAchievement.IsCompleted ? "mdi-trophy" : "mdi-trophy-outline";
         }
 
         private static int GetProgressRate(AchievementModel achievement)

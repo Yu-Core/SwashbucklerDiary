@@ -42,7 +42,6 @@ namespace SwashbucklerDiary.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            await base.OnInitializedAsync();
             NavigateService.Initialize(Navigation);
             AlertService.Initialize(PopupService);
             I18nService.Initialize(I18n);
@@ -51,6 +50,7 @@ namespace SwashbucklerDiary.Shared
             ThemeService.OnChanged += ThemeChanged;
             I18nService.OnChanged += StateHasChanged;
             await LoadSettings();
+            await base.OnInitializedAsync();
         }
 
         private bool Dark => ThemeService.Dark;
@@ -96,11 +96,11 @@ namespace SwashbucklerDiary.Shared
 
         private async Task LoadSettings()
         {
-            var language = await SettingsService.Get<string>(SettingType.Language);
-            I18nService.SetCulture(language);
-            int themeState = await SettingsService.Get(SettingType.ThemeState);
+            int themeState = SettingsService.GetDefault<int>(SettingType.ThemeState);
             ThemeService.ThemeState = (ThemeState)themeState;
             SystemService.SetStatusBar((ThemeState)themeState);
+            var language = await SettingsService.Get<string>(SettingType.Language);
+            I18nService.SetCulture(language);
         }
 
         private void LoadView()

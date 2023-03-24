@@ -34,7 +34,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowAddTag { get; set; }
         private async Task UpdateDiaries()
         {
-            Diaries = await DiaryService.QueryTakeAsync(50, it => !it.Private);
+            Diaries = await DiaryService.QueryAsync(it => !it.Private);
         }
 
         private async Task UpdateTags()

@@ -37,7 +37,7 @@
     <ScrollContainer Class="d-flex"
                  ContentClass="d-flex flex-column flex-grow-1">
     <div>
-        <div class="px-3 d-flex align-end">
+        <div class="px-3 px-sm-1 d-flex align-end">
             <span class="text-h6 font-weight-bold">
                 @(Diary.CreateTime.ToString("yyyy/MM/dd"))
             </span>
@@ -49,9 +49,9 @@
                 @(CounterValue())
             </span>
         </div>
-        <div class="px-2">
+        <div class="px-2 px-sm-0">
             <MChip Class="my-2 mr-2"
-                      Outlined
+                   Outlined="true"
                    OnClick="()=>ShowWeather=true">
                 <MIcon Left>
                     @(GetWeatherIcon(Diary.Weather))
@@ -59,7 +59,7 @@
                 @WeatherText
             </MChip>
             <MChip Class="my-2 mr-2"
-                      Outlined
+                   Outlined="true"
                    OnClick="()=>ShowMood=true">
                 <MIcon Left>
                     @(GetMoodIcon(Diary.Mood))
@@ -67,7 +67,7 @@
                 @MoodText
             </MChip>
             <MChip Class="my-2 mr-2"
-                      Outlined
+                   Outlined="true"
                    OnClick="()=>ShowLocation=true">
                 <MIcon Left>
                     mdi-map-marker-outline
@@ -85,9 +85,9 @@
                 Outlined="Desktop"
                 TValue="string"
                 HideDetails="@("auto")"
-                    Dense
-                        spellcheck="false"
-                        maxlength="20"
+                Dense="true"
+                    spellcheck="false"
+                    maxlength="20"
                 Placeholder="@(I18n.T("Write.TitlePlace"))">
         </MTextField>
     }
@@ -108,37 +108,40 @@
                    Flat="Mobile"
                    Outlined="Desktop"
                    HideDetails="@("auto")"
-                          NoResize
-                           spellcheck="false"
+                   NoResize="true"
+                       spellcheck="false"
                    Placeholder="@(I18n.T("Write.ContentPlace"))">
             </MTextarea>
         }
     </div>
 
-    <div class="mb-sm-5">
+    <div class="mb-sm-5 @(SelectedTags.Any()?"":"d-none")">
         <MChipGroup Column>
             @foreach (var item in SelectedTags)
             {
-                <MChip Close
-                      Outlined
+                <MChip Close="true"
+                   Outlined="true"
                    OnCloseClick="()=>RemoveSelectedTag(item)">
-                @(item.Name)
+                    @(item.Name)
                 </MChip>
             }
         </MChipGroup>
     </div>
 
-
     <div class="d-none d-sm-block">
-        <MButton Class="px-8"
-                  Rounded
-                  Dark
+        <MButton Class="px-8 mr-2 btn-chip text-subtitle-1"
+                 Rounded="true"
+                 Width="120"
+                 Height="40"
+                 Outlined="true"
                  OnClick="OnSave">
             @(I18n.T("Share.Save"))
         </MButton>
-        <MButton Class="px-8"
-                  Rounded
-                  Outlined
+        <MButton Class="px-8 btn-chip text-subtitle-1"
+                 Width="120" 
+                 Height="40"
+                 Rounded="true"
+                 Outlined="true"
                  OnClick="OnClear">
             @(I18n.T("Share.Clear"))
         </MButton>

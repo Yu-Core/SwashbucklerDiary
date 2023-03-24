@@ -29,6 +29,7 @@ namespace SwashbucklerDiary
             {
                 SettingsService.InitDefault<bool>(Models.SettingType.FirstSetLanguage);
                 SettingsService.InitDefault<bool>(Models.SettingType.FirstAgree);
+                SettingsService.InitDefault<int>(Models.SettingType.ThemeState);
             };
 
             return window;

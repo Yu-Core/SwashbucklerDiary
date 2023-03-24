@@ -1,6 +1,7 @@
 ﻿
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #fdfdfd;
 }
 
 h1:focus {
@@ -280,4 +281,9 @@ a, .btn-link {
 
 .theme--light .fdfdfd {
     background: #fdfdfd !important;
+}
+
+.theme--light .btn-chip {
+    border-color: #BDBDBD !important;
+    color: rgba(0,0,0,.87) !important;
 }
