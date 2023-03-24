@@ -2,10 +2,16 @@
 @inherits PageComponentBase
 
 <MyAppBar Title="@(I18n.T("About.LogFile"))" OnClick="NavigateToBack">
-
+    <ToolContent>
+        <MButton Icon="true" OnClick="ShareLogFile">
+            <MIcon>
+                mdi-share-variant-outline
+            </MIcon>
+        </MButton>
+    </ToolContent>
 </MyAppBar>
 <ScrollContainer>
-    <MList Dense>
+    <MList Dense Class="fdfdfd">
         @foreach (var item in LogTextList)
         {
             <MListItem>
@@ -15,5 +21,13 @@
             </MListItem>
         }
     </MList>
+    @if (!LogTextList.Any())
+    {
+        <div class="d-flex justify-center" style="padding-top:20vh;">
+            <div class="text-h6 text--secondary font-weight-bold-table">
+                @(I18n.T("Log.NoLog"))
+            </div>
+        </div>
+    }
 </ScrollContainer>
 

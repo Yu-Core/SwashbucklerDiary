@@ -12,6 +12,7 @@
     </MToolbarTitle>
 
     <MSpacer></MSpacer>
+    @ToolContent
 </MAppBar>
 
 @code {
@@ -21,4 +22,6 @@
     public EventCallback<MouseEventArgs> OnClick { get; set; }
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
+    [Parameter]
+    public RenderFragment? ToolContent { get; set; }
 }

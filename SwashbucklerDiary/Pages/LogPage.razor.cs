@@ -28,5 +28,15 @@ namespace SwashbucklerDiary.Pages
                 LogTextList.Add(Line);
             }
         }
+
+        private async Task ShareLogFile()
+        {
+            if (!File.Exists(SerilogConstants.filePath) || !LogTextList.Any())
+            {
+                await AlertService.Info(I18n.T("Log.NoLog"));
+                return;
+            }
+            await SystemService.ShareFile(I18n.T("Log.Share")!, SerilogConstants.filePath);
+        }
     }
 }
