@@ -1,5 +1,8 @@
-﻿<div id="@Id" class="overflow-y-auto @(Class)" style="@($"max-height:{Height}px;min-height:{Height}px;")" @oncontextmenu="OnContextmenu">
-    <MContainer Class="@(ContentClass)" Style="box-sizing: border-box;">
+﻿<div id="@Id"
+     class="overflow-y-auto flex-grow-1 @(Class)"
+     style="min-height:0;height:0;@(Style)"
+     @oncontextmenu="OnContextmenu">
+    <MContainer Class="@(ContentClass)" Style="@($"box-sizing:border-box;{ContentStyle}")">
         @ChildContent
     </MContainer>
 </div>

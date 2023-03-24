@@ -22,7 +22,7 @@
     </MAppBar>
 
     <SwiperTabItems @bind-Value="tab">
-    <SwiperTabItem Bottom>
+    <SwiperTabItem>
         <MDatePicker @bind-Value="PickedDate"
                      Class="rounded-lg"
                      TValue="DateOnly"
@@ -33,10 +33,9 @@
                      Locale="@(I18n.Culture.Name)">
         </MDatePicker>
         <DiaryCardList Value="CalendarDiaries" OnDeleted="Update"></DiaryCardList>
-
     </SwiperTabItem>
 
-    <SwiperTabItem Bottom>
+    <SwiperTabItem>
         <div class="d-md-flex tree-wrap">
             @if (Diaries.Any())
             {
@@ -48,9 +47,9 @@
                            ItemText="r=>r.Name"
                            ItemChildren="r=>r.Children"
                            ItemKey="r=>r.Id"
-                                      Activatable
-                                      OpenOnClick
-                                      Rounded
+                           Activatable="true"
+                           OpenOnClick="true"
+                           Rounded="true"
                            ExpandIcon="mdi-chevron-down">
                     </MTreeview>
                 </div>

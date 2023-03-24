@@ -1,6 +1,6 @@
 ﻿@namespace SwashbucklerDiary.Components
 
-<div class="@("swiper " + Id)" style="@(Show?"":"display:none;")">
+<div class="@($"swiper {Id}")" style="@($"{(Show?"":"display:none;")}height:100%;")">
     <div class="swiper-wrapper">
         @ChildContent
     </div>

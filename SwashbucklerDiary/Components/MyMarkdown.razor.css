@@ -42,6 +42,10 @@
             padding: 0px 8px !important;
         }
 
+    ::deep .vditor-content {
+        padding-bottom:70px;/*此处应等于工具栏的最大高度*/
+    }
+
     ::deep .vditor-panel--arrow {
         bottom: 35px;
     }
