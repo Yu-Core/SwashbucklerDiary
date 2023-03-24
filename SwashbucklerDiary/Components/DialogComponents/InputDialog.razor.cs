@@ -7,6 +7,7 @@ namespace SwashbucklerDiary.Components
     {
         private bool _value;
         private string? InputText;
+        private bool showPassword;
 
         [Parameter]
         public override bool Value
@@ -28,6 +29,27 @@ namespace SwashbucklerDiary.Components
         public int MaxLength { get; set; } = 20;
         [Parameter]
         public string? OKText { get; set; }
+        [Parameter]
+        public bool Password { get; set; }
+
+        private string PasswordIcon
+        {
+            get
+            {
+                if (!Password)
+                    return string.Empty;
+                return showPassword ? "mdi-eye" : "mdi-eye-off";
+            }
+        }
+        private string PasswordType
+        {
+            get
+            {
+                if (!Password)
+                    return string.Empty;
+                return showPassword ? "text" : "password";
+            }
+        }
 
         private void SetValue(bool value)
         {

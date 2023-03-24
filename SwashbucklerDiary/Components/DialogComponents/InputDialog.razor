@@ -23,7 +23,10 @@
                         Counter="@MaxLength"
                         maxlength="@MaxLength"
                         spellcheck="false"
-                        Placeholder="@Placeholder">
+                        Placeholder="@Placeholder"
+                        AppendIcon="@PasswordIcon"
+                        Type="@PasswordType"
+                        OnAppendClick="() => showPassword = !showPassword">
             </MTextField>
         </MCardText>
         <MCardActions>

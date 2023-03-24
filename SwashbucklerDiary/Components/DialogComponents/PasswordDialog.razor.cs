@@ -9,6 +9,8 @@ namespace SwashbucklerDiary.Components
         private bool _value;
         private Model model = new();
         private MForm? form;
+        private bool showPassword1;
+        private bool showPassword2;
 
         [Parameter]
         public override bool Value
@@ -29,11 +31,11 @@ namespace SwashbucklerDiary.Components
 
         class Model
         {
-            [Required]
+            [Required(ErrorMessage = "Please input a password")]
             [MaxLength(20, ErrorMessage = "Password must be at most 20 characters long")]
             [MinLength(6, ErrorMessage = "Password must be at least 6 characters long")]
             public string? Password { get; set; }
-            [Required]
+            [Required(ErrorMessage = "Please input a password")]
             [Compare("Password",ErrorMessage = "The two passwords are inconsistent")]
             public string? PasswordConfirmation { get; set; }
         }

@@ -30,7 +30,7 @@
 
     @foreach (var list in ViewLists)
     {
-        <MCard Class="mb-5"
+        <MCard Class="@(ViewLists.Last() != list?"mb-5":"")"
            Elevation="2"
            Rounded="@("lg")">
             <MList>
