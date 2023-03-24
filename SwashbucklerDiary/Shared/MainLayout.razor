@@ -3,14 +3,14 @@
 <ErrorBoundary>
     <ChildContent>
         <MApp Dark="Dark">
-            <MMain Style="@MainStyle">
-                @if (MasaBlazor.Breakpoint.SmAndUp && !ShowFirstLaunch)
-                {
-                    <MainNavigationDrawer @bind-Value="SelectedItemIndex"
-                                      Items="NavigationButtons"
-                                      MiniVariant="Mini">
-                    </MainNavigationDrawer>
-                }
+            <MainNavigationDrawer @bind-Value="SelectedItemIndex"
+                                  Show="ShowNavigationDrawer"
+                                  Items="NavigationButtons"
+                                  MiniVariant="Mini">
+            </MainNavigationDrawer>
+            <MMain Style="@(MainStyle)">
+                
+
                 @if (ShowFirstLaunch)
                 {
                     <FirstLaunchDialog @bind-Value="ShowFirstLaunch"></FirstLaunchDialog>
@@ -20,13 +20,10 @@
                     @Body
                 }
             </MMain>
-            @if (ShowBottomNavigation && !ShowFirstLaunch)
-            {
-                <MainBottomNavigation @bind-Value="SelectedItemIndex"
-                                  InputValue="ShowBottomNavigation"
+            <MainBottomNavigation @bind-Value="SelectedItemIndex"
+                                  Show="ShowBottomNavigation"
                                   Items="NavigationButtons">
-                </MainBottomNavigation>
-            }
+            </MainBottomNavigation>
         </MApp>
     </ChildContent>
     <ErrorContent>

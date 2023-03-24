@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Shared
         {
             get
             {
-                if (MasaBlazor.Breakpoint.SmAndUp)
+                if (MasaBlazor.Breakpoint.SmAndUp || ShowFirstLaunch)
                 {
                     return false;
                 }
@@ -70,16 +70,26 @@ namespace SwashbucklerDiary.Shared
             }
         }
 
+        private bool ShowNavigationDrawer
+        {
+            get
+            {
+                if(!MasaBlazor.Breakpoint.SmAndUp || ShowFirstLaunch)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
         private string MainStyle
         {
             get
             {
                 string style = string.Empty;
                 style += "transition:padding-left ease 0.3s !important;";
-                if(!ShowBottomNavigation)
-                {
-                    style += "padding-bottom:0px;";
-                }
+                
                 return style;
             }
         }

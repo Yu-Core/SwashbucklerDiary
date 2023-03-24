@@ -3,7 +3,7 @@
 
 <MBottomNavigation Value="Value"
                    ValueChanged="ValueChanged"
-                   InputValue="InputValue"
+                   InputValue="Show"
                    Class="d-flex justify-space-around d-sm-none"
                    Mandatory="true"
                    App="true"
@@ -28,7 +28,7 @@
     [Parameter]
     public EventCallback<StringNumber> ValueChanged { get; set; }
     [Parameter]
-    public bool InputValue { get; set; }
+    public bool Show { get; set; }
     [Parameter]
     public List<NavigationButton> Items { get; set; } = new();
 }

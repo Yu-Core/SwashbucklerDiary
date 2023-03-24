@@ -1,34 +1,40 @@
 ﻿@using SwashbucklerDiary.IServices
 @using SwashbucklerDiary.Models
 
-<MNavigationDrawer App Floating Permanent
+@if (Show)
+{
+    <MNavigationDrawer App="true"
+                   Floating="true"
+                   Permanent="true"
+                   Value="Show"
                    MiniVariant="MiniVariant"
                    MiniVariantChanged="MiniVariantChanged"
                    Style="max-height:unset;transition: width ease 0.3s;">
-    <MList Shaped Flat>
+        <MList Shaped Flat>
         <MListItemGroup Value="Value"
                         ValueChanged="ValueChanged"
                         Mandatory="true"
                         ActiveClass="@(MiniVariant?"":"navigation-active")">
             @foreach (var (item, i) in Items.Select((v, i) => (v, i)))
-            {
-                var activated = Value == i;
+                {
+                    var activated = Value == i;
 
-                <MListItem Ripple="false" OnClick="item.Action">
-                    <MListItemIcon>
-                        <MIcon Size="@(activated?30:24)">
-                            @(activated ? item.SelectedIcon : item.Icon)
-                        </MIcon>
-                    </MListItemIcon>
-                    <MListItemTitle Class="@(activated?"text-h6 font-weight-bold":"")"
+                    <MListItem Ripple="false" OnClick="item.Action">
+                        <MListItemIcon>
+                            <MIcon Size="@(activated?30:24)">
+                                @(activated ? item.SelectedIcon : item.Icon)
+                            </MIcon>
+                        </MListItemIcon>
+                        <MListItemTitle Class="@(activated?"text-h6 font-weight-bold":"")"
                                 Style="transition: font-size 0.3s ease;">
-                        @(I18n.T(item.Text))
-                    </MListItemTitle>
-                </MListItem>
-            }
-        </MListItemGroup>
-    </MList>
-</MNavigationDrawer>
+                            @(I18n.T(item.Text))
+                        </MListItemTitle>
+                    </MListItem>
+                }
+            </MListItemGroup>
+        </MList>
+    </MNavigationDrawer>
+}
 
 @code {
     [Inject]
@@ -44,4 +50,6 @@
     public bool MiniVariant { get; set; }
     [Parameter]
     public EventCallback<bool> MiniVariantChanged { get; set; }
+    [Parameter]
+    public bool Show { get; set; }
 }
