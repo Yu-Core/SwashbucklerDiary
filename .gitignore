@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /myapp.keystore
 /SwashbucklerDiary/myapp.keystore
+/SwashbucklerDiary/wwwroot/css/masa-blazor.min.css
