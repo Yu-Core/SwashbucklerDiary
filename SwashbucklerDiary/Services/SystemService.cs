@@ -184,8 +184,12 @@ namespace SwashbucklerDiary.Services
         }
 
         //打开本应用的应用商店详情页
-        public Task<bool> OpenStoreAppDetails()
+        public Task<bool> OpenStoreMyAppDetails()
         {
+#if WINDOWS
+            var id = "9P6PBVBF466L";
+            return OpenStoreAppDetails(id);
+#endif
             return OpenStoreAppDetails(AppInfo.PackageName);
         }
 
@@ -193,7 +197,7 @@ namespace SwashbucklerDiary.Services
         {
             string uri = string.Empty;
 #if WINDOWS
-            uri = $"ms-windows-store://pdp/?AppId={appId}";
+            uri = $"ms-windows-store://pdp/?productid={appId}";
 #elif ANDROID
             uri = $"market://details?id={appId}";
 #elif IOS || MACCATALYST
@@ -383,15 +387,6 @@ namespace SwashbucklerDiary.Services
         public void QuitApp()
         {
             App.Current!.Quit();
-//#if ANDROID
-//            Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
-//#elif IOS
-//            Thread.CurrentThread.Abort();
-//#elif WINDOWS
-//            System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
-//#else
-//            Environment.Exit(0);
-//#endif
         }
     }
 }

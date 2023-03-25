@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.IServices
         Task<bool> TryStorageWritePermission();
         Task<bool> TryStorageReadPermission();
         string GetAppVersion();
-        Task<bool> OpenStoreAppDetails();
+        Task<bool> OpenStoreMyAppDetails();
         Task<bool> OpenStoreAppDetails(string appId);
         Task<string> ReadMarkdownFile(string path);
         bool IsFirstLaunch();

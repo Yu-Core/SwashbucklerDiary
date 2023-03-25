@@ -69,7 +69,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task OpenAppDetails()
         {
-            bool flag = await SystemService.OpenStoreAppDetails();
+            bool flag = await SystemService.OpenStoreMyAppDetails();
             if (!flag)
             {
                 await AlertService.Error(I18n.T("About.OpenAppStoreFail"));
