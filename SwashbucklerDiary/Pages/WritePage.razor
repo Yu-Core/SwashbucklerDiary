@@ -1,10 +1,10 @@
 ﻿@page "/write"
 @inherits PageComponentBase
 
-<MAppBar App
+<MAppBar App="true"
          Elevation="0">
     <ChildContent>
-        <MButton Icon OnClick="OnBack">
+        <MButton Icon="true" OnClick="OnBack">
             <MIcon>
                 mdi-arrow-left
             </MIcon>
@@ -12,7 +12,7 @@
 
         <MSpacer></MSpacer>
 
-        <MButton Icon
+        <MButton Icon="true"
                  OnClick="()=>ShowSelectTag = true">
             <MIcon>
                 mdi-label-outline
@@ -32,9 +32,9 @@
             </ButtonContent>
         </MyMenu>
     </ChildContent>
-    </MAppBar>
+</MAppBar>
 
-    <ScrollContainer Class="d-flex"
+<ScrollContainer Class="d-flex"
                  ContentClass="d-flex flex-column flex-grow-1">
     <div>
         <div class="px-3 px-sm-1 d-flex align-end">
@@ -128,6 +128,9 @@
         </MChipGroup>
     </div>
 
+    <div class="@(Markdown?"vditor-toolbar-help":"")">
+    </div>
+
     <div class="d-none d-sm-block">
         <MButton Class="px-8 mr-2 btn-chip text-subtitle-1"
                  Rounded="true"
@@ -138,7 +141,7 @@
             @(I18n.T("Share.Save"))
         </MButton>
         <MButton Class="px-8 btn-chip text-subtitle-1"
-                 Width="120" 
+                 Width="120"
                  Height="40"
                  Rounded="true"
                  Outlined="true"

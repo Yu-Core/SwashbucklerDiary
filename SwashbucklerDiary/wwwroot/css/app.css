@@ -287,3 +287,9 @@ a, .btn-link {
     border-color: #BDBDBD !important;
     color: rgba(0,0,0,.87) !important;
 }
+
+@media screen and (max-width:600px) {
+    .vditor-toolbar-help {
+        padding-bottom:70px;
+    }
+}
