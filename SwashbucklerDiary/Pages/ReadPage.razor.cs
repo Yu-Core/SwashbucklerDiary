@@ -17,11 +17,13 @@ namespace SwashbucklerDiary.Pages
         private bool _showDelete;
         private bool ShowMenu;
         private bool ShowShare;
+        private bool ShowExport;
         private bool showLoading;
         private IJSObjectReference? module;
         private Action? OnDelete;
         private bool Markdown;
         private List<ViewListItem> ViewListItems = new();
+        private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
         public IDiaryService DiaryService { get; set; } = default!;
@@ -106,7 +108,7 @@ namespace SwashbucklerDiary.Pages
             {
                 new("Share.Copy","mdi-content-copy",async()=>await OnCopy()),
                 new(TopText,"mdi-format-vertical-align-top",async ()=>await OnTopping()),
-                new("Diary.Export","mdi-export",()=>ToDo()),
+                new("Diary.Export","mdi-export",()=>OpenExportDialog()),
                 new(MarkdownText,MarkdownIcon,async ()=>await MarkdownChanged()),
             };
             bool privacy = await SettingsService.Get(SettingType.Privacy);
@@ -127,22 +129,23 @@ namespace SwashbucklerDiary.Pages
 
         private void OpenDeleteDialog()
         {
-            OnDelete += async () =>
-            {
-                ShowDelete = false;
-                bool flag = await DiaryService.DeleteAsync(Diary);
-                if (flag)
-                {
-                    await AlertService.Success(I18n.T("Share.DeleteSuccess"));
-                }
-                else
-                {
-                    await AlertService.Error(I18n.T("Share.DeleteFail"));
-                }
-                NavigateToBack();
-            };
             ShowDelete = true;
             StateHasChanged();
+        }
+
+        private async Task HandleDelete()
+        {
+            ShowDelete = false;
+            bool flag = await DiaryService.DeleteAsync(Diary);
+            if (flag)
+            {
+                await AlertService.Success(I18n.T("Share.DeleteSuccess"));
+            }
+            else
+            {
+                await AlertService.Error(I18n.T("Share.DeleteFail"));
+            }
+            NavigateToBack();
         }
 
         private void OnEdit()
@@ -242,6 +245,14 @@ namespace SwashbucklerDiary.Pages
             }
 
             return len + " " + I18n.T("Write.CountUnit");
+        }
+
+        private void OpenExportDialog()
+        {
+            var diary = Diary;
+            ExportDiaries = new() { diary };
+            ShowExport = true;
+            StateHasChanged();
         }
     }
 }

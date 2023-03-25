@@ -40,9 +40,9 @@
             </MultiDisplay>
         </ButtonContent>
     </MyMenu>
-</MAppBar>
+    </MAppBar>
 
-<ScrollContainer>
+    <ScrollContainer>
     <div id="screenshot">
         <div class="px-3 d-flex align-end">
             <span class="text-h6 font-weight-bold">
@@ -60,8 +60,8 @@
             @if (ShowWeather)
             {
                 <MChip Class="my-2 mr-2" Outlined>
-                    <MIcon Left>
-                        @(GetWeatherIcon(Diary.Weather))
+                <MIcon Left>
+                    @(GetWeatherIcon(Diary.Weather))
                     </MIcon>
                     @(I18n.T("Weather." + Diary.Weather))
                 </MChip>
@@ -70,8 +70,8 @@
             @if (ShowMood)
             {
                 <MChip Class="my-2 mr-2" Outlined>
-                    <MIcon Left>
-                        @(GetMoodIcon(Diary.Mood))
+                <MIcon Left>
+                    @(GetMoodIcon(Diary.Mood))
                     </MIcon>
                     @(I18n.T("Mood." + Diary.Mood))
                 </MChip>
@@ -80,10 +80,10 @@
             @if (ShowLocation)
             {
                 <MChip Class="my-2 mr-2" Outlined>
-                    <MIcon Left>
-                        mdi-map-marker-outline
-                    </MIcon>
-                    @(Diary.Location)
+                <MIcon Left>
+                    mdi-map-marker-outline
+                </MIcon>
+                @(Diary.Location)
                 </MChip>
             }
         </div>
@@ -92,13 +92,13 @@
         {
             <MTextField Value="@(Diary.Title)"
                     Class="pb-0 my-sm-4 user-select font-weight-bold"
-                    Solo
-                    Flat
+                            Solo
+                            Flat
                     TValue="string"
                     HideDetails="@("auto")"
-                    Dense
-                    Readonly
-                    maxlength="20">
+                            Dense
+                            Readonly
+                            maxlength="20">
             </MTextField>
         }
         @if (Markdown)
@@ -110,11 +110,11 @@
         {
             <MTextarea Value="@(Diary.Content)"
                    Class="my-sm-4 user-select"
-                   Solo
-                   Flat
+                          Solo
+                          Flat
                    HideDetails="@("auto")"
-                   Readonly
-                   AutoGrow
+                          Readonly
+                          AutoGrow
                    Rows="8"
                    RowHeight="30">
             </MTextarea>
@@ -125,7 +125,7 @@
                 @foreach (var item in Tags)
                 {
                     <MChip Outlined>
-                        @(item.Name)
+                    @(item.Name)
                     </MChip>
                 }
             </MChipGroup>
@@ -141,8 +141,8 @@
             <MButton Icon OnClick="()=>ShowShare = false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-        </MCardTitle>
-        <MCardText>
+            </MCardTitle>
+            <MCardText>
             <MList>
                 <MListItem Class="px-0" OnClick="ShareText">
                     <MListItemIcon>
@@ -174,13 +174,15 @@
 </MyDialog>
 
 <MOverlay Value="showLoading" ZIndex="99">
-    <MProgressCircular Indeterminate Size="48">
+    <MProgressCircular Indeterminate="true" Size="48">
     </MProgressCircular>
 </MOverlay>
 
 <DeleteDialog @bind-Value="ShowDelete"
               Title="@(I18n.T("Diary.Delete.Title"))"
               Content="@(I18n.T("Diary.Delete.Content"))"
-              OnOK="()=>OnDelete?.Invoke()">
-
+              OnOK="HandleDelete">
 </DeleteDialog>
+
+<ExportDialog @bind-Value="ShowExport" Diaries="ExportDiaries">
+</ExportDialog>
