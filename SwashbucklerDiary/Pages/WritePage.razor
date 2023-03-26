@@ -92,7 +92,7 @@
         </MTextField>
     }
 
-    <div class="write-input-wrap" style="min-height:0;">
+    <div class="write-input-wrap">
         @if (Markdown)
         {
             <MyMarkdown @bind-Value="Diary.Content"
@@ -116,7 +116,7 @@
     </div>
 
     <div class="mb-sm-5 @(SelectedTags.Any()?"":"d-none")">
-        <MChipGroup Column>
+        <MChipGroup CenterActive="true">
             @foreach (var item in SelectedTags)
             {
                 <MChip Close="true"

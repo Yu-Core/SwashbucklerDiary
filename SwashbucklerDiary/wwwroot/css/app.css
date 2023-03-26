@@ -248,6 +248,14 @@ a, .btn-link {
     background: #424242 !important;
 }
 
+.theme--light .vditor-toolbar {
+    background: #fdfdfd !important;
+}
+
+.theme--dark .vditor-toolbar {
+    background: #121212 !important;
+}
+
 .vditor-reset {
     border-radius: 8px;
 }
@@ -290,6 +298,6 @@ a, .btn-link {
 
 @media screen and (max-width:600px) {
     .vditor-toolbar-help {
-        padding-bottom:70px;
+        margin-bottom:70px;
     }
 }

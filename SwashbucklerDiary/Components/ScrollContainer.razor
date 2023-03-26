@@ -2,7 +2,9 @@
      class="overflow-y-auto flex-grow-1 @(Class)"
      style="min-height:0;height:0;@(Style)"
      @oncontextmenu="OnContextmenu">
-    <MContainer Class="@(ContentClass)" Style="@($"box-sizing:border-box;{ContentStyle}")">
+    <MContainer Fluid="true"
+                Class="@(ContentClass)"
+                Style="@($"box-sizing:border-box;{ContentStyle}")">
         @ChildContent
     </MContainer>
 </div>

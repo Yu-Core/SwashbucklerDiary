@@ -14,13 +14,12 @@ namespace SwashbucklerDiary.Pages
     public partial class ReadPage : PageComponentBase, IAsyncDisposable
     {
         private DiaryModel Diary = new();
-        private bool _showDelete;
+        private bool ShowDelete;
         private bool ShowMenu;
         private bool ShowShare;
         private bool ShowExport;
         private bool showLoading;
         private IJSObjectReference? module;
-        private Action? OnDelete;
         private bool Markdown;
         private List<ViewListItem> ViewListItems = new();
         private List<DiaryModel> ExportDiaries = new();
@@ -50,18 +49,6 @@ namespace SwashbucklerDiary.Pages
         }
 
         private List<TagModel> Tags => Diary.Tags ?? new();
-        private bool ShowDelete
-        {
-            get => _showDelete;
-            set
-            {
-                _showDelete = value;
-                if (!value)
-                {
-                    OnDelete = null;
-                }
-            }
-        }
         private bool IsTop => Diary.Top;
         private bool IsPrivate => Diary.Private;
         private bool ShowTitle => !string.IsNullOrEmpty(Diary.Title);

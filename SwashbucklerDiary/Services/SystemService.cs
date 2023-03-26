@@ -189,8 +189,9 @@ namespace SwashbucklerDiary.Services
 #if WINDOWS
             var id = "9P6PBVBF466L";
             return OpenStoreAppDetails(id);
-#endif
+#else
             return OpenStoreAppDetails(AppInfo.PackageName);
+#endif
         }
 
         public async Task<bool> OpenStoreAppDetails(string appId)
