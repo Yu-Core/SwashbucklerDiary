@@ -1,6 +1,6 @@
 # Swashbuckler Diary
 
-English | [简体中文](./README.zh-cn.md)
+English | [简体中文](./README.zh-CN.md)
 
 "Swashbuckler Diary" is an open source, cross platform local diary application. Half a lifetime of wind and rain, half a lifetime of travel, one's Jianghu, always needs to leave something to be wonderful.
 
