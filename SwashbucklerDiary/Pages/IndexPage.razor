@@ -32,10 +32,10 @@
             </div>
         </div>
 
-        <DiaryCardList Value="Diaries"></DiaryCardList>
+        <DiaryCardList Value="Diaries" @bind-Tags="Tags"></DiaryCardList>
     </SwiperTabItem>
     <SwiperTabItem>
-        <TagCardList Value="Tags"></TagCardList>
+        <TagCardList @bind-Value="Tags"></TagCardList>
     </SwiperTabItem>
 </SwiperTabItems>
 

@@ -12,15 +12,17 @@
             <MButton Icon OnClick="HandleOnCancel">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-        </MCardTitle>
-        <MCardText Class="scroll-show" Style="max-height:200px;">
-            <MChipGroup @bind-Values="SelectedTagIndices"
+            </MCardTitle>
+            <MCardText Class="scroll-show" Style="max-height:200px;">
+            <MChipGroup @bind-Values="SelectedTagId"
                         Column
                         Multiple>
                 @foreach (var item in Tags)
                 {
-                    <MChip Filter
-                       Outlined>
+                    <MChip @key="@(item.Id.ToString())"
+                       Value="@(item.Id.ToString())"
+                       Filter="true"
+                       Outlined="true">
                         @(item.Name)
                     </MChip>
                 }

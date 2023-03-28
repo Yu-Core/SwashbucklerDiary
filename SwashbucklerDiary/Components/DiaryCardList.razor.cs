@@ -30,6 +30,10 @@ namespace SwashbucklerDiary.Components
         public string? CardClass { get; set; }
         [Parameter]
         public EventCallback OnDeleted { get; set; }
+        [Parameter]
+        public List<TagModel> Tags { get; set; } = new();
+        [Parameter]
+        public EventCallback<List<TagModel>> TagsChanged { get; set; }
 
         private List<TagModel> SelectedTags
         {

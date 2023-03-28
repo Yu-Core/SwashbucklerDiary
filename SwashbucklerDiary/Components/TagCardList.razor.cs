@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorComponent;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
@@ -16,6 +17,8 @@ namespace SwashbucklerDiary.Components
 
         [Parameter]
         public List<TagModel>? Value { get; set; } = new();
+        [Parameter]
+        public EventCallback<List<TagModel>> ValueChanged { get; set; }
 
         private string? RenameTagName { get; set; }
 
@@ -40,6 +43,10 @@ namespace SwashbucklerDiary.Components
             if (flag)
             {
                 Value!.Remove(tag);
+                if(ValueChanged.HasDelegate)
+                {
+                    await ValueChanged.InvokeAsync(Value);
+                }
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
                 StateHasChanged();
             }
@@ -65,6 +72,10 @@ namespace SwashbucklerDiary.Components
 
             var tag = Value!.FirstOrDefault(it => it.Id == RenameTagId);
             tag!.Name = RenameTagName = tagName;
+            if (ValueChanged.HasDelegate)
+            {
+                await ValueChanged.InvokeAsync(Value);
+            }
             bool flag = await TagService.UpdateAsync(tag);
             if (flag)
             {

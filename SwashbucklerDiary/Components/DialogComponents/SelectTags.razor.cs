@@ -10,8 +10,7 @@ namespace SwashbucklerDiary.Components
     {
         private bool _value;
         private bool ShowAddTag;
-        private List<StringNumber> SelectedTagIndices = new();
-        private List<TagModel> Tags = new();
+        private List<StringNumber> SelectedTagId = new();
 
         [Inject]
         public ITagService TagService { get; set; } = default!;
@@ -28,14 +27,21 @@ namespace SwashbucklerDiary.Components
         public EventCallback<List<TagModel>> ValuesChanged { get; set; }
         [Parameter]
         public EventCallback OnSave { get; set; }
+        [Parameter]
+        public List<TagModel> Tags { get; set; } = new();
+        [Parameter]
+        public EventCallback<List<TagModel>> TagsChanged { get; set; }
 
         protected virtual async Task HandleOnSave(MouseEventArgs _)
         {
             var TagModels = new List<TagModel>();
-            foreach (var item in SelectedTagIndices)
+            foreach (var item in SelectedTagId)
             {
-                var TagModel = Tags[item.ToInt32()];
-                TagModels.Add(TagModel);
+                var TagModel = Tags.FirstOrDefault(it=>it.Id.ToString() == item.ToString());
+                if (TagModel != null)
+                {
+                    TagModels.Add(TagModel);
+                }
             }
             Values = TagModels;
 
@@ -49,20 +55,18 @@ namespace SwashbucklerDiary.Components
 
         private string? AddTagName { get; set; }
 
-        private async void SetValue(bool value)
+        private void SetValue(bool value)
         {
             if (_value != value)
             {
                 if (value)
                 {
-                    Tags = await TagService.QueryAsync();
-                    SelectedTagIndices.Clear();
+                    SelectedTagId = new();
                     foreach (var item in Values)
                     {
-                        int index = Tags.FindIndex(it => it.Id == item.Id); ;
-                        if (index > -1)
+                        if(Tags.Any(it=> it.Id == item.Id))
                         {
-                            SelectedTagIndices.Add(index);
+                            SelectedTagId.Add(item.Id.ToString());
                         }
                     }
                 }
@@ -98,6 +102,10 @@ namespace SwashbucklerDiary.Components
 
             await AlertService.Success(I18n.T("Share.AddSuccess"));
             Tags.Add(tag);
+            if(TagsChanged.HasDelegate)
+            {
+                await TagsChanged.InvokeAsync(Tags);
+            }
             StateHasChanged();
         }
     }

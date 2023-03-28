@@ -19,13 +19,13 @@ namespace SwashbucklerDiary.Pages
         private bool ShowLocation;
         private bool Markdown = true;
         private bool IsSaved;
-        private readonly double MdToolBarHeight = 75;
         private List<ViewListItem> ViewListItems = new();
         private DiaryModel Diary = new()
         {
             Tags = new(),
             CreateTime = DateTime.Now
         };
+        private List<TagModel> Tags = new();
 
         [Inject]
         public MasaBlazor MasaBlazor { get; set; } = default!;
@@ -60,6 +60,7 @@ namespace SwashbucklerDiary.Pages
             NavigateService.Action += OnBack;
             LoadView();
             await LoadSettings();
+            await UpdateTags();
             await SetTag();
             await SetDiary();
         }
@@ -84,55 +85,10 @@ namespace SwashbucklerDiary.Pages
             get => Diary.Location;
             set => Diary.Location = value;
         }
-        private double OccupyHeight => Markdown && Mobile ? MdToolBarHeight : 0;
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
         private Dictionary<string, string> WeatherIcons => IconService.WeatherIcon;
         private Dictionary<string, string> MoodIcons => IconService.MoodIcon;
-        private StringNumber WeatherIndex
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(Diary.Weather))
-                {
-                    return -1;
-                }
-                return WeatherIcons.Keys.ToList().IndexOf(Diary.Weather);
-            }
-            set
-            {
-                if (value != null)
-                {
-                    Diary.Weather = WeatherIcons.ElementAt(value.ToInt32()).Key;
-                }
-                else
-                {
-                    Diary.Weather = string.Empty;
-                }
-            }
-        }
-        private StringNumber MoodIndex
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(Diary.Mood))
-                {
-                    return -1;
-                }
-                return MoodIcons.Keys.ToList().IndexOf(Diary.Mood);
-            }
-            set
-            {
-                if (value != null)
-                {
-                    Diary.Mood = MoodIcons.ElementAt(value.ToInt32()).Key;
-                }
-                else
-                {
-                    Diary.Mood = string.Empty;
-                }
-            }
-        }
         private string WeatherText =>
             string.IsNullOrEmpty(Diary.Weather) ? I18n.T("Write.Weather")! : I18n.T("Weather." + Diary.Weather)!;
         private string MoodText =>
@@ -186,7 +142,12 @@ namespace SwashbucklerDiary.Pages
                 new(ShowTitleText,"mdi-format-title",async()=>await ShowTitleChanged()),
                 new(MarkdownText,MarkdownIcon,async ()=>await MarkdownChanged())
             };
-        } 
+        }
+
+        private async Task UpdateTags()
+        {
+            Tags = await TagService.QueryAsync();
+        }
 
         private void RemoveSelectedTag(TagModel tag)
         {
