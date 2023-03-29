@@ -30,3 +30,14 @@
     min-height: 0;
     overflow: visible;
 }
+
+@media (hover: none) {
+    .write-chip-group {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+.write-chip-group ::deep .m-chip {
+    margin: 4px 8px 4px 0;
+}

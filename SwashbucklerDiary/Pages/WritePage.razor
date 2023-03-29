@@ -116,7 +116,7 @@
     </div>
 
     <div class="mb-sm-5 @(SelectedTags.Any()?"":"d-none")">
-        <MChipGroup CenterActive="true">
+        <div class="write-chip-group" style="width:100%;">
             @foreach (var item in SelectedTags)
             {
                 <MChip Close="true"
@@ -125,7 +125,7 @@
                     @(item.Name)
                 </MChip>
             }
-        </MChipGroup>
+        </div>
     </div>
 
     <div class="@(Markdown?"vditor-toolbar-help":"")">
