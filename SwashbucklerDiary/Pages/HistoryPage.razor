@@ -1,5 +1,5 @@
 ﻿@page "/history"
-@inherits PageComponentBase
+@inherits DiariesPageComponentBase
 
 <MAppBar App
          Elevation="0">
@@ -32,7 +32,10 @@
                      AllowedDates="AllowedDates"
                      Locale="@(I18n.Culture.Name)">
         </MDatePicker>
-        <DiaryCardList Value="CalendarDiaries" OnDeleted="Update"></DiaryCardList>
+        <DiaryCardList Value="CalendarDiaries"
+                       @bind-Tags="Tags"
+                       OnDeleted="Update">
+        </DiaryCardList>
     </SwiperTabItem>
 
     <SwiperTabItem>
@@ -56,6 +59,7 @@
             }
             <div class="ml-md-5">
                 <DiaryCardList Value="TreeDiaries"
+                               @bind-Tags="Tags"
                                Class="flex-md-column"
                                CardClass="tree-card"
                                OnDeleted="Update">

@@ -124,8 +124,8 @@
             <MChipGroup Column>
                 @foreach (var item in Tags)
                 {
-                    <MChip Outlined>
-                    @(item.Name)
+                    <MChip Outlined="true">
+                        @(item.Name)
                     </MChip>
                 }
             </MChipGroup>
@@ -138,11 +138,11 @@
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Read.SelectShare"))
             <MSpacer></MSpacer>
-            <MButton Icon OnClick="()=>ShowShare = false">
+            <MButton Icon="true" OnClick="()=>ShowShare = false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-            </MCardTitle>
-            <MCardText>
+        </MCardTitle>
+        <MCardText>
             <MList>
                 <MListItem Class="px-0" OnClick="ShareText">
                     <MListItemIcon>

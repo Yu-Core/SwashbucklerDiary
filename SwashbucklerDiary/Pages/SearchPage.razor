@@ -1,5 +1,5 @@
 ﻿@page "/search"
-@inherits PageComponentBase
+@inherits DiariesPageComponentBase
 
 <MAppBar App Elevation="0">
     <MButton Icon OnClick="NavigateToBack">
@@ -21,7 +21,7 @@
 
 </MAppBar>
 <ScrollContainer Id="scrolling-search">
-    <DiaryCardList Value="Diaries"></DiaryCardList>
+    <DiaryCardList Value="Diaries" @bind-Tags="Tags"></DiaryCardList>
 </ScrollContainer>
 
 

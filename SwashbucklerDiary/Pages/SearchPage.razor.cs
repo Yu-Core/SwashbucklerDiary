@@ -1,27 +1,20 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.IServices;
-using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class SearchPage : PageComponentBase
+    public partial class SearchPage : DiariesPageComponentBase
     {
-        private List<DiaryModel> Diaries = new();
-
-        [Inject]
-        private IDiaryService DiaryService { get; set; } = default!;
-
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Search { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override Task OnInitializedAsync()
         {
-            await UpdateDiaries();
+            return base.OnInitializedAsync();
         }
 
-        private async Task UpdateDiaries()
+        protected override async Task UpdateDiaries()
         {
             if (!string.IsNullOrWhiteSpace(Search))
             {

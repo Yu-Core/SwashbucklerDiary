@@ -1,12 +1,12 @@
 ﻿@page "/tag/{id:guid}"
-@inherits PageComponentBase
+@inherits DiariesPageComponentBase
 
 <MyAppBar Title="@(Tag.Name)"
           OnClick="NavigateToBack">
 </MyAppBar>
 
 <ScrollContainer>
-    <DiaryCardList Value="Diaries" />
+    <DiaryCardList Value="Diaries" @bind-Tags="Tags" />
 </ScrollContainer>
 
 <FabTransition>

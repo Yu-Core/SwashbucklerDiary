@@ -1,24 +1,15 @@
-﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Components;
-using SwashbucklerDiary.IServices;
-using SwashbucklerDiary.Models;
+﻿using SwashbucklerDiary.Components;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class PrivacyLibraryPage : PageComponentBase
+    public partial class PrivacyLibraryPage : DiariesPageComponentBase
     {
-        private List<DiaryModel> Diaries = new();
-
-        [Inject]
-        private IDiaryService DiaryService { get; set; } = default!;
-
-        protected override async Task OnInitializedAsync()
+        protected override Task OnInitializedAsync()
         {
-            await UpdateDiaries();
-            await base.OnInitializedAsync();
+            return base.OnInitializedAsync();
         }
 
-        private async Task UpdateDiaries()
+        protected override async Task UpdateDiaries()
         {
             Diaries = await DiaryService.QueryAsync(it => it.Private);
         }

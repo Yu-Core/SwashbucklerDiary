@@ -1,24 +1,18 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class HistoryPage : PageComponentBase
+    public partial class HistoryPage : DiariesPageComponentBase
     {
         private DateOnly PickedDate = DateOnly.FromDateTime(DateTime.Now);
-        private List<DiaryModel> Diaries = new();
         private StringNumber tab = 0;
         private List<int>? _active;
         private List<Tree> Trees = new();
         private Func<DateOnly, bool> AllowedDates = PickedDate => true;
         private readonly List<string> Types = new() { "Calendar", "Tree" };
-
-        [Inject]
-        public IDiaryService DiaryService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -28,8 +22,9 @@ namespace SwashbucklerDiary.Pages
         {
             InitTab();
             SetCurrentUrl();
-            await Update();
             await base.OnInitializedAsync();
+            UpdateTrees();
+            UpdateAllowDates();
         }
 
         private class Tree
@@ -51,12 +46,6 @@ namespace SwashbucklerDiary.Pages
                 var id = _active[0];
                 return Diaries.Where(it => it.CreateTime.ToString("yyyyMMdd") == id.ToString()).ToList();
             }
-        }
-
-        private async Task UpdateDiaries()
-        {
-            Diaries = await DiaryService.QueryAsync(it => !it.Private);
-            StateHasChanged();
         }
 
         private void InitTab()

@@ -1,22 +1,14 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class IndexPage : PageComponentBase
+    public partial class IndexPage : DiariesPageComponentBase
     {
         private StringNumber tab = 0;
-        private List<DiaryModel> Diaries = new();
-        private List<TagModel> Tags = new();
         private readonly List<string> Types = new() { "All", "Tags" };
-
-        [Inject]
-        private IDiaryService DiaryService { get; set; } = default!;
-        [Inject]
-        private ITagService TagService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -26,21 +18,10 @@ namespace SwashbucklerDiary.Pages
         {
             InitTab();
             SetCurrentUrl();
-            await UpdateTags();
-            await UpdateDiaries();
             await base.OnInitializedAsync();
         }
 
         private bool ShowAddTag { get; set; }
-        private async Task UpdateDiaries()
-        {
-            Diaries = await DiaryService.QueryAsync(it => !it.Private);
-        }
-
-        private async Task UpdateTags()
-        {
-            Tags = await TagService.QueryAsync();
-        }
 
         private void InitTab()
         {

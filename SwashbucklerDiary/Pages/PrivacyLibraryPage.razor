@@ -1,9 +1,9 @@
 ﻿@page "/privacyLibrary"
-@inherits PageComponentBase
+@inherits DiariesPageComponentBase
 
 <MyAppBar Title="@(I18n.T("Setting.Safe.PrivacyLibrary"))" OnClick="NavigateToBack">
 </MyAppBar>
 
 <ScrollContainer>
-    <DiaryCardList Value="Diaries" />
+    <DiaryCardList Value="Diaries" @bind-Tags="Tags" />
 </ScrollContainer>
