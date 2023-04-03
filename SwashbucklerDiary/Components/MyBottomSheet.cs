@@ -28,11 +28,11 @@ namespace SwashbucklerDiary.Components
 
         protected override void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
             if (Value)
             {
                 NavigateService.Action -= Close;
             }
+            base.Dispose(disposing);
         }
 
         private void SetValue(bool value)
