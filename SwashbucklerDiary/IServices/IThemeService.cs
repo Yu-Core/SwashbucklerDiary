@@ -6,7 +6,8 @@ namespace SwashbucklerDiary.IServices
     {
         bool Light { get; }
         bool Dark { get; }
-        public ThemeState ThemeState { get; set; }
+        public ThemeState ThemeState { get;}
+        void SetThemeState(ThemeState themeState);
         event Action<ThemeState> OnChanged;
     }
 }

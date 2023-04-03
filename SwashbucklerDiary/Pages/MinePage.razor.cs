@@ -147,7 +147,7 @@ namespace SwashbucklerDiary.Pages
         private async Task ThemeStateChanged(ThemeState themeState)
         {
             ThemeState = themeState;
-            ThemeService.ThemeState = ThemeState;
+            ThemeService.SetThemeState(ThemeState);
             await SettingsService.Save(SettingType.ThemeState, (int)ThemeState);
         }
     }

@@ -10,7 +10,6 @@ namespace SwashbucklerDiary.Services
         public ThemeState ThemeState
         {
             get => GetThemeState();
-            set => SetThemeState(value);
         }
         public bool Light => ThemeState == ThemeState.Light;
         public bool Dark => ThemeState == ThemeState.Dark;
@@ -30,7 +29,7 @@ namespace SwashbucklerDiary.Services
         /// <summary>
         /// 系统主题切换
         /// </summary>
-        private void SetThemeState(ThemeState themeState)
+        public void SetThemeState(ThemeState themeState)
         {
             if(AlreadySet == false)
             {

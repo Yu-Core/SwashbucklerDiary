@@ -53,7 +53,6 @@ namespace SwashbucklerDiary.Shared
             await base.OnInitializedAsync();
         }
 
-        private bool Dark => ThemeService.Dark;
         private bool Mini => MasaBlazor.Breakpoint.Sm;
 
         private bool ShowBottomNavigation
@@ -97,8 +96,8 @@ namespace SwashbucklerDiary.Shared
         private async Task LoadSettings()
         {
             int themeState = SettingsService.GetDefault<int>(SettingType.ThemeState);
-            ThemeService.ThemeState = (ThemeState)themeState;
-            SystemService.SetStatusBar((ThemeState)themeState);
+            ThemeService.SetThemeState((ThemeState)themeState);
+            //SystemService.SetStatusBar((ThemeState)themeState);
             var language = await SettingsService.Get<string>(SettingType.Language);
             I18nService.SetCulture(language);
         }
@@ -125,6 +124,7 @@ namespace SwashbucklerDiary.Shared
 
         private void ThemeChanged(ThemeState state)
         {
+            MasaBlazor.Theme.Dark = state == ThemeState.Dark;
             SystemService.SetStatusBar(state);
             InvokeAsync(StateHasChanged);
         }

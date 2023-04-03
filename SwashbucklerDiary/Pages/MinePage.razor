@@ -144,7 +144,7 @@
                          Class="mt-0 pb-1"
                          OnClick="()=>ShowLanguage=false"
                          HideDetails="@("auto")"
-                          Mandatory>
+                         Mandatory="true">
                 @foreach (var item in Languages)
                 {
                     <MRadio Label="@(item.Key)"
@@ -175,7 +175,7 @@
                          Class="mt-0 pb-1"
                          OnClick="()=>ShowThemeState=false"
                          HideDetails="@("auto")"
-                          Mandatory>
+                         Mandatory="true">
                 @foreach (var item in ThemeStates)
                 {
                     <MRadio Label="@(I18n.T(item.Key))"
