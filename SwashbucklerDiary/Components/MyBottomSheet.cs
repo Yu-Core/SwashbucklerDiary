@@ -13,11 +13,7 @@ namespace SwashbucklerDiary.Components
         public bool MyValue
         {
             get => base.Value;
-            set
-            {
-                base.Value = value;
-                SetValue(value);
-            }
+            set => SetValue(value);
         }
         [Parameter]
         public EventCallback<bool> MyValueChanged
@@ -37,22 +33,26 @@ namespace SwashbucklerDiary.Components
 
         private void SetValue(bool value)
         {
-            Task.Run(() =>
+            if (base.Value != value)
             {
-                if (value)
+                base.Value = value;
+                Task.Run(() =>
                 {
-                    NavigateService.Action += Close;
-                }
-                else
-                {
-                    NavigateService.Action -= Close;
-                }
-            });
+                    if (value)
+                    {
+                        NavigateService.Action += Close;
+                    }
+                    else
+                    {
+                        NavigateService.Action -= Close;
+                    }
+                });
+            }
         }
 
         private async void Close()
         {
-            Value = false;
+            MyValue = false;
             if (MyValueChanged.HasDelegate)
             {
                 await MyValueChanged.InvokeAsync(false);
