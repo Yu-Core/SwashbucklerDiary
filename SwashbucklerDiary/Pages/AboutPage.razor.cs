@@ -1,5 +1,4 @@
-﻿using BlazorComponent.I18n;
-using SwashbucklerDiary.Components;
+﻿using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages

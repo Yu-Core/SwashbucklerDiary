@@ -87,8 +87,8 @@ namespace SwashbucklerDiary.Pages
             };
             FeedbackTypes = new()
             {
-                new("Email","mdi-email-outline",async()=>await SendMail()),
-                new("Github","mdi-github",async()=>await ToGithub()),
+                new("Email","mdi-email-outline",SendMail),
+                new("Github","mdi-github",ToGithub),
             };
         }
 

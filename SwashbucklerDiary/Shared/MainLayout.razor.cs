@@ -73,7 +73,7 @@ namespace SwashbucklerDiary.Shared
         {
             get
             {
-                if(!MasaBlazor.Breakpoint.SmAndUp || ShowFirstLaunch)
+                if (!MasaBlazor.Breakpoint.SmAndUp || ShowFirstLaunch)
                 {
                     return false;
                 }
@@ -87,7 +87,7 @@ namespace SwashbucklerDiary.Shared
             get
             {
                 string style = string.Empty;
-                style += "transition:padding-left ease 0.3s !important;"; 
+                style += "transition:padding-left ease 0.3s !important;";
                 return style;
             }
         }

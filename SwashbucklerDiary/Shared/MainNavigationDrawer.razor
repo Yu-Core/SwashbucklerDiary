@@ -19,7 +19,7 @@
                 {
                     var activated = Value == i;
 
-                    <MListItem Ripple="false" OnClick="item.Action">
+                    <MListItem Ripple="false" OnClick="()=>item.Delegate.DynamicInvoke()">
                         <MListItemIcon>
                             <MIcon Size="@(activated?30:24)">
                                 @(activated ? item.SelectedIcon : item.Icon)

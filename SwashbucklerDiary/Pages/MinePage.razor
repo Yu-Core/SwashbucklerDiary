@@ -101,7 +101,7 @@
             <MList>
                 @foreach (var item in list.Value)
                 {
-                    <MListItem OnClick="@(item.Action)">
+                    <MListItem OnClick="@(()=>item.Delegate.DynamicInvoke())">
                         <MListItemIcon>
                             <MIcon Class="list-item-icon">
                                 @(item.Icon)
@@ -203,7 +203,7 @@
         <MCardText>
             @foreach (var item in FeedbackTypes)
             {
-                <MListItem Class="px-0" OnClick="@(item.Action)">
+                <MListItem Class="px-0" OnClick="@(()=>item.Delegate.DynamicInvoke())">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             @(item.Icon)

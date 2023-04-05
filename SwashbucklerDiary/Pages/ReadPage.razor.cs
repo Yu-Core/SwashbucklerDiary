@@ -22,6 +22,7 @@ namespace SwashbucklerDiary.Pages
         private IJSObjectReference? module;
         private bool Markdown;
         private List<ViewListItem> ViewListItems = new();
+        private List<ViewListItem> ShareItems = new();
         private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
@@ -93,16 +94,22 @@ namespace SwashbucklerDiary.Pages
         {
             ViewListItems = new List<ViewListItem>()
             {
-                new("Share.Copy","mdi-content-copy",async()=>await OnCopy()),
-                new(TopText,"mdi-format-vertical-align-top",async ()=>await OnTopping()),
-                new("Diary.Export","mdi-export",()=>OpenExportDialog()),
-                new(MarkdownText,MarkdownIcon,async ()=>await MarkdownChanged()),
+                new("Share.Copy","mdi-content-copy",OnCopy),
+                new(TopText,"mdi-format-vertical-align-top",OnTopping),
+                new("Diary.Export","mdi-export",OpenExportDialog),
+                new(MarkdownText,MarkdownIcon,MarkdownChanged),
             };
             bool privacy = await SettingsService.Get(SettingType.Privacy);
             if (privacy)
             {
-                ViewListItems.Add(new(PrivateText, PrivateIcon, async () => await DiaryPrivacyChanged()));
+                ViewListItems.Add(new(PrivateText, PrivateIcon, DiaryPrivacyChanged));
             }
+
+            ShareItems = new()
+            {
+                new("Share.TextShare","mdi-format-text",ShareText),
+                new("Share.ImageShare","mdi-image-outline",ShareImage),
+            };
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()
@@ -157,7 +164,7 @@ namespace SwashbucklerDiary.Pages
         private async Task ShareText()
         {
             ShowShare = false;
-            await SystemService.ShareText(I18n.T("Read.Share")!, DiaryCopyContent);
+            await SystemService.ShareText(I18n.T("Share.Share")!, DiaryCopyContent);
             await HandleAchievements(AchievementType.Share);
         }
 
@@ -176,7 +183,7 @@ namespace SwashbucklerDiary.Pages
             await File.WriteAllBytesAsync(file, Convert.FromBase64String(base64));
             showLoading = false;
 
-            await SystemService.ShareFile(I18n.T("Read.Share")!, file);
+            await SystemService.ShareFile(I18n.T("Share.Share")!, file);
             await HandleAchievements(AchievementType.Share);
         }
 

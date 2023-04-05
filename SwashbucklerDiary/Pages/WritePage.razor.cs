@@ -139,8 +139,8 @@ namespace SwashbucklerDiary.Pages
         {
              ViewListItems = new()
             {
-                new(ShowTitleText,"mdi-format-title",async()=>await ShowTitleChanged()),
-                new(MarkdownText,MarkdownIcon,async ()=>await MarkdownChanged())
+                new(ShowTitleText,"mdi-format-title",ShowTitleChanged),
+                new(MarkdownText,MarkdownIcon,MarkdownChanged)
             };
         }
 
@@ -277,7 +277,6 @@ namespace SwashbucklerDiary.Pages
         {
             Markdown = !Markdown;
             await SettingsService.Save(SettingType.Markdown, Markdown);
-            StateHasChanged();
         }
 
         protected async Task HandleAchievements()
@@ -297,7 +296,6 @@ namespace SwashbucklerDiary.Pages
         {
             ShowTitle = !ShowTitle;
             await SettingsService.Save(SettingType.Title, ShowTitle);
-            StateHasChanged();
         }
     }
 }

@@ -14,7 +14,7 @@
                 <MList Class="rounded-t-lg py-4">
                     @foreach (var item in ViewListItems)
                     {
-                        <MListItem OnClick="()=>OnClick(item.Action)">
+                        <MListItem OnClick="()=>OnClick(item.Delegate)">
                             <MListItemIcon >
                                 <MIcon>
                                     @(item.Icon)
@@ -58,7 +58,7 @@
                 <MList MinWidth="150">
                     @foreach (var item in ViewListItems)
                     {
-                        <MListItem Dense OnClick="()=>OnClick(item.Action)">
+                        <MListItem Dense OnClick="()=>OnClick(item.Delegate)">
                             <MListItemContent>
                                 @(I18n.T(item.Text))
                             </MListItemContent>

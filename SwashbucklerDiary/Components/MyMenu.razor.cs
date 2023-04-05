@@ -10,10 +10,10 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public List<ViewListItem> ViewListItems { get; set; } = new();
 
-        private async Task OnClick(Action action)
+        private async Task OnClick(MulticastDelegate @delegate)
         {
             await InternalValueChanged(false);
-            action.Invoke();
+            @delegate.DynamicInvoke();
         }
     }
 }

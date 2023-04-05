@@ -14,7 +14,12 @@
     "EditFail": "Edit Fail",
     "AddSuccess": "Add success",
     "AddFail": "Add failed",
-    "Clear": "Clear"
+    "Clear": "Clear",
+    "Share": "Share",
+    "SelectShare": "Select sharing method",
+    "TextShare": "Text share",
+    "ImageShare": "Image share",
+    "FileShare": "File share"
   },
   "Main": {
     "Diary": "Diary",
@@ -121,10 +126,6 @@
     "sick": "sick"
   },
   "Read": {
-    "Share": "Share",
-    "SelectShare": "Select sharing method",
-    "TextShare": "Text share",
-    "ImageShare": "Image share",
     "OpenPrivacy": "Open privacy",
     "ClosePrivacy": "Close privacy"
   },
@@ -375,6 +376,10 @@
   },
   "Log": {
     "NoLog": "No log",
-    "Share": "Share"
+    "Share": "Share",
+    "Delete": {
+      "Title": "Delete logs",
+      "Content": "Are you sure to clear all logs?"
+    }
   }
 }

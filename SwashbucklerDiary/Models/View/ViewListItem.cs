@@ -28,7 +28,7 @@
             }
             set => _icon = value;
         }
-        public Action Action { get; set; }
+        public MulticastDelegate Delegate { get; set; }
 
         public Func<string>? TextFunc { get; set; }
         public Func<string>? IconFunc { get; set; }
@@ -37,21 +37,42 @@
         {
             _text = text;
             _icon = icon;
-            Action = action;
+            Delegate = action;
+        }
+
+        public ViewListItem(string text, string icon, Func<Task> func)
+        {
+            _text = text;
+            _icon = icon;
+            Delegate = func;
         }
 
         public ViewListItem(Func<string> text, Func<string> icon, Action action)
         {
             TextFunc = text;
             IconFunc = icon;
-            Action = action;
+            Delegate = action;
+        }
+
+        public ViewListItem(Func<string> text, Func<string> icon, Func<Task> func)
+        {
+            TextFunc = text;
+            IconFunc = icon;
+            Delegate = func;
         }
 
         public ViewListItem(Func<string> text, string icon, Action action)
         {
             TextFunc = text;
             _icon = icon;
-            Action = action;
+            Delegate = action;
+        }
+
+        public ViewListItem(Func<string> text, string icon, Func<Task> func)
+        {
+            TextFunc = text;
+            _icon = icon;
+            Delegate = func;
         }
     }
 }

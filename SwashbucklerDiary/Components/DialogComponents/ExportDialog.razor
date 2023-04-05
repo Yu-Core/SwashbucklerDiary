@@ -15,7 +15,7 @@
         <MCardText>
             @foreach (var item in ViewListItems)
             {
-                <MListItem Class="px-0" OnClick="@(item.Action)">
+                <MListItem Class="px-0" OnClick="@(()=>item.Delegate.DynamicInvoke())">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             @(item.Icon)

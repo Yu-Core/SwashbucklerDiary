@@ -15,7 +15,12 @@
     "EditFail": "修改失败",
     "AddSuccess": "添加成功",
     "AddFail": "添加失败",
-    "Clear": "清除"
+    "Clear": "清除",
+    "Share": "分享",
+    "SelectShare": "选择分享方式",
+    "TextShare": "文字分享",
+    "ImageShare": "图片分享",
+    "FileShare": "文件分享"
   },
   "Main": {
     "Diary": "日记",
@@ -122,10 +127,6 @@
     "sick": "生病"
   },
   "Read": {
-    "Share": "分享",
-    "SelectShare": "选择分享方式",
-    "TextShare": "文字分享",
-    "ImageShare": "图片分享",
     "OpenPrivacy": "移入隐私库",
     "ClosePrivacy": "移出隐私库"
   },
@@ -376,6 +377,10 @@
   },
   "Log": {
     "NoLog": "暂无日志",
-    "Share": "分享"
+    "Share": "分享",
+    "Delete": {
+      "Title": "删除日志",
+      "Content": "确定清空所有日志吗？"
+    }
   }
 }
