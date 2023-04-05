@@ -1,6 +1,6 @@
-﻿<MAppBar App
+﻿<MAppBar App="true"
          Elevation="0">
-    <MButton Icon OnClick="OnClick">
+    <MButton Icon="true" OnClick="OnClick">
         <MIcon>
             mdi-arrow-left
         </MIcon>
@@ -10,9 +10,6 @@
         @Title
         @ChildContent
     </MToolbarTitle>
-
-    <MSpacer></MSpacer>
-    @ToolContent
 </MAppBar>
 
 @code {
@@ -22,6 +19,4 @@
     public EventCallback<MouseEventArgs> OnClick { get; set; }
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
-    [Parameter]
-    public RenderFragment? ToolContent { get; set; }
 }

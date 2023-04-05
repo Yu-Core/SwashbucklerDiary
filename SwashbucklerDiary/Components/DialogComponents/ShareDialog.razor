@@ -1,0 +1,35 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits DialogComponentBase
+
+<MMDialog MyValue="Value"
+          MyValueChanged="InternalValueChanged"
+          MaxWidth="420">
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Share.SelectShare"))
+            <MSpacer></MSpacer>
+            <MButton Icon="true" OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            <MList>
+                @foreach (var item in Items)
+                {
+                    <MListItem Class="px-0" OnClick="()=>item.Delegate.DynamicInvoke()">
+                        <MListItemIcon>
+                            <MIcon Class="list-item-icon">
+                                @(item.Icon)
+                            </MIcon>
+                        </MListItemIcon>
+                        <MListItemContent>
+                            <MListItemTitle>
+                                @(I18n.T(item.Text))
+                            </MListItemTitle>
+                        </MListItemContent>
+                    </MListItem>
+                }
+            </MList>
+        </MCardText>
+    </MCard>
+</MMDialog>

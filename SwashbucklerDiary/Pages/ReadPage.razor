@@ -1,27 +1,27 @@
 ﻿@page "/read/{id:guid}"
 @inherits PageComponentBase
 
-<MAppBar App Elevation="0">
-    <MButton Icon OnClick="NavigateToBack">
+<MAppBar App="true" Elevation="0">
+    <MButton Icon="true" OnClick="NavigateToBack">
         <MIcon>
             mdi-arrow-left
         </MIcon>
     </MButton>
 
     <MSpacer></MSpacer>
-    <MButton Icon
+    <MButton Icon="true"
              OnClick="()=>ShowShare=true">
         <MIcon>
             mdi-share-variant-outline
         </MIcon>
     </MButton>
-    <MButton Icon
+    <MButton Icon="true"
              OnClick="OpenDeleteDialog">
         <MIcon>
             mdi-delete-outline
         </MIcon>
     </MButton>
-    <MButton Icon
+    <MButton Icon="true"
              OnClick="OnEdit">
         <MIcon>
             mdi-pencil
@@ -40,9 +40,9 @@
             </MultiDisplay>
         </ButtonContent>
     </MyMenu>
-    </MAppBar>
+</MAppBar>
 
-    <ScrollContainer>
+<ScrollContainer>
     <div id="screenshot">
         <div class="px-3 d-flex align-end">
             <span class="text-h6 font-weight-bold">
@@ -59,8 +59,8 @@
         <div class="px-2">
             @if (ShowWeather)
             {
-                <MChip Class="my-2 mr-2" Outlined>
-                <MIcon Left>
+                <MChip Class="my-2 mr-2" Outlined="true">
+                <MIcon Left="true">
                     @(GetWeatherIcon(Diary.Weather))
                     </MIcon>
                     @(I18n.T("Weather." + Diary.Weather))
@@ -69,8 +69,8 @@
 
             @if (ShowMood)
             {
-                <MChip Class="my-2 mr-2" Outlined>
-                <MIcon Left>
+                <MChip Class="my-2 mr-2" Outlined="true">
+                <MIcon Left="true">
                     @(GetMoodIcon(Diary.Mood))
                     </MIcon>
                     @(I18n.T("Mood." + Diary.Mood))
@@ -79,8 +79,8 @@
 
             @if (ShowLocation)
             {
-                <MChip Class="my-2 mr-2" Outlined>
-                <MIcon Left>
+                <MChip Class="my-2 mr-2" Outlined="true">
+                <MIcon Left="true">
                     mdi-map-marker-outline
                 </MIcon>
                 @(Diary.Location)
@@ -92,36 +92,38 @@
         {
             <MTextField Value="@(Diary.Title)"
                     Class="pb-0 my-sm-4 user-select font-weight-bold"
-                            Solo
-                            Flat
+                    Solo="true"
+                    Flat="true"
                     TValue="string"
                     HideDetails="@("auto")"
-                            Dense
-                            Readonly
-                            maxlength="20">
+                    Dense="true"
+                    Readonly="true"
+                        maxlength="20">
             </MTextField>
         }
         @if (Markdown)
         {
-            <MMarkdownIt Source="@(Diary.Content)" Class="my-sm-4 px-3 user-select" Style="padding-top:10px">
+            <MMarkdownIt Source="@(Diary.Content)"
+                     Class="my-sm-4 px-3 user-select"
+                     Style="padding-top:10px">
             </MMarkdownIt>
         }
         else
         {
             <MTextarea Value="@(Diary.Content)"
                    Class="my-sm-4 user-select"
-                          Solo
-                          Flat
+                   Solo="true"
+                   Flat="true"
                    HideDetails="@("auto")"
-                          Readonly
-                          AutoGrow
+                   Readonly="true"
+                   AutoGrow="true"
                    Rows="8"
                    RowHeight="30">
             </MTextarea>
         }
 
         <div class="mb-5">
-            <MChipGroup Column>
+            <MChipGroup Column="true">
                 @foreach (var item in Tags)
                 {
                     <MChip Outlined="true">
@@ -133,45 +135,8 @@
     </div>
 </ScrollContainer>
 
-<MyDialog @bind-MyValue="ShowShare" MaxWidth="420">
-    <MCard Rounded="@("lg")">
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Read.SelectShare"))
-            <MSpacer></MSpacer>
-            <MButton Icon="true" OnClick="()=>ShowShare = false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText>
-            <MList>
-                <MListItem Class="px-0" OnClick="ShareText">
-                    <MListItemIcon>
-                        <MIcon Class="list-item-icon">
-                            mdi-format-text
-                        </MIcon>
-                    </MListItemIcon>
-                    <MListItemContent>
-                        <MListItemTitle>
-                            @(I18n.T("Read.TextShare"))
-                        </MListItemTitle>
-                    </MListItemContent>
-                </MListItem>
-                <MListItem Class="px-0" OnClick="ShareImage">
-                    <MListItemIcon>
-                        <MIcon Class="list-item-icon">
-                            mdi-image-outline
-                        </MIcon>
-                    </MListItemIcon>
-                    <MListItemContent>
-                        <MListItemTitle>
-                            @(I18n.T("Read.ImageShare"))
-                        </MListItemTitle>
-                    </MListItemContent>
-                </MListItem>
-            </MList>
-        </MCardText>
-    </MCard>
-</MyDialog>
+<ShareDialog @bind-Value="ShowShare" Items="ShareItems">
+</ShareDialog>
 
 <MOverlay Value="showLoading" ZIndex="99">
     <MProgressCircular Indeterminate="true" Size="48">
