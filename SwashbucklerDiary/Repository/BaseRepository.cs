@@ -18,6 +18,7 @@ namespace SwashbucklerDiary.Repository
                 typeof(UserAchievementModel),
                 typeof(UserStateModel),
                 typeof(LocationModel),
+                typeof(LogModel),
             };
             base.Context!.CodeFirst.InitTables(types);
         }
@@ -25,6 +26,11 @@ namespace SwashbucklerDiary.Repository
         public virtual Task<int> CountAsync()
         {
             return base.Context.Queryable<T>().CountAsync();
+        }
+
+        public Task<bool> DeleteAsync()
+        {
+            return base.Context.Deleteable<T>().ExecuteCommandHasChangeAsync();
         }
 
         public virtual Task<List<T>> GetListTakeAsync(int count)

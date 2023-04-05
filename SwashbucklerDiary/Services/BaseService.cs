@@ -38,6 +38,11 @@ namespace SwashbucklerDiary.Services
             return _iBaseRepository.CountAsync(func);
         }
 
+        public virtual Task<bool> DeleteAsync()
+        {
+            return _iBaseRepository.DeleteAsync();
+        }
+
         public virtual Task<bool> DeleteAsync(TEntity entity)
         {
             return _iBaseRepository.DeleteAsync(entity);

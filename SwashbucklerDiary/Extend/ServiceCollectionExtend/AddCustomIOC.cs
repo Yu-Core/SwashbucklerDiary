@@ -16,12 +16,14 @@ namespace SwashbucklerDiary.Extend
             services.AddSingleton<IUserAchievementRepository, UserAchievementRepository>();
             services.AddSingleton<IUserStateModelRepository, UserStateModelRepository>();
             services.AddSingleton<ILocationRepository, LocationRepository>();
+            services.AddSingleton<ILogRepository, LogRepository>();
             //数据服务相关
             services.AddSingleton<ITagService, TagService>();
             services.AddSingleton<IDiaryService, DiaryService>();
             services.AddSingleton<IDiaryTagService, DiaryTagService>();
             services.AddSingleton<IAchievementService, AchievementService>();
             services.AddSingleton<ILocationService, LocationService>();
+            services.AddSingleton<ILogService, LogService>();
             //功能服务相关
             services.AddSingleton<INavigateService, NavigateService>();
             services.AddSingleton<IconService>();

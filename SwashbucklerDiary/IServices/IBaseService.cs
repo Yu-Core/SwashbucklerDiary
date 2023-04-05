@@ -8,6 +8,7 @@ namespace SwashbucklerDiary.IServices
         Task<bool> AddAsync(List<TEntity> entities);
         Task<int> AddReturnIdAsync(TEntity entity);
         Task<TEntity> AddReturnEntityAsync(TEntity entity);
+        Task<bool> DeleteAsync();
         Task<bool> DeleteAsync(TEntity entity);
         Task<bool> DeleteAsync(Guid id);
         Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func);

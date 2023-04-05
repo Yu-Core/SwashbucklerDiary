@@ -8,11 +8,6 @@ namespace SwashbucklerDiary.Extend
     {
         public static IServiceCollection AddSerilogConfig(this IServiceCollection services)
         {
-            if (!Directory.Exists(SerilogConstants.folderPath))
-            {
-                Directory.CreateDirectory(SerilogConstants.folderPath);
-            }
-
             Log.Logger = new LoggerConfiguration()
 #if DEBUG
                             .MinimumLevel.Debug()
@@ -24,7 +19,7 @@ namespace SwashbucklerDiary.Extend
 #if DEBUG
                  .WriteTo.Debug()
 #endif
-                 .WriteTo.Async(c => c.File(path: SerilogConstants.filePath))
+                 .WriteTo.Async(c => c.SQLite(SQLiteConstants.DatabasePath, "LogModel"))
                  .CreateLogger();
 
             services.AddLogging(logging =>
