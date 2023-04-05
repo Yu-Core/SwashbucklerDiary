@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Components
         private bool ShowAdd;
         private List<LocationModel> Locations = new();
         private MCardText? mCardText;
-        private MyDialog? myDialog;
+        private MMDialog? myDialog;
 
         [Inject]
         ILocationService LocationService { get; set; } = default!;

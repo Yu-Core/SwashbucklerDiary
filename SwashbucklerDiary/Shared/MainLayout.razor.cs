@@ -82,13 +82,12 @@ namespace SwashbucklerDiary.Shared
             }
         }
 
-        private string MainStyle
+        private static string MainStyle
         {
             get
             {
                 string style = string.Empty;
-                style += "transition:padding-left ease 0.3s !important;";
-                
+                style += "transition:padding-left ease 0.3s !important;"; 
                 return style;
             }
         }
@@ -97,7 +96,6 @@ namespace SwashbucklerDiary.Shared
         {
             int themeState = SettingsService.GetDefault<int>(SettingType.ThemeState);
             ThemeService.SetThemeState((ThemeState)themeState);
-            //SystemService.SetStatusBar((ThemeState)themeState);
             var language = await SettingsService.Get<string>(SettingType.Language);
             I18nService.SetCulture(language);
         }

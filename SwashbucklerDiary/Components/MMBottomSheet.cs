@@ -4,7 +4,7 @@ using SwashbucklerDiary.IServices;
 
 namespace SwashbucklerDiary.Components
 {
-    public class MyBottomSheet : MBottomSheet
+    public class MMBottomSheet : MBottomSheet
     {
         [Inject]
         protected INavigateService NavigateService { get; set; } = default!;

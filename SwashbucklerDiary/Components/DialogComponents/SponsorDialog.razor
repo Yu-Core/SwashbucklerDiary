@@ -1,7 +1,7 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits DialogComponentBase
 
-<MyDialog MyValue="Value"
+<MMDialog MyValue="Value"
           MyValueChanged="InternalValueChanged"
           MaxWidth="420">
     <MCard Rounded="@("lg")">
@@ -55,9 +55,9 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MyDialog>
+</MMDialog>
 
-<MyDialog @bind-MyValue="ShowThank" MaxWidth="420">
+<MMDialog @bind-MyValue="ShowThank" MaxWidth="420">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Amount.Thank"))
@@ -70,4 +70,4 @@
             @(I18n.T("Amount.ThankContent"))
         </MCardText>
     </MCard>
-</MyDialog>
+</MMDialog>

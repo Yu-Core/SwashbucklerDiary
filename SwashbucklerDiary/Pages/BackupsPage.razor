@@ -75,7 +75,7 @@
     </SwiperTabItem>
 </SwiperTabItems>
 
-<MyDialog @bind-MyValue="ShowBackups" MaxWidth="420">
+<MMDialog @bind-MyValue="ShowBackups" MaxWidth="420">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Backups.Local"))
@@ -99,9 +99,9 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MyDialog>
+</MMDialog>
 
-<MyDialog @bind-MyValue="ShowRestore" MaxWidth="420">
+<MMDialog @bind-MyValue="ShowRestore" MaxWidth="420">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Backups.ConfirmRestore.Title"))
@@ -125,4 +125,4 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MyDialog>
+</MMDialog>

@@ -1,0 +1,19 @@
+﻿@inherits DialogComponentBase
+
+<MultiDisplay Tablet="true">
+    <MobileContent>
+        <MMBottomSheet MyValue="Value"
+                       MyValueChanged="ValueChanged">
+            @ChildContent
+        </MMBottomSheet>
+    </MobileContent>
+    <DesktopContent>
+        <MMDialog Value="Value"
+                  ValueChanged="ValueChanged"
+                  MaxWidth="420">
+            <MCard Class="rounded-lg">
+                @ChildContent
+            </MCard>
+        </MMDialog>
+    </DesktopContent>
+</MultiDisplay>

@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Components
         [Inject]
         protected IAchievementService AchievementService { get; set; } = default!;
 
-        protected void NavigateToBack()
+        protected virtual void NavigateToBack()
         {
             NavigateService.NavigateToBack();
         }

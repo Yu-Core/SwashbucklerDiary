@@ -1,7 +1,7 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits DialogComponentBase
 
-<MyDialog MyValue="Value"
+<MMDialog MyValue="Value"
           MyValueChanged="InternalValueChanged"
           MaxWidth="420"
           Scrollable>
@@ -43,7 +43,7 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MyDialog>
+</MMDialog>
 
 <InputDialog @bind-Value="ShowAddTag"
              @bind-Text="AddTagName"
