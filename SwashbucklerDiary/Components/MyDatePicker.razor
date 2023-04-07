@@ -1,0 +1,34 @@
+﻿@inherits DialogComponentBase
+
+<MultiDisplay Tablet>
+    <MobileContent>
+        <PPMobileDatePicker MyVisible="Value"
+                            MyVisibleChanged="ValueChanged"
+                            Value="Date"
+                            ValueChanged="DateChanged"
+                            class="rounded-t-lg">
+        </PPMobileDatePicker>
+    </MobileContent>
+    <DesktopContent>
+        <MMDialog MyValue="Value"
+                  MyValueChanged="ValueChanged"
+                  MaxWidth="420">
+            <MDatePicker @bind-Value="InternalDate"
+                         Class="rounded-lg pt-4"
+                         FullWidth="true"
+                         NoTitle="true"
+                         Scrollable="true">
+                <MSpacer></MSpacer>
+                <MButton Text="true"
+                         OnClick="HandleOnCancel">
+                    @(I18n.T("Share.Cancel"))
+                </MButton>
+                <MButton Text="true"
+                         Color="primary"
+                         OnClick="HandleOnOK">
+                    @(I18n.T("Share.OK"))
+                </MButton>
+            </MDatePicker>
+        </MMDialog>
+    </DesktopContent>
+</MultiDisplay>
