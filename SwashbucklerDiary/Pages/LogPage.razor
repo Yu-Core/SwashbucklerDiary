@@ -60,17 +60,17 @@
 </MAppBar>
 
 <ScrollContainer>
-    <MList Dense="true" Class="fdfdfd user-select">
+    <div class="px-4 text-subtitle-1 user-select">
         @foreach (var item in Logs)
         {
-            <MListItem>
-                <MListItemContent>
-                    @item.Timestamp
-                    @item.RenderedMessage
-                </MListItemContent>
-            </MListItem>
+            <div>
+                @item.Timestamp
+            </div>
+            <div>
+                @item.RenderedMessage
+            </div>
         }
-    </MList>
+    </div>
     @if (!Logs.Any())
     {
         <div class="d-flex justify-center" style="padding-top:20vh;">
