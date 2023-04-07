@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class LogPage : PageComponentBase
+    public partial class LogPage : PageComponentBase,IDisposable
     {
         private bool _showSearch;
         private bool ShowMenu;
@@ -176,10 +176,12 @@ namespace SwashbucklerDiary.Pages
                 {
                     IsFilter = false;
                     FilterReset();
+                    NavigateService.Action += CloseSearch;
                 }
                 else
                 {
                     Search = string.Empty;
+                    NavigateService.Action -= CloseSearch;
                 }
                 _showSearch = value;
             }
@@ -196,6 +198,21 @@ namespace SwashbucklerDiary.Pages
                 }
                 _showFilter = value;
             }
+        }
+
+        private void CloseSearch()
+        {
+            ShowSearch = false;
+            StateHasChanged();
+        }
+
+        public void Dispose()
+        {
+            if(ShowSearch)
+            {
+                NavigateService.Action -= CloseSearch;
+            }
+            GC.SuppressFinalize(this);
         }
     }
 }
