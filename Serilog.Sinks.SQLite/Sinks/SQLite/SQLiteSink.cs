@@ -19,14 +19,12 @@ using Serilog.Sinks.Batch;
 using Serilog.Sinks.Extensions;
 using SQLite;
 
+//There are changes here. Code source https://github.com/saleem-mirza/serilog-sinks-sqlite/issues/24
 namespace Serilog.Sinks.SQLite
 {
     internal class SQLiteSink : BatchProvider, ILogEventSink
     {
         private readonly string _databasePath; private readonly bool _storeTimestampInUtc; private readonly bool _rollOver; private readonly string _tableName;
-
-
-
 
         private static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 

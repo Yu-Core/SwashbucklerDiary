@@ -77,12 +77,15 @@ namespace Serilog
                 throw new ArgumentException($"Invalid path {nameof(sqliteDbPath)}");
             }
 
+            // There will be an exception where the reference object instance is null in Maui's Android
+            
             //if (!sqliteDbPathUri.IsAbsoluteUri) {
             //    var basePath = System.Reflection.Assembly.GetEntryAssembly().Location;
             //    sqliteDbPath = Path.Combine(Path.GetDirectoryName(basePath) ?? throw new NullReferenceException(), sqliteDbPath);
             //}
 
-            try {
+            try
+            {
                 var sqliteDbFile = new FileInfo(sqliteDbPath);
                 sqliteDbFile.Directory?.Create();
 
