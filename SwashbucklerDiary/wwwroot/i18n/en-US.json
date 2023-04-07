@@ -19,7 +19,8 @@
     "SelectShare": "Select sharing method",
     "TextShare": "Text share",
     "ImageShare": "Image share",
-    "FileShare": "File share"
+    "FileShare": "File share",
+    "Reset": "Reset"
   },
   "Main": {
     "Diary": "Diary",
@@ -378,8 +379,13 @@
     "NoLog": "No log",
     "Share": "Share",
     "Delete": {
-      "Title": "Delete logs",
+      "Title": "Clear logs",
       "Content": "Are you sure to clear all logs?"
-    }
+    },
+    "Last month": "Last month",
+    "Last three months": "Last three months",
+    "Last six months": "Last six months",
+    "Clear": "Clear",
+    "Filter": "Filter"
   }
 }

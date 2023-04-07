@@ -27,8 +27,8 @@ namespace SwashbucklerDiary
             builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
 
-            builder.Services.AddSerilogConfig();
             builder.Services.AddSqlsugarConfig();
+            builder.Services.AddSerilogConfig();
             builder.Services.AddMasaBlazorConfig();
             builder.Services.AddCustomIOC();
             builder.Services.AddMauiExceptionHandle();

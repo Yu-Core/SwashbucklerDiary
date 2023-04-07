@@ -1,27 +1,77 @@
 ﻿@page "/log"
 @inherits PageComponentBase
 
-<MyAppBar Title="@(I18n.T("About.LogFile"))" OnClick="NavigateToBack">
-    <ToolContent>
-        <MButton Icon="true" OnClick="ShareLogFile">
-            <MIcon>
-                mdi-share-variant-outline
-            </MIcon>
-        </MButton>
-    </ToolContent>
-</MyAppBar>
+<MAppBar App="true" Elevation="0">
+    <MButton Icon="true" OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    @if (!ShowSearch)
+    {
+        <MToolbarTitle>
+            @(I18n.T("About.LogFile"))
+        </MToolbarTitle>
+        <MSpacer></MSpacer>
+    }
+    else
+    {
+        <MTextField TValue="string"
+                Value="Search"
+                ValueChanged="TextChanged"
+                Class="ml-3 rounded-lg"
+                Solo="true"
+                Flat="true"
+                Autofocus="true"
+                Clearable="true"
+                HideDetails="@("auto")"
+                    spellcheck="false"
+                Placeholder="@(I18n.T("Search.Placeholder"))">
+        </MTextField>
+    }
+
+    <MButton Icon="true"
+             OnClick="()=>ShowSearch=!ShowSearch">
+        <MIcon>
+            mdi-magnify
+        </MIcon>
+    </MButton>
+
+    <MButton Icon="true"
+             OnClick="()=>ShowFilter=!ShowFilter">
+        <MIcon>
+            @(IsFilter ? "mdi-filter-check-outline" : "mdi-filter-outline")
+        </MIcon>
+    </MButton>
+
+    <MyMenu @bind-Value="ShowMenu" ViewListItems="ViewListItems">
+        <ButtonContent>
+            <MultiDisplay>
+                <DesktopContent>
+                    <MIcon>mdi-dots-horizontal</MIcon>
+                </DesktopContent>
+                <MobileContent>
+                    <MIcon>mdi-dots-vertical</MIcon>
+                </MobileContent>
+            </MultiDisplay>
+        </ButtonContent>
+    </MyMenu>
+</MAppBar>
+
 <ScrollContainer>
-    <MList Dense Class="fdfdfd">
-        @foreach (var item in LogTextList)
+    <MList Dense="true" Class="fdfdfd user-select">
+        @foreach (var item in Logs)
         {
             <MListItem>
                 <MListItemContent>
-                    @item
+                    @item.Timestamp
+                    @item.RenderedMessage
                 </MListItemContent>
             </MListItem>
         }
     </MList>
-    @if (!LogTextList.Any())
+    @if (!Logs.Any())
     {
         <div class="d-flex justify-center" style="padding-top:20vh;">
             <div class="text-h6 text--secondary font-weight-bold-table">
@@ -31,3 +81,18 @@
     }
 </ScrollContainer>
 
+<LogFilterDialog @bind-Value="ShowFilter"
+                 @bind-IsFilter="IsFilter"
+                 Logs="AllLogs"
+                 OnReset="FilterReset"
+                 OnOK="FilterOK">
+</LogFilterDialog>
+
+<DeleteDialog @bind-Value="ShowDelete"
+              Title="@(I18n.T("Log.Delete.Title"))"
+              Content="@(I18n.T("Log.Delete.Content"))"
+              OnOK="HandleDelete">
+</DeleteDialog>
+
+<ShareDialog @bind-Value="ShowShare" Items="ShareItems">
+</ShareDialog>

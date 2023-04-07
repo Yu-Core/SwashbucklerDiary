@@ -1,0 +1,89 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits DialogComponentBase
+
+<MyDialog Value="Value" ValueChanged="InternalValueChanged">
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Log.Filter"))
+            <MSpacer></MSpacer>
+            <MButton Icon="true" OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            <div>
+                <MChipGroup @bind-Value="DefaultDate" Column="true">
+                    @foreach (var item in DefaultDates)
+                    {
+                        <MChip @key="item.Key"
+                           Value="item.Key"
+                           Outlined="true"
+                           Class="flex-grow-1 justify-center"
+                           Filter="true"
+                           OnClick="SelectDeafultDate">
+                            @(I18n.T(item.Key))
+                        </MChip>
+                    }
+
+                </MChipGroup>
+                <MChipGroup Column="true"
+                            Multiple="true">
+                    <MChip Class="flex-grow-1 justify-center mx-0"
+                           Outlined="true"
+                           IsActive="false"
+                           OnClick="OpenMinDateDialog">
+                        @MinDateText
+                    </MChip>
+                    <div class="d-flex align-center">
+                        <MIcon>mdi-minus</MIcon>
+                    </div>
+                    <MChip Class="flex-grow-1 justify-center"
+                           Outlined="true"
+                           IsActive="false"
+                           OnClick="OpenMaxDateDialog">
+                        @MaxDateText
+                    </MChip>
+                </MChipGroup>
+            </div>
+        </MCardText>
+        <MCardActions>
+            <MultiDisplay>
+                <DesktopContent>
+                    <MSpacer></MSpacer>
+                    <MButton Text="true" OnClick="HandleOnReset">
+                        @(I18n.T("Share.Reset"))
+                    </MButton>
+                    <MButton Text="true"
+                             Color="primary"
+                             OnClick="HandleOnOK">
+                        @(I18n.T("Share.OK"))
+                    </MButton>
+                </DesktopContent>
+                <MobileContent>
+                    <MButton Rounded="true"
+                             Depressed="true"
+                             Large="true"
+                             Class="text-subtitle-1 flex-grow-1"
+                             OnClick="HandleOnReset">
+                        @(I18n.T("Share.Reset"))
+                    </MButton>
+                    <MButton Rounded="true"
+                             Depressed="true"
+                             Large="true"
+                             Class="text-subtitle-1 flex-grow-1"
+                             OnClick="HandleOnOK">
+                        @(I18n.T("Share.OK"))
+                    </MButton>
+                </MobileContent>
+            </MultiDisplay>
+        </MCardActions>
+    </MCard>
+</MyDialog>
+
+<MyDatePicker @bind-Value="ShowMinDate"
+              @bind-Date="MinDate">
+</MyDatePicker>
+
+<MyDatePicker @bind-Value="ShowMaxDate"
+              @bind-Date="MaxDate">
+</MyDatePicker>

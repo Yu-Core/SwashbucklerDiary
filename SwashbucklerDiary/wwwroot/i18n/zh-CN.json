@@ -20,7 +20,8 @@
     "SelectShare": "选择分享方式",
     "TextShare": "文字分享",
     "ImageShare": "图片分享",
-    "FileShare": "文件分享"
+    "FileShare": "文件分享",
+    "Reset": "重置"
   },
   "Main": {
     "Diary": "日记",
@@ -379,8 +380,13 @@
     "NoLog": "暂无日志",
     "Share": "分享",
     "Delete": {
-      "Title": "删除日志",
+      "Title": "清空日志",
       "Content": "确定清空所有日志吗？"
-    }
+    },
+    "Last month": "近一个月",
+    "Last three months": "近三个月",
+    "Last six months": "近六个月",
+    "Clear": "清空",
+    "Filter": "筛选"
   }
 }

@@ -4,19 +4,19 @@
 <MMDialog MyValue="Value"
           MyValueChanged="InternalValueChanged"
           MaxWidth="420"
-          Scrollable>
+          Scrollable="true">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Tag.Select"))
             <MSpacer></MSpacer>
-            <MButton Icon OnClick="HandleOnCancel">
+            <MButton Icon="true" OnClick="HandleOnCancel">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-            </MCardTitle>
-            <MCardText Class="scroll-show" Style="max-height:200px;">
+        </MCardTitle>
+        <MCardText Class="scroll-show" Style="max-height:200px;">
             <MChipGroup @bind-Values="SelectedTagId"
-                        Column
-                        Multiple>
+                        Column="true"
+                        Multiple="true">
                 @foreach (var item in Tags)
                 {
                     <MChip @key="@(item.Id.ToString())"
@@ -29,14 +29,14 @@
             </MChipGroup>
         </MCardText>
         <MCardActions>
-            <MButton Text OnClick="()=>ShowAddTag = true">
+            <MButton Text="true" OnClick="()=>ShowAddTag = true">
                 @(I18n.T("Tag.Add"))
             </MButton>
             <MSpacer></MSpacer>
-            <MButton Text OnClick="HandleOnCancel">
+            <MButton Text="true" OnClick="HandleOnCancel">
                 @(I18n.T("Share.Cancel"))
             </MButton>
-            <MButton Text
+            <MButton Text="true"
                      Color="primary"
                      OnClick="HandleOnSave">
                 @(I18n.T("Share.Save"))
