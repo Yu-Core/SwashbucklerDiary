@@ -167,20 +167,50 @@ a, .btn-link {
     border-radius: 8px !important;
 }
 /*修复应用栏中最前最后的位置，使用包裹的组件边距不正确*/
-.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:first-of-type, .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type {
-    margin-left: -12px
+.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:first-of-type:nth-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:nth-child(2) {
+    margin-left: -12px;
 }
 
-.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:first-child, .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type {
-    margin-right: -12px
+.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:first-of-type:nth-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:nth-child(2) {
+    margin-right: -12px;
 }
 
-.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:last-of-type, .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:last-of-type {
-    margin-right: -12px
+.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:last-of-type:nth-last-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:last-of-type:nth-last-child(2) {
+    margin-right: -12px;
 }
 
-.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:last-of-type, .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:last-of-type {
-    margin-left: -12px
+.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:last-of-type:nth-last-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:last-of-type:nth-last-child(2) {
+    margin-left: -12px;
+}
+
+.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:first-child:last-of-type:nth-last-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:last-of-type:nth-last-child(2) {
+    margin-left: -12px;
+    margin-right: 0px;
+}
+
+.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:first-child:last-of-type:nth-last-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:first-child:last-of-type:nth-last-child(2) {
+    margin-left: 0px;
+    margin-right: -12px;
+}
+
+.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:last-child:first-of-type:nth-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:last-child:first-of-type:nth-child(2) {
+    margin-left: 0px;
+    margin-right: -12px;
+}
+
+.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:last-child:first-of-type:nth-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:last-child:first-of-type:nth-child(2) {
+    margin-left: -12px;
+    margin-right: 0px;
+}
+
+.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:first-of-type:nth-child(2):last-of-type:nth-last-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:nth-child(2):last-of-type:nth-last-child(2) {
+    margin-left: -12px;
+    margin-right: 0px;
+}
+
+.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:first-of-type:nth-child(2):last-of-type:nth-last-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:nth-child(2):last-of-type:nth-last-child(2) {
+    margin-left: 0px;
+    margin-right: -12px;
 }
 
 .transition {

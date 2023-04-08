@@ -80,14 +80,14 @@ namespace SwashbucklerDiary.Components
         {
             get
             {
-                return MinDate == DateOnly.MinValue ? "起始时间" : MinDate.ToString("yyyy-MM-dd");
+                return MinDate == DateOnly.MinValue ? I18n.T("Log.Start time") : MinDate.ToString("yyyy-MM-dd");
             }
         }
         private string MaxDateText
         {
             get
             {
-                return MaxDate == DateOnly.MinValue ? "终止时间" : MaxDate.ToString("yyyy-MM-dd");
+                return MaxDate == DateOnly.MinValue ? I18n.T("Log.End time") : MaxDate.ToString("yyyy-MM-dd");
             }
         }
 

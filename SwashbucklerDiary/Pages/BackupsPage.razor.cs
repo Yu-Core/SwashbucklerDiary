@@ -22,16 +22,6 @@ namespace SwashbucklerDiary.Pages
         private async Task SetBackupsFolderPath()
         {
             BackupsFolderPath = await SettingsService.Get(SettingType.BackupsPath);
-            //if (string.IsNullOrEmpty(BackupsFolderPath))
-            //{
-            //    return;
-            //}
-
-            //if (!Directory.Exists(BackupsFolderPath))
-            //{
-            //    BackupsFolderPath = string.Empty;
-            //    await SettingsService.Save(SettingType.BackupsPath, BackupsFolderPath);
-            //}
         }
 
         private async Task Backups()
@@ -84,20 +74,6 @@ namespace SwashbucklerDiary.Pages
                 return I18n.T("Backups.LocalPointer") + BackupsFolderPath;
             }
         }
-
-        //private async Task<bool> PickBackupsFolderPath()
-        //{
-        //    var folderPath = await SystemService.PickFolderAsync();
-
-        //    if (string.IsNullOrEmpty(folderPath))
-        //    {
-        //        return false;
-        //    }
-
-        //    BackupsFolderPath = folderPath;
-        //    await SettingsService.Save("BackupsPath", folderPath);
-        //    return true;
-        //}
 
         private async Task Restore()
         {

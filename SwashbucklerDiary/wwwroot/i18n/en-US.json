@@ -77,7 +77,7 @@
     "Text": "Text Mode"
   },
   "Search": {
-    "Placeholder": "Please enter diary keywords"
+    "Placeholder": "Please enter keywords"
   },
   "History": {
     "Calendar": "Calendar",
@@ -386,6 +386,8 @@
     "Last three months": "Last three months",
     "Last six months": "Last six months",
     "Clear": "Clear",
-    "Filter": "Filter"
+    "Filter": "Filter",
+    "Start time": "Start time",
+    "End time": "End time"
   }
 }

@@ -78,7 +78,7 @@
     "Text": "纯文本模式"
   },
   "Search": {
-    "Placeholder": "请输入日记关键词"
+    "Placeholder": "请输入关键词"
   },
   "History": {
     "Calendar": "日历",
@@ -387,6 +387,8 @@
     "Last three months": "近三个月",
     "Last six months": "近六个月",
     "Clear": "清空",
-    "Filter": "筛选"
+    "Filter": "筛选",
+    "Start time": "起始时间",
+    "End time": "终止时间"
   }
 }

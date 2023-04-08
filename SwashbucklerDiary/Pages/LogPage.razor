@@ -10,7 +10,7 @@
 
     @if (!ShowSearch)
     {
-        <MToolbarTitle>
+        <MToolbarTitle Class="font-weight-bold">
             @(I18n.T("About.LogFile"))
         </MToolbarTitle>
         <MSpacer></MSpacer>
@@ -60,11 +60,12 @@
 </MAppBar>
 
 <ScrollContainer>
-    <div class="px-4 text-subtitle-1 user-select">
+    <div class="px-4 text-subtitle-1 user-select" style="word-wrap:break-word;">
         @foreach (var item in Logs)
         {
             <div>
                 @item.Timestamp
+                @($"[{item.Level}]")
             </div>
             <div>
                 @item.RenderedMessage
