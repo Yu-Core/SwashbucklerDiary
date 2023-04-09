@@ -1,5 +1,4 @@
-﻿using BlazorComponent;
-using Masa.Blazor;
+﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extend;
@@ -46,7 +45,7 @@ namespace SwashbucklerDiary.Pages
         public async ValueTask DisposeAsync()
         {
             MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
-            NavigateService.Action -= OnBack;
+            NavigateService.Action -= NavigateToBack;
             if(!IsSaved)
             {
                 await SaveDiary();
@@ -57,12 +56,23 @@ namespace SwashbucklerDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
-            NavigateService.Action += OnBack;
+            NavigateService.Action += NavigateToBack;
             LoadView();
             await LoadSettings();
             await UpdateTags();
             await SetTag();
             await SetDiary();
+        }
+
+        protected override async void NavigateToBack()
+        {
+            if (string.IsNullOrWhiteSpace(Diary.Content))
+            {
+                base.NavigateToBack();
+                return;
+            }
+
+            await SaveDiaryAndToBack();
         }
 
         private List<TagModel> SelectedTags
@@ -168,17 +178,6 @@ namespace SwashbucklerDiary.Pages
             return SaveDiaryAndToBack();
         }
 
-        private async void OnBack()
-        {
-            if (string.IsNullOrWhiteSpace(Diary.Content))
-            {
-                NavigateToBack();
-                return;
-            }
-
-            await SaveDiaryAndToBack();
-        }
-
         private void OnClear()
         {
             Diary.Content = string.Empty;
@@ -224,7 +223,7 @@ namespace SwashbucklerDiary.Pages
         private async Task SaveDiaryAndToBack()
         {
             await SaveDiary();
-            NavigateToBack();
+            base.NavigateToBack();
         }
 
         private async Task InvokeStateHasChangedAsync()

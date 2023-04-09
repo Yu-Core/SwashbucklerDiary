@@ -9,7 +9,7 @@
     margin-bottom: 20px;
 }
 
-@media screen and (min-width:960px) {
+@media screen and (min-width:600px) {
     .mine-title {
         display: block !important;
     }

@@ -31,6 +31,16 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
+        protected override void NavigateToBack()
+        {
+            if (ShowSearch)
+            {
+                ShowSearch = false;
+                return;
+            }
+            base.NavigateToBack();
+        }
+
         private bool ShowSearch
         {
             get => _showSearch;
