@@ -331,3 +331,7 @@ a, .btn-link {
         margin-bottom:70px;
     }
 }
+
+.theme--light.m-divider {
+    border-color: rgba(0,0,0,.05) !important;
+}
