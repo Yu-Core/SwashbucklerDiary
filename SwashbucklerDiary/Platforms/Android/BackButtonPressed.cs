@@ -1,4 +1,5 @@
-﻿using Android.Views;
+﻿using Android.OS;
+using Android.Views;
 using Android.Widget;
 using SwashbucklerDiary.IServices;
 using Application = Android.App.Application;
@@ -41,7 +42,19 @@ namespace SwashbucklerDiary.Platforms.Android
             {
                 BackPressCounter++;
                 Toast toast = Toast.MakeText(Application.Context, I18n.T("Press again to exit"), ToastLength.Long)!;
-                toast.AddCallback(new MyToastCallBack());
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.R)
+                {
+                    toast.AddCallback(new MyToastCallBack());
+                }
+                else
+                {
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(3500);
+                        BackPressCounter = 0;
+                    });
+                }
+
                 toast.Show();
             }
         }
