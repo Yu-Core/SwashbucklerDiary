@@ -1,7 +1,4 @@
-﻿using BlazorComponent;
-using BlazorComponent.I18n;
-using Masa.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extend;
@@ -164,6 +161,7 @@ namespace SwashbucklerDiary.Pages
         private async Task ShareText()
         {
             ShowShare = false;
+            StateHasChanged();
             await SystemService.ShareText(I18n.T("Share.Share")!, DiaryCopyContent);
             await HandleAchievements(AchievementType.Share);
         }
@@ -172,6 +170,7 @@ namespace SwashbucklerDiary.Pages
         {
             showLoading = true;
             ShowShare = false;
+            StateHasChanged();
             await Task.Delay(1000);
 
             var base64 = await module!.InvokeAsync<string>("getScreenshotBase64", new object[1] { "#screenshot" });
@@ -182,6 +181,7 @@ namespace SwashbucklerDiary.Pages
 
             await File.WriteAllBytesAsync(file, Convert.FromBase64String(base64));
             showLoading = false;
+            StateHasChanged();
 
             await SystemService.ShareFile(I18n.T("Share.Share")!, file);
             await HandleAchievements(AchievementType.Share);

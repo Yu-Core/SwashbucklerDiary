@@ -104,7 +104,8 @@
 </MMDialog>
 
 <MMDialog @bind-MyValue="ShowDownload"
-          MaxWidth="420">
+          MaxWidth="420"
+          Scrollable="true">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Backups.Download.Title"))
@@ -113,7 +114,7 @@
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
-        <MCardText>
+        <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
             @foreach (var item in FileList)
             {
                 <MListItem Class="px-0" OnClick="()=>Download(item)">
