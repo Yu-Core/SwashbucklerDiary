@@ -315,24 +315,58 @@
   "Experimental features": "Warn! Experimental features",
   "Please input a password": "Please input a password",
   "Please enter the password again": "Please enter the password again",
+  "Please input Password": "Please input password",
+  "Please input Account": "Please input account",
+  "Please input ServerAddress": "Please input server address",
   "Backups": {
     "Local": "Local backups",
     "WebDAV": "WebDAV",
-    "Backups": "Backups",
-    "Restore": "Restore",
-    "BackupsSubtitle": "Save as a database file in db3 type",
-    "RestoreSubtitle": "Select a database file in db3 type",
-    "SelectFolder": "Please select your backup folder and save it",
-    "LocalPointer": "The data will be saved to the folder ",
-    "BackupsSuccess": "Backups success",
-    "Invalid backup folder": "Invalid backup folder",
-    "RestoreSuccess": "Restore success",
-    "RestoreFail": "Restore fail",
-    "ConfirmRestore": {
-      "Title": "Confirm restore",
-      "Content": "The database file will be overwritten. Do you want to continue?"
+    "Backups": {
+      "Title": "Backups",
+      "Subtitle": "Save as a .db3 database file",
+      "Success": "Backups success",
+      "Fail": "Backups fail",
+      "SelectFolder": "Please select your backup folder and save it",
+      "Content": "The data will be saved to a folder"
     },
-    "No diary": "暂无日记"
+    "Restore": {
+      "Title": "Restore",
+      "Subtitle": "Select a .db3 database file",
+      "Success": "Restore success",
+      "Fail": "Restore fail",
+      "ConfirmRestore": {
+        "Title": "Confirm restore",
+        "Content": "The database file will be overwritten. Do you want to continue?"
+      }
+    },
+    "Invalid backup folder": "Invalid backup folder",
+    "No diary": "No diary",
+    "Config": {
+      "Title": "Config",
+      "ServerAddress": "Server address",
+      "Account": "Account",
+      "Password": "Password",
+      "Success": "Config success",
+      "Fail": {
+        "ConfigInfo": "Check the config",
+        "NoNetwork": "Check the network",
+        "Unknown": "Unknown reason"
+      },
+      "Configured": "Configured",
+      "NotConfigured": "Not Configured",
+      "CheckConfigured": "Please configure WebDAV first"
+    },
+    "Upload": {
+      "Title": "Upload",
+      "Subtitle": "Save as a .db3 database file",
+      "Success": "Upload successful",
+      "Fail": "Upload failed",
+      "Content": "The data will be saved to the network disk folder"
+    },
+    "Download": {
+      "Title": "Download",
+      "Subtitle": "Select a .db3 database file"
+    }
   },
   "Location": {
     "Add": "Add location",

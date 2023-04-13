@@ -1,0 +1,58 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits DialogFocusComponentBase
+
+<MMDialog MyValue="Value"
+          MyValueChanged="ValueChanged"
+          @ref="myDialog"
+          MaxWidth="420">
+    <MForm @ref="@MForm"
+           Model="@configModel"
+           OnValidSubmit="HandleOnOK"
+           EnableValidation="true"
+           EnableI18n="true">
+        <MCard Rounded="@("lg")">
+            <MCardTitle Class="font-weight-bold">
+                @(I18n.T("Backups.Config.Title"))
+                <MSpacer></MSpacer>
+                <MButton Icon="true" OnClick="HandleOnCancel">
+                    <MIcon>mdi-close</MIcon>
+                </MButton>
+            </MCardTitle>
+            <MCardText Class="pb-0">
+                <MTextField @bind-Value="configModel.ServerAddress"
+                            @ref="TextField"
+                            Dense="true"
+                            Outlined="true"
+                            spellcheck="false"
+                            Label="@(I18n.T("Backups.Config.ServerAddress"))">
+                </MTextField>
+                <MTextField @bind-Value="configModel.Account"
+                            Dense="true"
+                            Outlined="true"
+                            spellcheck="false"
+                            Label="@(I18n.T("Backups.Config.Account"))">
+                </MTextField>
+                <MTextField @bind-Value="configModel.Password"
+                            Dense="true"
+                            Outlined="true"
+                            spellcheck="false"
+                            Label="@(I18n.T("Backups.Config.Password"))"
+                            AppendIcon="@(showPassword ? "mdi-eye" : "mdi-eye-off")"
+                            Type="@(showPassword ? "text" : "password")"
+                            OnAppendClick="() => showPassword = !showPassword">
+                </MTextField>
+            </MCardText>
+            <MCardActions>
+                <MSpacer></MSpacer>
+                <MButton Text="true" OnClick="HandleOnCancel">
+                    @(I18n.T("Share.Cancel"))
+                </MButton>
+                <MButton Text="true"
+                         Type="submit"
+                         Color="primary">
+                    @(I18n.T("Share.OK"))
+                </MButton>
+            </MCardActions>
+        </MCard>
+    </MForm>
+</MMDialog>

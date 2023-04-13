@@ -316,24 +316,60 @@
   "Experimental features": "警告！该功能处于实验中",
   "Please input a password": "请输入密码",
   "Please enter the password again": "请再次输入密码",
+  "Please input Password": "请输入密码",
+  "Please input Account": "请输入账户",
+  "Please input ServerAddress": "请输入服务器地址",
   "Backups": {
     "Local": "本地备份",
     "WebDAV": "WebDAV",
-    "Backups": "备份",
-    "Restore": "还原",
-    "BackupsSubtitle": "保存为db3格式的数据库文件",
-    "RestoreSubtitle": "选择db3格式的数据库文件",
-    "SelectFolder": "请选择你的备份文件夹,并保存",
-    "LocalPointer": "数据会被保存到文件夹",
-    "BackupsSuccess": "备份成功",
-    "Invalid backup folder": "无效的备份文件夹",
-    "RestoreSuccess": "还原成功",
-    "RestoreFail": "还原失败",
-    "ConfirmRestore": {
-      "Title": "确认还原",
-      "Content": "数据库文件会被覆盖，是否继续？"
+    "Backups": {
+      "Title": "备份",
+      "Subtitle": "保存为db3格式的数据库文件",
+      "Success": "备份成功",
+      "Fail": "备份失败",
+      "SelectFolder": "请选择你的备份文件夹,并保存",
+      "Content": "数据会被保存到文件夹"
     },
-    "No diary": "暂无日记"
+    "Restore": {
+      "Title": "还原",
+      "Subtitle": "选择db3格式的数据库文件",
+      "Success": "还原成功",
+      "Fail": "还原失败",
+      "ConfirmRestore": {
+        "Title": "确认还原",
+        "Content": "数据库文件会被覆盖，是否继续？"
+      }
+    },
+    "Invalid backup folder": "无效的备份文件夹",
+    "No diary": "暂无日记",
+    "Config": {
+      "Title": "配置",
+      "ServerAddress": "服务器地址",
+      "Account": "账户",
+      "Password": "密码",
+      "Success": "配置成功",
+      "Fail": {
+        "ConfigInfo": "配置失败,请检查配置信息",
+        "NoNetwork": "请检查网络",
+        "Unknown": "配置失败,未知原因"
+      },
+      "Configured": "已配置",
+      "NotConfigured": "未配置",
+      "CheckConfigured": "请先配置WebDAV"
+    },
+    "Upload": {
+      "Title": "上传",
+      "Subtitle": "保存为db3格式的数据库文件",
+      "Success": "上传成功",
+      "Fail": "上传失败",
+      "Content": "数据会被保存到网盘文件夹"
+    },
+    "Download": {
+      "Title": "拉取",
+      "Subtitle": "选择db3格式的数据库文件",
+      "Success": "拉取成功",
+      "Fail": "拉取失败"
+    }
   },
   "Location": {
     "Add": "添加位置",

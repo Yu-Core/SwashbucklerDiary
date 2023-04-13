@@ -13,6 +13,9 @@
         BackupsPath,
         ThemeState,
         FirstSetLanguage,
-        FirstAgree
+        FirstAgree,
+        WebDAVServerAddress,
+        WebDAVAccount,
+        WebDAVPassword
     }
 }

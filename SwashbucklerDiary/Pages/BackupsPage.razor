@@ -1,7 +1,7 @@
 ﻿@page "/backups"
 @inherits PageComponentBase
 
-<MAppBar App
+<MAppBar App="true"
          Elevation="0">
     <MButton Icon OnClick="NavigateToBack">
         <MIcon>
@@ -10,7 +10,7 @@
     </MButton>
     <MTabs @bind-Value="tabs"
            ActiveClass="text-h6 font-weight-bold"
-           HideSlider>
+           HideSlider="true">
         <MTab Class="m-tab-swiper"
               Ripple="false">
             @(I18n.T("Backups.Local"))
@@ -25,104 +25,11 @@
 
 <SwiperTabItems @bind-Value="tabs">
     <SwiperTabItem>
-        <MCard Elevation="2"
-               Rounded="@("lg")">
-            <MList TwoLine>
-                <MListItem OnClick="()=>ShowBackups=true">
-                    <MListItemAvatar>
-                        <MIcon Class="list-item-icon" Size="28">
-                            mdi-folder-arrow-down-outline
-                        </MIcon>
-                    </MListItemAvatar>
-                    <MListItemContent>
-                        <MListItemTitle>
-                            @(I18n.T("Backups.Backups"))
-                        </MListItemTitle>
-                        <MListItemSubtitle>
-                            @(I18n.T("Backups.BackupsSubtitle"))
-                        </MListItemSubtitle>
-                    </MListItemContent>
-                    <MListItemAction>
-                        <MIcon>mdi-chevron-right</MIcon>
-                    </MListItemAction>
-                </MListItem>
-
-                <MDivider Class="mx-3 mx-sm-0"></MDivider>
-
-                <MListItem OnClick="Restore">
-                    <MListItemAvatar>
-                        <MIcon Class="list-item-icon" Size="28">
-                            mdi-folder-arrow-up-outline
-                        </MIcon>
-                    </MListItemAvatar>
-                    <MListItemContent>
-                        <MListItemTitle>
-                            @(I18n.T("Backups.Restore"))
-                        </MListItemTitle>
-                        <MListItemSubtitle>
-                            @(I18n.T("Backups.RestoreSubtitle"))
-                        </MListItemSubtitle>
-                    </MListItemContent>
-                    <MListItemAction>
-                        <MIcon>mdi-chevron-right</MIcon>
-                    </MListItemAction>
-                </MListItem>
-            </MList>
-        </MCard>
+        <BackupsLocal></BackupsLocal>
     </SwiperTabItem>
     <SwiperTabItem>
-
+        <BackupsWebDAV></BackupsWebDAV>
     </SwiperTabItem>
 </SwiperTabItems>
 
-<MMDialog @bind-MyValue="ShowBackups" MaxWidth="420">
-    <MCard Rounded="@("lg")">
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Backups.Local"))
-            <MSpacer></MSpacer>
-            <MButton Icon OnClick="@(()=>ShowBackups=false)">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-            </MCardTitle>
-            <MCardText Class="pb-0">
-            @GetLocalPointer()
-            </MCardText>
-            <MCardActions>
-            <MSpacer></MSpacer>
-            <MButton Text OnClick="()=>ShowBackups=false">
-                @(I18n.T("Share.Cancel"))
-            </MButton>
-            <MButton Text
-                     Color="primary"
-                     OnClick="Backups">
-                @(I18n.T("Share.OK"))
-            </MButton>
-        </MCardActions>
-    </MCard>
-</MMDialog>
 
-<MMDialog @bind-MyValue="ShowRestore" MaxWidth="420">
-    <MCard Rounded="@("lg")">
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Backups.ConfirmRestore.Title"))
-            <MSpacer></MSpacer>
-            <MButton Icon OnClick="@(()=>ShowRestore=false)">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText Class="pb-0">
-            @(I18n.T("Backups.ConfirmRestore.Content"))
-        </MCardText>
-        <MCardActions>
-            <MSpacer></MSpacer>
-            <MButton Text OnClick="()=>ShowRestore=false">
-                @(I18n.T("Share.Cancel"))
-            </MButton>
-            <MButton Text
-                     Color="primary"
-                     OnClick="ConfirmRestore">
-                @(I18n.T("Share.OK"))
-            </MButton>
-        </MCardActions>
-    </MCard>
-</MMDialog>

@@ -1,0 +1,99 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits BackupsPageComponentBase
+
+<MCard Elevation="2"
+       Rounded="@("lg")">
+    <MList>
+        <MListItem OnClick="()=>ShowBackups=true">
+            <MListItemIcon>
+                <MIcon Class="list-item-icon">
+                    mdi-folder-arrow-down-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <MListItemTitle>
+                    @(I18n.T("Backups.Backups.Title"))
+                </MListItemTitle>
+                <MListItemSubtitle>
+                    @(I18n.T("Backups.Backups.Subtitle"))
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>mdi-chevron-right</MIcon>
+            </MListItemAction>
+        </MListItem>
+
+        <MDivider Class="mx-3 mx-sm-0"></MDivider>
+
+        <MListItem OnClick="Restore">
+            <MListItemIcon>
+                <MIcon Class="list-item-icon">
+                    mdi-folder-arrow-up-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <MListItemTitle>
+                    @(I18n.T("Backups.Restore.Title"))
+                </MListItemTitle>
+                <MListItemSubtitle>
+                    @(I18n.T("Backups.Restore.Subtitle"))
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>mdi-chevron-right</MIcon>
+            </MListItemAction>
+        </MListItem>
+    </MList>
+</MCard>
+
+<MMDialog @bind-MyValue="ShowBackups" MaxWidth="420">
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Backups.Backups.Title"))
+            <MSpacer></MSpacer>
+            <MButton Icon="true" OnClick="@(()=>ShowBackups=false)">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            @GetLocalBackupsDescription()
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text="true" OnClick="()=>ShowBackups=false">
+                @(I18n.T("Share.Cancel"))
+            </MButton>
+            <MButton Text="true"
+                     Color="primary"
+                     OnClick="Backups">
+                @(I18n.T("Share.OK"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MMDialog>
+
+<MMDialog @bind-MyValue="ShowRestore" MaxWidth="420">
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Backups.Restore.ConfirmRestore.Title"))
+            <MSpacer></MSpacer>
+            <MButton Icon="true" OnClick="@(()=>ShowRestore=false)">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            @(I18n.T("Backups.Restore.ConfirmRestore.Content"))
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text OnClick="()=>ShowRestore=false">
+                @(I18n.T("Share.Cancel"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="ConfirmRestore">
+                @(I18n.T("Share.OK"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MMDialog>

@@ -11,15 +11,18 @@ namespace SwashbucklerDiary.Services
             {SettingType.Language,"zh-CN" },
             {SettingType.Title,false },
             {SettingType.Markdown,true },
-            {SettingType.UserName,"" },
-            {SettingType.Sign,"" },
+            {SettingType.UserName,string.Empty },
+            {SettingType.Sign,string.Empty },
             {SettingType.Avatar,"./logo/logo.jpg" },
             {SettingType.Privacy,true },
-            {SettingType.PrivatePassword,"" },
-            {SettingType.BackupsPath,"" },
+            {SettingType.PrivatePassword,string.Empty },
+            {SettingType.BackupsPath,string.Empty },
             {SettingType.ThemeState,(int)ThemeState.Light },
             {SettingType.FirstSetLanguage,false },
             {SettingType.FirstAgree,false },
+            {SettingType.WebDAVServerAddress,string.Empty },
+            {SettingType.WebDAVAccount,string.Empty },
+            {SettingType.WebDAVPassword,string.Empty },
         };
         private Dictionary<SettingType, object> DefalutSettings = new();
 

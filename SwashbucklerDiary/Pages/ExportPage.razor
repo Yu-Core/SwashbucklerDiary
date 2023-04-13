@@ -8,13 +8,13 @@
 <ScrollContainer>
     <MCard Elevation="2"
            Rounded="@("lg")">
-        <MList TwoLine>
+        <MList>
             <MListItem OnClick="Export">
-                <MListItemAvatar>
-                    <MIcon Class="list-item-icon" Size="28">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
                         mdi-export
                     </MIcon>
-                </MListItemAvatar>
+                </MListItemIcon>
                 <MListItemContent>
                     <MListItemTitle>
                         @(I18n.T("Export.Export"))
@@ -31,11 +31,11 @@
             <MDivider Class="mx-3 mx-sm-0"></MDivider>
 
             <MListItem OnClick="Import">
-                <MListItemAvatar>
-                    <MIcon Class="list-item-icon" Size="28">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
                         mdi-import
                     </MIcon>
-                </MListItemAvatar>
+                </MListItemIcon>
                 <MListItemContent>
                     <MListItemTitle>
                         @(I18n.T("Export.Import"))
