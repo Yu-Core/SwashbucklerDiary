@@ -115,8 +115,9 @@ namespace SwashbucklerDiary.Shared
             await InvokeAsync(StateHasChanged);
         }
 
-        protected void To(string url)
+        protected async void To(string url)
         {
+            await NavigateService.NavBtnClick();
             Navigation.NavigateTo(url);
         }
 

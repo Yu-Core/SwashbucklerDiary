@@ -15,11 +15,11 @@ namespace SwashbucklerDiary
             SettingsService = settingsService;
         }
 
-        protected override void OnResume()
-        {
-            base.OnResume();
-            SystemService.OnResume();
-        }
+        //protected override void OnResume()
+        //{
+        //    base.OnResume();
+        //    SystemService.OnResume();
+        //}
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
@@ -31,7 +31,8 @@ namespace SwashbucklerDiary
                 SettingsService.InitDefault<bool>(Models.SettingType.FirstAgree);
                 SettingsService.InitDefault<int>(Models.SettingType.ThemeState);
             };
-
+            window.Resumed += (s, e) => SystemService.OnResume();
+            window.Stopped += (s, e) => SystemService.OnStop();
             return window;
         }
     }

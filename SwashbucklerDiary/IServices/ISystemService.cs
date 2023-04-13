@@ -5,7 +5,9 @@ namespace SwashbucklerDiary.IServices
     public interface ISystemService
     {
         event Action Resumed;
+        event Action Stopped;
         void OnResume();
+        void OnStop();
         Task SetClipboard(string text);
         Task ShareText(string title, string text);
         Task ShareFile(string title, string path);

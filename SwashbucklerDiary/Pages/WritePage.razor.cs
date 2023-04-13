@@ -8,7 +8,7 @@ using SwashbucklerDiary.Services;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class WritePage : PageComponentBase, IAsyncDisposable
+    public partial class WritePage : PageComponentBase, IDisposable
     {
         private bool ShowTitle;
         private bool ShowMenu;
@@ -17,7 +17,6 @@ namespace SwashbucklerDiary.Pages
         private bool ShowMood;
         private bool ShowLocation;
         private bool Markdown = true;
-        private bool IsSaved;
         private List<ListItemModel> ListItemModels = new();
         private DiaryModel Diary = new()
         {
@@ -42,14 +41,12 @@ namespace SwashbucklerDiary.Pages
         [SupplyParameterFromQuery]
         public Guid? DiaryId { get; set; }
 
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
             MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
             NavigateService.Action -= NavigateToBack;
-            if(!IsSaved)
-            {
-                await SaveDiary();
-            }
+            NavigateService.NavBtnAction -= SaveDiaryAsync;
+            SystemService.Stopped -= SaveDiary;
             GC.SuppressFinalize(this);
         }
 
@@ -57,6 +54,8 @@ namespace SwashbucklerDiary.Pages
         {
             MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             NavigateService.Action += NavigateToBack;
+            NavigateService.NavBtnAction += SaveDiaryAsync;
+            SystemService.Stopped += SaveDiary;
             LoadView();
             await LoadSettings();
             await UpdateTags();
@@ -66,13 +65,12 @@ namespace SwashbucklerDiary.Pages
 
         protected override async void NavigateToBack()
         {
-            if (string.IsNullOrWhiteSpace(Diary.Content))
+            if (!string.IsNullOrWhiteSpace(Diary.Content))
             {
-                base.NavigateToBack();
-                return;
+                await SaveDiaryAsync();
             }
 
-            await SaveDiaryAndToBack();
+            base.NavigateToBack();
         }
 
         private List<TagModel> SelectedTags
@@ -103,13 +101,13 @@ namespace SwashbucklerDiary.Pages
             string.IsNullOrEmpty(Diary.Weather) ? I18n.T("Write.Weather")! : I18n.T("Weather." + Diary.Weather)!;
         private string MoodText =>
             string.IsNullOrEmpty(Diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + Diary.Mood)!;
-        
+
         private string ShowTitleText() => ShowTitle ? "Write.CloseTitle" : "Write.OpenTitle";
 
         private string MarkdownText() => Markdown ? "Diary.Text" : "Diary.Markdown";
 
         private string MarkdownIcon() => Markdown ? "mdi-format-text" : "mdi-language-markdown-outline";
-        
+
         private async Task SetTag()
         {
             if (TagId != null)
@@ -147,7 +145,7 @@ namespace SwashbucklerDiary.Pages
 
         private void LoadView()
         {
-             ListItemModels = new()
+            ListItemModels = new()
             {
                 new(ShowTitleText,"mdi-format-title",ShowTitleChanged),
                 new(MarkdownText,MarkdownIcon,MarkdownChanged)
@@ -173,9 +171,13 @@ namespace SwashbucklerDiary.Pages
             ShowSelectTag = false;
         }
 
-        private Task OnSave()
+        private void OnSave()
         {
-            return SaveDiaryAndToBack();
+            if (string.IsNullOrWhiteSpace(Diary.Content))
+            {
+                return;
+            }
+            NavigateToBack();
         }
 
         private void OnClear()
@@ -184,14 +186,20 @@ namespace SwashbucklerDiary.Pages
             this.StateHasChanged();
         }
 
-        private async Task SaveDiary()
+        private async void SaveDiary()
+        {
+            await SaveDiaryAsync();
+        }
+
+        private async Task SaveDiaryAsync()
         {
             if (string.IsNullOrWhiteSpace(Diary.Content))
             {
                 return;
             }
 
-            if (DiaryId == null)
+            bool exist = await DiaryService.AnyAsync(it => it.Id == Diary.Id);
+            if (!exist)
             {
                 bool flag = await DiaryService.AddAsync(Diary);
                 if (flag)
@@ -216,14 +224,6 @@ namespace SwashbucklerDiary.Pages
                     await AlertService.Error(I18n.T("Share.EditFail"));
                 }
             }
-
-            IsSaved = true;
-        }
-
-        private async Task SaveDiaryAndToBack()
-        {
-            await SaveDiary();
-            base.NavigateToBack();
         }
 
         private async Task InvokeStateHasChangedAsync()

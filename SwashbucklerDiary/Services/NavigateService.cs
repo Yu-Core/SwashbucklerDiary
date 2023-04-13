@@ -8,6 +8,7 @@ namespace SwashbucklerDiary.Services
         public NavigationManager Navigation { get; set; } = default!;
         public event Func<string>? CurrentUrl;
         public event Action? Action;
+        public event Func<Task>? NavBtnAction;
 
         public void Initialize(NavigationManager navigation)
         {
@@ -61,6 +62,15 @@ namespace SwashbucklerDiary.Services
             }
 
             return false;
+        }
+
+        public Task NavBtnClick()
+        {
+            if(NavBtnAction != null)
+            {
+                return NavBtnAction.Invoke();
+            }
+            return Task.CompletedTask;
         }
     }
 }

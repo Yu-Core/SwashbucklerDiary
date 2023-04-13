@@ -21,5 +21,6 @@ namespace SwashbucklerDiary.IServices
         Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func);
         Task<int> CountAsync();
         Task<int> CountAsync(Expression<Func<TEntity, bool>> func);
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> func);
     }
 }

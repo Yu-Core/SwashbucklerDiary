@@ -9,6 +9,7 @@ namespace SwashbucklerDiary.IServices
         /// 存储想要返回时触发的方法
         /// </summary>
         event Action Action;
+        event Func<Task> NavBtnAction;
         NavigationManager Navigation { get;protected set; }
         /// <summary>
         /// 存储URL历史记录
@@ -33,5 +34,6 @@ namespace SwashbucklerDiary.IServices
         /// </summary>
         /// <returns>true已处理事件，false为无事件可处理(便于做进一步处理，例如退出应用)</returns>
         bool OnBackButtonPressed();
+        Task NavBtnClick();
     }
 }

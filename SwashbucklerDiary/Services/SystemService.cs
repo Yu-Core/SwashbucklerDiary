@@ -8,9 +8,14 @@ namespace SwashbucklerDiary.Services
     public class SystemService : ISystemService
     {
         public event Action? Resumed;
+        public event Action? Stopped;
         public void OnResume()
         {
             Resumed?.Invoke();
+        }
+        public void OnStop()
+        {
+            Stopped?.Invoke();
         }
         public async Task<string?> CapturePhotoAsync()
         {
