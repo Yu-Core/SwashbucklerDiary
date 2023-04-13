@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Config;
+﻿using SwashbucklerDiary.Config;
 using SwashbucklerDiary.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
@@ -113,20 +112,27 @@ namespace SwashbucklerDiary.Components
             }
         }
 
-        private async Task Upload()
+        private async Task OpenUploadDialog()
         {
-            ShowUpload = false;
             if (!Configured)
             {
-                await AlertService.Error(I18n.T("Backups.CheckConfigured"));
+                await AlertService.Error(I18n.T("Backups.Config.CheckConfigured"));
                 return;
             }
+
             var flag = await CheckPermission();
             if (!flag)
             {
                 return;
             }
 
+            ShowUpload = true;
+        }
+
+        private async Task Upload()
+        {
+            ShowUpload = false;
+            
             var sourceFile = SQLiteConstants.DatabasePath;
             if (!File.Exists(sourceFile))
             {
@@ -143,15 +149,15 @@ namespace SwashbucklerDiary.Components
             using var stream = File.OpenRead(sourceFile);
             var destFileName = WebDavFolderName + "/" + SaveFileName();
 
-            await WebDavClient!.PutFile(destFileName, stream);
+            await WebDavClient.PutFile(destFileName, stream);
             await AlertService.Success(I18n.T("Backups.Upload.Success"));
         }
 
-        private async Task Download()
+        private async Task OpenDownloadDialog()
         {
             if (!Configured)
             {
-                await AlertService.Error(I18n.T("Backups.CheckConfigured"));
+                await AlertService.Error(I18n.T("Backups.Config.CheckConfigured"));
                 return;
             }
 
@@ -170,7 +176,7 @@ namespace SwashbucklerDiary.Components
             ShowDownload = true;
         }
 
-        private async Task HandleOnDownload(string fileName)
+        private async Task Download(string fileName)
         {
             ShowDownload = false;
 

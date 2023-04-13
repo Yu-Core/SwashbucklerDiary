@@ -30,7 +30,7 @@
 
         <MDivider Class="mx-3 mx-sm-0"></MDivider>
 
-        <MListItem OnClick="()=>ShowUpload=true">
+        <MListItem OnClick="OpenUploadDialog">
             <MListItemIcon>
                 <MIcon Class="list-item-icon">
                     mdi-cloud-arrow-up-outline
@@ -51,7 +51,7 @@
 
         <MDivider Class="mx-3 mx-sm-0"></MDivider>
 
-        <MListItem OnClick="Download">
+        <MListItem OnClick="OpenDownloadDialog">
             <MListItemIcon>
                 <MIcon Class="list-item-icon">
                     mdi-cloud-arrow-down-outline
@@ -80,7 +80,7 @@
 <MMDialog @bind-MyValue="ShowUpload" MaxWidth="420">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Backups.Upload"))
+            @(I18n.T("Backups.Upload.Title"))
             <MSpacer></MSpacer>
             <MButton Icon="true" OnClick="@(()=>ShowUpload=false)">
                 <MIcon>mdi-close</MIcon>
@@ -116,7 +116,7 @@
         <MCardText>
             @foreach (var item in FileList)
             {
-                <MListItem Class="px-0" OnClick="()=>HandleOnDownload(item)">
+                <MListItem Class="px-0" OnClick="()=>Download(item)">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             mdi-file-outline
