@@ -4,7 +4,7 @@
 
 「 侠客日记 」是一个开源、跨平台的本地日记APP。半生风雨，半生行途，一个人的江湖，总要留下点什么才精彩。
 
-坚持极简风格，支持页面自适应(即多种设备尺寸)，支持Markdown，无需联网，所有数据都存储在本地。
+极简风格，支持页面自适应(即多种设备尺寸)，支持多语言，支持Markdown，支持WebDav备份，无需联网，所有数据都存储在本地。
 
 ## 截图
 
@@ -78,4 +78,5 @@
 - [SQLite-net](https://github.com/praeclarum/sqlite-net)
 - [SqlSugar](https://github.com/DotNetNext/SqlSugar)
 - [Swiper](https://github.com/nolimits4web/swiper)
+- [WebDavClient](https://github.com/skazantsev/WebDavClient)
 - [Vditor](https://github.com/Vanessa219/vditor)

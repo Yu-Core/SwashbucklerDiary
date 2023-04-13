@@ -17,6 +17,7 @@ namespace SwashbucklerDiary.Pages
             new OSP("SQLite-net","MIT license","https://github.com/praeclarum/sqlite-net/blob/master/LICENSE.txt"),
             new OSP("SqlSugar","Apache-2.0 license","https://github.com/DotNetNext/SqlSugar/blob/master/LICENSE"),
             new OSP("Swiper","MIT license","https://github.com/nolimits4web/swiper/blob/master/LICENSE"),
+            new OSP("WebDavClient","MIT license","https://github.com/skazantsev/WebDavClient/blob/main/LICENSE.txt"),
             new OSP("Vditor","MIT license","https://github.com/Vanessa219/vditor/blob/master/LICENSE"),
         };
         private class OSP

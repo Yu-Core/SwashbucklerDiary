@@ -4,7 +4,7 @@ English | [简体中文](./README.zh-CN.md)
 
 "Swashbuckler Diary" is an open source, cross platform local diary application. Half a lifetime of wind and rain, half a lifetime of travel, one's Jianghu, always needs to leave something to be wonderful.
 
-Adhere to minimalism style, support page adaptation(Refers to multiple device sizes), support Markdown, no need for networking, and all data is stored locally.
+Minimalism style, support page adaptation(Refers to multiple device sizes), support more languages, support Markdown, support WebDav backup, no need for networking, and all data is stored locally.
 
 ## Screenshot
 
@@ -78,4 +78,5 @@ Adhere to minimalism style, support page adaptation(Refers to multiple device si
 - [SQLite-net](https://github.com/praeclarum/sqlite-net)
 - [SqlSugar](https://github.com/DotNetNext/SqlSugar)
 - [Swiper](https://github.com/nolimits4web/swiper)
+- [WebDavClient](https://github.com/skazantsev/WebDavClient)
 - [Vditor](https://github.com/Vanessa219/vditor)
