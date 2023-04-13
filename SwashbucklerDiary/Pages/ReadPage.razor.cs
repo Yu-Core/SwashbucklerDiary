@@ -21,8 +21,8 @@ namespace SwashbucklerDiary.Pages
         private bool showLoading;
         private IJSObjectReference? module;
         private bool Markdown;
-        private List<ViewListItem> ViewListItems = new();
-        private List<ViewListItem> ShareItems = new();
+        private List<ListItemModel> ListItemModels = new();
+        private List<ListItemModel> ShareItems = new();
         private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
@@ -92,7 +92,7 @@ namespace SwashbucklerDiary.Pages
 
         async Task LoadView()
         {
-            ViewListItems = new List<ViewListItem>()
+            ListItemModels = new List<ListItemModel>()
             {
                 new("Share.Copy","mdi-content-copy",OnCopy),
                 new(TopText,"mdi-format-vertical-align-top",OnTopping),
@@ -102,7 +102,7 @@ namespace SwashbucklerDiary.Pages
             bool privacy = await SettingsService.Get(SettingType.Privacy);
             if (privacy)
             {
-                ViewListItems.Add(new(PrivateText, PrivateIcon, DiaryPrivacyChanged));
+                ListItemModels.Add(new(PrivateText, PrivateIcon, DiaryPrivacyChanged));
             }
 
             ShareItems = new()

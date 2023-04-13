@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Components
     public partial class ExportDialog : DialogComponentBase
     {
         private const string fileName = "SwashbucklerDiaryExport";
-        private List<ViewListItem> ViewListItems = new();
+        private List<ListItemModel> ListItemModels = new();
 
         [Inject]
         protected ISystemService SystemService { get; set; } = default!;
@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Components
 
         private void LoadView()
         {
-            ViewListItems = new()
+            ListItemModels = new()
             {
                 new("TXT","mdi-format-text",CreateTxtFile),
                 new("JSON","mdi-code-braces",CreateJsonFile),

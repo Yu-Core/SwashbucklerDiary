@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Pages
             new CodeSource("Github",githubUrl,"mdi-github"),
             new CodeSource("Gitee",giteeUrl,mdi_gitee)
         };
-        private List<List<ViewListItem>> ViewLists = new ();
+        private List<List<ListItemModel>> ViewLists = new ();
 
         protected override void OnInitialized()
         {

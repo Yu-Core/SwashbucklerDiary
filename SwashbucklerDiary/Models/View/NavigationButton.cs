@@ -1,6 +1,6 @@
 ﻿namespace SwashbucklerDiary.Models
 {
-    public class NavigationButton : ViewListItem
+    public class NavigationButton : ListItemModel
     {
         public string? SelectedIcon { get; set; }
 

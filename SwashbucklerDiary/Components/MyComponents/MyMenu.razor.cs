@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public RenderFragment? ButtonContent { get; set; }
         [Parameter]
-        public List<ViewListItem> ViewListItems { get; set; } = new();
+        public List<ListItemModel> ListItemModels { get; set; } = new();
 
         private async Task OnClick(MulticastDelegate @delegate)
         {

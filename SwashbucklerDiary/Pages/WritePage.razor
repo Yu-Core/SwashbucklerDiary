@@ -19,7 +19,7 @@
             </MIcon>
         </MButton>
 
-        <MyMenu @bind-Value="ShowMenu" ViewListItems="ViewListItems">
+        <MyMenu @bind-Value="ShowMenu" ListItemModels="ListItemModels">
             <ButtonContent>
                 <MultiDisplay>
                     <DesktopContent>
@@ -97,7 +97,7 @@
         {
             <MyMarkdown @bind-Value="Diary.Content"
                     WrapClass="write-markdown-wrap"
-                    Class="my-sm-4 px-3 write-markdown">
+                    Class="my-sm-4 px-3 rounded-lg write-markdown">
             </MyMarkdown>
         }
         else
@@ -128,10 +128,10 @@
         </div>
     </div>
 
-    <div class="@(Markdown?"vditor-toolbar-help":"")">
+    <div class="d-hover-none @(Markdown?"vditor-toolbar-help":"")">
     </div>
 
-    <div class="d-none d-sm-block">
+    <div class="d-no-hover-none hidden-xs-only">
         <MButton Class="px-8 mr-2 btn-chip text-subtitle-1"
                  Rounded="true"
                  Width="120"

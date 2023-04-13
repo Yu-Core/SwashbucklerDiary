@@ -10,12 +10,12 @@
                    MiniVariant="MiniVariant"
                    MiniVariantChanged="MiniVariantChanged"
                    Style="max-height:unset;transition: width ease 0.3s;">
-        <MList Shaped Flat>
-        <MListItemGroup Value="Value"
+        <MList Shaped="true" Flat="true">
+            <MListItemGroup Value="Value"
                         ValueChanged="ValueChanged"
                         Mandatory="true"
                         ActiveClass="@(MiniVariant?"":"navigation-active")">
-            @foreach (var (item, i) in Items.Select((v, i) => (v, i)))
+                @foreach (var (item, i) in Items.Select((v, i) => (v, i)))
                 {
                     var activated = Value == i;
 

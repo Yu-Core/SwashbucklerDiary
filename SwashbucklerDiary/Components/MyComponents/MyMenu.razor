@@ -6,17 +6,17 @@
         <MMBottomSheet MyValue="Value"
                        MyValueChanged="ValueChanged">
             <ActivatorContent>
-                <MButton Icon
+                <MButton Icon="true"
                          @attributes="@context.Attrs">
                     @ButtonContent
                 </MButton>
             </ActivatorContent>
             <ChildContent>
                 <MList Class="rounded-t-lg py-4">
-                    @foreach (var item in ViewListItems)
+                    @foreach (var item in ListItemModels)
                     {
                         <MListItem OnClick="()=>OnClick(item.Delegate)">
-                            <MListItemIcon >
+                            <MListItemIcon>
                                 <MIcon>
                                     @(item.Icon)
                                 </MIcon>
@@ -25,20 +25,23 @@
                                 @(I18n.T(item.Text))
                             </MListItemContent>
                         </MListItem>
-                        if (ViewListItems.Last() != item)
+                        if (ListItemModels.Last() != item)
                         {
                             <MDivider></MDivider>
                         }
                     }
                     <MListItem>
-                        <MButton Rounded Block Depressed Large
+                        <MButton Rounded="true"
+                                 Block="true"
+                                 Depressed="true"
+                                 Large="true"
+                                 Ripple="false"
                                  Class="text-subtitle-1"
                                  OnClick="HandleOnCancel">
                             @(I18n.T("Share.Cancel"))
                         </MButton>
                     </MListItem>
                 </MList>
-                
             </ChildContent>
         </MMBottomSheet>
     </MobileContent>
@@ -57,11 +60,11 @@
             </ActivatorContent>
             <ChildContent>
                 <MList MinWidth="150">
-                    @foreach (var item in ViewListItems)
+                    @foreach (var item in ListItemModels)
                     {
                         <MListItem Dense OnClick="()=>OnClick(item.Delegate)">
-                            <MListItemContent>
-                                @(I18n.T(item.Text))
+                        <MListItemContent>
+                            @(I18n.T(item.Text))
                             </MListItemContent>
                         </MListItem>
                     }

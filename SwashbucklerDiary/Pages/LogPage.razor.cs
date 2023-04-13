@@ -17,8 +17,8 @@ namespace SwashbucklerDiary.Pages
         private List<LogModel> AllLogs = new();
         private List<LogModel> Logs = new();
         private string? Search;
-        private List<ViewListItem> ViewListItems = new();
-        private List<ViewListItem> ShareItems = new();
+        private List<ListItemModel> ListItemModels = new();
+        private List<ListItemModel> ShareItems = new();
 
         [Inject]
         private ILogService LogService { get; set; } = default!;
@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Pages
 
         private void LoadView()
         {
-            ViewListItems = new List<ViewListItem>()
+            ListItemModels = new List<ListItemModel>()
             {
                 new("Log.Clear","mdi-delete-outline",OpenDeleteDialog),
                 new("Share.Share","mdi-share-variant-outline",OpenShareDialog),

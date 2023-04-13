@@ -1,6 +1,6 @@
 ﻿namespace SwashbucklerDiary.Models
 {
-    public class ViewListItem
+    public class ListItemModel
     {
         private string? _text;
         private string? _icon;
@@ -33,42 +33,42 @@
         public Func<string>? TextFunc { get; set; }
         public Func<string>? IconFunc { get; set; }
 
-        public ViewListItem(string text, string icon, Action action)
+        public ListItemModel(string text, string icon, Action action)
         {
             _text = text;
             _icon = icon;
             Delegate = action;
         }
 
-        public ViewListItem(string text, string icon, Func<Task> func)
+        public ListItemModel(string text, string icon, Func<Task> func)
         {
             _text = text;
             _icon = icon;
             Delegate = func;
         }
 
-        public ViewListItem(Func<string> text, Func<string> icon, Action action)
+        public ListItemModel(Func<string> text, Func<string> icon, Action action)
         {
             TextFunc = text;
             IconFunc = icon;
             Delegate = action;
         }
 
-        public ViewListItem(Func<string> text, Func<string> icon, Func<Task> func)
+        public ListItemModel(Func<string> text, Func<string> icon, Func<Task> func)
         {
             TextFunc = text;
             IconFunc = icon;
             Delegate = func;
         }
 
-        public ViewListItem(Func<string> text, string icon, Action action)
+        public ListItemModel(Func<string> text, string icon, Action action)
         {
             TextFunc = text;
             _icon = icon;
             Delegate = action;
         }
 
-        public ViewListItem(Func<string> text, string icon, Func<Task> func)
+        public ListItemModel(Func<string> text, string icon, Func<Task> func)
         {
             TextFunc = text;
             _icon = icon;

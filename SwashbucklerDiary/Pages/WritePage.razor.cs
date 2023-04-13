@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowLocation;
         private bool Markdown = true;
         private bool IsSaved;
-        private List<ViewListItem> ViewListItems = new();
+        private List<ListItemModel> ListItemModels = new();
         private DiaryModel Diary = new()
         {
             Tags = new(),
@@ -147,7 +147,7 @@ namespace SwashbucklerDiary.Pages
 
         private void LoadView()
         {
-             ViewListItems = new()
+             ListItemModels = new()
             {
                 new(ShowTitleText,"mdi-format-title",ShowTitleChanged),
                 new(MarkdownText,MarkdownIcon,MarkdownChanged)

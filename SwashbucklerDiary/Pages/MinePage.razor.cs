@@ -25,8 +25,8 @@ namespace SwashbucklerDiary.Pages
             {"ThemeState.Light",ThemeState.Light },
             {"ThemeState.Dark",ThemeState.Dark },
         };
-        private Dictionary<string, List<ViewListItem>> ViewLists = new();
-        private List<ViewListItem> FeedbackTypes = new();
+        private Dictionary<string, List<ListItemModel>> ViewLists = new();
+        private List<ListItemModel> FeedbackTypes = new();
         private const string githubUrl = "https://github.com/Yu-Core/SwashbucklerDiary";
         private const string mail = "yu-core@qq.com";
 

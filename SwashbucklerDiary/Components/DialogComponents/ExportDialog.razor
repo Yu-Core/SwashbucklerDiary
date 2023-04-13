@@ -13,7 +13,7 @@
             </MButton>
         </MCardTitle>
         <MCardText>
-            @foreach (var item in ViewListItems)
+            @foreach (var item in ListItemModels)
             {
                 <MListItem Class="px-0" OnClick="@(()=>item.Delegate.DynamicInvoke())">
                     <MListItemIcon>

@@ -333,5 +333,17 @@ a, .btn-link {
 }
 
 .theme--light.m-divider {
-    border-color: rgba(0,0,0,.05) !important;
+    border-color: rgba(0,0,0,.1) !important;
+}
+
+@media (hover: none) {
+    .d-no-hover-none {
+        display:none;
+    }
+}
+
+@media (hover: hover) {
+    .d-hover-none {
+        display: none;
+    }
 }

@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Components
     public partial class TagCard : MyComponentBase
     {
         private bool ShowMenu;
-        private List<ViewListItem> ViewListItems = new();
+        private List<ListItemModel> ListItemModels = new();
 
         [Parameter]
         public TagModel? Value { get; set; }
@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Components
 
         void LoadView()
         {
-            ViewListItems = new()
+            ListItemModels = new()
             {
                 new("Share.Rename","mdi-rename-outline",()=>OnRename.InvokeAsync()),
                 new("Share.Delete","mdi-delete-outline",()=>OnDelete.InvokeAsync()),

@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.Components
     public partial class DiaryCard : MyComponentBase
     {
         private bool ShowMenu;
-        private List<ViewListItem> ViewListItems = new();
+        private List<ListItemModel> ListItemModels = new();
 
         [Parameter]
         public DiaryModel? Value { get; set; }
@@ -62,7 +62,7 @@ namespace SwashbucklerDiary.Components
 
         private void LoadView()
         {
-            ViewListItems = new()
+            ListItemModels = new()
             {
                 new("Diary.Tag","mdi-label-outline",()=>OnTag.InvokeAsync()),
                 new("Share.Copy","mdi-content-copy",()=>OnCopy.InvokeAsync()),
