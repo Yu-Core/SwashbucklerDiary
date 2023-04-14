@@ -179,7 +179,6 @@
                 @foreach (var item in ThemeStates)
                 {
                     <MRadio Label="@(I18n.T(item.Key))"
-                        Disabled="@(item.Value == ThemeState.System)"
                         Class="my-2"
                         Value="@(item.Value)"
                         Color="@MRadioColor">
