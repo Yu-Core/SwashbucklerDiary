@@ -1,8 +1,9 @@
 ﻿@inherits LayoutComponentBase
 
-<ErrorBoundary>
-    <ChildContent>
-        <MApp>
+
+<MApp>
+    <ErrorBoundary>
+        <ChildContent>
             <MainNavigationDrawer @bind-Value="SelectedItemIndex"
                                   Show="ShowNavigationDrawer"
                                   Items="NavigationButtons"
@@ -22,9 +23,9 @@
                                   Show="ShowBottomNavigation"
                                   Items="NavigationButtons">
             </MainBottomNavigation>
-        </MApp>
-    </ChildContent>
-    <ErrorContent>
-        <ErrorDialog></ErrorDialog>
-    </ErrorContent>
-</ErrorBoundary>
+        </ChildContent>
+        <ErrorContent>
+            <ErrorDialog></ErrorDialog>
+        </ErrorContent>
+    </ErrorBoundary>
+</MApp>
