@@ -1,7 +1,7 @@
 ﻿
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background: #fdfdfd;
+    background: #fcfcfc;
 }
 
 h1:focus {
@@ -235,11 +235,11 @@ a, .btn-link {
 }
 
 .theme--light .my-picker .m-picker__body {
-    background: #fdfdfd !important;
+    background: #fcfcfc !important;
 }
 
     .theme--light .my-picker .m-picker__body + .m-picker__actions {
-        background: #fdfdfd !important;
+        background: #fcfcfc !important;
     }
 
 .theme--dark .my-picker .m-picker__body {
@@ -251,7 +251,7 @@ a, .btn-link {
     }
 
 .theme--light.m-app-bar.m-toolbar.m-sheet {
-    background: #fdfdfd !important;
+    background: #fcfcfc !important;
 }
 
 .theme--dark.m-app-bar.m-toolbar.m-sheet {
@@ -259,7 +259,7 @@ a, .btn-link {
 }
 
 .theme--light.m-navigation-drawer {
-    background: #fdfdfd !important;
+    background: #fcfcfc !important;
 }
 
 .theme--dark.m-navigation-drawer {
@@ -267,7 +267,7 @@ a, .btn-link {
 }
 
 .theme--light.m-application {
-    background: #fdfdfd !important;
+    background: #fcfcfc !important;
 }
 
 .theme--light.navigation-active {
@@ -279,7 +279,7 @@ a, .btn-link {
 }
 
 .theme--light .vditor-toolbar {
-    background: #fdfdfd !important;
+    background: #fcfcfc !important;
 }
 
 .theme--dark .vditor-toolbar {
@@ -317,8 +317,8 @@ a, .btn-link {
     opacity:.8;
 }
 
-.theme--light .fdfdfd {
-    background: #fdfdfd !important;
+.theme--light .fcfcfc {
+    background: #fcfcfc !important;
 }
 
 .theme--light .btn-chip {

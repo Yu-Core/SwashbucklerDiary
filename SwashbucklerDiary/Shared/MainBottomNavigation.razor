@@ -6,12 +6,10 @@
                    InputValue="Show"
                    Class="d-flex justify-space-around d-sm-none"
                    Mandatory="true"
-                   App="true"
-                   Shift="true">
+                   App="true">
     @foreach (var (item, i) in Items.Select((v, i) => (v, i)))
     {
         <MButton Ripple="false" OnClick="()=>item.Delegate.DynamicInvoke()">
-            <span>@(I18n.T(item.Text))</span>
             <MIcon>
                 @(Value == i ? item.SelectedIcon : item.Icon)
             </MIcon>

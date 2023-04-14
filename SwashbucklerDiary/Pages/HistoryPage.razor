@@ -39,10 +39,10 @@
     </SwiperTabItem>
 
     <SwiperTabItem>
-        <div class="d-md-flex tree-wrap">
+        <div class="d-sm-flex tree-wrap">
             @if (Diaries.Any())
             {
-                <div>
+                <div class="pr-sm-5">
                     <MTreeview @bind-Active="_active"
                            TItem="Tree"
                            TKey="int"
@@ -57,7 +57,7 @@
                     </MTreeview>
                 </div>
             }
-            <div class="ml-md-5">
+            <div>
                 <DiaryCardList Value="TreeDiaries"
                                @bind-Tags="Tags"
                                Class="flex-md-column"
