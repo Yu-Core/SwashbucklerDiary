@@ -123,7 +123,11 @@ namespace SwashbucklerDiary.Shared
 
         private void ThemeChanged(ThemeState state)
         {
-            MasaBlazor.Theme.Dark = state == ThemeState.Dark;
+            if (MasaBlazor.Theme.Dark != (state == ThemeState.Dark))
+            {
+                MasaBlazor.ToggleTheme();
+            }
+
             SystemService.SetStatusBar(state);
             InvokeAsync(StateHasChanged);
         }

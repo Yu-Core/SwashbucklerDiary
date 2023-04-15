@@ -119,7 +119,6 @@ namespace SwashbucklerDiary.Components
 
         private async Task HandleOnReset()
         {
-            
             await FilterChanged(false);
             await OnReset.InvokeAsync();
         }

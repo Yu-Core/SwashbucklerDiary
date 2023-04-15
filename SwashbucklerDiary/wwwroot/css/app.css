@@ -347,3 +347,10 @@ a, .btn-link {
         display: none;
     }
 }
+
+.p-mobile-date-picker__content .m-sheet:first-child {
+    border-radius: 8px 8px 0 0 !important;
+    padding: 16px 24px 10px;
+}
+
+    
