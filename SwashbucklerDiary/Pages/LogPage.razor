@@ -11,8 +11,7 @@
     <SearchFilter Title="@(I18n.T("About.LogFile"))"
                   @bind-Value="ShowSearch"
                   @bind-Expression="_searchExpression"
-                  Func="it=>it.RenderedMessage"
-                  @bind-Search="@Search"
+                  Func="(it,search)=>it.RenderedMessage!.Contains(search)"
                   OnUpdate="UpdateLogs">
     </SearchFilter>
 

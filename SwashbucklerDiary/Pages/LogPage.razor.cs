@@ -16,7 +16,6 @@ namespace SwashbucklerDiary.Pages
         private bool ShowDelete;
         private bool ShowShare;
         private List<LogModel> AllLogs = new();
-        private string? Search;
         private List<ListItemModel> ListItemModels = new();
         private List<ListItemModel> ShareItems = new();
         private List<LogModel> Logs = new();
