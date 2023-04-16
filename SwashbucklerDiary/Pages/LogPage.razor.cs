@@ -1,27 +1,38 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
+using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class LogPage : PageComponentBase,IDisposable
+    public partial class LogPage : PageComponentBase, IDisposable
     {
         private bool _showSearch;
         private bool ShowMenu;
-        private bool _showFilter;
+        private bool ShowFilter;
         private bool ShowDelete;
         private bool ShowShare;
-        private bool IsFilter;
         private List<LogModel> AllLogs = new();
-        private List<LogModel> Logs = new();
         private string? Search;
         private List<ListItemModel> ListItemModels = new();
         private List<ListItemModel> ShareItems = new();
+        private List<LogModel> Logs = new();
+        private Expression<Func<LogModel, bool>>? _dateExpression = null;
 
         [Inject]
         private ILogService LogService { get; set; } = default!;
+
+        public void Dispose()
+        {
+            if (ShowSearch)
+            {
+                NavigateService.Action -= CloseSearch;
+            }
+            GC.SuppressFinalize(this);
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -46,16 +57,14 @@ namespace SwashbucklerDiary.Pages
             get => _showSearch;
             set => SetShowSearch(value);
         }
-        private bool ShowFilter
-        {
-            get => _showFilter;
-            set => SetShowFilter(value);
-        }
 
+        private Expression<Func<LogModel, bool>> DateExpression => GetDateExpression();
+        private Expression<Func<LogModel, bool>> SearchExpression => GetSearchExpression();
+        private bool IsFilter => _dateExpression != null;
         private async Task InitLogs()
         {
             var logs = await LogService.QueryAsync();
-            AllLogs = Logs = logs.OrderByDescending(it=>it.Timestamp).ToList();
+            AllLogs = Logs = logs.OrderByDescending(it => it.Timestamp).ToList();
         }
 
         private void LoadView()
@@ -123,20 +132,6 @@ namespace SwashbucklerDiary.Pages
             await SystemService.ShareFile(I18n.T("Log.Share")!, targetFile);
         }
 
-        private void TextChanged(string value)
-        {
-            Search = value;
-            if (!string.IsNullOrWhiteSpace(Search))
-            {
-                Logs = AllLogs.Where(it=>it.RenderedMessage!.Contains(Search)).ToList();
-            }
-            else
-            {
-                IsFilter = false;
-                Logs = AllLogs;
-            }
-        }
-
         private void OpenDeleteDialog()
         {
             ShowDelete = true;
@@ -149,7 +144,7 @@ namespace SwashbucklerDiary.Pages
             bool flag = await LogService.DeleteAsync();
             if (flag)
             {
-                AllLogs = Logs = new();
+                AllLogs = new();
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
             }
             else
@@ -158,24 +153,12 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private void FilterReset()
-        {
-            Logs = AllLogs;
-        }
-
-        private void FilterOK(List<LogModel> logs)
-        {
-            Logs = logs;
-        }
-
         private void SetShowSearch(bool value)
         {
             if (_showSearch != value)
             {
                 if (value)
                 {
-                    IsFilter = false;
-                    FilterReset();
                     NavigateService.Action += CloseSearch;
                 }
                 else
@@ -187,32 +170,48 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private void SetShowFilter(bool value)
-        {
-            if (_showFilter != value)
-            {
-                if (value)
-                {
-                    ShowSearch = false;
-                    FilterReset();
-                }
-                _showFilter = value;
-            }
-        }
-
         private void CloseSearch()
         {
             ShowSearch = false;
             StateHasChanged();
         }
 
-        public void Dispose()
+        private Expression<Func<LogModel, bool>> GetDateExpression()
         {
-            if(ShowSearch)
+            if (_dateExpression == null)
             {
-                NavigateService.Action -= CloseSearch;
+                Expression<Func<LogModel, bool>> exp = it => true;
+                return exp;
             }
-            GC.SuppressFinalize(this);
+
+            return _dateExpression;
+        }
+
+        private Expression<Func<LogModel, bool>> GetSearchExpression()
+        {
+            Expression<Func<LogModel, bool>>? exp = null;
+            if (!string.IsNullOrWhiteSpace(Search))
+            {
+                exp = exp.And(it => it.RenderedMessage!.Contains(Search));
+            }
+            else
+            {
+                exp = exp.And(it => true);
+            }
+            return exp!;
+        }
+
+        private void SearchChanged(string value)
+        {
+            Search = value;
+            UpdateLogs();
+        }
+
+        private void UpdateLogs()
+        {
+            Func<LogModel, bool>? exp = DateExpression.Compile();
+            Func<LogModel, bool>? exp2 = SearchExpression.Compile();
+            Logs = AllLogs.Where(exp).Where(exp2).ToList();
         }
     }
 }

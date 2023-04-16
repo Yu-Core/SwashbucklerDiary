@@ -353,4 +353,9 @@ a, .btn-link {
     padding: 16px 24px 10px;
 }
 
+.m-markdown-it blockquote {
+    border-left: 4px lightgray solid;
+    padding-left: 16px;
+}
+
     

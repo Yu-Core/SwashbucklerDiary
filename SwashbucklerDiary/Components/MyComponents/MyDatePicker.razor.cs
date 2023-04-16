@@ -5,13 +5,14 @@ namespace SwashbucklerDiary.Components
     public partial class MyDatePicker : DialogComponentBase
     {
         private bool _value;
-        private DateOnly _internalDate;
-        private DateOnly InternalDate
+        private DateOnly _date = DateOnly.FromDateTime(DateTime.Now);
+        private DateOnly _desktopDate;
+        private DateOnly DesktopDate
         {
-            get => _internalDate;
+            get => _desktopDate;
             set
             {
-                _internalDate = value == DateOnly.MinValue ? DateOnly.FromDateTime(DateTime.Now) : value;
+                _desktopDate = value == DateOnly.MinValue ? DateOnly.FromDateTime(DateTime.Now) : value;
             }
         }
 
@@ -22,7 +23,11 @@ namespace SwashbucklerDiary.Components
             set => SetValue(value);
         }
         [Parameter]
-        public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+        public DateOnly Date
+        {
+            get => _date == DateOnly.MinValue ? DateOnly.FromDateTime(DateTime.Now) : _date;
+            set => _date = value;
+        }
         [Parameter]
         public EventCallback<DateOnly> DateChanged { get; set; }
 
@@ -32,7 +37,7 @@ namespace SwashbucklerDiary.Components
             {
                 if (value)
                 {
-                    InternalDate = Date;
+                    DesktopDate = Date;
                 }
                 _value = value;
             }
@@ -40,7 +45,7 @@ namespace SwashbucklerDiary.Components
 
         private async Task HandleOnOK()
         {
-            Date = InternalDate;
+            Date = DesktopDate;
             if (DateChanged.HasDelegate)
             {
                 await DateChanged.InvokeAsync(Date);

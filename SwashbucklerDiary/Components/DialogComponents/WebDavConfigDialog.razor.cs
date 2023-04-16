@@ -5,7 +5,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class WebDavConfigDialog : DialogFocusComponentBase
+    public partial class WebDavConfigDialog : FocusDialogComponentBase
     {
         private bool _value;
         private MForm? MForm;

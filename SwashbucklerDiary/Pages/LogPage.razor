@@ -19,7 +19,7 @@
     {
         <MTextField TValue="string"
                 Value="Search"
-                ValueChanged="TextChanged"
+                ValueChanged="SearchChanged"
                 Class="ml-3 rounded-lg"
                 Solo="true"
                 Flat="true"
@@ -82,12 +82,12 @@
     }
 </ScrollContainer>
 
-<LogFilterDialog @bind-Value="ShowFilter"
-                 @bind-IsFilter="IsFilter"
-                 Logs="AllLogs"
-                 OnReset="FilterReset"
-                 OnOK="FilterOK">
-</LogFilterDialog>
+<DateFilterDialog @bind-Value="ShowFilter"
+                  @bind-Expression="_dateExpression"
+                  DateOnlyFunc="it=>DateOnly.FromDateTime(it.Timestamp)"
+                  OnOK="UpdateLogs"
+                  OnReset="UpdateLogs">
+</DateFilterDialog>
 
 <DeleteDialog @bind-Value="ShowDelete"
               Title="@(I18n.T("Log.Delete.Title"))"

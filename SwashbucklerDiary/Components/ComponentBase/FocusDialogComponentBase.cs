@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Components
 {
-    public abstract class DialogFocusComponentBase : DialogComponentBase
+    public abstract class FocusDialogComponentBase : DialogComponentBase
     {
         protected MTextField<string?> TextField = default!;
         protected MMDialog? myDialog;

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class InputDialog : DialogFocusComponentBase
+    public partial class InputDialog : FocusDialogComponentBase
     {
         private bool _value;
         private string? InputText;

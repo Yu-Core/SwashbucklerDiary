@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class PasswordDialog : DialogFocusComponentBase
+    public partial class PasswordDialog : FocusDialogComponentBase
     {
         private bool _value;
         private Model model = new();

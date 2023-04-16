@@ -1,5 +1,6 @@
 ﻿@namespace SwashbucklerDiary.Components
-@inherits DialogComponentBase
+@inherits FilterDialogComponentBase<TValue>
+@typeparam TValue
 
 <MyDialog Value="Value" ValueChanged="InternalValueChanged">
     <MCard Class="rounded-t-lg">
