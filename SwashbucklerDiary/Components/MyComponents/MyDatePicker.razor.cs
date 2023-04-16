@@ -30,6 +30,10 @@ namespace SwashbucklerDiary.Components
         }
         [Parameter]
         public EventCallback<DateOnly> DateChanged { get; set; }
+        [Parameter]
+        public DateOnly? Min { get; set; }
+        [Parameter]
+        public DateOnly? Max { get; set; }
 
         private void SetValue(bool value)
         {

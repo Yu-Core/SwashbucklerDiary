@@ -6,7 +6,9 @@
         <PPMobileDatePicker MyVisible="Value"
                             MyVisibleChanged="ValueChanged"
                             Value="Date"
-                            ValueChanged="DateChanged">
+                            ValueChanged="DateChanged"
+                            Min="Min??default"
+                            Max="Max??default">
         </PPMobileDatePicker>
     </MobileContent>
     <DesktopContent>
@@ -17,7 +19,9 @@
                          Class="rounded-lg pt-4"
                          FullWidth="true"
                          NoTitle="true"
-                         Scrollable="true">
+                         Scrollable="true"
+                         Min="Min"
+                         Max="Max">
                 <MSpacer></MSpacer>
                 <MButton Text="true"
                          OnClick="HandleOnCancel">
