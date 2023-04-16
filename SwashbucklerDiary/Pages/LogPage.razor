@@ -8,28 +8,13 @@
         </MIcon>
     </MButton>
 
-    @if (!ShowSearch)
-    {
-        <MToolbarTitle Class="font-weight-bold">
-            @(I18n.T("About.LogFile"))
-        </MToolbarTitle>
-        <MSpacer></MSpacer>
-    }
-    else
-    {
-        <MTextField TValue="string"
-                Value="Search"
-                ValueChanged="SearchChanged"
-                Class="ml-3 rounded-lg"
-                Solo="true"
-                Flat="true"
-                Autofocus="true"
-                Clearable="true"
-                HideDetails="@("auto")"
-                    spellcheck="false"
-                Placeholder="@(I18n.T("Search.Placeholder"))">
-        </MTextField>
-    }
+    <SearchFilter Title="@(I18n.T("About.LogFile"))"
+                  @bind-Value="ShowSearch"
+                  @bind-Expression="_searchExpression"
+                  Func="it=>it.RenderedMessage"
+                  @bind-Search="@Search"
+                  OnUpdate="UpdateLogs">
+    </SearchFilter>
 
     <MButton Icon="true"
              OnClick="()=>ShowSearch=!ShowSearch">
@@ -84,9 +69,8 @@
 
 <DateFilterDialog @bind-Value="ShowFilter"
                   @bind-Expression="_dateExpression"
-                  DateOnlyFunc="it=>DateOnly.FromDateTime(it.Timestamp)"
-                  OnOK="UpdateLogs"
-                  OnReset="UpdateLogs">
+                  Func="it=>DateOnly.FromDateTime(it.Timestamp)"
+                  OnUpdate="UpdateLogs">
 </DateFilterDialog>
 
 <DeleteDialog @bind-Value="ShowDelete"

@@ -8,9 +8,9 @@ using System.Text;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class LogPage : PageComponentBase, IDisposable
+    public partial class LogPage : PageComponentBase
     {
-        private bool _showSearch;
+        private bool ShowSearch;
         private bool ShowMenu;
         private bool ShowFilter;
         private bool ShowDelete;
@@ -21,18 +21,10 @@ namespace SwashbucklerDiary.Pages
         private List<ListItemModel> ShareItems = new();
         private List<LogModel> Logs = new();
         private Expression<Func<LogModel, bool>>? _dateExpression = null;
+        private Expression<Func<LogModel, bool>>? _searchExpression = null;
 
         [Inject]
         private ILogService LogService { get; set; } = default!;
-
-        public void Dispose()
-        {
-            if (ShowSearch)
-            {
-                NavigateService.Action -= CloseSearch;
-            }
-            GC.SuppressFinalize(this);
-        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -52,11 +44,6 @@ namespace SwashbucklerDiary.Pages
             base.NavigateToBack();
         }
 
-        private bool ShowSearch
-        {
-            get => _showSearch;
-            set => SetShowSearch(value);
-        }
 
         private Expression<Func<LogModel, bool>> DateExpression => GetDateExpression();
         private Expression<Func<LogModel, bool>> SearchExpression => GetSearchExpression();
@@ -153,29 +140,6 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private void SetShowSearch(bool value)
-        {
-            if (_showSearch != value)
-            {
-                if (value)
-                {
-                    NavigateService.Action += CloseSearch;
-                }
-                else
-                {
-                    Search = string.Empty;
-                    NavigateService.Action -= CloseSearch;
-                }
-                _showSearch = value;
-            }
-        }
-
-        private void CloseSearch()
-        {
-            ShowSearch = false;
-            StateHasChanged();
-        }
-
         private Expression<Func<LogModel, bool>> GetDateExpression()
         {
             if (_dateExpression == null)
@@ -189,22 +153,13 @@ namespace SwashbucklerDiary.Pages
 
         private Expression<Func<LogModel, bool>> GetSearchExpression()
         {
-            Expression<Func<LogModel, bool>>? exp = null;
-            if (!string.IsNullOrWhiteSpace(Search))
+            if (_searchExpression == null)
             {
-                exp = exp.And(it => it.RenderedMessage!.Contains(Search));
+                Expression<Func<LogModel, bool>> exp = it => true;
+                return exp;
             }
-            else
-            {
-                exp = exp.And(it => true);
-            }
-            return exp!;
-        }
 
-        private void SearchChanged(string value)
-        {
-            Search = value;
-            UpdateLogs();
+            return _searchExpression;
         }
 
         private void UpdateLogs()

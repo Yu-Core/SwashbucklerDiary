@@ -28,11 +28,9 @@ namespace SwashbucklerDiary.Components
         }
         [EditorRequired]
         [Parameter]
-        public Func<TValue, DateOnly> DateOnlyFunc { get; set; } = default!;
+        public Func<TValue, DateOnly> Func { get; set; } = default!;
         [Parameter]
-        public EventCallback OnOK { get; set; }
-        [Parameter]
-        public EventCallback OnReset { get; set; }
+        public EventCallback OnUpdate { get; set; }
 
         private StringNumber DefaultDate
         {
@@ -106,7 +104,7 @@ namespace SwashbucklerDiary.Components
             {
                 await ExpressionChanged.InvokeAsync(Expression);
             }
-            await OnReset.InvokeAsync();
+            await OnUpdate.InvokeAsync();
         }
 
         private async Task HandleOnOK()
@@ -114,7 +112,7 @@ namespace SwashbucklerDiary.Components
             await InternalValueChanged(false);
             await SetExpression();
             FormBackups = Form.DeepCopy();
-            await OnOK.InvokeAsync();
+            await OnUpdate.InvokeAsync();
         }
 
         private async Task SetExpression()
@@ -125,18 +123,18 @@ namespace SwashbucklerDiary.Components
             if (!string.IsNullOrEmpty(defaultDate))
             {
                 DateOnly date = DefaultDates[defaultDate];
-                exp = exp.And(it => DateOnlyFunc.Invoke(it) >= date);
+                exp = exp.And(it => Func.Invoke(it) >= date);
             }
             else
             {
                 if(MinDate != DateOnly.MinValue)
                 {
-                    exp = exp.And( it => DateOnlyFunc.Invoke(it) >= MinDate);
+                    exp = exp.And( it => Func.Invoke(it) >= MinDate);
                 }
                 
                 if(MaxDate != DateOnly.MinValue)
                 {
-                    exp = exp.And(it => DateOnlyFunc.Invoke(it) <= MaxDate);
+                    exp = exp.And(it => Func.Invoke(it) <= MaxDate);
                 }
             }
 
