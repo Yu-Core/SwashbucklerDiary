@@ -15,9 +15,9 @@ namespace SwashbucklerDiary.Components
         private DateFilterForm FormBackups = new();
         private readonly Dictionary<string, DateOnly> DefaultDates = new()
         {
-            {"Log.Last month",DateOnly.FromDateTime(DateTime.Now.AddMonths(-1))},
-            {"Log.Last three months",DateOnly.FromDateTime(DateTime.Now.AddMonths(-3))},
-            {"Log.Last six months",DateOnly.FromDateTime(DateTime.Now.AddMonths(-6))},
+            {"Filter.Last month",DateOnly.FromDateTime(DateTime.Now.AddMonths(-1))},
+            {"Filter.Last three months",DateOnly.FromDateTime(DateTime.Now.AddMonths(-3))},
+            {"Filter.Last six months",DateOnly.FromDateTime(DateTime.Now.AddMonths(-6))},
         };
 
         [Parameter]
@@ -54,14 +54,14 @@ namespace SwashbucklerDiary.Components
         {
             get
             {
-                return MinDate == DateOnly.MinValue ? I18n.T("Log.Start time") : ((DateOnly)MinDate).ToString("yyyy-MM-dd");
+                return MinDate == DateOnly.MinValue ? I18n.T("Filter.Start time") : ((DateOnly)MinDate).ToString("yyyy-MM-dd");
             }
         }
         private string MaxDateText
         {
             get
             {
-                return MaxDate == DateOnly.MinValue ? I18n.T("Log.End time") : ((DateOnly)MaxDate).ToString("yyyy-MM-dd");
+                return MaxDate == DateOnly.MinValue ? I18n.T("Filter.End time") : ((DateOnly)MaxDate).ToString("yyyy-MM-dd");
             }
         }
 

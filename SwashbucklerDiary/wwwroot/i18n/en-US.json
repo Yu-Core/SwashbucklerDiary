@@ -416,10 +416,12 @@
       "Title": "Clear logs",
       "Content": "Are you sure to clear all logs?"
     },
+    "Clear": "Clear"
+  },
+  "Filter": {
     "Last month": "Last month",
     "Last three months": "Last three months",
     "Last six months": "Last six months",
-    "Clear": "Clear",
     "Filter": "Filter",
     "Start time": "Start time",
     "End time": "End time"
