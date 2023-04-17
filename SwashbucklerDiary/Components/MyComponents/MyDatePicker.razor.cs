@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Components
             get => _desktopDate;
             set
             {
-                _desktopDate = value == DateOnly.MinValue ? DateOnly.FromDateTime(DateTime.Now) : value;
+                _desktopDate = (value == DateOnly.MinValue || value == DateOnly.MaxValue) ? DateOnly.FromDateTime(DateTime.Now) : value;
             }
         }
 
@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public DateOnly Date
         {
-            get => _date == DateOnly.MinValue ? DateOnly.FromDateTime(DateTime.Now) : _date;
+            get => (_date == DateOnly.MinValue || _date == DateOnly.MaxValue) ? DateOnly.FromDateTime(DateTime.Now) : _date;
             set => _date = value;
         }
         [Parameter]

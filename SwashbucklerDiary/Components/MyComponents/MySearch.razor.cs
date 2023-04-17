@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Extend;
-using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class SearchFilter<TValue> : FilterDialogComponentBase<TValue>
+    public partial class MySearch : DialogComponentBase
     {
         private bool _value;
-        public string? Search;
 
         [Parameter]
         public override bool Value
@@ -16,18 +13,25 @@ namespace SwashbucklerDiary.Components
             set => SetValue(value);
         }
         [Parameter]
+        public string? Search { get; set; }
+        [Parameter]
+        public EventCallback<string> SearchChanged { get; set; }
+        [Parameter]
+        public EventCallback<string> OnChanged { get; set; }
+        [Parameter]
         public string? Title { get; set; }
-        [EditorRequired]
-        [Parameter]
-        public Func<TValue, string,bool> Func { get; set; } = default!;
-        [Parameter]
-        public EventCallback OnUpdate { get; set; }
 
+        private bool ShowTitle => !string.IsNullOrEmpty(Title);
         private void SetValue(bool value)
         {
             if (_value != value)
             {
                 _value = value;
+                if (!ShowTitle)
+                {
+                    return;
+                }
+
                 Task.Run(() =>
                 {
                     if (value)
@@ -48,26 +52,16 @@ namespace SwashbucklerDiary.Components
             await InternalValueChanged(false);
         }
 
-        private async Task SearchChanged(string? value)
+        private async Task InternalSearchChanged(string? value)
         {
             Search = value;
-
-            await SetExpression();
-            await OnUpdate.InvokeAsync();
-        }
-
-        private async Task SetExpression()
-        {
-            Expression<Func<TValue, bool>>? exp = null;
-            if (!string.IsNullOrWhiteSpace(Search))
+            if (SearchChanged.HasDelegate)
             {
-                exp = exp.And(it => Func.Invoke(it,Search));
+                await SearchChanged.InvokeAsync(Search);
             }
-
-            Expression = exp;
-            if (ExpressionChanged.HasDelegate)
+            if (OnChanged.HasDelegate)
             {
-                await ExpressionChanged.InvokeAsync(Expression);
+                await OnChanged.InvokeAsync(Search);
             }
         }
     }

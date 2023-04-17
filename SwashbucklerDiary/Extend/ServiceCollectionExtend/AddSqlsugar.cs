@@ -1,5 +1,6 @@
 ﻿using SqlSugar;
 using SwashbucklerDiary.Config;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace SwashbucklerDiary.Extend
@@ -35,7 +36,8 @@ namespace SwashbucklerDiary.Extend
                 //单例参数配置，所有上下文生效
                 db.Aop.OnLogExecuting = (sql, pars) =>
                 {
-                    Console.WriteLine(sql);//输出sql
+                    //Debug.WriteLine(sql);//输出sql
+                    Debug.WriteLine(UtilMethods.GetSqlString(DbType.Sqlite, sql, pars));//输出sql
                 };
             }
 #endif

@@ -8,12 +8,11 @@
         </MIcon>
     </MButton>
 
-    <SearchFilter Title="@(I18n.T("About.LogFile"))"
-                  @bind-Value="ShowSearch"
-                  @bind-Expression="_searchExpression"
-                  Func="(it,search)=>it.RenderedMessage!.Contains(search)"
-                  OnUpdate="UpdateLogs">
-    </SearchFilter>
+    <MySearch Title="@(I18n.T("About.LogFile"))"
+              @bind-Value="ShowSearch"
+              @bind-Search="Search"
+              OnChanged="UpdateLogs">
+    </MySearch>
 
     <MButton Icon="true"
              OnClick="()=>ShowSearch=!ShowSearch">
@@ -25,7 +24,7 @@
     <MButton Icon="true"
              OnClick="()=>ShowFilter=!ShowFilter">
         <MIcon>
-            @(IsFilter ? "mdi-filter-check-outline" : "mdi-filter-outline")
+            @(IsDateFiltered ? "mdi-filter-check-outline" : "mdi-filter-outline")
         </MIcon>
     </MButton>
 
@@ -67,9 +66,10 @@
 </ScrollContainer>
 
 <DateFilterDialog @bind-Value="ShowFilter"
-                  @bind-Expression="_dateExpression"
-                  Func="it=>DateOnly.FromDateTime(it.Timestamp)"
-                  OnUpdate="UpdateLogs">
+                  @bind-DateMinValue="MinDate"
+                  @bind-DateMaxValue="MaxDate"
+                  OnOK="UpdateLogs"
+                  OnReset="UpdateLogs">
 </DateFilterDialog>
 
 <DeleteDialog @bind-Value="ShowDelete"

@@ -2,11 +2,10 @@
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.Models.Form;
-using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class DateFilterDialog<TValue> : FilterDialogComponentBase<TValue>
+    public partial class DateFilterDialog : DialogComponentBase
     {
         private bool _value;
         private bool ShowMinDate;
@@ -26,11 +25,18 @@ namespace SwashbucklerDiary.Components
             get => _value;
             set => SetValue(value);
         }
-        [EditorRequired]
         [Parameter]
-        public Func<TValue, DateOnly> Func { get; set; } = default!;
+        public DateOnly DateMinValue { get; set; }
         [Parameter]
-        public EventCallback OnUpdate { get; set; }
+        public EventCallback<DateOnly> DateMinValueChanged { get; set; }
+        [Parameter]
+        public DateOnly DateMaxValue { get; set; }
+        [Parameter]
+        public EventCallback<DateOnly> DateMaxValueChanged { get; set; }
+        [Parameter]
+        public EventCallback OnOK { get; set; }
+        [Parameter]
+        public EventCallback OnReset { get; set; }
 
         private StringNumber DefaultDate
         {
@@ -61,7 +67,7 @@ namespace SwashbucklerDiary.Components
         {
             get
             {
-                return MaxDate == DateOnly.MinValue ? I18n.T("Filter.End time") : ((DateOnly)MaxDate).ToString("yyyy-MM-dd");
+                return MaxDate == DateOnly.MaxValue ? I18n.T("Filter.End time") : ((DateOnly)MaxDate).ToString("yyyy-MM-dd");
             }
         }
 
@@ -80,7 +86,7 @@ namespace SwashbucklerDiary.Components
         private void SelectDeafultDate()
         {
             MinDate = DateOnly.MinValue;
-            MaxDate = DateOnly.MinValue;
+            MaxDate = DateOnly.MaxValue;
         }
 
         private void OpenMinDateDialog()
@@ -99,50 +105,65 @@ namespace SwashbucklerDiary.Components
         {
             FormBackups = new();
             Form = new();
-            Expression = null;
-            if (ExpressionChanged.HasDelegate)
-            {
-                await ExpressionChanged.InvokeAsync(Expression);
-            }
-            await OnUpdate.InvokeAsync();
+            await Update();
+            await OnReset.InvokeAsync();
         }
 
         private async Task HandleOnOK()
         {
             await InternalValueChanged(false);
-            await SetExpression();
             FormBackups = Form.DeepCopy();
-            await OnUpdate.InvokeAsync();
+            await Update();
+            await OnOK.InvokeAsync();
         }
 
-        private async Task SetExpression()
+        private async Task Update()
         {
-            Expression<Func<TValue, bool>>? exp = null;
-            string? defaultDate = DefaultDate?.ToString();
+            await UpdateDateMinValue();
+            await UpdateDateMaxValue();
+        }
 
+        private async Task UpdateDateMinValue()
+        {
+            DateMinValue = GetDateMinValue();
+            if (DateMinValueChanged.HasDelegate)
+            {
+                await DateMinValueChanged.InvokeAsync(DateMinValue);
+            }
+        }
+
+        private async Task UpdateDateMaxValue()
+        {
+            DateMaxValue = GetDateMaxValue();
+            if (DateMaxValueChanged.HasDelegate)
+            {
+                await DateMaxValueChanged.InvokeAsync(DateMaxValue);
+            }
+        }
+
+        private DateOnly GetDateMinValue()
+        {
+            string? defaultDate = DefaultDate?.ToString();
             if (!string.IsNullOrEmpty(defaultDate))
             {
-                DateOnly date = DefaultDates[defaultDate];
-                exp = exp.And(it => Func.Invoke(it) >= date);
-            }
-            else
-            {
-                if(MinDate != DateOnly.MinValue)
-                {
-                    exp = exp.And( it => Func.Invoke(it) >= MinDate);
-                }
-                
-                if(MaxDate != DateOnly.MinValue)
-                {
-                    exp = exp.And(it => Func.Invoke(it) <= MaxDate);
-                }
+                return DefaultDates[defaultDate];
             }
 
-            Expression = exp;
-            if (ExpressionChanged.HasDelegate)
+            if (MinDate != DateOnly.MinValue)
             {
-                await ExpressionChanged.InvokeAsync(Expression);
+                return MinDate;
             }
+
+            return DateOnly.MinValue;
+        }
+        private DateOnly GetDateMaxValue()
+        {
+            if(MaxDate != DateOnly.MaxValue)
+            {
+                return MaxDate;
+            }
+
+            return DateOnly.MaxValue;
         }
     }
 }

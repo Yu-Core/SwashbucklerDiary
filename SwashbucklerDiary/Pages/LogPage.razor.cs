@@ -15,12 +15,12 @@ namespace SwashbucklerDiary.Pages
         private bool ShowFilter;
         private bool ShowDelete;
         private bool ShowShare;
-        private List<LogModel> AllLogs = new();
         private List<ListItemModel> ListItemModels = new();
         private List<ListItemModel> ShareItems = new();
         private List<LogModel> Logs = new();
-        private Expression<Func<LogModel, bool>>? _dateExpression = null;
-        private Expression<Func<LogModel, bool>>? _searchExpression = null;
+        private string? Search;
+        private DateOnly MinDate;
+        private DateOnly MaxDate = DateOnly.MaxValue;
 
         [Inject]
         private ILogService LogService { get; set; } = default!;
@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             LoadView();
-            await InitLogs();
+            await UpdateLogs();
             await HandleAchievements(AchievementType.Log);
             await base.OnInitializedAsync();
         }
@@ -43,15 +43,8 @@ namespace SwashbucklerDiary.Pages
             base.NavigateToBack();
         }
 
-
-        private Expression<Func<LogModel, bool>> DateExpression => GetDateExpression();
-        private Expression<Func<LogModel, bool>> SearchExpression => GetSearchExpression();
-        private bool IsFilter => _dateExpression != null;
-        private async Task InitLogs()
-        {
-            var logs = await LogService.QueryAsync();
-            AllLogs = Logs = logs.OrderByDescending(it => it.Timestamp).ToList();
-        }
+        private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
+        private bool IsDateFiltered => MinDate != DateOnly.MinValue || MaxDate != DateOnly.MaxValue;
 
         private void LoadView()
         {
@@ -130,7 +123,7 @@ namespace SwashbucklerDiary.Pages
             bool flag = await LogService.DeleteAsync();
             if (flag)
             {
-                AllLogs = new();
+                Logs = new();
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
             }
             else
@@ -139,33 +132,30 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private Expression<Func<LogModel, bool>> GetDateExpression()
+        private async Task UpdateLogs()
         {
-            if (_dateExpression == null)
-            {
-                Expression<Func<LogModel, bool>> exp = it => true;
-                return exp;
-            }
+            Expression<Func<LogModel, bool>> func = Func();
+            var logs = await LogService.QueryAsync(func);
 
-            return _dateExpression;
+            Logs = logs.OrderByDescending(it => it.Timestamp).ToList();
         }
 
-        private Expression<Func<LogModel, bool>> GetSearchExpression()
+        private Expression<Func<LogModel, bool>> Func()
         {
-            if (_searchExpression == null)
+            Expression<Func<LogModel, bool>> expSearch;
+            Expression<Func<LogModel, bool>> expDate;
+            expSearch = it => (it.RenderedMessage ?? string.Empty).ToLower().Contains(Search ?? string.Empty.ToLower());
+
+
+            DateTime MinDateTime = MinDate.ToDateTime(default);
+            DateTime MaxDateTime = MaxDate.ToDateTime(TimeOnly.MaxValue);
+            if (MaxDate != DateOnly.MaxValue)
             {
-                Expression<Func<LogModel, bool>> exp = it => true;
-                return exp;
+                MaxDateTime = MaxDateTime.AddDays(1);
             }
 
-            return _searchExpression;
-        }
-
-        private void UpdateLogs()
-        {
-            Func<LogModel, bool>? exp = DateExpression.Compile();
-            Func<LogModel, bool>? exp2 = SearchExpression.Compile();
-            Logs = AllLogs.Where(exp).Where(exp2).ToList();
+            expDate = it => it.Timestamp >= MinDateTime && it.Timestamp <= MaxDateTime;
+            return expDate.AndIF(IsSearchFiltered, expSearch);
         }
     }
 }

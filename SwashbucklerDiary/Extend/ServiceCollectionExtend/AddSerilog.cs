@@ -9,11 +9,7 @@ namespace SwashbucklerDiary.Extend
         public static IServiceCollection AddSerilogConfig(this IServiceCollection services)
         {
             Log.Logger = new LoggerConfiguration()
-#if DEBUG
-                            .MinimumLevel.Debug()
-#else
                             .MinimumLevel.Information()
-#endif
                             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                  .Enrich.FromLogContext()
 #if DEBUG

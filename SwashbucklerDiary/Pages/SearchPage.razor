@@ -6,21 +6,9 @@
         <MIcon>mdi-arrow-left</MIcon>
     </MButton>
 
-    <MTextField TValue="string"
-                Value="Search"
-                ValueChanged="TextChanged"
-                Class="ml-3 rounded-lg"
-                Solo="true"
-                Flat="true"
-                Autofocus="true"
-                Clearable="true"
-                HideDetails="@("auto")"
-                spellcheck="false"
-                Placeholder="@(I18n.T("Search.Placeholder"))">
-    </MTextField>
-
+    
 </MAppBar>
-<ScrollContainer Id="scrolling-search">
+<ScrollContainer>
     <DiaryCardList Value="Diaries" @bind-Tags="Tags"></DiaryCardList>
 </ScrollContainer>
 
