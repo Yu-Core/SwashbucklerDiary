@@ -10,15 +10,8 @@ namespace SwashbucklerDiary.Pages
     {
         private bool ShowSearch = true;
         private bool ShowFilter;
-        private Expression<Func<DiaryModel, bool>>? _dateExpression = null;
-        private Expression<Func<DiaryModel, bool>>? _searchExpression = null;
-        private Func<DiaryModel, string, bool> SearchFunc = (it, search) =>
-        {
-            return !it.Private &&
-            ((it.Title ?? string.Empty).Contains(search) ||
-            (it.Content ?? string.Empty).Contains(search));
-        };
-        //private List<DiaryModel> NewDiaries = new();
+        private DateOnly MinDate;
+        private DateOnly MaxDate = DateOnly.MaxValue;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -32,17 +25,13 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task UpdateDiaries()
         {
-            Func<DiaryModel, bool>? exp = DateExpression.Compile();
-            Func<DiaryModel, bool>? exp2 = SearchExpression.Compile();
-            //NewDiaries = Diaries.Where(exp).Where(exp2).ToList();
-            //Expression<Func<DiaryModel, bool>> expression = DateExpression.And(SearchExpression);
-            Diaries = await DiaryService.QueryAsync(it=>exp.Invoke(it) && exp2.Invoke(it));
-            await Task.CompletedTask;
+            Expression<Func<DiaryModel, bool>> func = Func();
+            var diaries = await DiaryService.QueryAsync(func);
+            Diaries = diaries.OrderByDescending(it => it.CreateTime).ToList();
         }
 
-        private Expression<Func<DiaryModel, bool>> DateExpression => GetDateExpression();
-        private Expression<Func<DiaryModel, bool>> SearchExpression => GetSearchExpression();
-        private bool IsFilter => _dateExpression != null;
+        private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
+        private bool IsDateFiltered => MinDate != DateOnly.MinValue || MaxDate != DateOnly.MaxValue;
 
         private void SetCurrentUrl()
         {
@@ -52,26 +41,32 @@ namespace SwashbucklerDiary.Pages
             };
         }
 
-        private Expression<Func<DiaryModel, bool>> GetDateExpression()
+        private Expression<Func<DiaryModel, bool>> Func()
         {
-            if (_dateExpression == null)
+            Expression<Func<DiaryModel, bool>> expSearch;
+            Expression<Func<DiaryModel, bool>> expDate;
+
+            if (!IsSearchFiltered)
             {
-                Expression<Func<DiaryModel, bool>> exp = it => true;
-                return exp;
+                expSearch = it => false;
+            }
+            else
+            {
+                expSearch = it => !it.Private &&
+                            ((it.Title ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower()) ||
+                            (it.Content ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower()));
+
             }
 
-            return _dateExpression;
-        }
-
-        private Expression<Func<DiaryModel, bool>> GetSearchExpression()
-        {
-            if (_searchExpression == null)
+            DateTime MinDateTime = MinDate.ToDateTime(default);
+            DateTime MaxDateTime = MaxDate.ToDateTime(TimeOnly.MaxValue);
+            if (MaxDate != DateOnly.MaxValue)
             {
-                Expression<Func<DiaryModel, bool>> exp = it => false;
-                return exp;
+                MaxDateTime = MaxDateTime.AddDays(1);
             }
 
-            return _searchExpression;
+            expDate = it => it.CreateTime >= MinDateTime && it.CreateTime <= MaxDateTime;
+            return expSearch.And(expDate);
         }
 
     }

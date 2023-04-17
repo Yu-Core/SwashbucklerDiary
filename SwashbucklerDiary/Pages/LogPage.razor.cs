@@ -144,7 +144,7 @@ namespace SwashbucklerDiary.Pages
         {
             Expression<Func<LogModel, bool>> expSearch;
             Expression<Func<LogModel, bool>> expDate;
-            expSearch = it => (it.RenderedMessage ?? string.Empty).ToLower().Contains(Search ?? string.Empty.ToLower());
+            expSearch = it => (it.RenderedMessage ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower());
 
 
             DateTime MinDateTime = MinDate.ToDateTime(default);

@@ -6,10 +6,25 @@
         <MIcon>mdi-arrow-left</MIcon>
     </MButton>
 
-    
+    <MySearch @bind-Value="ShowSearch"
+              @bind-Search="Search"
+              OnChanged="UpdateDiaries">
+    </MySearch>
+
+    <MButton Icon="true"
+             OnClick="()=>ShowFilter=!ShowFilter">
+        <MIcon>
+            @(IsDateFiltered ? "mdi-filter-check-outline" : "mdi-filter-outline")
+        </MIcon>
+    </MButton>
 </MAppBar>
 <ScrollContainer>
     <DiaryCardList Value="Diaries" @bind-Tags="Tags"></DiaryCardList>
 </ScrollContainer>
 
-
+<DateFilterDialog @bind-Value="ShowFilter"
+                  @bind-DateMinValue="MinDate"
+                  @bind-DateMaxValue="MaxDate"
+                  OnOK="UpdateDiaries"
+                  OnReset="UpdateDiaries">
+</DateFilterDialog>
