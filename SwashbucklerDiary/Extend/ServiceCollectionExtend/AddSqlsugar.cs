@@ -1,5 +1,6 @@
 ﻿using SqlSugar;
 using SwashbucklerDiary.Config;
+using SwashbucklerDiary.Models;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -42,6 +43,18 @@ namespace SwashbucklerDiary.Extend
             }
 #endif
             );
+
+            // 创建表
+            Type[] types = {
+                typeof(DiaryModel),
+                typeof(TagModel),
+                typeof(DiaryTagModel),
+                typeof(UserAchievementModel),
+                typeof(UserStateModel),
+                typeof(LocationModel),
+                typeof(LogModel),
+            };
+            sqlSugar.CodeFirst.InitTables(types);
 
             services.AddSingleton<ISqlSugarClient>(sqlSugar);//这边是SqlSugarScope用AddSingleton
             return services;

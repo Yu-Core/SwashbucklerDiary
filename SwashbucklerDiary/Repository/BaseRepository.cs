@@ -10,17 +10,6 @@ namespace SwashbucklerDiary.Repository
         public BaseRepository(ISqlSugarClient context) : base(context)
         {
             base.Context = context;
-            // 创建表
-            Type[] types = {
-                typeof(DiaryModel),
-                typeof(TagModel),
-                typeof(DiaryTagModel),
-                typeof(UserAchievementModel),
-                typeof(UserStateModel),
-                typeof(LocationModel),
-                typeof(LogModel),
-            };
-            base.Context!.CodeFirst.InitTables(types);
         }
 
         public virtual Task<int> CountAsync()
