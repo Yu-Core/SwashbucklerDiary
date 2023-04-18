@@ -64,7 +64,6 @@
                              Rounded="true"
                              Depressed="true"
                              Large="true"
-                             Ripple="false"
                              OnClick="HandleOnReset">
                         @(I18n.T("Share.Reset"))
                     </MButton>
@@ -72,7 +71,6 @@
                              Rounded="true"
                              Depressed="true"
                              Large="true"
-                             Ripple="false"
                              OnClick="HandleOnOK">
                         @(I18n.T("Share.OK"))
                     </MButton>
@@ -83,11 +81,9 @@
 </MyDialog>
 
 <MyDatePicker @bind-Value="ShowMinDate"
-              @bind-Date="MinDate"
-              Max="MaxDate">
+              @bind-Date="MinDate">
 </MyDatePicker>
 
 <MyDatePicker @bind-Value="ShowMaxDate"
-              @bind-Date="MaxDate"
-              Min="MinDate">
+              @bind-Date="MaxDate">
 </MyDatePicker>

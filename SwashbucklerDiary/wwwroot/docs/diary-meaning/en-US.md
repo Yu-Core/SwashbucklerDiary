@@ -1,6 +1,6 @@
 ﻿Why keep a diary? 
 
--- From Zhihu user chun-zi-12
+> From Zhihu user chun-zi-12
 
 A week ago, I thought of a question: "What is the meaning of making WeChat Moment?"
 

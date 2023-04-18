@@ -103,7 +103,7 @@ a, .btn-link {
 }
 /*去除滚动条*/
 ::-webkit-scrollbar {
-    display: none; 
+    display: none;
 }
 
 .m-tab-swiper {
@@ -266,6 +266,14 @@ a, .btn-link {
     background: #121212 !important;
 }
 
+.theme--light.m-bottom-navigation {
+    background: #fcfcfc !important;
+}
+
+.theme--dark.m-bottom-navigation {
+    background: #121212 !important;
+}
+
 .theme--light.m-application {
     background: #fcfcfc !important;
 }
@@ -313,8 +321,8 @@ a, .btn-link {
     background-color: #fefefe !important;
 }
 
-.theme--light.m-input--switch__track.black--text{
-    opacity:.8;
+.theme--light.m-input--switch__track.black--text {
+    opacity: .8;
 }
 
 .theme--light .fcfcfc {
@@ -328,7 +336,7 @@ a, .btn-link {
 
 @media screen and (max-width:600px) {
     .vditor-toolbar-help {
-        margin-bottom:70px;
+        margin-bottom: 70px;
     }
 }
 
@@ -338,7 +346,7 @@ a, .btn-link {
 
 @media (hover: none) {
     .d-no-hover-none {
-        display:none;
+        display: none;
     }
 }
 
@@ -354,8 +362,15 @@ a, .btn-link {
 }
 
 .m-markdown-it blockquote {
-    border-left: 4px lightgray solid;
-    padding-left: 16px;
+    color: #6a737d;
+    border-left: .25em solid #eaecef;
+    padding: 0 1em;
+}
+/*更改点击涟漪效果*/
+.m-ripple__animation--in {
+    transition-duration: 0.1s !important;
 }
 
-    
+.m-ripple__animation--out {
+    transition-duration: 0.15s !important;
+}
