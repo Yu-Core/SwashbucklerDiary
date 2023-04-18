@@ -12,6 +12,7 @@
     "Edit": "Edit",
     "EditSuccess": "Edit success",
     "EditFail": "Edit Fail",
+    "Add": "Add",
     "AddSuccess": "Add success",
     "AddFail": "Add failed",
     "Clear": "Clear",
@@ -365,7 +366,9 @@
     },
     "Download": {
       "Title": "Download",
-      "Subtitle": "Select a .db3 database file"
+      "Subtitle": "Select a .db3 database file",
+      "Success": "Download success",
+      "Fail": "Download fail"
     }
   },
   "Location": {

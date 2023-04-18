@@ -15,17 +15,7 @@
             </MButton>
         </MCardTitle>
 
-        <MCardText @ref="mCardText" Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
-            <MListItem Class="px-0" OnClick="()=>ShowAdd = true">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-plus
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Location.Add"))
-                </MListItemContent>
-            </MListItem>
+        <MCardText @ref="mCardText" Class="scroll-show pb-0" Style="max-height:300px;">
             @foreach (var item in Locations)
             {
                 <MListItem Class="px-0" OnClick="()=>SetSelectedLocation(item)">
@@ -42,13 +32,24 @@
                         @if (item.Name == Location)
                         {
                             <MIcon>
-                                mdi-check-bold
+                                mdi-check
                             </MIcon>
                         }
                     </MListItemAction>
                 </MListItem>
             }
         </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text="true" OnClick="Reset">
+                @(I18n.T("Share.Reset"))
+            </MButton>
+            <MButton Text="true"
+                     Color="primary"
+                     OnClick="()=>ShowAdd = true">
+                @(I18n.T("Share.Add"))
+            </MButton>
+        </MCardActions>
     </MCard>
 </MMDialog>
 

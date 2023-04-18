@@ -107,5 +107,14 @@ namespace SwashbucklerDiary.Components
                 await JS.ScrollTo(mCardText.Ref, 0);
             }
         }
+
+        private async Task Reset()
+        {
+            Location = string.Empty;
+            if (LocationChanged.HasDelegate)
+            {
+                await LocationChanged.InvokeAsync(Location);
+            }
+        }
     }
 }
