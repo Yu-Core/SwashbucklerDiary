@@ -16,6 +16,36 @@ namespace SwashbucklerDiary.Pages
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Search { get; set; }
+        [Parameter]
+        [SupplyParameterFromQuery]
+        public DateTime MinDateTime
+        {
+            get => MinDate.ToDateTime(default);
+            set
+            {
+                if (value == DateTime.MinValue)
+                {
+                    return;
+                }
+
+                MinDate = DateOnly.FromDateTime(value);
+            }
+        }
+        [Parameter]
+        [SupplyParameterFromQuery]
+        public DateTime MaxDateTime
+        {
+            get => MaxDate.ToDateTime(TimeOnly.MaxValue);
+            set
+            {
+                if (value == DateTime.MinValue)
+                {
+                    return;
+                }
+
+                MaxDate = DateOnly.FromDateTime(value);
+            }
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -37,36 +67,46 @@ namespace SwashbucklerDiary.Pages
         {
             NavigateService.CurrentUrl += () =>
             {
-                return Navigation.GetUriWithQueryParameter("Search", Search);
+                return Navigation.GetUriWithQueryParameters(
+                    new Dictionary<string, object?>
+                    {
+                        ["Search"] = Search,
+                        ["MinDateTime"] = MinDateTime,
+                        ["MaxDateTime"] = MaxDateTime,
+                    });
             };
         }
 
         private Expression<Func<DiaryModel, bool>> Func()
         {
+            Expression<Func<DiaryModel, bool>>? exp = null;
+            Expression<Func<DiaryModel, bool>> expPrivate;
             Expression<Func<DiaryModel, bool>> expSearch;
             Expression<Func<DiaryModel, bool>> expDate;
 
-            if (!IsSearchFiltered)
+            expPrivate = it => !it.Private;
+            expSearch = it => (it.Title ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower()) ||
+                (it.Content ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower());
+            expDate = it => it.CreateTime >= MinDateTime && it.CreateTime <= MaxDateTime;
+
+            if(IsDateFiltered)
             {
-                expSearch = it => false;
+                exp = exp.And(expPrivate);
+            }
+
+            if (IsSearchFiltered)
+            {
+                exp = exp.And(expSearch);
+            }
+
+            if(exp == null)
+            {
+                return it => false;
             }
             else
             {
-                expSearch = it => !it.Private &&
-                            ((it.Title ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower()) ||
-                            (it.Content ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower()));
-
+                return exp.And(expPrivate);
             }
-
-            DateTime MinDateTime = MinDate.ToDateTime(default);
-            DateTime MaxDateTime = MaxDate.ToDateTime(TimeOnly.MaxValue);
-            if (MaxDate != DateOnly.MaxValue)
-            {
-                MaxDateTime = MaxDateTime.AddDays(1);
-            }
-
-            expDate = it => it.CreateTime >= MinDateTime && it.CreateTime <= MaxDateTime;
-            return expSearch.And(expDate);
         }
 
     }

@@ -1,9 +1,41 @@
 ﻿@page "/privacyLibrary"
 @inherits DiariesPageComponentBase
 
-<MyAppBar Title="@(I18n.T("Setting.Safe.PrivacyLibrary"))" OnClick="NavigateToBack">
-</MyAppBar>
+<MAppBar App="true" Elevation="0">
+    <MButton Icon="true" OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MySearch Title="@(I18n.T("Setting.Safe.PrivacyLibrary"))"
+              @bind-Value="ShowSearch"
+              @bind-Search="Search"
+              OnChanged="UpdateDiaries">
+    </MySearch>
+
+    <MButton Icon="true"
+             OnClick="()=>ShowSearch=!ShowSearch">
+        <MIcon>
+            mdi-magnify
+        </MIcon>
+    </MButton>
+
+    <MButton Icon="true"
+             OnClick="()=>ShowFilter=!ShowFilter">
+        <MIcon>
+            @(IsDateFiltered ? "mdi-filter-check-outline" : "mdi-filter-outline")
+        </MIcon>
+    </MButton>
+</MAppBar>
 
 <ScrollContainer>
     <DiaryCardList Value="Diaries" @bind-Tags="Tags" />
 </ScrollContainer>
+
+<DateFilterDialog @bind-Value="ShowFilter"
+                  @bind-DateMinValue="MinDate"
+                  @bind-DateMaxValue="MaxDate"
+                  OnOK="UpdateDiaries"
+                  OnReset="UpdateDiaries">
+</DateFilterDialog>
