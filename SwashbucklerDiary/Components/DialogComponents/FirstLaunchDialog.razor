@@ -33,8 +33,7 @@
                     @(I18n.T("AgreementAndPolicy.Title"))
                 </MCardTitle>
                 <MCardText Class="pb-0">
-                    <MMarkdownIt Source="@(I18n.T("AgreementAndPolicy.Content"))" Breaks="true">
-                    </MMarkdownIt>
+                    <MarkdownPreview Value="@(I18n.T("AgreementAndPolicy.Content"))"></MarkdownPreview>
                 </MCardText>
                 <MCardActions>
                     <MButton Class="flex-grow-1"

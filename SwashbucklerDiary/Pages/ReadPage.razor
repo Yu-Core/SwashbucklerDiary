@@ -103,10 +103,10 @@
         }
         @if (Markdown)
         {
-            <MMarkdownIt Source="@(Diary.Content)"
-                     Class="my-sm-4 px-3 user-select"
-                     Style="padding-top:10px">
-            </MMarkdownIt>
+            <MarkdownPreview Value="@(Diary.Content)"
+                         Class="my-sm-4 px-3 user-select"
+                         Style="padding-top:10px">
+            </MarkdownPreview>
         }
         else
         {

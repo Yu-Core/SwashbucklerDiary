@@ -299,11 +299,11 @@ a, .btn-link {
 }
 
 .theme--light .vditor-reset {
-    background-color: #fefefe !important;
+    background-color: #fcfcfc !important;
 }
 
 .theme--dark .vditor-reset {
-    background-color: #2e2e2e !important;
+    background-color: #121212 !important;
     color: #fff;
 }
 
@@ -318,7 +318,7 @@ a, .btn-link {
 }
 
 .theme--light.m-text-field .m-input__slot {
-    background-color: #fefefe !important;
+    background-color: transparent !important;
 }
 
 .theme--light.m-input--switch__track.black--text {
@@ -361,11 +361,6 @@ a, .btn-link {
     padding: 16px 24px 10px;
 }
 
-.m-markdown-it blockquote {
-    color: #6a737d;
-    border-left: .25em solid #eaecef;
-    padding: 0 1em;
-}
 /*更改点击涟漪效果*/
 .m-ripple__animation--in {
     transition-duration: 0.1s !important;
