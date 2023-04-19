@@ -91,7 +91,7 @@ namespace SwashbucklerDiary.Pages
 
             if(IsDateFiltered)
             {
-                exp = exp.And(expPrivate);
+                exp = exp.And(expDate);
             }
 
             if (IsSearchFiltered)
