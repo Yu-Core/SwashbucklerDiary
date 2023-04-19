@@ -308,7 +308,7 @@ a, .btn-link {
 }
 
 .theme--light .icon-btn {
-    background: #000 !important;
+    background: #121212 !important;
     color: #fff !important;
 }
 
@@ -363,13 +363,17 @@ a, .btn-link {
 
 /*更改点击涟漪效果*/
 .m-ripple__animation--in {
-    transition-duration: 0.1s !important;
+    transition-duration: .125s !important;
 }
 
 .m-ripple__animation--out {
-    transition-duration: 0.15s !important;
+    transition-duration: .15s !important;
 }
 
 .vditor-panel {
     display: none !important;
+}
+
+.my-diary-card:last-child{
+    margin-bottom:0px !important;
 }
