@@ -27,9 +27,14 @@
             <MSubheader Class="px-0">
                 @(DateTime.Now.ToString("yyyy/MM/dd") + " " + I18n.ToWeek())
             </MSubheader>
-            <div class="text-h6 font-weight-bold">
-                @GetWelcomeText()
-            </div>
+
+            @if (ShowWelcomeText)
+            {
+                <div class="text-h6 font-weight-bold">
+                    @GetWelcomeText()
+                </div>
+            }
+            
         </div>
 
         <DiaryCardList Value="Diaries" @bind-Tags="Tags"></DiaryCardList>

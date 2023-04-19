@@ -16,6 +16,7 @@
         FirstAgree,
         WebDAVServerAddress,
         WebDAVAccount,
-        WebDAVPassword
+        WebDAVPassword,
+        WelcomeText
     }
 }

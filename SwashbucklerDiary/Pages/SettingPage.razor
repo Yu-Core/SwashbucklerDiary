@@ -162,6 +162,36 @@
             }
         </MList>
     </MCard>
+    <div class="text-h6 setting-title">
+        @(I18n.T("Setting.Display.Name"))
+    </div>
+
+    <MCard Class="setting-card"
+           Elevation="2"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-hand-wave-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.WelcomeText"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="WelcomText"
+                             TValue="bool"
+                             OnChange="WelcomTextChange"
+                             Dense="true"
+                             Inset="true"
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(WelcomText)">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
 </ScrollContainer>
 
 <PasswordDialog @bind-Value="ShowPPSet"

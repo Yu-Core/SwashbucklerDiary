@@ -23,8 +23,9 @@ namespace SwashbucklerDiary.Services
             {SettingType.WebDAVServerAddress,string.Empty },
             {SettingType.WebDAVAccount,string.Empty },
             {SettingType.WebDAVPassword,string.Empty },
+            {SettingType.WelcomeText,true },
         };
-        private Dictionary<SettingType, object> DefalutSettings = new();
+        private readonly Dictionary<SettingType, object> DefalutSettings = new();
 
         public Task<bool> ContainsKey(string key)
         {

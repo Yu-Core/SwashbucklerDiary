@@ -308,6 +308,10 @@
       "PasswordError": "Password error",
       "NotSetPassword": "No password set",
       "Permission": "Permission"
+    },
+    "Display": {
+      "Name": "Display",
+      "WelcomeText": "WelcomeText"
     }
   },
   "Password must be at most 20 characters long": "Password must be at most 20 characters long",

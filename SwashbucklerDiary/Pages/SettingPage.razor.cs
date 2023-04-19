@@ -9,6 +9,7 @@ namespace SwashbucklerDiary.Pages
         private bool Title;
         private bool Markdown;
         private bool Privacy;
+        private bool WelcomText;
         private string? PrivatePassword;
         private bool ShowPPSet;
         private bool ShowPPInput;
@@ -30,6 +31,7 @@ namespace SwashbucklerDiary.Pages
             Title = await SettingsService.Get(SettingType.Title);
             Markdown = await SettingsService.Get(SettingType.Markdown);
             Privacy = await SettingsService.Get(SettingType.Privacy);
+            WelcomText = await SettingsService.Get(SettingType.WelcomeText);
         }
 
         private async Task TitleChange(bool value)
@@ -50,6 +52,11 @@ namespace SwashbucklerDiary.Pages
             {
                 await AlertService.Success(I18n.T("Setting.Safe.CamouflageSuccess"));
             }
+        }
+
+        private async Task WelcomTextChange(bool value)
+        {
+            await SettingsService.Save(SettingType.WelcomeText, value);
         }
 
         private string? GetDisplayPrivacy()

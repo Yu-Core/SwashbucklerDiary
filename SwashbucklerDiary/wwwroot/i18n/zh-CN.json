@@ -309,6 +309,10 @@
       "PasswordError": "密码错误",
       "NotSetPassword": "未设置密码",
       "Permission": "权限"
+    },
+    "Display": {
+      "Name": "显示",
+      "WelcomeText": "问候语"
     }
   },
   "Password must be at most 20 characters long": "密码不得超过20个字符",

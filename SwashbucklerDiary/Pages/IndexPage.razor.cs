@@ -7,6 +7,7 @@ namespace SwashbucklerDiary.Pages
 {
     public partial class IndexPage : DiariesPageComponentBase
     {
+        private bool ShowWelcomeText;
         private StringNumber tab = 0;
         private readonly List<string> Types = new() { "All", "Tags" };
 
@@ -18,6 +19,7 @@ namespace SwashbucklerDiary.Pages
         {
             InitTab();
             SetCurrentUrl();
+            await LoadSettings();
             await base.OnInitializedAsync();
         }
 
@@ -37,6 +39,11 @@ namespace SwashbucklerDiary.Pages
             NavigateService.CurrentUrl += () => {
                 return Navigation.GetUriWithQueryParameter("Type", Types[tab.ToInt32()]);
             };
+        }
+
+        private async Task LoadSettings()
+        {
+            ShowWelcomeText = await SettingsService.Get(SettingType.WelcomeText);
         }
 
         private async Task SaveAddTag(string tagName)

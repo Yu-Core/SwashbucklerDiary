@@ -3,7 +3,7 @@
 
 <MHover>
     <MCard @attributes="context.Attrs"
-           Class="@("mb-5 my-sm-5 " + Class)"
+           Class="@("my-3 my-sm-5 " + Class)"
            Elevation="@(context.Hover?"4":"2")"
            OnClick="OnClick"
            Ripple="false"
@@ -32,11 +32,11 @@
                 </div>
             </MListItemAction>
         </MListItem>
-        <MDivider Class="mx-4"></MDivider>
+        <MDivider Class="mx-3"></MDivider>
         <MListItem ThreeLine>
             <MListItemContent>
-                <MListItemTitle>
-                    <b>@Title</b>
+                <MListItemTitle Class="pb-2" Style="font-size:1.05rem;">
+                    @Title
                 </MListItemTitle>
                 <MListItemSubtitle>
                     @Text
