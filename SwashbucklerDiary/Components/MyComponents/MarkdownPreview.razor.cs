@@ -77,19 +77,21 @@ namespace SwashbucklerDiary.Components
 
         private async Task SetOptions()
         {
-            string Language = await SettingsService.Get(SettingType.Language);
-            Language = Language.Replace("-", "_");
-            Dictionary<string, object?> themeOptions = new()
+            string mode = ThemeService.Dark ? "dark" : "light";
+            string lang = await SettingsService.Get(SettingType.Language);
+            lang = lang.Replace("-", "_");
+            Dictionary<string, object?> theme = new()
             {
                 {"current",ThemeService.Dark?"dark":"light" },
                 {"path","npm/vditor/3.9.0/dist/css/content-theme" }
             };
+
             _options = new()
             {
-                {"mode",ThemeService.Dark?"dark":"light" },
+                {"mode",mode },
                 {"cdn","npm/vditor/3.9.0" },
-                {"lang",Language },
-                {"theme",themeOptions }
+                {"lang",lang },
+                {"theme",theme }
             };
         }
     }

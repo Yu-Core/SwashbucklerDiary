@@ -1,4 +1,5 @@
-﻿using BlazorComponent.I18n;
+﻿using BlazorComponent;
+using BlazorComponent.I18n;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.IServices;
@@ -32,19 +33,8 @@ namespace SwashbucklerDiary.Components
         protected async override Task OnInitializedAsync()
         {
             module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/vditor-helper.js");
-            string Language = await SettingsService.Get(SettingType.Language);
-            Language = Language.Replace("-", "_");
-            _options = new()
-            {
-                {"mode","ir" },
-                {"toolbar",new List<string>(){"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "outdent", "indent","code","inline-code","link","emoji","edit-mode"}},
-                {"placeholder",I18n.T("Write.ContentPlace")! },
-                {"cdn","npm/vditor/3.9.0" },
-                {"lang",Language },
-                {"icon","material" },
-                {"theme", ThemeService.Dark?"dark":"" }
-            };
-            base.OnInitialized();
+            await SetOptions();
+            await base.OnInitializedAsync();
         }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -58,6 +48,34 @@ namespace SwashbucklerDiary.Components
         {
             await Task.Delay(1000);
             await module!.InvokeVoidAsync("PreventInputLoseFocus", null);
+        }
+
+        private async Task SetOptions()
+        {
+            string lang = await SettingsService.Get(SettingType.Language);
+            lang = lang.Replace("-", "_");
+            string theme = ThemeService.Dark ? "dark" : "light";
+            Dictionary<string, object?> previewTheme = new()
+            {
+                {"current",ThemeService.Dark?"dark":"light" },
+                {"path","npm/vditor/3.9.0/dist/css/content-theme" }
+            };
+            Dictionary<string, object?> preview = new()
+            {
+                {"theme",previewTheme },
+            };
+
+            _options = new()
+            {
+                {"mode","ir" },
+                {"toolbar",new List<string>(){"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "outdent", "indent","code","inline-code","link","emoji","edit-mode"}},
+                {"placeholder",I18n.T("Write.ContentPlace")! },
+                {"cdn","npm/vditor/3.9.0" },
+                {"lang",lang },
+                {"icon","material" },
+                {"theme",  theme},
+                {"preview", preview}
+            };
         }
     }
 }
