@@ -1,7 +1,4 @@
-﻿/*::deep .vditor {
-    --textarea-background-color: #fff;
-}*/
-
+﻿
 ::deep .vditor-toolbar {
     background-color: transparent;
     padding-left: 0px !important;
@@ -53,7 +50,3 @@
             filter: drop-shadow(0.1px 0.1px 1px rgba(0, 0, 0, .2));
         }
 }
-/*::deep .vditor-hint {
-    position: fixed;
-    left: -1000px;
-}*/

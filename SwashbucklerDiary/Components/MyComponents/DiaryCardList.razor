@@ -1,11 +1,11 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits MyComponentBase
 
-<div class="d-flex justify-space-between flex-wrap @(Class)">
+<div class="my-card-list @(Class)">
     @foreach (var item in Value)
     {
         <DiaryCard Value="item"
-               Class="@($"diary-card {CardClass}")"
+               Class="@CardClass"
                OnTag="()=>HandleTag(item)"
                OnCopy="()=>HandleCopy(item)"
                OnDelete="()=>OpenDeleteDialog(item)"
@@ -18,8 +18,8 @@
 
 @if (!Value.Any())
 {
-    <div class="d-flex justify-center" style="padding-top:20vh;">
-        <div class="text-h6 text--secondary font-weight-bold-table">
+    <div class="my-not-have">
+        <div class="text-h6 text--secondary font-weight-bold-desktop">
             @(I18n.T("Diary.NoDiary"))
         </div>
     </div>

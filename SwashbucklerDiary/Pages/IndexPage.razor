@@ -1,16 +1,18 @@
 ﻿@page "/"
 @inherits DiariesPageComponentBase
 
+<link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
+
 <MAppBar App
          Elevation="0">
     <MTabs @bind-Value="tab"
            ActiveClass="text-h6 font-weight-bold"
            HideSlider>
-        <MTab Class="m-tab-swiper"
+        <MTab Class="my-tab"
               Ripple="false">
             @(I18n.T("Index.All"))
         </MTab>
-        <MTab Class="m-tab-swiper"
+        <MTab Class="my-tab"
               Ripple="false">
             @(I18n.T("Index.Tag"))
         </MTab>
@@ -23,7 +25,7 @@
 
 <SwiperTabItems @bind-Value="tab">
     <SwiperTabItem>
-        <div class="mb-5 px-2">
+        <div class="mb-5 pl-2">
             <MSubheader Class="px-0">
                 @(DateTime.Now.ToString("yyyy/MM/dd") + " " + I18n.ToWeek())
             </MSubheader>
@@ -47,7 +49,7 @@
 @if (tab == 0)
 {
     <FabTransition>
-        <MButton Class="mb-15 mb-sm-0 icon-btn"
+        <MButton Class="my-btn-fab"
              Bottom
              Right
              Fixed
@@ -63,7 +65,7 @@
 @if (tab == 1)
 {
     <FabTransition>
-        <MButton Class="mb-15 mb-sm-0 icon-btn"
+        <MButton Class="my-btn-fab"
              Bottom
              Right
              Fixed

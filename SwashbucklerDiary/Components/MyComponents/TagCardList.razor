@@ -1,7 +1,7 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits MyComponentBase
 
-<div class="d-flex justify-space-between flex-wrap">
+<div class="my-card-list">
     @foreach (var item in Value!)
     {
         <TagCard Value="item"
@@ -14,8 +14,8 @@
 
 @if (!Value.Any())
 {
-    <div class="d-flex justify-center" style="padding-top:20vh;">
-        <div class="text-h6 text--secondary font-weight-bold-table">
+    <div class="my-not-have">
+        <div class="text-h6 text--secondary font-weight-bold-desktop">
             @(I18n.T("Tag.NoTag"))
         </div>
     </div>

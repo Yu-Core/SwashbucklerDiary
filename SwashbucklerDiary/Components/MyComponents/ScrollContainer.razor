@@ -1,12 +1,12 @@
 ﻿@namespace SwashbucklerDiary.Components
 
 <div id="@Id"
-     class="overflow-y-auto flex-grow-1 @(Class)"
-     style="min-height:0;height:0;@(Style)"
+     class="my-scroll-container @(Class)"
+     style="@(Style)"
      @oncontextmenu="OnContextmenu">
     <MContainer Fluid="true"
-                Class="@("px-4 "+ ContentClass)"
-                Style="@($"box-sizing:border-box;{ContentStyle}")">
+                Class="@("my-container "+ ContentClass)"
+                Style="@ContentStyle">
         @ChildContent
     </MContainer>
 </div>

@@ -1,16 +1,18 @@
 ﻿@page "/history"
 @inherits DiariesPageComponentBase
 
+<link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
+
 <MAppBar App
          Elevation="0">
     <MTabs @bind-Value="tab"
            ActiveClass="text-h6 font-weight-bold"
            HideSlider>
-        <MTab Class="m-tab-swiper"
+        <MTab Class="my-tab"
               Ripple="false">
             @(I18n.T("History.Calendar"))
         </MTab>
-        <MTab Class="m-tab-swiper"
+        <MTab Class="my-tab"
               Ripple="false">
             @(I18n.T("History.Catalogue"))
         </MTab>

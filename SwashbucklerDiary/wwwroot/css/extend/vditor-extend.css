@@ -1,0 +1,33 @@
+﻿/*隐藏输入处的提示*/
+.vditor-panel {
+    display: none !important;
+}
+
+/*软键盘遮挡问题*/
+@media (hover: none) {
+    .vditor-toolbar-help {
+        margin-bottom: 70px;
+    }
+}
+
+/*改变配色*/
+.theme--light .vditor-toolbar {
+    background: #fcfcfc !important;
+}
+
+.theme--dark .vditor-toolbar {
+    background: #121212 !important;
+}
+
+.vditor-reset {
+    border-radius: 8px;
+}
+
+.theme--light .vditor-reset {
+    background-color: #fcfcfc !important;
+}
+
+.theme--dark .vditor-reset {
+    background-color: #121212 !important;
+    color: #fff;
+}

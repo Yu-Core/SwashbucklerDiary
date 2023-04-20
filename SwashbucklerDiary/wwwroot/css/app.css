@@ -82,20 +82,7 @@ a, .btn-link {
         padding-left: env(safe-area-inset-left);
     }
 }
-/*解决移动端悬停问题*/
-@media (hover: none) {
-    .m-btn:hover::before {
-        display: none;
-    }
 
-    .m-input--selection-controls__input:hover .m-input--selection-controls__ripple:before {
-        display: none;
-    }
-
-    .m-icon:hover::before {
-        display: inline-block !important;
-    }
-}
 
 * {
     -ms-overflow-style: none;
@@ -106,16 +93,16 @@ a, .btn-link {
     display: none;
 }
 
-.m-tab-swiper {
+.my-tab {
     text-transform: none !important;
 }
 
-    .m-tab-swiper::before {
+    .my-tab::before {
         opacity: 0 !important;
     }
 
 @media screen and (max-width:600px) {
-    .m-tab-swiper {
+    .my-tab {
         min-width: unset !important;
     }
 }
@@ -156,62 +143,7 @@ a, .btn-link {
     color: #000000;
 }
 
-/*优化消息提示*/
-.m-alert__title {
-    margin-bottom: 8px;
-    font-size: 1rem !important;
-    font-weight: 700 !important;
-}
 
-.m-snack__wrapper {
-    border-radius: 8px !important;
-}
-/*修复应用栏中最前最后的位置，使用包裹的组件边距不正确*/
-.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:first-of-type:nth-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:nth-child(2) {
-    margin-left: -12px;
-}
-
-.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:first-of-type:nth-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:nth-child(2) {
-    margin-right: -12px;
-}
-
-.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:last-of-type:nth-last-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:last-of-type:nth-last-child(2) {
-    margin-right: -12px;
-}
-
-.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:last-of-type:nth-last-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:last-of-type:nth-last-child(2) {
-    margin-left: -12px;
-}
-
-.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:first-child:last-of-type:nth-last-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:last-of-type:nth-last-child(2) {
-    margin-left: -12px;
-    margin-right: 0px;
-}
-
-.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:first-child:last-of-type:nth-last-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:first-child:last-of-type:nth-last-child(2) {
-    margin-left: 0px;
-    margin-right: -12px;
-}
-
-.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:last-child:first-of-type:nth-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:last-child:first-of-type:nth-child(2) {
-    margin-left: 0px;
-    margin-right: -12px;
-}
-
-.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:last-child:first-of-type:nth-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:last-child:first-of-type:nth-child(2) {
-    margin-left: -12px;
-    margin-right: 0px;
-}
-
-.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:first-of-type:nth-child(2):last-of-type:nth-last-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:nth-child(2):last-of-type:nth-last-child(2) {
-    margin-left: -12px;
-    margin-right: 0px;
-}
-
-.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:first-of-type:nth-child(2):last-of-type:nth-last-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:nth-child(2):last-of-type:nth-last-child(2) {
-    margin-left: 0px;
-    margin-right: -12px;
-}
 
 .transition {
     transition: all ease 0.3s !important;
@@ -222,126 +154,27 @@ a, .btn-link {
     flex-direction: column;
 }
 
-.swiper {
-    width: 100%;
-}
-/*配色调整*/
-.theme--light .m-tab--active {
-    color: #000 !important;
-}
-
-.theme--dark .m-tab--active {
-    color: #fff !important;
-}
-
-.theme--light .my-picker .m-picker__body {
-    background: #fcfcfc !important;
-}
-
-    .theme--light .my-picker .m-picker__body + .m-picker__actions {
-        background: #fcfcfc !important;
-    }
-
-.theme--dark .my-picker .m-picker__body {
-    background: #1e1e1e !important;
-}
-
-    .theme--dark .my-picker .m-picker__body + .m-picker__actions {
-        background: #1e1e1e !important;
-    }
-
-.theme--light.m-app-bar.m-toolbar.m-sheet {
-    background: #fcfcfc !important;
-}
-
-.theme--dark.m-app-bar.m-toolbar.m-sheet {
-    background: #121212 !important;
-}
-
-.theme--light.m-navigation-drawer {
-    background: #fcfcfc !important;
-}
-
-.theme--dark.m-navigation-drawer {
-    background: #121212 !important;
-}
-
-.theme--light.m-bottom-navigation {
-    background: #fcfcfc !important;
-}
-
-.theme--dark.m-bottom-navigation {
-    background: #121212 !important;
-}
-
-.theme--light.m-application {
-    background: #fcfcfc !important;
-}
-
-.theme--light.navigation-active {
+.theme--light .my-navigation-drawer-active {
     background: #f5f5f5 !important;
 }
 
-.theme--dark.navigation-active {
+.theme--dark .my-navigation-drawer-active {
     background: #424242 !important;
 }
 
-.theme--light .vditor-toolbar {
-    background: #fcfcfc !important;
-}
-
-.theme--dark .vditor-toolbar {
-    background: #121212 !important;
-}
-
-.vditor-reset {
-    border-radius: 8px;
-}
-
-.theme--light .vditor-reset {
-    background-color: #fcfcfc !important;
-}
-
-.theme--dark .vditor-reset {
-    background-color: #121212 !important;
-    color: #fff;
-}
-
-.theme--light .icon-btn {
+.theme--light .my-btn-fab {
     background: #121212 !important;
     color: #fff !important;
 }
 
-.theme--dark .icon-btn {
+.theme--dark .my-btn-fab {
     background: #2e2e2e !important;
     color: #fff !important;
 }
 
-.theme--light.m-text-field .m-input__slot {
-    background-color: transparent !important;
-}
-
-.theme--light.m-input--switch__track.black--text {
-    opacity: .8;
-}
-
-.theme--light .fcfcfc {
-    background: #fcfcfc !important;
-}
-
-.theme--light .btn-chip {
+.theme--light .my-btn-chip {
     border-color: #BDBDBD !important;
     color: rgba(0,0,0,.87) !important;
-}
-
-@media screen and (max-width:600px) {
-    .vditor-toolbar-help {
-        margin-bottom: 70px;
-    }
-}
-
-.theme--light.m-divider {
-    border-color: rgba(0,0,0,.1) !important;
 }
 
 @media (hover: none) {
@@ -356,24 +189,104 @@ a, .btn-link {
     }
 }
 
-.p-mobile-date-picker__content .m-sheet:first-child {
-    border-radius: 8px 8px 0 0 !important;
-    padding: 16px 24px 10px;
+.my-diary-card {
+    width: 100%;
+    margin-top: 12px !important;
+    margin-bottom: 12px !important;
+    padding-bottom:8px !important;
 }
 
-/*更改点击涟漪效果*/
-.m-ripple__animation--in {
-    transition-duration: .125s !important;
+@media screen and (min-width:600px) {
+    .my-diary-card {
+        width: 48%;
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+    }
 }
 
-.m-ripple__animation--out {
-    transition-duration: .15s !important;
+.my-diary-card:last-child {
+    margin-bottom: 0px !important;
 }
 
-.vditor-panel {
-    display: none !important;
+.my-diary-card-title {
+    font-size: 1.05rem !important;
+    padding-bottom: 8px !important;
+    font-weight: 700 !important;
 }
 
-.my-diary-card:last-child{
-    margin-bottom:0px !important;
+.my-container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box !important;
 }
+
+.swiper {
+    width: 100%;
+}
+
+.swiper-slide {
+    position: relative !important;
+    overflow: auto !important;
+}
+
+    .swiper-slide > .my-container {
+        position: absolute !important;
+    }
+
+.my-scroll-container {
+    overflow-y: auto !important;
+    flex-grow: 1 !important;
+    min-height: 0 !important;
+    height: 0 !important;
+}
+
+.my-btn-fab {
+    margin-bottom: 60px !important;
+}
+
+@media screen and (min-width:600px) {
+    .my-btn-fab {
+        margin-bottom: 0px !important;
+    }
+}
+
+@media screen and (min-width:600px) {
+    .font-weight-bold-desktop {
+        font-weight: 700 !important;
+    }
+}
+
+.my-card-list {
+    display: flex !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+}
+
+.my-not-have {
+    display:flex !important;
+    justify-content:center !important;
+    padding-top: 20vh !important;
+}
+
+.my-tag-card {
+    width: 100%;
+}
+
+@media screen and (min-width:600px) {
+    .my-tag-card {
+        width: 48%;
+    }
+}
+
+.my-first-launch-card {
+    display:flex !important;
+    justify-content:center !important;
+    align-items:center !important;
+    background: #fcfcfc !important;
+}
+
+    .my-first-launch-card .my-first-launch-list {
+        text-align: center;
+        width: 100%;
+        background: #fcfcfc !important;
+    }

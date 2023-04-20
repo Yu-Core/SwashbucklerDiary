@@ -1,0 +1,140 @@
+﻿/*修复应用栏中最前最后的位置，使用包裹的组件边距不正确*/
+.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:first-of-type:nth-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:nth-child(2) {
+    margin-left: -12px;
+}
+
+.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:first-of-type:nth-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:nth-child(2) {
+    margin-right: -12px;
+}
+
+.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:last-of-type:nth-last-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:last-of-type:nth-last-child(2) {
+    margin-right: -12px;
+}
+
+.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:last-of-type:nth-last-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:last-of-type:nth-last-child(2) {
+    margin-left: -12px;
+}
+
+.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:first-child:last-of-type:nth-last-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:last-of-type:nth-last-child(2) {
+    margin-left: -12px;
+    margin-right: 0px;
+}
+
+.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:first-child:last-of-type:nth-last-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:first-child:last-of-type:nth-last-child(2) {
+    margin-left: 0px;
+    margin-right: -12px;
+}
+
+.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:last-child:first-of-type:nth-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:last-child:first-of-type:nth-child(2) {
+    margin-left: 0px;
+    margin-right: -12px;
+}
+
+.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:last-child:first-of-type:nth-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:last-child:first-of-type:nth-child(2) {
+    margin-left: -12px;
+    margin-right: 0px;
+}
+
+.m-application--is-ltr .m-toolbar__content > .m-btn.m-btn--icon:first-of-type:nth-child(2):last-of-type:nth-last-child(2), .m-application--is-ltr .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:nth-child(2):last-of-type:nth-last-child(2) {
+    margin-left: -12px;
+    margin-right: 0px;
+}
+
+.m-application--is-rtl .m-toolbar__content > .m-btn.m-btn--icon:first-of-type:nth-child(2):last-of-type:nth-last-child(2), .m-application--is-rtl .m-toolbar__extension > .m-btn.m-btn--icon:first-of-type:nth-child(2):last-of-type:nth-last-child(2) {
+    margin-left: 0px;
+    margin-right: -12px;
+}
+
+/*更改点击涟漪效果*/
+.m-ripple__animation--in {
+    transition-duration: .1s !important;
+}
+
+.m-ripple__animation--out {
+    transition-duration: .15s !important;
+}
+
+/*优化消息提示*/
+.m-alert__title {
+    margin-bottom: 8px;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+}
+
+.m-snack__wrapper {
+    border-radius: 8px !important;
+}
+
+/*解决移动端悬停问题*/
+@media (hover: none) {
+    .m-btn:hover::before {
+        display: none;
+    }
+
+    .m-input--selection-controls__input:hover .m-input--selection-controls__ripple:before {
+        display: none;
+    }
+
+    .m-icon:hover::before {
+        display: inline-block !important;
+    }
+}
+
+/*配色*/
+.theme--light.m-application {
+    background: #fcfcfc !important;
+}
+
+.theme--light.m-divider {
+    border-color: rgba(0,0,0,.1) !important;
+}
+
+.theme--light .m-tab--active {
+    color: #000 !important;
+}
+
+.theme--dark .m-tab--active {
+    color: #fff !important;
+}
+
+.theme--light .my-picker .m-picker__body {
+    background: #fcfcfc !important;
+}
+
+    .theme--light .my-picker .m-picker__body + .m-picker__actions {
+        background: #fcfcfc !important;
+    }
+
+.theme--dark .my-picker .m-picker__body {
+    background: #1e1e1e !important;
+}
+
+    .theme--dark .my-picker .m-picker__body + .m-picker__actions {
+        background: #1e1e1e !important;
+    }
+
+.m-navigation-drawer {
+    background: inherit !important;
+}
+
+.m-bottom-navigation {
+    background: inherit !important;
+}
+
+.m-app-bar.m-toolbar.m-sheet {
+    background: inherit !important;
+}
+
+.m-text-field .m-input__slot {
+    background-color: inherit !important;
+}
+
+.theme--light.m-input--switch__track.black--text {
+    opacity: .8;
+}
+
+.p-mobile-date-picker__content .m-sheet:first-child {
+    border-radius: 8px 8px 0 0 !important;
+    padding: 16px 24px 10px;
+}
+
