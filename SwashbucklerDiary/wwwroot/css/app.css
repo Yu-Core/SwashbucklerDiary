@@ -143,12 +143,6 @@ a, .btn-link {
     color: #000000;
 }
 
-
-
-.transition {
-    transition: all ease 0.3s !important;
-}
-
 .m-main__wrap {
     display: flex;
     flex-direction: column;
@@ -193,7 +187,7 @@ a, .btn-link {
     width: 100%;
     margin-top: 12px !important;
     margin-bottom: 12px !important;
-    padding-bottom:8px !important;
+    padding-bottom: 8px !important;
 }
 
 @media screen and (min-width:600px) {
@@ -204,8 +198,10 @@ a, .btn-link {
     }
 }
 
-.my-diary-card:last-child {
-    margin-bottom: 0px !important;
+@media screen and (max-width:600px) {
+    .my-diary-card:last-child {
+        margin-bottom: 0px !important;
+    }
 }
 
 .my-diary-card-title {
@@ -215,8 +211,8 @@ a, .btn-link {
 }
 
 .my-container {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
     box-sizing: border-box !important;
 }
 
@@ -263,8 +259,8 @@ a, .btn-link {
 }
 
 .my-not-have {
-    display:flex !important;
-    justify-content:center !important;
+    display: flex !important;
+    justify-content: center !important;
     padding-top: 20vh !important;
 }
 
@@ -279,9 +275,9 @@ a, .btn-link {
 }
 
 .my-first-launch-card {
-    display:flex !important;
-    justify-content:center !important;
-    align-items:center !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
     background: #fcfcfc !important;
 }
 

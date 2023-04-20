@@ -3,7 +3,7 @@
 
 <link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
 
-<MAppBar App
+<MAppBar App="true"
          Elevation="0">
     <MTabs @bind-Value="tab"
            ActiveClass="text-h6 font-weight-bold"
@@ -17,13 +17,9 @@
             @(I18n.T("History.Catalogue"))
         </MTab>
     </MTabs>
-    <MSpacer></MSpacer>
-    <MButton Large Icon OnClick="@(()=>To("/search"))">
-        <MIcon>mdi-magnify</MIcon>
-    </MButton>
-    </MAppBar>
+</MAppBar>
 
-    <SwiperTabItems @bind-Value="tab">
+<SwiperTabItems @bind-Value="tab">
     <SwiperTabItem>
         <MDatePicker @bind-Value="PickedDate"
                      Class="rounded-lg my-picker"

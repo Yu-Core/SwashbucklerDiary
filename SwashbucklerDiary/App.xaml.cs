@@ -15,12 +15,6 @@ namespace SwashbucklerDiary
             SettingsService = settingsService;
         }
 
-        //protected override void OnResume()
-        //{
-        //    base.OnResume();
-        //    SystemService.OnResume();
-        //}
-
         protected override Window CreateWindow(IActivationState? activationState)
         {
             Window window = base.CreateWindow(activationState);
