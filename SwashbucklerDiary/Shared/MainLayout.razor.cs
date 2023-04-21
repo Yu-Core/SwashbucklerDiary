@@ -7,9 +7,8 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Shared
 {
-    public partial class MainLayout : IDisposable
+    public partial class MainLayout
     {
-        bool ShowFirstLaunch = true;
         StringNumber SelectedItemIndex = 0;
         List<NavigationButton> NavigationButtons = new();
 
@@ -34,52 +33,16 @@ namespace SwashbucklerDiary.Shared
         [Inject]
         private ISystemService SystemService { get; set; } = default!;
 
-        public void Dispose()
-        {
-            MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
-            GC.SuppressFinalize(this);
-        }
-
         protected override async Task OnInitializedAsync()
         {
             NavigateService.Initialize(Navigation);
             AlertService.Initialize(PopupService);
             I18nService.Initialize(I18n);
             LoadView();
-            MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
             ThemeService.OnChanged += ThemeChanged;
             I18nService.OnChanged += StateHasChanged;
             await LoadSettings();
             await base.OnInitializedAsync();
-        }
-
-        private bool Mini => MasaBlazor.Breakpoint.Sm;
-
-        private bool ShowBottomNavigation
-        {
-            get
-            {
-                if (MasaBlazor.Breakpoint.SmAndUp || ShowFirstLaunch)
-                {
-                    return false;
-                }
-                string[] links = { "", "history", "mine" };
-                var url = Navigation!.ToBaseRelativePath(Navigation.Uri);
-                return links.Any(it => it == url.Split("?")[0]);
-            }
-        }
-
-        private bool ShowNavigationDrawer
-        {
-            get
-            {
-                if (!MasaBlazor.Breakpoint.SmAndUp || ShowFirstLaunch)
-                {
-                    return false;
-                }
-
-                return true;
-            }
         }
 
         private static string MainStyle
@@ -108,11 +71,6 @@ namespace SwashbucklerDiary.Shared
                 new ( "Main.History", "mdi-clock-outline", "mdi-clock", ()=>To("history")),
                 new ( "Main.Mine", "mdi-account-outline", "mdi-account", ()=>To("mine"))
             };
-        }
-
-        private async Task InvokeStateHasChangedAsync()
-        {
-            await InvokeAsync(StateHasChanged);
         }
 
         protected async void To(string url)

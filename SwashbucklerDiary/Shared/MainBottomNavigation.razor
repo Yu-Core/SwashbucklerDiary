@@ -1,10 +1,11 @@
 ﻿@using SwashbucklerDiary.IServices
 @using SwashbucklerDiary.Models
+@implements IDisposable
 
 <MBottomNavigation Value="Value"
                    ValueChanged="ValueChanged"
                    InputValue="Show"
-                   Class="d-flex justify-space-around d-sm-none elevation-0"
+                   Class="d-flex justify-space-around elevation-0"
                    Mandatory="true"
                    App="true">
     @foreach (var (item, i) in Items.Select((v, i) => (v, i)))
@@ -19,14 +20,51 @@
 
 @code {
     [Inject]
+    private MasaBlazor MasaBlazor { get; set; } = default!;
+    [Inject]
     private II18nService I18n { get; set; } = default!;
+    [Inject]
+    private NavigationManager Navigation { get; set; } = default!;
 
     [Parameter]
     public StringNumber Value { get; set; } = 0;
     [Parameter]
     public EventCallback<StringNumber> ValueChanged { get; set; }
     [Parameter]
-    public bool Show { get; set; }
-    [Parameter]
     public List<NavigationButton> Items { get; set; } = new();
+
+    public void Dispose()
+    {
+        MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+        GC.SuppressFinalize(this);
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
+        return base.OnInitializedAsync();
+    }
+
+    private async Task InvokeStateHasChangedAsync()
+    {
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private bool Show
+    {
+        get
+        {
+            if (!MasaBlazor.Breakpoint.Xs)
+            {
+                return false;
+            }
+            else
+            {
+                string[] links = { "", "history", "mine" };
+                var url = Navigation!.ToBaseRelativePath(Navigation.Uri);
+                return links.Any(it => it == url.Split("?")[0]);
+            }
+        }
+
+    }
 }

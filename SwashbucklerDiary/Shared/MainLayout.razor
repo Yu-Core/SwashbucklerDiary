@@ -1,26 +1,16 @@
 ﻿@inherits LayoutComponentBase
 
-
 <MApp>
     <ErrorBoundary>
         <ChildContent>
-            <MainNavigationDrawer @bind-Value="SelectedItemIndex"
-                                  Show="ShowNavigationDrawer"
-                                  Items="NavigationButtons"
-                                  MiniVariant="Mini">
-            </MainNavigationDrawer>
+            
             <MMain Style="@(MainStyle)">
-                @if (ShowFirstLaunch)
-                {
-                    <FirstLaunchDialog @bind-Value="ShowFirstLaunch"></FirstLaunchDialog>
-                }
-                else
-                {
-                    @Body
-                }
+                <MainNavigationDrawer @bind-Value="SelectedItemIndex"
+                                      Items="NavigationButtons">
+                </MainNavigationDrawer>
+                @Body
             </MMain>
             <MainBottomNavigation @bind-Value="SelectedItemIndex"
-                                  Show="ShowBottomNavigation"
                                   Items="NavigationButtons">
             </MainBottomNavigation>
         </ChildContent>
