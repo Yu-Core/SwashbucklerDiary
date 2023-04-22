@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Services
             {SettingType.Markdown,true },
             {SettingType.UserName,string.Empty },
             {SettingType.Sign,string.Empty },
-            {SettingType.Avatar,"./logo/logo.jpg" },
+            {SettingType.Avatar,"./logo/logo.svg" },
             {SettingType.Privacy,true },
             {SettingType.PrivatePassword,string.Empty },
             {SettingType.BackupsPath,string.Empty },
