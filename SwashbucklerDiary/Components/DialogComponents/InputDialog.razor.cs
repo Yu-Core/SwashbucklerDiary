@@ -8,6 +8,7 @@ namespace SwashbucklerDiary.Components
         private bool _value;
         private string? InputText;
         private bool showPassword;
+        private bool PressedSave;
 
         [Parameter]
         public override bool Value
@@ -65,6 +66,11 @@ namespace SwashbucklerDiary.Components
 
         protected virtual async Task HandleOnEnter(KeyboardEventArgs args)
         {
+            if (!_value)
+            {
+                return;
+            }
+
             if (args.Key == "Enter")
             {
                 await HandleOnOK();
