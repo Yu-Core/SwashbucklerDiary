@@ -4,10 +4,11 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class FirstLaunchDialog : DialogComponentBase
+    public partial class FirstLaunchDialog
     {
-        private bool FirstLaunchLanguage;
-        private bool FirstLaunchReadAgreementAndPolicy;
+        private bool Show = true;
+        private bool SelectedLanguage;
+        private bool AgreedAgreement;
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
@@ -15,45 +16,55 @@ namespace SwashbucklerDiary.Components
         private ISettingsService SettingsService { get; set; } = default!;
         [Inject]
         private ISystemService SystemService { get; set; } = default!;
+        [Inject]
+        private II18nService I18n { get; set; } = default!;
+        [Inject]
+        private IStateService StateService { get; set; } = default!;
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            LoadSettings();
-            base.OnInitialized();
+            await base.OnInitializedAsync();
+            await LoadSettings();
         }
 
         private Dictionary<string, string> Languages => I18n.Languages;
 
-        private async void LoadSettings()
+        private async Task LoadSettings()
         {
-            FirstLaunchLanguage = SettingsService.GetDefault<bool>(SettingType.FirstSetLanguage);
-            FirstLaunchReadAgreementAndPolicy = SettingsService.GetDefault<bool>(SettingType.FirstAgree);
-            if(FirstLaunchLanguage)
+            var lang = await SettingsService.Get<bool>(SettingType.FirstSetLanguage);
+            var agree = await SettingsService.Get<bool>(SettingType.FirstAgree);
+            
+            if (lang && agree)
             {
-                if(FirstLaunchReadAgreementAndPolicy)
-                {
-                    await InternalValueChanged(false);
-                }
+                Show = false;
+            }
+            else
+            {
+                SelectedLanguage = lang;
+                AgreedAgreement = agree;
             }
         }
 
         private async Task SetLanguage(string value)
         {
-            if (FirstLaunchLanguage)
+            if (SelectedLanguage)
                 return;
 
-            FirstLaunchLanguage = true;
+            SelectedLanguage = true;
             I18n.SetCulture(value);
             await InsertDefaultDiaries();
             await SettingsService.Save(SettingType.FirstSetLanguage, true);
             await SettingsService.Save(SettingType.Language, value);
+            await StateService.NotifyFirstLauchChanged();
         }
 
         private async Task OnArgee()
         {
+            if (AgreedAgreement)
+                return;
+            AgreedAgreement = true;
+            Show = false;
             await SettingsService.Save(SettingType.FirstAgree, true);
-
-            await InternalValueChanged(false);
         }
         private void OnDisagree()
         {

@@ -1,6 +1,7 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
+using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
@@ -11,12 +12,16 @@ namespace SwashbucklerDiary.Pages
         private StringNumber tab = 0;
         private readonly List<string> Types = new() { "All", "Tags" };
 
+        [Inject]
+        private IStateService StateService { get; set; } = default!;
+
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Type { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
+            FirstLauch();
             InitTab();
             SetCurrentUrl();
             await LoadSettings();
@@ -24,6 +29,11 @@ namespace SwashbucklerDiary.Pages
         }
 
         private bool ShowAddTag { get; set; }
+
+        private void FirstLauch()
+        {
+            StateService.FirstLauch += FirstLauchUpdateDiaries;
+        }
 
         private void InitTab()
         {
@@ -100,6 +110,12 @@ namespace SwashbucklerDiary.Pages
                 return I18n.T("Index.Welcome.BeforeDawn")!;
             }
             return "Hello World";
+        }
+
+        private async Task FirstLauchUpdateDiaries()
+        {
+            await UpdateDiaries();
+            await InvokeAsync(StateHasChanged);
         }
     }
 }

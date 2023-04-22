@@ -75,8 +75,7 @@ namespace SwashbucklerDiary.Shared
 
         protected async void To(string url)
         {
-            await NavigateService.NavBtnClick();
-            Navigation.NavigateTo(url);
+            await NavigateService.NavBtnClick(url);
         }
 
         private void ThemeChanged(ThemeState state)

@@ -275,6 +275,10 @@ a, .btn-link {
 }
 
 .my-first-launch-card {
+    position:fixed !important;
+    width:100%;
+    height:100%;
+    z-index:99;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;

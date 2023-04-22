@@ -34,6 +34,6 @@ namespace SwashbucklerDiary.IServices
         /// </summary>
         /// <returns>true已处理事件，false为无事件可处理(便于做进一步处理，例如退出应用)</returns>
         bool OnBackButtonPressed();
-        Task NavBtnClick();
+        Task NavBtnClick(string url);
     }
 }

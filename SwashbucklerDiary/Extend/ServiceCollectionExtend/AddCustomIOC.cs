@@ -33,6 +33,7 @@ namespace SwashbucklerDiary.Extend
             services.AddSingleton<II18nService, I18nService>();
             services.AddScoped<ILocalImageService, LocalImageService>();
             services.AddSingleton<IThemeService, ThemeService>();
+            services.AddSingleton<IStateService, StateService>();
             return services;
         }
     }

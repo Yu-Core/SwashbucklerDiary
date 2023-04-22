@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Services
         public void NavigateTo(string url)
         {
             string oldUrl = string.Empty;
-            if(CurrentUrl == null)
+            if (CurrentUrl == null)
             {
                 oldUrl = Navigation.ToBaseRelativePath(Navigation.Uri);
             }
@@ -64,13 +64,13 @@ namespace SwashbucklerDiary.Services
             return false;
         }
 
-        public Task NavBtnClick()
+        public async Task NavBtnClick(string url)
         {
-            if(NavBtnAction != null)
+            if (NavBtnAction != null)
             {
-                return NavBtnAction.Invoke();
+                await NavBtnAction.Invoke();
             }
-            return Task.CompletedTask;
+            Navigation.NavigateTo(url);
         }
     }
 }
