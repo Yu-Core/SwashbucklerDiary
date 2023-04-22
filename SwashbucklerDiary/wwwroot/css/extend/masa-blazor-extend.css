@@ -138,3 +138,7 @@
     padding: 16px 24px 10px;
 }
 
+.m-slide-group__wrapper{
+    flex:unset !important;
+}
+
