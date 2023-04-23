@@ -42,8 +42,8 @@
 
     <ItemGroup>
         <!-- App icon for android -->
-		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg_android.svg" Color="#FFFFFF" />
-		
+		<MauiIcon Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" ForegroundScale="0.5" Color="#FFFFFF" />
+
 		<!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#FFFFFF" />
 		
@@ -78,6 +78,7 @@
 
 	<ItemGroup>
 	  <None Remove="myapp.keystore" />
+	  <None Remove="Resources\AppIcon\appicon_windows.svg" />
 	</ItemGroup>
 
 	<ItemGroup>

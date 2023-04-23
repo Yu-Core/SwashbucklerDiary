@@ -156,16 +156,6 @@ a, .btn-link {
     background: #424242 !important;
 }
 
-.theme--light .my-btn-fab {
-    background: #121212 !important;
-    color: #fff !important;
-}
-
-.theme--dark .my-btn-fab {
-    background: #2e2e2e !important;
-    color: #fff !important;
-}
-
 .theme--light .my-btn-chip {
     border-color: #BDBDBD !important;
     color: rgba(0,0,0,.87) !important;
@@ -185,9 +175,8 @@ a, .btn-link {
 
 .my-diary-card {
     width: 100%;
-    margin-top: 12px !important;
-    margin-bottom: 12px !important;
-    padding-bottom: 8px !important;
+    margin-bottom: 20px;
+    padding: 0px 0px 8px !important;
 }
 
 @media screen and (min-width:600px) {
@@ -204,10 +193,13 @@ a, .btn-link {
     }
 }
 
+.my-diary-card .theme--light.m-divider {
+    border-color: rgba(0,0,0,.04);
+}
+
 .my-diary-card-title {
-    font-size: 1.05rem !important;
-    padding-bottom: 8px !important;
     font-weight: 700 !important;
+    padding-bottom: 8px !important;
 }
 
 .my-container {
@@ -234,6 +226,10 @@ a, .btn-link {
     flex-grow: 1 !important;
     min-height: 0 !important;
     height: 0 !important;
+}
+
+.theme--light .my-btn-fab {
+    background-color: #fff !important;
 }
 
 .my-btn-fab {
@@ -275,10 +271,10 @@ a, .btn-link {
 }
 
 .my-first-launch-card {
-    position:fixed !important;
-    width:100%;
-    height:100%;
-    z-index:99;
+    position: fixed !important;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
@@ -290,3 +286,10 @@ a, .btn-link {
         width: 100%;
         background: #fcfcfc !important;
     }
+
+.chevron-down {
+    transition: transform 0.75s;
+}
+.chevron-down-rotate-x {
+    transform: rotateX(180deg);
+}

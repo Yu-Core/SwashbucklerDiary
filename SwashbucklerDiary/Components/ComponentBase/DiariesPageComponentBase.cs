@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using System.Diagnostics;
 
 namespace SwashbucklerDiary.Components
 {
@@ -30,7 +29,6 @@ namespace SwashbucklerDiary.Components
         protected virtual async Task UpdateDiaries()
         {
             Diaries = await DiaryService.QueryAsync(it => !it.Private);
-            Debug.WriteLine(Diaries.Count);
         }
 
         protected virtual async Task UpdateTags()

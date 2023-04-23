@@ -86,7 +86,7 @@
 }
 
 .theme--light.m-divider {
-    border-color: rgba(0,0,0,.1) !important;
+    border-color: rgba(0,0,0,.08);
 }
 
 .theme--light .m-tab--active {
@@ -138,7 +138,20 @@
     padding: 16px 24px 10px;
 }
 
-.m-slide-group__wrapper{
-    flex:unset !important;
+/*临时解决MTabs闪烁问题*/
+.m-tabs-bar > .m-slide-group__wrapper {
+    flex: unset !important;
 }
 
+/*自适应圆角*/
+@media screen and (min-width:600px) {
+    .m-application .rounded-sm-b-lg {
+        border-bottom-left-radius: 8px !important;
+        border-bottom-right-radius: 8px !important;
+    }
+}
+
+/*日历提示圆点位置*/
+.m-date-picker-table--date .m-date-picker-table__events {
+    bottom: 2px !important;
+}

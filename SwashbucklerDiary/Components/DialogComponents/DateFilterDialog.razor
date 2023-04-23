@@ -2,7 +2,7 @@
 @inherits DialogComponentBase
 
 <MyDialog Value="Value" ValueChanged="InternalValueChanged">
-    <MCard Class="rounded-t-lg">
+    <MCard Class="rounded-t-lg rounded-sm-b-lg">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Filter.Filter"))
             <MSpacer></MSpacer>
@@ -35,7 +35,7 @@
                         @MinDateText
                     </MChip>
                     <div class="d-flex align-center">
-                        <MIcon>mdi-minus</MIcon>
+                        <MIcon Small>mdi-minus</MIcon>
                     </div>
                     <MChip Class="flex-grow-1 justify-center"
                            Outlined="true"

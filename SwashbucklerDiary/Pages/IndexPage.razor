@@ -26,13 +26,13 @@
 <SwiperTabItems @bind-Value="tab">
     <SwiperTabItem>
         <div class="mb-5 pl-2">
-            <MSubheader Class="px-0">
+            <div class="text--secondary mb-2">
                 @(DateTime.Now.ToString("yyyy/MM/dd") + " " + I18n.ToWeek())
-            </MSubheader>
+            </div>
 
             @if (ShowWelcomeText)
             {
-                <div class="text-h6 font-weight-bold">
+                <div class="text-h6">
                     @GetWelcomeText()
                 </div>
             }
@@ -49,7 +49,7 @@
 @if (tab == 0)
 {
     <FabTransition>
-        <MButton Class="my-btn-fab"
+        <MButton Class="my-btn-fab elevation-4"
              Bottom
              Right
              Fixed
@@ -65,7 +65,7 @@
 @if (tab == 1)
 {
     <FabTransition>
-        <MButton Class="my-btn-fab"
+        <MButton Class="my-btn-fab elevation-4"
              Bottom
              Right
              Fixed

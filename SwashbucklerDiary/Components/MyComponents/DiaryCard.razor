@@ -12,7 +12,7 @@
            __internal_preventDefault_oncontextmenu>
         <MListItem Dense>
             <MListItemContent>
-                <div class="text--secondary text-h6">
+                <div class="text--secondary">
                     @(Time.ToString("MM/dd"))
                 </div>
             </MListItemContent>
@@ -26,7 +26,9 @@
                 <div @onclick:stopPropagation="true">
                     <MyMenu @bind-Value="ShowMenu" ListItemModels="ListItemModels">
                         <ButtonContent>
-                            <MIcon>mdi-dots-horizontal</MIcon>
+                            <MIcon Class="@($"chevron-down {(ShowMenu?"chevron-down-rotate-x":"")}")">
+                                mdi-chevron-down
+                            </MIcon>
                         </ButtonContent>
                     </MyMenu>
                 </div>

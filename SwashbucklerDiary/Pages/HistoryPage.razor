@@ -22,12 +22,15 @@
 <SwiperTabItems @bind-Value="tab">
     <SwiperTabItem>
         <MDatePicker @bind-Value="PickedDate"
-                     Class="rounded-lg my-picker"
+                     Class="rounded-lg my-picker mb-5"
                      TValue="DateOnly"
                      ShowCurrent="false"
                      FullWidth="true"
                      NoTitle="true"
+                     Color="primary"
                      AllowedDates="AllowedDates"
+                     Events="AllowedDates"
+                     EventColor='"primary"'
                      Locale="@(I18n.Culture.Name)">
         </MDatePicker>
         <DiaryCardList Value="CalendarDiaries"

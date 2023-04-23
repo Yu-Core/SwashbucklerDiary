@@ -50,7 +50,7 @@ namespace SwashbucklerDiary.Shared
             get
             {
                 string style = string.Empty;
-                style += "transition:padding-left ease 0.3s !important;";
+                style += "transition:padding-left ease 0.2s !important;";
                 return style;
             }
         }
