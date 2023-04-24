@@ -32,7 +32,7 @@ namespace SwashbucklerDiary.Pages
                     new("About.SourceCode","mdi-book-open-page-variant-outline",()=>ShowSourceCode=true),
                     new("About.Agreement","mdi-file-document-multiple-outline",()=>To("/user-agreement")),
                     new("About.Privacy","mdi-lock-outline",()=>To("/privacy-policy")),
-                    new("About.UpdateRecords","mdi-update",()=>ToDo()),
+                    new("About.Check for updates","mdi-update",()=>ToDo()),
                 },
                 new()
                 {
