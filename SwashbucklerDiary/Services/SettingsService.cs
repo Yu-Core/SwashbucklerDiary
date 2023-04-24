@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Services
             {SettingType.Privacy,true },
             {SettingType.PrivatePassword,string.Empty },
             {SettingType.BackupsPath,string.Empty },
-            {SettingType.ThemeState,(int)ThemeState.Light },
+            {SettingType.ThemeState,(int)ThemeState.System },
             {SettingType.FirstSetLanguage,false },
             {SettingType.FirstAgree,false },
             {SettingType.WebDAVServerAddress,string.Empty },
