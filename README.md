@@ -1,14 +1,28 @@
-# Swashbuckler Diary
+# ÏÀ¿ÍÈÕ¼Ç
 
-English | [ç®€ä½“ä¸­æ–‡](./README.zh-CN.md)
+¼òÌåÖĞÎÄ | [English](./README.en-US.md)
 
-"Swashbuckler Diary" is an open source, cross platform local diary application. Half a lifetime of wind and rain, half a lifetime of travel, one's Jianghu, always needs to leave something to be wonderful.
+¡¸ ÏÀ¿ÍÈÕ¼Ç ¡¹ÊÇÒ»¸ö¿ªÔ´¡¢¿çÆ½Ì¨µÄ±¾µØÈÕ¼ÇAPP¡£
 
-Minimalism style, support page adaptation(Refers to multiple device sizes), support more languages, support Markdown, support WebDav backup, no need for networking, and all data is stored locally.
+Ã¿¸öÈËµÄĞÄµ×¶¼ÓĞÒ»¸öÏÀ¿Í£¬ÈçÓ°Ëæ·ç£¬ÅãÄã¿´¹ıÒ»Â·µÄ·ç¾°£¬¼ÇµÃÄãËùÓĞµÄ¾«²Ê¡£
 
-## Screenshot
+- ¼«¼ò·ç¸ñ
+- ±êÇ©¡¢ÌìÆø¡¢ĞÄÇé¡¢Î»ÖÃ
+- Markdown
+- ¶àÓïÑÔ
+- ÉîÉ«Ä£Ê½
+- Ò³Ãæ×ÔÊÊÓ¦(¼´¶àÖÖÉè±¸³ß´ç)
+- ËùÓĞÊı¾İ´æ´¢ÔÚ±¾µØ£¬ÎŞĞèÁªÍø
+- ±¾µØ±¸·İ
+- Webdav±¸·İ
+- µ¼³ö
+- ·ÖÏí
+- ³É¾Í
+- ÈÕÖ¾
 
- <table>
+## ½ØÍ¼
+
+<table>
     <tr>
         <td><img src="./Images/Windows1.png"/></td>
         <td><img src="./Images/Windows2.png"/></td>
@@ -25,7 +39,7 @@ Minimalism style, support page adaptation(Refers to multiple device sizes), supp
     </tr>
  </table>
 
-  <table>
+ <table>
     <tr>
         <td><img src="./Images/Android1.png"/></td>
         <td><img src="./Images/Android2.png"/></td>
@@ -40,33 +54,33 @@ Minimalism style, support page adaptation(Refers to multiple device sizes), supp
     </tr>
  </table>
 
- ## Development environment
+## Ö§³ÖµÄÆ½Ì¨
+- Windows (Windows 11ºÍWindows 10°æ±¾ 1809 »ò¸ü¸ß°æ±¾)
+- Android (Android 7.0 (API 24) »ò¸ü¸ß°æ±¾)
+- iOS (iOS 14 »ò¸ü¸ß°æ±¾)
+- macOS (macOS 11 »ò¸ü¸ß°æ±¾)
+- ~~Tizen (Ôİ²»Ö§³Ö)~~
 
-[Visual Studio 2022](https://learn.microsoft.com/en-us/visualstudio/install/install-visual-studio?view=vs-2022) æˆ– [Visual Studio 2022 for Mac](https://learn.microsoft.com/en-us/visualstudio/mac/installation?view=vsmac-2022)
+> macOS Ôİ²»Ö§³Ö¸ü¸Ä±êÌâÀ¸ÑÕÉ«
 
-- System requirements
+## ¿ª·¢»·¾³
 
-    - Windows 10 version 1909 or higher: Home, Professional, Education, and Enterprise
-    - macOS Monterey 12.0 or higher
+[Visual Studio 2022](https://learn.microsoft.com/zh-cn/visualstudio/install/install-visual-studio?view=vs-2022) »ò [Visual Studio 2022 for Mac](https://learn.microsoft.com/zh-cn/visualstudio/mac/installation?view=vsmac-2022)
 
-- Workload
+- ÏµÍ³ÒªÇó
 
-    - Web and Cloud
-        - ASP.NET and Web Development
-    - Desktop and mobile apps
-        - Mobile development using .NET / .NET Multi platform App UI development
-        - .NET Desktop Development
+    - Windows 10 °æ±¾ 1909 »ò¸ü¸ß°æ±¾£º¼ÒÍ¥°æ¡¢×¨Òµ°æ¡¢½ÌÓı°æºÍÆóÒµ°æ¡£
+    - macOS Monterey 12.0 »ò¸ü¸ß°æ±¾
 
-## Supported platforms
-- Windows (Windows 11 and Windows 10 version 1809 or higher)
-- Android (Android 7.0 (API 24) or higher)
-- iOS (iOS 14 or higher)
-- macOS (macOS 11 or higher)
-- ~~Tizen (Not supported temporarily)~~
+- ¹¤×÷¸ººÉ
 
-> Windows 10 and macOS does not currently support changing the title bar color
+    - Web ºÍÔÆ
+        - ASP.NET ºÍ Web ¿ª·¢
+    - ×ÀÃæÓ¦ÓÃºÍÒÆ¶¯Ó¦ÓÃ
+        - Ê¹ÓÃ .NET µÄÒÆ¶¯¿ª·¢ / .NET Multi-platform App UI ¿ª·¢
+        - .NET ×ÀÃæ¿ª·¢
 
-## Thanks to the following Open Source Projects
+## ¸ĞĞ»ÒÔÏÂ¿ªÔ´ÏîÄ¿
 - [.NET MAUI](https://github.com/dotnet/maui)
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
 - [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)

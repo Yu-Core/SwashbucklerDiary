@@ -6,8 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{F0B9BBF7-E653-454E-8B4B-C043F6AAEBA2}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE.txt = LICENSE.txt
+		README.en-US.md = README.en-US.md
 		README.md = README.md
-		README.zh-CN.md = README.zh-CN.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F33D825F-2DE5-41BC-A2E2-3C3E298C1A04}"
