@@ -6,8 +6,8 @@
     xmlns:local="using:SwashbucklerDiary.WinUI">
     <Application.Resources>
         <ResourceDictionary>
-            <SolidColorBrush x:Key="WindowCaptionBackground">#fcfcfc</SolidColorBrush>
-            <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">#fcfcfc</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowCaptionBackground">#f7f8f9</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">#f7f8f9</SolidColorBrush>
         </ResourceDictionary>
     </Application.Resources>
 </maui:MauiWinUIApplication>

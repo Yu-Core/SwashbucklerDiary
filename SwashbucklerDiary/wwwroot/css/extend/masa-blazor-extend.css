@@ -82,7 +82,7 @@
 
 /*配色*/
 .theme--light.m-application {
-    background: #fcfcfc !important;
+    background: #f7f8f9 !important;
 }
 
 .theme--light.m-divider {
@@ -98,11 +98,11 @@
 }
 
 .theme--light .my-picker .m-picker__body {
-    background: #fcfcfc !important;
+    background: #f7f8f9 !important;
 }
 
     .theme--light .my-picker .m-picker__body + .m-picker__actions {
-        background: #fcfcfc !important;
+        background: #f7f8f9 !important;
     }
 
 .theme--dark .my-picker .m-picker__body {
@@ -117,8 +117,8 @@
     background: inherit !important;
 }
 
-.m-bottom-navigation {
-    background: inherit !important;
+.theme--light.m-bottom-navigation {
+    background: #fff !important;
 }
 
 .m-app-bar.m-toolbar.m-sheet {
@@ -154,4 +154,14 @@
 /*日历提示圆点位置*/
 .m-date-picker-table--date .m-date-picker-table__events {
     bottom: 2px !important;
+}
+
+/*自适应海拔*/
+@media screen and (min-width:600px) {
+    .m-application .elevation-sm-2 {
+        box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12) !important
+    }
+    .m-application .elevation-sm-4 {
+        box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12) !important
+    }
 }

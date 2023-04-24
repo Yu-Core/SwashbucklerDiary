@@ -1,7 +1,7 @@
 ﻿
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background: #fcfcfc;
+    background: #f7f8f9;
 }
 
 h1:focus {
@@ -139,8 +139,8 @@ a, .btn-link {
     user-select: text;
 }
 
-.list-item-icon.theme--light.m-icon {
-    color: #000000;
+.theme--light.list-item-icon.m-icon {
+    color: #000000 !important;
 }
 
 .m-main__wrap {
@@ -149,7 +149,7 @@ a, .btn-link {
 }
 
 .theme--light .my-navigation-drawer-active {
-    background: #f5f5f5 !important;
+    background: #eeeeee !important;
 }
 
 .theme--dark .my-navigation-drawer-active {
@@ -194,12 +194,13 @@ a, .btn-link {
 }
 
 .my-diary-card .theme--light.m-divider {
-    border-color: rgba(0,0,0,.04);
+    border-color: rgba(0,0,0,.06);
 }
 
 .my-diary-card-title {
-    font-weight: 700 !important;
-    padding-bottom: 8px !important;
+    /*font-weight: 700 !important;*/
+    /*padding-bottom: 8px !important;*/
+    /*font-size:1.1rem !important;*/
 }
 
 .my-container {
@@ -278,13 +279,13 @@ a, .btn-link {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    background: #fcfcfc !important;
+    background: #f7f8f9 !important;
 }
 
     .my-first-launch-card .my-first-launch-list {
         text-align: center;
         width: 100%;
-        background: #fcfcfc !important;
+        background: #f7f8f9 !important;
     }
 
 .chevron-down {

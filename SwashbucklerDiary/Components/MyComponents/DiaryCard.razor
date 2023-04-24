@@ -3,16 +3,16 @@
 
 <MHover>
     <MCard @attributes="context.Attrs"
-           Class="@("my-diary-card " + Class)"
-           Elevation="@(context.Hover?"4":"2")"
+           Class="@($"my-diary-card elevation-sm-{(context.Hover?"4":"2")} {Class}")"
            OnClick="OnClick"
+           Elevation="0"
            Ripple="false"
            Rounded="@("lg")"
            @oncontextmenu="()=>ShowMenu=true"
            __internal_preventDefault_oncontextmenu>
         <MListItem Dense>
             <MListItemContent>
-                <div class="text--secondary">
+                <div class="text--secondary" style="font-size:1.1rem;">
                     @(Time.ToString("MM/dd"))
                 </div>
             </MListItemContent>
@@ -40,7 +40,7 @@
                 <MListItemTitle Class="my-diary-card-title">
                     @Title
                 </MListItemTitle>
-                <MListItemSubtitle>
+                <MListItemSubtitle Class="text--disabled">
                     @Text
                 </MListItemSubtitle>
             </MListItemContent>

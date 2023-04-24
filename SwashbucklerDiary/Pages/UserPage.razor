@@ -5,7 +5,8 @@
 </MyAppBar>
 
 <ScrollContainer>
-    <MCard Elevation="2"
+    <MCard Class="elevation-sm-2"
+           Elevation="0"
            Rounded="@("lg")">
         <MList>
             <MListItem OnClick="()=>ShowAvatar=true">
@@ -98,8 +99,8 @@
             <MButton Icon OnClick="()=>ShowAvatar=false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-        </MCardTitle>
-        <MCardText>
+            </MCardTitle>
+            <MCardText>
             <MListItem Class="px-0" OnClick="PickPhoto">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
@@ -145,4 +146,4 @@
 
 <MOverlay Value="showLoading" ZIndex="99">
     <MProgressCircular Indeterminate Size="48"></MProgressCircular>
-</MOverlay>
+    </MOverlay>

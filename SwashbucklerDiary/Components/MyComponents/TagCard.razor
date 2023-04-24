@@ -3,8 +3,8 @@
 
 <MHover>
     <MCard @attributes="context.Attrs"
-           Class="mb-5 my-tag-card"
-           Elevation="@(context.Hover?"4":"2")"
+           Class="@($"mb-5 my-tag-card elevation-sm-{(context.Hover?"4":"2")}")"
+           Elevation="0"
            Ripple="false"
            Rounded="@("lg")"
            @oncontextmenu="()=>ShowMenu=true"

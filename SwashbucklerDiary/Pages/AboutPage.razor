@@ -5,8 +5,8 @@
 </MyAppBar>
 
 <ScrollContainer>
-    <MCard Class="mb-5 py-sm-3 pl-4"
-           Elevation="2"
+    <MCard Class="mb-5 py-sm-3 pl-4 elevation-sm-2"
+           Elevation="0"
            Rounded="@("lg")">
         <MList>
             <MListItem>
@@ -30,8 +30,8 @@
 
     @foreach (var list in ViewLists)
     {
-        <MCard Class="@(ViewLists.Last() != list?"mb-5":"")"
-           Elevation="2"
+        <MCard Class="@($"elevation-sm-2 {(ViewLists.Last() != list?"mb-5":"")}")"
+           Elevation="0"
            Rounded="@("lg")">
             <MList>
                 @foreach (var item in list)

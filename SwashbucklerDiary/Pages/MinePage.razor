@@ -15,8 +15,8 @@
     <div class="d-sm-flex flex-sm-row justify-space-between">
         <MHover>
             <MCard @attributes="context.Attrs"
-                   Class="mine-info mb-5 py-md-3"
-                   Elevation="@(context.Hover?"4":"2")"
+                   Class="@($"mine-info mb-5 py-md-3 elevation-sm-{(context.Hover?"4":"2")}")"
+                   Elevation="0"
                    Rounded="@("lg")"
                    Ripple="false"
                    OnClick="@(()=>To("/user"))">
@@ -49,8 +49,8 @@
             </MCard>
         </MHover>
 
-        <MCard Class="mine-info mb-5 ml-sm-5 d-flex"
-               Elevation="2"
+        <MCard Class="mine-info mb-5 ml-sm-5 d-flex elevation-sm-2"
+               Elevation="0"
                Rounded="@("lg")">
             <MList Class="d-flex flex-grow-1">
                 <MListItem>
@@ -91,8 +91,8 @@
             @(I18n.T(list.Key))
         </div>
 
-        <MCard Class="mine-card"
-           Elevation="2"
+        <MCard Class="mine-card elevation-sm-2"
+           Elevation="0"
            Rounded="@("lg")">
             <MList>
                 @foreach (var item in list.Value)
