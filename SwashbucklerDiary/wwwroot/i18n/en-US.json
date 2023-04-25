@@ -299,7 +299,7 @@
       "Name": "Safe",
       "DisplayPrivacy": "Privacy mode",
       "PrivacyLibrary": "Privacy library",
-      "PrivacyPassword": "Privacy password",
+      "PrivacyPassword": "Privacy library password",
       "Mask": "Invalidate data",
       "CamouflageSuccess": "Camouflage success",
       "PrivatePasswordSetSuccess": "PrivatePassword set success",

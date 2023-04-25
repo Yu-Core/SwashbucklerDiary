@@ -300,7 +300,7 @@
       "Name": "安全",
       "DisplayPrivacy": "隐私模式",
       "PrivacyLibrary": "隐私库",
-      "PrivacyPassword": "隐私密码",
+      "PrivacyPassword": "隐私库密码",
       "Mask": "清除所有数据",
       "CamouflageSuccess": "伪装成功",
       "PrivatePasswordSetSuccess": "密码设置成功",
