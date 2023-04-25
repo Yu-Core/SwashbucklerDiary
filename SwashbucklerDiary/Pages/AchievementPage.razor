@@ -9,8 +9,8 @@
     <div class="d-flex justify-space-between flex-wrap">
         @foreach (var item in Achievements)
         {
-            <MCard Elevation="0"
-               Class="my-5 achievement-card elevation-sm-2"
+            <MCard Class="my-5 achievement-card"
+               Elevation="0"
                Rounded="@("lg")"
                Ripple="false">
                 <MList>
@@ -34,8 +34,8 @@
                                          Color="@(GetProgressRateColor(item))"
                                          Class="rounded-pill"
                                          Height="20">
-                            <strong class="@GetProgressRateTextColor(item)">
-                                @(GetProgressRateText(item))
+                                <strong class="@GetProgressRateTextColor(item)">
+                                    @(GetProgressRateText(item))
                                 </strong>
                             </MProgressLinear>
                         </MListItemContent>

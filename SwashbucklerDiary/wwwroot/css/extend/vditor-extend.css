@@ -3,6 +3,9 @@
     display: none !important;
 }
 
+.vditor-toolbar__item .vditor-panel {
+    display: block !important;
+}
 /*软键盘遮挡问题*/
 @media screen and (max-width:600px) {
     .vditor-toolbar-help {

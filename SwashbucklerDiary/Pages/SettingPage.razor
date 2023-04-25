@@ -9,7 +9,7 @@
         @(I18n.T("Setting.Diary.Name"))
     </div>
 
-    <MCard Class="setting-card elevation-sm-2"
+    <MCard Class="setting-card"
            Elevation="0"
            Rounded="@("lg")">
         <MList>
@@ -34,7 +34,7 @@
                 </MListItemAction>
             </MListItem>
 
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+            <MDivider Class="mx-3"></MDivider>
 
             <MListItem>
                 <MListItemIcon>
@@ -57,7 +57,7 @@
                 </MListItemAction>
             </MListItem>
 
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+            <MDivider Class="mx-3"></MDivider>
 
             <MListItem OnClick="@(()=>To("/location"))">
                 <MListItemIcon>
@@ -79,7 +79,7 @@
         @(I18n.T("Setting.Safe.Name"))
     </div>
 
-    <MCard Class="setting-card elevation-sm-2"
+    <MCard Class="setting-card"
            Elevation="0"
            Rounded="@("lg")">
         <MList>
@@ -97,7 +97,7 @@
                 </MListItemAction>
             </MListItem>
 
-            <MDivider Class="mx-3 mx-sm-0"></MDivider>
+            <MDivider Class="mx-3"></MDivider>
 
             <MListItem>
                 <MListItemIcon>
@@ -123,7 +123,7 @@
 
             @if (Privacy)
             {
-                <MDivider Class="mx-3 mx-sm-0"></MDivider>
+                <MDivider Class="mx-3"></MDivider>
 
                 <MListItem OnClick="@(()=>To("/privacyLibrary"))">
                     <MListItemIcon>
@@ -139,7 +139,7 @@
                     </MListItemAction>
                 </MListItem>
 
-                <MDivider Class="mx-3 mx-sm-0"></MDivider>
+                <MDivider Class="mx-3"></MDivider>
 
                 <MListItem OnClick="()=>ShowPPSet = true">
                     <MListItemIcon>
@@ -166,7 +166,7 @@
         @(I18n.T("Setting.Display.Name"))
     </div>
 
-    <MCard Class="setting-card elevation-sm-2"
+    <MCard Class="setting-card"
            Elevation="0"
            Rounded="@("lg")">
         <MList>
