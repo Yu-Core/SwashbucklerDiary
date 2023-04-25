@@ -88,7 +88,7 @@
 - [Markdown Guide](https://github.com/mattcone/markdown-guide)
 - [MASA.Blazor](https://github.com/BlazorComponent/MASA.Blazor)
 - [Serilog](https://github.com/serilog/serilog)
-- [Serilog.Sinks.SQLite](https://github.com/saleem-mirza/serilog-sinks-sqlite)
+- [Serilog.Sinks.SQLite.Maui](https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui)
 - [SQLite-net](https://github.com/praeclarum/sqlite-net)
 - [SqlSugar](https://github.com/DotNetNext/SqlSugar)
 - [Swiper](https://github.com/nolimits4web/swiper)
