@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Models;
-using Util.Reflection.Expressions.IntelligentGeneration.Extensions;
 
 namespace SwashbucklerDiary.Components
 {
@@ -14,17 +13,21 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public string? Class { get; set; }
         [Parameter]
-        public EventCallback OnTopping { get; set; }
+        public EventCallback<DiaryModel> OnTopping { get; set; }
         [Parameter]
-        public EventCallback OnDelete { get; set; }
+        public EventCallback<DiaryModel> OnDelete { get; set; }
         [Parameter]
-        public EventCallback OnCopy { get; set; }
+        public EventCallback<DiaryModel> OnCopy { get; set; }
         [Parameter]
-        public EventCallback OnTag { get; set; }
+        public EventCallback<DiaryModel> OnTag { get; set; }
         [Parameter]
-        public EventCallback OnExport { get; set; }
+        public EventCallback<DiaryModel> OnExport { get; set; }
         [Parameter]
-        public EventCallback OnClick { get; set; }
+        public bool Privacy { get; set; }
+        [Parameter]
+        public EventCallback<DiaryModel> OnPrivacy { get; set; }
+        [Parameter]
+        public EventCallback<DiaryModel> OnClick { get; set; }
 
         protected override void OnInitialized()
         {
@@ -52,13 +55,16 @@ namespace SwashbucklerDiary.Components
                         }
                     }
                 }
-                
+
                 return I18n.T("Diary.Untitled");
             }
         }
         private string? Text => Value!.Content;
         private bool IsTop => Value!.Top;
+        private bool IsPrivate => Value!.Private;
         private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
+        private string PrivateText() => IsPrivate ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
+        private string PrivateIcon() => IsPrivate ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
 
         private void LoadView()
         {
@@ -70,6 +76,11 @@ namespace SwashbucklerDiary.Components
                 new(TopText,"mdi-format-vertical-align-top",() => OnTopping.InvokeAsync(Value)),
                 new("Diary.Export","mdi-export",() => OnExport.InvokeAsync(Value))
             };
+
+            if (Privacy)
+            {
+                ListItemModels.Add(new(PrivateText, PrivateIcon, () => OnPrivacy.InvokeAsync(Value)));
+            }
         }
     }
 }

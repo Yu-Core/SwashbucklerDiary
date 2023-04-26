@@ -10,6 +10,7 @@ namespace SwashbucklerDiary.Components
         private bool ShowDeleteDiary;
         private bool ShowSelectTag;
         private bool ShowExport;
+        private bool PrivacyMode;
         private DiaryModel SelectDiary = new();
         private List<DiaryModel> ExportDiaries = new();
 
@@ -17,6 +18,9 @@ namespace SwashbucklerDiary.Components
         public IDiaryService DiaryService { get; set; } = default!;
         [Inject]
         private ISystemService SystemService { get; set; } = default!;
+
+        [Inject]
+        protected ISettingsService SettingsService { get; set; } = default!;
 
         [Parameter]
         public List<DiaryModel> Value
@@ -34,6 +38,12 @@ namespace SwashbucklerDiary.Components
         public List<TagModel> Tags { get; set; } = new();
         [Parameter]
         public EventCallback<List<TagModel>> TagsChanged { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            PrivacyMode = await SettingsService.Get(SettingType.PrivacyMode);
+            await base.OnInitializedAsync();
+        }
 
         private List<TagModel> SelectedTags
         {
@@ -117,5 +127,16 @@ namespace SwashbucklerDiary.Components
             ShowExport = true;
         }
 
+        private async Task HandlePrivacy(DiaryModel diaryModel)
+        {
+            diaryModel.Private = !diaryModel.Private;
+            await DiaryService.UpdateAsync(diaryModel);
+            var diary = _value.FirstOrDefault(it => it.Id == diaryModel.Id);
+            if (diary == null)
+            {
+                return;
+            }
+            _value.Remove(diary);
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.Pages
         {
             Title = await SettingsService.Get(SettingType.Title);
             Markdown = await SettingsService.Get(SettingType.Markdown);
-            Privacy = await SettingsService.Get(SettingType.Privacy);
+            Privacy = await SettingsService.Get(SettingType.PrivacyMode);
             WelcomText = await SettingsService.Get(SettingType.WelcomeText);
         }
 
@@ -47,7 +47,7 @@ namespace SwashbucklerDiary.Pages
         private async Task PrivacyChange(bool value)
         {
             Privacy = value;
-            await SettingsService.Save(SettingType.Privacy, value);
+            await SettingsService.Save(SettingType.PrivacyMode, value);
             if (!value)
             {
                 await AlertService.Success(I18n.T("Setting.Safe.CamouflageSuccess"));

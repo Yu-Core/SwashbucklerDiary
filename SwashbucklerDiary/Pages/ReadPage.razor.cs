@@ -96,7 +96,7 @@ namespace SwashbucklerDiary.Pages
                 new("Diary.Export","mdi-export",OpenExportDialog),
                 new(MarkdownText,MarkdownIcon,MarkdownChanged),
             };
-            bool privacy = await SettingsService.Get(SettingType.Privacy);
+            bool privacy = await SettingsService.Get(SettingType.PrivacyMode);
             if (privacy)
             {
                 ListItemModels.Add(new(PrivateText, PrivateIcon, DiaryPrivacyChanged));

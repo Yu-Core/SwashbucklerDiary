@@ -8,7 +8,7 @@
         UserName,
         Sign,
         Avatar,
-        Privacy, 
+        PrivacyMode, 
         PrivatePassword,
         BackupsPath,
         ThemeState,
