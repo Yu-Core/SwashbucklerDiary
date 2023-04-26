@@ -185,32 +185,7 @@
     </MCard>
 </MMDialog>
 
-<MMDialog MaxWidth="420"
-          @bind-MyValue="ShowFeedback">
-    <MCard Rounded="@("lg")">
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Mine.ContactWay"))
-            <MSpacer></MSpacer>
-            <MButton Icon="true" OnClick="()=>ShowFeedback=false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText>
-            @foreach (var item in FeedbackTypes)
-            {
-                <MListItem Class="px-0" OnClick="@(()=>item.Delegate.DynamicInvoke())">
-                    <MListItemIcon>
-                        <MIcon Class="list-item-icon">
-                            @(item.Icon)
-                        </MIcon>
-                    </MListItemIcon>
-                    <MListItemContent>
-                        <MListItemTitle>
-                            @(item.Text)
-                        </MListItemTitle>
-                    </MListItemContent>
-                </MListItem>
-            }
-        </MCardText>
-    </MCard>
-</MMDialog>
+<MultiDialog @bind-Value="ShowFeedback"
+             Title="@(I18n.T("Mine.ContactWay"))"
+             ListItemModels="FeedbackTypes">
+</MultiDialog>

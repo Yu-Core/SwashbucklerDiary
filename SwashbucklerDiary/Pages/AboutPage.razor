@@ -62,34 +62,10 @@
 
 </ScrollContainer>
 
-<MMDialog @bind-MyValue="ShowSourceCode"
-          MaxWidth="420">
-    <MCard Rounded="@("lg")">
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("About.SourceCode"))
-            <MSpacer></MSpacer>
-            <MButton Icon OnClick="()=>ShowSourceCode=false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText>
-            @foreach (var item in CodeSources)
-            {
-                <MListItem Class="px-0" OnClick="()=>ViewSourceCode(item.Url!)">
-                    <MListItemIcon>
-                        <MIcon Class="list-item-icon">
-                            @(item.Icon)
-                        </MIcon>
-                    </MListItemIcon>
-                    <MListItemContent>
-                        <MListItemTitle>
-                            @(item.Name)
-                        </MListItemTitle>
-                    </MListItemContent>
-                </MListItem>
-            }
-        </MCardText>
-    </MCard>
-</MMDialog>
+<MultiDialog @bind-Value="ShowSourceCode"
+             Title="@(I18n.T("About.SourceCode"))"
+             ListItemModels="CodeSources">
+
+</MultiDialog>
 
 <SponsorDialog @bind-Value="ShowSponsor" />

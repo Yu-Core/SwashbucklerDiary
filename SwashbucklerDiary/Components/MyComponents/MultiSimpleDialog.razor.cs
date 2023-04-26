@@ -2,7 +2,7 @@
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class MyDialog : DialogComponentBase
+    public partial class MultiSimpleDialog : DialogComponentBase
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; }

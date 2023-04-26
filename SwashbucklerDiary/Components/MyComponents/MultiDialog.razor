@@ -5,14 +5,8 @@
     <MobileContent>
         <MMBottomSheet MyValue="Value"
                        MyValueChanged="ValueChanged">
-            <ActivatorContent>
-                <MButton Icon="true"
-                         @attributes="@context.Attrs">
-                    @ButtonContent
-                </MButton>
-            </ActivatorContent>
-            <ChildContent>
-                <MList Class="rounded-t-lg py-4">
+            <MCard Class="rounded-t-lg py-2">
+                <MList>
                     @foreach (var item in ListItemModels)
                     {
                         <MListItem OnClick="()=>OnClick(item.Delegate)">
@@ -41,35 +35,39 @@
                         </MButton>
                     </MListItem>
                 </MList>
-            </ChildContent>
+            </MCard>
         </MMBottomSheet>
     </MobileContent>
     <DesktopContent>
-        <MMenu Value="Value"
-               ValueChanged="ValueChanged"
-               Rounded="@("lg")"
-               Bottom
-               Right
-               OffsetY
-               Transition="scroll-x-reverse-transition">
-            <ActivatorContent>
-                <MButton Icon
-                         @attributes="@context.Attrs">
-                    @ButtonContent
-                </MButton>
-            </ActivatorContent>
-            <ChildContent>
-                <MList MinWidth="150">
+        <MMDialog Value="Value"
+                  ValueChanged="ValueChanged"
+                  MaxWidth="420">
+            <MCard Rounded="@("lg")">
+                <MCardTitle Class="font-weight-bold">
+                    @Title
+                    <MSpacer></MSpacer>
+                    <MButton Icon="true" OnClick="HandleOnCancel">
+                        <MIcon>mdi-close</MIcon>
+                    </MButton>
+                </MCardTitle>
+                <MCardText>
                     @foreach (var item in ListItemModels)
                     {
-                        <MListItem Dense OnClick="()=>OnClick(item.Delegate)">
-                        <MListItemContent>
-                            @(I18n.T(item.Text))
+                        <MListItem Class="px-0" OnClick="()=>OnClick(item.Delegate)">
+                            <MListItemIcon>
+                                <MIcon Class="list-item-icon">
+                                    @(item.Icon)
+                                </MIcon>
+                            </MListItemIcon>
+                            <MListItemContent>
+                                <MListItemTitle>
+                                    @(I18n.T(item.Text))
+                                </MListItemTitle>
                             </MListItemContent>
                         </MListItem>
                     }
-                </MList>
-            </ChildContent>
-        </MMenu>
+                </MCardText>
+            </MCard>
+        </MMDialog>
     </DesktopContent>
 </MultiDisplay>

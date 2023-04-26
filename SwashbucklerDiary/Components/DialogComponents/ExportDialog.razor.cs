@@ -29,8 +29,8 @@ namespace SwashbucklerDiary.Components
             ListItemModels = new()
             {
                 new("TXT","mdi-format-text",CreateTxtFile),
-                new("JSON","mdi-code-braces",CreateJsonFile),
                 new("PDF","mdi-file-pdf-box",ToDo),
+                new("JSON","mdi-code-json",CreateJsonFile),
             };
         }
 

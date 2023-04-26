@@ -24,13 +24,13 @@
                     </MIcon>
                 }
                 <div @onclick:stopPropagation="true">
-                    <MyMenu @bind-Value="ShowMenu" ListItemModels="ListItemModels">
+                    <MultiMenu @bind-Value="ShowMenu" ListItemModels="ListItemModels">
                         <ButtonContent>
                             <MIcon Class="@($"chevron-down {(ShowMenu?"chevron-down-rotate-x":"")}")">
                                 mdi-chevron-down
                             </MIcon>
                         </ButtonContent>
-                    </MyMenu>
+                    </MultiMenu>
                 </div>
             </MListItemAction>
         </MListItem>

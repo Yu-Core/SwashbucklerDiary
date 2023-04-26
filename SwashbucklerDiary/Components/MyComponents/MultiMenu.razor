@@ -1,0 +1,77 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits DialogComponentBase
+
+<MultiDisplay>
+    <MobileContent>
+        <MMBottomSheet MyValue="Value"
+                       MyValueChanged="ValueChanged">
+            <ActivatorContent>
+                <MButton Icon="true"
+                         @attributes="@context.Attrs">
+                    @ButtonContent
+                </MButton>
+            </ActivatorContent>
+            <ChildContent>
+                <MCard Class="rounded-t-lg py-2">
+                    <MList>
+                        @foreach (var item in ListItemModels)
+                        {
+                            <MListItem OnClick="()=>OnClick(item.Delegate)">
+                                <MListItemIcon>
+                                    <MIcon>
+                                        @(item.Icon)
+                                    </MIcon>
+                                </MListItemIcon>
+                                <MListItemContent>
+                                    @(I18n.T(item.Text))
+                                </MListItemContent>
+                            </MListItem>
+                            if (ListItemModels.Last() != item)
+                            {
+                                <MDivider></MDivider>
+                            }
+                        }
+                        <MListItem>
+                            <MButton Rounded="true"
+                                     Block="true"
+                                     Depressed="true"
+                                     Large="true"
+                                     Class="text-subtitle-1"
+                                     OnClick="HandleOnCancel">
+                                @(I18n.T("Share.Cancel"))
+                            </MButton>
+                        </MListItem>
+                    </MList>
+                </MCard>
+            </ChildContent>
+        </MMBottomSheet>
+    </MobileContent>
+    <DesktopContent>
+        <MMenu Value="Value"
+               ValueChanged="ValueChanged"
+               Rounded="@("lg")"
+               Bottom
+               Right
+               OffsetY
+               Transition="scroll-x-reverse-transition">
+            <ActivatorContent>
+                <MButton Icon
+                         @attributes="@context.Attrs">
+                    @ButtonContent
+                </MButton>
+            </ActivatorContent>
+            <ChildContent>
+                <MList MinWidth="150">
+                    @foreach (var item in ListItemModels)
+                    {
+                        <MListItem Dense="true" OnClick="()=>OnClick(item.Delegate)">
+                            <MListItemContent>
+                                @(I18n.T(item.Text))
+                            </MListItemContent>
+                        </MListItem>
+                    }
+                </MList>
+            </ChildContent>
+        </MMenu>
+    </DesktopContent>
+</MultiDisplay>

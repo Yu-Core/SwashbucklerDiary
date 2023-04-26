@@ -1,8 +1,8 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits DialogComponentBase
 
-<MyDialog Value="Value" ValueChanged="InternalValueChanged">
-    <MCard Class="rounded-t-lg rounded-sm-b-lg">
+<MultiSimpleDialog Value="Value" ValueChanged="InternalValueChanged">
+    <MCard Class="rounded-t-lg rounded-b-sm-lg">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Filter.Filter"))
             <MSpacer></MSpacer>
@@ -78,7 +78,7 @@
             </MultiDisplay>
         </MCardActions>
     </MCard>
-</MyDialog>
+</MultiSimpleDialog>
 
 <MyDatePicker @bind-Value="ShowMinDate"
               @bind-Date="MinDate">

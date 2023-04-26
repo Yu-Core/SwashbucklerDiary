@@ -3,7 +3,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class MyMenu : DialogComponentBase
+    public partial class MultiMenu : DialogComponentBase
     {
         [Parameter]
         public RenderFragment? ButtonContent { get; set; }
