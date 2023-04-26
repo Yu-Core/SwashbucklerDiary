@@ -68,7 +68,7 @@ namespace SwashbucklerDiary.Components
             _options = new()
             {
                 {"mode","ir" },
-                {"toolbar",new List<string>(){"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "outdent", "indent","code","inline-code","link","emoji","edit-mode"}},
+                {"toolbar",new List<string>(){"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "outdent", "indent","code","inline-code","link","emoji"}},
                 {"placeholder",I18n.T("Write.ContentPlace")! },
                 {"cdn","npm/vditor/3.9.0" },
                 {"lang",lang },
