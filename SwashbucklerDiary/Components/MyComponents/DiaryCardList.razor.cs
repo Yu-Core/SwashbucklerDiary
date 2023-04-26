@@ -59,7 +59,12 @@ namespace SwashbucklerDiary.Components
             bool flag = await DiaryService.DeleteAsync(diaryModel);
             if (flag)
             {
-                _value.Remove(diaryModel);
+                var index = _value.FindIndex(it=>it.Id == diaryModel.Id);
+                if (index < 0)
+                {
+                    return;
+                }
+                _value.RemoveAt(index);
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
                 StateHasChanged();
             }
@@ -92,9 +97,9 @@ namespace SwashbucklerDiary.Components
             ShowSelectTag = false;
         }
 
-        private void HandleClick(Guid id)
+        private void HandleClick(DiaryModel diaryModel)
         {
-            NavigateService.NavigateTo($"/read/{id}");
+            NavigateService.NavigateTo($"/read/{diaryModel.Id}");
         }
 
         private static string DiaryCopyContent(DiaryModel diary)

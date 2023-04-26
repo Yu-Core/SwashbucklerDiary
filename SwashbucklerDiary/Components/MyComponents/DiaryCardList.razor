@@ -6,12 +6,14 @@
     {
         <DiaryCard Value="item"
                Class="@CardClass"
-               OnTag="()=>HandleTag(item)"
-               OnCopy="()=>HandleCopy(item)"
-               OnDelete="()=>OpenDeleteDialog(item)"
-               OnTopping="()=>HandleTopping(item)"
-               OnExport="()=>OpenExportDialog(item)"
-               OnClick="()=>HandleClick(item.Id)">
+               Privacy="PrivacyMode"
+               OnTag="HandleTag"
+               OnCopy="HandleCopy"
+               OnDelete="OpenDeleteDialog"
+               OnTopping="HandleTopping"
+               OnExport="OpenExportDialog"
+               OnPrivacy="HandlePrivacy"
+               OnClick="HandleClick">
         </DiaryCard>
     }
 </div>

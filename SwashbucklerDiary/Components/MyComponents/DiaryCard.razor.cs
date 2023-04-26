@@ -64,11 +64,11 @@ namespace SwashbucklerDiary.Components
         {
             ListItemModels = new()
             {
-                new("Diary.Tag","mdi-label-outline",()=>OnTag.InvokeAsync()),
-                new("Share.Copy","mdi-content-copy",()=>OnCopy.InvokeAsync()),
-                new("Share.Delete","mdi-delete-outline",()=>OnDelete.InvokeAsync()),
-                new(TopText,"mdi-format-vertical-align-top",()=>OnTopping.InvokeAsync()),
-                new("Diary.Export","mdi-export",()=>OnExport.InvokeAsync())
+                new("Diary.Tag","mdi-label-outline",() => OnTag.InvokeAsync(Value)),
+                new("Share.Copy","mdi-content-copy",() => OnCopy.InvokeAsync(Value)),
+                new("Share.Delete","mdi-delete-outline",() => OnDelete.InvokeAsync(Value)),
+                new(TopText,"mdi-format-vertical-align-top",() => OnTopping.InvokeAsync(Value)),
+                new("Diary.Export","mdi-export",() => OnExport.InvokeAsync(Value))
             };
         }
     }
