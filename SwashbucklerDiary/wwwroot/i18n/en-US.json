@@ -150,7 +150,8 @@
     "About": "About",
     "SelectLanguage": "Select language",
     "ContactWay": "Contact way",
-    "MailCopy": "The email address has been copied to the clipboard"
+    "MailCopy": "The email address has been copied to the clipboard",
+    "QQGroupCopy": "The QQ group number has been copied to the clipboard"
   },
   "ToDo": {
     "Title": "This function is not developed",
@@ -432,5 +433,6 @@
     "Filter": "Filter",
     "Start time": "Start time",
     "End time": "End time"
-  }
+  },
+  "QQGroup": "QQ Group"
 }

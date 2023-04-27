@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Maui.ApplicationModel;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -29,6 +30,7 @@ namespace SwashbucklerDiary.Pages
         private List<ListItemModel> FeedbackTypes = new();
         private const string githubUrl = "https://github.com/Yu-Core/SwashbucklerDiary";
         private const string mail = "yu-core@qq.com";
+        private const string qqGroup = "139864402";
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
@@ -89,6 +91,7 @@ namespace SwashbucklerDiary.Pages
             {
                 new("Email","mdi-email-outline",SendMail),
                 new("Github","mdi-github",ToGithub),
+                new("QQGroup","mdi-qqchat",OpenQQGroup),
             };
         }
 
@@ -117,7 +120,6 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SendMail()
         {
-            ShowFeedback = false;
             try
             {
                 if (SystemService.IsMailSupported())
@@ -140,7 +142,6 @@ namespace SwashbucklerDiary.Pages
 
         private async Task ToGithub()
         {
-            ShowFeedback = false;
             await SystemService.OpenBrowser(githubUrl);
         }
 
@@ -149,6 +150,24 @@ namespace SwashbucklerDiary.Pages
             ThemeState = themeState;
             ThemeService.SetThemeState(ThemeState);
             await SettingsService.Save(SettingType.ThemeState, (int)ThemeState);
+        }
+
+        private async Task OpenQQGroup()
+        {
+            try
+            {
+                bool flag = await SystemService.OpenQQGroup();
+                if (flag)
+                {
+                    await SystemService.SetClipboard(qqGroup);
+                    await AlertService.Success(I18n.T("Mine.QQGroupCopy"));
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("QQGroupError");
+            }
+            
         }
     }
 }

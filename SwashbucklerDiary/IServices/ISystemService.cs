@@ -38,5 +38,6 @@ namespace SwashbucklerDiary.IServices
         void SetStatusBar(ThemeState themeState);
         void OpenSystemSetting();
         void QuitApp();
+        Task<bool> OpenQQGroup();
     }
 }

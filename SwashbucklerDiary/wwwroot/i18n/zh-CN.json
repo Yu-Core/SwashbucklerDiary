@@ -151,7 +151,8 @@
     "About": "关于",
     "SelectLanguage": "选择语言",
     "ContactWay": "联系方式",
-    "MailCopy": "邮箱地址已复制到剪贴板"
+    "MailCopy": "邮箱地址已复制到剪贴板",
+    "QQGroupCopy": "QQ群号码已复制到剪贴板"
   },
   "ToDo": {
     "Title": "该功能暂未开放",
@@ -433,5 +434,6 @@
     "Filter": "筛选",
     "Start time": "起始时间",
     "End time": "终止时间"
-  }
+  },
+  "QQGroup": "QQ交流群"
 }

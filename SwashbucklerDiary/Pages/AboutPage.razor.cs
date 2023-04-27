@@ -49,7 +49,6 @@ namespace SwashbucklerDiary.Pages
 
         private async Task ViewSourceCode(string url)
         {
-            ShowSourceCode = false;
             await SystemService.OpenBrowser(url);
             await HandleAchievements(AchievementType.SourceCode);
         }
