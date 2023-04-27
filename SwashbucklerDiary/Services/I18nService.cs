@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Services
 {
     public class I18nService : II18nService
     {
-        public I18n I18n { get; set; } = default!;
+        private I18n I18n { get; set; } = default!;
         public CultureInfo Culture => I18n.Culture;
 
         public Dictionary<string, string> Languages { get; } = new()
@@ -17,9 +17,9 @@ namespace SwashbucklerDiary.Services
 
         public event Action? OnChanged;
 
-        public void Initialize(I18n i18n)
+        public void Initialize(object i18n)
         {
-            I18n = i18n;
+            I18n = (I18n)i18n;
         }
 
         public void SetCulture(string culture)

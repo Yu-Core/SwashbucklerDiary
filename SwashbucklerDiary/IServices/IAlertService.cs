@@ -4,7 +4,7 @@ namespace SwashbucklerDiary.IServices
 {
     public interface IAlertService
     {
-        void Initialize(IPopupService popupService);
+        void Initialize(object popupService);
         Task Alert(string? message);
         Task Alert(string? title, string? message);
         Task Success(string? message);

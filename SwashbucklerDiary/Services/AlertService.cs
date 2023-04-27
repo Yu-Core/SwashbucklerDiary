@@ -8,9 +8,9 @@ namespace SwashbucklerDiary.Services
     {
         private IPopupService PopupService = default!;
 
-        public void Initialize(IPopupService popupService)
+        public void Initialize(object popupService)
         {
-            PopupService = popupService;
+            PopupService = (IPopupService)popupService;
         }
 
         public Task Alert(string? message) => Alert(null, message);
