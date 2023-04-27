@@ -276,6 +276,7 @@ namespace SwashbucklerDiary.Pages
         {
             Markdown = !Markdown;
             await SettingsService.Save(SettingType.Markdown, Markdown);
+            await InvokeAsync(StateHasChanged);
         }
 
         protected async Task HandleAchievements()
@@ -295,6 +296,7 @@ namespace SwashbucklerDiary.Pages
         {
             ShowTitle = !ShowTitle;
             await SettingsService.Save(SettingType.Title, ShowTitle);
+            await InvokeAsync(StateHasChanged);
         }
     }
 }
