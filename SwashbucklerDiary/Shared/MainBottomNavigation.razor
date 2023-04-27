@@ -10,7 +10,7 @@
                    App="true">
     @foreach (var (item, i) in Items.Select((v, i) => (v, i)))
     {
-        <MButton Ripple="false" OnClick="()=>item.Delegate.DynamicInvoke()">
+        <MButton Ripple="false" OnClick="()=>item.OnClick.InvokeAsync()">
             <MIcon>
                 @(Value == i ? item.SelectedIcon : item.Icon)
             </MIcon>

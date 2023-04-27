@@ -64,34 +64,34 @@ namespace SwashbucklerDiary.Pages
                     "Mine.Data",
                     new()
                     {
-                        new("Mine.Backups","mdi-folder-sync-outline",()=>To("/backups")),
-                        new("Mine.Export","mdi-export",()=>To("/export")),
-                        new("Mine.Achievement","mdi-trophy-outline",()=>To("/achievement")),
+                        new("Mine.Backups","mdi-folder-sync-outline",EC(() => To("/backups"))),
+                        new("Mine.Export","mdi-export",EC(() => To("/export"))),
+                        new("Mine.Achievement","mdi-trophy-outline",EC(() => To("/achievement"))),
                     }
                 },
                 {
                     "Mine.Settings",
                     new()
                     {
-                        new("Mine.Settings","mdi-cog-outline",()=>To("/setting")),
-                        new("Mine.Languages","mdi-web",()=>ShowLanguage=true),
-                        new("Mine.Night","mdi-weather-night",()=>ShowThemeState=true),
+                        new("Mine.Settings","mdi-cog-outline",EC(() => To("/setting"))),
+                        new("Mine.Languages","mdi-web",EC(() => ShowLanguage = true)),
+                        new("Mine.Night","mdi-weather-night",EC(() => ShowThemeState = true)),
                     }
                 },
                 {
                     "Mine.Other",
                     new()
                     {
-                        new("Mine.Feedback","mdi-email-outline",()=>ShowFeedback=true),
-                        new("Mine.About","mdi-information-outline",()=>To("/about")),
+                        new("Mine.Feedback","mdi-email-outline",EC(() => ShowFeedback = true)),
+                        new("Mine.About","mdi-information-outline",EC(() => To("/about"))),
                     }
                 }
             };
             FeedbackTypes = new()
             {
-                new("Email","mdi-email-outline",SendMail),
-                new("Github","mdi-github",ToGithub),
-                new("QQGroup","mdi-qqchat",OpenQQGroup),
+                new("Email","mdi-email-outline",EC(SendMail)),
+                new("Github","mdi-github",EC(ToGithub)),
+                new("QQGroup","mdi-qqchat",EC(OpenQQGroup)),
             };
         }
 

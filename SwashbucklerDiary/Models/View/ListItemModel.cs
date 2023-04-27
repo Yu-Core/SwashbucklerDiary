@@ -1,4 +1,6 @@
-﻿namespace SwashbucklerDiary.Models
+﻿using Microsoft.AspNetCore.Components;
+
+namespace SwashbucklerDiary.Models
 {
     public class ListItemModel
     {
@@ -28,51 +30,30 @@
             }
             set => _icon = value;
         }
-        public MulticastDelegate Delegate { get; set; }
+        public EventCallback OnClick { get; set; }
 
         public Func<string>? TextFunc { get; set; }
         public Func<string>? IconFunc { get; set; }
 
-        public ListItemModel(string text, string icon, Action action)
+        public ListItemModel(string text, string icon, EventCallback onClick)
         {
             _text = text;
             _icon = icon;
-            Delegate = action;
+            OnClick = onClick;
         }
 
-        public ListItemModel(string text, string icon, Func<Task> func)
-        {
-            _text = text;
-            _icon = icon;
-            Delegate = func;
-        }
-
-        public ListItemModel(Func<string> text, Func<string> icon, Action action)
+        public ListItemModel(Func<string> text, Func<string> icon, EventCallback onClick)
         {
             TextFunc = text;
             IconFunc = icon;
-            Delegate = action;
+            OnClick = onClick;
         }
 
-        public ListItemModel(Func<string> text, Func<string> icon, Func<Task> func)
-        {
-            TextFunc = text;
-            IconFunc = icon;
-            Delegate = func;
-        }
-
-        public ListItemModel(Func<string> text, string icon, Action action)
+        public ListItemModel(Func<string> text, string icon, EventCallback onClick)
         {
             TextFunc = text;
             _icon = icon;
-            Delegate = action;
-        }
-
-        public ListItemModel(Func<string> text, string icon, Func<Task> func)
-        {
-            TextFunc = text;
-            _icon = icon;
-            Delegate = func;
+            OnClick = onClick;
         }
     }
 }

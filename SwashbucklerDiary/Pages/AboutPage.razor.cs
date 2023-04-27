@@ -25,23 +25,23 @@ namespace SwashbucklerDiary.Pages
             {
                 new()
                 {
-                    new("About.SourceCode","mdi-book-open-page-variant-outline",()=>ShowSourceCode=true),
-                    new("About.Agreement","mdi-file-document-multiple-outline",()=>To("/user-agreement")),
-                    new("About.Privacy","mdi-lock-outline",()=>To("/privacy-policy")),
-                    new("About.Check for updates","mdi-update",()=>ToDo()),
+                    new("About.SourceCode","mdi-book-open-page-variant-outline",EC(() => ShowSourceCode = true)),
+                    new("About.Agreement","mdi-file-document-multiple-outline",EC(() => To("/user-agreement"))),
+                    new("About.Privacy","mdi-lock-outline",EC(() => To("/privacy-policy"))),
+                    new("About.Check for updates","mdi-update",EC(() => ToDo())),
                 },
                 new()
                 {
-                    new("About.Related","mdi-xml",()=>To("/relatedOSP")),
-                    new("About.LogFile","mdi-file-document-edit-outline",()=>To("/log")),
-                    new("About.Evaluation","mdi-star-outline",OpenAppDetails),
-                    new("About.Sponsor","mdi-hand-heart-outline",()=>ShowSponsor=true),
+                    new("About.Related","mdi-xml",EC(() => To("/relatedOSP"))),
+                    new("About.LogFile","mdi-file-document-edit-outline",EC(() => To("/log"))),
+                    new("About.Evaluation","mdi-star-outline",EC(OpenAppDetails)),
+                    new("About.Sponsor","mdi-hand-heart-outline",EC(()=>ShowSponsor=true)),
                 }
             };
             CodeSources = new()
             {
-                new("Github","mdi-github",()=>ViewSourceCode(githubUrl)),
-                new("Gitee",mdi_gitee,()=>ViewSourceCode(giteeUrl))
+                new("Github","mdi-github",EC(() => ViewSourceCode(githubUrl))),
+                new("Gitee",mdi_gitee,EC(() => ViewSourceCode(giteeUrl)))
             };
         }
 

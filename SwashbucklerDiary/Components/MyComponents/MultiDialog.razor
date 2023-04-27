@@ -9,7 +9,7 @@
                 <MList>
                     @foreach (var item in ListItemModels)
                     {
-                        <MListItem OnClick="()=>OnClick(item.Delegate)">
+                        <MListItem OnClick="()=>OnClick(item.OnClick)">
                             <MListItemIcon>
                                 <MIcon>
                                     @(item.Icon)
@@ -53,7 +53,7 @@
                 <MCardText>
                     @foreach (var item in ListItemModels)
                     {
-                        <MListItem Class="px-0" OnClick="()=>OnClick(item.Delegate)">
+                        <MListItem Class="px-0" OnClick="()=>OnClick(item.OnClick)">
                             <MListItemIcon>
                                 <MIcon Class="list-item-icon">
                                     @(item.Icon)

@@ -36,7 +36,7 @@
             <MList>
                 @foreach (var item in list)
                 {
-                    <MListItem OnClick="@(()=>item.Delegate.DynamicInvoke())">
+                    <MListItem OnClick="item.OnClick">
                         <MListItemIcon>
                             <MIcon Class="list-item-icon">
                                 @(item.Icon)

@@ -70,16 +70,16 @@ namespace SwashbucklerDiary.Components
         {
             ListItemModels = new()
             {
-                new("Diary.Tag","mdi-label-outline",() => OnTag.InvokeAsync(Value)),
-                new("Share.Copy","mdi-content-copy",() => OnCopy.InvokeAsync(Value)),
-                new("Share.Delete","mdi-delete-outline",() => OnDelete.InvokeAsync(Value)),
-                new(TopText,"mdi-format-vertical-align-top",() => OnTopping.InvokeAsync(Value)),
-                new("Diary.Export","mdi-export",() => OnExport.InvokeAsync(Value))
+                new("Diary.Tag","mdi-label-outline",EC(()=>OnTag.InvokeAsync(Value))),
+                new("Share.Copy","mdi-content-copy",EC(() => OnCopy.InvokeAsync(Value))),
+                new("Share.Delete","mdi-delete-outline",EC(() => OnDelete.InvokeAsync(Value))),
+                new(TopText,"mdi-format-vertical-align-top",EC(() => OnTopping.InvokeAsync(Value))),
+                new("Diary.Export","mdi-export",EC(() => OnExport.InvokeAsync(Value)))
             };
 
             if (Privacy)
             {
-                ListItemModels.Add(new(PrivateText, PrivateIcon, () => OnPrivacy.InvokeAsync(Value)));
+                ListItemModels.Add(new(PrivateText, PrivateIcon, EC(() => OnPrivacy.InvokeAsync(Value))));
             }
         }
     }

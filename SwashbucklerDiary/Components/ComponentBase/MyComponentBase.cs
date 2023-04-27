@@ -28,5 +28,25 @@ namespace SwashbucklerDiary.Components
         {
             NavigateService.NavigateTo(url);
         }
+
+        /// <summary>
+        /// CreateEventCallback
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <returns></returns>
+        protected EventCallback EC(Func<Task> callback)
+        {
+            return EventCallback.Factory.Create(this, callback);
+        }
+
+        /// <summary>
+        /// CreateEventCallback
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <returns></returns>
+        protected EventCallback EC(Action callback)
+        {
+            return EventCallback.Factory.Create(this, callback);
+        }
     }
 }

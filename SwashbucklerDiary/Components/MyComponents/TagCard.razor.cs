@@ -27,8 +27,8 @@ namespace SwashbucklerDiary.Components
         {
             ListItemModels = new()
             {
-                new("Share.Rename","mdi-rename-outline",()=>OnRename.InvokeAsync()),
-                new("Share.Delete","mdi-delete-outline",()=>OnDelete.InvokeAsync()),
+                new("Share.Rename","mdi-rename-outline",EC(OnRename.InvokeAsync)),
+                new("Share.Delete","mdi-delete-outline",EC(OnDelete.InvokeAsync)),
             };
         }
     }

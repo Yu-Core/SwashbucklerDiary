@@ -50,14 +50,14 @@ namespace SwashbucklerDiary.Pages
         {
             ListItemModels = new List<ListItemModel>()
             {
-                new("Log.Clear","mdi-delete-outline",OpenDeleteDialog),
-                new("Share.Share","mdi-share-variant-outline",OpenShareDialog),
+                new("Log.Clear","mdi-delete-outline",EC(OpenDeleteDialog)),
+                new("Share.Share","mdi-share-variant-outline",EC(OpenShareDialog)),
             };
 
             ShareItems = new()
             {
-                new("Share.TextShare","mdi-format-text",ShareText),
-                new("Share.FileShare","mdi-file-outline",ShareLogFile),
+                new("Share.TextShare","mdi-format-text",EC(ShareText)),
+                new("Share.FileShare","mdi-file-outline",EC(ShareLogFile)),
             };
         }
 

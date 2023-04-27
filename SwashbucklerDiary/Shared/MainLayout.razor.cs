@@ -67,15 +67,18 @@ namespace SwashbucklerDiary.Shared
         {
             NavigationButtons = new()
             {
-                new ( "Main.Diary", "mdi-notebook-outline", "mdi-notebook", ()=>To("")),
-                new ( "Main.History", "mdi-clock-outline", "mdi-clock", ()=>To("history")),
-                new ( "Main.Mine", "mdi-account-outline", "mdi-account", ()=>To("mine"))
+                new ( "Main.Diary", "mdi-notebook-outline", "mdi-notebook", To("")),
+                new ( "Main.History", "mdi-clock-outline", "mdi-clock", To("history")),
+                new ( "Main.Mine", "mdi-account-outline", "mdi-account", To("mine"))
             };
         }
 
-        protected async void To(string url)
+        protected EventCallback To(string url)
         {
-            await NavigateService.NavBtnClick(url);
+            return EC(async () =>
+            {
+                await NavigateService.NavBtnClick(url);
+            });
         }
 
         private void ThemeChanged(ThemeState state)
@@ -87,6 +90,26 @@ namespace SwashbucklerDiary.Shared
 
             SystemService.SetStatusBar(state);
             InvokeAsync(StateHasChanged);
+        }
+
+        /// <summary>
+        /// CreateEventCallback
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <returns></returns>
+        private EventCallback EC(Func<Task> callback)
+        {
+            return EventCallback.Factory.Create(this, callback);
+        }
+
+        /// <summary>
+        /// CreateEventCallback
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <returns></returns>
+        private EventCallback EC(Action callback)
+        {
+            return EventCallback.Factory.Create(this, callback);
         }
     }
 }

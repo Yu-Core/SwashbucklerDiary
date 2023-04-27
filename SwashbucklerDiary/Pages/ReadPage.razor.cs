@@ -91,21 +91,21 @@ namespace SwashbucklerDiary.Pages
         {
             ListItemModels = new List<ListItemModel>()
             {
-                new("Share.Copy","mdi-content-copy",OnCopy),
-                new(TopText,"mdi-format-vertical-align-top",OnTopping),
-                new("Diary.Export","mdi-export",OpenExportDialog),
-                new(MarkdownText,MarkdownIcon,MarkdownChanged),
+                new("Share.Copy","mdi-content-copy",EC(OnCopy)),
+                new(TopText,"mdi-format-vertical-align-top",EC(OnTopping)),
+                new("Diary.Export","mdi-export",EC(OpenExportDialog)),
+                new(MarkdownText,MarkdownIcon,EC(MarkdownChanged)),
             };
             bool privacy = await SettingsService.Get(SettingType.PrivacyMode);
             if (privacy)
             {
-                ListItemModels.Add(new(PrivateText, PrivateIcon, DiaryPrivacyChanged));
+                ListItemModels.Add(new(PrivateText, PrivateIcon, EC(DiaryPrivacyChanged)));
             }
 
             ShareItems = new()
             {
-                new("Share.TextShare","mdi-format-text",ShareText),
-                new("Share.ImageShare","mdi-image-outline",ShareImage),
+                new("Share.TextShare","mdi-format-text",EC(ShareText)),
+                new("Share.ImageShare","mdi-image-outline",EC(ShareImage)),
             };
         }
 

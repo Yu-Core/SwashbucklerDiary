@@ -16,7 +16,7 @@
                     <MList>
                         @foreach (var item in ListItemModels)
                         {
-                            <MListItem OnClick="()=>OnClick(item.Delegate)">
+                            <MListItem OnClick="()=>OnClick(item.OnClick)">
                                 <MListItemIcon>
                                     <MIcon>
                                         @(item.Icon)
@@ -64,7 +64,7 @@
                 <MList MinWidth="150">
                     @foreach (var item in ListItemModels)
                     {
-                        <MListItem Dense="true" OnClick="()=>OnClick(item.Delegate)">
+                        <MListItem Dense="true" OnClick="()=>OnClick(item.OnClick)">
                             <MListItemContent>
                                 @(I18n.T(item.Text))
                             </MListItemContent>

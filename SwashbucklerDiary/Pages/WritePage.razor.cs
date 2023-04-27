@@ -147,8 +147,8 @@ namespace SwashbucklerDiary.Pages
         {
             ListItemModels = new()
             {
-                new(ShowTitleText,"mdi-format-title",ShowTitleChanged),
-                new(MarkdownText,MarkdownIcon,MarkdownChanged)
+                new(ShowTitleText,"mdi-format-title",EC(ShowTitleChanged)),
+                new(MarkdownText,MarkdownIcon,EC(MarkdownChanged))
             };
         }
 
@@ -276,7 +276,6 @@ namespace SwashbucklerDiary.Pages
         {
             Markdown = !Markdown;
             await SettingsService.Save(SettingType.Markdown, Markdown);
-            await InvokeAsync(StateHasChanged);
         }
 
         protected async Task HandleAchievements()
@@ -296,7 +295,6 @@ namespace SwashbucklerDiary.Pages
         {
             ShowTitle = !ShowTitle;
             await SettingsService.Save(SettingType.Title, ShowTitle);
-            await InvokeAsync(StateHasChanged);
         }
     }
 }

@@ -97,7 +97,7 @@
             <MList>
                 @foreach (var item in list.Value)
                 {
-                    <MListItem OnClick="@(()=>item.Delegate.DynamicInvoke())">
+                    <MListItem OnClick="()=>item.OnClick.InvokeAsync()">
                         <MListItemIcon>
                             <MIcon Class="list-item-icon">
                                 @(item.Icon)
