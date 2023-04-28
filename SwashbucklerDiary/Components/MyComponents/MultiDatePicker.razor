@@ -1,0 +1,23 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits DialogComponentBase
+
+<MultiDisplay>
+    <MobileContent>
+        <PPMobileDatePicker MyVisible="Value"
+                            MyVisibleChanged="ValueChanged"
+                            Value="Date"
+                            ValueChanged="DateChanged"
+                            Min="Min??default"
+                            Max="Max??default">
+        </PPMobileDatePicker>
+    </MobileContent>
+    <DesktopContent>
+        <MyDatePicker Value="Value"
+                      ValueChanged="ValueChanged"
+                      Date="Date"
+                      DateChanged="DateChanged"
+                      Min="Min"
+                      Max="Max">
+        </MyDatePicker>
+    </DesktopContent>
+</MultiDisplay>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using OneOf;
 
 namespace SwashbucklerDiary.Components
 {
@@ -6,13 +7,13 @@ namespace SwashbucklerDiary.Components
     {
         private bool _value;
         private DateOnly _date = DateOnly.FromDateTime(DateTime.Now);
-        private DateOnly _desktopDate;
-        private DateOnly DesktopDate
+        private DateOnly _internalDate;
+        private DateOnly InternalDate
         {
-            get => _desktopDate;
+            get => _internalDate;
             set
             {
-                _desktopDate = (value == DateOnly.MinValue || value == DateOnly.MaxValue) ? DateOnly.FromDateTime(DateTime.Now) : value;
+                _internalDate = (value == DateOnly.MinValue || value == DateOnly.MaxValue) ? DateOnly.FromDateTime(DateTime.Now) : value;
             }
         }
 
@@ -34,6 +35,10 @@ namespace SwashbucklerDiary.Components
         public DateOnly? Min { get; set; }
         [Parameter]
         public DateOnly? Max { get; set; }
+        [Parameter]
+        public OneOf<DateOnly[], Func<DateOnly, bool>>? Events { get; set; }
+        [Parameter]
+        public OneOf<string, Func<DateOnly, string>, Func<DateOnly, string[]>>? EventColor {get;set;}
 
         private void SetValue(bool value)
         {
@@ -41,7 +46,7 @@ namespace SwashbucklerDiary.Components
             {
                 if (value)
                 {
-                    DesktopDate = Date;
+                    InternalDate = Date;
                 }
                 _value = value;
             }
@@ -49,7 +54,7 @@ namespace SwashbucklerDiary.Components
 
         private async Task HandleOnOK()
         {
-            Date = DesktopDate;
+            Date = InternalDate;
             if (DateChanged.HasDelegate)
             {
                 await DateChanged.InvokeAsync(Date);

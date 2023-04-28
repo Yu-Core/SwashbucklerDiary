@@ -1,38 +1,27 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits DialogComponentBase
 
-<MultiDisplay>
-    <MobileContent>
-        <PPMobileDatePicker MyVisible="Value"
-                            MyVisibleChanged="ValueChanged"
-                            Value="Date"
-                            ValueChanged="DateChanged"
-                            Min="Min??default"
-                            Max="Max??default">
-        </PPMobileDatePicker>
-    </MobileContent>
-    <DesktopContent>
-        <MMDialog MyValue="Value"
-                  MyValueChanged="ValueChanged"
-                  MaxWidth="420">
-            <MDatePicker @bind-Value="DesktopDate"
-                         Class="rounded-lg pt-4"
-                         FullWidth="true"
-                         NoTitle="true"
-                         Scrollable="true"
-                         Min="Min"
-                         Max="Max">
-                <MSpacer></MSpacer>
-                <MButton Text="true"
-                         OnClick="HandleOnCancel">
-                    @(I18n.T("Share.Cancel"))
-                </MButton>
-                <MButton Text="true"
-                         Color="primary"
-                         OnClick="HandleOnOK">
-                    @(I18n.T("Share.OK"))
-                </MButton>
-            </MDatePicker>
-        </MMDialog>
-    </DesktopContent>
-</MultiDisplay>
+<MMDialog MyValue="Value"
+          MyValueChanged="ValueChanged"
+          MaxWidth="420">
+    <MDatePicker @bind-Value="InternalDate"
+                 Class="rounded-lg pt-4"
+                 FullWidth="true"
+                 NoTitle="true"
+                 Scrollable="true"
+                 Events="Events"
+                 EventColor='EventColor'
+                 Min="Min"
+                 Max="Max">
+        <MSpacer></MSpacer>
+        <MButton Text="true"
+                 OnClick="HandleOnCancel">
+            @(I18n.T("Share.Cancel"))
+        </MButton>
+        <MButton Text="true"
+                 Color="primary"
+                 OnClick="HandleOnOK">
+            @(I18n.T("Share.OK"))
+        </MButton>
+    </MDatePicker>
+</MMDialog>
