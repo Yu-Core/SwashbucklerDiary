@@ -14,5 +14,7 @@ namespace SwashbucklerDiary.IServices
         Task<bool> UpdateIncludesAsync(DiaryModel model);
         Task<int> GetWordCount(WordCountType type);
         Task<bool> ImportAsync(List<DiaryModel> diaries);
+        Task<List<DateOnly>> GetAllDates();
+        Task<List<DateOnly>> GetAllDates(Expression<Func<DiaryModel, bool>> func);
     }
 }

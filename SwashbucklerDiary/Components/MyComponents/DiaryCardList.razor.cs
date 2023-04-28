@@ -33,7 +33,7 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public string? CardClass { get; set; }
         [Parameter]
-        public EventCallback OnDeleted { get; set; }
+        public EventCallback OnUpdate { get; set; }
         [Parameter]
         public List<TagModel> Tags { get; set; } = new();
         [Parameter]
@@ -82,7 +82,7 @@ namespace SwashbucklerDiary.Components
             {
                 await AlertService.Error(I18n.T("Share.DeleteFail"));
             }
-            await OnDeleted.InvokeAsync();
+            await OnUpdate.InvokeAsync();
         }
 
         private async Task HandleCopy(DiaryModel diaryModel)
@@ -137,6 +137,7 @@ namespace SwashbucklerDiary.Components
                 return;
             }
             _value.Remove(diary);
+            await OnUpdate.InvokeAsync();
         }
     }
 }

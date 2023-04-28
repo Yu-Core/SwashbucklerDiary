@@ -18,14 +18,13 @@
                  FullWidth="true"
                  NoTitle="true"
                  Color="primary"
-                 AllowedDates="AllowedDates"
-                 Events="AllowedDates"
+                 Events="EventsDates"
                  EventColor='"primary"'
                  Locale="@(I18n.Culture.Name)">
     </MDatePicker>
-    <DiaryCardList Value="CalendarDiaries"
+
+    <DiaryCardList Value="Diaries"
                    @bind-Tags="Tags"
-                   OnDeleted="Update">
+                   OnUpdate="UpdateEventsDates">
     </DiaryCardList>
 </ScrollContainer>
-

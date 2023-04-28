@@ -146,5 +146,21 @@ namespace SwashbucklerDiary.Repository
             })
             .ExecuteCommandAsync();
         }
+
+        public Task<List<DateOnly>> GetAllDates()
+        {
+            return GetAllDates(it=>true);
+        }
+
+        public async Task<List<DateOnly>> GetAllDates(Expression<Func<DiaryModel, bool>> func)
+        {
+            var dates = await base.Context.Queryable<DiaryModel>()
+                .Where(func)
+                .Select(s => s.CreateTime.Date)
+                .Distinct()
+                .ToListAsync();
+
+            return dates.Select(DateOnly.FromDateTime).ToList();
+        }
     }
 }

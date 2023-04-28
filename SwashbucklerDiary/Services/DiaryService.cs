@@ -76,5 +76,15 @@ namespace SwashbucklerDiary.Services
             }
             return wordCount;
         }
+
+        public Task<List<DateOnly>> GetAllDates()
+        {
+            return _iDiaryRepository.GetAllDates();
+        }
+
+        public Task<List<DateOnly>> GetAllDates(Expression<Func<DiaryModel, bool>> func)
+        {
+            return _iDiaryRepository.GetAllDates(func);
+        }
     }
 }

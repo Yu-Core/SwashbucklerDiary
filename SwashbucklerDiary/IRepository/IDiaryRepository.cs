@@ -13,5 +13,7 @@ namespace SwashbucklerDiary.IRepository
         Task<List<DiaryModel>> GetListIncludesAsync(Expression<Func<DiaryModel, bool>> func);
         Task<bool> UpdateIncludesAsync(DiaryModel model);
         Task<bool> ImportAsync(List<DiaryModel> diaries);
+        Task<List<DateOnly>> GetAllDates();
+        Task<List<DateOnly>> GetAllDates(Expression<Func<DiaryModel, bool>> func);
     }
 }
