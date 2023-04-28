@@ -57,17 +57,6 @@ namespace SwashbucklerDiary.Services
             return Get(key!, defaultValue);
         }
 
-        public T GetDefault<T>(SettingType type)
-        {
-            return (T)DefalutSettings[type];
-        }
-
-        public async Task InitDefault<T>(SettingType type)
-        {
-            T value = await Get<T>(type);
-            DefalutSettings.Add(type, value!);
-        }
-
         public Task Save<T>(string key, T value)
         {
             Preferences.Default.Set(key, value);

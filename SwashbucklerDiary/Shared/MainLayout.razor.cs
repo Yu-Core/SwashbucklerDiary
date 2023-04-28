@@ -57,7 +57,7 @@ namespace SwashbucklerDiary.Shared
 
         private async Task LoadSettings()
         {
-            int themeState = SettingsService.GetDefault<int>(SettingType.ThemeState);
+            int themeState = await SettingsService.Get<int>(SettingType.ThemeState);
             ThemeService.SetThemeState((ThemeState)themeState);
             var language = await SettingsService.Get<string>(SettingType.Language);
             I18nService.SetCulture(language);

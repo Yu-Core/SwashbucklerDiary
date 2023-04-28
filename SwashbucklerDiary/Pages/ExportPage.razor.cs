@@ -95,7 +95,7 @@ namespace SwashbucklerDiary.Pages
             }
             catch (Exception e)
             {
-                Log.Error(e.Message);
+                Log.Error($"{e.Message}\n{e.StackTrace}");
                 await AlertService.Success(I18n.T("Export.ImportFail"));
             }
             
