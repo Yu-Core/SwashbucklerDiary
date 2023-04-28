@@ -1,0 +1,21 @@
+﻿@namespace SwashbucklerDiary.Components
+
+<FabTransition>
+    <MButton Class="my-btn-fab elevation-2"
+             Bottom
+             Right
+             Fixed
+             OnClick="OnClick"
+             Fab>
+        <MIcon>
+            @Icon
+        </MIcon>
+    </MButton>
+</FabTransition>
+
+@code {
+    [Parameter]
+    public string? Icon { get; set; }
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+}

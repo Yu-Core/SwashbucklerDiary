@@ -48,34 +48,14 @@
 
 @if (tab == 0)
 {
-    <FabTransition>
-        <MButton Class="my-btn-fab elevation-2"
-             Bottom
-             Right
-             Fixed
-             OnClick="@(()=>To("/write"))"
-             Fab>
-            <MIcon>
-                mdi-pencil
-            </MIcon>
-        </MButton>
-    </FabTransition>
+    <MyFloatButton Icon="mdi-pencil" OnClick="@(()=>To("/write"))">
+    </MyFloatButton>
 }
 
 @if (tab == 1)
 {
-    <FabTransition>
-        <MButton Class="my-btn-fab elevation-2"
-             Bottom
-             Right
-             Fixed
-             OnClick="()=>ShowAddTag=true"
-             Fab>
-            <MIcon>
-                mdi-plus
-            </MIcon>
-        </MButton>
-    </FabTransition>
+    <MyFloatButton Icon="mdi-plus" OnClick="()=>ShowAddTag=true">
+    </MyFloatButton>
 }
 
 <InputDialog @bind-Value="ShowAddTag"

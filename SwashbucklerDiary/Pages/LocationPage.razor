@@ -35,18 +35,8 @@
     }
 </ScrollContainer>
 
-<FabTransition>
-    <MButton Class="my-btn-fab elevation-2"
-             Bottom
-             Right
-             Fixed
-             OnClick="()=>ShowAdd=true"
-             Fab>
-        <MIcon>
-            mdi-plus
-        </MIcon>
-    </MButton>
-</FabTransition>
+<MyFloatButton Icon="mdi-plus" OnClick="()=>ShowAdd=true">
+</MyFloatButton>
 
 <InputDialog @bind-Value="ShowAdd"
              Title="@(I18n.T("Location.Add"))"
