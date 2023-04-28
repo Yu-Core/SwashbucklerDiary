@@ -1,12 +1,16 @@
-﻿using Masa.Blazor;
+﻿using BlazorComponent;
+using BlazorComponent.JSInterop;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Components
 {
     public partial class ScrollContainer
     {
+        private ElementReference element;
         [Inject]
-        public MasaBlazor MasaBlazor { get; set; } = default!;
+        private IJSRuntime JS { get; set; } = default!;
 
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
@@ -22,5 +26,12 @@ namespace SwashbucklerDiary.Components
         public string? ContentStyle { get; set; }
         [Parameter]
         public EventCallback OnContextmenu { get; set; }
+
+        public async Task ScrollToTop()
+        {
+            //直接滚动显得很生硬，所以延时0.2s
+            await Task.Delay(200);
+            await JS.ScrollTo(element, 0);
+        }
     }
 }

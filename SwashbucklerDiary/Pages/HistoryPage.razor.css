@@ -1,8 +1,22 @@
-﻿@media screen and (min-width:600px) {
-    .tree-wrap > div {
-        width: 50%;
-    }
-    ::deep .tree-card {
-        width: 100%;
-    }
+﻿
+.normal-calendar {
+    position: relative;
+    z-index: 2;
+}
+
+.float-calendar {
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    z-index: 1;
+    left:0px;
+    padding:12px 16px;
+}
+
+.theme--light .float-calendar {
+    background-color: #f7f8f9 !important;
+}
+
+.theme--dark .float-calendar {
+    background-color: #121212 !important;
 }

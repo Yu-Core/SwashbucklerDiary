@@ -10,21 +10,41 @@
     </MToolbarTitle>
 </MAppBar>
 
-<ScrollContainer>
-    <MDatePicker @bind-Value="PickedDate"
-                 Class="rounded-lg my-picker mb-5 pt-4"
-                 TValue="DateOnly"
-                 ShowCurrent="false"
-                 FullWidth="true"
-                 NoTitle="true"
-                 Color="primary"
-                 Events="EventsDates"
-                 EventColor='"primary"'
-                 Locale="@(I18n.Culture.Name)">
-    </MDatePicker>
+<ScrollContainer @ref="scrollContainer">
+    <div class="normal-calendar">
+        <MDatePicker @bind-Value="PickedDate"
+                     Class="rounded-lg my-picker mb-5 pt-4"
+                     TValue="DateOnly"
+                     ShowCurrent="false"
+                     FullWidth="true"
+                     NoTitle="true"
+                     Color="primary"
+                     Events="EventsDates"
+                     EventColor='"primary"'
+                     Locale="@(I18n.Culture.Name)">
+        </MDatePicker>
+    </div>
+
+    <div class="float-calendar">
+        <MTextField @bind-Value="PickedDate"
+                    Class="rounded-lg"
+                    Dense="true"
+                    Readonly="true"
+                    Outlined="true"
+                    HideDetails="@("auto")"
+                    OnMouseUp="()=>ShowFloatCalendar=true"
+                    PrependIcon="mdi-calendar">
+        </MTextField>
+    </div>
 
     <DiaryCardList Value="Diaries"
                    @bind-Tags="Tags"
                    OnUpdate="UpdateEventsDates">
     </DiaryCardList>
 </ScrollContainer>
+
+<MyDatePicker @bind-Value="ShowFloatCalendar"
+              @bind-Date="PickedDate"
+              Events="EventsDates"
+              EventColor='"primary"'>
+</MyDatePicker>

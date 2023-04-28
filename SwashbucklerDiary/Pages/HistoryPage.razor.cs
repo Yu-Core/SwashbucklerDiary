@@ -4,7 +4,8 @@ namespace SwashbucklerDiary.Pages
 {
     public partial class HistoryPage : DiariesPageComponentBase
     {
-        private DateOnly PickedDate = DateOnly.FromDateTime(DateTime.Now);
+        private ScrollContainer? scrollContainer;
+        private bool ShowFloatCalendar;
         private DateOnly _pickedDate = DateOnly.FromDateTime(DateTime.Now);
         private DateOnly[] EventsDates = Array.Empty<DateOnly>();
 
@@ -39,6 +40,12 @@ namespace SwashbucklerDiary.Pages
             _pickedDate = value;
             await UpdateDiaries();
             await InvokeAsync(StateHasChanged);
+            if(scrollContainer == null)
+            {
+                return;
+            }
+
+            await scrollContainer.ScrollToTop();
         }
 
         private async Task UpdateEventsDates()
@@ -46,5 +53,6 @@ namespace SwashbucklerDiary.Pages
             var eventsDates = await DiaryService.GetAllDates(it=>!it.Private);
             EventsDates = eventsDates.ToArray();
         }
+
     }
 }
