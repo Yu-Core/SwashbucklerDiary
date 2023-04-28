@@ -1,0 +1,34 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits MyComponentBase
+
+<div class="my-card-list">
+    @foreach (var item in Value)
+    {
+        <LocationCard Value="item"
+             OnDelete="OpenDeleteDialog"
+             OnRename="OpenRenameDialog">
+        </LocationCard>
+    }
+</div>
+
+@if (!Value.Any())
+{
+    <div class="my-not-have">
+        <div class="text-h6 text--secondary font-weight-bold-desktop">
+            @(I18n.T("Location.NoLocation"))
+        </div>
+    </div>
+}
+
+<InputDialog @bind-Value="ShowRename"
+             @bind-Text="@(SelectedLocation.Name)"
+             Title="@(I18n.T("Location.Rename"))"
+             Placeholder="@(I18n.T("Location.Placeholder"))"
+             OnOK="HandleRename">
+</InputDialog>
+
+<DeleteDialog @bind-Value="ShowDelete"
+              Title="@(I18n.T("Location.Delete.Title"))"
+              Content="@(I18n.T("Location.Delete.Content"))"
+              OnOK="()=>HandleDelete(SelectedLocation)">
+</DeleteDialog>

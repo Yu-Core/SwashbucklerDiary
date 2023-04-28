@@ -7,11 +7,7 @@ namespace SwashbucklerDiary.Pages
 {
     public partial class LocationPage : PageComponentBase
     {
-        bool ShowRename;
-        bool ShowDelete;
         bool ShowAdd;
-        Action? OnDelete;
-        LocationModel SelectLocation = new();
         List<LocationModel> Locations = new();
 
         [Inject]
@@ -26,61 +22,6 @@ namespace SwashbucklerDiary.Pages
         async Task UpdateLocations()
         {
             Locations = await LocationService.QueryAsync();
-        }
-
-        void RenameLocation(LocationModel location)
-        {
-            SelectLocation = location;
-            StateHasChanged();
-            ShowRename = true;
-        }
-
-        void DeleteLocation(LocationModel location)
-        {
-            OnDelete = null;
-            OnDelete += async () =>
-            {
-                ShowDelete = false;
-                bool flag = await LocationService.DeleteAsync(location);
-                if (flag)
-                {
-                    Locations.Remove(location);
-                    await AlertService.Success(I18n.T("Share.DeleteSuccess"));
-                    StateHasChanged();
-                }
-                else
-                {
-                    await AlertService.Error(I18n.T("Share.DeleteFail"));
-                }
-            };
-            ShowDelete = true;
-            StateHasChanged();
-        }
-
-        async Task SaveRename(string name)
-        {
-            ShowRename = false;
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return;
-            }
-
-            if (Locations!.Any(it => it.Name == name))
-            {
-                await AlertService.Warning(I18n.T("Location.Repeat.Title"), I18n.T("Location.Repeat.Content"));
-                return;
-            }
-
-            SelectLocation.Name = name;
-            bool flag = await LocationService.UpdateAsync(SelectLocation);
-            if (flag)
-            {
-                await AlertService.Success(I18n.T("Share.EditSuccess"));
-            }
-            else
-            {
-                await AlertService.Error(I18n.T("Share.EditFail"));
-            }
         }
 
         private async Task SaveAdd(string name)

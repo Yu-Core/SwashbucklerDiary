@@ -3,7 +3,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class LocationListItem : MyComponentBase
+    public partial class LocationCard : MyComponentBase
     {
         private bool ShowMenu;
         private List<ListItemModel> ListItemModels = new();
@@ -11,9 +11,9 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public LocationModel? Value { get; set; }
         [Parameter]
-        public EventCallback OnDelete { get; set; }
+        public EventCallback<LocationModel> OnDelete { get; set; }
         [Parameter]
-        public EventCallback OnRename { get; set; }
+        public EventCallback<LocationModel> OnRename { get; set; }
 
         protected override void OnInitialized()
         {
@@ -25,8 +25,8 @@ namespace SwashbucklerDiary.Components
         {
             ListItemModels = new()
             {
-                new("Share.Rename","mdi-rename-outline",EC(OnRename.InvokeAsync)),
-                new("Share.Delete","mdi-delete-outline",EC(OnDelete.InvokeAsync)),
+                new("Share.Rename","mdi-rename-outline",EC(()=>OnRename.InvokeAsync(Value))),
+                new("Share.Delete","mdi-delete-outline",EC(()=>OnDelete.InvokeAsync(Value))),
             };
         }
     }

@@ -5,34 +5,7 @@
 </MyAppBar>
 
 <ScrollContainer>
-    @if (Locations.Any())
-    {
-        <MCard Ripple="false"
-           Rounded="@("lg")">
-            <MList>
-                @foreach (var item in Locations)
-                {
-                    <LocationListItem Value="item"
-                              OnRename="()=>RenameLocation(item)"
-                              OnDelete="()=>DeleteLocation(item)">
-                    </LocationListItem>
-                    if (Locations.Last() != item)
-                    {
-                        <MDivider Class="mx-3"></MDivider>
-                    }
-                }
-            </MList>
-        </MCard>
-    }
-
-    @if (!Locations.Any())
-    {
-        <div class="my-not-have">
-            <div class="text-h6 text--secondary font-weight-bold-desktop">
-                @(I18n.T("Location.NoLocation"))
-            </div>
-        </div>
-    }
+  <LocationCardList Value="Locations"></LocationCardList>
 </ScrollContainer>
 
 <MyFloatButton Icon="mdi-plus" OnClick="()=>ShowAdd=true">
@@ -44,15 +17,3 @@
              OnOK="SaveAdd">
 </InputDialog>
 
-<InputDialog @bind-Value="ShowRename"
-             @bind-Text="@(SelectLocation.Name)"
-             Title="@(I18n.T("Location.Rename"))"
-             Placeholder="@(I18n.T("Location.Placeholder"))"
-             OnOK="SaveRename">
-</InputDialog>
-
-<DeleteDialog @bind-Value="ShowDelete"
-              Title="@(I18n.T("Location.Delete.Title"))"
-              Content="@(I18n.T("Location.Delete.Content"))"
-              OnOK="()=>OnDelete?.Invoke()">
-</DeleteDialog>

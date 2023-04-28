@@ -7,19 +7,18 @@
            Elevation="0"
            Ripple="false"
            Rounded="@("lg")"
-           @oncontextmenu="()=>ShowMenu=true"
-           OnClick="()=>OnClick.InvokeAsync(Value)">
+           @oncontextmenu="()=>ShowMenu=true">
         <MListItem>
             <MListItemIcon>
-                <MIcon>
-                    mdi-label-outline
+                <MIcon Class="list-item-icon">
+                    mdi-map-marker-outline
                 </MIcon>
             </MListItemIcon>
-
             <MListItemContent>
-                @(Value!.Name)
+                <MListItemTitle>
+                    @(Value?.Name)
+                </MListItemTitle>
             </MListItemContent>
-
             <MListItemAction>
                 <div @onclick:stopPropagation="true">
                     <MultiMenu @bind-Value="ShowMenu" ListItemModels="ListItemModels">

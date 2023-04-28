@@ -11,11 +11,11 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public TagModel? Value { get; set; }
         [Parameter]
-        public EventCallback OnDelete { get; set; }
+        public EventCallback<TagModel> OnDelete { get; set; }
         [Parameter]
-        public EventCallback OnRename { get; set; }
+        public EventCallback<TagModel> OnRename { get; set; }
         [Parameter]
-        public EventCallback OnClick { get; set; }
+        public EventCallback<TagModel> OnClick { get; set; }
 
         protected override void OnInitialized()
         {
@@ -27,8 +27,8 @@ namespace SwashbucklerDiary.Components
         {
             ListItemModels = new()
             {
-                new("Share.Rename","mdi-rename-outline",EC(OnRename.InvokeAsync)),
-                new("Share.Delete","mdi-delete-outline",EC(OnDelete.InvokeAsync)),
+                new("Share.Rename","mdi-rename-outline",EC(()=>OnRename.InvokeAsync(Value))),
+                new("Share.Delete","mdi-delete-outline",EC(()=>OnDelete.InvokeAsync(Value))),
             };
         }
     }

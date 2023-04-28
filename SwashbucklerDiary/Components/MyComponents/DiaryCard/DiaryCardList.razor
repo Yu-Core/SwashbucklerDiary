@@ -37,7 +37,7 @@
 <DeleteDialog @bind-Value="ShowDeleteDiary"
               Title="@(I18n.T("Diary.Delete.Title"))"
               Content="@(I18n.T("Diary.Delete.Content"))"
-              OnOK="()=>HandleDelete(SelectDiary)">
+              OnOK="()=>HandleDelete(SelectedDiary)">
 </DeleteDialog>
 
 <ExportDialog @bind-Value="ShowExport" Diaries="ExportDiaries">

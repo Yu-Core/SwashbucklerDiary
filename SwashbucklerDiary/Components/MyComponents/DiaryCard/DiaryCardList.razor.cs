@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Components
         private bool ShowSelectTag;
         private bool ShowExport;
         private bool PrivacyMode;
-        private DiaryModel SelectDiary = new();
+        private DiaryModel SelectedDiary = new();
         private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
@@ -47,8 +47,8 @@ namespace SwashbucklerDiary.Components
 
         private List<TagModel> SelectedTags
         {
-            get => SelectDiary.Tags ?? new();
-            set => SelectDiary.Tags = value;
+            get => SelectedDiary.Tags ?? new();
+            set => SelectedDiary.Tags = value;
         }
 
         private async Task HandleTopping(DiaryModel diaryModel)
@@ -59,7 +59,7 @@ namespace SwashbucklerDiary.Components
 
         private void OpenDeleteDialog(DiaryModel diaryModel)
         {
-            SelectDiary = diaryModel;
+            SelectedDiary = diaryModel;
             ShowDeleteDiary = true;
         }
 
@@ -95,15 +95,15 @@ namespace SwashbucklerDiary.Components
 
         private async Task HandleTag(DiaryModel diary)
         {
-            SelectDiary = diary;
-            SelectedTags = await DiaryService.GetTagsAsync(SelectDiary.Id);
+            SelectedDiary = diary;
+            SelectedTags = await DiaryService.GetTagsAsync(SelectedDiary.Id);
             StateHasChanged();
             ShowSelectTag = true;
         }
 
         private async Task SaveSelectTags()
         {
-            await DiaryService.UpdateTagsAsync(SelectDiary);
+            await DiaryService.UpdateTagsAsync(SelectedDiary);
             ShowSelectTag = false;
         }
 

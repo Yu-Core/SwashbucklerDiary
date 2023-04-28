@@ -1,5 +1,4 @@
-﻿using BlazorComponent;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
@@ -7,9 +6,8 @@ namespace SwashbucklerDiary.Components
 {
     public partial class TagCardList : MyComponentBase
     {
-        private bool ShowDeleteTag;
-        private bool ShowRenameTag;
-        private Guid RenameTagId;
+        private bool ShowDelete;
+        private bool ShowRename;
         private TagModel SelectedTag = new();
 
         [Inject]
@@ -20,25 +18,22 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public EventCallback<List<TagModel>> ValueChanged { get; set; }
 
-        private string? RenameTagName { get; set; }
-
-        private void HandleRename(TagModel tag)
+        private void OpenRenameDialog(TagModel tag)
         {
-            RenameTagId = tag.Id;
-            RenameTagName = tag.Name;
+            SelectedTag = tag;
             StateHasChanged();
-            ShowRenameTag = true;
+            ShowRename = true;
         }
 
         private void OpenDeleteDialog(TagModel tag)
         {
             SelectedTag = tag;
-            ShowDeleteTag = true;
+            ShowDelete = true;
         }
 
         private async Task HandleDelete(TagModel tag)
         {
-            ShowDeleteTag = false;
+            ShowDelete = false;
             bool flag = await TagService.DeleteAsync(tag);
             if (flag)
             {
@@ -56,9 +51,9 @@ namespace SwashbucklerDiary.Components
             }
         }
 
-        private async Task SaveRenameTag(string tagName)
+        private async Task HandleRename(string tagName)
         {
-            ShowRenameTag = false;
+            ShowRename = false;
             if (string.IsNullOrWhiteSpace(tagName))
             {
                 return;
@@ -70,13 +65,12 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            var tag = Value!.FirstOrDefault(it => it.Id == RenameTagId);
-            tag!.Name = RenameTagName = tagName;
+            SelectedTag.Name = tagName;
             if (ValueChanged.HasDelegate)
             {
                 await ValueChanged.InvokeAsync(Value);
             }
-            bool flag = await TagService.UpdateAsync(tag);
+            bool flag = await TagService.UpdateAsync(SelectedTag);
             if (flag)
             {
                 await AlertService.Success(I18n.T("Share.EditSuccess"));
@@ -87,9 +81,9 @@ namespace SwashbucklerDiary.Components
             }
         }
 
-        private void HandleClick(Guid id)
+        private void HandleClick(TagModel tag)
         {
-            NavigateService.NavigateTo($"/tag/{id}");
+            NavigateService.NavigateTo($"/tag/{tag.Id}");
         }
     }
 }
