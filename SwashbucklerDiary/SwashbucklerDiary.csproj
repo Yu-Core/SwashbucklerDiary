@@ -22,8 +22,8 @@
         <ApplicationIdGuid>DBFF20FC-EF94-4EE2-A049-931177D2CB18</ApplicationIdGuid>
 
         <!-- Versions -->
-        <ApplicationDisplayVersion>0.35.8</ApplicationDisplayVersion>
-        <ApplicationVersion>358</ApplicationVersion>
+        <ApplicationDisplayVersion>0.38.2</ApplicationDisplayVersion>
+        <ApplicationVersion>382</ApplicationVersion>
 
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -89,7 +89,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
-		<PackageReference Include="Masa.Blazor" Version="1.0.0-preview.16" />
+		<PackageReference Include="Masa.Blazor" Version="1.0.0-rc.1" />
 		<PackageReference Include="PInvoke.User32" Version="0.7.124" />
 		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="1.0.2" />
@@ -98,7 +98,7 @@
 		<PackageReference Include="Serilog" Version="2.12.0" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
 		<PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
-		<PackageReference Include="SqlSugarCore" Version="5.1.4.67" />
+		<PackageReference Include="SqlSugarCore" Version="5.1.4.69" />
 		<PackageReference Include="WebDav.Client" Version="2.8.0" />
 	</ItemGroup>
 
