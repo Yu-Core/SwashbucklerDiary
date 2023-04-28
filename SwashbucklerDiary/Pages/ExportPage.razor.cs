@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Serilog;
+using Serilog.Core;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -78,16 +80,25 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            using FileStream openStream = File.OpenRead(ImportFilePath);
-            List<DiaryModel>? diaries = await JsonSerializer.DeserializeAsync<List<DiaryModel>>(openStream);
-            if (diaries == null || !diaries.Any())
+            try
             {
-                await AlertService.Success(I18n.T("Export.ImportFail"));
-                return;
-            }
+                using FileStream openStream = File.OpenRead(ImportFilePath);
+                List<DiaryModel>? diaries = await JsonSerializer.DeserializeAsync<List<DiaryModel>>(openStream);
+                if (diaries == null || !diaries.Any())
+                {
+                    await AlertService.Success(I18n.T("Export.ImportFail"));
+                    return;
+                }
 
-            await DiaryService.ImportAsync(diaries);
-            await AlertService.Success(I18n.T("Export.ImportSuccess"));
+                await DiaryService.ImportAsync(diaries);
+                await AlertService.Success(I18n.T("Export.ImportSuccess"));
+            }
+            catch (Exception e)
+            {
+                Log.Error(e.Message);
+                await AlertService.Success(I18n.T("Export.ImportFail"));
+            }
+            
         }
     }
 }
