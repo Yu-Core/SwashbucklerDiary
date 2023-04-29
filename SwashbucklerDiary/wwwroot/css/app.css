@@ -199,7 +199,7 @@ a, .btn-link {
 }
 
 .my-diary-card-title {
-    /*font-weight: 700 !important;*/
+    font-weight: 700 !important;
     padding-bottom: 8px !important;
     /*font-size:1.1rem !important;*/
 }
