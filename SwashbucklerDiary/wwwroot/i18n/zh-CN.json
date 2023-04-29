@@ -1,5 +1,4 @@
 {
-  "$DefaultCulture": "true",
   "Share": {
     "OK": "确认",
     "Cancel": "取消",
@@ -151,7 +150,9 @@
     "SelectLanguage": "选择语言",
     "ContactWay": "联系方式",
     "MailCopy": "邮箱地址已复制到剪贴板",
-    "QQGroupCopy": "QQ群号码已复制到剪贴板"
+    "SendMailFail": "发送邮件失败",
+    "QQGroupCopy": "QQ群号码已复制到剪贴板",
+    "QQGroupError": "加入QQ群失败"
   },
   "ToDo": {
     "Title": "该功能暂未开放",

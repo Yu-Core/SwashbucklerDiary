@@ -150,7 +150,9 @@
     "SelectLanguage": "Select language",
     "ContactWay": "Contact way",
     "MailCopy": "The email address has been copied to the clipboard",
-    "QQGroupCopy": "The QQ group number has been copied to the clipboard"
+    "SendMailFail": "Send Mail Fail",
+    "QQGroupCopy": "The QQ group number has been copied to the clipboard",
+    "QQGroupError": "Failed to join QQ group"
   },
   "ToDo": {
     "Title": "This function is not developed",

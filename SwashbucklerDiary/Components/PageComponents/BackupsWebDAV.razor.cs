@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Config;
+﻿using Serilog;
+using SwashbucklerDiary.Config;
 using SwashbucklerDiary.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
@@ -86,14 +87,17 @@ namespace SwashbucklerDiary.Components
 
                 configModel = webDavConfig;
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException e)
             {
+                Log.Error($"{e.Message}\n{e.StackTrace}");
                 await AlertService.Error(I18n.T("Backups.Config.Fail.NoNetwork"));
                 return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                Log.Error($"{e.Message}\n{e.StackTrace}");
+                await AlertService.Error(I18n.T("Backups.Config.Fail.Unknown"));
+                return false;
             }
 
             return true;

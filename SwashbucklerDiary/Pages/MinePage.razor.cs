@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Maui.ApplicationModel;
+using Serilog;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -134,9 +135,10 @@ namespace SwashbucklerDiary.Pages
                     await AlertService.Success(I18n.T("Mine.MailCopy"));
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new Exception("SendMailError");
+                Log.Error($"{e.Message}\n{e.StackTrace}");
+                await AlertService.Success(I18n.T("Mine.SendMailFail"));
             }
         }
 
@@ -163,9 +165,10 @@ namespace SwashbucklerDiary.Pages
                     await AlertService.Success(I18n.T("Mine.QQGroupCopy"));
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new Exception("QQGroupError");
+                Log.Error($"{e.Message}\n{e.StackTrace}");
+                await AlertService.Success(I18n.T("Mine.QQGroupError"));
             }
             
         }

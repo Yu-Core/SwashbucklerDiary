@@ -291,7 +291,6 @@ namespace SwashbucklerDiary.Services
             }
             catch (Exception)
             {
-
                 throw;
             }
 
