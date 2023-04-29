@@ -1,11 +1,16 @@
 # Swashbuckler Diary
 
-[简体中文](./README.md) | English
+English | [简体中文](./README.md)
 
 "Swashbuckler Diary" is an open source, cross platform local diary application. Half a lifetime of wind and rain, half a lifetime of travel, one's Jianghu, always needs to leave something to be wonderful.
 
 Everyone has a swashbuckler in their heart, like a shadow following the wind, accompanying you to see the scenery all the way and remembering all your wonderful moments.
 
+## Download Channels
+- [![Microsoft 应用商店](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
+- [GitHub 发行版](https://github.com/Yu-Core/SwashbucklerDiary/releases)
+
+## Characteristics
 - Minimalist style
 - Tags, weather, mood, location
 - Markdown
@@ -18,7 +23,7 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 - Export
 - Sharing
 - Achievements
-- Log
+- Logs
 
 ## Screenshot
 
@@ -54,7 +59,7 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
     </tr>
  </table>
 
- ## Development environment
+ ## Development Environment
 
 [Visual Studio 2022](https://learn.microsoft.com/en-us/visualstudio/install/install-visual-studio?view=vs-2022) 或 [Visual Studio 2022 for Mac](https://learn.microsoft.com/en-us/visualstudio/mac/installation?view=vsmac-2022)
 
@@ -71,7 +76,7 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
         - Mobile development using .NET / .NET Multi platform App UI development
         - .NET Desktop Development
 
-## Supported platforms
+## Supported Platforms
 - Windows (Windows 11 and Windows 10 version 1809 or higher)
 - Android (Android 7.0 (API 24) or higher)
 - iOS (iOS 14 or higher)

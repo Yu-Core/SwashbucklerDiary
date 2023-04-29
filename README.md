@@ -1,11 +1,16 @@
 # 侠客日记
 
-简体中文 | [English](./README.en-US.md)
+[English](./README.en-US.md) | 简体中文
 
 「 侠客日记 」是一个开源、跨平台的本地日记APP。
 
 每个人的心底都有一个侠客，如影随风，陪你看过一路的风景，记得你所有的精彩。
 
+## 下载渠道
+- [![Microsoft 应用商店](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
+- [GitHub 发行版](https://github.com/Yu-Core/SwashbucklerDiary/releases)
+
+## 特点
 - 极简风格
 - 标签、天气、心情、位置
 - Markdown
