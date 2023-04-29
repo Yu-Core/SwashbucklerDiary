@@ -157,7 +157,7 @@ namespace SwashbucklerDiary.Pages
             try
             {
                 bool flag = await SystemService.OpenQQGroup();
-                if (flag)
+                if (!flag)
                 {
                     await SystemService.SetClipboard(qqGroup);
                     await AlertService.Success(I18n.T("Mine.QQGroupCopy"));
