@@ -17,6 +17,9 @@ namespace SwashbucklerDiary
         {
             Window window = base.CreateWindow(activationState);
 
+#if MACCATALYST
+            window.Created += MacTitleBar.InitTitleBarForMac;
+#endif
             window.Resumed += (s, e) => SystemService.OnResume();
             window.Stopped += (s, e) => SystemService.OnStop();
             return window;

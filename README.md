@@ -66,8 +66,6 @@
 - macOS (macOS 11 或更高版本)
 - ~~Tizen (暂不支持)~~
 
-> macOS 暂不支持更改标题栏颜色
-
 ## 开发环境
 
 [Visual Studio 2022](https://learn.microsoft.com/zh-cn/visualstudio/install/install-visual-studio?view=vs-2022) 或 [Visual Studio 2022 for Mac](https://learn.microsoft.com/zh-cn/visualstudio/mac/installation?view=vsmac-2022)

@@ -83,8 +83,6 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 - macOS (macOS 11 or higher)
 - ~~Tizen (Not supported temporarily)~~
 
-> macOS does not currently support changing the title bar color
-
 ## Thanks to the following Open Source Projects
 - [.NET MAUI](https://github.com/dotnet/maui)
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)

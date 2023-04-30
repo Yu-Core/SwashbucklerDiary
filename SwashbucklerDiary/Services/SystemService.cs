@@ -2,7 +2,6 @@
 using CommunityToolkit.Maui.Storage;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using System.Security.Policy;
 
 namespace SwashbucklerDiary.Services
 {
@@ -371,18 +370,20 @@ namespace SwashbucklerDiary.Services
 
         private static readonly Color statusBarColorLight = Color.FromRgb(247, 248, 249);
         private static readonly Color statusBarColorDark = Color.FromRgb(18, 18, 18);
-
+#pragma warning disable CA1416
         public void SetStatusBar(ThemeState themeState)
         {
             var Dark = themeState == ThemeState.Dark;
             Color backgroundColor = Dark ? statusBarColorDark : statusBarColorLight;
-#if WINDOWS
             Color foreColor = Dark ? Colors.White : Colors.Black;
+#if WINDOWS
             WindowsTitleBar.SetColorForWindows(backgroundColor, foreColor);
+#elif MACCATALYST
+            MacTitleBar.SetTitleBarColorForMac(backgroundColor, foreColor);
 #elif ANDROID || IOS14_2_OR_GREATER
-                CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(backgroundColor);
-                StatusBarStyle statusBarStyle = Dark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
-                CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(statusBarStyle);
+            CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(backgroundColor);
+            StatusBarStyle statusBarStyle = Dark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
+            CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(statusBarStyle);
 #endif
         }
 
