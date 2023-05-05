@@ -90,6 +90,7 @@
 - [html2canvas](https://github.com/niklasvh/html2canvas)
 - [Markdown Guide](https://github.com/mattcone/markdown-guide)
 - [MASA.Blazor](https://github.com/BlazorComponent/MASA.Blazor)
+- [P/Invoke](https://github.com/dotnet/pinvoke)
 - [Serilog](https://github.com/serilog/serilog)
 - [Serilog.Sinks.SQLite.Maui](https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui)
 - [SQLite-net](https://github.com/praeclarum/sqlite-net)

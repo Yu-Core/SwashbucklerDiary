@@ -12,6 +12,7 @@ namespace SwashbucklerDiary.Pages
             new OSP("html2canvas","MIT license","https://github.com/niklasvh/html2canvas/blob/master/LICENSE"),
             new OSP("Markdown Guide","MIT license","https://github.com/mattcone/markdown-guide/blob/master/LICENSE.txt"),
             new OSP("MASA.Blazor","MIT license","https://github.com/BlazorComponent/MASA.Blazor/blob/main/LICENSE"),
+            new OSP("P/Invoke","MIT license","https://github.com/dotnet/pinvoke/blob/main/LICENSE"),
             new OSP("Serilog","Apache-2.0 license","https://github.com/serilog/serilog/blob/dev/LICENSE"),
             new OSP("Serilog.Sinks.SQLite.Maui","Apache-2.0 license","https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui/blob/dev/LICENSE"),
             new OSP("SQLite-net","MIT license","https://github.com/praeclarum/sqlite-net/blob/master/LICENSE.txt"),
