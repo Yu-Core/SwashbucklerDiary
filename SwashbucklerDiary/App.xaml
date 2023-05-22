@@ -6,8 +6,8 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <Color x:Key="PageBackgroundColor">#fff</Color>
-            <Color x:Key="PrimaryTextColor">White</Color>
+            <Color x:Key="PageBackgroundColor">#f7f8f9</Color>
+            <Color x:Key="PrimaryTextColor">black</Color>
 
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />

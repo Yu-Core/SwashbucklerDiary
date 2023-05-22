@@ -20,10 +20,5 @@ namespace SwashbucklerDiary
 
             return base.DispatchKeyEvent(e);
         }
-        protected override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-            GlobalLayoutUtil.AssistActivity(this);
-        }
     }
 }

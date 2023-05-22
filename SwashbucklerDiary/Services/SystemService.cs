@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Storage;
+using MauiBlazorToolkit;
+using MauiBlazorToolkit.Essentials;
+using MauiBlazorToolkit.Platform;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
@@ -199,19 +202,9 @@ namespace SwashbucklerDiary.Services
 #endif
         }
 
-        public async Task<bool> OpenStoreAppDetails(string appId)
+        public Task<bool> OpenStoreAppDetails(string appId)
         {
-            string uri = string.Empty;
-#if WINDOWS
-            uri = $"ms-windows-store://pdp/?productid={appId}";
-#elif ANDROID
-            uri = $"market://details?id={appId}";
-#elif IOS || MACCATALYST
-            uri = $"itms-apps://itunes.apple.com/app/id{appId}?action=write-review";
-#else
-            return false;
-#endif
-            return await Launcher.Default.TryOpenAsync(uri);
+            return AppStoreLauncher.Default.TryOpenAsync(appId);
         }
 
         public async Task<string> ReadMarkdownFile(string path)
@@ -373,13 +366,12 @@ namespace SwashbucklerDiary.Services
 #pragma warning disable CA1416
         public void SetStatusBar(ThemeState themeState)
         {
-            var Dark = themeState == ThemeState.Dark;
+            var Dark = themeState == ThemeState.Dark; 
             Color backgroundColor = Dark ? statusBarColorDark : statusBarColorLight;
-            Color foreColor = Dark ? Colors.White : Colors.Black;
-#if WINDOWS
-            WindowsTitleBar.SetColorForWindows(backgroundColor, foreColor);
-#elif MACCATALYST
-            MacTitleBar.SetTitleBarColorForMac(backgroundColor, foreColor);
+#if WINDOWS || MACCATALYST
+            TitleBar.SetColor(backgroundColor);
+            TitleBarStyle titleBarStyle = Dark ? TitleBarStyle.LightContent : TitleBarStyle.DarkContent;
+            TitleBar.SetStyle(titleBarStyle);
 #elif ANDROID || IOS14_2_OR_GREATER
             CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(backgroundColor);
             StatusBarStyle statusBarStyle = Dark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;

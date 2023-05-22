@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
+using MauiBlazorToolkit;
 using SwashbucklerDiary.Extend;
 
 namespace SwashbucklerDiary
@@ -13,6 +14,11 @@ namespace SwashbucklerDiary
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseMauiBlazorToolkit(options =>
+                {
+                    options.HiddenMacTitleVisibility = true;
+                    options.WebViewSoftInputPatch = true;
+                })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

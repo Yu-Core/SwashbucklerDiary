@@ -4,9 +4,11 @@
              xmlns:local="clr-namespace:SwashbucklerDiary"
              x:Class="SwashbucklerDiary.MainPage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:mauiBlazorToolkit="clr-namespace:MauiBlazorToolkit.Behaviors;assembly=MauiBlazorToolkit"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Behaviors>
-        <toolkit:StatusBarBehavior StatusBarColor="#f7f8f9" StatusBarStyle="LightContent" />
+        <toolkit:StatusBarBehavior StatusBarColor="#f7f8f9" StatusBarStyle="DarkContent" />
+        <mauiBlazorToolkit:TitleBarBehavior TitleBarColor="#f7f8f9" TitleBarStyle="DarkContent"></mauiBlazorToolkit:TitleBarBehavior>
     </ContentPage.Behaviors>
     <BlazorWebView x:Name="_blazorWebView"
                    HostPage="wwwroot/index.html">
