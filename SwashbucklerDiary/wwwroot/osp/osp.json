@@ -1,0 +1,72 @@
+[
+  {
+    "Name": ".NET MAUI",
+    "License": "MIT license",
+    "Url": "https://github.com/dotnet/maui/blob/main/LICENSE.txt"
+  },
+  {
+    "Name": "ASP.NET Core",
+    "License": "MIT license",
+    "Url": "https://github.com/dotnet/aspnetcore/blob/main/LICENSE.txt"
+  },
+  {
+    "Name": "CommunityToolkit.Maui",
+    "License": "MIT license",
+    "Url": "https://github.com/CommunityToolkit/Maui/blob/main/LICENSE"
+  },
+  {
+    "Name": "html2canvas",
+    "License": "MIT license",
+    "Url": "https://github.com/niklasvh/html2canvas/blob/master/LICENSE"
+  },
+  {
+    "Name": "Markdown Guide",
+    "License": "MIT license",
+    "Url": "https://github.com/mattcone/markdown-guide/blob/master/LICENSE.txt"
+  },
+  {
+    "Name": "MASA.Blazor",
+    "License": "MIT license",
+    "Url": "https://github.com/BlazorComponent/MASA.Blazor/blob/main/LICENSE"
+  },
+  {
+    "Name": "P/Invoke",
+    "License": "MIT license",
+    "Url": "https://github.com/dotnet/pinvoke/blob/main/LICENSE"
+  },
+  {
+    "Name": "Serilog",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/serilog/serilog/blob/dev/LICENSE"
+  },
+  {
+    "Name": "Serilog.Sinks.SQLite.Maui",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui/blob/dev/LICENSE"
+  },
+  {
+    "Name": "SQLite-net",
+    "License": "MIT license",
+    "Url": "https://github.com/praeclarum/sqlite-net/blob/master/LICENSE.txt"
+  },
+  {
+    "Name": "SqlSugar",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/DotNetNext/SqlSugar/blob/master/LICENSE"
+  },
+  {
+    "Name": "Swiper",
+    "License": "MIT license",
+    "Url": "https://github.com/nolimits4web/swiper/blob/master/LICENSE"
+  },
+  {
+    "Name": "WebDavClient",
+    "License": "MIT license",
+    "Url": "https://github.com/skazantsev/WebDavClient/blob/main/LICENSE.txt"
+  },
+  {
+    "Name": "Vditor",
+    "License": "MIT license",
+    "Url": "https://github.com/Vanessa219/vditor/blob/master/LICENSE"
+  }
+]
