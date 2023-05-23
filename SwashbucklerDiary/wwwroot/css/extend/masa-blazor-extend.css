@@ -138,11 +138,6 @@
     padding: 16px 24px 10px;
 }
 
-/*临时解决MTabs闪烁问题*/
-.m-tabs-bar > .m-slide-group__wrapper {
-    flex: unset !important;
-}
-
 /*自适应圆角*/
 @media screen and (min-width:600px) {
     .m-application .rounded-b-sm-lg {
