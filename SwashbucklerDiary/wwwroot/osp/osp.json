@@ -30,6 +30,11 @@
     "Url": "https://github.com/BlazorComponent/MASA.Blazor/blob/main/LICENSE"
   },
   {
+    "Name": "MauiBlazorToolkit",
+    "License": "MIT license",
+    "Url": "https://github.com/Yu-Core/MauiBlazorToolkit/blob/master/LICENSE"
+  },
+  {
     "Name": "P/Invoke",
     "License": "MIT license",
     "Url": "https://github.com/dotnet/pinvoke/blob/main/LICENSE"
