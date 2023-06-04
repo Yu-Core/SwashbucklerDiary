@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Models;
+using SwashbucklerDiary.Services;
 
 namespace SwashbucklerDiary.Components
 {
@@ -7,6 +8,9 @@ namespace SwashbucklerDiary.Components
     {
         private bool ShowMenu;
         private List<ListItemModel> ListItemModels = new();
+
+        [Inject]
+        private IconService IconService { get; set; } = default!;
 
         [Parameter]
         public DiaryModel? Value { get; set; }
@@ -81,6 +85,24 @@ namespace SwashbucklerDiary.Components
             {
                 ListItemModels.Add(new(PrivateText, PrivateIcon, EC(() => OnPrivacy.InvokeAsync(Value))));
             }
+        }
+
+        private string GetWeatherIcon(string? key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return string.Empty;
+            }
+            return IconService.GetWeatherIcon(key);
+        }
+
+        private string GetMoodIcon(string? key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return string.Empty;
+            }
+            return IconService.GetMoodIcon(key);
         }
     }
 }

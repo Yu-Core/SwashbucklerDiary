@@ -26,13 +26,13 @@ namespace SwashbucklerDiary.Pages
         private List<TagModel> Tags = new();
 
         [Inject]
-        public MasaBlazor MasaBlazor { get; set; } = default!;
+        private MasaBlazor MasaBlazor { get; set; } = default!;
         [Inject]
-        public IDiaryService DiaryService { get; set; } = default!;
+        private IDiaryService DiaryService { get; set; } = default!;
         [Inject]
-        public ITagService TagService { get; set; } = default!;
+        private ITagService TagService { get; set; } = default!;
         [Inject]
-        public IconService IconService { get; set; } = default!;
+        private IconService IconService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -237,7 +237,7 @@ namespace SwashbucklerDiary.Pages
             {
                 return "mdi-weather-cloudy";
             }
-            return IconService!.GetWeatherIcon(key);
+            return IconService.GetWeatherIcon(key);
         }
 
         private string GetMoodIcon(string? key)
@@ -246,7 +246,7 @@ namespace SwashbucklerDiary.Pages
             {
                 return "mdi-emoticon-outline";
             }
-            return IconService!.GetMoodIcon(key);
+            return IconService.GetMoodIcon(key);
         }
 
         private string CounterValue()

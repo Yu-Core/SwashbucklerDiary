@@ -8,12 +8,18 @@
            Elevation="0"
            Ripple="false"
            Rounded="@("lg")"
-           @oncontextmenu="()=>ShowMenu=true"
+    @oncontextmenu="()=>ShowMenu=true"
            __internal_preventDefault_oncontextmenu>
         <MListItem Dense>
             <MListItemContent>
                 <div class="text--secondary" style="font-size:1.1rem;">
                     @(Time.ToString("MM/dd"))
+                    <MIcon Class="mx-2">
+                        @(GetWeatherIcon(Value?.Weather))
+                    </MIcon>
+                    <MIcon>
+                        @(GetMoodIcon(Value?.Mood))
+                    </MIcon>
                 </div>
             </MListItemContent>
             <MListItemAction>
