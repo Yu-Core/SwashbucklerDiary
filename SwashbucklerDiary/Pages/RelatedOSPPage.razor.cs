@@ -8,9 +8,9 @@ namespace SwashbucklerDiary.Pages
         private List<OSP> OSPs = new();
         private class OSP
         {
-            public string Name { get; set; }
-            public string License { get; set; }
-            public string Url { get; set; }
+            public string? Name { get; set; }
+            public string? License { get; set; }
+            public string? Url { get; set; }
         }
 
         protected override async Task OnInitializedAsync()
