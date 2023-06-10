@@ -10,7 +10,8 @@ namespace SwashbucklerDiary.Components
         private bool ShowDeleteDiary;
         private bool ShowSelectTag;
         private bool ShowExport;
-        private bool PrivacyMode;
+        private bool ShowPrivacy;
+        private bool ShowIcon;
         private DiaryModel SelectedDiary = new();
         private List<DiaryModel> ExportDiaries = new();
 
@@ -41,7 +42,7 @@ namespace SwashbucklerDiary.Components
 
         protected override async Task OnInitializedAsync()
         {
-            PrivacyMode = await SettingsService.Get(SettingType.PrivacyMode);
+            await LoadSettings();
             await base.OnInitializedAsync();
         }
 
@@ -49,6 +50,12 @@ namespace SwashbucklerDiary.Components
         {
             get => SelectedDiary.Tags ?? new();
             set => SelectedDiary.Tags = value;
+        }
+
+        private async Task LoadSettings()
+        {
+            ShowPrivacy = await SettingsService.Get(SettingType.PrivacyMode);
+            ShowIcon = await SettingsService.Get(SettingType.DiaryCardIcon);
         }
 
         private async Task HandleTopping(DiaryModel diaryModel)

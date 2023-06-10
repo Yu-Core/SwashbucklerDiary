@@ -32,6 +32,8 @@ namespace SwashbucklerDiary.Components
         public EventCallback<DiaryModel> OnPrivacy { get; set; }
         [Parameter]
         public EventCallback<DiaryModel> OnClick { get; set; }
+        [Parameter]
+        public bool Icon { get; set; }
 
         protected override void OnInitialized()
         {
@@ -87,20 +89,20 @@ namespace SwashbucklerDiary.Components
             }
         }
 
-        private string GetWeatherIcon(string? key)
+        private string? GetWeatherIcon(string? key)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                return string.Empty;
+                return null;
             }
             return IconService.GetWeatherIcon(key);
         }
 
-        private string GetMoodIcon(string? key)
+        private string? GetMoodIcon(string? key)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                return string.Empty;
+                return null;
             }
             return IconService.GetMoodIcon(key);
         }

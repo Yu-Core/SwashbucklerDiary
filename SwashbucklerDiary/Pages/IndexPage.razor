@@ -26,9 +26,12 @@
 <SwiperTabItems @bind-Value="tab">
     <SwiperTabItem>
         <div class="mb-5 pl-2">
-            <div class="text--secondary mb-2">
-                @(DateTime.Now.ToString("yyyy/MM/dd") + " " + I18n.ToWeek())
-            </div>
+            @if(ShowDate)
+            {
+                <div class="text--secondary mb-2">
+                    @(DateTime.Now.ToString("yyyy/MM/dd") + " " + I18n.ToWeek())
+                </div>
+            }
 
             @if (ShowWelcomeText)
             {

@@ -13,6 +13,8 @@ namespace SwashbucklerDiary.Pages
         private string? PrivatePassword;
         private bool ShowPPSet;
         private bool ShowPPInput;
+        private bool Date;
+        private bool DiaryCardIcon;
 
         protected override async Task OnInitializedAsync()
         {
@@ -32,6 +34,8 @@ namespace SwashbucklerDiary.Pages
             Markdown = await SettingsService.Get(SettingType.Markdown);
             Privacy = await SettingsService.Get(SettingType.PrivacyMode);
             WelcomText = await SettingsService.Get(SettingType.WelcomeText);
+            Date = await SettingsService.Get(SettingType.Date);
+            DiaryCardIcon = await SettingsService.Get(SettingType.DiaryCardIcon);
         }
 
         private Func<bool, Task> SettingChange(SettingType type)

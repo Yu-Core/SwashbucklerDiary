@@ -313,7 +313,9 @@
     },
     "Display": {
       "Name": "显示",
-      "WelcomeText": "问候语"
+      "WelcomeText": "问候语",
+      "Date": "日期",
+      "DiaryCardIcon": "卡片图标"
     }
   },
   "Password must be at most 20 characters long": "密码不得超过20个字符",

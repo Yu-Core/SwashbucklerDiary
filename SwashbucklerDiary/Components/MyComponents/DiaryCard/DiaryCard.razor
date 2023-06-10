@@ -12,14 +12,15 @@
            __internal_preventDefault_oncontextmenu>
         <MListItem Dense>
             <MListItemContent>
-                <div class="text--secondary" style="font-size:1.1rem;">
-                    @(Time.ToString("MM/dd"))
-                    <MIcon Class="mx-2">
-                        @(GetWeatherIcon(Value?.Weather))
-                    </MIcon>
-                    <MIcon>
-                        @(GetMoodIcon(Value?.Mood))
-                    </MIcon>
+                <div class="d-flex align-center">
+                    <span class="text--secondary mr-3" style="font-size:1.1rem;">
+                        @(Time.ToString("MM/dd"))
+                    </span>
+                    @if (Icon)
+                    {
+                        <DiaryCardIcon Value="@GetWeatherIcon(Value?.Weather)" />
+                        <DiaryCardIcon Value="@GetMoodIcon(Value?.Mood)" />
+                    }
                 </div>
             </MListItemContent>
             <MListItemAction>

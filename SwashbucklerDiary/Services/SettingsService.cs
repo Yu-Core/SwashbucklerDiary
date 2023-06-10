@@ -1,5 +1,4 @@
-﻿using SqlSugar;
-using SwashbucklerDiary.IServices;
+﻿using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Services
@@ -24,6 +23,8 @@ namespace SwashbucklerDiary.Services
             {SettingType.WebDAVAccount,string.Empty },
             {SettingType.WebDAVPassword,string.Empty },
             {SettingType.WelcomeText,true },
+            {SettingType.Date,true },
+            {SettingType.DiaryCardIcon,false },
         };
         private readonly Dictionary<SettingType, object> DefalutSettings = new();
 

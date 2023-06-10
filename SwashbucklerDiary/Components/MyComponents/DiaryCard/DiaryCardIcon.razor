@@ -1,0 +1,14 @@
+﻿@namespace SwashbucklerDiary.Components
+
+@if (!string.IsNullOrEmpty(Value))
+{
+    <MIcon Class="ml-2">
+        @Value
+    </MIcon>
+}
+
+@code
+{
+    [Parameter]
+    public string? Value { get; set; }
+}

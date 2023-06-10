@@ -175,6 +175,27 @@
             <MListItem>
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
+                        mdi-calendar-range-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Date"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="Date"
+                             TValue="bool"
+                             OnChange="SettingChange(SettingType.Date)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(Date)">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+            <MDivider Class="mx-3"></MDivider>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
                         mdi-hand-wave-outline
                     </MIcon>
                 </MListItemIcon>
@@ -189,6 +210,27 @@
                              Inset="true"
                              Color="white"
                              TrackColor="@MSwitchTrackColor(WelcomText)">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+            <MDivider Class="mx-3"></MDivider>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-emoticon-happy-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.DiaryCardIcon"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="DiaryCardIcon"
+                             TValue="bool"
+                             OnChange="SettingChange(SettingType.DiaryCardIcon)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(DiaryCardIcon)">
                     </MSwitch>
                 </MListItemAction>
             </MListItem>

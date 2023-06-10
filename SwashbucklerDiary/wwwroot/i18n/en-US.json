@@ -313,7 +313,9 @@
     },
     "Display": {
       "Name": "Display",
-      "WelcomeText": "WelcomeText"
+      "WelcomeText": "WelcomeText",
+      "Date": "Date",
+      "DiaryCardIcon": "CardIcon"
     }
   },
   "Password must be at most 20 characters long": "Password must be at most 20 characters long",

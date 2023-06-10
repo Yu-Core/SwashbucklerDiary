@@ -9,6 +9,7 @@ namespace SwashbucklerDiary.Pages
     public partial class IndexPage : DiariesPageComponentBase
     {
         private bool ShowWelcomeText;
+        private bool ShowDate;
         private StringNumber tab = 0;
         private readonly List<string> Types = new() { "All", "Tags" };
 
@@ -54,6 +55,7 @@ namespace SwashbucklerDiary.Pages
         private async Task LoadSettings()
         {
             ShowWelcomeText = await SettingsService.Get(SettingType.WelcomeText);
+            ShowDate = await SettingsService.Get(SettingType.Date);
         }
 
         private async Task SaveAddTag(string tagName)
