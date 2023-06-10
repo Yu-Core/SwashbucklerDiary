@@ -1,6 +1,7 @@
 ﻿@page "/setting"
 @namespace SwashbucklerDiary.Pages
 @inherits PageComponentBase
+@using SwashbucklerDiary.Models
 
 <MyAppBar Title="@(I18n.T("Mine.Settings"))" OnClick="NavigateToBack">
 </MyAppBar>
@@ -26,7 +27,7 @@
                 <MListItemAction>
                     <MSwitch @bind-Value="Title"
                              TValue="bool"
-                             OnChange="TitleChange"
+                             OnChange="SettingChange(SettingType.Title)"
                              Dense="true"
                              Inset="true"
                              Color="white"
@@ -49,7 +50,7 @@
                 <MListItemAction>
                     <MSwitch @bind-Value="Markdown"
                              TValue="bool"
-                             OnChange="MarkdownChange"
+                             OnChange="SettingChange(SettingType.Markdown)"
                              Dense="true"
                              Inset="true"
                              Color="white"
@@ -183,7 +184,7 @@
                 <MListItemAction>
                     <MSwitch @bind-Value="WelcomText"
                              TValue="bool"
-                             OnChange="WelcomTextChange"
+                             OnChange="SettingChange(SettingType.WelcomeText)"
                              Dense="true"
                              Inset="true"
                              Color="white"

@@ -34,14 +34,9 @@ namespace SwashbucklerDiary.Pages
             WelcomText = await SettingsService.Get(SettingType.WelcomeText);
         }
 
-        private async Task TitleChange(bool value)
+        private Func<bool, Task> SettingChange(SettingType type)
         {
-            await SettingsService.Save(SettingType.Title, value);
-        }
-
-        private async Task MarkdownChange(bool value)
-        {
-            await SettingsService.Save(SettingType.Markdown, value);
+            return (bool value) => SettingsService.Save(type, value);
         }
 
         private async Task PrivacyChange(bool value)
@@ -52,11 +47,6 @@ namespace SwashbucklerDiary.Pages
             {
                 await AlertService.Success(I18n.T("Setting.Safe.CamouflageSuccess"));
             }
-        }
-
-        private async Task WelcomTextChange(bool value)
-        {
-            await SettingsService.Save(SettingType.WelcomeText, value);
         }
 
         private string? GetDisplayPrivacy()
@@ -107,5 +97,6 @@ namespace SwashbucklerDiary.Pages
 
         private string? GetPrivatePasswordSetState()
             => string.IsNullOrEmpty(PrivatePassword) ? I18n.T("Setting.Safe.NotSetPassword") : null;
+
     }
 }
