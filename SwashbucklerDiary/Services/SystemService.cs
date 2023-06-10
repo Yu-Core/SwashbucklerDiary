@@ -59,8 +59,13 @@ namespace SwashbucklerDiary.Services
             };
         }
 
-        public async Task OpenBrowser(string url)
+        public async Task OpenBrowser(string? url)
         {
+            if(string.IsNullOrEmpty(url))
+            {
+                return;
+            }
+
             await Browser.Default.OpenAsync(url, BrowserLaunchMode.External);
         }
 

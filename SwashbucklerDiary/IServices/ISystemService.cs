@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.IServices
         bool IsMailSupported();
         Task SendEmail(List<string>? recipients);
         Task SendEmail(string? subject, string? body, List<string>? recipients);
-        Task OpenBrowser(string url);
+        Task OpenBrowser(string? url);
         Task FileCopy(string source, string target);
         Task<bool> CheckCameraPermission();
         Task<bool> CheckStorageWritePermission();

@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
-        private async Task OpenBrowser(string url)
+        private async Task OpenBrowser(string? url)
         {
             await SystemService.OpenBrowser(url);
         }
