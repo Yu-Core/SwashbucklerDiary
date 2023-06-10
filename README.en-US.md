@@ -8,7 +8,8 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 
 ## Download Channels
 - [![Microsoft 应用商店](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
-- [GitHub 发行版](https://github.com/Yu-Core/SwashbucklerDiary/releases)
+- [GitHub Releases](https://github.com/Yu-Core/SwashbucklerDiary/releases)
+- [蓝奏云](https://wwfc.lanzouj.com/b04q15i4j) ( Password: 1234 )
 
 ## Characteristics
 - Minimalist style
