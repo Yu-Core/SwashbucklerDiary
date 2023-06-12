@@ -35,11 +35,6 @@
     "Url": "https://github.com/Yu-Core/MauiBlazorToolkit/blob/master/LICENSE"
   },
   {
-    "Name": "P/Invoke",
-    "License": "MIT license",
-    "Url": "https://github.com/dotnet/pinvoke/blob/main/LICENSE"
-  },
-  {
     "Name": "Serilog",
     "License": "Apache-2.0 license",
     "Url": "https://github.com/serilog/serilog/blob/dev/LICENSE"
