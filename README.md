@@ -10,6 +10,7 @@
 - [![Microsoft 应用商店](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
 - [GitHub 发行版](https://github.com/Yu-Core/SwashbucklerDiary/releases)
 - [蓝奏云](https://wwfc.lanzouj.com/b04q15i4j) （密码：1234）
+- [百度手机助手](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
 
 ## 特点
 - 极简风格

@@ -7,9 +7,10 @@ English | [简体中文](./README.md)
 Everyone has a swashbuckler in their heart, like a shadow following the wind, accompanying you to see the scenery all the way and remembering all your wonderful moments.
 
 ## Download Channels
-- [![Microsoft 应用商店](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
+- [![Microsoft Store](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
 - [GitHub Releases](https://github.com/Yu-Core/SwashbucklerDiary/releases)
 - [蓝奏云](https://wwfc.lanzouj.com/b04q15i4j) ( Password: 1234 )
+- [百度手机助手](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
 
 ## Characteristics
 - Minimalist style
