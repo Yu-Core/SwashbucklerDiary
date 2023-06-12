@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Components
     public partial class TagCard : MyComponentBase
     {
         private bool ShowMenu;
-        private List<ListItemModel> ListItemModels = new();
+        private List<DynamicListItem> ListItemModels = new();
 
         [Parameter]
         public TagModel? Value { get; set; }
@@ -27,8 +27,8 @@ namespace SwashbucklerDiary.Components
         {
             ListItemModels = new()
             {
-                new("Share.Rename","mdi-rename-outline",EC(()=>OnRename.InvokeAsync(Value))),
-                new("Share.Delete","mdi-delete-outline",EC(()=>OnDelete.InvokeAsync(Value))),
+                new(this, "Share.Rename","mdi-rename-outline",() => OnRename.InvokeAsync(Value)),
+                new(this, "Share.Delete","mdi-delete-outline",() => OnDelete.InvokeAsync(Value)),
             };
         }
     }

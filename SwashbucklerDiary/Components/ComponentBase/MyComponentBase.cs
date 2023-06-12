@@ -1,5 +1,4 @@
-﻿using BlazorComponent.I18n;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 
 namespace SwashbucklerDiary.Components
@@ -27,26 +26,6 @@ namespace SwashbucklerDiary.Components
         protected void To(string url)
         {
             NavigateService.NavigateTo(url);
-        }
-
-        /// <summary>
-        /// CreateEventCallback
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <returns></returns>
-        protected EventCallback EC(Func<Task> callback)
-        {
-            return EventCallback.Factory.Create(this, callback);
-        }
-
-        /// <summary>
-        /// CreateEventCallback
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <returns></returns>
-        protected EventCallback EC(Action callback)
-        {
-            return EventCallback.Factory.Create(this, callback);
         }
     }
 }

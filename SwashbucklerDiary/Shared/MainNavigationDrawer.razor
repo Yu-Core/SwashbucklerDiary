@@ -1,6 +1,6 @@
 ﻿@using SwashbucklerDiary.IServices
 @using SwashbucklerDiary.Models
-@implements IDisposable
+@inherits MainNavigationCompontentBase
 
 <MNavigationDrawer App="true"
                    Floating="true"
@@ -17,7 +17,7 @@
                 {
                     var activated = Value == i;
 
-                    <MListItem Ripple="false" OnClick="()=>item.OnClick.InvokeAsync()">
+                    <MListItem Ripple="false" OnClick="item.OnClick">
                         <MListItemIcon>
                             <MIcon Size="@(activated?30:24)">
                                 @(activated ? item.SelectedIcon : item.Icon)
@@ -36,34 +36,4 @@
     private bool MiniVariant => MasaBlazor.Breakpoint.Sm;
     private bool Show => MasaBlazor.Breakpoint.SmAndUp;
 
-    [Inject]
-    private MasaBlazor MasaBlazor { get; set; } = default!;
-    [Inject]
-    private II18nService I18n { get; set; } = default!;
-    [Inject]
-    private NavigationManager Navigation { get; set; } = default!;
-
-    [Parameter]
-    public StringNumber Value { get; set; } = 0;
-    [Parameter]
-    public EventCallback<StringNumber> ValueChanged { get; set; }
-    [Parameter]
-    public List<NavigationButton> Items { get; set; } = new();
-
-    public void Dispose()
-    {
-        MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
-        GC.SuppressFinalize(this);
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
-        await base.OnInitializedAsync();
-    }
-
-    private async Task InvokeStateHasChangedAsync()
-    {
-        await InvokeAsync(StateHasChanged);
-    }
 }

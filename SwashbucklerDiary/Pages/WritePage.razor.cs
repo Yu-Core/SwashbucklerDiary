@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowMood;
         private bool ShowLocation;
         private bool Markdown = true;
-        private List<ListItemModel> ListItemModels = new();
+        private List<DynamicListItem> ListItemModels = new();
         private DiaryModel Diary = new()
         {
             Tags = new(),
@@ -147,8 +147,8 @@ namespace SwashbucklerDiary.Pages
         {
             ListItemModels = new()
             {
-                new(ShowTitleText,"mdi-format-title",EC(ShowTitleChanged)),
-                new(MarkdownText,MarkdownIcon,EC(MarkdownChanged))
+                new(this, ShowTitleText,"mdi-format-title",ShowTitleChanged),
+                new(this, MarkdownText,MarkdownIcon,MarkdownChanged)
             };
         }
 

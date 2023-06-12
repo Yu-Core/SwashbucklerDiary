@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public RenderFragment? ButtonContent { get; set; }
         [Parameter]
-        public List<ListItemModel> ListItemModels { get; set; } = new();
+        public List<DynamicListItem> ListItemModels { get; set; } = new();
 
         private async Task OnClick(EventCallback callback)
         {

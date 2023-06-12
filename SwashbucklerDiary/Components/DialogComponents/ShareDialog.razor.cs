@@ -6,6 +6,6 @@ namespace SwashbucklerDiary.Components
     public partial class ShareDialog : DialogComponentBase
     {
         [Parameter]
-        public List<ListItemModel> Items { get; set; } = new();
+        public List<DynamicListItem> Items { get; set; } = new();
     }
 }

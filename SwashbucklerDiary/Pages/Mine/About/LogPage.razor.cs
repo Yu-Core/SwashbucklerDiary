@@ -15,8 +15,8 @@ namespace SwashbucklerDiary.Pages
         private bool ShowFilter;
         private bool ShowDelete;
         private bool ShowShare;
-        private List<ListItemModel> ListItemModels = new();
-        private List<ListItemModel> ShareItems = new();
+        private List<DynamicListItem> ListItemModels = new();
+        private List<DynamicListItem> ShareItems = new();
         private List<LogModel> Logs = new();
         private string? Search;
         private DateOnly MinDate;
@@ -48,16 +48,16 @@ namespace SwashbucklerDiary.Pages
 
         private void LoadView()
         {
-            ListItemModels = new List<ListItemModel>()
+            ListItemModels = new List<DynamicListItem>()
             {
-                new("Log.Clear","mdi-delete-outline",EC(OpenDeleteDialog)),
-                new("Share.Share","mdi-share-variant-outline",EC(OpenShareDialog)),
+                new(this, "Log.Clear","mdi-delete-outline",OpenDeleteDialog),
+                new(this, "Share.Share","mdi-share-variant-outline",OpenShareDialog),
             };
 
             ShareItems = new()
             {
-                new("Share.TextShare","mdi-format-text",EC(ShareText)),
-                new("Share.FileShare","mdi-file-outline",EC(ShareLogFile)),
+                new(this, "Share.TextShare","mdi-format-text",ShareText),
+                new(this, "Share.FileShare","mdi-file-outline",ShareLogFile),
             };
         }
 

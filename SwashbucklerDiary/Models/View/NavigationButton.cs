@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
-
-namespace SwashbucklerDiary.Models
+﻿namespace SwashbucklerDiary.Models
 {
-    public class NavigationButton : ListItemModel
+    public class NavigationButton : DynamicListItem
     {
         public string? SelectedIcon { get; set; }
 
-        public NavigationButton(string text, string icon, string selectedIcon, EventCallback onClick) : base(text, icon, onClick)
+        public NavigationButton(object receiver, string text, string icon, string selectedIcon, Func<Task> onClick) : base(receiver, text, icon, onClick)
         {
             SelectedIcon = selectedIcon;
         }

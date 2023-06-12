@@ -18,8 +18,8 @@ namespace SwashbucklerDiary.Pages
         private bool showLoading;
         private IJSObjectReference? module;
         private bool Markdown;
-        private List<ListItemModel> ListItemModels = new();
-        private List<ListItemModel> ShareItems = new();
+        private List<DynamicListItem> ListItemModels = new();
+        private List<DynamicListItem> ShareItems = new();
         private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
@@ -89,23 +89,23 @@ namespace SwashbucklerDiary.Pages
 
         async Task LoadView()
         {
-            ListItemModels = new List<ListItemModel>()
+            ListItemModels = new List<DynamicListItem>()
             {
-                new("Share.Copy","mdi-content-copy",EC(OnCopy)),
-                new(TopText,"mdi-format-vertical-align-top",EC(OnTopping)),
-                new("Diary.Export","mdi-export",EC(OpenExportDialog)),
-                new(MarkdownText,MarkdownIcon,EC(MarkdownChanged)),
+                new(this, "Share.Copy","mdi-content-copy",OnCopy),
+                new(this, TopText,"mdi-format-vertical-align-top",OnTopping),
+                new(this, "Diary.Export","mdi-export",OpenExportDialog),
+                new(this, MarkdownText,MarkdownIcon,MarkdownChanged),
             };
             bool privacy = await SettingsService.Get(SettingType.PrivacyMode);
             if (privacy)
             {
-                ListItemModels.Add(new(PrivateText, PrivateIcon, EC(DiaryPrivacyChanged)));
+                ListItemModels.Add(new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged));
             }
 
             ShareItems = new()
             {
-                new("Share.TextShare","mdi-format-text",EC(ShareText)),
-                new("Share.ImageShare","mdi-image-outline",EC(ShareImage)),
+                new(this, "Share.TextShare","mdi-format-text",ShareText),
+                new(this, "Share.ImageShare","mdi-image-outline",ShareImage),
             };
         }
 

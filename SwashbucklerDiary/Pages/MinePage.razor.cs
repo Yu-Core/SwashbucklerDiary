@@ -27,8 +27,8 @@ namespace SwashbucklerDiary.Pages
             {"ThemeState.Light",ThemeState.Light },
             {"ThemeState.Dark",ThemeState.Dark },
         };
-        private Dictionary<string, List<ListItemModel>> ViewLists = new();
-        private List<ListItemModel> FeedbackTypes = new();
+        private Dictionary<string, List<DynamicListItem>> ViewLists = new();
+        private List<DynamicListItem> FeedbackTypes = new();
         private const string githubUrl = "https://github.com/Yu-Core/SwashbucklerDiary";
         private const string mail = "yu-core@qq.com";
         private const string qqGroup = "139864402";
@@ -65,34 +65,34 @@ namespace SwashbucklerDiary.Pages
                     "Mine.Data",
                     new()
                     {
-                        new("Mine.Backups","mdi-folder-sync-outline",EC(() => To("/backups"))),
-                        new("Mine.Export","mdi-export",EC(() => To("/export"))),
-                        new("Mine.Achievement","mdi-trophy-outline",EC(() => To("/achievement"))),
+                        new(this, "Mine.Backups","mdi-folder-sync-outline",() => To("/backups")),
+                        new(this, "Mine.Export","mdi-export",() => To("/export")),
+                        new(this, "Mine.Achievement","mdi-trophy-outline",() => To("/achievement")),
                     }
                 },
                 {
                     "Mine.Settings",
                     new()
                     {
-                        new("Mine.Settings","mdi-cog-outline",EC(() => To("/setting"))),
-                        new("Mine.Languages","mdi-web",EC(() => ShowLanguage = true)),
-                        new("Mine.Night","mdi-weather-night",EC(() => ShowThemeState = true)),
+                        new(this,"Mine.Settings","mdi-cog-outline",() => To("/setting")),
+                        new(this,"Mine.Languages","mdi-web",() => ShowLanguage = true),
+                        new(this,"Mine.Night","mdi-weather-night",() => ShowThemeState = true),
                     }
                 },
                 {
                     "Mine.Other",
                     new()
                     {
-                        new("Mine.Feedback","mdi-email-outline",EC(() => ShowFeedback = true)),
-                        new("Mine.About","mdi-information-outline",EC(() => To("/about"))),
+                        new(this,"Mine.Feedback","mdi-email-outline",() => ShowFeedback = true),
+                        new(this,"Mine.About","mdi-information-outline",() => To("/about")),
                     }
                 }
             };
             FeedbackTypes = new()
             {
-                new("Email","mdi-email-outline",EC(SendMail)),
-                new("Github","mdi-github",EC(ToGithub)),
-                new("QQGroup","mdi-qqchat",EC(OpenQQGroup)),
+                new(this, "Email","mdi-email-outline",SendMail),
+                new(this, "Github","mdi-github",ToGithub),
+                new(this, "QQGroup","mdi-qqchat",OpenQQGroup),
             };
         }
 

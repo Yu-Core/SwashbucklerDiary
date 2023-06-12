@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using OneOf;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
@@ -8,7 +9,7 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public string? Title { get; set; }
         [Parameter]
-        public List<ListItemModel> ListItemModels { get; set; } = new();
+        public List<DynamicListItem> ListItemModels { get; set; } = new();
 
         private async Task OnClick(EventCallback callback)
         {
