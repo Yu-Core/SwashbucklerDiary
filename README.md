@@ -11,6 +11,8 @@
 - [GitHub 发行版](https://github.com/Yu-Core/SwashbucklerDiary/releases)
 - [蓝奏云](https://wwfc.lanzouj.com/b04q15i4j) （密码：1234）
 - [百度手机助手](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
+- [豌豆荚](https://www.wandoujia.com/apps/8369224)
+- [酷安](https://www.coolapk.com/apk/937401)
 
 ## 特点
 - 极简风格
