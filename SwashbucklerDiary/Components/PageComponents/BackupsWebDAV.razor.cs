@@ -52,14 +52,15 @@ namespace SwashbucklerDiary.Components
                 return false;
             }
 
-            var clientParams = new WebDavClientParams
+            string? username = webDavConfig.Account;
+            string? password = webDavConfig.Password;
+            var httpHandler = new SocketsHttpHandler()
             {
-                BaseAddress = uri,
-                Credentials = new NetworkCredential(webDavConfig.Account, webDavConfig.Password)
+                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip,
+                Credentials = new NetworkCredential(username, password)
             };
-
-            var webDavClient = new WebDavClient(clientParams);
-
+            var client = new HttpClient(httpHandler, true) { BaseAddress = uri };
+            var webDavClient = new WebDavClient(client);
 
             try
             {
@@ -136,7 +137,7 @@ namespace SwashbucklerDiary.Components
         private async Task Upload()
         {
             ShowUpload = false;
-            
+
             var sourceFile = SQLiteConstants.DatabasePath;
             if (!File.Exists(sourceFile))
             {
@@ -211,7 +212,7 @@ namespace SwashbucklerDiary.Components
             {
                 foreach (var res in result.Resources)
                 {
-                    if(res.IsCollection)
+                    if (res.IsCollection)
                     {
                         continue;
                     }
