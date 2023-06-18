@@ -226,7 +226,7 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private async Task InvokeStateHasChangedAsync()
+        private async void InvokeStateHasChangedAsync(object? sender, BreakpointChangedEventArgs e)
         {
             await InvokeAsync(StateHasChanged);
         }

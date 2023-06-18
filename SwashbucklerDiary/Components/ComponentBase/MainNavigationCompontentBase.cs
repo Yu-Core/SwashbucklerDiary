@@ -34,7 +34,7 @@ namespace SwashbucklerDiary.Components
             return base.OnInitializedAsync();
         }
 
-        private async Task InvokeStateHasChangedAsync()
+        private async void InvokeStateHasChangedAsync(object? sender, BreakpointChangedEventArgs e)
         {
             await InvokeAsync(StateHasChanged);
         }

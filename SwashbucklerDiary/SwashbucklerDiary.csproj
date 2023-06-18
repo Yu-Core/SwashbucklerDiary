@@ -113,7 +113,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
-		<PackageReference Include="Masa.Blazor" Version="1.0.0-rc.3" />
+		<PackageReference Include="Masa.Blazor" Version="1.0.0-rc.4" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.5" />
 		<PackageReference Include="Serilog" Version="2.12.0" />
@@ -121,7 +121,7 @@
 		<PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
 		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="1.0.2" />
-		<PackageReference Include="SqlSugarCore" Version="5.1.4.83" />
+		<PackageReference Include="SqlSugarCore" Version="5.1.4.84" />
 		<PackageReference Include="WebDav.Client" Version="2.8.0" />
 		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.0.2" />
 	</ItemGroup>
