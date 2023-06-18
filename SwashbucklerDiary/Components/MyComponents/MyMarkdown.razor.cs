@@ -58,7 +58,7 @@ namespace SwashbucklerDiary.Components
             Dictionary<string, object?> previewTheme = new()
             {
                 {"current",ThemeService.Dark?"dark":"light" },
-                {"path","npm/vditor/3.9.0/dist/css/content-theme" }
+                {"path","npm/vditor/3.9.3/dist/css/content-theme" }
             };
             Dictionary<string, object?> preview = new()
             {
@@ -70,7 +70,7 @@ namespace SwashbucklerDiary.Components
                 {"mode","ir" },
                 {"toolbar",new List<string>(){"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "outdent", "indent","code","inline-code","link","emoji"}},
                 {"placeholder",I18n.T("Write.ContentPlace")! },
-                {"cdn","npm/vditor/3.9.0" },
+                {"cdn","npm/vditor/3.9.3" },
                 {"lang",lang },
                 {"icon","material" },
                 {"theme",  theme},

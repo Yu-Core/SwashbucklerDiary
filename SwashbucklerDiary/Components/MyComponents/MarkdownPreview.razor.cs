@@ -83,13 +83,13 @@ namespace SwashbucklerDiary.Components
             Dictionary<string, object?> theme = new()
             {
                 {"current",ThemeService.Dark?"dark":"light" },
-                {"path","npm/vditor/3.9.0/dist/css/content-theme" }
+                {"path","npm/vditor/3.9.3/dist/css/content-theme" }
             };
 
             _options = new()
             {
                 {"mode",mode },
-                {"cdn","npm/vditor/3.9.0" },
+                {"cdn","npm/vditor/3.9.3" },
                 {"lang",lang },
                 {"theme",theme }
             };
