@@ -11,6 +11,7 @@
 ::deep .vditor-reset {
     padding-left: 0px !important;
     padding-right: 0px !important;
+    --editor-bottom: 70px;
 }
 
 ::deep .vditor-panel--arrow::before {
