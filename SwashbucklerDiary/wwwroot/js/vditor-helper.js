@@ -12,3 +12,13 @@ export function PreventInputLoseFocus() {
         e.preventDefault();
     }
 }
+
+export function Copy(dotNetCallbackRef, callbackMethod) {
+    var elements = document.querySelectorAll('.vditor-copy');
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].addEventListener('click', function () {
+            dotNetCallbackRef.invokeMethodAsync(callbackMethod);
+        });
+    }
+    console.log(elements.length);
+}

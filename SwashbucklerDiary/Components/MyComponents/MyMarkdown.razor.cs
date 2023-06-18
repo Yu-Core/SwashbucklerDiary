@@ -1,6 +1,4 @@
-﻿using BlazorComponent;
-using BlazorComponent.I18n;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -13,7 +11,7 @@ namespace SwashbucklerDiary.Components
         private IJSObjectReference? module;
 
         [Inject]
-        private I18n I18n { get; set; } = default!;
+        private II18nService I18n { get; set; } = default!;
         [Inject]
         private ISettingsService SettingsService { get; set; } = default!;
         [Inject]
@@ -36,6 +34,7 @@ namespace SwashbucklerDiary.Components
             await SetOptions();
             await base.OnInitializedAsync();
         }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -44,8 +43,10 @@ namespace SwashbucklerDiary.Components
             }
             await base.OnAfterRenderAsync(firstRender);
         }
+
         private async Task PreventInputLoseFocus()
         {
+            //点击工具栏不会丢失焦点
             await Task.Delay(1000);
             await module!.InvokeVoidAsync("PreventInputLoseFocus", null);
         }
