@@ -97,13 +97,18 @@ namespace SwashbucklerDiary.Components
                 {"current",ThemeService.Dark?"dark":"light" },
                 {"path","npm/vditor/3.9.3/dist/css/content-theme" }
             };
+            Dictionary<string, object?> markdown = new()
+            {
+                {"linkBase","https://" }
+            };
 
             _options = new()
             {
                 {"mode",mode },
                 {"cdn","npm/vditor/3.9.3" },
                 {"lang",lang },
-                {"theme",theme }
+                {"theme",theme },
+                {"markdown",markdown }
             };
         }
 
