@@ -65,6 +65,10 @@ namespace SwashbucklerDiary.Components
             {
                 {"theme",previewTheme },
             };
+            Dictionary<string, object?> link = new()
+            {
+                {"isOpen",false }
+            };
 
             _options = new()
             {
@@ -75,7 +79,8 @@ namespace SwashbucklerDiary.Components
                 {"lang",lang },
                 {"icon","material" },
                 {"theme",  theme},
-                {"preview", preview}
+                {"preview", preview},
+                {"link",link }
             };
         }
     }
