@@ -92,23 +92,23 @@ namespace SwashbucklerDiary.Components
             string mode = ThemeService.Dark ? "dark" : "light";
             string lang = await SettingsService.Get(SettingType.Language);
             lang = lang.Replace("-", "_");
-            Dictionary<string, object?> theme = new()
-            {
-                {"current",ThemeService.Dark?"dark":"light" },
-                {"path","npm/vditor/3.9.3/dist/css/content-theme" }
+            var theme = new Dictionary<string, object?>() 
+            { 
+                { "current", ThemeService.Dark ? "dark" : "light" },
+                { "path", "npm/vditor/3.9.3/dist/css/content-theme" } 
             };
-            Dictionary<string, object?> markdown = new()
-            {
-                {"linkBase","https://" }
+            var markdown = new Dictionary<string, object?>() 
+            { 
+                { "linkBase", "https://" } 
             };
 
             _options = new()
             {
-                {"mode",mode },
-                {"cdn","npm/vditor/3.9.3" },
-                {"lang",lang },
-                {"theme",theme },
-                {"markdown",markdown }
+                { "mode", mode },
+                { "cdn", "npm/vditor/3.9.3" },
+                { "lang", lang },
+                { "theme", theme },
+                { "markdown" ,markdown }
             };
         }
 

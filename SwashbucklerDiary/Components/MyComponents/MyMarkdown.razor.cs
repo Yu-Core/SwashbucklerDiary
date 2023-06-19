@@ -56,31 +56,31 @@ namespace SwashbucklerDiary.Components
             string lang = await SettingsService.Get(SettingType.Language);
             lang = lang.Replace("-", "_");
             string theme = ThemeService.Dark ? "dark" : "light";
-            Dictionary<string, object?> previewTheme = new()
-            {
-                {"current",ThemeService.Dark?"dark":"light" },
-                {"path","npm/vditor/3.9.3/dist/css/content-theme" }
+            var previewTheme = new Dictionary<string, object?>() 
+            { 
+                { "current", ThemeService.Dark ? "dark" : "light" },
+                { "path", "npm/vditor/3.9.3/dist/css/content-theme" } 
             };
-            Dictionary<string, object?> preview = new()
+            var preview = new Dictionary<string, object?>()
             {
-                {"theme",previewTheme },
+                { "theme", previewTheme },
             };
-            Dictionary<string, object?> link = new()
+            var link = new Dictionary<string, object?>()
             {
-                {"isOpen",false }
+                { "isOpen", false }
             };
 
             _options = new()
             {
-                {"mode","ir" },
-                {"toolbar",new List<string>(){"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "outdent", "indent","code","inline-code","link","emoji"}},
-                {"placeholder",I18n.T("Write.ContentPlace")! },
-                {"cdn","npm/vditor/3.9.3" },
-                {"lang",lang },
-                {"icon","material" },
-                {"theme",  theme},
-                {"preview", preview},
-                {"link",link }
+                { "mode", "ir" },
+                { "toolbar", new List<string>(){"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "outdent", "indent","code","inline-code","link","emoji"}},
+                { "placeholder", I18n.T("Write.ContentPlace")! },
+                { "cdn", "npm/vditor/3.9.3" },
+                { "lang", lang },
+                { "icon","material" },
+                { "theme", theme },
+                { "preview", preview },
+                { "link", link }
             };
         }
     }
