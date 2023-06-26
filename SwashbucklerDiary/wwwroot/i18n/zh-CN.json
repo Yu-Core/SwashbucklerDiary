@@ -299,8 +299,8 @@
     },
     "Safe": {
       "Name": "安全",
-      "DisplayPrivacy": "隐私模式",
       "PrivacyLibrary": "隐私库",
+      "DisplayPrivacy": "隐私库可见性",
       "PrivacyPassword": "隐私库密码",
       "Mask": "清除所有数据",
       "CamouflageSuccess": "伪装成功",
@@ -309,7 +309,7 @@
       "ValidatePassword": "验证密码",
       "PasswordError": "密码错误",
       "NotSetPassword": "未设置密码",
-      "Permission": "权限"
+      "Permission": "系统权限"
     },
     "Display": {
       "Name": "显示",

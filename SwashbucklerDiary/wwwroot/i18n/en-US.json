@@ -299,9 +299,9 @@
     },
     "Safe": {
       "Name": "Safe",
-      "DisplayPrivacy": "Privacy mode",
       "PrivacyLibrary": "Privacy library",
-      "PrivacyPassword": "Privacy library password",
+      "DisplayPrivacy": "Privacy Visibility",
+      "PrivacyPassword": "Privacy password",
       "Mask": "Invalidate data",
       "CamouflageSuccess": "Camouflage success",
       "PrivatePasswordSetSuccess": "PrivatePassword set success",
@@ -309,7 +309,7 @@
       "ValidatePassword": "Validate password",
       "PasswordError": "Password error",
       "NotSetPassword": "No password set",
-      "Permission": "Permission"
+      "Permission": "System permission"
     },
     "Display": {
       "Name": "Display",

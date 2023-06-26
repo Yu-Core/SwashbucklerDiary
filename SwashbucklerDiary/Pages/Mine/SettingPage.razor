@@ -99,6 +99,25 @@
                 </MListItemAction>
             </MListItem>
 
+            @if(Privacy)
+            {
+                <MDivider Class="mx-3"></MDivider>
+
+                <MListItem OnClick="@(()=>To("/privacyLibrary"))">
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-safe
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n.T("Setting.Safe.PrivacyLibrary"))
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+            }
+
             <MDivider Class="mx-3"></MDivider>
 
             <MListItem>
@@ -125,22 +144,6 @@
 
             @if (Privacy)
             {
-                <MDivider Class="mx-3"></MDivider>
-
-                <MListItem OnClick="@(()=>To("/privacyLibrary"))">
-                    <MListItemIcon>
-                        <MIcon Class="list-item-icon">
-                            mdi-safe
-                        </MIcon>
-                    </MListItemIcon>
-                    <MListItemContent>
-                        @(I18n.T("Setting.Safe.PrivacyLibrary"))
-                    </MListItemContent>
-                    <MListItemAction>
-                        <MIcon>mdi-chevron-right</MIcon>
-                    </MListItemAction>
-                </MListItem>
-
                 <MDivider Class="mx-3"></MDivider>
 
                 <MListItem OnClick="()=>ShowPPSet = true">
