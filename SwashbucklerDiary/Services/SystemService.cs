@@ -405,5 +405,23 @@ namespace SwashbucklerDiary.Services
             return Browser.Default.OpenAsync(uri, BrowserLaunchMode.External);
 #endif
         }
+
+        public void ClearFolder(string folderPath)
+        {
+            DirectoryInfo directory = new DirectoryInfo(folderPath);
+
+            // 删除文件夹中的所有文件
+            foreach (FileInfo file in directory.GetFiles())
+            {
+                file.Delete();
+            }
+
+            // 删除文件夹中的所有子文件夹
+            foreach (DirectoryInfo subDirectory in directory.GetDirectories())
+            {
+                ClearFolder(subDirectory.FullName);
+                subDirectory.Delete();
+            }
+        }
     }
 }

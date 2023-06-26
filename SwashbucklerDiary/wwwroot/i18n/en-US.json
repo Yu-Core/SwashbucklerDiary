@@ -398,7 +398,7 @@
   "Export": {
     "Export": "Export",
     "Import": "Import",
-    "ExportSubtitle": "Save as txt, json, PDF type files",
+    "ExportSubtitle": "Save as txt, md, json, PDF type files",
     "ImportSubtitle": "Import json file",
     "ExportSuccess": "Export success",
     "SelectType": "Select export file type",

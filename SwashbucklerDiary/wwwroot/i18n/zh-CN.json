@@ -398,7 +398,7 @@
   "Export": {
     "Export": "导出",
     "Import": "导入",
-    "ExportSubtitle": "保存为txt、json、pdf等格式文件",
+    "ExportSubtitle": "保存为txt、md、json、pdf等格式文件",
     "ImportSubtitle": "导入json文件",
     "ExportSuccess": "导出成功",
     "SelectType": "选择导出文件格式",

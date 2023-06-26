@@ -39,5 +39,6 @@ namespace SwashbucklerDiary.IServices
         void OpenSystemSetting();
         void QuitApp();
         Task<bool> OpenQQGroup();
+        void ClearFolder(string folderPath);
     }
 }
