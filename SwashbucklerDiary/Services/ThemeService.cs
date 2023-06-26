@@ -5,8 +5,7 @@ namespace SwashbucklerDiary.Services
 {
     public class ThemeService : IThemeService
     {
-        private bool AlreadySet;
-        private ThemeState _themeState = ThemeState.Light;
+        private ThemeState? _themeState;
         public ThemeState ThemeState
         {
             get => GetThemeState();
@@ -23,28 +22,21 @@ namespace SwashbucklerDiary.Services
                 return Application.Current!.RequestedTheme == AppTheme.Dark ? ThemeState.Dark : ThemeState.Light;   
             }
             
-            return _themeState;
+            return _themeState ?? ThemeState.Light;
         }
 
         /// <summary>
         /// 系统主题切换
         /// </summary>
-        public void SetThemeState(ThemeState themeState)
+        public void SetThemeState(ThemeState value)
         {
-            if(AlreadySet == false)
+            if (_themeState == value)
             {
-                AlreadySet = true;
-            }
-            else
-            {
-                if(_themeState == themeState)
-                {
-                    return;
-                }
+                return;
             }
 
-            _themeState = themeState;
-            if (themeState == ThemeState.System)
+            _themeState = value;
+            if (value == ThemeState.System)
             {
                 Application.Current!.RequestedThemeChanged += HandlerAppThemeChanged;
             }
