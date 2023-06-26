@@ -1,13 +1,14 @@
-﻿using BlazorComponent.I18n;
-using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Components;
-using SwashbucklerDiary.IServices;
+﻿using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Models;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Pages
 {
     public partial class AchievementPage : PageComponentBase
     {
+        private string? Search;
+        private bool ShowSearch;
+        private List<AchievementModel> AllAchievements = new();
         private List<AchievementModel> Achievements = new();
 
         protected override async Task OnInitializedAsync()
@@ -16,10 +17,20 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
+        protected override void NavigateToBack()
+        {
+            if (ShowSearch)
+            {
+                ShowSearch = false;
+                return;
+            }
+            base.NavigateToBack();
+        }
+
         private async Task SetAchievements()
         {
             var achievements = await AchievementService.GetAchievements();
-            Achievements = achievements.OrderByDescending(it => it.UserAchievement.IsCompleted).ToList();
+            Achievements = AllAchievements = achievements.OrderByDescending(it => it.UserAchievement.IsCompleted).ToList();
         }
 
         private string GetIconColor(AchievementModel achievement)
@@ -58,6 +69,22 @@ namespace SwashbucklerDiary.Pages
             {
                 return $"{achievement.UserAchievement.CompleteRate} / {achievement.Steps}";
             }
+        }
+
+        private void UpdateAchievements()
+        {
+            Expression<Func<AchievementModel, bool>> func = Func();
+            var achievements = AllAchievements.Where(func.Compile());
+            Achievements = achievements.OrderByDescending(it => it.UserAchievement.IsCompleted).ToList();
+        }
+
+        private Expression<Func<AchievementModel, bool>> Func()
+        {
+            Expression<Func<AchievementModel, bool>> expSearch;
+            expSearch = it => I18n.T(it.Name ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower()) ||
+                I18n.T(it.Description ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower());
+
+            return expSearch;
         }
     }
 }

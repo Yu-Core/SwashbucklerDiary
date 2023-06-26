@@ -2,23 +2,40 @@
 @namespace SwashbucklerDiary.Pages
 @inherits PageComponentBase
 
-<MyAppBar Title="@(I18n!.T("Mine.Achievement"))" OnClick="NavigateToBack">
-    <BetaTooltip></BetaTooltip>
-</MyAppBar>
+<MAppBar App="true" Elevation="0">
+    <MButton Icon="true" OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MySearch @bind-Value="ShowSearch"
+              @bind-Search="Search"
+              Title="@(I18n.T("Mine.Achievement"))"
+              OnChanged="UpdateAchievements">
+    </MySearch>
+
+    <MButton Icon="true"
+             OnClick="()=>ShowSearch=!ShowSearch">
+        <MIcon>
+            mdi-magnify
+        </MIcon>
+    </MButton>
+</MAppBar>
 
 <ScrollContainer>
     <div class="d-flex justify-space-between flex-wrap">
         @foreach (var item in Achievements)
         {
             <MCard Class="my-5 achievement-card"
-               Elevation="0"
-               Rounded="@("lg")"
-               Ripple="false">
+                   Elevation="0"
+                   Rounded="@("lg")"
+                   Ripple="false">
                 <MList>
                     <MListItem>
                         <MListItemAvatar>
                             <MIcon XLarge Color="@GetIconColor(item)">
-                            @(AchievementPage.GetIcon(item))
+                                @(AchievementPage.GetIcon(item))
                             </MIcon>
                         </MListItemAvatar>
 
@@ -32,9 +49,9 @@
                             </MListItemSubtitle>
 
                             <MProgressLinear Value="AchievementPage.GetProgressRate(item)"
-                                         Color="@(GetProgressRateColor(item))"
-                                         Class="rounded-pill"
-                                         Height="20">
+                                             Color="@(GetProgressRateColor(item))"
+                                             Class="rounded-pill"
+                                             Height="20">
                                 <strong class="@GetProgressRateTextColor(item)">
                                     @(GetProgressRateText(item))
                                 </strong>
