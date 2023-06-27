@@ -1,5 +1,6 @@
 ﻿using Serilog;
 using SwashbucklerDiary.Config;
+using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
@@ -86,7 +87,7 @@ namespace SwashbucklerDiary.Components
                     WebDavClient = webDavClient;
                 }
 
-                configModel = webDavConfig;
+                configModel = webDavConfig.DeepCopy();
             }
             catch (HttpRequestException e)
             {

@@ -7,38 +7,27 @@ namespace SwashbucklerDiary.Components
 {
     public partial class WebDavConfigDialog : FocusDialogComponentBase
     {
-        private bool _value;
         private MForm? MForm;
         private WebDavConfigForm configModel = new();
         private bool showPassword;
 
         [Parameter]
-        public override bool Value
-        {
-            get => _value;
-            set => SetValue(value);
-        }
-        [Parameter]
         public WebDavConfigForm WebDavConfigForm { get; set; } = default!;
         [Parameter]
         public EventCallback<WebDavConfigForm> OnOK { get; set; }
+
+        protected override async Task DialogAfterShowContent()
+        {
+            MForm?.Reset();
+            configModel = WebDavConfigForm.DeepCopy();
+            await base.DialogAfterShowContent();
+        }
 
         private async Task HandleOnOK()
         {
             await OnOK.InvokeAsync(configModel);
         }
 
-        private void SetValue(bool value)
-        {
-            if (value != Value)
-            {
-                if (value)
-                {
-                    MForm?.ResetValidation();
-                    configModel = WebDavConfigForm.DeepCopy();
-                }
-                _value = value;
-            }
-        }
+        
     }
 }
