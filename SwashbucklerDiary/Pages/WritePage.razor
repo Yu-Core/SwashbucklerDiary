@@ -79,16 +79,16 @@
     @if (ShowTitle)
     {
         <MTextField @bind-Value="Diary.Title"
-                Class="pb-0 my-sm-4 user-select font-weight-bold flex-grow-0"
-                Solo="Mobile"
-                Flat="Mobile"
-                Outlined="Desktop"
-                TValue="string"
-                HideDetails="@("auto")"
-                Dense="true"
+                    Class="pb-0 my-sm-4 user-select font-weight-bold flex-grow-0"
+                    Solo="Mobile"
+                    Flat="Mobile"
+                    Outlined="Desktop"
+                    TValue="string"
+                    HideDetails="@("auto")"
+                    Dense="true"
                     spellcheck="false"
                     maxlength="20"
-                Placeholder="@(I18n.T("Write.TitlePlace"))">
+                    Placeholder="@(I18n.T("Write.TitlePlace"))">
         </MTextField>
     }
 
@@ -96,21 +96,21 @@
         @if (Markdown)
         {
             <MyMarkdown @bind-Value="Diary.Content"
-                    WrapClass="write-markdown-wrap"
-                    Class="my-sm-4 px-3 rounded-lg write-markdown">
+                        WrapClass="write-markdown-wrap"
+                        Class="my-sm-4 px-3 rounded-lg write-markdown">
             </MyMarkdown>
         }
         else
         {
             <MTextarea @bind-Value="Diary.Content"
-                   Class="@($"my-sm-4 user-select flex-grow-1 flex-column {(Markdown?"d-none":"")}")"
-                   Solo="Mobile"
-                   Flat="Mobile"
-                   Outlined="Desktop"
-                   HideDetails="@("auto")"
-                   NoResize="true"
+                       Class="@($"my-sm-4 user-select rounded-lg flex-grow-1 flex-column {(Markdown?"d-none":"")}")"
+                       Solo="Mobile"
+                       Flat="Mobile"
+                       Outlined="Desktop"
+                       HideDetails="@("auto")"
+                       NoResize="true"
                        spellcheck="false"
-                   Placeholder="@(I18n.T("Write.ContentPlace"))">
+                       Placeholder="@(I18n.T("Write.ContentPlace"))">
             </MTextarea>
         }
     </div>
@@ -120,8 +120,8 @@
             @foreach (var item in SelectedTags)
             {
                 <MChip Close="true"
-                   Outlined="true"
-                   OnCloseClick="()=>RemoveSelectedTag(item)">
+                       Outlined="true"
+                       OnCloseClick="()=>RemoveSelectedTag(item)">
                     @(item.Name)
                 </MChip>
             }
@@ -152,25 +152,25 @@
 </ScrollContainer>
 
 <SelectTags @bind-Value="ShowSelectTag"
-            @bind-Values="SelectedTags"
-            @bind-Tags="Tags"
+@bind-Values="SelectedTags"
+@bind-Tags="Tags"
             OnSave="SaveSelectTags">
 </SelectTags>
 
 <SelectIconDialog @bind-Value="ShowWeather"
-                  @bind-Item="@Weather"
+@bind-Item="@Weather"
                   Title="@(I18n.T("Write.SelectWeather"))"
                   Items="WeatherIcons"
                   Text="@(item=>I18n.T("Weather." + item.Key))">
 </SelectIconDialog>
 
 <SelectIconDialog @bind-Value="ShowMood"
-                  @bind-Item="@Mood"
+@bind-Item="@Mood"
                   Title="@(I18n.T("Write.SelectMood"))"
                   Items="MoodIcons"
                   Text="@(item=>I18n.T("Mood." + item.Key))">
 </SelectIconDialog>
 
 <SelectLocation @bind-Value="ShowLocation"
-                @bind-Location="Location">
+@bind-Location="Location">
 </SelectLocation>
