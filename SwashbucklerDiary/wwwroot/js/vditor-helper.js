@@ -20,5 +20,4 @@ export function Copy(dotNetCallbackRef, callbackMethod) {
             dotNetCallbackRef.invokeMethodAsync(callbackMethod);
         });
     }
-    console.log(elements.length);
 }

@@ -12,11 +12,3 @@
     left:0px;
     padding:12px 16px;
 }
-
-.theme--light .float-calendar {
-    background-color: #f7f8f9 !important;
-}
-
-.theme--dark .float-calendar {
-    background-color: #121212 !important;
-}
