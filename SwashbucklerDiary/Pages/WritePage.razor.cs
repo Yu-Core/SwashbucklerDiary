@@ -226,9 +226,9 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private async void InvokeStateHasChangedAsync(object? sender, BreakpointChangedEventArgs e)
+        private void InvokeStateHasChangedAsync(object? sender, BreakpointChangedEventArgs e)
         {
-            await InvokeAsync(StateHasChanged);
+            StateHasChanged();
         }
 
         private string GetWeatherIcon(string? key)
