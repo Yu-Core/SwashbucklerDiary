@@ -85,6 +85,14 @@
     background: #f7f8f9 !important;
 }
 
+    .theme--light.m-application .theme-element {
+        background-color: #f7f8f9 !important;
+    }
+
+.theme--dark.m-application .theme-element {
+    background-color: #121212 !important;
+}
+
 .theme--light.m-divider {
     border-color: rgba(0,0,0,.08);
 }
