@@ -166,3 +166,7 @@
     }
 }
 
+/*临时解决MTabs闪烁问题*/
+.m-tabs-bar > .m-slide-group__wrapper {
+    flex: unset !important;
+}
