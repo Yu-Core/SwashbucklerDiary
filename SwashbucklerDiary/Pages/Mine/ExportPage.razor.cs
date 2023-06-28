@@ -32,6 +32,12 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
+            if(!Diaries.Any())
+            {
+                await AlertService.Info(I18n.T("Diary.NoDiary"));
+                return;
+            }
+
             ShowExport = true;
         }
 
