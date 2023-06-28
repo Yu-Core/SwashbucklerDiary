@@ -6,6 +6,9 @@ English | [简体中文](./README.md)
 
 Everyone has a swashbuckler in their heart, like a shadow following the wind, accompanying you to see the scenery all the way and remembering all your wonderful moments.
 
+## Technology Stack
+[MAUI](https://learn.microsoft.com/en-us/dotnet/maui/) + [Blazor Hybrid](https://learn.microsoft.com/en-us/aspnet/core/blazor/hybrid/) + [Masa Blazor](https://docs.masastack.com/blazor/introduction/why-masa-blazor) + [SqlSugar](https://github.com/DotNetNext/SqlSugar) + [Serilog](https://serilog.net/)
+
 ## Download Channels
 - [![Microsoft Store](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
 - [GitHub Releases](https://github.com/Yu-Core/SwashbucklerDiary/releases)
