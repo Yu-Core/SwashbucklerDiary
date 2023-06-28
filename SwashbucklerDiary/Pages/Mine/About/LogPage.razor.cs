@@ -61,8 +61,14 @@ namespace SwashbucklerDiary.Pages
             };
         }
 
-        private void OpenShareDialog()
+        private async Task OpenShareDialog()
         {
+            if (!Logs.Any())
+            {
+                await AlertService.Info(I18n.T("Log.NoLog"));
+                return;
+            }
+
             ShowShare = true;
             StateHasChanged();
         }
