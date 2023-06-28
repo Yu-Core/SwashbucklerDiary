@@ -142,7 +142,7 @@ namespace SwashbucklerDiary.Components
             var sourceFile = SQLiteConstants.DatabasePath;
             if (!File.Exists(sourceFile))
             {
-                await AlertService.Alert(I18n.T("Backups.No diary"));
+                await AlertService.Alert(I18n.T("Backups.NoDbFile"));
                 return;
             }
 

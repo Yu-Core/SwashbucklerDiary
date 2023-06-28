@@ -349,7 +349,7 @@
       }
     },
     "Invalid backup folder": "Invalid backup folder",
-    "No diary": "No diary",
+    "NoDbFile": "No database file",
     "Config": {
       "Title": "Config",
       "ServerAddress": "Server address",

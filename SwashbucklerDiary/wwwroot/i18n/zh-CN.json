@@ -349,7 +349,7 @@
       }
     },
     "Invalid backup folder": "无效的备份文件夹",
-    "No diary": "暂无日记",
+    "NoDbFile": "没有数据库文件",
     "Config": {
       "Title": "配置",
       "ServerAddress": "服务器地址",
