@@ -4,11 +4,10 @@
     <ErrorBoundary>
         <ChildContent>
             <FirstLaunchDialog />
-            <MMain Style="@(MainStyle)">
-                <MainNavigationDrawer @bind-Value="SelectedItemIndex"
-                                      Items="NavigationButtons">
-                </MainNavigationDrawer>
-
+            <MainNavigationDrawer @bind-Value="SelectedItemIndex"
+                                  Items="NavigationButtons">
+            </MainNavigationDrawer>
+            <MMain>
                 @Body
             </MMain>
             <MainBottomNavigation @bind-Value="SelectedItemIndex"
