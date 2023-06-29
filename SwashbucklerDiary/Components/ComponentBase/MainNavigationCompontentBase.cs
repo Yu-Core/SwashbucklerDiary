@@ -24,13 +24,13 @@ namespace SwashbucklerDiary.Components
 
         public void Dispose()
         {
-            MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+            MasaBlazor.BreakpointChanged -= InvokeStateHasChangedAsync;
             GC.SuppressFinalize(this);
         }
 
         protected override Task OnInitializedAsync()
         {
-            MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
+            MasaBlazor.BreakpointChanged += InvokeStateHasChangedAsync;
             return base.OnInitializedAsync();
         }
 

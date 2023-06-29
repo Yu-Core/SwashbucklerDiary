@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Pages
 
         public void Dispose()
         {
-            MasaBlazor.Breakpoint.OnUpdate -= InvokeStateHasChangedAsync;
+            MasaBlazor.BreakpointChanged -= InvokeStateHasChangedAsync;
             NavigateService.Action -= NavigateToBack;
             NavigateService.NavBtnAction -= SaveDiaryAsync;
             SystemService.Stopped -= SaveDiary;
@@ -52,7 +52,7 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            MasaBlazor.Breakpoint.OnUpdate += InvokeStateHasChangedAsync;
+            MasaBlazor.BreakpointChanged += InvokeStateHasChangedAsync;
             NavigateService.Action += NavigateToBack;
             NavigateService.NavBtnAction += SaveDiaryAsync;
             SystemService.Stopped += SaveDiary;
