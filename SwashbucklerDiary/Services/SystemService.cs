@@ -203,8 +203,16 @@ namespace SwashbucklerDiary.Services
             var id = "9P6PBVBF466L";
             return OpenStoreAppDetails(id);
 #elif ANDROID
-            string uri = "https://www.coolapk.com/apk/937401";
-            return Browser.Default.OpenAsync(uri);
+            string uri = $"coolmarket://apk/{AppInfo.PackageName}";
+            try 
+	        {	        
+		        return Browser.Default.OpenAsync(uri);
+	        }
+	        catch (Exception)
+	        {
+                uri = $"https://www.coolapk.com/apk/{AppInfo.PackageName}";
+                return Browser.Default.OpenAsync(uri);
+	        }
 #else
             return OpenStoreAppDetails(AppInfo.PackageName);
 #endif
