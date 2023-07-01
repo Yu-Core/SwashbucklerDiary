@@ -26,7 +26,6 @@ namespace SwashbucklerDiary.Services
             {SettingType.Date,true },
             {SettingType.DiaryCardIcon,false },
         };
-        private readonly Dictionary<SettingType, object> DefalutSettings = new();
 
         public Task<bool> ContainsKey(string key)
         {
