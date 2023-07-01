@@ -71,6 +71,10 @@ namespace SwashbucklerDiary.Services
                 await NavBtnAction.Invoke();
             }
             Navigation.NavigateTo(url);
+            if(HistoryUrl.Count > 0)
+            {
+                HistoryUrl.Clear();
+            }
         }
     }
 }
