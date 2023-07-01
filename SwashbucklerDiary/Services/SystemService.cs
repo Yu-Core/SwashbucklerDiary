@@ -202,6 +202,9 @@ namespace SwashbucklerDiary.Services
 #if WINDOWS
             var id = "9P6PBVBF466L";
             return OpenStoreAppDetails(id);
+#elif ANDROID
+            string uri = "https://www.coolapk.com/apk/937401";
+            return Browser.Default.OpenAsync(uri);
 #else
             return OpenStoreAppDetails(AppInfo.PackageName);
 #endif
