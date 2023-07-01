@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Shared;
+﻿using SwashbucklerDiary.Components;
 
 namespace SwashbucklerDiary.Pages
 {

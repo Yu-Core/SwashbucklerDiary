@@ -1,17 +1,12 @@
 ﻿using SwashbucklerDiary.Components;
+using SwashbucklerDiary.Models;
 using System.Text.Json;
 
 namespace SwashbucklerDiary.Pages
 {
     public partial class RelatedOSPPage : PageComponentBase
     {
-        private List<OSP> OSPs = new();
-        private class OSP
-        {
-            public string? Name { get; set; }
-            public string? License { get; set; }
-            public string? Url { get; set; }
-        }
+        private List<OpenSourceProject> OSPs = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -26,10 +21,10 @@ namespace SwashbucklerDiary.Pages
 
         private async Task ReadJson()
         {
-            using Stream streamCultures = await FileSystem.OpenAppPackageFileAsync("wwwroot/osp/osp.json");
+            using Stream streamCultures = await FileSystem.OpenAppPackageFileAsync("wwwroot/json/open-source-project/open-source-project.json");
             using StreamReader readerCultures = new(streamCultures);
             string contents = readerCultures.ReadToEnd();
-            OSPs = JsonSerializer.Deserialize<List<OSP>>(contents) ?? throw new Exception("Failed to read json file data!");
+            OSPs = JsonSerializer.Deserialize<List<OpenSourceProject>>(contents) ?? throw new Exception("Failed to read json file data!");
         }
     }
 }
