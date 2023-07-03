@@ -2,7 +2,7 @@
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class MySearch : DialogComponentBase
+    public partial class MySearch : DialogComponentBase,IDisposable
     {
         private bool _value;
 
@@ -63,6 +63,12 @@ namespace SwashbucklerDiary.Components
             {
                 await OnChanged.InvokeAsync(Search);
             }
+        }
+
+        public void Dispose()
+        {
+            NavigateService.Action -= CloseSearch;
+            GC.SuppressFinalize(this);
         }
     }
 }
