@@ -47,9 +47,9 @@ namespace SwashbucklerDiary.Pages
 
         private void SetCurrentUrl()
         {
-            NavigateService.CurrentUrl += () => {
+            NavigateService.SetCurrentUrl(() => {
                 return Navigation.GetUriWithQueryParameter("Type", Types[tab.ToInt32()]);
-            };
+            });
         }
 
         private async Task LoadSettings()

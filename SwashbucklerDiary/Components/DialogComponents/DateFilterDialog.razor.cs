@@ -1,7 +1,7 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Extend;
-using SwashbucklerDiary.Models.Form;
+using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
@@ -10,14 +10,8 @@ namespace SwashbucklerDiary.Components
         private bool _value;
         private bool ShowMinDate;
         private bool ShowMaxDate;
-        private DateFilterForm Form = new();
-        private DateFilterForm FormBackups = new();
-        private readonly Dictionary<string, DateOnly> DefaultDates = new()
-        {
-            {"Filter.Last month",DateOnly.FromDateTime(DateTime.Now.AddMonths(-1))},
-            {"Filter.Last three months",DateOnly.FromDateTime(DateTime.Now.AddMonths(-3))},
-            {"Filter.Last six months",DateOnly.FromDateTime(DateTime.Now.AddMonths(-6))},
-        };
+        private DateFilterForm InternalForm = new();
+        private static Dictionary<string, DateOnly> DefaultDates => DateFilterForm.DefaultDates;
 
         [Parameter]
         public override bool Value
@@ -26,35 +20,37 @@ namespace SwashbucklerDiary.Components
             set => SetValue(value);
         }
         [Parameter]
-        public DateOnly DateMinValue { get; set; }
+        public DateFilterForm Form { get; set; } = new();
         [Parameter]
-        public EventCallback<DateOnly> DateMinValueChanged { get; set; }
-        [Parameter]
-        public DateOnly DateMaxValue { get; set; }
-        [Parameter]
-        public EventCallback<DateOnly> DateMaxValueChanged { get; set; }
+        public EventCallback<DateFilterForm> FormChanged { get; set; }
         [Parameter]
         public EventCallback OnOK { get; set; }
         [Parameter]
         public EventCallback OnReset { get; set; }
 
+        protected virtual Task DialogAfterShowContent()
+        {
+            InternalForm = Form.DeepCopy();
+            return Task.CompletedTask;
+        }
+
         private StringNumber DefaultDate
         {
-            get => Form.DefaultDate;
+            get => InternalForm.DefaultDate;
             set
             {
-                Form.DefaultDate = value?.ToString() ?? string.Empty;
+                InternalForm.DefaultDate = value?.ToString() ?? string.Empty;
             }
         }
         private DateOnly MinDate
         {
-            get => Form.MinDate;
-            set => Form.MinDate = value;
+            get => InternalForm.MinDate;
+            set => InternalForm.MinDate = value;
         }
         private DateOnly MaxDate
         {
-            get => Form.MaxDate;
-            set => Form.MaxDate = value;
+            get => InternalForm.MaxDate;
+            set => InternalForm.MaxDate = value;
         }
         private string MinDateText
         {
@@ -78,7 +74,7 @@ namespace SwashbucklerDiary.Components
                 _value = value;
                 if (value)
                 {
-                    Form = FormBackups.DeepCopy();
+                    InternalForm = Form.DeepCopy();
                 }
             }
         }
@@ -103,67 +99,19 @@ namespace SwashbucklerDiary.Components
 
         private async Task HandleOnReset()
         {
-            FormBackups = new();
+            InternalForm = new();
             Form = new();
-            await Update();
+            await FormChanged.InvokeAsync(Form);
             await OnReset.InvokeAsync();
         }
 
         private async Task HandleOnOK()
         {
             await InternalValueChanged(false);
-            FormBackups = Form.DeepCopy();
-            await Update();
+            Form = InternalForm.DeepCopy();
+            await FormChanged.InvokeAsync(Form);
             await OnOK.InvokeAsync();
         }
 
-        private async Task Update()
-        {
-            await UpdateDateMinValue();
-            await UpdateDateMaxValue();
-        }
-
-        private async Task UpdateDateMinValue()
-        {
-            DateMinValue = GetDateMinValue();
-            if (DateMinValueChanged.HasDelegate)
-            {
-                await DateMinValueChanged.InvokeAsync(DateMinValue);
-            }
-        }
-
-        private async Task UpdateDateMaxValue()
-        {
-            DateMaxValue = GetDateMaxValue();
-            if (DateMaxValueChanged.HasDelegate)
-            {
-                await DateMaxValueChanged.InvokeAsync(DateMaxValue);
-            }
-        }
-
-        private DateOnly GetDateMinValue()
-        {
-            string? defaultDate = DefaultDate?.ToString();
-            if (!string.IsNullOrEmpty(defaultDate))
-            {
-                return DefaultDates[defaultDate];
-            }
-
-            if (MinDate != DateOnly.MinValue)
-            {
-                return MinDate;
-            }
-
-            return DateOnly.MinValue;
-        }
-        private DateOnly GetDateMaxValue()
-        {
-            if(MaxDate != DateOnly.MaxValue)
-            {
-                return MaxDate;
-            }
-
-            return DateOnly.MaxValue;
-        }
     }
 }

@@ -4,7 +4,6 @@ namespace SwashbucklerDiary.IServices
 {
     public interface INavigateService
     {
-        event Func<string> CurrentUrl;
         /// <summary>
         /// 存储想要返回时触发的方法
         /// </summary>
@@ -35,5 +34,11 @@ namespace SwashbucklerDiary.IServices
         /// <returns>true已处理事件，false为无事件可处理(便于做进一步处理，例如退出应用)</returns>
         bool OnBackButtonPressed();
         Task NavBtnClick(string url);
+        void SetCurrentUrl(string? url);
+        void SetCurrentUrl(Func<string>? func);
+        void SetCurrentCache(object? value);
+        void SetCurrentCache(Func<object>? func);
+        object? GetCurrentCache();
+        object? GetCurrentCache(string url);
     }
 }

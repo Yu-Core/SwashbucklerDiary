@@ -9,9 +9,9 @@
         </MIcon>
     </MButton>
 
-    <MySearch Title="@(I18n.T("Setting.Safe.PrivacyLibrary"))"
-              @bind-Value="ShowSearch"
+    <MySearch @bind-Value="ShowSearch"
               @bind-Search="Search"
+              Title="@(I18n.T("Setting.Safe.PrivacyLibrary"))"
               OnChanged="UpdateDiaries">
     </MySearch>
 
@@ -35,8 +35,7 @@
 </ScrollContainer>
 
 <DateFilterDialog @bind-Value="ShowFilter"
-                  @bind-DateMinValue="MinDate"
-                  @bind-DateMaxValue="MaxDate"
+@bind-Form="SearchForm.DateFilter"
                   OnOK="UpdateDiaries"
                   OnReset="UpdateDiaries">
 </DateFilterDialog>

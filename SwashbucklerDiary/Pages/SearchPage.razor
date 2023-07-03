@@ -23,8 +23,7 @@
 </ScrollContainer>
 
 <DateFilterDialog @bind-Value="ShowFilter"
-                  @bind-DateMinValue="MinDate"
-                  @bind-DateMaxValue="MaxDate"
+                  @bind-Form="SearchForm.DateFilter"
                   OnOK="UpdateDiaries"
                   OnReset="UpdateDiaries">
 </DateFilterDialog>

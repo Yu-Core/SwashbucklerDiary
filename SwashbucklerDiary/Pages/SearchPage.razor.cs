@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Components;
+﻿using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.Models;
 using System.Linq.Expressions;
@@ -8,48 +7,15 @@ namespace SwashbucklerDiary.Pages
 {
     public partial class SearchPage : DiariesPageComponentBase
     {
-        private bool ShowSearch = true;
         private bool ShowFilter;
-        private DateOnly MinDate;
-        private DateOnly MaxDate = DateOnly.MaxValue;
-
-        [Parameter]
-        [SupplyParameterFromQuery]
-        public string? Search { get; set; }
-        [Parameter]
-        [SupplyParameterFromQuery]
-        public DateTime MinDateTime
+        private SearchForm SearchForm = new()
         {
-            get => MinDate.ToDateTime(default);
-            set
-            {
-                if (value == DateTime.MinValue)
-                {
-                    return;
-                }
-
-                MinDate = DateOnly.FromDateTime(value);
-            }
-        }
-        [Parameter]
-        [SupplyParameterFromQuery]
-        public DateTime MaxDateTime
-        {
-            get => MaxDate.ToDateTime(TimeOnly.MaxValue);
-            set
-            {
-                if (value == DateTime.MinValue)
-                {
-                    return;
-                }
-
-                MaxDate = DateOnly.FromDateTime(value);
-            }
-        }
+            ShowSearch = true
+        };
 
         protected override async Task OnInitializedAsync()
         {
-            SetCurrentUrl();
+            HandleCurrentCache();
             await base.OnInitializedAsync();
         }
 
@@ -60,22 +26,24 @@ namespace SwashbucklerDiary.Pages
             Diaries = diaries.OrderByDescending(it => it.CreateTime).ToList();
         }
 
-        private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
-        private bool IsDateFiltered => MinDate != DateOnly.MinValue || MaxDate != DateOnly.MaxValue;
-
-        private void SetCurrentUrl()
+        private bool ShowSearch
         {
-            NavigateService.CurrentUrl += () =>
-            {
-                return Navigation.GetUriWithQueryParameters(
-                    new Dictionary<string, object?>
-                    {
-                        ["Search"] = Search,
-                        ["MinDateTime"] = MinDateTime,
-                        ["MaxDateTime"] = MaxDateTime,
-                    });
-            };
+            get => SearchForm.ShowSearch;
+            set => SearchForm.ShowSearch = value;
         }
+        private string? Search
+        {
+            get => SearchForm.Search;
+            set => SearchForm.Search = value;
+        }
+        private DateOnly DateOnlyMin => SearchForm.DateFilter.GetDateMinValue();
+        private DateOnly DateOnlyMax => SearchForm.DateFilter.GetDateMaxValue();
+
+        private DateTime DateTimeMin => DateOnlyMin.ToDateTime(default);
+        private DateTime DateTimeMax => DateOnlyMax.ToDateTime(TimeOnly.MaxValue);
+        private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
+        private bool IsDateFiltered => DateOnlyMin != DateOnly.MinValue || DateOnlyMax != DateOnly.MaxValue;
+
 
         private Expression<Func<DiaryModel, bool>> Func()
         {
@@ -87,7 +55,7 @@ namespace SwashbucklerDiary.Pages
             expPrivate = it => !it.Private;
             expSearch = it => (it.Title ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower()) ||
                 (it.Content ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower());
-            expDate = it => it.CreateTime >= MinDateTime && it.CreateTime <= MaxDateTime;
+            expDate = it => it.CreateTime >= DateTimeMin && it.CreateTime <= DateTimeMax;
 
             if(IsDateFiltered)
             {
@@ -109,5 +77,10 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
+        private void HandleCurrentCache()
+        {
+            SearchForm = (SearchForm?)NavigateService.GetCurrentCache() ?? new();
+            NavigateService.SetCurrentCache(() => SearchForm);
+        }
     }
 }
