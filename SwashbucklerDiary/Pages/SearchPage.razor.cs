@@ -38,9 +38,6 @@ namespace SwashbucklerDiary.Pages
         }
         private DateOnly DateOnlyMin => SearchForm.DateFilter.GetDateMinValue();
         private DateOnly DateOnlyMax => SearchForm.DateFilter.GetDateMaxValue();
-
-        private DateTime DateTimeMin => DateOnlyMin.ToDateTime(default);
-        private DateTime DateTimeMax => DateOnlyMax.ToDateTime(TimeOnly.MaxValue);
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
         private bool IsDateFiltered => DateOnlyMin != DateOnly.MinValue || DateOnlyMax != DateOnly.MaxValue;
 
@@ -55,9 +52,13 @@ namespace SwashbucklerDiary.Pages
             expPrivate = it => !it.Private;
             expSearch = it => (it.Title ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower()) ||
                 (it.Content ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower());
+
+
+            DateTime DateTimeMin = DateOnlyMin.ToDateTime(default);
+            DateTime DateTimeMax = DateOnlyMax.ToDateTime(TimeOnly.MaxValue);
             expDate = it => it.CreateTime >= DateTimeMin && it.CreateTime <= DateTimeMax;
 
-            if(IsDateFiltered)
+            if (IsDateFiltered)
             {
                 exp = exp.And(expDate);
             }
@@ -67,7 +68,7 @@ namespace SwashbucklerDiary.Pages
                 exp = exp.And(expSearch);
             }
 
-            if(exp == null)
+            if (exp == null)
             {
                 return it => false;
             }

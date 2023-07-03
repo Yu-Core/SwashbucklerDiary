@@ -19,8 +19,7 @@ namespace SwashbucklerDiary.Pages
         private List<DynamicListItem> ShareItems = new();
         private List<LogModel> Logs = new();
         private string? Search;
-        private DateOnly MinDate;
-        private DateOnly MaxDate = DateOnly.MaxValue;
+        private DateFilterForm DateFilterForm = new();
 
         [Inject]
         private ILogService LogService { get; set; } = default!;
@@ -43,8 +42,10 @@ namespace SwashbucklerDiary.Pages
             base.NavigateToBack();
         }
 
+        private DateOnly DateOnlyMin => DateFilterForm.GetDateMinValue();
+        private DateOnly DateOnlyMax => DateFilterForm.GetDateMaxValue();
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
-        private bool IsDateFiltered => MinDate != DateOnly.MinValue || MaxDate != DateOnly.MaxValue;
+        private bool IsDateFiltered => DateOnlyMin != DateOnly.MinValue || DateOnlyMax != DateOnly.MaxValue;
 
         private void LoadView()
         {
@@ -142,7 +143,6 @@ namespace SwashbucklerDiary.Pages
         {
             Expression<Func<LogModel, bool>> func = Func();
             var logs = await LogService.QueryAsync(func);
-
             Logs = logs.OrderByDescending(it => it.Timestamp).ToList();
         }
 
@@ -152,10 +152,9 @@ namespace SwashbucklerDiary.Pages
             Expression<Func<LogModel, bool>> expDate;
             expSearch = it => (it.RenderedMessage ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower());
 
-
-            DateTime MinDateTime = MinDate.ToDateTime(default);
-            DateTime MaxDateTime = MaxDate.ToDateTime(TimeOnly.MaxValue);
-            if (MaxDate != DateOnly.MaxValue)
+            DateTime MinDateTime = DateOnlyMin.ToDateTime(default);
+            DateTime MaxDateTime = DateOnlyMax.ToDateTime(TimeOnly.MaxValue);
+            if (DateOnlyMax != DateOnly.MaxValue)
             {
                 MaxDateTime = MaxDateTime.AddDays(1);
             }
