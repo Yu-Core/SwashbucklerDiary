@@ -123,7 +123,7 @@
 		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="1.0.2" />
 		<PackageReference Include="SqlSugarCore" Version="5.1.4.84" />
 		<PackageReference Include="WebDav.Client" Version="2.8.0" />
-		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.0.2" />
+		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.2.1" />
 	</ItemGroup>
 
 </Project>
