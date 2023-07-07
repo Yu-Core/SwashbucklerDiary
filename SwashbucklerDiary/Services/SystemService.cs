@@ -46,6 +46,12 @@ namespace SwashbucklerDiary.Services
             {
                 return;
             }
+
+            if (File.Exists(target))
+            {
+                File.Delete(target);
+            }
+
             var file = new FileResult(source);
 #if WINDOWS
             // on Windows file.OpenReadAsync() throws an exception
