@@ -205,7 +205,7 @@
     "CustomPlace": "Please enter the amount you want to donate",
     "CurrencySymbol": "$",
     "Thank": "Thank",
-    "ThankContent": "Thank you, friend. I understand your kindness, so there's no need to really donate to me.\n\nI hope you can have fun and have a pleasant time every day. It would be even better if you could record your life and feelings.\n\nWhen you grow old, look at your past diary, reminisce about your life, laugh with joy in your childhood, be reckless in your youth, and have a harmonious family in your middle age, it's not a waste of your life.\n\nThis is my original intention in creating this software.\n\nDeveloper: Yu Core"
+    "ThankContent": "Thank you, friend. I understand your kindness, so there's no need to really donate to me.\n\nI hope you can have fun and have a pleasant time every day. It would be even better if you could record your life and feelings.\n\nThis is my original intention in creating this software.\n\nDeveloper: Yu Core"
   },
   "FunctionalDescription": "Functional Description",
   "ErrorHandle": {
