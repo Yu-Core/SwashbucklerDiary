@@ -3,11 +3,11 @@
 
 <MHover>
     <MCard @attributes="context.Attrs"
+    @oncontextmenu="()=>ShowMenu=true"
            Class="@($"mb-5 my-tag-card {(context.Hover?"elevation-sm-2":"")}")"
            Elevation="0"
            Ripple="false"
-           Rounded="@("lg")"
-           @oncontextmenu="()=>ShowMenu=true">
+           Rounded="@("lg")">
         <MListItem>
             <MListItemIcon>
                 <MIcon Class="list-item-icon">
@@ -21,7 +21,8 @@
             </MListItemContent>
             <MListItemAction>
                 <div @onclick:stopPropagation="true">
-                    <MultiMenu @bind-Value="ShowMenu" ListItemModels="ListItemModels">
+                    <MultiMenu @bind-Value="ShowMenu"
+                               ListItemModels="ListItemModels">
                         <ButtonContent>
                             <MIcon>mdi-pencil</MIcon>
                         </ButtonContent>

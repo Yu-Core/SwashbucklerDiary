@@ -1,13 +1,13 @@
 ﻿@namespace SwashbucklerDiary.Components
 
 <div @ref="element"
-    id="@Id"
+@oncontextmenu="OnContextmenu"
+     id="@Id"
      class="my-scroll-container @(Class)"
-     style="@(Style)"
-     @oncontextmenu="OnContextmenu">
-    <MContainer Fluid="true"
-                Class="@("my-container "+ ContentClass)"
-                Style="@ContentStyle">
+     style="@(Style)">
+    <MContainer Class="@("my-container "+ ContentClass)"
+                Style="@ContentStyle"
+                Fluid="true">
         @ChildContent
     </MContainer>
 </div>

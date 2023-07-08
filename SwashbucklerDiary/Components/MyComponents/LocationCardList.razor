@@ -5,8 +5,8 @@
     @foreach (var item in Value)
     {
         <LocationCard Value="item"
-             OnDelete="OpenDeleteDialog"
-             OnRename="OpenRenameDialog">
+                      OnDelete="OpenDeleteDialog"
+                      OnRename="OpenRenameDialog">
         </LocationCard>
     }
 </div>
@@ -21,7 +21,7 @@
 }
 
 <InputDialog @bind-Value="ShowRename"
-             @bind-Text="@(SelectedLocation.Name)"
+@bind-Text="@(SelectedLocation.Name)"
              Title="@(I18n.T("Location.Rename"))"
              Placeholder="@(I18n.T("Location.Placeholder"))"
              OnOK="HandleRename">

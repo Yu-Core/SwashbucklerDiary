@@ -2,34 +2,35 @@
 @namespace SwashbucklerDiary.Pages
 @inherits PageComponentBase
 
-<MyAppBar Title="@(I18n.T("About.Related"))" OnClick="NavigateToBack">
+<MyAppBar Title="@(I18n.T("About.Related"))"
+          OnClick="NavigateToBack">
 </MyAppBar>
 
 <ScrollContainer>
     @foreach (var item in OSPs)
     {
         <MCard Class="mb-5"
-           Elevation="0"
-           Rounded="@("lg")"
-           OnClick="()=>OpenBrowser(item.Url)">
-           <MList TwoLine>
-               <MListItem>
-                   <MListItemContent>
-                       <MListItemTitle Class="font-weight-bold">
-                            @(item.Name)
-                       </MListItemTitle>
-                       <MListItemSubtitle>
+               Elevation="0"
+               Rounded="@("lg")"
+               OnClick="()=>OpenBrowser(item.Url)">
+            <MList TwoLine>
+            <MListItem>
+                <MListItemContent>
+                    <MListItemTitle Class="font-weight-bold">
+                        @(item.Name)
+                        </MListItemTitle>
+                        <MListItemSubtitle>
                             @(item.License)
-                       </MListItemSubtitle>
+                        </MListItemSubtitle>
                         <MListItemSubtitle>
                             @(item.Url)
                         </MListItemSubtitle>
-                   </MListItemContent>
+                    </MListItemContent>
                     <MListItemAction>
                         <MIcon>mdi-chevron-right</MIcon>
                     </MListItemAction>
-               </MListItem>
-           </MList>
+                </MListItem>
+            </MList>
         </MCard>
     }
 </ScrollContainer>

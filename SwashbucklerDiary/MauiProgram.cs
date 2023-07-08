@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Maui;
-using CommunityToolkit.Maui.Core;
 using MauiBlazorToolkit;
 using SwashbucklerDiary.Extend;
 
@@ -27,6 +26,7 @@ namespace SwashbucklerDiary
                 {
                     essentials.UseVersionTracking();
                 });
+
 
             builder.Services.AddMauiBlazorWebView();
 #if DEBUG

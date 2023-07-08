@@ -1,24 +1,28 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits DialogComponentBase
 
-<MMDialog MyValue="Value"
+<MMDialog @ref="myDialog"
+          MyValue="Value"
           MyValueChanged="InternalValueChanged"
           MaxWidth="420"
-          Scrollable
-          @ref="myDialog">
+          Scrollable>
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Location.Select"))
             <MSpacer></MSpacer>
-            <MButton Icon OnClick="HandleOnCancel">
+            <MButton Icon
+                     OnClick="HandleOnCancel">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
 
-        <MCardText @ref="mCardText" Class="scroll-show pb-0" Style="max-height:300px;">
+        <MCardText @ref="mCardText"
+                   Class="scroll-show pb-0"
+                   Style="max-height:300px;">
             @foreach (var item in Locations)
             {
-                <MListItem Class="px-0" OnClick="()=>SetSelectedLocation(item)">
+                <MListItem Class="px-0"
+                           OnClick="()=>SetSelectedLocation(item)">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             mdi-map-marker-outline
@@ -45,7 +49,8 @@
                 @(I18n.T("Share.Add"))
             </MButton>
             <MSpacer></MSpacer>
-            <MButton Text="true" OnClick="HandleOnCancel">
+            <MButton Text="true"
+                     OnClick="HandleOnCancel">
                 @(I18n.T("Share.Cancel"))
             </MButton>
             <MButton Text="true"

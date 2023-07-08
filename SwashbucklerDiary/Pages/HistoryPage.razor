@@ -37,14 +37,14 @@
         </MTextField>
     </div>
 
-    <DiaryCardList Value="Diaries"
-                   @bind-Tags="Tags"
+    <DiaryCardList @bind-Tags="Tags"
+                   Value="Diaries"
                    OnUpdate="UpdateEventsDates">
     </DiaryCardList>
 </ScrollContainer>
 
 <MyDatePicker @bind-Value="ShowFloatCalendar"
-              @bind-Date="PickedDate"
+@bind-Date="PickedDate"
               Events="EventsDates"
               EventColor='"primary"'>
 </MyDatePicker>

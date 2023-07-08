@@ -2,7 +2,8 @@
 @namespace SwashbucklerDiary.Pages
 @inherits PageComponentBase
 
-<MyAppBar Title="@(I18n.T("User.Title"))" OnClick="NavigateToBack">
+<MyAppBar Title="@(I18n.T("User.Title"))"
+          OnClick="NavigateToBack">
 </MyAppBar>
 
 <ScrollContainer>
@@ -21,7 +22,8 @@
                 </MListItemContent>
 
                 <MListItemAction>
-                    <MAvatar Rounded="@("lg")" Size="32">
+                    <MAvatar Rounded="@("lg")"
+                             Size="32">
                         <MImage Src="@Avatar">
                             <PlaceholderContent>
                                 <MRow Class="fill-height ma-0"
@@ -90,18 +92,20 @@
     </MCard>
 </ScrollContainer>
 
-<MMDialog MaxWidth="420"
-          @bind-MyValue="ShowAvatar">
+<MMDialog @bind-MyValue="ShowAvatar"
+          MaxWidth="420">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("User.EditAvatar"))
             <MSpacer></MSpacer>
-            <MButton Icon OnClick="()=>ShowAvatar=false">
+            <MButton Icon
+                     OnClick="()=>ShowAvatar=false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-            </MCardTitle>
-            <MCardText>
-            <MListItem Class="px-0" OnClick="PickPhoto">
+        </MCardTitle>
+        <MCardText>
+            <MListItem Class="px-0"
+                       OnClick="PickPhoto">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-image-outline
@@ -113,7 +117,8 @@
                     </MListItemTitle>
                 </MListItemContent>
             </MListItem>
-            <MListItem Class="px-0" OnClick="OnCapture">
+            <MListItem Class="px-0"
+                       OnClick="OnCapture">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-camera-outline
@@ -130,20 +135,23 @@
 </MMDialog>
 
 <InputDialog @bind-Value="ShowUserName"
-             @bind-Text="UserName"
+@bind-Text="UserName"
              Title="@(I18n.T("User.EditUserName"))"
              Placeholder="@(I18n.T("User.UserNamePlace"))"
              OnOK="SaveUserName">
 </InputDialog>
 
 <InputDialog @bind-Value="ShowSign"
-             @bind-Text="Sign"
+@bind-Text="Sign"
              Title="@(I18n.T("User.EditSign"))"
              MaxLength="100"
              Placeholder="@(I18n.T("User.SignPlace"))"
              OnOK="SaveSign">
 </InputDialog>
 
-<MOverlay Value="showLoading" ZIndex="99">
-    <MProgressCircular Indeterminate Size="48"></MProgressCircular>
-    </MOverlay>
+<MOverlay Value="showLoading"
+          ZIndex="99">
+    <MProgressCircular Indeterminate
+                       Size="48">
+    </MProgressCircular>
+</MOverlay>

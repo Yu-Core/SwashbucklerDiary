@@ -46,12 +46,14 @@
     </MList>
 </MCard>
 
-<MMDialog @bind-MyValue="ShowBackups" MaxWidth="420">
+<MMDialog @bind-MyValue="ShowBackups"
+          MaxWidth="420">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Backups.Backups.Title"))
             <MSpacer></MSpacer>
-            <MButton Icon="true" OnClick="@(()=>ShowBackups=false)">
+            <MButton Icon="true"
+                     OnClick="@(()=>ShowBackups=false)">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
@@ -60,7 +62,8 @@
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
-            <MButton Text="true" OnClick="()=>ShowBackups=false">
+            <MButton Text="true"
+                     OnClick="()=>ShowBackups=false">
                 @(I18n.T("Share.Cancel"))
             </MButton>
             <MButton Text="true"
@@ -72,12 +75,14 @@
     </MCard>
 </MMDialog>
 
-<MMDialog @bind-MyValue="ShowRestore" MaxWidth="420">
+<MMDialog @bind-MyValue="ShowRestore"
+          MaxWidth="420">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Backups.Restore.ConfirmRestore.Title"))
             <MSpacer></MSpacer>
-            <MButton Icon="true" OnClick="@(()=>ShowRestore=false)">
+            <MButton Icon="true"
+                     OnClick="@(()=>ShowRestore=false)">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
@@ -86,7 +91,8 @@
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
-            <MButton Text OnClick="()=>ShowRestore=false">
+            <MButton Text
+                     OnClick="()=>ShowRestore=false">
                 @(I18n.T("Share.Cancel"))
             </MButton>
             <MButton Text

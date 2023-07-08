@@ -8,32 +8,33 @@
                    Stateless="true"
                    MiniVariant="MiniVariant"
                    Style="max-height:unset;transition: width ease 0.2s;">
-        <MList Shaped="true" Flat="true">
-            <MListItemGroup Value="Value"
+    <MList Shaped="true"
+           Flat="true">
+        <MListItemGroup Value="Value"
                         ValueChanged="ValueChanged"
                         Mandatory="true"
                         ActiveClass="@(MiniVariant?"":"my-navigation-drawer-active")">
-                @foreach (var (item, i) in Items.Select((v, i) => (v, i)))
-                {
-                    var activated = Value == i;
+            @foreach (var (item, i) in Items.Select((v, i) => (v, i)))
+            {
+                var activated = Value == i;
 
-                    <MListItem Ripple="false" OnClick="item.OnClick">
-                        <MListItemIcon>
-                            <MIcon Size="@(activated?30:24)">
-                                @(activated ? item.SelectedIcon : item.Icon)
-                            </MIcon>
-                        </MListItemIcon>
-                        <MListItemTitle Class="@(activated?"text-h6 font-weight-bold":"")">
-                            @(I18n.T(item.Text))
-                        </MListItemTitle>
-                    </MListItem>
-                }
-            </MListItemGroup>
-        </MList>
-    </MNavigationDrawer>
+                <MListItem Ripple="false"
+                           OnClick="item.OnClick">
+                    <MListItemIcon>
+                        <MIcon Size="@(activated?30:24)">
+                            @(activated ? item.SelectedIcon : item.Icon)
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemTitle Class="@(activated?"text-h6 font-weight-bold":"")">
+                        @(I18n.T(item.Text))
+                    </MListItemTitle>
+                </MListItem>
+            }
+        </MListItemGroup>
+    </MList>
+</MNavigationDrawer>
 
 @code {
     private bool MiniVariant => MasaBlazor.Breakpoint.Sm;
     private bool Show => MasaBlazor.Breakpoint.SmAndUp;
-
 }

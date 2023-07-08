@@ -3,12 +3,12 @@
 
 <MHover>
     <MCard @attributes="context.Attrs"
+    @oncontextmenu="()=>ShowMenu=true"
            Class="@($"my-diary-card {(context.Hover?"elevation-sm-2":"")} {Class}")"
            OnClick="()=>OnClick.InvokeAsync(Value)"
            Elevation="0"
            Ripple="false"
            Rounded="@("lg")"
-    @oncontextmenu="()=>ShowMenu=true"
            __internal_preventDefault_oncontextmenu>
         <MListItem Dense>
             <MListItemContent>
@@ -31,7 +31,8 @@
                     </MIcon>
                 }
                 <div @onclick:stopPropagation="true">
-                    <MultiMenu @bind-Value="ShowMenu" ListItemModels="ListItemModels">
+                    <MultiMenu @bind-Value="ShowMenu"
+                               ListItemModels="ListItemModels">
                         <ButtonContent>
                             <MIcon Class="@($"chevron-down {(ShowMenu?"chevron-down-rotate-x":"")}")">
                                 mdi-chevron-down

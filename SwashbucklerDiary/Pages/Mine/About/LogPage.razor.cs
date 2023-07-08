@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             LoadView();
-            await UpdateLogs();
+            await UpdateLogsAsync();
             await HandleAchievements(AchievementType.Log);
             await base.OnInitializedAsync();
         }
@@ -139,7 +139,7 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private async Task UpdateLogs()
+        private async Task UpdateLogsAsync()
         {
             Expression<Func<LogModel, bool>> func = Func();
             var logs = await LogService.QueryAsync(func);

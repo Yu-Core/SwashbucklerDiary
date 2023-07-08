@@ -15,11 +15,11 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            await UpdateLocations();
+            await UpdateLocationsAsync();
             await base.OnInitializedAsync();
         }
 
-        async Task UpdateLocations()
+        async Task UpdateLocationsAsync()
         {
             Locations = await LocationService.QueryAsync();
         }

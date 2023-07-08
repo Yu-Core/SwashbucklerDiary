@@ -18,7 +18,9 @@
         </MTab>
     </MTabs>
     <MSpacer></MSpacer>
-    <MButton Large Icon OnClick="@(()=>To("/search"))">
+    <MButton Large
+             Icon
+             OnClick="@(()=>To("/search"))">
         <MIcon>mdi-magnify</MIcon>
     </MButton>
 </MAppBar>
@@ -26,7 +28,7 @@
 <SwiperTabItems @bind-Value="tab">
     <SwiperTabItem>
         <div class="mb-5 pl-2">
-            @if(ShowDate)
+            @if (ShowDate)
             {
                 <div class="text--secondary mb-2">
                     @(DateTime.Now.ToString("yyyy/MM/dd") + " " + I18n.ToWeek())
@@ -39,10 +41,12 @@
                     @GetWelcomeText()
                 </div>
             }
-            
+
         </div>
 
-        <DiaryCardList Value="Diaries" @bind-Tags="Tags"></DiaryCardList>
+        <DiaryCardList @bind-Tags="Tags"
+                       Value="Diaries">
+        </DiaryCardList>
     </SwiperTabItem>
     <SwiperTabItem>
         <TagCardList @bind-Value="Tags"></TagCardList>
@@ -51,13 +55,15 @@
 
 @if (tab == 0)
 {
-    <MyFloatButton Icon="mdi-pencil" OnClick="@(()=>To("/write"))">
+    <MyFloatButton Icon="mdi-pencil"
+                   OnClick="@(()=>To("/write"))">
     </MyFloatButton>
 }
 
 @if (tab == 1)
 {
-    <MyFloatButton Icon="mdi-plus" OnClick="()=>ShowAddTag=true">
+    <MyFloatButton Icon="mdi-plus"
+                   OnClick="()=>ShowAddTag=true">
     </MyFloatButton>
 }
 

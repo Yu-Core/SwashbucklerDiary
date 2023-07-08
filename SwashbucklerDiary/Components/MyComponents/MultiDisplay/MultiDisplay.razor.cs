@@ -17,17 +17,17 @@ namespace SwashbucklerDiary.Components
 
         public void Dispose()
         {
-            MasaBlazor.BreakpointChanged -= InvokeStateHasChangedAsync;
+            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
             GC.SuppressFinalize(this);
         }
 
         protected override Task OnInitializedAsync()
         {
-            MasaBlazor.BreakpointChanged += InvokeStateHasChangedAsync;
+            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
             return base.OnInitializedAsync();
         }
 
-        private void InvokeStateHasChangedAsync(object? sender, BreakpointChangedEventArgs e)
+        private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
         {
             StateHasChanged();
         }

@@ -2,11 +2,12 @@
 @namespace SwashbucklerDiary.Pages
 @inherits PageComponentBase
 
-<MyAppBar Title="@(I18n.T("Setting.Diary.Location"))" OnClick="NavigateToBack">
+<MyAppBar Title="@(I18n.T("Setting.Diary.Location"))"
+          OnClick="NavigateToBack">
 </MyAppBar>
 
 <ScrollContainer>
-  <LocationCardList Value="Locations"></LocationCardList>
+    <LocationCardList Value="Locations"></LocationCardList>
 </ScrollContainer>
 
 <MyFloatButton Icon="mdi-plus" OnClick="()=>ShowAdd=true">

@@ -7,7 +7,7 @@
            Elevation="0"
            Ripple="false"
            Rounded="@("lg")"
-           @oncontextmenu="()=>ShowMenu=true"
+    @oncontextmenu="()=>ShowMenu=true"
            OnClick="()=>OnClick.InvokeAsync(Value)">
         <MListItem>
             <MListItemIcon>
@@ -22,7 +22,8 @@
 
             <MListItemAction>
                 <div @onclick:stopPropagation="true">
-                    <MultiMenu @bind-Value="ShowMenu" ListItemModels="ListItemModels">
+                    <MultiMenu @bind-Value="ShowMenu"
+                               ListItemModels="ListItemModels">
                         <ButtonContent>
                             <MIcon>mdi-pencil</MIcon>
                         </ButtonContent>

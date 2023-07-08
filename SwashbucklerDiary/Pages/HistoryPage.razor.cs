@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Pages
             await UpdateEventsDates();
         }
 
-        protected override async Task UpdateDiaries()
+        protected override async Task UpdateDiariesAsync()
         {
             Diaries = await DiaryService.QueryAsync(it => !it.Private && it.CreateTime >= MinPickedDateTime && it.CreateTime <= MaxPickedDateTime);
         }
@@ -38,7 +38,7 @@ namespace SwashbucklerDiary.Pages
             }
 
             _pickedDate = value;
-            await UpdateDiaries();
+            await UpdateDiariesAsync();
             await InvokeAsync(StateHasChanged);
             if(scrollContainer == null)
             {

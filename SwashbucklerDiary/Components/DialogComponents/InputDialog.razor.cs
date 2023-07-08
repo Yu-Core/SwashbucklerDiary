@@ -33,24 +33,11 @@ namespace SwashbucklerDiary.Components
         public bool Password { get; set; }
 
         private string PasswordIcon
-        {
-            get
-            {
-                if (!Password)
-                    return string.Empty;
-                return showPassword ? "mdi-eye" : "mdi-eye-off";
-            }
-        }
-        private string PasswordType
-        {
-            get
-            {
-                if (!Password)
-                    return string.Empty;
-                return showPassword ? "text" : "password";
-            }
-        }
+            => Password ? (showPassword ? "mdi-eye" : "mdi-eye-off") : string.Empty;
 
+        private string PasswordType
+            => Password ? (showPassword ? "text" : "password") : string.Empty;
+        
         private void SetValue(bool value)
         {
             if (value != Value)

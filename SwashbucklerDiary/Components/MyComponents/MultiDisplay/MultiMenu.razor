@@ -7,7 +7,7 @@
                        MyValueChanged="ValueChanged">
             <ActivatorContent>
                 <MButton Icon="true"
-                         @attributes="@context.Attrs">
+                @attributes="@context.Attrs">
                     @ButtonContent
                 </MButton>
             </ActivatorContent>
@@ -54,8 +54,8 @@
                Right
                Transition="scroll-x-reverse-transition">
             <ActivatorContent>
-                <MButton Icon
-                         @attributes="@context.Attrs">
+                <MButton @attributes="@context.Attrs"
+                         Icon="true">
                     @ButtonContent
                 </MButton>
             </ActivatorContent>
@@ -63,7 +63,8 @@
                 <MList MinWidth="150">
                     @foreach (var item in ListItemModels)
                     {
-                        <MListItem Dense="true" OnClick="()=>OnClick(item.OnClick)">
+                        <MListItem Dense="true"
+                                   OnClick="()=>OnClick(item.OnClick)">
                             <MListItemContent>
                                 @(I18n.T(item.Text))
                             </MListItemContent>

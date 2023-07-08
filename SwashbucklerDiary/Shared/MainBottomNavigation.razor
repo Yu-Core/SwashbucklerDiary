@@ -10,7 +10,8 @@
                    App="true">
     @foreach (var (item, i) in Items.Select((v, i) => (v, i)))
     {
-        <MButton Ripple="false" OnClick="item.OnClick">
+        <MButton Ripple="false"
+                 OnClick="item.OnClick">
             <MIcon>
                 @(Value == i ? item.SelectedIcon : item.Icon)
             </MIcon>
@@ -19,7 +20,7 @@
 </MBottomNavigation>
 
 @code {
-    
+
     private bool Show
     {
         get

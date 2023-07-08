@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Components
         private async Task Backups()
         {
             ShowBackups = false;
-            var flag = await CheckPermission();
+            var flag = await CheckPermissions();
             if (!flag)
             {
                 return;
@@ -71,7 +71,7 @@ namespace SwashbucklerDiary.Components
 
         private async Task Restore()
         {
-            var flag = await CheckPermission();
+            var flag = await CheckPermissions();
             if (!flag)
             {
                 return;

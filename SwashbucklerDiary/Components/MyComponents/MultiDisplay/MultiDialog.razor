@@ -46,14 +46,16 @@
                 <MCardTitle Class="font-weight-bold">
                     @Title
                     <MSpacer></MSpacer>
-                    <MButton Icon="true" OnClick="HandleOnCancel">
+                    <MButton Icon="true"
+                             OnClick="HandleOnCancel">
                         <MIcon>mdi-close</MIcon>
                     </MButton>
                 </MCardTitle>
                 <MCardText>
                     @foreach (var item in ListItemModels)
                     {
-                        <MListItem Class="px-0" OnClick="()=>OnClick(item.OnClick)">
+                        <MListItem Class="px-0"
+                                   OnClick="()=>OnClick(item.OnClick)">
                             <MListItemIcon Class="my-3">
                                 <MIcon Class="list-item-icon">
                                     @(item.Icon)

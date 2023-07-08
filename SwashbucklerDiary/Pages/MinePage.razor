@@ -22,7 +22,9 @@
                    OnClick="@(()=>To("/user"))">
                 <MList>
                     <MListItem ThreeLine>
-                        <MListItemAvatar Class="ml-md-4" Rounded="@("lg")" Size="70">
+                        <MListItemAvatar Class="ml-md-4"
+                                         Rounded="@("lg")"
+                                         Size="70">
                             <MImage Src="@(Avatar)">
                                 <PlaceholderContent>
                                     <MRow Class="fill-height ma-0"
@@ -92,8 +94,8 @@
         </div>
 
         <MCard Class="mine-card"
-           Elevation="0"
-           Rounded="@("lg")">
+               Elevation="0"
+               Rounded="@("lg")">
             <MList>
                 @foreach (var item in list.Value)
                 {
@@ -123,13 +125,14 @@
 
 </ScrollContainer>
 
-<MMDialog MaxWidth="420"
-          @bind-MyValue="ShowLanguage">
+<MMDialog @bind-MyValue="ShowLanguage"
+          MaxWidth="420">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Mine.SelectLanguage"))
             <MSpacer></MSpacer>
-            <MButton Icon="true" OnClick="()=>ShowLanguage= false">
+            <MButton Icon="true"
+                     OnClick="()=>ShowLanguage= false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
@@ -144,9 +147,9 @@
                 @foreach (var item in Languages)
                 {
                     <MRadio Label="@(item.Key)"
-                        Class="my-2"
-                        Value="@(item.Value)"
-                        Color="@MRadioColor">
+                            Class="my-2"
+                            Value="@(item.Value)"
+                            Color="@MRadioColor">
                     </MRadio>
                 }
             </MRadioGroup>
@@ -154,13 +157,14 @@
     </MCard>
 </MMDialog>
 
-<MMDialog MaxWidth="420"
-          @bind-MyValue="ShowThemeState">
+<MMDialog @bind-MyValue="ShowThemeState"
+          MaxWidth="420">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Mine.Night"))
             <MSpacer></MSpacer>
-            <MButton Icon="true" OnClick="()=>ShowThemeState= false">
+            <MButton Icon="true"
+                     OnClick="()=>ShowThemeState= false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
@@ -175,9 +179,9 @@
                 @foreach (var item in ThemeStates)
                 {
                     <MRadio Label="@(I18n.T(item.Key))"
-                        Class="my-2"
-                        Value="@(item.Value)"
-                        Color="@MRadioColor">
+                            Class="my-2"
+                            Value="@(item.Value)"
+                            Color="@MRadioColor">
                     </MRadio>
                 }
             </MRadioGroup>

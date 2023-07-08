@@ -81,7 +81,7 @@ namespace SwashbucklerDiary.Components
 
         async Task<List<DiaryModel>> GetDefaultDiaries(string[] keys)
         {
-            List<DiaryModel> diaries = new List<DiaryModel>();
+            var diaries = new List<DiaryModel>();
             foreach (string key in keys)
             {
                 var content = await SystemService.ReadMarkdownFile(I18n.T(key)!);

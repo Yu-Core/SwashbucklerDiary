@@ -17,21 +17,21 @@ namespace SwashbucklerDiary.Components
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            await InitDiaries();
-            await UpdateTags();
+            await InitializeDiariesAsync();
+            await UpdateTagsAsync();
         }
 
-        protected virtual Task InitDiaries()
+        protected virtual Task InitializeDiariesAsync()
         {
-            return UpdateDiaries();
+            return UpdateDiariesAsync();
         }
 
-        protected virtual async Task UpdateDiaries()
+        protected virtual async Task UpdateDiariesAsync()
         {
             Diaries = await DiaryService.QueryAsync(it => !it.Private);
         }
 
-        protected virtual async Task UpdateTags()
+        protected virtual async Task UpdateTagsAsync()
         {
             Tags = await TagService.QueryAsync();
         }

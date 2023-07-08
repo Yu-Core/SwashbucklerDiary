@@ -2,7 +2,7 @@
 {
     public class BackupsPageComponentBase : PageComponentBase
     {
-        protected async Task<bool> CheckPermission()
+        protected async Task<bool> CheckPermissions()
         {
             var writePermission = await SystemService.TryStorageWritePermission();
             if (!writePermission)
@@ -23,11 +23,12 @@
 
         protected string SaveFileName()
         {
-            var destFileName = "SwashbucklerDiaryBackups" +
-                DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") +
-                "v" +
-                SystemService.GetAppVersion() + ".db3";
-            return destFileName;
+            string name = "SwashbucklerDiaryBackups";
+            string time = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            string version = $"v{SystemService.GetAppVersion()}";
+            string suffix = ".db3";
+            
+            return name + time + version + suffix;
         }
     }
 }

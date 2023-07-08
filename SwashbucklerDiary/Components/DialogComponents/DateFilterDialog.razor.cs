@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public EventCallback OnReset { get; set; }
 
-        protected virtual Task DialogAfterShowContent()
+        protected virtual Task DialogAfterRenderAsync()
         {
             InternalForm = Form.DeepCopy();
             return Task.CompletedTask;
@@ -53,23 +53,13 @@ namespace SwashbucklerDiary.Components
             set => InternalForm.MaxDate = value;
         }
         private string MinDateText
-        {
-            get
-            {
-                return MinDate == DateOnly.MinValue ? I18n.T("Filter.Start time") : ((DateOnly)MinDate).ToString("yyyy-MM-dd");
-            }
-        }
+            => MinDate == DateOnly.MinValue ? I18n.T("Filter.Start time") : ((DateOnly)MinDate).ToString("yyyy-MM-dd");
         private string MaxDateText
-        {
-            get
-            {
-                return MaxDate == DateOnly.MaxValue ? I18n.T("Filter.End time") : ((DateOnly)MaxDate).ToString("yyyy-MM-dd");
-            }
-        }
+            => MaxDate == DateOnly.MaxValue ? I18n.T("Filter.End time") : ((DateOnly)MaxDate).ToString("yyyy-MM-dd");
 
         private void SetValue(bool value)
         {
-            if (value != Value)
+            if (value == Value)
             {
                 _value = value;
                 if (value)

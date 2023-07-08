@@ -3,16 +3,17 @@
 @inherits DiariesPageComponentBase
 
 <MAppBar App="true" Elevation="0">
-    <MButton Icon="true" OnClick="NavigateToBack">
+    <MButton Icon="true"
+             OnClick="NavigateToBack">
         <MIcon>
             mdi-arrow-left
         </MIcon>
     </MButton>
 
     <MySearch @bind-Value="ShowSearch"
-              @bind-Search="Search"
+    @bind-Search="Search"
               Title="@(I18n.T("Setting.Safe.PrivacyLibrary"))"
-              OnChanged="UpdateDiaries">
+              OnChanged="UpdateDiariesAsync">
     </MySearch>
 
     <MButton Icon="true"
@@ -31,11 +32,12 @@
 </MAppBar>
 
 <ScrollContainer>
-    <DiaryCardList Value="Diaries" @bind-Tags="Tags" />
+    <DiaryCardList @bind-Tags="Tags"
+                   Value="Diaries" />
 </ScrollContainer>
 
 <DateFilterDialog @bind-Value="ShowFilter"
 @bind-Form="SearchForm.DateFilter"
-                  OnOK="UpdateDiaries"
-                  OnReset="UpdateDiaries">
+                  OnOK="UpdateDiariesAsync"
+                  OnReset="UpdateDiariesAsync">
 </DateFilterDialog>

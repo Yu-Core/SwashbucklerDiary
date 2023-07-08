@@ -1,14 +1,16 @@
 ﻿@page "/search"
 @inherits DiariesPageComponentBase
 
-<MAppBar App Elevation="0">
-    <MButton Icon OnClick="NavigateToBack">
+<MAppBar App
+         Elevation="0">
+    <MButton Icon
+             OnClick="NavigateToBack">
         <MIcon>mdi-arrow-left</MIcon>
     </MButton>
 
     <MySearch @bind-Value="ShowSearch"
-              @bind-Search="Search"
-              OnChanged="UpdateDiaries">
+    @bind-Search="Search"
+              OnChanged="UpdateDiariesAsync">
     </MySearch>
 
     <MButton Icon="true"
@@ -19,11 +21,13 @@
     </MButton>
 </MAppBar>
 <ScrollContainer>
-    <DiaryCardList Value="Diaries" @bind-Tags="Tags"></DiaryCardList>
+    <DiaryCardList @bind-Tags="Tags"
+                   Value="Diaries">
+    </DiaryCardList>
 </ScrollContainer>
 
 <DateFilterDialog @bind-Value="ShowFilter"
-                  @bind-Form="SearchForm.DateFilter"
-                  OnOK="UpdateDiaries"
-                  OnReset="UpdateDiaries">
+@bind-Form="SearchForm.DateFilter"
+                  OnOK="UpdateDiariesAsync"
+                  OnReset="UpdateDiariesAsync">
 </DateFilterDialog>

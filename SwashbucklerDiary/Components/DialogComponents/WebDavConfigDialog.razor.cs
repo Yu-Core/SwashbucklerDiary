@@ -16,11 +16,11 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public EventCallback<WebDavConfigForm> OnOK { get; set; }
 
-        protected override async Task DialogAfterShowContent()
+        protected override async Task DialogAfterRenderAsync()
         {
             MForm?.Reset();
             configModel = WebDavConfigForm.DeepCopy();
-            await base.DialogAfterShowContent();
+            await base.DialogAfterRenderAsync();
         }
 
         private async Task HandleOnOK()

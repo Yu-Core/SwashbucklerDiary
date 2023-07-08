@@ -5,9 +5,9 @@
     @foreach (var item in Value!)
     {
         <TagCard Value="item"
-             OnDelete="OpenDeleteDialog"
-             OnRename="OpenRenameDialog"
-             OnClick="HandleClick">
+                 OnDelete="OpenDeleteDialog"
+                 OnRename="OpenRenameDialog"
+                 OnClick="HandleClick">
         </TagCard>
     }
 </div>
@@ -22,7 +22,7 @@
 }
 
 <InputDialog @bind-Value="ShowRename"
-             @bind-Text="SelectedTag.Name"
+@bind-Text="SelectedTag.Name"
              Title="@(I18n.T("Tag.Rename"))"
              Placeholder="@(I18n.T("Tag.Placeholder"))"
              OnOK="HandleRename">

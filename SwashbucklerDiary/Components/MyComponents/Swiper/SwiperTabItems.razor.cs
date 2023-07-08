@@ -18,17 +18,7 @@ namespace SwashbucklerDiary.Components
         public StringNumber Value
         {
             get => _value;
-            set
-            {
-                if (_value != value)
-                {
-                    _value = value;
-                    if (Show)
-                    {
-                        UpdateSwiper(value);
-                    }
-                }
-            }
+            set => SetValue(value);
         }
         [Parameter]
         public EventCallback<StringNumber> ValueChanged { get; set; }
@@ -42,6 +32,18 @@ namespace SwashbucklerDiary.Components
             if (ValueChanged.HasDelegate)
             {
                 await ValueChanged.InvokeAsync(value);
+            }
+        }
+
+        public void SetValue(StringNumber value)
+        {
+            if (_value != value)
+            {
+                _value = value;
+                if (Show)
+                {
+                    UpdateSwiper(value);
+                }
             }
         }
 

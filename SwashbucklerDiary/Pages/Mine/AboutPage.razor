@@ -2,7 +2,8 @@
 @namespace SwashbucklerDiary.Pages
 @inherits PageComponentBase
 
-<MyAppBar Title="@(I18n.T("Mine.About"))" OnClick="NavigateToBack">
+<MyAppBar Title="@(I18n.T("Mine.About"))"
+          OnClick="NavigateToBack">
 </MyAppBar>
 
 <ScrollContainer>
@@ -11,7 +12,9 @@
            Rounded="@("lg")">
         <MList>
             <MListItem>
-                <MListItemAvatar Rounded="@("lg")" Size="75" Class="mr-8 hidden-xs-only">
+                <MListItemAvatar Class="mr-8 hidden-xs-only"
+                                 Rounded="@("lg")"
+                                 Size="75">
                     <MImage Src="./logo/logo.svg"></MImage>
                 </MListItemAvatar>
                 <MListItemContent>
@@ -75,7 +78,8 @@
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("About.Check for updates"))
             <MSpacer></MSpacer>
-            <MButton Icon="true" OnClick="()=>ShowVersionUpdate=false">
+            <MButton Icon="true"
+                     OnClick="()=>ShowVersionUpdate=false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
@@ -84,7 +88,8 @@
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
-            <MButton Text="true" OnClick="()=>ShowVersionUpdate=false">
+            <MButton Text="true"
+                     OnClick="()=>ShowVersionUpdate=false">
                 @(I18n.T("Share.Cancel"))
             </MButton>
             <MButton Text="true"

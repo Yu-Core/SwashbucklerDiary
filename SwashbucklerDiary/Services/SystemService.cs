@@ -67,7 +67,7 @@ namespace SwashbucklerDiary.Services
 
         public async Task OpenBrowser(string? url)
         {
-            if(string.IsNullOrEmpty(url))
+            if (string.IsNullOrEmpty(url))
             {
                 return;
             }
@@ -224,7 +224,7 @@ namespace SwashbucklerDiary.Services
 #endif
         }
 
-        public Task<bool> OpenStoreAppDetails(string appId)
+        private static Task<bool> OpenStoreAppDetails(string appId)
         {
             return AppStoreLauncher.Default.TryOpenAsync(appId);
         }
@@ -388,7 +388,7 @@ namespace SwashbucklerDiary.Services
 #pragma warning disable CA1416
         public void SetStatusBar(ThemeState themeState)
         {
-            var Dark = themeState == ThemeState.Dark; 
+            var Dark = themeState == ThemeState.Dark;
             Color backgroundColor = Dark ? statusBarColorDark : statusBarColorLight;
 #if WINDOWS || MACCATALYST
             TitleBar.SetColor(backgroundColor);
@@ -425,7 +425,7 @@ namespace SwashbucklerDiary.Services
 
         public void ClearFolder(string folderPath)
         {
-            DirectoryInfo directory = new DirectoryInfo(folderPath);
+            DirectoryInfo directory = new(folderPath);
 
             // 删除文件夹中的所有文件
             foreach (FileInfo file in directory.GetFiles())

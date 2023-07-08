@@ -3,7 +3,8 @@
 @inherits PageComponentBase
 @using SwashbucklerDiary.Models
 
-<MyAppBar Title="@(I18n.T("Mine.Settings"))" OnClick="NavigateToBack">
+<MyAppBar Title="@(I18n.T("Mine.Settings"))"
+          OnClick="NavigateToBack">
 </MyAppBar>
 
 <ScrollContainer>
@@ -99,7 +100,7 @@
                 </MListItemAction>
             </MListItem>
 
-            @if(Privacy)
+            @if (Privacy)
             {
                 <MDivider Class="mx-3"></MDivider>
 

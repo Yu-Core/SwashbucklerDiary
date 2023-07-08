@@ -53,7 +53,8 @@
     </MCard>
 </ScrollContainer>
 
-<ExportDialog @bind-Value="ShowExport" Diaries="Diaries">
+<ExportDialog @bind-Value="ShowExport"
+              Diaries="Diaries">
 
 </ExportDialog>
 
@@ -62,16 +63,18 @@
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Export.ConfirmImport.Title"))
             <MSpacer></MSpacer>
-            <MButton Icon OnClick="@(()=>ShowImport=false)">
+            <MButton Icon
+                     OnClick="@(()=>ShowImport=false)">
                 <MIcon>mdi-close</MIcon>
             </MButton>
-            </MCardTitle>
-            <MCardText Class="pb-0">
+        </MCardTitle>
+        <MCardText Class="pb-0">
             @(I18n.T("Export.ConfirmImport.Content"))
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
-            <MButton Text OnClick="()=>ShowImport=false">
+            <MButton Text
+                     OnClick="()=>ShowImport=false">
                 @(I18n.T("Share.Cancel"))
             </MButton>
             <MButton Text

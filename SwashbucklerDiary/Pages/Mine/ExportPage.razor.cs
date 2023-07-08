@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Serilog;
-using Serilog.Core;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;

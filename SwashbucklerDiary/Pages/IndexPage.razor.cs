@@ -116,7 +116,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task FirstLauchUpdateDiaries()
         {
-            await UpdateDiaries();
+            await UpdateDiariesAsync();
             await InvokeAsync(StateHasChanged);
         }
     }

@@ -12,11 +12,11 @@ namespace SwashbucklerDiary.Components
             await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                myDialog!.AfterShowContent = async _ => await DialogAfterShowContent();
+                myDialog!.AfterShowContent = async _ => await DialogAfterRenderAsync();
             }
         }
 
-        protected virtual async Task DialogAfterShowContent()
+        protected virtual async Task DialogAfterRenderAsync()
         {
             await FocusAsync();
         }

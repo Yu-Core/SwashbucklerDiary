@@ -2,17 +2,19 @@
 @namespace SwashbucklerDiary.Pages
 @inherits PageComponentBase
 
-<MAppBar App="true" Elevation="0">
-    <MButton Icon="true" OnClick="NavigateToBack">
+<MAppBar App="true"
+         Elevation="0">
+    <MButton Icon="true"
+             OnClick="NavigateToBack">
         <MIcon>
             mdi-arrow-left
         </MIcon>
     </MButton>
 
-    <MySearch Title="@(I18n.T("About.LogFile"))"
-              @bind-Value="ShowSearch"
-              @bind-Search="Search"
-              OnChanged="UpdateLogs">
+    <MySearch @bind-Value="ShowSearch"
+    @bind-Search="Search"
+              Title="@(I18n.T("About.LogFile"))"
+              OnChanged="UpdateLogsAsync">
     </MySearch>
 
     <MButton Icon="true"
@@ -29,7 +31,8 @@
         </MIcon>
     </MButton>
 
-    <MultiMenu @bind-Value="ShowMenu" ListItemModels="ListItemModels">
+    <MultiMenu @bind-Value="ShowMenu"
+               ListItemModels="ListItemModels">
         <ButtonContent>
             <MultiDisplay>
                 <DesktopContent>
@@ -67,9 +70,9 @@
 </ScrollContainer>
 
 <DateFilterDialog @bind-Value="ShowFilter"
-                  @bind-Form="DateFilterForm"
-                  OnOK="UpdateLogs"
-                  OnReset="UpdateLogs">
+@bind-Form="DateFilterForm"
+                  OnOK="UpdateLogsAsync"
+                  OnReset="UpdateLogsAsync">
 </DateFilterDialog>
 
 <DeleteDialog @bind-Value="ShowDelete"
@@ -78,5 +81,6 @@
               OnOK="HandleDelete">
 </DeleteDialog>
 
-<ShareDialog @bind-Value="ShowShare" Items="ShareItems">
+<ShareDialog @bind-Value="ShowShare"
+             Items="ShareItems">
 </ShareDialog>

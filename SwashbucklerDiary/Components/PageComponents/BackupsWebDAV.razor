@@ -77,12 +77,14 @@
                     OnOK="SaveWebDavConfig">
 </WebDavConfigDialog>
 
-<MMDialog @bind-MyValue="ShowUpload" MaxWidth="420">
+<MMDialog @bind-MyValue="ShowUpload"
+          MaxWidth="420">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Backups.Upload.Title"))
             <MSpacer></MSpacer>
-            <MButton Icon="true" OnClick="@(()=>ShowUpload=false)">
+            <MButton Icon="true"
+                     OnClick="@(()=>ShowUpload=false)">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
@@ -91,7 +93,8 @@
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
-            <MButton Text="true" OnClick="()=>ShowUpload=false">
+            <MButton Text="true"
+                     OnClick="()=>ShowUpload=false">
                 @(I18n.T("Share.Cancel"))
             </MButton>
             <MButton Text="true"
@@ -110,14 +113,17 @@
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Backups.Download.Title"))
             <MSpacer></MSpacer>
-            <MButton Icon="true" OnClick="()=>ShowDownload=false">
+            <MButton Icon="true"
+                     OnClick="()=>ShowDownload=false">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
-        <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
+        <MCardText Class="scroll-show pb-0 mb-5"
+                   Style="max-height:300px;">
             @foreach (var item in FileList)
             {
-                <MListItem Class="px-0" OnClick="()=>Download(item)">
+                <MListItem Class="px-0"
+                           OnClick="()=>Download(item)">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             mdi-file-outline

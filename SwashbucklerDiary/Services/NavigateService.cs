@@ -129,10 +129,10 @@ namespace SwashbucklerDiary.Services
         public object? GetCurrentCache()
         {
             var url = Navigation.ToBaseRelativePath(Navigation.Uri);
-            return GetCurrentCache(url);
+            return GetCache(url);
         }
 
-        public object? GetCurrentCache(string url)
+        public object? GetCache(string url)
         {
             if (HistoryCache.ContainsKey(url))
             {

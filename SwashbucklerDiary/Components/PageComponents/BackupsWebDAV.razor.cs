@@ -126,7 +126,7 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            var flag = await CheckPermission();
+            var flag = await CheckPermissions();
             if (!flag)
             {
                 return;
@@ -167,7 +167,7 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            var flag = await CheckPermission();
+            var flag = await CheckPermissions();
             if (!flag)
             {
                 return;

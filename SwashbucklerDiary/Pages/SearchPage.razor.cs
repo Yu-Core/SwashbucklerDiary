@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
-        protected override async Task UpdateDiaries()
+        protected override async Task UpdateDiariesAsync()
         {
             Expression<Func<DiaryModel, bool>> func = Func();
             var diaries = await DiaryService.QueryAsync(func);

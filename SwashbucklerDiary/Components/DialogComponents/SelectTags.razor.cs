@@ -57,22 +57,24 @@ namespace SwashbucklerDiary.Components
 
         private void SetValue(bool value)
         {
-            if (_value != value)
+            if(_value  == value)
             {
-                if (value)
+                return;
+            }
+
+            if (value)
+            {
+                SelectedTagId = new();
+                foreach (var item in Values)
                 {
-                    SelectedTagId = new();
-                    foreach (var item in Values)
+                    if (Tags.Any(it => it.Id == item.Id))
                     {
-                        if(Tags.Any(it=> it.Id == item.Id))
-                        {
-                            SelectedTagId.Add(item.Id.ToString());
-                        }
+                        SelectedTagId.Add(item.Id.ToString());
                     }
                 }
-                _value = value;
-                StateHasChanged();
             }
+            _value = value;
+            StateHasChanged();
         }
 
         private async Task SaveAddTag(string tagName)
@@ -106,6 +108,7 @@ namespace SwashbucklerDiary.Components
             {
                 await TagsChanged.InvokeAsync(Tags);
             }
+
             StateHasChanged();
         }
     }

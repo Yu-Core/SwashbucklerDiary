@@ -4,18 +4,19 @@
 <MMDialog MyValue="Value"
           MyValueChanged="InternalValueChanged"
           MaxWidth="420"
-          @ref="myDialog">
+@ref="myDialog">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @Title
             <MSpacer></MSpacer>
-            <MButton Icon OnClick="HandleOnCancel">
+            <MButton Icon
+                     OnClick="HandleOnCancel">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
             <MTextField @bind-Value="InputText"
-                        @ref="TextField"
+            @ref="TextField"
                         OnKeyDown="HandleOnEnter"
                         Dense
                         HideDetails="@("auto")"
@@ -31,7 +32,8 @@
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
-            <MButton Text OnClick="HandleOnCancel">
+            <MButton Text
+                     OnClick="HandleOnCancel">
                 @(I18n.T("Share.Cancel"))
             </MButton>
             <MButton Text
