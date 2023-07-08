@@ -22,13 +22,13 @@ namespace SwashbucklerDiary.Components
             set => base.ValueChanged = value;
         }
 
-        public new async ValueTask DisposeAsync()
+        protected override Task DeleteContent()
         {
             if (Value)
             {
                 NavigateService.Action -= Close;
             }
-            await base.DisposeAsync();
+            return base.DeleteContent();    
         }
 
         private void SetValue(bool value)
