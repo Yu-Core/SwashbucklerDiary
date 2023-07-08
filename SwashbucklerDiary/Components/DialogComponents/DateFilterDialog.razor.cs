@@ -59,7 +59,7 @@ namespace SwashbucklerDiary.Components
 
         private void SetValue(bool value)
         {
-            if (value == Value)
+            if (value != Value)
             {
                 _value = value;
                 if (value)
