@@ -21,10 +21,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task ReadJson()
         {
-            using Stream streamCultures = await FileSystem.OpenAppPackageFileAsync("wwwroot/json/open-source-project/open-source-project.json");
-            using StreamReader readerCultures = new(streamCultures);
-            string contents = readerCultures.ReadToEnd();
-            OSPs = JsonSerializer.Deserialize<List<OpenSourceProject>>(contents) ?? throw new Exception("Failed to read json file data!");
+            OSPs = await SystemService.ReadJsonFileAsync<List<OpenSourceProject>>("wwwroot/json/open-source-project/open-source-project.json");
         }
     }
 }

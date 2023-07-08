@@ -1,6 +1,7 @@
 ﻿using Serilog;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Models;
+using System.Collections.Generic;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -45,10 +46,7 @@ namespace SwashbucklerDiary.Pages
                 }
             };
 
-            using Stream streamCultures = await FileSystem.OpenAppPackageFileAsync("wwwroot/json/code-source/code-source.json");
-            using StreamReader readerCultures = new(streamCultures);
-            string contents = readerCultures.ReadToEnd();
-            var codeSources = JsonSerializer.Deserialize<List<CodeSource>>(contents) ?? throw new Exception("Failed to read json file data!");
+            var codeSources = await SystemService.ReadJsonFileAsync<List<CodeSource>>("wwwroot/json/code-source/code-source.json");
             foreach (var item in codeSources)
             {
                 DynamicListItem codeSource = new(this, item.Name, item.Icon, () => ViewSourceCode(item.Url));

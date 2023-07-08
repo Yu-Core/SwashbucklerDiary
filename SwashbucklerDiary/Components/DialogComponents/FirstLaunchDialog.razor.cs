@@ -84,7 +84,7 @@ namespace SwashbucklerDiary.Components
             var diaries = new List<DiaryModel>();
             foreach (string key in keys)
             {
-                var content = await SystemService.ReadMarkdownFile(I18n.T(key)!);
+                var content = await SystemService.ReadMarkdownFileAsync(I18n.T(key)!);
                 var diary = new DiaryModel()
                 {
                     Content = content,

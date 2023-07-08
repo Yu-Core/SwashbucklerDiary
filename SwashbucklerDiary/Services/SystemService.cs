@@ -5,6 +5,7 @@ using MauiBlazorToolkit.Essentials;
 using MauiBlazorToolkit.Platform;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using System.Text.Json;
 
 namespace SwashbucklerDiary.Services
 {
@@ -229,7 +230,7 @@ namespace SwashbucklerDiary.Services
             return AppStoreLauncher.Default.TryOpenAsync(appId);
         }
 
-        public async Task<string> ReadMarkdownFile(string path)
+        public async Task<string> ReadMarkdownFileAsync(string path)
         {
             bool exist = await FileSystem.AppPackageFileExistsAsync(path);
             if (exist)
@@ -241,11 +242,7 @@ namespace SwashbucklerDiary.Services
             }
             else
             {
-                using var httpClient = new HttpClient();
-                await using var stream = await httpClient.GetStreamAsync(path);
-                using StreamReader sr = new(stream);
-                var content = sr.ReadToEnd();
-                return content;
+                return string.Empty;
             }
         }
 
@@ -439,6 +436,24 @@ namespace SwashbucklerDiary.Services
                 ClearFolder(subDirectory.FullName);
                 subDirectory.Delete();
             }
+        }
+
+        public async Task<T> ReadJsonFileAsync<T>(string path)
+        {
+            bool exists = await FileSystem.AppPackageFileExistsAsync(path);
+            if(!exists)
+            {
+                return default!;
+            }
+
+            using var stream = await FileSystem.OpenAppPackageFileAsync(path).ConfigureAwait(false);
+            using var reader = new StreamReader(stream);
+            var contents = await reader.ReadToEndAsync().ConfigureAwait(false);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            return JsonSerializer.Deserialize<T>(contents, options) ?? throw new("not find weather.json");
         }
     }
 }
