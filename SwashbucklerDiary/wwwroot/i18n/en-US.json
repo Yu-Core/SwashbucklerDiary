@@ -396,6 +396,8 @@
   },
   "Press again to exit": "Press again to exit",
   "Export": {
+    "Local": "Local export",
+    "LAN": "LAN transfer",
     "Export": "Export",
     "Import": "Import",
     "ExportSubtitle": "Save as txt, md, json, PDF type files",

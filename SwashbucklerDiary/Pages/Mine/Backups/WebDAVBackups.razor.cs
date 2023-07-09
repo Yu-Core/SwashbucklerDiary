@@ -1,4 +1,5 @@
 ﻿using Serilog;
+using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Config;
 using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.Models;
@@ -6,9 +7,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using WebDav;
 
-namespace SwashbucklerDiary.Components
+namespace SwashbucklerDiary.Pages
 {
-    public partial class BackupsWebDAV : BackupsPageComponentBase
+    public partial class WebDAVBackups : BackupsPageComponentBase
     {
         private bool ShowConfig;
         private bool ShowUpload;

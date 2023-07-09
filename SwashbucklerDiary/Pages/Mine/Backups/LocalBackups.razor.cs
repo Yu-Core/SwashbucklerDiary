@@ -1,9 +1,10 @@
-﻿using SwashbucklerDiary.Config;
+﻿using SwashbucklerDiary.Components;
+using SwashbucklerDiary.Config;
 using SwashbucklerDiary.Models;
 
-namespace SwashbucklerDiary.Components
+namespace SwashbucklerDiary.Pages
 {
-    public partial class BackupsLocal : BackupsPageComponentBase
+    public partial class LocalBackups : BackupsPageComponentBase
     {
         private bool ShowBackups;
         private bool ShowRestore;

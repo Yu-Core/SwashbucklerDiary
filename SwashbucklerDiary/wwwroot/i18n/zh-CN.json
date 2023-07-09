@@ -396,6 +396,8 @@
   },
   "Press again to exit": "再按一次退出",
   "Export": {
+    "Local": "本地导出",
+    "LAN": "局域网传输",
     "Export": "导出",
     "Import": "导入",
     "ExportSubtitle": "保存为txt、md、json、pdf等格式文件",

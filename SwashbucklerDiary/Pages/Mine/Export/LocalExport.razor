@@ -1,0 +1,79 @@
+﻿@namespace SwashbucklerDiary.Pages
+@inherits PageComponentBase
+
+<MCard Elevation="0"
+       Rounded="@("lg")">
+    <MList>
+        <MListItem OnClick="Export">
+            <MListItemIcon>
+                <MIcon Class="list-item-icon">
+                    mdi-export
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <MListItemTitle>
+                    @(I18n.T("Export.Export"))
+                </MListItemTitle>
+                <MListItemSubtitle>
+                    @(I18n.T("Export.ExportSubtitle"))
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>mdi-chevron-right</MIcon>
+            </MListItemAction>
+        </MListItem>
+
+        <MDivider Class="mx-3"></MDivider>
+
+        <MListItem OnClick="Import">
+            <MListItemIcon>
+                <MIcon Class="list-item-icon">
+                    mdi-import
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <MListItemTitle>
+                    @(I18n.T("Export.Import"))
+                </MListItemTitle>
+                <MListItemSubtitle>
+                    @(I18n.T("Export.ImportSubtitle"))
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>mdi-chevron-right</MIcon>
+            </MListItemAction>
+        </MListItem>
+    </MList>
+</MCard>
+
+<ExportDialog @bind-Value="ShowExport"
+              Diaries="Diaries">
+</ExportDialog>
+
+<MMDialog @bind-MyValue="ShowImport" MaxWidth="420">
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Export.ConfirmImport.Title"))
+            <MSpacer></MSpacer>
+            <MButton Icon
+                     OnClick="@(()=>ShowImport=false)">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            @(I18n.T("Export.ConfirmImport.Content"))
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text
+                     OnClick="()=>ShowImport=false">
+                @(I18n.T("Share.Cancel"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="ConfirmImport">
+                @(I18n.T("Share.OK"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MMDialog>
