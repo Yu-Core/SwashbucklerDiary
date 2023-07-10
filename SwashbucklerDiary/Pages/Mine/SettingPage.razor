@@ -75,6 +75,29 @@
                     <MIcon>mdi-chevron-right</MIcon>
                 </MListItemAction>
             </MListItem>
+
+            <MDivider Class="mx-3"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-calendar-edit-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Diary.EditCreateTime"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="EditCreateTime"
+                             TValue="bool"
+                             OnChange="SettingChange(SettingType.EditCreateTime)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(EditCreateTime)">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
         </MList>
     </MCard>
 

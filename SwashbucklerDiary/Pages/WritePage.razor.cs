@@ -16,7 +16,9 @@ namespace SwashbucklerDiary.Pages
         private bool ShowWeather;
         private bool ShowMood;
         private bool ShowLocation;
+        private bool ShowCreateTime;
         private bool Markdown = true;
+        private bool EditCreateTime;
         private List<DynamicListItem> ListItemModels = new();
         private DiaryModel Diary = new()
         {
@@ -93,6 +95,11 @@ namespace SwashbucklerDiary.Pages
             get => Diary.Location;
             set => Diary.Location = value;
         }
+        private DateOnly CreateTime
+        {
+            get => DateOnly.FromDateTime(Diary.CreateTime);
+            set => Diary.CreateTime = value.ToDateTime(TimeOnly.FromDateTime(DateTime.Now));
+        }
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
         private Dictionary<string, string> WeatherIcons => IconService.WeatherIcon;
@@ -141,6 +148,7 @@ namespace SwashbucklerDiary.Pages
         {
             ShowTitle = await SettingsService.Get(SettingType.Title);
             Markdown = await SettingsService.Get(SettingType.Markdown);
+            EditCreateTime = await SettingsService.Get(SettingType.EditCreateTime);
         }
 
         private void LoadView()

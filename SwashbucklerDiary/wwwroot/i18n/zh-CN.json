@@ -295,7 +295,8 @@
       "Name": "日记",
       "Title": "标题",
       "Markdown": "Markdown",
-      "Location": "位置"
+      "Location": "位置",
+      "EditCreateTime": "修改日期"
     },
     "Safe": {
       "Name": "安全",
@@ -313,8 +314,8 @@
     },
     "Display": {
       "Name": "显示",
-      "WelcomeText": "问候语",
-      "Date": "日期",
+      "WelcomeText": "首页问候语",
+      "Date": "首页日期",
       "DiaryCardIcon": "卡片图标"
     }
   },

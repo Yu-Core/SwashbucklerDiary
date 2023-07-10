@@ -40,9 +40,19 @@
                  ContentClass="d-flex flex-column flex-grow-1">
     <div>
         <div class="px-3 px-sm-1 d-flex align-end">
-            <span class="text-h6 font-weight-bold">
-                @(Diary.CreateTime.ToString("yyyy/MM/dd"))
-            </span>
+            @if (EditCreateTime)
+            {
+                <button class="text-h6 font-weight-bold" @onclick="()=>ShowCreateTime=true">
+                    @(Diary.CreateTime.ToString("yyyy/MM/dd"))
+                </button>
+            }
+            else
+            {
+                <span class="text-h6 font-weight-bold">
+                    @(Diary.CreateTime.ToString("yyyy/MM/dd"))
+                </span>
+            }
+
             <span class="pl-5 text-subtitle-1">
                 @(I18n.ToWeek(Diary.CreateTime))
             </span>
@@ -176,3 +186,8 @@
 <SelectLocation @bind-Value="ShowLocation"
 @bind-Location="Location">
 </SelectLocation>
+
+<MultiDatePicker @bind-Value="ShowCreateTime"
+@bind-Date="CreateTime"
+                 Max="DateOnly.FromDateTime(DateTime.Now)">
+</MultiDatePicker>

@@ -25,6 +25,7 @@ namespace SwashbucklerDiary.Services
             {SettingType.WelcomeText,true },
             {SettingType.Date,true },
             {SettingType.DiaryCardIcon,false },
+            {SettingType.EditCreateTime,false },
         };
 
         public Task<bool> ContainsKey(string key)

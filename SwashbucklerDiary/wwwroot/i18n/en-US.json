@@ -295,7 +295,8 @@
       "Name": "Diary",
       "Title": "Title",
       "Markdown": "Markdown",
-      "Location": "Location"
+      "Location": "Location",
+      "EditCreateTime": "Edit date"
     },
     "Safe": {
       "Name": "Safe",
@@ -313,9 +314,9 @@
     },
     "Display": {
       "Name": "Display",
-      "WelcomeText": "WelcomeText",
-      "Date": "Date",
-      "DiaryCardIcon": "CardIcon"
+      "WelcomeText": "Home page welcome text",
+      "Date": "Home page date",
+      "DiaryCardIcon": "Card icon"
     }
   },
   "Password must be at most 20 characters long": "Password must be at most 20 characters long",

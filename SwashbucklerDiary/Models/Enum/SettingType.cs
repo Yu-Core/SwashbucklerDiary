@@ -20,5 +20,6 @@
         WelcomeText = 15,
         Date = 17,
         DiaryCardIcon = 18,
+        EditCreateTime = 19,
     }
 }

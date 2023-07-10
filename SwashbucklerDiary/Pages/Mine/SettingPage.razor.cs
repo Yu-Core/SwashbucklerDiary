@@ -15,6 +15,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowPPInput;
         private bool Date;
         private bool DiaryCardIcon;
+        private bool EditCreateTime;
 
         protected override async Task OnInitializedAsync()
         {
@@ -36,6 +37,7 @@ namespace SwashbucklerDiary.Pages
             WelcomText = await SettingsService.Get(SettingType.WelcomeText);
             Date = await SettingsService.Get(SettingType.Date);
             DiaryCardIcon = await SettingsService.Get(SettingType.DiaryCardIcon);
+            EditCreateTime = await SettingsService.Get(SettingType.EditCreateTime);
         }
 
         private Func<bool, Task> SettingChange(SettingType type)
