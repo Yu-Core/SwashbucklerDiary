@@ -8,22 +8,24 @@
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("About.Sponsor"))
             <MSpacer></MSpacer>
-            <MButton Icon OnClick="HandleOnCancel">
+            <MButton Icon="true"
+                     OnClick="HandleOnCancel">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
             <MChipGroup @bind-Value="selection"
-                        Mandatory
+                        Mandatory="true"
                         ActiveClass="primary--text">
                 @foreach (var item in Amounts)
                 {
-                    <MChip Outlined
-                       Filter>
+                    <MChip Outlined="true"
+                           Filter="true">
                         @(I18n.T("Amount.CurrencySymbol") + item)
                     </MChip>
                 }
-                <MChip Outlined>
+                <MChip Outlined="true"
+                       Filter="true">
                     <MIcon>
                         mdi-pencil-outline
                     </MIcon>
@@ -32,14 +34,14 @@
             @if (ShowCustomAmount)
             {
                 <MTextField Value="55"
-                        TValue="int"
-                        Type="number"
-                        Outlined
-                        Dense
-                        HideDetails="@("auto")"
-                        Placeholder="@(I18n.T("Amount.CustomPlace"))"
-                        Prefix="$"
-                        NumberProps="@(prop=> { prop.Min = 10; prop.HideControl = true; })">
+                            TValue="int"
+                            Type="number"
+                            Outlined
+                            Dense
+                            HideDetails="@("auto")"
+                            Placeholder="@(I18n.T("Amount.CustomPlace"))"
+                            Prefix="$"
+                            NumberProps="@(prop=> { prop.Min = 10; prop.HideControl = true; })">
                 </MTextField>
             }
         </MCardText>
