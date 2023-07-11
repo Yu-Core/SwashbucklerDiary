@@ -97,10 +97,6 @@ namespace SwashbucklerDiary.Components
                 { "current", ThemeService.Dark ? "dark" : "light" },
                 { "path", "npm/vditor/3.9.3/dist/css/content-theme" } 
             };
-            var markdown = new Dictionary<string, object?>() 
-            { 
-                { "linkBase", "https://" } 
-            };
 
             _options = new()
             {
@@ -108,7 +104,6 @@ namespace SwashbucklerDiary.Components
                 { "cdn", "npm/vditor/3.9.3" },
                 { "lang", lang },
                 { "theme", theme },
-                { "markdown" ,markdown }
             };
         }
 
