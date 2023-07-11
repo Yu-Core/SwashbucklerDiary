@@ -29,6 +29,27 @@
                     <MIcon>mdi-chevron-right</MIcon>
                 </MListItemAction>
             </MListItem>
+
+            <MDivider Class="mx-3"></MDivider>
+
+            <MListItem OnClick="@(()=>ShowClearCache=true)">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-trash-can-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.General.Storage"))
+                </MListItemContent>
+                <MListItemContent>
+                    <MListItemSubtitle Class="text-right">
+                        @CacheSize
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
         </MList>
     </MCard>
 
@@ -287,3 +308,27 @@
              OnOK="InputPassword"
              OKText="@(I18n.T("Share.OK"))">
 </InputDialog>
+
+<MMDialog @bind-MyValue="ShowClearCache"
+          MaxWidth="420">
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Setting.General.Storage"))
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            @(I18n.T("Storage.Content"))
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text="true"
+                     OnClick="()=>ShowClearCache=false">
+                @(I18n.T("Share.Cancel"))
+            </MButton>
+            <MButton Text="true"
+                     Color="red"
+                     OnClick="ClearCache">
+                @(I18n.T("Share.OK"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MMDialog>

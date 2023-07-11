@@ -40,5 +40,6 @@ namespace SwashbucklerDiary.IServices
         void QuitApp();
         Task<bool> OpenQQGroup();
         void ClearFolder(string folderPath);
+        long GetDirectoryLength(string dirPath);
     }
 }

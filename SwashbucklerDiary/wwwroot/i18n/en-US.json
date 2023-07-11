@@ -294,7 +294,7 @@
     "General": {
       "Name": "General",
       "Permission": "System permission",
-      "Storage": "Storage"
+      "Storage": "Clear cache"
     },
     "Diary": {
       "Name": "Diary",
@@ -461,5 +461,9 @@
   },
   "lanReceiver": {
     "Waiting for connection": "Waiting for connection..."
+  },
+  "Storage": {
+    "Content": "Are you sure to clear all caches?",
+    "ClearSuccess": "Clear success"
   }
 }

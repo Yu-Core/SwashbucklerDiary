@@ -16,11 +16,14 @@ namespace SwashbucklerDiary.Pages
         private bool Date;
         private bool DiaryCardIcon;
         private bool EditCreateTime;
+        private bool ShowClearCache;
+        private string? CacheSize;
 
         protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
             await UpdatePrivatePassword();
+            UpdateCacheSize();
             await base.OnInitializedAsync();
         }
 
@@ -104,5 +107,36 @@ namespace SwashbucklerDiary.Pages
         private string? GetPrivatePasswordSetState()
             => string.IsNullOrEmpty(PrivatePassword) ? I18n.T("Setting.Safe.NotSetPassword") : null;
 
+        private void UpdateCacheSize()
+        {
+            string folderPath = FileSystem.Current.CacheDirectory;
+            long fileSizeInBytes = SystemService.GetDirectoryLength(folderPath);
+            string fileSizeInMB = ConvertBytesToReadable(fileSizeInBytes); // 转换为MB
+            CacheSize = fileSizeInMB;
+        }
+
+        private static string ConvertBytesToReadable(long bytes)
+        {
+            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+            int i = 0;
+            double size = bytes;
+
+            while (size >= 1024 && i < sizes.Length - 1)
+            {
+                size /= 1024;
+                i++;
+            }
+
+            return $"{size.ToString("0.#")} {sizes[i]}";
+        }
+
+        private async Task ClearCache()
+        {
+            ShowClearCache = false;
+            string folderPath = FileSystem.Current.CacheDirectory;
+            SystemService.ClearFolder(folderPath);
+            UpdateCacheSize(); 
+            await AlertService.Success(I18n.T("Storage.ClearSuccess"));
+        }
     }
 }

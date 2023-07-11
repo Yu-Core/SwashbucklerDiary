@@ -294,7 +294,7 @@
     "General": {
       "Name": "通用",
       "Permission": "系统权限",
-      "Storage": "存储空间"
+      "Storage": "清除缓存"
     },
     "Diary": {
       "Name": "日记",
@@ -461,5 +461,9 @@
   },
   "lanReceiver": {
     "Waiting for connection": "等待连接中..."
+  },
+  "Storage": {
+    "Content": "确定清除所有缓存吗？",
+    "ClearSuccess": "清理成功"
   }
 }
