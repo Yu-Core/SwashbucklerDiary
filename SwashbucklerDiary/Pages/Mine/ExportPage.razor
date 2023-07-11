@@ -10,7 +10,7 @@
             mdi-arrow-left
         </MIcon>
     </MButton>
-    <MTabs @bind-Value="tabs"
+    <MTabs @bind-Value="tab"
            ActiveClass="text-h6 font-weight-bold"
            HideSlider="true">
         <MTab Class="my-tab"
@@ -25,12 +25,12 @@
     <MSpacer></MSpacer>
 </MAppBar>
 
-<SwiperTabItems @bind-Value="tabs">
+<SwiperTabItems @bind-Value="tab">
     <SwiperTabItem>
         <LocalExport></LocalExport>
     </SwiperTabItem>
     <SwiperTabItem>
-        
+        <LANTransfer></LANTransfer>
     </SwiperTabItem>
 </SwiperTabItems>
 

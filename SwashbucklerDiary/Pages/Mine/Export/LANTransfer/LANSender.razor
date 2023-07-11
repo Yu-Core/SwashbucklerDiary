@@ -1,0 +1,80 @@
+﻿@page "/lanSender"
+@namespace SwashbucklerDiary.Pages
+@inherits PageComponentBase
+
+<MyAppBar Title="@(I18n.T("Export.Send"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MCard Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MSubheader>
+                <span>
+                    @(I18n.T("lanSender.List of available devices"))
+                </span>
+                <MSpacer></MSpacer>
+                <MButton Icon="true"
+                         OnClick="StartListening">
+                    <MIcon>
+                        mdi-refresh
+                    </MIcon>
+                </MButton>
+            </MSubheader>
+            @foreach (var item in LANDeviceInfos)
+            {
+                <MListItem>
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            @GetDeviceIcon(item.DevicePlatform)
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        <MListItemTitle>
+                            @(item.DeviceName)
+                        </MListItemTitle>
+                        <MListItemSubtitle>
+                            @(item.IPAddress)
+                        </MListItemSubtitle>
+                    </MListItemContent>
+                </MListItem>
+                if (LANDeviceInfos.Last() != item)
+                {
+                    <MDivider Class="mx-3"></MDivider>
+                }
+            }
+            @if (UDPListening)
+            {
+                <MListItem>
+                    <MListItemIcon>
+                        <MProgressCircular Size="20"
+                                           Width="2"
+                                           Indeterminate="true">
+                        </MProgressCircular>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n.T("lanSender.Searching for available devices"))
+                    </MListItemContent>
+                </MListItem>
+            }
+            else
+            {
+                @if (!LANDeviceInfos.Any())
+                {
+                    <MListItem>
+                        <MListItemIcon>
+                            <MIcon Class="list-item-icon">
+                                mdi-close-circle-outline
+                            </MIcon>
+                        </MListItemIcon>
+                        <MListItemContent>
+                            @(I18n.T("lanSender.There are currently no available devices"))
+                        </MListItemContent>
+                    </MListItem>
+                }
+            }
+        </MList>
+    </MCard>
+</ScrollContainer>
+

@@ -11,14 +11,14 @@ namespace SwashbucklerDiary.Pages
         private bool ShowWelcomeText;
         private bool ShowDate;
         private StringNumber tab = 0;
-        private readonly List<string> Types = new() { "All", "Tags" };
+        private readonly List<string> Views = new() { "All", "Tags" };
 
         [Inject]
         private IStateService StateService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
-        public string? Type { get; set; }
+        public string? View { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -38,17 +38,17 @@ namespace SwashbucklerDiary.Pages
 
         private void InitTab()
         {
-            if (string.IsNullOrEmpty(Type))
+            if (string.IsNullOrEmpty(View))
             {
-                Type = Types[0];
+                View = Views[0];
             }
-            tab = Types.IndexOf(Type!);
+            tab = Views.IndexOf(View!);
         }
 
         private void SetCurrentUrl()
         {
             NavigateService.SetCurrentUrl(() => {
-                return Navigation.GetUriWithQueryParameter("Type", Types[tab.ToInt32()]);
+                return Navigation.GetUriWithQueryParameter("View", Views[tab.ToInt32()]);
             });
         }
 

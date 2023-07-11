@@ -410,7 +410,9 @@
     "ConfirmImport": {
       "Title": "确认导入",
       "Content": "确认导入这些日记？"
-    }
+    },
+    "Send": "发送",
+    "Receive": "接收"
   },
   "ThemeState": {
     "System": "跟随系统",
@@ -446,5 +448,14 @@
     "No updates": "当前已是最新版本",
     "Need updates": "检测到最新版本，是否前往更新？",
     "Check failed": "检测失败，原因未知"
+  },
+  "lanSender": {
+    "List of available devices": "可用设备列表",
+    "Searching for available devices": "正在寻找可用设备。。。",
+    "There are currently no available devices": "暂无可用设备",
+    "No network connection": "没有网络连接"
+  },
+  "lanReceiver": {
+    "Waiting for connection": "等待连接中。。。"
   }
 }

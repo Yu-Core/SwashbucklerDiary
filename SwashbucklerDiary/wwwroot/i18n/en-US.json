@@ -410,7 +410,9 @@
     "ConfirmImport": {
       "Title": "Confirm import",
       "Content": "Confirm importing these diaries？"
-    }
+    },
+    "Send": "Send",
+    "Receive": "Receive"
   },
   "ThemeState": {
     "System": "Follow system",
@@ -446,5 +448,14 @@
     "No updates": "Currently the latest version",
     "Need updates": "Detected the latest version, do you want to proceed to update?",
     "Check failed": "Detection failed for unknown reason"
+  },
+  "lanSender": {
+    "List of available devices": "List of available devices",
+    "Searching for available devices": "Searching for available devices...",
+    "There are currently no available devices": "There are currently no available devices",
+    "No network connection": "No network connection"
+  },
+  "lanReceiver": {
+    "Waiting for connection": "Waiting for connection..."
   }
 }
