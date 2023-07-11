@@ -54,7 +54,9 @@
                         </MProgressCircular>
                     </MListItemIcon>
                     <MListItemContent>
-                        @(I18n.T("lanSender.Searching for available devices"))
+                        <MListItemTitle>
+                            @(I18n.T("lanSender.Searching for available devices"))
+                        </MListItemTitle>
                     </MListItemContent>
                 </MListItem>
             }
@@ -69,7 +71,9 @@
                             </MIcon>
                         </MListItemIcon>
                         <MListItemContent>
-                            @(I18n.T("lanSender.There are currently no available devices"))
+                            <MListItemTitle>
+                                @(I18n.T("lanSender.There are currently no available devices"))
+                            </MListItemTitle>
                         </MListItemContent>
                     </MListItem>
                 }

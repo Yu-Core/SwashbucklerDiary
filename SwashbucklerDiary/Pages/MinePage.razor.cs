@@ -65,16 +65,16 @@ namespace SwashbucklerDiary.Pages
                     "Mine.Data",
                     new()
                     {
-                        new(this, "Mine.Backups","mdi-folder-sync-outline",() => To("/backups")),
-                        new(this, "Mine.Export","mdi-export",() => To("/export")),
-                        new(this, "Mine.Achievement","mdi-trophy-outline",() => To("/achievement")),
+                        new(this, "Mine.Backups","mdi-folder-sync-outline",() => To("backups")),
+                        new(this, "Mine.Export","mdi-export",() => To("export")),
+                        new(this, "Mine.Achievement","mdi-trophy-outline",() => To("achievement")),
                     }
                 },
                 {
                     "Mine.Settings",
                     new()
                     {
-                        new(this,"Mine.Settings","mdi-cog-outline",() => To("/setting")),
+                        new(this,"Mine.Settings","mdi-cog-outline",() => To("setting")),
                         new(this,"Mine.Languages","mdi-web",() => ShowLanguage = true),
                         new(this,"Mine.Night","mdi-weather-night",() => ShowThemeState = true),
                     }
@@ -84,7 +84,7 @@ namespace SwashbucklerDiary.Pages
                     new()
                     {
                         new(this,"Mine.Feedback","mdi-email-outline",() => ShowFeedback = true),
-                        new(this,"Mine.About","mdi-information-outline",() => To("/about")),
+                        new(this,"Mine.About","mdi-information-outline",() => To("about")),
                     }
                 }
             };

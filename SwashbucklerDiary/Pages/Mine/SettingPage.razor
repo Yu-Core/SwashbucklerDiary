@@ -9,6 +9,30 @@
 
 <ScrollContainer>
     <div class="text-h6 setting-title">
+        @(I18n.T("Setting.General.Name"))
+    </div>
+
+    <MCard Class="setting-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem OnClick="@(()=>To("permission"))">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-account-cog-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.General.Permission"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <div class="text-h6 setting-title">
         @(I18n.T("Setting.Diary.Name"))
     </div>
 
@@ -62,7 +86,7 @@
 
             <MDivider Class="mx-3"></MDivider>
 
-            <MListItem OnClick="@(()=>To("/location"))">
+            <MListItem OnClick="@(()=>To("location"))">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-map-marker-outline
@@ -109,25 +133,9 @@
            Elevation="0"
            Rounded="@("lg")">
         <MList>
-            <MListItem OnClick="@(()=>To("/permission"))">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-account-cog-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Setting.Safe.Permission"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
             @if (Privacy)
             {
-                <MDivider Class="mx-3"></MDivider>
-
-                <MListItem OnClick="@(()=>To("/privacyLibrary"))">
+                <MListItem OnClick="@(()=>To("privacyLibrary"))">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             mdi-safe

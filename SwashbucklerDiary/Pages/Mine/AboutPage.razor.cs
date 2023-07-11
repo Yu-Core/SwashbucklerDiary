@@ -33,14 +33,14 @@ namespace SwashbucklerDiary.Pages
                 new()
                 {
                     new(this, "About.SourceCode","mdi-book-open-page-variant-outline",() => ShowSourceCode = true),
-                    new(this, "About.Agreement","mdi-file-document-multiple-outline",() => To("/user-agreement")),
-                    new(this, "About.Privacy","mdi-lock-outline",() => To("/privacy-policy")),
+                    new(this, "About.Agreement","mdi-file-document-multiple-outline",() => To("user-agreement")),
+                    new(this, "About.Privacy","mdi-lock-outline",() => To("privacy-policy")),
                     new(this, "About.Check for updates","mdi-update",VersionUpdate),
                 },
                 new()
                 {
-                    new(this, "About.Related","mdi-xml",() => To("/relatedOSP")),
-                    new(this, "About.LogFile","mdi-file-document-edit-outline",() => To("/log")),
+                    new(this, "About.Related","mdi-xml",() => To("relatedOSP")),
+                    new(this, "About.LogFile","mdi-file-document-edit-outline",() => To("log")),
                     new(this, "About.Evaluation","mdi-star-outline",OpenAppDetails),
                     new(this, "About.Sponsor","mdi-hand-heart-outline",() => ShowSponsor = true),
                 }

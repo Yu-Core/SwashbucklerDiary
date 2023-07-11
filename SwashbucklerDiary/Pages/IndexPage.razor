@@ -20,7 +20,7 @@
     <MSpacer></MSpacer>
     <MButton Large
              Icon
-             OnClick="@(()=>To("/search"))">
+             OnClick="@(()=>To("search"))">
         <MIcon>mdi-magnify</MIcon>
     </MButton>
 </MAppBar>
@@ -56,7 +56,7 @@
 @if (tab == 0)
 {
     <MyFloatButton Icon="mdi-pencil"
-                   OnClick="@(()=>To("/write"))">
+                   OnClick="@(()=>To("write"))">
     </MyFloatButton>
 }
 

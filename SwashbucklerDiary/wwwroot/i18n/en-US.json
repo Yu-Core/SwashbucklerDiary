@@ -291,6 +291,11 @@
     }
   },
   "Setting": {
+    "General": {
+      "Name": "General",
+      "Permission": "System permission",
+      "Storage": "Storage"
+    },
     "Diary": {
       "Name": "Diary",
       "Title": "Title",
@@ -309,8 +314,7 @@
       "SetPassword": "Set password",
       "ValidatePassword": "Validate password",
       "PasswordError": "Password error",
-      "NotSetPassword": "No password set",
-      "Permission": "System permission"
+      "NotSetPassword": "No password set"
     },
     "Display": {
       "Name": "Display",

@@ -18,7 +18,6 @@ namespace SwashbucklerDiary.Pages
         private bool _udpListening;
         private bool JoinMulticastGroup;
         private CancellationTokenSource CancellationTokenSource = new();
-        private DateTime UDPStartDateTime;
         private List<LANDeviceInfo> LANDeviceInfos = new List<LANDeviceInfo>();
 
         [Inject]
