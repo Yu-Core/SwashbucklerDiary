@@ -42,30 +42,8 @@ namespace SwashbucklerDiary.Components
         }
 
         private DateTime Time => Value!.CreateTime;
-        private string? Title
-        {
-            get
-            {
-                if (!string.IsNullOrWhiteSpace(Value!.Title))
-                {
-                    return Value!.Title;
-                }
-
-                if (!string.IsNullOrWhiteSpace(Text))
-                {
-                    foreach (var item in Text!.Split("\n"))
-                    {
-                        if (!string.IsNullOrWhiteSpace(item))
-                        {
-                            return item;
-                        }
-                    }
-                }
-
-                return I18n.T("Diary.Untitled");
-            }
-        }
-        private string? Text => Value!.Content;
+        private string? Title => GetTitle();
+        private string? Text => TextInterception(Value!.Content, 500);
         private bool IsTop => Value!.Top;
         private bool IsPrivate => Value!.Private;
         private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
@@ -105,6 +83,38 @@ namespace SwashbucklerDiary.Components
                 return null;
             }
             return IconService.GetMoodIcon(key);
+        }
+
+        private string GetTitle()
+        {
+            if (!string.IsNullOrWhiteSpace(Value!.Title))
+            {
+                return Value!.Title;
+            }
+
+            if (!string.IsNullOrWhiteSpace(Text))
+            {
+                string[] separators = { ",", "，", ".", "。", "?", "？", "!", "！", ";", "；", ":", "：", "\n" }; // 定义分隔符
+                string[] sentences = Text.Split(separators, StringSplitOptions.RemoveEmptyEntries); // 拆分文本
+                if(sentences.Length > 0)
+                {
+                    string firstSentence = sentences[0];
+                    return firstSentence;
+                }
+            }
+
+            return I18n.T("Diary.Untitled");
+        }
+
+        private static string? TextInterception(string? text, int endIndex)
+        {
+            int len = text is null ? 0 : text.Length;
+            if (len > endIndex)
+            {
+                return text!.Substring(0, endIndex);
+            }
+
+            return text;
         }
     }
 }

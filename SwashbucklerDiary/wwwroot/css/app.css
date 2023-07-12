@@ -202,6 +202,9 @@ a, .btn-link {
     font-weight: 700 !important;
     padding-bottom: 8px !important;
     /*font-size:1.1rem !important;*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .my-container {
