@@ -33,6 +33,11 @@ namespace SwashbucklerDiary.Platforms.Android
         public static void QuitApp()
         {
             I18n ??= MauiApplication.Current.Services.GetRequiredService<II18nService>();
+            string text = I18n.T("Press again to exit");
+            if(string.IsNullOrEmpty(text))
+            {
+                return;
+            }
 
             if (BackPressCounter == 1)
             {
