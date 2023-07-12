@@ -37,26 +37,31 @@ namespace SwashbucklerDiary.Components
         public string? Style { get; set; }
 
         [JSInvokable]
+        public async Task After()
+        {
+            //点击复制按钮提示复制成功
+            var dotNetCallbackRef = DotNetObjectReference.Create(this);
+            await module!.InvokeVoidAsync("Copy", new object[2] { dotNetCallbackRef, "CopySuccess" });
+            //修复点击链接的一些错误
+            await module!.InvokeVoidAsync("FixLink", new object[1] { element });
+        }
+
+        [JSInvokable]
         public async Task CopySuccess()
         {
             await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
 
-        protected override async Task OnInitializedAsync()
-        {
-            module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/vditor-helper.js");
-            await SetOptions();
-            await base.OnInitializedAsync();
-        }
-
-        protected override void OnAfterRender(bool firstRender)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
                 AfterFirstRender = true;
-                RenderingMarkdown(Value);
+                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/vditor-helper.js");
+                await RenderingMarkdown(Value);
             }
-            base.OnAfterRender(firstRender);
+
+            await base.OnAfterRenderAsync(firstRender);
         }
 
         private void SetValue(string? value)
@@ -66,12 +71,15 @@ namespace SwashbucklerDiary.Components
                 _value = value;
                 if(AfterFirstRender)
                 {
-                    RenderingMarkdown(value);
+                    Task.Run(async () =>
+                    {
+                        await RenderingMarkdown(value);
+                    });
                 }
             }
         }
 
-        private async void RenderingMarkdown(string? value)
+        private async Task RenderingMarkdown(string? value)
         {
             if(element.Context == null)
             {
@@ -83,8 +91,9 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            await JS.InvokeVoidAsync("Vditor.preview", new object[3] { element, value, _options });
-            await Copy();
+            await SetOptions();
+            var dotNetCallbackRef = DotNetObjectReference.Create(this);
+            await module!.InvokeVoidAsync("PreviewVditor", new object?[4] { dotNetCallbackRef, element,  value, _options });
         }
 
         private async Task SetOptions()
@@ -105,14 +114,6 @@ namespace SwashbucklerDiary.Components
                 { "lang", lang },
                 { "theme", theme },
             };
-        }
-
-        private async Task Copy()
-        {
-            await Task.Delay(1000);
-            //点击复制按钮提示复制成功
-            var dotNetCallbackRef = DotNetObjectReference.Create(this);
-            await module!.InvokeVoidAsync("Copy", new object[2] { dotNetCallbackRef, "CopySuccess" });
         }
     }
 }
