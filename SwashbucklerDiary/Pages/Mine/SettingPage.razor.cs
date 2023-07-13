@@ -1,5 +1,7 @@
-﻿using SwashbucklerDiary.Components;
+﻿using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
@@ -18,6 +20,9 @@ namespace SwashbucklerDiary.Pages
         private bool EditCreateTime;
         private bool ShowClearCache;
         private string? CacheSize;
+
+        [Inject]
+        private IAppDataService AppDataService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -109,32 +114,13 @@ namespace SwashbucklerDiary.Pages
 
         private void UpdateCacheSize()
         {
-            string folderPath = FileSystem.Current.CacheDirectory;
-            long fileSizeInBytes = PlatformService.GetDirectoryLength(folderPath);
-            string fileSizeInMB = ConvertBytesToReadable(fileSizeInBytes); // 转换为MB
-            CacheSize = fileSizeInMB;
-        }
-
-        private static string ConvertBytesToReadable(long bytes)
-        {
-            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
-            int i = 0;
-            double size = bytes;
-
-            while (size >= 1024 && i < sizes.Length - 1)
-            {
-                size /= 1024;
-                i++;
-            }
-
-            return $"{size.ToString("0.#")} {sizes[i]}";
+            CacheSize = AppDataService.GetCacheSize();
         }
 
         private async Task ClearCache()
         {
             ShowClearCache = false;
-            string folderPath = FileSystem.Current.CacheDirectory;
-            PlatformService.ClearFolder(folderPath);
+            AppDataService.ClearCache();
             UpdateCacheSize(); 
             await AlertService.Success(I18n.T("Storage.ClearSuccess"));
         }

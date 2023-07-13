@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Pages
 
         private void OpenSystemPermissionSetting()
         {
-            PlatformService.OpenSystemSetting();
+            PlatformService.OpenPlatformSetting();
         }
 
         private async void UpdatePermissionStates()

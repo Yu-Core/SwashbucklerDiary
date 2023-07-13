@@ -23,6 +23,8 @@ namespace SwashbucklerDiary.Pages
 
         [Inject]
         private ILogService LogService { get; set; } = default!;
+        [Inject]
+        private IAppDataService AppDataService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -112,10 +114,9 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            var targetFileName = "Logs.txt";
-            string targetFile = Path.Combine(FileSystem.CacheDirectory, targetFileName);
-            await File.WriteAllTextAsync(targetFile, text);
-            await PlatformService.ShareFile(I18n.T("Log.Share")!, targetFile);
+            var fn = "Logs.txt";
+            string path = await AppDataService.CreateCacheFileAsync(fn, text);
+            await PlatformService.ShareFile(I18n.T("Log.Share")!, path);
         }
 
         private void OpenDeleteDialog()

@@ -23,9 +23,11 @@ namespace SwashbucklerDiary.Pages
         private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
-        public IDiaryService DiaryService { get; set; } = default!;
+        private IDiaryService DiaryService { get; set; } = default!;
         [Inject]
-        public IconService IconService { get; set; } = default!;
+        private IconService IconService { get; set; } = default!;
+        [Inject]
+        private IAppDataService AppDataService { get; set; } = default!;
 
         [Parameter]
         public Guid Id { get; set; }
@@ -177,13 +179,12 @@ namespace SwashbucklerDiary.Pages
             base64 = base64.Substring(base64.IndexOf(",") + 1);
 
             string fn = "Screenshot.png";
-            string file = Path.Combine(FileSystem.CacheDirectory, fn);
+            string path = await AppDataService.CreateCacheFileAsync(fn, Convert.FromBase64String(base64));
 
-            await File.WriteAllBytesAsync(file, Convert.FromBase64String(base64));
             showLoading = false;
             StateHasChanged();
 
-            await PlatformService.ShareFile(I18n.T("Share.Share")!, file);
+            await PlatformService.ShareFile(I18n.T("Share.Share")!, path);
             await HandleAchievements(AchievementType.Share);
         }
 

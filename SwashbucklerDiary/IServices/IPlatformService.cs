@@ -18,7 +18,6 @@ namespace SwashbucklerDiary.IServices
         Task SendEmail(List<string>? recipients);
         Task SendEmail(string? subject, string? body, List<string>? recipients);
         Task OpenBrowser(string? url);
-        Task FileCopy(string source, string target);
         Task<bool> CheckCameraPermission();
         Task<bool> CheckStorageWritePermission();
         Task<bool> CheckStorageReadPermission();
@@ -35,11 +34,8 @@ namespace SwashbucklerDiary.IServices
         Task<string?> PickJsonFileAsync();
         Task<string?> SaveFileAsync(string name, Stream stream);
         Task<string?> SaveFileAsync(string? path,string name,Stream stream);
-        void SetStatusBar(ThemeState themeState);
-        void OpenSystemSetting();
+        void OpenPlatformSetting();
         void QuitApp();
         Task<bool> OpenQQGroup();
-        void ClearFolder(string folderPath);
-        long GetDirectoryLength(string dirPath);
     }
 }

@@ -15,6 +15,8 @@ namespace SwashbucklerDiary.Pages
 
         [Inject]
         private ILocalImageService LocalImageService { get; set; } = default!;
+        [Inject]
+        private IAppDataService AppDataService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -88,9 +90,9 @@ namespace SwashbucklerDiary.Pages
             await SavePhoto(photoPath);
         }
 
-        private async Task SavePhoto(string? filePath)
+        private async Task SavePhoto(string? sourcFilePath)
         {
-            if (string.IsNullOrWhiteSpace(filePath))
+            if (string.IsNullOrWhiteSpace(sourcFilePath))
             {
                 return;
             }
@@ -98,9 +100,8 @@ namespace SwashbucklerDiary.Pages
             showLoading = true;
             StateHasChanged();
 
-            // save the file into local storage
-            string localFilePath = Path.Combine(FileSystem.AppDataDirectory, nameof(Avatar) + Path.GetExtension(filePath));
-            await PlatformService.FileCopy(filePath, localFilePath);
+            string fn = nameof(Avatar) + Path.GetExtension(sourcFilePath);
+            string localFilePath = await AppDataService.CreateAppDataFileAsync(fn, sourcFilePath);
 
             string oldAvatar = await SettingsService.Get(SettingType.Avatar);
             await SettingsService.Save(SettingType.Avatar, localFilePath);

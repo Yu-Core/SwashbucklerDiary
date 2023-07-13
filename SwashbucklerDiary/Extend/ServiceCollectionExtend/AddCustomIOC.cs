@@ -35,6 +35,7 @@ namespace SwashbucklerDiary.Extend
             services.AddSingleton<IThemeService, ThemeService>();
             services.AddSingleton<IStateService, StateService>();
             services.AddSingleton<ILANService, LANService>();
+            services.AddSingleton<IAppDataService, AppDataService>();
             return services;
         }
     }

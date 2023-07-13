@@ -1,7 +1,13 @@
-﻿namespace SwashbucklerDiary.Components
+﻿using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.IServices;
+
+namespace SwashbucklerDiary.Components
 {
     public class BackupsPageComponentBase : PageComponentBase
     {
+        [Inject]
+        protected IAppDataService AppDataService { get; set; } = default!;
+
         protected async Task<bool> CheckPermissions()
         {
             var writePermission = await PlatformService.TryStorageWritePermission();

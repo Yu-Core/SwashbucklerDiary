@@ -30,8 +30,6 @@ namespace SwashbucklerDiary.Shared
         private IAlertService AlertService { get; set; } = default!;
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
-        [Inject]
-        private IPlatformService PlatformService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -73,7 +71,6 @@ namespace SwashbucklerDiary.Shared
                 MasaBlazor.ToggleTheme();
             }
 
-            PlatformService.SetStatusBar(state);
             InvokeAsync(StateHasChanged);
         }
     }

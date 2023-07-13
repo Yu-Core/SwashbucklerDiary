@@ -1,5 +1,4 @@
 ﻿using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Config;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
@@ -32,21 +31,8 @@ namespace SwashbucklerDiary.Pages
             }
 
             BackupsFolderPath = await SettingsService.Get(SettingType.BackupsPath);
-
-            var sourceFile = SQLiteConstants.DatabasePath;
-            if (!File.Exists(sourceFile))
-            {
-                await AlertService.Alert(I18n.T("Backups.NoDbFile"));
-                return;
-            }
-
-            var destFileName = SaveFileName();
-
-            //There is a bug in the file saved in the pick folder by Android
-            //https://github.com/dotnet/maui/issues/5295
-            //https://learn.microsoft.com/en-us/answers/questions/1183152/open-a-file-get-its-path-save-the-file-maui-androi
-
-            using var stream = File.OpenRead(sourceFile);
+            var destFileName = AppDataService.BackupFileName;
+            using var stream = AppDataService.GetDatabaseStream();
             var filePath = await PlatformService.SaveFileAsync(BackupsFolderPath, destFileName, stream);
             if (filePath == null)
             {
@@ -96,7 +82,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            File.Copy(RestoreFilePath, SQLiteConstants.DatabasePath, true);
+            AppDataService.RestoreDatabase(RestoreFilePath);
             await AlertService.Success(I18n.T("Backups.Restore.Success"));
         }
     }

@@ -1,9 +1,7 @@
 ﻿using Serilog;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Config;
 using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.Models;
-using System.ComponentModel.DataAnnotations;
 using System.Net;
 using WebDav;
 
@@ -23,16 +21,6 @@ namespace SwashbucklerDiary.Pages
         {
             await LoadSettings();
             await base.OnInitializedAsync();
-        }
-
-        private class ConfigModel
-        {
-            [Required(ErrorMessage = "Please input ServerAddress")]
-            public string? ServerAddress { get; set; }
-            [Required(ErrorMessage = "Please input Account")]
-            public string? Account { get; set; }
-            [Required(ErrorMessage = "Please input Password")]
-            public string? Password { get; set; }
         }
 
         private bool Configured => !string.IsNullOrEmpty(configModel.ServerAddress);
@@ -140,21 +128,14 @@ namespace SwashbucklerDiary.Pages
         {
             ShowUpload = false;
 
-            var sourceFile = SQLiteConstants.DatabasePath;
-            if (!File.Exists(sourceFile))
-            {
-                await AlertService.Alert(I18n.T("Backups.NoDbFile"));
-                return;
-            }
-
             bool flag2 = await ConnectWebDavClient(configModel);
             if (!flag2)
             {
                 return;
             }
 
-            using var stream = File.OpenRead(sourceFile);
-            var destFileName = WebDavFolderName + "/" + SaveFileName();
+            using var stream = AppDataService.GetDatabaseStream();
+            var destFileName = WebDavFolderName + "/" + AppDataService.BackupFileName;
 
             await WebDavClient.PutFile(destFileName, stream);
             await AlertService.Success(I18n.T("Backups.Upload.Success"));
@@ -201,8 +182,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            using var fileStream = new FileStream(SQLiteConstants.DatabasePath, FileMode.Create);
-            response.Stream.CopyTo(fileStream);
+            AppDataService.RestoreDatabase(response.Stream);
             await AlertService.Success(I18n.T("Backups.Download.Success"));
         }
 
