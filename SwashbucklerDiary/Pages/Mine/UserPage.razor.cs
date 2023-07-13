@@ -57,34 +57,34 @@ namespace SwashbucklerDiary.Pages
         private async Task PickPhoto()
         {
             ShowAvatar = false;
-            string? photoPath = await SystemService.PickPhotoAsync();
+            string? photoPath = await PlatformService.PickPhotoAsync();
             await SavePhoto(photoPath);
         }
 
         private async Task OnCapture()
         {
             ShowAvatar = false;
-            if (!SystemService.IsCaptureSupported())
+            if (!PlatformService.IsCaptureSupported())
             {
                 await AlertService.Error(I18n.T("User.NoCapture"));
                 return;
             }
 
-            var cameraPermission = await SystemService.TryCameraPermission();
+            var cameraPermission = await PlatformService.TryCameraPermission();
             if (!cameraPermission)
             {
                 await AlertService.Error(I18n.T("Permission.OpenCamera"));
                 return;
             }
 
-            var writePermission = await SystemService.TryStorageWritePermission();
+            var writePermission = await PlatformService.TryStorageWritePermission();
             if (!writePermission)
             {
                 await AlertService.Error(I18n.T("Permission.OpenStorageWrite"));
                 return;
             }
 
-            string? photoPath = await SystemService.CapturePhotoAsync();
+            string? photoPath = await PlatformService.CapturePhotoAsync();
             await SavePhoto(photoPath);
         }
 
@@ -100,7 +100,7 @@ namespace SwashbucklerDiary.Pages
 
             // save the file into local storage
             string localFilePath = Path.Combine(FileSystem.AppDataDirectory, nameof(Avatar) + Path.GetExtension(filePath));
-            await SystemService.FileCopy(filePath, localFilePath);
+            await PlatformService.FileCopy(filePath, localFilePath);
 
             string oldAvatar = await SettingsService.Get(SettingType.Avatar);
             await SettingsService.Save(SettingType.Avatar, localFilePath);

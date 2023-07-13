@@ -49,7 +49,7 @@ namespace SwashbucklerDiary.Pages
             }
 
             ImportFilePath = string.Empty;
-            ImportFilePath = await SystemService.PickJsonFileAsync();
+            ImportFilePath = await PlatformService.PickJsonFileAsync();
             if (string.IsNullOrEmpty(ImportFilePath))
             {
                 return;
@@ -59,14 +59,14 @@ namespace SwashbucklerDiary.Pages
 
         private async Task<bool> CheckPermission()
         {
-            var writePermission = await SystemService.TryStorageWritePermission();
+            var writePermission = await PlatformService.TryStorageWritePermission();
             if (!writePermission)
             {
                 await AlertService.Error(I18n.T("Permission.OpenStorageWrite"));
                 return false;
             }
 
-            var readPermission = await SystemService.TryStorageReadPermission();
+            var readPermission = await PlatformService.TryStorageReadPermission();
             if (!readPermission)
             {
                 await AlertService.Success(I18n.T("Permission.OpenStorageRead"));

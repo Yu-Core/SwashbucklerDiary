@@ -153,7 +153,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task OnCopy()
         {
-            await SystemService.SetClipboard(DiaryCopyContent);
+            await PlatformService.SetClipboard(DiaryCopyContent);
 
             await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
@@ -162,7 +162,7 @@ namespace SwashbucklerDiary.Pages
         {
             ShowShare = false;
             StateHasChanged();
-            await SystemService.ShareText(I18n.T("Share.Share")!, DiaryCopyContent);
+            await PlatformService.ShareText(I18n.T("Share.Share")!, DiaryCopyContent);
             await HandleAchievements(AchievementType.Share);
         }
 
@@ -183,7 +183,7 @@ namespace SwashbucklerDiary.Pages
             showLoading = false;
             StateHasChanged();
 
-            await SystemService.ShareFile(I18n.T("Share.Share")!, file);
+            await PlatformService.ShareFile(I18n.T("Share.Share")!, file);
             await HandleAchievements(AchievementType.Share);
         }
 

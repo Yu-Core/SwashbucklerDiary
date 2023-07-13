@@ -110,7 +110,7 @@ namespace SwashbucklerDiary.Pages
         private void UpdateCacheSize()
         {
             string folderPath = FileSystem.Current.CacheDirectory;
-            long fileSizeInBytes = SystemService.GetDirectoryLength(folderPath);
+            long fileSizeInBytes = PlatformService.GetDirectoryLength(folderPath);
             string fileSizeInMB = ConvertBytesToReadable(fileSizeInBytes); // 转换为MB
             CacheSize = fileSizeInMB;
         }
@@ -134,7 +134,7 @@ namespace SwashbucklerDiary.Pages
         {
             ShowClearCache = false;
             string folderPath = FileSystem.Current.CacheDirectory;
-            SystemService.ClearFolder(folderPath);
+            PlatformService.ClearFolder(folderPath);
             UpdateCacheSize(); 
             await AlertService.Success(I18n.T("Storage.ClearSuccess"));
         }

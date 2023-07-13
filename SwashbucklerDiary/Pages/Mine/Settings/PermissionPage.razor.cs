@@ -11,20 +11,20 @@ namespace SwashbucklerDiary.Pages
 
         public void Dispose()
         {
-            SystemService.Resumed -= UpdatePermissionStates;
+            PlatformService.Resumed -= UpdatePermissionStates;
             GC.SuppressFinalize(this);
         }
 
         protected override async Task OnInitializedAsync()
         {
             await UpdatePermissionStatesAsync();
-            SystemService.Resumed += UpdatePermissionStates;
+            PlatformService.Resumed += UpdatePermissionStates;
             base.OnInitialized();
         }
 
         private void OpenSystemPermissionSetting()
         {
-            SystemService.OpenSystemSetting();
+            PlatformService.OpenSystemSetting();
         }
 
         private async void UpdatePermissionStates()
@@ -35,9 +35,9 @@ namespace SwashbucklerDiary.Pages
 
         private async Task UpdatePermissionStatesAsync()
         {
-            CameraState = await SystemService.CheckCameraPermission();
-            var readStorageState = await SystemService.CheckStorageReadPermission();
-            var writeStorageState = await SystemService.CheckStorageWritePermission();
+            CameraState = await PlatformService.CheckCameraPermission();
+            var readStorageState = await PlatformService.CheckStorageReadPermission();
+            var writeStorageState = await PlatformService.CheckStorageWritePermission();
             StorageState = readStorageState || writeStorageState;
         }
 

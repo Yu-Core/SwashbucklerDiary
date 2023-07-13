@@ -16,12 +16,12 @@ namespace SwashbucklerDiary.Pages
 
         private async Task OpenBrowser(string? url)
         {
-            await SystemService.OpenBrowser(url);
+            await PlatformService.OpenBrowser(url);
         }
 
         private async Task ReadJson()
         {
-            OSPs = await SystemService.ReadJsonFileAsync<List<OpenSourceProject>>("wwwroot/json/open-source-project/open-source-project.json");
+            OSPs = await PlatformService.ReadJsonFileAsync<List<OpenSourceProject>>("wwwroot/json/open-source-project/open-source-project.json");
         }
     }
 }

@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Pages
         private async Task LoadingData()
         {
             var uri = I18n.T("FilePath.PrivacyPolicy")!;
-            Content = await SystemService.ReadMarkdownFileAsync(uri);
+            Content = await PlatformService.ReadMarkdownFileAsync(uri);
         }
     }
 }

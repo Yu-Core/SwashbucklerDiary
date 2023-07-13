@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Components
         [Inject]
         protected IJSRuntime JS { get; set; } = default!;
         [Inject]
-        protected ISystemService SystemService { get; set; } = default!;
+        protected IPlatformService PlatformService { get; set; } = default!;
         [Inject]
         protected IAchievementService AchievementService { get; set; } = default!;
 

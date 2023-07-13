@@ -123,15 +123,15 @@ namespace SwashbucklerDiary.Pages
         {
             try
             {
-                if (SystemService.IsMailSupported())
+                if (PlatformService.IsMailSupported())
                 {
                     List<string> recipients = new() { mail };
 
-                    await SystemService.SendEmail(recipients);
+                    await PlatformService.SendEmail(recipients);
                 }
                 else
                 {
-                    await SystemService.SetClipboard(mail);
+                    await PlatformService.SetClipboard(mail);
                     await AlertService.Success(I18n.T("Mine.MailCopy"));
                 }
             }
@@ -144,7 +144,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task ToGithub()
         {
-            await SystemService.OpenBrowser(githubUrl);
+            await PlatformService.OpenBrowser(githubUrl);
         }
 
         private async Task ThemeStateChanged(ThemeState themeState)
@@ -158,10 +158,10 @@ namespace SwashbucklerDiary.Pages
         {
             try
             {
-                bool flag = await SystemService.OpenQQGroup();
+                bool flag = await PlatformService.OpenQQGroup();
                 if (!flag)
                 {
-                    await SystemService.SetClipboard(qqGroup);
+                    await PlatformService.SetClipboard(qqGroup);
                     await AlertService.Success(I18n.T("Mine.QQGroupCopy"));
                 }
             }

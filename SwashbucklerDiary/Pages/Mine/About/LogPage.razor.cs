@@ -101,7 +101,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            await SystemService.ShareText(I18n.T("Share.Share")!, text);
+            await PlatformService.ShareText(I18n.T("Share.Share")!, text);
         }
 
         private async Task ShareLogFile()
@@ -115,7 +115,7 @@ namespace SwashbucklerDiary.Pages
             var targetFileName = "Logs.txt";
             string targetFile = Path.Combine(FileSystem.CacheDirectory, targetFileName);
             await File.WriteAllTextAsync(targetFile, text);
-            await SystemService.ShareFile(I18n.T("Log.Share")!, targetFile);
+            await PlatformService.ShareFile(I18n.T("Log.Share")!, targetFile);
         }
 
         private void OpenDeleteDialog()

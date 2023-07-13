@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.Components
         [Inject]
         public IDiaryService DiaryService { get; set; } = default!;
         [Inject]
-        private ISystemService SystemService { get; set; } = default!;
+        private IPlatformService PlatformService { get; set; } = default!;
 
         [Inject]
         protected ISettingsService SettingsService { get; set; } = default!;
@@ -95,7 +95,7 @@ namespace SwashbucklerDiary.Components
         private async Task HandleCopy(DiaryModel diaryModel)
         {
             var text = DiaryCopyContent(diaryModel);
-            await SystemService.SetClipboard(text);
+            await PlatformService.SetClipboard(text);
 
             await AlertService.Success(I18n.T("Share.CopySuccess"));
         }

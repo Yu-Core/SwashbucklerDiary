@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Components
         [Inject]
         private ISettingsService SettingsService { get; set; } = default!;
         [Inject]
-        private ISystemService SystemService { get; set; } = default!;
+        private IPlatformService PlatformService { get; set; } = default!;
         [Inject]
         private II18nService I18n { get; set; } = default!;
         [Inject]
@@ -68,7 +68,7 @@ namespace SwashbucklerDiary.Components
         }
         private void OnDisagree()
         {
-            SystemService.QuitApp();
+            PlatformService.QuitApp();
         }
 
         private async Task InsertDefaultDiaries()
@@ -84,7 +84,7 @@ namespace SwashbucklerDiary.Components
             var diaries = new List<DiaryModel>();
             foreach (string key in keys)
             {
-                var content = await SystemService.ReadMarkdownFileAsync(I18n.T(key)!);
+                var content = await PlatformService.ReadMarkdownFileAsync(I18n.T(key)!);
                 var diary = new DiaryModel()
                 {
                     Content = content,

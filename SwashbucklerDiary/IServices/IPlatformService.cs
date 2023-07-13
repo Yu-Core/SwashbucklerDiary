@@ -2,7 +2,7 @@
 
 namespace SwashbucklerDiary.IServices
 {
-    public interface ISystemService
+    public interface IPlatformService
     {
         event Action Resumed;
         event Action Stopped;

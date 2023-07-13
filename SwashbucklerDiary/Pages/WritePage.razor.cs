@@ -48,7 +48,7 @@ namespace SwashbucklerDiary.Pages
             MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
             NavigateService.Action -= NavigateToBack;
             NavigateService.NavBtnAction -= SaveDiaryAsync;
-            SystemService.Stopped -= SaveDiary;
+            PlatformService.Stopped -= SaveDiary;
             GC.SuppressFinalize(this);
         }
 
@@ -57,7 +57,7 @@ namespace SwashbucklerDiary.Pages
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
             NavigateService.Action += NavigateToBack;
             NavigateService.NavBtnAction += SaveDiaryAsync;
-            SystemService.Stopped += SaveDiary;
+            PlatformService.Stopped += SaveDiary;
             LoadView();
             await LoadSettings();
             await UpdateTags();

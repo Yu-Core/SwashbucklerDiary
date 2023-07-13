@@ -47,7 +47,7 @@ namespace SwashbucklerDiary.Pages
             //https://learn.microsoft.com/en-us/answers/questions/1183152/open-a-file-get-its-path-save-the-file-maui-androi
 
             using var stream = File.OpenRead(sourceFile);
-            var filePath = await SystemService.SaveFileAsync(BackupsFolderPath, destFileName, stream);
+            var filePath = await PlatformService.SaveFileAsync(BackupsFolderPath, destFileName, stream);
             if (filePath == null)
             {
                 return;
@@ -79,7 +79,7 @@ namespace SwashbucklerDiary.Pages
             }
 
             RestoreFilePath = string.Empty;
-            RestoreFilePath = await SystemService.PickDBFileAsync();
+            RestoreFilePath = await PlatformService.PickDBFileAsync();
             if (string.IsNullOrEmpty(RestoreFilePath))
             {
                 return;

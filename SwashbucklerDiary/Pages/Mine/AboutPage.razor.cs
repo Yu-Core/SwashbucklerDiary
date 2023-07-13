@@ -46,7 +46,7 @@ namespace SwashbucklerDiary.Pages
                 }
             };
 
-            var codeSources = await SystemService.ReadJsonFileAsync<List<CodeSource>>("wwwroot/json/code-source/code-source.json");
+            var codeSources = await PlatformService.ReadJsonFileAsync<List<CodeSource>>("wwwroot/json/code-source/code-source.json");
             foreach (var item in codeSources)
             {
                 DynamicListItem codeSource = new(this, item.Name, item.Icon, () => ViewSourceCode(item.Url));
@@ -54,17 +54,17 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private string AppVersion => SystemService.GetAppVersion();
+        private string AppVersion => PlatformService.GetAppVersion();
 
         private async Task ViewSourceCode(string? url)
         {
-            await SystemService.OpenBrowser(url);
+            await PlatformService.OpenBrowser(url);
             await HandleAchievements(AchievementType.SourceCode);
         }
 
         private async Task OpenAppDetails()
         {
-            bool flag = await SystemService.OpenStoreMyAppDetails();
+            bool flag = await PlatformService.OpenStoreMyAppDetails();
             if (!flag)
             {
                 await AlertService.Error(I18n.T("About.OpenAppStoreFail"));

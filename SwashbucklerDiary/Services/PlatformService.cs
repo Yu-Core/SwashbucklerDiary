@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace SwashbucklerDiary.Services
 {
-    public class SystemService : ISystemService
+    public class PlatformService : IPlatformService
     {
         public event Action? Resumed;
         public event Action? Stopped;

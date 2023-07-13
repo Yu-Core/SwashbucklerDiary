@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Extend
             services.AddSingleton<INavigateService, NavigateService>();
             services.AddSingleton<IconService>();
             services.AddSingleton<ISettingsService, SettingsService>();
-            services.AddSingleton<ISystemService, SystemService>();
+            services.AddSingleton<IPlatformService, PlatformService>();
             services.AddSingleton<IAlertService, AlertService>();
             services.AddSingleton<II18nService, I18nService>();
             services.AddScoped<ILocalImageService, LocalImageService>();

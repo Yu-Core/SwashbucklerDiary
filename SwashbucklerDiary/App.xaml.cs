@@ -4,21 +4,21 @@ namespace SwashbucklerDiary
 {
     public partial class App : Application
     {
-        private ISystemService SystemService { get; set; }
-        public App(ISystemService systemService)
+        private IPlatformService PlatformService { get; set; }
+        public App(IPlatformService platformService)
         {
             InitializeComponent();
 
             MainPage = new MainPage();
             
-            SystemService = systemService;
+            PlatformService = platformService;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
             Window window = base.CreateWindow(activationState);
-            window.Resumed += (s, e) => SystemService.OnResume();
-            window.Stopped += (s, e) => SystemService.OnStop();
+            window.Resumed += (s, e) => PlatformService.OnResume();
+            window.Stopped += (s, e) => PlatformService.OnStop();
             return window;
         }
     }

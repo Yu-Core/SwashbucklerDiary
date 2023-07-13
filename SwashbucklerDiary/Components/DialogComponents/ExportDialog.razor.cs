@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Components
         private List<DynamicListItem> ListItemModels = new();
 
         [Inject]
-        protected ISystemService SystemService { get; set; } = default!;
+        protected IPlatformService PlatformService { get; set; } = default!;
 
         [Parameter]
         public List<DiaryModel> Diaries { get; set; } = new();
@@ -89,7 +89,7 @@ namespace SwashbucklerDiary.Components
             using FileStream stream = File.OpenRead(sourceFilePath);
             //Cannot save an existing file
             //https://github.com/CommunityToolkit/Maui/issues/1049
-            var filePath = await SystemService.SaveFileAsync(targetFilePath, stream);
+            var filePath = await PlatformService.SaveFileAsync(targetFilePath, stream);
             if (filePath == null)
             {
                 return;
@@ -134,7 +134,7 @@ namespace SwashbucklerDiary.Components
             }
             else
             {
-                SystemService.ClearFolder(outputFolder);
+                PlatformService.ClearFolder(outputFolder);
             }
 
             foreach (var item in Diaries)
