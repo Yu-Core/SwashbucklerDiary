@@ -127,8 +127,8 @@
     "sick": "sick"
   },
   "Read": {
-    "OpenPrivacy": "Open privacy",
-    "ClosePrivacy": "Close privacy"
+    "OpenPrivacy": "Move to privacy library",
+    "ClosePrivacy": "Remove from privacy library"
   },
   "AppName": "Swashbuckler Diary",
   "Mine": {
@@ -314,12 +314,12 @@
       "SetPassword": "Set password",
       "ValidatePassword": "Validate password",
       "PasswordError": "Password error",
-      "NotSetPassword": "No password set"
+      "NotSetPassword": "not set"
     },
     "Display": {
       "Name": "Display",
-      "WelcomeText": "Home page welcome text",
-      "Date": "Home page date",
+      "WelcomeText": "Index welcome text",
+      "Date": "Index date",
       "DiaryCardIcon": "Card icon"
     }
   },
