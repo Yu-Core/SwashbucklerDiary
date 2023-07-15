@@ -13,13 +13,17 @@ namespace SwashbucklerDiary.Extend
             }
             else
             {
-                exp = Expression.Lambda<Func<T, bool>>(Expression.AndAlso(left.Body, right.Body), left.Parameters);
+                ParameterExpression p = Expression.Parameter(typeof(T), left.Parameters.First().Name);
+                MyExpressionVisitor visitor = new MyExpressionVisitor(p);
+                Expression bodyone = visitor.Visit(left.Body);
+                Expression bodytwo = visitor.Visit(right.Body);
+                exp = Expression.Lambda<Func<T, bool>>(Expression.AndAlso(bodyone, bodytwo), p);
             }
 
             return exp.ToExpression();
         }
 
-        public static Expression<Func<T, bool>> AndIF<T>(this Expression<Func<T, bool>> left,bool isAnd, Expression<Func<T, bool>> right)
+        public static Expression<Func<T, bool>> AndIF<T>(this Expression<Func<T, bool>> left, bool isAnd, Expression<Func<T, bool>> right)
         {
             Expression<Func<T, bool>>? exp;
             if (isAnd)
@@ -43,7 +47,11 @@ namespace SwashbucklerDiary.Extend
             }
             else
             {
-                exp = Expression.Lambda<Func<T, bool>>(Expression.OrElse(left.Body, right.Body), left.Parameters);
+                ParameterExpression p = Expression.Parameter(typeof(T), left.Parameters.First().Name);
+                MyExpressionVisitor visitor = new MyExpressionVisitor(p);
+                Expression bodyone = visitor.Visit(left.Body);
+                Expression bodytwo = visitor.Visit(right.Body);
+                exp = Expression.Lambda<Func<T, bool>>(Expression.OrElse(left.Body, right.Body), p);
             }
 
             return exp.ToExpression();
@@ -71,5 +79,24 @@ namespace SwashbucklerDiary.Extend
             return exp;
         }
 
+    }
+
+    public class MyExpressionVisitor : ExpressionVisitor
+    {
+        public ParameterExpression _Parameter { get; set; }
+
+        public MyExpressionVisitor(ParameterExpression Parameter)
+        {
+            _Parameter = Parameter;
+        }
+        protected override Expression VisitParameter(ParameterExpression p)
+        {
+            return _Parameter;
+        }
+
+        public override Expression Visit(Expression node)
+        {
+            return base.Visit(node);//Visit会根据VisitParameter()方法返回的Expression修改这里的node变量
+        }
     }
 }
