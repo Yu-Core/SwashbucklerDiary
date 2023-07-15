@@ -20,6 +20,6 @@ else
                 Clearable="true"
                 HideDetails="@("auto")"
                 spellcheck="false"
-                Placeholder="@(I18n.T("Search.Placeholder"))">
+                Placeholder="@(Placeholder ?? I18n.T("Search.Placeholder"))">
     </MTextField>
 }

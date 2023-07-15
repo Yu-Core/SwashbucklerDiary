@@ -81,7 +81,7 @@ namespace SwashbucklerDiary.Pages
             ShowImport = false;
             if (string.IsNullOrEmpty(ImportFilePath))
             {
-                await AlertService.Success(I18n.T("Export.ImportFail"));
+                await AlertService.Success(I18n.T("Export.Import.Fail"));
                 return;
             }
 
@@ -91,19 +91,18 @@ namespace SwashbucklerDiary.Pages
                 List<DiaryModel>? diaries = await JsonSerializer.DeserializeAsync<List<DiaryModel>>(openStream);
                 if (diaries == null || !diaries.Any())
                 {
-                    await AlertService.Success(I18n.T("Export.ImportFail"));
+                    await AlertService.Success(I18n.T("Export.Import.Fail"));
                     return;
                 }
 
                 await DiaryService.ImportAsync(diaries);
-                await AlertService.Success(I18n.T("Export.ImportSuccess"));
+                await AlertService.Success(I18n.T("Export.Import.Success"));
             }
             catch (Exception e)
             {
                 Log.Error($"{e.Message}\n{e.StackTrace}");
-                await AlertService.Success(I18n.T("Export.ImportFail"));
+                await AlertService.Success(I18n.T("Export.Import.Fail"));
             }
-
         }
     }
 }

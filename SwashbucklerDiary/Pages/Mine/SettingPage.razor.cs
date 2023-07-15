@@ -65,7 +65,7 @@ namespace SwashbucklerDiary.Pages
 
         private string? GetDisplayPrivacy()
         {
-            return Privacy ? I18n.T("Setting.Safe.DisplayPrivacy") : I18n.T("Setting.Safe.Mask");
+            return Privacy ? I18n.T("Setting.Safe.DisplayPrivacy.Name") : I18n.T("Setting.Safe.Mask.Name");
         }
 
         private async Task SetPassword(string value)

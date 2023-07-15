@@ -67,7 +67,7 @@ namespace SwashbucklerDiary.Pages
                     {
                         new(this, "Mine.Backups","mdi-folder-sync-outline",() => To("backups")),
                         new(this, "Mine.Export","mdi-export",() => To("export")),
-                        new(this, "Mine.Achievement","mdi-trophy-outline",() => To("achievement")),
+                        new(this, "Mine.Achievement.Name","mdi-trophy-outline",() => To("achievement")),
                     }
                 },
                 {

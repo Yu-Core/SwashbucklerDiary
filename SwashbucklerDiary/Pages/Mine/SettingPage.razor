@@ -23,7 +23,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.General.Permission"))
+                    @(I18n.T("Setting.General.Permission.Name"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -39,7 +39,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.General.Storage"))
+                    @(I18n.T("Setting.General.Storage.Name"))
                 </MListItemContent>
                 <MListItemContent Style="flex:none;">
                     <MListItemSubtitle Class="text-right">
@@ -68,7 +68,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Diary.Title"))
+                    @(I18n.T("Setting.Diary.Title.Name"))
                 </MListItemContent>
                 <MListItemAction>
                     <MSwitch @bind-Value="Title"
@@ -91,7 +91,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Diary.Markdown"))
+                    @(I18n.T("Setting.Diary.Markdown.Name"))
                 </MListItemContent>
                 <MListItemAction>
                     <MSwitch @bind-Value="Markdown"
@@ -114,7 +114,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Diary.Location"))
+                    @(I18n.T("Setting.Diary.Location.Name"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -130,7 +130,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Diary.EditCreateTime"))
+                    @(I18n.T("Setting.Diary.EditCreateTime.Name"))
                 </MListItemContent>
                 <MListItemAction>
                     <MSwitch @bind-Value="EditCreateTime"
@@ -163,15 +163,15 @@
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
-                        @(I18n.T("Setting.Safe.PrivacyLibrary"))
+                        @(I18n.T("Setting.Safe.PrivacyLibrary.Name"))
                     </MListItemContent>
                     <MListItemAction>
                         <MIcon>mdi-chevron-right</MIcon>
                     </MListItemAction>
                 </MListItem>
-            }
 
-            <MDivider Class="mx-3"></MDivider>
+                <MDivider Class="mx-3"></MDivider>
+            }
 
             <MListItem>
                 <MListItemIcon>
@@ -206,7 +206,7 @@
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
-                        @(I18n.T("Setting.Safe.PrivacyPassword"))
+                        @(I18n.T("Setting.Safe.PrivacyPassword.Name"))
                     </MListItemContent>
                     <MListItemContent Style="flex:none;">
                         <MListItemSubtitle Class="text-right">
@@ -235,7 +235,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Date"))
+                    @(I18n.T("Setting.Display.Date.Name"))
                 </MListItemContent>
                 <MListItemAction>
                     <MSwitch @bind-Value="Date"
@@ -256,7 +256,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.WelcomeText"))
+                    @(I18n.T("Setting.Display.WelcomeText.Name"))
                 </MListItemContent>
                 <MListItemAction>
                     <MSwitch @bind-Value="WelcomText"
@@ -277,7 +277,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.DiaryCardIcon"))
+                    @(I18n.T("Setting.Display.DiaryCardIcon.Name"))
                 </MListItemContent>
                 <MListItemAction>
                     <MSwitch @bind-Value="DiaryCardIcon"
@@ -313,7 +313,7 @@
           MaxWidth="420">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Setting.General.Storage"))
+            @(I18n.T("Setting.General.Storage.Name"))
         </MCardTitle>
         <MCardText Class="pb-0">
             @(I18n.T("Storage.Content"))

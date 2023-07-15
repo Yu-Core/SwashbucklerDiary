@@ -20,6 +20,8 @@ namespace SwashbucklerDiary.Components
         public EventCallback<string> OnChanged { get; set; }
         [Parameter]
         public string? Title { get; set; }
+        [Parameter]
+        public string? Placeholder { get; set; }
 
         private bool ShowTitle => !string.IsNullOrEmpty(Title);
         private void SetValue(bool value)

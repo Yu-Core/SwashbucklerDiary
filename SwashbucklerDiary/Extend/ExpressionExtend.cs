@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Extend
             else
             {
                 ParameterExpression p = Expression.Parameter(typeof(T), left.Parameters.First().Name);
-                MyExpressionVisitor visitor = new MyExpressionVisitor(p);
+                var visitor = new MyExpressionVisitor(p);
                 Expression bodyone = visitor.Visit(left.Body);
                 Expression bodytwo = visitor.Visit(right.Body);
                 exp = Expression.Lambda<Func<T, bool>>(Expression.AndAlso(bodyone, bodytwo), p);
@@ -48,10 +48,10 @@ namespace SwashbucklerDiary.Extend
             else
             {
                 ParameterExpression p = Expression.Parameter(typeof(T), left.Parameters.First().Name);
-                MyExpressionVisitor visitor = new MyExpressionVisitor(p);
+                var visitor = new MyExpressionVisitor(p);
                 Expression bodyone = visitor.Visit(left.Body);
                 Expression bodytwo = visitor.Visit(right.Body);
-                exp = Expression.Lambda<Func<T, bool>>(Expression.OrElse(left.Body, right.Body), p);
+                exp = Expression.Lambda<Func<T, bool>>(Expression.OrElse(bodyone, bodytwo), p);
             }
 
             return exp.ToExpression();
@@ -83,15 +83,15 @@ namespace SwashbucklerDiary.Extend
 
     public class MyExpressionVisitor : ExpressionVisitor
     {
-        public ParameterExpression _Parameter { get; set; }
+        public ParameterExpression Parameter { get; set; }
 
-        public MyExpressionVisitor(ParameterExpression Parameter)
+        public MyExpressionVisitor(ParameterExpression parameter)
         {
-            _Parameter = Parameter;
+            Parameter = parameter;
         }
         protected override Expression VisitParameter(ParameterExpression p)
         {
-            return _Parameter;
+            return Parameter;
         }
 
         public override Expression Visit(Expression node)

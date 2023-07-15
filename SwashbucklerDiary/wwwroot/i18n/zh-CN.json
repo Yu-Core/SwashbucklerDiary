@@ -140,7 +140,10 @@
     "Data": "数据",
     "Backups": "备份",
     "Export": "导出",
-    "Achievement": "成就",
+    "Achievement": {
+      "Name": "成就",
+      "Path": "成就"
+    },
     "Settings": "设置",
     "Languages": "语言",
     "Night": "深色模式",
@@ -160,9 +163,19 @@
   },
   "User": {
     "Title": "用户设置",
-    "Avatar": "头像",
-    "UserName": "昵称",
-    "Sign": "签名",
+    "Path": "用户设置",
+    "Avatar": {
+      "Name": "头像",
+      "Path": "用户设置 / 头像"
+    },
+    "UserName": {
+      "Name": "昵称",
+      "Path": "用户设置 / 昵称"
+    },
+    "Sign": {
+      "Name": "签名",
+      "Path": "用户设置 / 签名"
+    },
     "EditAvatar": "修改头像",
     "Photos": "相册",
     "Capture": "相机",
@@ -182,15 +195,39 @@
     "Disable": "未开启"
   },
   "About": {
-    "SourceCode": "查看源码",
-    "Agreement": "用户协议",
-    "Privacy": "隐私政策",
-    "Check for updates": "检查更新",
-    "Evaluation": "给个好评",
-    "Related": "开源相关",
+    "SourceCode": {
+      "Name": "查看源码",
+      "Path": "关于 / 查看源码"
+    },
+    "Agreement": {
+      "Name": "用户协议",
+      "Path": "关于 / 用户协议"
+    },
+    "Privacy": {
+      "Name": "隐私政策",
+      "Path": "关于 / 隐私政策"
+    },
+    "Check for updates": {
+      "Name": "检查更新",
+      "Path": "关于 / 检查更新"
+    },
+    "Evaluation": {
+      "Name": "给个好评",
+      "Path": "关于 / 给个好评"
+    },
+    "Related": {
+      "Name": "开源相关",
+      "Path": "关于 / 开源相关"
+    },
     "OpenAppStoreFail": "打开应用商店失败",
-    "LogFile": "日志文件",
-    "Sponsor": "捐助我们",
+    "LogFile": {
+      "Name": "日志文件",
+      "Path": "关于 / 日志文件"
+    },
+    "Sponsor": {
+      "Name": "捐助我们",
+      "Path": "关于 / 捐助我们"
+    },
     "Introduction": "一款开源、跨平台的本地日记APP"
   },
   "FilePath": {
@@ -293,22 +330,52 @@
   "Setting": {
     "General": {
       "Name": "通用",
-      "Permission": "系统权限",
-      "Storage": "清除缓存"
+      "Permission": {
+        "Name": "系统权限",
+        "Path": "设置 / 系统权限"
+      },
+      "Storage": {
+        "Name": "清理缓存",
+        "Path": "设置 / 清理缓存"
+      }
     },
     "Diary": {
       "Name": "日记",
-      "Title": "标题",
-      "Markdown": "Markdown",
-      "Location": "位置",
-      "EditCreateTime": "修改日期"
+      "Title": {
+        "Name": "标题",
+        "Path": "设置 / 标题"
+      },
+      "Markdown": {
+        "Name": "Markdown",
+        "Path": "设置 / Markdown"
+      },
+      "Location": {
+        "Name": "位置",
+        "Path": "设置 / 位置"
+      },
+      "EditCreateTime": {
+        "Name": "修改日期",
+        "Path": "设置 / 修改日期"
+      }
     },
     "Safe": {
       "Name": "安全",
-      "PrivacyLibrary": "隐私库",
-      "DisplayPrivacy": "隐私库可见性",
-      "PrivacyPassword": "隐私库密码",
-      "Mask": "清除所有数据",
+      "PrivacyLibrary": {
+        "Name": "隐私库",
+        "Path": "设置 / 隐私库"
+      },
+      "DisplayPrivacy": {
+        "Name": "隐私库可见性",
+        "Path": "设置 / 隐私库可见性"
+      },
+      "PrivacyPassword": {
+        "Name": "隐私库密码",
+        "Path": "设置 / 隐私库密码"
+      },
+      "Mask": {
+        "Name": "清除所有数据",
+        "Path": "设置 / 清除所有数据"
+      },
       "CamouflageSuccess": "伪装成功",
       "PrivatePasswordSetSuccess": "密码设置成功",
       "SetPassword": "设置密码",
@@ -318,9 +385,18 @@
     },
     "Display": {
       "Name": "显示",
-      "WelcomeText": "首页问候语",
-      "Date": "首页日期",
-      "DiaryCardIcon": "卡片图标"
+      "WelcomeText": {
+        "Name": "首页问候语",
+        "Path": "设置 / 首页问候语"
+      },
+      "Date": {
+        "Name": "首页日期",
+        "Path": "设置 / 首页日期"
+      },
+      "DiaryCardIcon": {
+        "Name": "日记卡片图标",
+        "Path": "设置 / 首页日期"
+      }
     }
   },
   "Password must be at most 20 characters long": "密码不得超过20个字符",
@@ -333,10 +409,17 @@
   "Please input Account": "请输入账户",
   "Please input ServerAddress": "请输入服务器地址",
   "Backups": {
-    "Local": "本地备份",
-    "WebDAV": "WebDAV",
+    "Local": {
+      "Name": "本地备份",
+      "Path": "备份 / 本地备份"
+    },
+    "WebDAV": {
+      "Name": "WebDAV",
+      "Path": "备份 / WebDAV"
+    },
     "Backups": {
       "Title": "备份",
+      "Path": "备份 / 本地备份 / 备份",
       "Subtitle": "保存为db3格式的数据库文件",
       "Success": "备份成功",
       "Fail": "备份失败",
@@ -345,6 +428,7 @@
     },
     "Restore": {
       "Title": "还原",
+      "Path": "备份 / 本地备份 / 还原",
       "Subtitle": "选择db3格式的数据库文件",
       "Success": "还原成功",
       "Fail": "还原失败",
@@ -357,6 +441,7 @@
     "NoDbFile": "没有数据库文件",
     "Config": {
       "Title": "配置",
+      "Path": "备份 / WebDAV / 配置",
       "ServerAddress": "服务器地址",
       "Account": "账户",
       "Password": "密码",
@@ -372,6 +457,7 @@
     },
     "Upload": {
       "Title": "上传",
+      "Path": "备份 / WebDAV / 上传",
       "Subtitle": "保存为db3格式的数据库文件",
       "Success": "上传成功",
       "Fail": "上传失败",
@@ -379,6 +465,7 @@
     },
     "Download": {
       "Title": "拉取",
+      "Path": "备份 / WebDAV / 拉取",
       "Subtitle": "选择db3格式的数据库文件",
       "Success": "拉取成功",
       "Fail": "拉取失败"
@@ -401,22 +488,40 @@
   },
   "Press again to exit": "再按一次退出",
   "Export": {
-    "Local": "本地导出",
-    "LAN": "局域网传输",
-    "Export": "导出",
-    "Import": "导入",
-    "ExportSubtitle": "保存为txt、md、json、pdf等格式文件",
-    "ImportSubtitle": "导入json文件",
-    "ExportSuccess": "导出成功",
-    "SelectType": "选择导出文件格式",
-    "ImportSuccess": "导入成功",
-    "ImportFail": "导入失败",
-    "ConfirmImport": {
-      "Title": "确认导入",
-      "Content": "确认导入这些日记？"
+    "Local": {
+      "Name": "本地导出",
+      "Path": "导出 / 本地导出"
     },
-    "Send": "发送",
-    "Receive": "接收"
+    "LAN": {
+      "Name": "局域网传输",
+      "Path": "导出 / 局域网传输"
+    },
+    "Export": {
+      "Title": "导出",
+      "Path":  "导出 / 本地导出 / 导出",
+      "Subtitle": "保存为txt、md、json、pdf等格式文件",
+      "Success": "导出成功",
+      "SelectType": "选择导出文件格式"
+    },
+    "Import": {
+      "Title": "导入",
+      "Path": "导出 / 本地导出 / 导入",
+      "Subtitle": "导入json文件",
+      "Success": "导入成功",
+      "Fail": "导入失败",
+      "ConfirmImport": {
+        "Title": "确认导入",
+        "Content": "确认导入这些日记？"
+      }
+    },
+    "Send": {
+      "Name": "发送",
+      "Path": "导出 / 局域网传输 / 发送"
+    },
+    "Receive": {
+      "Name": "接收",
+      "Path": "导出 / 局域网传输 / 接收"
+    }
   },
   "ThemeState": {
     "System": "跟随系统",
@@ -465,5 +570,9 @@
   "Storage": {
     "Content": "确定清除所有缓存吗？",
     "ClearSuccess": "清理成功"
+  },
+  "SearchAppFunction": {
+    "Placeholder": "请输入想要搜索的功能",
+    "No AppFunction": "未找到搜索结果"
   }
 }

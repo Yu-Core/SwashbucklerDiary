@@ -9,6 +9,12 @@
     <MToolbarTitle Class="font-weight-bold">
         @(I18n.T("Mine.Mine"))
     </MToolbarTitle>
+    <MSpacer></MSpacer>
+    <MButton Large
+             Icon
+             OnClick="@(()=>To("searchAppFunction"))">
+        <MIcon>mdi-magnify</MIcon>
+    </MButton>
 </MAppBar>
 
 <ScrollContainer>

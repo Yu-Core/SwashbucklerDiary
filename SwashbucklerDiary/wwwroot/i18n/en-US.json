@@ -140,7 +140,10 @@
     "Data": "Data",
     "Backups": "Backups",
     "Export": "Export",
-    "Achievement": "Achievement",
+    "Achievement": {
+      "Name": "Achievement",
+      "Path": "Achievement"
+    },
     "Settings": "Setting",
     "Languages": "Language",
     "Night": "Night mode",
@@ -160,9 +163,19 @@
   },
   "User": {
     "Title": "User settings",
-    "Avatar": "Avatar",
-    "UserName": "Nickname",
-    "Sign": "Sign",
+    "Path": "User settings",
+    "Avatar": {
+      "Name": "Avatar",
+      "Path": "User settings / Avatar"
+    },
+    "UserName": {
+      "Name": "Nickname",
+      "Path": "User settings / Nickname"
+    },
+    "Sign": {
+      "Name": "Sign",
+      "Path": "User settings / Sign"
+    },
     "EditAvatar": "Edit avatar",
     "Photos": "Photos",
     "Capture": "Capture",
@@ -182,15 +195,39 @@
     "Disable": "Disable"
   },
   "About": {
-    "SourceCode": "View source code",
-    "Agreement": "User agreement",
-    "Privacy": "Privacy policy",
-    "Check for updates": "Check for updates",
-    "Evaluation": "Give a favorable comment",
-    "Related": "Related open source project",
+    "SourceCode": {
+      "Name": "View source code",
+      "Path": "About / View source code"
+    },
+    "Agreement": {
+      "Name": "User agreement",
+      "Path": "About / User agreement"
+    },
+    "Privacy": {
+      "Name": "Privacy policy",
+      "Path": "About / Privacy policy"
+    },
+    "Check for updates": {
+      "Name": "Check for updates",
+      "Path": "About / Check for updates"
+    },
+    "Evaluation": {
+      "Name": "Give a favorable comment",
+      "Path": "About / Give a favorable comment"
+    },
+    "Related": {
+      "Name": "Related open source project",
+      "Path": "About / Related open source project"
+    },
     "OpenAppStoreFail": "Failed to open the store",
-    "LogFile": "Log file",
-    "Sponsor": "Sponsor we",
+    "LogFile": {
+      "Name": "Log file",
+      "Path": "About / Log file"
+    },
+    "Sponsor": {
+      "Name": "Sponsor we",
+      "Path": "About / Sponsor we"
+    },
     "Introduction": "An open source, cross-platform local diary app"
   },
   "FilePath": {
@@ -293,22 +330,52 @@
   "Setting": {
     "General": {
       "Name": "General",
-      "Permission": "System permission",
-      "Storage": "Clear cache"
+      "Permission": {
+        "Name": "System permission",
+        "Path": "Setting / System permission"
+      },
+      "Storage": {
+        "Name": "Clear cache",
+        "Path": "Setting / Clear cache"
+      }
     },
     "Diary": {
       "Name": "Diary",
-      "Title": "Title",
-      "Markdown": "Markdown",
-      "Location": "Location",
-      "EditCreateTime": "Edit date"
+      "Title": {
+        "Name": "Title",
+        "Path": "Setting / Title"
+      },
+      "Markdown": {
+        "Name": "Markdown",
+        "Path": "Setting / Markdown"
+      },
+      "Location": {
+        "Name": "Location",
+        "Path": "Setting / Location"
+      },
+      "EditCreateTime": {
+        "Name": "Edit date",
+        "Path": "Setting / Edit date"
+      }
     },
     "Safe": {
       "Name": "Safe",
-      "PrivacyLibrary": "Privacy library",
-      "DisplayPrivacy": "Privacy Visibility",
-      "PrivacyPassword": "Privacy password",
-      "Mask": "Invalidate data",
+      "PrivacyLibrary": {
+        "Name": "Privacy library",
+        "Path": "Setting / Privacy library"
+      },
+      "DisplayPrivacy": {
+        "Name": "Privacy Visibility",
+        "Path": "Setting / Privacy Visibility"
+      },
+      "PrivacyPassword": {
+        "Name": "Privacy password",
+        "Path": "Setting / Privacy password"
+      },
+      "Mask": {
+        "Name": "Invalidate data",
+        "Path": "Setting / Invalidate data"
+      },
       "CamouflageSuccess": "Camouflage success",
       "PrivatePasswordSetSuccess": "PrivatePassword set success",
       "SetPassword": "Set password",
@@ -318,9 +385,18 @@
     },
     "Display": {
       "Name": "Display",
-      "WelcomeText": "Index welcome text",
-      "Date": "Index date",
-      "DiaryCardIcon": "Card icon"
+      "WelcomeText": {
+        "Name": "Index welcome text",
+        "Path": "Setting / Index welcome text"
+      },
+      "Date": {
+        "Name": "Index date",
+        "Path": "Setting / Index date"
+      },
+      "DiaryCardIcon": {
+        "Name": "Card icon",
+        "Path": "Setting / Card icon"
+      }
     }
   },
   "Password must be at most 20 characters long": "Password must be at most 20 characters long",
@@ -333,10 +409,17 @@
   "Please input Account": "Please input account",
   "Please input ServerAddress": "Please input server address",
   "Backups": {
-    "Local": "Local backups",
-    "WebDAV": "WebDAV",
+    "Local": {
+      "Name": "Local backups",
+      "Path": "Backups / Local backups"
+    },
+    "WebDAV": {
+      "Name": "WebDAV",
+      "Path": "Backups / WebDAV"
+    },
     "Backups": {
       "Title": "Backups",
+      "Path": "Backups / Local backups / Backups",
       "Subtitle": "Save as a .db3 database file",
       "Success": "Backups success",
       "Fail": "Backups fail",
@@ -345,6 +428,7 @@
     },
     "Restore": {
       "Title": "Restore",
+      "Path": "Backups / Local backups / Restore",
       "Subtitle": "Select a .db3 database file",
       "Success": "Restore success",
       "Fail": "Restore fail",
@@ -357,6 +441,7 @@
     "NoDbFile": "No database file",
     "Config": {
       "Title": "Config",
+      "Path": "Backups / WebDAV / Config",
       "ServerAddress": "Server address",
       "Account": "Account",
       "Password": "Password",
@@ -372,6 +457,7 @@
     },
     "Upload": {
       "Title": "Upload",
+      "Path": "Backups / WebDAV / Upload",
       "Subtitle": "Save as a .db3 database file",
       "Success": "Upload successful",
       "Fail": "Upload failed",
@@ -379,6 +465,7 @@
     },
     "Download": {
       "Title": "Download",
+      "Path": "Backups / WebDAV / Download",
       "Subtitle": "Select a .db3 database file",
       "Success": "Download success",
       "Fail": "Download fail"
@@ -401,22 +488,40 @@
   },
   "Press again to exit": "Press again to exit",
   "Export": {
-    "Local": "Local export",
-    "LAN": "LAN transfer",
-    "Export": "Export",
-    "Import": "Import",
-    "ExportSubtitle": "Save as txt, md, json, PDF type files",
-    "ImportSubtitle": "Import json file",
-    "ExportSuccess": "Export success",
-    "SelectType": "Select export file type",
-    "ImportSuccess": "Import success",
-    "ImportFail": "Import fail",
-    "ConfirmImport": {
-      "Title": "Confirm import",
-      "Content": "Confirm importing these diaries？"
+    "Local": {
+      "Name": "Local export",
+      "Path": "Export / Local export"
     },
-    "Send": "Send",
-    "Receive": "Receive"
+    "LAN": {
+      "Name": "LAN transfer",
+      "Path": "Export / LAN transfer"
+    },
+    "Export": {
+      "Title": "Export",
+      "Path": "Export / Local export / Export",
+      "Subtitle": "Save as txt, md, json, PDF type files",
+      "Success": "Export success",
+      "SelectType": "Select export file type"
+    },
+    "Import": {
+      "Title": "Import",
+      "Path": "Export / Local export / Import",
+      "Subtitle": "Import json file",
+      "Success": "Import success",
+      "Fail": "Import fail",
+      "ConfirmImport": {
+        "Title": "Confirm import",
+        "Content": "Confirm importing these diaries？"
+      }
+    },
+    "Send": {
+      "Name": "Send",
+      "Path": "Export / LAN transfer / Send"
+    },
+    "Receive": {
+      "Name": "Receive",
+      "Path": "Export / LAN transfer / Receive"
+    }
   },
   "ThemeState": {
     "System": "Follow system",
@@ -465,5 +570,9 @@
   "Storage": {
     "Content": "Are you sure to clear all caches?",
     "ClearSuccess": "Clear success"
+  },
+  "SearchAppFunction": {
+    "Placeholder": "Please enter the function you want to search for",
+    "No AppFunction": "No search results found"
   }
 }

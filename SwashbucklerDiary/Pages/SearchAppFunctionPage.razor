@@ -1,0 +1,61 @@
+﻿@page "/searchAppFunction"
+@inherits PageComponentBase
+
+<MAppBar App
+         Elevation="0">
+    <MButton Icon
+             OnClick="NavigateToBack">
+        <MIcon>mdi-arrow-left</MIcon>
+    </MButton>
+
+    <MySearch @bind-Value="ShowSearch"
+    @bind-Search="Search"
+              Placeholder="@(I18n.T("SearchAppFunction.Placeholder"))"
+              OnChanged="UpdateAppFunctions">
+    </MySearch>
+</MAppBar>
+
+<ScrollContainer>
+    @if (AppFunctions.Any())
+    {
+        <MCard Elevation="0"
+               Rounded="@("lg")">
+            <MList>
+                @foreach (var item in AppFunctions)
+                {
+                    <MListItem OnClick="()=>To(item.Href!)">
+                        <MListItemIcon>
+                            <MIcon Class="list-item-icon">
+                                @item.Icon
+                            </MIcon>
+                        </MListItemIcon>
+                        <MListItemContent>
+                            <MListItemTitle>
+                                @(I18n.T(item.Name))
+                            </MListItemTitle>
+                            <MListItemSubtitle>
+                                @(I18n.T(item.Path))
+                            </MListItemSubtitle>
+                        </MListItemContent>
+                    </MListItem>
+                    if (AppFunctions.Last() != item)
+                    {
+                        <MDivider Class="mx-3"></MDivider>
+                    }
+                }
+            </MList>
+        </MCard>
+    }
+    else
+    {
+        @if (IsSearchFiltered)
+        {
+            <div class="my-not-have">
+                <div class="text-h6 text--secondary font-weight-bold-desktop">
+                    @(I18n.T("SearchAppFunction.No AppFunction"))
+                </div>
+            </div>
+        }
+    }
+
+</ScrollContainer>

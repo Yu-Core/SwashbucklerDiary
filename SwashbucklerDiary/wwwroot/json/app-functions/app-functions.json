@@ -1,0 +1,244 @@
+[
+  {
+    "Name": "User.Title",
+    "Icon": "mdi-account-cog-outline",
+    "Path": "User.Path",
+    "Href": "user"
+  },
+  {
+    "Name": "User.Avatar.Name",
+    "Icon": "mdi-account-circle-outline",
+    "Path": "User.Avatar.Path",
+    "Href": "user"
+  },
+  {
+    "Name": "User.UserName.Name",
+    "Icon": "mdi-card-account-details-outline",
+    "Path": "User.UserName.Path",
+    "Href": "user"
+  },
+  {
+    "Name": "User.Sign.Name",
+    "Icon": "mdi-file-sign",
+    "Path": "User.Sign.Path",
+    "Href": "user"
+  },
+  {
+    "Name": "Backups.Local.Name",
+    "Icon": "mdi-folder-arrow-up-down-outline",
+    "Path": "Backups.Local.Path",
+    "Href": "backups?View=Local"
+  },
+  {
+    "Name": "Backups.Backups.Title",
+    "Icon": "mdi-folder-arrow-down-outline",
+    "Path": "Backups.Backups.Path",
+    "Href": "backups?View=Local"
+  },
+  {
+    "Name": "Backups.Restore.Title",
+    "Icon": "mdi-folder-arrow-up-outline",
+    "Path": "Backups.Restore.Path",
+    "Href": "backups?View=Local"
+  },
+  {
+    "Name": "Backups.WebDAV.Name",
+    "Icon": "mdi-cloud-sync-outline",
+    "Path": "Backups.WebDAV.Path",
+    "Href": "backups?View=WebDAV"
+  },
+  {
+    "Name": "Backups.Config.Title",
+    "Icon": "mdi-cog-transfer-outline",
+    "Path": "Backups.Config.Path",
+    "Href": "backups?View=WebDAV"
+  },
+  {
+    "Name": "Backups.Upload.Title",
+    "Icon": "mdi-cloud-arrow-up-outline",
+    "Path": "Backups.Upload.Path",
+    "Href": "backups?View=WebDAV"
+  },
+  {
+    "Name": "Backups.Download.Title",
+    "Icon": "mdi-cloud-arrow-down-outline",
+    "Path": "Backups.Download.Path",
+    "Href": "backups?View=WebDAV"
+  },
+  {
+    "Name": "Export.Local.Name",
+    "Icon": "mdi-file-arrow-up-down-outline",
+    "Path": "Export.Local.Path",
+    "Href": "export?View=Local"
+  },
+  {
+    "Name": "Export.Export.Title",
+    "Icon": "mdi-export",
+    "Path": "Export.Export.Path",
+    "Href": "export?View=Local"
+  },
+  {
+    "Name": "Export.Import.Title",
+    "Icon": "mdi-import",
+    "Path": "Export.Import.Path",
+    "Href": "export?View=Local"
+  },
+  {
+    "Name": "Export.LAN.Name",
+    "Icon": "mdi-lan",
+    "Path": "Export.LAN.Path",
+    "Href": "export?View=LAN"
+  },
+  {
+    "Name": "Export.Send.Name",
+    "Icon": "mdi-send-outline",
+    "Path": "Export.Send.Path",
+    "Href": "lanSender"
+  },
+  {
+    "Name": "Export.Receive.Name",
+    "Icon": "mdi-printer-pos-outline",
+    "Path": "Export.Receive.Path",
+    "Href": "lanReceiver"
+  },
+  {
+    "Name": "Mine.Achievement.Name",
+    "Icon": "mdi-trophy-outline",
+    "Path": "Mine.Achievement.Path",
+    "Href": "achievement"
+  },
+  {
+    "Name": "Setting.General.Permission.Name",
+    "Icon": "mdi-account-cog-outline",
+    "Path": "Setting.General.Permission.Path",
+    "Href": "permission"
+  },
+  {
+    "Name": "Setting.General.Storage.Name",
+    "Icon": "mdi-trash-can-outline",
+    "Path": "Setting.General.Storage.Path",
+    "Href": "setting"
+  },
+  {
+    "Name": "Setting.Diary.Title.Name",
+    "Icon": "mdi-format-title",
+    "Path": "Setting.Diary.Title.Path",
+    "Href": "setting"
+  },
+  {
+    "Name": "Setting.Diary.Markdown.Name",
+    "Icon": "mdi-language-markdown-outline",
+    "Path": "Setting.Diary.Markdown.Path",
+    "Href": "setting"
+  },
+  {
+    "Name": "Setting.Diary.Location.Name",
+    "Icon": "mdi-map-marker-outline",
+    "Path": "Setting.Diary.Location.Path",
+    "Href": "location"
+  },
+  {
+    "Name": "Setting.Diary.EditCreateTime.Name",
+    "Icon": "mdi-calendar-edit-outline",
+    "Path": "Setting.Diary.EditCreateTime.Path",
+    "Href": "setting"
+  },
+  {
+    "Name": "Setting.Safe.PrivacyLibrary.Name",
+    "Icon": "mdi-safe",
+    "Path": "Setting.Safe.PrivacyLibrary.Path",
+    "Href": "setting",
+    "ConditionalDisplay": true,
+    "Privacy": true
+  },
+  {
+    "Name": "Setting.Safe.DisplayPrivacy.Name",
+    "Icon": "mdi-lock-outline",
+    "Path": "Setting.Safe.DisplayPrivacy.Path",
+    "Href": "setting",
+    "ConditionalDisplay": true,
+    "Privacy": true
+  },
+  {
+    "Name": "Setting.Safe.PrivacyPassword.Name",
+    "Icon": "mdi-key-outline",
+    "Path": "Setting.Safe.PrivacyPassword.Path",
+    "Href": "setting",
+    "ConditionalDisplay": true,
+    "Privacy": true
+  },
+  {
+    "Name": "Setting.Safe.Mask.Name",
+    "Icon": "mdi-database-remove-outline",
+    "Path": "Setting.Safe.Mask.Path",
+    "Href": "setting",
+    "ConditionalDisplay": true,
+    "Privacy": false
+  },
+  {
+    "Name": "Setting.Display.WelcomeText.Name",
+    "Icon": "mdi-hand-wave-outline",
+    "Path": "Setting.Display.WelcomeText.Path",
+    "Href": "setting"
+  },
+  {
+    "Name": "Setting.Display.Date.Name",
+    "Icon": "mdi-calendar-range-outline",
+    "Path": "Setting.Display.Date.Path",
+    "Href": "setting"
+  },
+  {
+    "Name": "Setting.Display.DiaryCardIcon.Name",
+    "Icon": "mdi-emoticon-happy-outline",
+    "Path": "Setting.Display.DiaryCardIcon.Path",
+    "Href": "setting"
+  },
+  {
+    "Name": "About.SourceCode.Name",
+    "Icon": "mdi-book-open-page-variant-outline",
+    "Path": "About.SourceCode.Path",
+    "Href": "about"
+  },
+  {
+    "Name": "About.Agreement.Name",
+    "Icon": "mdi-file-document-multiple-outline",
+    "Path": "About.Agreement.Path",
+    "Href": "user-agreement"
+  },
+  {
+    "Name": "About.Privacy.Name",
+    "Icon": "mdi-lock-outline",
+    "Path": "About.Privacy.Path",
+    "Href": "privacy-policy"
+  },
+  {
+    "Name": "About.Check for updates.Name",
+    "Icon": "mdi-update",
+    "Path": "About.Check for updates.Path",
+    "Href": "about"
+  },
+  {
+    "Name": "About.Related.Name",
+    "Icon": "mdi-xml",
+    "Path": "About.Related.Path",
+    "Href": "relatedOSP"
+  },
+  {
+    "Name": "About.LogFile.Name",
+    "Icon": "mdi-file-document-edit-outline",
+    "Path": "About.LogFile.Path",
+    "Href": "log"
+  },
+  {
+    "Name": "About.Evaluation.Name",
+    "Icon": "mdi-star-outline",
+    "Path": "About.Evaluation.Path",
+    "Href": "about"
+  },
+  {
+    "Name": "About.Sponsor.Name",
+    "Icon": "mdi-hand-heart-outline",
+    "Path": "About.Sponsor.Path",
+    "Href": "about"
+  }
+]

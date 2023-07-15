@@ -12,10 +12,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Export.Export"))
+                    @(I18n.T("Export.Export.Title"))
                 </MListItemTitle>
                 <MListItemSubtitle>
-                    @(I18n.T("Export.ExportSubtitle"))
+                    @(I18n.T("Export.Export.Subtitle"))
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -33,10 +33,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Export.Import"))
+                    @(I18n.T("Export.Import.Title"))
                 </MListItemTitle>
                 <MListItemSubtitle>
-                    @(I18n.T("Export.ImportSubtitle"))
+                    @(I18n.T("Export.Import.Subtitle"))
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -53,7 +53,7 @@
 <MMDialog @bind-MyValue="ShowImport" MaxWidth="420">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Export.ConfirmImport.Title"))
+            @(I18n.T("Export.Import.ConfirmImport.Title"))
             <MSpacer></MSpacer>
             <MButton Icon
                      OnClick="@(()=>ShowImport=false)">
@@ -61,7 +61,7 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
-            @(I18n.T("Export.ConfirmImport.Content"))
+            @(I18n.T("Export.Import.ConfirmImport.Content"))
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
