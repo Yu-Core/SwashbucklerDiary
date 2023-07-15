@@ -59,14 +59,11 @@
             </div>
         }
     </div>
-    @if (!Logs.Any())
-    {
-        <div class="my-not-have">
-            <div class="text-h6 text--secondary font-weight-bold-desktop">
-                @(I18n.T("Log.NoLog"))
-            </div>
-        </div>
-    }
+
+    <NotFound Show="!Logs.Any()"
+              Text="@(IsSearchFiltered ? null:I18n.T("Log.NoLog"))">
+    </NotFound>
+    
 </ScrollContainer>
 
 <DateFilterDialog @bind-Value="ShowFilter"

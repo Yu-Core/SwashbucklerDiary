@@ -78,7 +78,9 @@
     "Text": "纯文本模式"
   },
   "Search": {
-    "Placeholder": "请输入关键词"
+    "Please enter keywords": "请输入关键词",
+    "Please enter diary keywords": "请输入日记关键词",
+    "Not Found": "未找到搜索结果"
   },
   "History": {
     "Calendar": "日历"
@@ -572,7 +574,6 @@
     "ClearSuccess": "清理成功"
   },
   "SearchAppFunction": {
-    "Placeholder": "请输入想要搜索的功能",
-    "No AppFunction": "未找到搜索结果"
+    "Placeholder": "请输入想要搜索的功能"
   }
 }

@@ -48,14 +48,7 @@
     }
     else
     {
-        @if (IsSearchFiltered)
-        {
-            <div class="my-not-have">
-                <div class="text-h6 text--secondary font-weight-bold-desktop">
-                    @(I18n.T("SearchAppFunction.No AppFunction"))
-                </div>
-            </div>
-        }
+        <NotFound Show="IsSearchFiltered"></NotFound>
     }
 
 </ScrollContainer>

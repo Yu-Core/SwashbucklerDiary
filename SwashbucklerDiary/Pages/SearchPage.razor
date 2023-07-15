@@ -10,6 +10,7 @@
 
     <MySearch @bind-Value="ShowSearch"
     @bind-Search="Search"
+              Placeholder="@(I18n.T("Search.Please enter diary keywords"))"
               OnChanged="UpdateDiariesAsync">
     </MySearch>
 
@@ -22,7 +23,8 @@
 </MAppBar>
 <ScrollContainer>
     <DiaryCardList @bind-Tags="Tags"
-                   Value="Diaries">
+                   Value="Diaries"
+                   NotFoundText="@(IsSearchFiltered ? I18n.T("Search.Not Found"):null)">
     </DiaryCardList>
 </ScrollContainer>
 

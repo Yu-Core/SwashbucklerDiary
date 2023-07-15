@@ -19,14 +19,7 @@
     }
 </div>
 
-@if (!Value.Any())
-{
-    <div class="my-not-have">
-        <div class="text-h6 text--secondary font-weight-bold-desktop">
-            @(I18n.T("Diary.NoDiary"))
-        </div>
-    </div>
-}
+<NotFound Show="!Value.Any()" Text="@(NotFoundText ?? I18n.T("Diary.NoDiary"))"></NotFound>
 
 <SelectTags @bind-Value="ShowSelectTag"
 @bind-Values="SelectedTags"

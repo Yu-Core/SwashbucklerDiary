@@ -39,6 +39,8 @@ namespace SwashbucklerDiary.Components
         public List<TagModel> Tags { get; set; } = new();
         [Parameter]
         public EventCallback<List<TagModel>> TagsChanged { get; set; }
+        [Parameter]
+        public string? NotFoundText { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -76,7 +78,7 @@ namespace SwashbucklerDiary.Components
             bool flag = await DiaryService.DeleteAsync(diaryModel);
             if (flag)
             {
-                var index = _value.FindIndex(it=>it.Id == diaryModel.Id);
+                var index = _value.FindIndex(it => it.Id == diaryModel.Id);
                 if (index < 0)
                 {
                     return;

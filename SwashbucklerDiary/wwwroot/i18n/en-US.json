@@ -78,7 +78,9 @@
     "Text": "Text Mode"
   },
   "Search": {
-    "Placeholder": "Please enter keywords"
+    "Please enter keywords": "Please enter keywords",
+    "Please enter diary keywords": "Please enter diary keywords",
+    "Not Found": "Not Found"
   },
   "History": {
     "Calendar": "Calendar"
@@ -572,7 +574,6 @@
     "ClearSuccess": "Clear success"
   },
   "SearchAppFunction": {
-    "Placeholder": "Please enter the function you want to search for",
-    "No AppFunction": "No search results found"
+    "Placeholder": "Please enter the function you want to search for"
   }
 }

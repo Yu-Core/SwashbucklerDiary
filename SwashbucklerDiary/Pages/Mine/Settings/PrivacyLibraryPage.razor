@@ -33,7 +33,8 @@
 
 <ScrollContainer>
     <DiaryCardList @bind-Tags="Tags"
-                   Value="Diaries" />
+                   Value="Diaries"
+                   NotFoundText="@(IsSearchFiltered ? I18n.T("Search.Not Found"):null)" />
 </ScrollContainer>
 
 <DateFilterDialog @bind-Value="ShowFilter"

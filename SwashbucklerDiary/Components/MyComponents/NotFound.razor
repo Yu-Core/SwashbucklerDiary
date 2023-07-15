@@ -1,0 +1,22 @@
+﻿@using SwashbucklerDiary.IServices;
+@namespace SwashbucklerDiary.Components
+
+@if (Show)
+{
+    <div class="my-not-have">
+        <div class="text-h6 text--secondary font-weight-bold-desktop">
+            @(Text ?? I18n.T("Search.Not Found"))
+        </div>
+    </div>
+}
+
+@code {
+
+    [Inject]
+    protected II18nService I18n { get; set; } = default!;
+
+    [Parameter]
+    public bool Show { get; set; }
+    [Parameter]
+    public string? Text { get; set; }
+}
