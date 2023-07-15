@@ -2,6 +2,8 @@
 export function getScreenshotBase64(element) {
     return new Promise((resolve, reject) => {
         html2canvas(document.querySelector(element), {
+            allowTaint: true,
+            useCORS: true,
             onclone: (clonedDocument) => {
                 Array.from(clonedDocument.querySelectorAll('textarea')).forEach((textArea) => {
                     const div = clonedDocument.createElement('div')
