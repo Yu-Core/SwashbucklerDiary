@@ -13,11 +13,11 @@
                Elevation="0"
                Rounded="@("lg")"
                OnClick="()=>OpenBrowser(item.Url)">
-            <MList TwoLine>
-            <MListItem>
-                <MListItemContent>
-                    <MListItemTitle Class="font-weight-bold">
-                        @(item.Name)
+            <MList TwoLine="true">
+                <MListItem>
+                    <MListItemContent>
+                        <MListItemTitle Class="font-weight-bold">
+                            @(item.Name)
                         </MListItemTitle>
                         <MListItemSubtitle>
                             @(item.License)

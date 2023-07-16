@@ -46,9 +46,7 @@
             </MList>
         </MCard>
     }
-    else
-    {
-        <NotFound Show="IsSearchFiltered"></NotFound>
-    }
+
+    <NotFound Show="!AppFunctions.Any()"></NotFound>
 
 </ScrollContainer>
