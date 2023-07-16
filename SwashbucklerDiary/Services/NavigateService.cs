@@ -40,38 +40,38 @@ namespace SwashbucklerDiary.Services
             else
             {
                 oldUrl = CurrentUrl;
-                _currentUrl = null;
-                _funcCurrentUrl = null;
+                ClearCurrentUrl();
             }
 
             HistoryUrl.Add(oldUrl);
             if (CurrentCache != null)
             {
-                if(!HistoryCache.ContainsKey(oldUrl))
+                var cacheKey = oldUrl.Split("?")[0];
+                if (!HistoryCache.ContainsKey(cacheKey))
                 {
-                    HistoryCache.Add(oldUrl, CurrentCache);
+                    HistoryCache.Add(cacheKey, CurrentCache);
                 }
+
+                ClearCurrentCache();
             }
 
             Navigation.NavigateTo(url);
         }
         public void NavigateToBack()
         {
-            string oldUrl = Navigation.ToBaseRelativePath(Navigation.Uri);
+            ClearCurrentUrl();
+            ClearCurrentCache();
+            string cacheKey = Navigation.ToBaseRelativePath(Navigation.Uri).Split("?")[0]; ;
+            HistoryCache.Remove(cacheKey);
             string url = string.Empty;
             if (HistoryUrl.Count > 0)
             {
                 url = HistoryUrl.Last();
-            }
-            Navigation.NavigateTo(url);
-            if (HistoryUrl.Count > 0)
-            {
                 var lastIndex = HistoryUrl.Count - 1;
                 //RemoveAt比Remove性能好一些
                 HistoryUrl.RemoveAt(lastIndex);
             }
-
-            HistoryCache.Remove(oldUrl);
+            Navigation.NavigateTo(url);
         }
 
         public bool OnBackButtonPressed()
@@ -98,14 +98,14 @@ namespace SwashbucklerDiary.Services
             {
                 await NavBtnAction.Invoke();
             }
+            ClearCurrentUrl();
+            ClearCurrentCache();
+            HistoryUrl.Clear();
+            HistoryCache.Clear();
+
             Navigation.NavigateTo(url);
-            if(HistoryUrl.Count > 0)
-            {
-                HistoryUrl.Clear();
-                HistoryCache.Clear();
-            }
         }
-    
+
         public void SetCurrentUrl(string? url)
         {
             _currentUrl = url;
@@ -132,14 +132,27 @@ namespace SwashbucklerDiary.Services
             return GetCache(url);
         }
 
-        public object? GetCache(string url)
+        private object? GetCache(string url)
         {
-            if (HistoryCache.ContainsKey(url))
+            var cacheKey = url.Split("?")[0];
+            if (HistoryCache.ContainsKey(cacheKey))
             {
-                return HistoryCache[url];
+                return HistoryCache[cacheKey];
             }
 
             return null;
+        }
+
+        private void ClearCurrentUrl()
+        {
+            _currentUrl = null;
+            _funcCurrentUrl = null;
+        }
+
+        private void ClearCurrentCache()
+        {
+            _currentCache = null;
+            _funcCurrentCache = null;
         }
     }
 }

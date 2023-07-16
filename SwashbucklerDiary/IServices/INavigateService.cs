@@ -39,6 +39,5 @@ namespace SwashbucklerDiary.IServices
         void SetCurrentCache(object? value);
         void SetCurrentCache(Func<object>? func);
         object? GetCurrentCache();
-        object? GetCache(string url);
     }
 }
