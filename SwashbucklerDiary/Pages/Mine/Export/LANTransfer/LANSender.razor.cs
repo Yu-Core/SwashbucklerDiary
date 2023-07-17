@@ -28,6 +28,7 @@ namespace SwashbucklerDiary.Pages
             UDPListening = false;
             if (udpClient != null)
             {
+                udpClient.DropMulticastGroup(multicastAddress);
                 udpClient.Close();
                 udpClient.Dispose();
             }
@@ -37,7 +38,7 @@ namespace SwashbucklerDiary.Pages
         protected override void OnInitialized()
         {
             udpClient = new UdpClient(multicastPort);
-            StartListening();
+            StartUDPListening();
         }
 
         protected override void OnAfterRender(bool firstRender)
@@ -51,7 +52,7 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private bool IsCurrentPage => NavigateService.Navigation.Uri.Contains("/lanSender");
+        private bool IsCurrentPage => NavigateService.Navigation.Uri.Contains("lanSender");
 
         private bool UDPListening
         {
@@ -62,21 +63,23 @@ namespace SwashbucklerDiary.Pages
         private string GetDeviceIcon(DevicePlatformType devicePlatform)
             => LANService.GetDevicePlatformTypeIcon(devicePlatform);
 
-        private void StartListening()
+        private void StartUDPListening()
         {
-            if(!LANService.IsConnection())
+            if (UDPListening)
+            {
+                return;
+            }
+
+            if (!LANService.IsConnection())
             {
                 AlertService.Info(I18n.T("lanSender.No network connection"));
                 return;
             }
+
             if(!JoinMulticastGroup)
             {
-                udpClient!.JoinMulticastGroup(multicastAddress);
                 JoinMulticastGroup = true;
-            }
-            if (UDPListening)
-            {
-                return;
+                udpClient!.JoinMulticastGroup(multicastAddress);
             }
 
             UDPListening = true;
