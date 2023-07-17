@@ -5,9 +5,28 @@
 
 <MAppBar App="true"
          Elevation="0">
-    <MToolbarTitle Class="font-weight-bold">
-        @(I18n.T("History.Calendar"))
-    </MToolbarTitle>
+    @if (NormalCalendarVisible)
+    {
+        <MToolbarTitle Class="font-weight-bold">
+            @(I18n.T("History.Calendar"))
+        </MToolbarTitle>
+    }
+    else
+    {
+        <div class="float-calendar">
+            <MTextField @bind-Value="PickedDate"
+                        Class="rounded-lg text-h6 font-weight-bold"
+                        Style="cursor:pointer;"
+                        Dense="true"
+                        Readonly="true"
+                        Solo="true"
+                        Flat="true"
+                        HideDetails="@("auto")"
+                        OnMouseUp="()=>ShowFloatCalendar=true"
+                        PrependIcon="mdi-calendar">
+            </MTextField>
+        </div>
+    }
 </MAppBar>
 
 <ScrollContainer @ref="scrollContainer">
@@ -23,18 +42,6 @@
                      EventColor='"primary"'
                      Locale="@(I18n.Culture.Name)">
         </MDatePicker>
-    </div>
-
-    <div class="float-calendar theme-element">
-        <MTextField @bind-Value="PickedDate"
-                    Class="rounded-lg"
-                    Dense="true"
-                    Readonly="true"
-                    Outlined="true"
-                    HideDetails="@("auto")"
-                    OnMouseUp="()=>ShowFloatCalendar=true"
-                    PrependIcon="mdi-calendar">
-        </MTextField>
     </div>
 
     <DiaryCardList @bind-Tags="Tags"

@@ -1,18 +1,40 @@
-﻿using SwashbucklerDiary.Components;
+﻿using Microsoft.JSInterop;
+using SwashbucklerDiary.Components;
 
 namespace SwashbucklerDiary.Pages
 {
     public partial class HistoryPage : DiariesPageComponentBase
     {
         private ScrollContainer? scrollContainer;
+        private bool NormalCalendarVisible = true;
         private bool ShowFloatCalendar;
         private DateOnly _pickedDate = DateOnly.FromDateTime(DateTime.Now);
         private DateOnly[] EventsDates = Array.Empty<DateOnly>();
+        private IJSObjectReference? module;
+
+        [JSInvokable]
+        public async Task Show(bool value)
+        {
+            NormalCalendarVisible = value;
+            await InvokeAsync(StateHasChanged);
+        }
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
             await UpdateEventsDates();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if(firstRender)
+            {
+                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/scroll.js");
+                var dotNetCallbackRef = DotNetObjectReference.Create(this);
+                await module.InvokeVoidAsync("ElementVisible", new object[4] { dotNetCallbackRef ,"Show", ".my-scroll-container", ".normal-calendar" });
+            }
+            
+            await base.OnAfterRenderAsync(firstRender);
         }
 
         protected override async Task UpdateDiariesAsync()
