@@ -298,3 +298,6 @@ a, .btn-link {
 .chevron-down-rotate-x {
     transform: rotateX(180deg);
 }
+.setting-state{
+    flex:none !important;
+}
