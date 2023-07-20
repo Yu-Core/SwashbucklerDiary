@@ -39,16 +39,9 @@ namespace SwashbucklerDiary.Components
         {
             if (firstRender)
             {
-                await PreventInputLoseFocus();
+                await AfterMarkdownRender();
             }
             await base.OnAfterRenderAsync(firstRender);
-        }
-
-        private async Task PreventInputLoseFocus()
-        {
-            //点击工具栏不会丢失焦点
-            await Task.Delay(1000);
-            await module!.InvokeVoidAsync("PreventInputLoseFocus", null);
         }
 
         private async Task SetOptions()
@@ -83,5 +76,18 @@ namespace SwashbucklerDiary.Components
                 { "link", link }
             };
         }
+
+        private async Task AfterMarkdownRender()
+        {
+            await Task.Delay(1000);
+            await PreventInputLoseFocus();
+        }
+
+        private async Task PreventInputLoseFocus()
+        {
+            //点击工具栏不会丢失焦点
+            await module!.InvokeVoidAsync("PreventInputLoseFocus", null);
     }
+
+
 }

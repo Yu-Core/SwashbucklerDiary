@@ -57,7 +57,7 @@ namespace SwashbucklerDiary.Components
             if (firstRender)
             {
                 AfterFirstRender = true;
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/vditor-helper.js");
+                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/vditor-preview-helper.js");
                 await RenderingMarkdown(Value);
             }
 
