@@ -86,7 +86,7 @@
     "Calendar": "日历"
   },
   "Write": {
-    "OpenTitle": "打开标题",
+    "EnableTitle": "开启标题",
     "CloseTitle": "关闭标题",
     "Weather": "天气",
     "Mood": "心情",
@@ -98,7 +98,9 @@
     "SelectWeather": "选择天气",
     "SelectMood": "选择心情",
     "InputLocation": "输入位置",
-    "LocationPlace": "请输入位置"
+    "LocationPlace": "请输入位置",
+    "EnableEditCreateTime": "开启修改日期",
+    "CloseEditCreateTime": "关闭修改日期"
   },
   "Weather": {
     "sunny": "晴",

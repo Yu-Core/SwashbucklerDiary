@@ -10,15 +10,15 @@ namespace SwashbucklerDiary.Pages
 {
     public partial class WritePage : PageComponentBase, IDisposable
     {
-        private bool ShowTitle;
         private bool ShowMenu;
         private bool ShowSelectTag;
         private bool ShowWeather;
         private bool ShowMood;
         private bool ShowLocation;
         private bool ShowCreateTime;
-        private bool Markdown = true;
-        private bool EditCreateTime;
+        private bool EnableTitle;
+        private bool EnableMarkdown = true;
+        private bool EnableEditCreateTime;
         private List<DynamicListItem> ListItemModels = new();
         private DiaryModel Diary = new()
         {
@@ -109,11 +109,13 @@ namespace SwashbucklerDiary.Pages
         private string MoodText =>
             string.IsNullOrEmpty(Diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + Diary.Mood)!;
 
-        private string ShowTitleText() => ShowTitle ? "Write.CloseTitle" : "Write.OpenTitle";
+        private string SetTitleText() => EnableTitle ? "Write.CloseTitle" : "Write.EnableTitle";
 
-        private string MarkdownText() => Markdown ? "Diary.Text" : "Diary.Markdown";
+        private string SetMarkdownText() => EnableMarkdown ? "Diary.Text" : "Diary.Markdown";
 
-        private string MarkdownIcon() => Markdown ? "mdi-format-text" : "mdi-language-markdown-outline";
+        private string SetMarkdownIcon() => EnableMarkdown ? "mdi-format-text" : "mdi-language-markdown-outline";
+
+        private string SetEditCreateTimeText() => EnableEditCreateTime ? "Write.CloseEditCreateTime" : "Write.EnableEditCreateTime";
 
         private async Task SetTag()
         {
@@ -141,22 +143,23 @@ namespace SwashbucklerDiary.Pages
             }
 
             Diary = diary;
-            ShowTitle = !string.IsNullOrEmpty(diary.Title);
+            EnableTitle = !string.IsNullOrEmpty(diary.Title);
         }
 
         private async Task LoadSettings()
         {
-            ShowTitle = await SettingsService.Get(SettingType.Title);
-            Markdown = await SettingsService.Get(SettingType.Markdown);
-            EditCreateTime = await SettingsService.Get(SettingType.EditCreateTime);
+            EnableTitle = await SettingsService.Get(SettingType.Title);
+            EnableMarkdown = await SettingsService.Get(SettingType.Markdown);
+            EnableEditCreateTime = await SettingsService.Get(SettingType.EditCreateTime);
         }
 
         private void LoadView()
         {
             ListItemModels = new()
             {
-                new(this, ShowTitleText,"mdi-format-title",ShowTitleChanged),
-                new(this, MarkdownText,MarkdownIcon,MarkdownChanged)
+                new(this, SetTitleText,"mdi-format-title",()=> SettingChange(SettingType.Title,ref EnableTitle)),
+                new(this, SetMarkdownText,SetMarkdownIcon,()=> SettingChange(SettingType.Markdown,ref EnableMarkdown)),
+                new(this, SetEditCreateTimeText,"mdi-calendar-edit-outline",()=> SettingChange(SettingType.Markdown,ref EnableEditCreateTime))
             };
         }
 
@@ -280,12 +283,6 @@ namespace SwashbucklerDiary.Pages
             return len + " " + I18n.T("Write.CountUnit");
         }
 
-        private async Task MarkdownChanged()
-        {
-            Markdown = !Markdown;
-            await SettingsService.Save(SettingType.Markdown, Markdown);
-        }
-
         protected async Task HandleAchievements()
         {
             var messages = await AchievementService.UpdateUserState(AchievementType.Diary);
@@ -299,10 +296,10 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private async Task ShowTitleChanged()
+        private Task SettingChange(SettingType type, ref bool value)
         {
-            ShowTitle = !ShowTitle;
-            await SettingsService.Save(SettingType.Title, ShowTitle);
+            value = !value;
+            return SettingsService.Save(type, value);
         }
     }
 }

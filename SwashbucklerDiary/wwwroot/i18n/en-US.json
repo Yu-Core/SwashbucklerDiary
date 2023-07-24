@@ -86,7 +86,7 @@
     "Calendar": "Calendar"
   },
   "Write": {
-    "OpenTitle": "Open title",
+    "EnableTitle": "Enable title",
     "CloseTitle": "Close title",
     "Weather": "Weather",
     "Mood": "Mood",
@@ -98,7 +98,9 @@
     "SelectWeather": "Select weather",
     "SelectMood": "Select mood",
     "InputLocation": "Enter location",
-    "LocationPlace": "Please enter the location"
+    "LocationPlace": "Please enter the location",
+    "EnableEditCreateTime": "Enable edit date",
+    "CloseEditCreateTime": "Close edit date"
   },
   "Weather": {
     "sunny": "sunny",

@@ -40,7 +40,7 @@
                  ContentClass="d-flex flex-column flex-grow-1">
     <div>
         <div class="px-3 px-sm-1 d-flex align-end">
-            @if (EditCreateTime)
+            @if (EnableEditCreateTime)
             {
                 <button class="text-h6 font-weight-bold" @onclick="()=>ShowCreateTime=true">
                     @(Diary.CreateTime.ToString("yyyy/MM/dd"))
@@ -88,7 +88,7 @@
             </MChip>
         </div>
     </div>
-    @if (ShowTitle)
+    @if (EnableTitle)
     {
         <MTextField @bind-Value="Diary.Title"
                     Class="pb-0 my-sm-4 user-select font-weight-bold flex-grow-0"
@@ -105,7 +105,7 @@
     }
 
     <div class="write-input-wrap">
-        @if (Markdown)
+        @if (EnableMarkdown)
         {
             <MyMarkdown @bind-Value="Diary.Content"
                         WrapClass="write-markdown-wrap"
@@ -115,7 +115,7 @@
         else
         {
             <MTextarea @bind-Value="Diary.Content"
-                       Class="@($"my-sm-4 user-select rounded-lg flex-grow-1 flex-column {(Markdown?"d-none":"")}")"
+                       Class="@($"my-sm-4 user-select rounded-lg flex-grow-1 flex-column {(EnableMarkdown?"d-none":"")}")"
                        Solo="Mobile"
                        Flat="Mobile"
                        Outlined="Desktop"
@@ -140,7 +140,7 @@
         </div>
     </div>
 
-    <div class="d-hover-none @(Markdown?"vditor-toolbar-help":"")">
+    <div class="d-hover-none @(EnableMarkdown?"vditor-toolbar-help":"")">
     </div>
 
     <div class="d-no-hover-none hidden-xs-only">
