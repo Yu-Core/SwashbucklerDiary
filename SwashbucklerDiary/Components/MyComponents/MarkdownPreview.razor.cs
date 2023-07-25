@@ -5,7 +5,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class MarkdownPreview
+    public partial class MarkdownPreview : ITempCustomSchemeAssist
     {
         private ElementReference element;
         private string? _value;
@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.Components
         [Inject]
         private ISettingsService SettingsService { get; set; } = default!;
         [Inject]
-        private IJSRuntime JS { get; set; } = default!;
+        public IJSRuntime JS { get; set; } = default!;
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
 
@@ -44,10 +44,7 @@ namespace SwashbucklerDiary.Components
             await module!.InvokeVoidAsync("Copy", new object[2] { dotNetCallbackRef, "CopySuccess" });
             //修复点击链接的一些错误
             await module!.InvokeVoidAsync("FixLink", new object[1] { element });
-            if (OperatingSystem.IsWindows())
-            {
-                await JS!.InvokeVoidAsync("ImageRender", null);
-            }
+            await this.ImageRender();
         }
 
         [JSInvokable]

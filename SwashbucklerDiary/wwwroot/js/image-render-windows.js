@@ -8,7 +8,7 @@ function ImageRender() {
     for (var i = 0; i < imgs.length; i++) {
         var src = imgs[i].getAttribute('src');
         if (src && src.includes('appdata:///')) {
-            src = src.replace("appdata:///", "appdata/");;
+            src = src.replace("appdata:///", "appdata/");
             imgs[i].setAttribute("src", src); 
         }
     }

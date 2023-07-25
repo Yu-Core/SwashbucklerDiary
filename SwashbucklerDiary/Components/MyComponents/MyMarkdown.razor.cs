@@ -6,7 +6,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class MyMarkdown
+    public partial class MyMarkdown : ITempCustomSchemeAssist
     {
         private Dictionary<string, object> _options = new();
         private IJSObjectReference? module;
@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Components
         [Inject]
         private ISettingsService SettingsService { get; set; } = default!;
         [Inject]
-        private IJSRuntime? JS { get; set; }
+        public IJSRuntime JS { get; set; } = default!;
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
         [Inject]
@@ -99,7 +99,7 @@ namespace SwashbucklerDiary.Components
             if (ValueChanged.HasDelegate)
             {
                 await ValueChanged.InvokeAsync(value);
-                await ImageRender();
+                await this.ImageRender();
             }
         }
 
@@ -107,23 +107,13 @@ namespace SwashbucklerDiary.Components
         {
             await Task.Delay(1000);
             await PreventInputLoseFocus();
-            await ImageRender();
+            await this.ImageRender();
         }
 
         private async Task PreventInputLoseFocus()
         {
             //点击工具栏不会丢失焦点
             await module!.InvokeVoidAsync("PreventInputLoseFocus", null);
-        }
-
-        private async Task ImageRender()
-        {
-            //Windows暂时无法拦截自定义协议，所以需要将自定义协议渲染为https:// 
-            //已经向WebView2提了这个问题 https://github.com/MicrosoftEdge/WebView2Feedback/issues/3658
-            if (OperatingSystem.IsWindows())
-            {
-                await JS!.InvokeVoidAsync("ImageRender", null);
-            }
         }
 
         private async Task AddImage(string btnName)

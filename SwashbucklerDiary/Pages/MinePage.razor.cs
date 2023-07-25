@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.Maui.ApplicationModel;
 using Serilog;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
@@ -7,7 +6,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class MinePage : PageComponentBase
+    public partial class MinePage : PageComponentBase,ITempCustomSchemeAssist
     {
         private int DiaryCount;
         private long WordCount;
@@ -35,8 +34,6 @@ namespace SwashbucklerDiary.Pages
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
-        [Inject]
-        private ILocalImageService LocalImageService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -115,8 +112,8 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SetAvatar()
         {
-            string avatar = await SettingsService.Get(SettingType.Avatar);
-            Avatar = await LocalImageService.ToUrl(avatar);
+            string uri = await SettingsService.Get(SettingType.Avatar);
+            Avatar = this.ImageRender(uri);
         }
 
         private async Task SendMail()

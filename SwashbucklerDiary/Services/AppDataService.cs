@@ -306,20 +306,29 @@ namespace SwashbucklerDiary.Services
             }
         }
 
-        public async Task<string> CreateAppDataFileAsync(string relativePath, string sourcePath)
+        public async Task<string> CreateAppDataFileAsync(string targetFilePath, string sourceFilePath)
         {
-            relativePath = Path.Combine(relativePath.Split('/'));
+            
+
+            string relativePath = Path.Combine(targetFilePath.Split('/'));
             CreateDirectory(relativePath, FileSystem.Current.AppDataDirectory);
             string path = Path.Combine(FileSystem.Current.AppDataDirectory, relativePath);
+            if (Directory.Exists(path))
+            {
+                var fn = sourceFilePath.FileMD5() + Path.GetExtension(sourceFilePath);
+                targetFilePath = targetFilePath + fn;
+                path = Path.Combine(path, fn);
+            }
+
             if (File.Exists(path))
             {
                 File.Delete(path);
             }
 
-            var file = new FileResult(sourcePath);
+            var file = new FileResult(sourceFilePath);
 #if WINDOWS
             // on Windows file.OpenReadAsync() throws an exception
-            using Stream sourceStream = File.OpenRead(sourcePath);
+            using Stream sourceStream = File.OpenRead(sourceFilePath);
 #else
             using Stream sourceStream = await file.OpenReadAsync();
 #endif
@@ -327,23 +336,15 @@ namespace SwashbucklerDiary.Services
             {
                 await sourceStream.CopyToAsync(localFileStream);
             };
-            return path;
-        }
-
-        private async Task<string> InternalCreateAppDataFileAsync(string filePath,string dir)
-        {
-            var fn = filePath.FileMD5() + Path.GetExtension(filePath);
-            fn = dir + fn;
-            await CreateAppDataFileAsync(fn, filePath);
-            return customScheme + fn;
+            return customScheme + targetFilePath;
         }
 
         public Task<string> CreateAppDataImageFileAsync(string filePath)
-            => InternalCreateAppDataFileAsync(filePath, "Image/");
+            => CreateAppDataFileAsync("Image/", filePath);
 
         public Task<bool> DeleteAppDataFileByFilePathAsync(string filePath)
         {
-            if(!File.Exists(filePath))
+            if (!File.Exists(filePath))
             {
                 return Task.FromResult(false);
             }

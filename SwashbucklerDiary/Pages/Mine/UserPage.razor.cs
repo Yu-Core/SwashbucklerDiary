@@ -5,7 +5,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class UserPage : PageComponentBase
+    public partial class UserPage : PageComponentBase,ITempCustomSchemeAssist
     {
         private string? UserName;
         private string? Sign;
@@ -13,8 +13,6 @@ namespace SwashbucklerDiary.Pages
         private bool ShowAvatar;
         private bool showLoading;
 
-        [Inject]
-        private ILocalImageService LocalImageService { get; set; } = default!;
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
 
@@ -100,14 +98,14 @@ namespace SwashbucklerDiary.Pages
             showLoading = true;
             StateHasChanged();
 
-            string fn = nameof(Avatar) + Path.GetExtension(sourcFilePath);
-            string localFilePath = await AppDataService.CreateAppDataFileAsync(fn, sourcFilePath);
+            string oldUri = await SettingsService.Get(SettingType.Avatar);
 
-            string oldAvatar = await SettingsService.Get(SettingType.Avatar);
-            await SettingsService.Save(SettingType.Avatar, localFilePath);
+            string dir = "Avatar/";
+            string uri = await AppDataService.CreateAppDataFileAsync(dir, sourcFilePath);
+            await SettingsService.Save(SettingType.Avatar, uri);
+            await SetAvatar(uri);
 
-            await LocalImageService.RevokeUrl(oldAvatar);
-            await SetAvatar(localFilePath);
+            await AppDataService.DeleteAppDataFileByCustomSchemeAsync(oldUri);
 
             showLoading = false;
             StateHasChanged();
@@ -118,7 +116,7 @@ namespace SwashbucklerDiary.Pages
         private async Task SetAvatar(string? uri = null)
         {
             uri ??= await SettingsService.Get(SettingType.Avatar);
-            Avatar = await LocalImageService.ToUrl(uri);
+            Avatar = this.ImageRender(uri);
         }
     }
 }
