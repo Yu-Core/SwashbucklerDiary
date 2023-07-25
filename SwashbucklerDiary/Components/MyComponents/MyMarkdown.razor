@@ -1,10 +1,12 @@
 ﻿@namespace SwashbucklerDiary.Components
 
 <div class="@WrapClass">
-    <MMarkdown Value="@Value"
-               ValueChanged="ValueChanged"
+    <MMarkdown @ref="MMarkdown"
+               Value="@Value"
+               ValueChanged="InternalValueChanged"
                Class="@Class"
                Style="padding-top:10px"
-               Options="_options">
+               Options="_options"
+               OnToolbarButtonClick="AddImage">
     </MMarkdown>
 </div>

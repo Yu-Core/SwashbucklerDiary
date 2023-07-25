@@ -31,3 +31,7 @@
     background-color: #121212 !important;
     color: #fff;
 }
+
+.vditor-reset img {
+    border-radius: 8px;
+}

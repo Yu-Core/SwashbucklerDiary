@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -9,6 +10,7 @@ namespace SwashbucklerDiary.Components
     {
         private Dictionary<string, object> _options = new();
         private IJSObjectReference? module;
+        private MMarkdown? MMarkdown;
 
         [Inject]
         private II18nService I18n { get; set; } = default!;
@@ -18,6 +20,12 @@ namespace SwashbucklerDiary.Components
         private IJSRuntime? JS { get; set; }
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
+        [Inject]
+        private IPlatformService PlatformService { get; set; } = default!;
+        [Inject]
+        private IAlertService AlertService { get; set; } = default!;
+        [Inject]
+        private IAppDataService AppDataService { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
@@ -49,10 +57,10 @@ namespace SwashbucklerDiary.Components
             string lang = await SettingsService.Get(SettingType.Language);
             lang = lang.Replace("-", "_");
             string theme = ThemeService.Dark ? "dark" : "light";
-            var previewTheme = new Dictionary<string, object?>() 
-            { 
+            var previewTheme = new Dictionary<string, object?>()
+            {
                 { "current", ThemeService.Dark ? "dark" : "light" },
-                { "path", "npm/vditor/3.9.3/dist/css/content-theme" } 
+                { "path", "npm/vditor/3.9.3/dist/css/content-theme" }
             };
             var preview = new Dictionary<string, object?>()
             {
@@ -62,11 +70,20 @@ namespace SwashbucklerDiary.Components
             {
                 { "isOpen", false }
             };
+            var btnImage = new Dictionary<string, object?>()
+            {
+                {"hotkey","⌘⌥+I" },
+                {"name","image" },
+                {"tipPosition","n" },
+                {"tip","添加图片" },
+                {"className","" },
+                {"icon","<svg><use xlink:href=\"#vditor-icon-image\"></use></svg>" },
+            };
 
             _options = new()
             {
                 { "mode", "ir" },
-                { "toolbar", new List<string>(){"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "outdent", "indent","code","inline-code","link","emoji"}},
+                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "outdent", "indent","code","inline-code","link","emoji",btnImage}},
                 { "placeholder", I18n.T("Write.ContentPlace")! },
                 { "cdn", "npm/vditor/3.9.3" },
                 { "lang", lang },
@@ -77,17 +94,54 @@ namespace SwashbucklerDiary.Components
             };
         }
 
+        private async Task InternalValueChanged(string value)
+        {
+            if (ValueChanged.HasDelegate)
+            {
+                await ValueChanged.InvokeAsync(value);
+                await ImageRender();
+            }
+        }
+
         private async Task AfterMarkdownRender()
         {
             await Task.Delay(1000);
             await PreventInputLoseFocus();
+            await ImageRender();
         }
 
         private async Task PreventInputLoseFocus()
         {
             //点击工具栏不会丢失焦点
             await module!.InvokeVoidAsync("PreventInputLoseFocus", null);
+        }
+
+        private async Task ImageRender()
+        {
+            //Windows暂时无法拦截自定义协议，所以需要将自定义协议渲染为https:// 
+            //已经向WebView2提了这个问题 https://github.com/MicrosoftEdge/WebView2Feedback/issues/3658
+            if (OperatingSystem.IsWindows())
+            {
+                await JS!.InvokeVoidAsync("ImageRender", null);
+            }
+        }
+
+        private async Task AddImage(string btnName)
+        {
+            if (btnName == "image")
+            {
+                string? path = await PlatformService.PickPhotoAsync();
+                if (path == null)
+                {
+                    return;
+                }
+                string url = await AppDataService.CreateAppDataImageFileAsync(path);
+                string html = $"![]({url})";
+                if (path != null)
+                {
+                    await MMarkdown!.InsertValueAsync(html);
+                }
+            }
+        }
     }
-
-
 }

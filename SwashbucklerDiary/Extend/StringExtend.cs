@@ -17,6 +17,14 @@ namespace SwashbucklerDiary.Extend
             return sb.ToString();
         }
 
+        public static string FileMD5(this string filePath)
+        {
+            using var md5 = MD5.Create();
+            using var stream = File.OpenRead(filePath);
+            byte[] hash = md5.ComputeHash(stream);
+            return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+        }
+
         public static int WordCount(this string s)
         {
             string englishExpression = @"[\S]+";
