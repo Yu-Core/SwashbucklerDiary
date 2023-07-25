@@ -505,6 +505,7 @@
       "Path": "Export / Local export / Export",
       "Subtitle": "Save as txt, md, json, PDF type files",
       "Success": "Export success",
+      "Fail": "Export fail",
       "SelectType": "Select export file type"
     },
     "Import": {

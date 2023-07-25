@@ -502,9 +502,10 @@
     },
     "Export": {
       "Title": "导出",
-      "Path":  "导出 / 本地导出 / 导出",
+      "Path": "导出 / 本地导出 / 导出",
       "Subtitle": "保存为txt、md、json、pdf等格式文件",
       "Success": "导出成功",
+      "Fail": "导出失败",
       "SelectType": "选择导出文件格式"
     },
     "Import": {
