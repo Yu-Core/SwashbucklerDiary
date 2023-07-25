@@ -114,6 +114,7 @@ namespace SwashbucklerDiary.Components
                 { "cdn", "npm/vditor/3.9.3" },
                 { "lang", lang },
                 { "theme", theme },
+                { "icon","material" },
             };
         }
     }
