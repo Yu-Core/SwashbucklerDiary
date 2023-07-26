@@ -53,6 +53,7 @@ namespace SwashbucklerDiary.Extend
                 typeof(UserStateModel),
                 typeof(LocationModel),
                 typeof(LogModel),
+                typeof(DiaryResourceModel),
             };
             sqlSugar.CodeFirst.InitTables(types);
 

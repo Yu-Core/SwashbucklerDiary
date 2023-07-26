@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Serilog;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
@@ -37,14 +38,18 @@ namespace SwashbucklerDiary.Components
         {
             await InternalValueChanged(false);
 
-            bool flag = await AppDataService.CreateTxtFileAndSaveAsync(Diaries);
-            if (flag)
+            try
             {
-                //此处未来可能引入成就系统
-                await AlertService.Success(I18n.T("Export.Export.Success"));
+                bool flag = await AppDataService.CreateTxtFileAndSaveAsync(Diaries);
+                if (flag)
+                {
+                    //此处未来可能引入成就系统
+                    await AlertService.Success(I18n.T("Export.Export.Success"));
+                }
             }
-            else
+            catch (Exception e)
             {
+                Log.Error($"{e.Message}\n{e.StackTrace}");
                 await AlertService.Error(I18n.T("Export.Export.Fail"));
             }
         }
@@ -54,18 +59,22 @@ namespace SwashbucklerDiary.Components
         {
             await InternalValueChanged(false);
 
-            bool flag = await AppDataService.CreateJsonFileAndSaveAsync(Diaries);
-            if (flag)
+            try
             {
-                await AlertService.Success(I18n.T("Export.Export.Success"));
+                bool flag = await AppDataService.CreateJsonFileAndSaveAsync(Diaries);
+                if (flag)
+                {
+                    await AlertService.Success(I18n.T("Export.Export.Success"));
+                }
             }
-            else
+            catch (Exception e)
             {
+                Log.Error($"{e.Message}\n{e.StackTrace}");
                 await AlertService.Error(I18n.T("Export.Export.Fail"));
             }
         }
 
-        private Task CreatePDFFile()
+        private static Task CreatePDFFile()
         {
             return Task.CompletedTask;
         }
@@ -74,17 +83,22 @@ namespace SwashbucklerDiary.Components
         {
             await InternalValueChanged(false);
 
-            bool flag = await AppDataService.CreateMdFileAndSaveAsync(Diaries);
-            if (flag)
+            try
             {
-                await AlertService.Success(I18n.T("Export.Export.Success"));
+                bool flag = await AppDataService.CreateMdFileAndSaveAsync(Diaries);
+                if (flag)
+                {
+                    await AlertService.Success(I18n.T("Export.Export.Success"));
+                }
             }
-            else
+            catch (Exception e)
             {
+                Log.Error($"{e.Message}\n{e.StackTrace}");
                 await AlertService.Error(I18n.T("Export.Export.Fail"));
             }
+
         }
 
-        
+
     }
 }

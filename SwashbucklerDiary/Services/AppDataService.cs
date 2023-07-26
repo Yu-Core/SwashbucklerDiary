@@ -56,7 +56,7 @@ namespace SwashbucklerDiary.Services
             stream.CopyTo(fileStream);
         }
 
-        private void ClearFolder(string folderPath)
+        private static void ClearFolder(string folderPath)
         {
             DirectoryInfo directory = new(folderPath);
 
@@ -74,12 +74,12 @@ namespace SwashbucklerDiary.Services
             }
         }
 
-        private string GetFolderSize(string path)
+        private static string GetFolderSize(string path)
         {
             long fileSizeInBytes = GetDirectoryLength(path);
             return ConvertBytesToReadable(fileSizeInBytes);
         }
-        private long GetDirectoryLength(string dirPath)
+        private static long GetDirectoryLength(string dirPath)
         {
             long len = 0;
             //判断该路径是否存在（是否为文件夹）
@@ -133,48 +133,73 @@ namespace SwashbucklerDiary.Services
             return $"{size.ToString("0.#")} {sizes[i]}";
         }
 
-        public async Task<string> CreateTxtFileAsync(List<DiaryModel> diaries)
+        private string CreateTxtContent(DiaryModel diary)
         {
             StringBuilder text = new();
-            foreach (var item in diaries)
+            text.AppendLine(diary.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            if (string.IsNullOrEmpty(diary.Title))
             {
-                text.AppendLine(item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"));
-                if (string.IsNullOrEmpty(item.Title))
-                {
-                    text.AppendLine(item.Title);
-                }
+                text.AppendLine(diary.Title);
+            }
 
-                if (!string.IsNullOrEmpty(item.Weather))
-                {
-                    text.AppendLine(I18n.T("Weather." + item.Weather));
-                }
+            if (!string.IsNullOrEmpty(diary.Weather))
+            {
+                text.AppendLine(I18n.T("Weather." + diary.Weather));
+            }
 
-                if (!string.IsNullOrEmpty(item.Mood))
-                {
-                    text.AppendLine(I18n.T("Weather." + item.Weather));
-                }
+            if (!string.IsNullOrEmpty(diary.Mood))
+            {
+                text.AppendLine(I18n.T("Weather." + diary.Weather));
+            }
 
-                if (!string.IsNullOrEmpty(item.Location))
-                {
-                    text.AppendLine(item.Location);
-                }
+            if (!string.IsNullOrEmpty(diary.Location))
+            {
+                text.AppendLine(diary.Location);
+            }
 
-                text.AppendLine(item.Content);
-                if (item.Tags is not null && item.Tags.Count > 0)
+            text.AppendLine(diary.Content);
+            if (diary.Tags is not null && diary.Tags.Count > 0)
+            {
+                foreach (var tag in diary.Tags)
                 {
-                    foreach (var tag in item.Tags)
-                    {
-                        text.Append(tag + " ");
-                    }
-                    text.AppendLine();
+                    text.Append(tag + " ");
                 }
-
                 text.AppendLine();
             }
 
-            string filePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}.txt");
-            await File.WriteAllTextAsync(filePath, text.ToString());
-            return filePath;
+            text.AppendLine();
+            return text.ToString();
+        }
+
+        public Task<string> CreateTxtFileAsync(List<DiaryModel> diaries)
+        {
+            string outputFolder = Path.Combine(FileSystem.CacheDirectory, "Txt");
+            string zipFilePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}Txt.zip");
+
+            if (!Directory.Exists(outputFolder))
+            {
+                Directory.CreateDirectory(outputFolder);
+            }
+            else
+            {
+                ClearFolder(outputFolder);
+            }
+
+            foreach (var item in diaries)
+            {
+                string fileName = item.CreateTime.ToString("yyyy-MM-dd") + ".txt";
+                string filePath = Path.Combine(outputFolder, fileName);
+                string content = CreateTxtContent(item);
+                WriteToFile(filePath, content);
+            }
+
+            if (File.Exists(zipFilePath))
+            {
+                File.Delete(zipFilePath);
+            }
+
+            ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
+            return Task.FromResult(zipFilePath);
         }
 
         public async Task<string> CreateJsonFileAsync(List<DiaryModel> diaries)
@@ -195,7 +220,7 @@ namespace SwashbucklerDiary.Services
         public Task<string> CreateMdFileAsync(List<DiaryModel> diaries)
         {
             string outputFolder = Path.Combine(FileSystem.CacheDirectory, "Markdown");
-            string zipFilePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}.zip");
+            string zipFilePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}Markdown.zip");
 
             if (!Directory.Exists(outputFolder))
             {
@@ -208,9 +233,24 @@ namespace SwashbucklerDiary.Services
 
             foreach (var item in diaries)
             {
-                string fileName = item.CreateTime.ToString("yyyy-MM-dd-HH-mm-ss") + ".md";
+                string fileName = item.CreateTime.ToString("yyyy-MM-dd") + ".md";
                 string filePath = Path.Combine(outputFolder, fileName);
-                WriteToFile(filePath, item.Content);
+
+                var content = item.Content?.Replace(customScheme, "./");
+                WriteToFile(filePath, content);
+
+                if (item.ResourceUris is not null)
+                {
+                    foreach (var uri in item.ResourceUris)
+                    {
+                        if (uri.ResourceUri is null)
+                        {
+                            continue;
+                        }
+
+                        CopyUriFileToOutFolder(uri.ResourceUri, outputFolder);
+                    }
+                }
             }
 
             if (File.Exists(zipFilePath))
@@ -223,26 +263,22 @@ namespace SwashbucklerDiary.Services
             return Task.FromResult(zipFilePath);
         }
 
-        public async Task<bool> CreateTxtFileAndSaveAsync(List<DiaryModel> diaries)
+        private async Task<bool> CreateFileAndSaveAsync(Func<List<DiaryModel>, Task<string>> func, string type, List<DiaryModel> diaries)
         {
-            string filePath = await CreateTxtFileAsync(diaries);
-            string saveFilePath = exportFileName + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".txt";
+            string filePath = await func.Invoke(diaries);
+            string extension = Path.GetExtension(filePath);
+            string saveFilePath = $"{exportFileName}{type}{DateTime.Now:yyyy-MM-dd-HH-mm-ss}{extension}";
             return await SaveFile(saveFilePath, filePath);
         }
 
-        public async Task<bool> CreateJsonFileAndSaveAsync(List<DiaryModel> diaries)
-        {
-            string filePath = await CreateJsonFileAsync(diaries);
-            string saveFilePath = exportFileName + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".json";
-            return await SaveFile(saveFilePath, filePath);
-        }
+        public Task<bool> CreateTxtFileAndSaveAsync(List<DiaryModel> diaries)
+            => CreateFileAndSaveAsync(CreateTxtFileAsync, "Txt", diaries);
 
-        public async Task<bool> CreateMdFileAndSaveAsync(List<DiaryModel> diaries)
-        {
-            string filePath = await CreateMdFileAsync(diaries);
-            string saveFilePath = exportFileName + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".zip";
-            return await SaveFile(saveFilePath, filePath);
-        }
+        public Task<bool> CreateJsonFileAndSaveAsync(List<DiaryModel> diaries)
+            => CreateFileAndSaveAsync(CreateJsonFileAsync, "Json", diaries);
+
+        public Task<bool> CreateMdFileAndSaveAsync(List<DiaryModel> diaries)
+            => CreateFileAndSaveAsync(CreateMdFileAsync, "Markdown", diaries);
 
         private async Task<bool> SaveFile(string targetFilePath, string sourceFilePath)
         {
@@ -308,20 +344,24 @@ namespace SwashbucklerDiary.Services
 
         public async Task<string> CreateAppDataFileAsync(string targetFilePath, string sourceFilePath)
         {
-            
+            bool isMD5 = false;
+            if (string.IsNullOrEmpty(Path.GetExtension(targetFilePath)))
+            {
+                isMD5 = true;
+                var fn = sourceFilePath.FileMD5() + Path.GetExtension(sourceFilePath);
+                targetFilePath = targetFilePath.TrimEnd('/') + "/" + fn;
+            }
 
             string relativePath = Path.Combine(targetFilePath.Split('/'));
             CreateDirectory(relativePath, FileSystem.Current.AppDataDirectory);
             string path = Path.Combine(FileSystem.Current.AppDataDirectory, relativePath);
-            if (Directory.Exists(path))
-            {
-                var fn = sourceFilePath.FileMD5() + Path.GetExtension(sourceFilePath);
-                targetFilePath = targetFilePath + fn;
-                path = Path.Combine(path, fn);
-            }
-
             if (File.Exists(path))
             {
+                if (isMD5)
+                {
+                    return customScheme + targetFilePath;
+                }
+
                 File.Delete(path);
             }
 
@@ -336,11 +376,12 @@ namespace SwashbucklerDiary.Services
             {
                 await sourceStream.CopyToAsync(localFileStream);
             };
+
             return customScheme + targetFilePath;
         }
 
         public Task<string> CreateAppDataImageFileAsync(string filePath)
-            => CreateAppDataFileAsync("Image/", filePath);
+            => CreateAppDataFileAsync("Image", filePath);
 
         public Task<bool> DeleteAppDataFileByFilePathAsync(string filePath)
         {
@@ -355,9 +396,39 @@ namespace SwashbucklerDiary.Services
 
         public Task<bool> DeleteAppDataFileByCustomSchemeAsync(string uri)
         {
-            var relativePath = Path.Combine(uri.TrimStart(customScheme.ToCharArray()).Split('/'));
-            string path = Path.Combine(FileSystem.Current.AppDataDirectory, relativePath);
+            string path = UriToFilePath(uri);
             return DeleteAppDataFileByFilePathAsync(path);
+        }
+
+        private static string UriToFilePath(string uri)
+        {
+            var relativePath = Path.Combine(uri.TrimStart(customScheme.ToCharArray()).Split('/'));
+            return Path.Combine(FileSystem.Current.AppDataDirectory, relativePath);
+        }
+
+        private static void CopyUriFileToOutFolder(string uri, string outFolder)
+        {
+            uri = uri.Replace(customScheme, "");
+            var relativePath = Path.Combine(uri.TrimStart(customScheme.ToCharArray()).Split('/'));
+            var filePath = Path.Combine(FileSystem.Current.AppDataDirectory, relativePath);
+            if (!File.Exists(filePath))
+            {
+                return;
+            }
+
+            var outFilePath = Path.Combine(outFolder, relativePath);
+            var outFileDir = Path.GetDirectoryName(outFilePath);
+            if (outFileDir is null)
+            {
+                return;
+            }
+
+            if (!Directory.Exists(outFileDir))
+            {
+                Directory.CreateDirectory(outFileDir);
+            }
+
+            File.Copy(filePath, outFilePath, true);
         }
     }
 }

@@ -14,5 +14,7 @@ namespace SwashbucklerDiary.Models
 
         [Navigate(typeof(DiaryTagModel), nameof(DiaryTagModel.DiaryId), nameof(DiaryTagModel.TagId))]
         public List<TagModel>? Tags { get; set; }
+        [Navigate(NavigateType.OneToMany, nameof(DiaryResourceModel.DiaryId))]
+        public List<DiaryResourceModel>? ResourceUris { get; set; }
     }
 }

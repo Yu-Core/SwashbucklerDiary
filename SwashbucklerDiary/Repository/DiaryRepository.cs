@@ -14,6 +14,8 @@ namespace SwashbucklerDiary.Repository
         public override Task<List<DiaryModel>> GetListTakeAsync(int count)
         {
             return base.Context.Queryable<DiaryModel>()
+                .Includes(it => it.Tags)
+                .Includes(it => it.ResourceUris)
                 .OrderByDescending(it => it.CreateTime)
                 .Take(count)
                 .ToListAsync();
@@ -22,6 +24,8 @@ namespace SwashbucklerDiary.Repository
         public override Task<List<DiaryModel>> GetListTakeAsync(int count, Expression<Func<DiaryModel, bool>> func)
         {
             return base.Context.Queryable<DiaryModel>()
+                .Includes(it => it.Tags)
+                .Includes(it => it.ResourceUris)
                 .Where(func)
                 .OrderByDescending(it => it.CreateTime)
                 .Take(count)
@@ -32,6 +36,7 @@ namespace SwashbucklerDiary.Repository
         {
             return base.Context.InsertNav(model)
             .Include(it => it.Tags)
+            .Include(it => it.ResourceUris)
             .ExecuteCommandAsync();
         }
 
@@ -64,6 +69,7 @@ namespace SwashbucklerDiary.Repository
         {
             return Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
+                .Includes(it => it.ResourceUris)
                 .InSingleAsync(id);
         }
 
@@ -71,6 +77,7 @@ namespace SwashbucklerDiary.Repository
         {
             return Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
+                .Includes(it => it.ResourceUris)
                 .FirstAsync(whereExpression);
         }
 
@@ -88,6 +95,7 @@ namespace SwashbucklerDiary.Repository
         {
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
+                .Includes(it => it.ResourceUris)
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
@@ -96,6 +104,7 @@ namespace SwashbucklerDiary.Repository
         {
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
+                .Includes(it => it.ResourceUris)
                 .Where(func)
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
@@ -108,6 +117,7 @@ namespace SwashbucklerDiary.Repository
             {
                 ManyToManyIsUpdateA = true
             })
+            .Include(it => it.ResourceUris)
             .ExecuteCommandAsync();
         }
 

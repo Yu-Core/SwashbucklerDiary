@@ -5,6 +5,7 @@ using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using SwashbucklerDiary.Services;
+using System.Text.RegularExpressions;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -23,6 +24,7 @@ namespace SwashbucklerDiary.Pages
         private DiaryModel Diary = new()
         {
             Tags = new(),
+            ResourceUris = new(),
             CreateTime = DateTime.Now
         };
         private List<TagModel> Tags = new();
@@ -209,6 +211,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
+            Diary.ResourceUris = GetDiaryResources(Diary.Content);
             bool exist = await DiaryService.AnyAsync(it => it.Id == Diary.Id);
             if (!exist)
             {
@@ -300,6 +303,25 @@ namespace SwashbucklerDiary.Pages
         {
             value = !value;
             return SettingsService.Save(type, value);
+        }
+
+        private List<DiaryResourceModel> GetDiaryResources(string content)
+        {
+            var resourceUris = new List<DiaryResourceModel>();
+            string pattern = @"(?<=\(|"")(appdata:///\S+?)(?=\)|"")"; ;
+
+            MatchCollection matches = Regex.Matches(content, pattern);
+
+            foreach (Match match in matches.Cast<Match>())
+            {
+                resourceUris.Add(new()
+                {
+                    DiaryId = Diary.Id,
+                    ResourceUri = match.Value,
+                });
+            }
+
+            return resourceUris;
         }
     }
 }
