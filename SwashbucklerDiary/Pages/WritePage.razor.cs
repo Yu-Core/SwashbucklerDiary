@@ -161,7 +161,7 @@ namespace SwashbucklerDiary.Pages
             {
                 new(this, SetTitleText,"mdi-format-title",()=> SettingChange(SettingType.Title,ref EnableTitle)),
                 new(this, SetMarkdownText,SetMarkdownIcon,()=> SettingChange(SettingType.Markdown,ref EnableMarkdown)),
-                new(this, SetEditCreateTimeText,"mdi-calendar-edit-outline",()=> SettingChange(SettingType.Markdown,ref EnableEditCreateTime))
+                new(this, SetEditCreateTimeText,"mdi-calendar-edit-outline",()=> SettingChange(SettingType.EditCreateTime,ref EnableEditCreateTime))
             };
         }
 
