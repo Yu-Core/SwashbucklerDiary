@@ -136,7 +136,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            var diary = await DiaryService.FindIncludesAsync((Guid)DiaryId);
+            var diary = await DiaryService.FindAsync((Guid)DiaryId);
             if (diary == null)
             {
                 return;

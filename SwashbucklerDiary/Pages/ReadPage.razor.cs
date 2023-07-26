@@ -75,7 +75,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task UpdateDiary()
         {
-            var diary = await DiaryService.FindIncludesAsync(Id);
+            var diary = await DiaryService.FindAsync(Id);
             if (diary == null)
             {
                 NavigateToBack();

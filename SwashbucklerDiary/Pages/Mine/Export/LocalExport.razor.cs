@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            Diaries = await DiaryService.QueryIncludesAsync();
+            Diaries = await DiaryService.QueryAsync();
             await base.OnInitializedAsync();
         }
 

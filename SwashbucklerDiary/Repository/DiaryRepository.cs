@@ -11,21 +11,6 @@ namespace SwashbucklerDiary.Repository
         {
         }
 
-        public override Task<List<DiaryModel>> GetListAsync()
-        {
-            return base.Context.Queryable<DiaryModel>()
-                .OrderByDescending(it => it.CreateTime)
-                .ToListAsync();
-        }
-
-        public override Task<List<DiaryModel>> GetListAsync(Expression<Func<DiaryModel, bool>> whereExpression)
-        {
-            return base.Context.Queryable<DiaryModel>()
-                .Where(whereExpression)
-                .OrderByDescending(it => it.CreateTime)
-                .ToListAsync();
-        }
-
         public override Task<List<DiaryModel>> GetListTakeAsync(int count)
         {
             return base.Context.Queryable<DiaryModel>()
@@ -75,14 +60,14 @@ namespace SwashbucklerDiary.Repository
                 .ExecuteCommandAsync();
         }
 
-        public Task<DiaryModel> GetByIdIncludesAsync(Guid id)
+        public override Task<DiaryModel> GetByIdAsync(dynamic id)
         {
             return Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
                 .InSingleAsync(id);
         }
 
-        public Task<DiaryModel> GetFirstIncludesAsync(Expression<Func<DiaryModel, bool>> whereExpression)
+        public override Task<DiaryModel> GetFirstAsync(Expression<Func<DiaryModel, bool>> whereExpression)
         {
             return Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
@@ -99,7 +84,7 @@ namespace SwashbucklerDiary.Repository
                 .ToListAsync();
         }
 
-        public Task<List<DiaryModel>> GetListIncludesAsync()
+        public override Task<List<DiaryModel>> GetListAsync()
         {
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
@@ -107,7 +92,7 @@ namespace SwashbucklerDiary.Repository
                 .ToListAsync();
         }
 
-        public Task<List<DiaryModel>> GetListIncludesAsync(Expression<Func<DiaryModel, bool>> func)
+        public override Task<List<DiaryModel>> GetListAsync(Expression<Func<DiaryModel, bool>> func)
         {
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
