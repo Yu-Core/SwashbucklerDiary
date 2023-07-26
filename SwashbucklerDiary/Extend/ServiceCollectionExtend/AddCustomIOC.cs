@@ -12,7 +12,6 @@ namespace SwashbucklerDiary.Extend
             //仓储相关
             services.AddSingleton<IDiaryRepository,DiaryRepository>();
             services.AddSingleton<ITagRepository,TagRepository>();
-            services.AddSingleton<IDiaryTagRepository,DiaryTagRepository>();
             services.AddSingleton<IUserAchievementRepository, UserAchievementRepository>();
             services.AddSingleton<IUserStateModelRepository, UserStateModelRepository>();
             services.AddSingleton<ILocationRepository, LocationRepository>();
@@ -20,7 +19,6 @@ namespace SwashbucklerDiary.Extend
             //数据服务相关
             services.AddSingleton<ITagService, TagService>();
             services.AddSingleton<IDiaryService, DiaryService>();
-            services.AddSingleton<IDiaryTagService, DiaryTagService>();
             services.AddSingleton<IAchievementService, AchievementService>();
             services.AddSingleton<ILocationService, LocationService>();
             services.AddSingleton<ILogService, LogService>();
