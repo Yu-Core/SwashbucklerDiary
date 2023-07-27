@@ -2,19 +2,11 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.FileProviders;
 
-namespace Microsoft.AspNetCore.Components.WebView.Maui
+namespace SwashbucklerDiary.Utilities
 {
-	internal partial class StaticContentProvider
+    internal partial class StaticContentProvider
 	{
 		private static readonly FileExtensionContentTypeProvider ContentTypeProvider = new();
 
@@ -27,7 +19,7 @@ namespace Microsoft.AspNetCore.Components.WebView.Maui
 			=> new Dictionary<string, string>(StringComparer.Ordinal)
 			{
 				{ "Content-Type", contentType },
-				{ "Cache-Control", "no-cache, max-age=0, must-revalidate, no-store" },
+				//{ "Cache-Control", "no-cache, max-age=0, must-revalidate, no-store" },
 			};
 
 		internal class FileExtensionContentTypeProvider
