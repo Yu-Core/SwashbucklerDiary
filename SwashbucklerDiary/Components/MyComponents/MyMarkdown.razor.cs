@@ -196,6 +196,11 @@ namespace SwashbucklerDiary.Components
             if (string.IsNullOrEmpty(Value))
             {
                 await MMarkdown!.SetValueAsync(value);
+                Value = value;
+                if(ValueChanged.HasDelegate)
+                {
+                    await ValueChanged.InvokeAsync(value);
+                }
                 await this.CustomSchemeRender();
             }
             else
