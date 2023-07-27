@@ -12,6 +12,8 @@ namespace SwashbucklerDiary.IServices
         Task ShareText(string title, string text);
         Task ShareFile(string title, string path);
         Task<string?> PickPhotoAsync();
+        Task<string?> PickAudioAsync();
+        Task<string?> PickVideoAsync();
         bool IsCaptureSupported();
         Task<string?> CapturePhotoAsync();
         bool IsMailSupported();

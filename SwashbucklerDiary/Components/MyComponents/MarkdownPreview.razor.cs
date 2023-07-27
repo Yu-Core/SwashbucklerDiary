@@ -44,7 +44,7 @@ namespace SwashbucklerDiary.Components
             await module!.InvokeVoidAsync("Copy", new object[2] { dotNetCallbackRef, "CopySuccess" });
             //修复点击链接的一些错误
             await module!.InvokeVoidAsync("FixLink", new object[1] { element });
-            await this.ImageRender();
+            await this.CustomSchemeRender();
         }
 
         [JSInvokable]

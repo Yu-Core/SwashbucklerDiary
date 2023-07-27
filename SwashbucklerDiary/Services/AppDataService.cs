@@ -383,6 +383,12 @@ namespace SwashbucklerDiary.Services
         public Task<string> CreateAppDataImageFileAsync(string filePath)
             => CreateAppDataFileAsync("Image", filePath);
 
+        public Task<string> CreateAppDataAudioFileAsync(string filePath)
+            => CreateAppDataFileAsync("Audio", filePath);
+
+        public Task<string> CreateAppDataVideoFileAsync(string filePath)
+            => CreateAppDataFileAsync("Video", filePath);
+
         public Task<bool> DeleteAppDataFileByFilePathAsync(string filePath)
         {
             if (!File.Exists(filePath))

@@ -35,6 +35,8 @@ namespace SwashbucklerDiary.IServices
         Task<string> CreateCacheFileAsync(string filePath, byte[] contents);
         Task<string> CreateAppDataFileAsync(string fn, string filePath);
         Task<string> CreateAppDataImageFileAsync(string filePath);
+        Task<string> CreateAppDataAudioFileAsync(string filePath);
+        Task<string> CreateAppDataVideoFileAsync(string filePath);
         Task<bool> DeleteAppDataFileByFilePathAsync(string filePath);
         Task<bool> DeleteAppDataFileByCustomSchemeAsync(string uri);
     }

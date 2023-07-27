@@ -116,7 +116,7 @@ namespace SwashbucklerDiary.Pages
         private async Task SetAvatar(string? uri = null)
         {
             uri ??= await SettingsService.Get(SettingType.Avatar);
-            Avatar = this.ImageRender(uri);
+            Avatar = this.CustomSchemeRender(uri);
         }
     }
 }

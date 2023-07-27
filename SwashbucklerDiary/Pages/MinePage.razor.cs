@@ -113,7 +113,7 @@ namespace SwashbucklerDiary.Pages
         private async Task SetAvatar()
         {
             string uri = await SettingsService.Get(SettingType.Avatar);
-            Avatar = this.ImageRender(uri);
+            Avatar = this.CustomSchemeRender(uri);
         }
 
         private async Task SendMail()
