@@ -79,29 +79,31 @@ namespace SwashbucklerDiary.Components
                 {"className","" },
                 {"icon","<svg><use xlink:href=\"#vditor-icon-image\"></use></svg>" },
             };
-            var btnAudio = new Dictionary<string, object?>()
-            {
-                {"hotkey","⇧⌘A" },
-                {"name","audio" },
-                {"tipPosition","n" },
-                {"tip","添加音频" },
-                {"className","" },
-                {"icon","<svg><use xlink:href=\"#vditor-icon-audio\"></use></svg>" },
-            };
-            var btnVideo = new Dictionary<string, object?>()
-            {
-                {"hotkey","⇧⌘V" },
-                {"name","video" },
-                {"tipPosition","n" },
-                {"tip","添加视频" },
-                {"className","" },
-                {"icon","<svg><use xlink:href=\"#vditor-icon-video\"></use></svg>" },
-            };
+
+            //只有Windows能显示本机音视频，Android、ios、mac无法支持，所以砍去
+            //var btnAudio = new Dictionary<string, object?>()
+            //{
+            //    {"hotkey","⇧⌘A" },
+            //    {"name","audio" },
+            //    {"tipPosition","n" },
+            //    {"tip","添加音频" },
+            //    {"className","" },
+            //    {"icon","<svg><use xlink:href=\"#vditor-icon-audio\"></use></svg>" },
+            //};
+            //var btnVideo = new Dictionary<string, object?>()
+            //{
+            //    {"hotkey","⇧⌘V" },
+            //    {"name","video" },
+            //    {"tipPosition","n" },
+            //    {"tip","添加视频" },
+            //    {"className","" },
+            //    {"icon","<svg><use xlink:href=\"#vditor-icon-video\"></use></svg>" },
+            //};
 
             _options = new()
             {
                 { "mode", "ir" },
-                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link","emoji",btnImage,btnAudio,btnVideo}},
+                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link","emoji",btnImage,/*btnAudio,btnVideo*/}},
                 { "placeholder", I18n.T("Write.ContentPlace")! },
                 { "cdn", "npm/vditor/3.9.3" },
                 { "lang", lang },

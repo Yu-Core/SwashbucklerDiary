@@ -1,5 +1,6 @@
 ﻿using Android.Webkit;
 using Microsoft.AspNetCore.Components.WebView;
+using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary
 {
@@ -13,6 +14,7 @@ namespace SwashbucklerDiary
         {
             e.WebView.VerticalScrollBarEnabled = false; // 关闭滚动条
             e.WebView.Settings.JavaScriptEnabled = true;
+            e.WebView.Settings.MediaPlaybackRequiresUserGesture = false; // 是否需要用户手势才能播放
             e.WebView.SetWebViewClient(new MyWebViewClient(e.WebView.WebViewClient));
         }
 
@@ -58,10 +60,10 @@ namespace SwashbucklerDiary
                 path = FileSystem.AppDataDirectory + path;
                 if (File.Exists(path))
                 {
-                    string mime = MimeTypeMap.Singleton.GetMimeTypeFromExtension(Path.GetExtension(path));
+                    string contentType = StaticContentProvider.GetResponseContentTypeOrDefault(path);
                     string encoding = "UTF-8";
                     Stream stream = File.OpenRead(path);
-                    return new(mime, encoding, stream);
+                    return new(contentType, encoding, stream);
                 }
 
                 return WebViewClient.ShouldInterceptRequest(view, request);

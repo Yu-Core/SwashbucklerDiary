@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.Utilities
 			=> new Dictionary<string, string>(StringComparer.Ordinal)
 			{
 				{ "Content-Type", contentType },
-				//{ "Cache-Control", "no-cache, max-age=0, must-revalidate, no-store" },
+				{ "Cache-Control", "no-cache, max-age=0, must-revalidate, no-store" },
 			};
 
 		internal class FileExtensionContentTypeProvider

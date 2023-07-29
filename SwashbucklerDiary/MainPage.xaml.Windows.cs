@@ -30,12 +30,8 @@ namespace SwashbucklerDiary
             {
                 return;
             }
-            else
-            {
-                path = path.TrimStart("appdata/".ToCharArray());
-            }
 
-            //path = path.Replace("/", "\\");
+            path = path.TrimStart("appdata/".ToCharArray());
             path = Path.Combine(FileSystem.AppDataDirectory, path);
             if (File.Exists(path))
             {
@@ -70,21 +66,31 @@ namespace SwashbucklerDiary
                 var headers = StaticContentProvider.GetResponseHeaders(contentType);
                 var fileInfo = new FileInfo(path);
                 var length = fileInfo.Length;
-                headers.Add("Content-Length", length.ToString());
+                long rangStart = 0;
+                long rangEnd = length - 1;
 
                 //适用于音频视频文件资源的响应
                 bool isAny = args.Request.Headers.Contains("Range");
                 if (isAny)
                 {
-                    var range = args.Request.Headers.GetHeader("Range");
-                    var startIndex = Convert.ToInt64(range.TrimStart("bytes=".ToCharArray()).TrimEnd('-'));
+                    var rangeString = args.Request.Headers.GetHeader("Range");
+
+                    var rangs = rangeString.Split('=')[1].Split('-');
+                    rangStart = Convert.ToInt64(rangs[0]);
+                    if (rangs.Length > 1 && !string.IsNullOrEmpty(rangs[1]))
+                    {
+                        rangEnd = Convert.ToInt64(rangs[1]);
+                    }
+
                     string lastModifiedHex = fileInfo.LastWriteTimeUtc.Ticks.ToString("x");
                     string contentLengthHex = fileInfo.Length.ToString("x");
 
                     headers.Add("Accept-Ranges", "bytes");
-                    headers.Add("Content-Range", $"bytes {startIndex}-{length - 1}/{length}");
+                    headers.Add("Content-Range", $"bytes {rangStart}-{rangEnd}/{length}");
                     headers.Add("ETag", $"{lastModifiedHex}-{contentLengthHex}");
                 }
+
+                headers.Add("Content-Length", (rangEnd - rangStart + 1).ToString());
 
                 return headers;
             }
