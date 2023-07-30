@@ -2,23 +2,23 @@
 {
     public partial class PlatformService
     {
-        public Task<string?> PickJsonFileAsync()
+        public Task<string?> PickZipFileAsync()
         {
             var customFileType = new FilePickerFileType(
                 new Dictionary<DevicePlatform, IEnumerable<string>>
                 {
-                    { DevicePlatform.iOS, new[] { "public.json" } }, // UTType values
-                    { DevicePlatform.Android, new[] { "application/json" } }, // MIME type
-                    { DevicePlatform.WinUI, new[] { ".json" } }, // file extension
+                    { DevicePlatform.iOS, new[] { "public.zip-archive" } }, // UTType values
+                    { DevicePlatform.Android, new[] { "application/zip" } }, // MIME type
+                    { DevicePlatform.WinUI, new[] { ".zip" } }, // file extension
                     { DevicePlatform.Tizen, new[] { "*/*" } },
-                    { DevicePlatform.macOS, new[] { "public.json" } }, // UTType values
+                    { DevicePlatform.macOS, new[] { "public.zip-archive" } }, // UTType values
                 });
 
             PickOptions options = new()
             {
                 FileTypes = customFileType,
             };
-            return PickFileAsync(options, "json");
+            return PickFileAsync(options, ".zip");
         }
     }
 }

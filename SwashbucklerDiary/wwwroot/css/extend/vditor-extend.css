@@ -39,3 +39,7 @@
 .vditor-reset video {
     border-radius: 8px;
 }
+
+.video-rest iframe {
+    border-radius: 8px;
+}

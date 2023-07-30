@@ -16,6 +16,8 @@ namespace SwashbucklerDiary.Pages
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
+        [Inject]
+        private IAppDataService AppDataService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -49,7 +51,7 @@ namespace SwashbucklerDiary.Pages
             }
 
             ImportFilePath = string.Empty;
-            ImportFilePath = await PlatformService.PickJsonFileAsync();
+            ImportFilePath = await PlatformService.PickZipFileAsync();
             if (string.IsNullOrEmpty(ImportFilePath))
             {
                 return;
@@ -87,8 +89,7 @@ namespace SwashbucklerDiary.Pages
 
             try
             {
-                using FileStream openStream = File.OpenRead(ImportFilePath);
-                List<DiaryModel>? diaries = await JsonSerializer.DeserializeAsync<List<DiaryModel>>(openStream);
+                List<DiaryModel>? diaries = await AppDataService.ImportJsonFileAsync(ImportFilePath);
                 if (diaries == null || !diaries.Any())
                 {
                     await AlertService.Success(I18n.T("Export.Import.Fail"));

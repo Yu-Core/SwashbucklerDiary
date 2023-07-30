@@ -15,6 +15,10 @@ namespace SwashbucklerDiary.Services
         private readonly II18nService I18n;
         private const string exportFileName = "SwashbucklerDiaryExport";
         private const string customScheme = "appdata:///";
+        private const string ImageFolderName = "Image";
+        private const string AudioFolderName = "Audio";
+        private const string VideoFolderName = "Video";
+        private static string[] ResourceFolders = { ImageFolderName, AudioFolderName, VideoFolderName };
 
         public AppDataService(IPlatformService platformService,
             II18nService i18nService)
@@ -171,7 +175,7 @@ namespace SwashbucklerDiary.Services
             return text.ToString();
         }
 
-        public Task<string> CreateTxtFileAsync(List<DiaryModel> diaries)
+        public Task<string> ExportTxtFileAsync(List<DiaryModel> diaries)
         {
             string outputFolder = Path.Combine(FileSystem.CacheDirectory, "Txt");
             string zipFilePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}Txt.zip");
@@ -202,22 +206,59 @@ namespace SwashbucklerDiary.Services
             return Task.FromResult(zipFilePath);
         }
 
-        public async Task<string> CreateJsonFileAsync(List<DiaryModel> diaries)
+        public Task<string> ExportJsonFileAsync(List<DiaryModel> diaries)
         {
-            string filePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}.json");
+            string outputFolder = Path.Combine(FileSystem.CacheDirectory, "Json");
+            string zipFilePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}Json.zip");
 
-            var options = new JsonSerializerOptions
+            if (!Directory.Exists(outputFolder))
             {
-                WriteIndented = true,
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            };
+                Directory.CreateDirectory(outputFolder);
+            }
+            else
+            {
+                ClearFolder(outputFolder);
+            }
 
-            string jsonString = JsonSerializer.Serialize(diaries, options);
-            await File.WriteAllTextAsync(filePath, jsonString);
-            return filePath;
+            foreach (var item in diaries)
+            {
+                string fileName = item.CreateTime.ToString("yyyy-MM-dd") + ".json";
+                string filePath = Path.Combine(outputFolder, fileName);
+
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                };
+
+                string content = JsonSerializer.Serialize(item, options);
+                WriteToFile(filePath, content);
+
+                if (item.ResourceUris is not null)
+                {
+                    foreach (var uri in item.ResourceUris)
+                    {
+                        if (uri.ResourceUri is null)
+                        {
+                            continue;
+                        }
+
+                        CopyUriFileToOutFolder(uri.ResourceUri, outputFolder);
+                    }
+                }
+            }
+
+            if (File.Exists(zipFilePath))
+            {
+                File.Delete(zipFilePath);
+            }
+
+            // 将所有json文件添加到压缩包中
+            ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
+            return Task.FromResult(zipFilePath);
         }
 
-        public Task<string> CreateMdFileAsync(List<DiaryModel> diaries)
+        public Task<string> ExportMdFileAsync(List<DiaryModel> diaries)
         {
             string outputFolder = Path.Combine(FileSystem.CacheDirectory, "Markdown");
             string zipFilePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}Markdown.zip");
@@ -271,14 +312,14 @@ namespace SwashbucklerDiary.Services
             return await SaveFile(saveFilePath, filePath);
         }
 
-        public Task<bool> CreateTxtFileAndSaveAsync(List<DiaryModel> diaries)
-            => CreateFileAndSaveAsync(CreateTxtFileAsync, "Txt", diaries);
+        public Task<bool> ExportTxtFileAndSaveAsync(List<DiaryModel> diaries)
+            => CreateFileAndSaveAsync(ExportTxtFileAsync, "Txt", diaries);
 
-        public Task<bool> CreateJsonFileAndSaveAsync(List<DiaryModel> diaries)
-            => CreateFileAndSaveAsync(CreateJsonFileAsync, "Json", diaries);
+        public Task<bool> ExportJsonFileAndSaveAsync(List<DiaryModel> diaries)
+            => CreateFileAndSaveAsync(ExportJsonFileAsync, "Json", diaries);
 
-        public Task<bool> CreateMdFileAndSaveAsync(List<DiaryModel> diaries)
-            => CreateFileAndSaveAsync(CreateMdFileAsync, "Markdown", diaries);
+        public Task<bool> ExportMdFileAndSaveAsync(List<DiaryModel> diaries)
+            => CreateFileAndSaveAsync(ExportMdFileAsync, "Markdown", diaries);
 
         private async Task<bool> SaveFile(string targetFilePath, string sourceFilePath)
         {
@@ -381,13 +422,13 @@ namespace SwashbucklerDiary.Services
         }
 
         public Task<string> CreateAppDataImageFileAsync(string filePath)
-            => CreateAppDataFileAsync("Image", filePath);
+            => CreateAppDataFileAsync(ImageFolderName, filePath);
 
         public Task<string> CreateAppDataAudioFileAsync(string filePath)
-            => CreateAppDataFileAsync("Audio", filePath);
+            => CreateAppDataFileAsync(AudioFolderName, filePath);
 
         public Task<string> CreateAppDataVideoFileAsync(string filePath)
-            => CreateAppDataFileAsync("Video", filePath);
+            => CreateAppDataFileAsync(VideoFolderName, filePath);
 
         public Task<bool> DeleteAppDataFileByFilePathAsync(string filePath)
         {
@@ -435,6 +476,77 @@ namespace SwashbucklerDiary.Services
             }
 
             File.Copy(filePath, outFilePath, true);
+        }
+
+        public async Task<List<DiaryModel>> ImportJsonFileAsync(string filePath)
+        {
+            if(!File.Exists(filePath))
+            {
+                return new();
+            }
+
+            string outputFolder = Path.Combine(FileSystem.CacheDirectory, "Json");
+            if (!Directory.Exists(outputFolder))
+            {
+                Directory.CreateDirectory(outputFolder);
+            }
+            else
+            {
+                ClearFolder(outputFolder);
+            }
+
+            ZipFile.ExtractToDirectory(filePath, outputFolder);
+            // 获取文件夹下的所有json文件
+            string[] jsonFiles = Directory.GetFiles(outputFolder, "*.json");
+            if(jsonFiles.Length == 0)
+            {
+                return new();
+            }
+
+            var diaries = new List<DiaryModel>();
+            foreach (string jsonFile in jsonFiles)
+            {
+                using FileStream openStream = File.OpenRead(jsonFile);
+                var diarie = await JsonSerializer.DeserializeAsync<DiaryModel>(openStream);
+                if (diarie is not null)
+                {
+                    diaries.Add(diarie);
+                }
+            }
+
+            string[] subfolders = Directory.GetDirectories(outputFolder);
+            foreach (string subfolder in subfolders)
+            {
+                var name = Path.GetFileName(subfolder);
+                if(ResourceFolders.Contains(name))
+                {
+                    var outpath = Path.Combine(FileSystem.AppDataDirectory, name);
+                    CopyFolder(subfolder, outpath,SearchOption.TopDirectoryOnly);
+                }
+            }
+
+            return diaries;
+        }
+
+        static void CopyFolder(string sourceFolder, string destinationFolder, SearchOption searchOption)
+        {
+            // 获取源文件夹中的所有文件
+            string[] files = Directory.GetFiles(sourceFolder, "*", searchOption);
+
+            foreach (string file in files)
+            {
+                // 获取文件在源文件夹中的相对路径
+                string relativePath = Path.GetRelativePath(sourceFolder, file);
+
+                // 构建目标文件的路径
+                string destinationPath = Path.Combine(destinationFolder, relativePath);
+
+                // 确保目标文件夹存在
+                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+
+                // 复制文件
+                File.Copy(file, destinationPath, true);
+            }
         }
     }
 }

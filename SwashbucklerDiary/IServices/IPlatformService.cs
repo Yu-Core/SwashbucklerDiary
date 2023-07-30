@@ -33,7 +33,7 @@ namespace SwashbucklerDiary.IServices
         bool IsFirstLaunch();
         Task<string?> PickFolderAsync();
         Task<string?> PickDBFileAsync();
-        Task<string?> PickJsonFileAsync();
+        Task<string?> PickZipFileAsync();
         Task<string?> SaveFileAsync(string name, Stream stream);
         Task<string?> SaveFileAsync(string? path,string name,Stream stream);
         void OpenPlatformSetting();

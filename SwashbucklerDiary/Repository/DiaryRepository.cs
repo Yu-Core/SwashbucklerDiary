@@ -139,6 +139,7 @@ namespace SwashbucklerDiary.Repository
                 ManyToManyIsUpdateA = true,
                 ManyToManyIsUpdateB = true
             })
+            .Include(it=> it.ResourceUris)
             .ExecuteCommandAsync();
         }
 

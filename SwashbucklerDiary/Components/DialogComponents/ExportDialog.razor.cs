@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.Components
                 new(this,"TXT","mdi-format-text",CreateTxtFile),
                 new(this,"MD","mdi-language-markdown-outline",CreateMDFile),
                 new(this,"JSON","mdi-code-json",CreateJsonFile),
-                new(this,"PDF","mdi-file-pdf-box",ToDo),
+                //new(this,"PDF","mdi-file-pdf-box",ToDo),
             };
         }
 
@@ -40,7 +40,7 @@ namespace SwashbucklerDiary.Components
 
             try
             {
-                bool flag = await AppDataService.CreateTxtFileAndSaveAsync(Diaries);
+                bool flag = await AppDataService.ExportTxtFileAndSaveAsync(Diaries);
                 if (flag)
                 {
                     //此处未来可能引入成就系统
@@ -61,7 +61,7 @@ namespace SwashbucklerDiary.Components
 
             try
             {
-                bool flag = await AppDataService.CreateJsonFileAndSaveAsync(Diaries);
+                bool flag = await AppDataService.ExportJsonFileAndSaveAsync(Diaries);
                 if (flag)
                 {
                     await AlertService.Success(I18n.T("Export.Export.Success"));
@@ -85,7 +85,7 @@ namespace SwashbucklerDiary.Components
 
             try
             {
-                bool flag = await AppDataService.CreateMdFileAndSaveAsync(Diaries);
+                bool flag = await AppDataService.ExportMdFileAndSaveAsync(Diaries);
                 if (flag)
                 {
                     await AlertService.Success(I18n.T("Export.Export.Success"));

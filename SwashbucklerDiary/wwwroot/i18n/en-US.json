@@ -497,13 +497,13 @@
       "Path": "Export / Local export"
     },
     "LAN": {
-      "Name": "LAN transfer",
-      "Path": "Export / LAN transfer"
+      "Name": "LAN",
+      "Path": "Export / LAN"
     },
     "Export": {
       "Title": "Export",
       "Path": "Export / Local export / Export",
-      "Subtitle": "Save as txt, md, json, PDF type files",
+      "Subtitle": "Save as zip file of txt, md, json type",
       "Success": "Export success",
       "Fail": "Export fail",
       "SelectType": "Select export file type"
@@ -511,7 +511,7 @@
     "Import": {
       "Title": "Import",
       "Path": "Export / Local export / Import",
-      "Subtitle": "Import json file",
+      "Subtitle": "Import zip file of json type",
       "Success": "Import success",
       "Fail": "Import fail",
       "ConfirmImport": {
@@ -521,11 +521,11 @@
     },
     "Send": {
       "Name": "Send",
-      "Path": "Export / LAN transfer / Send"
+      "Path": "Export / LAN / Send"
     },
     "Receive": {
       "Name": "Receive",
-      "Path": "Export / LAN transfer / Receive"
+      "Path": "Export / LAN / Receive"
     }
   },
   "ThemeState": {
