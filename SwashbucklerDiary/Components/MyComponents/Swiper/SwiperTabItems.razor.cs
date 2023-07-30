@@ -6,10 +6,11 @@ namespace SwashbucklerDiary.Components
 {
     public partial class SwiperTabItems : IAsyncDisposable
     {
+        private ElementReference ElementRef;
         private IJSObjectReference? module;
         private StringNumber _value = 0;
         private bool Show;
-        private readonly string Id = "swiper" + Guid.NewGuid().ToString();
+        private readonly string Id = "swiper-" + Guid.NewGuid().ToString();
 
         [Inject]
         private IJSRuntime? JS { get; set; }
@@ -59,22 +60,22 @@ namespace SwashbucklerDiary.Components
             {
                 module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/init-swiper.js");
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
-                await module.InvokeVoidAsync("swiperInit", new object[4] { dotNetCallbackRef, "UpdateValue", Id, Value.ToInt32() });
+                await module.InvokeVoidAsync("swiperInit", new object[5] { dotNetCallbackRef, "UpdateValue", ElementRef, $"#{Id}", Value.ToInt32() });
                 Show = true;
-                StateHasChanged();
+                await InvokeAsync(StateHasChanged);
             }
         }
 
         private async void UpdateSwiper(StringNumber value)
         {
-            await JS!.InvokeVoidAsync($"{Id}.slideTo", new object[1] { value.ToInt32() });
+            await module!.InvokeVoidAsync("slideTo", new object[2] { ElementRef, value.ToInt32() });
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
             if (module is not null)
             {
-                await JS!.InvokeVoidAsync($"{Id}.destroy", new object[2] { true, true });
+                await module!.InvokeVoidAsync("destroy", new object[1] { ElementRef });
                 await module.DisposeAsync();
             }
 

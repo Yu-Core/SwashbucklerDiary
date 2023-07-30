@@ -1,11 +1,11 @@
 ﻿@namespace SwashbucklerDiary.Components
 
-<div class="@($"swiper {Id}")" style="@($"{(Show?"":"display:none;")}height:100%;")">
+<div @ref="ElementRef" id="@Id" class="swiper" style=@($"{(Show?"":"display:none;")}height:100%;")>
     <div class="swiper-wrapper">
         @ChildContent
     </div>
 </div>
 
-<div class="justify-center" style="@($"padding-top:30vh;{(Show?"display:none;":"display:flex;")}")">
+@* <div class="justify-center align-center" style=@($"height:100%;{(Show?"display:none;":"display:flex;")}")>
     <MProgressCircular Indeterminate Size="48"></MProgressCircular>
-</div>
+</div> *@

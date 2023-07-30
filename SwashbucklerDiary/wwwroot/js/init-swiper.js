@@ -1,7 +1,6 @@
 import '/npm/swiper/7.4.1/swiper-bundle.min.js';
-export function swiperInit(dotNetCallbackRef, callbackMethod, id, index) {
-    let className = "." + id;
-    window[id] = new Swiper(className, {
+export function swiperInit(dotNetCallbackRef, callbackMethod, dom, selector, index) {
+    dom.Swiper = new Swiper(selector, {
         observer: true,
         observeParents: true,
         observeSlideChildren: true,
@@ -15,4 +14,12 @@ export function swiperInit(dotNetCallbackRef, callbackMethod, id, index) {
             },
         }
     });
+}
+
+export function slideTo(dom, value) {
+    dom.Swiper.slideTo(value);
+}
+
+export function destroy(dom) {
+    dom.Swiper.destroy(true, true);
 }
