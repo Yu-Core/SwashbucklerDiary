@@ -21,7 +21,12 @@ namespace SwashbucklerDiary.Components
 
         public static string CustomSchemeRender(this ITempCustomSchemeAssist component,string uri)
         {
-            return uri.Replace("appdata:///", "appdata/");
+            if (OperatingSystem.IsWindows())
+            {
+                uri = uri.Replace("appdata:///", "appdata/");
+            }
+
+            return uri;
         }
     }
 }
