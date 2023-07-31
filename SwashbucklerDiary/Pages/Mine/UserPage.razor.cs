@@ -2,6 +2,7 @@
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -11,10 +12,12 @@ namespace SwashbucklerDiary.Pages
         private string? Sign;
         private string? Avatar;
         private bool ShowAvatar;
-        private bool showLoading;
 
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
+
+        [CascadingParameter]
+        protected MainLayout MainLayout { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -95,8 +98,8 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            showLoading = true;
-            StateHasChanged();
+            await MainLayout.SetLoading(true);
+            await InvokeAsync(StateHasChanged);
 
             string oldUri = await SettingsService.Get(SettingType.Avatar);
 
@@ -107,8 +110,8 @@ namespace SwashbucklerDiary.Pages
 
             await AppDataService.DeleteAppDataFileByCustomSchemeAsync(oldUri);
 
-            showLoading = false;
-            StateHasChanged();
+            await MainLayout.SetLoading(false);
+            await InvokeAsync(StateHasChanged);
             await AlertService.Success(I18n.T("Share.EditSuccess"));
             await HandleAchievements(AchievementType.Avatar);
         }

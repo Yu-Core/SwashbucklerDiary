@@ -145,13 +145,6 @@
              Items="ShareItems">
 </ShareDialog>
 
-<MOverlay Value="showLoading"
-          ZIndex="99">
-    <MProgressCircular Indeterminate="true"
-                       Size="48">
-    </MProgressCircular>
-</MOverlay>
-
 <DeleteDialog @bind-Value="ShowDelete"
               Title="@(I18n.T("Diary.Delete.Title"))"
               Content="@(I18n.T("Diary.Delete.Content"))"

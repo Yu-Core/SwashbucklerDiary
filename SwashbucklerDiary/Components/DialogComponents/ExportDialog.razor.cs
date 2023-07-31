@@ -2,6 +2,7 @@
 using Serilog;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Components
 {
@@ -16,7 +17,8 @@ namespace SwashbucklerDiary.Components
 
         [Parameter]
         public List<DiaryModel> Diaries { get; set; } = new();
-
+        [CascadingParameter]
+        protected MainLayout MainLayout { get; set; } = default!;
         protected override void OnInitialized()
         {
             LoadView();
@@ -37,7 +39,7 @@ namespace SwashbucklerDiary.Components
         private async Task CreateTxtFile()
         {
             await InternalValueChanged(false);
-
+            await MainLayout.SetLoading(true);
             try
             {
                 bool flag = await AppDataService.ExportTxtFileAndSaveAsync(Diaries);
@@ -52,13 +54,17 @@ namespace SwashbucklerDiary.Components
                 Log.Error($"{e.Message}\n{e.StackTrace}");
                 await AlertService.Error(I18n.T("Export.Export.Fail"));
             }
+            finally
+            {
+                await MainLayout.SetLoading(false);
+            }
         }
 
 
         private async Task CreateJsonFile()
         {
             await InternalValueChanged(false);
-
+            await MainLayout.SetLoading(true);
             try
             {
                 bool flag = await AppDataService.ExportJsonFileAndSaveAsync(Diaries);
@@ -72,6 +78,10 @@ namespace SwashbucklerDiary.Components
                 Log.Error($"{e.Message}\n{e.StackTrace}");
                 await AlertService.Error(I18n.T("Export.Export.Fail"));
             }
+            finally
+            {
+                await MainLayout.SetLoading(false);
+            }
         }
 
         private static Task CreatePDFFile()
@@ -82,7 +92,7 @@ namespace SwashbucklerDiary.Components
         private async Task CreateMDFile()
         {
             await InternalValueChanged(false);
-
+            await MainLayout.SetLoading(true);
             try
             {
                 bool flag = await AppDataService.ExportMdFileAndSaveAsync(Diaries);
@@ -96,7 +106,10 @@ namespace SwashbucklerDiary.Components
                 Log.Error($"{e.Message}\n{e.StackTrace}");
                 await AlertService.Error(I18n.T("Export.Export.Fail"));
             }
-
+            finally
+            {
+                await MainLayout.SetLoading(false);
+            }
         }
 
 

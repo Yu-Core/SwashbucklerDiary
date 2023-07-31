@@ -11,6 +11,7 @@ namespace SwashbucklerDiary.Shared
     {
         StringNumber SelectedItemIndex = 0;
         List<NavigationButton> NavigationButtons = new();
+        bool ShowLoading;
 
         [Inject]
         private MasaBlazor MasaBlazor { get; set; } = default!;
@@ -72,6 +73,12 @@ namespace SwashbucklerDiary.Shared
             }
 
             InvokeAsync(StateHasChanged);
+        }
+
+        public async Task SetLoading(bool value)
+        {
+            ShowLoading = value;
+            await InvokeAsync(StateHasChanged);
         }
     }
 }

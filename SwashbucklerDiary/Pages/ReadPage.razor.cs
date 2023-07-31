@@ -5,6 +5,7 @@ using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using SwashbucklerDiary.Services;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -15,7 +16,6 @@ namespace SwashbucklerDiary.Pages
         private bool ShowMenu;
         private bool ShowShare;
         private bool ShowExport;
-        private bool showLoading;
         private IJSObjectReference? module;
         private bool Markdown;
         private List<DynamicListItem> ListItemModels = new();
@@ -31,6 +31,8 @@ namespace SwashbucklerDiary.Pages
 
         [Parameter]
         public Guid Id { get; set; }
+        [CascadingParameter]
+        protected MainLayout MainLayout { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -170,7 +172,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task ShareImage()
         {
-            showLoading = true;
+            await MainLayout.SetLoading(true);
             ShowShare = false;
             StateHasChanged();
             await Task.Delay(1000);
@@ -181,7 +183,7 @@ namespace SwashbucklerDiary.Pages
             string fn = "Screenshot.png";
             string path = await AppDataService.CreateCacheFileAsync(fn, Convert.FromBase64String(base64));
 
-            showLoading = false;
+            await MainLayout.SetLoading(false);
             StateHasChanged();
 
             await PlatformService.ShareFile(I18n.T("Share.Share")!, path);
