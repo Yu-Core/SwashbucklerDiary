@@ -143,15 +143,15 @@ namespace SwashbucklerDiary.Components
                 await AddImageAsync();
             }
 
-            if(btnName == "audio")
-            {
-                await AddAudioAsync();
-            }
+            //if(btnName == "audio")
+            //{
+            //    await AddAudioAsync();
+            //}
 
-            if(btnName == "video")
-            {
-                await AddVideoAsync();
-            }
+            //if(btnName == "video")
+            //{
+            //    await AddVideoAsync();
+            //}
         }
 
         private async Task AddImageAsync()
