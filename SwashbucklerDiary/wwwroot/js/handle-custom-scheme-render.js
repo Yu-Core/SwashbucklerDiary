@@ -16,7 +16,7 @@ function HandleCustomSchemeRender() {
         // 检查src属性值是否以'appdata:///'开头
         if (srcValue.startsWith("appdata:///")) {
             // 替换src属性值中的'appdata:///'为'appdata/'
-            var newSrcValue = srcValue.replace("appdata:///", "appdata/");
+            var newSrcValue = srcValue.replace("appdata:///", "https://appdata/");
 
             // 更新元素的src属性值
             element.setAttribute("src", newSrcValue);

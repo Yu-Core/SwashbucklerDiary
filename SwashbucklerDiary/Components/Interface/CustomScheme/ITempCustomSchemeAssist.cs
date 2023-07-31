@@ -23,7 +23,7 @@ namespace SwashbucklerDiary.Components
         {
             if (OperatingSystem.IsWindows())
             {
-                uri = uri.Replace("appdata:///", "appdata/");
+                uri = uri.Replace("appdata:///", "https://appdata/");
             }
 
             return uri;
