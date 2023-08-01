@@ -4,25 +4,31 @@ namespace SwashbucklerDiary.Services
 {
     public partial class PlatformService
     {
-        private readonly static string MicrosoftStoreId = "9P6PBVBF466L";
+#if WINDOWS
+        private readonly static string AppId = "9P6PBVBF466L";
+#elif ANDROID
+        private readonly static string AppId = AppInfo.PackageName;
+#else
+        private readonly static string AppId = string.Empty;
+#endif
         //打开本应用的应用商店详情页
         public Task<bool> OpenStoreMyAppDetails()
         {
-#if WINDOWS
-            return OpenStoreAppDetails(MicrosoftStoreId);
-#elif ANDROID
-            return OpenCoolmarket(AppInfo.PackageName);
-#else
-            return OpenStoreAppDetails(AppInfo.PackageName);
-#endif
+            return OpenStoreAppDetails(AppId);
         }
 
         private static Task<bool> OpenStoreAppDetails(string appId)
         {
+#if WINDOWS
             return AppStoreLauncher.Default.TryOpenAsync(appId);
+#elif ANDROID
+            return OpenCoolmarket(appId);
+#else
+            return AppStoreLauncher.Default.TryOpenAsync();
+#endif
         }
-
-        private Task<bool> OpenCoolmarket(string packageName)
+#if ANDROID
+        private static Task<bool> OpenCoolmarket(string packageName)
         {
             string uri = $"coolmarket://apk/{packageName}";
             try
@@ -35,5 +41,6 @@ namespace SwashbucklerDiary.Services
                 return Browser.Default.OpenAsync(uri);
             }
         }
+#endif
     }
 }
