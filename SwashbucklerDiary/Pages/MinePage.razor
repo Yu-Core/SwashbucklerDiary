@@ -12,23 +12,23 @@
     <MSpacer></MSpacer>
     <MButton Large
              Icon
-             OnClick="@(()=>To("searchAppFunction"))">
-        <MIcon>mdi-magnify</MIcon>
-    </MButton>
-</MAppBar>
+              OnClick="@(()=>To("searchAppFunction"))">
+         <MIcon>mdi-magnify</MIcon>
+     </MButton>
+ </MAppBar>
 
-<ScrollContainer>
-    <div class="d-sm-flex flex-sm-row justify-space-between">
-        <MHover>
-            <MCard @attributes="context.Attrs"
-                   Class="@($"mine-info mb-5 py-md-3 {(context.Hover?"elevation-sm-2":"")}")"
-                   Elevation="0"
-                   Rounded="@("lg")"
-                   Ripple="false"
-                   OnClick="@(()=>To("user"))">
-                <MList>
-                    <MListItem ThreeLine>
-                        <MListItemAvatar Class="ml-md-4"
+ <ScrollContainer>
+     <div class="d-sm-flex flex-sm-row justify-space-between">
+         <MHover>
+             <MCard @attributes="context.Attrs"
+                    Class="@($"mine-info mb-5 py-sm-3 py-md-5 {(context.Hover?"elevation-sm-2":"")}")"
+                    Elevation="0"
+                    Rounded="@("lg")"
+                    Ripple="false"
+                    OnClick="@(()=>To("user"))">
+                 <MList>
+                     <MListItem ThreeLine>
+                        <MListItemAvatar Class="ml-sm-2 ml-md-4"
                                          Rounded="@("lg")"
                                          Size="70">
                             <MImage Src="@(Avatar)">
@@ -36,7 +36,8 @@
                                     <MRow Class="fill-height ma-0"
                                           Align="@AlignTypes.Center"
                                           Justify="@JustifyTypes.Center">
-                                        <MProgressCircular Indeterminate></MProgressCircular>
+                                        <MProgressCircular Indeterminate="true">
+                                        </MProgressCircular>
                                     </MRow>
                                 </PlaceholderContent>
                             </MImage>

@@ -185,6 +185,15 @@ a, .btn-link {
         width: 48%;
         margin-top: 20px !important;
         margin-bottom: 20px !important;
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+        padding-left: 8px !important;
+    }
+}
+
+@media screen and (min-width:960px) {
+    .my-diary-card {
+        padding-bottom: 16px !important;
     }
 }
 

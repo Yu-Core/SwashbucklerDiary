@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Components
 
         private DateTime Time => Value!.CreateTime;
         private string? Title => GetTitle();
-        private string? Text => TextInterception(Value!.Content, 500);
+        private string? Text => TextInterception(Value!.Content, 1000);
         private bool IsTop => Value!.Top;
         private bool IsPrivate => Value!.Private;
         private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
@@ -94,7 +94,7 @@ namespace SwashbucklerDiary.Components
 
             if (!string.IsNullOrWhiteSpace(Text))
             {
-                string[] separators = { ",", "，", ".", "。", "?", "？", "!", "！", ";", "；", ":", "：", "\n" }; // 定义分隔符
+                string[] separators = { ",", "，", ".", "。", "?", "？", "!", "！", ";", "；", "\n" }; // 定义分隔符
                 string[] sentences = Text.Split(separators, StringSplitOptions.RemoveEmptyEntries); // 拆分文本
                 if(sentences.Length > 0)
                 {
