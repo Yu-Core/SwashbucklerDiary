@@ -13,19 +13,21 @@
     }
     else
     {
-        <div class="float-calendar">
-            <MTextField @bind-Value="PickedDate"
-                        Class="rounded-lg text-h6 font-weight-bold"
-                        Style="cursor:pointer;"
-                        Dense="true"
-                        Readonly="true"
-                        Solo="true"
-                        Flat="true"
-                        HideDetails="@("auto")"
-                        OnMouseUp="()=>ShowFloatCalendar=true"
-                        PrependIcon="mdi-calendar">
-            </MTextField>
-        </div>
+        <MTextField Value="PickedDate"
+                    Class="rounded-lg text-h6 font-weight-bold"
+                    Dense="true"
+                    Readonly="true"
+                    Solo="true"
+                    Flat="true"
+                    HideDetails="@("auto")"
+                    PrependIcon="mdi-calendar">
+        </MTextField>
+        <MSpacer></MSpacer>
+        <MButton Icon="true"
+                 Large="true"
+                 OnClick="()=>ShowFloatCalendar=true">
+            <MIcon>mdi-pencil-outline</MIcon>
+        </MButton>
     }
 </MAppBar>
 
