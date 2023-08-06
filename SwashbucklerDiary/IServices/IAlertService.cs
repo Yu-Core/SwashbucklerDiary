@@ -15,5 +15,7 @@ namespace SwashbucklerDiary.IServices
         Task Info(string? title , string? message);
         Task Warning(string? message);
         Task Warning(string? title, string? message);
+        Task StartLoading();
+        Task StopLoading();
     }
 }

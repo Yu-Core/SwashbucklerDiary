@@ -17,8 +17,6 @@ namespace SwashbucklerDiary.Components
 
         [Parameter]
         public List<DiaryModel> Diaries { get; set; } = new();
-        [CascadingParameter]
-        protected MainLayout MainLayout { get; set; } = default!;
         protected override void OnInitialized()
         {
             LoadView();
@@ -39,7 +37,7 @@ namespace SwashbucklerDiary.Components
         private async Task CreateTxtFile()
         {
             await InternalValueChanged(false);
-            await MainLayout.SetLoading(true);
+            await AlertService.StartLoading();
             try
             {
                 bool flag = await AppDataService.ExportTxtFileAndSaveAsync(Diaries);
@@ -56,7 +54,7 @@ namespace SwashbucklerDiary.Components
             }
             finally
             {
-                await MainLayout.SetLoading(false);
+                await AlertService.StopLoading();
             }
         }
 
@@ -64,7 +62,7 @@ namespace SwashbucklerDiary.Components
         private async Task CreateJsonFile()
         {
             await InternalValueChanged(false);
-            await MainLayout.SetLoading(true);
+            await AlertService.StartLoading();
             try
             {
                 bool flag = await AppDataService.ExportJsonFileAndSaveAsync(Diaries);
@@ -80,7 +78,7 @@ namespace SwashbucklerDiary.Components
             }
             finally
             {
-                await MainLayout.SetLoading(false);
+                await AlertService.StopLoading();
             }
         }
 
@@ -92,7 +90,7 @@ namespace SwashbucklerDiary.Components
         private async Task CreateMDFile()
         {
             await InternalValueChanged(false);
-            await MainLayout.SetLoading(true);
+            await AlertService.StartLoading();
             try
             {
                 bool flag = await AppDataService.ExportMdFileAndSaveAsync(Diaries);
@@ -108,7 +106,7 @@ namespace SwashbucklerDiary.Components
             }
             finally
             {
-                await MainLayout.SetLoading(false);
+                await AlertService.StopLoading();
             }
         }
 

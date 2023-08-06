@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Services
 
         public Task Alert(string? title, string? message) => Alert(title, message, AlertTypes.None);
 
-        public async Task Alert(string? title, string? message,AlertTypes type)
+        public async Task Alert(string? title, string? message, AlertTypes type)
         {
             await PopupService.EnqueueSnackbarAsync(new()
             {
@@ -42,5 +42,17 @@ namespace SwashbucklerDiary.Services
         public Task Warning(string? message) => Warning(null, message);
 
         public Task Warning(string? title, string? message) => Alert(title, message, AlertTypes.Warning);
+
+        public Task StartLoading()
+        {
+            PopupService.ShowProgressCircular(options => options.Size = 48);
+            return Task.CompletedTask;
+        }
+
+        public Task StopLoading()
+        {
+            PopupService.HideProgressCircular();
+            return Task.CompletedTask;
+        }
     }
 }

@@ -15,12 +15,6 @@
             <MainBottomNavigation @bind-Value="SelectedItemIndex"
                                   Items="NavigationButtons">
             </MainBottomNavigation>
-            <MOverlay Value="ShowLoading"
-                      ZIndex="99">
-                <MProgressCircular Indeterminate="true"
-                                   Size="48">
-                </MProgressCircular>
-            </MOverlay>
         </ChildContent>
         <ErrorContent>
             <ErrorDialog></ErrorDialog>

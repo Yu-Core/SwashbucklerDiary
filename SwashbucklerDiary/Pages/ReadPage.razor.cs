@@ -31,8 +31,6 @@ namespace SwashbucklerDiary.Pages
 
         [Parameter]
         public Guid Id { get; set; }
-        [CascadingParameter]
-        protected MainLayout MainLayout { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -172,7 +170,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task ShareImage()
         {
-            await MainLayout.SetLoading(true);
+            await AlertService.StartLoading();
             ShowShare = false;
             StateHasChanged();
             await Task.Delay(1000);
@@ -183,7 +181,7 @@ namespace SwashbucklerDiary.Pages
             string fn = "Screenshot.png";
             string path = await AppDataService.CreateCacheFileAsync(fn, Convert.FromBase64String(base64));
 
-            await MainLayout.SetLoading(false);
+            await AlertService.StopLoading();
             StateHasChanged();
 
             await PlatformService.ShareFile(I18n.T("Share.Share")!, path);

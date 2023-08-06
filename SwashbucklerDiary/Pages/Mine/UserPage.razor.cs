@@ -16,9 +16,6 @@ namespace SwashbucklerDiary.Pages
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
 
-        [CascadingParameter]
-        protected MainLayout MainLayout { get; set; } = default!;
-
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -98,7 +95,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            await MainLayout.SetLoading(true);
+            await AlertService.StartLoading();
             await InvokeAsync(StateHasChanged);
 
             string oldUri = await SettingsService.Get(SettingType.Avatar);
@@ -110,7 +107,7 @@ namespace SwashbucklerDiary.Pages
 
             await AppDataService.DeleteAppDataFileByCustomSchemeAsync(oldUri);
 
-            await MainLayout.SetLoading(false);
+            await AlertService.StopLoading();
             await InvokeAsync(StateHasChanged);
             await AlertService.Success(I18n.T("Share.EditSuccess"));
             await HandleAchievements(AchievementType.Avatar);
