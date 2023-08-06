@@ -234,9 +234,9 @@ namespace SwashbucklerDiary.Services
                 string content = JsonSerializer.Serialize(item, options);
                 WriteToFile(filePath, content);
 
-                if (item.ResourceUris is not null)
+                if (item.Resources is not null)
                 {
-                    foreach (var uri in item.ResourceUris)
+                    foreach (var uri in item.Resources)
                     {
                         if (uri.ResourceUri is null)
                         {
@@ -280,9 +280,9 @@ namespace SwashbucklerDiary.Services
                 var content = item.Content?.Replace(customScheme, "./");
                 WriteToFile(filePath, content);
 
-                if (item.ResourceUris is not null)
+                if (item.Resources is not null)
                 {
-                    foreach (var uri in item.ResourceUris)
+                    foreach (var uri in item.Resources)
                     {
                         if (uri.ResourceUri is null)
                         {

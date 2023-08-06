@@ -1,0 +1,34 @@
+﻿@page "/image"
+@namespace SwashbucklerDiary.Pages
+@inherits PageComponentBase
+
+<MAppBar App="true"
+         Elevation="0">
+    <MButton Icon="true"
+             OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MToolbarTitle Class="font-weight-bold">
+        @(I18n.T("Setting.Diary.Image.Name"))
+    </MToolbarTitle>
+    <MSpacer></MSpacer>
+    <MButton Icon="true"
+             OnClick="()=>ShowConfimDelete=true">
+        <MIcon>
+            mdi-delete-outline
+        </MIcon>
+    </MButton>
+</MAppBar>
+
+<ScrollContainer>
+    <ImageResourceCardList Value="ImageResources"></ImageResourceCardList>
+</ScrollContainer>
+
+<DeleteDialog @bind-Value="ShowConfimDelete"
+              Title="@(I18n.T("Share.Delete"))"
+              Content="@(I18n.T("Setting.Diary.Image.DeleteUnusedImage"))"
+              OnOK="DeleteUnusedImageResource">
+</DeleteDialog>

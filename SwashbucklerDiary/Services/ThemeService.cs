@@ -1,34 +1,26 @@
-﻿using CommunityToolkit.Maui.Core;
-using SwashbucklerDiary.IServices;
+﻿using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-
-#if WINDOWS || MACCATALYST
-using MauiBlazorToolkit;
-using MauiBlazorToolkit.Platform;
-#endif
+using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Services
 {
     public class ThemeService : IThemeService
     {
-        private ThemeState? _themeState;
-        public ThemeState ThemeState
-        {
-            get => GetThemeState();
-        }
-        public bool Light => ThemeState == ThemeState.Light;
-        public bool Dark => ThemeState == ThemeState.Dark;
+        public ThemeState? ThemeState { get; set; }
+        public ThemeState RealThemeState => GetThemeState();
+        public bool Light => RealThemeState == Models.ThemeState.Light;
+        public bool Dark => RealThemeState == Models.ThemeState.Dark;
 
         public event Action<ThemeState>? OnChanged;
 
         private ThemeState GetThemeState()
         {
-            if (_themeState == ThemeState.System)
+            if (ThemeState == Models.ThemeState.System)
             {
-                return Application.Current!.RequestedTheme == AppTheme.Dark ? ThemeState.Dark : ThemeState.Light;   
+                return Application.Current!.RequestedTheme == AppTheme.Dark ? Models.ThemeState.Dark : Models.ThemeState.Light;   
             }
             
-            return _themeState ?? ThemeState.Light;
+            return ThemeState ?? Models.ThemeState.Light;
         }
 
         /// <summary>
@@ -36,13 +28,13 @@ namespace SwashbucklerDiary.Services
         /// </summary>
         public void SetThemeState(ThemeState value)
         {
-            if (_themeState == value)
+            if (ThemeState == value)
             {
                 return;
             }
 
-            _themeState = value;
-            if (value == ThemeState.System)
+            ThemeState = value;
+            if (value == Models.ThemeState.System)
             {
                 Application.Current!.RequestedThemeChanged += HandlerAppThemeChanged;
             }
@@ -51,36 +43,21 @@ namespace SwashbucklerDiary.Services
                 Application.Current!.RequestedThemeChanged -= HandlerAppThemeChanged;
             }
 
-            InternalNotifyStateChanged(ThemeState);
+            InternalNotifyStateChanged();
         }
 
         private void HandlerAppThemeChanged(object? sender, AppThemeChangedEventArgs e)
         {
-            InternalNotifyStateChanged(ThemeState);
+            InternalNotifyStateChanged();
         }
 
-        private void InternalNotifyStateChanged(ThemeState value)
+        private void InternalNotifyStateChanged()
         {
-            SetStatusBar(value);
+            ThemeState value = RealThemeState;
+            StaticTitleAndStatusBar.SetTitleAndStatusBar(value);
             OnChanged?.Invoke(value);
         }
 
-        private static readonly Color statusBarColorLight = Color.FromRgb(247, 248, 249);
-        private static readonly Color statusBarColorDark = Color.FromRgb(18, 18, 18);
-#pragma warning disable CA1416
-        private static void SetStatusBar(ThemeState themeState)
-        {
-            var Dark = themeState == ThemeState.Dark;
-            Color backgroundColor = Dark ? statusBarColorDark : statusBarColorLight;
-#if WINDOWS || MACCATALYST
-            TitleBar.SetColor(backgroundColor);
-            TitleBarStyle titleBarStyle = Dark ? TitleBarStyle.LightContent : TitleBarStyle.DarkContent;
-            TitleBar.SetStyle(titleBarStyle);
-#elif ANDROID || IOS14_2_OR_GREATER
-            CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(backgroundColor);
-            StatusBarStyle statusBarStyle = Dark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
-            CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(statusBarStyle);
-#endif
-        }
+
     }
 }

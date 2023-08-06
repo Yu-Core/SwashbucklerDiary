@@ -1,0 +1,25 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits DialogComponentBase
+
+<MMDialog MyValue="Value"
+          MyValueChanged="ValueChanged"
+          Fullscreen="true"
+          Transition="@(null)">
+    <MCard Class="fill-height theme-element"
+           Ripple="false"
+           OnClick="()=>InternalValueChanged(false)">
+        <MImage Src="@Src"
+                Width="@("100%")"
+                Height="@("100%")"
+                Contain="true">
+            <PlaceholderContent>
+                <MRow Class="fill-height ma-0"
+                      Align="@AlignTypes.Center"
+                      Justify="@JustifyTypes.Center">
+                    <MProgressCircular Indeterminate="true">
+                    </MProgressCircular>
+                </MRow>
+            </PlaceholderContent>
+        </MImage>
+    </MCard>
+</MMDialog>

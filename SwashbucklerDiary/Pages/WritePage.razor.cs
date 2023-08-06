@@ -5,6 +5,7 @@ using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using SwashbucklerDiary.Services;
+using SwashbucklerDiary.Utilities;
 using System.Text.RegularExpressions;
 
 namespace SwashbucklerDiary.Pages
@@ -24,7 +25,7 @@ namespace SwashbucklerDiary.Pages
         private DiaryModel Diary = new()
         {
             Tags = new(),
-            ResourceUris = new(),
+            Resources = new(),
             CreateTime = DateTime.Now
         };
         private List<TagModel> Tags = new();
@@ -211,7 +212,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            Diary.ResourceUris = GetDiaryResources(Diary.Content);
+            Diary.Resources = GetDiaryResources(Diary.Content);
             bool exist = await DiaryService.AnyAsync(it => it.Id == Diary.Id);
             if (!exist)
             {
@@ -305,23 +306,37 @@ namespace SwashbucklerDiary.Pages
             return SettingsService.Save(type, value);
         }
 
-        private List<DiaryResourceModel> GetDiaryResources(string content)
+        private List<ResourceModel> GetDiaryResources(string content)
         {
-            var resourceUris = new List<DiaryResourceModel>();
+            var resources = new List<ResourceModel>();
             string pattern = @"(?<=\(|"")(appdata:///\S+?)(?=\)|"")"; ;
 
             MatchCollection matches = Regex.Matches(content, pattern);
 
             foreach (Match match in matches.Cast<Match>())
             {
-                resourceUris.Add(new()
+                resources.Add(new()
                 {
-                    DiaryId = Diary.Id,
+                    ResourceType = GetResourceType(match.Value),
                     ResourceUri = match.Value,
                 });
             }
 
-            return resourceUris;
+            return resources;
+        }
+
+        private ResourceType GetResourceType(string uri)
+        {
+            var mime = StaticContentProvider.GetResponseContentTypeOrDefault(uri);
+            var type = mime.Split('/')[0];
+
+            return type switch
+            {
+                "image" => ResourceType.Image,
+                "audio" => ResourceType.Audio,
+                "video" => ResourceType.Video,
+                _ => ResourceType.Unknown
+            };
         }
     }
 }

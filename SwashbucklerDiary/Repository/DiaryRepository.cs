@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Repository
         {
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
-                .Includes(it => it.ResourceUris)
+                .Includes(it => it.Resources)
                 .OrderByDescending(it => it.CreateTime)
                 .Take(count)
                 .ToListAsync();
@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Repository
         {
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
-                .Includes(it => it.ResourceUris)
+                .Includes(it => it.Resources)
                 .Where(func)
                 .OrderByDescending(it => it.CreateTime)
                 .Take(count)
@@ -36,29 +36,18 @@ namespace SwashbucklerDiary.Repository
         {
             return base.Context.InsertNav(model)
             .Include(it => it.Tags)
-            .Include(it => it.ResourceUris)
+            .Include(it => it.Resources)
             .ExecuteCommandAsync();
-        }
-
-        public override Task<int> InsertReturnIdentityAsync(DiaryModel model)
-        {
-            return base.InsertReturnIdentityAsync(model);
-        }
-
-        public override Task<DiaryModel> InsertReturnEntityAsync(DiaryModel model)
-        {
-            return base.InsertReturnEntityAsync(model);
-        }
-
-        public override Task<bool> UpdateAsync(DiaryModel model)
-        {
-            return base.UpdateAsync(model);
         }
 
         public override Task<bool> DeleteAsync(DiaryModel model)
         {
             return base.Context.DeleteNav(model)
                 .Include(it => it.Tags, new DeleteNavOptions()
+                {
+                    ManyToManyIsDeleteA = true
+                })
+                .Include(it => it.Resources, new DeleteNavOptions()
                 {
                     ManyToManyIsDeleteA = true
                 })
@@ -69,7 +58,7 @@ namespace SwashbucklerDiary.Repository
         {
             return Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
-                .Includes(it => it.ResourceUris)
+                .Includes(it => it.Resources)
                 .InSingleAsync(id);
         }
 
@@ -77,7 +66,7 @@ namespace SwashbucklerDiary.Repository
         {
             return Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
-                .Includes(it => it.ResourceUris)
+                .Includes(it => it.Resources)
                 .FirstAsync(whereExpression);
         }
 
@@ -95,7 +84,7 @@ namespace SwashbucklerDiary.Repository
         {
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
-                .Includes(it => it.ResourceUris)
+                .Includes(it => it.Resources)
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
@@ -104,7 +93,7 @@ namespace SwashbucklerDiary.Repository
         {
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
-                .Includes(it => it.ResourceUris)
+                .Includes(it => it.Resources)
                 .Where(func)
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
@@ -117,7 +106,10 @@ namespace SwashbucklerDiary.Repository
             {
                 ManyToManyIsUpdateA = true
             })
-            .Include(it => it.ResourceUris)
+            .Include(it => it.Resources, new UpdateNavOptions
+            {
+                ManyToManyIsUpdateA = true
+            })
             .ExecuteCommandAsync();
         }
 
@@ -139,7 +131,11 @@ namespace SwashbucklerDiary.Repository
                 ManyToManyIsUpdateA = true,
                 ManyToManyIsUpdateB = true
             })
-            .Include(it=> it.ResourceUris)
+            .Include(it => it.Resources, new UpdateNavOptions
+            {
+                ManyToManyIsUpdateA = true,
+                ManyToManyIsUpdateB = true
+            })
             .ExecuteCommandAsync();
         }
 

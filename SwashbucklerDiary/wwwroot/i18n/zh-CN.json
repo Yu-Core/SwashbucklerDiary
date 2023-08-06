@@ -360,6 +360,11 @@
       "EditCreateTime": {
         "Name": "修改日期",
         "Path": "设置 / 修改日期"
+      },
+      "Image": {
+        "Name": "图片管理",
+        "Path": "设置 / 图片管理",
+        "DeleteUnusedImage": "确认删除未使用的图片？"
       }
     },
     "Safe": {

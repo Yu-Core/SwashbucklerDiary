@@ -360,6 +360,11 @@
       "EditCreateTime": {
         "Name": "Edit date",
         "Path": "Setting / Edit date"
+      },
+      "Image": {
+        "Name": "Image Manage",
+        "Path": "Setting / Image Manage",
+        "DeleteUnusedImage": "Are you sure to delete unused images?"
       }
     },
     "Safe": {

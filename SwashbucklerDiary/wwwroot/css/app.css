@@ -304,9 +304,34 @@ a, .btn-link {
 .chevron-down {
     transition: transform 0.75s;
 }
+
 .chevron-down-rotate-x {
     transform: rotateX(180deg);
 }
-.setting-state{
-    flex:none !important;
+
+.setting-state {
+    flex: none !important;
+}
+
+.my-image-card-list {
+    column-count: 2;
+    column-gap: 16px;
+}
+
+.my-image-card {
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 16px;
+}
+
+@media screen and (min-width:600px) {
+    .my-image-card-list {
+        column-count: 3;
+        column-gap: 24px;
+    }
+
+    .my-image-card {
+        margin-bottom: 24px;
+    }
 }

@@ -1,0 +1,15 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits MyComponentBase
+
+<CascadingValue Value="@this">
+    <div class="my-image-card-list">
+        @foreach (var item in Value)
+        {
+            <ImageResourceCard Value="item"></ImageResourceCard>
+        }
+    </div>
+</CascadingValue>
+
+<PreviewImageDialog @bind-Value="ShowPreview"
+                    Src="@PreviewImageSrc">
+</PreviewImageDialog>
