@@ -7,6 +7,12 @@ namespace SwashbucklerDiary.Services
     public class AlertService : IAlertService
     {
         private IPopupService PopupService = default!;
+        private ISettingsService SettingsService = default!;
+
+        public AlertService(ISettingsService settingsService)
+        {
+            SettingsService = settingsService;
+        }
 
         public void Initialize(object popupService)
         {
@@ -19,11 +25,13 @@ namespace SwashbucklerDiary.Services
 
         public async Task Alert(string? title, string? message, AlertTypes type)
         {
+            int timeout = await SettingsService.Get(Models.SettingType.AlertTimeout);
             await PopupService.EnqueueSnackbarAsync(new()
             {
                 Title = title,
                 Content = message,
-                Type = AlertTypes.None
+                Type = type,
+                Timeout = timeout
             });
         }
 

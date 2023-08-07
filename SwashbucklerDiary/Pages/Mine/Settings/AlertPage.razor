@@ -1,0 +1,24 @@
+﻿@page "/alert"
+@namespace SwashbucklerDiary.Pages
+@inherits PageComponentBase
+
+<MyAppBar Title="@(I18n.T("Setting.Display.Alert.Name"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MSubheader>
+       @(I18n.T("Alert.AlertTimeout"))：@(timeout / 1000) s
+    </MSubheader>
+    <MContainer Class="ma-0 py-0"
+                Style="max-width:600px;">
+        <MSlider Value="timeout"
+                 ValueChanged="UpdateAlertTimeout"
+                 TValue="int"
+                 Min="1000"
+                 Max="5000"
+                 Step="1000">
+        </MSlider>
+    </MContainer>
+</ScrollContainer>
+

@@ -26,6 +26,8 @@ namespace SwashbucklerDiary.Services
             {SettingType.Date,true },
             {SettingType.DiaryCardIcon,false },
             {SettingType.EditCreateTime,false },
+            {SettingType.AlertTimeout,5000 },
+
         };
 
         public Task<bool> ContainsKey(string key)

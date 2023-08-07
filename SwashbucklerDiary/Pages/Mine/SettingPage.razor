@@ -305,6 +305,20 @@
                     </MSwitch>
                 </MListItemAction>
             </MListItem>
+            <MDivider Class="mx-3"></MDivider>
+            <MListItem OnClick="@(()=>To("alert"))">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-alert-circle-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Alert.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
         </MList>
     </MCard>
 </ScrollContainer>

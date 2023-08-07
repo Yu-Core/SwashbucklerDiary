@@ -405,6 +405,10 @@
       "DiaryCardIcon": {
         "Name": "Card icon",
         "Path": "Setting / Card icon"
+      },
+      "Alert": {
+        "Name": "Alert Settings",
+        "Paht": "Setting / Alert Settings"
       }
     }
   },
@@ -583,5 +587,8 @@
   },
   "SearchAppFunction": {
     "Placeholder": "Please enter the function you want to search for"
+  },
+  "Alert": {
+    "AlertTimeout": "Alert timeout"
   }
 }

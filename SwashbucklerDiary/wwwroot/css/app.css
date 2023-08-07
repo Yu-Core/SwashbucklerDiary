@@ -252,7 +252,8 @@ a, .btn-link {
 
 @media screen and (min-width:600px) {
     .my-btn-fab {
-        margin-bottom: 0px !important;
+        margin-bottom: 20px !important;
+        margin-right: 20px !important;
     }
 }
 
