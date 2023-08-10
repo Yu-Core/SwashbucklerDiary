@@ -2,10 +2,11 @@
 using Microsoft.JSInterop;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class MarkdownPreview : ITempCustomSchemeAssist
+    public partial class MarkdownPreview
     {
         private ElementReference element;
         private string? _value;
@@ -44,7 +45,7 @@ namespace SwashbucklerDiary.Components
             await module!.InvokeVoidAsync("Copy", new object[2] { dotNetCallbackRef, "CopySuccess" });
             //修复点击链接的一些错误
             await module!.InvokeVoidAsync("FixLink", new object[1] { element });
-            await this.CustomSchemeRender();
+            await JS.CustomSchemeRender();
         }
 
         [JSInvokable]

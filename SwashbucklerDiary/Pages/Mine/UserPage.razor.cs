@@ -2,11 +2,11 @@
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class UserPage : PageComponentBase,ITempCustomSchemeAssist
+    public partial class UserPage : PageComponentBase
     {
         private string? UserName;
         private string? Sign;
@@ -116,7 +116,7 @@ namespace SwashbucklerDiary.Pages
         private async Task SetAvatar(string? uri = null)
         {
             uri ??= await SettingsService.Get(SettingType.Avatar);
-            Avatar = this.CustomSchemeRender(uri);
+            Avatar = StaticCustomScheme.CustomSchemeRender(uri);
         }
     }
 }

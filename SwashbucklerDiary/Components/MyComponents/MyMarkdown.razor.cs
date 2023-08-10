@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class MyMarkdown : ITempCustomSchemeAssist
+    public partial class MyMarkdown
     {
         private Dictionary<string, object> _options = new();
         private IJSObjectReference? module;
@@ -119,7 +120,7 @@ namespace SwashbucklerDiary.Components
             if (ValueChanged.HasDelegate)
             {
                 await ValueChanged.InvokeAsync(value);
-                await this.CustomSchemeRender();
+                await JS.CustomSchemeRender();
             }
         }
 
@@ -127,7 +128,7 @@ namespace SwashbucklerDiary.Components
         {
             await Task.Delay(1000);
             await PreventInputLoseFocus();
-            await this.CustomSchemeRender();
+            await JS.CustomSchemeRender();
         }
 
         private async Task PreventInputLoseFocus()
@@ -203,7 +204,7 @@ namespace SwashbucklerDiary.Components
                 {
                     await ValueChanged.InvokeAsync(value);
                 }
-                await this.CustomSchemeRender();
+                await JS.CustomSchemeRender();
             }
             else
             {

@@ -3,10 +3,11 @@ using Serilog;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class MinePage : PageComponentBase,ITempCustomSchemeAssist
+    public partial class MinePage : PageComponentBase
     {
         private int DiaryCount;
         private long WordCount;
@@ -113,7 +114,7 @@ namespace SwashbucklerDiary.Pages
         private async Task SetAvatar()
         {
             string uri = await SettingsService.Get(SettingType.Avatar);
-            Avatar = this.CustomSchemeRender(uri);
+            Avatar = StaticCustomScheme.CustomSchemeRender(uri);
         }
 
         private async Task SendMail()

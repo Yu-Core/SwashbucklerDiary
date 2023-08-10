@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Models;
+using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class ImageResourceCard : ITempCustomSchemeAssist
+    public partial class ImageResourceCard
     {
         [Inject]
         public IJSRuntime JS { get; set; } = default!;
@@ -14,7 +15,7 @@ namespace SwashbucklerDiary.Components
         [CascadingParameter]
         protected ImageResourceCardList ImageResourceCardList { get; set; } = default!;
 
-        private string Src => this.CustomSchemeRender(Value.ResourceUri!);
+        private string Src => StaticCustomScheme.CustomSchemeRender(Value.ResourceUri!);
 
         private async Task PreviewImage()
         {
