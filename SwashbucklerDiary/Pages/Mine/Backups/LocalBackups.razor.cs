@@ -30,10 +30,11 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
+            await AlertService.StartLoading();
             BackupsFolderPath = await SettingsService.Get(SettingType.BackupsPath);
-            var destFileName = AppDataService.BackupFileName;
-            using var stream = AppDataService.GetDatabaseStream();
-            var filePath = await PlatformService.SaveFileAsync(BackupsFolderPath, destFileName, stream);
+            var diaries = await DiaryService.QueryAsync();
+            var filePath = await AppDataService.BackupDatabase(BackupsFolderPath, diaries, true);
+            await AlertService.StopLoading();
             if (filePath == null)
             {
                 return;
@@ -65,7 +66,7 @@ namespace SwashbucklerDiary.Pages
             }
 
             RestoreFilePath = string.Empty;
-            RestoreFilePath = await PlatformService.PickDBFileAsync();
+            RestoreFilePath = await PlatformService.PickZipFileAsync();
             if (string.IsNullOrEmpty(RestoreFilePath))
             {
                 return;
@@ -78,12 +79,21 @@ namespace SwashbucklerDiary.Pages
             ShowRestore = false;
             if (string.IsNullOrEmpty(RestoreFilePath))
             {
-                await AlertService.Success(I18n.T("Backups.Restore.Fail"));
+                await AlertService.Error(I18n.T("Backups.Restore.Fail"));
                 return;
             }
 
-            AppDataService.RestoreDatabase(RestoreFilePath);
-            await AlertService.Success(I18n.T("Backups.Restore.Success"));
+            await AlertService.StartLoading();
+            bool flag = await AppDataService.RestoreDatabase(RestoreFilePath);
+            await AlertService.StopLoading();
+            if (flag)
+            {
+                await AlertService.Success(I18n.T("Backups.Restore.Success"));
+            }
+            else
+            {
+                await AlertService.Error(I18n.T("Backups.Restore.Fail"));
+            }
         }
     }
 

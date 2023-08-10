@@ -4,7 +4,7 @@ namespace SwashbucklerDiary.IServices
 {
     public interface IAppDataService
     {
-        string BackupFileName { get; }
+        string GetBackupFileName();
         /// <summary>
         /// 清除缓存
         /// </summary>
@@ -14,23 +14,21 @@ namespace SwashbucklerDiary.IServices
         /// </summary>
         /// <returns></returns>
         string GetCacheSize();
-        /// <summary>
-        /// 获取数据库文件
-        /// </summary>
-        /// <returns></returns>
-        FileStream GetDatabaseStream();
+        Task<Stream> BackupDatabase(List<DiaryModel> diaries, bool copyResources);
+        Task<string?> BackupDatabase(string path,List<DiaryModel> diaries, bool copyResources);
         /// <summary>
         /// 恢复数据库
         /// </summary>
         /// <param name="path">数据库文件路径</param>
-        void RestoreDatabase(string path);
-        void RestoreDatabase(Stream stream);
-        Task<string> ExportTxtFileAsync(List<DiaryModel> diaries);
-        Task<string> ExportJsonFileAsync(List<DiaryModel> diaries);
-        Task<string> ExportMdFileAsync(List<DiaryModel> diaries);
-        Task<bool> ExportTxtFileAndSaveAsync(List<DiaryModel> diaries);
-        Task<bool> ExportJsonFileAndSaveAsync(List<DiaryModel> diaries);
-        Task<bool> ExportMdFileAndSaveAsync(List<DiaryModel> diaries);
+        Task<bool> RestoreDatabase(string filePath);
+        Task<bool> RestoreDatabase(Stream stream);
+        Task<string> ExportTxtZipFileAsync(List<DiaryModel> diaries);
+        Task<string> ExportJsonZipFileAsync(List<DiaryModel> diaries);
+        Task<string> ExportMdZipFileAsync(List<DiaryModel> diaries);
+        Task<string> ExportDBZipFileAsync(List<DiaryModel> diaries, bool copyResources);
+        Task<bool> ExportTxtZipFileAndSaveAsync(List<DiaryModel> diaries);
+        Task<bool> ExportJsonZipFileAndSaveAsync(List<DiaryModel> diaries);
+        Task<bool> ExportMdZipFileAndSaveAsync(List<DiaryModel> diaries);
         Task<string> CreateCacheFileAsync(string filePath, string contents);
         Task<string> CreateCacheFileAsync(string filePath, byte[] contents);
         Task<string> CreateAppDataFileAsync(string fn, string filePath);

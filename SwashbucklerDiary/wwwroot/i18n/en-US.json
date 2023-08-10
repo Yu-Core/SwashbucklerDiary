@@ -428,12 +428,13 @@
     },
     "WebDAV": {
       "Name": "WebDAV",
-      "Path": "Backups / WebDAV"
+      "Path": "Backups / WebDAV",
+      "IncludeDiaryResources": "Include images"
     },
     "Backups": {
       "Title": "Backups",
       "Path": "Backups / Local backups / Backups",
-      "Subtitle": "Save as a .db3 database file",
+      "Subtitle": "Save as zip file of database file",
       "Success": "Backups success",
       "Fail": "Backups fail",
       "SelectFolder": "Please select your backup folder and save it",
@@ -442,7 +443,7 @@
     "Restore": {
       "Title": "Restore",
       "Path": "Backups / Local backups / Restore",
-      "Subtitle": "Select a .db3 database file",
+      "Subtitle": "Select zip file of database file",
       "Success": "Restore success",
       "Fail": "Restore fail",
       "ConfirmRestore": {
@@ -471,7 +472,7 @@
     "Upload": {
       "Title": "Upload",
       "Path": "Backups / WebDAV / Upload",
-      "Subtitle": "Save as a .db3 database file",
+      "Subtitle": "Save as zip file of database file",
       "Success": "Upload successful",
       "Fail": "Upload failed",
       "Content": "The data will be saved to the network disk folder"
@@ -479,7 +480,7 @@
     "Download": {
       "Title": "Download",
       "Path": "Backups / WebDAV / Download",
-      "Subtitle": "Select a .db3 database file",
+      "Subtitle": "Select zip file of database file",
       "Success": "Download success",
       "Fail": "Download fail"
     }

@@ -136,7 +136,7 @@ namespace SwashbucklerDiary.Pages
             catch (Exception e)
             {
                 Log.Error($"{e.Message}\n{e.StackTrace}");
-                await AlertService.Success(I18n.T("Mine.SendMailFail"));
+                await AlertService.Error(I18n.T("Mine.SendMailFail"));
             }
         }
 
@@ -166,7 +166,7 @@ namespace SwashbucklerDiary.Pages
             catch (Exception e)
             {
                 Log.Error($"{e.Message}\n{e.StackTrace}");
-                await AlertService.Success(I18n.T("Mine.QQGroupError"));
+                await AlertService.Error(I18n.T("Mine.QQGroupError"));
             }
             
         }

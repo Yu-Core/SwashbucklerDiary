@@ -40,7 +40,7 @@ namespace SwashbucklerDiary.Components
             await AlertService.StartLoading();
             try
             {
-                bool flag = await AppDataService.ExportTxtFileAndSaveAsync(Diaries);
+                bool flag = await AppDataService.ExportTxtZipFileAndSaveAsync(Diaries);
                 if (flag)
                 {
                     //此处未来可能引入成就系统
@@ -65,7 +65,7 @@ namespace SwashbucklerDiary.Components
             await AlertService.StartLoading();
             try
             {
-                bool flag = await AppDataService.ExportJsonFileAndSaveAsync(Diaries);
+                bool flag = await AppDataService.ExportJsonZipFileAndSaveAsync(Diaries);
                 if (flag)
                 {
                     await AlertService.Success(I18n.T("Export.Export.Success"));
@@ -93,7 +93,7 @@ namespace SwashbucklerDiary.Components
             await AlertService.StartLoading();
             try
             {
-                bool flag = await AppDataService.ExportMdFileAndSaveAsync(Diaries);
+                bool flag = await AppDataService.ExportMdZipFileAndSaveAsync(Diaries);
                 if (flag)
                 {
                     await AlertService.Success(I18n.T("Export.Export.Success"));

@@ -33,7 +33,7 @@ namespace SwashbucklerDiary.Pages
             }
             else
             {
-                await AlertService.Success(I18n.T("Share.DeleteFail"));
+                await AlertService.Error(I18n.T("Share.DeleteFail"));
 
             }
         }

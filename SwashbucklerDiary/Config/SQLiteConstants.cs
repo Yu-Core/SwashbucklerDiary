@@ -4,7 +4,7 @@ namespace SwashbucklerDiary.Config
 {
     public static class SQLiteConstants
     {
-        private const string DatabaseFilename = "SwashbucklerDiary.db3";
+        public const string DatabaseFilename = "SwashbucklerDiary.db3";
 
         public const SQLite.SQLiteOpenFlags Flags =
             // open the database in read/write mode

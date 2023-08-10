@@ -12,6 +12,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowConfig;
         private bool ShowUpload;
         private bool ShowDownload;
+        private bool IncludeDiaryResources;
         private WebDavConfigForm configModel = new();
         private const string WebDavFolderName = "SwashbucklerDiary";
         private IWebDavClient WebDavClient = default!;
@@ -31,6 +32,7 @@ namespace SwashbucklerDiary.Pages
             configModel.ServerAddress = await SettingsService.Get(SettingType.WebDAVServerAddress);
             configModel.Account = await SettingsService.Get(SettingType.WebDAVAccount);
             configModel.Password = await SettingsService.Get(SettingType.WebDAVPassword);
+            IncludeDiaryResources = await SettingsService.Get(SettingType.WebDAVCopyResources);
         }
 
         private async Task<bool> ConnectWebDavClient(WebDavConfigForm webDavConfig)
@@ -134,10 +136,14 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            using var stream = AppDataService.GetDatabaseStream();
-            var destFileName = WebDavFolderName + "/" + AppDataService.BackupFileName;
+            await AlertService.StartLoading();
+            var diaries = await DiaryService.QueryAsync();
+            bool copyResources = await SettingsService.Get(SettingType.WebDAVCopyResources);
+            using var stream = await AppDataService.BackupDatabase(diaries, copyResources);
+            var destFileName = WebDavFolderName + "/" + AppDataService.GetBackupFileName();
 
             await WebDavClient.PutFile(destFileName, stream);
+            await AlertService.StopLoading();
             await AlertService.Success(I18n.T("Backups.Upload.Success"));
         }
 
@@ -174,6 +180,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
+            await AlertService.StartLoading();
             var destFileName = WebDavFolderName + "/" + fileName;
             using var response = await WebDavClient.GetRawFile(destFileName); // get a file without processing from the server
             if (!response.IsSuccessful)
@@ -182,8 +189,16 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            AppDataService.RestoreDatabase(response.Stream);
-            await AlertService.Success(I18n.T("Backups.Download.Success"));
+            var flag = await AppDataService.RestoreDatabase(response.Stream);
+            await AlertService.StopLoading();
+            if (flag)
+            {
+                await AlertService.Success(I18n.T("Backups.Download.Success"));
+            }
+            else
+            {
+                await AlertService.Error(I18n.T("Backups.Download.Fail"));
+            }
         }
 
         private async Task SetFileList()
@@ -200,7 +215,7 @@ namespace SwashbucklerDiary.Pages
                     }
 
                     string extension = Path.GetExtension(res.DisplayName);
-                    if (extension == ".db3")
+                    if (extension == ".zip")
                     {
                         fileList.Add(res.DisplayName);
                     }
@@ -208,6 +223,16 @@ namespace SwashbucklerDiary.Pages
             }
             FileList = fileList;
             FileList.Reverse();
+        }
+
+        private Func<bool, Task> SettingChange(SettingType type)
+        {
+            return (bool value) => SettingsService.Save(type, value);
+        }
+
+        private string? MSwitchTrackColor(bool value)
+        {
+            return value && Light ? "black" : null;
         }
     }
 }

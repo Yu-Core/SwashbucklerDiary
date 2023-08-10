@@ -31,33 +31,46 @@ namespace SwashbucklerDiary.Services
 
         public string GetCacheSize() => GetFolderSize(FileSystem.Current.CacheDirectory);
 
-        public string BackupFileName
+        public Task<bool> RestoreDatabase(string filePath)
         {
-            get
+            if (!File.Exists(filePath))
             {
-                string name = "SwashbucklerDiaryBackups";
-                string time = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-                string version = $"v{PlatformService.GetAppVersion()}";
-                string suffix = ".db3";
-
-                return name + time + version + suffix;
+                return Task.FromResult(false);
             }
+
+            string outputFolder = Path.Combine(FileSystem.CacheDirectory, "DB");
+            if (!Directory.Exists(outputFolder))
+            {
+                Directory.CreateDirectory(outputFolder);
+            }
+            else
+            {
+                ClearFolder(outputFolder);
+            }
+
+            ZipFile.ExtractToDirectory(filePath, outputFolder);
+            // 获取文件夹下的db文件
+            string[] jsonFiles = Directory.GetFiles(outputFolder, "*.db3");
+            if (!jsonFiles.Any())
+            {
+                return Task.FromResult(false);
+            }
+
+            File.Copy(jsonFiles[0], SQLiteConstants.DatabasePath, true);
+            RestoreDiaryResource(outputFolder);
+            return Task.FromResult(true);
         }
 
-        public FileStream GetDatabaseStream()
+        public async Task<bool> RestoreDatabase(Stream stream)
         {
-            return File.OpenRead(SQLiteConstants.DatabasePath);
-        }
-
-        public void RestoreDatabase(string path)
-        {
-            File.Copy(path, SQLiteConstants.DatabasePath, true);
-        }
-
-        public void RestoreDatabase(Stream stream)
-        {
-            using var fileStream = new FileStream(SQLiteConstants.DatabasePath, FileMode.Create);
-            stream.CopyTo(fileStream);
+            var path = Path.Combine(FileSystem.CacheDirectory, Guid.NewGuid().ToString() + ".zip");
+            using (var fs = File.Create(path))
+            {
+                stream.CopyTo(fs);
+            }
+            var flag = await RestoreDatabase(path);
+            File.Delete(path);
+            return flag;
         }
 
         private static void ClearFolder(string folderPath)
@@ -175,7 +188,7 @@ namespace SwashbucklerDiary.Services
             return text.ToString();
         }
 
-        public Task<string> ExportTxtFileAsync(List<DiaryModel> diaries)
+        public Task<string> ExportTxtZipFileAsync(List<DiaryModel> diaries)
         {
             string outputFolder = Path.Combine(FileSystem.CacheDirectory, "Txt");
             string zipFilePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}Txt.zip");
@@ -206,7 +219,7 @@ namespace SwashbucklerDiary.Services
             return Task.FromResult(zipFilePath);
         }
 
-        public Task<string> ExportJsonFileAsync(List<DiaryModel> diaries)
+        public Task<string> ExportJsonZipFileAsync(List<DiaryModel> diaries)
         {
             string outputFolder = Path.Combine(FileSystem.CacheDirectory, "Json");
             string zipFilePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}Json.zip");
@@ -233,20 +246,9 @@ namespace SwashbucklerDiary.Services
 
                 string content = JsonSerializer.Serialize(item, options);
                 WriteToFile(filePath, content);
-
-                if (item.Resources is not null)
-                {
-                    foreach (var uri in item.Resources)
-                    {
-                        if (uri.ResourceUri is null)
-                        {
-                            continue;
-                        }
-
-                        CopyUriFileToOutFolder(uri.ResourceUri, outputFolder);
-                    }
-                }
             }
+
+            CopyDiaryResource(diaries, outputFolder);
 
             if (File.Exists(zipFilePath))
             {
@@ -258,7 +260,7 @@ namespace SwashbucklerDiary.Services
             return Task.FromResult(zipFilePath);
         }
 
-        public Task<string> ExportMdFileAsync(List<DiaryModel> diaries)
+        public Task<string> ExportMdZipFileAsync(List<DiaryModel> diaries)
         {
             string outputFolder = Path.Combine(FileSystem.CacheDirectory, "Markdown");
             string zipFilePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}Markdown.zip");
@@ -279,20 +281,9 @@ namespace SwashbucklerDiary.Services
 
                 var content = item.Content?.Replace(customScheme, "./");
                 WriteToFile(filePath, content);
-
-                if (item.Resources is not null)
-                {
-                    foreach (var uri in item.Resources)
-                    {
-                        if (uri.ResourceUri is null)
-                        {
-                            continue;
-                        }
-
-                        CopyUriFileToOutFolder(uri.ResourceUri, outputFolder);
-                    }
-                }
             }
+
+            CopyDiaryResource(diaries, outputFolder);
 
             if (File.Exists(zipFilePath))
             {
@@ -309,30 +300,29 @@ namespace SwashbucklerDiary.Services
             string filePath = await func.Invoke(diaries);
             string extension = Path.GetExtension(filePath);
             string saveFilePath = $"{exportFileName}{type}{DateTime.Now:yyyy-MM-dd-HH-mm-ss}{extension}";
-            return await SaveFile(saveFilePath, filePath);
+            var path = await SaveFile(saveFilePath, filePath);
+            return path is not null;
         }
 
-        public Task<bool> ExportTxtFileAndSaveAsync(List<DiaryModel> diaries)
-            => CreateFileAndSaveAsync(ExportTxtFileAsync, "Txt", diaries);
+        public Task<bool> ExportTxtZipFileAndSaveAsync(List<DiaryModel> diaries)
+            => CreateFileAndSaveAsync(ExportTxtZipFileAsync, "Txt", diaries);
 
-        public Task<bool> ExportJsonFileAndSaveAsync(List<DiaryModel> diaries)
-            => CreateFileAndSaveAsync(ExportJsonFileAsync, "Json", diaries);
+        public Task<bool> ExportJsonZipFileAndSaveAsync(List<DiaryModel> diaries)
+            => CreateFileAndSaveAsync(ExportJsonZipFileAsync, "Json", diaries);
 
-        public Task<bool> ExportMdFileAndSaveAsync(List<DiaryModel> diaries)
-            => CreateFileAndSaveAsync(ExportMdFileAsync, "Markdown", diaries);
+        public Task<bool> ExportMdZipFileAndSaveAsync(List<DiaryModel> diaries)
+            => CreateFileAndSaveAsync(ExportMdZipFileAsync, "Markdown", diaries);
 
-        private async Task<bool> SaveFile(string targetFilePath, string sourceFilePath)
+        private Task<string?> SaveFile(string name, string sourceFilePath)
+            => SaveFile(string.Empty, name, sourceFilePath);
+
+        private async Task<string?> SaveFile(string path, string name, string sourceFilePath)
         {
             using FileStream stream = File.OpenRead(sourceFilePath);
             //Cannot save an existing file
             //https://github.com/CommunityToolkit/Maui/issues/1049
-            var filePath = await PlatformService.SaveFileAsync(targetFilePath, stream);
-            if (filePath == null)
-            {
-                return false;
-            }
-
-            return true;
+            var filePath = await PlatformService.SaveFileAsync(path, name, stream);
+            return filePath;
         }
 
         private static void WriteToFile(string fileName, string? content)
@@ -480,7 +470,7 @@ namespace SwashbucklerDiary.Services
 
         public async Task<List<DiaryModel>> ImportJsonFileAsync(string filePath)
         {
-            if(!File.Exists(filePath))
+            if (!File.Exists(filePath))
             {
                 return new();
             }
@@ -498,7 +488,7 @@ namespace SwashbucklerDiary.Services
             ZipFile.ExtractToDirectory(filePath, outputFolder);
             // 获取文件夹下的所有json文件
             string[] jsonFiles = Directory.GetFiles(outputFolder, "*.json");
-            if(jsonFiles.Length == 0)
+            if (jsonFiles.Length == 0)
             {
                 return new();
             }
@@ -514,17 +504,7 @@ namespace SwashbucklerDiary.Services
                 }
             }
 
-            string[] subfolders = Directory.GetDirectories(outputFolder);
-            foreach (string subfolder in subfolders)
-            {
-                var name = Path.GetFileName(subfolder);
-                if(ResourceFolders.Contains(name))
-                {
-                    var outpath = Path.Combine(FileSystem.AppDataDirectory, name);
-                    CopyFolder(subfolder, outpath,SearchOption.TopDirectoryOnly);
-                }
-            }
-
+            RestoreDiaryResource(outputFolder);
             return diaries;
         }
 
@@ -547,6 +527,87 @@ namespace SwashbucklerDiary.Services
                 // 复制文件
                 File.Copy(file, destinationPath, true);
             }
+        }
+
+        public async Task<Stream> BackupDatabase(List<DiaryModel> diaries, bool copyResources)
+        {
+            string filePath = await ExportDBZipFileAsync(diaries, copyResources);
+            return File.OpenRead(filePath);
+        }
+
+        public async Task<string?> BackupDatabase(string path, List<DiaryModel> diaries, bool copyResources)
+        {
+            string filePath = await ExportDBZipFileAsync(diaries, copyResources);
+            string destFileName = GetBackupFileName();
+            return await SaveFile(path, destFileName, filePath);
+        }
+
+        public Task<string> ExportDBZipFileAsync(List<DiaryModel> diaries, bool copyResources)
+        {
+            string outputFolder = Path.Combine(FileSystem.CacheDirectory, "DB");
+            string zipFilePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}DB.zip");
+
+            if (!Directory.Exists(outputFolder))
+            {
+                Directory.CreateDirectory(outputFolder);
+            }
+            else
+            {
+                ClearFolder(outputFolder);
+            }
+
+            var destFileName = Path.Combine(outputFolder, SQLiteConstants.DatabaseFilename);
+            File.Copy(SQLiteConstants.DatabasePath, destFileName);
+            if (copyResources)
+            {
+                CopyDiaryResource(diaries, outputFolder);
+            }
+
+            if (File.Exists(zipFilePath))
+            {
+                File.Delete(zipFilePath);
+            }
+
+            ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
+            return Task.FromResult(zipFilePath);
+        }
+
+        private void CopyDiaryResource(List<DiaryModel> diaries, string outputFolder)
+        {
+            var resources = diaries.SelectMany(a => a.Resources ?? new()).Distinct().ToList();
+
+            foreach (var resource in resources)
+            {
+                if (resource.ResourceUri is null)
+                {
+                    continue;
+                }
+
+                CopyUriFileToOutFolder(resource.ResourceUri, outputFolder);
+            }
+        }
+
+        private void RestoreDiaryResource(string outputFolder)
+        {
+            string[] subfolders = Directory.GetDirectories(outputFolder);
+            foreach (string subfolder in subfolders)
+            {
+                var name = Path.GetFileName(subfolder);
+                if (ResourceFolders.Contains(name))
+                {
+                    var outpath = Path.Combine(FileSystem.AppDataDirectory, name);
+                    CopyFolder(subfolder, outpath, SearchOption.TopDirectoryOnly);
+                }
+            }
+        }
+
+        public string GetBackupFileName()
+        {
+            string name = "SwashbucklerDiaryBackups";
+            string time = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            string version = $"v{PlatformService.GetAppVersion()}";
+            string extension = ".zip";
+            return $"{name}{time}{version}{extension}";
         }
     }
 }

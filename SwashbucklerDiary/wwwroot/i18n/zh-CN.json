@@ -428,12 +428,13 @@
     },
     "WebDAV": {
       "Name": "WebDAV",
-      "Path": "备份 / WebDAV"
+      "Path": "备份 / WebDAV",
+      "IncludeDiaryResources": "包含图片"
     },
     "Backups": {
       "Title": "备份",
       "Path": "备份 / 本地备份 / 备份",
-      "Subtitle": "保存为db3格式的数据库文件",
+      "Subtitle": "保存为数据库文件生成的zip压缩包",
       "Success": "备份成功",
       "Fail": "备份失败",
       "SelectFolder": "请选择你的备份文件夹,并保存",
@@ -442,7 +443,7 @@
     "Restore": {
       "Title": "还原",
       "Path": "备份 / 本地备份 / 还原",
-      "Subtitle": "选择db3格式的数据库文件",
+      "Subtitle": "选择包含数据库文件的zip压缩包",
       "Success": "还原成功",
       "Fail": "还原失败",
       "ConfirmRestore": {
@@ -471,7 +472,7 @@
     "Upload": {
       "Title": "上传",
       "Path": "备份 / WebDAV / 上传",
-      "Subtitle": "保存为db3格式的数据库文件",
+      "Subtitle": "保存为数据库文件生成的zip压缩包",
       "Success": "上传成功",
       "Fail": "上传失败",
       "Content": "数据会被保存到网盘文件夹"
@@ -479,7 +480,7 @@
     "Download": {
       "Title": "拉取",
       "Path": "备份 / WebDAV / 拉取",
-      "Subtitle": "选择db3格式的数据库文件",
+      "Subtitle": "选择包含数据库文件的zip压缩包",
       "Success": "拉取成功",
       "Fail": "拉取失败"
     }

@@ -21,7 +21,7 @@
      <div class="d-sm-flex flex-sm-row justify-space-between">
          <MHover>
              <MCard @attributes="context.Attrs"
-                    Class="@($"mine-info mb-5 py-sm-3 py-md-5 {(context.Hover?"elevation-sm-2":"")}")"
+                    Class="@($"setting-info mb-5 py-sm-3 py-md-5 {(context.Hover?"elevation-sm-2":"")}")"
                     Elevation="0"
                     Rounded="@("lg")"
                     Ripple="false"
@@ -58,7 +58,7 @@
             </MCard>
         </MHover>
 
-        <MCard Class="mine-info mb-5 ml-sm-5 d-flex"
+        <MCard Class="setting-info mb-5 ml-sm-5 d-flex"
                Elevation="0"
                Rounded="@("lg")">
             <MList Class="d-flex flex-grow-1">
@@ -96,11 +96,11 @@
 
     @foreach (var list in ViewLists)
     {
-        <div class="text-h6 mine-title">
+        <div class="text-h6 setting-title">
             @(I18n.T(list.Key))
         </div>
 
-        <MCard Class="mine-card"
+        <MCard Class="setting-card"
                Elevation="0"
                Rounded="@("lg")">
             <MList>

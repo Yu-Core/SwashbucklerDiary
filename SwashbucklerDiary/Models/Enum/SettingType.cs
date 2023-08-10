@@ -22,5 +22,6 @@
         DiaryCardIcon = 18,
         EditCreateTime = 19,
         AlertTimeout = 20,
+        WebDAVCopyResources = 21,
     }
 }

@@ -27,6 +27,7 @@ namespace SwashbucklerDiary.Services
             {SettingType.DiaryCardIcon,false },
             {SettingType.EditCreateTime,false },
             {SettingType.AlertTimeout,5000 },
+            {SettingType.WebDAVCopyResources,false },
 
         };
 

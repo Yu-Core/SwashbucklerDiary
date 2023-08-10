@@ -1,7 +1,9 @@
 ﻿@namespace SwashbucklerDiary.Pages
 @inherits BackupsPageComponentBase
+@using SwashbucklerDiary.Models
 
-<MCard Elevation="0"
+<MCard Class="setting-card"
+       Elevation="0"
        Rounded="@("lg")">
     <MList>
         <MListItem OnClick="()=>ShowConfig=true">
@@ -70,6 +72,30 @@
             </MListItemAction>
         </MListItem>
     </MList>
+</MCard>
+
+<MCard Elevation="0"
+       Rounded="@("lg")">
+    <MListItem>
+        <MListItemIcon>
+            <MIcon Class="list-item-icon">
+                mdi-image-outline
+            </MIcon>
+        </MListItemIcon>
+        <MListItemContent>
+            @(I18n.T("Backups.WebDAV.IncludeDiaryResources"))
+        </MListItemContent>
+        <MListItemAction>
+            <MSwitch @bind-Value="IncludeDiaryResources"
+                     TValue="bool"
+                     OnChange="SettingChange(SettingType.WebDAVCopyResources)"
+                     Dense="true"
+                     Inset="true"
+                     Color="white"
+                     TrackColor="@MSwitchTrackColor(IncludeDiaryResources)">
+            </MSwitch>
+        </MListItemAction>
+    </MListItem>
 </MCard>
 
 <WebDavConfigDialog @bind-Value="ShowConfig"

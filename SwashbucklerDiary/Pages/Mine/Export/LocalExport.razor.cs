@@ -3,7 +3,6 @@ using Serilog;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using System.Text.Json;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -64,14 +63,14 @@ namespace SwashbucklerDiary.Pages
             var writePermission = await PlatformService.TryStorageWritePermission();
             if (!writePermission)
             {
-                await AlertService.Error(I18n.T("Permission.OpenStorageWrite"));
+                await AlertService.Info(I18n.T("Permission.OpenStorageWrite"));
                 return false;
             }
 
             var readPermission = await PlatformService.TryStorageReadPermission();
             if (!readPermission)
             {
-                await AlertService.Success(I18n.T("Permission.OpenStorageRead"));
+                await AlertService.Info(I18n.T("Permission.OpenStorageRead"));
                 return false;
             }
 
@@ -83,16 +82,17 @@ namespace SwashbucklerDiary.Pages
             ShowImport = false;
             if (string.IsNullOrEmpty(ImportFilePath))
             {
-                await AlertService.Success(I18n.T("Export.Import.Fail"));
+                await AlertService.Error(I18n.T("Export.Import.Fail"));
                 return;
             }
 
+            await AlertService.StartLoading();
             try
             {
                 List<DiaryModel>? diaries = await AppDataService.ImportJsonFileAsync(ImportFilePath);
                 if (diaries == null || !diaries.Any())
                 {
-                    await AlertService.Success(I18n.T("Export.Import.Fail"));
+                    await AlertService.Error(I18n.T("Export.Import.Fail"));
                     return;
                 }
 
@@ -102,7 +102,11 @@ namespace SwashbucklerDiary.Pages
             catch (Exception e)
             {
                 Log.Error($"{e.Message}\n{e.StackTrace}");
-                await AlertService.Success(I18n.T("Export.Import.Fail"));
+                await AlertService.Error(I18n.T("Export.Import.Fail"));
+            }
+            finally
+            {
+                await AlertService.StopLoading();
             }
         }
     }

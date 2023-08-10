@@ -361,3 +361,24 @@ a, .btn-link {
 .m-snack__wrapper.theme--dark * {
     color: rgba(255,255,255,.87) !important;
 }
+
+.setting-title {
+    display: none !important;
+    font-weight: 700 !important;
+    padding-bottom: 20px;
+    padding-left: 4px;
+}
+
+.setting-card {
+    margin-bottom: 20px;
+}
+
+@media screen and (min-width:600px) {
+    .setting-title {
+        display: block !important;
+    }
+
+    .setting-info {
+        width: 50%;
+    }
+}
