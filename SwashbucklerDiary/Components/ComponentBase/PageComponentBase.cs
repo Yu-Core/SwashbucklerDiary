@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Components
             var messages = await AchievementService.UpdateUserState(type);
             foreach (var item in messages)
             {
-                await AlertService.Success(I18n.T("Achievement.AchieveAchievements"), I18n.T(item));
+                await AlertService.Info(I18n.T("Achievement.AchieveAchievements"), I18n.T(item));
             }
         }
     }

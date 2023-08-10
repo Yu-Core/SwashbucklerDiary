@@ -336,3 +336,23 @@ a, .btn-link {
         margin-bottom: 24px;
     }
 }
+
+/*消息条提示样式，仿照masa旧版中的Toast*/
+
+.m-snack__wrapper {
+    border-radius: 9999px !important;
+    width: initial !important;
+    min-width: initial !important;
+}
+
+    .m-snack__wrapper::before {
+        background-color: unset !important;
+    }
+
+    .m-snack__wrapper.theme--light * {
+        color: rgba(0,0,0,.87) !important;
+    }
+
+    .m-snack__wrapper.theme--dark * {
+        color: rgba(255,255,255,.87) !important;
+    }

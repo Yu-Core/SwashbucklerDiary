@@ -56,13 +56,8 @@
 
 /*优化消息提示*/
 .m-alert__title {
-    margin-bottom: 8px;
     font-size: 1rem !important;
     font-weight: 700 !important;
-}
-
-.m-snack__wrapper {
-    border-radius: 8px !important;
 }
 
 /*解决移动端悬停问题*/
