@@ -165,7 +165,7 @@ namespace SwashbucklerDiary.Components
 
             string url = await AppDataService.CreateAppDataImageFileAsync(path);
             string html = $"![]({url})";
-            await InsertOrSetValueAsync(html);
+            await InsertValueAsync(html);
         }
 
         private async Task AddAudioAsync()
@@ -178,7 +178,7 @@ namespace SwashbucklerDiary.Components
 
             string url = await AppDataService.CreateAppDataAudioFileAsync(path);
             string html = $"<audio src=\"{url}\" controls ></audio>";
-            await InsertOrSetValueAsync(html);
+            await InsertValueAsync(html);
         }
 
         private async Task AddVideoAsync()
@@ -191,10 +191,10 @@ namespace SwashbucklerDiary.Components
 
             string url = await AppDataService.CreateAppDataVideoFileAsync(path);
             string html = $"<video src=\"{url}\" controls autoplay ></video>";
-            await InsertOrSetValueAsync(html);
+            await InsertValueAsync(html);
         }
 
-        private async Task InsertOrSetValueAsync(string value)
+        public async Task InsertValueAsync(string value)
         {
             if (string.IsNullOrEmpty(Value))
             {
@@ -204,6 +204,7 @@ namespace SwashbucklerDiary.Components
                 {
                     await ValueChanged.InvokeAsync(value);
                 }
+
                 await JS.CustomSchemeRender();
             }
             else

@@ -14,6 +14,13 @@
         <MSpacer></MSpacer>
 
         <MButton Icon="true"
+                 OnClick="InsertTimestamp">
+            <MIcon>
+                mdi-timer-plus-outline
+            </MIcon>
+        </MButton>
+
+        <MButton Icon="true"
                  OnClick="()=>ShowSelectTag = true">
             <MIcon>
                 mdi-label-outline
@@ -110,14 +117,16 @@
     <div class="write-input-wrap">
         @if (EnableMarkdown)
         {
-            <MyMarkdown @bind-Value="Diary.Content"
+            <MyMarkdown @ref="MyMarkdown"
+            @bind-Value="Diary.Content"
                         WrapClass="write-markdown-wrap"
                         Class="my-sm-4 px-3 rounded-lg write-markdown">
             </MyMarkdown>
         }
         else
         {
-            <MTextarea @bind-Value="Diary.Content"
+            <MMTextarea @ref="MMTextarea"
+            @bind-Value="Diary.Content"
                        Class="@($"my-sm-4 user-select rounded-lg flex-grow-1 flex-column {(EnableMarkdown?"d-none":"")}")"
                        Solo="Mobile"
                        Flat="Mobile"
@@ -126,7 +135,7 @@
                        NoResize="true"
                        spellcheck="false"
                        Placeholder="@(I18n.T("Write.ContentPlace"))">
-            </MTextarea>
+            </MMTextarea>
         }
     </div>
 

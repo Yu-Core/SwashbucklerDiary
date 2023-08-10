@@ -1,5 +1,6 @@
 ﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
@@ -21,6 +22,8 @@ namespace SwashbucklerDiary.Pages
         private bool EnableTitle;
         private bool EnableMarkdown = true;
         private bool EnableEditCreateTime;
+        private MyMarkdown? MyMarkdown;
+        private MMTextarea? MMTextarea;
         private List<DynamicListItem> ListItemModels = new();
         private DiaryModel Diary = new()
         {
@@ -337,6 +340,18 @@ namespace SwashbucklerDiary.Pages
                 "video" => ResourceType.Video,
                 _ => ResourceType.Unknown
             };
+        }
+
+        private async Task InsertTimestamp()
+        {
+            if(EnableMarkdown)
+            {
+                await MyMarkdown!.InsertValueAsync(DateTime.Now.ToString());
+            }
+            else
+            {
+                await MMTextarea!.InsertValueAsync(DateTime.Now.ToString());
+            }
         }
     }
 }
