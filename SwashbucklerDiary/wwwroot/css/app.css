@@ -338,21 +338,26 @@ a, .btn-link {
 }
 
 /*消息条提示样式，仿照masa旧版中的Toast*/
-
 .m-snack__wrapper {
-    border-radius: 9999px !important;
-    width: initial !important;
-    min-width: initial !important;
+    border-radius: 8px !important;
 }
 
-    .m-snack__wrapper::before {
-        background-color: unset !important;
+@media screen and (max-width:600px) {
+    .m-snack__wrapper {
+        border-radius: 9999px !important;
+        width: initial !important;
+        min-width: initial !important;
     }
+}
 
-    .m-snack__wrapper.theme--light * {
-        color: rgba(0,0,0,.87) !important;
-    }
+.m-snack__wrapper::before {
+    background-color: unset !important;
+}
 
-    .m-snack__wrapper.theme--dark * {
-        color: rgba(255,255,255,.87) !important;
-    }
+.m-snack__wrapper.theme--light * {
+    color: rgba(0,0,0,.87) !important;
+}
+
+.m-snack__wrapper.theme--dark * {
+    color: rgba(255,255,255,.87) !important;
+}
