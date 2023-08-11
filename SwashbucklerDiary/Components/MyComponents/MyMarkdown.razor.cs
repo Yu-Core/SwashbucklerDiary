@@ -196,21 +196,8 @@ namespace SwashbucklerDiary.Components
 
         public async Task InsertValueAsync(string value)
         {
-            if (string.IsNullOrEmpty(Value))
-            {
-                await MMarkdown!.SetValueAsync(value);
-                Value = value;
-                if(ValueChanged.HasDelegate)
-                {
-                    await ValueChanged.InvokeAsync(value);
-                }
-
-                await JS.CustomSchemeRender();
-            }
-            else
-            {
-                await MMarkdown!.InsertValueAsync(value);
-            }
+            await MMarkdown!.InsertValueAsync(value);
+            await module!.InvokeVoidAsync("moveCursorForward", value.Length);
         }
     }
 }
