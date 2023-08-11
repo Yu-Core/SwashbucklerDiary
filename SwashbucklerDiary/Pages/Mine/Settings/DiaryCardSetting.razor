@@ -1,0 +1,32 @@
+﻿@page "/diaryCardSetting"
+@namespace SwashbucklerDiary.Pages
+@inherits PageComponentBase
+
+<MyAppBar Title="@(I18n.T("Setting.Display.DiaryCard.Name"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<MCard Class="setting-card"
+       Elevation="0"
+       Rounded="@("lg")">
+        <MListItem>
+            <MListItemIcon>
+                <MIcon Class="list-item-icon">
+                    mdi-emoticon-happy-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+            @(I18n.T("Setting.Display.DiaryCard.Icon.Name"))
+            </MListItemContent>
+            <MListItemAction>
+                <MSwitch @bind-Value="DiaryCardIcon"
+                         TValue="bool"
+                         OnChange="SettingChange(SettingType.DiaryCardIcon)"
+                         Dense="true"
+                         Inset="true"
+                         Color="white"
+                         TrackColor="@MSwitchTrackColor(DiaryCardIcon)">
+                </MSwitch>
+            </MListItemAction>
+        </MListItem>
+</MCard>

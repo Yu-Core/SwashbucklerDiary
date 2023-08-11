@@ -29,5 +29,15 @@ namespace SwashbucklerDiary.Components
                 await AlertService.Info(I18n.T("Achievement.AchieveAchievements"), I18n.T(item));
             }
         }
+
+        protected Func<bool, Task> SettingChange(SettingType type)
+        {
+            return (bool value) => SettingsService.Save(type, value);
+        }
+
+        protected string? MSwitchTrackColor(bool value)
+        {
+            return value && Light ? "black" : null;
+        }
     }
 }

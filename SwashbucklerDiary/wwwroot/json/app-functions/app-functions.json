@@ -111,36 +111,12 @@
     "Name": "Setting.General.Permission.Name",
     "Icon": "mdi-account-cog-outline",
     "Path": "Setting.General.Permission.Path",
-    "Href": "permission"
+    "Href": "permissionSetting"
   },
   {
     "Name": "Setting.General.Storage.Name",
     "Icon": "mdi-trash-can-outline",
     "Path": "Setting.General.Storage.Path",
-    "Href": "setting"
-  },
-  {
-    "Name": "Setting.Diary.Title.Name",
-    "Icon": "mdi-format-title",
-    "Path": "Setting.Diary.Title.Path",
-    "Href": "setting"
-  },
-  {
-    "Name": "Setting.Diary.Markdown.Name",
-    "Icon": "mdi-language-markdown-outline",
-    "Path": "Setting.Diary.Markdown.Path",
-    "Href": "setting"
-  },
-  {
-    "Name": "Setting.Diary.Location.Name",
-    "Icon": "mdi-map-marker-outline",
-    "Path": "Setting.Diary.Location.Path",
-    "Href": "location"
-  },
-  {
-    "Name": "Setting.Diary.EditCreateTime.Name",
-    "Icon": "mdi-calendar-edit-outline",
-    "Path": "Setting.Diary.EditCreateTime.Path",
     "Href": "setting"
   },
   {
@@ -176,22 +152,76 @@
     "Privacy": false
   },
   {
-    "Name": "Setting.Display.WelcomeText.Name",
+    "Name": "Setting.Display.Index.Name",
+    "Icon": "mdi-home-outline",
+    "Path": "Setting.Display.Index.Path",
+    "Href": "indexSetting"
+  },
+  {
+    "Name": "Setting.Display.Index.WelcomeText.Name",
     "Icon": "mdi-hand-wave-outline",
-    "Path": "Setting.Display.WelcomeText.Path",
-    "Href": "setting"
+    "Path": "Setting.Display.Index.WelcomeText.Path",
+    "Href": "indexSetting"
   },
   {
-    "Name": "Setting.Display.Date.Name",
+    "Name": "Setting.Display.Index.Date.Name",
     "Icon": "mdi-calendar-range-outline",
-    "Path": "Setting.Display.Date.Path",
-    "Href": "setting"
+    "Path": "Setting.Display.Index.Date.Path",
+    "Href": "indexSetting"
   },
   {
-    "Name": "Setting.Display.DiaryCardIcon.Name",
+    "Name": "Setting.Display.Diary.Name",
+    "Icon": "mdi-notebook-outline",
+    "Path": "Setting.Display.Diary.Path",
+    "Href": "diarySetting"
+  },
+  {
+    "Name": "Setting.Display.Diary.Title.Name",
+    "Icon": "mdi-format-title",
+    "Path": "Setting.Display.Diary.Title.Path",
+    "Href": "diarySetting"
+  },
+  {
+    "Name": "Setting.Display.Diary.Markdown.Name",
+    "Icon": "mdi-language-markdown-outline",
+    "Path": "Setting.Display.Diary.Markdown.Path",
+    "Href": "diarySetting"
+  },
+  {
+    "Name": "Setting.Display.Diary.Location.Name",
+    "Icon": "mdi-map-marker-outline",
+    "Path": "Setting.Display.Diary.Location.Path",
+    "Href": "locationSetting"
+  },
+  {
+    "Name": "Setting.Display.Diary.EditCreateTime.Name",
+    "Icon": "mdi-calendar-edit-outline",
+    "Path": "Setting.Display.Diary.EditCreateTime.Path",
+    "Href": "diarySetting"
+  },
+  {
+    "Name": "Setting.Display.Diary.Image.Name",
+    "Icon": "mdi-image-outline",
+    "Path": "Setting.Display.Diary.Image.Path",
+    "Href": "imageSetting"
+  },
+  {
+    "Name": "Setting.Display.Alert.Name",
+    "Icon": "mdi-alert-box-outline",
+    "Path": "Setting.Display.Alert.Path",
+    "Href": "alertSetting"
+  },
+  {
+    "Name": "Setting.Display.DiaryCard.Name",
+    "Icon": "mdi-card-text-outline",
+    "Path": "Setting.Display.DiaryCard.Path",
+    "Href": "diaryCardSetting"
+  },
+  {
+    "Name": "Setting.Display.DiaryCard.Icon.Name",
     "Icon": "mdi-emoticon-happy-outline",
-    "Path": "Setting.Display.DiaryCardIcon.Path",
-    "Href": "setting"
+    "Path": "Setting.Display.DiaryCard.Icon.Path",
+    "Href": "diaryCardSetting"
   },
   {
     "Name": "About.SourceCode.Name",

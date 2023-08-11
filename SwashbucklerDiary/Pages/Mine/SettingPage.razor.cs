@@ -8,16 +8,10 @@ namespace SwashbucklerDiary.Pages
 {
     public partial class SettingPage : PageComponentBase
     {
-        private bool Title;
-        private bool Markdown;
         private bool Privacy;
-        private bool WelcomText;
         private string? PrivatePassword;
         private bool ShowPPSet;
         private bool ShowPPInput;
-        private bool Date;
-        private bool DiaryCardIcon;
-        private bool EditCreateTime;
         private bool ShowClearCache;
         private string? CacheSize;
 
@@ -32,25 +26,9 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
-        private string? MSwitchTrackColor(bool value)
-        {
-            return value && Light ? "black" : null;
-        }
-
         private async Task LoadSettings()
         {
-            Title = await SettingsService.Get(SettingType.Title);
-            Markdown = await SettingsService.Get(SettingType.Markdown);
             Privacy = await SettingsService.Get(SettingType.PrivacyMode);
-            WelcomText = await SettingsService.Get(SettingType.WelcomeText);
-            Date = await SettingsService.Get(SettingType.Date);
-            DiaryCardIcon = await SettingsService.Get(SettingType.DiaryCardIcon);
-            EditCreateTime = await SettingsService.Get(SettingType.EditCreateTime);
-        }
-
-        private Func<bool, Task> SettingChange(SettingType type)
-        {
-            return (bool value) => SettingsService.Save(type, value);
         }
 
         private async Task PrivacyChange(bool value)

@@ -343,30 +343,6 @@
         "Path": "Setting / Clear cache"
       }
     },
-    "Diary": {
-      "Name": "Diary",
-      "Title": {
-        "Name": "Title",
-        "Path": "Setting / Title"
-      },
-      "Markdown": {
-        "Name": "Markdown",
-        "Path": "Setting / Markdown"
-      },
-      "Location": {
-        "Name": "Location",
-        "Path": "Setting / Location"
-      },
-      "EditCreateTime": {
-        "Name": "Edit date",
-        "Path": "Setting / Edit date"
-      },
-      "Image": {
-        "Name": "Image Manage",
-        "Path": "Setting / Image Manage",
-        "DeleteUnusedImage": "Are you sure to delete unused images?"
-      }
-    },
     "Safe": {
       "Name": "Safe",
       "PrivacyLibrary": {
@@ -394,21 +370,54 @@
     },
     "Display": {
       "Name": "Display",
-      "WelcomeText": {
-        "Name": "Index welcome text",
-        "Path": "Setting / Index welcome text"
+      "Index": {
+        "Name": "Index",
+        "Path": "Setting / Index",
+        "WelcomeText": {
+          "Name": "Welcome text",
+          "Path": "Setting / Index / Welcome text"
+        },
+        "Date": {
+          "Name": "Date",
+          "Path": "Setting / Index / Date"
+        }
       },
-      "Date": {
-        "Name": "Index date",
-        "Path": "Setting / Index date"
+      "DiaryCard": {
+        "Name": "Diary card",
+        "Path": "Setting / Diary card",
+        "Icon": {
+          "Name": "Icon",
+          "Path": "Setting / Diary card / Card icon"
+        }
       },
-      "DiaryCardIcon": {
-        "Name": "Card icon",
-        "Path": "Setting / Card icon"
+      "Diary": {
+        "Name": "Diary",
+        "Path": "Setting / Diary",
+        "Title": {
+          "Name": "Title",
+          "Path": "Setting / Diary / Title"
+        },
+        "Markdown": {
+          "Name": "Markdown",
+          "Path": "Setting / Diary / Markdown"
+        },
+        "Location": {
+          "Name": "Location",
+          "Path": "Setting / Diary / Location"
+        },
+        "EditCreateTime": {
+          "Name": "Edit date",
+          "Path": "Setting / Diary / Edit date"
+        },
+        "Image": {
+          "Name": "Image",
+          "Path": "Setting / Diary / Image Manage",
+          "DeleteUnusedImage": "Are you sure to delete unused images?"
+        }
       },
       "Alert": {
-        "Name": "Alert Settings",
-        "Paht": "Setting / Alert Settings"
+        "Name": "Alert",
+        "Path": "Setting / Alert"
       }
     }
   },

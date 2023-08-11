@@ -75,7 +75,8 @@ namespace SwashbucklerDiary.Pages
             Expression<Func<AppFunction, bool>> expSearch;
             Expression<Func<AppFunction, bool>> expPrivacy;
 
-            expSearch = it => I18n.T(it.Name ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower());
+            expSearch = it => I18n.T(it.Name ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower())
+                || I18n.T(it.Path ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower());
             expPrivacy = it => !it.ConditionalDisplay || it.Privacy == Privacy;
 
             if (IsSearchFiltered)

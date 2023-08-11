@@ -3,9 +3,10 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class AlertPage : PageComponentBase
+    public partial class IndexSetting : PageComponentBase
     {
-        private int timeout;
+        private bool WelcomText;
+        private bool Date;
 
         protected override async Task OnInitializedAsync()
         {
@@ -15,13 +16,8 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LoadSettings()
         {
-            timeout = await SettingsService.Get(SettingType.AlertTimeout);
-        }
-
-        private async Task UpdateAlertTimeout(int value)
-        {
-            timeout = value;
-            await SettingsService.Save(SettingType.AlertTimeout, value);
+            WelcomText = await SettingsService.Get(SettingType.WelcomeText);
+            Date = await SettingsService.Get(SettingType.Date);
         }
     }
 }

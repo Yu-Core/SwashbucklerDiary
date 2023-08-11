@@ -343,30 +343,6 @@
         "Path": "设置 / 清理缓存"
       }
     },
-    "Diary": {
-      "Name": "日记",
-      "Title": {
-        "Name": "标题",
-        "Path": "设置 / 标题"
-      },
-      "Markdown": {
-        "Name": "Markdown",
-        "Path": "设置 / Markdown"
-      },
-      "Location": {
-        "Name": "位置",
-        "Path": "设置 / 位置"
-      },
-      "EditCreateTime": {
-        "Name": "修改日期",
-        "Path": "设置 / 修改日期"
-      },
-      "Image": {
-        "Name": "图片管理",
-        "Path": "设置 / 图片管理",
-        "DeleteUnusedImage": "确认删除未使用的图片？"
-      }
-    },
     "Safe": {
       "Name": "安全",
       "PrivacyLibrary": {
@@ -394,21 +370,54 @@
     },
     "Display": {
       "Name": "显示",
-      "WelcomeText": {
-        "Name": "首页问候语",
-        "Path": "设置 / 首页问候语"
+      "Index": {
+        "Name": "首页",
+        "Path": "设置 / 首页",
+        "WelcomeText": {
+          "Name": "问候语",
+          "Path": "设置 / 首页 / 问候语"
+        },
+        "Date": {
+          "Name": "日期",
+          "Path": "设置 / 首页 / 日期"
+        }
       },
-      "Date": {
-        "Name": "首页日期",
-        "Path": "设置 / 首页日期"
+      "DiaryCard": {
+        "Name": "日记卡片",
+        "Path": "设置 / 日记卡片",
+        "Icon": {
+          "Name": "图标",
+          "Path": "设置 / 日记卡片 / 图标"
+        }
       },
-      "DiaryCardIcon": {
-        "Name": "日记卡片图标",
-        "Path": "设置 / 首页日期"
+      "Diary": {
+        "Name": "日记",
+        "Path": "设置 / 日记",
+        "Title": {
+          "Name": "标题",
+          "Path": "设置 / 日记 / 标题"
+        },
+        "Markdown": {
+          "Name": "Markdown",
+          "Path": "设置 / 日记 / Markdown"
+        },
+        "Location": {
+          "Name": "位置",
+          "Path": "设置 / 日记 / 位置"
+        },
+        "EditCreateTime": {
+          "Name": "修改日期",
+          "Path": "设置 / 日记 / 修改日期"
+        },
+        "Image": {
+          "Name": "图片",
+          "Path": "设置 / 日记 / 图片",
+          "DeleteUnusedImage": "确认删除未使用的图片？"
+        }
       },
       "Alert": {
-        "Name": "提示设置",
-        "Paht": "设置 / 提示设置"
+        "Name": "提示框",
+        "Path": "设置 / 提示框"
       }
     }
   },

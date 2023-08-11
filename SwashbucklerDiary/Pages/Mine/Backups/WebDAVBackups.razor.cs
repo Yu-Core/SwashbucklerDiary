@@ -224,15 +224,5 @@ namespace SwashbucklerDiary.Pages
             FileList = fileList;
             FileList.Reverse();
         }
-
-        private Func<bool, Task> SettingChange(SettingType type)
-        {
-            return (bool value) => SettingsService.Save(type, value);
-        }
-
-        private string? MSwitchTrackColor(bool value)
-        {
-            return value && Light ? "black" : null;
-        }
     }
 }
