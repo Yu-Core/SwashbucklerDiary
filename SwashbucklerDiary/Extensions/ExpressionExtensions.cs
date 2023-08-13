@@ -2,7 +2,7 @@
 
 namespace SwashbucklerDiary.Extend
 {
-    public static class ExpressionExtend
+    public static class ExpressionExtensions
     {
         public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>>? left, Expression<Func<T, bool>> right)
         {

@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace SwashbucklerDiary.Extend
 {
-    public static class StringExtend
+    public static class StringExtensions
     {
         public static string MD5Encrytp32(this string password)
         {

@@ -3,7 +3,7 @@
 namespace SwashbucklerDiary.Extend
 {
 #nullable disable
-    public static class GenericExtend
+    public static class GenericExtensions
     {
         public static T DeepCopy<T>(this T obj)
         {
