@@ -19,8 +19,9 @@ namespace SwashbucklerDiary.Pages
         private readonly int multicastPort = 5299;// UDP组播端口
 
         private bool _tcpListening;
-        private bool Transferring;
+        private bool ShowTransferDialog;
         private bool Transferred;
+        private bool StopTransferr;
         private TcpListener? tcpListener;
         private readonly int tcpPort = 52099;// Tcp端口
         //private CancellationTokenSource CancellationTokenSource = new();
@@ -37,6 +38,7 @@ namespace SwashbucklerDiary.Pages
 
         public void Dispose()
         {
+            StopTransferr = true;
             UDPSending = false;
             if (udpClient != null)
             {
@@ -128,7 +130,7 @@ namespace SwashbucklerDiary.Pages
                     await InvokeAsync(() =>
                     {
                         UDPSending = false;
-                        Transferring = true;
+                        ShowTransferDialog = true;
                         StateHasChanged();
                     });
 
@@ -161,10 +163,14 @@ namespace SwashbucklerDiary.Pages
                     }
 
                     Log.Error($"{e.Message}\n{e.StackTrace}");
-                    await InvokeAsync(async () =>
+                    
+                    if(ShowTransferDialog)
                     {
-                        await AlertService.Error(I18n.T("lanReceiver.Receive failed"));
-                    });
+                        await InvokeAsync(async () =>
+                        {
+                            await AlertService.Error(I18n.T("lanReceiver.Receive failed"));
+                        });
+                    }
                 }
                 finally
                 {
@@ -176,7 +182,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task ReceiveProgressChanged(long readLength, long allLength)
         {
-            if (!Transferring)
+            if (StopTransferr)
             {
                 throw new Exception("Stop Transmission");
             }
@@ -196,7 +202,7 @@ namespace SwashbucklerDiary.Pages
         {
             if (!Transferred)
             {
-                Transferring = false;
+                StopTransferr = true;
             }
             else
             {

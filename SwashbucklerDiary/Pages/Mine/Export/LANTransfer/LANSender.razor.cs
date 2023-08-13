@@ -22,8 +22,9 @@ namespace SwashbucklerDiary.Pages
         private CancellationTokenSource CancellationTokenSource = new();
         private readonly List<LANDeviceInfo> LANDeviceInfos = new ();
 
-        private bool Transferring;
+        private bool ShowTransferDialog;
         private bool Transferred;
+        private bool StopTransferr;
         private readonly int TcpPort = 52099;
         private int Ps;
         private long TotalBytesToReceive;
@@ -35,6 +36,7 @@ namespace SwashbucklerDiary.Pages
         private IDiaryService DiaryService { get; set; } = default!;
         public void Dispose()
         {
+            StopTransferr = true;
             UDPListening = false;
             if (udpClient != null)
             {
@@ -132,7 +134,7 @@ namespace SwashbucklerDiary.Pages
         private void Send(LANDeviceInfo deviceInfo)
         {
             UDPListening = false;
-            Transferring = true;
+            ShowTransferDialog = true;
             StateHasChanged();
 
             Task.Run(async () =>
@@ -154,19 +156,26 @@ namespace SwashbucklerDiary.Pages
                 }
                 catch (Exception e)
                 {
-                    NavigateToBack();
-                    Log.Error($"{e.Message}\n{e.StackTrace}");
-                    await InvokeAsync(async () =>
+                    if (IsCurrentPage)
                     {
-                        await AlertService.Error(I18n.T("lanSender.Send failed"));
-                    });
+                        NavigateToBack();
+                    }
+
+                    Log.Error($"{e.Message}\n{e.StackTrace}");
+                    if (ShowTransferDialog)
+                    {
+                        await InvokeAsync(async () =>
+                        {
+                            await AlertService.Error(I18n.T("lanSender.Send failed"));
+                        });
+                    }
                 }
             });
         }
 
         private async Task SendProgressChanged(long readLength, long allLength)
         {
-            if (!Transferring)
+            if (StopTransferr)
             {
                 throw new Exception("Stop Transmission");
             }
@@ -186,7 +195,7 @@ namespace SwashbucklerDiary.Pages
         {
             if (!Transferred)
             {
-                Transferring = false;
+                StopTransferr = true;
             }
             else
             {
