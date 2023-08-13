@@ -388,6 +388,10 @@
         "Icon": {
           "Name": "Icon",
           "Path": "Setting / Diary card / Card icon"
+        },
+        "DateFormat": {
+          "Name": "Date format",
+          "Path": "Setting / Diary card / Date format"
         }
       },
       "Diary": {
@@ -606,5 +610,9 @@
   },
   "Alert": {
     "AlertTimeout": "Alert timeout"
+  },
+  "DateTimeFormat": {
+    "MM/dd": "Month/day",
+    "yyyy/MM/dd": "year/Month/day"
   }
 }

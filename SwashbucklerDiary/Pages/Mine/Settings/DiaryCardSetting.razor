@@ -6,9 +6,10 @@
           OnClick="NavigateToBack">
 </MyAppBar>
 
-<MCard Class="setting-card"
-       Elevation="0"
-       Rounded="@("lg")">
+<ScrollContainer>
+    <MCard Class="setting-card"
+           Elevation="0"
+           Rounded="@("lg")">
         <MListItem>
             <MListItemIcon>
                 <MIcon Class="list-item-icon">
@@ -16,7 +17,7 @@
                 </MIcon>
             </MListItemIcon>
             <MListItemContent>
-            @(I18n.T("Setting.Display.DiaryCard.Icon.Name"))
+                @(I18n.T("Setting.Display.DiaryCard.Icon.Name"))
             </MListItemContent>
             <MListItemAction>
                 <MSwitch @bind-Value="DiaryCardIcon"
@@ -29,4 +30,58 @@
                 </MSwitch>
             </MListItemAction>
         </MListItem>
-</MCard>
+
+        <MDivider Class="mx-3"></MDivider>
+
+        <MListItem OnClick="@(()=>ShowDiaryCardDateFormat=true)">
+            <MListItemIcon>
+                <MIcon Class="list-item-icon">
+                    mdi-calendar-clock
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                @(I18n.T("Setting.Display.DiaryCard.DateFormat.Name"))
+            </MListItemContent>
+            <MListItemContent Class="setting-state">
+                <MListItemSubtitle>
+                    @(I18n.T(DiaryCardDateFormatKey))
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>mdi-chevron-right</MIcon>
+            </MListItemAction>
+        </MListItem>
+    </MCard>
+</ScrollContainer>
+
+<MMDialog @bind-MyValue="ShowDiaryCardDateFormat"
+          MaxWidth="420">
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Setting.Display.DiaryCard.DateFormat.Name"))
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="()=>ShowDiaryCardDateFormat= false">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            <MRadioGroup Value="DiaryCardDateFormat"
+                         TValue="string"
+                         ValueChanged="DiaryCardDateFormatChanged"
+                         Class="mt-0 pb-1"
+                         OnClick="()=>ShowDiaryCardDateFormat=false"
+                         HideDetails="@("auto")"
+                         Mandatory="true">
+                @foreach (var item in DiaryCardDateFormats)
+                {
+                    <MRadio Label="@(I18n.T(item.Key))"
+                            Class="my-2"
+                            Value="@(item.Value)"
+                            Color="@MRadioColor">
+                    </MRadio>
+                }
+            </MRadioGroup>
+        </MCardText>
+    </MCard>
+</MMDialog>

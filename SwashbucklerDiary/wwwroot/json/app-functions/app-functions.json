@@ -224,6 +224,12 @@
     "Href": "diaryCardSetting"
   },
   {
+    "Name": "Setting.Display.DiaryCard.DateFormat.Name",
+    "Icon": "mdi-calendar-clock",
+    "Path": "Setting.Display.DiaryCard.DateFormat.Path",
+    "Href": "diaryCardSetting"
+  },
+  {
     "Name": "About.SourceCode.Name",
     "Icon": "mdi-book-open-page-variant-outline",
     "Path": "About.SourceCode.Path",

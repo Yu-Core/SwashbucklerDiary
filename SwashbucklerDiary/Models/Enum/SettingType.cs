@@ -23,5 +23,6 @@
         EditCreateTime = 19,
         AlertTimeout = 20,
         WebDAVCopyResources = 21,
+        DiaryCardDateFormat = 22,
     }
 }

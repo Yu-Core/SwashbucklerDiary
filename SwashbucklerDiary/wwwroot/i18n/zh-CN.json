@@ -388,6 +388,10 @@
         "Icon": {
           "Name": "图标",
           "Path": "设置 / 日记卡片 / 图标"
+        },
+        "DateFormat": {
+          "Name": "日期格式",
+          "Path": "设置 / 日记卡片 / 日期格式"
         }
       },
       "Diary": {
@@ -606,5 +610,9 @@
   },
   "Alert": {
     "AlertTimeout": "提示时长"
+  },
+  "DateTimeFormat": {
+    "MM/dd": "月/日",
+    "yyyy/MM/dd": "年/月/日"
   }
 }

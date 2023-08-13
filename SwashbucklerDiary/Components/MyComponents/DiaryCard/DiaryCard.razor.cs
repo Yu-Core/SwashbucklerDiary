@@ -34,6 +34,8 @@ namespace SwashbucklerDiary.Components
         public EventCallback<DiaryModel> OnClick { get; set; }
         [Parameter]
         public bool Icon { get; set; }
+        [Parameter]
+        public string? DateFormat { get; set; }
 
         protected override void OnInitialized()
         {

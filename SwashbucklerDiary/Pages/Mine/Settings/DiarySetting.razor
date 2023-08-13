@@ -6,110 +6,112 @@
           OnClick="NavigateToBack">
 </MyAppBar>
 
-<MCard Class="setting-card"
-       Elevation="0"
-       Rounded="@("lg")">
-    <MList>
-        <MListItem>
-            <MListItemIcon>
-                <MIcon Class="list-item-icon">
-                    mdi-format-title
-                </MIcon>
-            </MListItemIcon>
-            <MListItemContent>
-                @(I18n.T("Setting.Display.Diary.Title.Name"))
-            </MListItemContent>
-            <MListItemAction>
-                <MSwitch @bind-Value="Title"
-                         TValue="bool"
-                         OnChange="SettingChange(SettingType.Title)"
-                         Dense="true"
-                         Inset="true"
-                         Color="white"
-                         TrackColor="@MSwitchTrackColor(Title)">
-                </MSwitch>
-            </MListItemAction>
-        </MListItem>
+<ScrollContainer>
+    <MCard Class="setting-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-format-title
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.Title.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="Title"
+                             TValue="bool"
+                             OnChange="SettingChange(SettingType.Title)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(Title)">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
 
-        <MDivider Class="mx-3"></MDivider>
+            <MDivider Class="mx-3"></MDivider>
 
-        <MListItem>
-            <MListItemIcon>
-                <MIcon Class="list-item-icon">
-                    mdi-language-markdown-outline
-                </MIcon>
-            </MListItemIcon>
-            <MListItemContent>
-                @(I18n.T("Setting.Display.Diary.Markdown.Name"))
-            </MListItemContent>
-            <MListItemAction>
-                <MSwitch @bind-Value="Markdown"
-                         TValue="bool"
-                         OnChange="SettingChange(SettingType.Markdown)"
-                         Dense="true"
-                         Inset="true"
-                         Color="white"
-                         TrackColor="@MSwitchTrackColor(Markdown)">
-                </MSwitch>
-            </MListItemAction>
-        </MListItem>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-language-markdown-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.Markdown.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="Markdown"
+                             TValue="bool"
+                             OnChange="SettingChange(SettingType.Markdown)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(Markdown)">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
 
-        <MDivider Class="mx-3"></MDivider>
+            <MDivider Class="mx-3"></MDivider>
 
-        <MListItem>
-            <MListItemIcon>
-                <MIcon Class="list-item-icon">
-                    mdi-calendar-edit-outline
-                </MIcon>
-            </MListItemIcon>
-            <MListItemContent>
-                @(I18n.T("Setting.Display.Diary.EditCreateTime.Name"))
-            </MListItemContent>
-            <MListItemAction>
-                <MSwitch @bind-Value="EditCreateTime"
-                         TValue="bool"
-                         OnChange="SettingChange(SettingType.EditCreateTime)"
-                         Dense="true"
-                         Inset="true"
-                         Color="white"
-                         TrackColor="@MSwitchTrackColor(EditCreateTime)">
-                </MSwitch>
-            </MListItemAction>
-        </MListItem>
-    </MList>
-</MCard>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-calendar-edit-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.EditCreateTime.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="EditCreateTime"
+                             TValue="bool"
+                             OnChange="SettingChange(SettingType.EditCreateTime)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(EditCreateTime)">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
 
-<MCard Class="setting-card"
-       Elevation="0"
-       Rounded="@("lg")">
-    <MList>
-        <MListItem OnClick="@(()=>To("locationSetting"))">
-            <MListItemIcon>
-                <MIcon Class="list-item-icon">
-                    mdi-map-marker-outline
-                </MIcon>
-            </MListItemIcon>
-            <MListItemContent>
-                @(I18n.T("Setting.Display.Diary.Location.Name"))
-            </MListItemContent>
-            <MListItemAction>
-                <MIcon>mdi-chevron-right</MIcon>
-            </MListItemAction>
-        </MListItem>
-        <MDivider Class="mx-3"></MDivider>
+    <MCard Class="setting-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem OnClick="@(()=>To("locationSetting"))">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-map-marker-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.Location.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+            <MDivider Class="mx-3"></MDivider>
 
-        <MListItem OnClick="@(()=>To("imageSetting"))">
-            <MListItemIcon>
-                <MIcon Class="list-item-icon">
-                    mdi-image-outline
-                </MIcon>
-            </MListItemIcon>
-            <MListItemContent>
-                @(I18n.T("Setting.Display.Diary.Image.Name"))
-            </MListItemContent>
-            <MListItemAction>
-                <MIcon>mdi-chevron-right</MIcon>
-            </MListItemAction>
-        </MListItem>
-    </MList>
-</MCard>
+            <MListItem OnClick="@(()=>To("imageSetting"))">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-image-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.Image.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+</ScrollContainer>

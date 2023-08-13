@@ -12,6 +12,7 @@ namespace SwashbucklerDiary.Components
         private bool ShowExport;
         private bool ShowPrivacy;
         private bool ShowIcon;
+        private string? DateFormat;
         private DiaryModel SelectedDiary = new();
         private List<DiaryModel> ExportDiaries = new();
 
@@ -58,6 +59,7 @@ namespace SwashbucklerDiary.Components
         {
             ShowPrivacy = await SettingsService.Get(SettingType.PrivacyMode);
             ShowIcon = await SettingsService.Get(SettingType.DiaryCardIcon);
+            DateFormat = await SettingsService.Get(SettingType.DiaryCardDateFormat);
         }
 
         private async Task HandleTopping(DiaryModel diaryModel)
