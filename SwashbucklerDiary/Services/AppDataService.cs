@@ -1,6 +1,4 @@
-﻿using BlazorComponent;
-using Serilog;
-using SwashbucklerDiary.Config;
+﻿using SwashbucklerDiary.Config;
 using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -20,7 +18,7 @@ namespace SwashbucklerDiary.Services
         private const string ImageFolderName = "Image";
         private const string AudioFolderName = "Audio";
         private const string VideoFolderName = "Video";
-        private static string[] ResourceFolders = { ImageFolderName, AudioFolderName, VideoFolderName };
+        private static readonly string[] ResourceFolders = { ImageFolderName, AudioFolderName, VideoFolderName };
 
         public AppDataService(IPlatformService platformService,
             II18nService i18nService)
@@ -133,7 +131,7 @@ namespace SwashbucklerDiary.Services
         private static long FileSize(string filePath)
         {
             //定义一个FileInfo对象，是指与filePath所指向的文件相关联，以获取其大小
-            FileInfo fileInfo = new FileInfo(filePath);
+            FileInfo fileInfo = new(filePath);
             return fileInfo.Length;
         }
 
@@ -524,7 +522,7 @@ namespace SwashbucklerDiary.Services
                 string destinationPath = Path.Combine(destinationFolder, relativePath);
 
                 // 确保目标文件夹存在
-                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
 
                 // 复制文件
                 File.Copy(file, destinationPath, true);

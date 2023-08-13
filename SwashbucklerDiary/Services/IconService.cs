@@ -35,19 +35,19 @@
         };
         public string GetWeatherIcon(string key)
         {
-            if (string.IsNullOrEmpty(key) || !WeatherIcon.ContainsKey(key))
+            if (string.IsNullOrEmpty(key) || !WeatherIcon.TryGetValue(key, out string? value))
             {
                 return ErrorIcon;
             }
-            return WeatherIcon[key];
+            return value;
         }
         public string GetMoodIcon(string key)
         {
-            if (string.IsNullOrEmpty(key) || !MoodIcon.ContainsKey(key))
+            if (string.IsNullOrEmpty(key) || !MoodIcon.TryGetValue(key, out string? value))
             {
                 return ErrorIcon;
             }
-            return MoodIcon[key];
+            return value;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Services
             {DevicePlatformType.MacOS,"mdi-apple" },
             {DevicePlatformType.Unknown,"mdi-monitor-cellphone" },
         };
-        private IAppDataService AppDataService;
+        private readonly IAppDataService AppDataService;
 
         public LANService(IAppDataService appDataService)
         {
@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Services
         {
             string[] ipParts = ipAddress.Split('.');
 
-            StringBuilder ipPrefix = new StringBuilder();
+            StringBuilder ipPrefix = new();
 
             for (int i = 0; i < ipParts.Length - 1; i++)
             {
@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Services
         {
             try
             {
-                Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                Socket s = new(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 s.Connect(new IPEndPoint(IPAddress.Parse("8.8.8.8"), 53));
                 string ip = ((IPEndPoint)s.LocalEndPoint!).Address.ToString();
                 s.Close();
@@ -52,7 +52,7 @@ namespace SwashbucklerDiary.Services
             catch (Exception e)
             {
                 Console.WriteLine("Error: " + e.Message);
-                return null;
+                return string.Empty;
             }
         }
 
@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Services
         {
             try
             {
-                Ping ping = new Ping();
+                Ping ping = new();
                 PingReply reply = ping.Send(address, 1000);
                 return reply.Status == IPStatus.Success;
             }
@@ -91,17 +91,17 @@ namespace SwashbucklerDiary.Services
 
         public DevicePlatformType GetLocalDevicePlatformType()
         {
-            if(OperatingSystem.IsWindows())
+            if (OperatingSystem.IsWindows())
             {
                 return DevicePlatformType.Windows;
             }
 
-            if(OperatingSystem.IsLinux())
+            if (OperatingSystem.IsLinux())
             {
                 return DevicePlatformType.Linux;
             }
 
-            if(OperatingSystem.IsAndroid())
+            if (OperatingSystem.IsAndroid())
             {
                 return DevicePlatformType.Android;
             }
@@ -126,9 +126,9 @@ namespace SwashbucklerDiary.Services
 
         public string GetDevicePlatformTypeIcon(DevicePlatformType platformType)
         {
-            if (DeviceIcons.ContainsKey(platformType))
+            if (DeviceIcons.TryGetValue(platformType, out string? value))
             {
-                return DeviceIcons[platformType];
+                return value;
             }
             else
             {

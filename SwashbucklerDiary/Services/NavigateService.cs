@@ -135,9 +135,9 @@ namespace SwashbucklerDiary.Services
         private object? GetCache(string url)
         {
             var cacheKey = url.Split("?")[0];
-            if (HistoryCache.ContainsKey(cacheKey))
+            if (HistoryCache.TryGetValue(cacheKey, out object? value))
             {
-                return HistoryCache[cacheKey];
+                return value;
             }
 
             return null;

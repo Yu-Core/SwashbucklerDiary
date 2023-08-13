@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Pages
     {
         private bool _udpSending;
         private UdpClient? udpClient;
-        private IPAddress multicastAddress = IPAddress.Parse("239.0.0.1");// UDP组播地址
+        private readonly IPAddress multicastAddress = IPAddress.Parse("239.0.0.1");// UDP组播地址
         private readonly int multicastPort = 5299;// UDP组播端口
 
         private bool _tcpListening;

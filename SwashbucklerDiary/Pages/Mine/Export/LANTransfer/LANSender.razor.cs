@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Pages
         private bool _udpListening;
         private bool JoinMulticastGroup;
         private CancellationTokenSource CancellationTokenSource = new();
-        private List<LANDeviceInfo> LANDeviceInfos = new List<LANDeviceInfo>();
+        private readonly List<LANDeviceInfo> LANDeviceInfos = new ();
 
         private bool Transferring;
         private bool Transferred;
@@ -140,7 +140,7 @@ namespace SwashbucklerDiary.Pages
                 var ipAddress = deviceInfo.IPAddress;
                 try
                 {
-                    using TcpClient client = new(ipAddress, TcpPort);
+                    using TcpClient client = new(ipAddress!, TcpPort);
                     await using NetworkStream stream = client.GetStream();
 
                     var diaries = await DiaryService.QueryAsync();
