@@ -8,6 +8,51 @@
 
 <ScrollContainer>
     <div class="text-h6 setting-title">
+        @(I18n.T("Setting.General.Name"))
+    </div>
+
+    <MCard Class="setting-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem OnClick="@(()=>To("permissionSetting"))">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-account-cog-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.General.Permission.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3"></MDivider>
+
+            <MListItem OnClick="@(()=>ShowClearCache=true)">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-trash-can-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.General.Storage.Name"))
+                </MListItemContent>
+                <MListItemContent Class="setting-state">
+                    <MListItemSubtitle>
+                        @CacheSize
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <div class="text-h6 setting-title">
         @(I18n.T("Setting.Display.Name"))
     </div>
 
@@ -148,50 +193,7 @@
         </MList>
     </MCard>
 
-    <div class="text-h6 setting-title">
-        @(I18n.T("Setting.General.Name"))
-    </div>
-
-    <MCard Class="setting-card"
-           Elevation="0"
-           Rounded="@("lg")">
-        <MList>
-            <MListItem OnClick="@(()=>To("permissionSetting"))">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-account-cog-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Setting.General.Permission.Name"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3"></MDivider>
-
-            <MListItem OnClick="@(()=>ShowClearCache=true)">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-trash-can-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Setting.General.Storage.Name"))
-                </MListItemContent>
-                <MListItemContent Class="setting-state">
-                    <MListItemSubtitle>
-                        @CacheSize
-                    </MListItemSubtitle>
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
+    
 </ScrollContainer>
 
 <PasswordDialog @bind-Value="ShowPPSet"
