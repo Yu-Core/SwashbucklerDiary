@@ -30,11 +30,9 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            await AlertService.StartLoading();
             BackupsFolderPath = await SettingsService.Get(SettingType.BackupsPath);
             var diaries = await DiaryService.QueryAsync();
             var filePath = await AppDataService.BackupDatabase(BackupsFolderPath, diaries, true);
-            await AlertService.StopLoading();
             if (filePath == null)
             {
                 return;
@@ -83,9 +81,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            await AlertService.StartLoading();
             bool flag = await AppDataService.RestoreDatabase(RestoreFilePath);
-            await AlertService.StopLoading();
             if (flag)
             {
                 await AlertService.Success(I18n.T("Backups.Restore.Success"));

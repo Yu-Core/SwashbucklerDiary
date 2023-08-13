@@ -86,7 +86,6 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            await AlertService.StartLoading();
             try
             {
                 List<DiaryModel>? diaries = await AppDataService.ImportJsonFileAsync(ImportFilePath);
@@ -103,10 +102,6 @@ namespace SwashbucklerDiary.Pages
             {
                 Log.Error($"{e.Message}\n{e.StackTrace}");
                 await AlertService.Error(I18n.T("Export.Import.Fail"));
-            }
-            finally
-            {
-                await AlertService.StopLoading();
             }
         }
     }
