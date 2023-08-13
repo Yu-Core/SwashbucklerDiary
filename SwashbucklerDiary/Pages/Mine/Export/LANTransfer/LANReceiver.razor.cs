@@ -1,24 +1,39 @@
-﻿using SwashbucklerDiary.Components;
-using System.Net.Sockets;
-using System.Net;
-using System.Text;
-using SwashbucklerDiary.Models;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using Serilog;
+using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
+using SwashbucklerDiary.Models;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 using System.Text.Json;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class LANReceiver : PageComponentBase,IDisposable
+    //自我批评一下，此处代码写的太乱
+    public partial class LANReceiver : PageComponentBase, IDisposable
     {
         private bool _udpSending;
         private UdpClient? udpClient;
         private IPAddress multicastAddress = IPAddress.Parse("239.0.0.1");// UDP组播地址
-        private int multicastPort = 5299;// UDP组播端口
+        private readonly int multicastPort = 5299;// UDP组播端口
+
+        private bool _tcpListening;
+        private bool Transferring;
+        private bool Transferred;
+        private TcpListener? tcpListener;
+        private readonly int tcpPort = 52099;// Tcp端口
+        //private CancellationTokenSource CancellationTokenSource = new();
+        private int Ps;
+        private long TotalBytesToReceive;
+        private long BytesReceived;
+
         private LANDeviceInfo LANDeviceInfo = new();
 
         [Inject]
         private ILANService LANService { get; set; } = default!;
+        [Inject]
+        private IDiaryService DiaryService { get; set; } = default!;
 
         public void Dispose()
         {
@@ -28,14 +43,23 @@ namespace SwashbucklerDiary.Pages
                 udpClient.Close();
                 udpClient.Dispose();
             }
+
+            TCPListening = false;
+            if (tcpListener != null)
+            {
+                tcpListener.Stop();
+            }
+
             GC.SuppressFinalize(this);
         }
 
         protected override void OnInitialized()
         {
-            udpClient = new UdpClient();
+            var ipAddress = IPAddress.Parse(LANService.GetLocalIPv4());
+            udpClient = new UdpClient(new IPEndPoint(ipAddress, multicastPort));
             LANDeviceInfo = LANService.GetLocalLANDeviceInfo();
             SendMulticast();
+            _ = StartTcpListening();
         }
 
         private bool IsCurrentPage => NavigateService.Navigation.Uri.Contains("/lanReceiver");
@@ -44,9 +68,25 @@ namespace SwashbucklerDiary.Pages
             get => _udpSending && IsCurrentPage;
             set => _udpSending = value;
         }
+        private bool TCPListening
+        {
+            get => _tcpListening && IsCurrentPage;
+            set => _tcpListening = value;
+        }
 
         private void SendMulticast()
         {
+            if (UDPSending)
+            {
+                return;
+            }
+
+            if (!LANService.IsConnection())
+            {
+                AlertService.Error(I18n.T("lanSender.No network connection"));
+                return;
+            }
+
             UDPSending = true;
             Task.Run(async () =>
             {
@@ -61,5 +101,107 @@ namespace SwashbucklerDiary.Pages
             });
         }
 
+        private async Task StartTcpListening()
+        {
+            if (TCPListening)
+            {
+                return;
+            }
+
+            if (!LANService.IsConnection())
+            {
+                await AlertService.Error(I18n.T("lanSender.No network connection"));
+                return;
+            }
+
+            _ = Task.Run(async () =>
+            {
+                var ipEndPoint = new IPEndPoint(IPAddress.Any, tcpPort);
+                tcpListener = new(ipEndPoint);
+                try
+                {
+                    tcpListener.Start();
+
+                    using TcpClient handler = await tcpListener.AcceptTcpClientAsync();
+                    await using NetworkStream stream = handler.GetStream();
+
+                    await InvokeAsync(() =>
+                    {
+                        UDPSending = false;
+                        Transferring = true;
+                        StateHasChanged();
+                    });
+
+                    byte[] fileSizeBytes = new byte[sizeof(long)];
+                    stream.Read(fileSizeBytes, 0, fileSizeBytes.Length);
+                    long fileSize = BitConverter.ToInt64(fileSizeBytes, 0);
+
+                    var diaries = await LANService.LANReceiverAsync(stream, fileSize, ReceiveProgressChanged);
+                    Transferred = true;
+                    if (diaries == null || !diaries.Any())
+                    {
+                        await InvokeAsync(async () =>
+                        {
+                            await AlertService.Error(I18n.T("Export.Import.Fail"));
+                        });
+                        return;
+                    }
+
+                    await DiaryService.ImportAsync(diaries);
+                    await InvokeAsync(async () =>
+                    {
+                        await AlertService.Success(I18n.T("lanReceiver.Receive successfully"));
+                    });
+                }
+                catch (Exception e)
+                {
+                    if (IsCurrentPage)
+                    {
+                        NavigateToBack();
+                    }
+
+                    Log.Error($"{e.Message}\n{e.StackTrace}");
+                    await InvokeAsync(async () =>
+                    {
+                        await AlertService.Error(I18n.T("lanReceiver.Receive failed"));
+                    });
+                }
+                finally
+                {
+                    tcpListener.Stop();
+                }
+            });
+
+        }
+
+        private async Task ReceiveProgressChanged(long readLength, long allLength)
+        {
+            if (!Transferring)
+            {
+                throw new Exception("Stop Transmission");
+            }
+
+            var c = (int)(readLength * 100 / allLength);
+
+            if (c > 0 && c % 5 == 0) //刷新进度为每5%更新一次，过快的刷新会导致页面显示数值与实际不一致
+            {
+                Ps = c; //下载完成百分比
+                BytesReceived = readLength / 1024; //当前已经下载的Kb
+                TotalBytesToReceive = allLength / 1024; //文件总大小Kb
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        private void StopTransmission()
+        {
+            if (!Transferred)
+            {
+                Transferring = false;
+            }
+            else
+            {
+                NavigateToBack();
+            }
+        }
     }
 }

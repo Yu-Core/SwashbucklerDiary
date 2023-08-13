@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Serilog;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -9,6 +10,7 @@ using System.Text.Json;
 
 namespace SwashbucklerDiary.Pages
 {
+    //自我批评一下，此处代码写的太乱
     public partial class LANSender : PageComponentBase, IDisposable
     {
         private UdpClient? udpClient;
@@ -20,9 +22,17 @@ namespace SwashbucklerDiary.Pages
         private CancellationTokenSource CancellationTokenSource = new();
         private List<LANDeviceInfo> LANDeviceInfos = new List<LANDeviceInfo>();
 
+        private bool Transferring;
+        private bool Transferred;
+        private readonly int TcpPort = 52099;
+        private int Ps;
+        private long TotalBytesToReceive;
+        private long BytesReceived;
+
         [Inject]
         private ILANService LANService { get; set; } = default!;
-
+        [Inject]
+        private IDiaryService DiaryService { get; set; } = default!;
         public void Dispose()
         {
             UDPListening = false;
@@ -72,14 +82,15 @@ namespace SwashbucklerDiary.Pages
 
             if (!LANService.IsConnection())
             {
-                AlertService.Info(I18n.T("lanSender.No network connection"));
+                AlertService.Error(I18n.T("lanSender.No network connection"));
                 return;
             }
 
-            if(!JoinMulticastGroup)
+            if (!JoinMulticastGroup)
             {
                 JoinMulticastGroup = true;
-                udpClient!.JoinMulticastGroup(multicastAddress);
+                var ipAddress = IPAddress.Parse(LANService.GetLocalIPv4());
+                udpClient!.JoinMulticastGroup(multicastAddress, ipAddress);
             }
 
             UDPListening = true;
@@ -116,6 +127,71 @@ namespace SwashbucklerDiary.Pages
                 UDPListening = false;
                 await InvokeAsync(StateHasChanged);
             });
+        }
+
+        private void Send(LANDeviceInfo deviceInfo)
+        {
+            UDPListening = false;
+            Transferring = true;
+            StateHasChanged();
+
+            Task.Run(async () =>
+            {
+                var ipAddress = deviceInfo.IPAddress;
+                try
+                {
+                    using TcpClient client = new(ipAddress, TcpPort);
+                    await using NetworkStream stream = client.GetStream();
+
+                    var diaries = await DiaryService.QueryAsync();
+                    await LANService.LANSendAsync(diaries, stream, SendProgressChanged);
+
+                    Transferred = true;
+                    await InvokeAsync(async () =>
+                    {
+                        await AlertService.Success(I18n.T("lanSender.Send successfully"));
+                    });
+                }
+                catch (Exception e)
+                {
+                    NavigateToBack();
+                    Log.Error($"{e.Message}\n{e.StackTrace}");
+                    await InvokeAsync(async () =>
+                    {
+                        await AlertService.Error(I18n.T("lanSender.Send failed"));
+                    });
+                }
+            });
+        }
+
+        private async Task SendProgressChanged(long readLength, long allLength)
+        {
+            if (!Transferring)
+            {
+                throw new Exception("Stop Transmission");
+            }
+
+            var c = (int)(readLength * 100 / allLength);
+
+            if (c > 0 && c % 5 == 0) //刷新进度为每5%更新一次，过快的刷新会导致页面显示数值与实际不一致
+            {
+                Ps = c; //下载完成百分比
+                BytesReceived = readLength / 1024; //当前已经下载的Kb
+                TotalBytesToReceive = allLength / 1024; //文件总大小Kb
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        private void StopTransmission()
+        {
+            if (!Transferred)
+            {
+                Transferring = false;
+            }
+            else
+            {
+                NavigateToBack();
+            }
         }
     }
 }

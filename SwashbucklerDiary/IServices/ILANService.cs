@@ -5,13 +5,15 @@ namespace SwashbucklerDiary.IServices
 {
     public interface ILANService
     {
-        public bool IsConnection();
-        public string GetLocalIPv4();
-        public string GetIPPrefix(string ipAddress);
-        public bool Ping(IPAddress address);
-        public LANDeviceInfo GetLocalLANDeviceInfo();
-        public string GetLocalDeviceName();
-        public DevicePlatformType GetLocalDevicePlatformType();
-        public string GetDevicePlatformTypeIcon(DevicePlatformType platformType);
+        bool IsConnection();
+        string GetLocalIPv4();
+        string GetIPPrefix(string ipAddress);
+        bool Ping(IPAddress address);
+        LANDeviceInfo GetLocalLANDeviceInfo();
+        string GetLocalDeviceName();
+        DevicePlatformType GetLocalDevicePlatformType();
+        string GetDevicePlatformTypeIcon(DevicePlatformType platformType);
+        Task LANSendAsync(List<DiaryModel> diaries, Stream stream, Func<long, long, Task> action);
+        Task<List<DiaryModel>> LANReceiverAsync(Stream stream, long size, Func<long, long, Task> action);
     }
 }

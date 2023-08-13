@@ -1,0 +1,32 @@
+﻿@namespace SwashbucklerDiary.Components
+@inherits DialogComponentBase
+
+<MDialog Value="Value"
+         ValueChanged="InternalValueChanged"
+         Persistent="true"
+         MaxWidth="420">
+    <MCard Rounded="@("lg")">
+        <MCardTitle Class="font-weight-bold">
+            @Title
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="OnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardSubtitle Class="py-2">
+            @BytesReceived KB / @TotalBytesToReceive KB
+        </MCardSubtitle>
+         <MCardText>
+            <div class="d-flex align-center">
+                <MProgressLinear Value="@Ps"
+                                 Class="rounded-pill"
+                                 Height="10">
+                </MProgressLinear>
+                <span class="text-body-2 ml-2" style="white-space:nowrap;">
+                    @Ps %
+                </span>
+            </div>
+        </MCardText>
+    </MCard>
+</MDialog>

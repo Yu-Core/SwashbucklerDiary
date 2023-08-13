@@ -586,10 +586,16 @@
     "List of available devices": "可用设备列表",
     "Searching for available devices": "正在寻找可用设备...",
     "There are currently no available devices": "暂无可用设备",
-    "No network connection": "没有网络连接"
+    "No network connection": "没有网络连接",
+    "Sending": "正在发送",
+    "Send successfully": "发送成功",
+    "Send failed": "发送失败"
   },
   "lanReceiver": {
-    "Waiting for connection": "等待连接中..."
+    "Waiting for connection": "等待连接中...",
+    "Receiving": "正在接收",
+    "Receive successfully": "接收成功",
+    "Receive failed": "接收失败"
   },
   "Storage": {
     "Content": "确定清除所有缓存吗？",

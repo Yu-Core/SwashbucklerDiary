@@ -25,4 +25,13 @@
             </MCol>
         </MRow>
     }
+
 </ScrollContainer>
+
+<LANTransferDialog @bind-Value="Transferring"
+                   Title="@(I18n.T("lanReceiver.Receiving"))"
+                   Ps="Ps"
+                   BytesReceived="BytesReceived"
+                   TotalBytesToReceive="TotalBytesToReceive"
+                   OnCancel="StopTransmission">
+</LANTransferDialog>

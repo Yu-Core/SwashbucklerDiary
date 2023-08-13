@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.IServices
         /// <summary>
         /// 恢复数据库
         /// </summary>
-        /// <param name="path">数据库文件路径</param>
+        /// <param name="filePath">数据库文件路径</param>
         Task<bool> RestoreDatabase(string filePath);
         Task<bool> RestoreDatabase(Stream stream);
         Task<string> ExportTxtZipFileAsync(List<DiaryModel> diaries);

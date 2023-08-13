@@ -24,7 +24,7 @@
             </MSubheader>
             @foreach (var item in LANDeviceInfos)
             {
-                <MListItem>
+                <MListItem OnClick="()=>Send(item)">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             @GetDeviceIcon(item.DevicePlatform)
@@ -82,3 +82,10 @@
     </MCard>
 </ScrollContainer>
 
+<LANTransferDialog @bind-Value="Transferring"
+                   Title="@(I18n.T("lanSender.Sending"))"
+                   Ps="Ps"
+                   BytesReceived="BytesReceived"
+                   TotalBytesToReceive="TotalBytesToReceive"
+                   OnCancel="StopTransmission">
+</LANTransferDialog>

@@ -33,8 +33,8 @@ namespace SwashbucklerDiary.Extend
             services.AddSingleton<II18nService, I18nService>();
             services.AddSingleton<IThemeService, ThemeService>();
             services.AddSingleton<IStateService, StateService>();
-            services.AddSingleton<ILANService, LANService>();
             services.AddSingleton<IAppDataService, AppDataService>();
+            services.AddSingleton<ILANService, LANService>();
             return services;
         }
     }

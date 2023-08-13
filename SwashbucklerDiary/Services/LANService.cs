@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Devices;
-using SwashbucklerDiary.IServices;
+﻿using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -18,6 +17,12 @@ namespace SwashbucklerDiary.Services
             {DevicePlatformType.MacOS,"mdi-apple" },
             {DevicePlatformType.Unknown,"mdi-monitor-cellphone" },
         };
+        private IAppDataService AppDataService;
+
+        public LANService(IAppDataService appDataService)
+        {
+            AppDataService = appDataService;
+        }
 
         public string GetIPPrefix(string ipAddress)
         {
@@ -40,7 +45,7 @@ namespace SwashbucklerDiary.Services
             {
                 Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 s.Connect(new IPEndPoint(IPAddress.Parse("8.8.8.8"), 53));
-                string ip = ((IPEndPoint)s.LocalEndPoint).Address.ToString();
+                string ip = ((IPEndPoint)s.LocalEndPoint!).Address.ToString();
                 s.Close();
                 return ip;
             }
@@ -141,6 +146,49 @@ namespace SwashbucklerDiary.Services
             }
 
             return true;
+        }
+
+        public async Task LANSendAsync(List<DiaryModel> diaries, Stream stream, Func<long, long, Task> action)
+        {
+            var filePath = await AppDataService.ExportJsonZipFileAsync(diaries);
+
+            using FileStream fileStream = File.OpenRead(filePath);
+            // 发送文件总大小
+            long fileSize = fileStream.Length;
+            byte[] fileSizeBytes = BitConverter.GetBytes(fileSize);
+            stream.Write(fileSizeBytes, 0, fileSizeBytes.Length);
+
+            // 发送文件内容
+            byte[] buffer = new byte[1024 * 1024];
+            int bytesRead;
+            var readLength = 0;
+            while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                readLength += bytesRead;
+                await action(readLength, fileSize);
+                stream.Write(buffer, 0, bytesRead);
+            }
+        }
+
+        public async Task<List<DiaryModel>> LANReceiverAsync(Stream stream, long size, Func<long, long, Task> action)
+        {
+            var path = Path.Combine(FileSystem.CacheDirectory, Guid.NewGuid().ToString() + ".zip");
+            using (FileStream fileStream = File.Create(path))
+            {
+                byte[] buffer = new byte[1024 * 1024];
+                int bytesRead;
+                var readLength = 0;
+                while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    readLength += bytesRead;
+                    await action(readLength, size);
+                    fileStream.Write(buffer, 0, bytesRead);
+                }
+            }
+
+            var diaries = await AppDataService.ImportJsonFileAsync(path);
+            File.Delete(path);
+            return diaries;
         }
     }
 }
