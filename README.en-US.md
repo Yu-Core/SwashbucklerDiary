@@ -27,6 +27,7 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 - All data is stored locally without the need for networking
 - Local backup
 - Webdav backup
+- LAN transmission
 - Export
 - Sharing
 - Achievements
