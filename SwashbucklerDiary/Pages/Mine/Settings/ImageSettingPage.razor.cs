@@ -32,7 +32,7 @@ namespace SwashbucklerDiary.Pages
             var resources = await ResourceService.DeleteUnusedResourcesAsync(it => it.ResourceType == ResourceType.Image);
             if (resources is not null && resources.Any())
             {
-                await UpdateImageResourcesAsync();
+                ImageResources.RemoveAll(item => resources.Any(x => x.ResourceUri == item.ResourceUri));
                 foreach (var resource in resources)
                 {
                     await AppDataService.DeleteAppDataFileByCustomSchemeAsync(resource.ResourceUri!);

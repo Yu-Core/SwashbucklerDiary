@@ -108,7 +108,8 @@ namespace SwashbucklerDiary.Repository
             })
             .Include(it => it.Resources, new UpdateNavOptions
             {
-                ManyToManyIsUpdateA = true
+                ManyToManyIsUpdateA = true,
+                ManyToManyIsUpdateB = true,
             })
             .ExecuteCommandAsync();
         }
