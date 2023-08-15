@@ -12,6 +12,8 @@ namespace SwashbucklerDiary.Pages
 
         [Inject]
         private IResourceService ResourceService { get; set; } = default!;
+        [Inject]
+        private IAppDataService AppDataService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -26,15 +28,16 @@ namespace SwashbucklerDiary.Pages
 
         async Task DeleteUnusedImageResource()
         {
-            bool flag = await ResourceService.DeleteUnusedResourcesAsync(it=>it.ResourceType == ResourceType.Image);
-            if(flag)
+            ShowConfimDelete = false;
+            var resources = await ResourceService.DeleteUnusedResourcesAsync(it => it.ResourceType == ResourceType.Image);
+            if (resources is not null && resources.Any())
             {
+                await UpdateImageResourcesAsync();
+                foreach (var resource in resources)
+                {
+                    await AppDataService.DeleteAppDataFileByCustomSchemeAsync(resource.ResourceUri!);
+                }
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
-            }
-            else
-            {
-                await AlertService.Error(I18n.T("Share.DeleteFail"));
-
             }
         }
 

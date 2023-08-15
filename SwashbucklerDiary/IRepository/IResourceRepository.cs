@@ -5,6 +5,6 @@ namespace SwashbucklerDiary.IRepository
 {
     public interface IResourceRepository : IBaseRepository<ResourceModel>
     {
-        Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> func);
+        Task<List<ResourceModel>> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> func);
     }
 }

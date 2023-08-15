@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Services
             _resourceRepository = resourceRepository;
         }
 
-        public Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> func)
+        public Task<List<ResourceModel>> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> func)
         {
             return _resourceRepository.DeleteUnusedResourcesAsync(func);
         }
