@@ -103,8 +103,8 @@ namespace SwashbucklerDiary.Components
             }
 
             await AlertService.Success(I18n.T("Share.AddSuccess"));
-            Tags.Add(tag);
-            if(TagsChanged.HasDelegate)
+            Tags.Insert(0, tag);
+            if (TagsChanged.HasDelegate)
             {
                 await TagsChanged.InvokeAsync(Tags);
             }

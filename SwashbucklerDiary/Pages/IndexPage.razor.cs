@@ -47,7 +47,8 @@ namespace SwashbucklerDiary.Pages
 
         private void SetCurrentUrl()
         {
-            NavigateService.SetCurrentUrl(() => {
+            NavigateService.SetCurrentUrl(() =>
+            {
                 return Navigation.GetUriWithQueryParameter("View", Views[tab.ToInt32()]);
             });
         }
@@ -72,11 +73,11 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            TagModel tagModel = new()
+            TagModel tag = new()
             {
                 Name = tagName
             };
-            var flag = await TagService.AddAsync(tagModel);
+            var flag = await TagService.AddAsync(tag);
             if (!flag)
             {
                 await AlertService.Error(I18n.T("Share.AddFail"));
@@ -84,7 +85,7 @@ namespace SwashbucklerDiary.Pages
             }
 
             await AlertService.Success(I18n.T("Share.AddSuccess"));
-            Tags.Add(tagModel);
+            Tags.Insert(0, tag);
             this.StateHasChanged();
         }
 
