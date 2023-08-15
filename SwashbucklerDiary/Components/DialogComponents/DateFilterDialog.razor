@@ -87,9 +87,12 @@
 </MultiSimpleDialog>
 
 <MultiDatePicker @bind-Value="ShowMinDate"
-@bind-Date="MinDate">
+                 @bind-Date="MinDate"
+                 Max="@(MaxDate > Today ? Today : MaxDate)">
 </MultiDatePicker>
 
 <MultiDatePicker @bind-Value="ShowMaxDate"
-@bind-Date="MaxDate">
+                 @bind-Date="MaxDate"
+                 Min="MinDate"
+                 Max="Today">
 </MultiDatePicker>

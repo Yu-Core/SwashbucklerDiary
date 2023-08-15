@@ -56,6 +56,7 @@ namespace SwashbucklerDiary.Components
             => MinDate == DateOnly.MinValue ? I18n.T("Filter.Start time") : ((DateOnly)MinDate).ToString("yyyy-MM-dd");
         private string MaxDateText
             => MaxDate == DateOnly.MaxValue ? I18n.T("Filter.End time") : ((DateOnly)MaxDate).ToString("yyyy-MM-dd");
+        private DateOnly Today => DateOnly.FromDateTime(DateTime.Now);
 
         private void SetValue(bool value)
         {
