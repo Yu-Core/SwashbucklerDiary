@@ -59,14 +59,32 @@ namespace SwashbucklerDiary.Repository
         public Task<TagModel> GetByIdIncludesAsync(dynamic id)
         {
             return Context.Queryable<TagModel>()
-                .Includes(it => it.Diaries!.Where(d => !d.Private).ToList())
+                .Includes(it => it.Diaries!
+                                  .Where(d => !d.Private)
+                                  .OrderByDescending(it => it.CreateTime)
+                                  .ToList(),
+                          d => d.Tags)
+                .Includes(it => it.Diaries!
+                                  .Where(d => !d.Private)
+                                  .OrderByDescending(it => it.CreateTime)
+                                  .ToList(),
+                          d => d.Resources)
                 .InSingleAsync(id);
         }
 
         public Task<TagModel> GetFirstIncludesAsync(Expression<Func<TagModel, bool>> whereExpression)
         {
             return Context.Queryable<TagModel>()
-                .Includes(it => it.Diaries!.Where(d => !d.Private).ToList())
+                .Includes(it => it.Diaries!
+                                  .Where(d => !d.Private)
+                                  .OrderByDescending(it => it.CreateTime)
+                                  .ToList(),
+                          d => d.Tags)
+                .Includes(it => it.Diaries!
+                                  .Where(d => !d.Private)
+                                  .OrderByDescending(it => it.CreateTime)
+                                  .ToList(),
+                          d => d.Resources)
                 .FirstAsync(whereExpression);
         }
     }
