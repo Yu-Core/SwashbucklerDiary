@@ -5,9 +5,10 @@
           OnClick="NavigateToBack">
 </MyAppBar>
 
-<ScrollContainer>
+<ScrollContainer Id="tag-diaries-scroll">
     <DiaryCardList @bind-Tags="Tags"
-                   Value="Diaries" />
+                   Value="Diaries"
+                   ScrollParent="@("tag-diaries-scroll")" />
 </ScrollContainer>
 
 <MyFloatButton Icon="mdi-pencil"

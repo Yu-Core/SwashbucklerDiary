@@ -6,7 +6,6 @@ namespace SwashbucklerDiary.Components
 {
     public partial class ScrollContainer
     {
-        private ElementReference element;
         [Inject]
         private IJSRuntime JS { get; set; } = default!;
 
@@ -24,12 +23,14 @@ namespace SwashbucklerDiary.Components
         public string? ContentStyle { get; set; }
         [Parameter]
         public EventCallback OnContextmenu { get; set; }
+        [Parameter]
+        public  ElementReference Ref { get; set; }
 
         public async Task ScrollToTop()
         {
             //直接滚动显得很生硬，所以延时0.2s
             await Task.Delay(200);
-            await JS.ScrollTo(element, 0);
+            await JS.ScrollTo(Ref, 0);
         }
     }
 }

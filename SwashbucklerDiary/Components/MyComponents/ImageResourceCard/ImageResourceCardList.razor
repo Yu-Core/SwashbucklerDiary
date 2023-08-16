@@ -3,10 +3,24 @@
 
 <CascadingValue Value="@this">
     <div class="my-image-card-list">
-        @foreach (var item in Value)
+        @foreach (var item in InternalValue)
         {
             <ImageResourceCard Value="item"></ImageResourceCard>
         }
+        <MInfiniteScroll Style="width:100%;"
+                         OnLoad="@OnLoad"
+                         Parent="ScrollParent"
+                         EmptyText="@(string.Empty)"
+                         LoadingText="@(string.Empty)">
+            <LoadMoreContent Context="load">
+                <div class="@(InternalValue.Any()?"":"d-none")">
+                    <MButton Icon="true"
+                             OnClick="@load">
+                        <MIcon>mdi-reload</MIcon>
+                    </MButton>
+                </div>
+            </LoadMoreContent>
+        </MInfiniteScroll>
     </div>
 </CascadingValue>
 

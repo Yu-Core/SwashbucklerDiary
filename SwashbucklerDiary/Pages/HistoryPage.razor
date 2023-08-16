@@ -48,6 +48,7 @@
 
     <DiaryCardList @bind-Tags="Tags"
                    Value="Diaries"
+                   ScrollParent="@(scrollContainer!.Ref)"
                    OnUpdate="UpdateEventsDates">
     </DiaryCardList>
 </ScrollContainer>

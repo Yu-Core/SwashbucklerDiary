@@ -2,7 +2,7 @@
 @inherits MyComponentBase
 
 <div class="my-card-list @(Class)">
-    @foreach (var item in Value)
+    @foreach (var item in InternalValue)
     {
         <DiaryCard Value="item"
                    Class="@CardClass"
@@ -18,6 +18,20 @@
                    OnClick="HandleClick">
         </DiaryCard>
     }
+    <MInfiniteScroll Style="width:100%;"
+                     OnLoad="@OnLoad"
+                     Parent="ScrollParent"
+                     EmptyText="@(string.Empty)"
+                     LoadingText="@(string.Empty)">
+        <LoadMoreContent Context="load">
+            <div class="@(_internalValue.Any()?"":"d-none")">
+                <MButton Icon="true"
+                         OnClick="@load">
+                    <MIcon>mdi-reload</MIcon>
+                </MButton>
+            </div>
+        </LoadMoreContent>
+    </MInfiniteScroll>
 </div>
 
 <NotFound Show="!Value.Any()" Text="@(NotFoundText ?? I18n.T("Diary.NoDiary"))"></NotFound>

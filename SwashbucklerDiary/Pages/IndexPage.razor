@@ -4,9 +4,9 @@
 <link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
 
 <MAppBar App
-         Elevation="0">
-    <MTabs @bind-Value="tab"
-           ActiveClass="text-h6 font-weight-bold"
+          Elevation="0">
+     <MTabs @bind-Value="tab"
+            ActiveClass="text-h6 font-weight-bold"
            HideSlider>
         <MTab Class="my-tab"
               Ripple="false">
@@ -20,15 +20,15 @@
     <MSpacer></MSpacer>
     <MButton Large
              Icon
-             OnClick="@(()=>To("search"))">
-        <MIcon>mdi-magnify</MIcon>
-    </MButton>
-</MAppBar>
+              OnClick="@(()=>To("search"))">
+         <MIcon>mdi-magnify</MIcon>
+     </MButton>
+ </MAppBar>
 
-<SwiperTabItems @bind-Value="tab">
-    <SwiperTabItem>
-        <div class="mb-5 pl-2">
-            @if (ShowDate)
+ <SwiperTabItems @bind-Value="tab">
+     <SwiperTabItem Id="all-diaries-scroll">
+         <div class="mb-5 pl-2">
+             @if (ShowDate)
             {
                 <div class="text--secondary mb-2">
                     @(DateTime.Now.ToString("yyyy/MM/dd") + " " + I18n.ToWeek())
@@ -45,11 +45,14 @@
         </div>
 
         <DiaryCardList @bind-Tags="Tags"
-                       Value="Diaries">
+                       Value="Diaries"
+                       ScrollParent="@("#all-diaries-scroll")">
         </DiaryCardList>
     </SwiperTabItem>
-    <SwiperTabItem>
-        <TagCardList @bind-Value="Tags"></TagCardList>
+    <SwiperTabItem Id="all-tags-scroll">
+        <TagCardList @bind-Value="Tags"
+                     ScrollParent="@("#all-tags-scroll")">
+        </TagCardList>
     </SwiperTabItem>
 </SwiperTabItems>
 
