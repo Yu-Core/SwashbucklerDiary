@@ -165,3 +165,7 @@
 .m-tabs-bar > .m-slide-group__wrapper {
     flex: unset !important;
 }
+
+.m-date-picker-table {
+    height: auto !important;
+}
