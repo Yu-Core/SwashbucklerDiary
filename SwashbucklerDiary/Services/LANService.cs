@@ -91,37 +91,17 @@ namespace SwashbucklerDiary.Services
 
         public DevicePlatformType GetLocalDevicePlatformType()
         {
-            if (OperatingSystem.IsWindows())
-            {
-                return DevicePlatformType.Windows;
-            }
-
-            if (OperatingSystem.IsLinux())
-            {
-                return DevicePlatformType.Linux;
-            }
-
-            if (OperatingSystem.IsAndroid())
-            {
-                return DevicePlatformType.Android;
-            }
-
-            if (OperatingSystem.IsIOS())
-            {
-                return DevicePlatformType.iOS;
-            }
-
-            if (OperatingSystem.IsMacCatalyst() || OperatingSystem.IsMacOS())
-            {
-                return DevicePlatformType.MacOS;
-            }
-
-            if (OperatingSystem.IsBrowser())
-            {
-                return DevicePlatformType.Android;
-            }
-
+#if WINDOWS
+            return DevicePlatformType.Windows;
+#elif ANDROID
+            return DevicePlatformType.Android;
+#elif MACCATALYST
+            return DevicePlatformType.MacOS;
+#elif IOS
+            return DevicePlatformType.iOS;
+#else
             return DevicePlatformType.Unknown;
+#endif
         }
 
         public string GetDevicePlatformTypeIcon(DevicePlatformType platformType)

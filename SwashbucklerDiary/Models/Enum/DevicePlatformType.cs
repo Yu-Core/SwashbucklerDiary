@@ -4,10 +4,8 @@
     {
         Unknown,
         Windows,
-        Linux,
         Android,
         iOS,
         MacOS,
-        Browser,
     }
 }
