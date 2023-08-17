@@ -22,7 +22,8 @@
     "ImageShare": "图片分享",
     "FileShare": "文件分享",
     "Reset": "重置",
-    "Restore Default": "恢复默认"
+    "Restore Default": "恢复默认",
+    "Quit": "退出"
   },
   "Main": {
     "Diary": "日记",

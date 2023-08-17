@@ -22,7 +22,8 @@
     "ImageShare": "Image share",
     "FileShare": "File share",
     "Reset": "Reset",
-    "Restore Default": "Restore default"
+    "Restore Default": "Restore default",
+    "Quit": "Quit"
   },
   "Main": {
     "Diary": "Diary",
