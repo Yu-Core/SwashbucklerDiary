@@ -21,7 +21,8 @@
     "TextShare": "Text share",
     "ImageShare": "Image share",
     "FileShare": "File share",
-    "Reset": "Reset"
+    "Reset": "Reset",
+    "Restore Default": "Restore default"
   },
   "Main": {
     "Diary": "Diary",
@@ -529,95 +530,106 @@
     },
     "LAN": {
       "Name": "LAN",
-      "Path": "Export / LAN"
-    },
-    "Export": {
-      "Title": "Export",
-      "Path": "Export / Local export / Export",
-      "Subtitle": "Save as zip file of txt, md, json type",
-      "Success": "Export success",
-      "Fail": "Export fail",
-      "SelectType": "Select export file type"
-    },
-    "Import": {
-      "Title": "Import",
-      "Path": "Export / Local export / Import",
-      "Subtitle": "Import zip file of json type",
-      "Success": "Import success",
-      "Fail": "Import fail",
-      "ConfirmImport": {
-        "Title": "Confirm import",
-        "Content": "Confirm importing these diaries？"
+      "Path": "Export / LAN",
+      "Config": {
+        "Name": "Setting",
+        "Path": "Export / LAN / Setting",
+        "DeviceName": "Device name",
+        "ScanPort": "Scan port",
+        "TransmissionPort": "Transmission port"
+      },
+      "Export": {
+        "Title": "Export",
+        "Path": "Export / Local export / Export",
+        "Subtitle": "Save as zip file of txt, md, json type",
+        "Success": "Export success",
+        "Fail": "Export fail",
+        "SelectType": "Select export file type"
+      },
+      "Import": {
+        "Title": "Import",
+        "Path": "Export / Local export / Import",
+        "Subtitle": "Import zip file of json type",
+        "Success": "Import success",
+        "Fail": "Import fail",
+        "ConfirmImport": {
+          "Title": "Confirm import",
+          "Content": "Confirm importing these diaries？"
+        }
+      },
+      "Send": {
+        "Name": "Send",
+        "Path": "Export / LAN / Send"
+      },
+      "Receive": {
+        "Name": "Receive",
+        "Path": "Export / LAN / Receive"
       }
     },
-    "Send": {
-      "Name": "Send",
-      "Path": "Export / LAN / Send"
+    "ThemeState": {
+      "System": "Follow system",
+      "Light": "Light",
+      "Dark": "Dark"
     },
-    "Receive": {
-      "Name": "Receive",
-      "Path": "Export / LAN / Receive"
-    }
-  },
-  "ThemeState": {
-    "System": "Follow system",
-    "Light": "Light",
-    "Dark": "Dark"
-  },
-  "AgreementAndPolicy": {
-    "Title": "User agreement and privacy policy",
-    "Content": "You need to agree to the user agreement and privacy policy before using this app.If you do not agree, we regret that we are unable to provide you with services.\n\nYou can read [user agreement](https://github.com/Yu-Core/SwashbucklerDiary/blob/master/SwashbucklerDiary/wwwroot/docs/user-agreement/en-US.md) and [privacy policy](https://github.com/Yu-Core/SwashbucklerDiary/blob/master/SwashbucklerDiary/wwwroot/docs/privacy-policy/en-US.md) for more information. If you agree, please click\"Agree\"to start our service.",
-    "Agree": "Agree",
-    "Disagree": "Disagree"
-  },
-  "Log": {
-    "NoLog": "No log",
-    "Share": "Share",
-    "Delete": {
-      "Title": "Clear logs",
-      "Content": "Are you sure to clear all logs?"
+    "AgreementAndPolicy": {
+      "Title": "User agreement and privacy policy",
+      "Content": "You need to agree to the user agreement and privacy policy before using this app.If you do not agree, we regret that we are unable to provide you with services.\n\nYou can read [user agreement](https://github.com/Yu-Core/SwashbucklerDiary/blob/master/SwashbucklerDiary/wwwroot/docs/user-agreement/en-US.md) and [privacy policy](https://github.com/Yu-Core/SwashbucklerDiary/blob/master/SwashbucklerDiary/wwwroot/docs/privacy-policy/en-US.md) for more information. If you agree, please click\"Agree\"to start our service.",
+      "Agree": "Agree",
+      "Disagree": "Disagree"
     },
-    "Clear": "Clear"
-  },
-  "Filter": {
-    "Last month": "Last month",
-    "Last three months": "Last three months",
-    "Last six months": "Last six months",
-    "Filter": "Filter",
-    "Start time": "Start time",
-    "End time": "End time"
-  },
-  "QQGroup": "QQ Group",
-  "VersionUpdate": {
-    "LatestVersionUrl": "https://api.github.com/repos/Yu-Core/SwashbucklerDiary/releases/latest",
-    "No updates": "Currently the latest version",
-    "Need updates": "Detected the latest version, do you want to proceed to update?",
-    "Check failed": "Detection failed for unknown reason"
-  },
-  "lanSender": {
-    "List of available devices": "List of available devices",
-    "Searching for available devices": "Searching for available devices...",
-    "There are currently no available devices": "There are currently no available devices",
-    "No network connection": "No network connection",
-    "Sending": "Sending",
-    "Send successfully": "Send successfully",
-    "Send failed": "Send failed"
-  },
-  "lanReceiver": {
-    "Waiting for connection": "Waiting for connection...",
-    "Receiving": "Receiving",
-    "Receive successfully": "Receive successfully",
-    "Receive failed": "Receive failed"
-  },
-  "Storage": {
-    "Content": "Are you sure to clear all caches?",
-    "ClearSuccess": "Clear success"
-  },
-  "SearchAppFunction": {
-    "Placeholder": "Please enter the function you want to search for"
-  },
-  "DateTimeFormat": {
-    "MM/dd": "Month/day",
-    "yyyy/MM/dd": "year/Month/day"
+    "Log": {
+      "NoLog": "No log",
+      "Share": "Share",
+      "Delete": {
+        "Title": "Clear logs",
+        "Content": "Are you sure to clear all logs?"
+      },
+      "Clear": "Clear"
+    },
+    "Filter": {
+      "Last month": "Last month",
+      "Last three months": "Last three months",
+      "Last six months": "Last six months",
+      "Filter": "Filter",
+      "Start time": "Start time",
+      "End time": "End time"
+    },
+    "QQGroup": "QQ Group",
+    "VersionUpdate": {
+      "LatestVersionUrl": "https://api.github.com/repos/Yu-Core/SwashbucklerDiary/releases/latest",
+      "No updates": "Currently the latest version",
+      "Need updates": "Detected the latest version, do you want to proceed to update?",
+      "Check failed": "Detection failed for unknown reason"
+    },
+    "lanSender": {
+      "List of available devices": "List of available devices",
+      "Searching for available devices": "Searching for available devices...",
+      "There are currently no available devices": "There are currently no available devices",
+      "No network connection": "No network connection",
+      "Sending": "Sending",
+      "Send successfully": "Send successfully",
+      "Send failed": "Send failed"
+    },
+    "lanReceiver": {
+      "Waiting for connection": "Waiting for connection...",
+      "Receiving": "Receiving",
+      "Receive successfully": "Receive successfully",
+      "Receive failed": "Receive failed"
+    },
+    "Storage": {
+      "Content": "Are you sure to clear all caches?",
+      "ClearSuccess": "Clear success"
+    },
+    "SearchAppFunction": {
+      "Placeholder": "Please enter the function you want to search for"
+    },
+    "DateTimeFormat": {
+      "MM/dd": "Month/day",
+      "yyyy/MM/dd": "year/Month/day"
+    },
+    "Please input DeviceName": "Please input DeviceName",
+    "Please input ScanPort": "Please input ScanPort",
+    "Please input TransmissionPort": "Please input TransmissionPort",
+    "ScanPort and TransmissionPort cannot be the same": "ScanPort and TransmissionPort cannot be the same"
   }
 }

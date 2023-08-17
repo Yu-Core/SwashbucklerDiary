@@ -1,9 +1,9 @@
-﻿@namespace SwashbucklerDiary.Components
+﻿@namespace SwashbucklerDiary.Pages
 @inherits FocusDialogComponentBase
 
 <MMDialog MyValue="Value"
           MyValueChanged="ValueChanged"
-          @ref="myDialog"
+@ref="myDialog"
           MaxWidth="480">
     <MForm @ref="@MForm"
            Model="@configModel"
@@ -12,37 +12,43 @@
            EnableI18n="true">
         <MCard Rounded="@("lg")">
             <MCardTitle Class="font-weight-bold">
-                @(I18n.T("Backups.Config.Title"))
+                @(I18n.T("Export.LAN.Config.Name"))
                 <MSpacer></MSpacer>
                 <MButton Icon="true" OnClick="HandleOnCancel">
                     <MIcon>mdi-close</MIcon>
                 </MButton>
             </MCardTitle>
             <MCardText Class="pb-0">
-                <MTextField @bind-Value="configModel.ServerAddress"
-                            @ref="TextField"
+                <MTextField @bind-Value="configModel.DeviceName"
+                @ref="TextField"
                             Dense="true"
                             Outlined="true"
                             spellcheck="false"
-                            Label="@(I18n.T("Backups.Config.ServerAddress"))">
+                            Label="@(I18n.T("Export.LAN.Config.DeviceName"))">
                 </MTextField>
-                <MTextField @bind-Value="configModel.Account"
+                <MTextField @bind-Value="configModel.ScanPort"
+                            Type="number"
+                            TValue="int"
                             Dense="true"
                             Outlined="true"
                             spellcheck="false"
-                            Label="@(I18n.T("Backups.Config.Account"))">
+                            Label="@(I18n.T("Export.LAN.Config.ScanPort"))"
+                            NumberProps="@(prop => { prop.Min = 1204; prop.Max = 65535; prop.HideControl = true; })">
                 </MTextField>
-                <MTextField @bind-Value="configModel.Password"
+                <MTextField @bind-Value="configModel.TransmissionPort"
+                            Type="number" 
+                            TValue="int"
                             Dense="true"
                             Outlined="true"
                             spellcheck="false"
-                            Label="@(I18n.T("Backups.Config.Password"))"
-                            AppendIcon="@(showPassword ? "mdi-eye" : "mdi-eye-off")"
-                            Type="@(showPassword ? "text" : "password")"
-                            OnAppendClick="() => showPassword = !showPassword">
+                            Label="@(I18n.T("Export.LAN.Config.TransmissionPort"))"
+                            NumberProps="@(prop => { prop.Min = 1204; prop.Max = 65535; prop.HideControl = true; })">
                 </MTextField>
             </MCardText>
             <MCardActions>
+                <MButton Text="true" OnClick="OnReset">
+                    @(I18n.T("Restore Default"))
+                </MButton>
                 <MSpacer></MSpacer>
                 <MButton Text="true" OnClick="HandleOnCancel">
                     @(I18n.T("Share.Cancel"))

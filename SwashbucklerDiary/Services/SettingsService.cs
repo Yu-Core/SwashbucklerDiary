@@ -30,6 +30,9 @@ namespace SwashbucklerDiary.Services
             {SettingType.WebDAVCopyResources,false },
             {SettingType.DiaryCardDateFormat,"MM/dd" },
             {SettingType.AchievementsAlert,true },
+            {SettingType.LANDeviceName,string.Empty },
+            {SettingType.LANScanPort,5299 },
+            {SettingType.LANTransmissionPort,52099 },
 
         };
 
@@ -61,6 +64,18 @@ namespace SwashbucklerDiary.Services
         {
             var key = Enum.GetName(typeof(SettingType), type);
             return Get(key!, defaultValue);
+        }
+
+        public Task Remove(string key)
+        {
+            Preferences.Default.Remove(key);
+            return Task.CompletedTask;
+        }
+
+        public Task Remove(SettingType type)
+        {
+            var key = Enum.GetName(typeof(SettingType), type);
+            return Remove(key!);
         }
 
         public Task Save<T>(string key, T value)

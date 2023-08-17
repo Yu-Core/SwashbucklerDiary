@@ -49,7 +49,7 @@
   },
   {
     "Name": "Backups.Config.Title",
-    "Icon": "mdi-cog-transfer-outline",
+    "Icon": "mdi-cog-sync-outline",
     "Path": "Backups.Config.Path",
     "Href": "backups?View=WebDAV"
   },
@@ -87,6 +87,12 @@
     "Name": "Export.LAN.Name",
     "Icon": "mdi-lan",
     "Path": "Export.LAN.Path",
+    "Href": "export?View=LAN"
+  },
+  {
+    "Name": "Export.LAN.Config.Name",
+    "Icon": "mdi-cog-transfer-outline",
+    "Path": "Export.LAN.Config.Path",
     "Href": "export?View=LAN"
   },
   {
@@ -220,7 +226,7 @@
   {
     "Name": "Setting.Display.Alert.Achievement.Name",
     "Icon": "mdi-trophy-outline",
-    "Path": "Setting.Display.Alert。Achievement.Path",
+    "Path": "Setting.Display.Alert.Achievement.Path",
     "Href": "alertSetting"
   },
   {

@@ -24,6 +24,9 @@
         AlertTimeout = 20,
         WebDAVCopyResources = 21,
         DiaryCardDateFormat = 22,
-        AchievementsAlert = 23
+        AchievementsAlert = 23,
+        LANDeviceName = 24,
+        LANScanPort = 25,
+        LANTransmissionPort = 26,
     }
 }

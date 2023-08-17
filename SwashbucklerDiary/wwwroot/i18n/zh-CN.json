@@ -21,7 +21,8 @@
     "TextShare": "文字分享",
     "ImageShare": "图片分享",
     "FileShare": "文件分享",
-    "Reset": "重置"
+    "Reset": "重置",
+    "Restore Default": "恢复默认"
   },
   "Main": {
     "Diary": "日记",
@@ -529,7 +530,14 @@
     },
     "LAN": {
       "Name": "局域网传输",
-      "Path": "导出 / 局域网传输"
+      "Path": "导出 / 局域网传输",
+      "Config": {
+        "Name": "设置",
+        "Path": "导出 / 局域网传输 / 设置",
+        "DeviceName": "设备名",
+        "ScanPort": "扫描端口",
+        "TransmissionPort": "传输端口"
+      }
     },
     "Export": {
       "Title": "导出",
@@ -619,5 +627,9 @@
   "DateTimeFormat": {
     "MM/dd": "月/日",
     "yyyy/MM/dd": "年/月/日"
-  }
+  },
+  "Please input DeviceName": "请输入设备名",
+  "Please input ScanPort": "请输入扫描端口",
+  "Please input TransmissionPort": "请输入传输端口",
+  "ScanPort and TransmissionPort cannot be the same": "扫描端口和传输端口不能相同"
 }

@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Pages
     {
         private UdpClient? udpClient;
         private readonly IPAddress multicastAddress = IPAddress.Parse("239.0.0.1"); // 组播地址
-        private readonly int multicastPort = 5299; // 组播端口
+        private  int multicastPort; // 组播端口
         private readonly int millisecondsOutTime = 20000;
         private bool _udpListening;
         private bool JoinMulticastGroup;
@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowTransferDialog;
         private bool Transferred;
         private bool StopTransferr;
-        private readonly int TcpPort = 52099;
+        private int tcpPort;
         private int Ps;
         private long TotalBytesToReceive;
         private long BytesReceived;
@@ -47,10 +47,12 @@ namespace SwashbucklerDiary.Pages
             GC.SuppressFinalize(this);
         }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            await LoadSettings();
             udpClient = new UdpClient(multicastPort);
             StartUDPListening();
+            await base.OnInitializedAsync();
         }
 
         protected override void OnAfterRender(bool firstRender)
@@ -74,6 +76,12 @@ namespace SwashbucklerDiary.Pages
 
         private string GetDeviceIcon(DevicePlatformType devicePlatform)
             => LANService.GetDevicePlatformTypeIcon(devicePlatform);
+
+        private async Task LoadSettings()
+        {
+            multicastPort = await SettingsService.Get(SettingType.LANScanPort);
+            tcpPort = await SettingsService.Get(SettingType.LANTransmissionPort);
+        }
 
         private void StartUDPListening()
         {
@@ -142,7 +150,7 @@ namespace SwashbucklerDiary.Pages
                 var ipAddress = deviceInfo.IPAddress;
                 try
                 {
-                    using TcpClient client = new(ipAddress!, TcpPort);
+                    using TcpClient client = new(ipAddress!, tcpPort);
                     await using NetworkStream stream = client.GetStream();
 
                     var diaries = await DiaryService.QueryAsync();

@@ -16,14 +16,14 @@ namespace SwashbucklerDiary.Pages
         private bool _udpSending;
         private UdpClient? udpClient;
         private readonly IPAddress multicastAddress = IPAddress.Parse("239.0.0.1");// UDP组播地址
-        private readonly int multicastPort = 5299;// UDP组播端口
+        private int multicastPort;// UDP组播端口
 
         private bool _tcpListening;
         private bool ShowTransferDialog;
         private bool Transferred;
         private bool StopTransferr;
         private TcpListener? tcpListener;
-        private readonly int tcpPort = 52099;// Tcp端口
+        private int tcpPort;// Tcp端口
         //private CancellationTokenSource CancellationTokenSource = new();
         private int Ps;
         private long TotalBytesToReceive;
@@ -55,13 +55,12 @@ namespace SwashbucklerDiary.Pages
             GC.SuppressFinalize(this);
         }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            var ipAddress = IPAddress.Parse(LANService.GetLocalIPv4());
-            udpClient = new UdpClient(new IPEndPoint(ipAddress, multicastPort));
-            LANDeviceInfo = LANService.GetLocalLANDeviceInfo();
+            await LoadSettings();
             SendMulticast();
             _ = StartTcpListening();
+            await base.OnInitializedAsync();
         }
 
         private bool IsCurrentPage => NavigateService.Navigation.Uri.Contains("/lanReceiver");
@@ -74,6 +73,19 @@ namespace SwashbucklerDiary.Pages
         {
             get => _tcpListening && IsCurrentPage;
             set => _tcpListening = value;
+        }
+
+        private async Task LoadSettings()
+        {
+            LANDeviceInfo = LANService.GetLocalLANDeviceInfo();
+            var deviceName = await SettingsService.Get(SettingType.LANDeviceName);
+            if (!string.IsNullOrEmpty(deviceName))
+            {
+                LANDeviceInfo.DeviceName = deviceName;
+            }
+
+            multicastPort = await SettingsService.Get(SettingType.LANScanPort);
+            tcpPort = await SettingsService.Get(SettingType.LANTransmissionPort);
         }
 
         private void SendMulticast()
@@ -89,6 +101,8 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
+            var ipAddress = IPAddress.Parse(LANService.GetLocalIPv4());
+            udpClient = new UdpClient(new IPEndPoint(ipAddress, multicastPort));
             UDPSending = true;
             Task.Run(async () =>
             {
