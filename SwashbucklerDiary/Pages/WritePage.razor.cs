@@ -1,4 +1,5 @@
-﻿using Masa.Blazor;
+﻿using BlazorComponent;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
@@ -86,15 +87,15 @@ namespace SwashbucklerDiary.Pages
             get => Diary.Tags!;
             set => Diary.Tags = value;
         }
-        private string? Weather
+        private StringNumber? Weather
         {
             get => Diary.Weather;
-            set => Diary.Weather = value;
+            set => Diary.Weather = value?.ToString();
         }
-        private string? Mood
+        private StringNumber? Mood
         {
             get => Diary.Mood;
-            set => Diary.Mood = value;
+            set => Diary.Mood = value?.ToString();
         }
         private string? Location
         {
@@ -108,8 +109,8 @@ namespace SwashbucklerDiary.Pages
         }
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
-        private Dictionary<string, string> WeatherIcons => IconService.WeatherIcon;
-        private Dictionary<string, string> MoodIcons => IconService.MoodIcon;
+        private static Dictionary<string, string> WeatherIcons => IconService.WeatherIcon;
+        private static Dictionary<string, string> MoodIcons => IconService.MoodIcon;
         private string WeatherText =>
             string.IsNullOrEmpty(Diary.Weather) ? I18n.T("Write.Weather")! : I18n.T("Weather." + Diary.Weather)!;
         private string MoodText =>

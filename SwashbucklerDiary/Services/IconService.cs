@@ -3,7 +3,7 @@
     public class IconService
     {
         private readonly string ErrorIcon = "mdi-close";
-        public readonly Dictionary<string, string> WeatherIcon = new()
+        public readonly static Dictionary<string, string> WeatherIcon = new()
         {
             {"sunny","mdi-weather-sunny" },
             {"cloudy","mdi-weather-cloudy" },
@@ -15,7 +15,7 @@
             {"fog","mdi-weather-fog" },
             {"dust","mdi-weather-dust" },
         };
-        public readonly Dictionary<string, string> MoodIcon = new()
+        public readonly static Dictionary<string, string> MoodIcon = new()
         {
             {"happy","mdi-emoticon-happy-outline" },
             {"excited","mdi-emoticon-excited-outline" },

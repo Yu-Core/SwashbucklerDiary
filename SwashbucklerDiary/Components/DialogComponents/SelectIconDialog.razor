@@ -4,7 +4,8 @@
 <MMDialog MyValue="Value"
           MyValueChanged="InternalValueChanged"
           MaxWidth="420"
-          Scrollable>
+          Scrollable="true"
+          Transition="@(null)">
     <MCard Rounded="@("lg")">
         <MCardTitle Class="font-weight-bold">
             @(Title)
@@ -14,12 +15,14 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:200px;">
-            <MChipGroup Value="GetSelectedIndex()"
-                        ValueChanged="SelectedIndexChanged"
+            <MChipGroup Value="Item"
+                        ValueChanged="ItemChanged"
                         Column>
                 @foreach (var item in Items)
                 {
-                    <MChip Filter="true"
+                    <MChip @key="item.Key"
+                           Value="@(item.Key)"
+                           Filter="true"
                            Outlined="true"
                            OnClick="HandleOnCancel">
                         <MIcon Left="true">
