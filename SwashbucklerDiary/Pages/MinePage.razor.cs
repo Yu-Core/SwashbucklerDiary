@@ -48,7 +48,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SetCount()
         {
-            DiaryCount = await DiaryService.CountAsync(it=>!it.Private);
+            DiaryCount = await DiaryService.CountAsync(it => !it.Private);
             var wordCountType = (WordCountType)Enum.Parse(typeof(WordCountType), I18n.T("Write.WordCountType")!);
             WordCount = await DiaryService.GetWordCount(wordCountType);
             var diaries = await DiaryService.QueryAsync(it => !it.Private);
@@ -97,8 +97,8 @@ namespace SwashbucklerDiary.Pages
         private async Task LoadSettings()
         {
             Language = await SettingsService.Get(SettingType.Language);
-            UserName = await SettingsService.Get(SettingType.UserName);
-            Sign = await SettingsService.Get(SettingType.Sign);
+            UserName = await SettingsService.Get(SettingType.UserName, I18n.T("AppName"));
+            Sign = await SettingsService.Get(SettingType.Sign, I18n.T("Mine.Sign"));
             int themeState = await SettingsService.Get(SettingType.ThemeState);
             ThemeState = (ThemeState)themeState;
         }
@@ -168,7 +168,7 @@ namespace SwashbucklerDiary.Pages
                 Log.Error($"{e.Message}\n{e.StackTrace}");
                 await AlertService.Error(I18n.T("Mine.QQGroupError"));
             }
-            
+
         }
     }
 }
