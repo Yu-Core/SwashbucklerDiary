@@ -421,7 +421,15 @@
       },
       "Alert": {
         "Name": "提示框",
-        "Path": "设置 / 提示框"
+        "Path": "设置 / 提示框",
+        "AlertTimeout": {
+          "Name": "提示时长",
+          "Path": "设置 / 提示框 / 提示时长"
+        },
+        "Achievement": {
+          "Name": "成就",
+          "Path": "设置 / 提示框 / 成就"
+        }
       }
     }
   },
@@ -607,9 +615,6 @@
   },
   "SearchAppFunction": {
     "Placeholder": "请输入想要搜索的功能"
-  },
-  "Alert": {
-    "AlertTimeout": "提示时长"
   },
   "DateTimeFormat": {
     "MM/dd": "月/日",

@@ -8,6 +8,7 @@ namespace SwashbucklerDiary.Pages
     {
         private int _timeout;
         private bool ShowTimeout;
+        private bool AchievementsAlert;
         private Dictionary<string, string> Timeouts = new();
 
         protected override async Task OnInitializedAsync()
@@ -26,6 +27,7 @@ namespace SwashbucklerDiary.Pages
         private async Task LoadSettings()
         {
             _timeout = await SettingsService.Get(SettingType.AlertTimeout);
+            AchievementsAlert = await SettingsService.Get(SettingType.AchievementsAlert);
         }
 
         private async Task UpdateAlertTimeout(int value)

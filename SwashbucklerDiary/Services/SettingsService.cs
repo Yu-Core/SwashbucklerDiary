@@ -29,6 +29,7 @@ namespace SwashbucklerDiary.Services
             {SettingType.AlertTimeout,5000 },
             {SettingType.WebDAVCopyResources,false },
             {SettingType.DiaryCardDateFormat,"MM/dd" },
+            {SettingType.AchievementsAlert,true },
 
         };
 

@@ -421,7 +421,15 @@
       },
       "Alert": {
         "Name": "Alert",
-        "Path": "Setting / Alert"
+        "Path": "Setting / Alert",
+        "AlertTimeout": {
+          "Name": "Alert timeout",
+          "Path": "Setting / Alert / Alert timeout"
+        },
+        "Achievement": {
+          "Name": "Achievement",
+          "Path": "Setting / Alert / Achievement"
+        }
       }
     }
   },
@@ -607,9 +615,6 @@
   },
   "SearchAppFunction": {
     "Placeholder": "Please enter the function you want to search for"
-  },
-  "Alert": {
-    "AlertTimeout": "Alert timeout"
   },
   "DateTimeFormat": {
     "MM/dd": "Month/day",

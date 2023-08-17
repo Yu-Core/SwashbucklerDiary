@@ -298,10 +298,7 @@ namespace SwashbucklerDiary.Pages
             var wordCount = await DiaryService.GetWordCount(wordCountType);
             var messages2 = await AchievementService.UpdateUserState(AchievementType.Word, wordCount);
             messages.AddRange(messages2);
-            foreach (var item in messages)
-            {
-                await AlertService.Info(I18n.T("Achievement.AchieveAchievements"), I18n.T(item));
-            }
+            await AlertAchievements(messages);
         }
 
         private Task SettingChange(SettingType type, ref bool value)

@@ -24,10 +24,7 @@ namespace SwashbucklerDiary.Components
         protected virtual async Task HandleAchievements(AchievementType type)
         {
             var messages = await AchievementService.UpdateUserState(type);
-            foreach (var item in messages)
-            {
-                await AlertService.Info(I18n.T("Achievement.AchieveAchievements"), I18n.T(item));
-            }
+            await AlertAchievements(messages);
         }
 
         protected Func<bool, Task> SettingChange(SettingType type)
@@ -38,6 +35,20 @@ namespace SwashbucklerDiary.Components
         protected string? MSwitchTrackColor(bool value)
         {
             return value && Light ? "black" : null;
+        }
+
+        protected async Task AlertAchievements(List<string> messages)
+        {
+            bool achievementsAlert = await SettingsService.Get(SettingType.AchievementsAlert);
+            if(!achievementsAlert)
+            {
+                return;
+            }
+
+            foreach (var item in messages)
+            {
+                await AlertService.Info(I18n.T("Achievement.AchieveAchievements"), I18n.T(item));
+            }
         }
     }
 }

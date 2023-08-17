@@ -212,6 +212,18 @@
     "Href": "alertSetting"
   },
   {
+    "Name": "Setting.Display.Alert.AlertTimeout.Name",
+    "Icon": "mdi-timer-outline",
+    "Path": "Setting.Display.Alert.AlertTimeout.Path",
+    "Href": "alertSetting"
+  },
+  {
+    "Name": "Setting.Display.Alert.Achievement.Name",
+    "Icon": "mdi-trophy-outline",
+    "Path": "Setting.Display.Alert。Achievement.Path",
+    "Href": "alertSetting"
+  },
+  {
     "Name": "Setting.Display.DiaryCard.Name",
     "Icon": "mdi-card-text-outline",
     "Path": "Setting.Display.DiaryCard.Path",
