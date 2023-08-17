@@ -343,6 +343,10 @@ a, .btn-link {
 }
 
 @media screen and (max-width:600px) {
+    .m-enqueued-snackbars {
+        pointer-events: none;
+    }
+
     .m-snack__wrapper {
         border-radius: 9999px !important;
         width: initial !important;
