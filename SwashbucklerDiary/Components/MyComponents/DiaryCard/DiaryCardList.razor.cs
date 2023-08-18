@@ -91,6 +91,7 @@ namespace SwashbucklerDiary.Components
         private async Task HandleTopping(DiaryModel diaryModel)
         {
             diaryModel.Top = !diaryModel.Top;
+            diaryModel.UpdateTime = DateTime.Now;
             await DiaryService.UpdateAsync(diaryModel);
         }
 
@@ -147,6 +148,7 @@ namespace SwashbucklerDiary.Components
 
         private async Task SaveSelectTags()
         {
+            SelectedDiary.UpdateTime = DateTime.Now;
             await DiaryService.UpdateTagsAsync(SelectedDiary);
             ShowSelectTag = false;
         }
@@ -174,6 +176,7 @@ namespace SwashbucklerDiary.Components
         private async Task HandlePrivacy(DiaryModel diaryModel)
         {
             diaryModel.Private = !diaryModel.Private;
+            diaryModel.UpdateTime = DateTime.Now;
             await DiaryService.UpdateAsync(diaryModel);
             var index = _internalValue.FindIndex(it => it.Id == diaryModel.Id);
             if (index < 0)

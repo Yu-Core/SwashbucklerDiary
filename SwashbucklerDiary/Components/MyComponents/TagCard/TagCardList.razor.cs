@@ -88,6 +88,7 @@ namespace SwashbucklerDiary.Components
             }
 
             SelectedTag.Name = tagName;
+            SelectedTag.UpdateTime = DateTime.Now;
             bool flag = await TagService.UpdateAsync(SelectedTag);
             if (flag)
             {

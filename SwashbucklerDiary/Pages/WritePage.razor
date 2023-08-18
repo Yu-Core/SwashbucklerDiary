@@ -50,7 +50,7 @@
             @if (EnableEditCreateTime)
             {
                 <button class="text-h6 font-weight-bold" @onclick="()=>ShowCreateTime=true">
-                    @(Diary.CreateTime.ToString("yyyy/MM/dd"))
+                    @(CreateTime.ToString("yyyy/MM/dd"))
                     <MIcon>
                         mdi-pencil-outline
                     </MIcon>
@@ -59,12 +59,12 @@
             else
             {
                 <span class="text-h6 font-weight-bold">
-                    @(Diary.CreateTime.ToString("yyyy/MM/dd"))
+                    @(CreateTime.ToString("yyyy/MM/dd"))
                 </span>
             }
 
             <span class="pl-5 text-subtitle-1">
-                @(I18n.ToWeek(Diary.CreateTime))
+                @(I18n.ToWeek(CreateTime))
             </span>
             <MSpacer></MSpacer>
             <span class="text-subtitle-1">
@@ -200,6 +200,6 @@
 </SelectLocation>
 
 <MultiDatePicker @bind-Value="ShowCreateTime"
-@bind-Date="CreateTime"
+@bind-Date="CreateDate"
                  Max="DateOnly.FromDateTime(DateTime.Now)">
 </MultiDatePicker>

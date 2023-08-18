@@ -1,7 +1,6 @@
 ﻿using BlazorComponent;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
@@ -23,6 +22,7 @@ namespace SwashbucklerDiary.Pages
         private bool EnableTitle;
         private bool EnableMarkdown = true;
         private bool EnableEditCreateTime;
+        private bool CreateMode;
         private MyMarkdown? MyMarkdown;
         private MMTextarea? MMTextarea;
         private List<DynamicListItem> ListItemModels = new();
@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.Pages
         {
             Tags = new(),
             Resources = new(),
-            CreateTime = DateTime.Now
+            CreateTime = default
         };
         private List<TagModel> Tags = new();
 
@@ -82,6 +82,11 @@ namespace SwashbucklerDiary.Pages
             base.NavigateToBack();
         }
 
+        private DateTime CreateTime
+        {
+            get => (CreateMode && Diary.CreateTime == default) ? DateTime.Now : Diary.CreateTime;
+            set => Diary.CreateTime = value;
+        }
         private List<TagModel> SelectedTags
         {
             get => Diary.Tags!;
@@ -102,10 +107,10 @@ namespace SwashbucklerDiary.Pages
             get => Diary.Location;
             set => Diary.Location = value;
         }
-        private DateOnly CreateTime
+        private DateOnly CreateDate
         {
-            get => DateOnly.FromDateTime(Diary.CreateTime);
-            set => Diary.CreateTime = value.ToDateTime(TimeOnly.FromDateTime(DateTime.Now));
+            get => DateOnly.FromDateTime(CreateTime);
+            set => CreateTime = value.ToDateTime(TimeOnly.FromDateTime(DateTime.Now));
         }
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
@@ -140,6 +145,7 @@ namespace SwashbucklerDiary.Pages
         {
             if (DiaryId == null)
             {
+                CreateMode = true;
                 return;
             }
 
@@ -217,9 +223,14 @@ namespace SwashbucklerDiary.Pages
             }
 
             Diary.Resources = GetDiaryResources(Diary.Content);
-            bool exist = await DiaryService.AnyAsync(it => it.Id == Diary.Id);
-            if (!exist)
+            Diary.UpdateTime = DateTime.Now;
+            if (CreateMode)
             {
+                if(Diary.CreateTime == default)
+                {
+                    Diary.CreateTime = DateTime.Now;
+                }
+
                 bool flag = await DiaryService.AddAsync(Diary);
                 if (flag)
                 {
