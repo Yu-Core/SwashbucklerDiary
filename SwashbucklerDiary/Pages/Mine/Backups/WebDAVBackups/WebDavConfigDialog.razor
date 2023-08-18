@@ -1,9 +1,9 @@
 ﻿@namespace SwashbucklerDiary.Pages
 @inherits FocusDialogComponentBase
 
-<MMDialog MyValue="Value"
+<MMDialog @ref="myDialog"
+          MyValue="Value"
           MyValueChanged="ValueChanged"
-          @ref="myDialog"
           MaxWidth="480">
     <MForm @ref="@MForm"
            Model="@configModel"

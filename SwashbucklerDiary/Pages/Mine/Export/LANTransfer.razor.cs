@@ -27,7 +27,6 @@ namespace SwashbucklerDiary.Pages
         {
             DynamicLists = new()
             {
-                new(this,"Export.LAN.Config.Name","mdi-cog-transfer-outline",()=>ShowConfig=true),
                 new(this,"Export.Send.Name","mdi-send-outline",()=>To("lanSender")),
                 new(this,"Export.Receive.Name","mdi-printer-pos-outline",()=>To("lanReceiver")),
             };

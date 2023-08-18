@@ -1,9 +1,9 @@
 ﻿@namespace SwashbucklerDiary.Pages
 @inherits FocusDialogComponentBase
 
-<MMDialog MyValue="Value"
+<MMDialog @ref="myDialog"
+          MyValue="Value"
           MyValueChanged="ValueChanged"
-@ref="myDialog"
           MaxWidth="480">
     <MForm @ref="@MForm"
            Model="@configModel"
@@ -36,7 +36,7 @@
                             NumberProps="@(prop => { prop.Min = 1204; prop.Max = 65535; prop.HideControl = true; })">
                 </MTextField>
                 <MTextField @bind-Value="configModel.TransmissionPort"
-                            Type="number" 
+                            Type="number"
                             TValue="int"
                             Dense="true"
                             Outlined="true"
@@ -47,7 +47,7 @@
             </MCardText>
             <MCardActions>
                 <MButton Text="true" OnClick="OnReset">
-                    @(I18n.T("Restore Default"))
+                    @(I18n.T("Share.Restore Default"))
                 </MButton>
                 <MSpacer></MSpacer>
                 <MButton Text="true" OnClick="HandleOnCancel">
