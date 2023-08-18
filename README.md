@@ -69,7 +69,7 @@
 
 ## 支持的平台
 - Windows (Windows 11和Windows 10版本 1809 或更高版本)
-- Android (Android 7.0 (API 24) 或更高版本)
+- Android (Android 8.0 (API 26) 或更高版本)
 - iOS (iOS 14 或更高版本)
 - macOS (macOS 11 或更高版本)
 - ~~Tizen (暂不支持)~~

@@ -86,7 +86,7 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 
 ## Supported Platforms
 - Windows (Windows 11 and Windows 10 version 1809 or higher)
-- Android (Android 7.0 (API 24) or higher)
+- Android (Android 8.0 (API 26) or higher)
 - iOS (iOS 14 or higher)
 - macOS (macOS 11 or higher)
 - ~~Tizen (Not supported temporarily)~~
