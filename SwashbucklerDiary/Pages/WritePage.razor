@@ -1,6 +1,11 @@
 ﻿@page "/write"
 @inherits PageComponentBase
 
+@if (EnableMarkdown)
+{
+    <link href="css/extend/masa-blazor-extend-enqueued-snackbars-write.css" rel="stylesheet" />
+}
+
 <MAppBar App="true"
          Elevation="0">
     <ChildContent>

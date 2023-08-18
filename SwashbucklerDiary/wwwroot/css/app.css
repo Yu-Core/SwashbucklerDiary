@@ -246,14 +246,18 @@ a, .btn-link {
     background-color: #fff !important;
 }
 
-.my-btn-fab {
-    margin-bottom: 60px !important;
+@media screen and (max-width:600px) {
+    .my-btn-fab {
+        bottom: calc(1rem + 56px) !important;
+        margin-bottom: 8px !important;
+    }
 }
 
 @media screen and (min-width:600px) {
     .my-btn-fab {
-        margin-bottom: 20px !important;
-        margin-right: 20px !important;
+        bottom: 1rem !important;
+        right: 1rem !important;
+        margin: 8px !important;
     }
 }
 
