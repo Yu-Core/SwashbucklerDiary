@@ -7,6 +7,8 @@ namespace SwashbucklerDiary.Components
     public partial class DiaryCard : MyComponentBase
     {
         private bool ShowMenu;
+        private string? Title;
+        private string? Text;
         private List<DynamicListItem> ListItemModels = new();
 
         [Inject]
@@ -39,13 +41,14 @@ namespace SwashbucklerDiary.Components
 
         protected override void OnInitialized()
         {
+            SetTitleAndText();
             LoadView();
             base.OnInitialized();
         }
 
+        private bool HasTitle => !string.IsNullOrWhiteSpace(Value?.Title);
+        private bool HasContent => !string.IsNullOrWhiteSpace(Value?.Content);
         private DateTime Time => Value!.CreateTime;
-        private string? Title => GetTitle();
-        private string? Text => TextInterception(Value!.Content, 1000);
         private bool IsTop => Value!.Top;
         private bool IsPrivate => Value!.Private;
         private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
@@ -87,25 +90,46 @@ namespace SwashbucklerDiary.Components
             return IconService.GetMoodIcon(key);
         }
 
-        private string GetTitle()
+        private void SetTitleAndText()
         {
-            if (!string.IsNullOrWhiteSpace(Value!.Title))
+            Title = GetTitle();
+            Text = GetText();
+        }
+
+        private string? GetTitle()
+        {
+            if (HasTitle)
             {
-                return Value!.Title;
+                return Value!.Title!;
             }
 
-            if (!string.IsNullOrWhiteSpace(Text))
+            if (HasContent)
             {
                 string[] separators = { ",", "，", ".", "。", "?", "？", "!", "！", ";", "；", "\n" }; // 定义分隔符
-                string[] sentences = Text.Split(separators, StringSplitOptions.RemoveEmptyEntries); // 拆分文本
-                if(sentences.Length > 0)
+                string[] sentences = Value!.Content!.Split(separators, StringSplitOptions.RemoveEmptyEntries); // 拆分文本
+                if (sentences.Length > 0)
                 {
                     string firstSentence = sentences[0];
                     return firstSentence;
                 }
             }
 
-            return I18n.T("Diary.Untitled");
+            return null;
+        }
+
+        private string? GetText()
+        {
+            var text = TextInterception(Value!.Content, 1000) ?? string.Empty;
+            if (!HasTitle && Title is not null)
+            {
+                int length = Title.Length + 1;
+                if (HasContent && text.Length > length)
+                {
+                    text = text?.Substring(length);
+                }
+            }
+
+            return text;
         }
 
         private static string? TextInterception(string? text, int endIndex)

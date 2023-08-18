@@ -46,7 +46,7 @@
         <MListItem ThreeLine>
             <MListItemContent>
                 <div class="my-diary-card-title">
-                    @Title
+                    @(Title ?? I18n.T("Diary.Untitled"))
                 </div>
                 <MListItemSubtitle>
                     @Text
