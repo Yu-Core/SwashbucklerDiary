@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Pages
         private StringNumber Timeout
         {
             get => (_timeout / 1000).ToString();
-            set => _timeout = value.ToInt32() * 1000;
+            set => SetTimeout(value);
         }
 
         private async Task LoadSettings()
@@ -30,10 +30,10 @@ namespace SwashbucklerDiary.Pages
             AchievementsAlert = await SettingsService.Get(SettingType.AchievementsAlert);
         }
 
-        private async Task UpdateAlertTimeout(int value)
+        private async void SetTimeout(StringNumber value)
         {
-            _timeout = value;
-            await SettingsService.Save(SettingType.AlertTimeout, value);
+            _timeout = value.ToInt32() * 1000;
+            await SettingsService.Save(SettingType.AlertTimeout, _timeout);
         }
 
         private void SetTimeouts()
