@@ -105,12 +105,11 @@ namespace SwashbucklerDiary.Components
 
             if (HasContent)
             {
-                string[] separators = { ",", "，", ".", "。", "?", "？", "!", "！", ";", "；", "\n" }; // 定义分隔符
-                string[] sentences = Value!.Content!.Split(separators, StringSplitOptions.RemoveEmptyEntries); // 拆分文本
-                if (sentences.Length > 0)
+                char[] separators = { ',', '，', '.', '。', '?', '？', '!', '！', ';', '；', '\n' }; // 定义分隔符
+                int index = Value!.Content!.IndexOfAny(separators);
+                if (index > -1)
                 {
-                    string firstSentence = sentences[0];
-                    return firstSentence;
+                    return Value!.Content!.Substring(0, index + 1);
                 }
             }
 
@@ -119,28 +118,50 @@ namespace SwashbucklerDiary.Components
 
         private string? GetText()
         {
-            var text = TextInterception(Value!.Content, 1000) ?? string.Empty;
-            if (!HasTitle && Title is not null)
+            string text = SubText(Value!.Content, 0, 1000);
+            if (!HasTitle && Title is not null && HasContent)
             {
-                int length = Title.Length + 1;
-                if (HasContent && text.Length > length)
+                var subText = SubText(text, Title.Length);
+                if (!string.IsNullOrWhiteSpace(subText))
                 {
-                    text = text?.Substring(length);
+                    text = subText;
                 }
             }
 
             return text;
         }
 
-        private static string? TextInterception(string? text, int endIndex)
+        private static string SubText(string? text, int startIndex, int? length = null)
         {
-            int len = text is null ? 0 : text.Length;
-            if (len > endIndex)
+            if (text == null)
             {
-                return text!.Substring(0, endIndex);
+                return string.Empty;
             }
 
-            return text;
+            int textLength = text.Length;
+
+            if (startIndex < 0 || startIndex >= textLength)
+            {
+                return string.Empty;
+            }
+
+            if (length == null)
+            {
+                length = textLength - startIndex;
+            }
+            else if (length < 0)
+            {
+                return string.Empty;
+            }
+
+            int endIndex = startIndex + length.Value;
+
+            if (endIndex > textLength)
+            {
+                endIndex = textLength;
+            }
+
+            return text.Substring(startIndex, endIndex - startIndex);
         }
     }
 }
