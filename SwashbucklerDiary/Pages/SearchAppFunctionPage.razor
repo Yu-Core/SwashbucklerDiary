@@ -2,33 +2,35 @@
 @inherits PageComponentBase
 
 <MAppBar App
-         Elevation="0">
-    <MButton Icon
-             OnClick="NavigateToBack">
-        <MIcon>mdi-arrow-left</MIcon>
-    </MButton>
+          Elevation="0">
+     <MButton Icon
+              OnClick="NavigateToBack">
+         <MIcon>mdi-arrow-left</MIcon>
+     </MButton>
 
-    <MySearch @bind-Value="ShowSearch"
-    @bind-Search="Search"
-              Placeholder="@(I18n.T("SearchAppFunction.Placeholder"))"
-              OnChanged="UpdateAppFunctions">
-    </MySearch>
-</MAppBar>
+     <MySearch @bind-Value="ShowSearch"
+     @bind-Search="Search"
+               Placeholder="@(I18n.T("SearchAppFunction.Placeholder"))"
+               OnChanged="UpdateAppFunctions">
+     </MySearch>
+ </MAppBar>
 
-<ScrollContainer>
-    @if (AppFunctions.Any())
+ <ScrollContainer>
+     @if (AppFunctions.Any())
     {
-        <MCard Elevation="0"
-               Rounded="@("lg")">
-            <MList>
-                @foreach (var item in AppFunctions)
-                {
-                    <MListItem OnClick="()=>To(item.Href!)">
-                        <MListItemIcon>
+        @foreach (var item in AppFunctions)
+        {
+            <MCard Class="mb-5"
+                   Elevation="0"
+                   Rounded="@("lg")"
+                   OnClick="()=>To(item.Href!)">
+                <MList>
+                    <MListItem>
+                        <MListItemAvatar>
                             <MIcon Class="list-item-icon">
                                 @item.Icon
                             </MIcon>
-                        </MListItemIcon>
+                        </MListItemAvatar>
                         <MListItemContent>
                             <MListItemTitle>
                                 @(I18n.T(item.Name))
@@ -38,13 +40,9 @@
                             </MListItemSubtitle>
                         </MListItemContent>
                     </MListItem>
-                    if (AppFunctions.Last() != item)
-                    {
-                        <MDivider Class="mx-3"></MDivider>
-                    }
-                }
-            </MList>
-        </MCard>
+                </MList>
+            </MCard>
+        }
     }
 
     <NotFound Show="!AppFunctions.Any()"></NotFound>

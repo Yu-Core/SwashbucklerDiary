@@ -353,13 +353,14 @@ namespace SwashbucklerDiary.Pages
 
         private async Task InsertTimestamp()
         {
+            string dateTimeNow = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
             if(EnableMarkdown)
             {
-                await MyMarkdown!.InsertValueAsync(DateTime.Now.ToString());
+                await MyMarkdown!.InsertValueAsync(dateTimeNow);
             }
             else
             {
-                await MMTextarea!.InsertValueAsync(DateTime.Now.ToString());
+                await MMTextarea!.InsertValueAsync(dateTimeNow);
             }
         }
     }
