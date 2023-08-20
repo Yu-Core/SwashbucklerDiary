@@ -120,7 +120,9 @@ namespace SwashbucklerDiary.Components
             if (ValueChanged.HasDelegate)
             {
                 await ValueChanged.InvokeAsync(value);
+#if WINDOWS
                 await JS.CustomSchemeRender();
+#endif
             }
         }
 
@@ -128,7 +130,9 @@ namespace SwashbucklerDiary.Components
         {
             await Task.Delay(1000);
             await PreventInputLoseFocus();
+#if WINDOWS
             await JS.CustomSchemeRender();
+#endif
         }
 
         private async Task PreventInputLoseFocus()
