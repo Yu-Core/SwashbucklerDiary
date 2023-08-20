@@ -51,9 +51,17 @@ namespace SwashbucklerDiary.Services
 
         public Task Warning(string? title, string? message) => Alert(title, message, AlertTypes.Warning);
 
-        public Task StartLoading()
+        public Task StartLoading(bool opacity = true)
         {
-            PopupService.ShowProgressCircular(options => options.Size = 48);
+            PopupService.ShowProgressCircular(options =>
+            {
+                options.Size = 48;
+                if (!opacity)
+                {
+                    options.BackgroundOpacity = 0;
+                    options.Class = "my-alert-loading";
+                }
+            });
             return Task.CompletedTask;
         }
 

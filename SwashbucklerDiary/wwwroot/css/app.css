@@ -390,3 +390,11 @@ a, .btn-link {
         width: 50%;
     }
 }
+
+.theme--light.m-application .my-alert-loading {
+    color: #000;
+}
+
+.theme--dark.m-application .my-alert-loading {
+    color: #fff;
+}
