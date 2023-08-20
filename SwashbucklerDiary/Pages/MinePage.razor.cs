@@ -20,6 +20,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowLanguage;
         private bool ShowThemeState;
         private bool ShowFeedback;
+        private bool ShowPreviewImage;
         private Dictionary<string, string> Languages => I18n.Languages;
         private readonly static Dictionary<string, ThemeState> ThemeStates = new()
         {

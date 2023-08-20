@@ -30,8 +30,9 @@
                      <MListItem ThreeLine>
                         <MListItemAvatar Class="ml-sm-2 ml-md-4 mr-md-6"
                                          Rounded="@("lg")"
-                                         Size="70">
-                            <MImage Src="@(Avatar)">
+                                         Size="70"
+                                         @onclick:stopPropagation="true">
+                            <MImage Src="@(Avatar)" @onclick="()=>ShowPreviewImage=true">
                                 <PlaceholderContent>
                                     <MRow Class="fill-height ma-0"
                                           Align="@AlignTypes.Center"
@@ -200,3 +201,7 @@
              Title="@(I18n.T("Mine.ContactWay"))"
              ListItemModels="FeedbackTypes">
 </MultiDialog>
+
+<PreviewImageDialog @bind-Value="ShowPreviewImage"
+                    Src="@Avatar">
+</PreviewImageDialog>

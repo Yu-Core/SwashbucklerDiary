@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {

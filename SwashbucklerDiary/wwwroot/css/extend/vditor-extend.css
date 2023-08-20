@@ -33,6 +33,7 @@
 }
 
 .vditor-reset img {
+    cursor: pointer;
     border-radius: 8px;
 }
 

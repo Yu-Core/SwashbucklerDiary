@@ -28,3 +28,12 @@ export function FixLink(element) {
 
     }
 }
+
+export function PreviewImage(dotNetCallbackRef, callbackMethod, parent) {
+    var elements = parent.querySelectorAll("img");
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].addEventListener('click', function () {
+            dotNetCallbackRef.invokeMethodAsync(callbackMethod, this.src);
+        });
+    }
+}

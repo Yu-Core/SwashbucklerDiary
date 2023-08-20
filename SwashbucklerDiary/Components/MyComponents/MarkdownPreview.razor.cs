@@ -13,6 +13,8 @@ namespace SwashbucklerDiary.Components
         private Dictionary<string, object> _options = new();
         private bool AfterFirstRender;
         private IJSObjectReference? module;
+        private bool ShowPreviewImage;
+        private string? PreviewImageSrc;
 
         [Inject]
         private II18nService I18n { get; set; } = default!;
@@ -40,11 +42,14 @@ namespace SwashbucklerDiary.Components
         [JSInvokable]
         public async Task After()
         {
-            //点击复制按钮提示复制成功
             var dotNetCallbackRef = DotNetObjectReference.Create(this);
+
+            //点击复制按钮提示复制成功
             await module!.InvokeVoidAsync("Copy", new object[2] { dotNetCallbackRef, "CopySuccess" });
             //修复点击链接的一些错误
             await module!.InvokeVoidAsync("FixLink", new object[1] { element });
+            //图片预览
+            await module!.InvokeVoidAsync("PreviewImage", new object[3] { dotNetCallbackRef, "PreviewImage", element });
             await JS.CustomSchemeRender();
         }
 
@@ -54,12 +59,19 @@ namespace SwashbucklerDiary.Components
             await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
 
+        [JSInvokable]
+        public async Task PreviewImage(string src)
+        {
+            PreviewImageSrc = src;
+            ShowPreviewImage = true;
+            await InvokeAsync(StateHasChanged);
+        }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
                 AfterFirstRender = true;
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/vditor-preview-helper.js");
+                module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/vditor-preview-helper.js");
                 await RenderingMarkdown(Value);
             }
 
@@ -71,7 +83,7 @@ namespace SwashbucklerDiary.Components
             if (_value != value)
             {
                 _value = value;
-                if(AfterFirstRender)
+                if (AfterFirstRender)
                 {
                     Task.Run(async () =>
                     {
@@ -83,19 +95,19 @@ namespace SwashbucklerDiary.Components
 
         private async Task RenderingMarkdown(string? value)
         {
-            if(element.Context == null)
+            if (element.Context == null)
             {
                 return;
             }
 
-            if(string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(value))
             {
                 return;
             }
 
             await SetOptions();
             var dotNetCallbackRef = DotNetObjectReference.Create(this);
-            await module!.InvokeVoidAsync("PreviewVditor", new object?[4] { dotNetCallbackRef, element,  value, _options });
+            await module!.InvokeVoidAsync("PreviewVditor", new object?[4] { dotNetCallbackRef, element, value, _options });
         }
 
         private async Task SetOptions()
@@ -103,10 +115,10 @@ namespace SwashbucklerDiary.Components
             string mode = ThemeService.Dark ? "dark" : "light";
             string lang = await SettingsService.Get(SettingType.Language);
             lang = lang.Replace("-", "_");
-            var theme = new Dictionary<string, object?>() 
-            { 
+            var theme = new Dictionary<string, object?>()
+            {
                 { "current", ThemeService.Dark ? "dark" : "light" },
-                { "path", "npm/vditor/3.9.3/dist/css/content-theme" } 
+                { "path", "npm/vditor/3.9.3/dist/css/content-theme" }
             };
 
             _options = new()
