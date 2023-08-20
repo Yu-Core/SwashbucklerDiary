@@ -4,7 +4,8 @@
 <div class="my-card-list @(Class)">
     @foreach (var item in InternalValue)
     {
-        <DiaryCard Value="item"
+        <DiaryCard @key="item.Id"
+                   Value="item"
                    Class="@CardClass"
                    Privacy="ShowPrivacy"
                    Icon="ShowIcon"

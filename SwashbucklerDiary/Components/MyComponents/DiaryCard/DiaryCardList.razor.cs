@@ -115,7 +115,7 @@ namespace SwashbucklerDiary.Components
                 _internalValue.RemoveAt(index);
 
                 var index2 = _value.FindIndex(it => it.Id == diaryModel.Id);
-                if (index < 0)
+                if (index2 < 0)
                 {
                     return;
                 }
@@ -186,7 +186,7 @@ namespace SwashbucklerDiary.Components
             _internalValue.RemoveAt(index);
 
             var index2 = _value.FindIndex(it => it.Id == diaryModel.Id);
-            if (index < 0)
+            if (index2 < 0)
             {
                 return;
             }

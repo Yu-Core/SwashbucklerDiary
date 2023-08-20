@@ -4,7 +4,8 @@
 <div class="my-card-list">
     @foreach (var item in InternalValue)
     {
-        <TagCard Value="item"
+        <TagCard @key="item.Id"
+                 Value="item"
                  OnDelete="OpenDeleteDialog"
                  OnRename="OpenRenameDialog"
                  OnClick="HandleClick">
