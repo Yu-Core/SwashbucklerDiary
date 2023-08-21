@@ -55,7 +55,7 @@ namespace SwashbucklerDiary.Pages
             MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
             NavigateService.Action -= NavigateToBack;
             NavigateService.NavBtnAction -= SaveDiaryAsync;
-            PlatformService.Stopped -= SaveDiary;
+            PlatformService.Stopped -= LeaveAppSaveDiary;
             GC.SuppressFinalize(this);
         }
 
@@ -64,7 +64,7 @@ namespace SwashbucklerDiary.Pages
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
             NavigateService.Action += NavigateToBack;
             NavigateService.NavBtnAction += SaveDiaryAsync;
-            PlatformService.Stopped += SaveDiary;
+            PlatformService.Stopped += LeaveAppSaveDiary;
             LoadView();
             await LoadSettings();
             await UpdateTags();
@@ -206,14 +206,16 @@ namespace SwashbucklerDiary.Pages
             this.StateHasChanged();
         }
 
-        private async void SaveDiary()
+        private async void LeaveAppSaveDiary()
         {
-            await SaveDiaryAsync();
+            await SaveDiaryAsync(false);
         }
 
-        private async Task SaveDiaryAsync()
+        private Task SaveDiaryAsync() => SaveDiaryAsync(true);
+
+        private async Task SaveDiaryAsync(bool alert)
         {
-            if(EnableMarkdown)
+            if (EnableMarkdown)
             {
                 // vditor 每次输入会触发渲染，所以有1秒左右的防抖
                 // https://github.com/Vanessa219/vditor/issues/1307
@@ -231,32 +233,44 @@ namespace SwashbucklerDiary.Pages
             Diary.UpdateTime = DateTime.Now;
             if (CreateMode)
             {
-                if(Diary.CreateTime == default)
+                CreateMode = false;
+                if (Diary.CreateTime == default)
                 {
                     Diary.CreateTime = DateTime.Now;
                 }
 
                 bool flag = await DiaryService.AddAsync(Diary);
+
+                if (alert)
+                {
+                    if (flag)
+                    {
+                        await AlertService.Success(I18n.T("Share.AddSuccess"));
+                    }
+                    else
+                    {
+                        await AlertService.Error(I18n.T("Share.AddFail"));
+                    }
+                }
+
                 if (flag)
                 {
-                    await AlertService.Success(I18n.T("Share.AddSuccess"));
                     await HandleAchievements();
-                }
-                else
-                {
-                    await AlertService.Error(I18n.T("Share.AddFail"));
                 }
             }
             else
             {
                 bool flag = await DiaryService.UpdateIncludesAsync(Diary);
-                if (flag)
+                if (alert)
                 {
-                    await AlertService.Success(I18n.T("Share.EditSuccess"));
-                }
-                else
-                {
-                    await AlertService.Error(I18n.T("Share.EditFail"));
+                    if (flag)
+                    {
+                        await AlertService.Success(I18n.T("Share.EditSuccess"));
+                    }
+                    else
+                    {
+                        await AlertService.Error(I18n.T("Share.EditFail"));
+                    }
                 }
             }
         }
@@ -359,7 +373,7 @@ namespace SwashbucklerDiary.Pages
         private async Task InsertTimestamp()
         {
             string dateTimeNow = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
-            if(EnableMarkdown)
+            if (EnableMarkdown)
             {
                 await MyMarkdown!.InsertValueAsync(dateTimeNow);
             }
