@@ -115,24 +115,10 @@ namespace SwashbucklerDiary.Components
             };
         }
 
-        private async Task InternalValueChanged(string value)
-        {
-            if (ValueChanged.HasDelegate)
-            {
-                await ValueChanged.InvokeAsync(value);
-#if WINDOWS
-                await JS.CustomSchemeRender();
-#endif
-            }
-        }
-
         private async Task AfterMarkdownRender()
         {
             await Task.Delay(1000);
             await PreventInputLoseFocus();
-#if WINDOWS
-            await JS.CustomSchemeRender();
-#endif
         }
 
         private async Task PreventInputLoseFocus()
@@ -167,8 +153,9 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            string url = await AppDataService.CreateAppDataImageFileAsync(path);
-            string html = $"![]({url})";
+            string uri = await AppDataService.CreateAppDataImageFileAsync(path);
+            uri = StaticCustomScheme.CustomSchemeRender(uri);
+            string html = $"![]({uri})";
             await InsertValueAsync(html);
         }
 
@@ -180,8 +167,9 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            string url = await AppDataService.CreateAppDataAudioFileAsync(path);
-            string html = $"<audio src=\"{url}\" controls ></audio>";
+            string uri = await AppDataService.CreateAppDataAudioFileAsync(path);
+            uri = StaticCustomScheme.CustomSchemeRender(uri);
+            string html = $"<audio src=\"{uri}\" controls ></audio>";
             await InsertValueAsync(html);
         }
 
@@ -193,8 +181,9 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            string url = await AppDataService.CreateAppDataVideoFileAsync(path);
-            string html = $"<video src=\"{url}\" controls autoplay ></video>";
+            string uri = await AppDataService.CreateAppDataVideoFileAsync(path);
+            uri = StaticCustomScheme.CustomSchemeRender(uri);
+            string html = $"<video src=\"{uri}\" controls autoplay ></video>";
             await InsertValueAsync(html);
         }
 

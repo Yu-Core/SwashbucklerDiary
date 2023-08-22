@@ -6,6 +6,7 @@ using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using SwashbucklerDiary.Services;
 using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -82,6 +83,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
             Diary = diary;
+            Diary.Content = StaticCustomScheme.CustomSchemeRender(Diary.Content);
         }
 
         private async Task LoadSettings()

@@ -152,6 +152,7 @@ namespace SwashbucklerDiary.Pages
             }
 
             Diary = diary;
+            Diary.Content = StaticCustomScheme.CustomSchemeRender(Diary.Content);
             EnableTitle = !string.IsNullOrEmpty(diary.Title);
         }
 
@@ -229,6 +230,7 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
+            Diary.Content = StaticCustomScheme.ReverseCustomSchemeRender(Diary.Content!);
             Diary.Resources = GetDiaryResources(Diary.Content);
             Diary.UpdateTime = DateTime.Now;
             if (CreateMode)

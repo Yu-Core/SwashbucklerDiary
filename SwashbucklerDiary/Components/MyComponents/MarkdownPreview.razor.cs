@@ -2,7 +2,6 @@
 using Microsoft.JSInterop;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Components
 {
@@ -50,9 +49,6 @@ namespace SwashbucklerDiary.Components
             await module!.InvokeVoidAsync("FixLink", new object[1] { element });
             //图片预览
             await module!.InvokeVoidAsync("PreviewImage", new object[3] { dotNetCallbackRef, "PreviewImage", element });
-#if WINDOWS
-                await JS.CustomSchemeRender();
-#endif
         }
 
         [JSInvokable]
@@ -68,6 +64,7 @@ namespace SwashbucklerDiary.Components
             ShowPreviewImage = true;
             await InvokeAsync(StateHasChanged);
         }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
