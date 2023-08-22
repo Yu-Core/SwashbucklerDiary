@@ -24,9 +24,10 @@ namespace SwashbucklerDiary.Components
         public IDiaryService DiaryService { get; set; } = default!;
         [Inject]
         private IPlatformService PlatformService { get; set; } = default!;
-
         [Inject]
         protected ISettingsService SettingsService { get; set; } = default!;
+        [Inject]
+        private ITagService TagService { get; set; } = default!;
 
         [Parameter]
         public List<DiaryModel> Value
@@ -148,9 +149,14 @@ namespace SwashbucklerDiary.Components
 
         private async Task SaveSelectTags()
         {
+            ShowSelectTag = false;
             SelectedDiary.UpdateTime = DateTime.Now;
             await DiaryService.UpdateTagsAsync(SelectedDiary);
-            ShowSelectTag = false;
+            Tags = await TagService.QueryAsync();
+            if (TagsChanged.HasDelegate)
+            {
+                await TagsChanged.InvokeAsync(Tags);
+            }
         }
 
         private void HandleClick(DiaryModel diaryModel)

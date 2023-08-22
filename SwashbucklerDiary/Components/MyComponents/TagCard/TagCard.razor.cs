@@ -23,6 +23,19 @@ namespace SwashbucklerDiary.Components
             base.OnInitialized();
         }
 
+        private string DiaryCount
+        {
+            get
+            {
+                if(Value?.Diaries is null || Value.Diaries.Count == 0)
+                {
+                    return string.Empty;
+                }
+
+                return Value.Diaries.Count.ToString();
+            }
+        }
+
         void LoadView()
         {
             ListItemModels = new()

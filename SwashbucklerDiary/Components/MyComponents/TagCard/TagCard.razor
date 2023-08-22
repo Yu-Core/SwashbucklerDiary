@@ -20,12 +20,18 @@
                 @(Value!.Name)
             </MListItemContent>
 
+            <MListItemContent Class="setting-state">
+                <MListItemSubtitle>
+                    @(DiaryCount)
+                </MListItemSubtitle>
+            </MListItemContent>
+
             <MListItemAction>
                 <div @onclick:stopPropagation="true">
                     <MultiMenu @bind-Value="ShowMenu"
                                ListItemModels="ListItemModels">
                         <ButtonContent>
-                            <MIcon>mdi-pencil</MIcon>
+                            <MIcon>mdi-pencil-outline</MIcon>
                         </ButtonContent>
                     </MultiMenu>
                 </div>

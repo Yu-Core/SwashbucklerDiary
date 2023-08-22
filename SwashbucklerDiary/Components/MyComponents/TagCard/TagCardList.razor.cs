@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Components
         private bool ShowRename;
         private TagModel SelectedTag = new();
         private List<TagModel> _value = default!;
-        private List<TagModel> InternalValue = new();
+        private List<TagModel> _internalValue = new();
         private int loadCount = 50;
 
         [Inject]
@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public List<TagModel> Value
         {
-            get => _value;
+            get => _value.OrderByDescending(it => it.Diaries is null ? 0 : it.Diaries.Count).ToList();
             set => SetValue(value);
         }
         [Parameter]
@@ -29,6 +29,11 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public OneOf<ElementReference, string>? ScrollParent { get; set; }
 
+        private List<TagModel> InternalValue
+        {
+            get => _internalValue.OrderByDescending(it => it.Diaries is null ? 0 : it.Diaries.Count).ToList();
+            set => _internalValue = value;
+        }
         private void SetValue(List<TagModel> value)
         {
             bool first = _value is null;
@@ -60,7 +65,7 @@ namespace SwashbucklerDiary.Components
             if (flag)
             {
                 Value!.Remove(tag);
-                if(ValueChanged.HasDelegate)
+                if (ValueChanged.HasDelegate)
                 {
                     await ValueChanged.InvokeAsync(Value);
                 }
@@ -83,7 +88,7 @@ namespace SwashbucklerDiary.Components
 
             if (Value!.Any(it => it.Name == tagName))
             {
-                await AlertService.Warning(I18n.T("Tag.Repeat.Title"),I18n.T("Tag.Repeat.Content"));
+                await AlertService.Warning(I18n.T("Tag.Repeat.Title"), I18n.T("Tag.Repeat.Content"));
                 return;
             }
 
