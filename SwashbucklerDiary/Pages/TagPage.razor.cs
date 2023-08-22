@@ -20,9 +20,15 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
             Tag = tagModel;
+            await base.OnInitializedAsync();
         }
 
-        protected override List<DiaryModel> Diaries => Tag.Diaries ?? new();
+        protected override Task UpdateDiariesAsync()
+        {
+            Diaries = Tag.Diaries ?? new();
+            return Task.CompletedTask;
+        }
+
 
         private void NavigateToWrite()
         {
