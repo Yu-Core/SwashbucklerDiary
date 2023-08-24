@@ -16,9 +16,9 @@ namespace SwashbucklerDiary.Components
 
         protected override async Task OnInitializedAsync()
         {
-            await base.OnInitializedAsync();
             await InitializeDiariesAsync();
             await UpdateTagsAsync();
+            await base.OnInitializedAsync();
         }
 
         protected virtual Task InitializeDiariesAsync()

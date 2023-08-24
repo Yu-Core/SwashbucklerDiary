@@ -50,20 +50,11 @@ namespace SwashbucklerDiary.Pages
         [SupplyParameterFromQuery]
         public Guid? DiaryId { get; set; }
 
-        public void Dispose()
-        {
-            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
-            NavigateService.Action -= NavigateToBack;
-            NavigateService.NavBtnAction -= SaveDiaryAsync;
-            PlatformService.Stopped -= LeaveAppSaveDiary;
-            GC.SuppressFinalize(this);
-        }
-
         protected override async Task OnInitializedAsync()
         {
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
             NavigateService.Action += NavigateToBack;
-            NavigateService.NavBtnAction += SaveDiaryAsync;
+            NavigateService.BeforeNavBtn += SaveDiaryAsync;
             PlatformService.Stopped += LeaveAppSaveDiary;
             LoadView();
             await LoadSettings();
@@ -76,6 +67,15 @@ namespace SwashbucklerDiary.Pages
         {
             await SaveDiaryAsync();
             base.NavigateToBack();
+        }
+
+        protected override void OnDispose()
+        {
+            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
+            NavigateService.Action -= NavigateToBack;
+            NavigateService.BeforeNavBtn -= SaveDiaryAsync;
+            PlatformService.Stopped -= LeaveAppSaveDiary;
+            base.OnDispose();
         }
 
         private DateTime CreateTime

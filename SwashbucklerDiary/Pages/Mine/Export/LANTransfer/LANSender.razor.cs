@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace SwashbucklerDiary.Pages
 {
     //自我批评一下，此处代码写的太乱
-    public partial class LANSender : PageComponentBase, IDisposable
+    public partial class LANSender : PageComponentBase
     {
         private UdpClient? udpClient;
         private readonly IPAddress multicastAddress = IPAddress.Parse("239.0.0.1"); // 组播地址
@@ -34,19 +34,7 @@ namespace SwashbucklerDiary.Pages
         private ILANService LANService { get; set; } = default!;
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
-        public void Dispose()
-        {
-            StopTransferr = true;
-            UDPListening = false;
-            if (udpClient != null)
-            {
-                udpClient.DropMulticastGroup(multicastAddress);
-                udpClient.Close();
-                udpClient.Dispose();
-            }
-            GC.SuppressFinalize(this);
-        }
-
+        
         protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
@@ -64,6 +52,20 @@ namespace SwashbucklerDiary.Pages
                     CancellationTokenSource.Cancel();
                 }
             }
+        }
+
+        protected override void OnDispose()
+        {
+            StopTransferr = true;
+            UDPListening = false;
+            if (udpClient != null)
+            {
+                udpClient.DropMulticastGroup(multicastAddress);
+                udpClient.Close();
+                udpClient.Dispose();
+            }
+
+            base.OnDispose();
         }
 
         private bool IsCurrentPage => NavigateService.Navigation.Uri.Contains("lanSender");

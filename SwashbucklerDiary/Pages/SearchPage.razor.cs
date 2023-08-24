@@ -15,7 +15,8 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            HandleCurrentCache();
+            LoadCache();
+            NavigateService.BeforeNavigate += SetCache;
             await base.OnInitializedAsync();
         }
 
@@ -24,6 +25,12 @@ namespace SwashbucklerDiary.Pages
             Expression<Func<DiaryModel, bool>> func = Func();
             var diaries = await DiaryService.QueryAsync(func);
             Diaries = diaries.OrderByDescending(it => it.CreateTime).ToList();
+        }
+
+        protected override void OnDispose()
+        {
+            NavigateService.BeforeNavigate -= SetCache;
+            base.OnDispose();
         }
 
         private bool ShowSearch
@@ -41,6 +48,16 @@ namespace SwashbucklerDiary.Pages
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
         private bool IsDateFiltered => DateOnlyMin != DateOnly.MinValue || DateOnlyMax != DateOnly.MaxValue;
 
+        private void LoadCache()
+        {
+            SearchForm = (SearchForm?)NavigateService.GetCurrentCache(nameof(SearchForm)) ?? new();
+        }
+
+        private Task SetCache()
+        {
+            NavigateService.SetCurrentCache(nameof(SearchForm), SearchForm);
+            return Task.CompletedTask;
+        }
 
         private Expression<Func<DiaryModel, bool>> Func()
         {
@@ -76,12 +93,6 @@ namespace SwashbucklerDiary.Pages
             {
                 return exp.And(expPrivate);
             }
-        }
-
-        private void HandleCurrentCache()
-        {
-            SearchForm = (SearchForm?)NavigateService.GetCurrentCache() ?? new();
-            NavigateService.SetCurrentCache(() => SearchForm);
         }
     }
 }

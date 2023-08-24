@@ -24,9 +24,15 @@ namespace SwashbucklerDiary.Pages
         {
             FirstLauch();
             InitTab();
-            SetCurrentUrl();
             await LoadSettings();
+            NavigateService.BeforeNavigate += SetCurrentUrl;
             await base.OnInitializedAsync();
+        }
+
+        protected override void OnDispose()
+        {
+            NavigateService.BeforeNavigate -= SetCurrentUrl;
+            base.OnDispose();
         }
 
         private bool ShowAddTag { get; set; }
@@ -42,15 +48,15 @@ namespace SwashbucklerDiary.Pages
             {
                 View = Views[0];
             }
+
             tab = Views.IndexOf(View!);
         }
 
-        private void SetCurrentUrl()
+        private Task SetCurrentUrl()
         {
-            NavigateService.SetCurrentUrl(() =>
-            {
-                return Navigation.GetUriWithQueryParameter("View", Views[tab.ToInt32()]);
-            });
+            var url = Navigation.GetUriWithQueryParameter("View", Views[tab.ToInt32()]);
+            NavigateService.SetCurrentUrl(url);
+            return Task.CompletedTask;
         }
 
         private async Task LoadSettings()

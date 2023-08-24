@@ -5,7 +5,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public class PageComponentBase : MyComponentBase
+    public class PageComponentBase : MyComponentBase, IDisposable
     {
         [Inject]
         protected ISettingsService SettingsService { get; set; } = default!;
@@ -15,6 +15,12 @@ namespace SwashbucklerDiary.Components
         protected IPlatformService PlatformService { get; set; } = default!;
         [Inject]
         protected IAchievementService AchievementService { get; set; } = default!;
+
+        public void Dispose()
+        {
+            OnDispose();
+            GC.SuppressFinalize(this);
+        }
 
         protected virtual void NavigateToBack()
         {
@@ -49,6 +55,10 @@ namespace SwashbucklerDiary.Components
             {
                 await AlertService.Info(I18n.T("Achievement.AchieveAchievements"), I18n.T(item));
             }
+        }
+
+        protected virtual void OnDispose()
+        {
         }
     }
 }

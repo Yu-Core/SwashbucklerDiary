@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace SwashbucklerDiary.Pages
 {
     //自我批评一下，此处代码写的太乱
-    public partial class LANReceiver : PageComponentBase, IDisposable
+    public partial class LANReceiver : PageComponentBase
     {
         private bool _udpSending;
         private UdpClient? udpClient;
@@ -36,7 +36,7 @@ namespace SwashbucklerDiary.Pages
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
 
-        public void Dispose()
+        protected override void OnDispose()
         {
             StopTransferr = true;
             UDPSending = false;
@@ -52,7 +52,7 @@ namespace SwashbucklerDiary.Pages
                 tcpListener.Stop();
             }
 
-            GC.SuppressFinalize(this);
+            base.OnDispose();
         }
 
         protected override async Task OnInitializedAsync()

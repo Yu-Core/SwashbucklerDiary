@@ -17,11 +17,28 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            LoadCache();
             await LoadSettings();
             await SetAppFunctions();
-            HandleCurrentCache();
             UpdateAppFunctions();
+            NavigateService.BeforeNavigate += SetCache;
             await base.OnInitializedAsync();
+        }
+
+        protected override void OnDispose()
+        {
+            NavigateService.BeforeNavigate -= SetCache;
+            base.OnDispose();
+        }
+
+        protected override void NavigateToBack()
+        {
+            if (ShowSearch)
+            {
+                ShowSearch = false;
+                return;
+            }
+            base.NavigateToBack();
         }
 
         private bool ShowSearch
@@ -36,31 +53,27 @@ namespace SwashbucklerDiary.Pages
         }
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
 
-        protected override void NavigateToBack()
-        {
-            if (ShowSearch)
-            {
-                ShowSearch = false;
-                return;
-            }
-            base.NavigateToBack();
-        }
-
         private async Task SetAppFunctions()
         {
             var appFunctions = await PlatformService.ReadJsonFileAsync<List<AppFunction>>("wwwroot/json/app-functions/app-functions.json");
             AppFunctions = AllAppFunctions = appFunctions;
         }
 
-        private void HandleCurrentCache()
-        {
-            SearchForm = (SearchForm?)NavigateService.GetCurrentCache() ?? new();
-            NavigateService.SetCurrentCache(() => SearchForm);
-        }
-
         private async Task LoadSettings()
         {
             Privacy = await SettingsService.Get(SettingType.PrivacyMode);
+        }
+
+
+        private void LoadCache()
+        {
+            SearchForm = (SearchForm?)NavigateService.GetCurrentCache(nameof(SearchForm)) ?? new();
+        }
+
+        private Task SetCache()
+        {
+            NavigateService.SetCurrentCache(nameof(SearchForm), SearchForm);
+            return Task.CompletedTask;
         }
 
         private void UpdateAppFunctions()

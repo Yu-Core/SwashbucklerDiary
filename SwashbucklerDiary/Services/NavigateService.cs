@@ -5,35 +5,33 @@ namespace SwashbucklerDiary.Services
 {
     public class NavigateService : INavigateService
     {
-        private string? _currentUrl;
-        private Func<string?>? _funcCurrentUrl;
-        private object? _currentCache;
-        private Func<object?>? _funcCurrentCache;
-        private string? CurrentUrl
-        {
-            get => _currentUrl ?? _funcCurrentUrl?.Invoke();
-        }
-        private object? CurrentCache
-        {
-            get => _currentCache ?? _funcCurrentCache?.Invoke();
-        }
-
-        public NavigationManager Navigation { get; set; } = default!;
+        private string? CurrentUrl;
+        private Dictionary<string, object?> CurrentCache = new();
         public event Action? Action;
-        public event Func<Task>? NavBtnAction;
+        public event Func<Task>? BeforeNavBtn;
+        public event Func<Task>? BeforeNavigate;
 
         public void Initialize(NavigationManager navigation)
         {
             Navigation = navigation;
         }
 
+        public NavigationManager Navigation { get; set; } = default!;
         public List<string> HistoryUrl { get; set; } = new List<string>();
-        public Dictionary<string, object?> HistoryCache { get; set; } = new();
+        private Dictionary<string, Dictionary<string, object?>?> HistoryCache { get; set; } = new();
+        private string UriKey => Navigation.ToBaseRelativePath(Navigation.Uri).Split("?")[0];
 
-        public void NavigateTo(string url)
+        public async void NavigateTo(string url)
         {
+            RemoveCurrentHistoryCache();
+
+            if (BeforeNavigate is not null)
+            {
+                await BeforeNavigate.Invoke();
+            }
+
             string oldUrl;
-            if (CurrentUrl == null)
+            if (CurrentUrl is null)
             {
                 oldUrl = Navigation.ToBaseRelativePath(Navigation.Uri);
             }
@@ -44,16 +42,7 @@ namespace SwashbucklerDiary.Services
             }
 
             HistoryUrl.Add(oldUrl);
-            if (CurrentCache != null)
-            {
-                var cacheKey = oldUrl.Split("?")[0];
-                if (!HistoryCache.ContainsKey(cacheKey))
-                {
-                    HistoryCache.Add(cacheKey, CurrentCache);
-                }
-
-                ClearCurrentCache();
-            }
+            AddCurrentHistoryCache();
 
             Navigation.NavigateTo(url);
         }
@@ -61,8 +50,7 @@ namespace SwashbucklerDiary.Services
         {
             ClearCurrentUrl();
             ClearCurrentCache();
-            string cacheKey = Navigation.ToBaseRelativePath(Navigation.Uri).Split("?")[0]; ;
-            HistoryCache.Remove(cacheKey);
+            RemoveCurrentHistoryCache();
             string url = string.Empty;
             if (HistoryUrl.Count > 0)
             {
@@ -94,10 +82,11 @@ namespace SwashbucklerDiary.Services
 
         public async Task NavBtnClick(string url)
         {
-            if (NavBtnAction != null)
+            if (BeforeNavBtn is not null)
             {
-                await NavBtnAction.Invoke();
+                await BeforeNavBtn.Invoke();
             }
+
             ClearCurrentUrl();
             ClearCurrentCache();
             HistoryUrl.Clear();
@@ -108,51 +97,69 @@ namespace SwashbucklerDiary.Services
 
         public void SetCurrentUrl(string? url)
         {
-            _currentUrl = url;
+            CurrentUrl = url;
         }
 
-        public void SetCurrentUrl(Func<string>? func)
+        public void SetCurrentCache(string key, object? value)
         {
-            _funcCurrentUrl = func;
+            CurrentCache.Add(key, value);
         }
 
-        public void SetCurrentCache(object? value)
-        {
-            _currentCache = value;
-        }
-
-        public void SetCurrentCache(Func<object?>? func)
-        {
-            _funcCurrentCache = func;
-        }
-
-        public object? GetCurrentCache()
+        public object? GetCurrentCache(string key)
         {
             var url = Navigation.ToBaseRelativePath(Navigation.Uri);
-            return GetCache(url);
+            return GetCache(url, key);
         }
 
-        private object? GetCache(string url)
+        private object? GetCache(string url, string key)
         {
             var cacheKey = url.Split("?")[0];
-            if (HistoryCache.TryGetValue(cacheKey, out object? value))
+            var existCache = HistoryCache.TryGetValue(cacheKey, out Dictionary<string, object?>? cache);
+            if (!existCache)
             {
-                return value;
+                return null;
             }
 
-            return null;
+            if (cache == null || cache.Count == 0)
+            {
+                return null;
+            }
+
+            var existCurrentCache = cache.TryGetValue(key, out object? value);
+            if (!existCurrentCache)
+            {
+                return null;
+            }
+
+            return value;
         }
 
         private void ClearCurrentUrl()
         {
-            _currentUrl = null;
-            _funcCurrentUrl = null;
+            CurrentUrl = null;
         }
 
         private void ClearCurrentCache()
         {
-            _currentCache = null;
-            _funcCurrentCache = null;
+            CurrentCache = new();
+        }
+
+        private void RemoveCurrentHistoryCache()
+        {
+            HistoryCache.Remove(UriKey);
+        }
+
+        private void AddCurrentHistoryCache()
+        {
+            if (CurrentCache.Count > 0)
+            {
+                if (!HistoryCache.ContainsKey(UriKey))
+                {
+                    HistoryCache.Add(UriKey, CurrentCache);
+                }
+
+                ClearCurrentCache();
+            }
         }
     }
 }

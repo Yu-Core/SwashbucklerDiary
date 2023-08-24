@@ -2,24 +2,24 @@
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class PermissionSettingPage : PageComponentBase,IDisposable
+    public partial class PermissionSettingPage : PageComponentBase
     {
         private bool CameraState;
         private bool StorageState;
         private string? CameraPermission => GetPermissionText(CameraState);
         private string? StoragePermission => GetPermissionText(StorageState);
 
-        public void Dispose()
-        {
-            PlatformService.Resumed -= UpdatePermissionStates;
-            GC.SuppressFinalize(this);
-        }
-
         protected override async Task OnInitializedAsync()
         {
             await UpdatePermissionStatesAsync();
             PlatformService.Resumed += UpdatePermissionStates;
             base.OnInitialized();
+        }
+
+        protected override void OnDispose()
+        {
+            PlatformService.Resumed -= UpdatePermissionStates;
+            base.OnDispose();
         }
 
         private void OpenSystemPermissionSetting()

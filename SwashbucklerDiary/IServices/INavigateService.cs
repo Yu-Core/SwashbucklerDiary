@@ -8,8 +8,9 @@ namespace SwashbucklerDiary.IServices
         /// 存储想要返回时触发的方法
         /// </summary>
         event Action Action;
-        event Func<Task> NavBtnAction;
-        NavigationManager Navigation { get;protected set; }
+        event Func<Task> BeforeNavBtn;
+        event Func<Task>? BeforeNavigate;
+        NavigationManager Navigation { get; protected set; }
         /// <summary>
         /// 存储URL历史记录
         /// </summary>
@@ -35,9 +36,7 @@ namespace SwashbucklerDiary.IServices
         bool OnBackButtonPressed();
         Task NavBtnClick(string url);
         void SetCurrentUrl(string? url);
-        void SetCurrentUrl(Func<string>? func);
-        void SetCurrentCache(object? value);
-        void SetCurrentCache(Func<object>? func);
-        object? GetCurrentCache();
+        void SetCurrentCache(string key, object? value);
+        object? GetCurrentCache(string key);
     }
 }

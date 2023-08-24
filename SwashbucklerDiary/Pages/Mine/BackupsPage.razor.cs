@@ -18,7 +18,15 @@ namespace SwashbucklerDiary.Pages
             base.OnInitialized();
             InitTab();
             SetCurrentUrl();
+            NavigateService.BeforeNavigate += SetCurrentUrl;
         }
+
+        protected override void OnDispose()
+        {
+            NavigateService.BeforeNavigate -= SetCurrentUrl;
+            base.OnDispose();
+        }
+
         private void InitTab()
         {
             if (string.IsNullOrEmpty(View))
@@ -28,11 +36,11 @@ namespace SwashbucklerDiary.Pages
             tab = Views.IndexOf(View!);
         }
 
-        private void SetCurrentUrl()
+        private Task SetCurrentUrl()
         {
-            NavigateService.SetCurrentUrl(() => {
-                return Navigation.GetUriWithQueryParameter("View", Views[tab.ToInt32()]);
-            });
+            var url = Navigation.GetUriWithQueryParameter("View", Views[tab.ToInt32()]);
+            NavigateService.SetCurrentUrl(url);
+            return Task.CompletedTask;
         }
 
     }
