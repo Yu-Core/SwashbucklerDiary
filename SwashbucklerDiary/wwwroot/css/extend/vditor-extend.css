@@ -33,7 +33,6 @@
 }
 
 .vditor-reset img {
-    cursor: pointer;
     border-radius: 8px;
 }
 
@@ -42,5 +41,7 @@
 }
 
 .vditor-reset iframe {
+    width: 100%;
+    aspect-ratio: 2/1;
     border-radius: 8px;
 }
