@@ -166,6 +166,6 @@
     flex: unset !important;
 }
 
-.m-date-picker-table {
+.m-dialog .m-date-picker-table {
     height: auto !important;
 }

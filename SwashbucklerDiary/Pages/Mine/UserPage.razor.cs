@@ -11,20 +11,30 @@ namespace SwashbucklerDiary.Pages
         private string? UserName;
         private string? Sign;
         private string? Avatar;
-        private bool ShowAvatar;
+        private bool ShowEditAvatar;
+        private bool ShowEditUserName;
+        private bool ShowEditSign;
+        private List<DynamicListItem> EditAvatarMethods = new();
 
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
-            await base.OnInitializedAsync();
+            LoadView();
             await LoadSettings();
             await SetAvatar();
+            await base.OnInitializedAsync();
         }
 
-        private bool ShowUserName { get; set; }
-        private bool ShowSign { get; set; }
+        private void LoadView()
+        {
+            EditAvatarMethods = new()
+            {
+                new(this, "User.Photos","mdi-image-outline",PickPhoto),
+                new(this, "User.Capture","mdi-camera-outline",OnCapture),
+            };
+        }
 
         private async Task LoadSettings()
         {
@@ -34,7 +44,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SaveSign(string tagName)
         {
-            ShowSign = false;
+            ShowEditSign = false;
             if (!string.IsNullOrWhiteSpace(tagName) && tagName != Sign)
             {
                 Sign = tagName;
@@ -45,7 +55,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SaveUserName(string tagName)
         {
-            ShowUserName = false;
+            ShowEditUserName = false;
             if (!string.IsNullOrWhiteSpace(tagName) && tagName != UserName)
             {
                 UserName = tagName;
@@ -56,14 +66,14 @@ namespace SwashbucklerDiary.Pages
 
         private async Task PickPhoto()
         {
-            ShowAvatar = false;
+            ShowEditAvatar = false;
             string? photoPath = await PlatformService.PickPhotoAsync();
             await SavePhoto(photoPath);
         }
 
         private async Task OnCapture()
         {
-            ShowAvatar = false;
+            ShowEditAvatar = false;
             if (!PlatformService.IsCaptureSupported())
             {
                 await AlertService.Error(I18n.T("User.NoCapture"));

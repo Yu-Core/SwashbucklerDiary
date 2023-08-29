@@ -1,9 +1,7 @@
 ﻿using Serilog;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Models;
-using System.Collections.Generic;
 using System.Net.Http.Json;
-using System.Text.Json;
 
 namespace SwashbucklerDiary.Pages
 {

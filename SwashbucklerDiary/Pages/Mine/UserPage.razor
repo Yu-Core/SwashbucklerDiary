@@ -10,7 +10,7 @@
     <MCard Elevation="0"
            Rounded="@("lg")">
         <MList>
-            <MListItem OnClick="()=>ShowAvatar=true">
+            <MListItem OnClick="()=>ShowEditAvatar=true">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         mdi-account-circle-outline
@@ -30,121 +30,84 @@
                                       Align="@AlignTypes.Center"
                                       Justify="@JustifyTypes.Center">
                                     <MProgressCircular Indeterminate></MProgressCircular>
-                                </MRow>
-                            </PlaceholderContent>
-                        </MImage>
-                    </MAvatar>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
+                                 </MRow>
+                             </PlaceholderContent>
+                         </MImage>
+                     </MAvatar>
+                     <MIcon>mdi-chevron-right</MIcon>
+                 </MListItemAction>
+             </MListItem>
 
-            <MDivider Class="mx-3"></MDivider>
+             <MDivider Class="mx-3"></MDivider>
 
-            <MListItem OnClick="()=>ShowUserName=true">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-card-account-details-outline
-                    </MIcon>
-                </MListItemIcon>
+             <MListItem OnClick="()=>ShowEditUserName=true">
+                 <MListItemIcon>
+                     <MIcon Class="list-item-icon">
+                         mdi-card-account-details-outline
+                     </MIcon>
+                 </MListItemIcon>
 
-                <MListItemContent>
-                    @(I18n.T("User.UserName.Name"))
-                </MListItemContent>
+                 <MListItemContent>
+                     @(I18n.T("User.UserName.Name"))
+                 </MListItemContent>
 
-                <MListItemContent>
-                    <MListItemSubtitle Class="text-right">
-                        @UserName
-                    </MListItemSubtitle>
-                </MListItemContent>
+                 <MListItemContent>
+                     <MListItemSubtitle Class="text-right">
+                         @UserName
+                     </MListItemSubtitle>
+                 </MListItemContent>
 
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
+                 <MListItemAction>
+                     <MIcon>mdi-chevron-right</MIcon>
+                 </MListItemAction>
+             </MListItem>
 
-            <MDivider Class="mx-3"></MDivider>
+             <MDivider Class="mx-3"></MDivider>
 
-            <MListItem OnClick="()=>ShowSign = true">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-file-sign
-                    </MIcon>
-                </MListItemIcon>
+             <MListItem OnClick="()=>ShowEditSign = true">
+                 <MListItemIcon>
+                     <MIcon Class="list-item-icon">
+                         mdi-file-sign
+                     </MIcon>
+                 </MListItemIcon>
 
-                <MListItemContent>
-                    <MListItemTitle>
-                        @(I18n.T("User.Sign.Name"))
-                    </MListItemTitle>
+                 <MListItemContent>
+                     <MListItemTitle>
+                         @(I18n.T("User.Sign.Name"))
+                     </MListItemTitle>
 
-                </MListItemContent>
+                 </MListItemContent>
 
-                <MListItemContent>
-                    <MListItemSubtitle Class="text-right">
-                        @Sign
-                    </MListItemSubtitle>
-                </MListItemContent>
+                 <MListItemContent>
+                     <MListItemSubtitle Class="text-right">
+                         @Sign
+                     </MListItemSubtitle>
+                 </MListItemContent>
 
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
-</ScrollContainer>
+                 <MListItemAction>
+                     <MIcon>mdi-chevron-right</MIcon>
+                 </MListItemAction>
+             </MListItem>
+         </MList>
+     </MCard>
+ </ScrollContainer>
 
-<MMDialog @bind-MyValue="ShowAvatar"
-          MaxWidth="420">
-    <MCard Rounded="@("lg")">
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("User.EditAvatar"))
-            <MSpacer></MSpacer>
-            <MButton Icon
-                     OnClick="()=>ShowAvatar=false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText>
-            <MListItem Class="px-0"
-                       OnClick="PickPhoto">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-image-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    <MListItemTitle>
-                        @(I18n.T("User.Photos"))
-                    </MListItemTitle>
-                </MListItemContent>
-            </MListItem>
-            <MListItem Class="px-0"
-                       OnClick="OnCapture">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-camera-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    <MListItemTitle>
-                        @(I18n.T("User.Capture"))
-                    </MListItemTitle>
-                </MListItemContent>
-            </MListItem>
-        </MCardText>
-    </MCard>
-</MMDialog>
+ <MultiDialog @bind-Value="ShowEditAvatar"
+              Title="@(I18n.T("User.EditAvatar"))"
+              ListItemModels="EditAvatarMethods">
+ </MultiDialog>
 
-<InputDialog @bind-Value="ShowUserName"
-@bind-Text="UserName"
-             Title="@(I18n.T("User.EditUserName"))"
-             Placeholder="@(I18n.T("User.UserNamePlace"))"
-             OnOK="SaveUserName">
-</InputDialog>
+ <InputDialog @bind-Value="ShowEditUserName"
+ @bind-Text="UserName"
+              Title="@(I18n.T("User.EditUserName"))"
+              Placeholder="@(I18n.T("User.UserNamePlace"))"
+              OnOK="SaveUserName">
+ </InputDialog>
 
-<InputDialog @bind-Value="ShowSign"
-@bind-Text="Sign"
-             Title="@(I18n.T("User.EditSign"))"
-             MaxLength="100"
-             Placeholder="@(I18n.T("User.SignPlace"))"
-             OnOK="SaveSign">
-</InputDialog>
+ <InputDialog @bind-Value="ShowEditSign"
+ @bind-Text="Sign"
+              Title="@(I18n.T("User.EditSign"))"
+              MaxLength="100"
+              Placeholder="@(I18n.T("User.SignPlace"))"
+              OnOK="SaveSign">
+ </InputDialog>
