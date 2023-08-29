@@ -1,4 +1,4 @@
-export function ElementVisible(dotNetCallbackRef, callbackMethod, parentSelector, childSelector) {
+function ElementVisible(dotNetCallbackRef, callbackMethod, parentSelector, childSelector) {
     var parent = document.querySelector(parentSelector);
     var child = document.querySelector(childSelector);
     let timeout;
@@ -12,4 +12,12 @@ export function ElementVisible(dotNetCallbackRef, callbackMethod, parentSelector
         }, 200);// 设置延迟时间，单位为毫秒
         
     });
+}
+
+function GetScrollTop(element) {
+    return element.scrollTop;
+}
+
+function SetScrollTop(element,top) {
+    element.scrollTop = top;
 }

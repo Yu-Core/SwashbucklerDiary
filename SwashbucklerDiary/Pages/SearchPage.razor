@@ -21,10 +21,9 @@
          </MIcon>
      </MButton>
  </MAppBar>
- <ScrollContainer Id="search-diaries-scroll">
+ <ScrollContainer>
      <DiaryCardList @bind-Tags="Tags"
                     Value="Diaries"
-                    ScrollParent="@("#search-diaries-scroll")"
                     NotFoundText="@(I18n.T("Search.Not Found"))">
      </DiaryCardList>
  </ScrollContainer>

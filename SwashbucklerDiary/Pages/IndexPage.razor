@@ -26,7 +26,7 @@
  </MAppBar>
 
  <SwiperTabItems @bind-Value="tab">
-     <SwiperTabItem Id="all-diaries-scroll">
+     <SwiperTabItem>
          <div class="mb-5 pl-2">
              @if (ShowDate)
             {
@@ -45,14 +45,11 @@
         </div>
 
         <DiaryCardList @bind-Tags="Tags"
-                       Value="Diaries"
-                       ScrollParent="@("#all-diaries-scroll")">
+                       Value="Diaries">
         </DiaryCardList>
     </SwiperTabItem>
-    <SwiperTabItem Id="all-tags-scroll">
-        <TagCardList @bind-Value="Tags"
-                     ScrollParent="@("#all-tags-scroll")">
-        </TagCardList>
+    <SwiperTabItem>
+        <TagCardList @bind-Value="Tags"></TagCardList>
     </SwiperTabItem>
 </SwiperTabItems>
 

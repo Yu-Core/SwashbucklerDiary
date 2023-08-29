@@ -10,7 +10,6 @@ namespace SwashbucklerDiary.Pages
         private bool ShowFloatCalendar;
         private DateOnly _pickedDate = DateOnly.FromDateTime(DateTime.Now);
         private DateOnly[] EventsDates = Array.Empty<DateOnly>();
-        private IJSObjectReference? module;
 
         [JSInvokable]
         public async Task Show(bool value)
@@ -29,9 +28,9 @@ namespace SwashbucklerDiary.Pages
         {
             if(firstRender)
             {
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/scroll.js");
+                //module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/scroll.js");
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
-                await module.InvokeVoidAsync("ElementVisible", new object[4] { dotNetCallbackRef ,"Show", ".my-scroll-container", ".normal-calendar" });
+                await JS.InvokeVoidAsync("ElementVisible", new object[4] { dotNetCallbackRef ,"Show", ".my-scroll-container", ".normal-calendar" });
             }
             
             await base.OnAfterRenderAsync(firstRender);

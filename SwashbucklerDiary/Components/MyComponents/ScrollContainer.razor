@@ -8,6 +8,8 @@
     <MContainer Class="@("my-container "+ ContentClass)"
                 Style="@ContentStyle"
                 Fluid="true">
-        @ChildContent
+        <CascadingValue Value="Ref" Name="ScrollElement">
+            @ChildContent
+        </CascadingValue>
     </MContainer>
 </div>
