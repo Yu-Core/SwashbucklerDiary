@@ -220,6 +220,7 @@ namespace SwashbucklerDiary.Pages
             {
                 // vditor 每次输入会触发渲染，所以有1秒左右的防抖
                 // https://github.com/Vanessa219/vditor/issues/1307
+                // https://github.com/Vanessa219/vditor/issues/574
                 await Task.Delay(800);
             }
 

@@ -1,5 +1,5 @@
 /*!
- * Vditor v3.9.3 - A markdown editor written in TypeScript.
+ * Vditor v3.9.5 - A markdown editor written in TypeScript.
  *
  * MIT License
  *
@@ -727,7 +727,7 @@
   bottom: 0;
   display: flex;
   flex-direction: column;
-  z-index: 3;
+  z-index: 100;
 }
 .vditor-img__bar {
   border-bottom: 1px solid var(--border-color);
