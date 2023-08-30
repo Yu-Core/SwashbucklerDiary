@@ -168,4 +168,5 @@
 
 .m-dialog .m-date-picker-table {
     height: auto !important;
+    padding-bottom: 12px;
 }

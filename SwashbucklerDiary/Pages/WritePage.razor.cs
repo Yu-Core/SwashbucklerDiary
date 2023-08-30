@@ -23,6 +23,7 @@ namespace SwashbucklerDiary.Pages
         private bool EnableMarkdown = true;
         private bool EnableEditCreateTime;
         private bool CreateMode;
+        private bool Overlay;
         private MyMarkdown? MyMarkdown;
         private MMTextarea? MMTextarea;
         private List<DynamicListItem> ListItemModels = new();
@@ -221,7 +222,13 @@ namespace SwashbucklerDiary.Pages
                 // vditor 每次输入会触发渲染，所以有1秒左右的防抖
                 // https://github.com/Vanessa219/vditor/issues/1307
                 // https://github.com/Vanessa219/vditor/issues/574
+                Overlay = true;
+                await InvokeAsync(StateHasChanged);
+
                 await Task.Delay(800);
+
+                Overlay = false;
+                await InvokeAsync(StateHasChanged);
             }
 
             if (string.IsNullOrWhiteSpace(Diary.Content))

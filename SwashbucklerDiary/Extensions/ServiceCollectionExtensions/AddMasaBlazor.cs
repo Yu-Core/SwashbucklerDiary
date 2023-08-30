@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Extend
                         {
                             { nameof(PEnqueuedSnackbars.Closeable), true },
                             { nameof(PEnqueuedSnackbars.Text), true },
-                            { nameof(PEnqueuedSnackbars.Elevation), new StringNumber(3) },
+                            { nameof(PEnqueuedSnackbars.Elevation), new StringNumber(2) },
                             { nameof(PEnqueuedSnackbars.Position), SnackPosition.BottomCenter }
                         }
                     }
