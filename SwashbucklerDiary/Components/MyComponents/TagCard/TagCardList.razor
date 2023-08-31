@@ -24,7 +24,7 @@
 }
 
 <InputDialog @bind-Value="ShowRename"
-@bind-Text="SelectedTag.Name"
+             Text="@(SelectedTag.Name)"
              Title="@(I18n.T("Tag.Rename"))"
              Placeholder="@(I18n.T("Tag.Placeholder"))"
              OnOK="HandleRename">

@@ -20,8 +20,6 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public string? Text { get; set; }
         [Parameter]
-        public EventCallback<string?> TextChanged { get; set; }
-        [Parameter]
         public EventCallback<string> OnOK { get; set; }
         [Parameter]
         public string? Placeholder { get; set; }
@@ -46,6 +44,7 @@ namespace SwashbucklerDiary.Components
                 {
                     InputText = Text;
                 }
+
                 _value = value;
             }
         }

@@ -53,8 +53,6 @@ namespace SwashbucklerDiary.Components
             await OnSave.InvokeAsync();
         }
 
-        private string? AddTagName { get; set; }
-
         private void SetValue(bool value)
         {
             if(_value  == value)
@@ -104,11 +102,6 @@ namespace SwashbucklerDiary.Components
 
             await AlertService.Success(I18n.T("Share.AddSuccess"));
             Tags.Insert(0, tag);
-            if (TagsChanged.HasDelegate)
-            {
-                await TagsChanged.InvokeAsync(Tags);
-            }
-
             StateHasChanged();
         }
     }

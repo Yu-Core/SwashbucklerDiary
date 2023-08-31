@@ -21,7 +21,7 @@
 }
 
 <InputDialog @bind-Value="ShowRename"
-@bind-Text="@(SelectedLocation.Name)"
+             Text="@(SelectedLocation.Name)"
              Title="@(I18n.T("Location.Rename"))"
              Placeholder="@(I18n.T("Location.Placeholder"))"
              OnOK="HandleRename">

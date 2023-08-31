@@ -98,14 +98,14 @@
  </MultiDialog>
 
  <InputDialog @bind-Value="ShowEditUserName"
- @bind-Text="UserName"
+              Text="@UserName"
               Title="@(I18n.T("User.EditUserName"))"
               Placeholder="@(I18n.T("User.UserNamePlace"))"
               OnOK="SaveUserName">
  </InputDialog>
 
  <InputDialog @bind-Value="ShowEditSign"
- @bind-Text="Sign"
+              Text="@Sign"
               Title="@(I18n.T("User.EditSign"))"
               MaxLength="100"
               Placeholder="@(I18n.T("User.SignPlace"))"
