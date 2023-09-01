@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Components
             }
         }
 
-        private void Delete() => TagCardList.Delete(Value);
+        private Task Delete() => TagCardList.Delete(Value);
         private Task Rename() => TagCardList.Rename(Value);
 
         private void LoadView()

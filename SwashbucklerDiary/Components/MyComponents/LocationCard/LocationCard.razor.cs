@@ -8,12 +8,10 @@ namespace SwashbucklerDiary.Components
         private bool ShowMenu;
         private List<DynamicListItem> ListItemModels = new();
 
+        [CascadingParameter]
+        public LocationCardList LocationCardList { get; set; } = default!;
         [Parameter]
-        public LocationModel? Value { get; set; }
-        [Parameter]
-        public EventCallback<LocationModel> OnDelete { get; set; }
-        [Parameter]
-        public EventCallback<LocationModel> OnRename { get; set; }
+        public LocationModel Value { get; set; } = default!;
 
         protected override void OnInitialized()
         {
@@ -21,12 +19,15 @@ namespace SwashbucklerDiary.Components
             base.OnInitialized();
         }
 
+        private Task Delete() => LocationCardList.Delete(Value);
+        private Task Rename() => LocationCardList.Rename(Value);
+
         void LoadView()
         {
             ListItemModels = new()
             {
-                new(this, "Share.Rename","mdi-rename-outline",()=>OnRename.InvokeAsync(Value)),
-                new(this, "Share.Delete","mdi-delete-outline",()=>OnDelete.InvokeAsync(Value)),
+                new(this, "Share.Rename","mdi-rename-outline",Rename),
+                new(this, "Share.Delete","mdi-delete-outline",Delete),
             };
         }
     }

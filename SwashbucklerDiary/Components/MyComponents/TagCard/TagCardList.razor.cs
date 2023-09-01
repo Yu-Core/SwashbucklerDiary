@@ -32,11 +32,11 @@ namespace SwashbucklerDiary.Components
             await InvokeAsync(StateHasChanged);
         }
 
-        public void Delete(TagModel tag)
+        public async Task Delete(TagModel tag)
         {
             SelectedTag = tag;
             ShowDelete = true;
-            InvokeAsync(StateHasChanged);
+            await InvokeAsync(StateHasChanged);
         }
 
         public int GetDiaryCount(TagModel tag) => Diaries.Count(d => d.Tags != null && d.Tags.Any(t => t.Id == tag.Id));

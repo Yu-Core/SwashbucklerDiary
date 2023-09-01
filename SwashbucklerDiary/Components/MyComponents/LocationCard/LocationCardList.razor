@@ -2,13 +2,14 @@
 @inherits MyComponentBase
 
 <div class="my-card-list">
-    @foreach (var item in Value)
-    {
-        <LocationCard Value="item"
-                      OnDelete="OpenDeleteDialog"
-                      OnRename="OpenRenameDialog">
-        </LocationCard>
-    }
+    <CascadingValue Value="this">
+        @foreach (var item in Value)
+        {
+            <LocationCard @key="item.Id"
+                          Value="item">
+            </LocationCard>
+        }
+    </CascadingValue>
 </div>
 
 @if (!Value.Any())
@@ -24,11 +25,11 @@
              Text="@(SelectedLocation.Name)"
              Title="@(I18n.T("Location.Rename"))"
              Placeholder="@(I18n.T("Location.Placeholder"))"
-             OnOK="HandleRename">
+             OnOK="ConfirmRename">
 </InputDialog>
 
 <DeleteDialog @bind-Value="ShowDelete"
               Title="@(I18n.T("Location.Delete.Title"))"
               Content="@(I18n.T("Location.Delete.Content"))"
-              OnOK="()=>HandleDelete(SelectedLocation)">
+              OnOK="ConfirmDelete">
 </DeleteDialog>

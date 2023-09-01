@@ -16,7 +16,7 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(Value?.Name)
+                    @(Value.Name)
                 </MListItemTitle>
             </MListItemContent>
             <MListItemAction>
@@ -24,7 +24,7 @@
                     <MultiMenu @bind-Value="ShowMenu"
                                ListItemModels="ListItemModels">
                         <ButtonContent>
-                            <MIcon>mdi-pencil</MIcon>
+                            <MIcon>mdi-pencil-outline</MIcon>
                         </ButtonContent>
                     </MultiMenu>
                 </div>
