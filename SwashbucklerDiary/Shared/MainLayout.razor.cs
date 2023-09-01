@@ -45,10 +45,12 @@ namespace SwashbucklerDiary.Shared
 
         private async Task LoadSettings()
         {
-            int themeState = await SettingsService.Get<int>(SettingType.ThemeState);
+            var themeState = await SettingsService.Get<int>(SettingType.ThemeState);
             ThemeService.SetThemeState((ThemeState)themeState);
             var language = await SettingsService.Get<string>(SettingType.Language);
             I18nService.SetCulture(language);
+            var timeout = await SettingsService.Get<int>(SettingType.AlertTimeout);
+            AlertService.SetTimeout(timeout);
         }
 
         private void LoadView()

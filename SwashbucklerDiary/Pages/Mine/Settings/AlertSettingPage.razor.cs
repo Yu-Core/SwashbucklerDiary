@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Pages
         private int _timeout;
         private bool ShowTimeout;
         private bool AchievementsAlert;
-        private Dictionary<string, string> Timeouts = new();
+        private readonly Dictionary<string, string> Timeouts = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -32,7 +32,13 @@ namespace SwashbucklerDiary.Pages
 
         private async void SetTimeout(StringNumber value)
         {
+            if(_timeout == value)
+            {
+                return;
+            }
+
             _timeout = value.ToInt32() * 1000;
+            AlertService.SetTimeout(_timeout);
             await SettingsService.Save(SettingType.AlertTimeout, _timeout);
         }
 
