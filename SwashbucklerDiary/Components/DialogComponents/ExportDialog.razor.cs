@@ -2,7 +2,6 @@
 using Serilog;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Components
 {
@@ -30,21 +29,26 @@ namespace SwashbucklerDiary.Components
                 new(this,"TXT","mdi-format-text",CreateTxtFile),
                 new(this,"MD","mdi-language-markdown-outline",CreateMDFile),
                 new(this,"JSON","mdi-code-json",CreateJsonFile),
-                //new(this,"PDF","mdi-file-pdf-box",ToDo),
             };
         }
 
-        private async Task CreateTxtFile()
+        private Task CreateTxtFile() => CreateFile(AppDataService.ExportTxtZipFileAndSaveAsync);
+
+        private Task CreateJsonFile() => CreateFile(AppDataService.ExportJsonZipFileAndSaveAsync);
+
+        private Task CreateMDFile() => CreateFile(AppDataService.ExportMdZipFileAndSaveAsync);
+
+        private async Task CreateFile(Func<List<DiaryModel>,Task<bool>> func)
         {
             await InternalValueChanged(false);
             await AlertService.StartLoading();
             try
             {
-                bool flag = await AppDataService.ExportTxtZipFileAndSaveAsync(Diaries);
+                bool flag = await func(Diaries);
                 if (flag)
                 {
-                    //此处未来可能引入成就系统
                     await AlertService.Success(I18n.T("Export.Export.Success"));
+                    await HandleAchievements(AchievementType.Export);
                 }
             }
             catch (Exception e)
@@ -57,59 +61,5 @@ namespace SwashbucklerDiary.Components
                 await AlertService.StopLoading();
             }
         }
-
-
-        private async Task CreateJsonFile()
-        {
-            await InternalValueChanged(false);
-            await AlertService.StartLoading();
-            try
-            {
-                bool flag = await AppDataService.ExportJsonZipFileAndSaveAsync(Diaries);
-                if (flag)
-                {
-                    await AlertService.Success(I18n.T("Export.Export.Success"));
-                }
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{e.Message}\n{e.StackTrace}");
-                await AlertService.Error(I18n.T("Export.Export.Fail"));
-            }
-            finally
-            {
-                await AlertService.StopLoading();
-            }
-        }
-
-        private static Task CreatePDFFile()
-        {
-            return Task.CompletedTask;
-        }
-
-        private async Task CreateMDFile()
-        {
-            await InternalValueChanged(false);
-            await AlertService.StartLoading();
-            try
-            {
-                bool flag = await AppDataService.ExportMdZipFileAndSaveAsync(Diaries);
-                if (flag)
-                {
-                    await AlertService.Success(I18n.T("Export.Export.Success"));
-                }
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{e.Message}\n{e.StackTrace}");
-                await AlertService.Error(I18n.T("Export.Export.Fail"));
-            }
-            finally
-            {
-                await AlertService.StopLoading();
-            }
-        }
-
-
     }
 }

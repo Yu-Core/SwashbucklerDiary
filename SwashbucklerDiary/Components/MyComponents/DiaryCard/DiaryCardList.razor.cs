@@ -25,8 +25,6 @@ namespace SwashbucklerDiary.Components
         [Inject]
         private IPlatformService PlatformService { get; set; } = default!;
         [Inject]
-        protected ISettingsService SettingsService { get; set; } = default!;
-        [Inject]
         private ITagService TagService { get; set; } = default!;
 
         [CascadingParameter(Name = "ScrollElement")]
