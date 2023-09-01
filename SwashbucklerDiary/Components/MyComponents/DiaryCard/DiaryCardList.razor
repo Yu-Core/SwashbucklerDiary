@@ -1,15 +1,52 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits MyComponentBase
 
-@if (Value.Any())
-{
-    <DiaryCardListContent Value="Value"
-                          Class="@Class"
-                          CardClass="@CardClass"
-                          Tags="Tags"
-                          TagsChanged="TagsChanged"
-                          OnUpdate="OnUpdate">
-    </DiaryCardListContent>
-}
+<div class="my-card-list @(Class)">
+    <CascadingValue Value="this">
+        @foreach (var item in InternalValue)
+        {
+            <DiaryCard @key="item.Id"
+                       Value="item"
+                       Class="@CardClass">
+            </DiaryCard>
+        }
+    </CascadingValue>
+
+    @if (InternalValue.Any())
+    {
+        <MInfiniteScroll Style="width:100%;"
+                         OnLoad="@OnLoad"
+                         Parent="ScrollElement"
+                         EmptyText="@(string.Empty)"
+                         LoadingText="@(string.Empty)">
+            <LoadMoreContent Context="load">
+                <div class="@(ShowLoadMore?"":"d-none")">
+                    <MButton Icon="true"
+                             OnClick="@load">
+                        <MIcon>mdi-reload</MIcon>
+                    </MButton>
+                </div>
+            </LoadMoreContent>
+        </MInfiniteScroll>
+    }
+
+</div>
 
 <NotFound Show="!Value.Any()" Text="@(NotFoundText ?? I18n.T("Diary.NoDiary"))"></NotFound>
+
+<SelectTags @bind-Value="ShowSelectTag"
+@bind-Values="SelectedTags"
+            Tags="Tags"
+            TagsChanged="TagsChanged"
+            OnSave="SaveSelectTags">
+</SelectTags>
+
+<DeleteDialog @bind-Value="ShowDeleteDiary"
+              Title="@(I18n.T("Diary.Delete.Title"))"
+              Content="@(I18n.T("Diary.Delete.Content"))"
+              OnOK="ConfirmDelete">
+</DeleteDialog>
+
+<ExportDialog @bind-Value="ShowExport"
+              Diaries="ExportDiaries">
+</ExportDialog>

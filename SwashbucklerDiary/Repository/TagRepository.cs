@@ -14,10 +14,6 @@ namespace SwashbucklerDiary.Repository
         public override Task<List<TagModel>> GetListAsync()
         {
             return base.Context.Queryable<TagModel>()
-                .Includes(it => it.Diaries!
-                                  .Where(d => !d.Private)
-                                  .Select(d => new DiaryModel() { Id = d.Id })
-                                  .ToList())
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
@@ -25,10 +21,6 @@ namespace SwashbucklerDiary.Repository
         public override Task<List<TagModel>> GetListAsync(Expression<Func<TagModel, bool>> whereExpression)
         {
             return base.Context.Queryable<TagModel>()
-                .Includes(it => it.Diaries!
-                                  .Where(d => !d.Private)
-                                  .Select(d => new DiaryModel() { Id = d.Id })
-                                  .ToList())
                 .Where(whereExpression)
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();

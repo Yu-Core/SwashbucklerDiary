@@ -5,7 +5,7 @@
     <MCard @attributes="context.Attrs"
     @oncontextmenu="()=>ShowMenu=true"
            Class="@($"my-diary-card {(context.Hover?"elevation-sm-2":"")} {Class}")"
-           OnClick="()=>OnClick.InvokeAsync(Value)"
+           OnClick="ToRead"
            Elevation="0"
            Ripple="false"
            Rounded="@("lg")"
@@ -16,10 +16,10 @@
                     <span class="text--secondary mr-3" style="font-size:1.1rem;">
                         @(Time.ToString(DateFormat))
                     </span>
-                    @if (Icon)
+                    @if (ShowIcon)
                     {
-                        <DiaryCardIcon Value="@GetWeatherIcon(Value?.Weather)" />
-                        <DiaryCardIcon Value="@GetMoodIcon(Value?.Mood)" />
+                        <DiaryCardIcon Value="@GetWeatherIcon()" />
+                        <DiaryCardIcon Value="@GetMoodIcon()" />
                     }
                 </div>
             </MListItemContent>

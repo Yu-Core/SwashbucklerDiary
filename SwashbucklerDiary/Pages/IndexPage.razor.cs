@@ -92,7 +92,7 @@ namespace SwashbucklerDiary.Pages
 
             await AlertService.Success(I18n.T("Share.AddSuccess"));
             Tags.Insert(0, tag);
-            this.StateHasChanged();
+            StateHasChanged();
         }
 
         private string GetWelcomeText()

@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Components
     {
         private bool _value;
         private bool ShowAddTag;
-        private List<StringNumber> SelectedTagId = new();
+        private List<StringNumber> SelectedTagIds = new();
 
         [Inject]
         public ITagService TagService { get; set; } = default!;
@@ -22,7 +22,7 @@ namespace SwashbucklerDiary.Components
             set => SetValue(value);
         }
         [Parameter]
-        public List<TagModel> Values { get; set; } = new List<TagModel>();
+        public List<TagModel> Values { get; set; } = default!;
         [Parameter]
         public EventCallback<List<TagModel>> ValuesChanged { get; set; }
         [Parameter]
@@ -35,7 +35,7 @@ namespace SwashbucklerDiary.Components
         protected virtual async Task HandleOnSave(MouseEventArgs _)
         {
             var TagModels = new List<TagModel>();
-            foreach (var item in SelectedTagId)
+            foreach (var item in SelectedTagIds)
             {
                 var TagModel = Tags.FirstOrDefault(it=>it.Id.ToString() == item.ToString());
                 if (TagModel != null)
@@ -62,15 +62,16 @@ namespace SwashbucklerDiary.Components
 
             if (value)
             {
-                SelectedTagId = new();
+                SelectedTagIds = new();
                 foreach (var item in Values)
                 {
                     if (Tags.Any(it => it.Id == item.Id))
                     {
-                        SelectedTagId.Add(item.Id.ToString());
+                        SelectedTagIds.Add(item.Id.ToString());
                     }
                 }
             }
+
             _value = value;
             StateHasChanged();
         }

@@ -2,15 +2,14 @@
 @inherits MyComponentBase
 
 <div class="my-card-list">
-    @foreach (var item in Value)
-    {
-        <TagCard @key="item.Id"
-                 Value="item"
-                 OnDelete="OpenDeleteDialog"
-                 OnRename="OpenRenameDialog"
-                 OnClick="HandleClick">
-        </TagCard>
-    }
+    <CascadingValue Value="this">
+        @foreach (var item in Value)
+        {
+            <TagCard @key="item.Id"
+                     Value="item">
+            </TagCard>
+        }
+    </CascadingValue>
 
 </div>
 
@@ -27,11 +26,11 @@
              Text="@(SelectedTag.Name)"
              Title="@(I18n.T("Tag.Rename"))"
              Placeholder="@(I18n.T("Tag.Placeholder"))"
-             OnOK="HandleRename">
+             OnOK="ConfirmRename">
 </InputDialog>
 
 <DeleteDialog @bind-Value="ShowDelete"
               Title="@(I18n.T("Tag.Delete.Title"))"
               Content="@(I18n.T("Tag.Delete.Content"))"
-              OnOK="()=>HandleDelete(SelectedTag)">
+              OnOK="ConfirmDelete">
 </DeleteDialog>

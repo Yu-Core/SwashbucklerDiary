@@ -14,43 +14,29 @@ namespace SwashbucklerDiary.Components
         [Inject]
         private IconService IconService { get; set; } = default!;
 
+        [CascadingParameter]
+        public DiaryCardList DiaryCardList { get; set; } = default!;
         [Parameter]
-        public DiaryModel? Value { get; set; }
+        public DiaryModel Value { get; set; } = default!;
         [Parameter]
         public string? Class { get; set; }
-        [Parameter]
-        public EventCallback<DiaryModel> OnTopping { get; set; }
-        [Parameter]
-        public EventCallback<DiaryModel> OnDelete { get; set; }
-        [Parameter]
-        public EventCallback<DiaryModel> OnCopy { get; set; }
-        [Parameter]
-        public EventCallback<DiaryModel> OnTag { get; set; }
-        [Parameter]
-        public EventCallback<DiaryModel> OnExport { get; set; }
-        [Parameter]
-        public bool Privacy { get; set; }
-        [Parameter]
-        public EventCallback<DiaryModel> OnPrivacy { get; set; }
-        [Parameter]
-        public EventCallback<DiaryModel> OnClick { get; set; }
-        [Parameter]
-        public bool Icon { get; set; }
-        [Parameter]
-        public string? DateFormat { get; set; }
 
         protected override void OnInitialized()
         {
-            SetTitleAndText();
             LoadView();
+            SetContent();
             base.OnInitialized();
         }
 
         private bool HasTitle => !string.IsNullOrWhiteSpace(Value?.Title);
         private bool HasContent => !string.IsNullOrWhiteSpace(Value?.Content);
-        private DateTime Time => Value!.CreateTime;
-        private bool IsTop => Value!.Top;
-        private bool IsPrivate => Value!.Private;
+        private DateTime Time => Value.CreateTime;
+        private bool IsTop => Value.Top;
+        private bool IsPrivate => Value.Private;
+        private bool ShowPrivacy => DiaryCardList.ShowPrivacy;
+        private bool ShowIcon => DiaryCardList.ShowIcon;
+        private string? DateFormat => DiaryCardList.DateFormat;
+
         private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
         private string PrivateText() => IsPrivate ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
         private string PrivateIcon() => IsPrivate ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
@@ -59,38 +45,26 @@ namespace SwashbucklerDiary.Components
         {
             ListItemModels = new()
             {
-                new(this,"Diary.Tag","mdi-label-outline",()=>OnTag.InvokeAsync(Value)),
-                new(this, "Share.Copy","mdi-content-copy",() => OnCopy.InvokeAsync(Value)),
-                new(this, "Share.Delete","mdi-delete-outline",() => OnDelete.InvokeAsync(Value)),
-                new(this, TopText,"mdi-format-vertical-align-top",() => OnTopping.InvokeAsync(Value)),
-                new(this, "Diary.Export","mdi-export",() => OnExport.InvokeAsync(Value))
+                new(this,"Diary.Tag","mdi-label-outline",ChangeTag),
+                new(this, "Share.Copy","mdi-content-copy",Copy),
+                new(this, "Share.Delete","mdi-delete-outline",Delete),
+                new(this, TopText,"mdi-format-vertical-align-top",Topping),
+                new(this, "Diary.Export","mdi-export",Export)
             };
 
-            if (Privacy)
+            if (ShowPrivacy)
             {
-                ListItemModels.Add(new(this, PrivateText, PrivateIcon, () => OnPrivacy.InvokeAsync(Value)));
+                ListItemModels.Add(new(this, PrivateText, PrivateIcon, MovePrivacy));
             }
         }
 
-        private string? GetWeatherIcon(string? key)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                return null;
-            }
-            return IconService.GetWeatherIcon(key);
-        }
+        private string? GetWeatherIcon() =>
+            string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetWeatherIcon(Value.Weather);
 
-        private string? GetMoodIcon(string? key)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                return null;
-            }
-            return IconService.GetMoodIcon(key);
-        }
+        private string? GetMoodIcon() =>
+            string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetMoodIcon(Value.Weather);
 
-        private void SetTitleAndText()
+        private void SetContent()
         {
             Title = GetTitle();
             Text = GetText();
@@ -100,16 +74,16 @@ namespace SwashbucklerDiary.Components
         {
             if (HasTitle)
             {
-                return Value!.Title!;
+                return Value.Title!;
             }
 
             if (HasContent)
             {
                 char[] separators = { ',', '，', '.', '。', '?', '？', '!', '！', ';', '；', '\n' }; // 定义分隔符
-                int index = Value!.Content!.IndexOfAny(separators);
+                int index = Value.Content!.IndexOfAny(separators);
                 if (index > -1)
                 {
-                    return Value!.Content!.Substring(0, index + 1);
+                    return Value.Content!.Substring(0, index + 1);
                 }
             }
 
@@ -118,7 +92,7 @@ namespace SwashbucklerDiary.Components
 
         private string? GetText()
         {
-            string text = SubText(Value!.Content, 0, 1000);
+            string text = SubText(Value.Content, 0, 1000);
             if (!HasTitle && Title is not null && HasContent)
             {
                 var subText = SubText(text, Title.Length);
@@ -163,5 +137,22 @@ namespace SwashbucklerDiary.Components
 
             return text.Substring(startIndex, endIndex - startIndex);
         }
+
+        private void ToRead()
+        {
+            NavigateService.NavigateTo($"/read/{Value.Id}");
+        }
+
+        private Task Topping() => DiaryCardList.Topping(Value);
+
+        private void Delete() => DiaryCardList.Delete(Value);
+
+        private Task Copy() => DiaryCardList.Copy(Value);
+
+        private Task ChangeTag() => DiaryCardList.ChangeTag(Value);
+
+        private void Export() => DiaryCardList.Export(Value);
+
+        private Task MovePrivacy() => DiaryCardList.MovePrivacy(Value);
     }
 }

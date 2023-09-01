@@ -17,27 +17,33 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public List<TagModel> Value
         {
-            get => _value.OrderByDescending(it => it.Diaries is null ? 0 : it.Diaries.Count).ToList();
+            get => _value.OrderByDescending(GetDiaryCount).ToList();
             set => _value = value;
         }
         [Parameter]
         public EventCallback<List<TagModel>> ValueChanged { get; set; }
+        [Parameter]
+        public List<DiaryModel> Diaries { get; set; } = default!;
 
-        private void OpenRenameDialog(TagModel tag)
+        public async Task Rename(TagModel tag)
         {
             SelectedTag = tag;
-            StateHasChanged();
             ShowRename = true;
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void OpenDeleteDialog(TagModel tag)
+        public void Delete(TagModel tag)
         {
             SelectedTag = tag;
             ShowDelete = true;
+            InvokeAsync(StateHasChanged);
         }
 
-        private async Task HandleDelete(TagModel tag)
+        public int GetDiaryCount(TagModel tag) => Diaries.Count(d => d.Tags != null && d.Tags.Any(t => t.Id == tag.Id));
+
+        private async Task ConfirmDelete()
         {
+            var tag = SelectedTag;
             ShowDelete = false;
             bool flag = await TagService.DeleteAsync(tag);
             if (flag)
@@ -58,7 +64,7 @@ namespace SwashbucklerDiary.Components
             }
         }
 
-        private async Task HandleRename(string tagName)
+        private async Task ConfirmRename(string tagName)
         {
             ShowRename = false;
             if (string.IsNullOrWhiteSpace(tagName))
@@ -83,11 +89,6 @@ namespace SwashbucklerDiary.Components
             {
                 await AlertService.Error(I18n.T("Share.EditFail"));
             }
-        }
-
-        private void HandleClick(TagModel tag)
-        {
-            NavigateService.NavigateTo($"/tag/{tag.Id}");
         }
     }
 }
