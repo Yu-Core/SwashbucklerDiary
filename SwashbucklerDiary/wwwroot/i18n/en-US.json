@@ -418,7 +418,8 @@
         "Image": {
           "Name": "Image",
           "Path": "Setting / Diary / Image Manage",
-          "DeleteUnusedImage": "Are you sure to delete unused images?"
+          "DeleteUnusedImage": "Are you sure to delete unused images?",
+          "NoImage": "No image"
         }
       },
       "Alert": {

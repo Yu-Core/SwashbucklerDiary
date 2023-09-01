@@ -1,15 +1,20 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits MyComponentBase
 
-<CascadingValue Value="@this">
-    <div class="my-image-card-list">
+
+<div class="my-image-card-list">
+    <CascadingValue Value="@this">
         @foreach (var item in InternalValue)
         {
             <ImageResourceCard Value="item"></ImageResourceCard>
         }
+    </CascadingValue>
+
+    @if (InternalValue.Any())
+    {
         <MInfiniteScroll Style="width:100%;"
                          OnLoad="@OnLoad"
-                         Parent="ScrollParent"
+                         Parent="ScrollElement"
                          EmptyText="@(string.Empty)"
                          LoadingText="@(string.Empty)">
             <LoadMoreContent Context="load">
@@ -21,8 +26,10 @@
                 </div>
             </LoadMoreContent>
         </MInfiniteScroll>
-    </div>
-</CascadingValue>
+    }
+</div>
+
+<NotFound Show="!Value.Any()" Text="@(I18n.T("Setting.Display.Diary.Image.NoImage"))"></NotFound>
 
 <PreviewImageDialog @bind-Value="ShowPreview"
                     Src="@PreviewImageSrc">

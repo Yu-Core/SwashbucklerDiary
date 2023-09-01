@@ -17,9 +17,6 @@ namespace SwashbucklerDiary.Components
 
         private string Src => StaticCustomScheme.CustomSchemeRender(Value.ResourceUri!);
 
-        private async Task PreviewImage()
-        {
-            await ImageResourceCardList.PreviewImage(Src);
-        }
+        private Task PreviewImage() => ImageResourceCardList.PreviewImage(Src);
     }
 }

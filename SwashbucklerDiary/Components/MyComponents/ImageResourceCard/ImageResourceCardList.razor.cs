@@ -1,6 +1,5 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
-using OneOf;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
@@ -12,22 +11,24 @@ namespace SwashbucklerDiary.Components
         private List<ResourceModel> _value = default!;
         private List<ResourceModel> InternalValue = new();
         private int loadCount = 20;
+        private bool FirstLoad = true;
 
+        [CascadingParameter(Name = "ScrollElement")]
+        public ElementReference ScrollElement { get; set; }
         [Parameter]
         public List<ResourceModel> Value
         {
             get => _value;
             set => SetValue(value);
         }
-        [Parameter]
-        public OneOf<ElementReference, string>? ScrollParent { get; set; }
+
+        private bool ShowLoadMore => InternalValue.Any() && InternalValue.Count < _value.Count;
 
         private void SetValue(List<ResourceModel> value)
         {
-            bool first = _value is null;
-            _value = value;
-            if (!first)
+            if(_value != value)
             {
+                _value = value;
                 InternalValue = new();
                 InternalValue = MockRequest();
             }
@@ -42,11 +43,15 @@ namespace SwashbucklerDiary.Components
 
         private void OnLoad(InfiniteScrollLoadEventArgs args)
         {
+            if (FirstLoad)
+            {
+                FirstLoad = false;
+                return;
+            }
+
             var append = MockRequest();
 
             InternalValue.AddRange(append);
-
-            args.Status = InternalValue.Count == Value.Count ? InfiniteScrollLoadStatus.Empty : InfiniteScrollLoadStatus.Ok;
         }
 
         private List<ResourceModel> MockRequest()

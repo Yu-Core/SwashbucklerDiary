@@ -23,10 +23,8 @@
     </MButton>
 </MAppBar>
 
-<ScrollContainer Id="all-images-scroll">
-    <ImageResourceCardList Value="ImageResources"
-                           ScrollParent="@("#all-images-scroll")">
-    </ImageResourceCardList>
+<ScrollContainer>
+    <ImageResourceCardList Value="ImageResources"></ImageResourceCardList>
 </ScrollContainer>
 
 <DeleteDialog @bind-Value="ShowConfimDelete"

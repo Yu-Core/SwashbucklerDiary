@@ -418,7 +418,8 @@
         "Image": {
           "Name": "图片",
           "Path": "设置 / 日记 / 图片",
-          "DeleteUnusedImage": "确认删除未使用的图片？"
+          "DeleteUnusedImage": "确认删除未使用的图片？",
+          "NoImage": "暂无图片"
         }
       },
       "Alert": {
