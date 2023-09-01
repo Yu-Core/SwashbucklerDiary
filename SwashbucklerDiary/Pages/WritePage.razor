@@ -132,14 +132,14 @@
         {
             <MMTextarea @ref="MMTextarea"
             @bind-Value="Diary.Content"
-                       Class="@($"my-sm-4 user-select rounded-lg flex-grow-1 flex-column {(EnableMarkdown?"d-none":"")}")"
-                       Solo="Mobile"
-                       Flat="Mobile"
-                       Outlined="Desktop"
-                       HideDetails="@("auto")"
-                       NoResize="true"
-                       spellcheck="false"
-                       Placeholder="@(I18n.T("Write.ContentPlace"))">
+                        Class="@($"my-sm-4 user-select rounded-lg flex-grow-1 flex-column {(EnableMarkdown?"d-none":"")}")"
+                        Solo="Mobile"
+                        Flat="Mobile"
+                        Outlined="Desktop"
+                        HideDetails="@("auto")"
+                        NoResize="true"
+                        spellcheck="false"
+                        Placeholder="@(I18n.T("Write.ContentPlace"))">
             </MMTextarea>
         }
     </div>
@@ -205,8 +205,7 @@
 </SelectLocation>
 
 <MultiDatePicker @bind-Value="ShowCreateTime"
-@bind-Date="CreateDate"
-                 Max="DateOnly.FromDateTime(DateTime.Now)">
+@bind-Date="CreateDate">
 </MultiDatePicker>
 
 <MOverlay Value="Overlay" Opacity="0">
