@@ -23,11 +23,13 @@ namespace SwashbucklerDiary.Components
 
         protected override async Task OnInitializedAsync()
         {
-            await base.OnInitializedAsync();
             await LoadSettings();
+            await base.OnInitializedAsync();
         }
 
         private Dictionary<string, string> Languages => I18n.Languages;
+        private bool ShowLanguga => !SelectedLanguage;
+        private bool ShowAgreement => SelectedLanguage;
 
         private async Task LoadSettings()
         {
@@ -48,7 +50,9 @@ namespace SwashbucklerDiary.Components
         private async Task SetLanguage(string value)
         {
             if (SelectedLanguage)
+            {
                 return;
+            }
 
             SelectedLanguage = true;
             I18n.SetCulture(value);
@@ -58,28 +62,31 @@ namespace SwashbucklerDiary.Components
             await StateService.NotifyFirstLauchChanged();
         }
 
-        private async Task OnArgee()
+        private async Task Argee()
         {
             if (AgreedAgreement)
+            {
                 return;
+            }
+
             AgreedAgreement = true;
             Show = false;
             await SettingsService.Save(SettingType.FirstAgree, true);
         }
-        private void OnDisagree()
+
+        private void Disagree()
         {
             PlatformService.QuitApp();
         }
 
         private async Task InsertDefaultDiaries()
         {
-            string[] defaultdiaries = { "FilePath.Functional Description",
-                    "FilePath.Diary Meaning", "FilePath.Markdown Syntax" };
+            string[] defaultdiaries = { "FilePath.Functional Description","FilePath.Diary Meaning", "FilePath.Markdown Syntax" };
             var diaries = await GetDefaultDiaries(defaultdiaries);
             await DiaryService.AddAsync(diaries);
         }
 
-        async Task<List<DiaryModel>> GetDefaultDiaries(string[] keys)
+        private async Task<List<DiaryModel>> GetDefaultDiaries(string[] keys)
         {
             var diaries = new List<DiaryModel>();
             foreach (string key in keys)

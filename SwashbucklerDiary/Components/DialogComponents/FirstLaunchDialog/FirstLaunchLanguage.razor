@@ -1,0 +1,15 @@
+﻿@namespace SwashbucklerDiary.Components
+
+<div class="@(ShowClass)" style="width:100%;max-width:420px;">
+    @foreach (var item in Languages)
+    {
+        <MButton Class="mb-5"
+                 Rounded="true"
+                 Block="true"
+                 Outlined="true"
+                 Large="true"
+                 OnClick="()=>HandleClick(item.Value)">
+            @(item.Key)
+        </MButton>
+    }
+</div>

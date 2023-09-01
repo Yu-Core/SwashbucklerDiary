@@ -295,6 +295,8 @@ a, .btn-link {
     height: 100%;
     z-index: 99;
     display: flex !important;
+    flex-direction: column;
+    flex:1 1 auto;
     justify-content: center !important;
     align-items: center !important;
     background: #f7f8f9 !important;
