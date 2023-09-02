@@ -12,6 +12,7 @@ namespace SwashbucklerDiary.IServices
         Dictionary<string, string> Languages { get; }
         void Initialize(object i18n);
         string T(string? key);
+        string? T(string? key, bool whenNullReturnKey);
         void SetCulture(string culture);
         string ToWeek(DateTime? dateTime = null);
     }

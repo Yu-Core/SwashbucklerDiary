@@ -28,19 +28,21 @@ namespace SwashbucklerDiary.Services
             OnChanged?.Invoke();
         }
 
-        public string T(string? key)
+        public string T(string? key) => T(key, true) ?? key ?? string.Empty;
+
+        public string? T(string? key, bool whenNullReturnKey)
         {
             if (key == null)
             {
                 return string.Empty;
             }
 
-            if(I18n is null)
+            if (I18n is null)
             {
                 return string.Empty;
             }
 
-            return I18n.T(key) ?? key;
+            return I18n.T(key, whenNullReturnKey);
         }
 
         public string ToWeek(DateTime? dateTime = null)

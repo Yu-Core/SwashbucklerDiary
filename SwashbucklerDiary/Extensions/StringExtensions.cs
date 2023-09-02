@@ -6,8 +6,13 @@ namespace SwashbucklerDiary.Extend
 {
     public static class StringExtensions
     {
-        public static string MD5Encrytp32(this string password)
+        public static string MD5Encrytp32(this string? password)
         {
+            if (string.IsNullOrEmpty(password))
+            {
+                return string.Empty;
+            }
+
             byte[] newBuffer = MD5.HashData(Encoding.UTF8.GetBytes(password));
             StringBuilder sb = new();
             for (int i = 0; i < newBuffer.Length; i++)
