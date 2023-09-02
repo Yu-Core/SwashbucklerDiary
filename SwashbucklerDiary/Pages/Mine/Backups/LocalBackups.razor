@@ -47,8 +47,9 @@
 </MCard>
 
 <MMDialog @bind-MyValue="ShowBackups"
+          ContentClass="rounded-lg"
           MaxWidth="420">
-    <MCard Rounded="@("lg")">
+    <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Backups.Backups.Title"))
             <MSpacer></MSpacer>
@@ -76,8 +77,9 @@
 </MMDialog>
 
 <MMDialog @bind-MyValue="ShowRestore"
+          ContentClass="rounded-lg"
           MaxWidth="420">
-    <MCard Rounded="@("lg")">
+    <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Backups.Restore.ConfirmRestore.Title"))
             <MSpacer></MSpacer>

@@ -4,7 +4,8 @@
 <MultiDisplay>
     <MobileContent>
         <MMBottomSheet MyValue="Value"
-                       MyValueChanged="ValueChanged">
+                       MyValueChanged="ValueChanged"
+                       ContentClass="rounded-t-lg">
             <MCard Class="rounded-t-lg py-2">
                 <MList>
                     @foreach (var item in ListItemModels)
@@ -41,8 +42,9 @@
     <DesktopContent>
         <MMDialog Value="Value"
                   ValueChanged="ValueChanged"
+                  ContentClass="rounded-lg"
                   MaxWidth="420">
-            <MCard Rounded="@("lg")">
+            <MCard>
                 <MCardTitle Class="font-weight-bold">
                     @Title
                     <MSpacer></MSpacer>

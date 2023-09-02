@@ -4,13 +4,14 @@
 <MMDialog @ref="myDialog"
           MyValue="Value"
           MyValueChanged="ValueChanged"
+          ContentClass="rounded-lg"
           MaxWidth="480">
     <MForm @ref="@MForm"
            Model="@configModel"
            OnValidSubmit="HandleOnOK"
            EnableValidation="true"
            EnableI18n="true">
-        <MCard Rounded="@("lg")">
+        <MCard>
             <MCardTitle Class="font-weight-bold">
                 @(I18n.T("Export.LAN.Config.Name"))
                 <MSpacer></MSpacer>

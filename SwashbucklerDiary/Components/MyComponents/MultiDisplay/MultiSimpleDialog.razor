@@ -4,13 +4,15 @@
 <MultiDisplay>
     <MobileContent>
         <MMBottomSheet MyValue="Value"
-                       MyValueChanged="ValueChanged">
+                       MyValueChanged="ValueChanged"
+                       ContentClass="rounded-t-lg">
             @ChildContent
         </MMBottomSheet>
     </MobileContent>
     <DesktopContent>
         <MMDialog Value="Value"
                   ValueChanged="ValueChanged"
+                  ContentClass="rounded-lg"
                   MaxWidth="420">
             @ChildContent
         </MMDialog>

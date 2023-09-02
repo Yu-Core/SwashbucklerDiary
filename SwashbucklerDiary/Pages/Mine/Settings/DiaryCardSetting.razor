@@ -55,8 +55,9 @@
 </ScrollContainer>
 
 <MMDialog @bind-MyValue="ShowDiaryCardDateFormat"
+          ContentClass="rounded-lg"
           MaxWidth="420">
-    <MCard Rounded="@("lg")">
+    <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Setting.Display.DiaryCard.DateFormat.Name"))
             <MSpacer></MSpacer>

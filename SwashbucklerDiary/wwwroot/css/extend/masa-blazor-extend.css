@@ -136,10 +136,14 @@
     opacity: .8;
 }
 
-.p-mobile-date-picker__content .m-sheet:first-child {
+.p-mobile-date-picker__content {
     border-radius: 8px 8px 0 0 !important;
-    padding: 16px 24px 10px;
 }
+
+    .p-mobile-date-picker__content .m-sheet:first-child {
+        border-radius: 8px 8px 0 0 !important;
+        padding: 16px;
+    }
 
 /*自适应圆角*/
 @media screen and (min-width:600px) {

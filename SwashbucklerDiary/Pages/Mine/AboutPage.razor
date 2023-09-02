@@ -72,8 +72,9 @@
 </MultiDialog>
 
 <MMDialog @bind-MyValue="ShowVersionUpdate"
+          ContentClass="rounded-lg"
           MaxWidth="420">
-    <MCard Rounded="@("lg")">
+    <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("About.Check for updates.Name"))
             <MSpacer></MSpacer>

@@ -212,8 +212,9 @@
 </InputDialog>
 
 <MMDialog @bind-MyValue="ShowClearCache"
+          ContentClass="rounded-lg"
           MaxWidth="420">
-    <MCard Rounded="@("lg")">
+    <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Setting.General.Storage.Name"))
         </MCardTitle>

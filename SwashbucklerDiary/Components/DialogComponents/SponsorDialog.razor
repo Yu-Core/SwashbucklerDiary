@@ -3,8 +3,9 @@
 
 <MMDialog MyValue="Value"
           MyValueChanged="InternalValueChanged"
+          ContentClass="rounded-lg"
           MaxWidth="420">
-    <MCard Rounded="@("lg")">
+    <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("About.Sponsor.Name"))
             <MSpacer></MSpacer>
@@ -38,38 +39,40 @@
                             Type="number"
                             Outlined
                             Dense
-                            HideDetails="@("auto")"
-                            Placeholder="@(I18n.T("Amount.CustomPlace"))"
-                            Prefix="$"
-                            NumberProps="@(prop=> { prop.Min = 10; prop.HideControl = true; })">
-                </MTextField>
+                             HideDetails="@("auto")"
+                             Placeholder="@(I18n.T("Amount.CustomPlace"))"
+                             Prefix="$"
+                             NumberProps="@(prop=> { prop.Min = 10; prop.HideControl = true; })">
+                 </MTextField>
             }
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text OnClick="HandleOnCancel">
-                @(I18n.T("Share.Cancel"))
-            </MButton>
-            <MButton Text
-                     Color="primary"
-                     OnClick="OnSponsor">
-                @(I18n.T("Share.OK"))
-            </MButton>
-        </MCardActions>
-    </MCard>
-</MMDialog>
+                 @(I18n.T("Share.Cancel"))
+             </MButton>
+             <MButton Text
+                      Color="primary"
+                      OnClick="OnSponsor">
+                 @(I18n.T("Share.OK"))
+             </MButton>
+         </MCardActions>
+     </MCard>
+ </MMDialog>
 
-<MMDialog @bind-MyValue="ShowThank" MaxWidth="420">
-    <MCard Rounded="@("lg")">
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Amount.Thank"))
-            <MSpacer></MSpacer>
-            <MButton Icon OnClick="()=>ShowThank=false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText Style="white-space:pre-line;">
-            @(I18n.T("Amount.ThankContent"))
-        </MCardText>
-    </MCard>
-</MMDialog>
+ <MMDialog @bind-MyValue="ShowThank"
+           ContentClass="rounded-lg"
+           MaxWidth="420">
+     <MCard>
+         <MCardTitle Class="font-weight-bold">
+             @(I18n.T("Amount.Thank"))
+             <MSpacer></MSpacer>
+             <MButton Icon OnClick="()=>ShowThank=false">
+                 <MIcon>mdi-close</MIcon>
+             </MButton>
+         </MCardTitle>
+         <MCardText Style="white-space:pre-line;">
+             @(I18n.T("Amount.ThankContent"))
+         </MCardText>
+     </MCard>
+ </MMDialog>
