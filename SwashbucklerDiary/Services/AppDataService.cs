@@ -166,36 +166,42 @@ namespace SwashbucklerDiary.Services
         {
             StringBuilder text = new();
             text.AppendLine(diary.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"));
-            if (string.IsNullOrEmpty(diary.Title))
-            {
-                text.AppendLine(diary.Title);
-            }
+            text.AppendLine();
 
             if (!string.IsNullOrEmpty(diary.Weather))
             {
                 text.AppendLine(I18n.T("Weather." + diary.Weather));
+                text.AppendLine();
             }
 
             if (!string.IsNullOrEmpty(diary.Mood))
             {
-                text.AppendLine(I18n.T("Weather." + diary.Weather));
+                text.AppendLine(I18n.T("Mood." + diary.Mood));
             }
 
             if (!string.IsNullOrEmpty(diary.Location))
             {
                 text.AppendLine(diary.Location);
+                text.AppendLine();
             }
 
-            text.AppendLine(diary.Content);
             if (diary.Tags is not null && diary.Tags.Count > 0)
             {
                 foreach (var tag in diary.Tags)
                 {
-                    text.Append(tag + " ");
+                    text.Append(tag.Name + ", ");
                 }
+                text.AppendLine();
                 text.AppendLine();
             }
 
+            if (!string.IsNullOrEmpty(diary.Title))
+            {
+                text.AppendLine(diary.Title);
+            text.AppendLine();
+            }
+
+            text.AppendLine(diary.Content); 
             text.AppendLine();
             return text.ToString();
         }
