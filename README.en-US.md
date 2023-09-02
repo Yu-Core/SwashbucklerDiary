@@ -99,6 +99,7 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 - [Markdown Guide](https://github.com/mattcone/markdown-guide)
 - [MASA.Blazor](https://github.com/BlazorComponent/MASA.Blazor)
 - [MauiBlazorToolkit](https://github.com/Yu-Core/MauiBlazorToolkit)
+- [MiniExcel](https://github.com/mini-software/MiniExcel)
 - [Serilog](https://github.com/serilog/serilog)
 - [Serilog.Sinks.SQLite.Maui](https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui)
 - [SQLite-net](https://github.com/praeclarum/sqlite-net)

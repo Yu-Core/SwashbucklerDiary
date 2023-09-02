@@ -35,6 +35,11 @@
     "Url": "https://github.com/Yu-Core/MauiBlazorToolkit/blob/master/LICENSE"
   },
   {
+    "Name": "MiniExcel",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/mini-software/MiniExcel/blob/master/LICENSE"
+  },
+  {
     "Name": "Serilog",
     "License": "Apache-2.0 license",
     "Url": "https://github.com/serilog/serilog/blob/dev/LICENSE"
