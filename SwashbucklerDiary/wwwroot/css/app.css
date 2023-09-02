@@ -348,6 +348,14 @@ a, .btn-link {
     border-radius: 8px !important;
 }
 
+    .m-snack__wrapper::before {
+        background-color: unset !important;
+    }
+
+    .m-snack__wrapper .m-alert__icon {
+        align-self: unset !important;
+    }
+
 @media screen and (max-width:600px) {
     .m-enqueued-snackbars {
         pointer-events: none;
@@ -358,10 +366,6 @@ a, .btn-link {
         width: initial !important;
         min-width: initial !important;
     }
-}
-
-.m-snack__wrapper::before {
-    background-color: unset !important;
 }
 
 .m-snack__wrapper.theme--light * {
