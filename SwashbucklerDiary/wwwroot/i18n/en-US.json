@@ -546,7 +546,7 @@
     "Export": {
       "Title": "Export",
       "Path": "Export / Local export / Export",
-      "Subtitle": "Save as zip file of txt, md, json type",
+      "Subtitle": "txt、md、json、xlsx",
       "Success": "Export success",
       "Fail": "Export fail",
       "SelectType": "Select export file type"
@@ -635,5 +635,14 @@
   "Please input DeviceName": "Please input DeviceName",
   "Please input ScanPort": "Please input ScanPort",
   "Please input TransmissionPort": "Please input TransmissionPort",
-  "ScanPort and TransmissionPort cannot be the same": "ScanPort and TransmissionPort cannot be the same"
+  "ScanPort and TransmissionPort cannot be the same": "ScanPort and TransmissionPort cannot be the same",
+  "Excel": {
+    "Time": "Time",
+    "Weather": "Weather",
+    "Mood": "Mood",
+    "Location": "Location",
+    "Title": "Title",
+    "Content": "Content",
+    "Tags": "Tags"
+  }
 }

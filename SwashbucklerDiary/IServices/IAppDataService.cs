@@ -26,9 +26,11 @@ namespace SwashbucklerDiary.IServices
         Task<string> ExportJsonZipFileAsync(List<DiaryModel> diaries);
         Task<string> ExportMdZipFileAsync(List<DiaryModel> diaries);
         Task<string> ExportDBZipFileAsync(List<DiaryModel> diaries, bool copyResources);
+        Task<string> ExportXlsxFileAsync(List<DiaryModel> diaries);
         Task<bool> ExportTxtZipFileAndSaveAsync(List<DiaryModel> diaries);
         Task<bool> ExportJsonZipFileAndSaveAsync(List<DiaryModel> diaries);
         Task<bool> ExportMdZipFileAndSaveAsync(List<DiaryModel> diaries);
+        Task<bool> ExportXlsxFileAndSaveAsync(List<DiaryModel> diaries);
         Task<string> CreateCacheFileAsync(string filePath, string contents);
         Task<string> CreateCacheFileAsync(string filePath, byte[] contents);
         Task<string> CreateAppDataFileAsync(string fn, string filePath);

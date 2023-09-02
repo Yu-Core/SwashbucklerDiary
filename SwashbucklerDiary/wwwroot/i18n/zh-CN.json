@@ -546,7 +546,7 @@
     "Export": {
       "Title": "导出",
       "Path": "导出 / 本地导出 / 导出",
-      "Subtitle": "保存为txt、md、json生成的zip压缩包",
+      "Subtitle": "txt、md、json、xlsx",
       "Success": "导出成功",
       "Fail": "导出失败",
       "SelectType": "选择导出文件格式"
@@ -635,5 +635,14 @@
   "Please input DeviceName": "请输入设备名",
   "Please input ScanPort": "请输入扫描端口",
   "Please input TransmissionPort": "请输入传输端口",
-  "ScanPort and TransmissionPort cannot be the same": "扫描端口和传输端口不能相同"
+  "ScanPort and TransmissionPort cannot be the same": "扫描端口和传输端口不能相同",
+  "Excel": {
+    "Time": "时间",
+    "Weather": "天气",
+    "Mood": "心情",
+    "Location": "位置",
+    "Title": "标题",
+    "Content": "内容",
+    "Tags": "标签"
+  }
 }

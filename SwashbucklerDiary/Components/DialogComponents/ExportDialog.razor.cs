@@ -26,9 +26,10 @@ namespace SwashbucklerDiary.Components
         {
             ListItemModels = new()
             {
-                new(this,"TXT","mdi-format-text",CreateTxtFile),
-                new(this,"MD","mdi-language-markdown-outline",CreateMDFile),
-                new(this,"JSON","mdi-code-json",CreateJsonFile),
+                new(this,"TXT", "mdi-format-text", CreateTxtFile),
+                new(this,"MD", "mdi-language-markdown-outline", CreateMdFile),
+                new(this,"JSON", "mdi-code-braces", CreateJsonFile),
+                new(this,"XLSX", "mdi-table-large", CreateXlsxFile),
             };
         }
 
@@ -36,7 +37,9 @@ namespace SwashbucklerDiary.Components
 
         private Task CreateJsonFile() => CreateFile(AppDataService.ExportJsonZipFileAndSaveAsync);
 
-        private Task CreateMDFile() => CreateFile(AppDataService.ExportMdZipFileAndSaveAsync);
+        private Task CreateMdFile() => CreateFile(AppDataService.ExportMdZipFileAndSaveAsync);
+
+        private Task CreateXlsxFile() => CreateFile(AppDataService.ExportXlsxFileAndSaveAsync);
 
         private async Task CreateFile(Func<List<DiaryModel>,Task<bool>> func)
         {

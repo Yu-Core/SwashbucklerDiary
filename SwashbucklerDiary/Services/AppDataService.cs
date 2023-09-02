@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Config;
+﻿using MiniExcelLibs;
+using SwashbucklerDiary.Config;
 using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -6,6 +7,7 @@ using System.IO.Compression;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SwashbucklerDiary.Services
 {
@@ -198,10 +200,10 @@ namespace SwashbucklerDiary.Services
             if (!string.IsNullOrEmpty(diary.Title))
             {
                 text.AppendLine(diary.Title);
-            text.AppendLine();
+                text.AppendLine();
             }
 
-            text.AppendLine(diary.Content); 
+            text.AppendLine(diary.Content);
             text.AppendLine();
             return text.ToString();
         }
@@ -312,6 +314,57 @@ namespace SwashbucklerDiary.Services
             ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
             return Task.FromResult(zipFilePath);
         }
+        public Task<string> ExportXlsxFileAsync(List<DiaryModel> diaries)
+        {
+            string filePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}Xlsx.xlsx");
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            var timeColName = I18n.T("Excel.Time");
+            var weatherColName = I18n.T("Excel.Weather");
+            var moodColName = I18n.T("Excel.Mood");
+            var locationColName = I18n.T("Excel.Location");
+            var tagsColName = I18n.T("Excel.Tags");
+            var titleColName = I18n.T("Excel.Title");
+            var contentColName = I18n.T("Excel.Content");
+
+            var values = new List<Dictionary<string, object>>();
+            foreach (var item in diaries)
+            {
+                var time = item.CreateTime.ToString("yyyy/MM/dd HH:mm:ss");
+                var weather = item.Weather is null ? string.Empty : I18n.T("Weather." + item.Weather);
+                var mood = item.Mood is null ? string.Empty : I18n.T("Mood." + item.Mood);
+                var location = item.Location ?? string.Empty;
+                var tags = string.Empty;
+                if (item.Tags is not null && item.Tags.Count > 0)
+                {
+                    foreach (var tag in item.Tags)
+                    {
+                        tags += tag.Name + ", ";
+                    }
+                }
+
+                var title = item.Title ?? string.Empty;
+                var content = item.Content ?? string.Empty;
+
+                var value = new Dictionary<string, object>()
+                {
+                    {timeColName, time },
+                    {weatherColName, weather },
+                    {moodColName, mood },
+                    {locationColName, location },
+                    {tagsColName, tags },
+                    {titleColName, title },
+                    {contentColName, content },
+                };
+                values.Add(value);
+            }
+
+            MiniExcel.SaveAs(filePath, values);
+            return Task.FromResult(filePath);
+        }
 
         private async Task<bool> CreateFileAndSaveAsync(Func<List<DiaryModel>, Task<string>> func, string type, List<DiaryModel> diaries)
         {
@@ -330,6 +383,9 @@ namespace SwashbucklerDiary.Services
 
         public Task<bool> ExportMdZipFileAndSaveAsync(List<DiaryModel> diaries)
             => CreateFileAndSaveAsync(ExportMdZipFileAsync, "Markdown", diaries);
+
+        public Task<bool> ExportXlsxFileAndSaveAsync(List<DiaryModel> diaries)
+            => CreateFileAndSaveAsync(ExportXlsxFileAsync, "Xlsx", diaries);
 
         private static void WriteToFile(string fileName, string? content)
         {
