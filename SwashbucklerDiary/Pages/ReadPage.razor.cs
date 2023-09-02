@@ -186,7 +186,7 @@ namespace SwashbucklerDiary.Pages
             await AlertService.StopLoading();
             StateHasChanged();
 
-            await PlatformService.ShareFile(I18n.T("Share.Share")!, path);
+            await PlatformService.ShareFile(I18n.T("Share.Share"), path);
             await HandleAchievements(AchievementType.Share);
         }
 

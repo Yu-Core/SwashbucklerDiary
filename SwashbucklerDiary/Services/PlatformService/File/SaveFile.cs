@@ -4,10 +4,21 @@ namespace SwashbucklerDiary.Services
 {
     public partial class PlatformService
     {
-        public Task<string?> SaveFileAsync(string name, Stream stream)
+        public Task<string?> SaveFileAsync(string name, string sourceFilePath)
+            => SaveFileAsync(string.Empty, name, sourceFilePath);
+
+        public async Task<string?> SaveFileAsync(string? path, string name, string sourceFilePath)
         {
-            return SaveFileAsync(string.Empty, name, stream);
+            using FileStream stream = File.OpenRead(sourceFilePath);
+            //Cannot save an existing file
+            //https://github.com/CommunityToolkit/Maui/issues/1049
+            var filePath = await SaveFileAsync(path, name, stream);
+            return filePath;
         }
+
+        public Task<string?> SaveFileAsync(string name, Stream stream)
+            => SaveFileAsync(string.Empty, name, stream);
+
         public async Task<string?> SaveFileAsync(string? path, string name, Stream stream)
         {
             try

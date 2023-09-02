@@ -312,7 +312,7 @@ namespace SwashbucklerDiary.Services
             string filePath = await func.Invoke(diaries);
             string extension = Path.GetExtension(filePath);
             string saveFilePath = $"{exportFileName}{type}{DateTime.Now:yyyy-MM-dd-HH-mm-ss}{extension}";
-            var path = await SaveFile(saveFilePath, filePath);
+            var path = await PlatformService.SaveFileAsync(saveFilePath, filePath);
             return path is not null;
         }
 
@@ -324,18 +324,6 @@ namespace SwashbucklerDiary.Services
 
         public Task<bool> ExportMdZipFileAndSaveAsync(List<DiaryModel> diaries)
             => CreateFileAndSaveAsync(ExportMdZipFileAsync, "Markdown", diaries);
-
-        private Task<string?> SaveFile(string name, string sourceFilePath)
-            => SaveFile(string.Empty, name, sourceFilePath);
-
-        private async Task<string?> SaveFile(string path, string name, string sourceFilePath)
-        {
-            using FileStream stream = File.OpenRead(sourceFilePath);
-            //Cannot save an existing file
-            //https://github.com/CommunityToolkit/Maui/issues/1049
-            var filePath = await PlatformService.SaveFileAsync(path, name, stream);
-            return filePath;
-        }
 
         private static void WriteToFile(string fileName, string? content)
         {
@@ -445,11 +433,11 @@ namespace SwashbucklerDiary.Services
 
         public Task<bool> DeleteAppDataFileByCustomSchemeAsync(string uri)
         {
-            string path = UriToFilePath(uri);
+            string path = CustomSchemeUriToFilePath(uri);
             return DeleteAppDataFileByFilePathAsync(path);
         }
 
-        private static string UriToFilePath(string uri)
+        public string CustomSchemeUriToFilePath(string uri)
         {
             var relativePath = Path.Combine(uri.TrimStart(customScheme.ToCharArray()).Split('/'));
             return Path.Combine(FileSystem.Current.AppDataDirectory, relativePath);
@@ -551,7 +539,7 @@ namespace SwashbucklerDiary.Services
         {
             string filePath = await ExportDBZipFileAsync(diaries, copyResources);
             string destFileName = GetBackupFileName();
-            return await SaveFile(path, destFileName, filePath);
+            return await PlatformService.SaveFileAsync(path, destFileName, filePath);
         }
 
         public Task<string> ExportDBZipFileAsync(List<DiaryModel> diaries, bool copyResources)

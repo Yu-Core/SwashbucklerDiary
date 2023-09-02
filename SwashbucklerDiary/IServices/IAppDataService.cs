@@ -38,5 +38,6 @@ namespace SwashbucklerDiary.IServices
         Task<bool> DeleteAppDataFileByFilePathAsync(string filePath);
         Task<bool> DeleteAppDataFileByCustomSchemeAsync(string uri);
         Task<List<DiaryModel>> ImportJsonFileAsync(string filePath);
+        string CustomSchemeUriToFilePath(string uri);
     }
 }

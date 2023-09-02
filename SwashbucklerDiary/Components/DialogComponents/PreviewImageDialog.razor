@@ -5,11 +5,37 @@
           MyValueChanged="ValueChanged"
           Fullscreen="true"
           Transition="@(null)">
-    <MCard Class="fill-height theme-element"
+    <MCard Class="fill-height theme-element d-flex flex-column"
            Ripple="false"
            OnClick="()=>InternalValueChanged(false)">
-        <div class="pb-sm-7 fill-height">
-            <MImage Src="@Src"
+        <MToolbar Class="flex-grow-0 theme-element"
+                  Elevation="0">
+            <MButton Icon="true">
+                <MIcon>
+                    mdi-arrow-left
+                </MIcon>
+            </MButton>
+
+            <MSpacer></MSpacer>
+
+            <MButton Icon="true"
+                     OnClickStopPropagation="true"
+                     OnClick="SaveToLocal">
+                <MIcon>
+                    mdi-tray-arrow-down
+                </MIcon>
+            </MButton>
+            <MButton Icon="true"
+                     OnClickStopPropagation="true"
+                     OnClick="Share">
+                <MIcon>
+                    mdi-share-variant-outline
+                </MIcon>
+            </MButton>
+        </MToolbar>
+        <div class="flex-grow-1" style="position:relative;">
+            <MImage Style="position:absolute;"
+                    Src="@Src"
                     Width="@("100%")"
                     Height="@("100%")"
                     Contain="true">
@@ -23,5 +49,8 @@
                 </PlaceholderContent>
             </MImage>
         </div>
+        <MToolbar Class="flex-grow-0 theme-element"
+                  Elevation="0">
+        </MToolbar>
     </MCard>
 </MMDialog>

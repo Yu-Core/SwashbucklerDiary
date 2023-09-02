@@ -34,7 +34,9 @@ namespace SwashbucklerDiary.IServices
         Task<string?> PickFolderAsync();
         Task<string?> PickDBFileAsync();
         Task<string?> PickZipFileAsync();
+        Task<string?> SaveFileAsync(string name, string sourceFilePath);
         Task<string?> SaveFileAsync(string name, Stream stream);
+        Task<string?> SaveFileAsync(string? path,string name, string sourceFilePath);
         Task<string?> SaveFileAsync(string? path,string name,Stream stream);
         void OpenPlatformSetting();
         void QuitApp();

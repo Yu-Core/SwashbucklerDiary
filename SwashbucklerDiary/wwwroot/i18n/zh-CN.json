@@ -23,7 +23,9 @@
     "FileShare": "文件分享",
     "Reset": "重置",
     "Restore Default": "恢复默认",
-    "Quit": "退出"
+    "Quit": "退出",
+    "SaveSuccess": "保存成功",
+    "SaveFail": "保存失败"
   },
   "Main": {
     "Diary": "日记",

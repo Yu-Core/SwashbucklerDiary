@@ -23,7 +23,9 @@
     "FileShare": "File share",
     "Reset": "Reset",
     "Restore Default": "Restore default",
-    "Quit": "Quit"
+    "Quit": "Quit",
+    "SaveSuccess": "Save success",
+    "SaveFail": "Save fail"
   },
   "Main": {
     "Diary": "Diary",
