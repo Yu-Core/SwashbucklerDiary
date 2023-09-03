@@ -18,7 +18,7 @@
                          EmptyText="@(string.Empty)"
                          LoadingText="@(string.Empty)">
             <LoadMoreContent Context="load">
-                <div class="@(InternalValue.Any()?"":"d-none")">
+                <div class="@(ShowLoadMore?"":"d-none")">
                     <MButton Icon="true"
                              OnClick="@load">
                         <MIcon>mdi-reload</MIcon>
