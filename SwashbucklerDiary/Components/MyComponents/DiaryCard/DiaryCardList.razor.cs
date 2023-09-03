@@ -15,8 +15,8 @@ namespace SwashbucklerDiary.Components
         private bool ShowExport;
         private DiaryModel SelectedDiary = new();
         private List<DiaryModel> ExportDiaries = new();
-        private int loadCount = 20;
-        private bool firstLoad = true;
+        private int LoadCount = 20;
+        private bool FirstLoad = true;
 
         [Inject]
         private IJSRuntime JS { get; set; } = default!;
@@ -199,9 +199,9 @@ namespace SwashbucklerDiary.Components
 
         private void OnLoad(InfiniteScrollLoadEventArgs args)
         {
-            if (firstLoad)
+            if (FirstLoad)
             {
-                firstLoad = false;
+                FirstLoad = false;
                 return;
             }
 
@@ -212,7 +212,7 @@ namespace SwashbucklerDiary.Components
 
         private List<DiaryModel> MockRequest()
         {
-            return Value.Skip(_internalValue.Count).Take(loadCount).ToList();
+            return Value.Skip(_internalValue.Count).Take(LoadCount).ToList();
         }
     }
 }

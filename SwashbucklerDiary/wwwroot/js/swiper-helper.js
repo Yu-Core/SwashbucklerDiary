@@ -23,7 +23,3 @@ export function swiperInit(dotNetCallbackRef, callbackMethod, dom, selector, ind
 export function slideTo(dom, value) {
     dom.Swiper.slideTo(value);
 }
-
-export function destroy(dom) {
-    dom.Swiper.destroy(true, true);
-}

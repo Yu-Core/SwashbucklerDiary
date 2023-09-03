@@ -5,13 +5,13 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class MarkdownPreview
+    public partial class MarkdownPreview : IAsyncDisposable
     {
         private ElementReference element;
         private string? _value;
         private Dictionary<string, object> _options = new();
         private bool AfterFirstRender;
-        private IJSObjectReference? module;
+        private IJSObjectReference module = default!;
         private bool ShowPreviewImage;
         private string? PreviewImageSrc;
 
@@ -44,11 +44,11 @@ namespace SwashbucklerDiary.Components
             var dotNetCallbackRef = DotNetObjectReference.Create(this);
 
             //点击复制按钮提示复制成功
-            await module!.InvokeVoidAsync("Copy", new object[2] { dotNetCallbackRef, "CopySuccess" });
+            await module.InvokeVoidAsync("Copy", new object[2] { dotNetCallbackRef, "CopySuccess" });
             //修复点击链接的一些错误
-            await module!.InvokeVoidAsync("FixLink", new object[1] { element });
+            await module.InvokeVoidAsync("FixLink", new object[1] { element });
             //图片预览
-            await module!.InvokeVoidAsync("PreviewImage", new object[3] { dotNetCallbackRef, "PreviewImage", element });
+            await module.InvokeVoidAsync("PreviewImage", new object[3] { dotNetCallbackRef, "PreviewImage", element });
         }
 
         [JSInvokable]
@@ -106,7 +106,7 @@ namespace SwashbucklerDiary.Components
 
             await SetOptions();
             var dotNetCallbackRef = DotNetObjectReference.Create(this);
-            await module!.InvokeVoidAsync("PreviewVditor", new object?[4] { dotNetCallbackRef, element, value, _options });
+            await module.InvokeVoidAsync("PreviewVditor", new object?[4] { dotNetCallbackRef, element, value, _options });
         }
 
         private async Task SetOptions()
@@ -128,6 +128,16 @@ namespace SwashbucklerDiary.Components
                 { "theme", theme },
                 { "icon","material" },
             };
+        }
+
+        async ValueTask IAsyncDisposable.DisposeAsync()
+        {
+            if (module is not null)
+            {
+                await module.DisposeAsync();
+            }
+
+            GC.SuppressFinalize(this);
         }
     }
 }

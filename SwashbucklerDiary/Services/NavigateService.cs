@@ -66,7 +66,7 @@ namespace SwashbucklerDiary.Services
         {
             if (Action != null && Action?.GetInvocationList().Length > 0)
             {
-                var delegates = Action!.GetInvocationList();
+                var delegates = Action.GetInvocationList();
                 (delegates.Last() as Action)!.Invoke();
                 return true;
             }

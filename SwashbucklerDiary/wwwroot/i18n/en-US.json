@@ -135,8 +135,8 @@
     "sick": "sick"
   },
   "Read": {
-    "OpenPrivacy": "Move to privacy library",
-    "ClosePrivacy": "Remove from privacy library"
+    "OpenPrivacy": "Private",
+    "ClosePrivacy": "Cancel private"
   },
   "AppName": "Swashbuckler Diary",
   "Mine": {

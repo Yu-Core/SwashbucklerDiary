@@ -4,8 +4,12 @@ namespace SwashbucklerDiary.IServices
 {
     public interface IPlatformService
     {
+        Color LightColor { get; set; }
+        Color DarkColor { get; set; }
+
         event Action Resumed;
         event Action Stopped;
+
         void OnResume();
         void OnStop();
         Task SetClipboard(string text);
@@ -41,5 +45,7 @@ namespace SwashbucklerDiary.IServices
         void OpenPlatformSetting();
         void QuitApp();
         Task<bool> OpenQQGroup();
+        void SetTitleBarOrStatusBar(ThemeState themeState);
+        void SetTitleBarOrStatusBar(ThemeState themeState, Color backgroundColor);
     }
 }

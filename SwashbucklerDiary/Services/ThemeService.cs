@@ -1,6 +1,5 @@
 ﻿using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Services
 {
@@ -10,8 +9,13 @@ namespace SwashbucklerDiary.Services
         public ThemeState RealThemeState => GetThemeState();
         public bool Light => RealThemeState == Models.ThemeState.Light;
         public bool Dark => RealThemeState == Models.ThemeState.Dark;
-
         public event Action<ThemeState>? OnChanged;
+        private IPlatformService PlatformService;
+
+        public ThemeService(IPlatformService platformService) 
+        {
+            PlatformService = platformService;
+        }
 
         private ThemeState GetThemeState()
         {
@@ -54,10 +58,8 @@ namespace SwashbucklerDiary.Services
         private void InternalNotifyStateChanged()
         {
             ThemeState value = RealThemeState;
-            StaticTitleAndStatusBar.SetTitleAndStatusBar(value);
+            PlatformService.SetTitleBarOrStatusBar(value);
             OnChanged?.Invoke(value);
         }
-
-
     }
 }

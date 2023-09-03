@@ -28,7 +28,6 @@ namespace SwashbucklerDiary.Pages
         {
             if(firstRender)
             {
-                //module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/scroll.js");
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
                 await JS.InvokeVoidAsync("ElementVisible", new object[4] { dotNetCallbackRef ,"Show", ".my-scroll-container", ".normal-calendar" });
             }

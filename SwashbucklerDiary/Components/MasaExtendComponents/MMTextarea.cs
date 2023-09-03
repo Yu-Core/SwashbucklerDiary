@@ -3,9 +3,9 @@ using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Components
 {
-    public class MMTextarea : MTextarea
+    public class MMTextarea : MTextarea,IAsyncDisposable
     {
-        private IJSObjectReference? module;
+        private IJSObjectReference module = default!;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -29,6 +29,17 @@ namespace SwashbucklerDiary.Components
             {
                 await ValueChanged.InvokeAsync(Value);
             }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (module is not null)
+            {
+                await module.DisposeAsync();
+            }
+
+            base.Dispose(disposing:true);
+            GC.SuppressFinalize(this);
         }
     }
 }

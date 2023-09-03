@@ -13,11 +13,3 @@ function ElementVisible(dotNetCallbackRef, callbackMethod, parentSelector, child
         
     });
 }
-
-function GetScrollTop(element) {
-    return element.scrollTop;
-}
-
-function SetScrollTop(element,top) {
-    element.scrollTop = top;
-}

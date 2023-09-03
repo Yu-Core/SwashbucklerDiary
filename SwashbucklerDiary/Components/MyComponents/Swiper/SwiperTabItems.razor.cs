@@ -7,13 +7,13 @@ namespace SwashbucklerDiary.Components
     public partial class SwiperTabItems : IAsyncDisposable
     {
         private ElementReference ElementRef;
-        private IJSObjectReference? module;
+        private IJSObjectReference module = default!;
         private StringNumber _value = 0;
         private bool Show;
-        private readonly string Id = "swiper-" + Guid.NewGuid().ToString();
+        private readonly string Id = $"swiper-{ Guid.NewGuid() }";
 
         [Inject]
-        private IJSRuntime? JS { get; set; }
+        private IJSRuntime JS { get; set; } = default!;
 
         [Parameter]
         public StringNumber Value
@@ -58,7 +58,7 @@ namespace SwashbucklerDiary.Components
         {
             if (firstRender)
             {
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/init-swiper.js");
+                module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/swiper-helper.js");
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
                 await module.InvokeVoidAsync("swiperInit", new object[5] { dotNetCallbackRef, "UpdateValue", ElementRef, $"#{Id}", Value.ToInt32() });
                 Show = true;
@@ -68,14 +68,13 @@ namespace SwashbucklerDiary.Components
 
         private async void UpdateSwiper(StringNumber value)
         {
-            await module!.InvokeVoidAsync("slideTo", new object[2] { ElementRef, value.ToInt32() });
+            await module.InvokeVoidAsync("slideTo", new object[2] { ElementRef, value.ToInt32() });
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
             if (module is not null)
             {
-                await module!.InvokeVoidAsync("destroy", new object[1] { ElementRef });
                 await module.DisposeAsync();
             }
 

@@ -32,7 +32,7 @@
             else
             {
                 string[] links = { "", "history", "mine" };
-                var url = Navigation!.ToBaseRelativePath(Navigation.Uri);
+                var url = Navigation.ToBaseRelativePath(Navigation.Uri);
                 return links.Any(it => it == url.Split("?")[0]);
             }
         }

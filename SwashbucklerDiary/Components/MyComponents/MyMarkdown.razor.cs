@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Components
     public partial class MyMarkdown
     {
         private Dictionary<string, object> _options = new();
-        private IJSObjectReference? module;
+        private IJSObjectReference module = default!;
         private MMarkdown? MMarkdown;
 
         [Inject]
@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Components
 
         protected async override Task OnInitializedAsync()
         {
-            module = await JS!.InvokeAsync<IJSObjectReference>("import", "./js/vditor-helper.js");
+            module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/vditor-helper.js");
             await SetOptions();
             await base.OnInitializedAsync();
         }
@@ -124,7 +124,7 @@ namespace SwashbucklerDiary.Components
         private async Task PreventInputLoseFocus()
         {
             //点击工具栏不会丢失焦点
-            await module!.InvokeVoidAsync("PreventInputLoseFocus", null);
+            await module.InvokeVoidAsync("PreventInputLoseFocus", null);
         }
 
         private async Task HandleToolbarButtonClick(string btnName)
@@ -190,7 +190,7 @@ namespace SwashbucklerDiary.Components
         public async Task InsertValueAsync(string value)
         {
             await MMarkdown!.InsertValueAsync(value);
-            await module!.InvokeVoidAsync("moveCursorForward", value.Length);
+            await module.InvokeVoidAsync("moveCursorForward", value.Length);
         }
     }
 }

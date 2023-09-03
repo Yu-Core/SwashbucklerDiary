@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowMenu;
         private bool ShowShare;
         private bool ShowExport;
-        private IJSObjectReference? module;
+        private IJSObjectReference module = default!;
         private bool Markdown;
         private List<DynamicListItem> ListItemModels = new();
         private List<DynamicListItem> ShareItems = new();
@@ -177,7 +177,7 @@ namespace SwashbucklerDiary.Pages
             StateHasChanged();
             await Task.Delay(1000);
 
-            var base64 = await module!.InvokeAsync<string>("getScreenshotBase64", new object[1] { "#screenshot" });
+            var base64 = await module.InvokeAsync<string>("getScreenshotBase64", new object[1] { "#screenshot" });
             base64 = base64.Substring(base64.IndexOf(",") + 1);
 
             string fn = "Screenshot.png";
@@ -196,7 +196,7 @@ namespace SwashbucklerDiary.Pages
             {
                 return "mdi-weather-cloudy";
             }
-            return IconService!.GetWeatherIcon(key);
+            return IconService.GetWeatherIcon(key);
         }
 
         private string GetMoodIcon(string? key)
@@ -205,7 +205,7 @@ namespace SwashbucklerDiary.Pages
             {
                 return "mdi-emoticon-outline";
             }
-            return IconService!.GetMoodIcon(key);
+            return IconService.GetMoodIcon(key);
         }
 
         private async Task MarkdownChanged()
