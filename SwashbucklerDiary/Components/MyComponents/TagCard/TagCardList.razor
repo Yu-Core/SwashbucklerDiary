@@ -34,3 +34,7 @@
               Content="@(I18n.T("Tag.Delete.Content"))"
               OnOK="ConfirmDelete">
 </DeleteDialog>
+
+<ExportDialog @bind-Value="ShowExport"
+              Diaries="ExportDiaries">
+</ExportDialog>

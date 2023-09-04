@@ -8,11 +8,15 @@ namespace SwashbucklerDiary.Components
     {
         private bool ShowDelete;
         private bool ShowRename;
+        private bool ShowExport;
         private TagModel SelectedTag = new();
         private List<TagModel> _value = new();
+        private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
-        public ITagService TagService { get; set; } = default!;
+        private ITagService TagService { get; set; } = default!;
+        [Inject]
+        private IPlatformService PlatformService { get; set; } = default!;
 
         [Parameter]
         public List<TagModel> Value
@@ -39,7 +43,28 @@ namespace SwashbucklerDiary.Components
             await InvokeAsync(StateHasChanged);
         }
 
-        public int GetDiaryCount(TagModel tag) => Diaries.Count(d => d.Tags != null && d.Tags.Any(t => t.Id == tag.Id));
+        public async Task Export(TagModel tag)
+        {
+            var flag = await CheckPermission();
+            if (!flag)
+            {
+                return;
+            }
+
+            var diaries = Diaries.Where(it => it.Tags != null && it.Tags.Any(t => t.Id == tag.Id)).ToList();
+            if (diaries is null ||  !diaries.Any())
+            {
+                await AlertService.Info(I18n.T("Diary.NoDiary"));
+                return;
+            }
+
+            ExportDiaries = diaries;
+            ShowExport = true;
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public int GetDiaryCount(TagModel tag)
+            => Diaries.Count(d => d.Tags != null && d.Tags.Any(t => t.Id == tag.Id));
 
         private async Task ConfirmDelete()
         {
@@ -89,6 +114,25 @@ namespace SwashbucklerDiary.Components
             {
                 await AlertService.Error(I18n.T("Share.EditFail"));
             }
+        }
+
+        private async Task<bool> CheckPermission()
+        {
+            var writePermission = await PlatformService.TryStorageWritePermission();
+            if (!writePermission)
+            {
+                await AlertService.Info(I18n.T("Permission.OpenStorageWrite"));
+                return false;
+            }
+
+            var readPermission = await PlatformService.TryStorageReadPermission();
+            if (!readPermission)
+            {
+                await AlertService.Info(I18n.T("Permission.OpenStorageRead"));
+                return false;
+            }
+
+            return true;
         }
     }
 }

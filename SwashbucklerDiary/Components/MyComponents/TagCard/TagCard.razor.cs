@@ -30,6 +30,7 @@ namespace SwashbucklerDiary.Components
 
         private Task Delete() => TagCardList.Delete(Value);
         private Task Rename() => TagCardList.Rename(Value);
+        private Task Export() => TagCardList.Export(Value);
 
         private void LoadView()
         {
@@ -37,6 +38,7 @@ namespace SwashbucklerDiary.Components
             {
                 new(this, "Share.Rename","mdi-rename-outline",Rename),
                 new(this, "Share.Delete","mdi-delete-outline",Delete),
+                new(this, "Diary.Export","mdi-export",Export),
             };
         }
 
