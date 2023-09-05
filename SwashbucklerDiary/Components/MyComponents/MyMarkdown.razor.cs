@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Components
 {
     public partial class MyMarkdown
     {
-        private Dictionary<string, object> _options = new();
+        private Dictionary<string, object>? _options;
         private IJSObjectReference module = default!;
         private MMarkdown? MMarkdown;
 
@@ -36,6 +36,8 @@ namespace SwashbucklerDiary.Components
         public string? Class { get; set; }
         [Parameter]
         public string? WrapClass { get; set; }
+
+        private bool Show => _options is not null;
 
         protected async override Task OnInitializedAsync()
         {
@@ -124,7 +126,7 @@ namespace SwashbucklerDiary.Components
         private async Task PreventInputLoseFocus()
         {
             //点击工具栏不会丢失焦点
-            await module.InvokeVoidAsync("PreventInputLoseFocus", null);
+            await module.InvokeVoidAsync("preventInputLoseFocus", null);
         }
 
         private async Task HandleToolbarButtonClick(string btnName)
