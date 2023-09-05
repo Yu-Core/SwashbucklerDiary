@@ -27,8 +27,8 @@
     }
 </MAppBar>
 
-<ScrollContainer @ref="scrollContainer">
-    <div class="normal-calendar">
+<ScrollContainer @ref="ScrollContainer">
+    <div @ref="NormalCalendar" class="normal-calendar">
         <MDatePicker @bind-Value="PickedDate"
                      Class="rounded-lg my-picker mb-5 pt-4"
                      TValue="DateOnly"

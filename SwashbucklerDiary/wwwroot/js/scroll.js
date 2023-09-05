@@ -1,6 +1,4 @@
-function ElementVisible(dotNetCallbackRef, callbackMethod, parentSelector, childSelector) {
-    var parent = document.querySelector(parentSelector);
-    var child = document.querySelector(childSelector);
+function listenElementVisibility(dotNetCallbackRef, callbackMethod, parent, child) {
     let timeout;
     parent.addEventListener('scroll', function () {
         clearTimeout(timeout);

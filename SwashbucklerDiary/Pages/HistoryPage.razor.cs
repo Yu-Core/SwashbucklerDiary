@@ -1,18 +1,21 @@
-﻿using Microsoft.JSInterop;
+﻿using BlazorComponent.JSInterop;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 
 namespace SwashbucklerDiary.Pages
 {
     public partial class HistoryPage : DiariesPageComponentBase
     {
-        private ScrollContainer? scrollContainer;
+        private ScrollContainer ScrollContainer = default!;
+        private ElementReference NormalCalendar;
         private bool NormalCalendarVisible = true;
         private bool ShowFloatCalendar;
         private DateOnly _pickedDate = DateOnly.FromDateTime(DateTime.Now);
         private DateOnly[] EventsDates = Array.Empty<DateOnly>();
 
         [JSInvokable]
-        public async Task Show(bool value)
+        public async Task ShowNormalCalendar(bool value)
         {
             NormalCalendarVisible = value;
             await InvokeAsync(StateHasChanged);
@@ -26,12 +29,12 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if(firstRender)
+            if (firstRender)
             {
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
-                await JS.InvokeVoidAsync("ElementVisible", new object[4] { dotNetCallbackRef ,"Show", ".my-scroll-container", ".normal-calendar" });
+                await JS.InvokeVoidAsync("listenElementVisibility", new object[4] { dotNetCallbackRef, "ShowNormalCalendar", ScrollContainer.Ref, NormalCalendar });
             }
-            
+
             await base.OnAfterRenderAsync(firstRender);
         }
 
@@ -52,7 +55,7 @@ namespace SwashbucklerDiary.Pages
 
         private async void SetPickedDate(DateOnly value)
         {
-            if(_pickedDate == value)
+            if (_pickedDate == value)
             {
                 return;
             }
@@ -60,17 +63,14 @@ namespace SwashbucklerDiary.Pages
             _pickedDate = value;
             await UpdateDiariesAsync();
             await InvokeAsync(StateHasChanged);
-            if(scrollContainer == null)
-            {
-                return;
-            }
-
-            await scrollContainer.ScrollToTop();
+            //直接滚动显得很生硬，所以延时0.2s
+            await Task.Delay(200);
+            await JS.ScrollTo(ScrollContainer.Ref, 0);
         }
 
         private async Task UpdateEventsDates()
         {
-            var eventsDates = await DiaryService.GetAllDates(it=>!it.Private);
+            var eventsDates = await DiaryService.GetAllDates(it => !it.Private);
             EventsDates = eventsDates.ToArray();
         }
 
