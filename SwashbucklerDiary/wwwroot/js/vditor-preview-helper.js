@@ -1,4 +1,4 @@
-export function PreviewVditor(dotNetCallbackRef, element, text, options) {
+export function previewVditor(dotNetCallbackRef, element, text, options) {
     let VditorOptions = {
         ...options,
         after: () => {
@@ -8,7 +8,7 @@ export function PreviewVditor(dotNetCallbackRef, element, text, options) {
     Vditor.preview(element, text, VditorOptions);
 }
 
-export function Copy(dotNetCallbackRef, callbackMethod) {
+export function copy(dotNetCallbackRef, callbackMethod) {
     var elements = document.querySelectorAll('.vditor-copy');
     for (var i = 0; i < elements.length; i++) {
         elements[i].addEventListener('click', function () {
@@ -17,7 +17,7 @@ export function Copy(dotNetCallbackRef, callbackMethod) {
     }
 }
 
-export function FixLink(element) {
+export function fixLink(element) {
     var links = element.querySelectorAll("a"); // 获取所有a标签
     for (var i = 0; i < links.length; i++) {
         var href = links[i].getAttribute('href');
@@ -29,7 +29,7 @@ export function FixLink(element) {
     }
 }
 
-export function PreviewImage(dotNetCallbackRef, callbackMethod, parent) {
+export function previewImage(dotNetCallbackRef, callbackMethod, parent) {
     var elements = parent.querySelectorAll("img");
     for (var i = 0; i < elements.length; i++) {
         elements[i].addEventListener('click', function () {

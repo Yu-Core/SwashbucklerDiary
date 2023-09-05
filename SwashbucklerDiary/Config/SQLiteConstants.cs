@@ -14,14 +14,14 @@ namespace SwashbucklerDiary.Config
             // enable multi-threaded database access
             SQLite.SQLiteOpenFlags.SharedCache;
 
-        public static string DatabasePath =>
-            Path.Combine(FileSystem.AppDataDirectory, DatabaseFilename);
-        public static string ConnectionString = new SqliteConnectionStringBuilder()
+        public readonly static string DatabasePath = Path.Combine(FileSystem.AppDataDirectory, DatabaseFilename);
+
+        public readonly static string ConnectionString = new SqliteConnectionStringBuilder()
         {
             DataSource = DatabasePath,
             Mode = SqliteOpenMode.ReadWriteCreate,
             Cache = SqliteCacheMode.Shared
-            
+
         }.ToString();
     }
 }

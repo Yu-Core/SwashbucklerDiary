@@ -1,5 +1,5 @@
 import '/npm/swiper/7.4.1/swiper-bundle.min.js';
-export function swiperInit(dotNetCallbackRef, callbackMethod, dom, selector, index) {
+export function initSwiper(dotNetCallbackRef, callbackMethod, dom, selector, index) {
     if (dom == null) {
         return;
     }

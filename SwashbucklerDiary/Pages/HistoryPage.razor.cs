@@ -34,7 +34,7 @@ namespace SwashbucklerDiary.Pages
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
                 await JS.InvokeVoidAsync("listenElementVisibility", new object[4] { dotNetCallbackRef, "ShowNormalCalendar", ScrollContainer.Ref, NormalCalendar });
             }
-
+            
             await base.OnAfterRenderAsync(firstRender);
         }
 

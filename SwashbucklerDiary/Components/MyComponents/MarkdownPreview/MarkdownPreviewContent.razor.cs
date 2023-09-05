@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.IServices;
-using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class MarkdownPreview : IAsyncDisposable
+    public partial class MarkdownPreviewContent : IAsyncDisposable
     {
         private ElementReference element;
-        private string? _value;
-        private Dictionary<string, object> _options = new();
-        private bool AfterFirstRender;
         private IJSObjectReference module = default!;
         private bool ShowPreviewImage;
         private string? PreviewImageSrc;
@@ -28,15 +24,13 @@ namespace SwashbucklerDiary.Components
         private IAlertService AlertService { get; set; } = default!;
 
         [Parameter]
-        public string? Value
-        {
-            get => _value;
-            set => SetValue(value);
-        }
+        public string? Value { get;set; }
         [Parameter]
         public string? Class { get; set; }
         [Parameter]
         public string? Style { get; set; }
+        [Parameter]
+        public Dictionary<string, object>? Options { get; set; }
 
         [JSInvokable]
         public async Task After()
@@ -44,11 +38,11 @@ namespace SwashbucklerDiary.Components
             var dotNetCallbackRef = DotNetObjectReference.Create(this);
 
             //点击复制按钮提示复制成功
-            await module.InvokeVoidAsync("Copy", new object[2] { dotNetCallbackRef, "CopySuccess" });
+            await module.InvokeVoidAsync("copy", new object[2] { dotNetCallbackRef, "CopySuccess" });
             //修复点击链接的一些错误
-            await module.InvokeVoidAsync("FixLink", new object[1] { element });
+            await module.InvokeVoidAsync("fixLink", new object[1] { element });
             //图片预览
-            await module.InvokeVoidAsync("PreviewImage", new object[3] { dotNetCallbackRef, "PreviewImage", element });
+            await module.InvokeVoidAsync("previewImage", new object[3] { dotNetCallbackRef, "PreviewImage", element });
         }
 
         [JSInvokable]
@@ -69,27 +63,11 @@ namespace SwashbucklerDiary.Components
         {
             if (firstRender)
             {
-                AfterFirstRender = true;
                 module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/vditor-preview-helper.js");
                 await RenderingMarkdown(Value);
             }
 
             await base.OnAfterRenderAsync(firstRender);
-        }
-
-        private void SetValue(string? value)
-        {
-            if (_value != value)
-            {
-                _value = value;
-                if (AfterFirstRender)
-                {
-                    Task.Run(async () =>
-                    {
-                        await RenderingMarkdown(value);
-                    });
-                }
-            }
         }
 
         private async Task RenderingMarkdown(string? value)
@@ -104,31 +82,11 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            await SetOptions();
             var dotNetCallbackRef = DotNetObjectReference.Create(this);
-            await module.InvokeVoidAsync("PreviewVditor", new object?[4] { dotNetCallbackRef, element, value, _options });
+            await module.InvokeVoidAsync("previewVditor", new object?[4] { dotNetCallbackRef, element, value, Options });
         }
 
-        private async Task SetOptions()
-        {
-            string mode = ThemeService.Dark ? "dark" : "light";
-            string lang = await SettingsService.Get(SettingType.Language);
-            lang = lang.Replace("-", "_");
-            var theme = new Dictionary<string, object?>()
-            {
-                { "current", ThemeService.Dark ? "dark" : "light" },
-                { "path", "npm/vditor/3.9.5/dist/css/content-theme" }
-            };
-
-            _options = new()
-            {
-                { "mode", mode },
-                { "cdn", "npm/vditor/3.9.5" },
-                { "lang", lang },
-                { "theme", theme },
-                { "icon","material" },
-            };
-        }
+        
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {

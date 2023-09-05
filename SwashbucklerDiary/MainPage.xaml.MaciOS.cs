@@ -19,6 +19,7 @@ namespace SwashbucklerDiary
             e.WebView.ScrollView.ShowsVerticalScrollIndicator = false; // 关闭滚动条
         }
 
+#nullable disable
         private class AppDataSchemeHandler : NSObject, IWKUrlSchemeHandler
         {
             [Export("webView:startURLSchemeTask:")]

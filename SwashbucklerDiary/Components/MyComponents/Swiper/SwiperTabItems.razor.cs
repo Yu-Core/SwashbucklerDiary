@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Components
             {
                 module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/swiper-helper.js");
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
-                await module.InvokeVoidAsync("swiperInit", new object[5] { dotNetCallbackRef, "UpdateValue", ElementRef, $"#{Id}", Value.ToInt32() });
+                await module.InvokeVoidAsync("initSwiper", new object[5] { dotNetCallbackRef, "UpdateValue", ElementRef, $"#{Id}", Value.ToInt32() });
                 Show = true;
                 await InvokeAsync(StateHasChanged);
             }

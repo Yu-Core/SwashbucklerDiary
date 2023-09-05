@@ -5,12 +5,13 @@ namespace SwashbucklerDiary.Services
 {
     public class ThemeService : IThemeService
     {
+        public event Action<ThemeState>? OnChanged;
+        private IPlatformService PlatformService;
+
         public ThemeState? ThemeState { get; set; }
         public ThemeState RealThemeState => GetThemeState();
         public bool Light => RealThemeState == Models.ThemeState.Light;
         public bool Dark => RealThemeState == Models.ThemeState.Dark;
-        public event Action<ThemeState>? OnChanged;
-        private IPlatformService PlatformService;
 
         public ThemeService(IPlatformService platformService) 
         {

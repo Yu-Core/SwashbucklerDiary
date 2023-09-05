@@ -25,8 +25,10 @@ namespace SwashbucklerDiary.Platforms.Android
                         QuitApp();
                     }
                 }
+
                 return true;
             }
+
             return false;
         }
 

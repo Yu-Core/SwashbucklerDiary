@@ -1,9 +1,11 @@
-﻿using Android.Webkit;
+﻿using Android.OS;
+using Android.Webkit;
 using Microsoft.AspNetCore.Components.WebView;
 using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary
 {
+#pragma warning disable CA1416 // 验证平台兼容性
     public partial class MainPage
     {
         private partial void BlazorWebViewInitializing(object? sender, BlazorWebViewInitializingEventArgs e)
@@ -15,7 +17,10 @@ namespace SwashbucklerDiary
             e.WebView.VerticalScrollBarEnabled = false; // 关闭滚动条
             e.WebView.Settings.JavaScriptEnabled = true;
             e.WebView.Settings.MediaPlaybackRequiresUserGesture = false; // 是否需要用户手势才能播放
-            e.WebView.SetWebViewClient(new MyWebViewClient(e.WebView.WebViewClient));
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+            {
+                e.WebView.SetWebViewClient(new MyWebViewClient(e.WebView.WebViewClient));
+            }
         }
 
 #nullable disable
