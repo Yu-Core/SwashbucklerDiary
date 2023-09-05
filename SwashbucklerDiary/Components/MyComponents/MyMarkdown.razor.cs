@@ -106,7 +106,7 @@ namespace SwashbucklerDiary.Components
             _options = new()
             {
                 { "mode", "ir" },
-                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link","emoji",btnImage,/*btnAudio,btnVideo*/}},
+                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link",btnImage,/*btnAudio,btnVideo*/}},
                 { "placeholder", I18n.T("Write.ContentPlace")! },
                 { "cdn", "npm/vditor/3.9.5" },
                 { "lang", lang },
