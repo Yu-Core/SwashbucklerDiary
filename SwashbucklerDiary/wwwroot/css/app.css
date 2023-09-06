@@ -140,14 +140,13 @@ a, .btn-link {
 }
 
 .theme--light.list-item-icon.m-icon {
-    /*color: #000000 !important;*/
     color: rgba(0,0,0,.87) !important;
 }
 
-.m-main__wrap {
+/*.m-main__wrap {
     display: flex;
     flex-direction: column;
-}
+}*/
 
 .theme--light .my-navigation-drawer-active {
     background: #eeeeee !important;
@@ -210,16 +209,22 @@ a, .btn-link {
 .my-diary-card-title {
     font-weight: 700 !important;
     padding-bottom: 8px !important;
-    /*font-size:1.1rem !important;*/
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.my-scroll-container {
+    overflow-y: auto !important;
+    position: relative !important;
+    height: 100% !important;
 }
 
 .my-container {
     padding-left: 14px !important;
     padding-right: 14px !important;
     box-sizing: border-box !important;
+    position: absolute !important;
 }
 
 .swiper {
@@ -229,17 +234,6 @@ a, .btn-link {
 .swiper-slide {
     position: relative !important;
     overflow: auto !important;
-}
-
-    .swiper-slide > .my-container {
-        position: absolute !important;
-    }
-
-.my-scroll-container {
-    overflow-y: auto !important;
-    flex-grow: 1 !important;
-    min-height: 0 !important;
-    height: 0 !important;
 }
 
 .theme--light .my-btn-fab {
@@ -294,19 +288,8 @@ a, .btn-link {
     width: 100%;
     height: 100%;
     z-index: 99;
-    display: flex !important;
-    flex-direction: column;
-    flex:1 1 auto;
-    justify-content: center !important;
-    align-items: center !important;
     background: #f7f8f9 !important;
 }
-
-    .my-first-launch-card .my-first-launch-list {
-        text-align: center;
-        width: 100%;
-        background: #f7f8f9 !important;
-    }
 
 .chevron-down {
     transition: transform 0.75s;
