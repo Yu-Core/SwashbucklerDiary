@@ -35,6 +35,11 @@
     "Url": "https://github.com/Yu-Core/MauiBlazorToolkit/blob/master/LICENSE"
   },
   {
+    "Name": "Microsoft.Data.Sqlite",
+    "License": "MIT license",
+    "Url": "https://github.com/dotnet/efcore/blob/release/8.0/LICENSE.txt"
+  },
+  {
     "Name": "MiniExcel",
     "License": "Apache-2.0 license",
     "Url": "https://github.com/mini-software/MiniExcel/blob/master/LICENSE"
@@ -45,6 +50,21 @@
     "Url": "https://github.com/serilog/serilog/blob/dev/LICENSE"
   },
   {
+    "Name": "Serilog.Extensions.Logging",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/serilog/serilog-extensions-logging/blob/dev/LICENSE"
+  },
+  {
+    "Name": "Serilog.Sinks.Async",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/serilog/serilog-sinks-async/blob/dev/LICENSE"
+  },
+  {
+    "Name": "Serilog.Sinks.Debug",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/serilog/serilog-sinks-debug/blob/dev/LICENSE"
+  },
+  {
     "Name": "Serilog.Sinks.SQLite.Maui",
     "License": "Apache-2.0 license",
     "Url": "https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui/blob/dev/LICENSE"
@@ -53,6 +73,11 @@
     "Name": "SQLite-net",
     "License": "MIT license",
     "Url": "https://github.com/praeclarum/sqlite-net/blob/master/LICENSE.txt"
+  },
+  {
+    "Name": "SQLitePCLRaw",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/ericsink/SQLitePCL.raw/blob/master/LICENSE.TXT"
   },
   {
     "Name": "SqlSugar",
