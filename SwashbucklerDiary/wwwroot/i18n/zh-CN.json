@@ -135,8 +135,9 @@
     "sick": "生病"
   },
   "Read": {
-    "OpenPrivacy": "移入隐私库",
-    "ClosePrivacy": "移出隐私库"
+    "OpenPrivacy": "设为私密",
+    "ClosePrivacy": "取消私密",
+    "PrivacyAlert": "已移动至隐私库"
   },
   "AppName": "侠客日记",
   "Mine": {

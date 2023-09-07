@@ -105,6 +105,10 @@ namespace SwashbucklerDiary.Components
             _value.RemoveAt(index2);
             await InvokeAsync(StateHasChanged);
             await OnUpdate.InvokeAsync();
+            if (diaryModel.Private)
+            {
+                await AlertService.Success(I18n.T("Read.PrivacyAlert"));
+            }
         }
 
         public void Export(DiaryModel diary)

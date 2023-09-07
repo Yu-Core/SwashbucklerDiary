@@ -136,7 +136,8 @@
   },
   "Read": {
     "OpenPrivacy": "Private",
-    "ClosePrivacy": "Cancel private"
+    "ClosePrivacy": "Cancel private",
+    "PrivacyAlert": "Moved into the privacy library"
   },
   "AppName": "Swashbuckler Diary",
   "Mine": {

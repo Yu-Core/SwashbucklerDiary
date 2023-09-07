@@ -218,7 +218,9 @@ namespace SwashbucklerDiary.Pages
         private async Task DiaryPrivacyChanged()
         {
             Diary.Private = !Diary.Private;
+            Diary.UpdateTime = DateTime.Now;
             await DiaryService.UpdateAsync(Diary);
+            await AlertService.Success(I18n.T("Read.PrivacyAlert"));
         }
 
         private string CounterValue()
