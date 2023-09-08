@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Components
         private IAlertService AlertService { get; set; } = default!;
 
         [Parameter]
-        public string? Value { get;set; }
+        public string? Value { get; set; }
         [Parameter]
         public string? Class { get; set; }
         [Parameter]
@@ -85,8 +85,6 @@ namespace SwashbucklerDiary.Components
             var dotNetCallbackRef = DotNetObjectReference.Create(this);
             await module.InvokeVoidAsync("previewVditor", new object?[4] { dotNetCallbackRef, element, value, Options });
         }
-
-        
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {

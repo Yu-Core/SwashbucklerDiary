@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Components
 
         private Task CreateXlsxFile() => CreateFile(AppDataService.ExportXlsxFileAndSaveAsync);
 
-        private async Task CreateFile(Func<List<DiaryModel>,Task<bool>> func)
+        private async Task CreateFile(Func<List<DiaryModel>, Task<bool>> func)
         {
             await InternalValueChanged(false);
             await AlertService.StartLoading();

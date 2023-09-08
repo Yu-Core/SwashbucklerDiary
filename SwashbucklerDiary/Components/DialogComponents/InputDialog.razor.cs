@@ -36,19 +36,6 @@ namespace SwashbucklerDiary.Components
         private string PasswordType
             => Password ? (showPassword ? "text" : "password") : string.Empty;
         
-        private void SetValue(bool value)
-        {
-            if (value != Value)
-            {
-                if (value)
-                {
-                    InputText = Text;
-                }
-
-                _value = value;
-            }
-        }
-
         protected virtual async Task HandleOnEnter(KeyboardEventArgs args)
         {
             if (!_value)
@@ -65,6 +52,21 @@ namespace SwashbucklerDiary.Components
         protected async Task HandleOnOK()
         {
             await OnOK.InvokeAsync(InputText);
+        }
+
+        private void SetValue(bool value)
+        {
+            if (value == Value)
+            {
+                return;
+            }
+
+            if (value)
+            {
+                InputText = Text;
+            }
+
+            _value = value;
         }
     }
 }

@@ -36,18 +36,6 @@ namespace SwashbucklerDiary.Components
             }
         }
 
-        public void SetValue(StringNumber value)
-        {
-            if (_value != value)
-            {
-                _value = value;
-                if (Show)
-                {
-                    UpdateSwiper(value);
-                }
-            }
-        }
-
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -63,6 +51,18 @@ namespace SwashbucklerDiary.Components
                 await module.InvokeVoidAsync("initSwiper", new object[5] { dotNetCallbackRef, "UpdateValue", ElementRef, $"#{Id}", Value.ToInt32() });
                 Show = true;
                 await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        private void SetValue(StringNumber value)
+        {
+            if (_value != value)
+            {
+                _value = value;
+                if (Show)
+                {
+                    UpdateSwiper(value);
+                }
             }
         }
 

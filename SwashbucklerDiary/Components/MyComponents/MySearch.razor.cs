@@ -49,6 +49,12 @@ namespace SwashbucklerDiary.Components
             }
         }
 
+        public void Dispose()
+        {
+            NavigateService.Action -= CloseSearch;
+            GC.SuppressFinalize(this);
+        }
+
         private async void CloseSearch()
         {
             await InternalValueChanged(false);
@@ -65,12 +71,6 @@ namespace SwashbucklerDiary.Components
             {
                 await OnChanged.InvokeAsync(Search);
             }
-        }
-
-        public void Dispose()
-        {
-            NavigateService.Action -= CloseSearch;
-            GC.SuppressFinalize(this);
         }
     }
 }

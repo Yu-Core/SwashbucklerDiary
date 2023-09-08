@@ -8,9 +8,8 @@ namespace SwashbucklerDiary.Components
     public partial class SponsorDialog : DialogComponentBase
     {
         private bool _value;
-        private bool ShowCustomAmount => selection == Amounts.Count;
         private bool ShowThank;
-        StringNumber selection = 0;
+        private StringNumber selection = 0;
         private string? CustomAmount;
         private string? ThankContent;
         private readonly static List<string> Amounts = new()
@@ -25,17 +24,21 @@ namespace SwashbucklerDiary.Components
             set => SetValue(value); 
         }
 
+        private bool ShowCustomAmount => selection == Amounts.Count;
+
         private void SetValue(bool value)
         {
-            if(_value != value)
+            if(_value == value)
             {
-                if(value)
-                {
-                    CustomAmount = string.Empty;
-                }
-
-                _value = value;
+                return;
             }
+
+            if (value)
+            {
+                CustomAmount = string.Empty;
+            }
+
+            _value = value;
         }
 
         private async Task OnSponsor(MouseEventArgs mouseEventArgs)
