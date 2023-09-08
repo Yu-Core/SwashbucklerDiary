@@ -1,14 +1,14 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits DialogComponentBase
 
-<MultiDisplay>
+<MultiDisplay OnUpdate="UpdateDisplay">
     <MobileContent>
-        <MMBottomSheet MyValue="Value"
-                       MyValueChanged="ValueChanged"
-                       ContentClass="rounded-t-lg">
+        <MBottomSheet Value="Value"
+                      ValueChanged="ValueChanged"
+                      ContentClass="rounded-t-lg">
             <ActivatorContent>
-                <MButton Icon="true"
-                @attributes="@context.Attrs">
+                <MButton @attributes="@context.Attrs"
+                         Icon="true">
                     @ButtonContent
                 </MButton>
             </ActivatorContent>
@@ -45,14 +45,14 @@
                     </MList>
                 </MCard>
             </ChildContent>
-        </MMBottomSheet>
+        </MBottomSheet>
     </MobileContent>
     <DesktopContent>
         <MMenu Value="Value"
                ValueChanged="ValueChanged"
                Rounded="@("lg")"
-               Bottom
-               Right
+               Bottom="true"
+               Right="true"
                Transition="scroll-x-reverse-transition">
             <ActivatorContent>
                 <MButton @attributes="@context.Attrs"

@@ -28,6 +28,7 @@ namespace SwashbucklerDiary.Components
             {
                 NavigateService.Action -= Close;
             }
+
             base.Dispose(disposing);
         }
 

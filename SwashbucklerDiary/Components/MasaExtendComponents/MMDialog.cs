@@ -28,6 +28,7 @@ namespace SwashbucklerDiary.Components
             {
                 NavigateService.Action -= Close;
             }
+
             return base.DeleteContent();    
         }
 
@@ -38,16 +39,16 @@ namespace SwashbucklerDiary.Components
                 base.Value = value;
                 Task.Run(() =>
                 {
-                    if (value)
-                    {
-                        NavigateService.Action += Close;
-                    }
-                    else
-                    {
-                        NavigateService.Action -= Close;
-                    }
-                });
+            if (value)
+            {
+                NavigateService.Action += Close;
             }
+            else
+            {
+                NavigateService.Action -= Close;
+            }
+                });
+        }
         }
 
         private async void Close()

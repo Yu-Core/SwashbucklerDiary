@@ -14,6 +14,10 @@ namespace SwashbucklerDiary.Components
         public RenderFragment? DesktopContent { get; set; }
         [Parameter]
         public bool Tablet { get; set; }
+        [Parameter]
+        public EventCallback<bool> OnUpdate { get; set; }
+
+        private bool Show;
 
         public void Dispose()
         {
@@ -23,13 +27,25 @@ namespace SwashbucklerDiary.Components
 
         protected override Task OnInitializedAsync()
         {
+            Show = Tablet ? MasaBlazor.Breakpoint.MdAndUp : MasaBlazor.Breakpoint.SmAndUp;
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
             return base.OnInitializedAsync();
         }
 
-        private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
+        private async void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
         {
-            StateHasChanged();
+            var show = Tablet ? MasaBlazor.Breakpoint.MdAndUp : MasaBlazor.Breakpoint.SmAndUp;
+            bool update = Show != show;
+            if(update)
+            {
+                if (OnUpdate.HasDelegate)
+                {
+                    await OnUpdate.InvokeAsync(Show);
+                }
+
+                Show = show;
+                StateHasChanged();
+            }
         }
     }
 }

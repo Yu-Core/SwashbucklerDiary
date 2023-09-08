@@ -18,5 +18,13 @@ namespace SwashbucklerDiary.Components
         public DateOnly? Min { get; set; }
         [Parameter]
         public DateOnly? Max { get; set; }
+
+        private async Task UpdateDisplay(bool value)
+        {
+            if (Value)
+            {
+                await InternalValueChanged(false);
+            }
+        }
     }
 }
