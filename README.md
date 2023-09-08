@@ -112,3 +112,4 @@
 - [Swiper](https://github.com/nolimits4web/swiper)
 - [WebDavClient](https://github.com/skazantsev/WebDavClient)
 - [Vditor](https://github.com/Vanessa219/vditor)
+- [Zoom](https://github.com/anitasv/zoom)

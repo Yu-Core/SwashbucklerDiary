@@ -3,14 +3,16 @@
 
 <MMDialog MyValue="Value"
           MyValueChanged="ValueChanged"
+          Eager="true"
           Fullscreen="true"
           Transition="@(null)">
     <MCard Class="fill-height theme-element d-flex flex-column"
-           Ripple="false"
-           OnClick="()=>InternalValueChanged(false)">
-        <MToolbar Class="flex-grow-0 theme-element"
+           Ripple="false">
+        <MToolbar Class="flex-grow-0"
+                  Style="z-index:2;background-color:transparent;"
                   Elevation="0">
-            <MButton Icon="true">
+            <MButton Icon="true"
+                     OnClick="()=>InternalValueChanged(false)">
                 <MIcon>
                     mdi-arrow-left
                 </MIcon>
@@ -19,22 +21,22 @@
             <MSpacer></MSpacer>
 
             <MButton Icon="true"
-                     OnClickStopPropagation="true"
                      OnClick="SaveToLocal">
                 <MIcon>
                     mdi-tray-arrow-down
                 </MIcon>
             </MButton>
             <MButton Icon="true"
-                     OnClickStopPropagation="true"
                      OnClick="Share">
                 <MIcon>
                     mdi-share-variant-outline
                 </MIcon>
             </MButton>
         </MToolbar>
-        <div class="flex-grow-1" style="position:relative;">
-            <MImage Style="position:absolute;"
+
+        <div class="flex-grow-1" style="position:relative;z-index:1;">
+            <MImage Id="zoom-image"
+                    Style="position:absolute;"
                     Src="@Src"
                     Width="@("100%")"
                     Height="@("100%")"
@@ -49,7 +51,9 @@
                 </PlaceholderContent>
             </MImage>
         </div>
-        <MToolbar Class="flex-grow-0 theme-element"
+
+        <MToolbar Class="flex-grow-0"
+                  Style="background-color:transparent;"
                   Elevation="0">
         </MToolbar>
     </MCard>
