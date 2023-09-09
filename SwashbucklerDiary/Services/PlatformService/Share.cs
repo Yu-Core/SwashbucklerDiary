@@ -4,6 +4,11 @@
     {
         public Task ShareFile(string title, string path)
         {
+            if (!File.Exists(path))
+            {
+                return Task.CompletedTask;
+            }
+
             return Share.Default.RequestAsync(new ShareFileRequest
             {
                 Title = title,

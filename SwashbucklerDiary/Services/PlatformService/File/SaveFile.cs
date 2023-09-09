@@ -9,6 +9,11 @@ namespace SwashbucklerDiary.Services
 
         public async Task<string?> SaveFileAsync(string? path, string name, string sourceFilePath)
         {
+            if(!File.Exists(sourceFilePath))
+            {
+                return null;
+            }
+
             using FileStream stream = File.OpenRead(sourceFilePath);
             //Cannot save an existing file
             //https://github.com/CommunityToolkit/Maui/issues/1049
