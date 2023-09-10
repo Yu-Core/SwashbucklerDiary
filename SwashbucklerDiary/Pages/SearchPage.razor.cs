@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Components;
+﻿using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.Models;
 using System.Linq.Expressions;
@@ -13,9 +14,14 @@ namespace SwashbucklerDiary.Pages
             ShowSearch = true
         };
 
+        [Parameter]
+        [SupplyParameterFromQuery]
+        public string? Query { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             LoadCache();
+            LoadQuery();
             NavigateService.BeforeNavigate += SetCache;
             await base.OnInitializedAsync();
         }
@@ -51,6 +57,14 @@ namespace SwashbucklerDiary.Pages
         private void LoadCache()
         {
             SearchForm = (SearchForm?)NavigateService.GetCurrentCache(nameof(SearchForm)) ?? new();
+        }
+
+        private void LoadQuery()
+        {
+            if (!string.IsNullOrEmpty(Query))
+            {
+                SearchForm.Search = Query;
+            }
         }
 
         private Task SetCache()

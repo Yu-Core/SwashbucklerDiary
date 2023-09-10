@@ -387,3 +387,27 @@ a, .btn-link {
 .theme--dark.m-application .my-alert-loading {
     color: #fff;
 }
+
+@media screen and (min-width:960px) {
+    .m-navigation-drawer .m-list-item {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+}
+
+
+.theme--light.m-application .primary-background {
+    background-color: #f7f8f9 !important;
+}
+
+.theme--dark.m-application .primary-background {
+    background-color: #121212 !important;
+}
+
+.theme--light.m-application .second-background {
+    background-color: #fff !important;
+}
+
+.theme--dark.m-application .second-background {
+    background-color: #1e1e1e !important;
+}

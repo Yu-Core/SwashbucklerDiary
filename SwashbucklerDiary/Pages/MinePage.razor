@@ -6,28 +6,26 @@
 
 <MAppBar App="true"
          Elevation="0">
-    <MToolbarTitle Class="font-weight-bold">
+    <MToolbarTitle Class="font-weight-bold"
+                   Style="width:100%;">
         @(I18n.T("Mine.Mine"))
     </MToolbarTitle>
     <MSpacer></MSpacer>
-    <MButton Large
-             Icon
-              OnClick="@(()=>To("searchAppFunction"))">
-         <MIcon>mdi-magnify</MIcon>
-     </MButton>
- </MAppBar>
+    <MultiSearchControl OnSearch="Search">
+    </MultiSearchControl>
+</MAppBar>
 
- <ScrollContainer>
-     <div class="d-sm-flex flex-sm-row justify-space-between">
-         <MHover>
-             <MCard @attributes="context.Attrs"
-                    Class="@($"setting-info mb-5 py-sm-3 py-md-5 {(context.Hover?"elevation-sm-2":"")}")"
-                    Elevation="0"
-                    Rounded="@("lg")"
-                    Ripple="false"
-                    OnClick="@(()=>To("user"))">
-                 <MList>
-                     <MListItem ThreeLine>
+<ScrollContainer>
+    <div class="d-sm-flex flex-sm-row justify-space-between">
+        <MHover>
+            <MCard @attributes="context.Attrs"
+                   Class="@($"setting-info mb-5 py-sm-3 py-md-5 {(context.Hover?"elevation-sm-2":"")}")"
+                   Elevation="0"
+                   Rounded="@("lg")"
+                   Ripple="false"
+                   OnClick="@(()=>To("user"))">
+                <MList>
+                    <MListItem ThreeLine>
                         <MListItemAvatar Class="ml-sm-2 ml-md-4 mr-md-6"
                                          Rounded="@("lg")"
                                          Size="70"

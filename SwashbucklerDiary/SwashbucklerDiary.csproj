@@ -113,7 +113,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.3.0" />
-		<PackageReference Include="Masa.Blazor" Version="1.0.3" />
+		<PackageReference Include="Masa.Blazor" Version="1.0.4" />
 		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.10" />
 		<PackageReference Include="MiniExcel" Version="1.31.2" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />

@@ -1,35 +1,35 @@
 ﻿@page "/search"
 @inherits DiariesPageComponentBase
 
-<MAppBar App
-          Elevation="0">
-     <MButton Icon
-              OnClick="NavigateToBack">
-         <MIcon>mdi-arrow-left</MIcon>
-     </MButton>
+<MAppBar App="true"
+         Elevation="0">
+    <MButton Icon="true"
+             OnClick="NavigateToBack">
+        <MIcon>mdi-arrow-left</MIcon>
+    </MButton>
 
-     <MySearch @bind-Value="ShowSearch"
-     @bind-Search="Search"
-               Placeholder="@(I18n.T("Search.Please enter diary keywords"))"
-               OnChanged="UpdateDiariesAsync">
-     </MySearch>
+    <MySearch @bind-Value="ShowSearch"
+    @bind-Search="Search"
+              Placeholder="@(I18n.T("Search.Please enter diary keywords"))"
+              OnChanged="UpdateDiariesAsync">
+    </MySearch>
 
-     <MButton Icon="true"
-              OnClick="()=>ShowFilter=!ShowFilter">
-         <MIcon>
-             @(IsDateFiltered ? "mdi-filter-check-outline" : "mdi-filter-outline")
-         </MIcon>
-     </MButton>
- </MAppBar>
- <ScrollContainer>
-     <DiaryCardList @bind-Tags="Tags"
-                    Value="Diaries"
-                    NotFoundText="@(I18n.T("Search.Not Found"))">
-     </DiaryCardList>
- </ScrollContainer>
+    <MButton Icon="true"
+             OnClick="()=>ShowFilter=!ShowFilter">
+        <MIcon>
+            @(IsDateFiltered ? "mdi-filter-check-outline" : "mdi-filter-outline")
+        </MIcon>
+    </MButton>
+</MAppBar>
+<ScrollContainer>
+    <DiaryCardList @bind-Tags="Tags"
+                   Value="Diaries"
+                   NotFoundText="@(I18n.T("Search.Not Found"))">
+    </DiaryCardList>
+</ScrollContainer>
 
- <DateFilterDialog @bind-Value="ShowFilter"
- @bind-Form="SearchForm.DateFilter"
-                   OnOK="UpdateDiariesAsync"
-                   OnReset="UpdateDiariesAsync">
- </DateFilterDialog>
+<DateFilterDialog @bind-Value="ShowFilter"
+@bind-Form="SearchForm.DateFilter"
+                  OnOK="UpdateDiariesAsync"
+                  OnReset="UpdateDiariesAsync">
+</DateFilterDialog>

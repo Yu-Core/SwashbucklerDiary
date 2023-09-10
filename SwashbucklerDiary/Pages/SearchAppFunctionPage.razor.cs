@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Components;
+﻿using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.Models;
 using System.Linq.Expressions;
@@ -15,9 +16,14 @@ namespace SwashbucklerDiary.Pages
             ShowSearch = true
         };
 
+        [Parameter]
+        [SupplyParameterFromQuery]
+        public string? Query { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             LoadCache();
+            LoadQuery();
             await LoadSettings();
             await SetAppFunctions();
             UpdateAppFunctions();
@@ -53,6 +59,13 @@ namespace SwashbucklerDiary.Pages
         }
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
 
+        private void LoadQuery()
+        {
+            if (!string.IsNullOrEmpty(Query))
+            {
+                SearchForm.Search = Query;
+            }
+        }
         private async Task SetAppFunctions()
         {
             var appFunctions = await PlatformService.ReadJsonFileAsync<List<AppFunction>>("wwwroot/json/app-functions/app-functions.json");

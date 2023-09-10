@@ -49,7 +49,7 @@
 </MAppBar>
 
 <ScrollContainer ContentClass="d-flex flex-column"
-                 ContentStyle="height:100%;">
+                 ContentStyle="height:100%;padding-top:0px;">
     <div>
         <div class="px-3 px-sm-1 d-flex align-end">
             @if (EnableEditCreateTime)
@@ -157,27 +157,9 @@
         </div>
     </div>
 
-    <div class="d-hover-none @(EnableMarkdown?"vditor-toolbar-help":"")">
+    <div class="@(EnableMarkdown?"vditor-toolbar-help":"")">
     </div>
 
-    <div class="d-no-hover-none hidden-xs-only">
-        <MButton Class="px-8 mr-2 my-btn-chip text-subtitle-1"
-                 Rounded="true"
-                 Width="120"
-                 Height="40"
-                 Outlined="true"
-                 OnClick="OnSave">
-            @(I18n.T("Share.Save"))
-        </MButton>
-        <MButton Class="px-8 my-btn-chip text-subtitle-1"
-                 Width="120"
-                 Height="40"
-                 Rounded="true"
-                 Outlined="true"
-                 OnClick="OnClear">
-            @(I18n.T("Share.Clear"))
-        </MButton>
-    </div>
 </ScrollContainer>
 
 <SelectTags @bind-Value="ShowSelectTag"

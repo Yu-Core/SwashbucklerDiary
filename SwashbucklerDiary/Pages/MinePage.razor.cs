@@ -169,7 +169,12 @@ namespace SwashbucklerDiary.Pages
                 Log.Error($"{e.Message}\n{e.StackTrace}");
                 await AlertService.Error(I18n.T("Mine.QQGroupError"));
             }
-
+        }
+        
+        private Task Search(string? value)
+        {
+            To($"searchAppFunction?query={value}");
+            return Task.CompletedTask;
         }
     }
 }

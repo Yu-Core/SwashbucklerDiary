@@ -126,5 +126,11 @@ namespace SwashbucklerDiary.Pages
             await UpdateDiariesAsync();
             await InvokeAsync(StateHasChanged);
         }
+
+        private Task Search(string? value)
+        {
+            To($"search?query={value}");
+            return Task.CompletedTask;
+        }
     }
 }

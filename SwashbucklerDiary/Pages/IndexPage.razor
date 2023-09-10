@@ -3,8 +3,8 @@
 
 <link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
 
-<MAppBar App
-          Elevation="0">
+<MAppBar App="true"
+         Elevation="0">
      <MTabs @bind-Value="tab"
             ActiveClass="text-h6 font-weight-bold"
            HideSlider>
@@ -17,18 +17,18 @@
             @(I18n.T("Index.Tag"))
         </MTab>
     </MTabs>
-    <MSpacer></MSpacer>
-    <MButton Large
-             Icon
-              OnClick="@(()=>To("search"))">
-         <MIcon>mdi-magnify</MIcon>
-     </MButton>
- </MAppBar>
 
- <SwiperTabItems @bind-Value="tab">
-     <SwiperTabItem>
-         <div class="mb-5 pl-2">
-             @if (ShowDate)
+    <MSpacer></MSpacer>
+
+    <MultiSearchControl OnSearch="Search">
+    </MultiSearchControl>
+
+</MAppBar>
+
+<SwiperTabItems @bind-Value="tab">
+    <SwiperTabItem>
+        <div class="pl-2">
+            @if (ShowDate)
             {
                 <div class="text--secondary mb-2">
                     @(DateTime.Now.ToString("yyyy/MM/dd") + " " + I18n.ToWeek())
@@ -37,7 +37,7 @@
 
             @if (ShowWelcomeText)
             {
-                <div class="text-h6">
+                <div class="text-h6 mb-5">
                     @GetWelcomeText()
                 </div>
             }
