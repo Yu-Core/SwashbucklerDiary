@@ -7,6 +7,8 @@ namespace SwashbucklerDiary.Components
     {
         [Inject]
         private II18nService I18n { get; set; } = default!;
+        [Inject]
+        private IThemeService ThemeService { get; set; } = default!;
 
         [Parameter]
         public bool Show { get; set; }
@@ -16,5 +18,6 @@ namespace SwashbucklerDiary.Components
         public EventCallback OnCancel { get; set; }
 
         private string ShowClass => Show ? "" : "d-none";
+        private bool Drak => ThemeService.Dark;
     }
 }

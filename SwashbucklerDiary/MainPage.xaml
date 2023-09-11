@@ -11,7 +11,8 @@
         <mauiBlazorToolkit:TitleBarBehavior TitleBarColor="#f7f8f9" TitleBarStyle="DarkContent"></mauiBlazorToolkit:TitleBarBehavior>
     </ContentPage.Behaviors>
     <BlazorWebView x:Name="_blazorWebView"
-                   HostPage="wwwroot/index.html">
+                   HostPage="wwwroot/index.html"
+                   BackgroundColor="{DynamicResource PageBackgroundColor}">
         <BlazorWebView.RootComponents>
             <RootComponent Selector="#app" ComponentType="{x:Type local:Main}" />
         </BlazorWebView.RootComponents>

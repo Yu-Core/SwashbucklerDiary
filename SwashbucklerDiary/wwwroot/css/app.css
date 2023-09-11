@@ -288,8 +288,17 @@ a, .btn-link {
     width: 100%;
     height: 100%;
     z-index: 99;
-    background: #f7f8f9 !important;
 }
+
+    .my-first-launch-card .theme--light.agreement-confirm-btn {
+        background-color: #000 !important;
+        color: #fff !important;
+    }
+
+    .my-first-launch-card .theme--dark.agreement-confirm-btn {
+        background-color: #fff !important;
+        color: #000 !important;
+    }
 
 .chevron-down {
     transition: transform 0.75s;
@@ -394,7 +403,6 @@ a, .btn-link {
         padding-right: 32px;
     }
 }
-
 
 .theme--light.m-application .primary-background {
     background-color: #f7f8f9 !important;
