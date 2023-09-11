@@ -1,8 +1,7 @@
 ﻿@page "/read/{id:guid}"
 @inherits PageComponentBase
 
-<MAppBar App="true"
-         Elevation="0">
+<MyAppBar>
     <MButton Icon="true"
              OnClick="NavigateToBack">
         <MIcon>
@@ -43,7 +42,7 @@
             </MultiDisplay>
         </ButtonContent>
     </MultiMenu>
-</MAppBar>
+</MyAppBar>
 
 <ScrollContainer>
     <div id="screenshot" class="primary-background">

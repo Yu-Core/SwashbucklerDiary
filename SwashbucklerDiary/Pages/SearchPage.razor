@@ -1,8 +1,7 @@
 ﻿@page "/search"
 @inherits DiariesPageComponentBase
 
-<MAppBar App="true"
-         Elevation="0">
+<MyAppBar>
     <MButton Icon="true"
              OnClick="NavigateToBack">
         <MIcon>mdi-arrow-left</MIcon>
@@ -20,7 +19,8 @@
             @(IsDateFiltered ? "mdi-filter-check-outline" : "mdi-filter-outline")
         </MIcon>
     </MButton>
-</MAppBar>
+</MyAppBar>
+
 <ScrollContainer>
     <DiaryCardList @bind-Tags="Tags"
                    Value="Diaries"

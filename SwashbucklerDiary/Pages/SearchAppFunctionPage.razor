@@ -1,9 +1,9 @@
 ﻿@page "/searchAppFunction"
 @inherits PageComponentBase
 
-<MAppBar App
-          Elevation="0">
-     <MButton Icon
+
+<MyAppBar>
+    <MButton Icon
               OnClick="NavigateToBack">
          <MIcon>mdi-arrow-left</MIcon>
      </MButton>
@@ -13,7 +13,7 @@
                Placeholder="@(I18n.T("SearchAppFunction.Placeholder"))"
                OnChanged="UpdateAppFunctions">
      </MySearch>
- </MAppBar>
+ </MyAppBar>
 
  <ScrollContainer>
      @if (AppFunctions.Any())

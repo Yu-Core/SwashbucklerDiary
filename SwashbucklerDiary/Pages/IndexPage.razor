@@ -3,7 +3,7 @@
 
 <link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
 
-<MAppBar App="true"
+<MyAppBar>
          Elevation="0">
      <MTabs @bind-Value="tab"
             ActiveClass="text-h6 font-weight-bold"
@@ -23,7 +23,8 @@
     <MultiSearchControl OnSearch="Search">
     </MultiSearchControl>
 
-</MAppBar>
+</MyAppBar>
+
 
 <SwiperTabItems @bind-Value="tab">
     <SwiperTabItem>

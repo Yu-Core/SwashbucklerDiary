@@ -2,8 +2,7 @@
 @namespace SwashbucklerDiary.Pages
 @inherits PageComponentBase
 
-<MAppBar App="true"
-         Elevation="0">
+<MyAppBar>
     <MButton Icon="true"
              OnClick="NavigateToBack">
         <MIcon>
@@ -23,7 +22,7 @@
             mdi-magnify
         </MIcon>
     </MButton>
-</MAppBar>
+</MyAppBar>
 
 <ScrollContainer>
     <div class="d-flex justify-space-between flex-wrap">
@@ -37,32 +36,32 @@
                     <MListItem>
                         <MListItemAvatar>
                             <MIcon XLarge
-                                   Color="@GetIconColor(item)">
-                                @(AchievementPage.GetIcon(item))
-                            </MIcon>
-                        </MListItemAvatar>
+                                    Color="@GetIconColor(item)">
+                                 @(AchievementPage.GetIcon(item))
+                             </MIcon>
+                         </MListItemAvatar>
 
-                        <MListItemContent>
-                            <MListItemTitle Class="mb-4 font-weight-bold">
-                                @(I18n.T(item.Name))
-                            </MListItemTitle>
+                         <MListItemContent>
+                             <MListItemTitle Class="mb-4 font-weight-bold">
+                                 @(I18n.T(item.Name))
+                             </MListItemTitle>
 
-                            <MListItemSubtitle Class="mb-4">
-                                @(I18n.T(item.Description))
-                            </MListItemSubtitle>
+                             <MListItemSubtitle Class="mb-4">
+                                 @(I18n.T(item.Description))
+                             </MListItemSubtitle>
 
-                            <MProgressLinear Value="AchievementPage.GetProgressRate(item)"
-                                             Class="rounded-pill"
-                                             Color="@(GetProgressRateColor(item))"
-                                             Height="20">
-                                <strong class="@GetProgressRateTextColor(item)">
-                                    @(GetProgressRateText(item))
-                                </strong>
-                            </MProgressLinear>
-                        </MListItemContent>
-                    </MListItem>
-                </MList>
-            </MCard>
+                             <MProgressLinear Value="AchievementPage.GetProgressRate(item)"
+                                              Class="rounded-pill"
+                                              Color="@(GetProgressRateColor(item))"
+                                              Height="20">
+                                 <strong class="@GetProgressRateTextColor(item)">
+                                     @(GetProgressRateText(item))
+                                 </strong>
+                             </MProgressLinear>
+                         </MListItemContent>
+                     </MListItem>
+                 </MList>
+             </MCard>
         }
     </div>
 

@@ -6,47 +6,44 @@
     <link href="css/extend/masa-blazor-extend-enqueued-snackbars-write.css" rel="stylesheet" />
 }
 
-<MAppBar App="true"
-         Elevation="0">
-    <ChildContent>
-        <MButton Icon="true"
-                 OnClick="NavigateToBack">
-            <MIcon>
-                mdi-arrow-left
-            </MIcon>
-        </MButton>
+<MyAppBar>
+    <MButton Icon="true"
+             OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
 
-        <MSpacer></MSpacer>
+    <MSpacer></MSpacer>
 
-        <MButton Icon="true"
-                 OnClick="InsertTimestamp">
-            <MIcon>
-                mdi-clock-outline
-            </MIcon>
-        </MButton>
+    <MButton Icon="true"
+             OnClick="InsertTimestamp">
+        <MIcon>
+            mdi-clock-outline
+        </MIcon>
+    </MButton>
 
-        <MButton Icon="true"
-                 OnClick="()=>ShowSelectTag = true">
-            <MIcon>
-                mdi-label-outline
-            </MIcon>
-        </MButton>
+    <MButton Icon="true"
+             OnClick="()=>ShowSelectTag = true">
+        <MIcon>
+            mdi-label-outline
+        </MIcon>
+    </MButton>
 
-        <MultiMenu @bind-Value="ShowMenu"
-                   ListItemModels="ListItemModels">
-            <ButtonContent>
-                <MultiDisplay>
-                    <DesktopContent>
-                        <MIcon>mdi-dots-horizontal</MIcon>
-                    </DesktopContent>
-                    <MobileContent>
-                        <MIcon>mdi-dots-vertical</MIcon>
-                    </MobileContent>
-                </MultiDisplay>
-            </ButtonContent>
-        </MultiMenu>
-    </ChildContent>
-</MAppBar>
+    <MultiMenu @bind-Value="ShowMenu"
+               ListItemModels="ListItemModels">
+        <ButtonContent>
+            <MultiDisplay>
+                <DesktopContent>
+                    <MIcon>mdi-dots-horizontal</MIcon>
+                </DesktopContent>
+                <MobileContent>
+                    <MIcon>mdi-dots-vertical</MIcon>
+                </MobileContent>
+            </MultiDisplay>
+        </ButtonContent>
+    </MultiMenu>
+</MyAppBar>
 
 <ScrollContainer ContentClass="d-flex flex-column"
                  ContentStyle="height:100%;padding-top:0px;">

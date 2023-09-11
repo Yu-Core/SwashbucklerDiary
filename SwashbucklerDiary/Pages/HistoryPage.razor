@@ -3,8 +3,7 @@
 
 <link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
 
-<MAppBar App="true"
-         Elevation="0">
+<MyAppBar>
     @if (NormalCalendarVisible)
     {
         <MToolbarTitle Class="font-weight-bold">
@@ -25,7 +24,7 @@
             </MTextField>
         </div>
     }
-</MAppBar>
+</MyAppBar>
 
 <ScrollContainer @ref="ScrollContainer">
     <div @ref="NormalCalendar" class="normal-calendar">

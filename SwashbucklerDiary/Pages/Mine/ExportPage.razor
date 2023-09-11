@@ -2,35 +2,35 @@
 @namespace SwashbucklerDiary.Pages
 @inherits PageComponentBase
 
-<MAppBar App="true"
-         Elevation="0">
-    <MButton Icon
-             OnClick="NavigateToBack">
-        <MIcon>
-            mdi-arrow-left
-        </MIcon>
-    </MButton>
-    <MTabs @bind-Value="tab"
-           ActiveClass="text-h6 font-weight-bold"
-           HideSlider="true">
-        <MTab Class="my-tab"
-              Ripple="false">
-            @(I18n.T("Export.Local.Name"))
-        </MTab>
-        <MTab Class="my-tab"
-              Ripple="false">
-            @(I18n.T("Export.LAN.Name"))
-        </MTab>
-    </MTabs>
-    <MSpacer></MSpacer>
-</MAppBar>
 
-<SwiperTabItems @bind-Value="tab">
-    <SwiperTabItem>
-        <LocalExport></LocalExport>
-    </SwiperTabItem>
-    <SwiperTabItem>
-        <LANTransfer></LANTransfer>
-    </SwiperTabItem>
-</SwiperTabItems>
+<MyAppBar>
+    <MButton Icon
+              OnClick="NavigateToBack">
+         <MIcon>
+             mdi-arrow-left
+         </MIcon>
+     </MButton>
+     <MTabs @bind-Value="tab"
+            ActiveClass="text-h6 font-weight-bold"
+            HideSlider="true">
+         <MTab Class="my-tab"
+               Ripple="false">
+             @(I18n.T("Export.Local.Name"))
+         </MTab>
+         <MTab Class="my-tab"
+               Ripple="false">
+             @(I18n.T("Export.LAN.Name"))
+         </MTab>
+     </MTabs>
+     <MSpacer></MSpacer>
+ </MyAppBar>
+
+ <SwiperTabItems @bind-Value="tab">
+     <SwiperTabItem>
+         <LocalExport></LocalExport>
+     </SwiperTabItem>
+     <SwiperTabItem>
+         <LANTransfer></LANTransfer>
+     </SwiperTabItem>
+ </SwiperTabItems>
 

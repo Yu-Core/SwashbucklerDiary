@@ -4,8 +4,7 @@
 
 <link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
 
-<MAppBar App="true"
-         Elevation="0">
+<MyAppBar>
     <MToolbarTitle Class="font-weight-bold"
                    Style="width:100%;">
         @(I18n.T("Mine.Mine"))
@@ -13,7 +12,7 @@
     <MSpacer></MSpacer>
     <MultiSearchControl OnSearch="Search">
     </MultiSearchControl>
-</MAppBar>
+</MyAppBar>
 
 <ScrollContainer>
     <div class="d-sm-flex flex-sm-row justify-space-between">
