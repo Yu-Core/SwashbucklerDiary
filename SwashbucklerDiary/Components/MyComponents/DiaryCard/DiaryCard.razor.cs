@@ -62,7 +62,7 @@ namespace SwashbucklerDiary.Components
             string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetWeatherIcon(Value.Weather);
 
         private string? GetMoodIcon() =>
-            string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetMoodIcon(Value.Weather);
+            string.IsNullOrWhiteSpace(Value.Mood) ? null : IconService.GetMoodIcon(Value.Mood);
 
         private void SetContent()
         {
