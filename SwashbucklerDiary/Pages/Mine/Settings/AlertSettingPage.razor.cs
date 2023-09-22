@@ -4,7 +4,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class AlertSettingPage : PageComponentBase
+    public partial class AlertSettingPage : ImportantComponentBase
     {
         private int _timeout;
         private bool ShowTimeout;

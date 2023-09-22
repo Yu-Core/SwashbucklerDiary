@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class WritePage : PageComponentBase, IDisposable
+    public partial class WritePage : ImportantComponentBase, IDisposable
     {
         private bool ShowMenu;
         private bool ShowSelectTag;
@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Pages
         private bool CreateMode;
         private bool Overlay;
         private MyMarkdown? MyMarkdown;
-        private MMTextarea? MMTextarea;
+        private MTextareaExtension? MTextareaExtension;
         private List<DynamicListItem> ListItemModels = new();
         private DiaryModel Diary = new()
         {
@@ -51,30 +51,50 @@ namespace SwashbucklerDiary.Pages
         [SupplyParameterFromQuery]
         public Guid? DiaryId { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
-            NavigateService.Action += NavigateToBack;
-            NavigateService.BeforeNavBtn += SaveDiaryAsync;
+            NavigateService.BeforePop += BeforePop;
+            NavigateService.BeforePopToRoot += BeforePopToRoot;
             PlatformService.Stopped += LeaveAppSaveDiary;
             LoadView();
+
+            base.OnInitialized();
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
             await LoadSettings();
             await UpdateTags();
             await SetTag();
             await SetDiary();
         }
 
-        protected override async void NavigateToBack()
+        private async Task BeforePop(PopEventArgs e)
         {
+            if (!IsCurrentPage)
+            {
+                return;
+            }
+
             await SaveDiaryAsync();
-            base.NavigateToBack();
+        }
+
+        private async Task BeforePopToRoot(PopEventArgs e)
+        {
+            if (!IsCurrentPage)
+            {
+                return;
+            }
+
+            await SaveDiaryAsync();
         }
 
         protected override void OnDispose()
         {
             MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
-            NavigateService.Action -= NavigateToBack;
-            NavigateService.BeforeNavBtn -= SaveDiaryAsync;
+            NavigateService.BeforePop -= BeforePop;
+            NavigateService.BeforePopToRoot -= BeforePopToRoot;
             PlatformService.Stopped -= LeaveAppSaveDiary;
             base.OnDispose();
         }
@@ -191,21 +211,6 @@ namespace SwashbucklerDiary.Pages
         private void SaveSelectTags()
         {
             ShowSelectTag = false;
-        }
-
-        private void OnSave()
-        {
-            if (string.IsNullOrWhiteSpace(Diary.Content))
-            {
-                return;
-            }
-            NavigateToBack();
-        }
-
-        private void OnClear()
-        {
-            Diary.Content = string.Empty;
-            this.StateHasChanged();
         }
 
         private async void LeaveAppSaveDiary()
@@ -387,7 +392,7 @@ namespace SwashbucklerDiary.Pages
             }
             else
             {
-                await MMTextarea!.InsertValueAsync(dateTimeNow);
+                await MTextareaExtension!.InsertValueAsync(dateTimeNow);
             }
         }
     }

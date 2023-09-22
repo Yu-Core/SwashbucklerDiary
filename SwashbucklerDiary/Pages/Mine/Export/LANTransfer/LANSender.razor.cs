@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace SwashbucklerDiary.Pages
 {
     //自我批评一下，此处代码写的太乱
-    public partial class LANSender : PageComponentBase
+    public partial class LANSender : ImportantComponentBase
     {
         private UdpClient? udpClient;
         private readonly IPAddress multicastAddress = IPAddress.Parse("239.0.0.1"); // 组播地址
@@ -67,8 +67,6 @@ namespace SwashbucklerDiary.Pages
 
             base.OnDispose();
         }
-
-        private bool IsCurrentPage => NavigateService.Navigation.Uri.Contains("lanSender");
 
         private bool UDPListening
         {

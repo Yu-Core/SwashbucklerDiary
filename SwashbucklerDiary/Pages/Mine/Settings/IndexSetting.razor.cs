@@ -3,7 +3,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class IndexSetting : PageComponentBase
+    public partial class IndexSetting : ImportantComponentBase
     {
         private bool WelcomText;
         private bool Date;

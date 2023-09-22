@@ -4,7 +4,7 @@ using SwashbucklerDiary.Components;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class BackupsPage : PageComponentBase
+    public partial class BackupsPage : ImportantComponentBase
     {
         private StringNumber tab = 0;
         private readonly List<string> Views = new() { "Local", "WebDAV" };
@@ -17,14 +17,6 @@ namespace SwashbucklerDiary.Pages
         {
             base.OnInitialized();
             InitTab();
-            SetCurrentUrl();
-            NavigateService.BeforeNavigate += SetCurrentUrl;
-        }
-
-        protected override void OnDispose()
-        {
-            NavigateService.BeforeNavigate -= SetCurrentUrl;
-            base.OnDispose();
         }
 
         private void InitTab()
@@ -35,13 +27,5 @@ namespace SwashbucklerDiary.Pages
             }
             tab = Views.IndexOf(View!);
         }
-
-        private Task SetCurrentUrl()
-        {
-            var url = Navigation.GetUriWithQueryParameter("View", Views[tab.ToInt32()]);
-            NavigateService.SetCurrentUrl(url);
-            return Task.CompletedTask;
-        }
-
     }
 }

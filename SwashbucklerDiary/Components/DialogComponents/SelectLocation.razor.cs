@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Components
         private bool ShowAdd;
         private List<LocationModel> _locations = new();
         private MCardText? mCardText;
-        private MMDialog? myDialog;
+        private MDialogExtension? myDialog;
         private string? InternalLocation;
 
         [Inject]

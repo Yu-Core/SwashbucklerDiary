@@ -1,5 +1,5 @@
 ﻿@page "/searchAppFunction"
-@inherits PageComponentBase
+@inherits ImportantComponentBase
 
 
 <MyAppBar>
@@ -8,8 +8,8 @@
          <MIcon>mdi-arrow-left</MIcon>
      </MButton>
 
-     <MySearch @bind-Value="ShowSearch"
-     @bind-Search="Search"
+     <MySearch @bind-Search="Search"
+               Value="true"
                Placeholder="@(I18n.T("SearchAppFunction.Placeholder"))"
                OnChanged="UpdateAppFunctions">
      </MySearch>

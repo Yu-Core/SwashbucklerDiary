@@ -2,7 +2,7 @@
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class PrivacyPolicyPage : PageComponentBase
+    public partial class PrivacyPolicyPage : ImportantComponentBase
     {
         private string? Content { get; set; }
 

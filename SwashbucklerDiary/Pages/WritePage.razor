@@ -1,9 +1,11 @@
 ﻿@page "/write"
-@inherits PageComponentBase
+@inherits ImportantComponentBase
 
 @if (EnableMarkdown)
 {
-    <link href="css/extend/masa-blazor-extend-enqueued-snackbars-write.css" rel="stylesheet" />
+    <OnlyCurrentPageDiaplsy>
+        <link href="css/extend/masa-blazor-extend-enqueued-snackbars-write.css" rel="stylesheet" />
+    </OnlyCurrentPageDiaplsy>
 }
 
 <MyAppBar>
@@ -120,24 +122,24 @@
         @if (EnableMarkdown)
         {
             <MyMarkdown @ref="MyMarkdown"
-            @bind-Value="Diary.Content"
+                        @bind-Value="Diary.Content"
                         WrapClass="write-markdown-wrap"
                         Class="my-sm-4 px-3 rounded-lg write-markdown">
             </MyMarkdown>
         }
         else
         {
-            <MMTextarea @ref="MMTextarea"
-            @bind-Value="Diary.Content"
-                        Class="@($"my-sm-4 user-select rounded-lg flex-grow-1 flex-column {(EnableMarkdown?"d-none":"")}")"
-                        Solo="Mobile"
-                        Flat="Mobile"
-                        Outlined="Desktop"
-                        HideDetails="@("auto")"
-                        NoResize="true"
-                        spellcheck="false"
-                        Placeholder="@(I18n.T("Write.ContentPlace"))">
-            </MMTextarea>
+            <MTextareaExtension @ref="MTextareaExtension"
+                                @bind-Value="Diary.Content"
+                                Class="@($"my-sm-4 user-select rounded-lg flex-grow-1 flex-column {(EnableMarkdown?"d-none":"")}")"
+                                Solo="Mobile"
+                                Flat="Mobile"
+                                Outlined="Desktop"
+                                HideDetails="@("auto")"
+                                NoResize="true"
+                                spellcheck="false"
+                                Placeholder="@(I18n.T("Write.ContentPlace"))">
+            </MTextareaExtension>
         }
     </div>
 
@@ -160,31 +162,31 @@
 </ScrollContainer>
 
 <SelectTags @bind-Value="ShowSelectTag"
-@bind-Values="SelectedTags"
-@bind-Tags="Tags"
+            @bind-Values="SelectedTags"
+            @bind-Tags="Tags"
             OnSave="SaveSelectTags">
 </SelectTags>
 
 <SelectIconDialog @bind-Value="ShowWeather"
-@bind-Item="@Weather"
+                  @bind-Item="@Weather"
                   Title="@(I18n.T("Write.SelectWeather"))"
                   Items="WeatherIcons"
                   Text="@(item=>I18n.T("Weather." + item.Key))">
 </SelectIconDialog>
 
 <SelectIconDialog @bind-Value="ShowMood"
-@bind-Item="@Mood"
+                  @bind-Item="@Mood"
                   Title="@(I18n.T("Write.SelectMood"))"
                   Items="MoodIcons"
                   Text="@(item=>I18n.T("Mood." + item.Key))">
 </SelectIconDialog>
 
 <SelectLocation @bind-Value="ShowLocation"
-@bind-Location="Location">
+                @bind-Location="Location">
 </SelectLocation>
 
 <MultiDatePicker @bind-Value="ShowCreateTime"
-@bind-Date="CreateDate">
+                 @bind-Date="CreateDate">
 </MultiDatePicker>
 
 <MOverlay Value="Overlay" Opacity="0">

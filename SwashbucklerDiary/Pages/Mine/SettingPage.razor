@@ -1,6 +1,6 @@
 ﻿@page "/setting"
 @namespace SwashbucklerDiary.Pages
-@inherits PageComponentBase
+@inherits ImportantComponentBase
 
 <MyAppBar Title="@(I18n.T("Mine.Settings"))"
           OnClick="NavigateToBack">
@@ -211,7 +211,7 @@
              OKText="@(I18n.T("Share.OK"))">
 </InputDialog>
 
-<MMDialog @bind-MyValue="ShowClearCache"
+<MDialogExtension @bind-MyValue="ShowClearCache"
           ContentClass="rounded-lg"
           MaxWidth="420">
     <MCard>
@@ -234,4 +234,4 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MMDialog>
+</MDialogExtension>

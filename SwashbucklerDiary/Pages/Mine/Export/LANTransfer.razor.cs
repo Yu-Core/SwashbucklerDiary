@@ -6,7 +6,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class LANTransfer : PageComponentBase
+    public partial class LANTransfer : ImportantComponentBase
     {
         private bool ShowConfig;
         private List<DynamicListItem> DynamicLists = new();

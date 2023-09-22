@@ -5,6 +5,9 @@ namespace SwashbucklerDiary.Models
 {
     public class DynamicListItem
     {
+        private OneOf<Func<string>, string?> OneOfText;
+        private OneOf<Func<string>, string?> OneOfIcon;
+
         public string? Text
         {
             get => OneOfText.IsT0 ? OneOfText.AsT0.Invoke() : OneOfText.AsT1;
@@ -16,9 +19,7 @@ namespace SwashbucklerDiary.Models
             set => OneOfIcon = value;
         }
         public EventCallback OnClick { get; set; }
-        public OneOf<Func<string>, string?> OneOfText { get; set; }
-        public OneOf<Func<string>, string?> OneOfIcon { get; set; }
-
+        
         private DynamicListItem(object receiver, string? t = null, Func<string>? tFunc = null, string? i = null, Func<string>? iFunc = null, Action? oAction = null, Func<Task>? oFunc = null)
         {
             OneOfText = t != null ? t : tFunc ?? throw new("At least one is not empty"); ;

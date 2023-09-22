@@ -1,6 +1,6 @@
 ﻿@page "/about"
 @namespace SwashbucklerDiary.Pages
-@inherits PageComponentBase
+@inherits ImportantComponentBase
 
 <MyAppBar Title="@(I18n.T("Mine.About"))"
           OnClick="NavigateToBack">
@@ -71,7 +71,7 @@
              ListItemModels="CodeSources">
 </MultiDialog>
 
-<MMDialog @bind-MyValue="ShowVersionUpdate"
+<MDialogExtension @bind-MyValue="ShowVersionUpdate"
           ContentClass="rounded-lg"
           MaxWidth="420">
     <MCard>
@@ -99,6 +99,6 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MMDialog>
+</MDialogExtension>
 
 <SponsorDialog @bind-Value="ShowSponsor" />

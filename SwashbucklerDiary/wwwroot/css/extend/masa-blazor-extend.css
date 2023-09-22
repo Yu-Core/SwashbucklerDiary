@@ -92,14 +92,6 @@
     color: #fff !important;
 }
 
-/*.theme--light .my-picker .m-picker__body {
-    background: #f7f8f9 !important;
-}
-
-    .theme--light .my-picker .m-picker__body + .m-picker__actions {
-        background: #f7f8f9 !important;
-    }*/
-
 .theme--dark .my-picker .m-picker__body {
     background: #1e1e1e !important;
 }
@@ -116,7 +108,7 @@
     background: #fff !important;
 }
 
-.m-app-bar.m-toolbar.m-sheet {
+.m-toolbar.m-sheet {
     background: inherit !important;
 }
 
@@ -165,4 +157,13 @@
 .m-dialog .m-date-picker-table {
     height: auto !important;
     padding-bottom: 12px;
+}
+
+.m-window-item.m-window-item--active {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.m-window-item.m-window-item--active>*{
+    flex-grow:0 !important;
 }

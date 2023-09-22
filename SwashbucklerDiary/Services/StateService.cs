@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.IServices;
+﻿using BlazorComponent;
+using SwashbucklerDiary.IServices;
 
 namespace SwashbucklerDiary.Services
 {

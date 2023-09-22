@@ -4,7 +4,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public class DiariesPageComponentBase : PageComponentBase
+    public class DiariesPageComponentBase : ImportantComponentBase
     {
         [Inject]
         protected IDiaryService DiaryService { get; set; } = default!;
@@ -34,6 +34,13 @@ namespace SwashbucklerDiary.Components
         protected virtual async Task UpdateTagsAsync()
         {
             Tags = await TagService.QueryAsync();
+        }
+
+        protected override async void OnResume()
+        {
+            await UpdateDiariesAsync();
+            await UpdateTagsAsync();
+            base.OnResume();
         }
     }
 }

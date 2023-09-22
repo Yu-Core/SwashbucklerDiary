@@ -2,7 +2,7 @@
 @namespace SwashbucklerDiary.Pages
 @inherits DiariesPageComponentBase
 
-<MAppBar App="true" Elevation="0">
+<MyAppBar>
     <MButton Icon="true"
              OnClick="NavigateToBack">
         <MIcon>
@@ -11,7 +11,7 @@
     </MButton>
 
     <MySearch @bind-Value="ShowSearch"
-    @bind-Search="Search"
+              @bind-Search="Search"
               Title="@(I18n.T("Setting.Safe.PrivacyLibrary.Name"))"
               OnChanged="UpdateDiariesAsync">
     </MySearch>
@@ -29,7 +29,7 @@
             @(IsDateFiltered ? "mdi-filter-check-outline" : "mdi-filter-outline")
         </MIcon>
     </MButton>
-</MAppBar>
+</MyAppBar>
 
 <ScrollContainer>
     <DiaryCardList @bind-Tags="Tags"
@@ -38,7 +38,7 @@
 </ScrollContainer>
 
 <DateFilterDialog @bind-Value="ShowFilter"
-@bind-Form="SearchForm.DateFilter"
+                  @bind-Form="DateFilter"
                   OnOK="UpdateDiariesAsync"
                   OnReset="UpdateDiariesAsync">
 </DateFilterDialog>

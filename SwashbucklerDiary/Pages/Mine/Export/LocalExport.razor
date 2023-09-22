@@ -1,5 +1,5 @@
 ﻿@namespace SwashbucklerDiary.Pages
-@inherits PageComponentBase
+@inherits ImportantComponentBase
 
 <MCard Elevation="0"
        Rounded="@("lg")">
@@ -50,7 +50,7 @@
               Diaries="Diaries">
 </ExportDialog>
 
-<MMDialog @bind-MyValue="ShowImport"
+<MDialogExtension @bind-MyValue="ShowImport"
           ContentClass="rounded-lg"
           MaxWidth="420">
     <MCard>
@@ -78,4 +78,4 @@
              </MButton>
          </MCardActions>
      </MCard>
- </MMDialog>
+ </MDialogExtension>

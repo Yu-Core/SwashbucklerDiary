@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class MyAppBar : IDisposable
+    public partial class MyAppBar
     {
         [Inject]
         private NavigationManager NavigationManager { get; set; } = default!;
@@ -15,23 +14,5 @@ namespace SwashbucklerDiary.Components
         public EventCallback<MouseEventArgs> OnClick { get; set; }
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
-
-        public void Dispose()
-        {
-            NavigationManager.LocationChanged -= NavigationManagerOnLocationChanged;
-            GC.SuppressFinalize(this);
-        }
-
-        protected override Task OnInitializedAsync()
-        {
-            NavigationManager.LocationChanged += NavigationManagerOnLocationChanged;
-            return base.OnInitializedAsync();
-        }
-
-        private void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
-        {
-            InvokeAsync(StateHasChanged);
-        }
-
     }
 }

@@ -1,9 +1,10 @@
 ﻿@namespace SwashbucklerDiary.Components
-@inherits MyComponentBase
+@inherits ImportantComponentBase
 
 <div class="my-card-list @(Class)">
-    <CascadingValue Value="this">
-        @foreach (var item in InternalValue)
+    <CascadingValue Value="this"
+                    IsFixed="true">
+        @foreach (var item in Value)
         {
             <DiaryCard @key="item.Id"
                        Value="item"
@@ -12,30 +13,14 @@
         }
     </CascadingValue>
 
-    @if (InternalValue.Any())
-    {
-        <MInfiniteScroll Style="width:100%;"
-                         OnLoad="@OnLoad"
-                         Parent="ScrollElement"
-                         EmptyText="@(string.Empty)"
-                         LoadingText="@(string.Empty)">
-            <LoadMoreContent Context="load">
-                <div class="@(ShowLoadMore?"":"d-none")">
-                    <MButton Icon="true"
-                             OnClick="@load">
-                        <MIcon>mdi-reload</MIcon>
-                    </MButton>
-                </div>
-            </LoadMoreContent>
-        </MInfiniteScroll>
-    }
-
 </div>
 
-<NotFound Show="!Value.Any()" Text="@(NotFoundText ?? I18n.T("Diary.NoDiary"))"></NotFound>
+<NotFound Show="!Value.Any()"
+          Text="@(NotFoundText ?? I18n.T("Diary.NoDiary"))">
+</NotFound>
 
 <SelectTags @bind-Value="ShowSelectTag"
-@bind-Values="SelectedTags"
+            @bind-Values="SelectedTags"
             Tags="Tags"
             TagsChanged="TagsChanged"
             OnSave="SaveSelectTags">

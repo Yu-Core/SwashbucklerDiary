@@ -4,7 +4,7 @@ using SwashbucklerDiary.IServices;
 
 namespace SwashbucklerDiary.Components
 {
-    public class MMDialog : MDialog
+    public class MDialogExtension : MDialog
     {
         [Inject]
         protected INavigateService NavigateService { get; set; } = default!;

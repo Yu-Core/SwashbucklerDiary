@@ -7,15 +7,10 @@ namespace SwashbucklerDiary.Pages
 {
     public partial class PrivacyLibraryPage : DiariesPageComponentBase
     {
+        private bool ShowSearch;
         private bool ShowFilter;
-        private SearchForm SearchForm = new();
-
-        protected override async Task OnInitializedAsync()
-        {
-            LoadCache();
-            NavigateService.BeforeNavigate += SetCache;
-            await base.OnInitializedAsync();
-        }
+        private string? Search;
+        private DateFilterForm DateFilter = new();
 
         protected override async Task UpdateDiariesAsync()
         {
@@ -24,39 +19,11 @@ namespace SwashbucklerDiary.Pages
             Diaries = diaries.OrderByDescending(it => it.CreateTime).ToList();
         }
 
-        protected override void OnDispose()
-        {
-            NavigateService.BeforeNavigate -= SetCache;
-            base.OnDispose();
-        }
-
-        private bool ShowSearch
-        {
-            get => SearchForm.ShowSearch;
-            set => SearchForm.ShowSearch = value;
-        }
-        private string? Search
-        {
-            get => SearchForm.Search;
-            set => SearchForm.Search = value;
-        }
-        private DateOnly DateOnlyMin => SearchForm.DateFilter.GetDateMinValue();
-        private DateOnly DateOnlyMax => SearchForm.DateFilter.GetDateMaxValue();
+        private DateOnly DateOnlyMin => DateFilter.GetDateMinValue();
+        private DateOnly DateOnlyMax => DateFilter.GetDateMaxValue();
 
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
         private bool IsDateFiltered => DateOnlyMin != DateOnly.MinValue || DateOnlyMax != DateOnly.MaxValue;
-
-
-        private void LoadCache()
-        {
-            SearchForm = (SearchForm?)NavigateService.GetCurrentCache(nameof(SearchForm)) ?? new();
-        }
-
-        private Task SetCache()
-        {
-            NavigateService.SetCurrentCache(nameof(SearchForm), SearchForm);
-            return Task.CompletedTask;
-        }
 
         private Expression<Func<DiaryModel, bool>> Func()
         {

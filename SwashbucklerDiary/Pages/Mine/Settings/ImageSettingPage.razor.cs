@@ -5,7 +5,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class ImageSettingPage : PageComponentBase
+    public partial class ImageSettingPage : ImportantComponentBase
     {
         bool ShowConfimDelete;
         List<ResourceModel> ImageResources = new();

@@ -1,8 +1,6 @@
-﻿@page "/mine"
-@using SwashbucklerDiary.Models
-@inherits PageComponentBase
-
-<link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
+﻿@using SwashbucklerDiary.Models
+@namespace SwashbucklerDiary.Pages
+@inherits ImportantComponentBase
 
 <MyAppBar>
     <MToolbarTitle Class="font-weight-bold"
@@ -130,7 +128,7 @@
 
 </ScrollContainer>
 
-<MMDialog @bind-MyValue="ShowLanguage"
+<MDialogExtension @bind-MyValue="ShowLanguage"
           ContentClass="rounded-lg"
           MaxWidth="420">
     <MCard>
@@ -161,9 +159,9 @@
             </MRadioGroup>
         </MCardText>
     </MCard>
-</MMDialog>
+</MDialogExtension>
 
-<MMDialog @bind-MyValue="ShowThemeState"
+<MDialogExtension @bind-MyValue="ShowThemeState"
           ContentClass="rounded-lg"
           MaxWidth="420">
     <MCard>
@@ -194,7 +192,7 @@
             </MRadioGroup>
         </MCardText>
     </MCard>
-</MMDialog>
+</MDialogExtension>
 
 <MultiDialog @bind-Value="ShowFeedback"
              Title="@(I18n.T("Mine.ContactWay"))"

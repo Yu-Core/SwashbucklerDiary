@@ -28,9 +28,9 @@ namespace SwashbucklerDiary.Components
             return AlertService.Info(I18n.T("ToDo.Title"), I18n.T("ToDo.Content"));
         }
 
-        protected void To(string url)
+        protected void To(string url, bool cacheCurrentURL = true)
         {
-            NavigateService.NavigateTo(url);
+            NavigateService.PushAsync(url, cacheCurrentURL);
         }
 
         protected virtual async Task HandleAchievements(AchievementType type)

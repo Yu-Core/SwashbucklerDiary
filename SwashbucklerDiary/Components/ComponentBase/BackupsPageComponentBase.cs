@@ -3,7 +3,7 @@ using SwashbucklerDiary.IServices;
 
 namespace SwashbucklerDiary.Components
 {
-    public class BackupsPageComponentBase : PageComponentBase
+    public class BackupsPageComponentBase : ImportantComponentBase
     {
         [Inject]
         protected IAppDataService AppDataService { get; set; } = default!;

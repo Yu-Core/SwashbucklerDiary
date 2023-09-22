@@ -1,39 +1,27 @@
-﻿using BlazorComponent;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class DiaryCardList : MyComponentBase
+    public partial class DiaryCardList : ImportantComponentBase
     {
-        private List<DiaryModel> _value = default!;
-        private List<DiaryModel> _internalValue = new();
+        public event Action? Resumed;
+        private List<DiaryModel> _value = new();
         private bool ShowDeleteDiary;
         private bool ShowSelectTag;
         private bool ShowExport;
         private DiaryModel SelectedDiary = new();
         private List<DiaryModel> ExportDiaries = new();
-        private int LoadCount = 20;
-        private bool FirstLoad = true;
 
-        [Inject]
-        private IJSRuntime JS { get; set; } = default!;
         [Inject]
         public IDiaryService DiaryService { get; set; } = default!;
-        [Inject]
-        private IPlatformService PlatformService { get; set; } = default!;
-        [Inject]
-        private ITagService TagService { get; set; } = default!;
 
-        [CascadingParameter(Name = "ScrollElement")]
-        public ElementReference ScrollElement { get; set; }
         [Parameter]
         public List<DiaryModel> Value
         {
             get => _value.OrderByDescending(it => it.Top).ToList();
-            set => SetValue(value);
+            set => _value = value;
         }
         [Parameter]
         public string? Class { get; set; }
@@ -51,7 +39,7 @@ namespace SwashbucklerDiary.Components
         public bool ShowPrivacy { get; set; }
         public bool ShowIcon { get; set; }
         public string? DateFormat { get; set; }
-
+        
         public async Task Topping(DiaryModel diaryModel)
         {
             diaryModel.Top = !diaryModel.Top;
@@ -89,20 +77,14 @@ namespace SwashbucklerDiary.Components
             diaryModel.Private = !diaryModel.Private;
             diaryModel.UpdateTime = DateTime.Now;
             await DiaryService.UpdateAsync(diaryModel);
-            var index = _internalValue.FindIndex(it => it.Id == diaryModel.Id);
+            
+            var index = _value.FindIndex(it => it.Id == diaryModel.Id);
             if (index < 0)
             {
                 return;
             }
-            _internalValue.RemoveAt(index);
 
-            var index2 = _value.FindIndex(it => it.Id == diaryModel.Id);
-            if (index2 < 0)
-            {
-                return;
-            }
-
-            _value.RemoveAt(index2);
+            _value.RemoveAt(index);
             await InvokeAsync(StateHasChanged);
             await OnUpdate.InvokeAsync();
             if (diaryModel.Private)
@@ -124,28 +106,17 @@ namespace SwashbucklerDiary.Components
             await base.OnInitializedAsync();
         }
 
-        private List<DiaryModel> InternalValue
+        protected override async void OnResume()
         {
-            get => _internalValue.OrderByDescending(it => it.Top).ToList();
-            set => _internalValue = value;
+            await LoadSettings();
+            Resumed?.Invoke();
+            base.OnResume();
         }
 
         private List<TagModel> SelectedTags
         {
             get => SelectedDiary.Tags ?? new();
             set => SelectedDiary.Tags = value;
-        }
-
-        private bool ShowLoadMore => _internalValue.Any() && _internalValue.Count < _value.Count;
-
-        private void SetValue(List<DiaryModel> value)
-        {
-            if (_value != value)
-            {
-                _value = value;
-                _internalValue = new();
-                _internalValue = MockRequest();
-            }
         }
 
         private async Task LoadSettings()
@@ -162,19 +133,13 @@ namespace SwashbucklerDiary.Components
             bool flag = await DiaryService.DeleteAsync(diaryModel);
             if (flag)
             {
-                var index = _internalValue.FindIndex(it => it.Id == diaryModel.Id);
+                var index = _value.FindIndex(it => it.Id == diaryModel.Id);
                 if (index < 0)
                 {
                     return;
                 }
-                _internalValue.RemoveAt(index);
 
-                var index2 = _value.FindIndex(it => it.Id == diaryModel.Id);
-                if (index2 < 0)
-                {
-                    return;
-                }
-                _value.RemoveAt(index2);
+                _value.RemoveAt(index);
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
                 await InvokeAsync(StateHasChanged);
             }
@@ -198,25 +163,8 @@ namespace SwashbucklerDiary.Components
             {
                 return diary.Content!;
             }
+
             return diary.Title + "\n" + diary.Content;
-        }
-
-        private void OnLoad(InfiniteScrollLoadEventArgs args)
-        {
-            if (FirstLoad)
-            {
-                FirstLoad = false;
-                return;
-            }
-
-            var append = MockRequest();
-
-            _internalValue.AddRange(append);
-        }
-
-        private List<DiaryModel> MockRequest()
-        {
-            return Value.Skip(_internalValue.Count).Take(LoadCount).ToList();
         }
     }
 }

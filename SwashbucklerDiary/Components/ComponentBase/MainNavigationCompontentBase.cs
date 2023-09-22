@@ -34,6 +34,12 @@ namespace SwashbucklerDiary.Components
             return base.OnInitializedAsync();
         }
 
+        protected string? GetIcon(NavigationButton button)
+        {
+            bool activated = Items.IndexOf(button) == Value;
+            return activated ? button.SelectedIcon : button.Icon;
+        }
+
         private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
         {
             StateHasChanged();

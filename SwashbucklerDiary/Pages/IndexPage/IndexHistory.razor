@@ -1,7 +1,5 @@
-﻿@page "/history"
-@inherits DiariesPageComponentBase
-
-<link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
+﻿@namespace SwashbucklerDiary.Pages
+@inherits ImportantComponentBase
 
 <MyAppBar>
     @if (NormalCalendarVisible)
@@ -42,13 +40,13 @@
     </div>
 
     <DiaryCardList @bind-Tags="Tags"
-                   Value="Diaries"
+                   Value="PickerDiaries"
                    OnUpdate="UpdateEventsDates">
     </DiaryCardList>
 </ScrollContainer>
 
 <MyDatePicker @bind-Value="ShowFloatCalendar"
-@bind-Date="PickedDate"
+              @bind-Date="PickedDate"
               Events="EventsDates"
               EventColor='"primary"'>
 </MyDatePicker>

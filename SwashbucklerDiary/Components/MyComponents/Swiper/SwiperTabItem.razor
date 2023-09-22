@@ -3,7 +3,9 @@
 <div @ref="Ref" id="@Id" class="swiper-slide">
     <MContainer Class="my-container"
                 Fluid="true">
-        <CascadingValue Value="Ref" Name="ScrollElement">
+        <CascadingValue Value="Ref"
+                        Name="ScrollElement"
+                        IsFixed="true">
             @ChildContent
         </CascadingValue>
     </MContainer>

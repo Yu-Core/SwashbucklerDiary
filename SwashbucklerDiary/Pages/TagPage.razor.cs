@@ -1,38 +1,26 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
     public partial class TagPage : DiariesPageComponentBase
     {
-        private TagModel Tag = new();
+        private string? TagName;
 
         [Parameter]
         public Guid Id { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task UpdateDiariesAsync()
         {
-            var tagModel = await TagService.FindIncludesAsync(Id);
-            if (tagModel == null)
-            {
-                NavigateToBack();
-                return;
-            }
-            Tag = tagModel;
-            await base.OnInitializedAsync();
-        }
-
-        protected override Task UpdateDiariesAsync()
-        {
-            Diaries = Tag.Diaries ?? new();
-            return Task.CompletedTask;
+            var tag = await TagService.FindIncludesAsync(Id);
+            TagName = tag?.Name;
+            Diaries = tag?.Diaries ?? new();
         }
 
 
         private void NavigateToWrite()
         {
-            NavigateService.NavigateTo($"/write?tagId={Id}");
+            NavigateService.PushAsync($"/write?tagId={Id}");
         }
     }
 }

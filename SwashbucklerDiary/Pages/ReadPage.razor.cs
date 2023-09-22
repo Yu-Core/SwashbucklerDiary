@@ -5,12 +5,11 @@ using SwashbucklerDiary.Extend;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using SwashbucklerDiary.Services;
-using SwashbucklerDiary.Shared;
 using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class ReadPage : PageComponentBase, IAsyncDisposable
+    public partial class ReadPage : ImportantComponentBase, IAsyncDisposable
     {
         private DiaryModel Diary = new();
         private bool ShowDelete;
@@ -119,6 +118,7 @@ namespace SwashbucklerDiary.Pages
             {
                 await module.DisposeAsync();
             }
+
             GC.SuppressFinalize(this);
         }
 
@@ -140,12 +140,13 @@ namespace SwashbucklerDiary.Pages
             {
                 await AlertService.Error(I18n.T("Share.DeleteFail"));
             }
+
             NavigateToBack();
         }
 
-        private void OnEdit()
+        private Task OnEdit()
         {
-            NavigateService.NavigateTo($"/write?DiaryId={Id}");
+            return NavigateService.PushAsync($"/write?DiaryId={Id}", false);
         }
 
         private async Task OnTopping()

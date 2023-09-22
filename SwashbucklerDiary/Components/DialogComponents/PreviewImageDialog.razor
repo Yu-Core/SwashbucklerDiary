@@ -1,7 +1,7 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits DialogComponentBase
 
-<MMDialog MyValue="Value"
+<MDialogExtension MyValue="Value"
           MyValueChanged="ValueChanged"
           Eager="true"
           Fullscreen="true"
@@ -34,7 +34,7 @@
             </MButton>
         </MToolbar>
 
-        <div class="flex-grow-1" style="position:relative;z-index:1;">
+        <div style="position:relative;z-index:1;height:100%;">
             <MImage Id="zoom-image"
                     Style="position:absolute;"
                     Src="@Src"
@@ -57,4 +57,4 @@
                   Elevation="0">
         </MToolbar>
     </MCard>
-</MMDialog>
+</MDialogExtension>

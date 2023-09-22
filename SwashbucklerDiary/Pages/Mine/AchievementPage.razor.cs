@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class AchievementPage : PageComponentBase
+    public partial class AchievementPage : ImportantComponentBase
     {
         private string? Search;
         private bool ShowSearch;

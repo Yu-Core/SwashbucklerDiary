@@ -1,0 +1,34 @@
+﻿@page "/"
+@namespace SwashbucklerDiary.Pages
+@inherits DiariesPageComponentBase
+
+<OnlyCurrentPageDiaplsy>
+    <link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
+</OnlyCurrentPageDiaplsy>
+
+<MWindow Value="NavigationIndex"
+         Style="height:100%;">
+    <MWindowItem Style="height:100%;"
+                 Eager="true"
+                 Transition="">
+        <IndexDiary @bind-Tags="Tags"
+                    Diaries="Diaries">
+        </IndexDiary>
+    </MWindowItem>
+    <MWindowItem Style="height:100%;"
+                 Eager="true"
+                 Transition="">
+        <IndexHistory @bind-Tags="Tags"
+                      Diaries="Diaries">
+        </IndexHistory>
+    </MWindowItem>
+    <MWindowItem Style="height:100%;"
+                 Eager="true"
+                 Transition="">
+        <IndexMine></IndexMine>
+    </MWindowItem>
+</MWindow>
+
+<MainBottomNavigation @bind-Value="NavigationIndex"
+                      Items="NavigationButtons">
+</MainBottomNavigation>

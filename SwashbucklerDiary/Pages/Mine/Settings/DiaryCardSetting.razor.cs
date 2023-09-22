@@ -3,7 +3,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class DiaryCardSetting : PageComponentBase
+    public partial class DiaryCardSetting : ImportantComponentBase
     {
         private bool DiaryCardIcon;
         private string? DiaryCardDateFormat;

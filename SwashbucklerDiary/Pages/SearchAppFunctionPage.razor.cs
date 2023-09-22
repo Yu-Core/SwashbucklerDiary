@@ -6,64 +6,40 @@ using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class SearchAppFunctionPage : PageComponentBase
+    public partial class SearchAppFunctionPage : ImportantComponentBase
     {
         private bool Privacy;
+        private string? Search;
         private List<AppFunction> AllAppFunctions = new();
         private List<AppFunction> AppFunctions = new();
-        private SearchForm SearchForm = new()
-        {
-            ShowSearch = true
-        };
-
+        
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Query { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            LoadCache();
             LoadQuery();
             await LoadSettings();
             await SetAppFunctions();
             UpdateAppFunctions();
-            NavigateService.BeforeNavigate += SetCache;
             await base.OnInitializedAsync();
         }
 
-        protected override void OnDispose()
+        protected override async void OnResume()
         {
-            NavigateService.BeforeNavigate -= SetCache;
-            base.OnDispose();
+            await LoadSettings();
+            UpdateAppFunctions();
+            base.OnResume();
         }
 
-        protected override void NavigateToBack()
-        {
-            if (ShowSearch)
-            {
-                ShowSearch = false;
-                return;
-            }
-            base.NavigateToBack();
-        }
-
-        private bool ShowSearch
-        {
-            get => SearchForm.ShowSearch;
-            set => SearchForm.ShowSearch = value;
-        }
-        private string? Search
-        {
-            get => SearchForm.Search;
-            set => SearchForm.Search = value;
-        }
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
 
         private void LoadQuery()
         {
             if (!string.IsNullOrEmpty(Query))
             {
-                SearchForm.Search = Query;
+                Search = Query;
             }
         }
         private async Task SetAppFunctions()
@@ -75,18 +51,6 @@ namespace SwashbucklerDiary.Pages
         private async Task LoadSettings()
         {
             Privacy = await SettingsService.Get(SettingType.PrivacyMode);
-        }
-
-
-        private void LoadCache()
-        {
-            SearchForm = (SearchForm?)NavigateService.GetCurrentCache(nameof(SearchForm)) ?? new();
-        }
-
-        private Task SetCache()
-        {
-            NavigateService.SetCurrentCache(nameof(SearchForm), SearchForm);
-            return Task.CompletedTask;
         }
 
         private void UpdateAppFunctions()

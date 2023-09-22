@@ -44,7 +44,7 @@ namespace SwashbucklerDiary.Components
 
         private void ToTagPage()
         {
-            NavigateService.NavigateTo($"/tag/{Value.Id}");
+            NavigateService.PushAsync($"/tag/{Value.Id}");
         }
     }
 }

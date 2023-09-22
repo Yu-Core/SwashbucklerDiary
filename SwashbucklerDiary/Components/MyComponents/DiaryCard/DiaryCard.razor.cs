@@ -4,11 +4,9 @@ using SwashbucklerDiary.Services;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class DiaryCard : MyComponentBase
+    public partial class DiaryCard : MyComponentBase, IDisposable
     {
         private bool ShowMenu;
-        private string? Title;
-        private string? Text;
         private List<DynamicListItem> ListItemModels = new();
 
         [Inject]
@@ -21,10 +19,15 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public string? Class { get; set; }
 
+        public void Dispose()
+        {
+            DiaryCardList.Resumed -= OnResume;
+        }
+
         protected override void OnInitialized()
         {
             LoadView();
-            SetContent();
+            DiaryCardList.Resumed += OnResume;
             base.OnInitialized();
         }
 
@@ -36,6 +39,9 @@ namespace SwashbucklerDiary.Components
         private bool ShowPrivacy => DiaryCardList.ShowPrivacy;
         private bool ShowIcon => DiaryCardList.ShowIcon;
         private string? DateFormat => DiaryCardList.DateFormat;
+
+        private string? Title => GetTitle();
+        private string? Text => GetText();
 
         private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
         private string PrivateText() => IsPrivate ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
@@ -58,17 +64,23 @@ namespace SwashbucklerDiary.Components
             }
         }
 
+        private Task Topping() => DiaryCardList.Topping(Value);
+
+        private void Delete() => DiaryCardList.Delete(Value);
+
+        private Task Copy() => DiaryCardList.Copy(Value);
+
+        private Task ChangeTag() => DiaryCardList.ChangeTag(Value);
+
+        private void Export() => DiaryCardList.Export(Value);
+
+        private Task MovePrivacy() => DiaryCardList.MovePrivacy(Value);
+
         private string? GetWeatherIcon() =>
             string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetWeatherIcon(Value.Weather);
 
         private string? GetMoodIcon() =>
             string.IsNullOrWhiteSpace(Value.Mood) ? null : IconService.GetMoodIcon(Value.Mood);
-
-        private void SetContent()
-        {
-            Title = GetTitle();
-            Text = GetText();
-        }
 
         private string? GetTitle()
         {
@@ -140,19 +152,12 @@ namespace SwashbucklerDiary.Components
 
         private void ToRead()
         {
-            NavigateService.NavigateTo($"/read/{Value.Id}");
+            NavigateService.PushAsync($"/read/{Value.Id}");
         }
 
-        private Task Topping() => DiaryCardList.Topping(Value);
-
-        private void Delete() => DiaryCardList.Delete(Value);
-
-        private Task Copy() => DiaryCardList.Copy(Value);
-
-        private Task ChangeTag() => DiaryCardList.ChangeTag(Value);
-
-        private void Export() => DiaryCardList.Export(Value);
-
-        private Task MovePrivacy() => DiaryCardList.MovePrivacy(Value);
+        private void OnResume()
+        {
+            LoadView();
+        }
     }
 }

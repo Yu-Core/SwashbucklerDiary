@@ -6,7 +6,7 @@ using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class UserPage : PageComponentBase
+    public partial class UserPage : ImportantComponentBase
     {
         private string? UserName;
         private string? Sign;

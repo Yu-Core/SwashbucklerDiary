@@ -1,9 +1,8 @@
 ﻿@page "/log"
 @namespace SwashbucklerDiary.Pages
-@inherits PageComponentBase
+@inherits ImportantComponentBase
 
-<MAppBar App="true"
-         Elevation="0">
+<MyAppBar>
     <MButton Icon="true"
              OnClick="NavigateToBack">
         <MIcon>
@@ -12,7 +11,7 @@
     </MButton>
 
     <MySearch @bind-Value="ShowSearch"
-    @bind-Search="Search"
+              @bind-Search="Search"
               Title="@(I18n.T("About.LogFile.Name"))"
               OnChanged="UpdateLogsAsync">
     </MySearch>
@@ -44,7 +43,7 @@
             </MultiDisplay>
         </ButtonContent>
     </MultiMenu>
-</MAppBar>
+</MyAppBar>
 
 <ScrollContainer>
     <div class="px-4 text-subtitle-1 user-select" style="word-wrap:break-word;">
@@ -63,11 +62,11 @@
     <NotFound Show="!Logs.Any()"
               Text="@(IsSearchFiltered ? null:I18n.T("Log.NoLog"))">
     </NotFound>
-    
+
 </ScrollContainer>
 
 <DateFilterDialog @bind-Value="ShowFilter"
-@bind-Form="DateFilterForm"
+                  @bind-Form="DateFilterForm"
                   OnOK="UpdateLogsAsync"
                   OnReset="UpdateLogsAsync">
 </DateFilterDialog>

@@ -3,7 +3,7 @@ using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Components
 {
-    public class MMTextarea : MTextarea,IAsyncDisposable
+    public class MTextareaExtension : MTextarea,IAsyncDisposable
     {
         private IJSObjectReference module = default!;
 

@@ -7,7 +7,7 @@ using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class MinePage : PageComponentBase
+    public partial class IndexMine : ImportantComponentBase
     {
         private int DiaryCount;
         private long WordCount;
@@ -30,19 +30,32 @@ namespace SwashbucklerDiary.Pages
         };
         private Dictionary<string, List<DynamicListItem>> ViewLists = new();
         private List<DynamicListItem> FeedbackTypes = new();
-        private const string githubUrl = "https://github.com/Yu-Core/SwashbucklerDiary";
-        private const string mail = "yu-core@qq.com";
-        private const string qqGroup = "139864402";
+        private Dictionary<string,string> FeedbackTypeDatas = new();
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             LoadView();
+            base.OnInitialized();
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await LoadViewAsync();
             await SetCount();
             await LoadSettings();
             await SetAvatar();
+            await base.OnInitializedAsync();
+        }
+
+        protected override async void OnResume()
+        {
+            await SetCount();
+            await LoadSettings();
+            await SetAvatar();
+            base.OnResume();
         }
 
         private string MRadioColor => ThemeService.Dark ? "white" : "black";
@@ -95,6 +108,11 @@ namespace SwashbucklerDiary.Pages
             };
         }
 
+        private async Task LoadViewAsync()
+        {
+            FeedbackTypeDatas = await PlatformService.ReadJsonFileAsync<Dictionary<string,string>>("wwwroot/json/feedback-type/feedback-type.json");
+        }
+
         private async Task LoadSettings()
         {
             Language = await SettingsService.Get(SettingType.Language);
@@ -120,6 +138,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SendMail()
         {
+            var mail = FeedbackTypeDatas["Email"];
             try
             {
                 if (PlatformService.IsMailSupported())
@@ -143,6 +162,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task ToGithub()
         {
+            var githubUrl = FeedbackTypeDatas["Github"];
             await PlatformService.OpenBrowser(githubUrl);
         }
 
@@ -155,6 +175,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task OpenQQGroup()
         {
+            var qqGroup = FeedbackTypeDatas["QQGroup"];
             try
             {
                 bool flag = await PlatformService.OpenQQGroup();

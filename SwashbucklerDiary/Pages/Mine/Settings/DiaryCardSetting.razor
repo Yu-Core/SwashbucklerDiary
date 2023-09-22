@@ -1,6 +1,6 @@
 ﻿@page "/diaryCardSetting"
 @namespace SwashbucklerDiary.Pages
-@inherits PageComponentBase
+@inherits ImportantComponentBase
 
 <MyAppBar Title="@(I18n.T("Setting.Display.DiaryCard.Name"))"
           OnClick="NavigateToBack">
@@ -54,7 +54,7 @@
     </MCard>
 </ScrollContainer>
 
-<MMDialog @bind-MyValue="ShowDiaryCardDateFormat"
+<MDialogExtension @bind-MyValue="ShowDiaryCardDateFormat"
           ContentClass="rounded-lg"
           MaxWidth="420">
     <MCard>
@@ -85,4 +85,4 @@
             </MRadioGroup>
         </MCardText>
     </MCard>
-</MMDialog>
+</MDialogExtension>

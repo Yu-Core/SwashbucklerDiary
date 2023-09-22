@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class RelatedOSPPage : PageComponentBase
+    public partial class RelatedOSPPage : ImportantComponentBase
     {
         private List<OpenSourceProject> OSPs = new();
 

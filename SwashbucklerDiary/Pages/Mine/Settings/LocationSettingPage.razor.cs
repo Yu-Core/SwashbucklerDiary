@@ -5,7 +5,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class LocationSettingPage : PageComponentBase
+    public partial class LocationSettingPage : ImportantComponentBase
     {
         bool ShowAdd;
         List<LocationModel> Locations = new();

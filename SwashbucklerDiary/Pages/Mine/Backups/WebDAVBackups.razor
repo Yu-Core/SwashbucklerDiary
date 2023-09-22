@@ -103,7 +103,7 @@
                     OnOK="SaveWebDavConfig">
 </WebDavConfigDialog>
 
-<MMDialog @bind-MyValue="ShowUpload"
+<MDialogExtension @bind-MyValue="ShowUpload"
           ContentClass="rounded-lg"
           MaxWidth="420">
     <MCard>
@@ -131,9 +131,9 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MMDialog>
+</MDialogExtension>
 
-<MMDialog @bind-MyValue="ShowDownload"
+<MDialogExtension @bind-MyValue="ShowDownload"
           ContentClass="rounded-lg"
           MaxWidth="420"
           Scrollable="true">
@@ -164,5 +164,5 @@
             }
         </MCardText>
     </MCard>
-</MMDialog>
+</MDialogExtension>
 

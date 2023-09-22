@@ -1,6 +1,4 @@
-﻿using SwashbucklerDiary.Models;
-
-namespace SwashbucklerDiary.IServices
+﻿namespace SwashbucklerDiary.IServices
 {
     public interface IStateService
     {

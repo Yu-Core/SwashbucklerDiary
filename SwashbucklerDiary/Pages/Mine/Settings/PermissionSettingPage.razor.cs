@@ -2,7 +2,7 @@
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class PermissionSettingPage : PageComponentBase
+    public partial class PermissionSettingPage : ImportantComponentBase
     {
         private bool CameraState;
         private bool StorageState;

@@ -8,7 +8,7 @@
     </MButton>
 
     <MySearch @bind-Value="ShowSearch"
-    @bind-Search="Search"
+              @bind-Search="Search"
               Placeholder="@(I18n.T("Search.Please enter diary keywords"))"
               OnChanged="UpdateDiariesAsync">
     </MySearch>
@@ -29,7 +29,7 @@
 </ScrollContainer>
 
 <DateFilterDialog @bind-Value="ShowFilter"
-@bind-Form="SearchForm.DateFilter"
+                  @bind-Form="DateFilter"
                   OnOK="UpdateDiariesAsync"
                   OnReset="UpdateDiariesAsync">
 </DateFilterDialog>

@@ -6,7 +6,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class SettingPage : PageComponentBase
+    public partial class SettingPage : ImportantComponentBase
     {
         private bool Privacy;
         private string? PrivatePassword;

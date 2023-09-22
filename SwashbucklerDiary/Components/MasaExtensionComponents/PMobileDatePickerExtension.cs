@@ -1,42 +1,41 @@
-﻿using Masa.Blazor;
+﻿using Masa.Blazor.Presets;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 
 namespace SwashbucklerDiary.Components
 {
-    public class MMBottomSheet : MBottomSheet
+    public class PMobileDatePickerExtension : PMobileDatePicker, IDisposable
     {
         [Inject]
         protected INavigateService NavigateService { get; set; } = default!;
 
         [Parameter]
-        public bool MyValue
+        public bool MyVisible
         {
-            get => base.Value;
-            set => SetValue(value);
+            get => base.Visible;
+            set => SetVisible(value);
         }
         [Parameter]
-        public EventCallback<bool> MyValueChanged
+        public EventCallback<bool> MyVisibleChanged
         {
-            get => base.ValueChanged;
-            set => base.ValueChanged = value;
+            get => base.VisibleChanged;
+            set => base.VisibleChanged = value;
         }
 
-        protected override void Dispose(bool disposing)
+        public void Dispose()
         {
-            if (Value)
+            if (Visible)
             {
                 NavigateService.Action -= Close;
             }
-
-            base.Dispose(disposing);
+            GC.SuppressFinalize(this);
         }
 
-        private void SetValue(bool value)
+        private void SetVisible(bool value)
         {
-            if (base.Value != value)
+            if (base.Visible != value)
             {
-                base.Value = value;
+                base.Visible = value;
                 Task.Run(() =>
                 {
                     if (value)
@@ -53,10 +52,10 @@ namespace SwashbucklerDiary.Components
 
         private async void Close()
         {
-            MyValue = false;
-            if (MyValueChanged.HasDelegate)
+            MyVisible = false;
+            if (MyVisibleChanged.HasDelegate)
             {
-                await MyValueChanged.InvokeAsync(false);
+                await MyVisibleChanged.InvokeAsync(false);
             }
         }
     }

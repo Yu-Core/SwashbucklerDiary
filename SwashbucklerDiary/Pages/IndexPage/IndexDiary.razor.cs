@@ -6,7 +6,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class IndexPage : DiariesPageComponentBase
+    public partial class IndexDiary : ImportantComponentBase
     {
         private bool ShowWelcomeText;
         private bool ShowDate;
@@ -14,33 +14,37 @@ namespace SwashbucklerDiary.Pages
         private readonly List<string> Views = new() { "All", "Tags" };
 
         [Inject]
-        private IStateService StateService { get; set; } = default!;
+        protected ITagService TagService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
         public string? View { get; set; }
+        [Parameter]
+        public List<DiaryModel> Diaries { get; set; } = new();
+        [Parameter]
+        public List<TagModel> Tags { get; set; } = new();
+        [Parameter]
+        public EventCallback<List<TagModel>> TagsChanged { get; set; }
+
+        protected override void OnInitialized()
+        {
+            InitTab();
+            base.OnInitialized();
+        }
 
         protected override async Task OnInitializedAsync()
         {
-            FirstLauch();
-            InitTab();
             await LoadSettings();
-            NavigateService.BeforeNavigate += SetCurrentUrl;
             await base.OnInitializedAsync();
         }
 
-        protected override void OnDispose()
+        protected override async void OnResume()
         {
-            NavigateService.BeforeNavigate -= SetCurrentUrl;
-            base.OnDispose();
+            await LoadSettings();
+            base.OnResume();
         }
 
         private bool ShowAddTag { get; set; }
-
-        private void FirstLauch()
-        {
-            StateService.FirstLauch += FirstLauchUpdateDiaries;
-        }
 
         private void InitTab()
         {
@@ -50,13 +54,6 @@ namespace SwashbucklerDiary.Pages
             }
 
             tab = Views.IndexOf(View!);
-        }
-
-        private Task SetCurrentUrl()
-        {
-            var url = Navigation.GetUriWithQueryParameter("View", Views[tab.ToInt32()]);
-            NavigateService.SetCurrentUrl(url);
-            return Task.CompletedTask;
         }
 
         private async Task LoadSettings()
@@ -119,12 +116,6 @@ namespace SwashbucklerDiary.Pages
                 return I18n.T("Index.Welcome.BeforeDawn")!;
             }
             return "Hello World";
-        }
-
-        private async Task FirstLauchUpdateDiaries()
-        {
-            await UpdateDiariesAsync();
-            await InvokeAsync(StateHasChanged);
         }
 
         private Task Search(string? value)

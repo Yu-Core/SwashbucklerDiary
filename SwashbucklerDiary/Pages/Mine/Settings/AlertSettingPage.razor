@@ -1,6 +1,6 @@
 ﻿@page "/alertSetting"
 @namespace SwashbucklerDiary.Pages
-@inherits PageComponentBase
+@inherits ImportantComponentBase
 
 <MyAppBar Title="@(I18n.T("Setting.Display.Alert.Name"))"
           OnClick="NavigateToBack">
@@ -58,7 +58,7 @@
 </ScrollContainer>
 
 <SelectIconDialog @bind-Value="ShowTimeout"
-@bind-Item="@Timeout"
+                  @bind-Item="@Timeout"
                   Title="@(I18n.T("Setting.Display.Alert.AlertTimeout.Name"))"
                   Items="Timeouts"
                   Text="@(item=>item.Key + "s")">

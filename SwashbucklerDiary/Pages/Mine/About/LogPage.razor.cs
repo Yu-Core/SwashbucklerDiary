@@ -8,7 +8,7 @@ using System.Text;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class LogPage : PageComponentBase
+    public partial class LogPage : ImportantComponentBase
     {
         private bool ShowSearch;
         private bool ShowMenu;

@@ -8,5 +8,10 @@
         {
             SelectedIcon = selectedIcon;
         }
+
+        public NavigationButton(object receiver, string text, string icon, string selectedIcon, Action onClick) : base(receiver, text, icon, onClick)
+        {
+            SelectedIcon = selectedIcon;
+        }
     }
 }

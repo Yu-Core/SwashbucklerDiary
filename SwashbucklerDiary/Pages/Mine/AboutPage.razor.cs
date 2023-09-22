@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class AboutPage : PageComponentBase
+    public partial class AboutPage : ImportantComponentBase
     {
         private bool ShowSourceCode;
         private bool ShowSponsor;
@@ -18,13 +18,19 @@ namespace SwashbucklerDiary.Pages
             public string? Tag_Name { get; set;}
         }
 
+        protected override void OnInitialized()
+        {
+            LoadView();
+            base.OnInitialized();
+        }
+
         protected override async Task OnInitializedAsync()
         {
-            await LoadView();
+            await LoadViewAsync();
             await base.OnInitializedAsync();
         }
 
-        private async Task LoadView()
+        private void LoadView()
         {
             ViewLists = new()
             {
@@ -43,7 +49,10 @@ namespace SwashbucklerDiary.Pages
                     new(this, "About.Sponsor.Name","mdi-hand-heart-outline",() => ShowSponsor = true),
                 }
             };
+        }
 
+        private async Task LoadViewAsync()
+        {
             var codeSources = await PlatformService.ReadJsonFileAsync<List<CodeSource>>("wwwroot/json/code-source/code-source.json");
             foreach (var item in codeSources)
             {

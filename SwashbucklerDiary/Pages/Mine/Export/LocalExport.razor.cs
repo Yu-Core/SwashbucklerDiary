@@ -6,7 +6,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class LocalExport : PageComponentBase
+    public partial class LocalExport : ImportantComponentBase
     {
         private bool ShowExport;
         private bool ShowImport;

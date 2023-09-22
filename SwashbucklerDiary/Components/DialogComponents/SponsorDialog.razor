@@ -1,7 +1,7 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits DialogComponentBase
 
-<MMDialog MyValue="Value"
+<MDialogExtension MyValue="Value"
           MyValueChanged="InternalValueChanged"
           ContentClass="rounded-lg"
           MaxWidth="420">
@@ -57,9 +57,9 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MMDialog>
+</MDialogExtension>
 
-<MMDialog @bind-MyValue="ShowThank"
+<MDialogExtension @bind-MyValue="ShowThank"
           ContentClass="rounded-lg"
           MaxWidth="420">
     <MCard>
@@ -75,4 +75,4 @@
             @ThankContent
          </MCardText>
      </MCard>
- </MMDialog>
+ </MDialogExtension>

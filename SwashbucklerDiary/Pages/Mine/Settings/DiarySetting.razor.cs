@@ -3,7 +3,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class DiarySetting : PageComponentBase
+    public partial class DiarySetting : ImportantComponentBase
     {
         private bool Title;
         private bool Markdown;

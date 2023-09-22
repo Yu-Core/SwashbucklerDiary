@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace SwashbucklerDiary.Pages
 {
     //自我批评一下，此处代码写的太乱
-    public partial class LANReceiver : PageComponentBase
+    public partial class LANReceiver : ImportantComponentBase
     {
         private bool _udpSending;
         private UdpClient? udpClient;
@@ -63,7 +63,6 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
-        private bool IsCurrentPage => NavigateService.Navigation.Uri.Contains("/lanReceiver");
         private bool UDPSending
         {
             get => _udpSending && IsCurrentPage;

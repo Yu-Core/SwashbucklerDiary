@@ -5,61 +5,92 @@ namespace SwashbucklerDiary.Services
 {
     public class NavigateService : INavigateService
     {
-        private string? CurrentUrl;
-        private Dictionary<string, object?> CurrentCache = new();
         public event Action? Action;
-        public event Func<Task>? BeforeNavBtn;
-        public event Func<Task>? BeforeNavigate;
+        public event Func<PushEventArgs, Task>? BeforePush;
+        public event Func<PopEventArgs, Task>? BeforePop;
+        public event Func<PopEventArgs, Task>? BeforePopToRoot;
+        public event Action<PushEventArgs>? Pushed;
+        public event Action<PopEventArgs>? Poped;
+        public event Action<PopEventArgs>? PopedToRoot;
+
+        public string? RootPath { get; set; }
+        public NavigationManager Navigation { get; set; } = default!;
+        public List<string> HistoryURLs { get; set; } = new();
 
         public void Initialize(NavigationManager navigation)
         {
             Navigation = navigation;
         }
 
-        public NavigationManager Navigation { get; set; } = default!;
-        public List<string> HistoryUrl { get; set; } = new List<string>();
-        private Dictionary<string, Dictionary<string, object?>?> HistoryCache { get; set; } = new();
-        private string UriKey => Navigation.ToBaseRelativePath(Navigation.Uri).Split("?")[0];
-
-        public async void NavigateTo(string url)
+        public void SetRootPath()
         {
-            RemoveCurrentHistoryCache();
-
-            if (BeforeNavigate is not null)
+            if (RootPath is not null)
             {
-                await BeforeNavigate.Invoke();
+                return;
             }
 
-            string oldUrl;
-            if (CurrentUrl is null)
-            {
-                oldUrl = Navigation.ToBaseRelativePath(Navigation.Uri);
-            }
-            else
-            {
-                oldUrl = CurrentUrl;
-                ClearCurrentUrl();
-            }
-
-            HistoryUrl.Add(oldUrl);
-            AddCurrentHistoryCache();
-
-            Navigation.NavigateTo(url);
+            RootPath = Navigation.Uri;
         }
-        public void NavigateToBack()
+
+        public async Task PushAsync(string url, bool isCachePrevious = true)
         {
-            ClearCurrentUrl();
-            ClearCurrentCache();
-            RemoveCurrentHistoryCache();
-            string url = string.Empty;
-            if (HistoryUrl.Count > 0)
+            string nextUri = new Uri(new(Navigation.BaseUri), url).ToString();
+            PushEventArgs args = new(Navigation.Uri, nextUri, isCachePrevious);
+
+            if (BeforePush is not null)
             {
-                url = HistoryUrl.Last();
-                var lastIndex = HistoryUrl.Count - 1;
-                //RemoveAt比Remove性能好一些
-                HistoryUrl.RemoveAt(lastIndex);
+                await BeforePush.Invoke(args);
             }
+
+            string currentURL = Navigation.Uri;
+            HistoryURLs.Add(currentURL);
+
             Navigation.NavigateTo(url);
+            Pushed?.Invoke(args);
+        }
+
+        public async Task PopAsync()
+        {
+            if (HistoryURLs.Count > 0)
+            {
+                string previousUri = HistoryURLs.Last();
+                PopEventArgs args = new(previousUri, Navigation.Uri);
+
+                if (BeforePop is not null)
+                {
+                    await BeforePop.Invoke(args);
+                }
+
+                var lastIndex = HistoryURLs.Count - 1;
+                HistoryURLs.RemoveAt(lastIndex);
+                Navigation.NavigateTo(previousUri);
+
+                Poped?.Invoke(args);
+            }
+        }
+
+        public async Task PopToRootAsync()
+        {
+            if (RootPath is null)
+            {
+                return;
+            }
+
+            var current = new Uri(Navigation.Uri).AbsolutePath;
+            if (current == new Uri(RootPath).AbsolutePath)
+            {
+                return;
+            }
+
+            PopEventArgs args = new(RootPath, Navigation.Uri);
+            if (BeforePopToRoot is not null)
+            {
+                await BeforePopToRoot.Invoke(args);
+            }
+
+            Navigation.NavigateTo(RootPath);
+            HistoryURLs.Clear();
+            PopedToRoot?.Invoke(args);
         }
 
         public bool OnBackButtonPressed()
@@ -71,95 +102,13 @@ namespace SwashbucklerDiary.Services
                 return true;
             }
 
-            if (HistoryUrl.Count > 0)
+            if (HistoryURLs.Any())
             {
-                NavigateToBack();
+                _ = PopAsync();
                 return true;
             }
 
             return false;
-        }
-
-        public async Task NavBtnClick(string url)
-        {
-            if (BeforeNavBtn is not null)
-            {
-                await BeforeNavBtn.Invoke();
-            }
-
-            ClearCurrentUrl();
-            ClearCurrentCache();
-            HistoryUrl.Clear();
-            HistoryCache.Clear();
-
-            Navigation.NavigateTo(url);
-        }
-
-        public void SetCurrentUrl(string? url)
-        {
-            CurrentUrl = url;
-        }
-
-        public void SetCurrentCache(string key, object? value)
-        {
-            CurrentCache.Add(key, value);
-        }
-
-        public object? GetCurrentCache(string key)
-        {
-            var url = Navigation.ToBaseRelativePath(Navigation.Uri);
-            return GetCache(url, key);
-        }
-
-        private object? GetCache(string url, string key)
-        {
-            var cacheKey = url.Split("?")[0];
-            var existCache = HistoryCache.TryGetValue(cacheKey, out Dictionary<string, object?>? cache);
-            if (!existCache)
-            {
-                return null;
-            }
-
-            if (cache == null || cache.Count == 0)
-            {
-                return null;
-            }
-
-            var existCurrentCache = cache.TryGetValue(key, out object? value);
-            if (!existCurrentCache)
-            {
-                return null;
-            }
-
-            return value;
-        }
-
-        private void ClearCurrentUrl()
-        {
-            CurrentUrl = null;
-        }
-
-        private void ClearCurrentCache()
-        {
-            CurrentCache = new();
-        }
-
-        private void RemoveCurrentHistoryCache()
-        {
-            HistoryCache.Remove(UriKey);
-        }
-
-        private void AddCurrentHistoryCache()
-        {
-            if (CurrentCache.Count > 0)
-            {
-                if (!HistoryCache.ContainsKey(UriKey))
-                {
-                    HistoryCache.Add(UriKey, CurrentCache);
-                }
-
-                ClearCurrentCache();
-            }
         }
     }
 }

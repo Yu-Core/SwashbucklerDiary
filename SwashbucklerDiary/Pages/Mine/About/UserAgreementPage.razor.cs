@@ -2,7 +2,7 @@
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class UserAgreementPage : PageComponentBase
+    public partial class UserAgreementPage : ImportantComponentBase
     {
         private string? Content { get; set; }
 

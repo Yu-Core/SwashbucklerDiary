@@ -1,6 +1,6 @@
 ﻿@page "/achievement"
 @namespace SwashbucklerDiary.Pages
-@inherits PageComponentBase
+@inherits ImportantComponentBase
 
 <MyAppBar>
     <MButton Icon="true"
@@ -11,7 +11,7 @@
     </MButton>
 
     <MySearch @bind-Value="ShowSearch"
-    @bind-Search="Search"
+              @bind-Search="Search"
               Title="@(I18n.T("Mine.Achievement.Name"))"
               OnChanged="UpdateAchievements">
     </MySearch>
