@@ -70,11 +70,6 @@
     "Url": "https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui/blob/dev/LICENSE"
   },
   {
-    "Name": "SQLite-net",
-    "License": "MIT license",
-    "Url": "https://github.com/praeclarum/sqlite-net/blob/master/LICENSE.txt"
-  },
-  {
     "Name": "SQLitePCLRaw",
     "License": "Apache-2.0 license",
     "Url": "https://github.com/ericsink/SQLitePCL.raw/blob/master/LICENSE.TXT"

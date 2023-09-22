@@ -106,7 +106,6 @@
 - [Serilog.Sinks.Async](https://github.com/serilog/serilog-sinks-async)
 - [Serilog.Sinks.Debug](https://github.com/serilog/serilog-sinks-debug)
 - [Serilog.Sinks.SQLite.Maui](https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui)
-- [SQLite-net](https://github.com/praeclarum/sqlite-net)
 - [SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw)
 - [SqlSugar](https://github.com/DotNetNext/SqlSugar)
 - [Swiper](https://github.com/nolimits4web/swiper)
