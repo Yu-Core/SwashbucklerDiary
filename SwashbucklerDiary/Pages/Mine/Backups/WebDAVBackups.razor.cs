@@ -1,6 +1,6 @@
 ﻿using Serilog;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.Models;
 using System.Net;
 using WebDav;

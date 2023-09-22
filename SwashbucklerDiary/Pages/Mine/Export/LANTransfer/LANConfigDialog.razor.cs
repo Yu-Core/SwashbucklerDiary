@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.Extensions;
 
 namespace SwashbucklerDiary.Pages
 {

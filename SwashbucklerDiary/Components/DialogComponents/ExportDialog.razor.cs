@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.Components
 {
     public partial class ExportDialog : DialogComponentBase
     {
-        private List<DynamicListItem> ListItemModels = new();
+        private List<DynamicListItem> Items = new();
 
         [Inject]
         protected IPlatformService PlatformService { get; set; } = default!;
@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Components
 
         private void LoadView()
         {
-            ListItemModels = new()
+            Items = new()
             {
                 new(this,"TXT", "mdi-format-text", CreateTxtFile),
                 new(this,"MD", "mdi-language-markdown-outline", CreateMdFile),

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
@@ -8,7 +9,7 @@ namespace SwashbucklerDiary.Components
     public class ImportantComponentBase : MyComponentBase, IDisposable
     {
         private string? Url;
-        
+
         [Inject]
         protected IJSRuntime JS { get; set; } = default!;
         [Inject]
@@ -20,14 +21,13 @@ namespace SwashbucklerDiary.Components
             GC.SuppressFinalize(this);
         }
 
-        protected bool IsCurrentPage => Url is null || EqualsAbsolutePath(Navigation.Uri, Url);
-
+        protected bool IsCurrentPage => Url is null || Url.EqualsAbsolutePath(Navigation.Uri);
 
         protected override void OnInitialized()
         {
             InitializedUrl();
             NavigateService.Poped += Poped;
-            if(IsRootPath)
+            if (IsRootPath)
             {
                 NavigateService.PopedToRoot += Poped;
             }
@@ -66,7 +66,7 @@ namespace SwashbucklerDiary.Components
 
         protected void Poped(PopEventArgs e)
         {
-            if (EqualsAbsolutePath(e.PreviousUri, Url))
+            if (Url.EqualsAbsolutePath(e.PreviousUri))
             {
                 Task.Run(OnResume);
             }
@@ -77,16 +77,6 @@ namespace SwashbucklerDiary.Components
         private void InitializedUrl()
         {
             Url = Navigation.Uri;
-        }
-
-        private bool EqualsAbsolutePath(string? uri1, string? uri2)
-        {
-            if (uri1 == null || uri2 == null)
-            {
-                return false;
-            }
-
-            return new Uri(uri1).AbsolutePath == new Uri(uri2).AbsolutePath;
         }
     }
 }

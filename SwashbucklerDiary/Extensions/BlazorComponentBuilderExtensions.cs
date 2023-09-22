@@ -1,7 +1,7 @@
 ﻿using BlazorComponent.I18n;
 using System.Text.Json;
 
-namespace SwashbucklerDiary.Extend
+namespace SwashbucklerDiary.Extensions
 {
     public static class BlazorComponentBuilderExtensions
     {

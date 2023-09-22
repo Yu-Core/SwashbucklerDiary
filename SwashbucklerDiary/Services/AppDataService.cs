@@ -1,6 +1,6 @@
 ﻿using MiniExcelLibs;
 using SwashbucklerDiary.Config;
-using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using System.IO.Compression;

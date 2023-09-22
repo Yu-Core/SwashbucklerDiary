@@ -8,7 +8,7 @@
                        ContentClass="rounded-t-lg">
             <MCard Class="rounded-t-lg py-2">
                 <MList>
-                    @foreach (var item in ListItemModels)
+                    @foreach (var item in DynamicListItems)
                     {
                         <MListItem OnClick="()=>OnClick(item.OnClick)">
                             <MListItemIcon>
@@ -20,7 +20,7 @@
                                 @(I18n.T(item.Text))
                             </MListItemContent>
                         </MListItem>
-                        if (ListItemModels.Last() != item)
+                        if (DynamicListItems.Last() != item)
                         {
                             <MDivider></MDivider>
                         }
@@ -54,7 +54,7 @@
                     </MButton>
                 </MCardTitle>
                 <MCardText>
-                    @foreach (var item in ListItemModels)
+                    @foreach (var item in DynamicListItems)
                     {
                         <MListItem Class="px-0"
                                    OnClick="()=>OnClick(item.OnClick)">

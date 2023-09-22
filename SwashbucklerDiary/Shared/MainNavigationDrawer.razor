@@ -7,14 +7,13 @@
                    Value="Show"
                    Stateless="true"
                    Width="300"
-                   MiniVariant="MiniVariant"
-                   Style="max-height:unset;transition: width ease 0.2s;">
+                   MiniVariant="MiniVariant">
     <MList Shaped="true"
            Flat="true">
         <MListItemGroup Value="Value"
                         ValueChanged="ValueChanged"
                         Mandatory="true"
-                        ActiveClass="@(MiniVariant?"":"my-navigation-drawer-active")">
+                        ActiveClass="@ActiveClass">
             @foreach (var item in Items)
             {
                 <MListItem Ripple="false"
@@ -36,6 +35,7 @@
 @code {
     private bool MiniVariant => MasaBlazor.Breakpoint.Sm;
     private bool Show => MasaBlazor.Breakpoint.SmAndUp;
+    private string ActiveClass => MiniVariant ? "" : "my-navigation-drawer-active";
 
     protected string? GetTitleClass(NavigationButton button)
     {

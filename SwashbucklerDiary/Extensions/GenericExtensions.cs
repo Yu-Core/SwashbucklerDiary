@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace SwashbucklerDiary.Extend
+namespace SwashbucklerDiary.Extensions
 {
 #nullable disable
     public static class GenericExtensions

@@ -5,8 +5,6 @@ namespace SwashbucklerDiary.Components
 {
     public partial class SelectIconDialog : DialogComponentBase
     {
-        //private List<string> ItemsKeys = new();
-
         [Parameter]
         public string? Title { get; set; }
         [Parameter]

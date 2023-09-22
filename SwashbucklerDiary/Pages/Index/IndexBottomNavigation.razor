@@ -1,8 +1,8 @@
-﻿@using SwashbucklerDiary.IServices
-@using SwashbucklerDiary.Models
+﻿@using SwashbucklerDiary.Models
+@namespace SwashbucklerDiary.Pages
 @inherits MainNavigationCompontentBase
 
-@if (MasaBlazor.Breakpoint.Xs)
+@if (Show)
 {
     <MBottomNavigation Value="Value"
                        ValueChanged="ValueChanged"
@@ -17,4 +17,8 @@
             </MButton>
         }
     </MBottomNavigation>
+}
+
+@code {
+    private bool Show => MasaBlazor.Breakpoint.Xs;
 }

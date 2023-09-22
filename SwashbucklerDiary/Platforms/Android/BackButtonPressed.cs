@@ -36,7 +36,8 @@ namespace SwashbucklerDiary.Platforms.Android
         {
             I18n ??= MauiApplication.Current.Services.GetRequiredService<II18nService>();
             string text = I18n.T("Press again to exit");
-            if(string.IsNullOrEmpty(text))
+            //I18未初始化时，禁用返回键退出
+            if (string.IsNullOrEmpty(text))
             {
                 return;
             }
@@ -49,6 +50,8 @@ namespace SwashbucklerDiary.Platforms.Android
             {
                 BackPressCounter++;
                 Toast toast = Toast.MakeText(Application.Context, I18n.T("Press again to exit"), ToastLength.Long)!;
+                //Toast的消失回调是Android11引入的，所以Android11以前的版本，定时3.5s后重置次数
+                //ToastLength.Long是3.5s，ToastLength.Short是2s
                 if (Build.VERSION.SdkInt >= BuildVersionCodes.R)
                 {
                     toast.AddCallback(new MyToastCallBack());

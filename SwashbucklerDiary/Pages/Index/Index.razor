@@ -2,9 +2,9 @@
 @namespace SwashbucklerDiary.Pages
 @inherits DiariesPageComponentBase
 
-<OnlyCurrentPageDiaplsy>
+<OnlyThisPageDisplay>
     <link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
-</OnlyCurrentPageDiaplsy>
+</OnlyThisPageDisplay>
 
 <MWindow Value="NavigationIndex"
          Style="height:100%;">
@@ -29,6 +29,6 @@
     </MWindowItem>
 </MWindow>
 
-<MainBottomNavigation @bind-Value="NavigationIndex"
-                      Items="NavigationButtons">
-</MainBottomNavigation>
+<IndexBottomNavigation @bind-Value="NavigationIndex"
+                       Items="NavigationButtons">
+</IndexBottomNavigation>

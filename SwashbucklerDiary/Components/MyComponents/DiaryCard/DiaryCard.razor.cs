@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.Components
     public partial class DiaryCard : MyComponentBase, IDisposable
     {
         private bool ShowMenu;
-        private List<DynamicListItem> ListItemModels = new();
+        private List<DynamicListItem> MenuItems = new();
 
         [Inject]
         private IconService IconService { get; set; } = default!;
@@ -22,6 +22,7 @@ namespace SwashbucklerDiary.Components
         public void Dispose()
         {
             DiaryCardList.Resumed -= OnResume;
+            GC.SuppressFinalize(this);
         }
 
         protected override void OnInitialized()
@@ -49,7 +50,7 @@ namespace SwashbucklerDiary.Components
 
         private void LoadView()
         {
-            ListItemModels = new()
+            MenuItems = new()
             {
                 new(this,"Diary.Tag","mdi-label-outline",ChangeTag),
                 new(this, "Share.Copy","mdi-content-copy",Copy),
@@ -60,7 +61,7 @@ namespace SwashbucklerDiary.Components
 
             if (ShowPrivacy)
             {
-                ListItemModels.Add(new(this, PrivateText, PrivateIcon, MovePrivacy));
+                MenuItems.Add(new(this, PrivateText, PrivateIcon, MovePrivacy));
             }
         }
 

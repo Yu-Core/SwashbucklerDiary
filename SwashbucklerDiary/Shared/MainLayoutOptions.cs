@@ -6,6 +6,7 @@ namespace SwashbucklerDiary.Shared
     public class MainLayoutOptions
     {
         private StringNumber _navigationIndex = 0;
+
         public StringNumber NavigationIndex
         {
             get => _navigationIndex;
@@ -20,7 +21,7 @@ namespace SwashbucklerDiary.Shared
                 });
             }
         }
-        public List<NavigationButton> NavigationButtons { get; set; } = new();
         public Action? NavigationIndexAction { get; set; }
+        public List<NavigationButton> NavigationButtons { get; set; } = new();
     }
 }

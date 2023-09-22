@@ -4,9 +4,9 @@ using SwashbucklerDiary.Models;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace SwashbucklerDiary.Extend
+namespace SwashbucklerDiary.Extensions
 {
-    public static partial class ServiceCollectionExtend
+    public static partial class ServiceCollectionExtensions
     {
         public static IServiceCollection AddSqlsugarConfig(this IServiceCollection services)
         {

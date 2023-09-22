@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace SwashbucklerDiary.Extend
+namespace SwashbucklerDiary.Extensions
 {
     public static class ExpressionExtensions
     {

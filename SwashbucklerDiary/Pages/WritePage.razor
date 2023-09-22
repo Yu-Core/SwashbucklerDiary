@@ -3,9 +3,9 @@
 
 @if (EnableMarkdown)
 {
-    <OnlyCurrentPageDiaplsy>
+    <OnlyThisPageDisplay>
         <link href="css/extend/masa-blazor-extend-enqueued-snackbars-write.css" rel="stylesheet" />
-    </OnlyCurrentPageDiaplsy>
+    </OnlyThisPageDisplay>
 }
 
 <MyAppBar>
@@ -33,7 +33,7 @@
     </MButton>
 
     <MultiMenu @bind-Value="ShowMenu"
-               ListItemModels="ListItemModels">
+               DynamicListItems="MenuItems">
         <ButtonContent>
             <MultiDisplay>
                 <DesktopContent>

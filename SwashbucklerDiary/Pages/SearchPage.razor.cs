@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.Models;
 using System.Linq.Expressions;
 

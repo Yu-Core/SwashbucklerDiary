@@ -3,7 +3,8 @@
 
 
 <div class="my-image-card-list">
-    <CascadingValue Value="@this">
+    <CascadingValue Value="@this"
+                    IsFixed="true">
         @foreach (var item in InternalValue)
         {
             <ImageResourceCard Value="item"></ImageResourceCard>

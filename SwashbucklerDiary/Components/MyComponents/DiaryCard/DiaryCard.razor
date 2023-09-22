@@ -32,7 +32,7 @@
                 }
                 <div @onclick:stopPropagation="true">
                     <MultiMenu @bind-Value="ShowMenu"
-                               ListItemModels="ListItemModels">
+                               DynamicListItems="MenuItems">
                         <ButtonContent>
                             <MIcon Class="@($"chevron-down {(ShowMenu?"chevron-down-rotate-x":"")}")">
                                 mdi-chevron-down

@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Components
         private string? PreviewImageSrc;
         private List<ResourceModel> _value = default!;
         private List<ResourceModel> InternalValue = new();
-        private int LoadCount = 20;
+        private readonly int LoadCount = 20;
         private bool FirstLoad = true;
 
         [CascadingParameter(Name = "ScrollElement")]

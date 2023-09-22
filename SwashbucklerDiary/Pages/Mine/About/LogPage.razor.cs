@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using System.Linq.Expressions;
@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Pages
         private bool ShowFilter;
         private bool ShowDelete;
         private bool ShowShare;
-        private List<DynamicListItem> ListItemModels = new();
+        private List<DynamicListItem> MenuItems = new();
         private List<DynamicListItem> ShareItems = new();
         private List<LogModel> Logs = new();
         private string? Search;
@@ -51,7 +51,7 @@ namespace SwashbucklerDiary.Pages
 
         private void LoadView()
         {
-            ListItemModels = new List<DynamicListItem>()
+            MenuItems = new List<DynamicListItem>()
             {
                 new(this, "Log.Clear","mdi-delete-outline",OpenDeleteDialog),
                 new(this, "Share.Share","mdi-share-variant-outline",OpenShareDialog),

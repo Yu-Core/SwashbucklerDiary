@@ -1,7 +1,7 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.Extensions;
 
 namespace SwashbucklerDiary.Components
 {

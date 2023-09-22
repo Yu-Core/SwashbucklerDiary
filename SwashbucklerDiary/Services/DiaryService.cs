@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Extend;
+﻿using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IRepository;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;

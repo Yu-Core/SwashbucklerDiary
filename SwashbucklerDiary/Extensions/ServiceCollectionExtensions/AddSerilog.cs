@@ -2,9 +2,9 @@
 using Serilog;
 using Serilog.Events;
 
-namespace SwashbucklerDiary.Extend
+namespace SwashbucklerDiary.Extensions
 {
-    public static partial class ServiceCollectionExtend
+    public static partial class ServiceCollectionExtensions
     {
         public static IServiceCollection AddSerilogConfig(this IServiceCollection services)
         {

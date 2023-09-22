@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using MauiBlazorToolkit;
-using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.Extensions;
 
 namespace SwashbucklerDiary
 {

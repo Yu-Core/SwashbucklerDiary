@@ -2,7 +2,8 @@
 @inherits MyComponentBase
 
 <div class="my-card-list">
-    <CascadingValue Value="this">
+    <CascadingValue Value="this"
+                    IsFixed="true">
         @foreach (var item in Value)
         {
             <LocationCard @key="item.Id"

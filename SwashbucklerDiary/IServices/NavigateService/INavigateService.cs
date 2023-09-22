@@ -40,14 +40,14 @@ namespace SwashbucklerDiary.IServices
         /// </summary>
         Task PopAsync();
         /// <summary>
-        /// 返回键处理
-        /// </summary>
-        /// <returns>true已处理事件，false为无事件可处理(便于做进一步处理，例如退出应用)</returns>
-        bool OnBackButtonPressed();
-        /// <summary>
         /// 返回到根页面
         /// </summary>
         /// <returns></returns>
         Task PopToRootAsync();
+        /// <summary>
+        /// 返回键处理
+        /// </summary>
+        /// <returns>true已处理事件，false为无事件可处理(便于做进一步处理，例如退出应用)</returns>
+        bool OnBackButtonPressed();
     }
 }

@@ -1,8 +1,9 @@
 ﻿using BlazorComponent;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Maui.Controls;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using SwashbucklerDiary.Services;
@@ -26,7 +27,7 @@ namespace SwashbucklerDiary.Pages
         private bool Overlay;
         private MyMarkdown? MyMarkdown;
         private MTextareaExtension? MTextareaExtension;
-        private List<DynamicListItem> ListItemModels = new();
+        private List<DynamicListItem> MenuItems = new();
         private DiaryModel Diary = new()
         {
             Tags = new(),
@@ -186,7 +187,7 @@ namespace SwashbucklerDiary.Pages
 
         private void LoadView()
         {
-            ListItemModels = new()
+            MenuItems = new()
             {
                 new(this, SetTitleText,"mdi-format-title",()=> SettingChange(SettingType.Title,ref EnableTitle)),
                 new(this, SetMarkdownText,SetMarkdownIcon,()=> SettingChange(SettingType.Markdown,ref EnableMarkdown)),
@@ -350,7 +351,7 @@ namespace SwashbucklerDiary.Pages
             return SettingsService.Save(type, value);
         }
 
-        private List<ResourceModel> GetDiaryResources(string content)
+        private static List<ResourceModel> GetDiaryResources(string content)
         {
             var resources = new List<ResourceModel>();
             string pattern = @"(?<=\(|"")(appdata:///\S+?)(?=\)|"")"; ;
@@ -369,7 +370,7 @@ namespace SwashbucklerDiary.Pages
             return resources;
         }
 
-        private ResourceType GetResourceType(string uri)
+        private static ResourceType GetResourceType(string uri)
         {
             var mime = StaticContentProvider.GetResponseContentTypeOrDefault(uri);
             var type = mime.Split('/')[0];

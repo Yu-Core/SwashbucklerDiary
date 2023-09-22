@@ -1,4 +1,4 @@
-﻿namespace SwashbucklerDiary.Extend
+﻿namespace SwashbucklerDiary.Extensions
 {
     //https://github.com/dotnet/maui/discussions/653
 #nullable disable

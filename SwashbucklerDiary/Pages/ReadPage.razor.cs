@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using SwashbucklerDiary.Services;
@@ -11,14 +11,14 @@ namespace SwashbucklerDiary.Pages
 {
     public partial class ReadPage : ImportantComponentBase, IAsyncDisposable
     {
-        private DiaryModel Diary = new();
         private bool ShowDelete;
         private bool ShowMenu;
         private bool ShowShare;
         private bool ShowExport;
-        private IJSObjectReference module = default!;
         private bool Markdown;
-        private List<DynamicListItem> ListItemModels = new();
+        private DiaryModel Diary = new();
+        private IJSObjectReference module = default!;
+        private List<DynamicListItem> MenuItems = new();
         private List<DynamicListItem> ShareItems = new();
         private List<DiaryModel> ExportDiaries = new();
 
@@ -55,17 +55,6 @@ namespace SwashbucklerDiary.Pages
         private bool ShowWeather => !string.IsNullOrEmpty(Diary.Weather);
         private bool ShowMood => !string.IsNullOrEmpty(Diary.Mood);
         private bool ShowLocation => !string.IsNullOrEmpty(Diary.Location);
-        private string DiaryCopyContent
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(Diary.Title))
-                {
-                    return Diary.Content!;
-                }
-                return Diary.Title + "\n" + Diary.Content;
-            }
-        }
 
         private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
         private string MarkdownText() => Markdown ? "Diary.Text" : "Diary.Markdown";
@@ -92,7 +81,7 @@ namespace SwashbucklerDiary.Pages
 
         async Task LoadView()
         {
-            ListItemModels = new List<DynamicListItem>()
+            MenuItems = new List<DynamicListItem>()
             {
                 new(this, "Share.Copy","mdi-content-copy",OnCopy),
                 new(this, TopText,"mdi-format-vertical-align-top",OnTopping),
@@ -102,7 +91,7 @@ namespace SwashbucklerDiary.Pages
             bool privacy = await SettingsService.Get(SettingType.PrivacyMode);
             if (privacy)
             {
-                ListItemModels.Add(new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged));
+                MenuItems.Add(new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged));
             }
 
             ShareItems = new()
@@ -158,8 +147,8 @@ namespace SwashbucklerDiary.Pages
 
         private async Task OnCopy()
         {
-            await PlatformService.SetClipboard(DiaryCopyContent);
-
+            var content = GetDiaryCopyContent();
+            await PlatformService.SetClipboard(content);
             await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
 
@@ -167,7 +156,8 @@ namespace SwashbucklerDiary.Pages
         {
             ShowShare = false;
             StateHasChanged();
-            await PlatformService.ShareText(I18n.T("Share.Share")!, DiaryCopyContent);
+            var content = GetDiaryCopyContent();
+            await PlatformService.ShareText(I18n.T("Share.Share"), content);
             await HandleAchievements(AchievementType.Share);
         }
 
@@ -197,6 +187,7 @@ namespace SwashbucklerDiary.Pages
             {
                 return "mdi-weather-cloudy";
             }
+
             return IconService.GetWeatherIcon(key);
         }
 
@@ -206,6 +197,7 @@ namespace SwashbucklerDiary.Pages
             {
                 return "mdi-emoticon-outline";
             }
+
             return IconService.GetMoodIcon(key);
         }
 
@@ -253,6 +245,16 @@ namespace SwashbucklerDiary.Pages
             ExportDiaries = new() { diary };
             ShowExport = true;
             StateHasChanged();
+        }
+
+        private string GetDiaryCopyContent()
+        {
+            if (string.IsNullOrEmpty(Diary.Title))
+            {
+                return Diary.Content!;
+            }
+
+            return Diary.Title + "\n" + Diary.Content;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Components
     public partial class LocationCard : MyComponentBase
     {
         private bool ShowMenu;
-        private List<DynamicListItem> ListItemModels = new();
+        private List<DynamicListItem> MenuItems = new();
 
         [CascadingParameter]
         public LocationCardList LocationCardList { get; set; } = default!;
@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Components
 
         void LoadView()
         {
-            ListItemModels = new()
+            MenuItems = new()
             {
                 new(this, "Share.Rename","mdi-rename-outline",Rename),
                 new(this, "Share.Delete","mdi-delete-outline",Delete),

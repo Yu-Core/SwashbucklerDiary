@@ -1,7 +1,7 @@
 ﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages

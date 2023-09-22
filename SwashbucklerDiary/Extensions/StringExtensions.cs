@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace SwashbucklerDiary.Extend
+namespace SwashbucklerDiary.Extensions
 {
     public static class StringExtensions
     {
@@ -53,9 +53,16 @@ namespace SwashbucklerDiary.Extend
             return count;
         }
 
-        public static bool IsRelativePath(this string uri)
+        public static bool EqualsAbsolutePath(this string? uri1,string? uri2)
         {
-            return Uri.IsWellFormedUriString(uri, UriKind.Relative);
+            if (uri1 == null || uri2 == null)
+            {
+                return false;
+            }
+
+            return new Uri(uri1).AbsolutePath == new Uri(uri2).AbsolutePath;
         }
+
+
     }
 }

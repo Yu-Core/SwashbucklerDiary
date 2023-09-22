@@ -3,9 +3,9 @@ using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Repository;
 using SwashbucklerDiary.Services;
 
-namespace SwashbucklerDiary.Extend
+namespace SwashbucklerDiary.Extensions
 {
-    public static partial class ServiceCollectionExtend
+    public static partial class ServiceCollectionExtensions
     {
         public static IServiceCollection AddCustomIOC(this IServiceCollection services)
         {
@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Extend
             services.AddSingleton<IResourceService, ResourceService>();
             //功能服务相关
             services.AddSingleton<INavigateService, NavigateService>();
-            services.AddSingleton<IconService>();
+            services.AddSingleton<IIconService,IconService>();
             services.AddSingleton<ISettingsService, SettingsService>();
             services.AddSingleton<IPlatformService, PlatformService>();
             services.AddSingleton<IAlertService, AlertService>();

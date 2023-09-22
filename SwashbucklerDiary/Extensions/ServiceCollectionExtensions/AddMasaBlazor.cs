@@ -2,9 +2,9 @@
 using Masa.Blazor;
 using Masa.Blazor.Presets;
 
-namespace SwashbucklerDiary.Extend
+namespace SwashbucklerDiary.Extensions
 {
-    public static partial class ServiceCollectionExtend
+    public static partial class ServiceCollectionExtensions
     {
         public static IServiceCollection AddMasaBlazorConfig(this IServiceCollection services)
         {

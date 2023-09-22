@@ -68,12 +68,12 @@
 
 <MultiDialog @bind-Value="ShowSourceCode"
              Title="@(I18n.T("About.SourceCode.Name"))"
-             ListItemModels="CodeSources">
+             DynamicListItems="CodeSources">
 </MultiDialog>
 
 <MDialogExtension @bind-MyValue="ShowVersionUpdate"
-          ContentClass="rounded-lg"
-          MaxWidth="420">
+                  ContentClass="rounded-lg"
+                  MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("About.Check for updates.Name"))

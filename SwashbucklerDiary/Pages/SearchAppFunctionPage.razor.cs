@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Extend;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.Models;
 using System.Linq.Expressions;
 
@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Pages
         {
             LoadQuery();
             await LoadSettings();
-            await SetAppFunctions();
+            await LoadAppFunctions();
             UpdateAppFunctions();
             await base.OnInitializedAsync();
         }
@@ -42,10 +42,11 @@ namespace SwashbucklerDiary.Pages
                 Search = Query;
             }
         }
-        private async Task SetAppFunctions()
+
+        private async Task LoadAppFunctions()
         {
             var appFunctions = await PlatformService.ReadJsonFileAsync<List<AppFunction>>("wwwroot/json/app-functions/app-functions.json");
-            AppFunctions = AllAppFunctions = appFunctions;
+            AllAppFunctions = appFunctions;
         }
 
         private async Task LoadSettings()

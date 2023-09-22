@@ -28,15 +28,5 @@ namespace SwashbucklerDiary.Components
 
             return true;
         }
-
-        protected string SaveFileName()
-        {
-            string name = "SwashbucklerDiaryBackups";
-            string time = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-            string version = $"v{PlatformService.GetAppVersion()}";
-            string suffix = ".db3";
-            
-            return name + time + version + suffix;
-        }
     }
 }

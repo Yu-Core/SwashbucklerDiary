@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
+using SwashbucklerDiary.Extensions;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class OnlyCurrentPageDiaplsy : IDisposable
+    public partial class OnlyThisPageDisplay : IDisposable
     {
-        private string? CurrentUrl;
-        private bool IsCurrentPage = true;
+        private string? Url;
 
         [Inject]
         private NavigationManager Navigation { get; set; } = default!;
@@ -27,15 +27,15 @@ namespace SwashbucklerDiary.Components
             GC.SuppressFinalize(this);
         }
 
+        private bool IsCurrentPage => Url is null || Url.EqualsAbsolutePath(Navigation.Uri);
+
         private void InitializedCurrentUrl()
         {
-            CurrentUrl = new Uri(Navigation.Uri).AbsolutePath;
+            Url = Navigation.Uri;
         }
 
         private void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
-            IsCurrentPage = CurrentUrl == new Uri(Navigation.Uri).AbsolutePath;
-
             InvokeAsync(StateHasChanged);
         }
     }
