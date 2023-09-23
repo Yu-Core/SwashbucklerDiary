@@ -77,7 +77,7 @@ namespace SwashbucklerDiary.Components
 
         private Task ChangeTag() => DiaryCardList.ChangeTag(Value);
 
-        private void Export() => DiaryCardList.Export(Value);
+        private Task Export() => DiaryCardList.Export(Value);
 
         private Task MovePrivacy() => DiaryCardList.MovePrivacy(Value);
 

@@ -51,7 +51,8 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            var diaries = Diaries.Where(it => it.Tags != null && it.Tags.Any(t => t.Id == tag.Id)).ToList();
+            var newTag = await TagService.FindIncludesAsync(tag.Id);
+            var diaries = newTag.Diaries;
             if (diaries is null ||  !diaries.Any())
             {
                 await AlertService.Info(I18n.T("Diary.NoDiary"));

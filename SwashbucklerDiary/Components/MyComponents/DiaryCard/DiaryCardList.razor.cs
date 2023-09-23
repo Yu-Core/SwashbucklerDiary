@@ -93,11 +93,12 @@ namespace SwashbucklerDiary.Components
             }
         }
 
-        public void Export(DiaryModel diary)
+        public async Task Export(DiaryModel diary)
         {
-            ExportDiaries = new() { diary };
+            var newDiary = await DiaryService.FindAsync(diary.Id);
+            ExportDiaries = new() { newDiary };
             ShowExport = true;
-            InvokeAsync(StateHasChanged);
+            await InvokeAsync(StateHasChanged);
         }
 
         protected override async Task OnInitializedAsync()

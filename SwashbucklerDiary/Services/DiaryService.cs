@@ -16,26 +16,6 @@ namespace SwashbucklerDiary.Services
             _iDiaryRepository = iDiaryRepository;
         }
 
-        public override Task<DiaryModel> FindAsync(Guid id)
-        {
-            return _iDiaryRepository.GetByIdAsync(id);
-        }
-
-        public override Task<DiaryModel> FindAsync(Expression<Func<DiaryModel, bool>> func)
-        {
-            return _iDiaryRepository.GetFirstAsync(func);
-        }
-
-        public override Task<List<DiaryModel>> QueryAsync()
-        {
-            return _iDiaryRepository.GetListAsync();
-        }
-
-        public override Task<List<DiaryModel>> QueryAsync(Expression<Func<DiaryModel, bool>> func)
-        {
-            return _iDiaryRepository.GetListAsync(func);
-        }
-
         public Task<List<TagModel>> GetTagsAsync(Guid id)
         {
             return _iDiaryRepository.GetTagsAsync(id);
