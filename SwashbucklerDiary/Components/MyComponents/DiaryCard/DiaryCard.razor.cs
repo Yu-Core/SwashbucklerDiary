@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using SwashbucklerDiary.Services;
 
@@ -10,7 +11,7 @@ namespace SwashbucklerDiary.Components
         private List<DynamicListItem> MenuItems = new();
 
         [Inject]
-        private IconService IconService { get; set; } = default!;
+        private IIconService IconService { get; set; } = default!;
 
         [CascadingParameter]
         public DiaryCardList DiaryCardList { get; set; } = default!;
@@ -43,10 +44,13 @@ namespace SwashbucklerDiary.Components
 
         private string? Title => GetTitle();
         private string? Text => GetText();
-
         private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
         private string PrivateText() => IsPrivate ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
         private string PrivateIcon() => IsPrivate ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
+        private string? WeatherIcon =>
+            string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetWeatherIcon(Value.Weather);
+        private string? MoodIcon =>
+            string.IsNullOrWhiteSpace(Value.Mood) ? null : IconService.GetMoodIcon(Value.Mood);
 
         private void LoadView()
         {
@@ -76,12 +80,6 @@ namespace SwashbucklerDiary.Components
         private void Export() => DiaryCardList.Export(Value);
 
         private Task MovePrivacy() => DiaryCardList.MovePrivacy(Value);
-
-        private string? GetWeatherIcon() =>
-            string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetWeatherIcon(Value.Weather);
-
-        private string? GetMoodIcon() =>
-            string.IsNullOrWhiteSpace(Value.Mood) ? null : IconService.GetMoodIcon(Value.Mood);
 
         private string? GetTitle()
         {

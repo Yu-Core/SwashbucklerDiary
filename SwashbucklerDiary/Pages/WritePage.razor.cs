@@ -1,12 +1,10 @@
 ﻿using BlazorComponent;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Maui.Controls;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Services;
 using SwashbucklerDiary.Utilities;
 using System.Text.RegularExpressions;
 
@@ -35,6 +33,8 @@ namespace SwashbucklerDiary.Pages
             CreateTime = default
         };
         private List<TagModel> Tags = new();
+        private Dictionary<string, string> WeatherIcons = new();
+        private Dictionary<string, string> MoodIcons = new();
 
         [Inject]
         private MasaBlazor MasaBlazor { get; set; } = default!;
@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Pages
         [Inject]
         private ITagService TagService { get; set; } = default!;
         [Inject]
-        private IconService IconService { get; set; } = default!;
+        private IIconService IconService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -54,12 +54,12 @@ namespace SwashbucklerDiary.Pages
 
         protected override void OnInitialized()
         {
+            LoadView();
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
             NavigateService.BeforePop += BeforePop;
             NavigateService.BeforePopToRoot += BeforePopToRoot;
             PlatformService.Stopped += LeaveAppSaveDiary;
-            LoadView();
-
+            
             base.OnInitialized();
         }
 
@@ -132,8 +132,6 @@ namespace SwashbucklerDiary.Pages
         }
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
-        private static Dictionary<string, string> WeatherIcons => IconService.WeatherIcon;
-        private static Dictionary<string, string> MoodIcons => IconService.MoodIcon;
         private string WeatherText =>
             string.IsNullOrEmpty(Diary.Weather) ? I18n.T("Write.Weather")! : I18n.T("Weather." + Diary.Weather)!;
         private string MoodText =>
@@ -193,6 +191,8 @@ namespace SwashbucklerDiary.Pages
                 new(this, SetMarkdownText,SetMarkdownIcon,()=> SettingChange(SettingType.Markdown,ref EnableMarkdown)),
                 new(this, SetEditCreateTimeText,"mdi-calendar-edit-outline",()=> SettingChange(SettingType.EditCreateTime,ref EnableEditCreateTime))
             };
+            WeatherIcons = IconService.GetWeatherIcons();
+            MoodIcons = IconService.GetMoodIcons();
         }
 
         private async Task UpdateTags()

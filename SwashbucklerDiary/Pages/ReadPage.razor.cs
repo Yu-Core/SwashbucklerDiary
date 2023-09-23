@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Pages
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
         [Inject]
-        private IconService IconService { get; set; } = default!;
+        private IIconService IconService { get; set; } = default!;
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
 

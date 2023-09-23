@@ -1,0 +1,19 @@
+{
+  "cloudy": "mdi-weather-cloudy",
+  "dust": "mdi-weather-dust",
+  "fog": "mdi-weather-fog",
+  "hail": "mdi-weather-hail",
+  "hazy": "mdi-weather-hazy",
+  "hurricane": "mdi-weather-hurricane-outline",
+  "lightning": "mdi-weather-lightning",
+  "lightning-rainy": "mdi-weather-lightning-rainy",
+  "pouring": "mdi-weather-pouring",
+  "rainy": "mdi-weather-rainy",
+  "sleet": "mdi-weather-snowy-rainy",
+  "snow": "mdi-weather-snowy",
+  "sunny": "mdi-weather-sunny",
+  "sunny-off": "mdi-weather-sunny-off",
+  "tornado": "mdi-weather-tornado",
+  "ultraviolet": "mdi-sun-wireless-outline",
+  "windy": "mdi-weather-windy"
+}

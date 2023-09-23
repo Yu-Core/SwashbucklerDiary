@@ -2,11 +2,12 @@
 @inherits DialogComponentBase
 
 <MDialogExtension MyValue="Value"
-          MyValueChanged="InternalValueChanged"
-          ContentClass="rounded-lg"
-          MaxWidth="420"
-          Scrollable="true"
-          Transition="@(null)">
+                  MyValueChanged="InternalValueChanged"
+                  ContentClass="rounded-lg"
+                  MaxWidth="420"
+                  Eager="true"
+                  Scrollable="true"
+                  Transition="">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(Title)
@@ -15,21 +16,21 @@
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
-        <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:200px;">
+        <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
             <MChipGroup Value="Item"
                         ValueChanged="ItemChanged"
-                        Column>
-                @foreach (var item in Items)
+                        Column="true">
+                @foreach (var item in IconListItems)
                 {
-                    <MChip @key="item.Key"
-                           Value="@(item.Key)"
+                    <MChip @key="item.Name"
+                           Value="@(item.Name)"
                            Filter="true"
                            Outlined="true"
                            OnClick="HandleOnCancel">
                         <MIcon Left="true">
-                            @(item.Value)
+                            @(item.Icon)
                         </MIcon>
-                        @(Text?.Invoke(item))
+                        @(item.Text)
                     </MChip>
                 }
             </MChipGroup>

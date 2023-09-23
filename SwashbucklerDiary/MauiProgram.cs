@@ -37,6 +37,7 @@ namespace SwashbucklerDiary
             builder.Services.AddMasaBlazorConfig();
             builder.Services.AddSqlsugarConfig();
             builder.Services.AddCustomIOC();
+            builder.Services.AddIconCache();
             builder.Services.AddMauiExceptionHandle();
 
             return builder.Build();
