@@ -87,7 +87,13 @@
     "Not Found": "Not Found"
   },
   "History": {
-    "Calendar": "Calendar"
+    "Calendar": "Calendar",
+    "ExportTime": {
+      "Name": "Select the time range",
+      "Day": "Export all diaries for this date",
+      "Month": "Export all diaries for this month",
+      "Year": "Export all diaries for this year"
+    }
   },
   "Write": {
     "EnableTitle": "Enable title",

@@ -4,17 +4,22 @@ using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Pages
 {
     public partial class IndexHistory : ImportantComponentBase
     {
-        private ScrollContainer ScrollContainer = default!;
-        private ElementReference NormalCalendar;
         private bool NormalCalendarVisible = true;
         private bool ShowFloatCalendar;
+        private bool ShowExport;
+        private bool ShowExportTime;
+        private ScrollContainer ScrollContainer = default!;
+        private ElementReference NormalCalendar;
         private DateOnly _pickedDate = DateOnly.FromDateTime(DateTime.Now);
         private DateOnly[] EventsDates = Array.Empty<DateOnly>();
+        private List<DynamicListItem> ExportTimeItems = new();
+        private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
         protected IDiaryService DiaryService { get; set; } = default!;
@@ -31,6 +36,12 @@ namespace SwashbucklerDiary.Pages
         {
             NormalCalendarVisible = value;
             await InvokeAsync(StateHasChanged);
+        }
+
+        protected override void OnInitialized()
+        {
+            LoadView();
+            base.OnInitialized();
         }
 
         protected override async Task OnInitializedAsync()
@@ -64,9 +75,33 @@ namespace SwashbucklerDiary.Pages
             set => SetPickedDate(value);
         }
 
-        public DateTime MinPickedDateTime => _pickedDate.ToDateTime(default);
+        private DateTime MinPickedDateTime => _pickedDate.ToDateTime(default);
 
-        public DateTime MaxPickedDateTime => _pickedDate.ToDateTime(TimeOnly.MaxValue);
+        private DateTime MaxPickedDateTime => _pickedDate.ToDateTime(TimeOnly.MaxValue);
+
+        private Expression<Func<DiaryModel, bool>> ExpressionDay =>
+            it => it.CreateTime.Day == PickedDate.Day &&
+            it.CreateTime.Month == PickedDate.Month &&
+            it.CreateTime.Year == PickedDate.Year;
+
+        private Expression<Func<DiaryModel, bool>> ExpressionMonth =>
+            it => it.CreateTime.Month == PickedDate.Month &&
+            it.CreateTime.Year == PickedDate.Year;
+
+        private Expression<Func<DiaryModel, bool>> ExpressionYear =>
+            it => it.CreateTime.Year == PickedDate.Year;
+
+        
+
+        private void LoadView()
+        {
+            ExportTimeItems = new()
+            {
+                new(this,"History.ExportTime.Day","mdi-alpha-d",ExportThisDay),
+                new(this,"History.ExportTime.Month","mdi-alpha-m",ExportThisMonth),
+                new(this,"History.ExportTime.Year","mdi-alpha-y",ExportThisYear),
+            };
+        }
 
         private async void SetPickedDate(DateOnly value)
         {
@@ -89,5 +124,52 @@ namespace SwashbucklerDiary.Pages
             EventsDates = eventsDates.ToArray();
         }
 
+        private Task ExportThisDay()
+            => ExportThisTime(ExpressionDay);
+
+        private Task ExportThisMonth()
+            => ExportThisTime(ExpressionMonth);
+
+        private Task ExportThisYear()
+            => ExportThisTime(ExpressionYear);
+
+        private async Task ExportThisTime(Expression<Func<DiaryModel, bool>> expression)
+        {
+            ShowExportTime = false;
+            var flag = await CheckPermission();
+            if (!flag)
+            {
+                return;
+            }
+
+            ExportDiaries = await DiaryService.QueryAsync(expression);
+            if (!ExportDiaries.Any())
+            {
+                await AlertService.Info(I18n.T("Diary.NoDiary"));
+                return;
+            }
+
+            ShowExport = true;
+            StateHasChanged();
+        }
+
+        private async Task<bool> CheckPermission()
+        {
+            var writePermission = await PlatformService.TryStorageWritePermission();
+            if (!writePermission)
+            {
+                await AlertService.Info(I18n.T("Permission.OpenStorageWrite"));
+                return false;
+            }
+
+            var readPermission = await PlatformService.TryStorageReadPermission();
+            if (!readPermission)
+            {
+                await AlertService.Info(I18n.T("Permission.OpenStorageRead"));
+                return false;
+            }
+
+            return true;
+        }
     }
 }

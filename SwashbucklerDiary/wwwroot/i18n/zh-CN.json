@@ -87,7 +87,13 @@
     "Not Found": "未找到搜索结果"
   },
   "History": {
-    "Calendar": "日历"
+    "Calendar": "日历",
+    "ExportTime": {
+      "Name": "选择时间范围",
+      "Day": "导出该日期日记",
+      "Month": "导出该月份日记",
+      "Year": "导出该年份日记"
+    }
   },
   "Write": {
     "EnableTitle": "开启标题",

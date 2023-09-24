@@ -22,6 +22,14 @@
             </MTextField>
         </div>
     }
+
+    <MSpacer></MSpacer>
+    <MButton Icon="true"
+             OnClick="()=>ShowExportTime=true">
+        <MIcon>
+            mdi-export
+        </MIcon>
+    </MButton>
 </MyAppBar>
 
 <ScrollContainer @ref="ScrollContainer">
@@ -50,3 +58,12 @@
               Events="EventsDates"
               EventColor='"primary"'>
 </MyDatePicker>
+
+<MultiDialog @bind-Value="ShowExportTime"
+             Title="@(I18n.T("History.ExportTime.Name"))"
+             DynamicListItems="ExportTimeItems">
+</MultiDialog>
+
+<ExportDialog @bind-Value="ShowExport"
+              Diaries="ExportDiaries">
+</ExportDialog>
