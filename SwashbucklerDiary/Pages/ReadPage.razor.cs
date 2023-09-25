@@ -4,7 +4,6 @@ using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Services;
 using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
@@ -67,9 +66,10 @@ namespace SwashbucklerDiary.Pages
             var diary = await DiaryService.FindAsync(Id);
             if (diary == null)
             {
-                NavigateToBack();
+                await NavigateToBack();
                 return;
             }
+
             Diary = diary;
             Diary.Content = StaticCustomScheme.CustomSchemeRender(Diary.Content);
         }
@@ -130,7 +130,7 @@ namespace SwashbucklerDiary.Pages
                 await AlertService.Error(I18n.T("Share.DeleteFail"));
             }
 
-            NavigateToBack();
+            await NavigateToBack();
         }
 
         private Task OnEdit()

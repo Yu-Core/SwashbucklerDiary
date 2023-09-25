@@ -34,14 +34,15 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
-        protected override void NavigateToBack()
+        protected override Task NavigateToBack()
         {
             if (ShowSearch)
             {
                 ShowSearch = false;
-                return;
+                return Task.CompletedTask;
             }
-            base.NavigateToBack();
+
+            return base.NavigateToBack();
         }
 
         private DateOnly DateOnlyMin => DateFilterForm.GetDateMinValue();

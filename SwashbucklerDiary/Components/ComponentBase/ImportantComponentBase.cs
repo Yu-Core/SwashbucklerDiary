@@ -35,9 +35,9 @@ namespace SwashbucklerDiary.Components
             base.OnInitialized();
         }
 
-        protected virtual void NavigateToBack()
+        protected virtual Task NavigateToBack()
         {
-            NavigateService.PopAsync();
+            return NavigateService.PopAsync();
         }
 
         protected Func<bool, Task> SettingChange(SettingType type)
@@ -68,7 +68,7 @@ namespace SwashbucklerDiary.Components
         {
             if (Url.EqualsAbsolutePath(e.PreviousUri))
             {
-                Task.Run(OnResume);
+                OnResume();
             }
         }
 

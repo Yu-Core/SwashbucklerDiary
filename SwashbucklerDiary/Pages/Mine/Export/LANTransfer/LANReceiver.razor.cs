@@ -172,7 +172,7 @@ namespace SwashbucklerDiary.Pages
                 {
                     if (IsCurrentPage)
                     {
-                        NavigateToBack();
+                        await NavigateToBack();
                     }
 
                     Log.Error($"{e.Message}\n{e.StackTrace}");
