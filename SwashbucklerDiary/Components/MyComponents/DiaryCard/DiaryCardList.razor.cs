@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public string? CardClass { get; set; }
         [Parameter]
-        public EventCallback OnUpdate { get; set; }
+        public EventCallback<DiaryModel> OnRemove { get; set; }
         [Parameter]
         public List<TagModel> Tags { get; set; } = new();
         [Parameter]
@@ -86,7 +86,7 @@ namespace SwashbucklerDiary.Components
 
             _value.RemoveAt(index);
             await InvokeAsync(StateHasChanged);
-            await OnUpdate.InvokeAsync();
+            await OnRemove.InvokeAsync(diaryModel);
             if (diaryModel.Private)
             {
                 await AlertService.Success(I18n.T("Read.PrivacyAlert"));
@@ -148,7 +148,7 @@ namespace SwashbucklerDiary.Components
             {
                 await AlertService.Error(I18n.T("Share.DeleteFail"));
             }
-            await OnUpdate.InvokeAsync();
+            await OnRemove.InvokeAsync(diaryModel);
         }
 
         private async Task SaveSelectTags()

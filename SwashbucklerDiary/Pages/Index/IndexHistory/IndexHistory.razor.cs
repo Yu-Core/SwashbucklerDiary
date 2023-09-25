@@ -4,7 +4,6 @@ using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -12,14 +11,11 @@ namespace SwashbucklerDiary.Pages
     {
         private bool NormalCalendarVisible = true;
         private bool ShowFloatCalendar;
-        private bool ShowExport;
-        private bool ShowExportTime;
+        private bool ShowExportThisTime;
         private ScrollContainer ScrollContainer = default!;
         private ElementReference NormalCalendar;
         private DateOnly _pickedDate = DateOnly.FromDateTime(DateTime.Now);
         private DateOnly[] EventsDates = Array.Empty<DateOnly>();
-        private List<DynamicListItem> ExportTimeItems = new();
-        private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
         protected IDiaryService DiaryService { get; set; } = default!;
@@ -36,12 +32,6 @@ namespace SwashbucklerDiary.Pages
         {
             NormalCalendarVisible = value;
             await InvokeAsync(StateHasChanged);
-        }
-
-        protected override void OnInitialized()
-        {
-            LoadView();
-            base.OnInitialized();
         }
 
         protected override async Task OnInitializedAsync()
@@ -67,7 +57,11 @@ namespace SwashbucklerDiary.Pages
             base.OnResume();
         }
 
-        private List<DiaryModel> PickerDiaries => Diaries.Where(it => !it.Private && it.CreateTime >= MinPickedDateTime && it.CreateTime <= MaxPickedDateTime).ToList();
+        private List<DiaryModel> PickerDiaries => 
+            Diaries.Where(it => !it.Private && 
+            it.CreateTime.Day == PickedDate.Day &&
+            it.CreateTime.Month == PickedDate.Month &&
+            it.CreateTime.Year == PickedDate.Year).ToList();
 
         private DateOnly PickedDate
         {
@@ -75,35 +69,7 @@ namespace SwashbucklerDiary.Pages
             set => SetPickedDate(value);
         }
 
-        private DateTime MinPickedDateTime => _pickedDate.ToDateTime(default);
-
-        private DateTime MaxPickedDateTime => _pickedDate.ToDateTime(TimeOnly.MaxValue);
-
-        private Expression<Func<DiaryModel, bool>> ExpressionDay =>
-            it => it.CreateTime.Day == PickedDate.Day &&
-            it.CreateTime.Month == PickedDate.Month &&
-            it.CreateTime.Year == PickedDate.Year;
-
-        private Expression<Func<DiaryModel, bool>> ExpressionMonth =>
-            it => it.CreateTime.Month == PickedDate.Month &&
-            it.CreateTime.Year == PickedDate.Year;
-
-        private Expression<Func<DiaryModel, bool>> ExpressionYear =>
-            it => it.CreateTime.Year == PickedDate.Year;
-
-        
-
-        private void LoadView()
-        {
-            ExportTimeItems = new()
-            {
-                new(this,"History.ExportTime.Day","mdi-alpha-d",ExportThisDay),
-                new(this,"History.ExportTime.Month","mdi-alpha-m",ExportThisMonth),
-                new(this,"History.ExportTime.Year","mdi-alpha-y",ExportThisYear),
-            };
-        }
-
-        private async void SetPickedDate(DateOnly value)
+        private void SetPickedDate(DateOnly value)
         {
             if (_pickedDate == value)
             {
@@ -111,11 +77,14 @@ namespace SwashbucklerDiary.Pages
             }
 
             _pickedDate = value;
-            //await UpdateDiariesAsync();
-            await InvokeAsync(StateHasChanged);
-            //直接滚动显得很生硬，所以延时0.2s
-            await Task.Delay(200);
-            await JS.ScrollTo(ScrollContainer.Ref, 0);
+
+            Task.Run(async() =>
+            {
+                await InvokeAsync(StateHasChanged);
+                //直接滚动显得很生硬，所以延时0.2s
+                await Task.Delay(200);
+                await JS.ScrollTo(ScrollContainer.Ref, 0);
+            });
         }
 
         private async Task UpdateEventsDates()
@@ -124,33 +93,21 @@ namespace SwashbucklerDiary.Pages
             EventsDates = eventsDates.ToArray();
         }
 
-        private Task ExportThisDay()
-            => ExportThisTime(ExpressionDay);
-
-        private Task ExportThisMonth()
-            => ExportThisTime(ExpressionMonth);
-
-        private Task ExportThisYear()
-            => ExportThisTime(ExpressionYear);
-
-        private async Task ExportThisTime(Expression<Func<DiaryModel, bool>> expression)
+        private async Task HandleOnRemove(DiaryModel diary)
         {
-            ShowExportTime = false;
+            Diaries.Remove(diary);
+            await UpdateEventsDates();
+        }
+
+        private async Task ExportThisTime()
+        {
             var flag = await CheckPermission();
             if (!flag)
             {
                 return;
             }
 
-            ExportDiaries = await DiaryService.QueryAsync(expression);
-            if (!ExportDiaries.Any())
-            {
-                await AlertService.Info(I18n.T("Diary.NoDiary"));
-                return;
-            }
-
-            ShowExport = true;
-            StateHasChanged();
+            ShowExportThisTime = true;
         }
 
         private async Task<bool> CheckPermission()
