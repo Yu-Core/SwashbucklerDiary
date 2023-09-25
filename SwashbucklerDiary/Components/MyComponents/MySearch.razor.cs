@@ -24,6 +24,7 @@ namespace SwashbucklerDiary.Components
         public string? Placeholder { get; set; }
 
         private bool ShowTitle => !string.IsNullOrEmpty(Title);
+        private string? TextFieldColor => Light ? "grey" : null;
         private void SetValue(bool value)
         {
             if (_value != value)

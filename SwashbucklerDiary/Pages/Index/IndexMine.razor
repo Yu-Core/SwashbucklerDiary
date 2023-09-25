@@ -129,8 +129,9 @@
 </ScrollContainer>
 
 <MDialogExtension @bind-MyValue="ShowLanguage"
-          ContentClass="rounded-lg"
-          MaxWidth="420">
+                  ContentClass="rounded-lg"
+                  MaxWidth="420"
+                  Eager="true">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Mine.SelectLanguage"))
@@ -162,8 +163,9 @@
 </MDialogExtension>
 
 <MDialogExtension @bind-MyValue="ShowThemeState"
-          ContentClass="rounded-lg"
-          MaxWidth="420">
+                  ContentClass="rounded-lg"
+                  MaxWidth="420"
+                  Eager="true">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Mine.Night"))

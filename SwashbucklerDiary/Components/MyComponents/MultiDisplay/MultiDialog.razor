@@ -4,8 +4,9 @@
 <MultiDisplay>
     <MobileContent>
         <MBottomSheetExtension MyValue="Value"
-                       MyValueChanged="ValueChanged"
-                       ContentClass="rounded-t-lg">
+                               MyValueChanged="ValueChanged"
+                               ContentClass="rounded-t-lg"
+                               Eager="true">
             <MCard Class="rounded-t-lg py-2">
                 <MList>
                     @foreach (var item in DynamicListItems)
@@ -41,9 +42,10 @@
     </MobileContent>
     <DesktopContent>
         <MDialogExtension MyValue="Value"
-                  MyValueChanged="ValueChanged"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420">
+                          MyValueChanged="ValueChanged"
+                          ContentClass="rounded-lg"
+                          MaxWidth="420"
+                          Eager="true">
             <MCard>
                 <MCardTitle Class="font-weight-bold">
                     @Title

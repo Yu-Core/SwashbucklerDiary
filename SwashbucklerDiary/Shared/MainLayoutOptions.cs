@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Shared
             get => _navigationIndex;
             set
             {
-                if(value == _navigationIndex) return;
+                if (value == _navigationIndex) return;
 
                 _navigationIndex = value;
                 Task.Run(() =>
