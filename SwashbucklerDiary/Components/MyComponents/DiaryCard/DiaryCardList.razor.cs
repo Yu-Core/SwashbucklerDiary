@@ -107,11 +107,11 @@ namespace SwashbucklerDiary.Components
             await base.OnInitializedAsync();
         }
 
-        protected override async void OnResume()
+        protected override async Task OnResume()
         {
             await LoadSettings();
             Resumed?.Invoke();
-            base.OnResume();
+            await base.OnResume();
         }
 
         private List<TagModel> SelectedTags

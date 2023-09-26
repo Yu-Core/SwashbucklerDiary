@@ -7,7 +7,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class IndexHistory : ImportantComponentBase
+    public partial class IndexHistory : IndexPageCompentBase
     {
         private bool NormalCalendarVisible = true;
         private bool ShowFloatCalendar;
@@ -15,7 +15,6 @@ namespace SwashbucklerDiary.Pages
         private ScrollContainer ScrollContainer = default!;
         private ElementReference NormalCalendar;
         private DateOnly _pickedDate = DateOnly.FromDateTime(DateTime.Now);
-        private DateOnly[] EventsDates = Array.Empty<DateOnly>();
 
         [Inject]
         protected IDiaryService DiaryService { get; set; } = default!;
@@ -34,12 +33,6 @@ namespace SwashbucklerDiary.Pages
             await InvokeAsync(StateHasChanged);
         }
 
-        protected override async Task OnInitializedAsync()
-        {
-            await UpdateEventsDates();
-            await base.OnInitializedAsync();
-        }
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -51,23 +44,22 @@ namespace SwashbucklerDiary.Pages
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        protected override async void OnResume()
-        {
-            await UpdateEventsDates();
-            base.OnResume();
-        }
-
-        private List<DiaryModel> PickerDiaries => 
-            Diaries.Where(it => !it.Private && 
-            it.CreateTime.Day == PickedDate.Day &&
-            it.CreateTime.Month == PickedDate.Month &&
-            it.CreateTime.Year == PickedDate.Year).ToList();
-
         private DateOnly PickedDate
         {
             get => _pickedDate;
             set => SetPickedDate(value);
         }
+
+        private List<DiaryModel> PickerDiaries =>
+            Diaries.Where(it => !it.Private &&
+            it.CreateTime.Day == PickedDate.Day &&
+            it.CreateTime.Month == PickedDate.Month &&
+            it.CreateTime.Year == PickedDate.Year).ToList();
+
+        private DateOnly[] EventsDates =>
+            Diaries.Select(s => DateOnly.FromDateTime(s.CreateTime))
+                   .Distinct()
+                   .ToArray();
 
         private void SetPickedDate(DateOnly value)
         {
@@ -78,7 +70,7 @@ namespace SwashbucklerDiary.Pages
 
             _pickedDate = value;
 
-            Task.Run(async() =>
+            Task.Run(async () =>
             {
                 await InvokeAsync(StateHasChanged);
                 //直接滚动显得很生硬，所以延时0.2s
@@ -87,16 +79,9 @@ namespace SwashbucklerDiary.Pages
             });
         }
 
-        private async Task UpdateEventsDates()
-        {
-            var eventsDates = await DiaryService.GetAllDates(it => !it.Private);
-            EventsDates = eventsDates.ToArray();
-        }
-
-        private async Task HandleOnRemove(DiaryModel diary)
+        private void HandleOnRemove(DiaryModel diary)
         {
             Diaries.Remove(diary);
-            await UpdateEventsDates();
         }
 
         private async Task ExportThisTime()

@@ -26,11 +26,11 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
-        protected override async void OnResume()
+        protected override async Task OnResume()
         {
             await LoadSettings();
             UpdateAppFunctions();
-            base.OnResume();
+            await base.OnResume();
         }
 
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);

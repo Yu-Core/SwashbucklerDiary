@@ -1,12 +1,11 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class IndexDiary : ImportantComponentBase
+    public partial class IndexDiary : IndexPageCompentBase
     {
         private bool ShowWelcomeText;
         private bool ShowDate;
@@ -26,6 +25,12 @@ namespace SwashbucklerDiary.Pages
         [Parameter]
         public EventCallback<List<TagModel>> TagsChanged { get; set; }
 
+        public async Task LoadSettings()
+        {
+            ShowWelcomeText = await SettingsService.Get(SettingType.WelcomeText);
+            ShowDate = await SettingsService.Get(SettingType.Date);
+        }
+
         protected override void OnInitialized()
         {
             InitTab();
@@ -37,13 +42,6 @@ namespace SwashbucklerDiary.Pages
             await LoadSettings();
             await base.OnInitializedAsync();
         }
-
-        protected override async void OnResume()
-        {
-            await LoadSettings();
-            base.OnResume();
-        }
-
         private bool ShowAddTag { get; set; }
 
         private void InitTab()
@@ -54,12 +52,6 @@ namespace SwashbucklerDiary.Pages
             }
 
             tab = Views.IndexOf(View!);
-        }
-
-        private async Task LoadSettings()
-        {
-            ShowWelcomeText = await SettingsService.Get(SettingType.WelcomeText);
-            ShowDate = await SettingsService.Get(SettingType.Date);
         }
 
         private async Task SaveAddTag(string tagName)

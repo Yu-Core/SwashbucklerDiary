@@ -7,8 +7,11 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class Index : DiariesPageComponentBase
+    public partial class IndexPage : DiariesPageComponentBase
     {
+        private IndexDiary IndexDiary = default!;
+        private IndexHistory IndexHistory = default!;
+        private IndexMine IndexMine = default!;
         private StringNumber NavigationIndex
         {
             get => MainLayoutOptions.NavigationIndex;
@@ -37,6 +40,12 @@ namespace SwashbucklerDiary.Pages
             base.OnDispose();
         }
 
+        protected override async Task OnResume()
+        {
+            await LoadSettings();
+            await base.OnResume();
+        }
+
         private void FirstLauch()
         {
             StateService.FirstLauch += FirstLauchUpdateDiaries;
@@ -45,12 +54,18 @@ namespace SwashbucklerDiary.Pages
         private async Task FirstLauchUpdateDiaries()
         {
             await UpdateDiariesAsync();
-            await InvokeAsync(StateHasChanged);
         }
 
         private void NavigationIndexChanged()
         {
             InvokeAsync(StateHasChanged);
+        }
+
+        private async Task LoadSettings()
+        {
+            await IndexDiary.LoadSettings();
+            await IndexMine.LoadSettings();
+            await IndexMine.SetAvatar();
         }
     }
 }

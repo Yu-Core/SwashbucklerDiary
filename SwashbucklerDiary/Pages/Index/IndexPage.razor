@@ -11,21 +11,25 @@
     <MWindowItem Style="height:100%;"
                  Eager="true"
                  Transition="">
-        <IndexDiary @bind-Tags="Tags"
+        <IndexDiary @ref="IndexDiary"
+                    @bind-Tags="Tags"
                     Diaries="Diaries">
         </IndexDiary>
     </MWindowItem>
     <MWindowItem Style="height:100%;"
                  Eager="true"
                  Transition="">
-        <IndexHistory @bind-Tags="Tags"
+        <IndexHistory @ref="IndexHistory"
+                      @bind-Tags="Tags"
                       Diaries="Diaries">
         </IndexHistory>
     </MWindowItem>
     <MWindowItem Style="height:100%;"
                  Eager="true"
                  Transition="">
-        <IndexMine></IndexMine>
+        <IndexMine @ref="IndexMine"
+                   Diaries="Diaries">
+        </IndexMine>
     </MWindowItem>
 </MWindow>
 

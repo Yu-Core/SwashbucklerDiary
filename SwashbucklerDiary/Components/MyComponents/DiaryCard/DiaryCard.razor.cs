@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Services;
 
 namespace SwashbucklerDiary.Components
 {

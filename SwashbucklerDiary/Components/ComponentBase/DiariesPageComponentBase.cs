@@ -36,11 +36,11 @@ namespace SwashbucklerDiary.Components
             Tags = await TagService.QueryAsync();
         }
 
-        protected override async void OnResume()
+        protected override async Task OnResume()
         {
             await UpdateDiariesAsync();
             await UpdateTagsAsync();
-            base.OnResume();
+            await base.OnResume();
         }
     }
 }

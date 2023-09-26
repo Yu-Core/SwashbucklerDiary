@@ -124,13 +124,12 @@ namespace SwashbucklerDiary.Pages
             if (flag)
             {
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
+                await NavigateToBack();
             }
             else
             {
                 await AlertService.Error(I18n.T("Share.DeleteFail"));
             }
-
-            await NavigateToBack();
         }
 
         private Task OnEdit()

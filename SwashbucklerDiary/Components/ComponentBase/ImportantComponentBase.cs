@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
@@ -26,12 +27,7 @@ namespace SwashbucklerDiary.Components
         protected override void OnInitialized()
         {
             InitializedUrl();
-            NavigateService.Poped += Poped;
-            if (IsRootPath)
-            {
-                NavigateService.PopedToRoot += Poped;
-            }
-
+            Navigation.LocationChanged += NavigationManagerOnLocationChanged;
             base.OnInitialized();
         }
 
@@ -52,31 +48,25 @@ namespace SwashbucklerDiary.Components
 
         protected virtual void OnDispose()
         {
-            NavigateService.Poped -= Poped;
-            if (IsRootPath)
-            {
-                NavigateService.PopedToRoot -= Poped;
-            }
+            Navigation.LocationChanged -= NavigationManagerOnLocationChanged;
         }
 
-        protected virtual void OnResume()
+        protected virtual async Task OnResume()
         {
-            InvokeAsync(StateHasChanged);
+            await InvokeAsync(StateHasChanged);
         }
-
-        protected void Poped(PopEventArgs e)
-        {
-            if (Url.EqualsAbsolutePath(e.PreviousUri))
-            {
-                OnResume();
-            }
-        }
-
-        private bool IsRootPath => Url == NavigateService.RootPath;
 
         private void InitializedUrl()
         {
             Url = Navigation.Uri;
+        }
+
+        private void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
+        {
+            if (Url.EqualsAbsolutePath(Navigation.Uri))
+            {
+                _ = OnResume();
+            }
         }
     }
 }

@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Serilog;
-using SwashbucklerDiary.Components;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class IndexMine : ImportantComponentBase
+    public partial class IndexMine : IndexPageCompentBase
     {
-        private int DiaryCount;
-        private long WordCount;
-        private int ActiveDayCount;
         private string? Language;
         private ThemeState ThemeState;
         private string? UserName;
@@ -21,7 +18,6 @@ namespace SwashbucklerDiary.Pages
         private bool ShowThemeState;
         private bool ShowFeedback;
         private bool ShowPreviewImage;
-        private Dictionary<string, string> Languages => I18n.Languages;
         private readonly static Dictionary<string, ThemeState> ThemeStates = new()
         {
             {"ThemeState.System",ThemeState.System },
@@ -30,10 +26,28 @@ namespace SwashbucklerDiary.Pages
         };
         private Dictionary<string, List<DynamicListItem>> ViewLists = new();
         private List<DynamicListItem> FeedbackTypes = new();
-        private Dictionary<string,string> FeedbackTypeDatas = new();
+        private Dictionary<string, string> FeedbackTypeDatas = new();
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
+
+        [Parameter]
+        public List<DiaryModel> Diaries { get; set; } = new();
+
+        public async Task LoadSettings()
+        {
+            Language = await SettingsService.Get(SettingType.Language);
+            UserName = await SettingsService.Get(SettingType.UserName, I18n.T("AppName"));
+            Sign = await SettingsService.Get(SettingType.Sign, I18n.T("Mine.Sign"));
+            int themeState = await SettingsService.Get(SettingType.ThemeState);
+            ThemeState = (ThemeState)themeState;
+        }
+
+        public async Task SetAvatar()
+        {
+            string uri = await SettingsService.Get(SettingType.Avatar);
+            Avatar = StaticCustomScheme.CustomSchemeRender(uri);
+        }
 
         protected override void OnInitialized()
         {
@@ -44,30 +58,17 @@ namespace SwashbucklerDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             await LoadViewAsync();
-            await SetCount();
             await LoadSettings();
             await SetAvatar();
             await base.OnInitializedAsync();
         }
 
-        protected override async void OnResume()
-        {
-            await SetCount();
-            await LoadSettings();
-            await SetAvatar();
-            base.OnResume();
-        }
-
         private string MRadioColor => ThemeService.Dark ? "white" : "black";
 
-        private async Task SetCount()
-        {
-            DiaryCount = await DiaryService.CountAsync(it => !it.Private);
-            var wordCountType = (WordCountType)Enum.Parse(typeof(WordCountType), I18n.T("Write.WordCountType")!);
-            WordCount = await DiaryService.GetWordCount(wordCountType);
-            var diaries = await DiaryService.QueryAsync(it => !it.Private);
-            ActiveDayCount = diaries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
-        }
+        private Dictionary<string, string> Languages => I18n.Languages;
+        private int DiaryCount => Diaries.Count;
+        private long WordCount => GetWordCount(Diaries);
+        private int ActiveDayCount => Diaries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
 
         private void LoadView()
         {
@@ -110,16 +111,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LoadViewAsync()
         {
-            FeedbackTypeDatas = await PlatformService.ReadJsonFileAsync<Dictionary<string,string>>("wwwroot/json/feedback-type/feedback-type.json");
-        }
-
-        private async Task LoadSettings()
-        {
-            Language = await SettingsService.Get(SettingType.Language);
-            UserName = await SettingsService.Get(SettingType.UserName, I18n.T("AppName"));
-            Sign = await SettingsService.Get(SettingType.Sign, I18n.T("Mine.Sign"));
-            int themeState = await SettingsService.Get(SettingType.ThemeState);
-            ThemeState = (ThemeState)themeState;
+            FeedbackTypeDatas = await PlatformService.ReadJsonFileAsync<Dictionary<string, string>>("wwwroot/json/feedback-type/feedback-type.json");
         }
 
         private async Task LanguageChanged(string value)
@@ -127,13 +119,6 @@ namespace SwashbucklerDiary.Pages
             Language = value;
             I18n.SetCulture(value);
             await SettingsService.Save(SettingType.Language, Language);
-            await SetCount();
-        }
-
-        private async Task SetAvatar()
-        {
-            string uri = await SettingsService.Get(SettingType.Avatar);
-            Avatar = StaticCustomScheme.CustomSchemeRender(uri);
         }
 
         private async Task SendMail()
@@ -191,11 +176,34 @@ namespace SwashbucklerDiary.Pages
                 await AlertService.Error(I18n.T("Mine.QQGroupError"));
             }
         }
-        
+
         private Task Search(string? value)
         {
             To($"searchAppFunction?query={value}");
             return Task.CompletedTask;
+        }
+
+        private int GetWordCount(List<DiaryModel> diaries)
+        {
+            var type = (WordCountType)Enum.Parse(typeof(WordCountType), I18n.T("Write.WordCountType")!);
+            var wordCount = 0;
+            if (type == WordCountType.Word)
+            {
+                foreach (var item in diaries)
+                {
+                    wordCount += item.Content?.WordCount() ?? 0;
+                }
+            }
+
+            if (type == WordCountType.Character)
+            {
+                foreach (var item in diaries)
+                {
+                    wordCount += item.Content?.CharacterCount() ?? 0;
+                }
+            }
+
+            return wordCount;
         }
     }
 }
