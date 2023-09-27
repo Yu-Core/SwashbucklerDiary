@@ -17,19 +17,22 @@
                     <MList>
                         @foreach (var item in DynamicListItems)
                         {
-                            <MListItem OnClick="()=>OnClick(item.OnClick)">
-                                <MListItemIcon>
-                                    <MIcon>
-                                        @(item.Icon)
-                                    </MIcon>
-                                </MListItemIcon>
-                                <MListItemContent>
-                                    @(I18n.T(item.Text))
-                                </MListItemContent>
-                            </MListItem>
-                            if (DynamicListItems.Last() != item)
+                            @if (item.Show)
                             {
-                                <MDivider></MDivider>
+                                <MListItem OnClick="()=>OnClick(item.OnClick)">
+                                    <MListItemIcon>
+                                        <MIcon>
+                                            @(item.Icon)
+                                        </MIcon>
+                                    </MListItemIcon>
+                                    <MListItemContent>
+                                        @(I18n.T(item.Text))
+                                    </MListItemContent>
+                                </MListItem>
+                                if (DynamicListItems.Last() != item)
+                                {
+                                    <MDivider></MDivider>
+                                }
                             }
                         }
                         <MListItem>
@@ -64,12 +67,15 @@
                 <MList MinWidth="150">
                     @foreach (var item in DynamicListItems)
                     {
-                        <MListItem Dense="true"
-                                   OnClick="()=>OnClick(item.OnClick)">
-                            <MListItemContent>
-                                @(I18n.T(item.Text))
-                            </MListItemContent>
-                        </MListItem>
+                        @if (item.Show)
+                        {
+                            <MListItem Dense="true"
+                                       OnClick="()=>OnClick(item.OnClick)">
+                                <MListItemContent>
+                                    @(I18n.T(item.Text))
+                                </MListItemContent>
+                            </MListItem>
+                        }
                     }
                 </MList>
             </ChildContent>

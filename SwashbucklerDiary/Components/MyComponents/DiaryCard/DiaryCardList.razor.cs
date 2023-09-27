@@ -6,7 +6,6 @@ namespace SwashbucklerDiary.Components
 {
     public partial class DiaryCardList : ImportantComponentBase
     {
-        public event Action? Resumed;
         private List<DiaryModel> _value = new();
         private bool ShowDeleteDiary;
         private bool ShowSelectTag;
@@ -110,7 +109,6 @@ namespace SwashbucklerDiary.Components
         protected override async Task OnResume()
         {
             await LoadSettings();
-            Resumed?.Invoke();
             await base.OnResume();
         }
 

@@ -4,7 +4,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class DiaryCard : MyComponentBase, IDisposable
+    public partial class DiaryCard : MyComponentBase
     {
         private bool ShowMenu;
         private List<DynamicListItem> MenuItems = new();
@@ -19,16 +19,9 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public string? Class { get; set; }
 
-        public void Dispose()
-        {
-            DiaryCardList.Resumed -= OnResume;
-            GC.SuppressFinalize(this);
-        }
-
         protected override void OnInitialized()
         {
             LoadView();
-            DiaryCardList.Resumed += OnResume;
             base.OnInitialized();
         }
 
@@ -59,13 +52,9 @@ namespace SwashbucklerDiary.Components
                 new(this, "Share.Copy","mdi-content-copy",Copy),
                 new(this, "Share.Delete","mdi-delete-outline",Delete),
                 new(this, TopText,"mdi-format-vertical-align-top",Topping),
-                new(this, "Diary.Export","mdi-export",Export)
+                new(this, "Diary.Export","mdi-export",Export),
+                new(this, PrivateText, PrivateIcon, MovePrivacy,()=>ShowPrivacy)
             };
-
-            if (ShowPrivacy)
-            {
-                MenuItems.Add(new(this, PrivateText, PrivateIcon, MovePrivacy));
-            }
         }
 
         private Task Topping() => DiaryCardList.Topping(Value);
@@ -151,11 +140,6 @@ namespace SwashbucklerDiary.Components
         private void ToRead()
         {
             NavigateService.PushAsync($"/read/{Value.Id}");
-        }
-
-        private void OnResume()
-        {
-            LoadView();
         }
     }
 }
