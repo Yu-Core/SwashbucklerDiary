@@ -1,6 +1,7 @@
-﻿@using SwashbucklerDiary.Models
+﻿@page "/mine"
+@using SwashbucklerDiary.Models
 @namespace SwashbucklerDiary.Pages
-@inherits IndexPageCompentBase
+@inherits ImportantComponentBase
 
 <MyAppBar>
     <MToolbarTitle Class="font-weight-bold"
@@ -143,13 +144,13 @@
         </MCardTitle>
         <MCardText>
             <MRadioGroup Value="Language"
-                         TValue="string"
                          ValueChanged="LanguageChanged"
+                         TValue="string"
                          Class="mt-0 pb-1"
-                         OnClick="()=>ShowLanguage=false"
+                         OnClick="()=>ShowLanguage = false"
                          HideDetails="@("auto")"
                          Mandatory="true">
-                @foreach (var item in Languages)
+                @foreach (var item in I18n.Languages)
                 {
                     <MRadio Label="@(item.Key)"
                             Class="my-2"

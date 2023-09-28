@@ -143,12 +143,12 @@ namespace SwashbucklerDiary.Pages
 
         private async Task UpdateLogsAsync()
         {
-            Expression<Func<LogModel, bool>> func = Func();
-            var logs = await LogService.QueryAsync(func);
+            Expression<Func<LogModel, bool>> exp = GetExpression();
+            var logs = await LogService.QueryAsync(exp);
             Logs = logs.OrderByDescending(it => it.Timestamp).ToList();
         }
 
-        private Expression<Func<LogModel, bool>> Func()
+        private Expression<Func<LogModel, bool>> GetExpression()
         {
             Expression<Func<LogModel, bool>> expSearch;
             Expression<Func<LogModel, bool>> expDate;

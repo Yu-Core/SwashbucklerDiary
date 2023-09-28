@@ -33,9 +33,9 @@ namespace SwashbucklerDiary.Services
             return _iBaseRepository.CountAsync();
         }
 
-        public virtual Task<int> CountAsync(Expression<Func<TEntity, bool>> func)
+        public virtual Task<int> CountAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return _iBaseRepository.CountAsync(func);
+            return _iBaseRepository.CountAsync(expression);
         }
 
         public virtual Task<bool> DeleteAsync()
@@ -53,9 +53,9 @@ namespace SwashbucklerDiary.Services
             return _iBaseRepository.DeleteByIdAsync(id);
         }
 
-        public virtual Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> func)
+        public virtual Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return _iBaseRepository.DeleteAsync(func);
+            return _iBaseRepository.DeleteAsync(expression);
         }
 
         public virtual Task<TEntity> FindAsync(Guid id)
@@ -63,9 +63,9 @@ namespace SwashbucklerDiary.Services
             return _iBaseRepository.GetByIdAsync(id);
         }
 
-        public virtual Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func)
+        public virtual Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return _iBaseRepository.GetFirstAsync(func);
+            return _iBaseRepository.GetFirstAsync(expression);
         }
 
         public virtual Task<List<TEntity>> QueryAsync()
@@ -73,9 +73,9 @@ namespace SwashbucklerDiary.Services
             return _iBaseRepository.GetListAsync();
         }
 
-        public virtual Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func)
+        public virtual Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return _iBaseRepository.GetListAsync(func);
+            return _iBaseRepository.GetListAsync(expression);
         }
 
         public virtual Task<bool> UpdateAsync(TEntity entity)
@@ -88,14 +88,14 @@ namespace SwashbucklerDiary.Services
             return _iBaseRepository.GetListTakeAsync(count);
         }
 
-        public Task<List<TEntity>> QueryTakeAsync(int count, Expression<Func<TEntity, bool>> func)
+        public Task<List<TEntity>> QueryTakeAsync(int count, Expression<Func<TEntity, bool>> expression)
         {
-            return _iBaseRepository.GetListTakeAsync(count,func);
+            return _iBaseRepository.GetListTakeAsync(count, expression);
         }
 
-        public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> func)
+        public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return _iBaseRepository.IsAnyAsync(func);
+            return _iBaseRepository.IsAnyAsync(expression);
         }
     }
 }

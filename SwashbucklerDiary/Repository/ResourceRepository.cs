@@ -11,10 +11,10 @@ namespace SwashbucklerDiary.Repository
         {
         }
 
-        public async Task<List<ResourceModel>> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> func)
+        public async Task<List<ResourceModel>> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> expression)
         {
             var resources = await base.Context.Queryable<ResourceModel>()
-                .Where(func)
+                .Where(expression)
                 .Where(p => SqlFunc.Subqueryable<DiaryResourceModel>().Where(s => s.ResourceUri == p.ResourceUri).NotAny())
                 .ToListAsync();
             await base.Context.Deleteable<ResourceModel>(resources).ExecuteCommandAsync();

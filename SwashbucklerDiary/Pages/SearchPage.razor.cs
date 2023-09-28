@@ -25,8 +25,8 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task UpdateDiariesAsync()
         {
-            Expression<Func<DiaryModel, bool>> func = Func();
-            var diaries = await DiaryService.QueryAsync(func);
+            Expression<Func<DiaryModel, bool>> exp = GetExpression();
+            var diaries = await DiaryService.QueryAsync(exp);
             Diaries = diaries.OrderByDescending(it => it.CreateTime).ToList();
         }
 
@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Pages
             }
         }
 
-        private Expression<Func<DiaryModel, bool>> Func()
+        private Expression<Func<DiaryModel, bool>> GetExpression()
         {
             Expression<Func<DiaryModel, bool>>? exp = null;
             Expression<Func<DiaryModel, bool>> expPrivate;

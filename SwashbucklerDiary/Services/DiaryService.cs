@@ -62,9 +62,9 @@ namespace SwashbucklerDiary.Services
             return _iDiaryRepository.GetAllDates();
         }
 
-        public Task<List<DateOnly>> GetAllDates(Expression<Func<DiaryModel, bool>> func)
+        public Task<List<DateOnly>> GetAllDates(Expression<Func<DiaryModel, bool>> expression)
         {
-            return _iDiaryRepository.GetAllDates(func);
+            return _iDiaryRepository.GetAllDates(expression);
         }
     }
 }

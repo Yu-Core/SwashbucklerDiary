@@ -1,5 +1,6 @@
-﻿@namespace SwashbucklerDiary.Pages
-@inherits IndexPageCompentBase
+﻿@page "/"
+@namespace SwashbucklerDiary.Pages
+@inherits DiariesPageComponentBase
 
 <MyAppBar>
     <MTabs @bind-Value="tab"
@@ -42,14 +43,12 @@
                  
         </div>
 
-        <DiaryCardList Tags="Tags"
-                       TagsChanged="TagsChanged"
+        <DiaryCardList @bind-Tags="Tags"
                        Value="Diaries">
         </DiaryCardList>
     </SwiperTabItem>
     <SwiperTabItem>
-        <TagCardList Value="Tags"
-                     ValueChanged="TagsChanged"
+        <TagCardList @bind-Value="Tags"
                      Diaries="Diaries">
         </TagCardList>
     </SwiperTabItem>

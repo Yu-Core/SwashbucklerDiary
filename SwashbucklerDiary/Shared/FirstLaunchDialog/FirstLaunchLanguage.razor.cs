@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 
-namespace SwashbucklerDiary.Components
+namespace SwashbucklerDiary.Shared
 {
     public partial class FirstLaunchLanguage
     {
@@ -13,7 +13,6 @@ namespace SwashbucklerDiary.Components
         [Parameter]
         public EventCallback<string> OnClick { get; set; }
 
-        private Dictionary<string, string> Languages => I18n.Languages;
         private string ShowClass => Show ? "" : "d-none";
 
         private Task HandleClick(string value) => OnClick.InvokeAsync(value);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Serilog;
+using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -7,7 +8,7 @@ using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class IndexMine : IndexPageCompentBase
+    public partial class MinePage : ImportantComponentBase
     {
         private string? Language;
         private ThemeState ThemeState;
@@ -18,6 +19,10 @@ namespace SwashbucklerDiary.Pages
         private bool ShowThemeState;
         private bool ShowFeedback;
         private bool ShowPreviewImage;
+        private bool AfterRender;
+        private int DiaryCount;
+        private long WordCount;
+        private int ActiveDayCount;
         private readonly static Dictionary<string, ThemeState> ThemeStates = new()
         {
             {"ThemeState.System",ThemeState.System },
@@ -29,25 +34,7 @@ namespace SwashbucklerDiary.Pages
         private Dictionary<string, string> FeedbackTypeDatas = new();
 
         [Inject]
-        private IDiaryService DiaryService { get; set; } = default!;
-
-        [Parameter]
-        public List<DiaryModel> Diaries { get; set; } = new();
-
-        public async Task LoadSettings()
-        {
-            Language = await SettingsService.Get(SettingType.Language);
-            UserName = await SettingsService.Get(SettingType.UserName, I18n.T("AppName"));
-            Sign = await SettingsService.Get(SettingType.Sign, I18n.T("Mine.Sign"));
-            int themeState = await SettingsService.Get(SettingType.ThemeState);
-            ThemeState = (ThemeState)themeState;
-        }
-
-        public async Task SetAvatar()
-        {
-            string uri = await SettingsService.Get(SettingType.Avatar);
-            Avatar = StaticCustomScheme.CustomSchemeRender(uri);
-        }
+        protected IDiaryService DiaryService { get; set; } = default!;
 
         protected override void OnInitialized()
         {
@@ -55,20 +42,34 @@ namespace SwashbucklerDiary.Pages
             base.OnInitialized();
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
             await LoadViewAsync();
             await LoadSettings();
             await SetAvatar();
-            await base.OnInitializedAsync();
+            await UpdateStatisticalData();
+            await base.OnParametersSetAsync();
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender)
+            {
+                AfterRender = true;
+            }
+
+            base.OnAfterRender(firstRender);
+        }
+
+        protected override async Task OnResume()
+        {
+            await LoadSettings();
+            await SetAvatar();
+            await UpdateStatisticalData();
+            await base.OnResume();
         }
 
         private string MRadioColor => ThemeService.Dark ? "white" : "black";
-
-        private Dictionary<string, string> Languages => I18n.Languages;
-        private int DiaryCount => Diaries.Count;
-        private long WordCount => GetWordCount(Diaries);
-        private int ActiveDayCount => Diaries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
 
         private void LoadView()
         {
@@ -116,9 +117,14 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LanguageChanged(string value)
         {
+            if (!AfterRender || Language == value)
+            {
+                return;
+            }
+
             Language = value;
             I18n.SetCulture(value);
-            await SettingsService.Save(SettingType.Language, Language);
+            await SettingsService.Save(SettingType.Language, value);
         }
 
         private async Task SendMail()
@@ -151,10 +157,15 @@ namespace SwashbucklerDiary.Pages
             await PlatformService.OpenBrowser(githubUrl);
         }
 
-        private async Task ThemeStateChanged(ThemeState themeState)
+        private async Task ThemeStateChanged(ThemeState value)
         {
-            ThemeState = themeState;
-            ThemeService.SetThemeState(ThemeState);
+            if (!AfterRender || ThemeState == value)
+            {
+                return;
+            }
+
+            ThemeState = value;
+            ThemeService.SetThemeState(value);
             await SettingsService.Save(SettingType.ThemeState, (int)ThemeState);
         }
 
@@ -204,6 +215,29 @@ namespace SwashbucklerDiary.Pages
             }
 
             return wordCount;
+        }
+
+        private async Task LoadSettings()
+        {
+            Language = await SettingsService.Get(SettingType.Language);
+            UserName = await SettingsService.Get(SettingType.UserName, I18n.T("AppName"));
+            Sign = await SettingsService.Get(SettingType.Sign, I18n.T("Mine.Sign"));
+            int themeState = await SettingsService.Get(SettingType.ThemeState);
+            ThemeState = (ThemeState)themeState;
+        }
+
+        private async Task SetAvatar()
+        {
+            string uri = await SettingsService.Get(SettingType.Avatar);
+            Avatar = StaticCustomScheme.CustomSchemeRender(uri);
+        }
+
+        private async Task UpdateStatisticalData()
+        { 
+            var diries = await DiaryService.QueryAsync(it => !it.Private);
+            DiaryCount = diries.Count;
+            WordCount = GetWordCount(diries);
+            ActiveDayCount = diries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
         }
     }
 }

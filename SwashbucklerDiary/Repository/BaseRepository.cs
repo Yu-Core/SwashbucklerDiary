@@ -27,10 +27,10 @@ namespace SwashbucklerDiary.Repository
             return base.Context.Queryable<T>().Take(count).ToListAsync();
         }
 
-        public virtual Task<List<T>> GetListTakeAsync(int count, Expression<Func<T, bool>> func)
+        public virtual Task<List<T>> GetListTakeAsync(int count, Expression<Func<T, bool>> expression)
         {
             return base.Context.Queryable<T>()
-                .Where(func)
+                .Where(expression)
                 .Take(count)
                 .ToListAsync();
         }

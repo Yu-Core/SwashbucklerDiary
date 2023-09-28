@@ -14,8 +14,8 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task UpdateDiariesAsync()
         {
-            Expression<Func<DiaryModel, bool>> func = Func();
-            var diaries = await DiaryService.QueryAsync(func);
+            Expression<Func<DiaryModel, bool>> exp = GetExpression();
+            var diaries = await DiaryService.QueryAsync(exp);
             Diaries = diaries.OrderByDescending(it => it.CreateTime).ToList();
         }
 
@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Pages
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
         private bool IsDateFiltered => DateOnlyMin != DateOnly.MinValue || DateOnlyMax != DateOnly.MaxValue;
 
-        private Expression<Func<DiaryModel, bool>> Func()
+        private Expression<Func<DiaryModel, bool>> GetExpression()
         {
             Expression<Func<DiaryModel, bool>> expPrivate;
             Expression<Func<DiaryModel, bool>> expSearch;

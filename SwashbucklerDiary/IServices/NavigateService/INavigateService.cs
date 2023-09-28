@@ -4,7 +4,7 @@ namespace SwashbucklerDiary.IServices
 {
     public interface INavigateService
     {
-        string? RootPath { get; protected set; }
+        List<string> RootPaths { get; protected set; }
         /// <summary>
         /// 存储想要返回时触发的方法
         /// </summary>
@@ -27,10 +27,6 @@ namespace SwashbucklerDiary.IServices
         /// <param name="navigation"></param>
         void Initialize(NavigationManager navigation);
         /// <summary>
-        /// 设置根页面
-        /// </summary>
-        void SetRootPath();
-        /// <summary>
         /// 导航
         /// </summary>
         /// <param name="url"></param>
@@ -43,7 +39,7 @@ namespace SwashbucklerDiary.IServices
         /// 返回到根页面
         /// </summary>
         /// <returns></returns>
-        Task PopToRootAsync();
+        Task PopToRootAsync(string url);
         /// <summary>
         /// 返回键处理
         /// </summary>

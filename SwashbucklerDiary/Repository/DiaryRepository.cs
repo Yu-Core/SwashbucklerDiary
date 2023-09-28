@@ -21,12 +21,12 @@ namespace SwashbucklerDiary.Repository
                 .ToListAsync();
         }
 
-        public override Task<List<DiaryModel>> GetListTakeAsync(int count, Expression<Func<DiaryModel, bool>> func)
+        public override Task<List<DiaryModel>> GetListTakeAsync(int count, Expression<Func<DiaryModel, bool>> expression)
         {
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
                 .Includes(it => it.Resources)
-                .Where(func)
+                .Where(expression)
                 .OrderByDescending(it => it.CreateTime)
                 .Take(count)
                 .ToListAsync();
@@ -62,12 +62,12 @@ namespace SwashbucklerDiary.Repository
                 .InSingleAsync(id);
         }
 
-        public override Task<DiaryModel> GetFirstAsync(Expression<Func<DiaryModel, bool>> whereExpression)
+        public override Task<DiaryModel> GetFirstAsync(Expression<Func<DiaryModel, bool>> expression)
         {
             return Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
                 .Includes(it => it.Resources)
-                .FirstAsync(whereExpression);
+                .FirstAsync(expression);
         }
 
         public Task<List<TagModel>> GetTagsAsync(Guid id)
@@ -89,12 +89,12 @@ namespace SwashbucklerDiary.Repository
                 .ToListAsync();
         }
 
-        public override Task<List<DiaryModel>> GetListAsync(Expression<Func<DiaryModel, bool>> func)
+        public override Task<List<DiaryModel>> GetListAsync(Expression<Func<DiaryModel, bool>> expression)
         {
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
                 .Includes(it => it.Resources)
-                .Where(func)
+                .Where(expression)
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
@@ -145,10 +145,10 @@ namespace SwashbucklerDiary.Repository
             return GetAllDates(it=>true);
         }
 
-        public async Task<List<DateOnly>> GetAllDates(Expression<Func<DiaryModel, bool>> func)
+        public async Task<List<DateOnly>> GetAllDates(Expression<Func<DiaryModel, bool>> expression)
         {
             var dates = await base.Context.Queryable<DiaryModel>()
-                .Where(func)
+                .Where(expression)
                 .Select(s => s.CreateTime.Date)
                 .Distinct()
                 .ToListAsync();

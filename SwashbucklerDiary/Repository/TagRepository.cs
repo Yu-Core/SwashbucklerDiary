@@ -18,10 +18,10 @@ namespace SwashbucklerDiary.Repository
                 .ToListAsync();
         }
 
-        public override Task<List<TagModel>> GetListAsync(Expression<Func<TagModel, bool>> whereExpression)
+        public override Task<List<TagModel>> GetListAsync(Expression<Func<TagModel, bool>> expression)
         {
             return base.Context.Queryable<TagModel>()
-                .Where(whereExpression)
+                .Where(expression)
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
@@ -72,7 +72,7 @@ namespace SwashbucklerDiary.Repository
                 .InSingleAsync(id);
         }
 
-        public Task<TagModel> GetFirstIncludesAsync(Expression<Func<TagModel, bool>> whereExpression)
+        public Task<TagModel> GetFirstIncludesAsync(Expression<Func<TagModel, bool>> expression)
         {
             return Context.Queryable<TagModel>()
                 .Includes(it => it.Diaries!
@@ -85,7 +85,7 @@ namespace SwashbucklerDiary.Repository
                                   .OrderByDescending(it => it.CreateTime)
                                   .ToList(),
                           d => d.Resources)
-                .FirstAsync(whereExpression);
+                .FirstAsync(expression);
         }
     }
 }

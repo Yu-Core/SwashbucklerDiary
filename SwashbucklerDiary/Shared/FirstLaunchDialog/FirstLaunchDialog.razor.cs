@@ -2,7 +2,7 @@
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
-namespace SwashbucklerDiary.Components
+namespace SwashbucklerDiary.Shared
 {
     public partial class FirstLaunchDialog
     {
@@ -27,7 +27,6 @@ namespace SwashbucklerDiary.Components
             await base.OnInitializedAsync();
         }
 
-        private Dictionary<string, string> Languages => I18n.Languages;
         private bool ShowLanguga => !SelectedLanguage;
         private bool ShowAgreement => SelectedLanguage;
 

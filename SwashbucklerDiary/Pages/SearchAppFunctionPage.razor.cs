@@ -56,11 +56,11 @@ namespace SwashbucklerDiary.Pages
 
         private void UpdateAppFunctions()
         {
-            Expression<Func<AppFunction, bool>> func = Func();
-            AppFunctions = AllAppFunctions.Where(func.Compile()).ToList();
+            Expression<Func<AppFunction, bool>> exp = GetExpression();
+            AppFunctions = AllAppFunctions.Where(exp.Compile()).ToList();
         }
 
-        private Expression<Func<AppFunction, bool>> Func()
+        private Expression<Func<AppFunction, bool>> GetExpression()
         {
             Expression<Func<AppFunction, bool>>? exp = null;
             Expression<Func<AppFunction, bool>> expSearch;

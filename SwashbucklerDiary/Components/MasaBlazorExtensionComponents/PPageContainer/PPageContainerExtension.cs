@@ -44,8 +44,8 @@ namespace SwashbucklerDiary.Components
 
         private void PopedToRoot(PopEventArgs e)
         {
-            var current = new Uri(e.PreviousUri).AbsolutePath;
-            var paths = _patternPaths.Where(p => p.AbsolutePath == current)
+            var rootPaths = NavigateService.RootPaths.Select(it => new Uri(it).AbsolutePath);
+            var paths = _patternPaths.Where(p => rootPaths.Contains(p.AbsolutePath))
                 .Select(p => p.AbsolutePath)
                 .ToArray();
             _patternPaths.RemoveAll(_patternPaths.Keys.Except(paths));

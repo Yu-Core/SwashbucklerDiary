@@ -13,8 +13,8 @@ namespace SwashbucklerDiary.Services
 #pragma warning disable CA1416
     public partial class PlatformService
     {
-        public Color LightColor { get; set; } = Color.FromRgb(247, 248, 249);
-        public Color DarkColor { get; set; } = Color.FromRgb(18, 18, 18);
+        public Color LightColor { get; set; } = Color.FromArgb("#f7f8f9");
+        public Color DarkColor { get; set; } = Color.FromArgb("#121212");
 
         public void SetTitleBarOrStatusBar(ThemeState themeState)
         {

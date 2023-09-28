@@ -1,29 +1,19 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class IndexDiary : IndexPageCompentBase
+    public partial class IndexPage : DiariesPageComponentBase
     {
         private bool ShowWelcomeText;
         private bool ShowDate;
         private StringNumber tab = 0;
-        private readonly List<string> Views = new() { "All", "Tags" };
 
         [Inject]
-        protected ITagService TagService { get; set; } = default!;
-
-        [Parameter]
-        [SupplyParameterFromQuery]
-        public string? View { get; set; }
-        [Parameter]
-        public List<DiaryModel> Diaries { get; set; } = new();
-        [Parameter]
-        public List<TagModel> Tags { get; set; } = new();
-        [Parameter]
-        public EventCallback<List<TagModel>> TagsChanged { get; set; }
+        private IStateService StateService { get; set; } = default!;
 
         public async Task LoadSettings()
         {
@@ -33,26 +23,29 @@ namespace SwashbucklerDiary.Pages
 
         protected override void OnInitialized()
         {
-            InitTab();
+            FirstLauch();
             base.OnInitialized();
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
             await LoadSettings();
-            await base.OnInitializedAsync();
+            await base.OnParametersSetAsync();
         }
-        private bool ShowAddTag { get; set; }
 
-        private void InitTab()
+        protected override void OnDispose()
         {
-            if (string.IsNullOrEmpty(View))
-            {
-                View = Views[0];
-            }
-
-            tab = Views.IndexOf(View!);
+            StateService.FirstLauch -= FirstLauchUpdateDiaries;
+            base.OnDispose();
         }
+
+        protected override async Task OnResume()
+        {
+            await LoadSettings();
+            await base.OnResume();
+        }
+
+        private bool ShowAddTag { get; set; }
 
         private async Task SaveAddTag(string tagName)
         {
@@ -114,6 +107,17 @@ namespace SwashbucklerDiary.Pages
         {
             To($"search?query={value}");
             return Task.CompletedTask;
+        }
+
+        private void FirstLauch()
+        {
+            StateService.FirstLauch += FirstLauchUpdateDiaries;
+        }
+
+        private async Task FirstLauchUpdateDiaries()
+        {
+            await UpdateDiariesAsync();
+            await InvokeAsync(StateHasChanged);
         }
     }
 }

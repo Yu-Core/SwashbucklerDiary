@@ -13,23 +13,13 @@ namespace SwashbucklerDiary.Services
         public event Action<PopEventArgs>? Poped;
         public event Action<PopEventArgs>? PopedToRoot;
 
-        public string? RootPath { get; set; }
+        public List<string> RootPaths { get; set; } = new();
         public NavigationManager Navigation { get; set; } = default!;
         public List<string> HistoryURLs { get; set; } = new();
 
         public void Initialize(NavigationManager navigation)
         {
             Navigation = navigation;
-        }
-
-        public void SetRootPath()
-        {
-            if (RootPath is not null)
-            {
-                return;
-            }
-
-            RootPath = Navigation.Uri;
         }
 
         public async Task PushAsync(string url, bool isCachePrevious = true)
@@ -69,26 +59,26 @@ namespace SwashbucklerDiary.Services
             }
         }
 
-        public async Task PopToRootAsync()
+        public async Task PopToRootAsync(string url)
         {
-            if (RootPath is null)
+            url = new Uri(new(Navigation.BaseUri), url).ToString();
+            if(Navigation.Uri == url)
             {
                 return;
             }
 
-            var current = new Uri(Navigation.Uri).AbsolutePath;
-            if (current == new Uri(RootPath).AbsolutePath)
+            if (!RootPaths.Contains(url))
             {
-                return;
+                RootPaths.Add(url);
             }
 
-            PopEventArgs args = new(RootPath, Navigation.Uri);
+            PopEventArgs args = new(url, Navigation.Uri);
             if (BeforePopToRoot is not null)
             {
                 await BeforePopToRoot.Invoke(args);
             }
 
-            Navigation.NavigateTo(RootPath);
+            Navigation.NavigateTo(url);
             HistoryURLs.Clear();
             PopedToRoot?.Invoke(args);
         }

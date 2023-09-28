@@ -1,5 +1,6 @@
-﻿@namespace SwashbucklerDiary.Pages
-@inherits IndexPageCompentBase
+﻿@page "/history"
+@namespace SwashbucklerDiary.Pages
+@inherits DiariesPageComponentBase
 
 <MyAppBar>
     @if (NormalCalendarVisible)
@@ -48,8 +49,8 @@
     </div>
 
     <DiaryCardList @bind-Tags="Tags"
-                   Value="PickerDiaries"
-                   OnRemove="HandleOnRemove">
+                   Value="PickedDiaries"
+                   OnRemove="HandelOnRemove">
     </DiaryCardList>
 </ScrollContainer>
 

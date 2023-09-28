@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.IServices;
 
-namespace SwashbucklerDiary.Components
+namespace SwashbucklerDiary.Shared
 {
     public partial class FirstLaunchAgreement
     {

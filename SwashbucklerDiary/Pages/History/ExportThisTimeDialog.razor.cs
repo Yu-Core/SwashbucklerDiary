@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Components;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using System.Linq.Expressions;
@@ -60,7 +61,9 @@ namespace SwashbucklerDiary.Pages
             await InternalValueChanged(false);
             await InvokeAsync(StateHasChanged);
 
-            ExportDiaries = await DiaryService.QueryAsync(expression);
+            Expression<Func<DiaryModel, bool>> exp = it => !it.Private;
+            exp =exp.And(expression);
+            ExportDiaries = await DiaryService.QueryAsync(exp);
             if (!ExportDiaries.Any())
             {
                 await AlertService.Info(I18n.T("Diary.NoDiary"));

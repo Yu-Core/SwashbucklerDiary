@@ -12,6 +12,7 @@ namespace SwashbucklerDiary.Services
             {
                 return;
             }
+
             await FirstLauch.Invoke();
         }
     }

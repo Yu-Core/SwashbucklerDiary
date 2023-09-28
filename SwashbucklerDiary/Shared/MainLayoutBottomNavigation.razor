@@ -1,0 +1,33 @@
+﻿@using SwashbucklerDiary.IServices;
+@using SwashbucklerDiary.Models
+@inherits MainNavigationCompontentBase
+
+@if (IsRootPath)
+{
+    <link href="css/extend/masa-blazor-extend-enqueued-snackbars.css" rel="stylesheet" />
+}
+
+<MBottomNavigation Value="Value"
+                   ValueChanged="ValueChanged"
+                   InputValue="Show"
+                   Class="d-flex justify-space-around"
+                   Mandatory="true"
+                   App="true">
+    @foreach (var item in Items)
+    {
+        <MButton Ripple="false"
+                 OnClick="item.OnClick">
+            <MIcon>
+                @GetIcon(item)
+            </MIcon>
+        </MButton>
+    }
+</MBottomNavigation>
+
+@code {
+    [Inject]
+    private INavigateService NavigateService { get; set; } = default!;
+
+    private bool Show => MasaBlazor.Breakpoint.Xs && IsRootPath;
+    private bool IsRootPath => NavigateService.RootPaths.Contains(Navigation.Uri);
+}

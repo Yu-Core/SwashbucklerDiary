@@ -9,17 +9,8 @@ namespace SwashbucklerDiary.Shared
 {
     public partial class MainLayout : IDisposable
     {
-        private readonly MainLayoutOptions _options = new();
-        private StringNumber NavigationIndex
-        {
-            get => _options.NavigationIndex;
-            set => _options.NavigationIndex = value;
-        }
-        private List<NavigationButton> NavigationButtons
-        {
-            get => _options.NavigationButtons;
-            set => _options.NavigationButtons = value;
-        }
+        private StringNumber NavigationIndex = 0;
+        private List<NavigationButton> NavigationButtons = new();
 
         [Inject]
         private MasaBlazor MasaBlazor { get; set; } = default!;
@@ -40,15 +31,22 @@ namespace SwashbucklerDiary.Shared
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
 
+        public void Dispose()
+        {
+            ThemeService.OnChanged -= ThemeChanged;
+            I18nService.OnChanged -= StateHasChanged;
+            GC.SuppressFinalize(this);
+        }
+
         protected override void OnInitialized()
         {
             NavigateService.Initialize(Navigation);
             AlertService.Initialize(PopupService);
             I18nService.Initialize(I18n);
             LoadView();
+            SetRootPath();
             ThemeService.OnChanged += ThemeChanged;
             I18nService.OnChanged += StateHasChanged;
-            _options.NavigationIndexAction += NavigationIndexChanged;
             base.OnInitialized();
         }
 
@@ -72,14 +70,14 @@ namespace SwashbucklerDiary.Shared
         {
             NavigationButtons = new()
             {
-                new (this, "Main.Diary", "mdi-notebook-outline", "mdi-notebook", PopToRootAsync),
-                new (this, "Main.History", "mdi-clock-outline", "mdi-clock", PopToRootAsync),
-                new (this, "Main.Mine", "mdi-account-outline", "mdi-account", PopToRootAsync)
+                new (this, "Main.Diary", "mdi-notebook-outline", "mdi-notebook", ()=>PopToRootAsync("")),
+                new (this, "Main.History", "mdi-clock-outline", "mdi-clock", ()=>PopToRootAsync("history")),
+                new (this, "Main.Mine", "mdi-account-outline", "mdi-account", ()=>PopToRootAsync("mine"))
             };
         }
 
-        protected Task PopToRootAsync()
-            => NavigateService.PopToRootAsync();
+        protected Task PopToRootAsync(string url)
+            => NavigateService.PopToRootAsync(url);
 
         private void ThemeChanged(ThemeState state)
         {
@@ -91,17 +89,9 @@ namespace SwashbucklerDiary.Shared
             InvokeAsync(StateHasChanged);
         }
 
-        public void Dispose()
+        private void SetRootPath()
         {
-            ThemeService.OnChanged -= ThemeChanged;
-            I18nService.OnChanged -= StateHasChanged;
-            _options.NavigationIndexAction -= NavigationIndexChanged;
-            GC.SuppressFinalize(this);
-        }
-
-        private void NavigationIndexChanged()
-        {
-            InvokeAsync(StateHasChanged);
+            NavigateService.RootPaths.Add(Navigation.Uri);
         }
     }
 }

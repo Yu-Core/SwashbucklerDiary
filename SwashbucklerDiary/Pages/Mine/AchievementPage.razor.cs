@@ -74,12 +74,12 @@ namespace SwashbucklerDiary.Pages
 
         private void UpdateAchievements()
         {
-            Expression<Func<AchievementModel, bool>> func = Func();
-            var achievements = AllAchievements.Where(func.Compile());
+            Expression<Func<AchievementModel, bool>> exp = GetExpression();
+            var achievements = AllAchievements.Where(exp.Compile());
             Achievements = achievements.OrderByDescending(it => it.UserAchievement.IsCompleted).ToList();
         }
 
-        private Expression<Func<AchievementModel, bool>> Func()
+        private Expression<Func<AchievementModel, bool>> GetExpression()
         {
             Expression<Func<AchievementModel, bool>> expSearch;
             expSearch = it => I18n.T(it.Name ?? string.Empty).ToLower().Contains((Search ?? string.Empty).ToLower()) ||
