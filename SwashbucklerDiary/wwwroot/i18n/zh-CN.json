@@ -262,13 +262,6 @@
     "Diary Meaning": "wwwroot/docs/diary-meaning/zh-CN.md",
     "Markdown Syntax": "wwwroot/docs/markdown-syntax/zh-CN.md"
   },
-  "Amount": {
-    "Custom": "自定义",
-    "CustomPlace": "请输入你要捐助的金额",
-    "CurrencySymbol": "￥",
-    "Thank": "感谢",
-    "ThankContent": "谢谢你朋友，好意我心领了，所以不必真的捐赠给我。\n\n希望你每天能玩得开心，过得愉快。如果能记录下自己的生活与感受，那就更好了。\n\n这就是我制作这款软件的初衷。\n\n开发者：Yu-Core"
-  },
   "FunctionalDescription": "功能说明",
   "ErrorHandle": {
     "Title": "错误",
@@ -662,17 +655,24 @@
     "Content": "内容",
     "Tags": "标签"
   },
-  "Easter egg": {
-    "FDAF7DC20B5F1B936291CCF081BB5A46": "遇见你很高兴",
-    "D7EFA19FBE7D3972FD5ADB6024223D74": "C#是世界上最好的语言",
-    "A34490B593CDC390C77104721BA7EB39": "不用客气，人人为我，我为人人",
-    "6BE06EC190B673427CFFB45068068D87": "为什么起这个名字？\n\n因为当时我在看《侠客行》",
-    "7ECA689F0D3389D9DEA66AE112E5CFD7": "Hello World",
-    "0CBC6611F5540BD0809A388DC95A615B": "此路不通",
-    "5A7236AEBE23637F6CD0A8D676D1DA45": "群众的眼睛是雪亮的",
-    "86A52BB54EC90AB8D7E1F869DAC8E810": "承蒙关心",
-    "C116367842222A37E03CF0F456B563D6": "恭喜你找到了彩蛋，应该给你发个奖状",
-    "8E5C0A1E46703251C02613C1048177F1": "有时候，诀别就成了永别，请珍惜身边的人",
-    "C83640C604DD5E0EACBF3DE0A1181101": "Bug一个不留 /n/n愿这个世界没有Bug"
+  "Sponsor": {
+    "Type": {
+      "QQ": {
+        "Name": "QQ钱包",
+        "Url": "https://gitee.com/Yu-core/SwashbucklerDiary/raw/assets/Assets/Images/QQ.png"
+      },
+      "WeChat": {
+        "Name": "微信支付",
+        "Url": "https://gitee.com/Yu-core/SwashbucklerDiary/raw/assets/Assets/Images/WeChat.png"
+      },
+      "Alipay": {
+        "Name": "支付宝",
+        "Url": "https://gitee.com/Yu-core/SwashbucklerDiary/raw/assets/Assets/Images/Alipay.jpg"
+      }
+    },
+    "Introduce": {
+      "Title": "支持侠客日记的开发",
+      "Content": "感谢你的使用，侠客日记当前版本的发布离不开大家的支持。最初只是想写个App玩玩，也是为了满足自己写日记的需求。\n\n在不断的更新中，提升自己的同时，确实是付出了一点点心血。加上App备案的关系，需要域名和服务器，产生了一点支出。\n\n如果你感兴趣，并且它确实有帮助到你，可以给予捐赠，鼓励开发者更好的维护这个项目。谢谢你的支持。"
+    }
   }
 }

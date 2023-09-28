@@ -8,9 +8,8 @@ namespace SwashbucklerDiary.Pages
     public partial class AboutPage : ImportantComponentBase
     {
         private bool ShowSourceCode;
-        private bool ShowSponsor;
         private bool ShowVersionUpdate;
-        private readonly List<DynamicListItem> CodeSources = new();
+        private readonly List<DynamicListItem> CodeSourceListItems = new();
         private List<List<DynamicListItem>> ViewLists = new();
 
         private class Release
@@ -46,7 +45,7 @@ namespace SwashbucklerDiary.Pages
                     new(this, "About.Related.Name","mdi-xml",() => To("relatedOSP")),
                     new(this, "About.LogFile.Name","mdi-file-document-edit-outline",() => To("log")),
                     new(this, "About.Evaluation.Name","mdi-star-outline",OpenAppDetails),
-                    new(this, "About.Sponsor.Name","mdi-hand-heart-outline",() => ShowSponsor = true),
+                    new(this, "About.Sponsor.Name","mdi-hand-heart-outline",()=>To("sponsor")),
                 }
             };
         }
@@ -56,8 +55,8 @@ namespace SwashbucklerDiary.Pages
             var codeSources = await PlatformService.ReadJsonFileAsync<List<CodeSource>>("wwwroot/json/code-source/code-source.json");
             foreach (var item in codeSources)
             {
-                DynamicListItem codeSource = new(this, item.Name, item.Icon, () => ViewSourceCode(item.Url));
-                CodeSources.Add(codeSource);
+                DynamicListItem codeSourceListItem = new(this, item.Name, item.Icon, () => ViewSourceCode(item.Url));
+                CodeSourceListItems.Add(codeSourceListItem);
             }
         }
 

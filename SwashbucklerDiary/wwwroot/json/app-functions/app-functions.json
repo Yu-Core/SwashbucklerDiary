@@ -293,6 +293,6 @@
     "Name": "About.Sponsor.Name",
     "Icon": "mdi-hand-heart-outline",
     "Path": "About.Sponsor.Path",
-    "Href": "about"
+    "Href": "sponsor"
   }
 ]

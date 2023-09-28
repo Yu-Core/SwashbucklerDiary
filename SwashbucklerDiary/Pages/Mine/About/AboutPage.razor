@@ -68,7 +68,7 @@
 
 <MultiDialog @bind-Value="ShowSourceCode"
              Title="@(I18n.T("About.SourceCode.Name"))"
-             DynamicListItems="CodeSources">
+             DynamicListItems="CodeSourceListItems">
 </MultiDialog>
 
 <MDialogExtension @bind-MyValue="ShowVersionUpdate"
@@ -100,5 +100,3 @@
         </MCardActions>
     </MCard>
 </MDialogExtension>
-
-<SponsorDialog @bind-Value="ShowSponsor" />
