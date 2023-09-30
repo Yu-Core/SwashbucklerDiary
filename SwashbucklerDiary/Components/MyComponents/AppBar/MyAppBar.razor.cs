@@ -10,8 +10,10 @@ namespace SwashbucklerDiary.Components
 
         [Parameter]
         public string? Title { get; set; }
+
         [Parameter]
         public EventCallback<MouseEventArgs> OnClick { get; set; }
+
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
     }

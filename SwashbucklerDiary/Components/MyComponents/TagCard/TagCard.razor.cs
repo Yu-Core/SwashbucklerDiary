@@ -6,10 +6,12 @@ namespace SwashbucklerDiary.Components
     public partial class TagCard : MyComponentBase
     {
         private bool ShowMenu;
+
         private List<DynamicListItem> MenuItems = new();
 
         [CascadingParameter]
         public TagCardList TagCardList { get; set; } = default!;
+
         [Parameter]
         public TagModel Value { get; set; } = default!;
 
@@ -29,7 +31,9 @@ namespace SwashbucklerDiary.Components
         }
 
         private Task Delete() => TagCardList.Delete(Value);
+
         private Task Rename() => TagCardList.Rename(Value);
+
         private Task Export() => TagCardList.Export(Value);
 
         private void LoadView()

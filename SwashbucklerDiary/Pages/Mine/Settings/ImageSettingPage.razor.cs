@@ -8,17 +8,19 @@ namespace SwashbucklerDiary.Pages
     public partial class ImageSettingPage : ImportantComponentBase
     {
         bool ShowConfimDelete;
+
         List<ResourceModel> ImageResources = new();
 
         [Inject]
         private IResourceService ResourceService { get; set; } = default!;
+
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
             await UpdateImageResourcesAsync();
-            await base.OnInitializedAsync();
+            await base.OnParametersSetAsync();
         }
 
         async Task UpdateImageResourcesAsync()

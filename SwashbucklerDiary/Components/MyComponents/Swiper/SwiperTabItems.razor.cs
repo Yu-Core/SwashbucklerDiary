@@ -7,9 +7,13 @@ namespace SwashbucklerDiary.Components
     public partial class SwiperTabItems : IAsyncDisposable
     {
         private ElementReference ElementRef;
+
         private IJSObjectReference module = default!;
+
         private StringNumber _value = 0;
+
         private bool Show;
+
         private readonly string Id = $"swiper-{ Guid.NewGuid() }";
 
         [Inject]
@@ -21,8 +25,10 @@ namespace SwashbucklerDiary.Components
             get => _value;
             set => SetValue(value);
         }
+
         [Parameter]
         public EventCallback<StringNumber> ValueChanged { get; set; }
+
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 

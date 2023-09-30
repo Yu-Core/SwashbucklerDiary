@@ -7,9 +7,13 @@ namespace SwashbucklerDiary.Components
     public partial class PasswordDialog : FocusDialogComponentBase
     {
         private bool _value;
+
         private Model model = new();
+
         private MForm? form;
+
         private bool showPassword1;
+
         private bool showPassword2;
 
         [Parameter]
@@ -18,14 +22,19 @@ namespace SwashbucklerDiary.Components
             get => _value;
             set => SetValue(value);
         }
+
         [Parameter]
         public string? Title { get; set; }
+
         [Parameter]
         public EventCallback<string?> TextChanged { get; set; }
+
         [Parameter]
         public EventCallback<string> OnOK { get; set; }
+
         [Parameter]
         public string? Placeholder { get; set; }
+
         [Parameter]
         public int MaxLength { get; set; } = 20;
 

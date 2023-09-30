@@ -10,13 +10,16 @@ namespace SwashbucklerDiary.Components
 
         [Inject]
         private ISettingsService SettingsService { get; set; } = default!;
+
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
+
         [Parameter]
         public string? Class { get; set; }
+
         [Parameter]
         public string? Style { get; set; }
 

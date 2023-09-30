@@ -9,11 +9,17 @@ namespace SwashbucklerDiary.Pages
     public partial class UserPage : ImportantComponentBase
     {
         private string? UserName;
+
         private string? Sign;
+
         private string? Avatar;
+
         private bool ShowEditAvatar;
+
         private bool ShowEditUserName;
+
         private bool ShowEditSign;
+
         private List<DynamicListItem> EditAvatarMethods = new();
 
         [Inject]

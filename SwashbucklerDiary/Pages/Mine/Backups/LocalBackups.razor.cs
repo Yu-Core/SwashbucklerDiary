@@ -6,8 +6,11 @@ namespace SwashbucklerDiary.Pages
     public partial class LocalBackups : BackupsPageComponentBase
     {
         private bool ShowBackups;
+
         private bool ShowRestore;
+
         private string? BackupsFolderPath;
+
         private string? RestoreFilePath;
 
         protected override async Task OnInitializedAsync()

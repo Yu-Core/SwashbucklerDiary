@@ -9,21 +9,33 @@ namespace SwashbucklerDiary.Pages
     public partial class SearchAppFunctionPage : ImportantComponentBase
     {
         private bool Privacy;
+
         private string? Search;
+
         private List<AppFunction> AllAppFunctions = new();
+
         private List<AppFunction> AppFunctions = new();
         
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Query { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             LoadQuery();
+            base.OnInitialized();
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
             await LoadSettings();
-            await LoadAppFunctions();
-            UpdateAppFunctions();
             await base.OnInitializedAsync();
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            await LoadAppFunctions();
+            await base.OnParametersSetAsync();
         }
 
         protected override async Task OnResume()
@@ -47,6 +59,7 @@ namespace SwashbucklerDiary.Pages
         {
             var appFunctions = await PlatformService.ReadJsonFileAsync<List<AppFunction>>("wwwroot/json/app-functions/app-functions.json");
             AllAppFunctions = appFunctions;
+            UpdateAppFunctions(appFunctions);
         }
 
         private async Task LoadSettings()
@@ -54,11 +67,14 @@ namespace SwashbucklerDiary.Pages
             Privacy = await SettingsService.Get(SettingType.PrivacyMode);
         }
 
-        private void UpdateAppFunctions()
+        private void UpdateAppFunctions(List<AppFunction> appFunctions)
         {
             Expression<Func<AppFunction, bool>> exp = GetExpression();
-            AppFunctions = AllAppFunctions.Where(exp.Compile()).ToList();
+            AppFunctions = appFunctions.Where(exp.Compile()).ToList();
         }
+
+        private void UpdateAppFunctions()
+            => UpdateAppFunctions(AllAppFunctions);
 
         private Expression<Func<AppFunction, bool>> GetExpression()
         {

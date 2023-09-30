@@ -7,6 +7,7 @@ namespace SwashbucklerDiary.Components
     {
         [Parameter]
         public string? Title { get; set; }
+
         [Parameter]
         public List<DynamicListItem> DynamicListItems { get; set; } = new();
 

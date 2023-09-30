@@ -7,16 +7,22 @@ namespace SwashbucklerDiary.Components
     public partial class MarkdownPreviewContent : IAsyncDisposable
     {
         private ElementReference element;
+
         private IJSObjectReference module = default!;
+
         private bool ShowPreviewImage;
+
         private string? PreviewImageSrc;
 
         [Inject]
         private II18nService I18n { get; set; } = default!;
+
         [Inject]
         private ISettingsService SettingsService { get; set; } = default!;
+
         [Inject]
         public IJSRuntime JS { get; set; } = default!;
+
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
 
@@ -25,10 +31,13 @@ namespace SwashbucklerDiary.Components
 
         [Parameter]
         public string? Value { get; set; }
+
         [Parameter]
         public string? Class { get; set; }
+
         [Parameter]
         public string? Style { get; set; }
+
         [Parameter]
         public Dictionary<string, object>? Options { get; set; }
 

@@ -11,26 +11,42 @@ namespace SwashbucklerDiary.Pages
     public partial class MinePage : ImportantComponentBase
     {
         private string? Language;
+
         private ThemeState ThemeState;
+
         private string? UserName;
+
         private string? Sign;
+
         private string? Avatar;
+
         private bool ShowLanguage;
+
         private bool ShowThemeState;
+
         private bool ShowFeedback;
+
         private bool ShowPreviewImage;
+
         private bool AfterRender;
+
         private int DiaryCount;
+
         private long WordCount;
+
         private int ActiveDayCount;
+
         private readonly static Dictionary<string, ThemeState> ThemeStates = new()
         {
             {"ThemeState.System",ThemeState.System },
             {"ThemeState.Light",ThemeState.Light },
             {"ThemeState.Dark",ThemeState.Dark },
         };
+
         private Dictionary<string, List<DynamicListItem>> ViewLists = new();
+
         private List<DynamicListItem> FeedbackTypes = new();
+
         private Dictionary<string, string> FeedbackTypeDatas = new();
 
         [Inject]

@@ -7,14 +7,17 @@ namespace SwashbucklerDiary.Pages
     public partial class AchievementPage : ImportantComponentBase
     {
         private string? Search;
+
         private bool ShowSearch;
+
         private List<AchievementModel> AllAchievements = new();
+
         private List<AchievementModel> Achievements = new();
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
-            await SetAchievements();
-            await base.OnInitializedAsync();
+            await LoadAchievements();
+            await base.OnParametersSetAsync();
         }
 
         protected override Task NavigateToBack()
@@ -28,48 +31,10 @@ namespace SwashbucklerDiary.Pages
             return base.NavigateToBack();
         }
 
-        private async Task SetAchievements()
+        private async Task LoadAchievements()
         {
             var achievements = await AchievementService.GetAchievements();
             Achievements = AllAchievements = achievements.OrderByDescending(it => it.UserAchievement.IsCompleted).ToList();
-        }
-
-        private string GetIconColor(AchievementModel achievement)
-        {
-            return achievement.UserAchievement.IsCompleted && Light ? "black" : "";
-        }
-
-        private static string GetIcon(AchievementModel achievement)
-        {
-            return achievement.UserAchievement.IsCompleted ? "mdi-trophy" : "mdi-trophy-outline";
-        }
-
-        private static int GetProgressRate(AchievementModel achievement)
-        {
-            double percent = (double)achievement.UserAchievement.CompleteRate / achievement.Steps * 100;
-            return (int)percent;
-        }
-
-        private string GetProgressRateColor(AchievementModel achievement)
-        {
-            return achievement.UserAchievement.IsCompleted && Light ? "#2e2e2e" : "grey lighten-1";
-        }
-
-        private string GetProgressRateTextColor(AchievementModel achievement)
-        {
-            return achievement.UserAchievement.IsCompleted && Light ? "white--text" : "";
-        }
-
-        private string GetProgressRateText(AchievementModel achievement)
-        {
-            if (achievement.UserAchievement.IsCompleted)
-            {
-                return $"{I18n.T("Achievement.Completed")} {achievement.UserAchievement.CompletedTime:d}";
-            }
-            else
-            {
-                return $"{achievement.UserAchievement.CompleteRate} / {achievement.Steps}";
-            }
         }
 
         private void UpdateAchievements()

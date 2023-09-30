@@ -11,11 +11,13 @@ namespace SwashbucklerDiary.Components
 
         [Inject]
         protected IPlatformService PlatformService { get; set; } = default!;
+
         [Inject]
         protected IAppDataService AppDataService { get; set; } = default!;
 
         [Parameter]
         public List<DiaryModel> Diaries { get; set; } = new();
+
         protected override void OnInitialized()
         {
             LoadView();

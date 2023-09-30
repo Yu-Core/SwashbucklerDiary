@@ -5,9 +5,8 @@ namespace SwashbucklerDiary.Pages
     public partial class PermissionSettingPage : ImportantComponentBase
     {
         private bool CameraState;
+
         private bool StorageState;
-        private string? CameraPermission => GetPermissionText(CameraState);
-        private string? StoragePermission => GetPermissionText(StorageState);
 
         protected override async Task OnInitializedAsync()
         {
@@ -21,6 +20,10 @@ namespace SwashbucklerDiary.Pages
             PlatformService.Resumed -= UpdatePermissionStates;
             base.OnDispose();
         }
+
+        private string? CameraPermission => GetPermissionText(CameraState);
+
+        private string? StoragePermission => GetPermissionText(StorageState);
 
         private void OpenSystemPermissionSetting()
         {

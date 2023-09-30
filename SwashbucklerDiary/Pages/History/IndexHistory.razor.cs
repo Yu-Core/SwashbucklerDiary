@@ -9,12 +9,19 @@ namespace SwashbucklerDiary.Pages
     public partial class IndexHistory : DiariesPageComponentBase
     {
         private bool NormalCalendarVisible = true;
+
         private bool ShowFloatCalendar;
+
         private bool ShowExportThisTime;
+
         private ScrollContainer ScrollContainer = default!;
+
         private ElementReference NormalCalendar;
+
         private DateOnly _pickedDate = DateOnly.FromDateTime(DateTime.Now);
+
         private DateOnly[] EventsDates = Array.Empty<DateOnly>();
+
         private List<DiaryModel> PickedDiaries = new();
 
         [JSInvokable]

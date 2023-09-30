@@ -10,7 +10,9 @@ namespace SwashbucklerDiary.Pages
     public partial class ExportThisTimeDialog : DialogComponentBase
     {
         private bool ShowExport;
+
         private List<DynamicListItem> ExportTimeItems = new();
+
         private List<DiaryModel> ExportDiaries = new();
 
         [Inject]

@@ -10,14 +10,20 @@ namespace SwashbucklerDiary.Components
     public partial class SelectLocation : DialogComponentBase
     {
         private bool _value;
+
         private bool ShowAdd;
+
         private List<LocationModel> _locations = new();
+
         private MCardText? mCardText;
+
         private MDialogExtension? myDialog;
+
         private string? InternalLocation;
 
         [Inject]
         ILocationService LocationService { get; set; } = default!;
+
         [Inject]
         IJSRuntime JS { get; set; } = default!;
 
@@ -27,8 +33,10 @@ namespace SwashbucklerDiary.Components
             get => _value;
             set => SetValue(value);
         }
+
         [Parameter]
         public string? Location { get; set; }
+
         [Parameter]
         public EventCallback<string> LocationChanged { get; set; }
 

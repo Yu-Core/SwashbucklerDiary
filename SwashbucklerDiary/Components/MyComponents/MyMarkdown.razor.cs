@@ -10,30 +10,41 @@ namespace SwashbucklerDiary.Components
     public partial class MyMarkdown
     {
         private Dictionary<string, object>? _options;
+
         private IJSObjectReference module = default!;
+
         private MMarkdown? MMarkdown;
 
         [Inject]
         private II18nService I18n { get; set; } = default!;
+
         [Inject]
         private ISettingsService SettingsService { get; set; } = default!;
+
         [Inject]
         public IJSRuntime JS { get; set; } = default!;
+
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
+
         [Inject]
         private IPlatformService PlatformService { get; set; } = default!;
+
         [Inject]
         private IAlertService AlertService { get; set; } = default!;
+
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
+
         [Parameter]
         public EventCallback<string> ValueChanged { get; set; }
+
         [Parameter]
         public string? Class { get; set; }
+
         [Parameter]
         public string? WrapClass { get; set; }
 

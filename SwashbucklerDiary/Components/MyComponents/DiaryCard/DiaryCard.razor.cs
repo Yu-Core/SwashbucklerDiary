@@ -7,6 +7,7 @@ namespace SwashbucklerDiary.Components
     public partial class DiaryCard : MyComponentBase
     {
         private bool ShowMenu;
+
         private List<DynamicListItem> MenuItems = new();
 
         [Inject]
@@ -14,8 +15,10 @@ namespace SwashbucklerDiary.Components
 
         [CascadingParameter]
         public DiaryCardList DiaryCardList { get; set; } = default!;
+
         [Parameter]
         public DiaryModel Value { get; set; } = default!;
+
         [Parameter]
         public string? Class { get; set; }
 
@@ -26,21 +29,37 @@ namespace SwashbucklerDiary.Components
         }
 
         private bool HasTitle => !string.IsNullOrWhiteSpace(Value?.Title);
+
         private bool HasContent => !string.IsNullOrWhiteSpace(Value?.Content);
+
         private DateTime Time => Value.CreateTime;
+
         private bool IsTop => Value.Top;
+
         private bool IsPrivate => Value.Private;
+
         private bool ShowPrivacy => DiaryCardList.ShowPrivacy;
+
         private bool ShowIcon => DiaryCardList.ShowIcon;
+
         private string? DateFormat => DiaryCardList.DateFormat;
 
         private string? Title => GetTitle();
+
         private string? Text => GetText();
-        private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
-        private string PrivateText() => IsPrivate ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
-        private string PrivateIcon() => IsPrivate ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
+
+        private string TopText() 
+            => IsTop ? "Diary.CancelTop" : "Diary.Top";
+
+        private string PrivateText() 
+            => IsPrivate ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
+
+        private string PrivateIcon() 
+            => IsPrivate ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
+
         private string? WeatherIcon =>
             string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetWeatherIcon(Value.Weather);
+        
         private string? MoodIcon =>
             string.IsNullOrWhiteSpace(Value.Mood) ? null : IconService.GetMoodIcon(Value.Mood);
 

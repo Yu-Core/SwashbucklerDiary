@@ -8,8 +8,11 @@ namespace SwashbucklerDiary.Pages
     public partial class PrivacyLibraryPage : DiariesPageComponentBase
     {
         private bool ShowSearch;
+
         private bool ShowFilter;
+
         private string? Search;
+
         private DateFilterForm DateFilter = new();
 
         protected override async Task UpdateDiariesAsync()
@@ -20,9 +23,11 @@ namespace SwashbucklerDiary.Pages
         }
 
         private DateOnly DateOnlyMin => DateFilter.GetDateMinValue();
+
         private DateOnly DateOnlyMax => DateFilter.GetDateMaxValue();
 
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
+
         private bool IsDateFiltered => DateOnlyMin != DateOnly.MinValue || DateOnlyMax != DateOnly.MaxValue;
 
         private Expression<Func<DiaryModel, bool>> GetExpression()

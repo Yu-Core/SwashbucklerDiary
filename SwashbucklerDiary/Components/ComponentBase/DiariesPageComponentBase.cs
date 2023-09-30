@@ -8,10 +8,12 @@ namespace SwashbucklerDiary.Components
     {
         [Inject]
         protected IDiaryService DiaryService { get; set; } = default!;
+
         [Inject]
         protected ITagService TagService { get; set; } = default!;
 
         protected virtual List<DiaryModel> Diaries { get; set; } = new();
+
         protected virtual List<TagModel> Tags { get; set; } = new();
 
         protected override async Task OnParametersSetAsync()

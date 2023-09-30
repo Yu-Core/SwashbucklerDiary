@@ -13,41 +13,62 @@ namespace SwashbucklerDiary.Pages
     public partial class WritePage : ImportantComponentBase, IDisposable
     {
         private bool ShowMenu;
+
         private bool ShowSelectTag;
+
         private bool ShowWeather;
+
         private bool ShowMood;
+
         private bool ShowLocation;
+
         private bool ShowCreateTime;
+
         private bool EnableTitle;
+
         private bool EnableMarkdown = true;
+
         private bool EnableEditCreateTime;
+
         private bool CreateMode;
+
         private bool Overlay;
+
         private MyMarkdown? MyMarkdown;
+
         private MTextareaExtension? MTextareaExtension;
+
         private List<DynamicListItem> MenuItems = new();
+
         private DiaryModel Diary = new()
         {
             Tags = new(),
             Resources = new(),
             CreateTime = default
         };
+
         private List<TagModel> Tags = new();
+
         private Dictionary<string, string> WeatherIcons = new();
+
         private Dictionary<string, string> MoodIcons = new();
 
         [Inject]
         private MasaBlazor MasaBlazor { get; set; } = default!;
+
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
+
         [Inject]
         private ITagService TagService { get; set; } = default!;
+
         [Inject]
         private IIconService IconService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
         public Guid? TagId { get; set; }
+
         [Parameter]
         [SupplyParameterFromQuery]
         public Guid? DiaryId { get; set; }
@@ -66,9 +87,15 @@ namespace SwashbucklerDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
+            await base.OnInitializedAsync();
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
             await UpdateTags();
             await SetTag();
             await SetDiary();
+            await base.OnParametersSetAsync();
         }
 
         private async Task BeforePop(PopEventArgs e)

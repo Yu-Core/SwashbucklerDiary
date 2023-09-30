@@ -9,12 +9,15 @@ namespace SwashbucklerDiary.Pages
     public partial class LANConfigDialog : FocusDialogComponentBase
     {
         private MForm? MForm;
+
         private LANConfigForm configModel = new();
 
         [Parameter]
         public LANConfigForm Form { get; set; } = default!;
+
         [Parameter]
         public EventCallback<LANConfigForm> OnOK { get; set; }
+
         [Parameter]
         public EventCallback OnReset { get; set; }
 

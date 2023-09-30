@@ -29,5 +29,6 @@
     private INavigateService NavigateService { get; set; } = default!;
 
     private bool Show => MasaBlazor.Breakpoint.Xs && IsRootPath;
+
     private bool IsRootPath => NavigateService.RootPaths.Contains(Navigation.Uri);
 }

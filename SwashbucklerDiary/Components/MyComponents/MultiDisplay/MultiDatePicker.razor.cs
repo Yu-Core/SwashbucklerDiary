@@ -12,10 +12,13 @@ namespace SwashbucklerDiary.Components
             get => (_date == DateOnly.MinValue || _date == DateOnly.MaxValue) ? DateOnly.FromDateTime(DateTime.Now) : _date;
             set => _date = value;
         }
+
         [Parameter]
         public EventCallback<DateOnly> DateChanged { get; set; }
+
         [Parameter]
         public DateOnly? Min { get; set; }
+
         [Parameter]
         public DateOnly? Max { get; set; }
 

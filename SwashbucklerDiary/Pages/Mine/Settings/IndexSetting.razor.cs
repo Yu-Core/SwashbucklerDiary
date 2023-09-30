@@ -6,6 +6,7 @@ namespace SwashbucklerDiary.Pages
     public partial class IndexSetting : ImportantComponentBase
     {
         private bool WelcomText;
+
         private bool Date;
 
         protected override async Task OnInitializedAsync()

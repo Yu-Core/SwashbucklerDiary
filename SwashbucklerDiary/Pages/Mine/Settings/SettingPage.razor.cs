@@ -9,10 +9,15 @@ namespace SwashbucklerDiary.Pages
     public partial class SettingPage : ImportantComponentBase
     {
         private bool Privacy;
+
         private string? PrivatePassword;
+
         private bool ShowPPSet;
+
         private bool ShowPPInput;
+
         private bool ShowClearCache;
+
         private string? CacheSize;
 
         [Inject]

@@ -11,29 +11,48 @@ namespace SwashbucklerDiary.Pages
     public partial class LogPage : ImportantComponentBase
     {
         private bool ShowSearch;
+
         private bool ShowMenu;
+
         private bool ShowFilter;
+
         private bool ShowDelete;
+
         private bool ShowShare;
+
         private List<DynamicListItem> MenuItems = new();
+
         private List<DynamicListItem> ShareItems = new();
+
         private List<LogModel> Logs = new();
+
         private string? Search;
+
         private DateFilterForm DateFilterForm = new();
 
         [Inject]
         private ILogService LogService { get; set; } = default!;
+
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             LoadView();
-            await UpdateLogsAsync();
+            base.OnInitialized();
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
             await HandleAchievements(AchievementType.Log);
             await base.OnInitializedAsync();
         }
 
+        protected override async Task OnParametersSetAsync()
+        {
+            await UpdateLogsAsync();
+            await base.OnParametersSetAsync();
+        }
         protected override Task NavigateToBack()
         {
             if (ShowSearch)
@@ -129,6 +148,7 @@ namespace SwashbucklerDiary.Pages
         private async Task HandleDelete()
         {
             ShowDelete = false;
+            StateHasChanged();
             bool flag = await LogService.DeleteAsync();
             if (flag)
             {

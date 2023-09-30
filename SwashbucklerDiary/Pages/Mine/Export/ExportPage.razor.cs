@@ -7,6 +7,7 @@ namespace SwashbucklerDiary.Pages
     public partial class ExportPage : ImportantComponentBase
     {
         private StringNumber tab = 0;
+
         private readonly List<string> Views = new() { "Local", "LAN" };
 
         [Parameter]

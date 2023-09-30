@@ -7,14 +7,20 @@ namespace SwashbucklerDiary.Components
     public partial class TagCardList : MyComponentBase
     {
         private bool ShowDelete;
+
         private bool ShowRename;
+
         private bool ShowExport;
+
         private TagModel SelectedTag = new();
+
         private List<TagModel> _value = new();
+
         private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
         private ITagService TagService { get; set; } = default!;
+
         [Inject]
         private IPlatformService PlatformService { get; set; } = default!;
 
@@ -24,8 +30,10 @@ namespace SwashbucklerDiary.Components
             get => _value.OrderByDescending(GetDiaryCount).ToList();
             set => _value = value;
         }
+
         [Parameter]
         public EventCallback<List<TagModel>> ValueChanged { get; set; }
+
         [Parameter]
         public List<DiaryModel> Diaries { get; set; } = default!;
 

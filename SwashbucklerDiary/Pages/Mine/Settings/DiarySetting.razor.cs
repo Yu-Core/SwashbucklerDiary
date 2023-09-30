@@ -6,7 +6,9 @@ namespace SwashbucklerDiary.Pages
     public partial class DiarySetting : ImportantComponentBase
     {
         private bool Title;
+
         private bool Markdown;
+
         private bool EditCreateTime;
 
         protected override async Task OnInitializedAsync()

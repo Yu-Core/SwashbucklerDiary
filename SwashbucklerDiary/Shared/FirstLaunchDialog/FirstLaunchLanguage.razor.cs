@@ -10,6 +10,7 @@ namespace SwashbucklerDiary.Shared
 
         [Parameter]
         public bool Show { get; set; }
+
         [Parameter]
         public EventCallback<string> OnClick { get; set; }
 

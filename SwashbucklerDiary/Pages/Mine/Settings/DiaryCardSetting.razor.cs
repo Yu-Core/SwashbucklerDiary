@@ -6,8 +6,11 @@ namespace SwashbucklerDiary.Pages
     public partial class DiaryCardSetting : ImportantComponentBase
     {
         private bool DiaryCardIcon;
+
         private string? DiaryCardDateFormat;
+
         private bool ShowDiaryCardDateFormat;
+
         private readonly static Dictionary<string, string> DiaryCardDateFormats = new()
         {
             {"DateTimeFormat.MM/dd","MM/dd" },
@@ -21,6 +24,7 @@ namespace SwashbucklerDiary.Pages
         }
 
         private string MRadioColor => ThemeService.Dark ? "white" : "black";
+
         private string DiaryCardDateFormatKey => DiaryCardDateFormats.FirstOrDefault(x => x.Value == DiaryCardDateFormat).Key;
 
         private async Task LoadSettings()

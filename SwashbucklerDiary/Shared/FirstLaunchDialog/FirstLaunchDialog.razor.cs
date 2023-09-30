@@ -7,17 +7,23 @@ namespace SwashbucklerDiary.Shared
     public partial class FirstLaunchDialog
     {
         private bool Show = true;
+
         private bool SelectedLanguage;
+
         private bool AgreedAgreement;
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
+
         [Inject]
         private ISettingsService SettingsService { get; set; } = default!;
+
         [Inject]
         private IPlatformService PlatformService { get; set; } = default!;
+
         [Inject]
         private II18nService I18n { get; set; } = default!;
+
         [Inject]
         private IStateService StateService { get; set; } = default!;
 
@@ -28,6 +34,7 @@ namespace SwashbucklerDiary.Shared
         }
 
         private bool ShowLanguga => !SelectedLanguage;
+
         private bool ShowAgreement => SelectedLanguage;
 
         private async Task LoadSettings()

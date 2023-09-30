@@ -15,6 +15,7 @@ namespace SwashbucklerDiary.Components
             get => base.Value;
             set => SetValue(value);
         }
+
         [Parameter]
         public EventCallback<bool> MyValueChanged
         {

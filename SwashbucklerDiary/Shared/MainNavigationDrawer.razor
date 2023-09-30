@@ -34,7 +34,9 @@
 
 @code {
     private bool MiniVariant => MasaBlazor.Breakpoint.Sm;
+
     private bool Show => MasaBlazor.Breakpoint.SmAndUp;
+
     private string ActiveClass => MiniVariant ? "" : "my-navigation-drawer-active";
 
     protected string? GetTitleClass(NavigationButton button)

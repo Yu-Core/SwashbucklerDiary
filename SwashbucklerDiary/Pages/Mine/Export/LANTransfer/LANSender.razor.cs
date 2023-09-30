@@ -14,24 +14,38 @@ namespace SwashbucklerDiary.Pages
     public partial class LANSender : ImportantComponentBase
     {
         private UdpClient? udpClient;
+
         private readonly IPAddress multicastAddress = IPAddress.Parse("239.0.0.1"); // 组播地址
+
         private  int multicastPort; // 组播端口
+
         private readonly int millisecondsOutTime = 20000;
+
         private bool _udpListening;
+
         private bool JoinMulticastGroup;
+
         private CancellationTokenSource CancellationTokenSource = new();
+
         private readonly List<LANDeviceInfo> LANDeviceInfos = new ();
 
         private bool ShowTransferDialog;
+
         private bool Transferred;
+
         private bool StopTransferr;
+
         private int tcpPort;
+
         private int Ps;
+
         private long TotalBytesToReceive;
+
         private long BytesReceived;
 
         [Inject]
         private ILANService LANService { get; set; } = default!;
+
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
         

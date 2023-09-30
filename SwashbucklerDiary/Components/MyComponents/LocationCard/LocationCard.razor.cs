@@ -6,10 +6,12 @@ namespace SwashbucklerDiary.Components
     public partial class LocationCard : MyComponentBase
     {
         private bool ShowMenu;
+
         private List<DynamicListItem> MenuItems = new();
 
         [CascadingParameter]
         public LocationCardList LocationCardList { get; set; } = default!;
+
         [Parameter]
         public LocationModel Value { get; set; } = default!;
 
@@ -20,6 +22,7 @@ namespace SwashbucklerDiary.Components
         }
 
         private Task Delete() => LocationCardList.Delete(Value);
+
         private Task Rename() => LocationCardList.Rename(Value);
 
         void LoadView()

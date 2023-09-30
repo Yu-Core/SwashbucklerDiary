@@ -9,8 +9,11 @@ namespace SwashbucklerDiary.Pages
     public partial class SearchPage : DiariesPageComponentBase
     {
         private bool ShowFilter;
+
         private bool ShowSearch = true;
+
         private string? Search;
+
         private DateFilterForm DateFilter = new();
 
         [Parameter]
@@ -31,8 +34,11 @@ namespace SwashbucklerDiary.Pages
         }
 
         private DateOnly DateOnlyMin => DateFilter.GetDateMinValue();
+
         private DateOnly DateOnlyMax => DateFilter.GetDateMaxValue();
+
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(Search);
+
         private bool IsDateFiltered => DateOnlyMin != DateOnly.MinValue || DateOnlyMax != DateOnly.MaxValue;
 
         private void LoadQuery()

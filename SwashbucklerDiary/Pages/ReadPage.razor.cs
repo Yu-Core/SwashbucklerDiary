@@ -11,32 +11,55 @@ namespace SwashbucklerDiary.Pages
     public partial class ReadPage : ImportantComponentBase, IAsyncDisposable
     {
         private bool ShowDelete;
+
         private bool ShowMenu;
+
         private bool ShowShare;
+
         private bool ShowExport;
+
         private bool Markdown;
+
+        private bool Privacy;
+
         private DiaryModel Diary = new();
+
         private IJSObjectReference module = default!;
+
         private List<DynamicListItem> MenuItems = new();
+
         private List<DynamicListItem> ShareItems = new();
+
         private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
+
         [Inject]
         private IIconService IconService { get; set; } = default!;
+
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
 
         [Parameter]
         public Guid Id { get; set; }
 
+        protected override void OnInitialized()
+        {
+            LoadView();
+            base.OnInitialized();
+        }
+
         protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
-            await LoadView();
-            await UpdateDiary();
             await base.OnInitializedAsync();
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            await UpdateDiary();
+            await base.OnParametersSetAsync();
         }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -48,17 +71,27 @@ namespace SwashbucklerDiary.Pages
         }
 
         private List<TagModel> Tags => Diary.Tags ?? new();
+
         private bool IsTop => Diary.Top;
+
         private bool IsPrivate => Diary.Private;
+
         private bool ShowTitle => !string.IsNullOrEmpty(Diary.Title);
+
         private bool ShowWeather => !string.IsNullOrEmpty(Diary.Weather);
+
         private bool ShowMood => !string.IsNullOrEmpty(Diary.Mood);
+
         private bool ShowLocation => !string.IsNullOrEmpty(Diary.Location);
 
         private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
+
         private string MarkdownText() => Markdown ? "Diary.Text" : "Diary.Markdown";
+
         private string MarkdownIcon() => Markdown ? "mdi-format-text" : "mdi-language-markdown-outline";
+        
         private string PrivateText() => IsPrivate ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
+        
         private string PrivateIcon() => IsPrivate ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
 
         private async Task UpdateDiary()
@@ -77,9 +110,10 @@ namespace SwashbucklerDiary.Pages
         private async Task LoadSettings()
         {
             Markdown = await SettingsService.Get(SettingType.Markdown);
+            Privacy = await SettingsService.Get(SettingType.PrivacyMode);
         }
 
-        async Task LoadView()
+        private void LoadView()
         {
             MenuItems = new List<DynamicListItem>()
             {
@@ -87,12 +121,8 @@ namespace SwashbucklerDiary.Pages
                 new(this, TopText,"mdi-format-vertical-align-top",OnTopping),
                 new(this, "Diary.Export","mdi-export",OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon,MarkdownChanged),
+                new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>Privacy)
             };
-            bool privacy = await SettingsService.Get(SettingType.PrivacyMode);
-            if (privacy)
-            {
-                MenuItems.Add(new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged));
-            }
 
             ShareItems = new()
             {

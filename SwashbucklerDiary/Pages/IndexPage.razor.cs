@@ -9,7 +9,9 @@ namespace SwashbucklerDiary.Pages
     public partial class IndexPage : DiariesPageComponentBase
     {
         private bool ShowWelcomeText;
+
         private bool ShowDate;
+
         private StringNumber tab = 0;
 
         [Inject]

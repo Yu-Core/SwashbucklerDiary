@@ -6,13 +6,20 @@ namespace SwashbucklerDiary.Components
     public abstract class FocusDialogComponentBase : DialogComponentBase
     {
         protected MTextField<string?> TextField = default!;
+
         protected MDialogExtension? myDialog;
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                myDialog!.AfterShowContent = async _ => await DialogAfterRenderAsync();
+                if(myDialog is null)
+                {
+                    return;
+                }
+
+                myDialog.AfterShowContent = async _ => await DialogAfterRenderAsync();
             }
         }
 

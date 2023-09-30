@@ -8,8 +8,11 @@ namespace SwashbucklerDiary.Pages
     public partial class AboutPage : ImportantComponentBase
     {
         private bool ShowSourceCode;
+
         private bool ShowVersionUpdate;
+
         private readonly List<DynamicListItem> CodeSourceListItems = new();
+
         private List<List<DynamicListItem>> ViewLists = new();
 
         private class Release

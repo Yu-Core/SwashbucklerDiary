@@ -8,10 +8,12 @@ namespace SwashbucklerDiary.Components
     public partial class DateFilterDialog : DialogComponentBase
     {
         private bool _value;
+
         private bool ShowMinDate;
+
         private bool ShowMaxDate;
+
         private DateFilterForm InternalForm = new();
-        private static Dictionary<string, DateOnly> DefaultDates => DateFilterForm.DefaultDates;
 
         [Parameter]
         public override bool Value
@@ -19,12 +21,16 @@ namespace SwashbucklerDiary.Components
             get => _value;
             set => SetValue(value);
         }
+
         [Parameter]
         public DateFilterForm Form { get; set; } = new();
+
         [Parameter]
         public EventCallback<DateFilterForm> FormChanged { get; set; }
+
         [Parameter]
         public EventCallback OnOK { get; set; }
+
         [Parameter]
         public EventCallback OnReset { get; set; }
 
@@ -34,6 +40,9 @@ namespace SwashbucklerDiary.Components
             return Task.CompletedTask;
         }
 
+        private static Dictionary<string, DateOnly> DefaultDates 
+            => DateFilterForm.DefaultDates;
+
         private StringNumber DefaultDate
         {
             get => InternalForm.DefaultDate;
@@ -42,20 +51,25 @@ namespace SwashbucklerDiary.Components
                 InternalForm.DefaultDate = value?.ToString() ?? string.Empty;
             }
         }
+
         private DateOnly MinDate
         {
             get => InternalForm.MinDate;
             set => InternalForm.MinDate = value;
         }
+
         private DateOnly MaxDate
         {
             get => InternalForm.MaxDate;
             set => InternalForm.MaxDate = value;
         }
+
         private string MinDateText
             => MinDate == DateOnly.MinValue ? I18n.T("Filter.Start time") : ((DateOnly)MinDate).ToString("yyyy-MM-dd");
+        
         private string MaxDateText
             => MaxDate == DateOnly.MaxValue ? I18n.T("Filter.End time") : ((DateOnly)MaxDate).ToString("yyyy-MM-dd");
+        
         private DateOnly Today => DateOnly.FromDateTime(DateTime.Now);
 
         private void SetValue(bool value)

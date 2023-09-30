@@ -7,8 +7,11 @@ namespace SwashbucklerDiary.Pages
     public partial class AlertSettingPage : ImportantComponentBase
     {
         private int _timeout;
+
         private bool ShowTimeout;
+
         private bool AchievementsAlert;
+
         private readonly Dictionary<string, string> Timeouts = new();
 
         protected override async Task OnInitializedAsync()

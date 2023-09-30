@@ -6,8 +6,10 @@ namespace SwashbucklerDiary.Components
     {
         [Parameter]
         public string? Title { get; set; }
+
         [Parameter]
         public string? Content { get; set; }
+
         [Parameter]
         public EventCallback OnOK { get; set; }
     }

@@ -6,8 +6,10 @@ namespace SwashbucklerDiary.Components
     {
         [Parameter]
         public string? Id { get; set; }
+
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
+
         [Parameter]
         public RenderFragment? FixContent { get; set; }
 

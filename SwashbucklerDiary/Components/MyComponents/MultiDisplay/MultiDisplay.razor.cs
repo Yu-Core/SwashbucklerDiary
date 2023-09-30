@@ -10,10 +10,13 @@ namespace SwashbucklerDiary.Components
 
         [Parameter]
         public RenderFragment? MobileContent { get; set; }
+
         [Parameter]
         public RenderFragment? DesktopContent { get; set; }
+
         [Parameter]
         public bool Tablet { get; set; }
+
         [Parameter]
         public EventCallback<bool> OnUpdate { get; set; }
 

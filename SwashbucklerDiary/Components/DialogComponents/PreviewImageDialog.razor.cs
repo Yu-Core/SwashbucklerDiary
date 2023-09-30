@@ -12,8 +12,10 @@ namespace SwashbucklerDiary.Components
 
         [Inject]
         private IPlatformService PlatformService { get; set; } = default!;
+
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
+
         [Inject]
         private IJSRuntime JS { get; set; } = default!;
 
@@ -23,6 +25,7 @@ namespace SwashbucklerDiary.Components
             get => base.Value;
             set => SetValue(value);
         }
+
         [Parameter]
         public string? Src { get; set; }
 

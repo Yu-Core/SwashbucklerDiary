@@ -14,25 +14,37 @@ namespace SwashbucklerDiary.Pages
     public partial class LANReceiver : ImportantComponentBase
     {
         private bool _udpSending;
+
         private UdpClient? udpClient;
+
         private readonly IPAddress multicastAddress = IPAddress.Parse("239.0.0.1");// UDP组播地址
+
         private int multicastPort;// UDP组播端口
 
         private bool _tcpListening;
+
         private bool ShowTransferDialog;
+
         private bool Transferred;
+
         private bool StopTransferr;
+
         private TcpListener? tcpListener;
+
         private int tcpPort;// Tcp端口
+
         //private CancellationTokenSource CancellationTokenSource = new();
         private int Ps;
+
         private long TotalBytesToReceive;
+
         private long BytesReceived;
 
         private LANDeviceInfo LANDeviceInfo = new();
 
         [Inject]
         private ILANService LANService { get; set; } = default!;
+
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
 

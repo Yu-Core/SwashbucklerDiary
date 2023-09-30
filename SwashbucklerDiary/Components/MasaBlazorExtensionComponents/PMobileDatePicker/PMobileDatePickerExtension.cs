@@ -15,6 +15,7 @@ namespace SwashbucklerDiary.Components
             get => base.Visible;
             set => SetVisible(value);
         }
+
         [Parameter]
         public EventCallback<bool> MyVisibleChanged
         {

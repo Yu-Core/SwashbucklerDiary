@@ -9,7 +9,9 @@ namespace SwashbucklerDiary.Components
     public partial class SelectTags : DialogComponentBase
     {
         private bool _value;
+
         private bool ShowAddTag;
+
         private List<StringNumber> SelectedTagIds = new();
 
         [Inject]
@@ -21,14 +23,19 @@ namespace SwashbucklerDiary.Components
             get => _value;
             set => SetValue(value);
         }
+
         [Parameter]
         public List<TagModel> Values { get; set; } = default!;
+
         [Parameter]
         public EventCallback<List<TagModel>> ValuesChanged { get; set; }
+
         [Parameter]
         public EventCallback OnSave { get; set; }
+
         [Parameter]
         public List<TagModel> Tags { get; set; } = new();
+
         [Parameter]
         public EventCallback<List<TagModel>> TagsChanged { get; set; }
 

@@ -7,10 +7,15 @@ namespace SwashbucklerDiary.Components
     public partial class DiaryCardList : ImportantComponentBase
     {
         private List<DiaryModel> _value = new();
+
         private bool ShowDeleteDiary;
+
         private bool ShowSelectTag;
+
         private bool ShowExport;
+
         private DiaryModel SelectedDiary = new();
+
         private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
@@ -22,21 +27,29 @@ namespace SwashbucklerDiary.Components
             get => _value.OrderByDescending(it => it.Top).ToList();
             set => _value = value;
         }
+
         [Parameter]
         public string? Class { get; set; }
+
         [Parameter]
         public string? CardClass { get; set; }
+
         [Parameter]
         public EventCallback<DiaryModel> OnRemove { get; set; }
+
         [Parameter]
         public List<TagModel> Tags { get; set; } = new();
+
         [Parameter]
         public EventCallback<List<TagModel>> TagsChanged { get; set; }
+
         [Parameter]
         public string? NotFoundText { get; set; }
 
         public bool ShowPrivacy { get; set; }
+
         public bool ShowIcon { get; set; }
+
         public string? DateFormat { get; set; }
         
         public async Task Topping(DiaryModel diaryModel)

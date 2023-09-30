@@ -7,8 +7,11 @@ namespace SwashbucklerDiary.Components
     public partial class LocationCardList : MyComponentBase
     {
         bool ShowRename;
+
         bool ShowDelete;
+
         LocationModel SelectedLocation = new();
+
         List<LocationModel> _value = new();
 
         [Inject]

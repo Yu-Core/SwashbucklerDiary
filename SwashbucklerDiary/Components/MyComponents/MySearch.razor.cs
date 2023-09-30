@@ -12,19 +12,26 @@ namespace SwashbucklerDiary.Components
             get => _value;
             set => SetValue(value);
         }
+
         [Parameter]
         public string? Search { get; set; }
+
         [Parameter]
         public EventCallback<string> SearchChanged { get; set; }
+
         [Parameter]
         public EventCallback<string> OnChanged { get; set; }
+
         [Parameter]
         public string? Title { get; set; }
+
         [Parameter]
         public string? Placeholder { get; set; }
 
         private bool ShowTitle => !string.IsNullOrEmpty(Title);
+
         private string? TextFieldColor => Light ? "grey" : null;
+
         private void SetValue(bool value)
         {
             if (_value != value)

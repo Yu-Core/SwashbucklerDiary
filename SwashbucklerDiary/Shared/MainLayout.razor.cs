@@ -10,24 +10,33 @@ namespace SwashbucklerDiary.Shared
     public partial class MainLayout : IDisposable
     {
         private StringNumber NavigationIndex = 0;
+
         private List<NavigationButton> NavigationButtons = new();
 
         [Inject]
         private MasaBlazor MasaBlazor { get; set; } = default!;
+
         [Inject]
         private NavigationManager Navigation { get; set; } = default!;
+
         [Inject]
         private INavigateService NavigateService { get; set; } = default!;
+
         [Inject]
         private I18n I18n { get; set; } = default!;
+
         [Inject]
         private II18nService I18nService { get; set; } = default!;
+
         [Inject]
         private ISettingsService SettingsService { get; set; } = default!;
+
         [Inject]
         private IPopupService PopupService { get; set; } = default!;
+
         [Inject]
         private IAlertService AlertService { get; set; } = default!;
+
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
 

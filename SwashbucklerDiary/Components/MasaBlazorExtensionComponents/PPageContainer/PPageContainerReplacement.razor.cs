@@ -37,6 +37,7 @@ namespace SwashbucklerDiary.Components
         protected readonly LRUCache<string, PatternPath> _patternPaths = new(10);
 
         private string? _previousPath;
+
         private PatternPath? _currentPatternPath;
 
         protected override void OnInitialized()

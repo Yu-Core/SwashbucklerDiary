@@ -12,6 +12,7 @@ namespace SwashbucklerDiary.Components
 
         [Parameter]
         public ResourceModel Value { get; set; } = default!;
+
         [CascadingParameter]
         protected ImageResourceCardList ImageResourceCardList { get; set; } = default!;
 

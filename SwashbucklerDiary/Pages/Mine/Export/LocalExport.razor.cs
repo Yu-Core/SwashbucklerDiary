@@ -9,12 +9,16 @@ namespace SwashbucklerDiary.Pages
     public partial class LocalExport : ImportantComponentBase
     {
         private bool ShowExport;
+
         private bool ShowImport;
+
         private string? ImportFilePath;
+
         private List<DiaryModel> Diaries = new();
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
+
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
 

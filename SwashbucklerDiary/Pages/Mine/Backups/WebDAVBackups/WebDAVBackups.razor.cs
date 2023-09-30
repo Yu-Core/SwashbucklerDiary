@@ -10,12 +10,19 @@ namespace SwashbucklerDiary.Pages
     public partial class WebDAVBackups : BackupsPageComponentBase
     {
         private bool ShowConfig;
+
         private bool ShowUpload;
+
         private bool ShowDownload;
+
         private bool IncludeDiaryResources;
+
         private WebDavConfigForm configModel = new();
+
         private const string WebDavFolderName = "SwashbucklerDiary";
+
         private IWebDavClient WebDavClient = default!;
+
         public List<string> FileList = new();
 
         protected override async Task OnInitializedAsync()
@@ -25,6 +32,7 @@ namespace SwashbucklerDiary.Pages
         }
 
         private bool Configured => !string.IsNullOrEmpty(configModel.ServerAddress);
+
         private string ConfiguredText => Configured ? I18n.T("Backups.Config.Configured") : I18n.T("Backups.Config.NotConfigured");
 
         private async Task LoadSettings()

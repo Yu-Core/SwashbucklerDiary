@@ -1,6 +1,5 @@
 ﻿using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Models;
-using System.Text.Json;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -8,10 +7,10 @@ namespace SwashbucklerDiary.Pages
     {
         private List<OpenSourceProject> OSPs = new();
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
             await ReadJson();
-            await base.OnInitializedAsync();
+            await base.OnParametersSetAsync();
         }
 
         private async Task OpenBrowser(string? url)

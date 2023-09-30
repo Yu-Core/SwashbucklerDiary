@@ -9,8 +9,11 @@ namespace SwashbucklerDiary.Pages
     public partial class LANTransfer : ImportantComponentBase
     {
         private bool ShowConfig;
+
         private List<DynamicListItem> DynamicLists = new();
+
         private LANConfigForm configModel = new();
+
         private string? DeviceName;
 
         [Inject]

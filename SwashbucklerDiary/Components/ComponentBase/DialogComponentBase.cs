@@ -7,6 +7,7 @@ namespace SwashbucklerDiary.Components
     {
         [Parameter]
         public virtual bool Value { get; set; }
+
         [Parameter]
         public EventCallback<bool> ValueChanged { get; set; }
 

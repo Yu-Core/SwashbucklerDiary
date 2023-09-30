@@ -7,6 +7,7 @@ namespace SwashbucklerDiary.Components
     {
         [Inject]
         protected IAppDataService AppDataService { get; set; } = default!;
+
         [Inject]
         protected IDiaryService DiaryService { get; set; } = default!;
 
