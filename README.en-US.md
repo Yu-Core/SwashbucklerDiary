@@ -6,16 +6,20 @@ English | [简体中文](./README.md)
 
 Everyone has a swashbuckler in their heart, like a shadow following the wind, accompanying you to see the scenery all the way and remembering all your wonderful moments.
 
-## Technology Stack
-[MAUI](https://learn.microsoft.com/en-us/dotnet/maui/) + [Blazor Hybrid](https://learn.microsoft.com/en-us/aspnet/core/blazor/hybrid/) + [Masa Blazor](https://docs.masastack.com/blazor/introduction/why-masa-blazor) + [SqlSugar](https://github.com/DotNetNext/SqlSugar) + [Serilog](https://serilog.net/)
+## Main Technology Stack
+- [MAUI](https://learn.microsoft.com/dotnet/maui/)
+- [Blazor Hybrid](https://learn.microsoft.com/aspnet/core/blazor/hybrid/) 
+- [Masa Blazor](https://docs.masastack.com/blazor/introduction/why-masa-blazor) 
+- [SqlSugar](https://www.donet5.com/Home/Doc) 
+- [Serilog](https://serilog.net/)
 
 ## Download Channels
-- [![Microsoft Store](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
+- [![Microsoft Store](https://get.microsoft.com/images/en-US%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
 - [GitHub Releases](https://github.com/Yu-Core/SwashbucklerDiary/releases)
-- [蓝奏云](https://wwfc.lanzouj.com/b04q15i4j) ( Password: 1234 )
-- [百度手机助手](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
-- [豌豆荚](https://www.wandoujia.com/apps/8369224)
-- [酷安](https://www.coolapk.com/apk/937401)
+- [lanzou cloud](https://wwfc.lanzouj.com/b04q15i4j) ( Password: 1234 )
+- [Baidu Mobile Assistant](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
+- [wandoujia](https://www.wandoujia.com/apps/8369224)
+- [coolapk](https://www.coolapk.com/apk/937401)
 
 ## Characteristics
 - Minimalist style
@@ -23,7 +27,6 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 - Markdown
 - Multilingual
 - Dark mode
-- Page adaptation (Multiple device sizes)
 - All data is stored locally without the need for networking
 - Local backup
 - Webdav backup

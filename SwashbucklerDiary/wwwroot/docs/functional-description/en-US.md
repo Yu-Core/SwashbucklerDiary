@@ -9,7 +9,6 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 - Markdown
 - Multilingual
 - Dark mode
-- Page adaptation (Multiple device sizes)
 - All data is stored locally without the need for networking
 - Local backup
 - Webdav backup

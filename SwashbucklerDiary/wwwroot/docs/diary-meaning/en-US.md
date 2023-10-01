@@ -28,4 +28,4 @@ How we want to know ourselves is diary, let us see ourselves clearly, know ourse
 
 There is no point in writing a diary, just for the diary itself.
 
-[https://www.zhihu.com/question/36073641](https://www.zhihu.com/question/36073641)
+[https://www.zhihu.com/question/36073641/answer/216328905](https://www.zhihu.com/question/36073641/answer/216328905)

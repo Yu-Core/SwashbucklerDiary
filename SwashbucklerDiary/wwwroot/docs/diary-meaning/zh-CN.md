@@ -29,4 +29,4 @@
 
 写日记其实也没什么意义，就是为了日记本身。
 
-[https://www.zhihu.com/question/36073641](https://www.zhihu.com/question/36073641)
+[https://www.zhihu.com/question/36073641/answer/216328905](https://www.zhihu.com/question/36073641/answer/216328905)

@@ -6,8 +6,12 @@
 
 每个人的心底都有一个侠客，如影随风，陪你看过一路的风景，记得你所有的精彩。
 
-## 技术栈
-[MAUI](https://learn.microsoft.com/zh-cn/dotnet/maui/) + [Blazor Hybrid](https://learn.microsoft.com/zh-cn/aspnet/core/blazor/hybrid/) + [Masa Blazor](https://docs.masastack.com/blazor/introduction/why-masa-blazor) + [SqlSugar](https://www.donet5.com/Home/Doc) + [Serilog](https://serilog.net/)
+## 主要技术栈
+- [MAUI](https://learn.microsoft.com/dotnet/maui/)
+- [Blazor Hybrid](https://learn.microsoft.com/aspnet/core/blazor/hybrid/) 
+- [Masa Blazor](https://docs.masastack.com/blazor/introduction/why-masa-blazor) 
+- [SqlSugar](https://www.donet5.com/Home/Doc) 
+- [Serilog](https://serilog.net/)
 
 ## 下载渠道
 - [![Microsoft 应用商店](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
@@ -23,7 +27,6 @@
 - Markdown
 - 多语言
 - 深色模式
-- 页面自适应(即多种设备尺寸)
 - 所有数据存储在本地，无需联网
 - 本地备份
 - Webdav备份
