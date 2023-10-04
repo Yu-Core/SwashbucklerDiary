@@ -1,13 +1,13 @@
-﻿using MiniExcelLibs;
+﻿using ClosedXML.Excel;
 using SwashbucklerDiary.Config;
 using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using System.Data;
 using System.IO.Compression;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SwashbucklerDiary.Services
 {
@@ -322,15 +322,15 @@ namespace SwashbucklerDiary.Services
                 File.Delete(filePath);
             }
 
-            var timeColName = I18n.T("Excel.Time");
-            var weatherColName = I18n.T("Excel.Weather");
-            var moodColName = I18n.T("Excel.Mood");
-            var locationColName = I18n.T("Excel.Location");
-            var tagsColName = I18n.T("Excel.Tags");
-            var titleColName = I18n.T("Excel.Title");
-            var contentColName = I18n.T("Excel.Content");
+            var dataTable = new DataTable();
+            dataTable.Columns.Add(I18n.T("Excel.Time"));
+            dataTable.Columns.Add(I18n.T("Excel.Weather"));
+            dataTable.Columns.Add(I18n.T("Excel.Mood"));
+            dataTable.Columns.Add(I18n.T("Excel.Location"));
+            dataTable.Columns.Add(I18n.T("Excel.Tags"));
+            dataTable.Columns.Add(I18n.T("Excel.Title"));
+            dataTable.Columns.Add(I18n.T("Excel.Content"));
 
-            var values = new List<Dictionary<string, object>>();
             foreach (var item in diaries)
             {
                 var time = item.CreateTime.ToString("yyyy/MM/dd HH:mm:ss");
@@ -349,20 +349,12 @@ namespace SwashbucklerDiary.Services
                 var title = item.Title ?? string.Empty;
                 var content = item.Content ?? string.Empty;
 
-                var value = new Dictionary<string, object>()
-                {
-                    {timeColName, time },
-                    {weatherColName, weather },
-                    {moodColName, mood },
-                    {locationColName, location },
-                    {tagsColName, tags },
-                    {titleColName, title },
-                    {contentColName, content },
-                };
-                values.Add(value);
+                dataTable.Rows.Add(time, weather, mood, location, tags, title, content);
             }
 
-            MiniExcel.SaveAs(filePath, values);
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add(dataTable, "Sheet1");
+            workbook.SaveAs(filePath);
             return Task.FromResult(filePath);
         }
 

@@ -47,24 +47,28 @@ namespace SwashbucklerDiary.Components
         {
             await InternalValueChanged(false);
             await AlertService.StartLoading();
-            try
+            _ = Task.Run(async () =>
             {
-                bool flag = await func(Diaries);
-                if (flag)
+                try
                 {
-                    await AlertService.Success(I18n.T("Export.Export.Success"));
-                    await HandleAchievements(AchievementType.Export);
+                    bool flag = await func(Diaries);
+                    if (flag)
+                    {
+                        await AlertService.Success(I18n.T("Export.Export.Success"));
+                        await HandleAchievements(AchievementType.Export);
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{e.Message}\n{e.StackTrace}");
-                await AlertService.Error(I18n.T("Export.Export.Fail"));
-            }
-            finally
-            {
-                await AlertService.StopLoading();
-            }
+                catch (Exception e)
+                {
+                    Log.Error($"{e.Message}\n{e.StackTrace}");
+                    await AlertService.Error(I18n.T("Export.Export.Fail"));
+                }
+                finally
+                {
+                    await AlertService.StopLoading();
+                }
+            });
+
         }
     }
 }

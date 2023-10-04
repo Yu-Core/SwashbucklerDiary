@@ -10,6 +10,11 @@
     "Url": "https://github.com/dotnet/aspnetcore/blob/main/LICENSE.txt"
   },
   {
+    "Name": "ClosedXML",
+    "License": "MIT license",
+    "Url": "https://github.com/ClosedXML/ClosedXML/blob/develop/LICENSE"
+  },
+  {
     "Name": "CommunityToolkit.Maui",
     "License": "MIT license",
     "Url": "https://github.com/CommunityToolkit/Maui/blob/main/LICENSE"
@@ -38,11 +43,6 @@
     "Name": "Microsoft.Data.Sqlite",
     "License": "MIT license",
     "Url": "https://github.com/dotnet/efcore/blob/release/8.0/LICENSE.txt"
-  },
-  {
-    "Name": "MiniExcel",
-    "License": "Apache-2.0 license",
-    "Url": "https://github.com/mini-software/MiniExcel/blob/master/LICENSE"
   },
   {
     "Name": "Serilog",

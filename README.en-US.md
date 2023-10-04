@@ -96,14 +96,13 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 
 ## Thanks to the following Open Source Projects
 - [.NET MAUI](https://github.com/dotnet/maui)
-- [ASP.NET Core](https://github.com/dotnet/aspnetcore)
+- [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 - [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)
 - [html2canvas](https://github.com/niklasvh/html2canvas)
 - [Markdown Guide](https://github.com/mattcone/markdown-guide)
 - [MASA.Blazor](https://github.com/BlazorComponent/MASA.Blazor)
 - [MauiBlazorToolkit](https://github.com/Yu-Core/MauiBlazorToolkit)
 - [Microsoft.Data.Sqlite](https://github.com/dotnet/efcore#microsoftdatasqlite)
-- [MiniExcel](https://github.com/mini-software/MiniExcel)
 - [Serilog](https://github.com/serilog/serilog)
 - [Serilog.Extensions.Logging](https://github.com/serilog/serilog-extensions-logging)
 - [Serilog.Sinks.Async](https://github.com/serilog/serilog-sinks-async)
