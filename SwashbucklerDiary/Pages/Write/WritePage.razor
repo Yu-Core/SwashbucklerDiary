@@ -47,21 +47,12 @@
                  ContentStyle="height:100%;padding-top:0px;">
     <div>
         <div class="px-3 px-sm-1 d-flex align-end">
-            @if (EnableEditCreateTime)
-            {
-                <button class="text-h6 font-weight-bold" @onclick="()=>ShowCreateTime=true">
-                    @(CreateTime.ToString("yyyy/MM/dd"))
-                    <MIcon>
-                        mdi-pencil-outline
-                    </MIcon>
-                </button>
-            }
-            else
-            {
-                <span class="text-h6 font-weight-bold">
-                    @(CreateTime.ToString("yyyy/MM/dd"))
-                </span>
-            }
+            <button class="d-flex align-center text-h6 font-weight-bold" @onclick="()=>ShowCreateTime=true">
+                @(CreateTime.ToString("yyyy/MM/dd"))
+                <MIcon Class="ml-2">
+                    mdi-pencil-outline
+                </MIcon>
+            </button>
 
             <span class="pl-5 text-subtitle-1">
                 @(I18n.ToWeek(CreateTime))

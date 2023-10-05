@@ -109,8 +109,6 @@
     "SelectMood": "Select mood",
     "InputLocation": "Enter location",
     "LocationPlace": "Please enter the location",
-    "EnableEditCreateTime": "Enable edit date",
-    "CloseEditCreateTime": "Close edit date"
   },
   "Weather": {
     "cloudy": "cloudy",
@@ -419,10 +417,6 @@
         "Location": {
           "Name": "Location",
           "Path": "Setting / Diary / Location"
-        },
-        "EditCreateTime": {
-          "Name": "Edit date",
-          "Path": "Setting / Diary / Edit date"
         },
         "Image": {
           "Name": "Image",

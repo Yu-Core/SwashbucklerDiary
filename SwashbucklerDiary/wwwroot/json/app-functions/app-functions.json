@@ -200,12 +200,6 @@
     "Href": "locationSetting"
   },
   {
-    "Name": "Setting.Display.Diary.EditCreateTime.Name",
-    "Icon": "mdi-calendar-edit-outline",
-    "Path": "Setting.Display.Diary.EditCreateTime.Path",
-    "Href": "diarySetting"
-  },
-  {
     "Name": "Setting.Display.Diary.Image.Name",
     "Icon": "mdi-image-outline",
     "Path": "Setting.Display.Diary.Image.Path",

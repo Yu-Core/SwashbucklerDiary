@@ -9,8 +9,6 @@ namespace SwashbucklerDiary.Pages
 
         private bool Markdown;
 
-        private bool EditCreateTime;
-
         protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
@@ -21,7 +19,6 @@ namespace SwashbucklerDiary.Pages
         {
             Title = await SettingsService.Get(SettingType.Title);
             Markdown = await SettingsService.Get(SettingType.Markdown);
-            EditCreateTime = await SettingsService.Get(SettingType.EditCreateTime);
         }
     }
 }

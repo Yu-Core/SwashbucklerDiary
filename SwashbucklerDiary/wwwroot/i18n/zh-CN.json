@@ -108,9 +108,7 @@
     "SelectWeather": "选择天气",
     "SelectMood": "选择心情",
     "InputLocation": "输入位置",
-    "LocationPlace": "请输入位置",
-    "EnableEditCreateTime": "开启修改日期",
-    "CloseEditCreateTime": "关闭修改日期"
+    "LocationPlace": "请输入位置"
   },
   "Weather": {
     "cloudy": "多云",
@@ -419,10 +417,6 @@
         "Location": {
           "Name": "位置",
           "Path": "设置 / 日记 / 位置"
-        },
-        "EditCreateTime": {
-          "Name": "修改日期",
-          "Path": "设置 / 日记 / 修改日期"
         },
         "Image": {
           "Name": "图片",

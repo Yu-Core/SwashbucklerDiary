@@ -28,8 +28,6 @@ namespace SwashbucklerDiary.Pages
 
         private bool EnableMarkdown = true;
 
-        private bool EnableEditCreateTime;
-
         private bool CreateMode;
 
         private bool Overlay;
@@ -183,8 +181,6 @@ namespace SwashbucklerDiary.Pages
 
         private string SetMarkdownIcon() => EnableMarkdown ? "mdi-format-text" : "mdi-language-markdown-outline";
 
-        private string SetEditCreateTimeText() => EnableEditCreateTime ? "Write.CloseEditCreateTime" : "Write.EnableEditCreateTime";
-
         private async Task SetTag()
         {
             if (TagId != null)
@@ -220,16 +216,14 @@ namespace SwashbucklerDiary.Pages
         {
             EnableTitle = await SettingsService.Get(SettingType.Title);
             EnableMarkdown = await SettingsService.Get(SettingType.Markdown);
-            EnableEditCreateTime = await SettingsService.Get(SettingType.EditCreateTime);
         }
 
         private void LoadView()
         {
             MenuItems = new()
             {
-                new(this, SetTitleText,"mdi-format-title", ()=> SettingChange(SettingType.Title, ref EnableTitle)),
-                new(this, SetMarkdownText,SetMarkdownIcon, ()=> SettingChange(SettingType.Markdown, ref EnableMarkdown)),
-                new(this, SetEditCreateTimeText,"mdi-calendar-edit-outline", ()=> SettingChange(SettingType.EditCreateTime, ref EnableEditCreateTime))
+                new(this, SetTitleText, "mdi-format-title", ()=> SettingChange(SettingType.Title, ref EnableTitle)),
+                new(this, SetMarkdownText, SetMarkdownIcon, ()=> SettingChange(SettingType.Markdown, ref EnableMarkdown)),
             };
             WeatherIcons = IconService.GetWeatherIcons();
             MoodIcons = IconService.GetMoodIcons();
