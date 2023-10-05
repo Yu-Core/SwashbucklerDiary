@@ -40,33 +40,21 @@
 
 <table>
     <tr>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/6488c04f-16dd-41a8-adf1-0924b454aae9"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/a34deaf0-910e-465f-9e9e-d1228d5b7e9f"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/974548e5-9c9e-4e79-949d-91eabad3369d"/></td>
+        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/30a8309f-eeab-4b78-8754-2bd25d0ecc37"/></td>
+        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/b3019503-cf36-4f90-b711-da9014619932"/></td>
     </tr>
     <tr>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/14135371-fb73-4174-9d28-d368c05fa010"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/d4f36d3a-6a9e-4615-80c0-400d06affb62"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/2b203f1c-9bec-4917-8003-8c94614494bd"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/f7683a08-ca8c-4229-aed4-8bd3786a4063"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/8728d595-1455-481b-883b-430957d69f81"/></td>
+        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/386a1795-5e33-4380-84a3-76bc99e9a85d"/></td>
+        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/632e4c5d-f679-4f9f-8b4c-4b33dacc2cec"/></td>
     </tr>
  </table>
 
  <table>
     <tr>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/f91c056d-d324-4094-8a8e-821f3a98fd43"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/45b25356-109f-4755-b899-d1ee2f1693ec"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/0964106e-233d-42ab-bf5f-63e0a7892f53"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/752f6ce9-0fdc-41fb-8f19-ee6e79a20ada"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/b1c7f5da-fa9e-44ff-8700-6511e6cbfb7f"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/cdb17d93-8ce3-43a1-b096-925ac7680aeb"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/c8a107bf-8415-4fc5-959c-0c419cec635e"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/7a09bbc3-fc09-4f5e-afba-1a3e4d443612"/></td>
+        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/6297bcda-424d-460a-b3c3-31928aecd177"/></td>
+        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/b45e412f-a3aa-4a38-b52e-83ef19b75dc6"/></td>
+        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/6de2b7dc-4f99-4730-b924-ffcaccee6057"/></td>
+        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/cf3f27bb-3b89-4aea-ab19-f97bf4830f84"/></td>
     </tr>
  </table>
 
