@@ -86,12 +86,12 @@ namespace SwashbucklerDiary.Components
             };
             var btnImage = new Dictionary<string, object?>()
             {
-                {"hotkey","⇧⌘I" },
-                {"name","image" },
-                {"tipPosition","n" },
-                {"tip","添加图片" },
-                {"className","" },
-                {"icon","<svg><use xlink:href=\"#vditor-icon-image\"></use></svg>" },
+                {"hotkey", "⇧⌘I" },
+                {"name", "image" },
+                {"tipPosition", "n" },
+                {"tip", I18n.T("Vditor.AddImage") },
+                {"className", "" },
+                {"icon", "<svg><use xlink:href=\"#vditor-icon-image\"></use></svg>" },
             };
 
             //只有Windows能显示本机音视频，Android、ios、mac无法支持，所以砍去

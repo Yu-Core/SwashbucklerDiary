@@ -28,14 +28,9 @@
     }
 </div>
 
-@if (!Value.Any())
-{
-    <div class="my-not-have">
-        <div class="text-h6 text--secondary font-weight-bold-desktop">
-            @(I18n.T("Tag.NoTag"))
-        </div>
-    </div>
-}
+<EmptyContent Show="!Value.Any()"
+              Text="@(I18n.T("Tag.NoTag"))">
+</EmptyContent>
 
 <InputDialog @bind-Value="ShowRename"
              Text="@(SelectedTag.Name)"

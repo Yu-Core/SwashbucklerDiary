@@ -276,7 +276,7 @@ a, .btn-link {
 .my-not-have {
     display: flex !important;
     justify-content: center !important;
-    padding-top: 20vh !important;
+    padding-top: 10vh !important;
 }
 
 .my-tag-card {

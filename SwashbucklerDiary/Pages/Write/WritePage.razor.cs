@@ -132,35 +132,48 @@ namespace SwashbucklerDiary.Pages
             get => (CreateMode && Diary.CreateTime == default) ? DateTime.Now : Diary.CreateTime;
             set => Diary.CreateTime = value;
         }
+
         private List<TagModel> SelectedTags
         {
             get => Diary.Tags!;
             set => Diary.Tags = value;
         }
+
         private StringNumber? Weather
         {
             get => Diary.Weather;
             set => Diary.Weather = value?.ToString();
         }
+
         private StringNumber? Mood
         {
             get => Diary.Mood;
             set => Diary.Mood = value?.ToString();
         }
+
         private string? Location
         {
             get => Diary.Location;
             set => Diary.Location = value;
         }
+
         private DateOnly CreateDate
         {
             get => DateOnly.FromDateTime(CreateTime);
             set => CreateTime = value.ToDateTime(TimeOnly.FromDateTime(DateTime.Now));
         }
+
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
+
         private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
+
+        private string WeatherIcon => GetWeatherIcon(Diary.Weather);
+
         private string WeatherText =>
             string.IsNullOrEmpty(Diary.Weather) ? I18n.T("Write.Weather")! : I18n.T("Weather." + Diary.Weather)!;
+
+        private string MoodIcon => GetMoodIcon(Diary.Mood);
+
         private string MoodText =>
             string.IsNullOrEmpty(Diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + Diary.Mood)!;
 
@@ -214,9 +227,9 @@ namespace SwashbucklerDiary.Pages
         {
             MenuItems = new()
             {
-                new(this, SetTitleText,"mdi-format-title",()=> SettingChange(SettingType.Title,ref EnableTitle)),
-                new(this, SetMarkdownText,SetMarkdownIcon,()=> SettingChange(SettingType.Markdown,ref EnableMarkdown)),
-                new(this, SetEditCreateTimeText,"mdi-calendar-edit-outline",()=> SettingChange(SettingType.EditCreateTime,ref EnableEditCreateTime))
+                new(this, SetTitleText,"mdi-format-title", ()=> SettingChange(SettingType.Title, ref EnableTitle)),
+                new(this, SetMarkdownText,SetMarkdownIcon, ()=> SettingChange(SettingType.Markdown, ref EnableMarkdown)),
+                new(this, SetEditCreateTimeText,"mdi-calendar-edit-outline", ()=> SettingChange(SettingType.EditCreateTime, ref EnableEditCreateTime))
             };
             WeatherIcons = IconService.GetWeatherIcons();
             MoodIcons = IconService.GetMoodIcons();
@@ -327,6 +340,7 @@ namespace SwashbucklerDiary.Pages
             {
                 return "mdi-weather-cloudy";
             }
+
             return IconService.GetWeatherIcon(key);
         }
 
@@ -336,6 +350,7 @@ namespace SwashbucklerDiary.Pages
             {
                 return "mdi-emoticon-outline";
             }
+
             return IconService.GetMoodIcon(key);
         }
 

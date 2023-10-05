@@ -59,9 +59,9 @@
         }
     </div>
 
-    <NotFound Show="!Logs.Any()"
-              Text="@(IsSearchFiltered ? null:I18n.T("Log.NoLog"))">
-    </NotFound>
+    <EmptyContent Show="!Logs.Any()"
+                  Text="@(IsSearchFiltered ? null:I18n.T("Log.NoLog"))">
+    </EmptyContent>
 
 </ScrollContainer>
 

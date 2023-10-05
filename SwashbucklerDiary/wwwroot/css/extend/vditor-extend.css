@@ -3,10 +3,14 @@
     display: none !important;
 }*/
 
+:root {
+    --vditor-toolbar-height: 70px;
+}
+
 /*软键盘遮挡问题*/
 @media screen and (max-width:600px) {
     .vditor-toolbar-help {
-        margin-bottom: 70px;
+        margin-bottom: var(--vditor-toolbar-height);
     }
 }
 
@@ -44,4 +48,57 @@
     width: 100%;
     aspect-ratio: 2/1;
     border-radius: 8px;
+}
+
+.vditor-toolbar {
+    background-color: transparent;
+    padding-left: 0px !important;
+}
+
+    .vditor-toolbar .vditor-toolbar__item {
+        padding: 0px 8px !important;
+    }
+
+.vditor-reset {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    --editor-bottom: 50px;
+}
+
+.vditor-panel--arrow::before {
+    filter: drop-shadow(0.1px -0.1px 1px rgba(0, 0, 0, .1));
+}
+
+@media screen and (max-width:600px) {
+    .vditor {
+        border: none;
+    }
+
+    .vditor-toolbar {
+        max-height: var(--vditor-toolbar-height);
+        display: flex;
+        flex-wrap: wrap;
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        padding-left: 12px !important;
+        border: none;
+        z-index: 10;
+        /*box-shadow: 0 -3px 5px -3px rgba(0,0,0,.2);*/
+    }
+
+        .vditor-toolbar .vditor-toolbar__item {
+            padding: 0px 8px !important;
+        }
+
+    .vditor-panel--arrow {
+        bottom: 35px;
+    }
+
+        .vditor-panel--arrow::before {
+            top: unset;
+            bottom: -14px;
+            transform: rotateX(180deg);
+            filter: drop-shadow(0.1px 0.1px 1px rgba(0, 0, 0, .2));
+        }
 }

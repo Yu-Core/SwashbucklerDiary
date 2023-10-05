@@ -1,4 +1,5 @@
 ﻿@page "/write"
+@namespace SwashbucklerDiary.Pages
 @inherits ImportantComponentBase
 
 @if (EnableMarkdown)
@@ -18,12 +19,7 @@
 
     <MSpacer></MSpacer>
 
-    <MButton Icon="true"
-             OnClick="InsertTimestamp">
-        <MIcon>
-            mdi-clock-outline
-        </MIcon>
-    </MButton>
+    <InsertTimestampButton OnClick="InsertTimestamp"></InsertTimestampButton>
 
     <MButton Icon="true"
              OnClick="()=>ShowSelectTag = true">
@@ -80,7 +76,7 @@
                    Outlined="true"
                    OnClick="()=>ShowWeather=true">
                 <MIcon Left>
-                    @(GetWeatherIcon(Diary.Weather))
+                    @(WeatherIcon)
                 </MIcon>
                 @WeatherText
             </MChip>
@@ -88,7 +84,7 @@
                    Outlined="true"
                    OnClick="()=>ShowMood=true">
                 <MIcon Left>
-                    @(GetMoodIcon(Diary.Mood))
+                    @(MoodIcon)
                 </MIcon>
                 @MoodText
             </MChip>
@@ -156,8 +152,11 @@
         </div>
     </div>
 
-    <div class="@(EnableMarkdown?"vditor-toolbar-help":"")">
-    </div>
+    @if (EnableMarkdown)
+    {
+        <div class="vditor-toolbar-help"></div>
+    }
+
 
 </ScrollContainer>
 

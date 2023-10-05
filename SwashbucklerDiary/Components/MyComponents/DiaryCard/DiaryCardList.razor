@@ -26,9 +26,9 @@
     }
 </div>
 
-<NotFound Show="!Value.Any()"
-          Text="@(NotFoundText ?? I18n.T("Diary.NoDiary"))">
-</NotFound>
+<EmptyContent Show="!Value.Any()"
+              Text="@(NotFoundText ?? I18n.T("Diary.NoDiary"))">
+</EmptyContent>
 
 <SelectTags @bind-Value="ShowSelectTag"
             @bind-Values="SelectedTags"

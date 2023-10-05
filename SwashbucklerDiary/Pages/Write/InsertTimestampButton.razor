@@ -1,0 +1,29 @@
+﻿@namespace SwashbucklerDiary.Pages
+
+<MButton @ref="MButton"
+         Icon="true"
+         OnClick="OnClick">
+    <MIcon>
+        mdi-clock-outline
+    </MIcon>
+</MButton>
+
+@code {
+    private MButton MButton = default!;
+
+    [Inject]
+    public IJSRuntime JS { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("preventDefaultOnmousedown", MButton.Ref);
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}

@@ -76,7 +76,7 @@
   },
   {
     "Name": "SqlSugar",
-    "License": "Apache-2.0 license",
+    "License": "MIT license",
     "Url": "https://github.com/DotNetNext/SqlSugar/blob/master/LICENSE"
   },
   {
