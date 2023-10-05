@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.Components
         private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
-        public IDiaryService DiaryService { get; set; } = default!;
+        private IDiaryService DiaryService { get; set; } = default!;
 
         [Parameter]
         public List<DiaryModel> Value
@@ -27,12 +27,6 @@ namespace SwashbucklerDiary.Components
             get => _value.OrderByDescending(it => it.Top).ToList();
             set => _value = value;
         }
-
-        [Parameter]
-        public string? Class { get; set; }
-
-        [Parameter]
-        public string? CardClass { get; set; }
 
         [Parameter]
         public EventCallback<DiaryModel> OnRemove { get; set; }

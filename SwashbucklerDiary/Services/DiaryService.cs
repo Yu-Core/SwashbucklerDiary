@@ -39,6 +39,11 @@ namespace SwashbucklerDiary.Services
         public async Task<int> GetWordCount(WordCountType type)
         {
             var diaries = await QueryAsync(it=>!it.Private);
+            return GetWordCount(diaries,type);
+        }
+
+        public int GetWordCount(List<DiaryModel> diaries, WordCountType type)
+        {
             var wordCount = 0;
             if (type == WordCountType.Word)
             {
@@ -47,7 +52,8 @@ namespace SwashbucklerDiary.Services
                     wordCount += item.Content?.WordCount() ?? 0;
                 }
             }
-            if(type == WordCountType.Character)
+
+            if (type == WordCountType.Character)
             {
                 foreach (var item in diaries)
                 {

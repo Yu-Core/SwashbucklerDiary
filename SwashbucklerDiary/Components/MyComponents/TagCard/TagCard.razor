@@ -3,11 +3,11 @@
 
 <MHover>
     <MCard @attributes="context.Attrs"
+           @oncontextmenu="()=>ShowMenu=true"
            Class="@($"mb-5 my-tag-card {(context.Hover?"elevation-sm-2":"")}")"
            Elevation="0"
            Ripple="false"
            Rounded="@("lg")"
-    @oncontextmenu="()=>ShowMenu=true"
            OnClick="ToTagPage">
         <MListItem>
             <MListItemIcon>

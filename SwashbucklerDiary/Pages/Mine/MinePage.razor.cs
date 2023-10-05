@@ -213,24 +213,7 @@ namespace SwashbucklerDiary.Pages
         private int GetWordCount(List<DiaryModel> diaries)
         {
             var type = (WordCountType)Enum.Parse(typeof(WordCountType), I18n.T("Write.WordCountType")!);
-            var wordCount = 0;
-            if (type == WordCountType.Word)
-            {
-                foreach (var item in diaries)
-                {
-                    wordCount += item.Content?.WordCount() ?? 0;
-                }
-            }
-
-            if (type == WordCountType.Character)
-            {
-                foreach (var item in diaries)
-                {
-                    wordCount += item.Content?.CharacterCount() ?? 0;
-                }
-            }
-
-            return wordCount;
+            return DiaryService.GetWordCount(diaries,type);
         }
 
         private async Task LoadSettings()

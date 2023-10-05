@@ -3,8 +3,8 @@
 
 <MHover>
     <MCard @attributes="context.Attrs"
-    @oncontextmenu="()=>ShowMenu=true"
-           Class="@($"my-diary-card {(context.Hover?"elevation-sm-2":"")} {Class}")"
+           @oncontextmenu="()=>ShowMenu=true"
+           Class="@($"diary-card {(context.Hover?"elevation-sm-2":"")} {Class}")"
            OnClick="ToRead"
            Elevation="0"
            Ripple="false"
@@ -45,7 +45,7 @@
         <MDivider Class="mx-3"></MDivider>
         <MListItem ThreeLine>
             <MListItemContent>
-                <div class="my-diary-card-title">
+                <div class="diary-card-title">
                     @(Title ?? I18n.T("Diary.Untitled"))
                 </div>
                 <MListItemSubtitle>

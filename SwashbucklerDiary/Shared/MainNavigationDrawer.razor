@@ -39,7 +39,7 @@
 
     private string ActiveClass => MiniVariant ? "" : "my-navigation-drawer-active";
 
-    protected string? GetTitleClass(NavigationButton button)
+    private string? GetTitleClass(NavigationButton button)
     {
         bool activated = Items.IndexOf(button) == Value;
         return activated ? "text-h6 font-weight-bold" : "";

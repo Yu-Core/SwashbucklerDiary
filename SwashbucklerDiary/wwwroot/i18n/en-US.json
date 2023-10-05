@@ -159,9 +159,6 @@
   "Mine": {
     "Mine": "Mine",
     "Sign": "Hear the barking of dogs at the firewood gate, and return at night in the wind and snow",
-    "DiaryCount": "Diaries",
-    "WordCount": "Words",
-    "ActiveDayCount": "Days",
     "Data": "Data",
     "Backups": "Backups",
     "Export": "Export",
@@ -674,5 +671,17 @@
       "Title": "Support the development of Swashbuckler Diary",
       "Content": "Thank you for your use. The current version of Xiake Diary cannot be released without everyone's support. At first, I just wanted to write an app to play with, and also to meet my diary writing needs. \n\nIn addition, the relationship between app registration and the need for domain names and servers has resulted in some expenses. \n\nIf you are interested and it does help you, you can donate to encourage developers to better maintain this project. Thank you for your support."
     }
+  },
+  "Statistics": {
+    "Name": "Statistics",
+    "DiaryCount": "Diaries",
+    "WordCount": "Words",
+    "ActiveDayCount": "Days",
+    "MostWeather": "Most weather",
+    "MostMood": "Most mood",
+    "EarliestDate": "Earliest date",
+    "LastDate": "Last date",
+    "TagCount": "Tags",
+    "Not have": "Not have"
   }
 }

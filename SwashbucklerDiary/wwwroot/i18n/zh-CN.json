@@ -159,9 +159,6 @@
   "Mine": {
     "Mine": "我的",
     "Sign": "柴门闻犬吠，风雪夜归人",
-    "DiaryCount": "日记数",
-    "WordCount": "总字数",
-    "ActiveDayCount": "活跃天数",
     "Data": "数据",
     "Backups": "备份",
     "Export": "导出",
@@ -674,5 +671,18 @@
       "Title": "支持侠客日记的开发",
       "Content": "感谢你的使用，侠客日记当前版本的发布离不开大家的支持。最初只是想写个App玩玩，也是为了满足自己写日记的需求。\n\n在不断的更新中，提升自己的同时，确实是付出了一点点心血。加上App备案的关系，需要域名和服务器，产生了一点支出。\n\n如果你感兴趣，并且它确实有帮助到你，可以给予捐赠，鼓励开发者更好的维护这个项目。谢谢你的支持。"
     }
+  },
+  "Statistics": {
+    "Name": "统计",
+    "DiaryCount": "日记数",
+    "WordCount": "总字数",
+    "ActiveDayCount": "活跃天数",
+    "MostWeather": "最多的天气",
+    "MostMood": "最多的心情",
+    "EarliestDate": "最早的日期",
+    "LastDate": "最后的日期",
+    "TagCount": "标签数",
+    "LocationCount": "位置数",
+    "Not have": "无"
   }
 }

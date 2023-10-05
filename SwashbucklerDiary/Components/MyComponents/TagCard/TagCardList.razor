@@ -1,17 +1,31 @@
 ﻿@namespace SwashbucklerDiary.Components
 @inherits MyComponentBase
 
-<div class="my-card-list">
-    <CascadingValue Value="this"
-                    IsFixed="true">
-        @foreach (var item in Value)
-        {
-            <TagCard @key="item.Id"
-                     Value="item">
-            </TagCard>
-        }
-    </CascadingValue>
-
+<div class="card-list-wrap">
+    <div class="card-list-main">
+        <CascadingValue Value="this"
+                        IsFixed="true">
+            <Virtualize Items="Value"
+                        ItemSize="60"
+                        Context="item">
+                <TagCard @key="item.Id"
+                         Value="item">
+                </TagCard>
+            </Virtualize>
+        </CascadingValue>
+    </div>
+    @if (Value.Any())
+    {
+        <MultiDisplay Tablet="true">
+            <DesktopContent>
+                <div class="card-list-assist-info">
+                    <TagStatisticsCard Tags="Value"
+                                       Diaries="Diaries">
+                    </TagStatisticsCard>
+                </div>
+            </DesktopContent>
+        </MultiDisplay>
+    }
 </div>
 
 @if (!Value.Any())

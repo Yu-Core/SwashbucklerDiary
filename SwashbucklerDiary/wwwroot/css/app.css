@@ -173,45 +173,57 @@ a, .btn-link {
     }
 }
 
-.my-diary-card {
+.diary-card {
     width: 100%;
     margin-bottom: 20px;
     padding: 0px 0px 8px !important;
 }
 
 @media screen and (min-width:600px) {
-    .my-diary-card {
-        width: 48%;
-        margin-top: 20px !important;
-        margin-bottom: 20px !important;
-        padding-top: 8px !important;
-        padding-bottom: 8px !important;
-        padding-left: 8px !important;
+    .diary-card {
+        padding: 8px !important;
     }
 }
 
 @media screen and (min-width:960px) {
-    .my-diary-card {
+    .diary-card {
         padding-bottom: 16px !important;
     }
 }
 
 @media screen and (max-width:600px) {
-    .my-diary-card:last-child {
+    .diary-card:last-child {
         margin-bottom: 0px !important;
     }
 }
 
-.my-diary-card .theme--light.m-divider {
+.diary-card .theme--light.m-divider {
     border-color: rgba(0,0,0,.04);
 }
 
-.my-diary-card-title {
+.diary-card-title {
     font-weight: 700 !important;
     padding-bottom: 8px !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.card-list-wrap {
+    display: flex;
+}
+
+.card-list-main {
+    flex-grow: 1;
+    min-width: 0px;
+}
+
+.card-list-assist-info {
+    position: sticky;
+    top: 0;
+    height: fit-content;
+    min-width: 300px;
+    margin-left: 16px;
 }
 
 .my-scroll-container {
@@ -261,12 +273,6 @@ a, .btn-link {
     }
 }
 
-.my-card-list {
-    display: flex !important;
-    justify-content: space-between !important;
-    flex-wrap: wrap !important;
-}
-
 .my-not-have {
     display: flex !important;
     justify-content: center !important;
@@ -275,12 +281,6 @@ a, .btn-link {
 
 .my-tag-card {
     width: 100%;
-}
-
-@media screen and (min-width:600px) {
-    .my-tag-card {
-        width: 48%;
-    }
 }
 
 .my-first-launch-card {

@@ -158,7 +158,7 @@ namespace SwashbucklerDiary.Components
 
         private void ToRead()
         {
-            NavigateService.PushAsync($"/read/{Value.Id}");
+            NavigateService.PushAsync($"read/{Value.Id}");
         }
     }
 }

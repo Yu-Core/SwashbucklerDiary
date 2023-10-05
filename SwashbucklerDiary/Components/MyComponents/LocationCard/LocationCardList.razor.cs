@@ -70,6 +70,7 @@ namespace SwashbucklerDiary.Components
             }
 
             SelectedLocation.Name = name;
+            SelectedLocation.UpdateTime = DateTime.Now;
             bool flag = await LocationService.UpdateAsync(SelectedLocation);
             if (flag)
             {
