@@ -145,6 +145,7 @@ namespace SwashbucklerDiary.Pages
             {
                 var ipEndPoint = new IPEndPoint(IPAddress.Any, tcpPort);
                 tcpListener = new(ipEndPoint);
+
                 try
                 {
                     tcpListener.Start();
@@ -162,44 +163,50 @@ namespace SwashbucklerDiary.Pages
                     byte[] fileSizeBytes = new byte[sizeof(long)];
                     stream.Read(fileSizeBytes, 0, fileSizeBytes.Length);
                     long fileSize = BitConverter.ToInt64(fileSizeBytes, 0);
-
-                    var diaries = await LANService.LANReceiverAsync(stream, fileSize, ReceiveProgressChanged);
-                    Transferred = true;
-                    if (diaries == null || !diaries.Any())
+                    try
                     {
+                        var diaries = await LANService.LANReceiverAsync(stream, fileSize, ReceiveProgressChanged);
+                        Transferred = true;
+                        if (diaries == null || !diaries.Any())
+                        {
+                            await InvokeAsync(async () =>
+                            {
+                                await AlertService.Error(I18n.T("Export.Import.Fail"));
+                            });
+                            return;
+                        }
+
+                        await DiaryService.ImportAsync(diaries);
                         await InvokeAsync(async () =>
                         {
-                            await AlertService.Error(I18n.T("Export.Import.Fail"));
+                            await AlertService.Success(I18n.T("lanReceiver.Receive successfully"));
                         });
-                        return;
                     }
-
-                    await DiaryService.ImportAsync(diaries);
-                    await InvokeAsync(async () =>
+                    catch (Exception e)
                     {
-                        await AlertService.Success(I18n.T("lanReceiver.Receive successfully"));
-                    });
+                        if (IsCurrentPage)
+                        {
+                            await NavigateToBack();
+                        }
+
+                        Log.Error($"{e.Message}\n{e.StackTrace}");
+
+                        if (ShowTransferDialog)
+                        {
+                            await InvokeAsync(async () =>
+                            {
+                                await AlertService.Error(I18n.T("lanReceiver.Receive failed"));
+                            });
+                        }
+                    }
+                    finally
+                    {
+                        tcpListener.Stop();
+                    }
                 }
                 catch (Exception e)
                 {
-                    if (IsCurrentPage)
-                    {
-                        await NavigateToBack();
-                    }
-
-                    Log.Error($"{e.Message}\n{e.StackTrace}");
-                    
-                    if(ShowTransferDialog)
-                    {
-                        await InvokeAsync(async () =>
-                        {
-                            await AlertService.Error(I18n.T("lanReceiver.Receive failed"));
-                        });
-                    }
-                }
-                finally
-                {
-                    tcpListener.Stop();
+                    Log.Information($"{e.Message}\n{e.StackTrace}");
                 }
             });
 
