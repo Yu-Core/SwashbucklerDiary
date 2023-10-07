@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.IServices
         string GetLocalDeviceName();
         DevicePlatformType GetLocalDevicePlatformType();
         string GetDevicePlatformTypeIcon(DevicePlatformType platformType);
-        Task LANSendAsync(List<DiaryModel> diaries, Stream stream, Func<long, long, Task> action);
-        Task<List<DiaryModel>> LANReceiverAsync(Stream stream, long size, Func<long, long, Task> action);
+        Task LANSendAsync(List<DiaryModel> diaries, Stream stream, Func<long, long, Task> func);
+        Task<List<DiaryModel>> LANReceiverAsync(Stream stream, long size, Func<long, long, Task> func);
     }
 }

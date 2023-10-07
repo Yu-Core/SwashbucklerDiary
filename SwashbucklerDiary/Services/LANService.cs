@@ -128,7 +128,7 @@ namespace SwashbucklerDiary.Services
             return true;
         }
 
-        public async Task LANSendAsync(List<DiaryModel> diaries, Stream stream, Func<long, long, Task> action)
+        public async Task LANSendAsync(List<DiaryModel> diaries, Stream stream, Func<long, long, Task> func)
         {
             var filePath = await AppDataService.ExportJsonZipFileAsync(diaries);
 
@@ -145,12 +145,12 @@ namespace SwashbucklerDiary.Services
             while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
             {
                 readLength += bytesRead;
-                await action(readLength, fileSize);
+                await func(readLength, fileSize);
                 stream.Write(buffer, 0, bytesRead);
             }
         }
 
-        public async Task<List<DiaryModel>> LANReceiverAsync(Stream stream, long size, Func<long, long, Task> action)
+        public async Task<List<DiaryModel>> LANReceiverAsync(Stream stream, long size, Func<long, long, Task> func)
         {
             var path = Path.Combine(FileSystem.CacheDirectory, Guid.NewGuid().ToString() + ".zip");
             using (FileStream fileStream = File.Create(path))
@@ -161,7 +161,7 @@ namespace SwashbucklerDiary.Services
                 while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
                 {
                     readLength += bytesRead;
-                    await action(readLength, size);
+                    await func(readLength, size);
                     fileStream.Write(buffer, 0, bytesRead);
                 }
             }

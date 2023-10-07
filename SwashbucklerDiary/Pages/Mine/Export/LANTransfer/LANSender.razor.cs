@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Pages
 
         private readonly IPAddress multicastAddress = IPAddress.Parse("239.0.0.1"); // 组播地址
 
-        private  int multicastPort; // 组播端口
+        private int multicastPort; // 组播端口
 
         private readonly int millisecondsOutTime = 20000;
 
@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Pages
 
         private CancellationTokenSource CancellationTokenSource = new();
 
-        private readonly List<LANDeviceInfo> LANDeviceInfos = new ();
+        private readonly List<LANDeviceInfo> LANDeviceInfos = new();
 
         private bool ShowTransferDialog;
 
@@ -48,7 +48,7 @@ namespace SwashbucklerDiary.Pages
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
-        
+
         protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
@@ -204,7 +204,7 @@ namespace SwashbucklerDiary.Pages
 
             var c = (int)(readLength * 100 / allLength);
 
-            if (c > 0 && c % 5 == 0) //刷新进度为每5%更新一次，过快的刷新会导致页面显示数值与实际不一致
+            if (c > 0) 
             {
                 Ps = c; //下载完成百分比
                 BytesReceived = readLength / 1024; //当前已经下载的Kb
