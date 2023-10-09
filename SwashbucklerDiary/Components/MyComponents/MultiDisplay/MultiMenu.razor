@@ -29,7 +29,7 @@
                                         @(I18n.T(item.Text))
                                     </MListItemContent>
                                 </MListItem>
-                                if (DynamicListItems.Last() != item)
+                                if (DynamicListItems.Last(it => it.Show) != item)
                                 {
                                     <MDivider></MDivider>
                                 }

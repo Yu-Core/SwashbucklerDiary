@@ -1,11 +1,11 @@
 ﻿@namespace SwashbucklerDiary.Pages
 @inherits DialogComponentBase
 
-<MultiDialog Value="Value"
+<MultiListDialog Value="Value"
              ValueChanged="ValueChanged"
              Title="@(I18n.T("History.ExportTime.Name"))"
              DynamicListItems="ExportTimeItems">
-</MultiDialog>
+</MultiListDialog>
 
 <ExportDialog @bind-Value="ShowExport"
               Diaries="ExportDiaries">

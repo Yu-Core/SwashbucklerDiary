@@ -92,10 +92,10 @@
      </MCard>
  </ScrollContainer>
 
- <MultiDialog @bind-Value="ShowEditAvatar"
+ <MultiListDialog @bind-Value="ShowEditAvatar"
               Title="@(I18n.T("User.EditAvatar"))"
               DynamicListItems="EditAvatarMethods">
- </MultiDialog>
+ </MultiListDialog>
 
  <InputDialog @bind-Value="ShowEditUserName"
               Text="@UserName"

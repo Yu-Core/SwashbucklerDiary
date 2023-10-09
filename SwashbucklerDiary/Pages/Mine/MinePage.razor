@@ -197,10 +197,10 @@
     </MCard>
 </MDialogExtension>
 
-<MultiDialog @bind-Value="ShowFeedback"
+<MultiListDialog @bind-Value="ShowFeedback"
              Title="@(I18n.T("Mine.ContactWay"))"
              DynamicListItems="FeedbackTypes">
-</MultiDialog>
+</MultiListDialog>
 
 <PreviewImageDialog @bind-Value="ShowPreviewImage"
                     Src="@Avatar">
