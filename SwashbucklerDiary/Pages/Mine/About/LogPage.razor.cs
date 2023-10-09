@@ -44,15 +44,11 @@ namespace SwashbucklerDiary.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            await UpdateLogsAsync();
             await HandleAchievements(AchievementType.Log);
             await base.OnInitializedAsync();
         }
 
-        protected override async Task OnParametersSetAsync()
-        {
-            await UpdateLogsAsync();
-            await base.OnParametersSetAsync();
-        }
         protected override Task NavigateToBack()
         {
             if (ShowSearch)

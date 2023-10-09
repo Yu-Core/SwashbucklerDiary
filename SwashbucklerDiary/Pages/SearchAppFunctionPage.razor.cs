@@ -29,13 +29,8 @@ namespace SwashbucklerDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
-            await base.OnInitializedAsync();
-        }
-
-        protected override async Task OnParametersSetAsync()
-        {
             await LoadAppFunctions();
-            await base.OnParametersSetAsync();
+            await base.OnInitializedAsync();
         }
 
         protected override async Task OnResume()

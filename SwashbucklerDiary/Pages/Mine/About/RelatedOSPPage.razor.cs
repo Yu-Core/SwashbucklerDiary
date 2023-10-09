@@ -7,10 +7,10 @@ namespace SwashbucklerDiary.Pages
     {
         private List<OpenSourceProject> OSPs = new();
 
-        protected override async Task OnParametersSetAsync()
+        protected override async Task OnInitializedAsync()
         {
             await ReadJson();
-            await base.OnParametersSetAsync();
+            await base.OnInitializedAsync();
         }
 
         private async Task OpenBrowser(string? url)

@@ -17,10 +17,10 @@ namespace SwashbucklerDiary.Pages
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
 
-        protected override async Task OnParametersSetAsync()
+        protected override async Task OnInitializedAsync()
         {
             await UpdateImageResourcesAsync();
-            await base.OnParametersSetAsync();
+            await base.OnInitializedAsync();
         }
 
         async Task UpdateImageResourcesAsync()

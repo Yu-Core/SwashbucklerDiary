@@ -16,11 +16,11 @@ namespace SwashbucklerDiary.Components
 
         protected virtual List<TagModel> Tags { get; set; } = new();
 
-        protected override async Task OnParametersSetAsync()
+        protected override async Task OnInitializedAsync()
         {
             await InitializeDiariesAsync();
             await UpdateTagsAsync();
-            await base.OnParametersSetAsync(); 
+            await base.OnInitializedAsync();
         }
 
         protected virtual Task InitializeDiariesAsync()

@@ -14,10 +14,10 @@ namespace SwashbucklerDiary.Pages
 
         private List<AchievementModel> Achievements = new();
 
-        protected override async Task OnParametersSetAsync()
+        protected override async Task OnInitializedAsync()
         {
             await LoadAchievements();
-            await base.OnParametersSetAsync();
+            await base.OnInitializedAsync();
         }
 
         protected override Task NavigateToBack()

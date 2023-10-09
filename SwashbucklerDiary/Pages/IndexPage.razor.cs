@@ -29,10 +29,10 @@ namespace SwashbucklerDiary.Pages
             base.OnInitialized();
         }
 
-        protected override async Task OnParametersSetAsync()
+        protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
-            await base.OnParametersSetAsync();
+            await base.OnInitializedAsync();
         }
 
         protected override void OnDispose()

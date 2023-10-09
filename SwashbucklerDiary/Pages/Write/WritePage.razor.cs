@@ -85,15 +85,10 @@ namespace SwashbucklerDiary.Pages
         protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
-            await base.OnInitializedAsync();
-        }
-
-        protected override async Task OnParametersSetAsync()
-        {
             await UpdateTags();
             await SetTag();
             await SetDiary();
-            await base.OnParametersSetAsync();
+            await base.OnInitializedAsync();
         }
 
         private async Task BeforePop(PopEventArgs e)
