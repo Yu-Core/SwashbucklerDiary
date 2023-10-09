@@ -9,6 +9,7 @@ namespace SwashbucklerDiary.Components
     public partial class PreviewImageDialog : DialogComponentBase, IAsyncDisposable
     {
         private IJSObjectReference module = default!;
+        private readonly string Id = $"zoom-image-{Guid.NewGuid()}";
 
         [Inject]
         private IPlatformService PlatformService { get; set; } = default!;
@@ -34,7 +35,7 @@ namespace SwashbucklerDiary.Components
             if (firstRender)
             {
                 module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/zoom-helper.js");
-                await module.InvokeVoidAsync("initZoom", "#zoom-image");
+                await module.InvokeVoidAsync("initZoom", $"#{Id}");
             }
 
             await base.OnAfterRenderAsync(firstRender);
@@ -52,7 +53,7 @@ namespace SwashbucklerDiary.Components
             base.Value = value;
             if (!value && module is not null)
             {
-                await module.InvokeVoidAsync("reset", "#zoom-image");
+                await module.InvokeVoidAsync("reset", $"#{Id}");
             }
         }
 

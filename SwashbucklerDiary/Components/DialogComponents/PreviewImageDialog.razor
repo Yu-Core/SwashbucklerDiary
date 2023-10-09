@@ -2,10 +2,10 @@
 @inherits DialogComponentBase
 
 <MDialogExtension MyValue="Value"
-          MyValueChanged="ValueChanged"
-          Eager="true"
-          Fullscreen="true"
-          Transition="@(null)">
+                  MyValueChanged="ValueChanged"
+                  Eager="true"
+                  Fullscreen="true"
+                  Transition="">
     <MCard Class="fill-height primary-background d-flex flex-column"
            Ripple="false">
         <MToolbar Class="flex-grow-0"
@@ -35,7 +35,7 @@
         </MToolbar>
 
         <div style="position:relative;z-index:1;height:100%;">
-            <MImage Id="zoom-image"
+            <MImage Id="@Id"
                     Style="position:absolute;"
                     Src="@Src"
                     Width="@("100%")"

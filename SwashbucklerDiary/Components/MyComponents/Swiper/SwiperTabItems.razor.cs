@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Components
 
         private bool Show;
 
-        private readonly string Id = $"swiper-{ Guid.NewGuid() }";
+        private readonly string Id = $"swiper-{Guid.NewGuid()}";
 
         [Inject]
         private IJSRuntime JS { get; set; } = default!;
