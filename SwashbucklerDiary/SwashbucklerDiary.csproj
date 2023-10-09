@@ -115,14 +115,14 @@
 		<PackageReference Include="ClosedXML" Version="0.102.1" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.3.0" />
 		<PackageReference Include="Masa.Blazor" Version="1.0.4" />
-		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.11" />
+		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="5.0.5" />
 		<PackageReference Include="Serilog" Version="3.0.1" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
 		<PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
 		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="1.0.2" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.6" />
-		<PackageReference Include="SqlSugarCoreNoDrive" Version="5.1.4.107" />
+		<PackageReference Include="SqlSugarCoreNoDrive" Version="5.1.4.84" />
 		<PackageReference Include="WebDav.Client" Version="2.8.0" />
 		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.2.3" />
 	</ItemGroup>
