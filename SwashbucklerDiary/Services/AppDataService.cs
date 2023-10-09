@@ -59,6 +59,7 @@ namespace SwashbucklerDiary.Services
             }
 
             File.Copy(jsonFiles[0], SQLiteConstants.DatabasePath, true);
+            ClearDiaryResource();
             RestoreDiaryResource(outputFolder);
             return Task.FromResult(true);
         }
@@ -77,6 +78,11 @@ namespace SwashbucklerDiary.Services
 
         private static void ClearFolder(string folderPath)
         {
+            if (!Directory.Exists(folderPath))
+            {
+                return;
+            }
+
             DirectoryInfo directory = new(folderPath);
 
             // 删除文件夹中的所有文件
@@ -662,6 +668,15 @@ namespace SwashbucklerDiary.Services
             string version = $"v{PlatformService.GetAppVersion()}";
             string extension = ".zip";
             return $"{name}{time}{version}{extension}";
+        }
+
+        private void ClearDiaryResource()
+        {
+            foreach (var item in ResourceFolders)
+            {
+                var folderPath = Path.Combine(FileSystem.AppDataDirectory, item);
+                ClearFolder(folderPath);
+            }
         }
     }
 }
