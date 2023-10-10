@@ -2,6 +2,7 @@
 using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 
@@ -40,6 +41,9 @@ namespace SwashbucklerDiary.Shared
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
 
+        [Inject]
+        protected IJSRuntime JS { get; set; } = default!;
+
         public void Dispose()
         {
             ThemeService.OnChanged -= ThemeChanged;
@@ -62,6 +66,7 @@ namespace SwashbucklerDiary.Shared
         protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
+            await DisableJSConsoleLog();
             await base.OnInitializedAsync();
         }
 
@@ -101,6 +106,15 @@ namespace SwashbucklerDiary.Shared
         private void SetRootPath()
         {
             NavigateService.RootPaths.Add(Navigation.Uri);
+        }
+
+        private async Task DisableJSConsoleLog()
+        {
+#if DEBUG
+            await Task.CompletedTask;
+#else
+            await JS.InvokeVoidAsync("disableConsoleLog", null);
+#endif
         }
     }
 }

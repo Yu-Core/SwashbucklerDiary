@@ -74,7 +74,7 @@ namespace SwashbucklerDiary.Components
             var previewTheme = new Dictionary<string, object?>()
             {
                 { "current", ThemeService.Dark ? "dark" : "light" },
-                { "path", "npm/vditor/3.9.5/dist/css/content-theme" }
+                { "path", "npm/vditor/3.9.6/dist/css/content-theme" }
             };
             var preview = new Dictionary<string, object?>()
             {
@@ -119,7 +119,7 @@ namespace SwashbucklerDiary.Components
                 { "mode", "ir" },
                 { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link",btnImage,/*btnAudio,btnVideo*/}},
                 { "placeholder", I18n.T("Write.ContentPlace")! },
-                { "cdn", "npm/vditor/3.9.5" },
+                { "cdn", "npm/vditor/3.9.6" },
                 { "lang", lang },
                 { "icon","material" },
                 { "theme", theme },
@@ -172,38 +172,37 @@ namespace SwashbucklerDiary.Components
             await InsertValueAsync(html);
         }
 
-        private async Task AddAudioAsync()
-        {
-            string? path = await PlatformService.PickAudioAsync();
-            if (path == null)
-            {
-                return;
-            }
+        //private async Task AddAudioAsync()
+        //{
+        //    string? path = await PlatformService.PickAudioAsync();
+        //    if (path == null)
+        //    {
+        //        return;
+        //    }
 
-            string uri = await AppDataService.CreateAppDataAudioFileAsync(path);
-            uri = StaticCustomScheme.CustomSchemeRender(uri);
-            string html = $"<audio src=\"{uri}\" controls ></audio>";
-            await InsertValueAsync(html);
-        }
+        //    string uri = await AppDataService.CreateAppDataAudioFileAsync(path);
+        //    uri = StaticCustomScheme.CustomSchemeRender(uri);
+        //    string html = $"<audio src=\"{uri}\" controls ></audio>";
+        //    await InsertValueAsync(html);
+        //}
 
-        private async Task AddVideoAsync()
-        {
-            string? path = await PlatformService.PickVideoAsync();
-            if (path == null)
-            {
-                return;
-            }
+        //private async Task AddVideoAsync()
+        //{
+        //    string? path = await PlatformService.PickVideoAsync();
+        //    if (path == null)
+        //    {
+        //        return;
+        //    }
 
-            string uri = await AppDataService.CreateAppDataVideoFileAsync(path);
-            uri = StaticCustomScheme.CustomSchemeRender(uri);
-            string html = $"<video src=\"{uri}\" controls autoplay ></video>";
-            await InsertValueAsync(html);
-        }
+        //    string uri = await AppDataService.CreateAppDataVideoFileAsync(path);
+        //    uri = StaticCustomScheme.CustomSchemeRender(uri);
+        //    string html = $"<video src=\"{uri}\" controls autoplay ></video>";
+        //    await InsertValueAsync(html);
+        //}
 
         public async Task InsertValueAsync(string value)
         {
             await MMarkdown!.InsertValueAsync(value);
-            await module.InvokeVoidAsync("moveCursorForward", value.Length);
         }
     }
 }

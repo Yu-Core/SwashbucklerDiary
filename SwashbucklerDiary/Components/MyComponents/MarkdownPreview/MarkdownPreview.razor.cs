@@ -39,13 +39,13 @@ namespace SwashbucklerDiary.Components
             var theme = new Dictionary<string, object?>()
             {
                 { "current", ThemeService.Dark ? "dark" : "light" },
-                { "path", "npm/vditor/3.9.5/dist/css/content-theme" }
+                { "path", "npm/vditor/3.9.6/dist/css/content-theme" }
             };
 
             _options = new()
             {
                 { "mode", mode },
-                { "cdn", "npm/vditor/3.9.5" },
+                { "cdn", "npm/vditor/3.9.6" },
                 { "lang", lang },
                 { "theme", theme },
                 { "icon", "material" },
