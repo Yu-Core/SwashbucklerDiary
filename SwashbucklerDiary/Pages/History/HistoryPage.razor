@@ -34,7 +34,7 @@
 </MyAppBar>
 
 <ScrollContainer @ref="ScrollContainer">
-    <div @ref="NormalCalendar" class="normal-calendar">
+    <IntersectElement IntersectChanged="HandleIntersectChanged">
         <MDatePicker @bind-Value="PickedDate"
                      Class="rounded-lg my-picker mb-5 pt-4"
                      TValue="DateOnly"
@@ -46,7 +46,7 @@
                      EventColor='"primary"'
                      Locale="@(I18n.Culture.Name)">
         </MDatePicker>
-    </div>
+    </IntersectElement>
 
     <DiaryCardList @bind-Tags="Tags"
                    Value="PickedDiaries"
