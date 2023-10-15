@@ -4,7 +4,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class LocationCardList : MyComponentBase
+    public partial class LocationCardList : CardListComponentBase<LocationModel>
     {
         bool ShowRename;
 
@@ -12,17 +12,8 @@ namespace SwashbucklerDiary.Components
 
         LocationModel SelectedLocation = new();
 
-        List<LocationModel> _value = new();
-
         [Inject]
         public ILocationService LocationService { get; set; } = default!;
-
-        [Parameter]
-        public List<LocationModel> Value
-        {
-            get => _value.OrderByDescending(it => it.CreateTime).ToList();
-            set => _value = value;
-        }
 
         public async Task Delete(LocationModel location)
         {
@@ -36,6 +27,12 @@ namespace SwashbucklerDiary.Components
             SelectedLocation = location;
             ShowRename = true;
             await InvokeAsync(StateHasChanged);
+        }
+
+        protected override void OnInitialized()
+        {
+            LoadView();
+            base.OnInitialized();
         }
 
         private async Task ConfirmDelete()
@@ -80,6 +77,16 @@ namespace SwashbucklerDiary.Components
             {
                 await AlertService.Error(I18n.T("Share.EditFail"));
             }
+        }
+
+        private void LoadView()
+        {
+            SortOptions = new()
+            {
+                {"Sort.CreateTime.Desc", it => it.OrderByDescending(l => l.CreateTime) },
+                {"Sort.CreateTime.Asc", it => it.OrderBy(l => l.CreateTime) },
+            };
+            SortItem = SortItems.First().Value;
         }
     }
 }

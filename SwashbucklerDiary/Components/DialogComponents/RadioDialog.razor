@@ -1,0 +1,39 @@
+﻿@namespace SwashbucklerDiary.Components
+@attribute [CascadingTypeParameter(nameof(TItemValue))]
+@typeparam TItemValue
+@inherits DialogComponentBase
+
+<MDialogExtension MyValue="Value"
+                  MyValueChanged="InternalValueChanged"
+                  ContentClass="rounded-lg"
+                  MaxWidth="420"
+                  Eager="true">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @Title
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            <MRadioGroup Value="ItemValue"
+                         TValue="TItemValue"
+                         ValueChanged="InternalItemValueChanged"
+                         Class="mt-0 pb-1"
+                         OnClick="HandleOnCancel"
+                         HideDetails="@("auto")"
+                         Mandatory="true">
+                @foreach (var item in Items)
+                {
+                    <MRadio Label="@(I18n.T(item.Key))"
+                            Class="my-2"
+                            Value="@(item.Value)"
+                            Color="@MRadioColor">
+                    </MRadio>
+                }
+            </MRadioGroup>
+        </MCardText>
+    </MCard>
+</MDialogExtension>

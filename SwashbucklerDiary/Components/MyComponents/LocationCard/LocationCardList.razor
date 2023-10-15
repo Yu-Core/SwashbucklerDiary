@@ -1,5 +1,5 @@
 ﻿@namespace SwashbucklerDiary.Components
-@inherits MyComponentBase
+@inherits CardListComponentBase<LocationModel>
 
 <div class="card-list-wrap">
     <div class="card-list-main">
@@ -44,3 +44,11 @@
               Content="@(I18n.T("Location.Delete.Content"))"
               OnOK="ConfirmDelete">
 </DeleteDialog>
+
+<RadioDialog @bind-ItemValue="SortItem"
+             Value="ShowSort"
+             ValueChanged="ShowSortChanged"
+             Title="@(I18n.T("Share.Sort"))"
+             TItemValue="string"
+             Items="SortItems">
+</RadioDialog>

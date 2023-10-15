@@ -8,6 +8,7 @@ namespace SwashbucklerDiary.Pages
     public partial class LocationSettingPage : ImportantComponentBase
     {
         bool ShowAdd;
+        bool ShowSort;
 
         List<LocationModel> Locations = new();
 

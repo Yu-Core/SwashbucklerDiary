@@ -54,35 +54,10 @@
     </MCard>
 </ScrollContainer>
 
-<MDialogExtension @bind-MyValue="ShowDiaryCardDateFormat"
-          ContentClass="rounded-lg"
-          MaxWidth="420">
-    <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Setting.Display.DiaryCard.DateFormat.Name"))
-            <MSpacer></MSpacer>
-            <MButton Icon="true"
-                     OnClick="()=>ShowDiaryCardDateFormat= false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText>
-            <MRadioGroup Value="DiaryCardDateFormat"
-                         TValue="string"
-                         ValueChanged="DiaryCardDateFormatChanged"
-                         Class="mt-0 pb-1"
-                         OnClick="()=>ShowDiaryCardDateFormat=false"
-                         HideDetails="@("auto")"
-                         Mandatory="true">
-                @foreach (var item in DiaryCardDateFormats)
-                {
-                    <MRadio Label="@(I18n.T(item.Key))"
-                            Class="my-2"
-                            Value="@(item.Value)"
-                            Color="@MRadioColor">
-                    </MRadio>
-                }
-            </MRadioGroup>
-        </MCardText>
-    </MCard>
-</MDialogExtension>
+<RadioDialog @bind-Value="ShowDiaryCardDateFormat"
+             Title="@(I18n.T("Setting.Display.DiaryCard.DateFormat.Name"))"
+             ItemValue="DiaryCardDateFormat"
+             TItemValue="string"
+             ItemValueChanged="DiaryCardDateFormatChanged"
+             Items="DiaryCardDateFormats">
+</RadioDialog>

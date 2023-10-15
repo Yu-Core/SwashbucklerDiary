@@ -4,7 +4,7 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class TagCardList : MyComponentBase
+    public partial class TagCardList : CardListComponentBase<TagModel>
     {
         private bool ShowDelete;
 
@@ -14,28 +14,16 @@ namespace SwashbucklerDiary.Components
 
         private TagModel SelectedTag = new();
 
-        private List<TagModel> _value = new();
-
         private List<DiaryModel> ExportDiaries = new();
 
         [Inject]
         private ITagService TagService { get; set; } = default!;
 
-        [Inject]
-        private IPlatformService PlatformService { get; set; } = default!;
-
-        [Parameter]
-        public List<TagModel> Value
-        {
-            get => _value.OrderByDescending(GetDiaryCount).ToList();
-            set => _value = value;
-        }
-
         [Parameter]
         public EventCallback<List<TagModel>> ValueChanged { get; set; }
 
         [Parameter]
-        public List<DiaryModel> Diaries { get; set; } = default!;
+        public List<DiaryModel> Diaries { get; set; } = new();
 
         public async Task Rename(TagModel tag)
         {
@@ -61,7 +49,7 @@ namespace SwashbucklerDiary.Components
 
             var newTag = await TagService.FindIncludesAsync(tag.Id);
             var diaries = newTag.Diaries;
-            if (diaries is null ||  !diaries.Any())
+            if (diaries is null || !diaries.Any())
             {
                 await AlertService.Info(I18n.T("Diary.NoDiary"));
                 return;
@@ -74,6 +62,12 @@ namespace SwashbucklerDiary.Components
 
         public int GetDiaryCount(TagModel tag)
             => Diaries.Count(d => d.Tags != null && d.Tags.Any(t => t.Id == tag.Id));
+
+        protected override void OnInitialized()
+        {
+            LoadView();
+            base.OnInitialized();
+        }
 
         private async Task ConfirmDelete()
         {
@@ -142,6 +136,18 @@ namespace SwashbucklerDiary.Components
             }
 
             return true;
+        }
+
+        private void LoadView()
+        {
+            SortOptions = new()
+            {
+                {"Sort.DiaryCount.Desc", it => it.OrderByDescending(GetDiaryCount) },
+                {"Sort.DiaryCount.Asc", it => it.OrderBy(GetDiaryCount) },
+                {"Sort.CreateTime.Desc", it => it.OrderByDescending(t => t.CreateTime) },
+                {"Sort.CreateTime.Asc", it => it.OrderBy(t => t.CreateTime) },
+            };
+            SortItem = SortItems.First().Value;
         }
     }
 }

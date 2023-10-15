@@ -4,10 +4,8 @@ using SwashbucklerDiary.Models;
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class DiaryCardList : ImportantComponentBase
+    public partial class DiaryCardList : CardListComponentBase<DiaryModel>
     {
-        private List<DiaryModel> _value = new();
-
         private bool ShowDeleteDiary;
 
         private bool ShowSelectTag;
@@ -20,13 +18,6 @@ namespace SwashbucklerDiary.Components
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
-
-        [Parameter]
-        public List<DiaryModel> Value
-        {
-            get => _value.OrderByDescending(it => it.Top).ToList();
-            set => _value = value;
-        }
 
         [Parameter]
         public EventCallback<DiaryModel> OnRemove { get; set; }
@@ -45,7 +36,7 @@ namespace SwashbucklerDiary.Components
         public bool ShowIcon { get; set; }
 
         public string? DateFormat { get; set; }
-        
+
         public async Task Topping(DiaryModel diaryModel)
         {
             diaryModel.Top = !diaryModel.Top;
@@ -83,7 +74,7 @@ namespace SwashbucklerDiary.Components
             diaryModel.Private = !diaryModel.Private;
             diaryModel.UpdateTime = DateTime.Now;
             await DiaryService.UpdateAsync(diaryModel);
-            
+
             var index = _value.FindIndex(it => it.Id == diaryModel.Id);
             if (index < 0)
             {
@@ -107,6 +98,12 @@ namespace SwashbucklerDiary.Components
             await InvokeAsync(StateHasChanged);
         }
 
+        protected override void OnInitialized()
+        {
+            LoadView();
+            base.OnInitialized();
+        }
+
         protected override async Task OnInitializedAsync()
         {
             await LoadSettings();
@@ -117,6 +114,11 @@ namespace SwashbucklerDiary.Components
         {
             await LoadSettings();
             await base.OnResume();
+        }
+
+        protected override IEnumerable<DiaryModel> Sort(IEnumerable<DiaryModel> value)
+        {
+            return base.Sort(value).OrderByDescending(it => it.Top);
         }
 
         private List<TagModel> SelectedTags
@@ -171,6 +173,16 @@ namespace SwashbucklerDiary.Components
             }
 
             return diary.Title + "\n" + diary.Content;
+        }
+
+        private void LoadView()
+        {
+            SortOptions = new()
+            {
+                {"Sort.CreateTime.Desc",it => it.OrderByDescending(d => d.CreateTime) },
+                {"Sort.CreateTime.Asc",it => it.OrderBy(d => d.CreateTime) },
+            };
+            SortItem = SortItems.First().Value;
         }
     }
 }

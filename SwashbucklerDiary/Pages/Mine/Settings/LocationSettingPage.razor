@@ -2,12 +2,32 @@
 @namespace SwashbucklerDiary.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("Setting.Display.Diary.Location.Name"))"
-          OnClick="NavigateToBack">
+<MyAppBar>
+    <MButton Icon="true"
+             OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MToolbarTitle Class="font-weight-bold">
+        @(I18n.T("Setting.Display.Diary.Location.Name"))
+    </MToolbarTitle>
+
+    <MSpacer></MSpacer>
+
+    <MButton Icon="true"
+             OnClick="()=>ShowSort=true">
+        <MIcon>
+            mdi-sort-variant
+        </MIcon>
+    </MButton>
 </MyAppBar>
 
 <ScrollContainer>
-    <LocationCardList Value="Locations"></LocationCardList>
+    <LocationCardList @bind-ShowSort="ShowSort"
+                      Value="Locations">
+    </LocationCardList>
 </ScrollContainer>
 
 <MyFloatButton Icon="mdi-plus" OnClick="()=>ShowAdd=true">
@@ -18,4 +38,3 @@
              Placeholder="@(I18n.T("Location.Placeholder"))"
              OnOK="SaveAdd">
 </InputDialog>
-

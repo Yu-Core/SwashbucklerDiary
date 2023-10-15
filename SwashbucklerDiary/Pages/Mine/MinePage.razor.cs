@@ -28,15 +28,13 @@ namespace SwashbucklerDiary.Pages
 
         private bool ShowPreviewImage;
 
-        private bool AfterRender;
-
         private int DiaryCount;
 
         private long WordCount;
 
         private int ActiveDayCount;
 
-        private readonly static Dictionary<string, ThemeState> ThemeStates = new()
+        private static readonly Dictionary<string, ThemeState> ThemeStates = new()
         {
             {"ThemeState.System",ThemeState.System },
             {"ThemeState.Light",ThemeState.Light },
@@ -67,16 +65,6 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender)
-            {
-                AfterRender = true;
-            }
-
-            base.OnAfterRender(firstRender);
-        }
-
         protected override async Task OnResume()
         {
             await LoadSettings();
@@ -84,8 +72,6 @@ namespace SwashbucklerDiary.Pages
             await UpdateStatisticalData();
             await base.OnResume();
         }
-
-        private string MRadioColor => ThemeService.Dark ? "white" : "black";
 
         private void LoadView()
         {
@@ -133,11 +119,6 @@ namespace SwashbucklerDiary.Pages
 
         private async Task LanguageChanged(string value)
         {
-            if (!AfterRender || Language == value)
-            {
-                return;
-            }
-
             Language = value;
             I18n.SetCulture(value);
             await SettingsService.Save(SettingType.Language, value);
@@ -175,11 +156,6 @@ namespace SwashbucklerDiary.Pages
 
         private async Task ThemeStateChanged(ThemeState value)
         {
-            if (!AfterRender || ThemeState == value)
-            {
-                return;
-            }
-
             ThemeState = value;
             ThemeService.SetThemeState(value);
             await SettingsService.Save(SettingType.ThemeState, (int)ThemeState);

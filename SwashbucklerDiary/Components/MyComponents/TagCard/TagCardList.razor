@@ -1,5 +1,5 @@
 ﻿@namespace SwashbucklerDiary.Components
-@inherits MyComponentBase
+@inherits CardListComponentBase<TagModel>
 
 <div class="card-list-wrap">
     <div class="card-list-main">
@@ -48,3 +48,11 @@
 <ExportDialog @bind-Value="ShowExport"
               Diaries="ExportDiaries">
 </ExportDialog>
+
+<RadioDialog @bind-ItemValue="SortItem"
+             Value="ShowSort"
+             ValueChanged="ShowSortChanged"
+             Title="@(I18n.T("Share.Sort"))"
+             TItemValue="string"
+             Items="SortItems">
+</RadioDialog>

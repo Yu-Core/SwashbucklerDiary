@@ -25,7 +25,8 @@
     "Restore Default": "Restore default",
     "Quit": "Quit",
     "SaveSuccess": "Save success",
-    "SaveFail": "Save fail"
+    "SaveFail": "Save fail",
+    "Sort": "Sort"
   },
   "Main": {
     "Diary": "Diary",
@@ -108,7 +109,7 @@
     "SelectWeather": "Select weather",
     "SelectMood": "Select mood",
     "InputLocation": "Enter location",
-    "LocationPlace": "Please enter the location",
+    "LocationPlace": "Please enter the location"
   },
   "Weather": {
     "cloudy": "cloudy",
@@ -676,9 +677,20 @@
     "EarliestDate": "Earliest date",
     "LastDate": "Last date",
     "TagCount": "Tags",
+    "LocationCount": "Locations",
     "Not have": "Not have"
   },
   "Vditor": {
     "AddImage": "Add Image"
+  },
+  "Sort": {
+    "CreateTime": {
+      "Asc": "CreateTime-Asc",
+      "Desc": "CreateTime-Desc"
+    },
+    "DiaryCount": {
+      "Asc": "DiaryCount-Asc",
+      "Desc": "DiaryCount-Desc"
+    }
   }
 }

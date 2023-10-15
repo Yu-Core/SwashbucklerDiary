@@ -6,6 +6,8 @@ namespace SwashbucklerDiary.Components
 {
     public class DiariesPageComponentBase : ImportantComponentBase
     {
+        protected bool ShowDiarySort;
+
         [Inject]
         protected IDiaryService DiaryService { get; set; } = default!;
 

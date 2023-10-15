@@ -140,9 +140,10 @@
     </div>
 </ScrollContainer>
 
-<ShareDialog @bind-Value="ShowShare"
-             Items="ShareItems">
-</ShareDialog>
+<MultiListDialog @bind-Value="ShowShare"
+                 Title="Share.SelectShare"
+                 DynamicListItems="ShareItems">
+</MultiListDialog>
 
 <DeleteDialog @bind-Value="ShowDelete"
               Title="@(I18n.T("Diary.Delete.Title"))"

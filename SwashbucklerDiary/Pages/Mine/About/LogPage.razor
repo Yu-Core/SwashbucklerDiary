@@ -77,6 +77,7 @@
               OnOK="HandleDelete">
 </DeleteDialog>
 
-<ShareDialog @bind-Value="ShowShare"
-             Items="ShareItems">
-</ShareDialog>
+<MultiListDialog @bind-Value="ShowShare"
+                 Title="Share.SelectShare"
+                 DynamicListItems="ShareItems">
+</MultiListDialog>

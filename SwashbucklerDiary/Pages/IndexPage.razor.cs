@@ -12,6 +12,8 @@ namespace SwashbucklerDiary.Pages
 
         private bool ShowDate;
 
+        private bool ShowTagSort;
+
         private StringNumber tab = 0;
 
         [Inject]

@@ -19,7 +19,13 @@
 
     <MSpacer></MSpacer>
 
-    <InsertTimestampButton OnClick="InsertTimestamp"></InsertTimestampButton>
+    <MButtonExtension Icon="true"
+                      OnMousedownPreventDefault="true"
+                      OnClick="InsertTimestamp">
+        <MIcon>
+            mdi-clock-outline
+        </MIcon>
+    </MButtonExtension>
 
     <MButton Icon="true"
              OnClick="()=>ShowSelectTag = true">
@@ -179,5 +185,6 @@
                  @bind-Date="CreateDate">
 </MultiDatePicker>
 
-<MOverlay Value="Overlay" Opacity="0">
+<MOverlay Value="Overlay"
+          Opacity="0">
 </MOverlay>

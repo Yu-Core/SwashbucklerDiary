@@ -1,12 +1,31 @@
 ﻿@page "/tag/{id:guid}"
 @inherits DiariesPageComponentBase
 
-<MyAppBar Title="@(TagName)"
-          OnClick="NavigateToBack">
+<MyAppBar>
+    <MButton Icon="true"
+             OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MToolbarTitle Class="font-weight-bold">
+        @(TagName)
+    </MToolbarTitle>
+
+    <MSpacer></MSpacer>
+
+    <MButton Icon="true"
+             OnClick="()=>ShowDiarySort=true">
+        <MIcon>
+            mdi-sort-variant
+        </MIcon>
+    </MButton>
 </MyAppBar>
 
 <ScrollContainer>
     <DiaryCardList @bind-Tags="Tags"
+                   @bind-ShowSort="ShowDiarySort"
                    Value="Diaries" />
 </ScrollContainer>
 

@@ -129,77 +129,25 @@
 
 </ScrollContainer>
 
-<MDialogExtension @bind-MyValue="ShowLanguage"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420"
-                  Eager="true">
-    <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Mine.SelectLanguage"))
-            <MSpacer></MSpacer>
-            <MButton Icon="true"
-                     OnClick="()=>ShowLanguage= false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText>
-            <MRadioGroup Value="Language"
-                         ValueChanged="LanguageChanged"
-                         TValue="string"
-                         Class="mt-0 pb-1"
-                         OnClick="()=>ShowLanguage = false"
-                         HideDetails="@("auto")"
-                         Mandatory="true">
-                @foreach (var item in I18n.Languages)
-                {
-                    <MRadio Label="@(item.Key)"
-                            Class="my-2"
-                            Value="@(item.Value)"
-                            Color="@MRadioColor">
-                    </MRadio>
-                }
-            </MRadioGroup>
-        </MCardText>
-    </MCard>
-</MDialogExtension>
+<RadioDialog @bind-Value="ShowLanguage"
+             Title="@(I18n.T("Mine.SelectLanguage"))"
+             ItemValue="Language"
+             TItemValue="string"
+             ItemValueChanged="LanguageChanged"
+             Items="I18n.Languages">
+</RadioDialog>
 
-<MDialogExtension @bind-MyValue="ShowThemeState"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420"
-                  Eager="true">
-    <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Mine.Night"))
-            <MSpacer></MSpacer>
-            <MButton Icon="true"
-                     OnClick="()=>ShowThemeState= false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText>
-            <MRadioGroup Value="ThemeState"
-                         TValue="ThemeState"
-                         ValueChanged="ThemeStateChanged"
-                         Class="mt-0 pb-1"
-                         OnClick="()=>ShowThemeState=false"
-                         HideDetails="@("auto")"
-                         Mandatory="true">
-                @foreach (var item in ThemeStates)
-                {
-                    <MRadio Label="@(I18n.T(item.Key))"
-                            Class="my-2"
-                            Value="@(item.Value)"
-                            Color="@MRadioColor">
-                    </MRadio>
-                }
-            </MRadioGroup>
-        </MCardText>
-    </MCard>
-</MDialogExtension>
+<RadioDialog @bind-Value="ShowThemeState"
+             Title="@(I18n.T("Mine.Night"))"
+             ItemValue="ThemeState"
+             TItemValue="ThemeState"
+             ItemValueChanged="ThemeStateChanged"
+             Items="ThemeStates">
+</RadioDialog>
 
 <MultiListDialog @bind-Value="ShowFeedback"
-             Title="@(I18n.T("Mine.ContactWay"))"
-             DynamicListItems="FeedbackTypes">
+                 Title="@(I18n.T("Mine.ContactWay"))"
+                 DynamicListItems="FeedbackTypes">
 </MultiListDialog>
 
 <PreviewImageDialog @bind-Value="ShowPreviewImage"

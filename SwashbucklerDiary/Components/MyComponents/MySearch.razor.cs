@@ -2,7 +2,7 @@
 
 namespace SwashbucklerDiary.Components
 {
-    public partial class MySearch : DialogComponentBase,IDisposable
+    public partial class MySearch : DialogComponentBase, IDisposable
     {
         private bool _value;
 

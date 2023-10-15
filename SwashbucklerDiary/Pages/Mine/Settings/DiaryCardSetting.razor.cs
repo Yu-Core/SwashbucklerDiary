@@ -23,8 +23,6 @@ namespace SwashbucklerDiary.Pages
             await base.OnInitializedAsync();
         }
 
-        private string MRadioColor => ThemeService.Dark ? "white" : "black";
-
         private string DiaryCardDateFormatKey => DiaryCardDateFormats.FirstOrDefault(x => x.Value == DiaryCardDateFormat).Key;
 
         private async Task LoadSettings()

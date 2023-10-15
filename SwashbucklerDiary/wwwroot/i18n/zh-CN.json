@@ -25,7 +25,8 @@
     "Restore Default": "恢复默认",
     "Quit": "退出",
     "SaveSuccess": "保存成功",
-    "SaveFail": "保存失败"
+    "SaveFail": "保存失败",
+    "Sort": "排序"
   },
   "Main": {
     "Diary": "日记",
@@ -681,5 +682,15 @@
   },
   "Vditor": {
     "AddImage": "添加图片"
+  },
+  "Sort": {
+    "CreateTime": {
+      "Asc": "创建时间-正序",
+      "Desc": "创建时间-倒序"
+    },
+    "DiaryCount": {
+      "Asc": "日记数量-正序",
+      "Desc": "日记数量-倒序"
+    }
   }
 }
