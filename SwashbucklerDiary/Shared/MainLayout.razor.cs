@@ -42,7 +42,8 @@ namespace SwashbucklerDiary.Shared
         private IThemeService ThemeService { get; set; } = default!;
 
         [Inject]
-        protected IJSRuntime JS { get; set; } = default!;
+        private IJSRuntime JS { get; set; } = default!;
+
 
         public void Dispose()
         {

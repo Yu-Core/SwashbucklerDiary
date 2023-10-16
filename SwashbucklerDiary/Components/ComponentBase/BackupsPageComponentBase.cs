@@ -10,24 +10,5 @@ namespace SwashbucklerDiary.Components
 
         [Inject]
         protected IDiaryService DiaryService { get; set; } = default!;
-
-        protected async Task<bool> CheckPermissions()
-        {
-            var writePermission = await PlatformService.TryStorageWritePermission();
-            if (!writePermission)
-            {
-                await AlertService.Info(I18n.T("Permission.OpenStorageWrite"));
-                return false;
-            }
-
-            var readPermission = await PlatformService.TryStorageReadPermission();
-            if (!readPermission)
-            {
-                await AlertService.Info(I18n.T("Permission.OpenStorageRead"));
-                return false;
-            }
-
-            return true;
-        }
     }
 }

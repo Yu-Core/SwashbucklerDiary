@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Components
 
         public async Task Export(TagModel tag)
         {
-            var flag = await CheckPermission();
+            var flag = await PlatformService.TryStorageWritePermission();
             if (!flag)
             {
                 return;
@@ -117,25 +117,6 @@ namespace SwashbucklerDiary.Components
             {
                 await AlertService.Error(I18n.T("Share.EditFail"));
             }
-        }
-
-        private async Task<bool> CheckPermission()
-        {
-            var writePermission = await PlatformService.TryStorageWritePermission();
-            if (!writePermission)
-            {
-                await AlertService.Info(I18n.T("Permission.OpenStorageWrite"));
-                return false;
-            }
-
-            var readPermission = await PlatformService.TryStorageReadPermission();
-            if (!readPermission)
-            {
-                await AlertService.Info(I18n.T("Permission.OpenStorageRead"));
-                return false;
-            }
-
-            return true;
         }
 
         private void LoadView()

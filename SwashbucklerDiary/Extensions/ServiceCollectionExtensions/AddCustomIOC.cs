@@ -28,9 +28,9 @@ namespace SwashbucklerDiary.Extensions
             services.AddSingleton<INavigateService, NavigateService>();
             services.AddSingleton<IIconService,IconService>();
             services.AddSingleton<ISettingsService, SettingsService>();
-            services.AddSingleton<IPlatformService, PlatformService>();
             services.AddSingleton<IAlertService, AlertService>();
             services.AddSingleton<II18nService, I18nService>();
+            services.AddSingleton<IPlatformService, PlatformService>();
             services.AddSingleton<IThemeService, ThemeService>();
             services.AddSingleton<IStateService, StateService>();
             services.AddSingleton<IAppDataService, AppDataService>();

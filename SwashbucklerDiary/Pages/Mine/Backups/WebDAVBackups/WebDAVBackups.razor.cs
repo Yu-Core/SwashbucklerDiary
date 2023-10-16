@@ -125,12 +125,6 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            var flag = await CheckPermissions();
-            if (!flag)
-            {
-                return;
-            }
-
             ShowUpload = true;
         }
 
@@ -160,12 +154,6 @@ namespace SwashbucklerDiary.Pages
             if (!Configured)
             {
                 await AlertService.Error(I18n.T("Backups.Config.CheckConfigured"));
-                return;
-            }
-
-            var flag = await CheckPermissions();
-            if (!flag)
-            {
                 return;
             }
 

@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task Export()
         {
-            var flag = await CheckPermission();
+            var flag = await PlatformService.TryStorageWritePermission();
             if (!flag)
             {
                 return;
@@ -47,7 +47,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task Import()
         {
-            var flag = await CheckPermission();
+            var flag = await PlatformService.TryStorageWritePermission();
             if (!flag)
             {
                 return;
@@ -60,25 +60,6 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
             ShowImport = true;
-        }
-
-        private async Task<bool> CheckPermission()
-        {
-            var writePermission = await PlatformService.TryStorageWritePermission();
-            if (!writePermission)
-            {
-                await AlertService.Info(I18n.T("Permission.OpenStorageWrite"));
-                return false;
-            }
-
-            var readPermission = await PlatformService.TryStorageReadPermission();
-            if (!readPermission)
-            {
-                await AlertService.Info(I18n.T("Permission.OpenStorageRead"));
-                return false;
-            }
-
-            return true;
         }
 
         private async Task ConfirmImport()

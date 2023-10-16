@@ -92,6 +92,12 @@ namespace SwashbucklerDiary.Components
 
         public async Task Export(DiaryModel diary)
         {
+            var flag = await PlatformService.TryStorageWritePermission();
+            if (!flag)
+            {
+                return;
+            }
+
             var newDiary = await DiaryService.FindAsync(diary.Id);
             ExportDiaries = new() { newDiary };
             ShowExport = true;

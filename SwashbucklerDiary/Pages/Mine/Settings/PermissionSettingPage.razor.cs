@@ -39,9 +39,7 @@ namespace SwashbucklerDiary.Pages
         private async Task UpdatePermissionStatesAsync()
         {
             CameraState = await PlatformService.CheckCameraPermission();
-            var readStorageState = await PlatformService.CheckStorageReadPermission();
-            var writeStorageState = await PlatformService.CheckStorageWritePermission();
-            StorageState = readStorageState || writeStorageState;
+            StorageState = await PlatformService.CheckStorageWritePermission();
         }
 
         private string GetPermissionText(bool value)

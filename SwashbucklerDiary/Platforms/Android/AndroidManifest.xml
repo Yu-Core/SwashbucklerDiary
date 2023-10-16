@@ -6,12 +6,17 @@
 				 android:supportsRtl="true"
 				 android:hardwareAccelerated="true">
 	</application>
-	<uses-sdk android:minSdkVersion="24" android:targetSdkVersion="32" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
 	<uses-permission android:name="android.permission.CAMERA" />
+	<!-- Required only if your app needs to access images or photos that other apps created -->
+	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+	<!-- Required only if your app needs to access videos that other apps created -->
+	<uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+	<!-- Required only if your app needs to access audio files that other apps created -->
+	<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 	<queries>
 		<intent>
 			<action android:name="android.media.action.IMAGE_CAPTURE" />

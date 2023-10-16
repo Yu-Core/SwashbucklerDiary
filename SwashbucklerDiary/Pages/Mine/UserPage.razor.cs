@@ -80,23 +80,16 @@ namespace SwashbucklerDiary.Pages
         private async Task OnCapture()
         {
             ShowEditAvatar = false;
-            if (!PlatformService.IsCaptureSupported())
-            {
-                await AlertService.Error(I18n.T("User.NoCapture"));
-                return;
-            }
 
             var cameraPermission = await PlatformService.TryCameraPermission();
             if (!cameraPermission)
             {
-                await AlertService.Error(I18n.T("Permission.OpenCamera"));
                 return;
             }
 
             var writePermission = await PlatformService.TryStorageWritePermission();
             if (!writePermission)
             {
-                await AlertService.Error(I18n.T("Permission.OpenStorageWrite"));
                 return;
             }
 

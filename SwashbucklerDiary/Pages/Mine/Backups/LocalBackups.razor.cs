@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Pages
         private async Task Backups()
         {
             ShowBackups = false;
-            var flag = await CheckPermissions();
+            var flag = await PlatformService.TryStorageWritePermission();
             if (!flag)
             {
                 return;
@@ -60,18 +60,13 @@ namespace SwashbucklerDiary.Pages
 
         private async Task Restore()
         {
-            var flag = await CheckPermissions();
-            if (!flag)
-            {
-                return;
-            }
-
             RestoreFilePath = string.Empty;
             RestoreFilePath = await PlatformService.PickZipFileAsync();
             if (string.IsNullOrEmpty(RestoreFilePath))
             {
                 return;
             }
+
             ShowRestore = true;
         }
 

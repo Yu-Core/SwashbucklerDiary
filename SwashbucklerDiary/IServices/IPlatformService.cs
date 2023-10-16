@@ -26,10 +26,8 @@ namespace SwashbucklerDiary.IServices
         Task OpenBrowser(string? url);
         Task<bool> CheckCameraPermission();
         Task<bool> CheckStorageWritePermission();
-        Task<bool> CheckStorageReadPermission();
         Task<bool> TryCameraPermission();
         Task<bool> TryStorageWritePermission();
-        Task<bool> TryStorageReadPermission();
         string GetAppVersion();
         Task<bool> OpenStoreMyAppDetails();
         Task<string> ReadMarkdownFileAsync(string path);

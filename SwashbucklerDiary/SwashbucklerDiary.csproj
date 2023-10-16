@@ -113,7 +113,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="ClosedXML" Version="0.102.1" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="5.3.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
 		<PackageReference Include="Masa.Blazor" Version="1.1.0" />
 		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="5.0.5" />
 		<PackageReference Include="Serilog" Version="3.0.1" />
