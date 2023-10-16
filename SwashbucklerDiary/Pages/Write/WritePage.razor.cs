@@ -32,9 +32,9 @@ namespace SwashbucklerDiary.Pages
 
         private bool Overlay;
 
-        private MyMarkdown? MyMarkdown;
+        private MyMarkdown MyMarkdown = default!;
 
-        private MTextareaExtension? MTextareaExtension;
+        private MyTextarea MyTextarea = default!;
 
         private List<DynamicListItem> MenuItems = new();
 
@@ -420,11 +420,11 @@ namespace SwashbucklerDiary.Pages
             string dateTimeNow = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
             if (EnableMarkdown)
             {
-                await MyMarkdown!.InsertValueAsync(dateTimeNow);
+                await MyMarkdown.InsertValueAsync(dateTimeNow);
             }
             else
             {
-                await MTextareaExtension!.InsertValueAsync(dateTimeNow);
+                await MyTextarea.InsertValueAsync(dateTimeNow);
             }
         }
     }

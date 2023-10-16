@@ -1,0 +1,14 @@
+﻿@namespace SwashbucklerDiary.Components
+
+<MTextarea @ref="MTextarea"
+           Value="@Value"
+           ValueChanged="ValueChanged"
+           Class="@($"{Class} user-select flex-grow-1 flex-column")"
+           Solo="Mobile"
+           Flat="Mobile"
+           Outlined="Desktop"
+           HideDetails="@("auto")"
+           NoResize="true"
+           spellcheck="false"
+           Placeholder="@(I18n.T("Write.ContentPlace"))">
+</MTextarea>
