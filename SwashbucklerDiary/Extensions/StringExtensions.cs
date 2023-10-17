@@ -63,6 +63,18 @@ namespace SwashbucklerDiary.Extensions
             return new Uri(uri1).AbsolutePath == new Uri(uri2).AbsolutePath;
         }
 
+        public static string TrimStart(this string str, string trimString)
+        {
+            if (str == null)
+                throw new ArgumentNullException(nameof(str));
 
+            if (trimString == null)
+                throw new ArgumentNullException(nameof(trimString));
+
+            if (str.StartsWith(trimString))
+                return str.Substring(trimString.Length);
+
+            return str;
+        }
     }
 }

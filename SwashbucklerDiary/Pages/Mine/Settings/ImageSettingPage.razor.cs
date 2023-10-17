@@ -28,19 +28,21 @@ namespace SwashbucklerDiary.Pages
             ImageResources = await ResourceService.QueryAsync(it => it.ResourceType == ResourceType.Image);
         }
 
-        async Task DeleteUnusedImageResource()
+        async Task DeleteUnusedImageResources()
         {
             ShowConfimDelete = false;
-            var resources = await ResourceService.DeleteUnusedResourcesAsync(it => it.ResourceType == ResourceType.Image);
-            if (resources is not null && resources.Any())
+            var flag = await ResourceService.DeleteUnusedResourcesAsync(it => it.ResourceType == ResourceType.Image);
+            if (flag)
             {
-                ImageResources.RemoveAll(item => resources.Any(x => x.ResourceUri == item.ResourceUri));
-                foreach (var resource in resources)
-                {
-                    await AppDataService.DeleteAppDataFileByCustomSchemeAsync(resource.ResourceUri!);
-                }
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
             }
+
+            var resources = await ResourceService.QueryAsync(it => it.ResourceType == ResourceType.Image);
+            ImageResources = resources;
+
+            var resourceUris = resources.Select(it => it.ResourceUri!).ToList();
+            AppDataService.DeleteAppDataFileByCustomScheme(resourceUris, ResourceType.Image);
+            
         }
 
     }

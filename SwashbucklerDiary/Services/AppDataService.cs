@@ -27,7 +27,12 @@ namespace SwashbucklerDiary.Services
 
         private const string VideoFolderName = "Video";
 
-        private static readonly string[] ResourceFolders = { ImageFolderName, AudioFolderName, VideoFolderName };
+        private static readonly Dictionary<ResourceType, string> ResourceFolders = new()
+        {
+            { ResourceType.Image, ImageFolderName},
+            { ResourceType.Audio, AudioFolderName},
+            { ResourceType.Video, VideoFolderName},
+        };
 
         public AppDataService(IPlatformService platformService,
             II18nService i18nService)
@@ -66,7 +71,7 @@ namespace SwashbucklerDiary.Services
             }
 
             File.Copy(jsonFiles[0], SQLiteConstants.DatabasePath, true);
-            ClearDiaryResource();
+            ClearAllDiaryResources();
             RestoreDiaryResource(outputFolder);
             return Task.FromResult(true);
         }
@@ -83,7 +88,7 @@ namespace SwashbucklerDiary.Services
             return flag;
         }
 
-        private static void ClearFolder(string folderPath)
+        private static void ClearFolder(string folderPath, List<string>? exceptPaths = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -92,8 +97,14 @@ namespace SwashbucklerDiary.Services
 
             DirectoryInfo directory = new(folderPath);
 
+            var files = directory.GetFiles();
+            if (exceptPaths != null && exceptPaths.Any())
+            {
+                files = directory.GetFiles().Where(it => !exceptPaths.Contains(it.FullName)).ToArray();
+            }
+
             // 删除文件夹中的所有文件
-            foreach (FileInfo file in directory.GetFiles())
+            foreach (FileInfo file in files)
             {
                 try
                 {
@@ -506,14 +517,14 @@ namespace SwashbucklerDiary.Services
 
         public string CustomSchemeUriToFilePath(string uri)
         {
-            var relativePath = Path.Combine(uri.TrimStart(customScheme.ToCharArray()).Split('/'));
+            var relativePath = Path.Combine(uri.TrimStart(customScheme).Split('/'));
             return Path.Combine(FileSystem.Current.AppDataDirectory, relativePath);
         }
 
         private static void CopyUriFileToOutFolder(string uri, string outFolder)
         {
             uri = uri.Replace(customScheme, "");
-            var relativePath = Path.Combine(uri.TrimStart(customScheme.ToCharArray()).Split('/'));
+            var relativePath = Path.Combine(uri.TrimStart(customScheme).Split('/'));
             var filePath = Path.Combine(FileSystem.Current.AppDataDirectory, relativePath);
             if (!File.Exists(filePath))
             {
@@ -660,7 +671,7 @@ namespace SwashbucklerDiary.Services
             foreach (string subfolder in subfolders)
             {
                 var name = Path.GetFileName(subfolder);
-                if (ResourceFolders.Contains(name))
+                if (ResourceFolders.ContainsValue(name))
                 {
                     var outpath = Path.Combine(FileSystem.AppDataDirectory, name);
                     CopyFolder(subfolder, outpath, SearchOption.TopDirectoryOnly);
@@ -677,13 +688,25 @@ namespace SwashbucklerDiary.Services
             return $"{name}{time}{version}{extension}";
         }
 
-        private void ClearDiaryResource()
+        private void ClearAllDiaryResources()
         {
-            foreach (var item in ResourceFolders)
+            foreach (var item in ResourceFolders.Values)
             {
                 var folderPath = Path.Combine(FileSystem.AppDataDirectory, item);
                 ClearFolder(folderPath);
             }
+        }
+
+        public void DeleteAppDataFileByCustomScheme(List<string>? exceptUris, ResourceType resourceType)
+        {
+            if (exceptUris is null || !exceptUris.Any())
+            {
+                return;
+            }
+
+            var exceptPaths = exceptUris.Select(CustomSchemeUriToFilePath).ToList();
+            var folderPath = Path.Combine(FileSystem.AppDataDirectory, ResourceFolders[resourceType]);
+            ClearFolder(folderPath, exceptPaths);
         }
     }
 }

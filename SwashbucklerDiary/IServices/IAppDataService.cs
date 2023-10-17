@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.IServices
 
         Task<Stream> BackupDatabase(List<DiaryModel> diaries, bool copyResources);
 
-        Task<string?> BackupDatabase(string path,List<DiaryModel> diaries, bool copyResources);
+        Task<string?> BackupDatabase(string path, List<DiaryModel> diaries, bool copyResources);
 
         /// <summary>
         /// 恢复数据库
@@ -62,6 +62,8 @@ namespace SwashbucklerDiary.IServices
         Task<bool> DeleteAppDataFileByFilePathAsync(string filePath);
 
         Task<bool> DeleteAppDataFileByCustomSchemeAsync(string uri);
+
+        void DeleteAppDataFileByCustomScheme(List<string>? exceptUris, ResourceType resourceType);
 
         Task<List<DiaryModel>> ImportJsonFileAsync(string filePath);
 
