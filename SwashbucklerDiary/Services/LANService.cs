@@ -17,6 +17,7 @@ namespace SwashbucklerDiary.Services
             {DevicePlatformType.MacOS,"mdi-apple" },
             {DevicePlatformType.Unknown,"mdi-monitor-cellphone" },
         };
+
         private readonly IAppDataService AppDataService;
 
         public LANService(IAppDataService appDataService)

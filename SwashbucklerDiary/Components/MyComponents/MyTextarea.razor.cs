@@ -8,6 +8,7 @@ namespace SwashbucklerDiary.Components
     public partial class MyTextarea : IAsyncDisposable
     {
         private IJSObjectReference module = default!;
+
         private MTextarea MTextarea = default!;
 
         [Inject]

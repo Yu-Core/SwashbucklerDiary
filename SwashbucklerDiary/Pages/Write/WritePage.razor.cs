@@ -63,6 +63,9 @@ namespace SwashbucklerDiary.Pages
         [Inject]
         private IIconService IconService { get; set; } = default!;
 
+        [Inject]
+        private IResourceService ResourceService { get; set; } = default!;
+
         [Parameter]
         [SupplyParameterFromQuery]
         public Guid? TagId { get; set; }
@@ -170,6 +173,8 @@ namespace SwashbucklerDiary.Pages
         private string MoodText =>
             string.IsNullOrEmpty(Diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + Diary.Mood)!;
 
+        private WordCountType WordCountType => (WordCountType) Enum.Parse(typeof(WordCountType), I18n.T("Write.WordCountType")!);
+
         private string SetTitleText() => EnableTitle ? "Write.CloseTitle" : "Write.EnableTitle";
 
         private string SetMarkdownText() => EnableMarkdown ? "Diary.Text" : "Diary.Markdown";
@@ -272,7 +277,7 @@ namespace SwashbucklerDiary.Pages
             }
 
             Diary.Content = StaticCustomScheme.ReverseCustomSchemeRender(Diary.Content!);
-            Diary.Resources = GetDiaryResources(Diary.Content);
+            Diary.Resources = ResourceService.GetDiaryResources(Diary.Content);
             Diary.UpdateTime = DateTime.Now;
             if (CreateMode)
             {
@@ -353,15 +358,12 @@ namespace SwashbucklerDiary.Pages
             }
 
             value = value.Trim();
-            if (I18n.T("Write.WordCountType") == WordCountType.Word.ToString())
+            len = WordCountType switch
             {
-                len = value.WordCount();
-            }
-
-            if (I18n.T("Write.WordCountType") == WordCountType.Character.ToString())
-            {
-                len = value.CharacterCount();
-            }
+                WordCountType.Word => value.WordCount(),
+                WordCountType.Character => value.CharacterCount(),
+                _ => default
+            };
 
             return len + " " + I18n.T("Write.CountUnit");
         }
@@ -369,8 +371,7 @@ namespace SwashbucklerDiary.Pages
         protected async Task HandleAchievements()
         {
             var messages = await AchievementService.UpdateUserState(AchievementType.Diary);
-            var wordCountType = (WordCountType)Enum.Parse(typeof(WordCountType), I18n.T("Write.WordCountType")!);
-            var wordCount = await DiaryService.GetWordCount(wordCountType);
+            var wordCount = await DiaryService.GetWordCount(WordCountType);
             var messages2 = await AchievementService.UpdateUserState(AchievementType.Word, wordCount);
             messages.AddRange(messages2);
             await AlertAchievements(messages);
@@ -380,39 +381,6 @@ namespace SwashbucklerDiary.Pages
         {
             value = !value;
             return SettingsService.Save(type, value);
-        }
-
-        private static List<ResourceModel> GetDiaryResources(string content)
-        {
-            var resources = new List<ResourceModel>();
-            string pattern = @"(?<=\(|"")(appdata:///\S+?)(?=\)|"")"; ;
-
-            MatchCollection matches = Regex.Matches(content, pattern);
-
-            foreach (Match match in matches.Cast<Match>())
-            {
-                resources.Add(new()
-                {
-                    ResourceType = GetResourceType(match.Value),
-                    ResourceUri = match.Value,
-                });
-            }
-
-            return resources;
-        }
-
-        private static ResourceType GetResourceType(string uri)
-        {
-            var mime = StaticContentProvider.GetResponseContentTypeOrDefault(uri);
-            var type = mime.Split('/')[0];
-
-            return type switch
-            {
-                "image" => ResourceType.Image,
-                "audio" => ResourceType.Audio,
-                "video" => ResourceType.Video,
-                _ => ResourceType.Unknown
-            };
         }
 
         private async Task InsertTimestamp()

@@ -38,29 +38,18 @@ namespace SwashbucklerDiary.Services
 
         public async Task<int> GetWordCount(WordCountType type)
         {
-            var diaries = await QueryAsync(it=>!it.Private);
-            return GetWordCount(diaries,type);
+            var diaries = await QueryAsync(it => !it.Private);
+            return GetWordCount(diaries, type);
         }
 
         public int GetWordCount(List<DiaryModel> diaries, WordCountType type)
         {
-            var wordCount = 0;
-            if (type == WordCountType.Word)
+            return type switch
             {
-                foreach (var item in diaries)
-                {
-                    wordCount += item.Content?.WordCount() ?? 0;
-                }
-            }
-
-            if (type == WordCountType.Character)
-            {
-                foreach (var item in diaries)
-                {
-                    wordCount += item.Content?.CharacterCount() ?? 0;
-                }
-            }
-            return wordCount;
+                WordCountType.Word => diaries.Sum(d => d.Content?.WordCount() ?? 0),
+                WordCountType.Character => diaries.Sum(d => d.Content?.CharacterCount() ?? 0),
+                _ => default
+            };
         }
 
         public Task<List<DateOnly>> GetAllDates()

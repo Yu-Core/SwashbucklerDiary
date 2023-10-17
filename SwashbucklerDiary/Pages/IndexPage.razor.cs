@@ -104,6 +104,7 @@ namespace SwashbucklerDiary.Pages
             {
                 return I18n.T("Index.Welcome.BeforeDawn")!;
             }
+
             return "Hello World";
         }
 

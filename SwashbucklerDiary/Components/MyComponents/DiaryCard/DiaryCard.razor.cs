@@ -6,6 +6,10 @@ namespace SwashbucklerDiary.Components
 {
     public partial class DiaryCard : MyComponentBase
     {
+        private string? Title;
+
+        private string? Text;
+
         private bool ShowMenu;
 
         private List<DynamicListItem> MenuItems = new();
@@ -28,6 +32,13 @@ namespace SwashbucklerDiary.Components
             base.OnInitialized();
         }
 
+        protected override void OnParametersSet()
+        {
+            Title = GetTitle();
+            Text = GetText();
+            base.OnParametersSet();
+        }
+
         private bool HasTitle => !string.IsNullOrWhiteSpace(Value?.Title);
 
         private bool HasContent => !string.IsNullOrWhiteSpace(Value?.Content);
@@ -44,22 +55,18 @@ namespace SwashbucklerDiary.Components
 
         private string? DateFormat => DiaryCardList.DateFormat;
 
-        private string? Title => GetTitle();
-
-        private string? Text => GetText();
-
-        private string TopText() 
+        private string TopText()
             => IsTop ? "Diary.CancelTop" : "Diary.Top";
 
-        private string PrivateText() 
+        private string PrivateText()
             => IsPrivate ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
 
-        private string PrivateIcon() 
+        private string PrivateIcon()
             => IsPrivate ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
 
         private string? WeatherIcon =>
             string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetWeatherIcon(Value.Weather);
-        
+
         private string? MoodIcon =>
             string.IsNullOrWhiteSpace(Value.Mood) ? null : IconService.GetMoodIcon(Value.Mood);
 
@@ -103,6 +110,10 @@ namespace SwashbucklerDiary.Components
                 {
                     return Value.Content!.Substring(0, index + 1);
                 }
+                else
+                {
+                    return SubText(Value.Content, 0, 200);
+                }
             }
 
             return null;
@@ -110,7 +121,7 @@ namespace SwashbucklerDiary.Components
 
         private string? GetText()
         {
-            string text = SubText(Value.Content, 0, 1000);
+            string text = SubText(Value.Content, 0, 2000);
             if (!HasTitle && Title is not null && HasContent)
             {
                 var subText = SubText(text, Title.Length);

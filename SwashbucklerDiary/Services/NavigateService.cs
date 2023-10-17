@@ -6,15 +6,23 @@ namespace SwashbucklerDiary.Services
     public class NavigateService : INavigateService
     {
         public event Action? Action;
+
         public event Func<PushEventArgs, Task>? BeforePush;
+
         public event Func<PopEventArgs, Task>? BeforePop;
+
         public event Func<PopEventArgs, Task>? BeforePopToRoot;
+
         public event Action<PushEventArgs>? Pushed;
+
         public event Action<PopEventArgs>? Poped;
+
         public event Action<PopEventArgs>? PopedToRoot;
 
         public List<string> RootPaths { get; set; } = new();
+
         public NavigationManager Navigation { get; set; } = default!;
+
         public List<string> HistoryURLs { get; set; } = new();
 
         public void Initialize(NavigationManager navigation)

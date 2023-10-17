@@ -2,6 +2,7 @@
 
 namespace SwashbucklerDiary.Services
 {
+#pragma warning disable CA1416
     public partial class PlatformService
     {
         public Task<string?> SaveFileAsync(string name, string sourceFilePath)

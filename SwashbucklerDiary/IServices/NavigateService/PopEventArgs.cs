@@ -9,6 +9,7 @@
         }
 
         public string PreviousUri { get; set; }
+
         public string NextUri { get; set; }
     }
 }

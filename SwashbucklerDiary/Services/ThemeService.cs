@@ -11,11 +11,11 @@ namespace SwashbucklerDiary.Services
 
         public ThemeState? ThemeState { get; set; }
 
-        public ThemeState RealThemeState => GetThemeState();
+        public ThemeState DisplayedThemeState => GetThemeState();
 
-        public bool Light => RealThemeState == Models.ThemeState.Light;
+        public bool Light => DisplayedThemeState == Models.ThemeState.Light;
 
-        public bool Dark => RealThemeState == Models.ThemeState.Dark;
+        public bool Dark => DisplayedThemeState == Models.ThemeState.Dark;
 
         public ThemeService(IPlatformService platformService) 
         {
@@ -62,7 +62,7 @@ namespace SwashbucklerDiary.Services
 
         private void InternalNotifyStateChanged()
         {
-            ThemeState value = RealThemeState;
+            ThemeState value = DisplayedThemeState;
             PlatformService.SetTitleBarOrStatusBar(value);
             OnChanged?.Invoke(value);
         }

@@ -8,6 +8,7 @@ namespace SwashbucklerDiary.Services
     public class TagService : BaseService<TagModel>, ITagService
     {
         private readonly ITagRepository _tagRepository;
+
         public TagService(ITagRepository tagRepository)
         {
             base._iBaseRepository = tagRepository;

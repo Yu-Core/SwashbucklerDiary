@@ -6,14 +6,23 @@ namespace SwashbucklerDiary.IServices
     public interface ILANService
     {
         bool IsConnection();
+
         string GetLocalIPv4();
+
         string GetIPPrefix(string ipAddress);
+
         bool Ping(IPAddress address);
+
         LANDeviceInfo GetLocalLANDeviceInfo();
+
         string GetLocalDeviceName();
+
         DevicePlatformType GetLocalDevicePlatformType();
+
         string GetDevicePlatformTypeIcon(DevicePlatformType platformType);
+
         Task LANSendAsync(List<DiaryModel> diaries, Stream stream, Func<long, long, Task> func);
+
         Task<List<DiaryModel>> LANReceiverAsync(Stream stream, long size, Func<long, long, Task> func);
     }
 }

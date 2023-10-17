@@ -7,6 +7,7 @@ namespace SwashbucklerDiary.Services
     public class AlertService : IAlertService
     {
         private IPopupService PopupService = default!;
+
         private int Timeout;
 
         public void Initialize(object popupService)

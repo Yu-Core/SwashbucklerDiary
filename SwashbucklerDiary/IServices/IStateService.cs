@@ -3,6 +3,7 @@
     public interface IStateService
     {
         event Func<Task>? FirstLauch;
+
         Task NotifyFirstLauchChanged();
     }
 }

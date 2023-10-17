@@ -44,7 +44,7 @@ namespace SwashbucklerDiary.Components
             var TagModels = new List<TagModel>();
             foreach (var item in SelectedTagIds)
             {
-                var TagModel = Tags.FirstOrDefault(it=>it.Id.ToString() == item.ToString());
+                var TagModel = Tags.FirstOrDefault(it => it.Id.ToString() == item.ToString());
                 if (TagModel != null)
                 {
                     TagModels.Add(TagModel);
@@ -62,7 +62,7 @@ namespace SwashbucklerDiary.Components
 
         private void SetValue(bool value)
         {
-            if(_value  == value)
+            if (_value == value)
             {
                 return;
             }

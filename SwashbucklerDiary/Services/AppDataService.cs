@@ -14,12 +14,19 @@ namespace SwashbucklerDiary.Services
     public class AppDataService : IAppDataService
     {
         private readonly IPlatformService PlatformService;
+
         private readonly II18nService I18n;
+
         private const string exportFileName = "SwashbucklerDiaryExport";
+
         private const string customScheme = "appdata:///";
+
         private const string ImageFolderName = "Image";
+
         private const string AudioFolderName = "Audio";
+
         private const string VideoFolderName = "Video";
+
         private static readonly string[] ResourceFolders = { ImageFolderName, AudioFolderName, VideoFolderName };
 
         public AppDataService(IPlatformService platformService,

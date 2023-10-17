@@ -7,6 +7,7 @@ namespace SwashbucklerDiary.Services
     public class I18nService : II18nService
     {
         private I18n I18n { get; set; } = default!;
+
         public CultureInfo Culture => I18n.Culture;
 
         public Dictionary<string, string> Languages { get; } = new()

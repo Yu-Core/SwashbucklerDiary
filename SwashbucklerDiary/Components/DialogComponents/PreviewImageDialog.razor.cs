@@ -9,6 +9,7 @@ namespace SwashbucklerDiary.Components
     public partial class PreviewImageDialog : DialogComponentBase, IAsyncDisposable
     {
         private IJSObjectReference module = default!;
+
         private readonly string Id = $"zoom-image-{Guid.NewGuid()}";
 
         [Inject]
