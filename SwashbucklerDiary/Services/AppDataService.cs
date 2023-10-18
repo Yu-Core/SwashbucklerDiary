@@ -3,6 +3,7 @@ using SwashbucklerDiary.Config;
 using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
+using SwashbucklerDiary.Utilities;
 using System.Data;
 using System.IO.Compression;
 using System.Text;
@@ -19,7 +20,7 @@ namespace SwashbucklerDiary.Services
 
         private const string exportFileName = "SwashbucklerDiaryExport";
 
-        private const string customScheme = "appdata:///";
+        private readonly static string customScheme = StaticCustomScheme.CustomPathPrefix;
 
         private const string ImageFolderName = "Image";
 

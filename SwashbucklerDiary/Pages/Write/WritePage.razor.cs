@@ -6,7 +6,6 @@ using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
 using SwashbucklerDiary.Utilities;
-using System.Text.RegularExpressions;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -208,7 +207,11 @@ namespace SwashbucklerDiary.Pages
             }
 
             Diary = diary;
-            Diary.Content = StaticCustomScheme.CustomSchemeRender(Diary.Content);
+            if (EnableMarkdown)
+            {
+                Diary.Content = StaticCustomScheme.CustomSchemeRender(Diary.Content);
+            }
+
             EnableTitle = !string.IsNullOrEmpty(diary.Title);
         }
 
@@ -223,7 +226,7 @@ namespace SwashbucklerDiary.Pages
             MenuItems = new()
             {
                 new(this, SetTitleText, "mdi-format-title", ()=> SettingChange(SettingType.Title, ref EnableTitle)),
-                new(this, SetMarkdownText, SetMarkdownIcon, ()=> SettingChange(SettingType.Markdown, ref EnableMarkdown)),
+                new(this, SetMarkdownText, SetMarkdownIcon, MarkdownChange),
             };
             WeatherIcons = IconService.GetWeatherIcons();
             MoodIcons = IconService.GetMoodIcons();
@@ -393,6 +396,19 @@ namespace SwashbucklerDiary.Pages
             else
             {
                 await MyTextarea.InsertValueAsync(dateTimeNow);
+            }
+        }
+
+        private async Task MarkdownChange()
+        {
+            await SettingChange(SettingType.Markdown, ref EnableMarkdown);
+            if(EnableMarkdown)
+            {
+                Diary.Content = StaticCustomScheme.CustomSchemeRender(Diary.Content);
+            }
+            else
+            {
+                Diary.Content = StaticCustomScheme.ReverseCustomSchemeRender(Diary.Content!);
             }
         }
     }

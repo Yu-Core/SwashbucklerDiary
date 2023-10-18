@@ -35,6 +35,7 @@ namespace SwashbucklerDiary.Extensions
             services.AddSingleton<IStateService, StateService>();
             services.AddSingleton<IAppDataService, AppDataService>();
             services.AddSingleton<ILANService, LANService>();
+            services.AddScoped<IScreenshotService, ScreenshotService>();
             return services;
         }
     }

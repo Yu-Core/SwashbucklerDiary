@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
@@ -8,7 +7,7 @@ using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {
-    public partial class ReadPage : ImportantComponentBase, IAsyncDisposable
+    public partial class ReadPage : ImportantComponentBase
     {
         private bool ShowDelete;
 
@@ -18,13 +17,11 @@ namespace SwashbucklerDiary.Pages
 
         private bool ShowExport;
 
-        private bool Markdown;
+        private bool EnableMarkdown;
 
-        private bool Privacy;
+        private bool EnablePrivacy;
 
         private DiaryModel Diary = new();
-
-        private IJSObjectReference module = default!;
 
         private List<DynamicListItem> MenuItems = new();
 
@@ -41,6 +38,9 @@ namespace SwashbucklerDiary.Pages
         [Inject]
         private IAppDataService AppDataService { get; set; } = default!;
 
+        [Inject]
+        private IScreenshotService ScreenshotService { get; set; } = default!;
+
         [Parameter]
         public Guid Id { get; set; }
 
@@ -55,14 +55,6 @@ namespace SwashbucklerDiary.Pages
             await LoadSettings();
             await UpdateDiary();
             await base.OnInitializedAsync();
-        }
-
-        protected async override Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
-            {
-                module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/screenshot.js");
-            }
         }
 
         private List<TagModel> Tags => Diary.Tags ?? new();
@@ -81,9 +73,9 @@ namespace SwashbucklerDiary.Pages
 
         private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
 
-        private string MarkdownText() => Markdown ? "Diary.Text" : "Diary.Markdown";
+        private string MarkdownText() => EnableMarkdown ? "Diary.Text" : "Diary.Markdown";
 
-        private string MarkdownIcon() => Markdown ? "mdi-format-text" : "mdi-language-markdown-outline";
+        private string MarkdownIcon() => EnableMarkdown ? "mdi-format-text" : "mdi-language-markdown-outline";
         
         private string PrivateText() => IsPrivate ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
         
@@ -99,13 +91,16 @@ namespace SwashbucklerDiary.Pages
             }
 
             Diary = diary;
-            Diary.Content = StaticCustomScheme.CustomSchemeRender(Diary.Content);
+            if (EnableMarkdown)
+            {
+                Diary.Content = StaticCustomScheme.CustomSchemeRender(Diary.Content);
+            }
         }
 
         private async Task LoadSettings()
         {
-            Markdown = await SettingsService.Get(SettingType.Markdown);
-            Privacy = await SettingsService.Get(SettingType.PrivacyMode);
+            EnableMarkdown = await SettingsService.Get(SettingType.Markdown);
+            EnablePrivacy = await SettingsService.Get(SettingType.PrivacyMode);
         }
 
         private void LoadView()
@@ -116,7 +111,7 @@ namespace SwashbucklerDiary.Pages
                 new(this, TopText,"mdi-format-vertical-align-top",OnTopping),
                 new(this, "Diary.Export","mdi-export",OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon,MarkdownChanged),
-                new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>Privacy)
+                new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>EnablePrivacy)
             };
 
             ShareItems = new()
@@ -124,16 +119,6 @@ namespace SwashbucklerDiary.Pages
                 new(this, "Share.TextShare","mdi-format-text",ShareText),
                 new(this, "Share.ImageShare","mdi-image-outline",ShareImage),
             };
-        }
-
-        async ValueTask IAsyncDisposable.DisposeAsync()
-        {
-            if (module is not null)
-            {
-                await module.DisposeAsync();
-            }
-
-            GC.SuppressFinalize(this);
         }
 
         private void OpenDeleteDialog()
@@ -190,11 +175,9 @@ namespace SwashbucklerDiary.Pages
             await AlertService.StartLoading();
             ShowShare = false;
             StateHasChanged();
-            await Task.Delay(1000);
 
-            var base64 = await module.InvokeAsync<string>("getScreenshotBase64", new object[1] { "#screenshot" });
-            base64 = base64.Substring(base64.IndexOf(",") + 1);
-
+            var base64 = await ScreenshotService.ScreenshotToBase64("#screenshot");
+            
             string fn = "Screenshot.png";
             string path = await AppDataService.CreateCacheFileAsync(fn, Convert.FromBase64String(base64));
 
@@ -227,8 +210,16 @@ namespace SwashbucklerDiary.Pages
 
         private async Task MarkdownChanged()
         {
-            Markdown = !Markdown;
-            await SettingsService.Save(SettingType.Markdown, Markdown);
+            EnableMarkdown = !EnableMarkdown;
+            await SettingsService.Save(SettingType.Markdown, EnableMarkdown);
+            if (EnableMarkdown)
+            {
+                Diary.Content = StaticCustomScheme.CustomSchemeRender(Diary.Content);
+            }
+            else
+            {
+                Diary.Content = StaticCustomScheme.ReverseCustomSchemeRender(Diary.Content!);
+            }
             StateHasChanged();
         }
 
@@ -263,9 +254,9 @@ namespace SwashbucklerDiary.Pages
             return len + " " + I18n.T("Write.CountUnit");
         }
 
-        private void OpenExportDialog()
+        private async Task OpenExportDialog()
         {
-            var diary = Diary;
+            var diary = await DiaryService.FindAsync(Diary.Id); ;
             ExportDiaries = new() { diary };
             ShowExport = true;
             StateHasChanged();
@@ -273,12 +264,13 @@ namespace SwashbucklerDiary.Pages
 
         private string GetDiaryCopyContent()
         {
+            var content = StaticCustomScheme.ReverseCustomSchemeRender(Diary.Content);
             if (string.IsNullOrEmpty(Diary.Title))
             {
-                return Diary.Content!;
+                return content;
             }
 
-            return Diary.Title + "\n" + Diary.Content;
+            return Diary.Title + "\n" + content;
         }
     }
 }

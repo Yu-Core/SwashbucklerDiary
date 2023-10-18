@@ -1,6 +1,7 @@
 ﻿using Android.OS;
 using Android.Webkit;
 using Microsoft.AspNetCore.Components.WebView;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary
@@ -26,6 +27,8 @@ namespace SwashbucklerDiary
 #nullable disable
         private class MyWebViewClient : WebViewClient
         {
+            private readonly string Prefix = $"/{StaticCustomScheme.CustomStr}";
+
             private WebViewClient WebViewClient { get; }
 
             public MyWebViewClient(WebViewClient webViewClient)
@@ -40,7 +43,7 @@ namespace SwashbucklerDiary
 
             public override WebResourceResponse ShouldInterceptRequest(Android.Webkit.WebView view, IWebResourceRequest request)
             {
-                if (request.Url.Scheme == "appdata")
+                if (request.Url.Path.StartsWith(Prefix))
                 {
                     return InterceptAppDataRequest(view, request);
                 }
@@ -61,7 +64,7 @@ namespace SwashbucklerDiary
 
             private WebResourceResponse InterceptAppDataRequest(Android.Webkit.WebView view, IWebResourceRequest request)
             {
-                var path = request.Url.Path;
+                var path = request.Url.Path.TrimStart(Prefix);
                 path = FileSystem.AppDataDirectory + path;
                 if (File.Exists(path))
                 {

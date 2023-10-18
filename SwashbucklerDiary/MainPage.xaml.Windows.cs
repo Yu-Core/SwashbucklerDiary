@@ -18,7 +18,7 @@ namespace SwashbucklerDiary
             //webview2.WebResourceRequested += WebView2WebResourceRequested;
 
             //从之前的拦截请求，自己创建响应，改为虚拟主机映射
-            webview2.SetVirtualHostNameToFolderMapping("appdata", FileSystem.AppDataDirectory,
+            webview2.SetVirtualHostNameToFolderMapping(StaticCustomScheme.CustomStr, FileSystem.AppDataDirectory,
                                      CoreWebView2HostResourceAccessKind.Allow);
         }
 
@@ -35,7 +35,7 @@ namespace SwashbucklerDiary
         //        return;
         //    }
 
-        //    path = path.TrimStart("appdata/".ToCharArray());
+        //    path = path.TrimStart("appdata/");
         //    path = Path.Combine(FileSystem.AppDataDirectory, path);
         //    if (File.Exists(path))
         //    {

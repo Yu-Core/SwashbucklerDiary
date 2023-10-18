@@ -1,6 +1,10 @@
 ﻿using Foundation;
 using Microsoft.AspNetCore.Components.WebView;
+using SwashbucklerDiary.Utilities;
+using System.Globalization;
+using System.Net.Mime;
 using System.Runtime.Versioning;
+using SystemConfiguration;
 using WebKit;
 
 namespace SwashbucklerDiary
@@ -35,10 +39,20 @@ namespace SwashbucklerDiary
                 path = FileSystem.AppDataDirectory + path;
                 if (File.Exists(path))
                 {
-                    byte[] bytes = File.ReadAllBytes(path);
-                    using var response = new NSHttpUrlResponse(urlSchemeTask.Request.Url, 200, "HTTP/1.1", null);
-                    urlSchemeTask.DidReceiveResponse(response);
-                    urlSchemeTask.DidReceiveData(NSData.FromArray(bytes));
+                    byte[] responseBytes = File.ReadAllBytes(path);
+                    string contentType = StaticContentProvider.GetResponseContentTypeOrDefault(path);
+                    using (var dic = new NSMutableDictionary<NSString, NSString>())
+                    {
+                        dic.Add((NSString)"Content-Length", (NSString)(responseBytes.Length.ToString(CultureInfo.InvariantCulture)));
+                        dic.Add((NSString)"Content-Type", (NSString)contentType);
+                        // Disable local caching. This will prevent user scripts from executing correctly.
+                        dic.Add((NSString)"Cache-Control", (NSString)"no-cache, max-age=0, must-revalidate, no-store");
+                        
+                        using var response = new NSHttpUrlResponse(urlSchemeTask.Request.Url, 200, "HTTP/1.1", dic);
+                        urlSchemeTask.DidReceiveResponse(response);
+                    }
+                    
+                    urlSchemeTask.DidReceiveData(NSData.FromArray(responseBytes));
                     urlSchemeTask.DidFinish();
                 }
             }
