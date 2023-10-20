@@ -88,7 +88,10 @@ namespace SwashbucklerDiary.Pages
 
         private void HandleIntersectChanged(bool value)
         {
-            NormalCalendarVisible = value;
+            if (IsCurrentPage)
+            {
+                NormalCalendarVisible = value;
+            }
         }
     }
 }
