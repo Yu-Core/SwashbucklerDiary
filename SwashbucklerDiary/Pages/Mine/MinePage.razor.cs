@@ -122,6 +122,8 @@ namespace SwashbucklerDiary.Pages
             Language = value;
             I18n.SetCulture(value);
             await SettingsService.Save(SettingType.Language, value);
+            UserName = await SettingsService.Get(SettingType.UserName, I18n.T("AppName"));
+            Sign = await SettingsService.Get(SettingType.Sign, I18n.T("Mine.Sign"));
         }
 
         private async Task SendMail()
