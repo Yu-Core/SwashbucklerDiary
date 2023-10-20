@@ -249,7 +249,8 @@
       "Name": "Sponsor we",
       "Path": "About / Sponsor we"
     },
-    "Introduction": "An open source, cross-platform local diary app"
+    "Introduction": "An open source, cross-platform local diary app",
+    "Filing number": "APP Filing number: "
   },
   "FilePath": {
     "UserAgreement": "wwwroot/docs/user-agreement/en-US.md",

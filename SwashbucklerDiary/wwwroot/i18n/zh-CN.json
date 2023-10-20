@@ -249,7 +249,8 @@
       "Name": "捐助我们",
       "Path": "关于 / 捐助我们"
     },
-    "Introduction": "一款开源、跨平台的本地日记APP"
+    "Introduction": "一款开源、跨平台的本地日记APP",
+    "Filing number": "APP备案号："
   },
   "FilePath": {
     "UserAgreement": "wwwroot/docs/user-agreement/zh-CN.md",
