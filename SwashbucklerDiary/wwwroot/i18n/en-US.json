@@ -682,7 +682,9 @@
     "Not have": "Not have"
   },
   "Vditor": {
-    "AddImage": "Add Image"
+    "AddImage": "Add Image",
+    "AddAudio": "Add Audio",
+    "AddVideo": "Add Video"
   },
   "Sort": {
     "CreateTime": {

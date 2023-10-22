@@ -682,7 +682,9 @@
     "Not have": "无"
   },
   "Vditor": {
-    "AddImage": "添加图片"
+    "AddImage": "添加图片",
+    "AddAudio": "添加音频",
+    "AddVideo": "添加视频"
   },
   "Sort": {
     "CreateTime": {

@@ -94,30 +94,29 @@ namespace SwashbucklerDiary.Components
                 {"icon", "<svg><use xlink:href=\"#vditor-icon-image\"></use></svg>" },
             };
 
-            //只有Windows能显示本机音视频，Android、ios、mac无法支持，所以砍去
-            //var btnAudio = new Dictionary<string, object?>()
-            //{
-            //    {"hotkey","⇧⌘A" },
-            //    {"name","audio" },
-            //    {"tipPosition","n" },
-            //    {"tip","添加音频" },
-            //    {"className","" },
-            //    {"icon","<svg><use xlink:href=\"#vditor-icon-audio\"></use></svg>" },
-            //};
-            //var btnVideo = new Dictionary<string, object?>()
-            //{
-            //    {"hotkey","⇧⌘V" },
-            //    {"name","video" },
-            //    {"tipPosition","n" },
-            //    {"tip","添加视频" },
-            //    {"className","" },
-            //    {"icon","<svg><use xlink:href=\"#vditor-icon-video\"></use></svg>" },
-            //};
+            var btnAudio = new Dictionary<string, object?>()
+            {
+                {"hotkey","⇧⌘A" },
+                {"name","audio" },
+                {"tipPosition","n" },
+                {"tip",I18n.T("Vditor.AddAudio") },
+                {"className","" },
+                {"icon","<svg><use xlink:href=\"#vditor-icon-audio\"></use></svg>" },
+            };
+            var btnVideo = new Dictionary<string, object?>()
+            {
+                {"hotkey","⇧⌘V" },
+                {"name","video" },
+                {"tipPosition","n" },
+                {"tip",I18n.T("Vditor.AddVideo") },
+                {"className","" },
+                {"icon","<svg><use xlink:href=\"#vditor-icon-video\"></use></svg>" },
+            };
 
             _options = new()
             {
                 { "mode", "ir" },
-                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link",btnImage,/*btnAudio,btnVideo*/}},
+                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link",btnImage,btnAudio,btnVideo}},
                 { "placeholder", I18n.T("Write.ContentPlace")! },
                 { "cdn", "npm/vditor/3.9.6" },
                 { "lang", lang },
@@ -147,15 +146,15 @@ namespace SwashbucklerDiary.Components
                 await AddImageAsync();
             }
 
-            //if(btnName == "audio")
-            //{
-            //    await AddAudioAsync();
-            //}
+            if (btnName == "audio")
+            {
+                await AddAudioAsync();
+            }
 
-            //if(btnName == "video")
-            //{
-            //    await AddVideoAsync();
-            //}
+            if (btnName == "video")
+            {
+                await AddVideoAsync();
+            }
         }
 
         private async Task AddImageAsync()
@@ -172,33 +171,33 @@ namespace SwashbucklerDiary.Components
             await InsertValueAsync(html);
         }
 
-        //private async Task AddAudioAsync()
-        //{
-        //    string? path = await PlatformService.PickAudioAsync();
-        //    if (path == null)
-        //    {
-        //        return;
-        //    }
+        private async Task AddAudioAsync()
+        {
+            string? path = await PlatformService.PickAudioAsync();
+            if (path == null)
+            {
+                return;
+            }
 
-        //    string uri = await AppDataService.CreateAppDataAudioFileAsync(path);
-        //    uri = StaticCustomScheme.CustomSchemeRender(uri);
-        //    string html = $"<audio src=\"{uri}\" controls ></audio>";
-        //    await InsertValueAsync(html);
-        //}
+            string uri = await AppDataService.CreateAppDataAudioFileAsync(path);
+            uri = StaticCustomScheme.CustomSchemeRender(uri);
+            string html = $"<audio src=\"{uri}\" controls ></audio>";
+            await InsertValueAsync(html);
+        }
 
-        //private async Task AddVideoAsync()
-        //{
-        //    string? path = await PlatformService.PickVideoAsync();
-        //    if (path == null)
-        //    {
-        //        return;
-        //    }
+        private async Task AddVideoAsync()
+        {
+            string? path = await PlatformService.PickVideoAsync();
+            if (path == null)
+            {
+                return;
+            }
 
-        //    string uri = await AppDataService.CreateAppDataVideoFileAsync(path);
-        //    uri = StaticCustomScheme.CustomSchemeRender(uri);
-        //    string html = $"<video src=\"{uri}\" controls autoplay ></video>";
-        //    await InsertValueAsync(html);
-        //}
+            string uri = await AppDataService.CreateAppDataVideoFileAsync(path);
+            uri = StaticCustomScheme.CustomSchemeRender(uri);
+            string html = $"<video src=\"{uri}\" controls ></video>";
+            await InsertValueAsync(html);
+        }
 
         public async Task InsertValueAsync(string value)
         {

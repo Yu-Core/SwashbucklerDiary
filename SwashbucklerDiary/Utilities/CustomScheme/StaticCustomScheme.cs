@@ -1,18 +1,18 @@
-﻿using Microsoft.AspNetCore.Components.WebView.Maui;
-
-namespace SwashbucklerDiary.Utilities
+﻿namespace SwashbucklerDiary.Utilities
 {
-    //Android中将自定义链接替换为https://0.0.0.0/appdata,保证同源，方便截图时不会出现跨域问题
-    //Windows中将自定义链接替换为虚拟路径https://appdata，如果使用拦截的话，会有文件大小限制，超出9MB的图片不会显示，截图时没有跨域问题，不需要同源
+    //Windows、Android中将自定义链接替换为https://0.0.0.0/appdata,保证同源，方便截图时不会出现跨域问题
+    //macOS、iOS用不了https://，只能用appdata://，所以截图时出现跨域问题
     public static class StaticCustomScheme
     {
         public readonly static string CustomStr = "appdata";
-#if WINDOWS
-        private readonly static string LocalPathPrefix = $"https://{CustomStr}/";
-#elif ANDROID
+
+        public readonly static string CustomPathPrefix = $"{CustomStr}:///";
+#if WINDOWS || ANDROID
+        public readonly static string InterceptPrefix = $"/{CustomStr}/";
+
         private readonly static string LocalPathPrefix = $"./{CustomStr}/";
 #endif
-        public readonly static string CustomPathPrefix = $"{CustomStr}:///";
+        
 
         public static string ReverseCustomSchemeRender(string? uri)
         {

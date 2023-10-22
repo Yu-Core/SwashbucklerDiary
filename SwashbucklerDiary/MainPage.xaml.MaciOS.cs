@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Components.WebView;
 using SwashbucklerDiary.Utilities;
 using System.Globalization;
-using System.Net.Mime;
 using System.Runtime.Versioning;
-using SystemConfiguration;
 using WebKit;
 
 namespace SwashbucklerDiary
@@ -14,8 +12,8 @@ namespace SwashbucklerDiary
         private partial void BlazorWebViewInitializing(object? sender, BlazorWebViewInitializingEventArgs e)
         {
             e.Configuration.AllowsInlineMediaPlayback = true;
-            e.Configuration.MediaTypesRequiringUserActionForPlayback = WebKit.WKAudiovisualMediaTypes.None;
-            e.Configuration.SetUrlSchemeHandler(new AppDataSchemeHandler(), "appdata");
+            //e.Configuration.MediaTypesRequiringUserActionForPlayback = WebKit.WKAudiovisualMediaTypes.None;
+            e.Configuration.SetUrlSchemeHandler(new AppDataSchemeHandler(), StaticCustomScheme.CustomStr);
         }
 
         private partial void BlazorWebViewInitialized(object? sender, BlazorWebViewInitializedEventArgs e)

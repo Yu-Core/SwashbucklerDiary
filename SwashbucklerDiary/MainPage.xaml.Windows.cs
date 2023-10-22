@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.WebView;
 using Microsoft.Web.WebView2.Core;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.Utilities;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage.Streams;
@@ -10,94 +11,113 @@ namespace SwashbucklerDiary
     {
         private partial void BlazorWebViewInitializing(object? sender, BlazorWebViewInitializingEventArgs e)
         {
+            e.EnvironmentOptions = new()
+            {
+                //禁用自动播放，但不知道为什么没有生效
+                AdditionalBrowserArguments = "--autoplay-policy=user-gesture-required",
+            };
         }
 
         private partial void BlazorWebViewInitialized(object? sender, BlazorWebViewInitializedEventArgs e)
         {
             var webview2 = e.WebView.CoreWebView2;
-            //webview2.WebResourceRequested += WebView2WebResourceRequested;
-
-            //从之前的拦截请求，自己创建响应，改为虚拟主机映射
-            webview2.SetVirtualHostNameToFolderMapping(StaticCustomScheme.CustomStr, FileSystem.AppDataDirectory,
-                                     CoreWebView2HostResourceAccessKind.Allow);
+            webview2.WebResourceRequested += WebView2WebResourceRequested;
         }
 
-        //async void WebView2WebResourceRequested(CoreWebView2 webview2, CoreWebView2WebResourceRequestedEventArgs args)
-        //{
-        //    await HandleAppDataRequest(webview2, args);
-        //}
+        async void WebView2WebResourceRequested(CoreWebView2 webview2, CoreWebView2WebResourceRequestedEventArgs args)
+        {
+            await HandleAppDataRequest(webview2, args);
+        }
 
-        //async Task HandleAppDataRequest(CoreWebView2 webview2, CoreWebView2WebResourceRequestedEventArgs args)
-        //{
-        //    string path = new Uri(args.Request.Uri).AbsolutePath.TrimStart('/');
-        //    if (!path.StartsWith("appdata/"))
-        //    {
-        //        return;
-        //    }
+        async Task HandleAppDataRequest(CoreWebView2 webview2, CoreWebView2WebResourceRequestedEventArgs args)
+        {
+            string path = new Uri(args.Request.Uri).AbsolutePath;
+            if (!path.StartsWith(StaticCustomScheme.InterceptPrefix))
+            {
+                return;
+            }
 
-        //    path = path.TrimStart("appdata/");
-        //    path = Path.Combine(FileSystem.AppDataDirectory, path);
-        //    if (File.Exists(path))
-        //    {
-        //        using var contentStream = File.OpenRead(path);
-        //        IRandomAccessStream stream = await CopyContentToRandomAccessStreamAsync(contentStream);
-        //        var headers = GetResponseHeaders(args, path);
-        //        var headerString = GetHeaderString(headers);
-        //        var response = webview2.Environment.CreateWebResourceResponse(stream, 200, "OK", headerString);
-        //        args.Response = response;
-        //    }
-        //    else
-        //    {
-        //        var response = webview2.Environment.CreateWebResourceResponse(null, 404, "Not Found", string.Empty);
-        //        args.Response = response;
-        //    }
+            path = path.TrimStart(StaticCustomScheme.InterceptPrefix);
+            path = Path.Combine(path.Split("/"));
+            var filePath = Path.Combine(FileSystem.AppDataDirectory, path);
+            if (File.Exists(filePath))
+            {
+                args.Response = await CreateWebResourceResponse(webview2, args, filePath);
+            }
+            else
+            {
+                args.Response = webview2.Environment.CreateWebResourceResponse(null, 404, "Not Found", string.Empty);
+            }
 
-        //    static string GetHeaderString(IDictionary<string, string> headers) =>
-        //    string.Join(Environment.NewLine, headers.Select(kvp => $"{kvp.Key}: {kvp.Value}"));
+            static string GetHeaderString(IDictionary<string, string> headers) =>
+                string.Join(Environment.NewLine, headers.Select(kvp => $"{kvp.Key}: {kvp.Value}"));
 
-        //    static async Task<IRandomAccessStream> CopyContentToRandomAccessStreamAsync(Stream content)
-        //    {
-        //        using var memStream = new MemoryStream();
-        //        await content.CopyToAsync(memStream);
-        //        var randomAccessStream = new InMemoryRandomAccessStream();
-        //        await randomAccessStream.WriteAsync(memStream.GetWindowsRuntimeBuffer());
-        //        return randomAccessStream;
-        //    }
+            static async Task<CoreWebView2WebResourceResponse> CreateWebResourceResponse(CoreWebView2 webview2, CoreWebView2WebResourceRequestedEventArgs args, string filePath)
+            {
+                var contentType = StaticContentProvider.GetResponseContentTypeOrDefault(filePath);
+                var headers = StaticContentProvider.GetResponseHeaders(contentType);
+                using var contentStream = File.OpenRead(filePath);
+                var length = contentStream.Length;
+                long rangeStart = 0;
+                long rangeEnd = length - 1;
 
-        //    static IDictionary<string, string> GetResponseHeaders(CoreWebView2WebResourceRequestedEventArgs args, string path)
-        //    {
-        //        var contentType = StaticContentProvider.GetResponseContentTypeOrDefault(path);
-        //        var headers = StaticContentProvider.GetResponseHeaders(contentType);
-        //        var fileInfo = new FileInfo(path);
-        //        var length = fileInfo.Length;
-        //        long rangStart = 0;
-        //        long rangEnd = length - 1;
+                int StatusCode = 200;
+                string ReasonPhrase = "OK";
 
-        //        //适用于音频视频文件资源的响应
-        //        bool isAny = args.Request.Headers.Contains("Range");
-        //        if (isAny)
-        //        {
-        //            var rangeString = args.Request.Headers.GetHeader("Range");
+                //适用于音频视频文件资源的响应
+                bool partial = args.Request.Headers.Contains("Range");
+                if (partial)
+                {
+                    StatusCode = 206;
+                    ReasonPhrase = "Partial Content";
 
-        //            var rangs = rangeString.Split('=')[1].Split('-');
-        //            rangStart = Convert.ToInt64(rangs[0]);
-        //            if (rangs.Length > 1 && !string.IsNullOrEmpty(rangs[1]))
-        //            {
-        //                rangEnd = Convert.ToInt64(rangs[1]);
-        //            }
+                    var rangeString = args.Request.Headers.GetHeader("Range");
+                    var ranges = rangeString.Split('=');
+                    if (ranges.Length > 1 && !string.IsNullOrEmpty(ranges[1]))
+                    {
+                        string[] rangeDatas = ranges[1].Split("-");
+                        rangeStart = Convert.ToInt64(rangeDatas[0]);
+                        if (rangeDatas.Length > 1 && !string.IsNullOrEmpty(rangeDatas[1]))
+                        {
+                            rangeEnd = Convert.ToInt64(rangeDatas[1]);
+                        }
+                        else
+                        {
+                            rangeEnd = Math.Min(rangeEnd, rangeStart + 4 * 1024 * 1024);
+                        }
+                    }
 
-        //            string lastModifiedHex = fileInfo.LastWriteTimeUtc.Ticks.ToString("x");
-        //            string contentLengthHex = fileInfo.Length.ToString("x");
+                    headers.Add("Accept-Ranges", "bytes");
+                    headers.Add("Content-Range", $"bytes {rangeStart}-{rangeEnd}/{length}");
+                }
 
-        //            headers.Add("Accept-Ranges", "bytes");
-        //            headers.Add("Content-Range", $"bytes {rangStart}-{rangEnd}/{length}");
-        //            headers.Add("ETag", $"{lastModifiedHex}-{contentLengthHex}");
-        //        }
+                headers.Add("Content-Length", (rangeEnd - rangeStart + 1).ToString());
+                var headerString = GetHeaderString(headers);
+                IRandomAccessStream stream = await ReadStreamRange(contentStream, rangeStart, rangeEnd);
+                return webview2.Environment.CreateWebResourceResponse(stream, StatusCode, ReasonPhrase, headerString);
+            }
 
-        //        headers.Add("Content-Length", (rangEnd - rangStart + 1).ToString());
+            static async Task<IRandomAccessStream> ReadStreamRange(Stream contentStream, long start, long end)
+            {
+                long length = end - start + 1;
+                contentStream.Position = start;
 
-        //        return headers;
-        //    }
-        //}
+                using var memoryStream = new MemoryStream();
+                byte[] buffer = new byte[4 * 1024 * 1024];
+                int bytesRead;
+
+                while (length > 0 && (bytesRead = contentStream.Read(buffer, 0, (int)Math.Min(buffer.Length, length))) > 0)
+                {
+                    memoryStream.Write(buffer, 0, bytesRead);
+                    length -= bytesRead;
+                }
+
+                // 将内存流的位置重置为起始位置
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                var randomAccessStream = new InMemoryRandomAccessStream();
+                await randomAccessStream.WriteAsync(memoryStream.GetWindowsRuntimeBuffer());
+                return randomAccessStream;
+            }
+        }
     }
 }

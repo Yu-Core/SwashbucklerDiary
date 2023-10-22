@@ -17,7 +17,7 @@ namespace SwashbucklerDiary
         {
             e.WebView.VerticalScrollBarEnabled = false; // 关闭滚动条
             e.WebView.Settings.JavaScriptEnabled = true;
-            e.WebView.Settings.MediaPlaybackRequiresUserGesture = false; // 是否需要用户手势才能播放
+            //e.WebView.Settings.MediaPlaybackRequiresUserGesture = false; // 是否需要用户手势才能播放
             if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
             {
                 e.WebView.SetWebViewClient(new MyWebViewClient(e.WebView.WebViewClient));
@@ -27,8 +27,6 @@ namespace SwashbucklerDiary
 #nullable disable
         private class MyWebViewClient : WebViewClient
         {
-            private readonly string Prefix = $"/{StaticCustomScheme.CustomStr}";
-
             private WebViewClient WebViewClient { get; }
 
             public MyWebViewClient(WebViewClient webViewClient)
@@ -43,7 +41,7 @@ namespace SwashbucklerDiary
 
             public override WebResourceResponse ShouldInterceptRequest(Android.Webkit.WebView view, IWebResourceRequest request)
             {
-                if (request.Url.Path.StartsWith(Prefix))
+                if (request.Url.Path.StartsWith(StaticCustomScheme.InterceptPrefix))
                 {
                     return InterceptAppDataRequest(view, request);
                 }
@@ -64,18 +62,58 @@ namespace SwashbucklerDiary
 
             private WebResourceResponse InterceptAppDataRequest(Android.Webkit.WebView view, IWebResourceRequest request)
             {
-                var path = request.Url.Path.TrimStart(Prefix);
-                path = FileSystem.AppDataDirectory + path;
+                var path = request.Url.Path.TrimStart(StaticCustomScheme.InterceptPrefix);
+                path = Path.Combine(FileSystem.AppDataDirectory, path);
                 if (File.Exists(path))
                 {
-                    string contentType = StaticContentProvider.GetResponseContentTypeOrDefault(path);
-                    string encoding = "UTF-8";
-                    Stream stream = File.OpenRead(path);
-                    return new(contentType, encoding, stream);
+                    var response = CreateWebResourceResponse(request, path);
+                    return response;
                 }
 
                 return WebViewClient.ShouldInterceptRequest(view, request);
             }
+
+            private WebResourceResponse CreateWebResourceResponse(IWebResourceRequest request, string path)
+            {
+                string contentType = StaticContentProvider.GetResponseContentTypeOrDefault(path);
+                var headers = StaticContentProvider.GetResponseHeaders(contentType);
+                Stream stream = File.OpenRead(path);
+                string encoding = "UTF-8";
+                int stateCode = 200;
+
+                var length = stream.Length;
+                long rangeStart = 0;
+                long rangeEnd = length - 1;
+
+                bool partial = request.RequestHeaders.TryGetValue("Range", out string rangeString);
+                if (partial)
+                {
+                    //206,可断点续传
+                    stateCode = 206;
+
+                    var ranges = rangeString.Split('=');
+                    if (ranges.Length > 1 && !string.IsNullOrEmpty(ranges[1]))
+                    {
+                        string[] rangeDatas = ranges[1].Split("-");
+                        rangeStart = Convert.ToInt64(rangeDatas[0]);
+                        if (rangeDatas.Length > 1 && !string.IsNullOrEmpty(rangeDatas[1]))
+                        {
+                            rangeEnd = Convert.ToInt64(rangeDatas[1]);
+                        }
+                    }
+
+                    headers.Add("Accept-Ranges", "bytes");
+                    headers.Add("Content-Range", $"bytes {rangeStart}-{rangeEnd}/{length}");
+
+                }
+
+                //不是必要的，删去似乎也不影响
+                headers.Add("Content-Length", (rangeEnd - rangeStart + 1).ToString());
+
+                var response = new WebResourceResponse(contentType, encoding, stateCode, "OK", headers, stream);
+                return response;
+            }
+
         }
     }
 }
