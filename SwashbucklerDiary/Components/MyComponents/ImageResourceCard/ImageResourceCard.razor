@@ -5,7 +5,8 @@
        Rounded="@("lg")"
        Ripple="false"
        OnClick="PreviewImage">
-    <MImage Src="@Src">
+    <MImageExtension Src=""
+                     MySrc="@Src">
         <PlaceholderContent>
             <MRow Class="fill-height ma-0"
                   Align="@AlignTypes.Center"
@@ -14,5 +15,5 @@
                 </MProgressCircular>
             </MRow>
         </PlaceholderContent>
-    </MImage>
+    </MImageExtension>
 </MCard>

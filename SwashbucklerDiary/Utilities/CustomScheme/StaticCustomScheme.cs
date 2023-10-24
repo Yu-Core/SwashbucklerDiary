@@ -1,7 +1,7 @@
 ﻿namespace SwashbucklerDiary.Utilities
 {
-    //Windows、Android中将自定义链接替换为https://0.0.0.0/appdata,保证同源，方便截图时不会出现跨域问题
-    //macOS、iOS用不了https://，只能用appdata://，所以截图时出现跨域问题
+    //Windows、Android中将自定义链接替换为./appdata,保证同源，方便截图时不会出现跨域问题
+    //macOS、iOS如果未来可以拦截Maui的app://,可以考虑取消appdata://，全都替换为./appdata
     public static class StaticCustomScheme
     {
         public readonly static string CustomStr = "appdata";
@@ -13,8 +13,7 @@
         private readonly static string LocalPathPrefix = $"./{CustomStr}/";
 #endif
         
-
-        public static string ReverseCustomSchemeRender(string? uri)
+        public static string LocalPathToCustomPath(string? uri)
         {
             if (string.IsNullOrEmpty(uri))
             {
@@ -27,7 +26,7 @@
             return uri;
         }
 
-        public static string CustomSchemeRender(string? uri)
+        public static string CustomPathToLocalPath(string? uri)
         {
             if (string.IsNullOrEmpty(uri))
             {

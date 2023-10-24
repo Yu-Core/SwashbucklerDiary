@@ -24,7 +24,8 @@
                 <MListItemAction>
                     <MAvatar Rounded="@("lg")"
                              Size="32">
-                        <MImage Src="@Avatar">
+                        <MImageExtension Src=""
+                                         MySrc="@Avatar">
                             <PlaceholderContent>
                                 <MRow Class="fill-height ma-0"
                                       Align="@AlignTypes.Center"
@@ -32,7 +33,7 @@
                                     <MProgressCircular Indeterminate></MProgressCircular>
                                  </MRow>
                              </PlaceholderContent>
-                         </MImage>
+                         </MImageExtension>
                      </MAvatar>
                      <MIcon>mdi-chevron-right</MIcon>
                  </MListItemAction>
@@ -54,60 +55,60 @@
                  <MListItemContent>
                      <MListItemSubtitle Class="text-right">
                          @UserName
-                     </MListItemSubtitle>
-                 </MListItemContent>
+                    </MListItemSubtitle>
+                </MListItemContent>
 
-                 <MListItemAction>
-                     <MIcon>mdi-chevron-right</MIcon>
-                 </MListItemAction>
-             </MListItem>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
 
-             <MDivider Class="mx-3"></MDivider>
+            <MDivider Class="mx-3"></MDivider>
 
-             <MListItem OnClick="()=>ShowEditSign = true">
-                 <MListItemIcon>
-                     <MIcon Class="list-item-icon">
-                         mdi-file-sign
-                     </MIcon>
-                 </MListItemIcon>
+            <MListItem OnClick="()=>ShowEditSign = true">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-file-sign
+                    </MIcon>
+                </MListItemIcon>
 
-                 <MListItemContent>
-                     <MListItemTitle>
-                         @(I18n.T("User.Sign.Name"))
-                     </MListItemTitle>
+                <MListItemContent>
+                    <MListItemTitle>
+                        @(I18n.T("User.Sign.Name"))
+                    </MListItemTitle>
 
-                 </MListItemContent>
+                </MListItemContent>
 
-                 <MListItemContent>
-                     <MListItemSubtitle Class="text-right">
-                         @Sign
-                     </MListItemSubtitle>
-                 </MListItemContent>
+                <MListItemContent>
+                    <MListItemSubtitle Class="text-right">
+                        @Sign
+                    </MListItemSubtitle>
+                </MListItemContent>
 
-                 <MListItemAction>
-                     <MIcon>mdi-chevron-right</MIcon>
-                 </MListItemAction>
-             </MListItem>
-         </MList>
-     </MCard>
- </ScrollContainer>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+</ScrollContainer>
 
- <MultiListDialog @bind-Value="ShowEditAvatar"
-              Title="@(I18n.T("User.EditAvatar"))"
-              DynamicListItems="EditAvatarMethods">
- </MultiListDialog>
+<MultiListDialog @bind-Value="ShowEditAvatar"
+                 Title="@(I18n.T("User.EditAvatar"))"
+                 DynamicListItems="EditAvatarMethods">
+</MultiListDialog>
 
- <InputDialog @bind-Value="ShowEditUserName"
-              Text="@UserName"
-              Title="@(I18n.T("User.EditUserName"))"
-              Placeholder="@(I18n.T("User.UserNamePlace"))"
-              OnOK="SaveUserName">
- </InputDialog>
+<InputDialog @bind-Value="ShowEditUserName"
+             Text="@UserName"
+             Title="@(I18n.T("User.EditUserName"))"
+             Placeholder="@(I18n.T("User.UserNamePlace"))"
+             OnOK="SaveUserName">
+</InputDialog>
 
- <InputDialog @bind-Value="ShowEditSign"
-              Text="@Sign"
-              Title="@(I18n.T("User.EditSign"))"
-              MaxLength="100"
-              Placeholder="@(I18n.T("User.SignPlace"))"
-              OnOK="SaveSign">
- </InputDialog>
+<InputDialog @bind-Value="ShowEditSign"
+             Text="@Sign"
+             Title="@(I18n.T("User.EditSign"))"
+             MaxLength="100"
+             Placeholder="@(I18n.T("User.SignPlace"))"
+             OnOK="SaveSign">
+</InputDialog>

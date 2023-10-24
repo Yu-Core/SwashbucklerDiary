@@ -93,7 +93,7 @@ namespace SwashbucklerDiary.Pages
             Diary = diary;
             if (EnableMarkdown)
             {
-                Diary.Content = StaticCustomScheme.CustomSchemeRender(Diary.Content);
+                Diary.Content = StaticCustomScheme.CustomPathToLocalPath(Diary.Content);
             }
         }
 
@@ -212,14 +212,6 @@ namespace SwashbucklerDiary.Pages
         {
             EnableMarkdown = !EnableMarkdown;
             await SettingsService.Save(SettingType.Markdown, EnableMarkdown);
-            if (EnableMarkdown)
-            {
-                Diary.Content = StaticCustomScheme.CustomSchemeRender(Diary.Content);
-            }
-            else
-            {
-                Diary.Content = StaticCustomScheme.ReverseCustomSchemeRender(Diary.Content!);
-            }
             StateHasChanged();
         }
 
@@ -264,7 +256,7 @@ namespace SwashbucklerDiary.Pages
 
         private string GetDiaryCopyContent()
         {
-            var content = StaticCustomScheme.ReverseCustomSchemeRender(Diary.Content);
+            var content = StaticCustomScheme.LocalPathToCustomPath(Diary.Content);
             if (string.IsNullOrEmpty(Diary.Title))
             {
                 return content;

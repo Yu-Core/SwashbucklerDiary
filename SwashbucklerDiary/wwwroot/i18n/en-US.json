@@ -695,5 +695,8 @@
       "Asc": "DiaryCount-Asc",
       "Desc": "DiaryCount-Desc"
     }
+  },
+  "Image": {
+    "Not exist": "Image does not exist"
   }
 }

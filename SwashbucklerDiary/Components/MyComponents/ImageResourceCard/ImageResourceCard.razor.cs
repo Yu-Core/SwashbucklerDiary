@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Components
         [CascadingParameter]
         protected ImageResourceCardList ImageResourceCardList { get; set; } = default!;
 
-        private string Src => StaticCustomScheme.CustomSchemeRender(Value.ResourceUri!);
+        private string? Src => Value.ResourceUri;
 
         private Task PreviewImage() => ImageResourceCardList.PreviewImage(Src);
     }

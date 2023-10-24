@@ -205,8 +205,7 @@ namespace SwashbucklerDiary.Pages
 
         private async Task SetAvatar()
         {
-            string uri = await SettingsService.Get(SettingType.Avatar);
-            Avatar = StaticCustomScheme.CustomSchemeRender(uri);
+            Avatar = await SettingsService.Get(SettingType.Avatar);
         }
 
         private async Task UpdateStatisticalData()

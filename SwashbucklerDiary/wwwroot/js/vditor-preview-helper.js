@@ -8,8 +8,8 @@ export function previewVditor(dotNetCallbackRef, element, text, options) {
     Vditor.preview(element, text, VditorOptions);
 }
 
-export function copy(dotNetCallbackRef, callbackMethod) {
-    var elements = document.querySelectorAll('.vditor-copy');
+export function copy(dotNetCallbackRef, callbackMethod, parent) {
+    var elements = parent.querySelectorAll('.vditor-copy');
     for (var i = 0; i < elements.length; i++) {
         elements[i].addEventListener('click', function () {
             dotNetCallbackRef.invokeMethodAsync(callbackMethod);
@@ -33,7 +33,7 @@ export function previewImage(dotNetCallbackRef, callbackMethod, parent) {
     var elements = parent.querySelectorAll("img");
     for (var i = 0; i < elements.length; i++) {
         elements[i].addEventListener('click', function () {
-            dotNetCallbackRef.invokeMethodAsync(callbackMethod, this.src);
+            dotNetCallbackRef.invokeMethodAsync(callbackMethod, this.getAttribute('src'));
         });
     }
 }

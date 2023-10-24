@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Components
 
         private IJSObjectReference module = default!;
 
-        private MMarkdown? MMarkdown;
+        private MMarkdown MMarkdown = default!;
 
         [Inject]
         private II18nService I18n { get; set; } = default!;
@@ -139,21 +139,19 @@ namespace SwashbucklerDiary.Components
             await module.InvokeVoidAsync("preventInputLoseFocus", null);
         }
 
-        private async Task HandleToolbarButtonClick(string btnName)
+        private async void HandleToolbarButtonClick(string btnName)
         {
-            if (btnName == "image")
+            switch (btnName)
             {
-                await AddImageAsync();
-            }
-
-            if (btnName == "audio")
-            {
-                await AddAudioAsync();
-            }
-
-            if (btnName == "video")
-            {
-                await AddVideoAsync();
+                case "image":
+                    await AddImageAsync();
+                    break;
+                case "audio":
+                    await AddAudioAsync();
+                    break;
+                case "video":
+                    await AddVideoAsync();
+                    break;
             }
         }
 
@@ -166,7 +164,7 @@ namespace SwashbucklerDiary.Components
             }
 
             string uri = await AppDataService.CreateAppDataImageFileAsync(path);
-            uri = StaticCustomScheme.CustomSchemeRender(uri);
+            uri = StaticCustomScheme.CustomPathToLocalPath(uri);
             string html = $"![]({uri})";
             await InsertValueAsync(html);
         }
@@ -180,7 +178,7 @@ namespace SwashbucklerDiary.Components
             }
 
             string uri = await AppDataService.CreateAppDataAudioFileAsync(path);
-            uri = StaticCustomScheme.CustomSchemeRender(uri);
+            uri = StaticCustomScheme.CustomPathToLocalPath(uri);
             string html = $"<audio src=\"{uri}\" controls ></audio>";
             await InsertValueAsync(html);
         }
@@ -194,14 +192,15 @@ namespace SwashbucklerDiary.Components
             }
 
             string uri = await AppDataService.CreateAppDataVideoFileAsync(path);
-            uri = StaticCustomScheme.CustomSchemeRender(uri);
+            uri = StaticCustomScheme.CustomPathToLocalPath(uri);
             string html = $"<video src=\"{uri}\" controls ></video>";
             await InsertValueAsync(html);
         }
 
         public async Task InsertValueAsync(string value)
         {
-            await MMarkdown!.InsertValueAsync(value);
+            await MMarkdown.InsertValueAsync(value);
+            await module.InvokeVoidAsync("moveCursorForward", value.Length);
         }
     }
 }

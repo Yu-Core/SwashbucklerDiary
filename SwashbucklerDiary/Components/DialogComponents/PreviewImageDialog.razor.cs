@@ -60,12 +60,28 @@ namespace SwashbucklerDiary.Components
 
         private string GetFilePath()
         {
-            string src = StaticCustomScheme.ReverseCustomSchemeRender(Src);
+            if(string.IsNullOrEmpty(Src))
+            {
+                return string.Empty;
+            }
+
+            var src = StaticCustomScheme.LocalPathToCustomPath(Src);
+            if (!src.StartsWith(StaticCustomScheme.CustomPathPrefix))
+            {
+                return string.Empty;
+            }
+
             return AppDataService.CustomSchemeUriToFilePath(src);
         }
 
         private async Task SaveToLocal()
         {
+            if (string.IsNullOrEmpty(FilePath))
+            {
+                await AlertService.Error(I18n.T("Image.Not exist"));
+                return;
+            }
+
             var name = Path.GetFileName(FilePath);
             var path = await PlatformService.SaveFileAsync(name, FilePath);
             if (path is not null)
@@ -76,6 +92,12 @@ namespace SwashbucklerDiary.Components
 
         private async Task Share()
         {
+            if (string.IsNullOrEmpty(FilePath))
+            {
+                await AlertService.Error(I18n.T("Image.Not exist"));
+                return;
+            }
+
             await PlatformService.ShareFile(I18n.T("Share.Share"), FilePath);
             await HandleAchievements(AchievementType.Share);
         }

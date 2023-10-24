@@ -47,7 +47,7 @@ namespace SwashbucklerDiary.Components
             var dotNetCallbackRef = DotNetObjectReference.Create(this);
 
             //点击复制按钮提示复制成功
-            await module.InvokeVoidAsync("copy", new object[2] { dotNetCallbackRef, "CopySuccess" });
+            await module.InvokeVoidAsync("copy", new object[3] { dotNetCallbackRef, "CopySuccess", element });
             //修复点击链接的一些错误
             await module.InvokeVoidAsync("fixLink", new object[1] { element });
             //图片预览
