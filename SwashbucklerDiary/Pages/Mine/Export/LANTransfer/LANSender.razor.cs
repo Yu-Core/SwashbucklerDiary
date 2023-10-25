@@ -89,7 +89,7 @@ namespace SwashbucklerDiary.Pages
         }
 
         private string GetDeviceIcon(DevicePlatformType devicePlatform)
-            => LANService.GetDevicePlatformTypeIcon(devicePlatform);
+            => PlatformService.GetDevicePlatformTypeIcon(devicePlatform);
 
         private async Task LoadSettings()
         {

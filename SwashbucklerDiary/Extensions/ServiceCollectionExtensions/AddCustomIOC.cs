@@ -32,7 +32,7 @@ namespace SwashbucklerDiary.Extensions
             services.AddSingleton<II18nService, I18nService>();
             services.AddSingleton<IPlatformService, PlatformService>();
             services.AddSingleton<IThemeService, ThemeService>();
-            services.AddSingleton<IStateService, StateService>();
+            services.AddSingleton<IVersionService, VersionService>();
             services.AddSingleton<IAppDataService, AppDataService>();
             services.AddSingleton<ILANService, LANService>();
             services.AddScoped<IScreenshotService, ScreenshotService>();

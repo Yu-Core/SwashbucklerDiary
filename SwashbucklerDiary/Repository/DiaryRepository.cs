@@ -114,6 +114,21 @@ namespace SwashbucklerDiary.Repository
             .ExecuteCommandAsync();
         }
 
+        public Task<bool> UpdateIncludesAsync(List<DiaryModel> models)
+        {
+            return base.Context.UpdateNav(models)
+            .Include(it => it.Tags, new UpdateNavOptions
+            {
+                ManyToManyIsUpdateA = true
+            })
+            .Include(it => it.Resources, new UpdateNavOptions
+            {
+                ManyToManyIsUpdateA = true,
+                ManyToManyIsUpdateB = true,
+            })
+            .ExecuteCommandAsync();
+        }
+
         public Task<bool> UpdateTagsAsync(DiaryModel model)
         {
             return base.Context.UpdateNav(model)

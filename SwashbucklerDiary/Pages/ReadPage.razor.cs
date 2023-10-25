@@ -3,7 +3,6 @@ using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -91,10 +90,6 @@ namespace SwashbucklerDiary.Pages
             }
 
             Diary = diary;
-            if (EnableMarkdown)
-            {
-                Diary.Content = StaticCustomScheme.CustomPathToLocalPath(Diary.Content);
-            }
         }
 
         private async Task LoadSettings()
@@ -256,7 +251,7 @@ namespace SwashbucklerDiary.Pages
 
         private string GetDiaryCopyContent()
         {
-            var content = StaticCustomScheme.LocalPathToCustomPath(Diary.Content);
+            var content = Diary.Content!;
             if (string.IsNullOrEmpty(Diary.Title))
             {
                 return content;

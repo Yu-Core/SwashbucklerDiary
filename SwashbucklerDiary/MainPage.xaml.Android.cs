@@ -41,7 +41,7 @@ namespace SwashbucklerDiary
 
             public override WebResourceResponse ShouldInterceptRequest(Android.Webkit.WebView view, IWebResourceRequest request)
             {
-                if (request.Url.Path.StartsWith(StaticCustomScheme.InterceptPrefix))
+                if (request.Url.Path.StartsWith(StaticCustomPath.InterceptPrefix))
                 {
                     return InterceptAppDataRequest(view, request);
                 }
@@ -62,7 +62,7 @@ namespace SwashbucklerDiary
 
             private WebResourceResponse InterceptAppDataRequest(Android.Webkit.WebView view, IWebResourceRequest request)
             {
-                var path = request.Url.Path.TrimStart(StaticCustomScheme.InterceptPrefix);
+                var path = request.Url.Path.TrimStart(StaticCustomPath.InterceptPrefix);
                 path = Path.Combine(FileSystem.AppDataDirectory, path);
                 if (File.Exists(path))
                 {

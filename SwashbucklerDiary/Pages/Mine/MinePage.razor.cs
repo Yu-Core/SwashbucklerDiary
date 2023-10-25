@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Serilog;
 using SwashbucklerDiary.Components;
-using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {

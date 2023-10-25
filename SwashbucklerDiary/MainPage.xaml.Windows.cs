@@ -32,12 +32,12 @@ namespace SwashbucklerDiary
         async Task HandleAppDataRequest(CoreWebView2 webview2, CoreWebView2WebResourceRequestedEventArgs args)
         {
             string path = new Uri(args.Request.Uri).AbsolutePath;
-            if (!path.StartsWith(StaticCustomScheme.InterceptPrefix))
+            if (!path.StartsWith(StaticCustomPath.InterceptPrefix))
             {
                 return;
             }
 
-            path = path.TrimStart(StaticCustomScheme.InterceptPrefix);
+            path = path.TrimStart(StaticCustomPath.InterceptPrefix);
             path = Path.Combine(path.Split("/"));
             var filePath = Path.Combine(FileSystem.AppDataDirectory, path);
             if (File.Exists(filePath))

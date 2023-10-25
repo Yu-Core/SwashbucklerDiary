@@ -11,6 +11,8 @@ namespace SwashbucklerDiary.IServices
 
         Task<bool> UpdateIncludesAsync(DiaryModel model);
 
+        Task<bool> UpdateIncludesAsync(List<DiaryModel> models);
+
         Task<int> GetWordCount(WordCountType type);
 
         int GetWordCount(List<DiaryModel> diaries, WordCountType type);

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Components
 {
@@ -16,7 +15,7 @@ namespace SwashbucklerDiary.Components
         [CascadingParameter]
         protected ImageResourceCardList ImageResourceCardList { get; set; } = default!;
 
-        private string? Src => Value.ResourceUri;
+        private string Src => Value.ResourceUri!;
 
         private Task PreviewImage() => ImageResourceCardList.PreviewImage(Src);
     }

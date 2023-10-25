@@ -18,9 +18,9 @@ namespace SwashbucklerDiary.Services
 
         private readonly II18nService I18n;
 
-        private const string exportFileName = "SwashbucklerDiaryExport";
+        private const string exportFileName = "SDExport";
 
-        private readonly static string customScheme = StaticCustomScheme.CustomPathPrefix;
+        private readonly static string CustomPathPrefix = StaticCustomPath.CustomPathPrefix;
 
         private const string ImageFolderName = "Image";
 
@@ -64,6 +64,16 @@ namespace SwashbucklerDiary.Services
             }
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
+            var versionJsonPath = Path.Combine(outputFolder, "version.json");
+            if (!File.Exists(versionJsonPath))
+            {
+                return Task.FromResult(false);
+            }
+            else
+            {
+                File.Delete(versionJsonPath);
+            }
+
             // 获取文件夹下的db文件
             string[] jsonFiles = Directory.GetFiles(outputFolder, "*.db3");
             if (!jsonFiles.Any())
@@ -268,6 +278,7 @@ namespace SwashbucklerDiary.Services
         {
             string outputFolder = Path.Combine(FileSystem.CacheDirectory, "Json");
             string zipFilePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}Json.zip");
+            string fileSuffix = ".json";
 
             if (!Directory.Exists(outputFolder))
             {
@@ -280,7 +291,7 @@ namespace SwashbucklerDiary.Services
 
             foreach (var item in diaries)
             {
-                string fileName = item.CreateTime.ToString("yyyy-MM-dd") + ".json";
+                string fileName = item.CreateTime.ToString("yyyy-MM-dd") + fileSuffix;
                 string filePath = Path.Combine(outputFolder, fileName);
 
                 var options = new JsonSerializerOptions
@@ -294,6 +305,8 @@ namespace SwashbucklerDiary.Services
             }
 
             CopyDiaryResource(diaries, outputFolder);
+
+            CreateExportVersionInfo(outputFolder, fileSuffix);
 
             if (File.Exists(zipFilePath))
             {
@@ -324,8 +337,7 @@ namespace SwashbucklerDiary.Services
                 string fileName = item.CreateTime.ToString("yyyy-MM-dd") + ".md";
                 string filePath = Path.Combine(outputFolder, fileName);
 
-                var content = item.Content?.Replace(customScheme, "./");
-                WriteToFile(filePath, content);
+                WriteToFile(filePath, item.Content);
             }
 
             CopyDiaryResource(diaries, outputFolder);
@@ -339,6 +351,7 @@ namespace SwashbucklerDiary.Services
             ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
             return Task.FromResult(zipFilePath);
         }
+
         public Task<string> ExportXlsxFileAsync(List<DiaryModel> diaries)
         {
             string filePath = Path.Combine(FileSystem.CacheDirectory, $"{exportFileName}Xlsx.xlsx");
@@ -469,7 +482,7 @@ namespace SwashbucklerDiary.Services
             {
                 if (isMD5)
                 {
-                    return customScheme + targetFilePath;
+                    return CustomPathPrefix + targetFilePath;
                 }
 
                 File.Delete(path);
@@ -487,17 +500,11 @@ namespace SwashbucklerDiary.Services
                 await sourceStream.CopyToAsync(localFileStream);
             };
 
-            return customScheme + targetFilePath;
+            return CustomPathPrefix + targetFilePath;
         }
 
-        public Task<string> CreateAppDataImageFileAsync(string filePath)
-            => CreateAppDataFileAsync(ImageFolderName, filePath);
-
-        public Task<string> CreateAppDataAudioFileAsync(string filePath)
-            => CreateAppDataFileAsync(AudioFolderName, filePath);
-
-        public Task<string> CreateAppDataVideoFileAsync(string filePath)
-            => CreateAppDataFileAsync(VideoFolderName, filePath);
+        public Task<string> CreateAppDataFileAsync(ResourceType type, string filePath)
+            => CreateAppDataFileAsync(ResourceFolders[type], filePath);
 
         public Task<bool> DeleteAppDataFileByFilePathAsync(string filePath)
         {
@@ -510,22 +517,21 @@ namespace SwashbucklerDiary.Services
             return Task.FromResult(true);
         }
 
-        public Task<bool> DeleteAppDataFileByCustomSchemeAsync(string uri)
+        public Task<bool> DeleteAppDataFileByCustomPathAsync(string uri)
         {
-            string path = CustomSchemeUriToFilePath(uri);
+            string path = CustomPathUriToFilePath(uri);
             return DeleteAppDataFileByFilePathAsync(path);
         }
 
-        public string CustomSchemeUriToFilePath(string uri)
+        public string CustomPathUriToFilePath(string uri)
         {
-            var relativePath = Path.Combine(uri.TrimStart(customScheme).Split('/'));
+            var relativePath = Path.Combine(uri.TrimStart(CustomPathPrefix).Split('/'));
             return Path.Combine(FileSystem.Current.AppDataDirectory, relativePath);
         }
 
         private static void CopyUriFileToOutFolder(string uri, string outFolder)
         {
-            uri = uri.Replace(customScheme, "");
-            var relativePath = Path.Combine(uri.TrimStart(customScheme).Split('/'));
+            var relativePath = Path.Combine(uri.TrimStart(CustomPathPrefix).Split('/'));
             var filePath = Path.Combine(FileSystem.Current.AppDataDirectory, relativePath);
             if (!File.Exists(filePath))
             {
@@ -565,6 +571,16 @@ namespace SwashbucklerDiary.Services
             }
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
+            var versionJsonPath = Path.Combine(outputFolder, "version.json");
+            if(!File.Exists(versionJsonPath))
+            {
+                return new();
+            }
+            else
+            {
+                File.Delete(versionJsonPath);
+            }
+
             // 获取文件夹下的所有json文件
             string[] jsonFiles = Directory.GetFiles(outputFolder, "*.json");
             if (jsonFiles.Length == 0)
@@ -642,6 +658,8 @@ namespace SwashbucklerDiary.Services
                 CopyDiaryResource(diaries, outputFolder);
             }
 
+            CreateExportVersionInfo(outputFolder, ".db3");
+
             if (File.Exists(zipFilePath))
             {
                 File.Delete(zipFilePath);
@@ -653,6 +671,7 @@ namespace SwashbucklerDiary.Services
 
         private void CopyDiaryResource(List<DiaryModel> diaries, string outputFolder)
         {
+            outputFolder = Path.Combine(outputFolder, StaticCustomPath.CustomStr);
             var resources = diaries.SelectMany(a => a.Resources ?? new()).Distinct().ToList();
 
             foreach (var resource in resources)
@@ -668,7 +687,7 @@ namespace SwashbucklerDiary.Services
 
         private void RestoreDiaryResource(string outputFolder)
         {
-            string[] subfolders = Directory.GetDirectories(outputFolder);
+            string[] subfolders = Directory.GetDirectories(outputFolder, "*", SearchOption.AllDirectories);
             foreach (string subfolder in subfolders)
             {
                 var name = Path.GetFileName(subfolder);
@@ -682,7 +701,7 @@ namespace SwashbucklerDiary.Services
 
         public string GetBackupFileName()
         {
-            string name = "SwashbucklerDiaryBackups";
+            string name = "SDBackups";
             string time = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
             string version = $"v{PlatformService.GetAppVersion()}";
             string extension = ".zip";
@@ -698,16 +717,34 @@ namespace SwashbucklerDiary.Services
             }
         }
 
-        public void DeleteAppDataFileByCustomScheme(List<string>? exceptUris, ResourceType resourceType)
+        public void DeleteAppDataFileByCustomPath(List<string>? exceptUris, ResourceType resourceType)
         {
             if (exceptUris is null || !exceptUris.Any())
             {
                 return;
             }
 
-            var exceptPaths = exceptUris.Select(CustomSchemeUriToFilePath).ToList();
+            var exceptPaths = exceptUris.Select(CustomPathUriToFilePath).ToList();
             var folderPath = Path.Combine(FileSystem.AppDataDirectory, ResourceFolders[resourceType]);
             ClearFolder(folderPath, exceptPaths);
+        }
+
+        private void CreateExportVersionInfo(string outputFolder, string fileSuffix)
+        {
+            var exportVersionInfo = new ExportVersionInfo()
+            {
+                Version = PlatformService.GetAppVersion(),
+                FileSuffix = fileSuffix,
+                Platform = PlatformService.GetDevicePlatformType().ToString(),
+                DateTime = DateTime.Now,
+            };
+
+            // 将对象序列化为 JSON 字符串
+            string jsonString = JsonSerializer.Serialize(exportVersionInfo);
+
+            // 将 JSON 字符串写入文件
+            var jsonPath = Path.Combine(outputFolder, "version.json");
+            File.WriteAllText(jsonPath, jsonString);
         }
     }
 }

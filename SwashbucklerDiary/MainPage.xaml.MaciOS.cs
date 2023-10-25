@@ -13,7 +13,7 @@ namespace SwashbucklerDiary
         {
             e.Configuration.AllowsInlineMediaPlayback = true;
             //e.Configuration.MediaTypesRequiringUserActionForPlayback = WebKit.WKAudiovisualMediaTypes.None;
-            e.Configuration.SetUrlSchemeHandler(new AppDataSchemeHandler(), StaticCustomScheme.CustomStr);
+            e.Configuration.SetUrlSchemeHandler(new AppDataSchemeHandler(), StaticCustomPath.CustomStr);
         }
 
         private partial void BlazorWebViewInitialized(object? sender, BlazorWebViewInitializedEventArgs e)

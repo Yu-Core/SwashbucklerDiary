@@ -1,7 +1,6 @@
 ﻿using BlazorComponent.JSInterop;
 using Microsoft.JSInterop;
 using Serilog;
-using Serilog.Core;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Utilities;
 
@@ -30,7 +29,7 @@ namespace SwashbucklerDiary.Services
         {
             try
             {
-                if (StaticCustomScheme.IsInternalUri(uri))
+                if (uri.StartsWith(StaticCustomPath.CustomPathPrefix))
                 {
                     return uri;
                 }

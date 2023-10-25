@@ -2,7 +2,6 @@
 using SwashbucklerDiary.Components;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -114,7 +113,7 @@ namespace SwashbucklerDiary.Pages
             await SettingsService.Save(SettingType.Avatar, uri);
             await SetAvatar(uri);
 
-            await AppDataService.DeleteAppDataFileByCustomSchemeAsync(oldUri);
+            await AppDataService.DeleteAppDataFileByCustomPathAsync(oldUri);
 
             await AlertService.StopLoading();
             await InvokeAsync(StateHasChanged);

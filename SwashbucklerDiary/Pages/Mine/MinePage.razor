@@ -28,9 +28,8 @@
                                          Rounded="@("lg")"
                                          Size="70"
                                          @onclick:stopPropagation="true">
-                            <MImageExtension Src=""
-                                             MySrc="@(Avatar)"
-                                             @onclick="()=>ShowPreviewImage=true">
+                            <MImage Src="@(Avatar)"
+                                    @onclick="()=>ShowPreviewImage=true">
                                 <PlaceholderContent>
                                     <MRow Class="fill-height ma-0"
                                           Align="@AlignTypes.Center"
@@ -39,7 +38,7 @@
                                         </MProgressCircular>
                                     </MRow>
                                 </PlaceholderContent>
-                            </MImageExtension>
+                            </MImage>
                         </MListItemAvatar>
                         <MListItemContent>
                             <MListItemTitle Class="text-h6 font-weight-bold">

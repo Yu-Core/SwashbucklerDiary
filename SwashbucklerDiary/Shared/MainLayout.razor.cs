@@ -44,6 +44,9 @@ namespace SwashbucklerDiary.Shared
         [Inject]
         private IJSRuntime JS { get; set; } = default!;
 
+        [Inject]
+        private IVersionService VersionService { get; set; } = default!;
+
 
         public void Dispose()
         {
@@ -68,6 +71,7 @@ namespace SwashbucklerDiary.Shared
         {
             await LoadSettings();
             await DisableJSConsoleLog();
+            await VersionService.UpdateVersion();
             await base.OnInitializedAsync();
         }
 

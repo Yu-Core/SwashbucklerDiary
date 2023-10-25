@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Shared
         private II18nService I18n { get; set; } = default!;
 
         [Inject]
-        private IStateService StateService { get; set; } = default!;
+        private IVersionService VersionService { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -65,7 +65,7 @@ namespace SwashbucklerDiary.Shared
             await InsertDefaultDiaries();
             await SettingsService.Save(SettingType.FirstSetLanguage, true);
             await SettingsService.Save(SettingType.Language, value);
-            await StateService.NotifyFirstLauchChanged();
+            await VersionService.NotifyFirstLauchChanged();
         }
 
         private async Task Argee()

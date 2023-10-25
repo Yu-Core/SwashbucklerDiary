@@ -65,13 +65,13 @@ namespace SwashbucklerDiary.Components
                 return string.Empty;
             }
 
-            var src = StaticCustomScheme.LocalPathToCustomPath(Src);
-            if (!src.StartsWith(StaticCustomScheme.CustomPathPrefix))
+            var src = Src;
+            if (!src.StartsWith(StaticCustomPath.CustomPathPrefix))
             {
                 return string.Empty;
             }
 
-            return AppDataService.CustomSchemeUriToFilePath(src);
+            return AppDataService.CustomPathUriToFilePath(src);
         }
 
         private async Task SaveToLocal()

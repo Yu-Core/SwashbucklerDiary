@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Extensions;
+﻿using DocumentFormat.OpenXml.EMMA;
+using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IRepository;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
@@ -24,6 +25,11 @@ namespace SwashbucklerDiary.Services
         public Task<bool> UpdateIncludesAsync(DiaryModel model)
         {
             return _iDiaryRepository.UpdateIncludesAsync(model);
+        }
+
+        public Task<bool> UpdateIncludesAsync(List<DiaryModel> models)
+        {
+            return _iDiaryRepository.UpdateIncludesAsync(models);
         }
 
         public Task<bool> UpdateTagsAsync(DiaryModel model)

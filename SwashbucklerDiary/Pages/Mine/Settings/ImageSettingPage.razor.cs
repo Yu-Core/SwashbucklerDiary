@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Pages
             ImageResources = resources;
 
             var resourceUris = resources.Select(it => it.ResourceUri!).ToList();
-            AppDataService.DeleteAppDataFileByCustomScheme(resourceUris, ResourceType.Image);
+            AppDataService.DeleteAppDataFileByCustomPath(resourceUris, ResourceType.Image);
             
         }
 

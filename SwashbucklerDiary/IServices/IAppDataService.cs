@@ -53,20 +53,16 @@ namespace SwashbucklerDiary.IServices
 
         Task<string> CreateAppDataFileAsync(string fn, string filePath);
 
-        Task<string> CreateAppDataImageFileAsync(string filePath);
-
-        Task<string> CreateAppDataAudioFileAsync(string filePath);
-
-        Task<string> CreateAppDataVideoFileAsync(string filePath);
+        Task<string> CreateAppDataFileAsync(ResourceType type, string filePath);
 
         Task<bool> DeleteAppDataFileByFilePathAsync(string filePath);
 
-        Task<bool> DeleteAppDataFileByCustomSchemeAsync(string uri);
+        Task<bool> DeleteAppDataFileByCustomPathAsync(string uri);
 
-        void DeleteAppDataFileByCustomScheme(List<string>? exceptUris, ResourceType resourceType);
+        void DeleteAppDataFileByCustomPath(List<string>? exceptUris, ResourceType resourceType);
 
         Task<List<DiaryModel>> ImportJsonFileAsync(string filePath);
 
-        string CustomSchemeUriToFilePath(string uri);
+        string CustomPathUriToFilePath(string uri);
     }
 }

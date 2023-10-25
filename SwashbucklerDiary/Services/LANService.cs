@@ -9,20 +9,14 @@ namespace SwashbucklerDiary.Services
 {
     public class LANService : ILANService
     {
-        private readonly Dictionary<DevicePlatformType, string> DeviceIcons = new()
-        {
-            {DevicePlatformType.Windows,"mdi-microsoft-windows" },
-            {DevicePlatformType.Android,"mdi-android" },
-            {DevicePlatformType.iOS,"mdi-apple-ios" },
-            {DevicePlatformType.MacOS,"mdi-apple" },
-            {DevicePlatformType.Unknown,"mdi-monitor-cellphone" },
-        };
-
         private readonly IAppDataService AppDataService;
 
-        public LANService(IAppDataService appDataService)
+        private readonly IPlatformService PlatformService;
+
+        public LANService(IAppDataService appDataService, IPlatformService platformService)
         {
             AppDataService = appDataService;
+            PlatformService = platformService;
         }
 
         public string GetIPPrefix(string ipAddress)
@@ -75,7 +69,7 @@ namespace SwashbucklerDiary.Services
         {
             string deviceName = GetLocalDeviceName();
             string ipAddress = GetLocalIPv4();
-            DevicePlatformType platformType = GetLocalDevicePlatformType();
+            DevicePlatformType platformType = PlatformService.GetDevicePlatformType();
 
             return new()
             {
@@ -88,33 +82,6 @@ namespace SwashbucklerDiary.Services
         public string GetLocalDeviceName()
         {
             return DeviceInfo.Current.Name;
-        }
-
-        public DevicePlatformType GetLocalDevicePlatformType()
-        {
-#if WINDOWS
-            return DevicePlatformType.Windows;
-#elif ANDROID
-            return DevicePlatformType.Android;
-#elif MACCATALYST
-            return DevicePlatformType.MacOS;
-#elif IOS
-            return DevicePlatformType.iOS;
-#else
-            return DevicePlatformType.Unknown;
-#endif
-        }
-
-        public string GetDevicePlatformTypeIcon(DevicePlatformType platformType)
-        {
-            if (DeviceIcons.TryGetValue(platformType, out string? value))
-            {
-                return value;
-            }
-            else
-            {
-                return DeviceIcons[DevicePlatformType.Unknown];
-            }
         }
 
         public bool IsConnection()

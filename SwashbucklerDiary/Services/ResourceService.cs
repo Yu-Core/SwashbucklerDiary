@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Services
         public List<ResourceModel> GetDiaryResources(string content)
         {
             var resources = new List<ResourceModel>();
-            string pattern = @"(?<=\(|"")(appdata:///\S+?)(?=\)|"")"; ;
+            string pattern = $@"(?<=\(|"")({StaticCustomPath.CustomPathPrefix}\S+?)(?=\)|"")";
 
             MatchCollection matches = Regex.Matches(content, pattern);
 

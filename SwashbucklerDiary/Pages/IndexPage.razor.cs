@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Pages
         private StringNumber tab = 0;
 
         [Inject]
-        private IStateService StateService { get; set; } = default!;
+        private IVersionService VersionService { get; set; } = default!;
 
         public async Task LoadSettings()
         {
@@ -27,7 +27,8 @@ namespace SwashbucklerDiary.Pages
 
         protected override void OnInitialized()
         {
-            FirstLauch();
+            VersionService.AfterFirstLauch += UpdateDiariesAndStateHasChanged;
+            VersionService.AfterUpdateVersion += UpdateDiariesAndStateHasChanged;
             base.OnInitialized();
         }
 
@@ -39,7 +40,8 @@ namespace SwashbucklerDiary.Pages
 
         protected override void OnDispose()
         {
-            StateService.FirstLauch -= FirstLauchUpdateDiaries;
+            VersionService.AfterFirstLauch -= UpdateDiariesAndStateHasChanged;
+            VersionService.AfterUpdateVersion -= UpdateDiariesAndStateHasChanged;
             base.OnDispose();
         }
 
@@ -114,12 +116,7 @@ namespace SwashbucklerDiary.Pages
             return Task.CompletedTask;
         }
 
-        private void FirstLauch()
-        {
-            StateService.FirstLauch += FirstLauchUpdateDiaries;
-        }
-
-        private async Task FirstLauchUpdateDiaries()
+        private async Task UpdateDiariesAndStateHasChanged()
         {
             await UpdateDiariesAsync();
             await InvokeAsync(StateHasChanged);

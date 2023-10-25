@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Components
 {
@@ -163,8 +162,7 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            string uri = await AppDataService.CreateAppDataImageFileAsync(path);
-            uri = StaticCustomScheme.CustomPathToLocalPath(uri);
+            string uri = await AppDataService.CreateAppDataFileAsync(ResourceType.Image, path);
             string html = $"![]({uri})";
             await InsertValueAsync(html);
         }
@@ -177,8 +175,7 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            string uri = await AppDataService.CreateAppDataAudioFileAsync(path);
-            uri = StaticCustomScheme.CustomPathToLocalPath(uri);
+            string uri = await AppDataService.CreateAppDataFileAsync(ResourceType.Audio, path);
             string html = $"<audio src=\"{uri}\" controls ></audio>";
             await InsertValueAsync(html);
         }
@@ -191,8 +188,7 @@ namespace SwashbucklerDiary.Components
                 return;
             }
 
-            string uri = await AppDataService.CreateAppDataVideoFileAsync(path);
-            uri = StaticCustomScheme.CustomPathToLocalPath(uri);
+            string uri = await AppDataService.CreateAppDataFileAsync(ResourceType.Video, path);
             string html = $"<video src=\"{uri}\" controls ></video>";
             await InsertValueAsync(html);
         }

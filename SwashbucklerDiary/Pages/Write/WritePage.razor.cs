@@ -5,7 +5,6 @@ using SwashbucklerDiary.Components;
 using SwashbucklerDiary.Extensions;
 using SwashbucklerDiary.IServices;
 using SwashbucklerDiary.Models;
-using SwashbucklerDiary.Utilities;
 
 namespace SwashbucklerDiary.Pages
 {
@@ -207,11 +206,6 @@ namespace SwashbucklerDiary.Pages
             }
 
             Diary = diary;
-            if (EnableMarkdown)
-            {
-                Diary.Content = StaticCustomScheme.CustomPathToLocalPath(Diary.Content);
-            }
-
             EnableTitle = !string.IsNullOrEmpty(diary.Title);
         }
 
@@ -226,7 +220,7 @@ namespace SwashbucklerDiary.Pages
             MenuItems = new()
             {
                 new(this, SetTitleText, "mdi-format-title", ()=> SettingChange(SettingType.Title, ref EnableTitle)),
-                new(this, SetMarkdownText, SetMarkdownIcon, MarkdownChange),
+                new(this, SetMarkdownText, SetMarkdownIcon, ()=> SettingChange(SettingType.Markdown, ref EnableMarkdown)),
             };
             WeatherIcons = IconService.GetWeatherIcons();
             MoodIcons = IconService.GetMoodIcons();
@@ -279,7 +273,6 @@ namespace SwashbucklerDiary.Pages
                 return;
             }
 
-            Diary.Content = StaticCustomScheme.LocalPathToCustomPath(Diary.Content!);
             Diary.Resources = ResourceService.GetDiaryResources(Diary.Content);
             Diary.UpdateTime = DateTime.Now;
             if (CreateMode)
@@ -396,19 +389,6 @@ namespace SwashbucklerDiary.Pages
             else
             {
                 await MyTextarea.InsertValueAsync(dateTimeNow);
-            }
-        }
-
-        private async Task MarkdownChange()
-        {
-            await SettingChange(SettingType.Markdown, ref EnableMarkdown);
-            if(EnableMarkdown)
-            {
-                Diary.Content = StaticCustomScheme.CustomPathToLocalPath(Diary.Content);
-            }
-            else
-            {
-                Diary.Content = StaticCustomScheme.LocalPathToCustomPath(Diary.Content!);
             }
         }
     }

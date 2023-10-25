@@ -223,5 +223,9 @@ namespace SwashbucklerDiary.IServices
         /// <param name="themeState"></param>
         /// <param name="backgroundColor"></param>
         void SetTitleBarOrStatusBar(ThemeState themeState, Color backgroundColor);
+
+        DevicePlatformType GetDevicePlatformType();
+
+        string GetDevicePlatformTypeIcon(DevicePlatformType platformType);
     }
 }

@@ -35,13 +35,12 @@
         </MToolbar>
 
         <div style="position:relative;z-index:1;height:100%;">
-            <MImageExtension Id="@Id"
-                             Style="position:absolute;"
-                             Src=""
-                             MySrc="@Src"
-                             Width="@("100%")"
-                             Height="@("100%")"
-                             Contain="true">
+            <MImage Id="@Id"
+                    Style="position:absolute;"
+                    Src="@Src"
+                    Width="@("100%")"
+                    Height="@("100%")"
+                    Contain="true">
                 <PlaceholderContent>
                     <MRow Class="fill-height ma-0"
                           Align="@AlignTypes.Center"
@@ -50,7 +49,7 @@
                         </MProgressCircular>
                     </MRow>
                 </PlaceholderContent>
-            </MImageExtension>
+            </MImage>
         </div>
 
         <MToolbar Class="flex-grow-0"
