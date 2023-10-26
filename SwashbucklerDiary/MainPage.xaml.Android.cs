@@ -41,9 +41,10 @@ namespace SwashbucklerDiary
 
             public override WebResourceResponse ShouldInterceptRequest(Android.Webkit.WebView view, IWebResourceRequest request)
             {
-                if (request.Url.Path.StartsWith(StaticCustomPath.InterceptPrefix))
+                var intercept = InterceptCustomPathRequest(request, out WebResourceResponse webResourceResponse);
+                if (intercept)
                 {
-                    return InterceptAppDataRequest(view, request);
+                    return webResourceResponse;
                 }
 
                 return WebViewClient.ShouldInterceptRequest(view, request);
@@ -60,20 +61,28 @@ namespace SwashbucklerDiary
                 WebViewClient.Dispose();
             }
 
-            private WebResourceResponse InterceptAppDataRequest(Android.Webkit.WebView view, IWebResourceRequest request)
+            private static bool InterceptCustomPathRequest(IWebResourceRequest request, out WebResourceResponse webResourceResponse)
             {
-                var path = request.Url.Path.TrimStart(StaticCustomPath.InterceptPrefix);
-                path = Path.Combine(FileSystem.AppDataDirectory, path);
-                if (File.Exists(path))
+                webResourceResponse = null;
+
+                var uri = request.Url.ToString();
+                if (!uri.StartsWith(StaticCustomPath.InterceptPrefix))
                 {
-                    var response = CreateWebResourceResponse(request, path);
-                    return response;
+                    return false;
                 }
 
-                return WebViewClient.ShouldInterceptRequest(view, request);
+                var path = uri.TrimStart(StaticCustomPath.InterceptPrefix);
+                path = Path.Combine(FileSystem.AppDataDirectory, path);
+                if (!File.Exists(path))
+                {
+                    return false;
+                }
+
+                webResourceResponse = CreateWebResourceResponse(request, path);
+                return true;
             }
 
-            private WebResourceResponse CreateWebResourceResponse(IWebResourceRequest request, string path)
+            private static WebResourceResponse CreateWebResourceResponse(IWebResourceRequest request, string path)
             {
                 string contentType = StaticContentProvider.GetResponseContentTypeOrDefault(path);
                 var headers = StaticContentProvider.GetResponseHeaders(contentType);

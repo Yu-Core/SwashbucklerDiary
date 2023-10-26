@@ -76,14 +76,14 @@ namespace SwashbucklerDiary.Services
         private async Task UpdateVersion647()
         {
             string avatar = await SettingsService.Get(SettingType.Avatar);
-            avatar = avatar.Replace("appdata:///", "./appdata/");
+            avatar = avatar.Replace("appdata:///", "appdata/");
             await SettingsService.Save(SettingType.Avatar, avatar);
 
             var diaries = await DiaryService.QueryAsync();
             await ResourceService.DeleteAsync();
             foreach (var diary in diaries)
             {
-                diary.Content = diary.Content!.Replace("appdata:///", "./appdata/");
+                diary.Content = diary.Content!.Replace("appdata:///", "appdata/");
                 diary.Resources = ResourceService.GetDiaryResources(diary.Content);
                 diary.UpdateTime = DateTime.Now;
             }

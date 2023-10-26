@@ -26,18 +26,22 @@ namespace SwashbucklerDiary
 
         async void WebView2WebResourceRequested(CoreWebView2 webview2, CoreWebView2WebResourceRequestedEventArgs args)
         {
-            await HandleAppDataRequest(webview2, args);
-        }
-
-        async Task HandleAppDataRequest(CoreWebView2 webview2, CoreWebView2WebResourceRequestedEventArgs args)
-        {
-            string path = new Uri(args.Request.Uri).AbsolutePath;
-            if (!path.StartsWith(StaticCustomPath.InterceptPrefix))
+            var intercept = await InterceptCustomPathRequest(webview2, args);
+            if (intercept)
             {
                 return;
             }
+        }
 
-            path = path.TrimStart(StaticCustomPath.InterceptPrefix);
+        static async Task<bool> InterceptCustomPathRequest(CoreWebView2 webview2, CoreWebView2WebResourceRequestedEventArgs args)
+        {
+            string uri = args.Request.Uri;
+            if (!uri.StartsWith(StaticCustomPath.InterceptPrefix))
+            {
+                return false;
+            }
+
+            var path = uri.TrimStart(StaticCustomPath.InterceptPrefix);
             path = Path.Combine(path.Split("/"));
             var filePath = Path.Combine(FileSystem.AppDataDirectory, path);
             if (File.Exists(filePath))
@@ -48,6 +52,8 @@ namespace SwashbucklerDiary
             {
                 args.Response = webview2.Environment.CreateWebResourceResponse(null, 404, "Not Found", string.Empty);
             }
+
+            return true;
 
             static string GetHeaderString(IDictionary<string, string> headers) =>
                 string.Join(Environment.NewLine, headers.Select(kvp => $"{kvp.Key}: {kvp.Value}"));

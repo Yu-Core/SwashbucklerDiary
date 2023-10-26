@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using MauiBlazorToolkit;
+using Microsoft.AspNetCore.Components.WebView.Maui;
 using SwashbucklerDiary.Extensions;
 
 namespace SwashbucklerDiary
@@ -29,6 +30,11 @@ namespace SwashbucklerDiary
 
 
             builder.Services.AddMauiBlazorWebView();
+
+#if IOS || MACCATALYST
+            builder.Services.ConfigureMauiHandlers(static handlers => handlers.AddHandler<IBlazorWebView, MyBlazorWebViewHandler>());
+#endif
+
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
