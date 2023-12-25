@@ -1,0 +1,70 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits DialogComponentBase
+
+<MDialogExtension @ref="myDialog"
+                  MyValue="Visible"
+                  MyValueChanged="InternalVisibleChanged"
+                  ContentClass="rounded-lg"
+                  MaxWidth="420"
+                  Scrollable>
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("Location.Select"))
+            <MSpacer></MSpacer>
+            <MButton Icon
+                     OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+
+        <MCardText @ref="mCardText"
+                   Class="scroll-show pb-0"
+                   Style="max-height:300px;">
+            @foreach (var item in Locations)
+            {
+                <MListItem Class="px-0"
+                           OnClick="()=>SetSelectedLocation(item)">
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-map-marker-outline
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(item.Name)
+                    </MListItemContent>
+
+                    <MListItemAction>
+                        @if (item.Name == internalLocation)
+                        {
+                            <MIcon>
+                                mdi-check
+                            </MIcon>
+                        }
+                    </MListItemAction>
+                </MListItem>
+            }
+        </MCardText>
+        <MCardActions>
+            <MButton Text="true"
+                     OnClick="()=>showAdd = true">
+                @(I18n.T("Share.Add"))
+            </MButton>
+            <MSpacer></MSpacer>
+            <MButton Text="true"
+                     OnClick="HandleOnCancel">
+                @(I18n.T("Share.Cancel"))
+            </MButton>
+            <MButton Text="true"
+                     Color="primary"
+                     OnClick="HandleOnOK">
+                @(I18n.T("Share.Save"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MDialogExtension>
+
+<InputDialog @bind-Visible="showAdd"
+             Title="@(I18n.T("Location.Add"))"
+             Placeholder="@(I18n.T("Location.Placeholder"))"
+             OnOK="SaveAdd">
+</InputDialog>

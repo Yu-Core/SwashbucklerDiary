@@ -1,0 +1,43 @@
+﻿@page "/search"
+@inherits DiariesPageComponentBase
+
+<MyAppBar>
+    <MButton Icon="true"
+             OnClick="NavigateToBack">
+        <MIcon>mdi-arrow-left</MIcon>
+    </MButton>
+
+    <SearchTextField @bind-Visible="showSearch"
+                     @bind-Value="search"
+                     Placeholder="@(I18n.T("Search.Please enter diary keywords"))"
+                     OnChanged="UpdateDiariesAsync">
+    </SearchTextField>
+
+    <MButton Icon="true"
+             OnClick="()=>showFilter=!showFilter">
+        <MIcon>
+            @(IsDateFiltered ? "mdi-filter-check-outline" : "mdi-filter-outline")
+        </MIcon>
+    </MButton>
+
+    <MButton Icon="true"
+             OnClick="()=>showDiarySort=true">
+        <MIcon>
+            mdi-sort-variant
+        </MIcon>
+    </MButton>
+</MyAppBar>
+
+<ScrollContainer>
+    <DiaryCardList @bind-Tags="Tags"
+                   @bind-ShowSort="showDiarySort"
+                   Value="Diaries"
+                   NotFoundText="@(I18n.T("Search.Not Found"))">
+    </DiaryCardList>
+</ScrollContainer>
+
+<DateFilterDialog @bind-Visible="showFilter"
+                  @bind-Value="dateFilter"
+                  OnOK="UpdateDiariesAsync"
+                  OnReset="UpdateDiariesAsync">
+</DateFilterDialog>

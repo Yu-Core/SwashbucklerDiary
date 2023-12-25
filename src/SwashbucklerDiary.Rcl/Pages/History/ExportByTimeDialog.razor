@@ -1,0 +1,12 @@
+﻿@namespace SwashbucklerDiary.Rcl.Pages
+@inherits DialogComponentBase
+
+<MultiListDialog Visible="Visible"
+                 VisibleChanged="VisibleChanged"
+                 Title="@(I18n.T("History.ExportTime.Name"))"
+                 DynamicListItems="exportTimeItems">
+</MultiListDialog>
+
+<ExportDialog @bind-Visible="showExport"
+              Value="exportDiaries">
+</ExportDialog>

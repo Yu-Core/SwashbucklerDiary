@@ -1,0 +1,57 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits MyComponentBase
+
+<MHover>
+    <MCard @attributes="context.Attrs"
+           @oncontextmenu="()=>showMenu=true"
+           Class="@($"diary-card {(context.Hover?"elevation-sm-2":"")} {Class}")"
+           OnClick="ToRead"
+           Elevation="0"
+           Ripple="false"
+           Rounded="@("lg")"
+           __internal_preventDefault_oncontextmenu>
+        <MListItem Dense>
+            <MListItemContent>
+                <div class="d-flex align-center">
+                    <span class="text--secondary mr-3" style="font-size:1.1rem;">
+                        @(Time.ToString(DateFormat))
+                    </span>
+                    @if (ShowIcon)
+                    {
+                        <DiaryCardIcon Value="@WeatherIcon" />
+                        <DiaryCardIcon Value="@MoodIcon" />
+                    }
+                </div>
+            </MListItemContent>
+            <MListItemAction>
+                @if (IsTop)
+                {
+                    <MIcon>
+                        mdi-format-vertical-align-top
+                    </MIcon>
+                }
+                <div @onclick:stopPropagation="true">
+                    <MultiMenu @bind-Visible="showMenu"
+                               DynamicListItems="menuItems">
+                        <ButtonContent>
+                            <MIcon Class="@($"chevron-down {(showMenu?"chevron-down-rotate-x":"")}")">
+                                mdi-chevron-down
+                            </MIcon>
+                        </ButtonContent>
+                    </MultiMenu>
+                </div>
+            </MListItemAction>
+        </MListItem>
+        <MDivider Class="mx-3"></MDivider>
+        <MListItem ThreeLine>
+            <MListItemContent>
+                <div class="diary-card-title">
+                    @(title ?? I18n.T("Diary.Untitled"))
+                </div>
+                <MListItemSubtitle>
+                    @text
+                </MListItemSubtitle>
+            </MListItemContent>
+        </MListItem>
+    </MCard>
+</MHover>

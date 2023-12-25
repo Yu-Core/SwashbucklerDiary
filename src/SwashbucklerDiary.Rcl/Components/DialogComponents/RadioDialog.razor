@@ -1,0 +1,39 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@typeparam TItem
+@typeparam TItemValue
+@inherits DialogComponentBase
+
+<MDialogExtension MyValue="Visible"
+                  MyValueChanged="InternalVisibleChanged"
+                  ContentClass="rounded-lg"
+                  MaxWidth="420"
+                  Eager="true">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @Title
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            <MRadioGroup Value="Value"
+                         TValue="TItemValue"
+                         ValueChanged="InternalValueChanged"
+                         Class="mt-0 pb-1"
+                         OnClick="HandleOnCancel"
+                         HideDetails="@("auto")"
+                         Mandatory="true">
+                @foreach (var item in Items)
+                {
+                    <MRadio Label="@InternalItemText(item)"
+                            Class="my-2"
+                            Value="InternalItemValue(item)"
+                            Color="@MRadioColor">
+                    </MRadio>
+                }
+            </MRadioGroup>
+        </MCardText>
+    </MCard>
+</MDialogExtension>

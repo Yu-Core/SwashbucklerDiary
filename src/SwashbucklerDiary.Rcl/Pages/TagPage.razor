@@ -1,0 +1,34 @@
+﻿@page "/tag/{id:guid}"
+@inherits DiariesPageComponentBase
+
+<MyAppBar>
+    <MButton Icon="true"
+             OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MToolbarTitle Class="font-weight-bold">
+        @(tagName)
+    </MToolbarTitle>
+
+    <MSpacer></MSpacer>
+
+    <MButton Icon="true"
+             OnClick="()=>showDiarySort=true">
+        <MIcon>
+            mdi-sort-variant
+        </MIcon>
+    </MButton>
+</MyAppBar>
+
+<ScrollContainer>
+    <DiaryCardList @bind-Tags="Tags"
+                   @bind-ShowSort="showDiarySort"
+                   Value="Diaries" />
+</ScrollContainer>
+
+<RightBottomFloatButton Icon="mdi-pencil"
+                        OnClick="NavigateToWrite">
+</RightBottomFloatButton>

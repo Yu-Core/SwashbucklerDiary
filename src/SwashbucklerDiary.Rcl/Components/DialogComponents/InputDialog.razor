@@ -1,0 +1,47 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits FocusDialogComponentBase
+
+<MDialogExtension @ref="mDialogExtension"
+                  MyValue="Visible"
+                  MyValueChanged="InternalVisibleChanged"
+                  ContentClass="rounded-lg"
+                  MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @Title
+            <MSpacer></MSpacer>
+            <MButton Icon
+                     OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            <MTextField @bind-Value="inputText"
+                        @ref="textField"
+                        OnKeyDown="HandleOnEnter"
+                        Dense
+                        HideDetails="@("auto")"
+                        Outlined
+                        Counter="@MaxLength"
+                        maxlength="@MaxLength"
+                        spellcheck="false"
+                        Placeholder="@Placeholder"
+                        AppendIcon="@PasswordIcon"
+                        Type="@PasswordType"
+                        OnAppendClick="() => showPassword = !showPassword">
+            </MTextField>
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text
+                     OnClick="HandleOnCancel">
+                @(I18n.T("Share.Cancel"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="HandleOnOK">
+                @(OKText ?? I18n.T("Share.Save"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MDialogExtension>

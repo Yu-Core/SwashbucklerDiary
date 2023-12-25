@@ -1,0 +1,57 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits CardListComponentBase<TagModel>
+
+<div class="card-list-wrap">
+    <div class="card-list-main">
+        <CascadingValue Value="this"
+                        IsFixed="true">
+            <Virtualize Items="Value"
+                        ItemSize="60"
+                        Context="item">
+                <TagCard @key="item.Id"
+                         Value="item">
+                </TagCard>
+            </Virtualize>
+        </CascadingValue>
+    </div>
+    @if (Value.Any())
+    {
+        <MultiDisplay Tablet="true">
+            <DesktopContent>
+                <div class="card-list-assist-info">
+                    <TagStatisticsCard Tags="Value"
+                                       Diaries="Diaries">
+                    </TagStatisticsCard>
+                </div>
+            </DesktopContent>
+        </MultiDisplay>
+    }
+</div>
+
+<EmptyResult Show="!Value.Any()"
+              Text="@(I18n.T("Tag.NoTag"))">
+</EmptyResult>
+
+<InputDialog @bind-Visible="ShowRename"
+             Text="@(SelectedTag.Name)"
+             Title="@(I18n.T("Tag.Rename"))"
+             Placeholder="@(I18n.T("Tag.Placeholder"))"
+             OnOK="ConfirmRename">
+</InputDialog>
+
+<DeleteDialog @bind-Visible="ShowDelete"
+              Title="@(I18n.T("Tag.Delete.Title"))"
+              Content="@(I18n.T("Tag.Delete.Content"))"
+              OnOK="ConfirmDelete">
+</DeleteDialog>
+
+<ExportDialog @bind-Visible="ShowExport"
+              Value="ExportDiaries">
+</ExportDialog>
+
+<RadioDialog @bind-Value="sortItem"
+             Visible="ShowSort"
+             VisibleChanged="ShowSortChanged"
+             Title="@(I18n.T("Share.Sort"))"
+             Items="SortItems">
+</RadioDialog>

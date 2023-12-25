@@ -1,0 +1,40 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits MyComponentBase
+
+
+<div class="my-image-card-list">
+    <CascadingValue Value="@this"
+                    IsFixed="true">
+        @foreach (var item in internalValue)
+        {
+            <ImageResourceCard Value="item"></ImageResourceCard>
+        }
+    </CascadingValue>
+
+    @if (internalValue.Any())
+    {
+        <MInfiniteScroll Style="width:100%;"
+                         OnLoad="@OnLoad"
+                         Parent="ScrollElement"
+                         EmptyText="@(string.Empty)"
+                         LoadingText="@(string.Empty)">
+            <LoadMoreContent Context="load">
+                <div class="@(ShowLoadMore?"":"d-none")">
+                    <MButton Icon="true"
+                             OnClick="@load">
+                        <MIcon>mdi-reload</MIcon>
+                    </MButton>
+                </div>
+            </LoadMoreContent>
+        </MInfiniteScroll>
+    }
+
+</div>
+
+<EmptyResult Show="!Value.Any()"
+              Text="@(I18n.T("Setting.Display.Diary.Image.NoImage"))">
+</EmptyResult>
+
+<PreviewImageDialog @bind-Visible="showPreview"
+                    Src="@previewImageSrc">
+</PreviewImageDialog>

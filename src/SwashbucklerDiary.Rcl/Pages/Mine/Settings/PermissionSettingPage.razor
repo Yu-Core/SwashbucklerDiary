@@ -1,0 +1,60 @@
+﻿@page "/permissionSetting"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar Title="@(I18n.T("Setting.General.Permission.Name"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MCard Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem OnClick="OpenSystemPermissionSetting">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-camera-outline
+                    </MIcon>
+                </MListItemIcon>
+
+                <MListItemContent>
+                    @(I18n.T("Permission.Camera"))
+                </MListItemContent>
+
+                <MListItemContent Class="setting-state">
+                    <MListItemSubtitle>
+                        @CameraPermission
+                    </MListItemSubtitle>
+                </MListItemContent>
+
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3"></MDivider>
+
+            <MListItem OnClick="OpenSystemPermissionSetting">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-sd
+                    </MIcon>
+                </MListItemIcon>
+
+                <MListItemContent>
+                    @(I18n.T("Permission.Storage"))
+                </MListItemContent>
+
+                <MListItemContent Class="setting-state">
+                    <MListItemSubtitle>
+                        @StoragePermission
+                    </MListItemSubtitle>
+                </MListItemContent>
+
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+</ScrollContainer>

@@ -361,7 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/myapp.keystore
-/SwashbucklerDiary/myapp.keystore
-/SwashbucklerDiary/wwwroot/css/masa-blazor.min.css
-/SwashbucklerDiary/wwwroot/css/masa-blazor.min.css
+/src/SwashbucklerDiary.Maui/myapp.keystore

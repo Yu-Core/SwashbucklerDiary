@@ -1,0 +1,16 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits MyComponentBase
+
+<div class="@WrapClass">
+    @if (Show)
+    {
+        <MMarkdown @ref="MMarkdown"
+                   Value="@Value"
+                   ValueChanged="ValueChanged"
+                   Class="@Class"
+                   Style="padding-top:10px"
+                   Options="_options"
+                   OnToolbarButtonClick="HandleToolbarButtonClick">
+        </MMarkdown>
+    }
+</div>

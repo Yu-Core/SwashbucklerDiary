@@ -1,0 +1,74 @@
+﻿@page "/history"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits DiariesPageComponentBase
+
+<MyAppBar>
+    @if (normalCalendarVisible)
+    {
+        <MToolbarTitle Class="font-weight-bold">
+            @(I18n.T("History.Calendar"))
+        </MToolbarTitle>
+    }
+    else
+    {
+        <div class="float-calendar" style="cursor:pointer;" @onclick="()=>showFloatCalendar=true">
+            <MTextField Value="PickedDate"
+                        Class="rounded-lg text-h6 font-weight-bold"
+                        Dense="true"
+                        Readonly="true"
+                        Solo="true"
+                        Flat="true"
+                        HideDetails="@("auto")"
+                        PrependIcon="mdi-calendar">
+            </MTextField>
+        </div>
+    }
+
+    <MSpacer></MSpacer>
+
+    <MButton Icon="true"
+             OnClick="ExportThisTime">
+        <MIcon>
+            mdi-export
+        </MIcon>
+    </MButton>
+
+    <MButton Icon="true"
+             OnClick="()=>showDiarySort=true">
+        <MIcon>
+            mdi-sort-variant
+        </MIcon>
+    </MButton>
+</MyAppBar>
+
+<ScrollContainer @ref="scrollContainer">
+    <IntersectElement IntersectChanged="HandleIntersectChanged">
+        <MDatePicker @bind-Value="PickedDate"
+                     Class="rounded-lg my-picker mb-5 pt-4"
+                     TValue="DateOnly"
+                     ShowCurrent="false"
+                     FullWidth="true"
+                     NoTitle="true"
+                     Color="primary"
+                     Events="eventsDates"
+                     EventColor='"primary"'
+                     Locale="@(I18n.Culture.Name)">
+        </MDatePicker>
+    </IntersectElement>
+
+    <DiaryCardList @bind-Tags="Tags"
+                   @bind-ShowSort="showDiarySort"
+                   Value="pickedDiaries"
+                   OnRemove="HandelOnRemove">
+    </DiaryCardList>
+</ScrollContainer>
+
+<DatePickerDialog @bind-Value="PickedDate"
+                  @bind-Visible="showFloatCalendar"
+                  Events="eventsDates"
+                  EventColor='"primary"'>
+</DatePickerDialog>
+
+<ExportByTimeDialog @bind-Visible="showExportThisTime"
+                      Value="PickedDate">
+</ExportByTimeDialog>

@@ -1,0 +1,11 @@
+﻿@page "/user-agreement"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar Title="@(I18n.T("About.Agreement.Name"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MarkdownPreview Value="@content"></MarkdownPreview>
+</ScrollContainer>

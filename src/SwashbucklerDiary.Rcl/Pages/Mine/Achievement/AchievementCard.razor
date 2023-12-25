@@ -1,0 +1,37 @@
+﻿@namespace SwashbucklerDiary.Rcl.Pages
+@inherits MyComponentBase
+
+<MCard Class="mb-5 my-sm-5 py-sm-3 achievement-card"
+       Elevation="0"
+       Rounded="@("lg")"
+       Ripple="false">
+    <MList>
+        <MListItem>
+            <MListItemAvatar>
+                <MIcon XLarge
+                        Color="@IconColor">
+                     @Icon
+                 </MIcon>
+             </MListItemAvatar>
+
+             <MListItemContent>
+                 <MListItemTitle Class="mb-4 font-weight-bold">
+                     @(I18n.T(Value.Name))
+                 </MListItemTitle>
+
+                 <MListItemSubtitle Class="mb-4">
+                     @(I18n.T(Value.Description))
+                 </MListItemSubtitle>
+
+                 <MProgressLinear Value="@ProgressRate"
+                                  Class="rounded-pill"
+                                  Color="@ProgressRateColor"
+                                  Height="20">
+                     <strong class="@ProgressRateTextColor">
+                         @ProgressRateText
+                     </strong>
+                 </MProgressLinear>
+             </MListItemContent>
+         </MListItem>
+     </MList>
+ </MCard>

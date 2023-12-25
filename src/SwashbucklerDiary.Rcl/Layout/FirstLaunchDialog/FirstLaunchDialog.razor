@@ -1,0 +1,18 @@
+﻿@namespace SwashbucklerDiary.Rcl.Layout
+
+@if (Show)
+{
+    <div class="my-first-launch-card primary-background">
+        <ScrollContainer Class="d-flex align-center"
+                         Style="width:100%;"
+                         ContentClass="d-flex justify-center">
+            <FirstLaunchLanguage Show="ShowLanguga"
+                                 OnClick="SetLanguage">
+            </FirstLaunchLanguage>
+            <FirstLaunchAgreement Show="ShowAgreement"
+                                  OnOK="Argee"
+                                  OnCancel="Disagree">
+            </FirstLaunchAgreement>
+        </ScrollContainer>
+    </div>
+}

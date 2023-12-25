@@ -1,0 +1,23 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits DialogComponentBase
+
+<MultiDisplay OnUpdate="UpdateDisplay">
+    <MobileContent>
+        <PMobileDatePickerExtension MyVisible="Visible"
+                                    MyVisibleChanged="VisibleChanged"
+                                    Value="Value"
+                                    ValueChanged="ValueChanged"
+                                    Min="Min??default"
+                                    Max="Max??default">
+        </PMobileDatePickerExtension>
+    </MobileContent>
+    <DesktopContent>
+        <DatePickerDialog Visible="Visible"
+                          VisibleChanged="VisibleChanged"
+                          Value="Value"
+                          ValueChanged="ValueChanged"
+                          Min="Min"
+                          Max="Max">
+        </DatePickerDialog>
+    </DesktopContent>
+</MultiDisplay>

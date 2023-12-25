@@ -1,0 +1,156 @@
+﻿@page "/mine"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar>
+    <MToolbarTitle Class="font-weight-bold"
+                   Style="width:100%;">
+        @(I18n.T("Mine.Mine"))
+    </MToolbarTitle>
+    <MSpacer></MSpacer>
+    <MultiSearch OnSearch="Search"></MultiSearch>
+</MyAppBar>
+
+<ScrollContainer>
+    <div class="d-sm-flex flex-sm-row justify-space-between">
+        <MHover>
+            <MCard @attributes="context.Attrs"
+                   Class="@($"setting-info mb-5 py-sm-3 py-md-5 {(context.Hover?"elevation-sm-2":"")}")"
+                   Elevation="0"
+                   Rounded="@("lg")"
+                   Ripple="false"
+                   OnClick="@(()=>To("user"))">
+                <MList>
+                    <MListItem ThreeLine>
+                        <MListItemAvatar Class="ml-sm-2 ml-md-4 mr-md-6"
+                                         Rounded="@("lg")"
+                                         Size="70"
+                                         @onclick:stopPropagation="true">
+                            <MImage Src="@(avatar)"
+                                    @onclick="()=>showPreviewImage=true">
+                                <PlaceholderContent>
+                                    <MRow Class="fill-height ma-0"
+                                          Align="@AlignTypes.Center"
+                                          Justify="@JustifyTypes.Center">
+                                        <MProgressCircular Indeterminate="true">
+                                        </MProgressCircular>
+                                    </MRow>
+                                </PlaceholderContent>
+                            </MImage>
+                        </MListItemAvatar>
+                        <MListItemContent>
+                            <MListItemTitle Class="text-h6 font-weight-bold">
+                                @(userName)
+                            </MListItemTitle>
+                            <MListItemSubtitle>
+                                @(sign)
+                            </MListItemSubtitle>
+                        </MListItemContent>
+                        <MListItemAction Style="align-self:unset;">
+                            <MIcon>mdi-chevron-right</MIcon>
+                        </MListItemAction>
+                    </MListItem>
+                </MList>
+            </MCard>
+        </MHover>
+
+        <MCard Class="setting-info mb-5 ml-sm-5 d-flex"
+               Elevation="0"
+               Rounded="@("lg")">
+            <MList Class="d-flex flex-grow-1">
+                <MListItem>
+                    <MListItemContent Class="justify-space-around text-center">
+                        <div style="flex:unset">
+                            <MListItemSubtitle>
+                                @(I18n.T("Statistics.DiaryCount"))
+                            </MListItemSubtitle>
+                            <MListItemTitle Class="mt-2 font-weight-bold text-h6">
+                                @diaryCount
+                            </MListItemTitle>
+                        </div>
+                        <div style="flex:unset">
+                            <MListItemSubtitle>
+                                @(I18n.T("Statistics.WordCount"))
+                            </MListItemSubtitle>
+                            <MListItemTitle Class="mt-2 font-weight-bold text-h6">
+                                @wordCount
+                            </MListItemTitle>
+                        </div>
+                        <div style="flex:unset">
+                            <MListItemSubtitle>
+                                @(I18n.T("Statistics.ActiveDayCount"))
+                            </MListItemSubtitle>
+                            <MListItemTitle Class="mt-2 font-weight-bold text-h6">
+                                @activeDayCount
+                            </MListItemTitle>
+                        </div>
+                    </MListItemContent>
+                </MListItem>
+            </MList>
+        </MCard>
+    </div>
+
+    @foreach (var list in ViewLists)
+    {
+        <div class="text-h6 setting-title">
+            @(I18n.T(list.Key))
+        </div>
+
+        <MCard Class="setting-card"
+               Elevation="0"
+               Rounded="@("lg")">
+            <MList>
+                @foreach (var item in list.Value)
+                {
+                    <MListItem OnClick="()=>item.OnClick.InvokeAsync()">
+                        <MListItemIcon>
+                            <MIcon Class="list-item-icon">
+                                @(item.Icon)
+                            </MIcon>
+                        </MListItemIcon>
+                        <MListItemContent>
+                            @(I18n.T(item.Text))
+                        </MListItemContent>
+                        <MListItemAction>
+                            <MIcon>mdi-chevron-right</MIcon>
+                        </MListItemAction>
+                    </MListItem>
+
+                    if (list.Value.Last() != item)
+                    {
+                        <MDivider Class="mx-3"></MDivider>
+                    }
+                }
+
+            </MList>
+        </MCard>
+    }
+
+</ScrollContainer>
+
+<RadioDialog @bind-Visible="showLanguage"
+             Title="@(I18n.T("Mine.SelectLanguage"))"
+             Value="language"
+             ValueChanged="LanguageChanged"
+             TItem="KeyValuePair<string,string>"
+             TItemValue="string"
+             Items="I18n.Languages">
+</RadioDialog>
+
+<RadioDialog @bind-Visible="showTheme"
+             Title="@(I18n.T("Mine.Night"))"
+             Value="theme"
+             ValueChanged="ThemeStateChanged"
+             TItem="KeyValuePair<string,Shared.Theme>"
+             TItemValue="Shared.Theme"
+             Items="themeItems">
+</RadioDialog>
+
+<MultiListDialog @bind-Visible="showFeedback"
+                 Title="@(I18n.T("Mine.ContactWay"))"
+                 DynamicListItems="FeedbackTypes">
+</MultiListDialog>
+
+<PreviewImageDialog @bind-Visible="showPreviewImage"
+                    Src="@avatar">
+</PreviewImageDialog>

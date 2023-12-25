@@ -1,0 +1,41 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits MyComponentBase
+
+<MHover>
+    <MCard @attributes="context.Attrs"
+           @oncontextmenu="()=>ShowMenu=true"
+           Class="@($"mb-5 my-tag-card {(context.Hover?"elevation-sm-2":"")}")"
+           Elevation="0"
+           Ripple="false"
+           Rounded="@("lg")"
+           OnClick="ToTagPage">
+        <MListItem>
+            <MListItemIcon>
+                <MIcon>
+                    mdi-label-outline
+                </MIcon>
+            </MListItemIcon>
+
+            <MListItemContent>
+                @(Value.Name)
+            </MListItemContent>
+
+            <MListItemContent Class="setting-state">
+                <MListItemSubtitle>
+                    @(DiaryCount)
+                </MListItemSubtitle>
+            </MListItemContent>
+
+            <MListItemAction>
+                <div @onclick:stopPropagation="true">
+                    <MultiMenu @bind-Visible="ShowMenu"
+                               DynamicListItems="MenuItems">
+                        <ButtonContent>
+                            <MIcon>mdi-pencil-outline</MIcon>
+                        </ButtonContent>
+                    </MultiMenu>
+                </div>
+            </MListItemAction>
+        </MListItem>
+    </MCard>
+</MHover>
