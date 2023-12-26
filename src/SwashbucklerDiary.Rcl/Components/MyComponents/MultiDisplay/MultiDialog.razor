@@ -1,0 +1,20 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits DialogComponentBase
+
+<MultiDisplay>
+    <MobileContent>
+        <MBottomSheetExtension MyValue="Visible"
+                               MyValueChanged="VisibleChanged"
+                               ContentClass="rounded-t-lg">
+            @ChildContent
+        </MBottomSheetExtension>
+    </MobileContent>
+    <DesktopContent>
+        <MDialogExtension MyValue="Visible"
+                          MyValueChanged="VisibleChanged"
+                          ContentClass="rounded-lg"
+                          MaxWidth="420">
+            @ChildContent
+        </MDialogExtension>
+    </DesktopContent>
+</MultiDisplay>

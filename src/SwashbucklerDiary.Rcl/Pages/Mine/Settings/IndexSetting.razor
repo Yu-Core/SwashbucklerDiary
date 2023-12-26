@@ -1,0 +1,57 @@
+﻿@page "/indexSetting"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar Title="@(I18n.T("Setting.Display.Index.Name"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MCard Class="setting-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-calendar-range-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Index.Date.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="date"
+                             TValue="bool"
+                             OnChange="SettingChange(Setting.Date)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(date)">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+            <MDivider Class="mx-3"></MDivider>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-hand-wave-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Index.WelcomeText.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="welcomText"
+                             TValue="bool"
+                             OnChange="SettingChange(Setting.WelcomeText)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(welcomText)">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+</ScrollContainer>

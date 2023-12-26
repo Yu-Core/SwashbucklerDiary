@@ -1,0 +1,50 @@
+﻿@page "/searchAppFunction"
+@inherits ImportantComponentBase
+
+
+<MyAppBar>
+    <MButton Icon
+             OnClick="NavigateToBack">
+        <MIcon>mdi-arrow-left</MIcon>
+    </MButton>
+
+    <SearchTextField @bind-Value="search"
+                     Visible="true"
+                     Placeholder="@(I18n.T("SearchAppFunction.Placeholder"))"
+                     OnChanged="UpdateAppFunctions">
+    </SearchTextField>
+</MyAppBar>
+
+<ScrollContainer>
+    @if (AppFunctions.Any())
+    {
+        @foreach (var item in AppFunctions)
+        {
+            <MCard Class="mb-5"
+                   Elevation="0"
+                   Rounded="@("lg")"
+                   OnClick="()=>To(item.Href!)">
+                <MList>
+                    <MListItem>
+                        <MListItemAvatar>
+                            <MIcon Class="list-item-icon">
+                                @item.Icon
+                            </MIcon>
+                        </MListItemAvatar>
+                        <MListItemContent>
+                            <MListItemTitle>
+                                @(I18n.T(item.Name))
+                            </MListItemTitle>
+                            <MListItemSubtitle>
+                                @(I18n.T(item.Path))
+                            </MListItemSubtitle>
+                        </MListItemContent>
+                    </MListItem>
+                </MList>
+            </MCard>
+        }
+    }
+
+    <EmptyResult Show="!AppFunctions.Any()"></EmptyResult>
+
+</ScrollContainer>

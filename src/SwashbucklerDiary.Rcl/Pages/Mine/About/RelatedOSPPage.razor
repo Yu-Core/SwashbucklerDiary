@@ -1,0 +1,36 @@
+﻿@page "/relatedOSP"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar Title="@(I18n.T("About.Related.Name"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    @foreach (var item in oSPs)
+    {
+        <MCard Class="mb-5"
+               Elevation="0"
+               Rounded="@("lg")"
+               OnClick="()=>OpenBrowser(item.Url)">
+            <MList TwoLine="true">
+                <MListItem>
+                    <MListItemContent>
+                        <MListItemTitle Class="font-weight-bold">
+                            @(item.Name)
+                        </MListItemTitle>
+                        <MListItemSubtitle>
+                            @(item.License)
+                        </MListItemSubtitle>
+                        <MListItemSubtitle>
+                            @(item.Url)
+                        </MListItemSubtitle>
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+            </MList>
+        </MCard>
+    }
+</ScrollContainer>

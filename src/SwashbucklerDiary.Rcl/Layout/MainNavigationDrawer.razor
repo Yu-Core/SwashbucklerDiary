@@ -1,0 +1,45 @@
+﻿@inherits MainNavigationCompontentBase
+
+<MNavigationDrawer App="true"
+                   Floating="true"
+                   Value="Show"
+                   Stateless="true"
+                   Width="300"
+                   MiniVariant="MiniVariant">
+    <MList Shaped="true"
+           Flat="true">
+        <MListItemGroup Value="Value"
+                        ValueChanged="ValueChanged"
+                        Mandatory="true"
+                        ActiveClass="@ActiveClass">
+            @foreach (var item in Items)
+            {
+                <MListItem Ripple="false"
+                           OnClick="item.OnClick">
+                    <MListItemIcon>
+                        <MIcon Size="24">
+                            @GetIcon(item)
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemTitle Class="@GetTitleClass(item)">
+                        @(I18n.T(item.Text))
+                    </MListItemTitle>
+                </MListItem>
+            }
+        </MListItemGroup>
+    </MList>
+</MNavigationDrawer>
+
+@code {
+    private bool MiniVariant => MasaBlazor.Breakpoint.Sm;
+
+    private bool Show => MasaBlazor.Breakpoint.SmAndUp;
+
+    private string ActiveClass => MiniVariant ? "" : "my-navigation-drawer-active";
+
+    private string? GetTitleClass(NavigationButton button)
+    {
+        bool activated = Items.IndexOf(button) == Value;
+        return activated ? "text-h6 font-weight-bold" : "";
+    }
+}

@@ -1,0 +1,15 @@
+﻿@namespace SwashbucklerDiary.Rcl.Layout
+
+<div class="@(ShowClass)" style="width:100%;max-width:420px;">
+    @foreach (var item in LanguageListItems)
+    {
+        <MButton Class="mb-5"
+                 Rounded="true"
+                 Block="true"
+                 Outlined="true"
+                 Large="true"
+                 OnClick="item.OnClick">
+            @(item.Text)
+        </MButton>
+    }
+</div>

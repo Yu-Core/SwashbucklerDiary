@@ -1,0 +1,11 @@
+{
+  "Diary": [ 1, 30, 100, 1000 ],
+  "Word": [ 3000, 10000, 100000 ],
+  "SourceCode": [ 1 ],
+  "Avatar": [ 1 ],
+  "NickName": [ 1 ],
+  "Sign": [ 1 ],
+  "Log": [ 1 ],
+  "Share": [ 1 ],
+  "Export": [ 1 ]
+}

@@ -1,0 +1,40 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits DialogComponentBase
+
+<MDialogExtension MyValue="Visible"
+                  MyValueChanged="InternalVisibleChanged"
+                  ContentClass="rounded-lg"
+                  MaxWidth="420"
+                  Eager="true"
+                  Scrollable="true"
+                  Transition="">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @(Title)
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
+            <MChipGroup Value="Value"
+                        ValueChanged="ValueChanged"
+                        Column="true">
+                @foreach (var item in iconListItems)
+                {
+                    <MChip @key="item.Name"
+                           Value="@(item.Name)"
+                           Filter="true"
+                           Outlined="true"
+                           OnClick="HandleOnCancel">
+                        <MIcon Left="true">
+                            @(item.Icon)
+                        </MIcon>
+                        @(item.Text)
+                    </MChip>
+                }
+            </MChipGroup>
+        </MCardText>
+    </MCard>
+</MDialogExtension>

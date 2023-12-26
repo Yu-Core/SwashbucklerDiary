@@ -1,0 +1,65 @@
+﻿@page "/alertSetting"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar Title="@(I18n.T("Setting.Display.Alert.Name"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MCard Class="setting-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MListItem OnClick="()=>showTimeout=true">
+            <MListItemIcon>
+                <MIcon Class="list-item-icon">
+                    mdi-timer-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                @(I18n.T("Setting.Display.Alert.AlertTimeout.Name"))
+            </MListItemContent>
+            <MListItemContent Class="setting-state">
+                <MListItemSubtitle>
+                    @(Timeout.ToString() + "s")
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>mdi-chevron-right</MIcon>
+            </MListItemAction>
+        </MListItem>
+    </MCard>
+
+    <MCard Class="setting-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MListItem>
+            <MListItemIcon>
+                <MIcon Class="list-item-icon">
+                    mdi-trophy-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                @(I18n.T("Setting.Display.Alert.Achievement.Name"))
+            </MListItemContent>
+            <MListItemAction>
+                <MSwitch @bind-Value="achievementsAlert"
+                         TValue="bool"
+                         OnChange="SettingChange(Setting.AchievementsAlert)"
+                         Dense="true"
+                         Inset="true"
+                         Color="white"
+                         TrackColor="@MSwitchTrackColor(achievementsAlert)">
+                </MSwitch>
+            </MListItemAction>
+        </MListItem>
+    </MCard>
+
+</ScrollContainer>
+
+<SelectIconDialog @bind-Visible="showTimeout"
+                  @bind-Value="@Timeout"
+                  Title="@(I18n.T("Setting.Display.Alert.AlertTimeout.Name"))"
+                  Items="timeoutItems"
+                  Text="@(item=>item.Key + "s")">
+</SelectIconDialog>

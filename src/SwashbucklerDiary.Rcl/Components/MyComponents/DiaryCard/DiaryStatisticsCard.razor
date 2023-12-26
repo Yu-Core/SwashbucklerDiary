@@ -1,0 +1,58 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+
+<MCard Class="pa-4"
+       Elevation="0"
+       Rounded="@("lg")">
+    <MListItem Dense="true">
+        <MListItemContent Class="font-weight-bold">
+            @(I18n.T("Statistics.Name"))
+        </MListItemContent>
+    </MListItem>
+    <MListItem Dense="true">
+        <MListItemContent>
+            @(I18n.T("Statistics.DiaryCount")): @(DiaryCount)
+        </MListItemContent>
+    </MListItem>
+    <MListItem Dense="true">
+        <MListItemContent>
+            @(I18n.T("Statistics.WordCount")): @(WordCount)
+        </MListItemContent>
+    </MListItem>
+    <MListItem Dense="true">
+        <MListItemContent>
+            @(I18n.T("Statistics.ActiveDayCount")): @(ActiveDayCount)
+        </MListItemContent>
+    </MListItem>
+    <MListItem Dense="true">
+        <MListItemContent>
+            <span>
+                @(I18n.T("Statistics.MostWeather")):
+                <MIcon>
+                    @(MostWeatherIcon)
+                </MIcon>
+                @(MostWeatherText)
+            </span>
+        </MListItemContent>
+    </MListItem>
+    <MListItem Dense="true">
+        <MListItemContent>
+            <span>
+                @(I18n.T("Statistics.MostMood")):
+                <MIcon>
+                    @(MostMoodIcon)
+                </MIcon>
+                @(MostMoodText)
+            </span>
+        </MListItemContent>
+    </MListItem>
+    <MListItem Dense="true">
+        <MListItemContent>
+            @(I18n.T("Statistics.EarliestDate")): @(EarliestDate)
+        </MListItemContent>
+    </MListItem>
+    <MListItem Dense="true">
+        <MListItemContent>
+            @(I18n.T("Statistics.LastDate")): @(LastDate)
+        </MListItemContent>
+    </MListItem>
+</MCard>
