@@ -25,13 +25,13 @@ namespace SwashbucklerDiary.Rcl.Components
         /// The content of the matched path would be cached in the DOM.
         /// </summary>
         [Parameter]
-        [MassApiParameter(ReleasedOn = "v1.0.2")]
+        [MasaApiParameter(ReleasedOn = "v1.0.2")]
         public IEnumerable<string>? IncludePatterns { get; set; }
 
         /// <summary>
         /// Max number of cached pages.
         /// </summary>
-        [Parameter][MassApiParameter(10, "v1.0.2")]
+        [Parameter][MasaApiParameter(10, "v1.0.2")]
         public int Max { get; set; } = 10;
 
         protected readonly LRUCache<string, PatternPath> _patternPaths = new(10);
@@ -53,9 +53,9 @@ namespace SwashbucklerDiary.Rcl.Components
             NavigationManager.LocationChanged += NavigationManagerOnLocationChanged;
         }
 
-        protected override void SetComponentClass()
+        protected override void SetComponentCss()
         {
-            base.SetComponentClass();
+            base.SetComponentCss();
 
             CssProvider.Apply(css => { css.Add("p-page-container"); }, style => { style.Add("height: 100%"); });
         }
@@ -106,11 +106,11 @@ namespace SwashbucklerDiary.Rcl.Components
             InvokeAsync(StateHasChanged);
         }
 
-        protected override void Dispose(bool disposing)
+        protected override ValueTask DisposeAsync(bool disposing)
         {
-            base.Dispose(disposing);
-
             NavigationManager.LocationChanged -= NavigationManagerOnLocationChanged;
+
+            return base.DisposeAsync(disposing);
         }
     }
 }

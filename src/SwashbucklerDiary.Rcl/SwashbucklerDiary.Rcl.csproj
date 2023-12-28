@@ -8,7 +8,7 @@
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Masa.Blazor" Version="1.2.2" />
+		<PackageReference Include="Masa.Blazor" Version="1.3.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0" />
 		<PackageReference Include="ClosedXML" Version="0.102.1" />
 		<PackageReference Include="WebDav.Client" Version="2.8.0" />

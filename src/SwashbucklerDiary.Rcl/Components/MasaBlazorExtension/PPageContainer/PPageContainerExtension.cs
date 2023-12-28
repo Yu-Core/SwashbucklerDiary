@@ -8,13 +8,12 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private INavigateService NavigateService { get; set; } = default!;
 
-        protected override void Dispose(bool disposing)
+        protected override ValueTask DisposeAsync(bool disposing)
         {
-            base.Dispose(disposing);
-
             NavigateService.Pushed -= Pushed;
             NavigateService.Poped -= Poped;
             NavigateService.PopedToRoot -= PopedToRoot;
+            return base.DisposeAsync(disposing);
         }
 
         protected override void OnInitialized()
