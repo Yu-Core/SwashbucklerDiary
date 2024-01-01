@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+		<Version>1.0.0</Version>
+		<WasmBuildNative>true</WasmBuildNative>
+
+		<!-- workaround for publish -->
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<EmccExtraLDFlags>-s WARN_ON_UNDEFINED_SYMBOLS=0 -lidbfs.js</EmccExtraLDFlags>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all" />
+		<PackageReference Include="Serilog" Version="3.1.1" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+		<PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Serilog.Sinks.SQLite.Simplified\Serilog.Sinks.SQLite.Simplified.csproj" />
+		<ProjectReference Include="..\SwashbucklerDiary.Rcl\SwashbucklerDiary.Rcl.csproj" />
+		<ProjectReference Include="..\SwashbucklerDiary.Repository\SwashbucklerDiary.Repository.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+	</ItemGroup>
+
+</Project>

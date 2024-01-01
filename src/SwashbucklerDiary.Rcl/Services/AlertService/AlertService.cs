@@ -6,13 +6,18 @@ namespace SwashbucklerDiary.Services
 {
     public class AlertService : IAlertService
     {
-        private IPopupService PopupService = default!;
+        private IPopupService _popupService = default!;
 
         private int Timeout;
 
         public void Initialize(object popupService)
         {
-            PopupService = (IPopupService)popupService;
+            _popupService = (IPopupService)popupService;
+        }
+
+        public AlertService(IPopupService popupService)
+        {
+            _popupService = popupService;
         }
 
         public Task Alert(string? message) => Alert(null, message);
@@ -22,7 +27,7 @@ namespace SwashbucklerDiary.Services
         public async Task Alert(string? title, string? message, AlertTypes type)
         {
             
-            await PopupService.EnqueueSnackbarAsync(new()
+            await _popupService.EnqueueSnackbarAsync(new()
             {
                 Title = title,
                 Content = message,
@@ -49,7 +54,7 @@ namespace SwashbucklerDiary.Services
 
         public Task StartLoading(bool opacity = true)
         {
-            PopupService.ShowProgressCircular(options =>
+            _popupService.ShowProgressCircular(options =>
             {
                 options.Size = 48;
                 if (!opacity)
@@ -63,7 +68,7 @@ namespace SwashbucklerDiary.Services
 
         public Task StopLoading()
         {
-            PopupService.HideProgressCircular();
+            _popupService.HideProgressCircular();
             return Task.CompletedTask;
         }
 

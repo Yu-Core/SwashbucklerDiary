@@ -136,7 +136,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             var mail = FeedbackTypeDatas["Email"];
             try
             {
-                if (PlatformIntegration.IsMailSupported())
+                bool isMailSupported = await PlatformIntegration.IsMailSupported();
+                if (isMailSupported)
                 {
                     List<string> recipients = new() { mail };
 

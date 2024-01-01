@@ -1,7 +1,9 @@
 ﻿using BlazorComponent;
+using BlazorComponent.I18n;
 using Masa.Blazor;
 using Masa.Blazor.Presets;
-using SwashbucklerDiary.Maui.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Extensions
 {
@@ -9,6 +11,7 @@ namespace SwashbucklerDiary.Maui.Extensions
     {
         public static IServiceCollection AddMasaBlazorConfig(this IServiceCollection services)
         {
+            services.AddSingleton<I18n>();
             services.AddMasaBlazor(options =>
             {
                 options.Defaults = new Dictionary<string, IDictionary<string, object?>?>()
@@ -24,6 +27,7 @@ namespace SwashbucklerDiary.Maui.Extensions
                     }
                 };
             }).AddI18nForMauiBlazor($"wwwroot/_content/{StaticWebAssets.RclAssemblyName}/i18n");
+            
             return services;
         }
     }

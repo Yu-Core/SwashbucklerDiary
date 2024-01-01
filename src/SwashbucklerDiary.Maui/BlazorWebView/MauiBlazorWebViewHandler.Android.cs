@@ -1,5 +1,5 @@
 ﻿using Android.Webkit;
-using SwashbucklerDiary.Maui.Utilities;
+using SwashbucklerDiary.Shared;
 using WebView = Android.Webkit.WebView;
 
 namespace SwashbucklerDiary.Maui.BlazorWebView
@@ -69,6 +69,8 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 return true;
             }
 
+            //因为Android Webview 的一个bug，所以流只能直接返回，不能做截取
+            //https://bugs.chromium.org/p/chromium/issues/detail?id=1161877#c13
             private static WebResourceResponse CreateWebResourceResponse(IWebResourceRequest request, string path)
             {
                 string contentType = StaticContentProvider.GetResponseContentTypeOrDefault(path);

@@ -1,6 +1,6 @@
 ﻿using SwashbucklerDiary.Maui.BlazorWebView;
-using SwashbucklerDiary.Maui.IRepository;
 using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Repository;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
 

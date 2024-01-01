@@ -3,9 +3,6 @@ using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
-    /// <summary>
-    /// 为了解决MAUI与Blazor中作用域不同，导致获取的I18n实例不同
-    /// </summary>
     public interface II18nService
     {
         event Action OnChanged;
@@ -13,8 +10,6 @@ namespace SwashbucklerDiary.Rcl.Services
         CultureInfo Culture { get; }
 
         Dictionary<string,string> Languages { get; }
-
-        void Initialize(object i18n);
 
         string T(string? key);
 

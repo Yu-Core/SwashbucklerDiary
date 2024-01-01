@@ -7,9 +7,3 @@ function preventDefaultOnmousedown(el) {
         e.preventDefault();
     }
 }
-
-function disableConsoleLog() {
-    window.console = {
-        log: function () { }
-    };
-}

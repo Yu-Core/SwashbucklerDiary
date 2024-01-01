@@ -13,9 +13,9 @@ namespace SwashbucklerDiary.Maui.Essentials
 #pragma warning disable CA1416
     public class TitleBarOrStatusBar
     {
-        private static Color LightColor { get; set; } = Color.FromArgb("#f7f8f9");
+        public static Color LightColor { get; set; } = Color.FromArgb("#f7f8f9");
 
-        private static Color DarkColor { get; set; } = Color.FromArgb("#121212");
+        public static Color DarkColor { get; set; } = Color.FromArgb("#121212");
 
         public static void SetTitleBarOrStatusBar(Theme theme)
         {
@@ -30,14 +30,14 @@ namespace SwashbucklerDiary.Maui.Essentials
                 return;
             }
 
-            bool Dark = theme == Theme.Dark;
+            bool dark = theme == Theme.Dark;
 #if WINDOWS || MACCATALYST
             TitleBar.SetColor(backgroundColor);
-            TitleBarStyle titleBarStyle = Dark ? TitleBarStyle.LightContent : TitleBarStyle.DarkContent;
+            TitleBarStyle titleBarStyle = dark ? TitleBarStyle.LightContent : TitleBarStyle.DarkContent;
             TitleBar.SetStyle(titleBarStyle);
 #elif ANDROID || IOS14_2_OR_GREATER
             StatusBar.SetColor(backgroundColor);
-            StatusBarStyle statusBarStyle = Dark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
+            StatusBarStyle statusBarStyle = dark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
             StatusBar.SetStyle(statusBarStyle);
 #endif
         }

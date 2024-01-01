@@ -9,7 +9,8 @@
 
         public async Task<bool> TryCameraPermission()
         {
-            if (!IsCaptureSupported())
+            bool isCaptureSupported = await IsCaptureSupported();
+            if (!isCaptureSupported)
             {
                 await _alertService.Error(_i18n.T("User.NoCapture"));
                 return false;

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
-using SwashbucklerDiary.Maui.Utilities;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {

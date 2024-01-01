@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Rcl.Essentials;
+﻿using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 
@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private IPreferences Preferences { get; set; } = default!;
 
         [Inject]
-        private IThemeService ThemeService { get; set; } = default!;
+        private MasaBlazor MasaBlazor { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
@@ -34,8 +34,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task SetOptions()
         {
-            var themeKind = await ThemeService.GetThemeAsync();
-            string mode = themeKind == Theme.Dark ? "dark" : "light";
+            var dark = MasaBlazor.Theme.Dark;
+            string mode = dark ? "dark" : "light";
             string lang = await Preferences.Get<string>(Setting.Language);
             lang = lang.Replace("-", "_");
             var theme = new Dictionary<string, object?>()

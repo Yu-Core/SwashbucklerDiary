@@ -7,11 +7,11 @@ namespace SwashbucklerDiary.Rcl.Layout
 {
     public partial class FirstLaunchDialog
     {
-        private bool Show = true;
+        private bool show = true;
 
-        private bool SelectedLanguage;
+        private bool showLanguga;
 
-        private bool AgreedAgreement;
+        private bool showAgreement;
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
@@ -31,40 +31,41 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         private IStaticWebAssets StaticWebAssets { get; set; } = default!;
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await LoadSettings();
-            await base.OnInitializedAsync();
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                await LoadSettings();
+                await InvokeAsync(StateHasChanged);
+            }
         }
-
-        private bool ShowLanguga => !SelectedLanguage;
-
-        private bool ShowAgreement => SelectedLanguage;
 
         private async Task LoadSettings()
         {
             var lang = await Preferences.Get<bool>(Setting.FirstSetLanguage);
             var agree = await Preferences.Get<bool>(Setting.FirstAgree);
-            
+
             if (lang && agree)
             {
-                Show = false;
+                show = false;
             }
             else
             {
-                SelectedLanguage = lang;
-                AgreedAgreement = agree;
+                showLanguga = !lang;
+                showAgreement = !agree;
             }
         }
 
         private async Task SetLanguage(string value)
         {
-            if (SelectedLanguage)
+            if (!showLanguga)
             {
                 return;
             }
 
-            SelectedLanguage = true;
+            showLanguga = false;
             I18n.SetCulture(value);
             await InsertDefaultDiaries();
             await Preferences.Set(Setting.FirstSetLanguage, true);
@@ -74,13 +75,13 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         private async Task Argee()
         {
-            if (AgreedAgreement)
+            if (!showAgreement)
             {
                 return;
             }
 
-            AgreedAgreement = true;
-            Show = false;
+            showAgreement = false;
+            show = false;
             await Preferences.Set(Setting.FirstAgree, true);
         }
 
@@ -91,7 +92,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         private async Task InsertDefaultDiaries()
         {
-            string[] defaultdiaries = { "FilePath.Functional Description","FilePath.Diary Meaning", "FilePath.Markdown Syntax" };
+            string[] defaultdiaries = { "FilePath.Functional Description", "FilePath.Diary Meaning", "FilePath.Markdown Syntax" };
             var diaries = await GetDefaultDiaries(defaultdiaries);
             await DiaryService.AddAsync(diaries);
         }

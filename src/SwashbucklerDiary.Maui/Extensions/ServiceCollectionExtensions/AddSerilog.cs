@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Maui.Extensions
 #if DEBUG
                  .WriteTo.Debug()
 #endif
-                 .WriteTo.Async(c => c.SQLite(SQLiteConstants.DatabasePath, "LogModel"))
+                 .WriteTo.SQLite(SQLiteConstants.DatabasePath, "LogModel")
                  .CreateLogger();
 
             services.AddLogging(logging =>

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Web.WebView2.Core;
-using SwashbucklerDiary.Maui.Utilities;
+using SwashbucklerDiary.Shared;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage.Streams;
 using WebView2Control = Microsoft.UI.Xaml.Controls.WebView2;

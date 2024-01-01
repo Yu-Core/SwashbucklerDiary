@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components.WebView;
 using Microsoft.AspNetCore.Components.WebView.Maui;
 using Microsoft.Extensions.Logging;
-using SwashbucklerDiary.Maui.Utilities;
+using SwashbucklerDiary.Shared;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.Versioning;

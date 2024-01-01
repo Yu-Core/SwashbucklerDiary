@@ -1,78 +1,36 @@
 ﻿using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Maui.BlazorWebView;
-using SwashbucklerDiary.Maui.Extensions;
-using SwashbucklerDiary.Maui.Utilities;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
-using System.Text.RegularExpressions;
 
 namespace SwashbucklerDiary.Maui.Services
 {
-    public class MediaResourceManager : IMediaResourceManager
+    public class MediaResourceManager : Rcl.Services.MediaResourceManager
     {
-        private readonly IPlatformIntegration _platformIntegration;
-
-        private readonly IAppFileManager _appFileManager;
-
         private readonly HttpClient _httpClient;
 
-        private readonly IAlertService _alertService;
+        private readonly string _customPathPrefix = MauiBlazorWebViewHandler.AppFilePathMap[FileSystem.AppDataDirectory] + "/";
 
-        private readonly II18nService _i18n;
+        protected override string? CustomPathPrefix => _customPathPrefix;
 
-        private readonly ILogger _logger;
-
-        private readonly string customPathPrefix = MauiBlazorWebViewHandler.AppFilePathMap[FileSystem.AppDataDirectory] + "/";
-
-        private static readonly Dictionary<MediaResource, string> _mediaResourceFolders = new()
-        {
-            { MediaResource.Image, "Image" },
-            { MediaResource.Audio, "Audio" },
-            { MediaResource.Video, "Video" },
-        };
-
-        public Dictionary<MediaResource, string> MediaResourceFolders => _mediaResourceFolders;
-
-        public MediaResourceManager(IPlatformIntegration mauiPlatformService, 
+        public MediaResourceManager(IPlatformIntegration platformIntegration,
             IAppFileManager appFileManager,
             IAlertService alertService,
             II18nService i18nService,
             ILogger<MediaResourceManager> logger)
+            : base(platformIntegration, appFileManager, alertService, i18nService, logger)
         {
-            _platformIntegration = mauiPlatformService;
-            _appFileManager = appFileManager;
             _httpClient = new HttpClient();
-            _alertService = alertService;
-            _i18n = i18nService;
-            _logger = logger;
         }
 
-        public async Task<string?> AddAudioAsync()
-        {
-            string? pickPath = await _platformIntegration.PickAudioAsync();
-            return await CreateMediaResourceFileAsync(MediaResource.Audio, pickPath);
-        }
-
-        public async Task<string?> AddImageAsync()
-        {
-            string? pickPath = await _platformIntegration.PickPhotoAsync();
-            return await CreateMediaResourceFileAsync(MediaResource.Image, pickPath);
-        }
-
-        public async Task<string?> AddVideoAsync()
-        {
-            string? pickPath = await _platformIntegration.PickVideoAsync();
-            return await CreateMediaResourceFileAsync(MediaResource.Video, pickPath);
-        }
-
-        private Task<string?> CreateMediaResourceFileAsync(MediaResource mediaResource, string? sourceFilePath)
+        protected override Task<string?> CreateMediaResourceFileAsync(MediaResource mediaResource, string? sourceFilePath)
         {
             var targetDirectoryPath = Path.Combine(FileSystem.AppDataDirectory, MediaResourceFolders[mediaResource]);
             return CreateMediaResourceFileAsync(targetDirectoryPath, sourceFilePath);
         }
 
-        public async Task<string?> CreateMediaResourceFileAsync(string targetDirectoryPath, string? sourceFilePath)
+        public override async Task<string?> CreateMediaResourceFileAsync(string targetDirectoryPath, string? sourceFilePath)
         {
             if (string.IsNullOrEmpty(sourceFilePath))
             {
@@ -101,7 +59,7 @@ namespace SwashbucklerDiary.Maui.Services
             return MauiBlazorWebViewHandler.FilePathToUrlRelativePath(targetFilePath);
         }
 
-        public async Task<bool> ShareImageAsync(string title, string url)
+        public override async Task<bool> ShareImageAsync(string title, string url)
         {
             var filePath = await GetImageFilePathAsync(url);
             if (string.IsNullOrEmpty(filePath))
@@ -113,7 +71,7 @@ namespace SwashbucklerDiary.Maui.Services
             return true;
         }
 
-        public async Task<bool> SaveImageAsync(string url)
+        public override async Task<bool> SaveImageAsync(string url)
         {
             var filePath = await GetImageFilePathAsync(url);
             if (string.IsNullOrEmpty(filePath))
@@ -126,7 +84,7 @@ namespace SwashbucklerDiary.Maui.Services
 
         private async Task<string> GetImageFilePathAsync(string url)
         {
-            if(string.IsNullOrEmpty(url))
+            if (string.IsNullOrEmpty(url))
             {
                 return string.Empty;
             }
@@ -144,8 +102,8 @@ namespace SwashbucklerDiary.Maui.Services
             {
                 filePath = await DownloadFileAndCreateTempFileAsync(url);
             }
-            
-            if(string.IsNullOrEmpty(filePath))
+
+            if (string.IsNullOrEmpty(filePath))
             {
                 await _alertService.Error(_i18n.T("Image.Not exist"));
             }
@@ -189,39 +147,6 @@ namespace SwashbucklerDiary.Maui.Services
             using var stream = await FileSystem.OpenAppPackageFileAsync($"wwwroot/{url}");
             var fileName = Path.GetFileName(url);
             return await _appFileManager.CreateTempFileAsync(fileName, stream);
-        }
-
-        public List<ResourceModel> GetDiaryResources(string content)
-        {
-            var resources = new List<ResourceModel>();
-            string pattern = $@"(?<=\(|"")({customPathPrefix}\S+?)(?=\)|"")";
-
-            MatchCollection matches = Regex.Matches(content, pattern);
-
-            foreach (Match match in matches.Cast<Match>())
-            {
-                resources.Add(new()
-                {
-                    ResourceType = GetResourceKind(match.Value),
-                    ResourceUri = match.Value,
-                });
-            }
-
-            return resources;
-        }
-
-        public MediaResource GetResourceKind(string uri)
-        {
-            var mime = StaticContentProvider.GetResponseContentTypeOrDefault(uri);
-            var type = mime.Split('/')[0];
-
-            return type switch
-            {
-                "image" => MediaResource.Image,
-                "audio" => MediaResource.Audio,
-                "video" => MediaResource.Video,
-                _ => MediaResource.Unknown
-            };
         }
     }
 }

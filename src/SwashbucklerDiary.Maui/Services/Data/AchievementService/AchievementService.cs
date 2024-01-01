@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Maui.IRepository;
+﻿using SwashbucklerDiary.Repository;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;

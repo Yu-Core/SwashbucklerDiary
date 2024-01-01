@@ -51,7 +51,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
         /// 是否支持摄像头
         /// </summary>
         /// <returns></returns>
-        bool IsCaptureSupported();
+        ValueTask<bool> IsCaptureSupported();
 
         /// <summary>
         /// 拍照
@@ -63,7 +63,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
         /// 是否支持电子邮件
         /// </summary>
         /// <returns></returns>
-        bool IsMailSupported();
+        ValueTask<bool> IsMailSupported();
 
         /// <summary>
         /// 发送电子邮件
@@ -125,14 +125,6 @@ namespace SwashbucklerDiary.Rcl.Essentials
         /// <param name="sourceFilePath"></param>
         /// <returns></returns>
         Task<bool> SaveFileAsync(string name, string sourceFilePath);
-
-        /// <summary>
-        /// 保存文件
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="stream"></param>
-        /// <returns></returns>
-        Task<bool> SaveFileAsync(string name, Stream stream);
 
         /// <summary>
         /// 打开平台设置

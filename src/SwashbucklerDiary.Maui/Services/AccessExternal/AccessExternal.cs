@@ -1,48 +1,57 @@
 ﻿using MauiBlazorToolkit.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Services
 {
     public class AccessExternal : Rcl.Services.AccessExternal
     {
-        private readonly Lazy<string> appId;
+        private readonly Lazy<string> _appId;
 
-        private string AppId => appId.Value;
+        private readonly Lazy<string> _joinQQGroupUrl;
+
+        private string AppId => _appId.Value;
+
+        private string JoinQQGroupUrl => _joinQQGroupUrl.Value;
 
         public AccessExternal(IPlatformIntegration platformIntegration,
             IStaticWebAssets staticWebAssets
             ) : base(staticWebAssets, platformIntegration)
         {
             //默认加入QQ群的Url是从网页跳转QQ，代码位于Rcl
-            //ANDROID || IOS || MACCATALYST 使用直接跳转的链接
-#if ANDROID || IOS || MACCATALYST
-#if ANDROID
-            string joinQQGroupUrlJsonPath = "json/qq-group/qq-group.Android.json";
-#elif IOS || MACCATALYST
-            string joinQQGroupUrlJsonPath = "json/qq-group/qq-group.MaciOS.json";
-#endif
-            joinQQGroupUrl = new(() => _staticWebAssets.ReadJsonAsync<string>(joinQQGroupUrlJsonPath, false).Result);
+            //ANDROID || IOS 使用直接跳转的链接
+#if ANDROID || IOS
+            _joinQQGroupUrl = new(() =>
+            {
+                var qqGroupUrls = _staticWebAssets.ReadJsonAsync<Dictionary<AppDevicePlatform, string>>("json/qq-group/qq-group.json", false).Result;
+                return qqGroupUrls[_platformIntegration.CurrentPlatform];
+            });
+#else
+            _joinQQGroupUrl = new(() => _staticWebAssets.ReadJsonAsync<string>("json/qq-group/qq-group.json").Result);
 #endif
             //读取应用商店的AppId
             //目前只有Windows和Android
 #if WINDOWS || ANDROID
-#if WINDOWS
-            string appIdJsonPath = "json/app-id/app-id.Windows.json";
-#elif ANDROID
-            string appIdJsonPath = "json/app-id/app-id.Android.json";
-#endif
-            appId = new(() => _staticWebAssets.ReadJsonAsync<string>(appIdJsonPath, false).Result);
+            _appId = new(() =>
+            {
+                var appIds = _staticWebAssets.ReadJsonAsync<Dictionary<AppDevicePlatform, string>>("json/app-id/app-id.json").Result;
+                return appIds[_platformIntegration.CurrentPlatform];
+            });
 #else
-            appId = new(() => string.Empty);
+            _appId = new(() => string.Empty);
 #endif
         }
 
-#if ANDROID || IOS || MACCATALYST
         public override Task<bool> JoinQQGroup()
+#if ANDROID || IOS
             => Launcher.Default.TryOpenAsync(JoinQQGroupUrl);
+#else
+            => _platformIntegration.OpenBrowser(JoinQQGroupUrl);
 #endif
 
         public override Task<bool> OpenAppStoreAppDetails()
             => AppStoreLauncher.Default.TryOpenAsync(AppId);
+
+
     }
 }

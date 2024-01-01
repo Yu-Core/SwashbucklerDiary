@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
-using SwashbucklerDiary.Maui.BlazorWebView;
+﻿using SwashbucklerDiary.Maui.BlazorWebView;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -28,7 +27,7 @@ namespace SwashbucklerDiary.Maui.Services
             {
                 File.Delete(previousAvatarPath);
             }
-            string uri = await ((MediaResourceManager)_mediaResourceManager).CreateMediaResourceFileAsync(targetDirectoryPath, filePath) ?? string.Empty;
+            string uri = await _mediaResourceManager.CreateMediaResourceFileAsync(targetDirectoryPath, filePath) ?? string.Empty;
             await _preferences.Set(Setting.Avatar, uri);
             return uri;
         }

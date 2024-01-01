@@ -18,15 +18,16 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         public event Action<PopEventArgs>? PopedToRoot;
 
-        public List<string> RootPaths { get; set; } = new();
+        public List<string> RootPaths { get; set; } = [];
 
         public NavigationManager Navigation { get; set; } = default!;
 
-        public List<string> HistoryURLs { get; set; } = new();
+        public List<string> HistoryURLs { get; set; } = [];
 
         public void Initialize(object navigation)
         {
             Navigation = (NavigationManager)navigation;
+            RootPaths.Add(Navigation.BaseUri);
         }
 
         public async Task PushAsync(string url, bool isCachePrevious = true)
@@ -42,7 +43,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
             string currentURL = Navigation.Uri;
             HistoryURLs.Add(currentURL);
 
-            Navigation.NavigateTo(url);
+            Navigation.NavigateTo(url, replace: true);
             Pushed?.Invoke(args);
         }
 
@@ -60,7 +61,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
                 var lastIndex = HistoryURLs.Count - 1;
                 HistoryURLs.RemoveAt(lastIndex);
-                Navigation.NavigateTo(previousUri);
+                Navigation.NavigateTo(previousUri, replace: true);
 
                 Poped?.Invoke(args);
             }
@@ -69,7 +70,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
         public async Task PopToRootAsync(string url)
         {
             url = new Uri(new(Navigation.BaseUri), url).ToString();
-            if(Navigation.Uri == url)
+            if (Navigation.Uri == url)
             {
                 return;
             }
@@ -85,7 +86,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
                 await BeforePopToRoot.Invoke(args);
             }
 
-            Navigation.NavigateTo(url);
+            Navigation.NavigateTo(url, replace: true);
             HistoryURLs.Clear();
             PopedToRoot?.Invoke(args);
         }

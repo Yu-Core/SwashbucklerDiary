@@ -1,20 +1,20 @@
 ﻿#if WINDOWS
-using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Rcl.Essentials;
 #endif
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-        public bool IsMailSupported()
+        public ValueTask<bool> IsMailSupported()
         {
-            return Email.Default.IsComposeSupported;
+            return ValueTask.FromResult(Email.Default.IsComposeSupported);
         }
 
         public Task SendEmail(string? subject, string? body, List<string>? recipients)
         {
 #if WINDOWS
-            var uri = this.CreateMailToUri(subject, body, recipients);
+            var uri = EmailHelper.CreateMailToUri(subject, body, recipients);
             return Launcher.TryOpenAsync(uri);
 #else
             var message = new EmailMessage

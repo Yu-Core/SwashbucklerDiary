@@ -1,0 +1,36 @@
+﻿@page "/backups"
+@namespace SwashbucklerDiary.Maui.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar>
+    <MButton Icon
+             OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+    <MTabs @bind-Value="tab"
+           ActiveClass="text-h6 font-weight-bold"
+           HideSlider="true">
+        <MTab Class="my-tab"
+              Ripple="false">
+            @(I18n.T("Backups.Local.Name"))
+        </MTab>
+        <MTab Class="my-tab"
+              Ripple="false">
+            @(I18n.T("Backups.WebDAV.Name"))
+        </MTab>
+    </MTabs>
+    <MSpacer></MSpacer>
+</MyAppBar>
+
+<SwiperTabItems @bind-Value="tab">
+    <SwiperTabItem>
+        <LocalBackups></LocalBackups>
+    </SwiperTabItem>
+    <SwiperTabItem>
+        <WebDAVBackups></WebDAVBackups>
+    </SwiperTabItem>
+</SwiperTabItems>
+
+

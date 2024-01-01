@@ -2,9 +2,9 @@
 {
     public partial class PlatformIntegration
     {
-        public bool IsCaptureSupported()
+        public ValueTask<bool> IsCaptureSupported()
         {
-            return MediaPicker.Default.IsCaptureSupported;
+            return ValueTask.FromResult(MediaPicker.Default.IsCaptureSupported);
         }
 
         public async Task<string?> CapturePhotoAsync()

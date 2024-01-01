@@ -44,9 +44,7 @@
 	<!-- Android -->
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-android')) != true">
 		<Compile Remove="**\**\*.Android.cs" />
-		<Compile Remove="**\**\*.Android.json" />
 		<None Include="**\**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-		<None Include="**\**\*.Android.json" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 		<Compile Remove="**\Android\**\*.cs" />
 		<None Include="**\Android\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
@@ -54,9 +52,7 @@
 	<!-- Both iOS and Mac Catalyst -->
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-ios')) != true AND $(TargetFramework.StartsWith('net8.0-maccatalyst')) != true">
 		<Compile Remove="**\**\*.MaciOS.cs" />
-		<Compile Remove="**\**\*.MaciOS.json" />
 		<None Include="**\**\*.MaciOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-		<None Include="**\**\*.MaciOS.json" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 		<Compile Remove="**\MaciOS\**\*.cs" />
 		<None Include="**\MaciOS\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
@@ -64,9 +60,7 @@
 	<!-- iOS -->
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-ios')) != true">
 		<Compile Remove="**\**\*.iOS.cs" />
-		<Compile Remove="**\**\*.iOS.json" />
 		<None Include="**\**\*.iOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-		<None Include="**\**\*.iOS.json" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 		<Compile Remove="**\iOS\**\*.cs" />
 		<None Include="**\iOS\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
@@ -74,9 +68,7 @@
 	<!-- Mac Catalyst -->
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-maccatalyst')) != true">
 		<Compile Remove="**\**\*.MacCatalyst.cs" />
-		<Compile Remove="**\**\*.MacCatalyst.json" />
 		<None Include="**\**\*.MacCatalyst.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-		<None Include="**\**\*.MacCatalyst.json" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 		<Compile Remove="**\MacCatalyst\**\*.cs" />
 		<None Include="**\MacCatalyst\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
@@ -84,9 +76,7 @@
 	<!-- Windows -->
 	<ItemGroup Condition="$(TargetFramework.Contains('-windows')) != true">
 		<Compile Remove="**\*.Windows.cs" />
-		<Compile Remove="**\*.Windows.json" />
 		<None Include="**\*.Windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-		<None Include="**\*.Windows.json" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 		<Compile Remove="**\Windows\**\*.cs" />
 		<None Include="**\Windows\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
@@ -129,18 +119,16 @@
 	
 	<ItemGroup>
 		<ProjectReference Include="..\SwashbucklerDiary.Rcl\SwashbucklerDiary.Rcl.csproj" />
+		<ProjectReference Include="..\SwashbucklerDiary.Repository\SwashbucklerDiary.Repository.csproj" />
 	</ItemGroup>
 	
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
-		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="5.0.5" />
 		<PackageReference Include="Serilog" Version="3.1.1" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
 		<PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
-		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="1.9.2" />
-		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.7" />
-		<PackageReference Include="SqlSugarCoreNoDrive" Version="5.1.4.84" />
+		<PackageReference Include="WebDav.Client" Version="2.8.0" />
 		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.2.8" />
 	</ItemGroup>
 

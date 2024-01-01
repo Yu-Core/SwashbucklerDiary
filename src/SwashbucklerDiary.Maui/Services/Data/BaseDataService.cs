@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Maui.IRepository;
+﻿using SwashbucklerDiary.Repository;
 using SwashbucklerDiary.Rcl.Services;
 using System.Linq.Expressions;
 

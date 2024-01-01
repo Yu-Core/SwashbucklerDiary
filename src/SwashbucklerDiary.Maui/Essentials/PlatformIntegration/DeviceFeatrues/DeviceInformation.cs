@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Maui.Essentials
 #elif ANDROID
            => AppDevicePlatform.Android;
 #elif MACCATALYST
-           => AppDevicePlatform.MacOS;
+           => AppDevicePlatform.macOS;
 #elif IOS
            => AppDevicePlatform.iOS;
 #elif TIZEN

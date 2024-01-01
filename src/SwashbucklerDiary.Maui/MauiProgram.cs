@@ -39,20 +39,17 @@ namespace SwashbucklerDiary.Maui
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
 #endif
+            builder.Services.AddMasaBlazorConfig();
 
             builder.Services.AddSerilogConfig();
-
-            builder.Services.AddMasaBlazorConfig();
 
             builder.Services.AddSqlsugarConfig();
 
             builder.Services.AddDependencyInjection();
 
-            var app = builder.Build();
+            builder.Services.AddMauiExceptionHandler();
 
-            app.Services.AddMauiExceptionHandle();
-
-            return app;
+            return builder.Build();
         }
     }
 }

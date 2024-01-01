@@ -1,32 +1,26 @@
 ﻿using BlazorComponent.I18n;
-using SwashbucklerDiary.Rcl.Essentials;
 using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
-    public class I18nService : II18nService
+    public abstract class I18nService : II18nService
     {
-        private I18n I18n { get; set; } = default!;
+        private I18n _i18n;
 
-        public CultureInfo Culture => I18n.Culture;
+        public CultureInfo Culture => _i18n.Culture;
 
-        public Dictionary<string, string> Languages { get; }
+        public abstract Dictionary<string, string> Languages { get; }
 
         public event Action? OnChanged;
 
-        public I18nService(IStaticWebAssets staticWebAssets) 
+        public I18nService(I18n i18n)
         {
-            Languages = staticWebAssets.ReadJsonAsync<Dictionary<string, string>>("json/i18n/languages.json").Result;
-        }
-
-        public void Initialize(object i18n)
-        {
-            I18n = (I18n)i18n;
+            _i18n = i18n;
         }
 
         public void SetCulture(string culture)
         {
-            I18n.SetCulture(new CultureInfo(culture));
+            _i18n.SetCulture(new CultureInfo(culture));
             OnChanged?.Invoke();
         }
 
@@ -39,12 +33,12 @@ namespace SwashbucklerDiary.Rcl.Services
                 return string.Empty;
             }
 
-            if (I18n is null)
+            if (_i18n is null)
             {
                 return string.Empty;
             }
 
-            return I18n.T(key, whenNullReturnKey);
+            return _i18n.T(key, whenNullReturnKey);
         }
 
         public string ToWeek(DateTime? dateTime = null)

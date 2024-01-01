@@ -6,7 +6,7 @@
         Windows,
         Android,
         iOS,
-        MacOS,
+        macOS,
         Tizen,
         Browser,
         Linux

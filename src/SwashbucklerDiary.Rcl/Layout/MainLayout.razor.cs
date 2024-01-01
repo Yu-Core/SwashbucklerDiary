@@ -1,8 +1,6 @@
 ﻿using BlazorComponent;
-using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -27,9 +25,6 @@ namespace SwashbucklerDiary.Rcl.Layout
         private INavigateService NavigateService { get; set; } = default!;
 
         [Inject]
-        private I18n I18n { get; set; } = default!;
-
-        [Inject]
         private II18nService I18nService { get; set; } = default!;
 
         [Inject]
@@ -45,11 +40,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         private IThemeService ThemeService { get; set; } = default!;
 
         [Inject]
-        private IJSRuntime JS { get; set; } = default!;
-
-        [Inject]
         private IVersionUpdataManager VersionManager { get; set; } = default!;
-
 
         public void Dispose()
         {
@@ -62,9 +53,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         {
             NavigateService.Initialize(Navigation);
             AlertService.Initialize(PopupService);
-            I18nService.Initialize(I18n);
             LoadView();
-            SetRootPath();
             ThemeService.OnChanged += ThemeChanged;
             I18nService.OnChanged += StateHasChanged;
             base.OnInitialized();
@@ -72,10 +61,17 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected override async Task OnInitializedAsync()
         {
-            await LoadSettings();
-            await DisableJSConsoleLog();
             await VersionManager.UpdateVersion();
             await base.OnInitializedAsync();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            if(firstRender)
+            {
+                await LoadSettings();
+            }
         }
 
         private async Task LoadSettings()
@@ -111,18 +107,5 @@ namespace SwashbucklerDiary.Rcl.Layout
             await InvokeAsync(StateHasChanged);
         }
 
-        private void SetRootPath()
-        {
-            NavigateService.RootPaths.Add(Navigation.Uri);
-        }
-
-        private async Task DisableJSConsoleLog()
-        {
-#if DEBUG
-            await Task.CompletedTask;
-#else
-            await JS.InvokeVoidAsync("disableConsoleLog", null);
-#endif
-        }
     }
 }

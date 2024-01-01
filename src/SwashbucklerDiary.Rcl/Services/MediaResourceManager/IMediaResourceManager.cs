@@ -38,6 +38,8 @@ namespace SwashbucklerDiary.Rcl.Services
         /// <returns></returns>
         MediaResource GetResourceKind(string uri);
 
+        Task<string?> CreateMediaResourceFileAsync(string targetDirectoryPath, string? sourceFilePath);
+
         /// <summary>
         /// 分享图片
         /// </summary>
@@ -52,7 +54,5 @@ namespace SwashbucklerDiary.Rcl.Services
         /// <param name="url"></param>
         /// <returns></returns>
         Task<bool> SaveImageAsync(string url);
-
-
     }
 }
