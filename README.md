@@ -1,42 +1,43 @@
-# ÏÀ¿ÍÈÕ¼Ç
+# ä¾ å®¢æ—¥è®°
 
-[English](./README.en-US.md) | ¼òÌåÖĞÎÄ
+[English](./README.en-US.md) | ç®€ä½“ä¸­æ–‡
 
-¡¸ ÏÀ¿ÍÈÕ¼Ç ¡¹ÊÇÒ»¸ö¿ªÔ´¡¢¿çÆ½Ì¨µÄ±¾µØÈÕ¼ÇAPP¡£
+ã€Œ ä¾ å®¢æ—¥è®° ã€æ˜¯ä¸€ä¸ªå¼€æºã€è·¨å¹³å°çš„æœ¬åœ°æ—¥è®°APPã€‚
 
-Ã¿¸öÈËµÄĞÄµ×¶¼ÓĞÒ»¸öÏÀ¿Í£¬ÈçÓ°Ëæ·ç£¬ÅãÄã¿´¹ıÒ»Â·µÄ·ç¾°£¬¼ÇµÃÄãËùÓĞµÄ¾«²Ê¡£
+æ¯ä¸ªäººçš„å¿ƒåº•éƒ½æœ‰ä¸€ä¸ªä¾ å®¢ï¼Œå¦‚å½±éšé£ï¼Œé™ªä½ çœ‹è¿‡ä¸€è·¯çš„é£æ™¯ï¼Œè®°å¾—ä½ æ‰€æœ‰çš„ç²¾å½©ã€‚
 
-## Ö÷Òª¼¼ÊõÕ»
+## ä¸»è¦æŠ€æœ¯æ ˆ
 - [MAUI](https://learn.microsoft.com/dotnet/maui/)
 - [Blazor Hybrid](https://learn.microsoft.com/aspnet/core/blazor/hybrid/) 
+- [Blazor WebAssembly](https://learn.microsoft.com/aspnet/core/blazor/hosting-models#blazor-webassembly)
 - [Masa Blazor](https://docs.masastack.com/blazor/introduction/why-masa-blazor) 
 - [SqlSugar](https://www.donet5.com/Home/Doc) 
 - [Serilog](https://serilog.net/)
 
-## ÏÂÔØÇşµÀ
-- [![Microsoft Ó¦ÓÃÉÌµê](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
-- [GitHub ·¢ĞĞ°æ](https://github.com/Yu-Core/SwashbucklerDiary/releases)
-- [À¶×àÔÆ](https://wwfc.lanzouj.com/b04q15i4j) £¨ÃÜÂë£º1234£©
-- [°Ù¶ÈÊÖ»úÖúÊÖ](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
-- [Íã¶¹¼Ô](https://www.wandoujia.com/apps/8369224)
-- [¿á°²](https://www.coolapk.com/apk/937401)
+## ä¸‹è½½æ¸ é“
+- [![Microsoft åº”ç”¨å•†åº—](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
+- [GitHub å‘è¡Œç‰ˆ](https://github.com/Yu-Core/SwashbucklerDiary/releases)
+- [è“å¥äº‘](https://wwfc.lanzouj.com/b04q15i4j) ï¼ˆå¯†ç ï¼š1234ï¼‰
+- [ç™¾åº¦æ‰‹æœºåŠ©æ‰‹](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
+- [è±Œè±†èš](https://www.wandoujia.com/apps/8369224)
+- [é…·å®‰](https://www.coolapk.com/apk/937401)
 
-## ÌØµã
-- ¼«¼ò·ç¸ñ
-- ±êÇ©¡¢ÌìÆø¡¢ĞÄÇé¡¢Î»ÖÃ
+## ç‰¹ç‚¹
+- æç®€é£æ ¼
+- æ ‡ç­¾ã€å¤©æ°”ã€å¿ƒæƒ…ã€ä½ç½®
 - Markdown
-- ¶àÓïÑÔ
-- ÉîÉ«Ä£Ê½
-- ËùÓĞÊı¾İ´æ´¢ÔÚ±¾µØ£¬ÎŞĞèÁªÍø
-- ±¾µØ±¸·İ
-- Webdav±¸·İ
-- ¾ÖÓòÍø´«Êä
-- µ¼³ö
-- ·ÖÏí
-- ³É¾Í
-- ÈÕÖ¾
+- å¤šè¯­è¨€
+- æ·±è‰²æ¨¡å¼
+- æ‰€æœ‰æ•°æ®å­˜å‚¨åœ¨æœ¬åœ°ï¼Œæ— éœ€è”ç½‘
+- æœ¬åœ°å¤‡ä»½
+- Webdavå¤‡ä»½
+- å±€åŸŸç½‘ä¼ è¾“
+- å¯¼å‡º
+- åˆ†äº«
+- æˆå°±
+- æ—¥å¿—
 
-## ½ØÍ¼
+## æˆªå›¾
 
 <table>
     <tr>
@@ -58,33 +59,35 @@
     </tr>
  </table>
 
-## Ö§³ÖµÄÆ½Ì¨
-- Windows (Windows 11ºÍWindows 10°æ±¾ 1809 »ò¸ü¸ß°æ±¾)
-- Android (Android 8.0 (API 26) »ò¸ü¸ß°æ±¾)
-- iOS (iOS 14 »ò¸ü¸ß°æ±¾)
-- macOS (macOS 11 »ò¸ü¸ß°æ±¾)
-- ~~Tizen (Ôİ²»Ö§³Ö)~~
+## æ”¯æŒçš„å¹³å°
+- Windows (Windows 11å’ŒWindows 10ç‰ˆæœ¬ 1809 æˆ–æ›´é«˜ç‰ˆæœ¬)
+- Android (Android 8.0 (API 26) æˆ–æ›´é«˜ç‰ˆæœ¬)
+- iOS (iOS 14 æˆ–æ›´é«˜ç‰ˆæœ¬)
+- macOS (macOS 11 æˆ–æ›´é«˜ç‰ˆæœ¬)
+- ~~Tizen (æš‚ä¸æ”¯æŒ)~~
+- Web
 
-## ¿ª·¢»·¾³
+## å¼€å‘ç¯å¢ƒ
 
-[Visual Studio 2022](https://learn.microsoft.com/zh-cn/visualstudio/install/install-visual-studio?view=vs-2022) »ò [Visual Studio 2022 for Mac](https://learn.microsoft.com/zh-cn/visualstudio/mac/installation?view=vsmac-2022)
+[Visual Studio 2022](https://learn.microsoft.com/zh-cn/visualstudio/install/install-visual-studio?view=vs-2022) æˆ– [Visual Studio Code](https://code.visualstudio.com/docs)
 
-- ÏµÍ³ÒªÇó
+- ç³»ç»Ÿè¦æ±‚
 
-    - Windows 10 °æ±¾ 1909 »ò¸ü¸ß°æ±¾£º¼ÒÍ¥°æ¡¢×¨Òµ°æ¡¢½ÌÓı°æºÍÆóÒµ°æ¡£
-    - macOS Monterey 12.0 »ò¸ü¸ß°æ±¾
+    - Windows 10 ç‰ˆæœ¬ 1909 æˆ–æ›´é«˜ç‰ˆæœ¬ï¼šå®¶åº­ç‰ˆã€ä¸“ä¸šç‰ˆã€æ•™è‚²ç‰ˆå’Œä¼ä¸šç‰ˆã€‚
+    - macOS Ventura 13.5 æˆ–æ›´é«˜ç‰ˆæœ¬
 
-- ¹¤×÷¸ººÉ
+- å·¥ä½œè´Ÿè·
 
-    - Web ºÍÔÆ
-        - ASP.NET ºÍ Web ¿ª·¢
-    - ×ÀÃæÓ¦ÓÃºÍÒÆ¶¯Ó¦ÓÃ
-        - Ê¹ÓÃ .NET µÄÒÆ¶¯¿ª·¢ / .NET Multi-platform App UI ¿ª·¢
-        - .NET ×ÀÃæ¿ª·¢
+    - Web å’Œäº‘
+        - ASP.NET å’Œ Web å¼€å‘
+    - æ¡Œé¢åº”ç”¨å’Œç§»åŠ¨åº”ç”¨
+        - ä½¿ç”¨ .NET çš„ç§»åŠ¨å¼€å‘ / .NET Multi-platform App UI å¼€å‘
+        - .NET æ¡Œé¢å¼€å‘
 
-## ¸ĞĞ»ÒÔÏÂ¿ªÔ´ÏîÄ¿
+## æ„Ÿè°¢ä»¥ä¸‹å¼€æºé¡¹ç›®
 - [.NET MAUI](https://github.com/dotnet/maui)
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
+- [Blazored LocalStorage](https://github.com/Blazored/LocalStorage)
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 - [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)
 - [html2canvas](https://github.com/niklasvh/html2canvas)
@@ -94,7 +97,6 @@
 - [Microsoft.Data.Sqlite](https://github.com/dotnet/efcore#microsoftdatasqlite)
 - [Serilog](https://github.com/serilog/serilog)
 - [Serilog.Extensions.Logging](https://github.com/serilog/serilog-extensions-logging)
-- [Serilog.Sinks.Async](https://github.com/serilog/serilog-sinks-async)
 - [Serilog.Sinks.Debug](https://github.com/serilog/serilog-sinks-debug)
 - [Serilog.Sinks.SQLite.Maui](https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui)
 - [SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw)

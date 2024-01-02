@@ -9,6 +9,7 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 ## Main Technology Stack
 - [MAUI](https://learn.microsoft.com/dotnet/maui/)
 - [Blazor Hybrid](https://learn.microsoft.com/aspnet/core/blazor/hybrid/) 
+- [Blazor WebAssembly](https://learn.microsoft.com/aspnet/core/blazor/hosting-models#blazor-webassembly)
 - [Masa Blazor](https://docs.masastack.com/blazor/introduction/why-masa-blazor) 
 - [SqlSugar](https://www.donet5.com/Home/Doc) 
 - [Serilog](https://serilog.net/)
@@ -58,14 +59,22 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
     </tr>
  </table>
 
+## Supported Platforms
+- Windows (Windows 11 and Windows 10 version 1809 or higher)
+- Android (Android 8.0 (API 26) or higher)
+- iOS (iOS 14 or higher)
+- macOS (macOS 11 or higher)
+- ~~Tizen (Not supported temporarily)~~
+- Web
+
  ## Development Environment
 
-[Visual Studio 2022](https://learn.microsoft.com/en-us/visualstudio/install/install-visual-studio?view=vs-2022) 或 [Visual Studio 2022 for Mac](https://learn.microsoft.com/en-us/visualstudio/mac/installation?view=vsmac-2022)
+[Visual Studio 2022](https://learn.microsoft.com/en-us/visualstudio/install/install-visual-studio?view=vs-2022) 或 [Visual Studio Code](https://code.visualstudio.com/docs)
 
 - System requirements
 
     - Windows 10 version 1909 or higher: Home, Professional, Education, and Enterprise
-    - macOS Monterey 12.0 or higher
+    - macOS Ventura 13.5 or higher
 
 - Workload
 
@@ -75,15 +84,10 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
         - Mobile development using .NET / .NET Multi platform App UI development
         - .NET Desktop Development
 
-## Supported Platforms
-- Windows (Windows 11 and Windows 10 version 1809 or higher)
-- Android (Android 8.0 (API 26) or higher)
-- iOS (iOS 14 or higher)
-- macOS (macOS 11 or higher)
-- ~~Tizen (Not supported temporarily)~~
-
 ## Thanks to the following Open Source Projects
 - [.NET MAUI](https://github.com/dotnet/maui)
+- [ASP.NET Core](https://github.com/dotnet/aspnetcore)
+- [Blazored LocalStorage](https://github.com/Blazored/LocalStorage)
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 - [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)
 - [html2canvas](https://github.com/niklasvh/html2canvas)
@@ -93,7 +97,6 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 - [Microsoft.Data.Sqlite](https://github.com/dotnet/efcore#microsoftdatasqlite)
 - [Serilog](https://github.com/serilog/serilog)
 - [Serilog.Extensions.Logging](https://github.com/serilog/serilog-extensions-logging)
-- [Serilog.Sinks.Async](https://github.com/serilog/serilog-sinks-async)
 - [Serilog.Sinks.Debug](https://github.com/serilog/serilog-sinks-debug)
 - [Serilog.Sinks.SQLite.Maui](https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui)
 - [SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw)

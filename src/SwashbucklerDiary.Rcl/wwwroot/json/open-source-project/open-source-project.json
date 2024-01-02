@@ -10,6 +10,11 @@
     "Url": "https://github.com/dotnet/aspnetcore/blob/main/LICENSE.txt"
   },
   {
+    "Name": "Blazored LocalStorage",
+    "License": "MIT license",
+    "Url": "https://github.com/Blazored/LocalStorage"
+  },
+  {
     "Name": "ClosedXML",
     "License": "MIT license",
     "Url": "https://github.com/ClosedXML/ClosedXML/blob/develop/LICENSE"
@@ -53,11 +58,6 @@
     "Name": "Serilog.Extensions.Logging",
     "License": "Apache-2.0 license",
     "Url": "https://github.com/serilog/serilog-extensions-logging/blob/dev/LICENSE"
-  },
-  {
-    "Name": "Serilog.Sinks.Async",
-    "License": "Apache-2.0 license",
-    "Url": "https://github.com/serilog/serilog-sinks-async/blob/dev/LICENSE"
   },
   {
     "Name": "Serilog.Sinks.Debug",
