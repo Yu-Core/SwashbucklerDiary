@@ -49,22 +49,23 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         public async Task PopAsync()
         {
+            string previousUri = HistoryURLs.LastOrDefault() ?? Navigation.BaseUri;
+            PopEventArgs args = new(previousUri, Navigation.Uri);
+
+            if (BeforePop is not null)
+            {
+                await BeforePop.Invoke(args);
+            }
+
             if (HistoryURLs.Count > 0)
             {
-                string previousUri = HistoryURLs.Last();
-                PopEventArgs args = new(previousUri, Navigation.Uri);
-
-                if (BeforePop is not null)
-                {
-                    await BeforePop.Invoke(args);
-                }
-
                 var lastIndex = HistoryURLs.Count - 1;
                 HistoryURLs.RemoveAt(lastIndex);
-                Navigation.NavigateTo(previousUri, replace: true);
-
-                Poped?.Invoke(args);
             }
+            
+            Navigation.NavigateTo(previousUri, replace: true);
+
+            Poped?.Invoke(args);
         }
 
         public async Task PopToRootAsync(string url)
