@@ -1,4 +1,5 @@
-﻿using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Component;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -18,6 +19,11 @@ namespace SwashbucklerDiary.Rcl.Components
         public async Task MoveCursorForward(int length)
         {
             await base.InvokeVoidAsync("moveCursorForward", length);
+        }
+
+        public async Task Focus(ElementReference Ref)
+        {
+            await base.InvokeVoidAsync("focus", Ref);
         }
     }
 }

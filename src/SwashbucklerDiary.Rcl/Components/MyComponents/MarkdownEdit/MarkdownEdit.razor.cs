@@ -169,6 +169,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public async Task InsertValueAsync(string value)
         {
+            await Module.Focus(MMarkdown.Ref);
             await MMarkdown.InsertValueAsync(value);
             await Module.MoveCursorForward(value.Length);
         }

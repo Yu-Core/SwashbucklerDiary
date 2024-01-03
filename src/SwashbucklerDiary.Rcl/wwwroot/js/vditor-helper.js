@@ -47,3 +47,7 @@ export function moveCursorForward(length) {
     selection.removeAllRanges();
     selection.addRange(range);
 }
+
+export function focus(domRef) {
+    domRef.Vditor.focus();
+}
