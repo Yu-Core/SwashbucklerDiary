@@ -5,9 +5,14 @@ namespace SwashbucklerDiary.Rcl.Extensions
 {
     public static class IJSRuntimeExtensions
     {
-        public static ValueTask<IJSObjectReference> ImportJsModule(this IJSRuntime jSRuntime, string path)
+        public static ValueTask<IJSObjectReference> ImportRclJsModule(this IJSRuntime jSRuntime, string path)
         {
             return jSRuntime.InvokeAsync<IJSObjectReference>("import", $"./_content/{StaticWebAssets.RclAssemblyName}/{path}");
+        }
+
+        public static ValueTask<IJSObjectReference> ImportJsModule(this IJSRuntime jSRuntime, string path)
+        {
+            return jSRuntime.InvokeAsync<IJSObjectReference>("import", $"./{path}");
         }
     }
 }

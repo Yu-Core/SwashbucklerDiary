@@ -1,6 +1,6 @@
-﻿export function getScreenshotBase64(dotNetCallbackRef, callbackMethod, element) {
+﻿export function getScreenshotBase64(dotNetCallbackRef, callbackMethod, selector) {
     return new Promise((resolve, reject) => {
-        html2canvas(document.querySelector(element), {
+        html2canvas(document.querySelector(selector), {
             allowTaint: true,
             onclone: (cloned) => {
                 Array.from(cloned.querySelectorAll('textarea')).forEach((textArea) => {

@@ -69,7 +69,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (firstRender)
             {
-                module = await JS.ImportJsModule("js/vditor-preview-helper.js");
+                module = await JS.ImportRclJsModule("js/vditor-preview-helper.js");
                 await RenderingMarkdown(Value);
             }
 

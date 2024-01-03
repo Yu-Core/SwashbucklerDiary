@@ -1,11 +1,12 @@
 ﻿using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.WebAssembly.Extensions;
 
 namespace SwashbucklerDiary.WebAssembly.Services
 {
     public class AccessExternal : Rcl.Services.AccessExternal
     {
-        private readonly Lazy<Task<IJSInProcessObjectReference>> _module;
+        private readonly Lazy<ValueTask<IJSInProcessObjectReference>> _module;
 
         private readonly Lazy<Task<string>> _joinQQGroupUrl;
 
@@ -15,7 +16,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         private Task<Dictionary<string, string>> AppIds => _appIds.Value;
 
-        private Task<IJSInProcessObjectReference> Module => _module.Value;
+        private ValueTask<IJSInProcessObjectReference> Module => _module.Value;
 
         public AccessExternal(IPlatformIntegration platformIntegration,
             IStaticWebAssets staticWebAssets,
@@ -24,7 +25,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
         {
             _joinQQGroupUrl = new(() => _staticWebAssets.ReadJsonAsync<string>("json/qq-group/qq-group.json"));
             _appIds = new(() => _staticWebAssets.ReadJsonAsync<Dictionary<string, string>>("json/app-id/app-id.json"));
-            _module = new(() => ((IJSInProcessRuntime)jS).InvokeAsync<IJSInProcessObjectReference>("import", "./js/accessExternal.js").AsTask());
+            _module = new(() => ((IJSInProcessRuntime)jS).ImportJsModule("js/accessExternal.js"));
         }
 
         public override async Task<bool> OpenAppStoreAppDetails()

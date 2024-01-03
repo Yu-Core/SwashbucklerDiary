@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -25,7 +26,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
             NavigationManager navigationManager) :
             base(platformIntegration, appFileManager, alertService, i18nService, logger)
         {
-            _module = new(() => jSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/fileSystem.js"));
+            _module = new(() => jSRuntime.ImportJsModule("js/fileSystem.js"));
             _navigationManager = navigationManager;
         }
 

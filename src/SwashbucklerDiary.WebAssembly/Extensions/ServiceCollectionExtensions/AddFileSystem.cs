@@ -1,4 +1,5 @@
 ﻿using Microsoft.JSInterop;
+using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.WebAssembly.Extensions
 {
@@ -7,8 +8,9 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
         public static async Task<IServiceCollection> AddFileSystem(this IServiceCollection services)
         {
             var JS = services.BuildServiceProvider().GetRequiredService<IJSRuntime>();
-            var module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/fileSystem.js");
-            await module.InvokeVoidAsync("synchronizeFileWithIDBFS");
+            var module = await JS.ImportJsModule("js/fileSystem.js");
+            await module.InvokeVoidAsync("initFileSystem");
+            await module.DisposeAsync();
             return services;
         }
     }

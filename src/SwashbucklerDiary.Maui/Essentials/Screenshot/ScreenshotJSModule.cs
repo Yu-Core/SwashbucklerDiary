@@ -8,18 +8,14 @@ namespace SwashbucklerDiary.Maui.Essentials
 {
     public class ScreenshotJSModule : JSModule
     {
-        private readonly string _baseUri;
-
         private readonly HttpClient _httpClient;
 
         private readonly ILogger<ScreenshotJSModule> _logger;
 
         public ScreenshotJSModule(IJSRuntime js,
-            NavigationManager navigationManager,
             ILogger<ScreenshotJSModule> logger)
             : base(js, "./js/screenshot.js")
         {
-            _baseUri = navigationManager.BaseUri;
             _logger = logger;
             _httpClient = new HttpClient();
         }
