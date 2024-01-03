@@ -20,7 +20,7 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 - [lanzou cloud](https://wwfc.lanzouj.com/b04q15i4j) ( Password: 1234 )
 - [Baidu Mobile Assistant](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
 - [wandoujia](https://www.wandoujia.com/apps/8369224)
-- [coolapk](https://www.coolapk.com/apk/937401)
+- [CoolApk](https://www.coolapk.com/apk/937401)
 
 ## Characteristics
 - Minimalist style

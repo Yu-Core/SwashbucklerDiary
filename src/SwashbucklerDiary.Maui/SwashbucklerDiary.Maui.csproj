@@ -27,6 +27,7 @@
 		
 		<!-- App Identifier -->
 		<ApplicationId>com.yucore.swashbucklerdiary</ApplicationId>
+		<ApplicationIdGuid>DBFF20FC-EF94-4EE2-A049-931177D2CB18</ApplicationIdGuid>
 		
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -38,6 +39,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<DefaultLanguage>zh-CN</DefaultLanguage>
 		
 	</PropertyGroup>
 
@@ -110,6 +112,27 @@
 		
 	</ItemGroup>
 
+	<!-- Resource Localization -->
+	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
+		<AndroidResource Include="Platforms\Android\Resources\**" TargetPath="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('-ios'))">
+		<BundleResource Include="Platforms\iOS\Resources\**" TargetPath="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
+		<IPhoneResourcePrefix>Platforms/iOS/Resources</IPhoneResourcePrefix>
+	</PropertyGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('-maccatalyst'))">
+		<BundleResource Include="Platforms\MacCatalyst\Resources\**" TargetPath="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.Contains('-maccatalyst'))">
+		<IPhoneResourcePrefix>Platforms/MacCatalyst/Resources</IPhoneResourcePrefix>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
@@ -131,5 +154,5 @@
 		<PackageReference Include="WebDav.Client" Version="2.8.0" />
 		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.2.8" />
 	</ItemGroup>
-
+	
 </Project>

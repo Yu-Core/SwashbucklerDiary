@@ -10,7 +10,9 @@ namespace SwashbucklerDiary.Maui
             e.EnvironmentOptions = new()
             {
                 //禁用自动播放，但不知道为什么没有生效
-                AdditionalBrowserArguments = "--autoplay-policy=user-gesture-required"
+                AdditionalBrowserArguments = "--autoplay-policy=user-gesture-required",
+                //语言设置也不生效，疑似与WinUI3中Environment不生效有关
+                Language = "zh-CN"
             };
         }
 
