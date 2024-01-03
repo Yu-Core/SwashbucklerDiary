@@ -25,8 +25,3 @@
     // 没有匹配到主流操作系统
     return "unknown";
 };
-
-window.quit = () => {
-    window.location.replace('about:blank');
-    window.history.replaceState({}, document.title, window.location.pathname);
-}

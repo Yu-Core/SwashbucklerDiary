@@ -1,5 +1,6 @@
 ﻿using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.WebAssembly.Extensions;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
@@ -9,20 +10,30 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 
         public event Action? Stopped;
 
-        private readonly IJSInProcessRuntime _jS; 
+        private readonly Lazy<ValueTask<IJSInProcessObjectReference>> _module;
 
-        public AppLifecycle(IJSRuntime jSRuntime) 
+        public AppLifecycle(IJSRuntime jSRuntime)
         {
-            _jS = (IJSInProcessRuntime)jSRuntime;
+            _module = new(() => ((IJSInProcessRuntime)jSRuntime).ImportJsModule("js/appLifecycle.js"));
         }
 
+        [JSInvokable]
         public void OnResume() => Resumed?.Invoke();
 
+        [JSInvokable]
         public void OnStop() => Stopped?.Invoke();
 
-        public void QuitApp()
+        public async void QuitApp()
         {
-            _jS.InvokeVoid("quit");
+            var module = await _module.Value;
+            module.InvokeVoid("quit");
+        }
+
+        public async Task InitializedAsync()
+        {
+            var module = await _module.Value;
+            var dotNetObject = DotNetObjectReference.Create(this);
+            module.InvokeVoid("init", dotNetObject, nameof(OnStop), nameof(OnResume));
         }
     }
 }
