@@ -51,6 +51,13 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task Export(Func<List<DiaryModel>, Task<string>> func, ExportKind exportKind)
         {
             await InternalVisibleChanged(false);
+
+            var writePermission = await PlatformIntegration.TryStorageWritePermission();
+            if (!writePermission)
+            {
+                return;
+            }
+
             await AlertService.StartLoading();
             _ = Task.Run(async () =>
             {
