@@ -24,6 +24,12 @@ namespace SwashbucklerDiary.Maui.Extensions
                             { nameof(PEnqueuedSnackbars.Elevation), new StringNumber(2) },
                             { nameof(PEnqueuedSnackbars.Position), SnackPosition.BottomCenter }
                         }
+                    },
+                    {
+                        nameof(MImage), new Dictionary<string, object?>()
+                        {
+                            { nameof(MImage.Eager), true }
+                        }
                     }
                 };
             }).AddI18nForMauiBlazor($"wwwroot/_content/{StaticWebAssets.RclAssemblyName}/i18n");
