@@ -47,5 +47,7 @@
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
+		<key>CFBundleDevelopmentRegion</key>
+		<string>zh-CN</string>
 	</dict>
 </plist>
