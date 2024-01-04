@@ -4,14 +4,23 @@ namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-        private Task<string?> PickFileAsync(PickOptions options, string suffixName)
+        private Task<string?> PickFileAsync(IEnumerable<string> types, string suffixName)
         {
             string[] suffixNames = { suffixName };
-            return PickFileAsync(options, suffixNames);
+            return PickFileAsync(types, suffixNames);
         }
 
-        private async Task<string?> PickFileAsync(PickOptions options, string[] suffixNames)
+        private async Task<string?> PickFileAsync(IEnumerable<string> types, string[] suffixNames)
         {
+            PickOptions options = new()
+            {
+                FileTypes = new FilePickerFileType(
+                    new Dictionary<DevicePlatform, IEnumerable<string>>()
+                    {
+                        { DeviceInfo.Current.Platform, types }
+                    })
+            };
+
             try
             {
                 var result = await FilePicker.Default.PickAsync(options);
