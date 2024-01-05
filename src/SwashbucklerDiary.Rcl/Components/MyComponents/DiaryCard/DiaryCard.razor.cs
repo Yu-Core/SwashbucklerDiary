@@ -194,7 +194,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void ToRead()
         {
-            NavigateService.PushAsync($"read/{Value.Id}");
+            NavigateService.PushAsync($"read?Id={Value.Id}");
         }
     }
 }

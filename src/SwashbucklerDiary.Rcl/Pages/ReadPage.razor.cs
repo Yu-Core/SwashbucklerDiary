@@ -39,6 +39,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private IScreenshot ScreenshotService { get; set; } = default!;
 
         [Parameter]
+        [SupplyParameterFromQuery]
         public Guid Id { get; set; }
 
         protected override void OnInitialized()
