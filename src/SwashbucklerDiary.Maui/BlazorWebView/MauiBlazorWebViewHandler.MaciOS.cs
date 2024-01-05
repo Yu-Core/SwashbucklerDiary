@@ -152,12 +152,13 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
 
             private static bool InterceptCustomPathRequest(IWKUrlSchemeTask urlSchemeTask)
             {
-                var uri = urlSchemeTask.Request.Url.ToString();
-                if (uri == null)
+                var requestUrl = urlSchemeTask.Request.Url;
+                if (requestUrl == null)
                 {
                     return false;
                 }
 
+                string uri = requestUrl.ToString();
                 if (!Intercept(uri, out string path))
                 {
                     return false;
@@ -168,21 +169,75 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                     return false;
                 }
 
-                long length = new FileInfo(path).Length;
+                using var contentStream = File.OpenRead(path);
+                var length = contentStream.Length;
+                long rangeStart = 0;
+                long rangeEnd = length - 1;
+                int statusCode = 200;
+
+                
+
                 string contentType = StaticContentProvider.GetResponseContentTypeOrDefault(path);
                 using (var dic = new NSMutableDictionary<NSString, NSString>())
                 {
-                    dic.Add((NSString)"Content-Length", (NSString)(length.ToString(CultureInfo.InvariantCulture)));
+                    bool partial = urlSchemeTask.Request.Headers.TryGetValue((NSString)"Range", out NSObject rangeNSObject);
+                    if (partial)
+                    {
+                        statusCode = 206;
+                        ParseRange(rangeNSObject.ToString(), ref rangeStart, ref rangeEnd);
+                        dic.Add((NSString)"Accept-Ranges", (NSString)"bytes");
+                        dic.Add((NSString)"Content-Range", (NSString)$"bytes {rangeStart}-{rangeEnd}/{length}");
+                    }
+                    
+                    dic.Add((NSString)"Content-Length", (NSString)(rangeEnd - rangeStart + 1).ToString());
                     dic.Add((NSString)"Content-Type", (NSString)contentType);
                     // Disable local caching. This will prevent user scripts from executing correctly.
                     dic.Add((NSString)"Cache-Control", (NSString)"no-cache, max-age=0, must-revalidate, no-store");
-                    using var response = new NSHttpUrlResponse(urlSchemeTask.Request.Url, 200, "HTTP/1.1", dic);
+                    using var response = new NSHttpUrlResponse(requestUrl, statusCode, "HTTP/1.1", dic);
                     urlSchemeTask.DidReceiveResponse(response);
                 }
 
-                urlSchemeTask.DidReceiveData(NSData.FromFile(path));
+                urlSchemeTask.DidReceiveData(NSData.FromArray(ReadStreamRange(contentStream, rangeStart, rangeEnd)));
                 urlSchemeTask.DidFinish();
                 return true;
+            }
+
+            static void ParseRange(string rangeString, ref long rangeStart, ref long rangeEnd)
+            {
+                var ranges = rangeString.Split('=');
+                if (ranges.Length > 1 && !string.IsNullOrEmpty(ranges[1]))
+                {
+                    string[] rangeDatas = ranges[1].Split("-");
+                    rangeStart = Convert.ToInt64(rangeDatas[0]);
+                    if (rangeDatas.Length > 1 && !string.IsNullOrEmpty(rangeDatas[1]))
+                    {
+                        rangeEnd = Convert.ToInt64(rangeDatas[1]);
+                    }
+                }
+            }
+
+            static byte[] ReadStreamRange(FileStream contentStream, long start, long end)
+            {
+                // 检查结束位置是否大于开始位置
+                if (end < start)
+                {
+                    throw new ArgumentException("结束位置必须大于开始位置");
+                }
+
+                // 计算需要读取的字节数
+                long numberOfBytesToRead = end - start + 1;
+                byte[] byteArray = new byte[numberOfBytesToRead];
+                contentStream.Seek(start, SeekOrigin.Begin);
+                int bytesRead = contentStream.Read(byteArray, 0, (int)(numberOfBytesToRead));
+                // 如果读取的字节数小于期望的字节数，说明到达了文件的末尾或发生了其他错误
+                if (bytesRead < numberOfBytesToRead)
+                {
+                    // 创建一个新的缓冲区，只包含实际读取的字节
+                    byte[] actualBuffer = new byte[bytesRead];
+                    Array.Copy(byteArray, actualBuffer, bytesRead);
+                    return actualBuffer;
+                }
+                return byteArray;
             }
         }
     }
