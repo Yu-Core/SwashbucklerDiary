@@ -31,16 +31,19 @@
 
     <MultiMenu @bind-Visible="showMenu"
                DynamicListItems="menuItems">
-        <ButtonContent>
-            <MultiDisplay>
-                <DesktopContent>
-                    <MIcon>mdi-dots-horizontal</MIcon>
-                </DesktopContent>
-                <MobileContent>
-                    <MIcon>mdi-dots-vertical</MIcon>
-                </MobileContent>
-            </MultiDisplay>
-        </ButtonContent>
+        <ActivatorContent>
+            <MButton @attributes="@context.Attrs"
+                     Icon="true">
+                <MultiDisplay>
+                    <DesktopContent>
+                        <MIcon>mdi-dots-horizontal</MIcon>
+                    </DesktopContent>
+                    <MobileContent>
+                        <MIcon>mdi-dots-vertical</MIcon>
+                    </MobileContent>
+                </MultiDisplay>
+            </MButton>
+        </ActivatorContent>
     </MultiMenu>
 </MyAppBar>
 

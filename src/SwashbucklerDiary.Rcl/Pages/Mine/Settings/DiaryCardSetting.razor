@@ -54,11 +54,11 @@
     </MCard>
 </ScrollContainer>
 
-<RadioDialog @bind-Visible="showDiaryCardDateFormat"
+<RadioDialog @bind-Value="diaryCardDateFormat"
+             @bind-Visible="showDiaryCardDateFormat"
              Title="@(I18n.T("Setting.Display.DiaryCard.DateFormat.Name"))"
-             Value="diaryCardDateFormat"
              TItemValue="string"
              TItem="KeyValuePair<string,string>"
-             ValueChanged="DiaryCardDateFormatChanged"
+             OnChange="DiaryCardDateFormatChanged"
              Items="DiaryCardDateFormats">
 </RadioDialog>

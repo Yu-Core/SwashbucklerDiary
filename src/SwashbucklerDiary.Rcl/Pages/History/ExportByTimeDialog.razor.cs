@@ -23,8 +23,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override void OnInitialized()
         {
-            LoadView();
             base.OnInitialized();
+
+            LoadView();
         }
 
         private Expression<Func<DiaryModel, bool>> ExpressionDay =>

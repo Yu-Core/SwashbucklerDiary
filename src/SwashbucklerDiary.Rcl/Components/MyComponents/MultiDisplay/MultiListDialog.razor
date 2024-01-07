@@ -4,31 +4,33 @@
 <MultiDisplay>
     <MobileContent>
         <MBottomSheetExtension MyValue="Visible"
-                               MyValueChanged="VisibleChanged"
+                               MyValueChanged="InternalVisibleChanged"
                                ContentClass="rounded-t-lg"
                                Eager="true">
             <MCard Class="rounded-t-lg py-2">
                 <MList>
-                    @foreach (var item in DynamicListItems)
-                    {
-                        @if (item.Show)
+                    <div @onclick="HandleOnCancel">
+                        @foreach (var item in DynamicListItems)
                         {
-                            <MListItem OnClick="()=>OnClick(item.OnClick)">
-                                <MListItemIcon>
-                                    <MIcon>
-                                        @(item.Icon)
-                                    </MIcon>
-                                </MListItemIcon>
-                                <MListItemContent>
-                                    @(I18n.T(item.Text))
-                                </MListItemContent>
-                            </MListItem>
-                            if (DynamicListItems.Last(it => it.Show) != item)
+                            @if (item.Show)
                             {
-                                <MDivider></MDivider>
+                                <MListItem OnClick="item.OnClick">
+                                    <MListItemIcon>
+                                        <MIcon>
+                                            @(item.Icon)
+                                        </MIcon>
+                                    </MListItemIcon>
+                                    <MListItemContent>
+                                        @(I18n.T(item.Text))
+                                    </MListItemContent>
+                                </MListItem>
+                                if (DynamicListItems.Last(it => it.Show) != item)
+                                {
+                                    <MDivider></MDivider>
+                                }
                             }
                         }
-                    }
+                    </div>
                     <MListItem>
                         <MButton Rounded="true"
                                  Block="true"
@@ -45,7 +47,7 @@
     </MobileContent>
     <DesktopContent>
         <MDialogExtension MyValue="Visible"
-                          MyValueChanged="VisibleChanged"
+                          MyValueChanged="InternalVisibleChanged"
                           ContentClass="rounded-lg"
                           MaxWidth="420"
                           Eager="true">
@@ -59,25 +61,27 @@
                     </MButton>
                 </MCardTitle>
                 <MCardText>
-                    @foreach (var item in DynamicListItems)
-                    {
-                        @if (item.Show)
+                    <div @onclick="HandleOnCancel">
+                        @foreach (var item in DynamicListItems)
                         {
-                            <MListItem Class="px-0"
-                                       OnClick="()=>OnClick(item.OnClick)">
-                                <MListItemIcon Class="my-3">
-                                    <MIcon Class="list-item-icon">
-                                        @(item.Icon)
-                                    </MIcon>
-                                </MListItemIcon>
-                                <MListItemContent>
-                                    <MListItemTitle>
-                                        @(I18n.T(item.Text))
-                                    </MListItemTitle>
-                                </MListItemContent>
-                            </MListItem>
+                            @if (item.Show)
+                            {
+                                <MListItem Class="px-0"
+                                           OnClick="item.OnClick">
+                                    <MListItemIcon Class="my-3">
+                                        <MIcon Class="list-item-icon">
+                                            @(item.Icon)
+                                        </MIcon>
+                                    </MListItemIcon>
+                                    <MListItemContent>
+                                        <MListItemTitle>
+                                            @(I18n.T(item.Text))
+                                        </MListItemTitle>
+                                    </MListItemContent>
+                                </MListItem>
+                            }
                         }
-                    }
+                    </div>
                 </MCardText>
             </MCard>
         </MDialogExtension>

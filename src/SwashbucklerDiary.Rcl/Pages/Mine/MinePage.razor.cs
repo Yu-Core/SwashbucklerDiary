@@ -57,17 +57,29 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override void OnInitialized()
         {
-            LoadView();
             base.OnInitialized();
+
+            LoadView();
         }
 
         protected override async Task OnInitializedAsync()
         {
             await LoadViewAsync();
-            await LoadSettings();
             await SetAvatar();
-            await UpdateStatisticalData();
+
             await base.OnInitializedAsync();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                await LoadSettings();
+                await UpdateStatisticalData();
+                StateHasChanged();
+            }
         }
 
         protected override async Task OnResume()
@@ -124,7 +136,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LanguageChanged(string value)
         {
-            language = value;
             I18n.SetCulture(value);
             await Preferences.Set(Setting.Language, value);
             userName = await Preferences.Get(Setting.UserName, I18n.T("AppName"));
@@ -164,7 +175,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task ThemeStateChanged(Theme value)
         {
-            theme = value;
             await ThemeService.SetThemeAsync(value);
             await Preferences.Set(Setting.ThemeState, (int)theme);
         }

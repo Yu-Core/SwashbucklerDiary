@@ -17,10 +17,15 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         ILocationService LocationService { get; set; } = default!;
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await UpdateLocationsAsync();
-            await base.OnInitializedAsync();
+            await base.OnAfterRenderAsync(firstRender);
+
+            if(firstRender)
+            {
+                await UpdateLocationsAsync();
+                StateHasChanged();
+            }
         }
 
         async Task UpdateLocationsAsync()

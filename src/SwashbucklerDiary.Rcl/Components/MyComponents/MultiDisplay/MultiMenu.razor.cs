@@ -1,59 +1,17 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorComponent;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class MultiMenu : DialogComponentBase, IDisposable
+    public partial class MultiMenu : DialogComponentBase
     {
+        [EditorRequired]
         [Parameter]
-        public override bool Visible
-        {
-            get => base.Visible;
-            set => SetValue(value);
-        }
+        public RenderFragment<ActivatorProps> ActivatorContent { get; set; } = default!;
 
         [Parameter]
-        public RenderFragment? ButtonContent { get; set; }
-
-        [Parameter]
-        public List<DynamicListItem> DynamicListItems { get; set; } = new();
-
-        public void Dispose()
-        {
-            if (Visible)
-            {
-                NavigateService.Action -= Close;
-            }
-
-            GC.SuppressFinalize(this);
-        }
-
-        protected void SetValue(bool value)
-        {
-            if (base.Visible == value)
-            {
-                return;
-            }
-
-            base.Visible = value;
-            if (value)
-            {
-                NavigateService.Action += Close;
-            }
-            else
-            {
-                NavigateService.Action -= Close;
-            }
-        }
-
-        private async void Close()
-        {
-            Visible = false;
-            if (VisibleChanged.HasDelegate)
-            {
-                await VisibleChanged.InvokeAsync(false);
-            }
-        }
+        public List<DynamicListItem> DynamicListItems { get; set; } = [];
 
         private async Task UpdateDisplay(bool value)
         {
@@ -62,5 +20,6 @@ namespace SwashbucklerDiary.Rcl.Components
                 await InternalVisibleChanged(false);
             }
         }
+
     }
 }

@@ -25,9 +25,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected IPreferences Preferences { get; set; } = default!;
 
-        [Inject]
-        protected NavigationManager Navigation { get; set; } = default!;
-
         [CascadingParameter(Name = "IsDark")]
         public bool Dark { get; set; }
 

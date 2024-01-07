@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 {
     public partial class FirstLaunchLanguage
     {
-        private readonly List<DynamicListItem> LanguageListItems = [];
+        private List<DynamicListItem> LanguageListItems = [];
 
         [Inject]
         private II18nService I18n { get; set; } = default!;
@@ -21,13 +21,21 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected override void OnInitialized()
         {
+            base.OnInitialized();
+
+            SetLanguageListItems();
+        }
+
+        private void SetLanguageListItems()
+        {
+            var languageListItems = new List<DynamicListItem>();
             foreach (var language in I18n.Languages)
             {
                 var item = new DynamicListItem(this, language.Key, string.Empty, () => OnClick.InvokeAsync(language.Value));
-                LanguageListItems.Add(item);
+                languageListItems.Add(item);
             };
 
-            base.OnInitialized();
+            LanguageListItems = languageListItems;
         }
     }
 }

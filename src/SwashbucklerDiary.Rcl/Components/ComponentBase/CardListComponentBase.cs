@@ -2,7 +2,7 @@
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class CardListComponentBase<T> : ImportantComponentBase
+    public abstract class CardListComponentBase<T> : ImportantComponentBase
     {
         protected List<T> _value = [];
 

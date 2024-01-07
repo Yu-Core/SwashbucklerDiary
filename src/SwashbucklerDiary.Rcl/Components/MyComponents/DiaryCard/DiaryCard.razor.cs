@@ -29,8 +29,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override void OnInitialized()
         {
-            LoadView();
             base.OnInitialized();
+            LoadView();
         }
 
         protected override void OnParametersSet()
@@ -86,37 +86,31 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private Task Topping()
         {
-            showMenu = false;
             return DiaryCardList.Topping(Value);
         }
 
         private void Delete()
         {
-            showMenu = false;
             DiaryCardList.Delete(Value);
         }
 
         private Task Copy()
         {
-            showMenu = false;
             return DiaryCardList.Copy(Value);
         }
 
         private Task ChangeTag()
         {
-            showMenu = false;
             return DiaryCardList.ChangeTag(Value);
         }
 
         private Task Export()
         {
-            showMenu = false;
             return DiaryCardList.Export(Value);
         }
 
         private Task MovePrivacy()
         {
-            showMenu = false;
             return DiaryCardList.MovePrivacy(Value);
         }
 

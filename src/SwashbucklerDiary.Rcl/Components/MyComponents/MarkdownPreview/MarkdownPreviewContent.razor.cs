@@ -65,13 +65,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            await base.OnAfterRenderAsync(firstRender);
+
             if (firstRender)
             {
                 module = await JS.ImportRclJsModule("js/vditor-preview-helper.js");
                 await RenderingMarkdown(Value);
             }
-
-            await base.OnAfterRenderAsync(firstRender);
         }
 
         private async Task RenderingMarkdown(string? value)

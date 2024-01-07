@@ -2,9 +2,10 @@
 @inherits DialogComponentBase
 
 <MDialogExtension MyValue="Visible"
-                  MyValueChanged="VisibleChanged"
+                  MyValueChanged="InternalVisibleChanged"
                   ContentClass="rounded-lg"
-                  MaxWidth="420">
+                  MaxWidth="420"
+                  Eager="true">
     <MDatePicker @bind-Value="InternalDate"
                  Class="rounded-lg pt-4 my-picker"
                  FullWidth="true"

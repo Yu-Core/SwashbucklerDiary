@@ -2,23 +2,18 @@
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class SelectLocationDialog : DialogComponentBase
+    public partial class SelectLocationDialog : ShowContentDialogComponentBase
     {
-        private bool _value;
-
         private bool showAdd;
 
         private List<LocationModel> _locations = [];
 
-        private MCardText? mCardText;
-
-        private MDialogExtension? myDialog;
+        private MCardText mCardText = default!;
 
         private string? internalLocation;
 
@@ -29,26 +24,21 @@ namespace SwashbucklerDiary.Rcl.Components
         IJSRuntime JS { get; set; } = default!;
 
         [Parameter]
-        public override bool Visible
-        {
-            get => _value;
-            set => SetValue(value);
-        }
-
-        [Parameter]
         public string? Value { get; set; }
 
         [Parameter]
         public EventCallback<string> ValueChanged { get; set; }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override async Task AfterShowContent(bool isLazyContent)
         {
-            await base.OnAfterRenderAsync(firstRender);
-            if (firstRender)
-            {
-                myDialog!.AfterShowContent = async _ => { await ScrollToTop(); };
-            }
+            await base.AfterShowContent(isLazyContent);
+            await ScrollToTop();
+        }
 
+        protected override async Task BeforeShowContent()
+        {
+            await base.BeforeShowContent();
+            await SetLocations();
         }
 
         private List<LocationModel> Locations
@@ -57,18 +47,10 @@ namespace SwashbucklerDiary.Rcl.Components
             set => _locations = value;
         }
 
-        private async void SetValue(bool value)
+        private async Task SetLocations()
         {
-            if (_value != value)
-            {
-                if (value)
-                {
-                    Locations = await LocationService.QueryAsync();
-                    internalLocation = Value;
-                }
-                _value = value;
-                StateHasChanged();
-            }
+            Locations = await LocationService.QueryAsync();
+            internalLocation = Value;
         }
 
         private async Task SetSelectedLocation(LocationModel location)
@@ -118,6 +100,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 await ValueChanged.InvokeAsync(internalLocation);
             }
         }
+
         private async Task ScrollToTop()
         {
             if (mCardText?.Ref != null)

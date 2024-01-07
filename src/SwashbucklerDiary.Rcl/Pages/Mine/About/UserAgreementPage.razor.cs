@@ -8,8 +8,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            await LoadingData();
             await base.OnInitializedAsync();
+
+            await LoadingData();
         }
 
         private async Task LoadingData()

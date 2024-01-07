@@ -14,10 +14,15 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private List<AchievementModel> achievements = [];
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await LoadAchievements();
-            await base.OnInitializedAsync();
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                await LoadAchievements();
+                StateHasChanged();
+            }
         }
 
         protected override Task NavigateToBack()

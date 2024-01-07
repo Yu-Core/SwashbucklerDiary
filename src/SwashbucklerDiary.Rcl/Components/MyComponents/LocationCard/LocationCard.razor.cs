@@ -18,19 +18,18 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override void OnInitialized()
         {
-            LoadView();
             base.OnInitialized();
+
+            LoadView();
         }
 
         private Task Delete()
         {
-            ShowMenu = false;
             return LocationCardList.Delete(Value);
         }
 
         private Task Rename()
         {
-            ShowMenu = false;
             return LocationCardList.Rename(Value);
         }
 

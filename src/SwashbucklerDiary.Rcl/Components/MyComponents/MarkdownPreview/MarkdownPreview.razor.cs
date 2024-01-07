@@ -1,7 +1,6 @@
-﻿using Masa.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -10,10 +9,10 @@ namespace SwashbucklerDiary.Rcl.Components
         private Dictionary<string, object>? _options;
 
         [Inject]
-        private IPreferences Preferences { get; set; } = default!;
+        protected II18nService I18n { get; set; } = default!;
 
-        [Inject]
-        private MasaBlazor MasaBlazor { get; set; } = default!;
+        [CascadingParameter(Name = "IsDark")]
+        public bool Dark { get; set; }
 
         [Parameter]
         public string? Value { get; set; }
@@ -26,17 +25,17 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool Show => !string.IsNullOrEmpty(Value) && _options is not null;
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
-            await SetOptions();
-            await base.OnInitializedAsync();
+            base.OnInitialized();
+
+            SetOptions();
         }
 
-        private async Task SetOptions()
+        private void SetOptions()
         {
-            var dark = MasaBlazor.Theme.Dark;
-            string mode = dark ? "dark" : "light";
-            string lang = await Preferences.Get<string>(Setting.Language);
+            string lang = I18n.Culture.Name.Replace("-", "_");
+            string mode = Dark ? "dark" : "light";
             lang = lang.Replace("-", "_");
             var theme = new Dictionary<string, object?>()
             {

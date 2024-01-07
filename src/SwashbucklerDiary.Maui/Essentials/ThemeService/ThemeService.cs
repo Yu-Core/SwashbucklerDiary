@@ -46,11 +46,12 @@ namespace SwashbucklerDiary.Maui.Essentials
 
         private async Task InternalNotifyStateChanged()
         {
-            TitleBarOrStatusBar.SetTitleBarOrStatusBar(RealTheme);
             if (OnChanged is not null)
             {
                 await OnChanged.Invoke(RealTheme);
             }
+
+            TitleBarOrStatusBar.SetTitleBarOrStatusBar(RealTheme);
         }
     }
 }

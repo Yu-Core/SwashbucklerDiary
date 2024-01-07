@@ -17,10 +17,15 @@ namespace SwashbucklerDiary.Rcl.Pages
             {"DateTimeFormat.yyyy/MM/dd","yyyy/MM/dd" },
         };
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await LoadSettings();
-            await base.OnInitializedAsync();
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                await LoadSettings();
+                StateHasChanged();
+            }
         }
 
         private string DiaryCardDateFormatKey => DiaryCardDateFormats.FirstOrDefault(x => x.Value == diaryCardDateFormat).Key;
@@ -33,7 +38,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task DiaryCardDateFormatChanged(string value)
         {
-            diaryCardDateFormat = value;
             await Preferences.Set(Setting.DiaryCardDateFormat, value);
         }
     }

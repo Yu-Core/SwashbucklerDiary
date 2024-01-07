@@ -38,7 +38,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             if (firstRender)
             {
                 await LoadSettings();
-                await InvokeAsync(StateHasChanged);
+                StateHasChanged();
             }
         }
 

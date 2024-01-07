@@ -51,6 +51,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            await base.OnAfterRenderAsync(firstRender);
+
             if (firstRender)
             {
                 module = await JS.ImportRclJsModule("js/swiper-helper.js");

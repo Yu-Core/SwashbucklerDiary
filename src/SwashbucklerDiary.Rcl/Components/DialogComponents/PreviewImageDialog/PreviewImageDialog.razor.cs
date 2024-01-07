@@ -26,12 +26,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            await base.OnAfterRenderAsync(firstRender);
+
             if (firstRender)
             {
                 await Module.Init($"#{id}");
             }
-
-            await base.OnAfterRenderAsync(firstRender);
         }
 
         private async void SetVisible(bool value)

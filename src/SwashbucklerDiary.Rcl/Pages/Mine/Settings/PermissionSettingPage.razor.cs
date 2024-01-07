@@ -13,11 +13,22 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
-            await UpdatePermissionStatesAsync();
-            AppLifecycle.Resumed += UpdatePermissionStates;
             base.OnInitialized();
+            
+            AppLifecycle.Resumed += UpdatePermissionStates;
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+
+            if(firstRender)
+            {
+                await UpdatePermissionStatesAsync();
+                StateHasChanged();
+            }
         }
 
         protected override void OnDispose()

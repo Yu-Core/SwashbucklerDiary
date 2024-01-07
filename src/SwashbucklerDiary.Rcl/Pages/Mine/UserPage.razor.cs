@@ -28,10 +28,21 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            LoadView();
-            await LoadSettings();
-            await SetAvatar();
             await base.OnInitializedAsync();
+
+            LoadView();
+            await SetAvatar();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                await LoadSettings();
+                StateHasChanged();
+            }
         }
 
         private void LoadView()

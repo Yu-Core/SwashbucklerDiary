@@ -4,16 +4,18 @@
 <MultiDisplay>
     <MobileContent>
         <MBottomSheetExtension MyValue="Visible"
-                               MyValueChanged="VisibleChanged"
-                               ContentClass="rounded-t-lg">
+                               MyValueChanged="InternalVisibleChanged"
+                               ContentClass="rounded-t-lg"
+                               Eager="true">
             @ChildContent
         </MBottomSheetExtension>
     </MobileContent>
     <DesktopContent>
         <MDialogExtension MyValue="Visible"
-                          MyValueChanged="VisibleChanged"
+                          MyValueChanged="InternalVisibleChanged"
                           ContentClass="rounded-lg"
-                          MaxWidth="420">
+                          MaxWidth="420"
+                          Eager="true">
             @ChildContent
         </MDialogExtension>
     </DesktopContent>

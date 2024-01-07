@@ -175,8 +175,6 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 long rangeEnd = length - 1;
                 int statusCode = 200;
 
-                
-
                 string contentType = StaticContentProvider.GetResponseContentTypeOrDefault(path);
                 using (var dic = new NSMutableDictionary<NSString, NSString>())
                 {

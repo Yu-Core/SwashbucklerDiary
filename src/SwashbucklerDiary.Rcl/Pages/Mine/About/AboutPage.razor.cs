@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? appVersion;
 
-        private readonly List<DynamicListItem> codeSourceListItems = [];
+        private List<DynamicListItem> codeSourceListItems = [];
 
         private List<List<DynamicListItem>> viewLists = [];
 
@@ -33,15 +33,17 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override void OnInitialized()
         {
-            LoadView();
             base.OnInitialized();
+
+            LoadView();
         }
 
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync();
+
             await LoadViewAsync();
             appVersion = await PlatformIntegration.GetAppVersion();
-            await base.OnInitializedAsync();
         }
 
         private void LoadView()

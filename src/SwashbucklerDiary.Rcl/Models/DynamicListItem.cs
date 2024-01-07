@@ -5,75 +5,161 @@ namespace SwashbucklerDiary.Rcl.Models
 {
     public class DynamicListItem
     {
-        private OneOf<Func<string>, string?> OneOfText;
+        protected TFunc<string> _text = default!;
 
-        private OneOf<Func<string>, string?> OneOfIcon;
+        protected TFunc<string> _icon = default!;
 
-        private readonly Func<bool>? FuncShow;
+        protected Func<bool>? _funcShow;
 
         public string? Text
         {
-            get => OneOfText.IsT0 ? OneOfText.AsT0.Invoke() : OneOfText.AsT1;
-            set => OneOfText = value;
+            get => _text.ToT();
         }
 
         public string? Icon
         {
-            get => OneOfIcon.IsT0 ? OneOfIcon.AsT0.Invoke() : OneOfIcon.AsT1;
-            set => OneOfIcon = value;
+            get => _icon.ToT();
         }
 
         public bool Show
         {
-            get => FuncShow is null || FuncShow.Invoke();
+            get => _funcShow is null || _funcShow.Invoke();
         }
 
         public EventCallback OnClick { get; set; }
 
-        private DynamicListItem(object receiver, string? t = null, Func<string>? tFunc = null, string? i = null, Func<string>? iFunc = null, Action? oAction = null, Func<Task>? oFunc = null, Func<bool>? show = null)
+        public DynamicListItem(DynamicListItem dynamicListItem)
         {
-            FuncShow = show;
-            OneOfText = t != null ? t : tFunc ?? throw new("At least one is not empty"); ;
-            OneOfIcon = i != null ? i : iFunc ?? throw new("At least one is not empty"); ;
+            _text = dynamicListItem._text;
+            _icon = dynamicListItem._icon;
+            _funcShow = dynamicListItem._funcShow;
+            OnClick = dynamicListItem.OnClick;
+        }
 
-            if (oFunc != null)
+        private DynamicListItem(Func<bool>? funcShow)
+        {
+            _funcShow = funcShow;
+        }
+
+        private DynamicListItem(object receiver, Action actionOnClick, Func<bool>? funcShow) : this(funcShow)
+        {
+            _funcShow = funcShow;
+            OnClick = EventCallback.Factory.Create(receiver, actionOnClick);
+        }
+
+        private DynamicListItem(object receiver, Func<Task> funcOnClick, Func<bool>? funcShow) : this(funcShow)
+        {
+            OnClick = EventCallback.Factory.Create(receiver, funcOnClick);
+        }
+
+        public DynamicListItem(object receiver, string text, Action actionOnClick, Func<bool>? funcShow) : this(receiver, actionOnClick, funcShow)
+        {
+            _text = text;
+        }
+
+        public DynamicListItem(object receiver, Func<string> funcText, Action actionOnClick, Func<bool>? funcShow) : this(receiver, actionOnClick, funcShow)
+        {
+            _text = funcText;
+        }
+
+        public DynamicListItem(object receiver, string text, Func<Task> funcOnClick, Func<bool>? funcShow) : this(receiver, funcOnClick, funcShow)
+        {
+            _text = text;
+        }
+
+        public DynamicListItem(object receiver, Func<string> funcText, Func<Task> funcOnClick, Func<bool>? funcShow) : this(receiver, funcOnClick, funcShow)
+        {
+            _text = funcText;
+        }
+
+        public DynamicListItem(object receiver, string text, string icon, Action actionOnClick, Func<bool>? funcShow = null) : this(receiver, text, actionOnClick, funcShow)
+        {
+            _icon = icon;
+        }
+
+        public DynamicListItem(object receiver, string text, string icon, Func<Task> funcOnClick, Func<bool>? funcShow = null) : this(receiver, text, funcOnClick, funcShow)
+        {
+            _icon = icon;
+        }
+
+        public DynamicListItem(object receiver, string text, Func<string> funcIcon, Action actionOnClick, Func<bool>? funcShow = null) : this(receiver, text, actionOnClick, funcShow)
+        {
+            _icon = funcIcon;
+        }
+
+        public DynamicListItem(object receiver, string text, Func<string> funcIcon, Func<Task> funcOnClick, Func<bool>? funcShow = null) : this(receiver, text, funcOnClick, funcShow)
+        {
+            _icon = funcIcon;
+        }
+
+        public DynamicListItem(object receiver, Func<string> funcText, string icon, Action actionOnClick, Func<bool>? funcShow = null) : this(receiver, funcText, actionOnClick, funcShow)
+        {
+            _icon = icon;
+        }
+
+        public DynamicListItem(object receiver, Func<string> funcText, string icon, Func<Task> funcOnClick, Func<bool>? funcShow = null) : this(receiver, funcText, funcOnClick, funcShow)
+        {
+            _icon = icon;
+        }
+
+        public DynamicListItem(object receiver, Func<string> funcText, Func<string> funcIcon, Action actionOnClick, Func<bool>? funcShow = null) : this(receiver, funcText, actionOnClick, funcShow)
+        {
+            _icon = funcIcon;
+        }
+
+        public DynamicListItem(object receiver, Func<string> funcText, Func<string> funcIcon, Func<Task> funcOnClick, Func<bool>? funcShow = null) : this(receiver, funcText, funcOnClick, funcShow)
+        {
+            _icon = funcIcon;
+        }
+    }
+
+    [GenerateOneOf]
+    public partial class TFunc<T> : OneOfBase<T, Func<T>>
+    {
+        public T ToT() => Match(
+            t0 => t0,
+            t1 => t1.Invoke()
+        );
+
+        public static bool operator ==(TFunc<T>? left, TFunc<T>? right)
+        {
+            if (Equals(left, right))
             {
-                OnClick = EventCallback.Factory.Create(receiver, oFunc);
+                return true;
             }
 
-            if (oAction != null)
+            if (left is null || right is null)
             {
-                OnClick = EventCallback.Factory.Create(receiver, oAction);
+                return false;
             }
+
+            return left.Value == right.Value;
         }
 
-        public DynamicListItem(object receiver, string? text, string? icon, Action? onClickAction, Func<bool>? show = null) : this(receiver, t: text, i: icon, oAction: onClickAction, show: show)
+        public static bool operator !=(TFunc<T>? left, TFunc<T>? right)
         {
+            if (Equals(left, right))
+            {
+                return false;
+            }
+
+            if (left is null || right is null)
+            {
+                return true;
+            }
+
+            return left.Value != right.Value;
         }
 
-        public DynamicListItem(object receiver, string? text, string? icon, Func<Task>? onClickFunc, Func<bool>? show = null) : this(receiver, t: text, i: icon, oFunc: onClickFunc, show: show)
+        public override bool Equals(object obj)
         {
+            return base.Equals(obj);
         }
 
-        public DynamicListItem(object receiver, string? text, Func<string>? iconFunc, Action? onClickAction, Func<bool>? show = null) : this(receiver, t: text, iFunc: iconFunc, oAction: onClickAction, show: show)
+        public override int GetHashCode()
         {
-        }
-        public DynamicListItem(object receiver, string? text, Func<string>? iconFunc, Func<Task>? onClickFunc, Func<bool>? show = null) : this(receiver, t: text, iFunc: iconFunc, oFunc: onClickFunc, show: show)
-        {
-        }
-        public DynamicListItem(object receiver, Func<string>? textFunc, string? icon, Action? onClickAction, Func<bool>? show = null) : this(receiver, tFunc: textFunc, i: icon, oAction: onClickAction, show: show)
-        {
+            return base.GetHashCode();
         }
 
-        public DynamicListItem(object receiver, Func<string>? textFunc, string? icon, Func<Task>? onClickFunc, Func<bool>? show = null) : this(receiver, tFunc: textFunc, i: icon, oFunc: onClickFunc, show: show)
-        {
-        }
-
-        public DynamicListItem(object receiver, Func<string>? textFunc, Func<string>? iconFunc, Action? onClickAction, Func<bool>? show = null) : this(receiver, tFunc: textFunc, iFunc: iconFunc, oAction: onClickAction, show: show)
-        {
-        }
-        public DynamicListItem(object receiver, Func<string>? textFunc, Func<string>? iconFunc, Func<Task>? onClickFunc, Func<bool>? show = null) : this(receiver, tFunc: textFunc, iFunc: iconFunc, oFunc: onClickFunc, show: show)
-        {
-        }
     }
 }

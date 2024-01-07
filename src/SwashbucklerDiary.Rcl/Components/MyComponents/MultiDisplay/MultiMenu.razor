@@ -3,44 +3,44 @@
 
 <MultiDisplay OnUpdate="UpdateDisplay">
     <MobileContent>
-        <MBottomSheet Value="Visible"
-                      ValueChanged="VisibleChanged"
-                      ContentClass="rounded-t-lg">
+        <MBottomSheetExtension MyValue="Visible"
+                               MyValueChanged="InternalVisibleChanged"
+                               ContentClass="rounded-t-lg"
+                               Eager="true">
             <ActivatorContent>
-                <MButton @attributes="@context.Attrs"
-                         Icon="true">
-                    @ButtonContent
-                </MButton>
+                @(ActivatorContent(context))
             </ActivatorContent>
             <ChildContent>
                 <MCard Class="rounded-t-lg py-2">
                     <MList>
-                        @foreach (var item in DynamicListItems)
-                        {
-                            @if (item.Show)
+                        <div @onclick="HandleOnCancel">
+                            @foreach (var item in DynamicListItems)
                             {
-                                <MListItem OnClick="item.OnClick">
-                                    <MListItemIcon>
-                                        <MIcon>
-                                            @(item.Icon)
-                                        </MIcon>
-                                    </MListItemIcon>
-                                    <MListItemContent>
-                                        @(I18n.T(item.Text))
-                                    </MListItemContent>
-                                </MListItem>
-                                if (DynamicListItems.Last(it => it.Show) != item)
+                                @if (item.Show)
                                 {
-                                    <MDivider></MDivider>
+                                    <MListItem OnClick="item.OnClick">
+                                        <MListItemIcon>
+                                            <MIcon>
+                                                @(item.Icon)
+                                            </MIcon>
+                                        </MListItemIcon>
+                                        <MListItemContent>
+                                            @(I18n.T(item.Text))
+                                        </MListItemContent>
+                                    </MListItem>
+                                    if (DynamicListItems.Last(it => it.Show) != item)
+                                    {
+                                        <MDivider></MDivider>
+                                    }
                                 }
                             }
-                        }
+                        </div>
                         <MListItem>
-                            <MButton Rounded="true"
+                            <MButton Class="text-subtitle-1"
+                                     Rounded="true"
                                      Block="true"
                                      Depressed="true"
                                      Large="true"
-                                     Class="text-subtitle-1"
                                      OnClick="HandleOnCancel">
                                 @(I18n.T("Share.Cancel"))
                             </MButton>
@@ -48,20 +48,18 @@
                     </MList>
                 </MCard>
             </ChildContent>
-        </MBottomSheet>
+        </MBottomSheetExtension>
     </MobileContent>
     <DesktopContent>
-        <MMenu Value="Visible"
-               ValueChanged="VisibleChanged"
-               Rounded="@("lg")"
-               Bottom="true"
-               Right="true"
-               Transition="scroll-x-reverse-transition">
+        <MMenuExtension MyValue="Visible"
+                        MyValueChanged="InternalVisibleChanged"
+                        Rounded="@("lg")"
+                        Bottom="true"
+                        Right="true"
+                        Eager="true"
+                        Transition="scroll-x-reverse-transition">
             <ActivatorContent>
-                <MButton @attributes="@context.Attrs"
-                         Icon="true">
-                    @ButtonContent
-                </MButton>
+                @(ActivatorContent(context))
             </ActivatorContent>
             <ChildContent>
                 <MList MinWidth="150">
@@ -79,6 +77,6 @@
                     }
                 </MList>
             </ChildContent>
-        </MMenu>
+        </MMenuExtension>
     </DesktopContent>
 </MultiDisplay>

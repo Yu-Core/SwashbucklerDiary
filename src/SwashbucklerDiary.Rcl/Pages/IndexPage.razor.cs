@@ -27,15 +27,20 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override void OnInitialized()
         {
+            base.OnInitialized();
+
             VersionManager.AfterFirstEnter += UpdateDiariesAndStateHasChanged;
             VersionManager.AfterUpdateVersion += UpdateDiariesAndStateHasChanged;
-            base.OnInitialized();
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await LoadSettings();
-            await base.OnInitializedAsync();
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
+            {
+                await LoadSettings();
+                StateHasChanged();
+            }
         }
 
         protected override void OnDispose()

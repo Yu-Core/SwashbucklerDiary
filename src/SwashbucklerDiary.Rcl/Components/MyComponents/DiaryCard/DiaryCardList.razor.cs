@@ -101,14 +101,20 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override void OnInitialized()
         {
-            LoadView();
             base.OnInitialized();
+
+            LoadView();
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await LoadSettings();
-            await base.OnInitializedAsync();
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                await LoadSettings();
+                StateHasChanged();
+            }
         }
 
         protected override async Task OnResume()

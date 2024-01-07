@@ -14,10 +14,15 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private IResourceService ResourceService { get; set; } = default!;
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await UpdateImageResourcesAsync();
-            await base.OnInitializedAsync();
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                await UpdateImageResourcesAsync();
+                StateHasChanged();
+            }
         }
 
         async Task UpdateImageResourcesAsync()

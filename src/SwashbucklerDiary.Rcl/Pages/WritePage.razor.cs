@@ -83,22 +83,27 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override void OnInitialized()
         {
+            base.OnInitialized();
+
             LoadView();
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
             NavigateService.BeforePop += BeforePop;
             NavigateService.BeforePopToRoot += BeforePopToRoot;
             AppLifecycle.Stopped += LeaveAppSaveDiary;
-
-            base.OnInitialized();
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await LoadSettings();
-            await UpdateTags();
-            await SetTag();
-            await SetDiary();
-            await base.OnInitializedAsync();
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                await LoadSettings();
+                await UpdateTags();
+                await SetTag();
+                await SetDiary();
+                StateHasChanged();
+            }
         }
 
         private async Task BeforePop(PopEventArgs e)

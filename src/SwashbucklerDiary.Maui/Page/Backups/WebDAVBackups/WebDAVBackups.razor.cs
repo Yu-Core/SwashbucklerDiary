@@ -33,10 +33,15 @@ namespace SwashbucklerDiary.Maui.Pages
         [Inject]
         private IDiaryFileManager DiaryFileManager { get; set; } = default!;
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await LoadSettings();
-            await base.OnInitializedAsync();
+            await base.OnAfterRenderAsync(firstRender);
+
+            if(firstRender)
+            {
+                await LoadSettings();
+                StateHasChanged();
+            }
         }
 
         private bool Configured => !string.IsNullOrEmpty(configModel.ServerAddress);

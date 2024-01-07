@@ -4,7 +4,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class DiariesPageComponentBase : ImportantComponentBase
+    public abstract class DiariesPageComponentBase : ImportantComponentBase
     {
         protected bool showDiarySort;
 
@@ -18,11 +18,16 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected virtual List<TagModel> Tags { get; set; } = new();
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await InitializeDiariesAsync();
-            await UpdateTagsAsync();
-            await base.OnInitializedAsync();
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                await InitializeDiariesAsync();
+                await UpdateTagsAsync();
+                StateHasChanged();
+            }
         }
 
         protected virtual Task InitializeDiariesAsync()

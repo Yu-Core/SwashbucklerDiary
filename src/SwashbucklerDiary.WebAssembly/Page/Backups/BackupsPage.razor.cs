@@ -17,6 +17,7 @@ namespace SwashbucklerDiary.WebAssembly.Pages
         protected override void OnInitialized()
         {
             base.OnInitialized();
+
             InitTab();
         }
 

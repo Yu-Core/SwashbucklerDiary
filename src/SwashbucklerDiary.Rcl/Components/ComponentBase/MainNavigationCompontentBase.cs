@@ -6,7 +6,7 @@ using SwashbucklerDiary.Rcl.Models;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class MainNavigationCompontentBase : ComponentBase, IDisposable
+    public abstract class MainNavigationCompontentBase : ComponentBase, IDisposable
     {
         [Inject]
         protected MasaBlazor MasaBlazor { get; set; } = default!;
@@ -32,16 +32,11 @@ namespace SwashbucklerDiary.Rcl.Components
             GC.SuppressFinalize(this);
         }
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
-            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
-            return base.OnInitializedAsync();
-        }
+            await base.OnInitializedAsync();
 
-        protected string? GetIcon(NavigationButton button)
-        {
-            bool activated = Items.IndexOf(button) == Value;
-            return activated ? button.SelectedIcon : button.Icon;
+            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
         }
 
         private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)

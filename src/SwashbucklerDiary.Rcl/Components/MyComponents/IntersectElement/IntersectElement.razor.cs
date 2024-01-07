@@ -32,6 +32,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            await base.OnAfterRenderAsync(firstRender);
+
             if (firstRender)
             {
                 var handle = DotNetObjectReference.Create(new IntersectInvoker(OnIntersectAsync));

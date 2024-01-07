@@ -6,7 +6,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class ImportantComponentBase : MyComponentBase, IDisposable
+    public abstract class ImportantComponentBase : MyComponentBase, IDisposable
     {
         private string? thisPageUrl;
 
@@ -19,6 +19,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected IPlatformIntegration PlatformIntegration { get; set; } = default!;
 
+        [Inject]
+        protected NavigationManager Navigation { get; set; } = default!;
+
         public void Dispose()
         {
             OnDispose();
@@ -29,9 +32,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override void OnInitialized()
         {
+            base.OnInitialized();
+
             InitializedUrl();
             Navigation.LocationChanged += NavigationManagerOnLocationChanged;
-            base.OnInitialized();
         }
 
         protected virtual Task NavigateToBack()

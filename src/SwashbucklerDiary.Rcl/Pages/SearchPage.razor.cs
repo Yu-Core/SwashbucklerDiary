@@ -19,10 +19,11 @@ namespace SwashbucklerDiary.Rcl.Pages
         [SupplyParameterFromQuery]
         public string? Query { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
+            base.OnInitialized();
+
             LoadQuery();
-            await base.OnInitializedAsync();
         }
 
         protected override async Task UpdateDiariesAsync()

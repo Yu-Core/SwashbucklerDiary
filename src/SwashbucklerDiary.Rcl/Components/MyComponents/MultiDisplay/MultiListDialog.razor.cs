@@ -8,13 +8,8 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public string? Title { get; set; }
 
+        [EditorRequired]
         [Parameter]
-        public List<DynamicListItem> DynamicListItems { get; set; } = new();
-
-        private async Task OnClick(EventCallback callback)
-        {
-            await InternalVisibleChanged(false);
-            await callback.InvokeAsync();
-        }
+        public List<DynamicListItem> DynamicListItems { get; set; } = [];
     }
 }

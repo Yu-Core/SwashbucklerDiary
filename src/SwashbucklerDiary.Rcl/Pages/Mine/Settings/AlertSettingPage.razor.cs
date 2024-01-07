@@ -17,8 +17,18 @@ namespace SwashbucklerDiary.Rcl.Pages
         protected override async Task OnInitializedAsync()
         {
             SetTimeouts();
-            await LoadSettings();
             await base.OnInitializedAsync();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                await LoadSettings();
+                StateHasChanged();
+            }
         }
 
         private StringNumber Timeout

@@ -10,8 +10,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            await LoadViewAsync();
             await base.OnInitializedAsync();
+
+            await LoadViewAsync();
         }
 
         private async Task ToSponsor(string? url)

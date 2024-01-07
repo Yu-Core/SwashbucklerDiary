@@ -34,32 +34,35 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void SetValue(bool value)
         {
-            if (_visible != value)
+            if (_visible == value)
             {
-                _visible = value;
-                if (!ShowTitle)
-                {
-                    return;
-                }
+                return;
+            }
 
-                Task.Run(() =>
-                {
-                    if (value)
-                    {
-                        NavigateService.Action += CloseSearch;
-                    }
-                    else
-                    {
-                        Value = string.Empty;
-                        NavigateService.Action -= CloseSearch;
-                    }
-                });
+            _visible = value;
+            if (!ShowTitle)
+            {
+                return;
+            }
+
+            if (value)
+            {
+                NavigateService.Action += CloseSearch;
+            }
+            else
+            {
+                Value = string.Empty;
+                NavigateService.Action -= CloseSearch;
             }
         }
 
         public void Dispose()
         {
-            NavigateService.Action -= CloseSearch;
+            if(Visible)
+            {
+                NavigateService.Action -= CloseSearch;
+            }
+
             GC.SuppressFinalize(this);
         }
 
@@ -75,6 +78,7 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 await ValueChanged.InvokeAsync(Value);
             }
+
             if (OnChanged.HasDelegate)
             {
                 await OnChanged.InvokeAsync(Value);

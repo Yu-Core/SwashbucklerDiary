@@ -21,10 +21,11 @@ namespace SwashbucklerDiary.Rcl.Components
             GC.SuppressFinalize(this);
         }
 
-        protected override Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
+            base.OnInitialized();
+
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
-            return base.OnInitializedAsync();
         }
 
         private bool Desktop => MasaBlazor.Breakpoint.MdAndUp;

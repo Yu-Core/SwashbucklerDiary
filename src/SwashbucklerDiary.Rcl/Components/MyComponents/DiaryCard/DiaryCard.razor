@@ -32,12 +32,16 @@
                 }
                 <div @onclick:stopPropagation="true">
                     <MultiMenu @bind-Visible="showMenu"
-                               DynamicListItems="menuItems">
-                        <ButtonContent>
-                            <MIcon Class="@($"chevron-down {(showMenu?"chevron-down-rotate-x":"")}")">
-                                mdi-chevron-down
-                            </MIcon>
-                        </ButtonContent>
+                               DynamicListItems="menuItems"
+                               Context="menuContext">
+                        <ActivatorContent>
+                            <MButton @attributes="@menuContext.Attrs"
+                                     Icon="true">
+                                <MIcon Class="@($"chevron-down {(showMenu?"chevron-down-rotate-x":"")}")">
+                                    mdi-chevron-down
+                                </MIcon>
+                            </MButton>
+                        </ActivatorContent>
                     </MultiMenu>
                 </div>
             </MListItemAction>

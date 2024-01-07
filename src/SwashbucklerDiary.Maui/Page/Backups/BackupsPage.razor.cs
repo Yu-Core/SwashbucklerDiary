@@ -17,6 +17,7 @@ namespace SwashbucklerDiary.Maui.Pages
         protected override void OnInitialized()
         {
             base.OnInitialized();
+
             InitTab();
         }
 

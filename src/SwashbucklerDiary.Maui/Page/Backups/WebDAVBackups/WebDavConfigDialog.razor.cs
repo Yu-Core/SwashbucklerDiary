@@ -19,11 +19,11 @@ namespace SwashbucklerDiary.Maui.Pages
         [Parameter]
         public EventCallback<WebDavConfigForm> OnOK { get; set; }
 
-        protected override async Task DialogAfterRenderAsync()
+        protected override Task BeforeShowContent()
         {
             mForm?.Reset();
             configModel = Form.DeepCopy();
-            await base.DialogAfterRenderAsync();
+            return base.BeforeShowContent();
         }
 
         private async Task HandleOnOK()

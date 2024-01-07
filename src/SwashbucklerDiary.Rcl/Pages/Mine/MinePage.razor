@@ -128,19 +128,19 @@
 
 </ScrollContainer>
 
-<RadioDialog @bind-Visible="showLanguage"
+<RadioDialog @bind-Value="language"
+             @bind-Visible="showLanguage"
              Title="@(I18n.T("Mine.SelectLanguage"))"
-             Value="language"
-             ValueChanged="LanguageChanged"
+             OnChange="LanguageChanged"
              TItem="KeyValuePair<string,string>"
              TItemValue="string"
              Items="I18n.Languages">
 </RadioDialog>
 
-<RadioDialog @bind-Visible="showTheme"
+<RadioDialog @bind-Value="theme"
+             @bind-Visible="showTheme"
              Title="@(I18n.T("Mine.Night"))"
-             Value="theme"
-             ValueChanged="ThemeStateChanged"
+             OnChange="ThemeStateChanged"
              TItem="KeyValuePair<string,Shared.Theme>"
              TItemValue="Shared.Theme"
              Items="themeItems">

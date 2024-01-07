@@ -21,15 +21,20 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override void OnInitialized()
         {
-            LoadQuery();
             base.OnInitialized();
+
+            LoadQuery();
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await LoadSettings();
-            await LoadAppFunctions();
-            await base.OnInitializedAsync();
+            await base.OnAfterRenderAsync(firstRender);
+            if(firstRender)
+            {
+                await LoadSettings();
+                await LoadAppFunctions();
+                StateHasChanged();
+            }
         }
 
         protected override async Task OnResume()

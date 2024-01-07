@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class SelectIconDialog : DialogComponentBase
     {
-        private readonly List<IconListItem> iconListItems = [];
+        private List<IconListItem> iconListItems = [];
 
         [Parameter]
         public string? Title { get; set; }
@@ -25,18 +25,19 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override void OnInitialized()
         {
-            foreach (var item in Items)
-            {
-                var iconListItem = new IconListItem()
-                {
-                    Name = item.Key,
-                    Icon = item.Value,
-                    Text = Text?.Invoke(item)
-                };
-                iconListItems.Add(iconListItem);
-            }
+            SetIconListItems();
 
             base.OnInitialized();
+        }
+
+        private void SetIconListItems()
+        {
+            iconListItems = Items.Select(it => new IconListItem()
+            {
+                Name = it.Key,
+                Icon = it.Value,
+                Text = Text?.Invoke(it)
+            }).ToList();
         }
     }
 }

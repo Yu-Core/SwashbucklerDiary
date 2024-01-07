@@ -44,15 +44,21 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override void OnInitialized()
         {
-            LoadView();
             base.OnInitialized();
+
+            LoadView();
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await LoadSettings();
-            await UpdateDiary();
-            await base.OnInitializedAsync();
+            await base.OnAfterRenderAsync(firstRender);
+
+            if(firstRender)
+            {
+                await LoadSettings();
+                await UpdateDiary();
+                StateHasChanged();
+            }
         }
 
         private List<TagModel> Tags => diary.Tags ?? new();
@@ -101,17 +107,17 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems = new List<DynamicListItem>()
             {
-                new(this, "Share.Copy","mdi-content-copy",OnCopy),
-                new(this, TopText,"mdi-format-vertical-align-top",OnTopping),
-                new(this, "Diary.Export","mdi-export",OpenExportDialog),
-                new(this, MarkdownText,MarkdownIcon,MarkdownChanged),
+                new(this, "Share.Copy","mdi-content-copy", OnCopy),
+                new(this, TopText,"mdi-format-vertical-align-top", OnTopping),
+                new(this, "Diary.Export","mdi-export", OpenExportDialog),
+                new(this, MarkdownText,MarkdownIcon, MarkdownChanged),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>enablePrivacy)
             };
 
             shareItems = new()
             {
-                new(this, "Share.TextShare","mdi-format-text",ShareText),
-                new(this, "Share.ImageShare","mdi-image-outline",ShareImage),
+                new(this, "Share.TextShare","mdi-format-text", ShareText),
+                new(this, "Share.ImageShare","mdi-image-outline", ShareImage),
             };
         }
 
@@ -143,7 +149,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task OnTopping()
         {
-            showMenu = false;
             diary.Top = !diary.Top;
             await DiaryService.UpdateAsync(diary);
             StateHasChanged();
@@ -151,7 +156,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task OnCopy()
         {
-            showMenu = false;
             var content = GetDiaryCopyContent();
             await PlatformIntegration.SetClipboard(content);
             await AlertService.Success(I18n.T("Share.CopySuccess"));
@@ -159,8 +163,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task ShareText()
         {
-            showShare = false;
-            StateHasChanged();
             var content = GetDiaryCopyContent();
             await PlatformIntegration.ShareTextAsync(I18n.T("Share.Share"), content);
             await HandleAchievements(Achievement.Share);
@@ -169,8 +171,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async void ShareImage()
         {
             await AlertService.StartLoading();
-            showShare = false;
-            await InvokeAsync(StateHasChanged);
 
             var filePath = await ScreenshotService.CaptureAsync("#screenshot");
             await PlatformIntegration.ShareFileAsync(I18n.T("Share.Share"), filePath);
@@ -203,7 +203,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task MarkdownChanged()
         {
-            showMenu = false;
             enableMarkdown = !enableMarkdown;
             await Preferences.Set(Setting.Markdown, enableMarkdown);
             StateHasChanged();
@@ -211,7 +210,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task DiaryPrivacyChanged()
         {
-            showMenu = false;
+
             diary.Private = !diary.Private;
             diary.UpdateTime = DateTime.Now;
             await DiaryService.UpdateAsync(diary);
@@ -243,9 +242,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task OpenExportDialog()
         {
-            showMenu = false;
             var diary = await DiaryService.FindAsync(this.diary.Id); ;
-            exportDiaries = new() { diary };
+            exportDiaries = [diary];
             showExport = true;
             StateHasChanged();
         }

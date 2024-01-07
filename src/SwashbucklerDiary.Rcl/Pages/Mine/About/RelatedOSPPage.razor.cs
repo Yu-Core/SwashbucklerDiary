@@ -9,8 +9,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            await ReadJson();
             await base.OnInitializedAsync();
+
+            await ReadJson();
         }
 
         private async Task OpenBrowser(string? url)

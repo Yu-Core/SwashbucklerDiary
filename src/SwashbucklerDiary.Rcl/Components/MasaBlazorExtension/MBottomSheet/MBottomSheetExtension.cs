@@ -23,32 +23,31 @@ namespace SwashbucklerDiary.Rcl.Components
             set => base.ValueChanged = value;
         }
 
-        protected override ValueTask DisposeAsync(bool disposing)
+        protected override Task DeleteContent()
         {
             if (Value)
             {
                 NavigateService.Action -= Close;
             }
 
-            return base.DisposeAsync(disposing);
+            return base.DeleteContent();
         }
 
         private void SetValue(bool value)
         {
-            if (base.Value != value)
+            if (base.Value == value)
             {
-                base.Value = value;
-                Task.Run(() =>
-                {
-                    if (value)
-                    {
-                        NavigateService.Action += Close;
-                    }
-                    else
-                    {
-                        NavigateService.Action -= Close;
-                    }
-                });
+                return;
+            }
+
+            base.Value = value;
+            if (value)
+            {
+                NavigateService.Action += Close;
+            }
+            else
+            {
+                NavigateService.Action -= Close;
             }
         }
 

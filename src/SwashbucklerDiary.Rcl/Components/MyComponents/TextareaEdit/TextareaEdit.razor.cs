@@ -43,8 +43,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override void OnInitialized()
         {
-            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
             base.OnInitialized();
+
+            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
         }
 
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;

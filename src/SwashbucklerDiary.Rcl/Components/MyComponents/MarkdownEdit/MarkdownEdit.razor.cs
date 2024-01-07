@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -32,26 +31,26 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool Show => _options is not null;
 
-        protected async override Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
-            await SetOptions();
-            await base.OnInitializedAsync();
+            base.OnInitialized();
+
+            SetOptions();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            await base.OnAfterRenderAsync(firstRender);
+
             if (firstRender)
             {
                 await AfterMarkdownRender();
             }
-
-            await base.OnAfterRenderAsync(firstRender);
         }
 
-        private async Task SetOptions()
+        private void SetOptions()
         {
-            string lang = await Preferences.Get<string>(Setting.Language);
-            lang = lang.Replace("-", "_");
+            string lang = I18n.Culture.Name.Replace("-", "_");
             string theme = Dark ? "dark" : "light";
             var previewTheme = new Dictionary<string, object?>()
             {

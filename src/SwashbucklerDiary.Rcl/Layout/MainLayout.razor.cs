@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 {
     public partial class MainLayout : IDisposable
     {
-        private StringNumber NavigationIndex = 0;
+        private StringNumber NavigationButtonIndex = 0;
 
         private List<NavigationButton> NavigationButtons = new();
 
@@ -51,12 +51,13 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected override void OnInitialized()
         {
+            base.OnInitialized();
+
             NavigateService.Initialize(Navigation);
             AlertService.Initialize(PopupService);
             LoadView();
             ThemeService.OnChanged += ThemeChanged;
             I18nService.OnChanged += StateHasChanged;
-            base.OnInitialized();
         }
 
         protected override async Task OnInitializedAsync()
@@ -68,9 +69,11 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
-            if(firstRender)
+
+            if (firstRender)
             {
                 await LoadSettings();
+                StateHasChanged();
             }
         }
 
@@ -86,12 +89,11 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         private void LoadView()
         {
-            NavigationButtons = new()
-            {
-                new (this, "Main.Diary", "mdi-notebook-outline", "mdi-notebook", ()=>PopToRootAsync("")),
-                new (this, "Main.History", "mdi-clock-outline", "mdi-clock", ()=>PopToRootAsync("history")),
-                new (this, "Main.Mine", "mdi-account-outline", "mdi-account", ()=>PopToRootAsync("mine"))
-            };
+            List<NavigationButton> navigationButtons = [];
+            navigationButtons.Add(new(this, navigationButtons.Count, "Main.Diary", "mdi-notebook-outline", "mdi-notebook", GetIcon, () => PopToRootAsync("")));
+            navigationButtons.Add(new(this, navigationButtons.Count, "Main.History", "mdi-clock-outline", "mdi-clock", GetIcon, () => PopToRootAsync("history")));
+            navigationButtons.Add(new(this, navigationButtons.Count, "Main.Mine", "mdi-account-outline", "mdi-account", GetIcon, () => PopToRootAsync("mine")));
+            NavigationButtons = navigationButtons;
         }
 
         protected Task PopToRootAsync(string url)
@@ -107,5 +109,9 @@ namespace SwashbucklerDiary.Rcl.Layout
             await InvokeAsync(StateHasChanged);
         }
 
+        private string GetIcon(NavigationButton navigationButton)
+        {
+            return navigationButton.Index == NavigationButtonIndex ? navigationButton.SelectedIcon : navigationButton.NotSelectedIcon;
+        }
     }
 }

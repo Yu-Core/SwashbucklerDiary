@@ -6,23 +6,14 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class SelectTagsDialog : DialogComponentBase
+    public partial class SelectTagsDialog : ShowContentDialogComponentBase
     {
-        private bool _value;
-
         private bool showAddTag;
 
         private List<StringNumber> SelectedTagIds = [];
 
         [Inject]
         public ITagService TagService { get; set; } = default!;
-
-        [Parameter]
-        public override bool Visible
-        {
-            get => _value;
-            set => SetValue(value);
-        }
 
         [Parameter]
         public List<TagModel> Value { get; set; } = default!;
@@ -39,48 +30,46 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public EventCallback<List<TagModel>> ItemsChanged { get; set; }
 
+        protected override async Task BeforeShowContent()
+        {
+            await base.BeforeShowContent();
+            await SetSelectedTagIds();
+        }
+
         protected virtual async Task HandleOnSave(MouseEventArgs _)
         {
-            var TagModels = new List<TagModel>();
+            var tagModels = new List<TagModel>();
             foreach (var item in SelectedTagIds)
             {
-                var TagModel = Items.FirstOrDefault(it => it.Id.ToString() == item.ToString());
-                if (TagModel != null)
+                var tagModel = Items.FirstOrDefault(it => it.Id.ToString() == item.ToString());
+                if (tagModel != null)
                 {
-                    TagModels.Add(TagModel);
+                    tagModels.Add(tagModel);
                 }
             }
-            Value = TagModels;
+            Value = tagModels;
 
             if (ValueChanged.HasDelegate)
             {
-                await ValueChanged.InvokeAsync(TagModels);
+                await ValueChanged.InvokeAsync(tagModels);
             }
 
             await OnSave.InvokeAsync();
         }
 
-        private void SetValue(bool value)
+        private Task SetSelectedTagIds()
         {
-            if (_value == value)
+            List<StringNumber> selectedTagIds = [];
+            foreach (var item in Value)
             {
-                return;
-            }
-
-            if (value)
-            {
-                SelectedTagIds = [];
-                foreach (var item in Value)
+                if (Items.Any(it => it.Id == item.Id))
                 {
-                    if (Items.Any(it => it.Id == item.Id))
-                    {
-                        SelectedTagIds.Add(item.Id.ToString());
-                    }
+                    selectedTagIds.Add(item.Id.ToString());
                 }
             }
 
-            _value = value;
-            StateHasChanged();
+            SelectedTagIds = selectedTagIds;
+            return Task.CompletedTask;
         }
 
         private async Task SaveAddTag(string tagName)

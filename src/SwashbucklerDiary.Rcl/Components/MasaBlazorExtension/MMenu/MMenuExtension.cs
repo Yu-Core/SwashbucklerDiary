@@ -4,8 +4,7 @@ using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    //The significance of extension is to enable dialog or similar components to support return keys
-    public class MDialogExtension : MDialog
+    public class MMenuExtension : MMenu
     {
         [Inject]
         protected INavigateService NavigateService { get; set; } = default!;
@@ -24,14 +23,14 @@ namespace SwashbucklerDiary.Rcl.Components
             set => base.ValueChanged = value;
         }
 
-        protected override Task DeleteContent()
+        protected override ValueTask DisposeAsync(bool disposing)
         {
             if (Value)
             {
                 NavigateService.Action -= Close;
             }
 
-            return base.DeleteContent();
+            return base.DisposeAsync(disposing);
         }
 
         private void SetValue(bool value)

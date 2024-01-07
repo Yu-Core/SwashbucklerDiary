@@ -18,8 +18,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override void OnInitialized()
         {
-            LoadView();
             base.OnInitialized();
+
+            LoadView();
         }
 
         private string DiaryCount
@@ -33,19 +34,16 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private Task Delete()
         {
-            ShowMenu = false;
             return TagCardList.Delete(Value);
         }
 
         private Task Rename()
         {
-            ShowMenu = false;
             return TagCardList.Rename(Value);
         }
 
         private Task Export()
         {
-            ShowMenu = false;
             return TagCardList.Export(Value);
         }
 

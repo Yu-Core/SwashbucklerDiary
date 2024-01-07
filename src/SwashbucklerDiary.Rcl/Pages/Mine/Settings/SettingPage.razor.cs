@@ -24,14 +24,25 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            await LoadSettings();
-            await UpdatePrivatePassword();
-            UpdateCacheSize();
             await base.OnInitializedAsync();
+
+            UpdateCacheSize();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                await LoadSettings();
+                StateHasChanged();
+            }
         }
 
         private async Task LoadSettings()
         {
+            await UpdatePrivatePassword();
             privacy = await Preferences.Get<bool>(Setting.PrivacyMode);
         }
 
@@ -65,12 +76,14 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 return;
             }
+
             await UpdatePrivatePassword();
             if (privatePassword != value.MD5Encrytp32())
             {
                 await AlertService.Error(I18n.T("Setting.Safe.PasswordError"));
                 return;
             }
+
             await PrivacyChange(true);
         }
 

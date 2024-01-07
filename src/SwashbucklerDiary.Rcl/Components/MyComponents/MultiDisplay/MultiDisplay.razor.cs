@@ -28,11 +28,12 @@ namespace SwashbucklerDiary.Rcl.Components
             GC.SuppressFinalize(this);
         }
 
-        protected override Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
+            base.OnInitialized();
+
             Show = Tablet ? MasaBlazor.Breakpoint.MdAndUp : MasaBlazor.Breakpoint.SmAndUp;
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
-            return base.OnInitializedAsync();
         }
 
         private async void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)

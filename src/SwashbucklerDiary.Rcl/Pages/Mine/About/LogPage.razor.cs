@@ -39,15 +39,26 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override void OnInitialized()
         {
-            LoadView();
             base.OnInitialized();
+
+            LoadView();
         }
 
         protected override async Task OnInitializedAsync()
         {
-            await UpdateLogsAsync();
             await HandleAchievements(Achievement.Log);
             await base.OnInitializedAsync();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+
+            if(firstRender)
+            {
+                await UpdateLogsAsync();
+                StateHasChanged();
+            }
         }
 
         protected override Task NavigateToBack()
@@ -70,14 +81,14 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems = new List<DynamicListItem>()
             {
-                new(this, "Log.Clear","mdi-delete-outline",OpenDeleteDialog),
-                new(this, "Share.Share","mdi-share-variant-outline",OpenShareDialog),
+                new(this, "Log.Clear", "mdi-delete-outline", OpenDeleteDialog),
+                new(this, "Share.Share", "mdi-share-variant-outline", OpenShareDialog),
             };
 
             shareItems = new()
             {
-                new(this, "Share.TextShare","mdi-format-text",ShareText),
-                new(this, "Share.FileShare","mdi-file-outline",ShareLogFile),
+                new(this, "Share.TextShare","mdi-format-text", ShareText),
+                new(this, "Share.FileShare","mdi-file-outline", ShareLogFile),
             };
         }
 

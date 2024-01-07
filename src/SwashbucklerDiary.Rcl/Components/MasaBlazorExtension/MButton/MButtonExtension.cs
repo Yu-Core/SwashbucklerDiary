@@ -11,12 +11,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            await base.OnAfterRenderAsync(firstRender);
+
             if (firstRender && OnMousedownPreventDefault)
             {
                 await Js.InvokeVoidAsync("preventDefaultOnmousedown", Ref);
             }
-
-            await base.OnAfterRenderAsync(firstRender);
         }
     }
 }

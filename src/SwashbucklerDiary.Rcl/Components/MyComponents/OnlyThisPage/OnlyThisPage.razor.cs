@@ -16,9 +16,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override void OnInitialized()
         {
+            base.OnInitialized();
+
             InitializedUrl();
             Navigation.LocationChanged += NavigationManagerOnLocationChanged;
-            base.OnInitialized();
         }
 
         public void Dispose()

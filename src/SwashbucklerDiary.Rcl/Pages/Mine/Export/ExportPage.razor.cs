@@ -17,6 +17,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         protected override void OnInitialized()
         {
             base.OnInitialized();
+
             InitTab();
         }
 

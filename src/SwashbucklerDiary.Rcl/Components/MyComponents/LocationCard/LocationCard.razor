@@ -22,10 +22,14 @@
             <MListItemAction>
                 <div @onclick:stopPropagation="true">
                     <MultiMenu @bind-Visible="ShowMenu"
-                               DynamicListItems="MenuItems">
-                        <ButtonContent>
-                            <MIcon>mdi-pencil-outline</MIcon>
-                        </ButtonContent>
+                               DynamicListItems="MenuItems"
+                               Context="menuContext">
+                        <ActivatorContent>
+                            <MButton @attributes="@menuContext.Attrs"
+                                     Icon="true">
+                                <MIcon>mdi-pencil-outline</MIcon>
+                            </MButton>
+                        </ActivatorContent>
                     </MultiMenu>
                 </div>
             </MListItemAction>

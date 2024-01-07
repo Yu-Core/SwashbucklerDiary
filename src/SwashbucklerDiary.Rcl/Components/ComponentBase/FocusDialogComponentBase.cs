@@ -3,32 +3,18 @@ using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public abstract class FocusDialogComponentBase : DialogComponentBase
+    public abstract class FocusDialogComponentBase : ShowContentDialogComponentBase
     {
         protected MTextField<string?> textField = default!;
 
-        protected MDialogExtension mDialogExtension = default!;
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override async Task AfterShowContent(bool isLazyContent)
         {
-            await base.OnAfterRenderAsync(firstRender);
-            if (firstRender)
-            {
-                if(mDialogExtension is null)
-                {
-                    return;
-                }
+            await base.AfterShowContent(isLazyContent);
 
-                mDialogExtension.AfterShowContent = async _ => await DialogAfterRenderAsync();
-            }
-        }
-
-        protected virtual async Task DialogAfterRenderAsync()
-        {
             await FocusAsync();
         }
 
-        private async Task FocusAsync()
+        protected async Task FocusAsync()
         {
             if (textField != null && !textField.IsFocused)
             {

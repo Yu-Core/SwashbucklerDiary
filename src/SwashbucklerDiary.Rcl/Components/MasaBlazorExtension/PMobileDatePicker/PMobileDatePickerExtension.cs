@@ -29,25 +29,25 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 NavigateService.Action -= Close;
             }
+
             GC.SuppressFinalize(this);
         }
 
         private void SetVisible(bool value)
         {
-            if (base.Visible != value)
+            if (base.Visible == value)
             {
-                base.Visible = value;
-                Task.Run(() =>
-                {
-                    if (value)
-                    {
-                        NavigateService.Action += Close;
-                    }
-                    else
-                    {
-                        NavigateService.Action -= Close;
-                    }
-                });
+                return;
+            }
+
+            base.Visible = value;
+            if (value)
+            {
+                NavigateService.Action += Close;
+            }
+            else
+            {
+                NavigateService.Action -= Close;
             }
         }
 

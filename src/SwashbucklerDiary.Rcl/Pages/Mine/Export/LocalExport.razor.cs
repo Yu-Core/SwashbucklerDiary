@@ -25,12 +25,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private ILogger<LocalExport> Logger { get; set; } = default!;
 
-        protected override async Task OnInitializedAsync()
-        {
-            diaries = await DiaryService.QueryAsync();
-            await base.OnInitializedAsync();
-        }
-
         private async Task Export()
         {
             var flag = await PlatformIntegration.TryStorageWritePermission();
@@ -38,6 +32,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 return;
             }
+
+            await AlertService.StartLoading();
+            diaries = await DiaryService.QueryAsync();
+            await AlertService.StopLoading();
 
             if (diaries.Count == 0)
             {

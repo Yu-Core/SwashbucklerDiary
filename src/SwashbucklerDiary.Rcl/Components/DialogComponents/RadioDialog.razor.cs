@@ -13,6 +13,9 @@ namespace SwashbucklerDiary.Rcl.Components
         public EventCallback<TItemValue> ValueChanged { get; set; }
 
         [Parameter]
+        public EventCallback<TItemValue> OnChange { get; set; }
+
+        [Parameter]
         public string? Title { get; set; }
 
         [Parameter, EditorRequired]
