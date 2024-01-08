@@ -37,7 +37,6 @@ namespace SwashbucklerDiary.Maui
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
-            builder.Logging.AddDebug();
 #endif
             builder.Services.AddMasaBlazorConfig();
 
