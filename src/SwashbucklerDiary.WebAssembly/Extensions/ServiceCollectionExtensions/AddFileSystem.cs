@@ -8,9 +8,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
         public static async Task<IServiceCollection> AddFileSystem(this IServiceCollection services)
         {
             var JS = services.BuildServiceProvider().GetRequiredService<IJSRuntime>();
-            var module = await JS.ImportJsModule("js/fileSystem.js");
-            await module.InvokeVoidAsync("initFileSystem");
-            await module.DisposeAsync();
+            await JS.InvokeVoidAsync("MEMFileSystem.init");
             return services;
         }
     }

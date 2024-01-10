@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
     {
         private readonly string _customPathPrefix = FileSystem.AppDataDirectory + "/";
 
-        private readonly Lazy<ValueTask<IJSObjectReference>> _module;
+        private readonly IJSRuntime _jSRuntime;
 
         protected override string? CustomPathPrefix => _customPathPrefix;
 
@@ -26,8 +26,8 @@ namespace SwashbucklerDiary.WebAssembly.Services
             NavigationManager navigationManager) :
             base(platformIntegration, appFileManager, alertService, i18nService, logger)
         {
-            _module = new(() => jSRuntime.ImportJsModule("js/fileSystem.js"));
-            _navigationManager = navigationManager;
+            _jSRuntime = jSRuntime;
+             _navigationManager = navigationManager;
         }
 
         protected override Task<string?> CreateMediaResourceFileAsync(MediaResource mediaResource, string? sourceFilePath)
@@ -58,8 +58,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
                 }
 
                 //由于设置的从memfs(内存)到idbfs(indexedDB)的同步时间为1s，拦截请求(service worker)那里会找不到文件，所以此处应立即同步
-                var module = await _module.Value;
-                await module.InvokeVoidAsync("syncfs");
+                await _jSRuntime.InvokeVoidAsync("MEMFileSystem.syncfs");
             }
 
             return targetFilePath;
