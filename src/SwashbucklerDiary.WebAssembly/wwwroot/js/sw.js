@@ -32,7 +32,16 @@ if ('serviceWorker' in navigator) {
         window.location.reload();
     });
 
-    navigator.serviceWorker.register('service-worker.js', {updateViaCache: 'none'}).then(function (reg) {
+    navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' }).then(function (reg) {
+        //安装成功，建议此处强刷新以立刻执行SW
+        if (window.localStorage.getItem('install') != 'true') {
+            window.localStorage.setItem('install', 'true');
+            setTimeout(() => {
+                window.location.search = `?time=${new Date().getTime()}`
+            }, 1000);
+            return;
+        }
+
         if (reg.waiting) {
             emitSwUpdate();
             return;

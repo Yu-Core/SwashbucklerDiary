@@ -1,6 +1,7 @@
 // Caution! Be sure you understand the caveats before publishing an application with
 // offline support. See https://aka.ms/blazor-offline-considerations
 importScripts('./sw-IndexedDB.js');
+const indexedDBUrlPrefix = getIndexedDBUrlPrefix();
 
 self.importScripts('./service-worker-assets.js');
 self.addEventListener('install', event => event.waitUntil(onInstall(event)));
@@ -45,13 +46,10 @@ async function onActivate(event) {
 
 async function onFetch(event) {
     const requestUrl = event.request.url;
-    const baseUrl = self.location.origin;
-    if (event.request.method == "GET" && requestUrl.startsWith(`${baseUrl}${dbName}/`)) {
+    if (event.request.method == "GET" && requestUrl.startsWith(indexedDBUrlPrefix)) {
         const url = decodeURI(requestUrl);
-        const filePath = url.replace(`${baseUrl}`, '');
-        event.respondWith(
-            handleIndexedDBFileRequest(event.request, filePath)
-        );
+        const filePath = getIndexedDBFilePath(url);
+        return handleIndexedDBFileRequest(event.request, filePath);
     }
 
     let cachedResponse = null;
@@ -68,4 +66,15 @@ async function onFetch(event) {
     }
 
     return cachedResponse || fetch(event.request);
+}
+
+function getIndexedDBUrlPrefix() {
+    const pathname = self.location.pathname;
+    const directory = pathname.substring(0, pathname.lastIndexOf('/') + 1);
+    const newPathname = (directory + dbName).replace('//', '/');
+    return self.location.origin + newPathname + '/';
+}
+
+function getIndexedDBFilePath(url) {
+    return dbName + '/' + url.replace(indexedDBUrlPrefix, '');
 }
