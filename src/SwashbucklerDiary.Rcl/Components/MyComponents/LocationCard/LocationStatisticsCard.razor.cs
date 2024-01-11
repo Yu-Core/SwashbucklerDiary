@@ -9,6 +9,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private II18nService I18n { get; set; } = default!;
 
+        [CascadingParameter(Name = "Culture")]
+        public string? Culture { get; set; }
+
         [Parameter]
         public List<LocationModel> Locations { get; set; } = new();
 

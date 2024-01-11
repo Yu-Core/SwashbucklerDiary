@@ -1,7 +1,7 @@
 ﻿window.MEMFileSystem = {
-    synchronizing : false,
     init: function () {
         return new Promise((res, rej) => {
+            let synchronizing = false;
             //Create appdata folder
             Module.FS.mkdir('/appdata');
             //Create cache folder

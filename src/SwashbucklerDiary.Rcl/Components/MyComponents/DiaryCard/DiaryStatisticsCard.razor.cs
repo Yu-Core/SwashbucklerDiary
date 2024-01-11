@@ -15,6 +15,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private IIconService IIconService { get; set; } = default!;
 
+        [CascadingParameter(Name = "Culture")]
+        public string? Culture { get; set; }
+
         [Parameter]
         public List<DiaryModel> Diaries { get; set; } = new();
 

@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Maui.Core.Platform;
-using MauiBlazorToolkit;
-using Microsoft.AspNetCore.Components.WebView;
+﻿using Microsoft.AspNetCore.Components.WebView;
 using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 
@@ -25,6 +22,7 @@ namespace SwashbucklerDiary.Maui
         }
 
         private partial void BlazorWebViewInitializing(object? sender, BlazorWebViewInitializingEventArgs e);
+
         private partial void BlazorWebViewInitialized(object? sender, BlazorWebViewInitializedEventArgs e);
     }
 }

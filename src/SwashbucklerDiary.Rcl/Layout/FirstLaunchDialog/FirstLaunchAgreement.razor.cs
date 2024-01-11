@@ -8,6 +8,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         private II18nService I18n { get; set; } = default!;
 
+        [CascadingParameter(Name = "Culture")]
+        public string? Culture { get; set; }
+
         [Parameter]
         public bool Show { get; set; }
 

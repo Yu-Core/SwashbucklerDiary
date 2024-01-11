@@ -25,6 +25,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected IPreferences Preferences { get; set; } = default!;
 
+        [CascadingParameter(Name = "Culture")]
+        public string? Culture { get; set; }
+
         [CascadingParameter(Name = "IsDark")]
         public bool Dark { get; set; }
 

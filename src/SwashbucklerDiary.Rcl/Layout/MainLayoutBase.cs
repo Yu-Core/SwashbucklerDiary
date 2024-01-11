@@ -1,4 +1,5 @@
 ﻿using BlazorComponent;
+using BlazorComponent.I18n;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -9,43 +10,43 @@ using Theme = SwashbucklerDiary.Shared.Theme;
 
 namespace SwashbucklerDiary.Rcl.Layout
 {
-    public partial class MainLayout : IDisposable
+    public partial class MainLayoutBase : LayoutComponentBase, IDisposable
     {
-        private StringNumber NavigationButtonIndex = 0;
+        protected StringNumber NavigationButtonIndex = 0;
 
-        private List<NavigationButton> NavigationButtons = new();
-
-        [Inject]
-        private MasaBlazor MasaBlazor { get; set; } = default!;
+        protected List<NavigationButton> NavigationButtons = new();
 
         [Inject]
-        private NavigationManager Navigation { get; set; } = default!;
+        protected MasaBlazor MasaBlazor { get; set; } = default!;
 
         [Inject]
-        private INavigateService NavigateService { get; set; } = default!;
+        protected NavigationManager Navigation { get; set; } = default!;
 
         [Inject]
-        private II18nService I18nService { get; set; } = default!;
+        protected INavigateService NavigateService { get; set; } = default!;
 
         [Inject]
-        private IPreferences Preferences { get; set; } = default!;
+        protected II18nService I18n { get; set; } = default!;
 
         [Inject]
-        private IPopupService PopupService { get; set; } = default!;
+        protected IPreferences Preferences { get; set; } = default!;
 
         [Inject]
-        private IAlertService AlertService { get; set; } = default!;
+        protected IPopupService PopupService { get; set; } = default!;
 
         [Inject]
-        private IThemeService ThemeService { get; set; } = default!;
+        protected IAlertService AlertService { get; set; } = default!;
 
         [Inject]
-        private IVersionUpdataManager VersionManager { get; set; } = default!;
+        protected IThemeService ThemeService { get; set; } = default!;
+
+        [Inject]
+        protected IVersionUpdataManager VersionManager { get; set; } = default!;
 
         public void Dispose()
         {
             ThemeService.OnChanged -= ThemeChanged;
-            I18nService.OnChanged -= StateHasChanged;
+            I18n.OnChanged -= StateHasChanged;
             GC.SuppressFinalize(this);
         }
 
@@ -57,13 +58,14 @@ namespace SwashbucklerDiary.Rcl.Layout
             AlertService.Initialize(PopupService);
             LoadView();
             ThemeService.OnChanged += ThemeChanged;
-            I18nService.OnChanged += StateHasChanged;
+            I18n.OnChanged += StateHasChanged;
         }
 
         protected override async Task OnInitializedAsync()
         {
-            await VersionManager.UpdateVersion();
             await base.OnInitializedAsync();
+
+            await VersionManager.UpdateVersion();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -77,17 +79,17 @@ namespace SwashbucklerDiary.Rcl.Layout
             }
         }
 
-        private async Task LoadSettings()
+        protected async Task LoadSettings()
         {
             var themeState = await Preferences.Get<int>(Setting.ThemeState);
             await ThemeService.SetThemeAsync((Theme)themeState);
             var language = await Preferences.Get<string>(Setting.Language);
-            I18nService.SetCulture(language);
+            I18n.Initialize(language);
             var timeout = await Preferences.Get<int>(Setting.AlertTimeout);
             AlertService.SetTimeout(timeout);
         }
 
-        private void LoadView()
+        protected void LoadView()
         {
             List<NavigationButton> navigationButtons = [];
             navigationButtons.Add(new(this, navigationButtons.Count, "Main.Diary", "mdi-notebook-outline", "mdi-notebook", GetIcon, () => PopToRootAsync("")));
@@ -99,7 +101,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected Task PopToRootAsync(string url)
             => NavigateService.PopToRootAsync(url);
 
-        private async Task ThemeChanged(Theme theme)
+        protected async Task ThemeChanged(Theme theme)
         {
             if (MasaBlazor.Theme.Dark != (theme == Theme.Dark))
             {
@@ -109,7 +111,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             await InvokeAsync(StateHasChanged);
         }
 
-        private string GetIcon(NavigationButton navigationButton)
+        protected string GetIcon(NavigationButton navigationButton)
         {
             return navigationButton.Index == NavigationButtonIndex ? navigationButton.SelectedIcon : navigationButton.NotSelectedIcon;
         }

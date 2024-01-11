@@ -1,4 +1,9 @@
 {
   "ShowSettingsUI": "请打开设置，进入Cookie 和网站权限",
-  "External images are not supported": "不支持外部图片"
+  "External images are not supported": "不支持外部图片",
+  "pwa": {
+    "new-content-available": "新内容可用。点击 刷新 进行更新。",
+    "ignore": "忽略",
+    "refresh": "刷新"
+  }
 }

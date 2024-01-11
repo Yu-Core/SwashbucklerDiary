@@ -24,6 +24,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private IAlertService AlertService { get; set; } = default!;
 
+        [CascadingParameter(Name = "Culture")]
+        public string? Culture { get; set; }
+
         [Parameter]
         public string? Value { get; set; }
 

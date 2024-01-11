@@ -11,6 +11,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected II18nService I18n { get; set; } = default!;
 
+        [CascadingParameter(Name = "Culture")]
+        public string? Culture { get; set; }
+
         [CascadingParameter(Name = "IsDark")]
         public bool Dark { get; set; }
 

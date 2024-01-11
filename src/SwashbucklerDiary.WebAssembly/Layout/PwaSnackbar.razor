@@ -1,0 +1,32 @@
+﻿@using BlazorComponent.I18n;
+@inject IJSRuntime JSRuntime
+@inject I18n I18n
+
+<PSnackbar Class="m-snackbar--pwa" 
+           Content="@I18n.T("pwa.new-content-available")"
+           Value="false"
+           Vertical
+           Closeable
+           Right
+           Bottom
+           Timeout="-1"
+           ActionText="@I18n.T("pwa.refresh")"
+           ActionColor="secondary"
+           OnClose="Ignore"
+           OnAction="OnRefresh">
+</PSnackbar>
+
+@code {
+
+    [CascadingParameter(Name = "Culture")]
+    public string? Culture { get; set; }
+
+    [Parameter]
+    public Func<Task>? OnRefresh { get; set; }
+
+    private async Task Ignore()
+    {
+        await JSRuntime.InvokeVoidAsync("swIgnoreUpdate");
+    }
+
+}

@@ -1,10 +1,16 @@
 // Caution! Be sure you understand the caveats before publishing an application with
 // offline support. See https://aka.ms/blazor-offline-considerations
+importScripts('./sw-IndexedDB.js');
 
 self.importScripts('./service-worker-assets.js');
 self.addEventListener('install', event => event.waitUntil(onInstall(event)));
 self.addEventListener('activate', event => event.waitUntil(onActivate(event)));
 self.addEventListener('fetch', event => event.respondWith(onFetch(event)));
+self.addEventListener('message', event => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
+})
 
 const cacheNamePrefix = 'offline-cache-';
 const cacheName = `${cacheNamePrefix}${self.assetsManifest.version}`;
@@ -62,78 +68,4 @@ async function onFetch(event) {
     }
 
     return cachedResponse || fetch(event.request);
-}
-
-const dbName = "/appdata";
-const storeName = "FILE_DATA";
-
-function getFileFromIndexedDB(key) {
-    return new Promise((resolve, reject) => {
-        // 打开 IndexedDB，获取文件
-        const request = indexedDB.open(dbName, 21);
-        request.onerror = () => {
-            reject('Database failed to open');
-        };
-        request.onsuccess = () => {
-            const db = request.result;
-            var transaction = db.transaction(storeName, 'readonly');
-            var objectStore = transaction.objectStore(storeName);
-            const fileRequest = objectStore.get(key);
-
-            fileRequest.onsuccess = () => {
-                const fileName = key.split('/').pop();
-                const contents = fileRequest.result.contents;
-                var file = new File([contents], fileName);
-                resolve(file);
-            };
-
-            fileRequest.onerror = () => {
-                reject('File retrieval failed');
-            };
-        };
-    });
-}
-
-async function handleIndexedDBFileRequest(request, filePath) {
-    // 检查请求是否包含 Range 头
-    const rangeHeader = request.headers.get('Range');
-    if (rangeHeader) {
-        try {
-            // 尝试从 IndexedDB 获取文件
-            const file = await getFileFromIndexedDB(filePath);
-            const size = file.size;
-            const rangeMatch = rangeHeader.match(/bytes=(\d+)-(\d+)?/);
-            const start = Number(rangeMatch[1]);
-            const end = rangeMatch[2] ? Number(rangeMatch[2]) : size;
-            //const contentLength = end - start + 1;
-            const headers = {
-                "Content-Range": `bytes ${start}-${end - 1}/${size}`,
-                //"Accept-Ranges": "bytes",
-                //"Content-Length": contentLength,
-                //"Content-Type": file.type,
-            };
-            const response = new Response(file.slice(start, end), {
-                status: 206,
-                statusText: 'Partial Content',
-                headers: headers
-            });
-            return response;
-        } catch (error) {
-            // 在出错时返回一个 404 响应
-            return new Response('', { status: 404 });
-        }
-    } else {
-        // 如果没有 Range 头，正常处理请求
-        // ...
-        try {
-            const file = await getFileFromIndexedDB(filePath);
-            const response = new Response(file, {
-                headers: { 'Content-Type': file.type }
-            });
-            return response;
-        } catch (e) {
-            // 在出错时返回一个 404 响应
-            return new Response('', { status: 404 });
-        }
-    }
 }

@@ -41,16 +41,14 @@ namespace SwashbucklerDiary.WebAssembly.Services
             await AfterFirstEnter.Invoke();
         }
 
-        public Task UpdateVersion()
+        public async Task UpdateVersion()
         {
             //await UpdateVersion("0.64.7", UpdateVersion647);
 
-            //if (AfterUpdateVersion != null && updateCount > 0)
-            //{
-            //    await AfterUpdateVersion.Invoke();
-            //}
-
-            return Task.CompletedTask;
+            if (AfterUpdateVersion != null && updateCount > 0)
+            {
+                await AfterUpdateVersion.Invoke();
+            }
         }
 
         //private async Task UpdateVersion(string version, Func<Task> func)

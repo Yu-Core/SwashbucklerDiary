@@ -12,6 +12,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public List<TagModel> Tags { get; set; } = new();
 
+        [CascadingParameter(Name = "Culture")]
+        public string? Culture { get; set; }
+
         [Parameter]
         public List<DiaryModel> Diaries { get; set; } = new();
 

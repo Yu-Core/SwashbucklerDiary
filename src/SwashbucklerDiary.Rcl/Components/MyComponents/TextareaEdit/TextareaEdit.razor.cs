@@ -17,6 +17,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private TextareaJSModule Module { get; set; } = default!;
 
+        [CascadingParameter(Name = "Culture")]
+        public string? Culture { get; set; }
+
         [Parameter]
         public string? Value { get; set; }
 

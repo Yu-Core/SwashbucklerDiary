@@ -1,6 +1,5 @@
 ﻿using Android.Views;
 using Android.Widget;
-using SwashbucklerDiary.Maui;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using Application = Android.App.Application;
@@ -41,16 +40,17 @@ namespace SwashbucklerDiary
 
         public static void QuitApp()
         {
-            string text = I18n.T("Press again to exit");
             //I18未初始化时，禁用返回键退出
-            if (string.IsNullOrEmpty(text))
+            if (!I18n.Initialized)
             {
                 return;
             }
 
+            string text = I18n.T("Press again to exit");
+
             if (BackPressCounter == 1)
             {
-                App.Current!.Quit();
+                Microsoft.Maui.Controls.Application.Current!.Quit();
             }
             else if (BackPressCounter == 0)
             {

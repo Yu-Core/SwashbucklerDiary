@@ -1,0 +1,30 @@
+﻿@inherits MainLayoutBase
+
+<MApp>
+    <CascadingValue Value="@I18n.Culture.Name" Name="Culture">
+        <ErrorBoundary>
+            <ChildContent>
+                <FirstLaunchDialog />
+
+                <MainNavigationDrawer @bind-Value="NavigationButtonIndex"
+                                      Items="NavigationButtons">
+                </MainNavigationDrawer>
+
+                <MMain>
+                    <PPageContainerExtension>
+                        @Body
+                    </PPageContainerExtension>
+                </MMain>
+
+                <MainLayoutBottomNavigation @bind-Value="NavigationButtonIndex"
+                                            Items="NavigationButtons">
+                </MainLayoutBottomNavigation>
+            </ChildContent>
+
+            <ErrorContent>
+                <ErrorDialog></ErrorDialog>
+            </ErrorContent>
+        </ErrorBoundary>
+    </CascadingValue>
+</MApp>
+

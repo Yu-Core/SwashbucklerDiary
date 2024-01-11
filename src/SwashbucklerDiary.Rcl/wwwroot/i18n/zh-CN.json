@@ -26,7 +26,8 @@
     "Quit": "退出",
     "SaveSuccess": "保存成功",
     "SaveFail": "保存失败",
-    "Sort": "排序"
+    "Sort": "排序",
+    "NotSupported": "当前平台不支持"
   },
   "Main": {
     "Diary": "日记",

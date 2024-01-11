@@ -5,12 +5,14 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public abstract class I18nService : II18nService
     {
-        private I18n _i18n;
+        private readonly I18n _i18n;
+
+        public bool Initialized { get; set; }
 
         public CultureInfo Culture => _i18n.Culture;
 
         public abstract Dictionary<string, string> Languages { get; }
-
+        
         public event Action? OnChanged;
 
         public I18nService(I18n i18n)
@@ -46,5 +48,16 @@ namespace SwashbucklerDiary.Rcl.Services
             return T("Week." + ((int)(dateTime ?? DateTime.Now).DayOfWeek).ToString());
         }
 
+        public void Initialize(string culture)
+        {
+            if (Initialized)
+            {
+                return;
+            }
+
+
+            SetCulture(culture);
+            Initialized = true;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+﻿using BlazorComponent.I18n;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Services;
 
@@ -31,7 +32,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         {
             //var base64 = await ScreenshotToBase64(selector);
             //return await _appFileManager.CreateTempFileAsync(screenshotFileName, Convert.FromBase64String(base64));
-            await _alertService.Error(_i18n.T("ToDo.Title"));
+            await _alertService.Error(_i18n.T("Share.NotSupported"));
             return string.Empty;
         }
         // TODO: base64还是太慢，应该考虑字节数组

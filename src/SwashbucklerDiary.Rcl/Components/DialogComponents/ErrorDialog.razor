@@ -32,6 +32,9 @@
     [Inject]
     private IAppLifecycle AppLifecycle { get; set; } = default!;
 
+    [CascadingParameter(Name = "Culture")]
+    public string? Culture { get; set; }
+
     private void Quit()
     {
         AppLifecycle.QuitApp();

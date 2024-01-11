@@ -1,6 +1,6 @@
 {
-  "name": "SwashbucklerDiary.WebAssembly",
-  "short_name": "SwashbucklerDiary.WebAssembly",
+  "name": "Swashbuckler Diary",
+  "short_name": "Swashbuckler Diary",
   "id": "./",
   "start_url": "./",
   "display": "standalone",

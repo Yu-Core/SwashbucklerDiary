@@ -17,6 +17,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected NavigationManager Navigation { get; set; } = default!;
 
+        [CascadingParameter(Name = "Culture")]
+        public string? Culture { get; set; }
+
         [Parameter]
         public StringNumber Value { get; set; } = 0;
 

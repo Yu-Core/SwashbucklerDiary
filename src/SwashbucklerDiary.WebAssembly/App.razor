@@ -1,6 +1,5 @@
-﻿<Router AppAssembly="@typeof(MainLayout).Assembly" AdditionalAssemblies="[typeof(App).Assembly]">
+﻿<Router AppAssembly="@typeof(MainLayoutBase).Assembly" AdditionalAssemblies="[typeof(App).Assembly]">
     <Found Context="routeData">
-        <PageTitle>@(I18n.T("AppName"))</PageTitle>
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>

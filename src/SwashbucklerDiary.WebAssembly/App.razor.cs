@@ -13,16 +13,6 @@ namespace SwashbucklerDiary.WebAssembly
         [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
 
-        [Inject]
-        private II18nService I18n { get; set; } = default!;
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            I18n.OnChanged += StateHasChanged;
-        }
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
