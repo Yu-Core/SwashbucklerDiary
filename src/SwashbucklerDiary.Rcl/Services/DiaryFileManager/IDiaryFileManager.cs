@@ -4,9 +4,9 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public interface IDiaryFileManager
     {
-        Task<string> GetExportFileName(ExportKind exportKind);
+        string GetExportFileName(ExportKind exportKind);
 
-        Task<string> GetBackupFileName();
+        string GetBackupFileName();
 
         Task<string> ExportDBAsync(bool copyResources);
 

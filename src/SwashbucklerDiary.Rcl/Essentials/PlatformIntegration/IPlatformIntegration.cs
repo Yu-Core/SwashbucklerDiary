@@ -7,6 +7,8 @@ namespace SwashbucklerDiary.Rcl.Essentials
     {
         AppDevicePlatform CurrentPlatform { get; }
 
+        string AppVersion { get; }
+
         /// <summary>
         /// 复制到粘贴板
         /// </summary>
@@ -130,7 +132,5 @@ namespace SwashbucklerDiary.Rcl.Essentials
         /// 打开平台设置
         /// </summary>
         Task ShowSettingsUI();
-
-        Task<string> GetAppVersion();
     }
 }

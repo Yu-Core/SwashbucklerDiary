@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             string filePath = await DiaryFileManager.ExportDBAsync(true);
-            string name = await DiaryFileManager.GetBackupFileName();
+            string name = DiaryFileManager.GetBackupFileName();
             bool isSuccess = await PlatformIntegration.SaveFileAsync(name, filePath);
             if (!isSuccess)
             {

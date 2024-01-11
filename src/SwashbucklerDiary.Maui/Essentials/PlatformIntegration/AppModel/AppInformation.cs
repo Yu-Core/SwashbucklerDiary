@@ -2,11 +2,8 @@
 {
     public partial class PlatformIntegration
     {
-        public Task<string> GetAppVersion()
-        {
-            var version = VersionTracking.Default.CurrentVersion.ToString();
-            return Task.FromResult(version);
-        }
+        public string AppVersion 
+            => VersionTracking.Default.CurrentVersion.ToString();
 
         public Task ShowSettingsUI()
         {

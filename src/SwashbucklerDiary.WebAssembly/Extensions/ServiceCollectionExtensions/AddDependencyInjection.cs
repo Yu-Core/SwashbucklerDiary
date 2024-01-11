@@ -37,6 +37,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddScoped<IAlertService, AlertService>();
             services.AddScoped<II18nService, Services.I18nService>();
             services.AddScoped<IPlatformIntegration, PlatformIntegration>();
+            services.AddScoped<IVersionTracking, VersionTracking>();
 
             services.AddScoped<IAppLifecycle, AppLifecycle>();
             services.AddScoped<SystemThemeJSModule>();

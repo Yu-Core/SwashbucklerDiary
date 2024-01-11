@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.WebAssembly.Essentials;
 
 namespace SwashbucklerDiary.WebAssembly
@@ -13,6 +12,9 @@ namespace SwashbucklerDiary.WebAssembly
         [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
 
+        [Inject]
+        private IVersionTracking VersionTracking { get; set; } = default!;
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
@@ -21,6 +23,7 @@ namespace SwashbucklerDiary.WebAssembly
             {
                 await SystemThemeJSModule.InitializedAsync();
                 await ((AppLifecycle)AppLifecycle).InitializedAsync();
+                await VersionTracking.Track(typeof(App).Assembly);
             }
         }
     }

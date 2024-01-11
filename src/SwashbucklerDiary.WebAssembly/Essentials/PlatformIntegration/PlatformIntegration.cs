@@ -13,6 +13,8 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 
         private readonly ILogger _logger;
 
+        private readonly IVersionTracking _versionTracking;
+
         private readonly Lazy<ValueTask<IJSInProcessObjectReference>> _module;
 
         private ValueTask<IJSInProcessObjectReference> Module => _module.Value;
@@ -20,11 +22,13 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         public PlatformIntegration(IAlertService alertService, 
             II18nService i18n,
             ILogger<PlatformIntegration> logger,
-            IJSRuntime jS)
+            IJSRuntime jS,
+            IVersionTracking versionTracking)
         {
             _alertService = alertService;
             _i18n = i18n;
             _logger = logger;
+            _versionTracking = versionTracking;
             // import need async
             //https://github.com/dotnet/aspnetcore/issues/29808
             _module = new(() => ((IJSInProcessRuntime)jS).ImportJsModule("js/platformIntegration.js"));

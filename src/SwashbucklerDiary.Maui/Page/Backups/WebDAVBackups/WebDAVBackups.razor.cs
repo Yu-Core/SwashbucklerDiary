@@ -121,7 +121,7 @@ namespace SwashbucklerDiary.Maui.Pages
 
             string filePath = await DiaryFileManager.ExportDBAsync(includeDiaryResources);
             using var stream = File.OpenRead(filePath);
-            string fileName = await DiaryFileManager.GetBackupFileName();
+            string fileName = DiaryFileManager.GetBackupFileName();
             string destFileName = webDavFolderName + "/" + fileName;
             try
             {

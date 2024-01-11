@@ -26,6 +26,12 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected const string backupFileNamePrefix = "SDBackup";
 
+        protected JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        };
+
         public DiaryFileManager(IAppFileManager appFileManager,
             IPlatformIntegration platformIntegration,
             II18nService i18nService,
@@ -49,7 +55,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public abstract Task<string> ExportXlsxAsync(List<DiaryModel> diaries);
 
-        protected async Task<string> InternalExportDBAsync(bool copyResources, string outputFolder, string zipFilePath)
+        protected Task<string> InternalExportDBAsync(bool copyResources, string outputFolder, string zipFilePath)
         {
             if (!Directory.Exists(outputFolder))
             {
@@ -68,7 +74,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 CopyDiaryResource(outputFolder);
             }
 
-            await CreateExportVersionInfo(outputFolder, ".db3");
+            CreateExportVersionInfo(outputFolder, ".db3");
 
             if (File.Exists(zipFilePath))
             {
@@ -76,10 +82,10 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
-            return zipFilePath;
+            return Task.FromResult(zipFilePath);
         }
 
-        protected async Task<string> InternalExportJsonAsync(List<DiaryModel> diaries, string outputFolder, string zipFilePath)
+        protected Task<string> InternalExportJsonAsync(List<DiaryModel> diaries, string outputFolder, string zipFilePath)
         {
             string fileSuffix = ".json";
 
@@ -97,19 +103,13 @@ namespace SwashbucklerDiary.Rcl.Services
                 string fileName = item.CreateTime.ToString("yyyy-MM-dd") + fileSuffix;
                 string filePath = Path.Combine(outputFolder, fileName);
 
-                var options = new JsonSerializerOptions
-                {
-                    WriteIndented = true,
-                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                };
-
-                string content = JsonSerializer.Serialize(item, options);
+                string content = JsonSerializer.Serialize(item, jsonSerializerOptions);
                 WriteToFile(filePath, content);
             }
 
             CopyDiaryResource(diaries, outputFolder);
 
-            await CreateExportVersionInfo(outputFolder, fileSuffix);
+            CreateExportVersionInfo(outputFolder, fileSuffix);
 
             if (File.Exists(zipFilePath))
             {
@@ -118,7 +118,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
             // 将所有json文件添加到压缩包中
             ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
-            return zipFilePath;
+            return Task.FromResult(zipFilePath);
         }
 
         protected Task<string> InternalExportMdAsync(List<DiaryModel> diaries, string outputFolder, string zipFilePath)
@@ -246,11 +246,11 @@ namespace SwashbucklerDiary.Rcl.Services
             writer.Write(content);
         }
 
-        private async Task CreateExportVersionInfo(string outputFolder, string fileSuffix)
+        private void CreateExportVersionInfo(string outputFolder, string fileSuffix)
         {
             var exportVersionInfo = new ExportVersionInfo()
             {
-                Version = await _platformIntegration.GetAppVersion(),
+                Version = _platformIntegration.AppVersion,
                 FileSuffix = fileSuffix,
                 Platform = _platformIntegration.CurrentPlatform.ToString(),
                 DateTime = DateTime.Now,
@@ -325,22 +325,22 @@ namespace SwashbucklerDiary.Rcl.Services
             return text.ToString();
         }
 
-        public Task<string> GetExportFileName(ExportKind exportKind)
+        public string GetExportFileName(ExportKind exportKind)
         {
             string prefix = exportFileNamePrefix + exportKind.ToString();
             string suffix = exportKind == ExportKind.Xlsx ? ".xlsx" : ".zip";
             return InternalGetExportFileName(prefix, suffix);
         }
 
-        public Task<string> GetBackupFileName()
+        public string GetBackupFileName()
         {
             return InternalGetExportFileName(backupFileNamePrefix, ".zip");
         }
 
-        private async Task<string> InternalGetExportFileName(string prefix,string suffix)
+        private string InternalGetExportFileName(string prefix,string suffix)
         {
             string dataTime = DateTime.Now.ToString("yyyyMMddHHmmss");
-            string version = await _platformIntegration.GetAppVersion();
+            string version = _platformIntegration.AppVersion;
             return $"{prefix}_{dataTime}_v{version}{suffix}";
         }
 
@@ -385,7 +385,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
             // 获取文件夹下的db文件
             string[] jsonFiles = Directory.GetFiles(outputFolder, "*.db3");
-            if (!jsonFiles.Any())
+            if (jsonFiles.Length == 0)
             {
                 return Task.FromResult(false);
             }

@@ -1,9 +1,8 @@
 ﻿using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.WebAssembly.Essentials;
 
 namespace SwashbucklerDiary.WebAssembly.Services
 {
-    // TODO: 需要写一个版本跟踪
     public class VersionUpdataManager : IVersionUpdataManager
     {
         public event Func<Task>? AfterFirstEnter;
@@ -20,15 +19,19 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         private readonly IMediaResourceManager _mediaResourceManager;
 
+        private readonly IVersionTracking _versionTracking;
+
         public VersionUpdataManager(IDiaryService diaryService,
             IResourceService resourceService,
             Rcl.Essentials.IPreferences preferences,
-            IMediaResourceManager mediaResourceManager)
+            IMediaResourceManager mediaResourceManager,
+            IVersionTracking versionTracking)
         {
             _diaryService = diaryService;
             _resourceService = resourceService;
             _preferences = preferences;
             _mediaResourceManager = mediaResourceManager;
+            _versionTracking = versionTracking;
         }
 
         public async Task FirstEnter()
@@ -51,48 +54,30 @@ namespace SwashbucklerDiary.WebAssembly.Services
             }
         }
 
-        //private async Task UpdateVersion(string version, Func<Task> func)
-        //{
-        //    string? strPreviousVersion = VersionTracking.Default.PreviousVersion;
-        //    if (string.IsNullOrEmpty(strPreviousVersion))
-        //    {
-        //        return;
-        //    }
+        private async Task UpdateVersion(string version, Func<Task> func)
+        {
+            string? strPreviousVersion = _versionTracking.PreviousVersion;
+            if (string.IsNullOrEmpty(strPreviousVersion))
+            {
+                return;
+            }
 
-        //    var previousVersion = new Version(strPreviousVersion);
-        //    var targetVersion = new Version(version);
-        //    int result = previousVersion.CompareTo(targetVersion);
-        //    if (result > 0)
-        //    {
-        //        return;
-        //    }
+            var previousVersion = new Version(strPreviousVersion);
+            var targetVersion = new Version(version);
+            int result = previousVersion.CompareTo(targetVersion);
+            if (result > 0)
+            {
+                return;
+            }
 
-        //    bool first = VersionTracking.Default.IsFirstLaunchForCurrentVersion;
-        //    if (!first)
-        //    {
-        //        return;
-        //    }
+            bool first = _versionTracking.IsFirstLaunchForCurrentVersion;
+            if (!first)
+            {
+                return;
+            }
 
-        //    updateCount++;
-        //    await func.Invoke();
-        //}
-
-        ////此版本之后更改了资源的链接
-        //private async Task UpdateVersion647()
-        //{
-        //    string avatar = await _preferences.Get<string>(Setting.Avatar);
-        //    avatar = avatar.Replace("appdata:///", "appdata/");
-        //    await _preferences.Set(Setting.Avatar, avatar);
-
-        //    var diaries = await _diaryService.QueryAsync();
-        //    await _resourceService.DeleteAsync();
-        //    foreach (var diary in diaries)
-        //    {
-        //        diary.Content = diary.Content!.Replace("appdata:///", "appdata/");
-        //        diary.Resources = _mediaResourceManager.GetDiaryResources(diary.Content);
-        //        diary.UpdateTime = DateTime.Now;
-        //    }
-        //    await _diaryService.UpdateIncludesAsync(diaries);
-        //}
+            updateCount++;
+            await func.Invoke();
+        }
     }
 }

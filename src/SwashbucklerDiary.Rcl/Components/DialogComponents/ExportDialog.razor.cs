@@ -66,7 +66,7 @@ namespace SwashbucklerDiary.Rcl.Components
                     string path = await func(Value);
                     if (!string.IsNullOrEmpty(path))
                     {
-                        string fileName = await DiaryFileManager.GetExportFileName(exportKind);
+                        string fileName = DiaryFileManager.GetExportFileName(exportKind);
                         bool flag = await PlatformIntegration.SaveFileAsync(fileName, path);
                         if (flag)
                         {

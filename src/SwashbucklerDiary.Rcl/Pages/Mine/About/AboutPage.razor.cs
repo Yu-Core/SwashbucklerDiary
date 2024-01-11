@@ -14,8 +14,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showVersionUpdate;
 
-        private string? appVersion;
-
         private List<DynamicListItem> codeSourceListItems = [];
 
         private List<List<DynamicListItem>> viewLists = [];
@@ -43,8 +41,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             await base.OnInitializedAsync();
 
             await LoadViewAsync();
-            appVersion = await PlatformIntegration.GetAppVersion();
         }
+
+        private string AppVersion => PlatformIntegration.AppVersion;
 
         private void LoadView()
         {
@@ -106,7 +105,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 }
 
                 string latestVersion = release.Tag_Name.TrimStart('v').Replace(".0", "");
-                string currentVersion = appVersion.Replace(".0", "");
+                string currentVersion = AppVersion.Replace(".0", "");
                 if (latestVersion == currentVersion)
                 {
                     await AlertService.Info(I18n.T("VersionUpdate.No updates"));
