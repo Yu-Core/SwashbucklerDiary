@@ -65,6 +65,11 @@
     "Url": "https://github.com/serilog/serilog-sinks-debug/blob/dev/LICENSE"
   },
   {
+    "Name": "Serilog.Sinks.SQLite",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/saleem-mirza/serilog-sinks-sqlite/blob/dev/LICENSE"
+  },
+  {
     "Name": "Serilog.Sinks.SQLite.Maui",
     "License": "Apache-2.0 license",
     "Url": "https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui/blob/dev/LICENSE"

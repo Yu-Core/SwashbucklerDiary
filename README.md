@@ -6,6 +6,11 @@
 
 每个人的心底都有一个侠客，如影随风，陪你看过一路的风景，记得你所有的精彩。
 
+## 在线预览
+[在线演示地址（GitHub）](https://yu-core.github.io/SwashbucklerDiary/)
+
+[在线演示地址（Gitee）](https://yu-core.gitee.io/swashbucklerDiary/)
+
 ## 主要技术栈
 - [MAUI](https://learn.microsoft.com/dotnet/maui/)
 - [Blazor Hybrid](https://learn.microsoft.com/aspnet/core/blazor/hybrid/) 
@@ -98,6 +103,7 @@
 - [Serilog](https://github.com/serilog/serilog)
 - [Serilog.Extensions.Logging](https://github.com/serilog/serilog-extensions-logging)
 - [Serilog.Sinks.Debug](https://github.com/serilog/serilog-sinks-debug)
+- [Serilog.Sinks.SQLite](https://github.com/saleem-mirza/serilog-sinks-sqlite)
 - [Serilog.Sinks.SQLite.Maui](https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui)
 - [SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw)
 - [SqlSugar](https://github.com/DotNetNext/SqlSugar)

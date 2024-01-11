@@ -6,6 +6,11 @@ English | [简体中文](./README.md)
 
 Everyone has a swashbuckler in their heart, like a shadow following the wind, accompanying you to see the scenery all the way and remembering all your wonderful moments.
 
+## Online preview
+[Live Demo（GitHub）](https://yu-core.github.io/SwashbucklerDiary/)
+
+[Live Demo（Gitee）](https://yu-core.gitee.io/swashbucklerDiary/)
+
 ## Main Technology Stack
 - [MAUI](https://learn.microsoft.com/dotnet/maui/)
 - [Blazor Hybrid](https://learn.microsoft.com/aspnet/core/blazor/hybrid/) 
@@ -98,6 +103,7 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 - [Serilog](https://github.com/serilog/serilog)
 - [Serilog.Extensions.Logging](https://github.com/serilog/serilog-extensions-logging)
 - [Serilog.Sinks.Debug](https://github.com/serilog/serilog-sinks-debug)
+- [Serilog.Sinks.SQLite](https://github.com/saleem-mirza/serilog-sinks-sqlite)
 - [Serilog.Sinks.SQLite.Maui](https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui)
 - [SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw)
 - [SqlSugar](https://github.com/DotNetNext/SqlSugar)
