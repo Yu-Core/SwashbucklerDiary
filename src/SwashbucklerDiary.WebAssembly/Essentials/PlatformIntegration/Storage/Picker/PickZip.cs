@@ -3,6 +3,6 @@
     public partial class PlatformIntegration
     {
         public Task<string?> PickZipFileAsync()
-            => PickFileAsync(".zip");
+            => PickFileAsync("application/zip",".zip");
     }
 }

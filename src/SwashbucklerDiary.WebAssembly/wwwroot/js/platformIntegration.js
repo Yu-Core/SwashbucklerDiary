@@ -173,7 +173,7 @@ export function saveFileAsync(fileName, filePath) {
     URL.revokeObjectURL(url);
 }
 
-export function pickFileAsync(accept) {
+export function pickFileAsync(accept, suffix) {
     return new Promise((resolve) => {
         const input = document.createElement('input');
         input.type = 'file';
@@ -182,26 +182,31 @@ export function pickFileAsync(accept) {
         input.onchange = (event) => {
             const file = event.target.files[0];
             if (file) {
-                // wasm模式，C#计算md5比较难，所以在js中计算
-                calculateMD5(file)
-                    .then((md5) => {
-                        var newFileName = `${md5}${file.name.substring(file.name.lastIndexOf("."))}`;
-                        var newFile = new File([file], newFileName);
-                        var reader = new FileReader();
-                        reader.onload = function (event) {
-                            // 获取文件内容
-                            var contents = event.target.result;
+                if (suffix && !file.name.endsWith(suffix)) {
+                    resolve("");
+                }
+                else {
+                    // wasm模式，C#计算md5比较难，所以在js中计算
+                    calculateMD5(file)
+                        .then((md5) => {
+                            var newFileName = `${md5}${file.name.substring(file.name.lastIndexOf("."))}`;
+                            var newFile = new File([file], newFileName);
+                            var reader = new FileReader();
+                            reader.onload = function (event) {
+                                // 获取文件内容
+                                var contents = event.target.result;
 
-                            // 写入 Emscripten 文件系统
-                            var filePath = `cache/${newFile.name}`;
-                            Module.FS.writeFile(filePath, new Uint8Array(contents), { encoding: 'binary' });
-                            resolve(filePath);
-                        };
-                        reader.readAsArrayBuffer(newFile);
-                    })
-                    .catch(() => {
-                        resolve("");
-                    });
+                                // 写入 Emscripten 文件系统
+                                var filePath = `cache/${newFile.name}`;
+                                Module.FS.writeFile(filePath, new Uint8Array(contents), { encoding: 'binary' });
+                                resolve(filePath);
+                            };
+                            reader.readAsArrayBuffer(newFile);
+                        })
+                        .catch(() => {
+                            resolve("");
+                        });
+                }
             } else {
                 resolve("");
             }
