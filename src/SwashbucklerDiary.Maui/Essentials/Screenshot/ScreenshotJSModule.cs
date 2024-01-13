@@ -1,5 +1,4 @@
 ﻿using BlazorComponent.JSInterop;
-using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Shared;
@@ -20,10 +19,11 @@ namespace SwashbucklerDiary.Maui.Essentials
             _httpClient = new HttpClient();
         }
 
-        public async Task<string> GetScreenshotBase64(string selector)
+        public async Task<Stream> GetScreenshotStream(string selector)
         {
             var dotNetCallbackRef = DotNetObjectReference.Create(this);
-            return await InvokeAsync<string>("getScreenshotBase64", dotNetCallbackRef, nameof(HandleCorsUri), selector);
+            var dataReference = await InvokeAsync<IJSStreamReference>("getScreenshotStream", dotNetCallbackRef, nameof(HandleCorsUri), selector);
+            return await dataReference.OpenReadStreamAsync(maxAllowedSize: 10_000_000);
         }
 
         [JSInvokable]
@@ -42,7 +42,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             return string.Empty;
         }
 
-        public static string ConvertToBase64(string imagePath, byte[] imageBytes)
+        private static string ConvertToBase64(string imagePath, byte[] imageBytes)
         {
             // 获取文件类型
             string fileType = StaticContentProvider.GetResponseContentTypeOrDefault(imagePath);

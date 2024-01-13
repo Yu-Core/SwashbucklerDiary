@@ -35,7 +35,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             await _alertService.Error(_i18n.T("Share.NotSupported"));
             return string.Empty;
         }
-        // TODO: base64还是太慢，应该考虑字节数组
+        
         protected async Task<string> ScreenshotToBase64(string selector)
         {
             var str = await _module.GetScreenshotBase64(selector);
