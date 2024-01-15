@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace SwashbucklerDiary.WebAssembly.Essentials
+﻿namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public partial class PlatformIntegration
     {
@@ -9,7 +7,10 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 
         public Task ShowSettingsUI()
         {
-            return _alertService.Info(_i18n.T("ShowSettingsUI"));
+            //TODO: Browser environment cannot open browser settings, But it can be done through browser plugins or tampermonkey scripts
+            //return OpenUri("edge://settings/profiles", true);
+
+            return Task.CompletedTask;
         }
     }
 }

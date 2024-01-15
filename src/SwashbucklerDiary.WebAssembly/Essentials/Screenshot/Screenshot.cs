@@ -1,7 +1,5 @@
-﻿using BlazorComponent.I18n;
-using SwashbucklerDiary.Rcl.Essentials;
+﻿using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Services;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {

@@ -55,6 +55,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var writePermission = await PlatformIntegration.TryStorageWritePermission();
             if (!writePermission)
             {
+                await AlertService.Info(I18n.T("Permission.OpenStorageWrite"));
                 return;
             }
 

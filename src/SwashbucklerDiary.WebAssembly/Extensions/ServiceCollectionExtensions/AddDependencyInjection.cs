@@ -2,7 +2,6 @@
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Repository;
-using SwashbucklerDiary.Services;
 using SwashbucklerDiary.WebAssembly.Essentials;
 using SwashbucklerDiary.WebAssembly.Services;
 
@@ -46,7 +45,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddScoped<IAccessExternal, Services.AccessExternal>();
             services.AddScoped<IMediaResourceManager, Services.MediaResourceManager>();
             services.AddScoped<IDiaryFileManager, Services.DiaryFileManager>();
-            services.AddScoped<IAvatarService, AvatarService>();
+            services.AddScoped<IAvatarService, Services.AvatarService>();
             services.AddScoped<ScreenshotJSModule>();
             services.AddScoped<Rcl.Essentials.IScreenshot, Essentials.Screenshot>();
             services.AddScoped<IStorageSpace, Services.StorageSpace>();

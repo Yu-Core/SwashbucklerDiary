@@ -30,6 +30,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var flag = await PlatformIntegration.TryStorageWritePermission();
             if (!flag)
             {
+                await AlertService.Info(I18n.T("Permission.OpenStorageWrite"));
                 return;
             }
 
@@ -51,6 +52,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var flag = await PlatformIntegration.TryStorageWritePermission();
             if (!flag)
             {
+                await AlertService.Info(I18n.T("Permission.OpenStorageWrite"));
                 return;
             }
 

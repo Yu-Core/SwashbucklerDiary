@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -31,7 +30,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await base.OnInitializedAsync();
 
             LoadView();
-            await SetAvatar();
+            await LoadSettings();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -58,6 +57,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             userName = await Preferences.Get(Setting.UserName, I18n.T("AppName"));
             sign = await Preferences.Get(Setting.Sign, I18n.T("Mine.Sign"));
+            avatar = await Preferences.Get<string>(Setting.Avatar);
         }
 
         private async Task SaveSign(string tagName)
@@ -82,54 +82,28 @@ namespace SwashbucklerDiary.Rcl.Pages
             await HandleAchievements(Achievement.NickName);
         }
 
-        private async Task PickPhoto()
+        private Task PickPhoto()
+            => SetAvatar(AvatarService.SetAvatarByPickPhoto);
+
+        private Task OnCapture()
+            => SetAvatar(AvatarService.SetAvatarByCapture);
+
+        private async Task SetAvatar(Func<Task<string>> func)
         {
             showEditAvatar = false;
-            string? photoPath = await PlatformIntegration.PickPhotoAsync();
-            await SavePhoto(photoPath);
-        }
-
-        private async Task OnCapture()
-        {
-            showEditAvatar = false;
-
-            var cameraPermission = await PlatformIntegration.TryCameraPermission();
-            if (!cameraPermission)
-            {
-                return;
-            }
-
-            var writePermission = await PlatformIntegration.TryStorageWritePermission();
-            if (!writePermission)
-            {
-                return;
-            }
-
-            string? photoPath = await PlatformIntegration.CapturePhotoAsync();
-            await SavePhoto(photoPath);
-        }
-
-        private async Task SavePhoto(string? sourcFilePath)
-        {
-            if (string.IsNullOrWhiteSpace(sourcFilePath))
-            {
-                return;
-            }
-
             await AlertService.StartLoading();
-            await InvokeAsync(StateHasChanged);
-
-            avatar = await AvatarService.SetAvatar(sourcFilePath);
-
+            StateHasChanged();
+            string? photoPath = await func.Invoke();
             await AlertService.StopLoading();
-            await InvokeAsync(StateHasChanged);
+            if (string.IsNullOrEmpty(photoPath))
+            {
+                return;
+            }
+
+            avatar = photoPath;
+            StateHasChanged();
             await AlertService.Success(I18n.T("Share.EditSuccess"));
             await HandleAchievements(Achievement.Avatar);
-        }
-
-        private async Task SetAvatar()
-        {
-            avatar = await Preferences.Get<string>(Setting.Avatar);
         }
     }
 }

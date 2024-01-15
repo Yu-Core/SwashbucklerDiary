@@ -10,12 +10,7 @@
 
         public async Task<bool> TryCameraPermission()
         {
-            bool isCaptureSupported = await IsCaptureSupported();
-            if (!isCaptureSupported)
-            {
-                await _alertService.Error(_i18n.T("User.NoCapture"));
-                return false;
-            }
+            //capture只支持移动端，更合适的方法应该是自己写一个用于拍照的全屏弹窗
 
             var module = await Module;
             return await module.InvokeAsync<bool>("tryCameraPermission", null);

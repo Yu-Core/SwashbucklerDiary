@@ -19,7 +19,7 @@
                 return true;
             }
 
-            return await TryPermission<Permissions.StorageWrite>("Permission.OpenStorageWrite");
+            return await TryPermission<Permissions.StorageWrite>();
         }
     }
 }

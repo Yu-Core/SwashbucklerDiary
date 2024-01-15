@@ -2,6 +2,8 @@
 {
     public interface IAvatarService
     {
-        Task<string> SetAvatar(string filePath);
+        Task<string> SetAvatarByPickPhoto();
+
+        Task<string> SetAvatarByCapture();
     }
 }

@@ -1,8 +1,7 @@
 ﻿using BlazorComponent;
 using Masa.Blazor;
-using SwashbucklerDiary.Rcl.Services;
 
-namespace SwashbucklerDiary.Services
+namespace SwashbucklerDiary.Rcl.Services
 {
     public class AlertService : IAlertService
     {

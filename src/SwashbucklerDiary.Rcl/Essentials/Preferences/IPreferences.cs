@@ -10,6 +10,8 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         Task<T> Get<T>(Setting setting, T defaultValue);
 
+        Task<T> Get<T>(string key);
+
         Task<T> Get<T>(string key, T defaultValue);
 
         Task Set<T>(Setting setting, T value);

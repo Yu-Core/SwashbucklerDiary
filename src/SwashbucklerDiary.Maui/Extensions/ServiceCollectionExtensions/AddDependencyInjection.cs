@@ -4,7 +4,6 @@ using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Repository;
-using SwashbucklerDiary.Services;
 
 namespace SwashbucklerDiary.Maui.Extensions
 {
@@ -43,7 +42,7 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddSingleton<IAccessExternal, Services.AccessExternal>();
             services.AddSingleton<IMediaResourceManager, Services.MediaResourceManager>();
             services.AddSingleton<IDiaryFileManager, Services.DiaryFileManager>();
-            services.AddSingleton<IAvatarService, AvatarService>();
+            services.AddSingleton<IAvatarService, Services.AvatarService>();
             services.AddScoped<ScreenshotJSModule>();
             services.AddScoped<Rcl.Essentials.IScreenshot, Essentials.Screenshot>();
             services.AddSingleton<IStorageSpace, Services.StorageSpace>();
