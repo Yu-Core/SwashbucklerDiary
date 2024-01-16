@@ -40,10 +40,10 @@ namespace SwashbucklerDiary
 
         public static void QuitApp()
         {
-            //I18未初始化时，禁用返回键退出
+            //I18未初始化时，直接退出
             if (!I18n.Initialized)
             {
-                return;
+                Microsoft.Maui.Controls.Application.Current!.Quit();
             }
 
             string text = I18n.T("Press again to exit");
