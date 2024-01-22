@@ -36,18 +36,18 @@ namespace SwashbucklerDiary.Rcl.Models
             OnClick = dynamicListItem.OnClick;
         }
 
-        private DynamicListItem(Func<bool>? funcShow)
+        protected DynamicListItem(Func<bool>? funcShow)
         {
             _funcShow = funcShow;
         }
 
-        private DynamicListItem(object receiver, Action actionOnClick, Func<bool>? funcShow) : this(funcShow)
+        protected DynamicListItem(object receiver, Action actionOnClick, Func<bool>? funcShow) : this(funcShow)
         {
             _funcShow = funcShow;
             OnClick = EventCallback.Factory.Create(receiver, actionOnClick);
         }
 
-        private DynamicListItem(object receiver, Func<Task> funcOnClick, Func<bool>? funcShow) : this(funcShow)
+        protected DynamicListItem(object receiver, Func<Task> funcOnClick, Func<bool>? funcShow) : this(funcShow)
         {
             OnClick = EventCallback.Factory.Create(receiver, funcOnClick);
         }

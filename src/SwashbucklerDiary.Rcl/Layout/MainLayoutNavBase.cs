@@ -1,12 +1,13 @@
-﻿using BlazorComponent;
-using Masa.Blazor;
+﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
+using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Shared;
 
-namespace SwashbucklerDiary.Rcl.Components
+namespace SwashbucklerDiary.Rcl.Layout
 {
-    public abstract class MainNavigationCompontentBase : ComponentBase, IDisposable
+    public abstract class MainLayoutNavBase : ComponentBase, IDisposable
     {
         [Inject]
         protected MasaBlazor MasaBlazor { get; set; } = default!;
@@ -17,14 +18,11 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected NavigationManager Navigation { get; set; } = default!;
 
+        [Inject]
+        protected INavigateService NavigateService { get; set; } = default!;
+
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }
-
-        [Parameter]
-        public StringNumber Value { get; set; } = 0;
-
-        [Parameter]
-        public EventCallback<StringNumber> ValueChanged { get; set; }
 
         [Parameter]
         public List<NavigationButton> Items { get; set; } = new();
@@ -34,6 +32,8 @@ namespace SwashbucklerDiary.Rcl.Components
             MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
             GC.SuppressFinalize(this);
         }
+
+        protected bool IsRootPath => NavigateService.RootPaths.Any(it => it.EqualsAbsolutePath(Navigation.Uri));
 
         protected override async Task OnInitializedAsync()
         {

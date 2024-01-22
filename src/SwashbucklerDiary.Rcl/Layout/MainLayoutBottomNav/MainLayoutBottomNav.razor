@@ -1,34 +1,23 @@
-﻿@inherits MainNavigationCompontentBase
+﻿@namespace SwashbucklerDiary.Rcl.Layout
+@inherits MainLayoutNavBase
 
 @if (IsRootPath)
 {
     <link href="@cssHref" rel="stylesheet" />
 }
 
-<MBottomNavigation Value="Value"
-                   ValueChanged="ValueChanged"
-                   InputValue="Show"
+<MBottomNavigation InputValue="Show"
                    Class="d-flex justify-space-around"
                    Mandatory="true"
                    App="true">
     @foreach (var item in Items)
     {
-        <MButton Ripple="false"
-                 OnClick="item.OnClick">
-            <MIcon>
-                @item.Icon
-            </MIcon>
-        </MButton>
+        <MainLayoutBottomNavItem Value="item"></MainLayoutBottomNavItem>
     }
 </MBottomNavigation>
 
 @code {
     private readonly static string cssHref = $"./_content/{Rcl.Essentials.StaticWebAssets.RclAssemblyName}/css/extend/masa-blazor-extend-enqueued-snackbars.css";
 
-    [Inject]
-    private INavigateService NavigateService { get; set; } = default!;
-
     private bool Show => MasaBlazor.Breakpoint.Xs && IsRootPath;
-
-    private bool IsRootPath => NavigateService.RootPaths.Contains(Navigation.Uri);
 }

@@ -1,6 +1,4 @@
-﻿using BlazorComponent;
-using BlazorComponent.I18n;
-using Masa.Blazor;
+﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
@@ -12,9 +10,11 @@ namespace SwashbucklerDiary.Rcl.Layout
 {
     public partial class MainLayoutBase : LayoutComponentBase, IDisposable
     {
-        protected StringNumber NavigationButtonIndex = 0;
-
-        protected List<NavigationButton> NavigationButtons = new();
+        protected List<NavigationButton> NavigationButtons = [
+            new("Main.Diary", "mdi-notebook-outline", "mdi-notebook", ""),
+            new("Main.History", "mdi-clock-outline", "mdi-clock", "history"),
+            new("Main.Mine",  "mdi-account-outline", "mdi-account", "mine"),
+        ];
 
         [Inject]
         protected MasaBlazor MasaBlazor { get; set; } = default!;
@@ -53,10 +53,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected override void OnInitialized()
         {
             base.OnInitialized();
-
-            NavigateService.Initialize(Navigation);
-            AlertService.Initialize(PopupService);
             LoadView();
+            NavigateService.Initialize(Navigation, NavigationButtons.Select(it => it.Href).ToList());
+            AlertService.Initialize(PopupService);
             ThemeService.OnChanged += ThemeChanged;
             I18n.OnChanged += StateHasChanged;
         }
@@ -91,15 +90,12 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected void LoadView()
         {
-            List<NavigationButton> navigationButtons = [];
-            navigationButtons.Add(new(this, navigationButtons.Count, "Main.Diary", "mdi-notebook-outline", "mdi-notebook", GetIcon, () => PopToRootAsync("")));
-            navigationButtons.Add(new(this, navigationButtons.Count, "Main.History", "mdi-clock-outline", "mdi-clock", GetIcon, () => PopToRootAsync("history")));
-            navigationButtons.Add(new(this, navigationButtons.Count, "Main.Mine", "mdi-account-outline", "mdi-account", GetIcon, () => PopToRootAsync("mine")));
-            NavigationButtons = navigationButtons;
+            for (int i = 0; i < NavigationButtons.Count; i++)
+            {
+                var button = NavigationButtons[i];
+                button.OnClick = () => NavigateService.PopToRootAsync(button.Href);
+            }
         }
-
-        protected Task PopToRootAsync(string url)
-            => NavigateService.PopToRootAsync(url);
 
         protected async Task ThemeChanged(Theme theme)
         {
@@ -109,11 +105,6 @@ namespace SwashbucklerDiary.Rcl.Layout
             }
 
             await InvokeAsync(StateHasChanged);
-        }
-
-        protected string GetIcon(NavigationButton navigationButton)
-        {
-            return navigationButton.Index == NavigationButtonIndex ? navigationButton.SelectedIcon : navigationButton.NotSelectedIcon;
         }
     }
 }

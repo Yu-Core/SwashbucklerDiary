@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Essentials
 {
@@ -24,15 +25,15 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         public List<string> HistoryURLs { get; set; } = [];
 
-        public void Initialize(object navigation)
+        public void Initialize(object navigation, List<string> rootPaths)
         {
             Navigation = (NavigationManager)navigation;
-            RootPaths.Add(Navigation.BaseUri);
+            RootPaths = rootPaths.Select(it=> Navigation.ToAbsoluteUri(it).ToString()).ToList();
         }
 
         public async Task PushAsync(string url, bool isCachePrevious = true)
         {
-            string nextUri = new Uri(new(Navigation.BaseUri), url).ToString();
+            string nextUri = Navigation.ToAbsoluteUri(url).ToString();
             PushEventArgs args = new(Navigation.Uri, nextUri, isCachePrevious);
 
             if (BeforePush is not null)
@@ -70,15 +71,10 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         public async Task PopToRootAsync(string url)
         {
-            url = new Uri(new(Navigation.BaseUri), url).ToString();
-            if (Navigation.Uri == url)
+            url = Navigation.ToAbsoluteUri(url).ToString();
+            if (Navigation.Uri.EqualsAbsolutePath(url))
             {
                 return;
-            }
-
-            if (!RootPaths.Contains(url))
-            {
-                RootPaths.Add(url);
             }
 
             PopEventArgs args = new(url, Navigation.Uri);

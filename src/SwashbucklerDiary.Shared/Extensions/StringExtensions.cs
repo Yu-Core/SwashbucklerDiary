@@ -55,6 +55,16 @@ namespace SwashbucklerDiary.Shared
             return new Uri(uri1).AbsolutePath == new Uri(uri2).AbsolutePath;
         }
 
+        public static bool EqualsAbsolutePath(this string? uri1, Uri uri2)
+        {
+            if (uri1 == null || uri2 == null)
+            {
+                return false;
+            }
+
+            return new Uri(uri1).AbsolutePath == uri2.AbsolutePath;
+        }
+
         public static string TrimStart(this string str, string trimString)
         {
             ArgumentNullException.ThrowIfNull(str);

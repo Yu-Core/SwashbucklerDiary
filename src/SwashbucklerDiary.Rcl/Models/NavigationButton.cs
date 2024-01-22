@@ -1,27 +1,23 @@
 ﻿namespace SwashbucklerDiary.Rcl.Models
 {
-    public class NavigationButton : DynamicListItem
+    public class NavigationButton
     {
-        public int Index { get; set; }
+        public string Text { get; set; }
 
         public string SelectedIcon { get; set; }
 
         public string NotSelectedIcon { get; set; }
 
-        public NavigationButton(object receiver, int index, string text, string notSelectedIcon, string selectedIcon, Func<NavigationButton, string> funcIcon, Func<Task> onClick) : base(receiver, text, icon: null, onClick)
-        {
-            Index = index;
-            SelectedIcon = selectedIcon;
-            NotSelectedIcon = notSelectedIcon;
-            _icon = (Func<string>)(() => funcIcon.Invoke(this));
-        }
+        public string Href { get; set; }
 
-        public NavigationButton(object receiver, int index, string text, string notSelectedIcon, string selectedIcon, Func<NavigationButton, string> funcIcon, Action onClick) : base(receiver, text, icon: null, onClick)
+        public Func<Task> OnClick { get; set; } = default!;
+
+        public NavigationButton(string text, string notSelectedIcon, string selectedIcon,string href)
         {
-            Index = index;
+            Text = text;
             SelectedIcon = selectedIcon;
             NotSelectedIcon = notSelectedIcon;
-            _icon = (Func<string>)(() => funcIcon.Invoke(this));
+            Href = href;
         }
     }
 }

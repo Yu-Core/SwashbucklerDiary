@@ -30,7 +30,7 @@
         /// 初始化
         /// </summary>
         /// <param name="navigation"></param>
-        void Initialize(object navigation);
+        void Initialize(object navigation, List<string> rootPaths);
 
         /// <summary>
         /// 导航

@@ -1,0 +1,25 @@
+﻿@namespace SwashbucklerDiary.Rcl.Layout
+@inherits MainLayoutNavBase
+
+<MNavigationDrawer App="true"
+                   Floating="true"
+                   Value="Show"
+                   Stateless="true"
+                   Width="300"
+                   MiniVariant="MiniVariant">
+    <MList Shaped="true"
+           Flat="true">
+        @foreach (var item in Items)
+        {
+            <MainLayoutNavDrawerItem Value="item"
+                                     MiniVariant="MiniVariant">
+            </MainLayoutNavDrawerItem>
+        }
+    </MList>
+</MNavigationDrawer>
+
+@code {
+    private bool MiniVariant => MasaBlazor.Breakpoint.Sm;
+
+    private bool Show => MasaBlazor.Breakpoint.SmAndUp && IsRootPath;
+}

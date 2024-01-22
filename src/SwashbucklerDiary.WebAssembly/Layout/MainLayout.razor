@@ -8,9 +8,7 @@
 
                 <FirstLaunchDialog />
 
-                <MainNavigationDrawer @bind-Value="NavigationButtonIndex"
-                                      Items="NavigationButtons">
-                </MainNavigationDrawer>
+                <MainLayoutNavDrawer Items="NavigationButtons"></MainLayoutNavDrawer>
 
                 <MMain>
                     <PPageContainerExtension>
@@ -18,9 +16,7 @@
                     </PPageContainerExtension>
                 </MMain>
 
-                <MainLayoutBottomNavigation @bind-Value="NavigationButtonIndex"
-                                            Items="NavigationButtons">
-                </MainLayoutBottomNavigation>
+                <MainLayoutBottomNav Items="NavigationButtons"></MainLayoutBottomNav>
 
                 <PwaSnackbar OnRefresh="@RefreshToSkipWaiting"></PwaSnackbar>
             </ChildContent>
