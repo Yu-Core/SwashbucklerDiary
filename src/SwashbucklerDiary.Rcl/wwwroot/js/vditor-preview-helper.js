@@ -2,6 +2,8 @@ export function previewVditor(dotNetCallbackRef, element, text, options) {
     let VditorOptions = {
         ...options,
         after: () => {
+            fixLink(element);
+            fixCopyDisolaySoftKeyboard(element);
             dotNetCallbackRef.invokeMethodAsync('After');
         }
     }
@@ -17,7 +19,17 @@ export function copy(dotNetCallbackRef, callbackMethod, parent) {
     }
 }
 
-export function fixLink(element) {
+export function previewImage(dotNetCallbackRef, callbackMethod, parent) {
+    var elements = parent.querySelectorAll("img");
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].addEventListener('click', function () {
+            dotNetCallbackRef.invokeMethodAsync(callbackMethod, this.getAttribute('src'));
+        });
+    }
+}
+
+//修复点击链接的一些错误
+function fixLink(element) {
     var links = element.querySelectorAll("a"); // 获取所有a标签
     for (var i = 0; i < links.length; i++) {
         var href = links[i].getAttribute('href');
@@ -29,11 +41,9 @@ export function fixLink(element) {
     }
 }
 
-export function previewImage(dotNetCallbackRef, callbackMethod, parent) {
-    var elements = parent.querySelectorAll("img");
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].addEventListener('click', function () {
-            dotNetCallbackRef.invokeMethodAsync(callbackMethod, this.getAttribute('src'));
-        });
+function fixCopyDisolaySoftKeyboard(element) {
+    var textareas = element.querySelectorAll("textarea"); // 获取所有textarea标签
+    for (var i = 0; i < textareas.length; i++) {
+        textareas[i].readOnly = true;
     }
 }

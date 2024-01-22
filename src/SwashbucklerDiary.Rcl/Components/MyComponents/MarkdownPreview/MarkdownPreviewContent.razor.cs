@@ -46,8 +46,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
             //点击复制按钮提示复制成功
             await module.InvokeVoidAsync("copy", [dotNetCallbackRef, "CopySuccess", element]);
-            //修复点击链接的一些错误
-            await module.InvokeVoidAsync("fixLink", [element]);
             //图片预览
             await module.InvokeVoidAsync("previewImage", [dotNetCallbackRef, "PreviewImage", element]);
         }
