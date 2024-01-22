@@ -57,9 +57,14 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "current", theme },
                 { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.9.6/dist/css/content-theme" }
             };
+            var previewMarkdown = new Dictionary<string, object?>()
+            {
+                { "mark", true }
+            };
             var preview = new Dictionary<string, object?>()
             {
                 { "theme", previewTheme },
+                { "markdown", previewMarkdown },
             };
             var link = new Dictionary<string, object?>()
             {

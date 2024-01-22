@@ -45,6 +45,10 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "current", mode },
                 { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.9.6/dist/css/content-theme" }
             };
+            var markdown = new Dictionary<string, object>()
+            {
+                { "mark", true }
+            };
 
             _options = new()
             {
@@ -53,6 +57,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "lang", lang },
                 { "theme", theme },
                 { "icon", "material" },
+                { "markdown", markdown }
             };
         }
     }
