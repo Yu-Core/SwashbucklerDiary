@@ -32,13 +32,6 @@
             mdi-export
         </MIcon>
     </MButton>
-
-    <MButton Icon="true"
-             OnClick="()=>showDiarySort=true">
-        <MIcon>
-            mdi-sort-variant
-        </MIcon>
-    </MButton>
 </MyAppBar>
 
 <ScrollContainer @ref="scrollContainer">
@@ -57,7 +50,6 @@
     </IntersectElement>
 
     <DiaryCardList @bind-Tags="Tags"
-                   @bind-ShowSort="showDiarySort"
                    Value="pickedDiaries"
                    OnRemove="HandelOnRemove">
     </DiaryCardList>

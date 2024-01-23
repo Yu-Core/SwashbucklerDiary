@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -9,8 +8,6 @@ namespace SwashbucklerDiary.Rcl.Pages
     public partial class LocationSettingPage : ImportantComponentBase
     {
         bool showAdd;
-
-        bool showSort;
 
         List<LocationModel> locations = [];
 

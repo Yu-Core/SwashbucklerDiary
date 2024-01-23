@@ -33,12 +33,16 @@ namespace SwashbucklerDiary.Rcl.Components
             return LocationCardList.Rename(Value);
         }
 
+        private void Sort()
+            => LocationCardList.Sort();
+
         void LoadView()
         {
             MenuItems = new()
             {
                 new(this, "Share.Rename","mdi-rename-outline",Rename),
                 new(this, "Share.Delete","mdi-delete-outline",Delete),
+                new(this, "Share.Sort","mdi-sort-variant",Sort),
             };
         }
     }

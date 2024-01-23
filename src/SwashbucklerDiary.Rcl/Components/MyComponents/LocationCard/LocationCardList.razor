@@ -46,8 +46,7 @@
 </DeleteDialog>
 
 <RadioDialog @bind-Value="sortItem"
-             Visible="ShowSort"
-             VisibleChanged="ShowSortChanged"
+             @bind-Visible="showSort"
              Title="@(I18n.T("Share.Sort"))"
              Items="SortItems">
 </RadioDialog>

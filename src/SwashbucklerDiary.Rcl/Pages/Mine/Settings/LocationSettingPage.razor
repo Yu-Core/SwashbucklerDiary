@@ -1,33 +1,13 @@
-﻿@page "/pppp"
+﻿@page "/location"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar>
-    <MButton Icon="true"
-             OnClick="NavigateToBack">
-        <MIcon>
-            mdi-arrow-left
-        </MIcon>
-    </MButton>
-
-    <MToolbarTitle Class="font-weight-bold">
-        @(I18n.T("Setting.Display.Diary.Location.Name"))
-    </MToolbarTitle>
-
-    <MSpacer></MSpacer>
-
-    <MButton Icon="true"
-             OnClick="()=>showSort=true">
-        <MIcon>
-            mdi-sort-variant
-        </MIcon>
-    </MButton>
+<MyAppBar Title="@(I18n.T("Setting.Display.Diary.Location.Name"))"
+          OnClick="NavigateToBack">
 </MyAppBar>
 
 <ScrollContainer>
-    <LocationCardList @bind-ShowSort="showSort"
-                      Value="locations">
-    </LocationCardList>
+    <LocationCardList Value="locations"></LocationCardList>
 </ScrollContainer>
 
 <RightBottomFloatButton Icon="mdi-plus" OnClick="()=>showAdd=true">

@@ -47,6 +47,9 @@ namespace SwashbucklerDiary.Rcl.Components
             return TagCardList.Export(Value);
         }
 
+        private void Sort()
+            => TagCardList.Sort();
+
         private void LoadView()
         {
             MenuItems = new()
@@ -54,6 +57,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 new(this, "Share.Rename","mdi-rename-outline",Rename),
                 new(this, "Share.Delete","mdi-delete-outline",Delete),
                 new(this, "Diary.Export","mdi-export",Export),
+                new(this, "Share.Sort","mdi-sort-variant",Sort),
             };
         }
 

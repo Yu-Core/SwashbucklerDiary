@@ -29,18 +29,10 @@
             @(IsDateFiltered ? "mdi-filter-check-outline" : "mdi-filter-outline")
         </MIcon>
     </MButton>
-
-    <MButton Icon="true"
-             OnClick="()=>showDiarySort=true">
-        <MIcon>
-            mdi-sort-variant
-        </MIcon>
-    </MButton>
 </MyAppBar>
 
 <ScrollContainer>
     <DiaryCardList @bind-Tags="Tags"
-                   @bind-ShowSort="showDiarySort"
                    Value="Diaries"
                    NotFoundText="@(IsSearchFiltered ? I18n.T("Search.Not Found"):null)" />
 </ScrollContainer>

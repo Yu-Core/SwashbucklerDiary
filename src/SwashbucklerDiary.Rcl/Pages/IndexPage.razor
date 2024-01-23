@@ -19,27 +19,6 @@
     <MSpacer></MSpacer>
 
     <MultiSearch OnSearch="Search"></MultiSearch>
-
-    @if (tab == 0)
-    {
-        <MButton Icon="true"
-                 OnClick="()=>showDiarySort=true">
-            <MIcon>
-                mdi-sort-variant
-            </MIcon>
-        </MButton>
-    }
-
-    @if (tab == 1)
-    {
-        <MButton Icon="true"
-                 OnClick="()=>showTagSort=true">
-            <MIcon>
-                mdi-sort-variant
-            </MIcon>
-        </MButton>
-    }
-
 </MyAppBar>
 
 
@@ -63,13 +42,11 @@
         </div>
 
         <DiaryCardList @bind-Tags="Tags"
-                       @bind-ShowSort="showDiarySort"
                        Value="Diaries">
         </DiaryCardList>
     </SwiperTabItem>
     <SwiperTabItem>
         <TagCardList @bind-Value="Tags"
-                     @bind-ShowSort="showTagSort"
                      Diaries="Diaries">
         </TagCardList>
     </SwiperTabItem>

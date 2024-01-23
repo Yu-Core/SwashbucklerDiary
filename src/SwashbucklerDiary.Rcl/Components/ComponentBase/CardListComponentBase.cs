@@ -8,6 +8,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected string? sortItem;
 
+        protected bool showSort;
+
         protected Dictionary<string, Func<IEnumerable<T>, IEnumerable<T>>> sortOptions = [];
 
         [Parameter]
@@ -17,11 +19,11 @@ namespace SwashbucklerDiary.Rcl.Components
             set => _value = value;
         }
 
-        [Parameter]
-        public bool ShowSort { get; set; }
-
-        [Parameter]
-        public EventCallback<bool> ShowSortChanged { get; set; }
+        public void Sort()
+        {
+            showSort = true;
+            InvokeAsync(StateHasChanged);
+        }
 
         protected List<string> SortItems => sortOptions.Keys.ToList();
 

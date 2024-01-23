@@ -80,6 +80,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 new(this, "Share.Delete","mdi-delete-outline",Delete),
                 new(this, TopText,"mdi-format-vertical-align-top",Topping),
                 new(this, "Diary.Export","mdi-export",Export),
+                new(this, "Share.Sort","mdi-sort-variant",Sort),
                 new(this, PrivateText, PrivateIcon, MovePrivacy,()=>ShowPrivacy)
             };
         }
@@ -108,6 +109,9 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             return DiaryCardList.Export(Value);
         }
+
+        private void Sort()
+            => DiaryCardList.Sort();
 
         private Task MovePrivacy()
         {
