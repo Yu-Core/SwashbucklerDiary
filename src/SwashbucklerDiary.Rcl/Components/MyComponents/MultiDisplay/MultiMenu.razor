@@ -69,7 +69,12 @@
                         {
                             <MListItem Dense="true"
                                        OnClick="item.OnClick">
-                                <MListItemContent>
+                                <MListItemIcon Class="mr-3">
+                                    <MIcon Size="20">
+                                        @(item.Icon)
+                                    </MIcon>
+                                </MListItemIcon>
+                                <MListItemContent Class="text-subtitle-2">
                                     @(I18n.T(item.Text))
                                 </MListItemContent>
                             </MListItem>
