@@ -37,15 +37,19 @@ namespace SwashbucklerDiary.Rcl.Layout
 
             if (firstRender)
             {
-                await LoadSettings();
+                await UpdateSettings();
                 StateHasChanged();
             }
         }
 
-        private async Task LoadSettings()
+        private async Task UpdateSettings()
         {
-            var lang = await Preferences.Get<bool>(Setting.FirstSetLanguage);
-            var agree = await Preferences.Get<bool>(Setting.FirstAgree);
+            var langTask = Preferences.Get<bool>(Setting.FirstSetLanguage);
+            var agreeTask = Preferences.Get<bool>(Setting.FirstAgree);
+            await Task.WhenAll(langTask, agreeTask);
+
+            var lang = langTask.Result;
+            var agree = agreeTask.Result;
 
             if (lang && agree)
             {
@@ -67,10 +71,18 @@ namespace SwashbucklerDiary.Rcl.Layout
 
             showLanguga = false;
             I18n.SetCulture(value);
-            await InsertDefaultDiaries();
-            await Preferences.Set(Setting.FirstSetLanguage, true);
-            await Preferences.Set(Setting.Language, value);
-            await VersionManager.FirstEnter();
+            Task insertTask = Task.Run(async () =>
+            {
+                await InsertDefaultDiaries();
+                await VersionManager.FirstEnter();
+            });
+            Task[] tasks =
+            [
+                insertTask,
+                Preferences.Set(Setting.FirstSetLanguage, true),
+                Preferences.Set(Setting.Language, value)
+            ];
+            await Task.WhenAll(tasks);
         }
 
         private async Task Argee()

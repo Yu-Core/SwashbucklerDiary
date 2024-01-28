@@ -35,12 +35,12 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                await LoadSettings();
+                await UpdateSettings();
                 StateHasChanged();
             }
         }
 
-        private async Task LoadSettings()
+        private async Task UpdateSettings()
         {
             await UpdatePrivatePassword();
             privacy = await Preferences.Get<bool>(Setting.PrivacyMode);

@@ -31,15 +31,16 @@ namespace SwashbucklerDiary.Rcl.Pages
             await base.OnAfterRenderAsync(firstRender);
             if(firstRender)
             {
-                await LoadSettings();
-                await LoadAppFunctions();
+                await Task.WhenAll(
+                    UpdateSettings(),
+                    LoadAppFunctions());
                 StateHasChanged();
             }
         }
 
         protected override async Task OnResume()
         {
-            await LoadSettings();
+            await UpdateSettings();
             UpdateAppFunctions();
             await base.OnResume();
         }
@@ -61,7 +62,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             UpdateAppFunctions(appFunctions);
         }
 
-        private async Task LoadSettings()
+        private async Task UpdateSettings()
         {
             privacy = await Preferences.Get<bool>(Setting.PrivacyMode);
         }

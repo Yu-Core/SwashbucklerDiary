@@ -22,8 +22,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (firstRender)
             {
-                await InitializeDiariesAsync();
-                await UpdateTagsAsync();
+                await Task.WhenAll(
+                    InitializeDiariesAsync(),
+                    UpdateTagsAsync());
                 StateHasChanged();
             }
         }
@@ -45,8 +46,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override async Task OnResume()
         {
-            await UpdateDiariesAsync();
-            await UpdateTagsAsync();
+            await Task.WhenAll(
+                UpdateDiariesAsync(),
+                UpdateTagsAsync());
             await base.OnResume();
         }
     }

@@ -40,13 +40,12 @@ namespace SwashbucklerDiary
 
         public static void QuitApp()
         {
-            //I18未初始化时，直接退出
-            if (!I18n.Initialized)
-            {
-                Microsoft.Maui.Controls.Application.Current!.Quit();
-            }
-
             string text = I18n.T("Press again to exit");
+
+            if(string.IsNullOrEmpty(text))
+            {
+                return;
+            }
 
             if (BackPressCounter == 1)
             {

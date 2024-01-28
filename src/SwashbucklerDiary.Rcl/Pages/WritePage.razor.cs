@@ -98,10 +98,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                await LoadSettings();
-                await UpdateTags();
-                await SetTag();
-                await SetDiary();
+                await Task.WhenAll(
+                    UpdateSettings(),
+                    InitDiary(),
+                    InitTags());
                 StateHasChanged();
             }
         }
@@ -193,28 +193,30 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string SetMarkdownIcon() => enableMarkdown ? "mdi-format-text" : "mdi-language-markdown-outline";
 
-        private async Task SetTag()
+        private async Task InitTags()
         {
-            if (TagId != null)
+            Tags = await TagService.QueryAsync();
+
+            if (DiaryId is null && TagId is not null)
             {
-                var tag = await TagService.FindAsync((Guid)TagId);
-                if (tag != null)
+                var tag = Tags.Find(it=>it.Id == TagId);
+                if (tag is not null)
                 {
                     SelectedTags.Add(tag);
                 }
             }
         }
 
-        private async Task SetDiary()
+        private async Task InitDiary()
         {
-            if (DiaryId == null)
+            if (DiaryId is null)
             {
                 createMode = true;
                 return;
             }
 
             var diary = await DiaryService.FindAsync((Guid)DiaryId);
-            if (diary == null)
+            if (diary is null)
             {
                 return;
             }
@@ -223,7 +225,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             enableTitle = !string.IsNullOrEmpty(diary.Title);
         }
 
-        private async Task LoadSettings()
+        private async Task UpdateSettings()
         {
             enableTitle = await Preferences.Get<bool>(Setting.Title);
             enableMarkdown = await Preferences.Get<bool>(Setting.Markdown);
@@ -238,11 +240,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             };
             WeatherIcons = IconService.GetWeatherIcons();
             MoodIcons = IconService.GetMoodIcons();
-        }
-
-        private async Task UpdateTags()
-        {
-            Tags = await TagService.QueryAsync();
         }
 
         private void RemoveSelectedTag(TagModel tag)

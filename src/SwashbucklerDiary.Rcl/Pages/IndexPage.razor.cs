@@ -17,10 +17,13 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private IVersionUpdataManager VersionManager { get; set; } = default!;
 
-        public async Task LoadSettings()
+        public async Task UpdateSettings()
         {
-            showWelcomeText = await Preferences.Get<bool>(Setting.WelcomeText);
-            showDate = await Preferences.Get<bool>(Setting.Date);
+            var welcomeTextTask = Preferences.Get<bool>(Setting.WelcomeText);
+            var dateTask = Preferences.Get<bool>(Setting.Date);
+            await Task.WhenAll(welcomeTextTask, dateTask);
+            showWelcomeText = welcomeTextTask.Result;
+            showDate = dateTask.Result;
         }
 
         protected override void OnInitialized()
@@ -36,7 +39,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                await LoadSettings();
+                await UpdateSettings();
                 StateHasChanged();
             }
         }
@@ -50,7 +53,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override async Task OnResume()
         {
-            await LoadSettings();
+            await UpdateSettings();
             await base.OnResume();
         }
 

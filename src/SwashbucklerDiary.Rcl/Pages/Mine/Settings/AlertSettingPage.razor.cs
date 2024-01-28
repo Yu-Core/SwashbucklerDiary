@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                await LoadSettings();
+                await UpdateSettings();
                 StateHasChanged();
             }
         }
@@ -37,7 +37,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             set => SetTimeout(value);
         }
 
-        private async Task LoadSettings()
+        private async Task UpdateSettings()
         {
             _timeout = await Preferences.Get<int>(Setting.AlertTimeout);
             achievementsAlert = await Preferences.Get<bool>(Setting.AchievementsAlert);

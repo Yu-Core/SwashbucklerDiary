@@ -65,7 +65,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         protected override async Task OnInitializedAsync()
         {
             await LoadViewAsync();
-            await SetAvatar();
 
             await base.OnInitializedAsync();
         }
@@ -76,17 +75,15 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                await LoadSettings();
-                await UpdateStatisticalData();
+                await UpdateData();
+
                 StateHasChanged();
             }
         }
 
         protected override async Task OnResume()
         {
-            await LoadSettings();
-            await SetAvatar();
-            await UpdateStatisticalData();
+            await UpdateData();
             await base.OnResume();
         }
 
@@ -173,10 +170,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             await PlatformIntegration.OpenBrowser(githubUrl);
         }
 
-        private async Task ThemeStateChanged(Theme value)
+        private Task ThemeStateChanged(Theme value)
         {
-            await ThemeService.SetThemeAsync(value);
-            await Preferences.Set(Setting.ThemeState, (int)theme);
+            return Task.WhenAll(
+                ThemeService.SetThemeAsync(value),
+                Preferences.Set(Setting.ThemeState, (int)value));
         }
 
         private async Task OpenQQGroup()
@@ -210,18 +208,26 @@ namespace SwashbucklerDiary.Rcl.Pages
             return DiaryService.GetWordCount(diaries, type);
         }
 
-        private async Task LoadSettings()
+        private async Task UpdateSettings()
         {
-            language = await Preferences.Get<string>(Setting.Language);
-            userName = await Preferences.Get(Setting.UserName, I18n.T("AppName"));
-            sign = await Preferences.Get(Setting.Sign, I18n.T("Mine.Sign"));
-            int themeState = await Preferences.Get<int>(Setting.ThemeState);
-            theme = (Theme)themeState;
-        }
+            var languageTask = Preferences.Get<string>(Setting.Language);
+            var userNameTask = Preferences.Get(Setting.UserName, I18n.T("AppName"));
+            var signTask = Preferences.Get(Setting.Sign, I18n.T("Mine.Sign"));
+            var themeTask = Preferences.Get<int>(Setting.ThemeState);
+            var avatarTask = Preferences.Get<string>(Setting.Avatar);
 
-        private async Task SetAvatar()
-        {
-            avatar = await Preferences.Get<string>(Setting.Avatar);
+            await Task.WhenAll(
+                languageTask,
+                userNameTask,
+                signTask,
+                themeTask,
+                avatarTask);
+
+            language = languageTask.Result;
+            userName = userNameTask.Result;
+            sign = signTask.Result;
+            theme = (Theme)themeTask.Result;
+            avatar = avatarTask.Result;
         }
 
         private async Task UpdateStatisticalData()
@@ -230,6 +236,13 @@ namespace SwashbucklerDiary.Rcl.Pages
             diaryCount = diries.Count;
             wordCount = GetWordCount(diries);
             activeDayCount = diries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
+        }
+
+        private Task UpdateData()
+        {
+            return Task.WhenAll(
+                UpdateSettings(),
+                UpdateStatisticalData());
         }
     }
 }

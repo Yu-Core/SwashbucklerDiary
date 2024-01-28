@@ -4,8 +4,6 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public interface II18nService
     {
-        bool Initialized { get; protected set; }
-
         event Action OnChanged;
 
         CultureInfo Culture { get; }
@@ -15,8 +13,6 @@ namespace SwashbucklerDiary.Rcl.Services
         string T(string? key);
 
         string? T(string? key, bool whenNullReturnKey);
-
-        void Initialize(string culture);
 
         void SetCulture(string culture);
 

@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Maui.Pages
 
             if(firstRender)
             {
-                await LoadSettings();
+                await UpdateSettings();
                 StateHasChanged();
             }
         }
@@ -49,7 +49,7 @@ namespace SwashbucklerDiary.Maui.Pages
         private string ConfiguredText => Configured ? I18n.T("Backups.Config.Configured") : I18n.T("Backups.Config.NotConfigured");
 
 
-        private async Task LoadSettings()
+        private async Task UpdateSettings()
         {
             configModel.ServerAddress = await Preferences.Get<string>(Setting.WebDAVServerAddress);
             configModel.Account = await Preferences.Get<string>(Setting.WebDAVAccount);

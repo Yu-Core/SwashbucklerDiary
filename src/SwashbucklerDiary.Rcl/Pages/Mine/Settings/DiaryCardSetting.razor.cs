@@ -23,14 +23,14 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                await LoadSettings();
+                await UpdateSettings();
                 StateHasChanged();
             }
         }
 
         private string DiaryCardDateFormatKey => DiaryCardDateFormats.FirstOrDefault(x => x.Value == diaryCardDateFormat).Key;
 
-        private async Task LoadSettings()
+        private async Task UpdateSettings()
         {
             diaryCardIcon = await Preferences.Get<bool>(Setting.DiaryCardIcon);
             diaryCardDateFormat = await Preferences.Get<string>(Setting.DiaryCardDateFormat);

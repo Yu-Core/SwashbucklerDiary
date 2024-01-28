@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await base.OnInitializedAsync();
 
             LoadView();
-            await LoadSettings();
+            await UpdateSettings();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                await LoadSettings();
+                await UpdateSettings();
                 StateHasChanged();
             }
         }
@@ -53,11 +53,20 @@ namespace SwashbucklerDiary.Rcl.Pages
             };
         }
 
-        private async Task LoadSettings()
+        private async Task UpdateSettings()
         {
-            userName = await Preferences.Get(Setting.UserName, I18n.T("AppName"));
-            sign = await Preferences.Get(Setting.Sign, I18n.T("Mine.Sign"));
-            avatar = await Preferences.Get<string>(Setting.Avatar);
+            var userNameTask = Preferences.Get(Setting.UserName, I18n.T("AppName"));
+            var signTask = Preferences.Get(Setting.Sign, I18n.T("Mine.Sign"));
+            var avatarTask = Preferences.Get<string>(Setting.Avatar);
+
+            await Task.WhenAll(
+                userNameTask,
+                signTask,
+                avatarTask);
+
+            userName = userNameTask.Result;
+            sign = signTask.Result;
+            avatar = avatarTask.Result;
         }
 
         private async Task SaveSign(string tagName)

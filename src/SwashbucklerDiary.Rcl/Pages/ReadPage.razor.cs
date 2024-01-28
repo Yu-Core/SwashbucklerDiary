@@ -55,8 +55,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if(firstRender)
             {
-                await LoadSettings();
-                await UpdateDiary();
+                await UpdateData();
                 StateHasChanged();
             }
         }
@@ -97,10 +96,13 @@ namespace SwashbucklerDiary.Rcl.Pages
             this.diary = diary;
         }
 
-        private async Task LoadSettings()
+        private async Task UpdateSettings()
         {
-            enableMarkdown = await Preferences.Get<bool>(Setting.Markdown);
-            enablePrivacy = await Preferences.Get<bool>(Setting.PrivacyMode);
+            var markdownTask = Preferences.Get<bool>(Setting.Markdown);
+            var privacyTask = Preferences.Get<bool>(Setting.PrivacyMode);
+            await Task.WhenAll(markdownTask, privacyTask);
+            enableMarkdown = markdownTask.Result;
+            enablePrivacy = privacyTask.Result;
         }
 
         private void LoadView()
@@ -257,6 +259,13 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             return diary.Title + "\n" + content;
+        }
+
+        private Task UpdateData()
+        {
+            return Task.WhenAll(
+                UpdateSettings(),
+                UpdateDiary());
         }
     }
 }

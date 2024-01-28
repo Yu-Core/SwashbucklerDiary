@@ -15,12 +15,12 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                await LoadSettings();
+                await UpdateSettings();
                 StateHasChanged();
             }
         }
 
-        private async Task LoadSettings()
+        private async Task UpdateSettings()
         {
             welcomText = await Preferences.Get<bool>(Setting.WelcomeText);
             date = await Preferences.Get<bool>(Setting.Date);

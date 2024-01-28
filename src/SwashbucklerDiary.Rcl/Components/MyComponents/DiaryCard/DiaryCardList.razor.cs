@@ -111,14 +111,14 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (firstRender)
             {
-                await LoadSettings();
+                await UpdateSettings();
                 StateHasChanged();
             }
         }
 
         protected override async Task OnResume()
         {
-            await LoadSettings();
+            await UpdateSettings();
             await base.OnResume();
         }
 
@@ -133,7 +133,7 @@ namespace SwashbucklerDiary.Rcl.Components
             set => selectedDiary.Tags = value;
         }
 
-        private async Task LoadSettings()
+        private async Task UpdateSettings()
         {
             ShowPrivacy = await Preferences.Get<bool>(Setting.PrivacyMode);
             ShowIcon = await Preferences.Get<bool>(Setting.DiaryCardIcon);
