@@ -27,7 +27,14 @@
     <MSpacer></MSpacer>
 
     <MButton Icon="true"
-             OnClick="ExportThisTime">
+             OnClick="ResetDatePicker">
+        <MIcon>
+            mdi-calendar-refresh
+        </MIcon>
+    </MButton>
+
+    <MButton Icon="true"
+             OnClick="()=>showExportThisTime = true">
         <MIcon>
             mdi-export
         </MIcon>
@@ -36,10 +43,10 @@
 
 <ScrollContainer @ref="scrollContainer">
     <IntersectElement IntersectChanged="HandleIntersectChanged">
-        <MDatePicker @bind-Value="PickedDate"
+        <MDatePicker @key="datePickerKey"
+                     @bind-Value="PickedDate"
                      Class="rounded-lg my-picker mb-5 pt-4"
                      TValue="DateOnly"
-                     ShowCurrent="false"
                      FullWidth="true"
                      NoTitle="true"
                      Color="primary"
@@ -62,5 +69,5 @@
 </DatePickerDialog>
 
 <ExportByTimeDialog @bind-Visible="showExportThisTime"
-                      Value="PickedDate">
+                    Value="PickedDate">
 </ExportByTimeDialog>

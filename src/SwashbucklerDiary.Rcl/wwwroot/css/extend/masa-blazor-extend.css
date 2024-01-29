@@ -137,9 +137,14 @@
     }
 }
 
+/*日历高度*/
+.m-date-picker-table {
+    height: 249px;
+}
+
 /*日历提示圆点位置*/
 .m-date-picker-table--date .m-date-picker-table__events {
-    bottom: 2px !important;
+    bottom: 4px;
 }
 
 /*自适应海拔*/
@@ -164,6 +169,6 @@
     flex-direction: column !important;
 }
 
-.m-window-item.m-window-item--active>*{
-    flex-grow:0 !important;
-}
+    .m-window-item.m-window-item--active > * {
+        flex-grow: 0 !important;
+    }

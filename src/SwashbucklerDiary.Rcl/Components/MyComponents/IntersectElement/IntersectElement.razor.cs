@@ -47,8 +47,6 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 await IntersectChanged.InvokeAsync(args.IsIntersecting);
             }
-
-            await InvokeAsync(StateHasChanged);
         }
     }
 }

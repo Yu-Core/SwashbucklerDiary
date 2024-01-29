@@ -21,6 +21,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private List<DiaryModel> pickedDiaries = [];
 
+        private Guid datePickerKey = Guid.NewGuid();
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -66,11 +68,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             });
         }
 
-        private void ExportThisTime()
-        {
-            showExportThisTime = true;
-        }
-
         private void HandelOnRemove(DiaryModel diary)
         {
             Diaries.Remove(diary);
@@ -88,9 +85,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             pickedDiaries = diaries.Where(it
                 => !it.Private
-                && it.CreateTime.Day == PickedDate.Day
-                && it.CreateTime.Month == PickedDate.Month
-                && it.CreateTime.Year == PickedDate.Year)
+                && DateOnly.FromDateTime(it.CreateTime) == _pickedDate)
                 .ToList();
         }
 
@@ -108,6 +103,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 await JS.ScrollTo(scrollContainer.Ref, 0);
             }
+        }
+
+        private void ResetDatePicker()
+        {
+            datePickerKey = Guid.NewGuid();
+            PickedDate = DateOnly.FromDateTime(DateTime.Now);
         }
     }
 }
