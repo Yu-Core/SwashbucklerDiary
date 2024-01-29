@@ -1,5 +1,6 @@
 ﻿using BlazorComponent.JSInterop;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
@@ -19,6 +20,19 @@ namespace SwashbucklerDiary.Rcl.Pages
         private DateOnly[] eventsDates = [];
 
         private List<DiaryModel> pickedDiaries = [];
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            NavigateService.BeforePopToRoot += BeforePopToRoot;
+        }
+
+        protected override void OnDispose()
+        {
+            NavigateService.BeforePopToRoot -= BeforePopToRoot;
+            base.OnDispose();
+        }
 
         protected override async Task UpdateDiariesAsync()
         {
@@ -43,9 +57,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             _pickedDate = value;
             UpdatePickedDiaries(Diaries);
+            StateHasChanged();
             Task.Run(async () =>
             {
-                await InvokeAsync(StateHasChanged);
                 //直接滚动显得很生硬，所以延时0.2s
                 await Task.Delay(200);
                 await JS.ScrollTo(scrollContainer.Ref, 0);
@@ -85,6 +99,14 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (IsCurrentPage)
             {
                 normalCalendarVisible = value;
+            }
+        }
+
+        private async Task BeforePopToRoot(PopEventArgs args)
+        {
+            if (thisPageUrl == args.PreviousUri && thisPageUrl == args.NextUri)
+            {
+                await JS.ScrollTo(scrollContainer.Ref, 0);
             }
         }
     }

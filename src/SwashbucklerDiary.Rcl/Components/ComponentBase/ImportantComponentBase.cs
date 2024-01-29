@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public abstract class ImportantComponentBase : MyComponentBase, IDisposable
     {
-        private string? thisPageUrl;
+        protected string? thisPageUrl;
 
         [Inject]
         protected IJSRuntime JS { get; set; } = default!;

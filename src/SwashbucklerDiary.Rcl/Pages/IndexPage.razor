@@ -23,7 +23,7 @@
 
 
 <SwiperTabItems @bind-Value="tab">
-    <SwiperTabItem>
+    <SwiperTabItem @ref="swiperTabItem">
         <div class="pl-2">
             @if (showDate)
             {
@@ -45,7 +45,7 @@
                        Value="Diaries">
         </DiaryCardList>
     </SwiperTabItem>
-    <SwiperTabItem>
+    <SwiperTabItem @ref="swiperTabItem2">
         <TagCardList @bind-Value="Tags"
                      Diaries="Diaries">
         </TagCardList>

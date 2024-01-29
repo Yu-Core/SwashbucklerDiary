@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorComponent.JSInterop;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -33,6 +35,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private int activeDayCount;
 
+        private ScrollContainer scrollContainer = default!;
+
         private static readonly Dictionary<string, Theme> themeItems = new()
         {
             { "Theme.System", Theme.System },
@@ -60,6 +64,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadView();
+            NavigateService.BeforePopToRoot += BeforePopToRoot;
         }
 
         protected override async Task OnInitializedAsync()
@@ -85,6 +90,12 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await UpdateData();
             await base.OnResume();
+        }
+
+        protected override void OnDispose()
+        {
+            NavigateService.BeforePopToRoot -= BeforePopToRoot;
+            base.OnDispose();
         }
 
         private void LoadView()
@@ -243,6 +254,14 @@ namespace SwashbucklerDiary.Rcl.Pages
             return Task.WhenAll(
                 UpdateSettings(),
                 UpdateStatisticalData());
+        }
+
+        private async Task BeforePopToRoot(PopEventArgs args)
+        {
+            if (thisPageUrl == args.PreviousUri && thisPageUrl == args.NextUri)
+            {
+                await JS.ScrollTo(scrollContainer.Ref, 0);
+            }
         }
     }
 }

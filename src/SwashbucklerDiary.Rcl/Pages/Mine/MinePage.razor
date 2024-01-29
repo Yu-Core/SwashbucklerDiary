@@ -11,7 +11,7 @@
     <MultiSearch OnSearch="Search"></MultiSearch>
 </MyAppBar>
 
-<ScrollContainer>
+<ScrollContainer @ref="scrollContainer">
     <div class="d-sm-flex flex-sm-row justify-space-between">
         <MHover>
             <MCard @attributes="context.Attrs"

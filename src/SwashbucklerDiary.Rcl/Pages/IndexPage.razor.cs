@@ -1,6 +1,8 @@
 ﻿using BlazorComponent;
+using BlazorComponent.JSInterop;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -13,6 +15,10 @@ namespace SwashbucklerDiary.Rcl.Pages
         private bool showDate;
 
         private StringNumber tab = 0;
+
+        private SwiperTabItem swiperTabItem = default!;
+
+        private SwiperTabItem swiperTabItem2 = default!;
 
         [Inject]
         private IVersionUpdataManager VersionManager { get; set; } = default!;
@@ -32,6 +38,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             VersionManager.AfterFirstEnter += UpdateDiariesAndStateHasChanged;
             VersionManager.AfterUpdateVersion += UpdateDiariesAndStateHasChanged;
+            NavigateService.BeforePopToRoot += BeforePopToRoot;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -48,6 +55,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             VersionManager.AfterFirstEnter -= UpdateDiariesAndStateHasChanged;
             VersionManager.AfterUpdateVersion -= UpdateDiariesAndStateHasChanged;
+            NavigateService.BeforePopToRoot -= BeforePopToRoot;
             base.OnDispose();
         }
 
@@ -126,6 +134,15 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await UpdateDiariesAsync();
             await InvokeAsync(StateHasChanged);
+        }
+
+        private async Task BeforePopToRoot(PopEventArgs args)
+        {
+            if (thisPageUrl == args.PreviousUri && thisPageUrl == args.NextUri)
+            {
+                var element = tab == 0 ? swiperTabItem.Ref : swiperTabItem2.Ref;
+                await JS.ScrollTo(element, 0);
+            }
         }
     }
 }

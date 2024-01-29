@@ -72,15 +72,16 @@ namespace SwashbucklerDiary.Rcl.Essentials
         public async Task PopToRootAsync(string url)
         {
             url = Navigation.ToAbsoluteUri(url).ToString();
-            if (Navigation.Uri.EqualsAbsolutePath(url))
-            {
-                return;
-            }
-
+ 
             PopEventArgs args = new(url, Navigation.Uri);
             if (BeforePopToRoot is not null)
             {
                 await BeforePopToRoot.Invoke(args);
+            }
+
+            if (Navigation.Uri.EqualsAbsolutePath(url))
+            {
+                return;
             }
 
             Navigation.NavigateTo(url, replace: true);
