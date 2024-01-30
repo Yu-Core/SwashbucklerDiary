@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.Rcl.Services
     {
         private IPopupService _popupService = default!;
 
-        private int Timeout;
+        private int timeout;
 
         public void Initialize(object popupService)
         {
@@ -25,13 +25,12 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task Alert(string? title, string? message, AlertTypes type)
         {
-            
             await _popupService.EnqueueSnackbarAsync(new()
             {
                 Title = title,
                 Content = message,
                 Type = type,
-                Timeout = Timeout
+                Timeout = timeout
             });
         }
 
@@ -71,9 +70,9 @@ namespace SwashbucklerDiary.Rcl.Services
             return Task.CompletedTask;
         }
 
-        public void SetTimeout(int timeout)
+        public void SetTimeout(int value)
         {
-            Timeout = timeout;
+            timeout = value;
         }
     }
 }

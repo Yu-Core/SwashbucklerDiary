@@ -5,21 +5,17 @@
                    Floating="true"
                    Value="Show"
                    Stateless="true"
-                   Width="300"
-                   MiniVariant="MiniVariant">
-    <MList Shaped="true"
-           Flat="true">
+                   MiniVariant="true"
+                   MiniVariantWidth="72">
+    <MList Flat="true">
         @foreach (var item in Items)
         {
-            <MainLayoutNavDrawerItem Value="item"
-                                     MiniVariant="MiniVariant">
+            <MainLayoutNavDrawerItem Value="item">
             </MainLayoutNavDrawerItem>
         }
     </MList>
 </MNavigationDrawer>
 
 @code {
-    private bool MiniVariant => MasaBlazor.Breakpoint.Sm;
-
     private bool Show => MasaBlazor.Breakpoint.SmAndUp && IsRootPath;
 }

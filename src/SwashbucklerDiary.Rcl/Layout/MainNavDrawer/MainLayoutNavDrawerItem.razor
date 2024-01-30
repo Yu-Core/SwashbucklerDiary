@@ -1,26 +1,18 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Layout
 @inherits MainLayoutNavItemBase
 
-<MListItem Class="@ActiveClass"
+<MListItem Class="@Class"
            Ripple="false"
            OnClick="Value.OnClick">
     <MListItemIcon>
-        <MIcon Size="24">
+        <MIcon Size="28">
             @Icon
         </MIcon>
     </MListItemIcon>
-    <MListItemTitle Class="@TitleClass">
-        @(I18n.T(Value.Text))
-    </MListItemTitle>
 </MListItem>
 
 @code {
-    [Parameter]
-    public bool MiniVariant { get; set; }
+    private string ActiveClass => Activated ? "m-list-item--active" : "";
 
-    protected string TitleClass => Activated ? "text-h6 font-weight-bold" : "";
-
-    private string DesktopActiveClass => MiniVariant ? "" : "my-navigation-drawer-active";
-
-    private string ActiveClass => Activated ? $"{DesktopActiveClass} m-list-item--active" : "";
+    private string Class => $"{ActiveClass} mb-2";
 }

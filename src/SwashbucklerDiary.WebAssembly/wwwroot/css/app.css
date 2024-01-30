@@ -17,7 +17,7 @@ a, .btn-link {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .content {
@@ -100,4 +100,15 @@ a, .btn-link {
 
 code {
     color: #c02d76;
+}
+
+@media screen and (max-width:600px) {
+    .m-snackbar--pwa {
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+        .m-snackbar--pwa .m-snack__wrapper {
+            border-radius: 12px !important;
+        }
 }

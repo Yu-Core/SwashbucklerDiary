@@ -143,19 +143,6 @@ a, .btn-link {
     color: rgba(0,0,0,.87) !important;
 }
 
-/*.m-main__wrap {
-    display: flex;
-    flex-direction: column;
-}*/
-
-.theme--light .my-navigation-drawer-active {
-    background: #eeeeee !important;
-}
-
-.theme--dark .my-navigation-drawer-active {
-    background: #424242 !important;
-}
-
 .theme--light .my-btn-chip {
     border-color: #BDBDBD !important;
     color: rgba(0,0,0,.87) !important;
@@ -354,7 +341,7 @@ a, .btn-link {
     }
 
     .m-snack__wrapper {
-        border-radius: 9999px !important;
+        border-radius: 24px !important;
         width: initial !important;
         min-width: initial !important;
     }
@@ -395,13 +382,6 @@ a, .btn-link {
 
 .theme--dark.m-application .my-alert-loading {
     color: #fff;
-}
-
-@media screen and (min-width:960px) {
-    .m-navigation-drawer .m-list-item {
-        padding-left: 32px;
-        padding-right: 32px;
-    }
 }
 
 .theme--light.m-application .primary-background {
