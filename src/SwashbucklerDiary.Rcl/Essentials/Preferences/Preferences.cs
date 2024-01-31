@@ -19,7 +19,11 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         public abstract Task Remove(string key);
 
+        public abstract Task Remove(IEnumerable<string> keys);
+
         public abstract Task Set<T>(string key, T value);
+
+        public abstract Task Clear();
 
         public async Task<T> Get<T>(string key)
         {

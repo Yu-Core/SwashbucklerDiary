@@ -46,7 +46,7 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddScoped<ScreenshotJSModule>();
             services.AddScoped<Rcl.Essentials.IScreenshot, Essentials.Screenshot>();
             services.AddSingleton<IStorageSpace, Services.StorageSpace>();
-            services.AddSingleton<IVersionUpdataManager, VersionUpdataManager>();
+            services.AddSingleton<IVersionUpdataManager, Services.VersionUpdataManager>();
             services.AddSingleton<IWebDAV, Essentials.WebDAV>();
 
             return services;

@@ -47,9 +47,9 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddScoped<IDiaryFileManager, Services.DiaryFileManager>();
             services.AddScoped<IAvatarService, Services.AvatarService>();
             services.AddScoped<ScreenshotJSModule>();
-            services.AddScoped<Rcl.Essentials.IScreenshot, Essentials.Screenshot>();
+            services.AddScoped<IScreenshot, Screenshot>();
             services.AddScoped<IStorageSpace, Services.StorageSpace>();
-            services.AddScoped<IVersionUpdataManager, VersionUpdataManager>();
+            services.AddScoped<IVersionUpdataManager, Services.VersionUpdataManager>();
 
             return services;
         }

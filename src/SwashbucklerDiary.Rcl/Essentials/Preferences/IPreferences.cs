@@ -20,6 +20,10 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         Task Remove(string key);
 
+        Task Remove(IEnumerable<string> keys);
+
         Task Remove(Setting setting);
+
+        Task Clear();
     }
 }

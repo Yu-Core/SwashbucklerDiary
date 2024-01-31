@@ -23,7 +23,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task UpdateSettings()
         {
             welcomText = await Preferences.Get<bool>(Setting.WelcomeText);
-            date = await Preferences.Get<bool>(Setting.Date);
+            date = await Preferences.Get<bool>(Setting.IndexDate);
         }
     }
 }

@@ -8,6 +8,12 @@ namespace SwashbucklerDiary.Maui.Essentials
         {
         }
 
+        public override Task Clear()
+        {
+            Microsoft.Maui.Storage.Preferences.Default.Clear();
+            return Task.CompletedTask;
+        }
+
         public override Task<bool> ContainsKey(string key)
         {
             var result = Microsoft.Maui.Storage.Preferences.Default.ContainsKey(key);
@@ -24,6 +30,15 @@ namespace SwashbucklerDiary.Maui.Essentials
         public override Task Remove(string key)
         {
             Microsoft.Maui.Storage.Preferences.Default.Remove(key);
+            return Task.CompletedTask;
+        }
+
+        public override Task Remove(IEnumerable<string> keys)
+        {
+            foreach (var key in keys)
+            {
+                Microsoft.Maui.Storage.Preferences.Default.Remove(key);
+            }
             return Task.CompletedTask;
         }
 

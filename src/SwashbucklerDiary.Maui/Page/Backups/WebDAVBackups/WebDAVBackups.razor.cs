@@ -4,6 +4,7 @@ using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
+using System.Text.Json;
 
 namespace SwashbucklerDiary.Maui.Pages
 {
@@ -48,12 +49,14 @@ namespace SwashbucklerDiary.Maui.Pages
 
         private string ConfiguredText => Configured ? I18n.T("Backups.Config.Configured") : I18n.T("Backups.Config.NotConfigured");
 
-
         private async Task UpdateSettings()
         {
-            configModel.ServerAddress = await Preferences.Get<string>(Setting.WebDAVServerAddress);
-            configModel.Account = await Preferences.Get<string>(Setting.WebDAVAccount);
-            configModel.Password = await Preferences.Get<string>(Setting.WebDAVPassword);
+            var configJson = await Preferences.Get<string>(Setting.WebDavConfig);
+            if (!string.IsNullOrEmpty(configJson))
+            {
+                configModel = JsonSerializer.Deserialize<WebDavConfigForm>(configJson) ?? new();
+            }
+
             includeDiaryResources = await Preferences.Get<bool>(Setting.WebDAVCopyResources);
         }
 
@@ -65,9 +68,8 @@ namespace SwashbucklerDiary.Maui.Pages
                 configModel = webDavConfig.DeepCopy();
                 showConfig = false;
                 await AlertService.Success(I18n.T("Backups.Config.Success"));
-                await Preferences.Set(Setting.WebDAVServerAddress, configModel.ServerAddress);
-                await Preferences.Set(Setting.WebDAVAccount, configModel.Account);
-                await Preferences.Set(Setting.WebDAVPassword, configModel.Password);
+                var configJson = JsonSerializer.Serialize(configModel);
+                await Preferences.Set(Setting.WebDavConfig, configJson);
             }
         }
 

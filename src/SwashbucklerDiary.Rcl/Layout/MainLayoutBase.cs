@@ -4,7 +4,6 @@ using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
-using System;
 
 namespace SwashbucklerDiary.Rcl.Layout
 {
@@ -40,9 +39,12 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         protected IVersionUpdataManager VersionManager { get; set; } = default!;
 
+        [Inject]
+        protected MasaBlazor MasaBlazor { get; set; } = default!;
+
         public void Dispose()
         {
-            I18n.OnChanged -= StateHasChanged;
+            OnDispose();
             GC.SuppressFinalize(this);
         }
 
@@ -55,13 +57,6 @@ namespace SwashbucklerDiary.Rcl.Layout
             I18n.OnChanged += StateHasChanged;
         }
 
-        protected override async Task OnInitializedAsync()
-        {
-            await base.OnInitializedAsync();
-
-            await VersionManager.UpdateVersion();
-        }
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
@@ -71,6 +66,11 @@ namespace SwashbucklerDiary.Rcl.Layout
                 await UpdateSettings();
                 StateHasChanged();
             }
+        }
+
+        protected virtual void OnDispose()
+        {
+            I18n.OnChanged -= StateHasChanged;
         }
 
         protected async Task UpdateSettings()
@@ -86,6 +86,16 @@ namespace SwashbucklerDiary.Rcl.Layout
                 var button = NavigationButtons[i];
                 button.OnClick = () => NavigateService.PopToRootAsync(button.Href);
             }
+        }
+
+        protected Task ThemeChanged(Theme theme)
+        {
+            if (MasaBlazor.Theme.Dark != (theme == Theme.Dark))
+            {
+                MasaBlazor.ToggleTheme();
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

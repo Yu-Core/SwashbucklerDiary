@@ -14,6 +14,12 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             _localStorage = localStorage;
         }
 
+        public override Task Clear()
+        {
+            _localStorage.Clear();
+            return Task.CompletedTask;
+        }
+
         public override Task<bool> ContainsKey(string key)
         {
             var result = _localStorage.ContainKey(key);
@@ -35,6 +41,12 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         public override Task Remove(string key)
         {
             _localStorage.RemoveItem(key);
+            return Task.CompletedTask;
+        }
+
+        public override Task Remove(IEnumerable<string> keys)
+        {
+            _localStorage.RemoveItems(keys);
             return Task.CompletedTask;
         }
 

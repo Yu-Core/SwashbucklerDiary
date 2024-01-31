@@ -1,79 +1,28 @@
 ﻿using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
+using System.Text.Json;
 
 namespace SwashbucklerDiary.Maui.Services
 {
-    public class VersionUpdataManager : IVersionUpdataManager
+    public class VersionUpdataManager : Rcl.Services.VersionUpdataManager
     {
-        public event Func<Task>? AfterFirstEnter;
-
-        public event Func<Task>? AfterUpdateVersion;
-
-        private int updateCount;
-
-        private readonly IDiaryService _diaryService;
-
-        private readonly IResourceService _resourceService;
-
-        private readonly Rcl.Essentials.IPreferences _preferences;
-
-        private readonly IMediaResourceManager _mediaResourceManager;
-
-        public VersionUpdataManager(IDiaryService diaryService,
-            IResourceService resourceService,
-            Rcl.Essentials.IPreferences preferences,
-            IMediaResourceManager mediaResourceManager)
+        public VersionUpdataManager(IDiaryService diaryService, 
+            IResourceService resourceService, 
+            Rcl.Essentials.IPreferences preferences, 
+            IMediaResourceManager mediaResourceManager) : 
+            base(diaryService, resourceService, preferences, mediaResourceManager)
         {
-            _diaryService = diaryService;
-            _resourceService = resourceService;
-            _preferences = preferences;
-            _mediaResourceManager = mediaResourceManager;
         }
 
-        public async Task FirstEnter()
-        {
-            if (AfterFirstEnter == null)
-            {
-                return;
-            }
+        protected override string? PreviousVersion => VersionTracking.Default.PreviousVersion;
 
-            await AfterFirstEnter.Invoke();
-        }
+        protected override bool IsFirstLaunchForCurrentVersion => VersionTracking.Default.IsFirstLaunchForCurrentVersion;
 
-        public async Task UpdateVersion()
+        public override async Task UpdateVersion()
         {
             await UpdateVersion("0.64.7", UpdateVersion647);
-
-            if (AfterUpdateVersion != null && updateCount > 0)
-            {
-                await AfterUpdateVersion.Invoke();
-            }
-        }
-
-        private async Task UpdateVersion(string version, Func<Task> func)
-        {
-            string? strPreviousVersion = VersionTracking.Default.PreviousVersion;
-            if (string.IsNullOrEmpty(strPreviousVersion))
-            {
-                return;
-            }
-
-            var previousVersion = new Version(strPreviousVersion);
-            var targetVersion = new Version(version);
-            int result = previousVersion.CompareTo(targetVersion);
-            if (result > 0)
-            {
-                return;
-            }
-
-            bool first = VersionTracking.Default.IsFirstLaunchForCurrentVersion;
-            if (!first)
-            {
-                return;
-            }
-
-            updateCount++;
-            await func.Invoke();
+            await UpdateVersion("0.69.7", UpdateVersion697);
+            await base.UpdateVersion();
         }
 
         //此版本之后更改了资源的链接
@@ -92,6 +41,29 @@ namespace SwashbucklerDiary.Maui.Services
                 diary.UpdateTime = DateTime.Now;
             }
             await _diaryService.UpdateIncludesAsync(diaries);
+        }
+
+        protected override async Task UpdateVersion697()
+        {
+            var webDAVServerAddressTask = _preferences.Get<string>("WebDAVServerAddress");
+            var webDAVAccountTask = _preferences.Get<string>("WebDAVAccount");
+            var webDAVPasswordTask = _preferences.Get<string>("WebDAVPassword");
+            await Task.WhenAll(webDAVServerAddressTask, webDAVAccountTask, webDAVPasswordTask);
+            var webDAVServerAddress = webDAVServerAddressTask.Result;
+            if (!string.IsNullOrEmpty(webDAVServerAddress))
+            {
+                var config = new WebDavConfigForm()
+                {
+                    ServerAddress = webDAVServerAddressTask.Result,
+                    Account = webDAVAccountTask.Result,
+                    Password = webDAVPasswordTask.Result,
+                };
+                string webDavConfigJson = JsonSerializer.Serialize(config);
+                await _preferences.Set(Setting.WebDavConfig, webDavConfigJson);
+            }
+
+            string[] keys = ["ThemeState", "WebDAVServerAddress", "WebDAVAccount", "WebDAVPassword", "Date"];
+            await _preferences.Remove(keys);
         }
     }
 }

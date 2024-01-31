@@ -185,7 +185,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             return Task.WhenAll(
                 ThemeService.SetThemeAsync(value),
-                Preferences.Set(Setting.ThemeState, (int)value));
+                Preferences.Set(Setting.Theme, (int)value));
         }
 
         private async Task OpenQQGroup()
@@ -224,7 +224,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var languageTask = Preferences.Get<string>(Setting.Language);
             var userNameTask = Preferences.Get(Setting.UserName, I18n.T("AppName"));
             var signTask = Preferences.Get(Setting.Sign, I18n.T("Mine.Sign"));
-            var themeTask = Preferences.Get<int>(Setting.ThemeState);
+            var themeTask = Preferences.Get<int>(Setting.Theme);
             var avatarTask = Preferences.Get<string>(Setting.Avatar);
 
             await Task.WhenAll(

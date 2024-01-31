@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         public async Task UpdateSettings()
         {
             var welcomeTextTask = Preferences.Get<bool>(Setting.WelcomeText);
-            var dateTask = Preferences.Get<bool>(Setting.Date);
+            var dateTask = Preferences.Get<bool>(Setting.IndexDate);
             await Task.WhenAll(welcomeTextTask, dateTask);
             showWelcomeText = welcomeTextTask.Result;
             showDate = dateTask.Result;
