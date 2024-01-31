@@ -1,0 +1,53 @@
+name: github pages
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code
+      - uses: actions/checkout@v3
+        with:
+           fetch-depth: 0
+
+      # Install .NET SDK
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+           dotnet-version: '8.0.x'
+           
+      - name: Install .NET WebAssembly Tools
+        run: dotnet workload install wasm-tools
+
+      # Get the commit count and format the version
+      - name: Get commit count and format version
+        id: version
+        run: |
+          commit_count=$(git rev-list --count HEAD)
+          major=$((commit_count / 1000))
+          minor=$((commit_count % 1000 / 10))
+          patch=$((commit_count % 10))
+          formatted_version="$major.$minor.$patch"
+          echo "FORMATTED_VERSION=$formatted_version" >> $GITHUB_ENV
+
+      # Replace the version in the csproj file
+      - name: Update version in csproj
+        run: |
+          sed -i "s/<Version>.*<\/Version>/<Version>${{ env.FORMATTED_VERSION }}<\/Version>/" \
+          src/SwashbucklerDiary.WebAssembly/SwashbucklerDiary.WebAssembly.csproj
+
+      # Publish the site
+      - name: Publish
+        run: dotnet publish src/SwashbucklerDiary.WebAssembly/SwashbucklerDiary.WebAssembly.csproj -c Release -o public -p GHPages=true
+
+      # Deploy the site
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public/wwwroot
+          force_orphan: true
