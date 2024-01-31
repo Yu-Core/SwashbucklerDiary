@@ -1,5 +1,3 @@
-const controller = new AbortController();
-
 export async function checkCameraPermission() {
     try {
         const permissionStatus = await navigator.permissions.query({ name: 'camera' });
@@ -11,19 +9,7 @@ export async function checkCameraPermission() {
 }
 
 export function isCaptureSupported() {
-    //if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-    //    console.log('摄像头支持');
-    //    return true;
-    //} else {
-    //    console.log('摄像头不支持');
-    //    return false;
-    //}
-    let os = window.operatingSystem();
-    if (os === "Android" || os === "iOS") {
-        return true;
-    } else {
-        return false;
-    }
+    return false;
 }
 
 export async function tryCameraPermission() {
@@ -70,56 +56,36 @@ export function isMailSupported() {
     return typeof a.protocol !== "undefined" && a.protocol === "mailto:";
 }
 
-export async function capturePhotoAsync() {
-    return new Promise((resolve) => {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'image/*';
-        input.capture = 'user';
-        input.style.display = 'none';
-        input.onchange = (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                //const fileName = file.name;
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                    // 获取文件内容
-                    var contents = event.target.result;
-
-                    // 写入 Emscripten 文件系统
-                    var filePath = `cache/${file.name}`;
-                    //Module.FS_createDataFile('/cache', fileName, contents, true, true, true);
-                    Module.FS.writeFile(filePath, new Uint8Array(contents), { encoding: 'binary' });
-                    resolve(filePath);
-                };
-                reader.readAsArrayBuffer(file);
-
-            } else {
-                resolve("");
-            }
-            input.remove();
-        };
-        input.click();
-    });
+export function capturePhotoAsync() {
+    return '';
 }
 
 export function setClipboard(text) {
-    //navigator.clipboard.writeText的兼容性可能存在问题
-    navigator.clipboard.writeText(text);
+    if (navigator.clipboard) {
+        try {
+            navigator.clipboard.writeText(text)
+        } catch (e) {
+            execCommand()
+        }
+    } else {
+        execCommand()
+    }
 
-    //let input = document.createElement('input');
-    //input.type = 'text';
-    //input.value = text;  // 这里表示想要复制的内容
+    function execCommand() {
+        let input = document.createElement('input');
+        input.type = 'text';
+        input.readOnly = true;
+        input.value = text; 
 
-    //document.body.appendChild(input);
-    //input.focus();
-    //input.select();
-    //if (document.execCommand('copy')) {
-    //    document.execCommand('copy')
-    //}
-    //input.blur();
-    //document.body.removeChild(input);
-    console.log('copy success');
+        document.body.appendChild(input);
+        input.focus();
+        input.select();
+        if (document.execCommand('copy')) {
+            document.execCommand('copy')
+        }
+        input.blur();
+        input.remove();
+    }
 }
 
 export async function shareTextAsync(title, text) {
