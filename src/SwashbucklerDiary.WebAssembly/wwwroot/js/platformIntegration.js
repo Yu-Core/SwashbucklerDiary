@@ -145,8 +145,9 @@ export function pickFileAsync(accept, suffix) {
         input.type = 'file';
         input.accept = accept;
         input.style.display = 'none';
-        input.onchange = (event) => {
-            const file = event.target.files[0];
+
+        function handlePickFile() {
+            const file = input.files[0];
             if (file) {
                 if (suffix && !file.name.endsWith(suffix)) {
                     resolve("");
@@ -177,7 +178,25 @@ export function pickFileAsync(accept, suffix) {
                 resolve("");
             }
             input.remove();
-        };
+        }
+
+        function handleFocus() {
+            setTimeout(() => {
+                handlePickFile();
+                // 移除事件监听器，确保代码只执行一次
+                window.removeEventListener("focus", handleFocus);
+                document.removeEventListener("visibilitychange", handleVisibilityChange);
+            }, 200);
+        }
+
+        function handleVisibilityChange() {
+            if (document.visibilityState === "visible") {
+                handleFocus();
+            } 
+        }
+
+        window.addEventListener("focus", handleFocus, { once: true });
+        document.addEventListener("visibilitychange", handleVisibilityChange);
         input.click();
     });
 }
