@@ -110,5 +110,6 @@ code {
 
         .m-snackbar--pwa .m-snack__wrapper {
             border-radius: 12px !important;
+            min-width: 344px !important;
         }
 }
