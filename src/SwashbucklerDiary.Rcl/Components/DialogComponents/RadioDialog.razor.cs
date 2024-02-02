@@ -9,6 +9,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public TItemValue Value { get; set; } = default!;
 
+        [CascadingParameter(Name = "IsDark")]
+        public bool Dark { get; set; }
+
         [Parameter]
         public EventCallback<TItemValue> ValueChanged { get; set; }
 

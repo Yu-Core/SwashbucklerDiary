@@ -17,9 +17,6 @@ namespace SwashbucklerDiary.Rcl.Components
         protected IAlertService AlertService { get; set; } = default!;
 
         [Inject]
-        protected IThemeService ThemeService { get; set; } = default!;
-
-        [Inject]
         protected IAchievementService AchievementService { get; set; } = default!;
 
         [Inject]
@@ -27,11 +24,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }
-
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
-
-        protected bool Light => !Dark;
 
         protected Task ToDo()
         {

@@ -6,12 +6,11 @@ namespace SwashbucklerDiary.Maui
     {
         private readonly IAppLifecycle _appLifecycle;
 
-        public App(IAppLifecycle appLifecycle,
-            IThemeService themeService)
+        public App(IAppLifecycle appLifecycle)
         {
             InitializeComponent();
 
-            MainPage = new MainPage(themeService);
+            MainPage = new MainPage();
 
             _appLifecycle = appLifecycle;
         }

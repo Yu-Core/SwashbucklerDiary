@@ -59,6 +59,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         protected ILogger<MinePage> Logger { get; set; } = default!;
 
+        [Inject]
+        protected IThemeService ThemeService { get; set; } = default!;
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -181,9 +184,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             await PlatformIntegration.OpenBrowser(githubUrl);
         }
 
-        private Task ThemeStateChanged(Theme value)
+        private async Task ThemeChanged(Theme value)
         {
-            return Task.WhenAll(
+            await Task.WhenAll( 
                 ThemeService.SetThemeAsync(value),
                 Preferences.Set(Setting.Theme, (int)value));
         }

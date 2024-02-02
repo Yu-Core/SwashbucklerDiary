@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components.WebView;
-using Microsoft.Maui.Platform;
 using Microsoft.UI.Windowing;
 using Microsoft.Web.WebView2.Core;
 
@@ -24,7 +23,7 @@ namespace SwashbucklerDiary.Maui
         {
             //https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2controller.defaultbackgroundcolor?view=webview2-dotnet-1.0.1370.28
 
-            e.WebView.DefaultBackgroundColor = color.ToWindowsColor();
+            //e.WebView.DefaultBackgroundColor = color.ToWindowsColor();
             e.WebView.CoreWebView2.ContainsFullScreenElementChanged += FullScreen;
         }
 

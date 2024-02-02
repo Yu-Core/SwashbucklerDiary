@@ -88,14 +88,12 @@ namespace SwashbucklerDiary.Rcl.Layout
             }
         }
 
-        protected Task ThemeChanged(Theme theme)
+        protected void ThemeChanged(Theme theme)
         {
             if (MasaBlazor.Theme.Dark != (theme == Theme.Dark))
             {
                 MasaBlazor.ToggleTheme();
             }
-
-            return Task.CompletedTask;
         }
     }
 }

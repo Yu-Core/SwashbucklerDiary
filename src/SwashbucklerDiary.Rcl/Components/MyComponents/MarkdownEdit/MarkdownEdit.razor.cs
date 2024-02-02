@@ -17,6 +17,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private VditorJSModule Module { get; set; } = default!;
 
+        [CascadingParameter(Name = "IsDark")]
+        public bool Dark { get; set; }
+
         [Parameter]
         public string? Value { get; set; }
 

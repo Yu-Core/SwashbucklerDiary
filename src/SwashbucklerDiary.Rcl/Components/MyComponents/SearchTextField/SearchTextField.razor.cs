@@ -6,6 +6,9 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         private bool _visible;
 
+        [CascadingParameter(Name = "IsDark")]
+        public bool Dark { get; set; }
+
         [Parameter]
         public override bool Visible
         {
@@ -27,6 +30,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public string? Placeholder { get; set; }
+
+        protected bool Light => !Dark;
 
         private bool ShowTitle => !string.IsNullOrEmpty(Title);
 

@@ -22,6 +22,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected NavigationManager Navigation { get; set; } = default!;
 
+        [CascadingParameter(Name = "IsDark")]
+        public bool Dark { get; set; }
+
         public void Dispose()
         {
             OnDispose();
@@ -29,6 +32,8 @@ namespace SwashbucklerDiary.Rcl.Components
         }
 
         protected bool IsCurrentPage => thisPageUrl is null || thisPageUrl.EqualsAbsolutePath(Navigation.Uri);
+
+        protected bool Light => !Dark;
 
         protected override void OnInitialized()
         {

@@ -94,7 +94,7 @@
             <MList>
                 @foreach (var item in list.Value)
                 {
-                    <MListItem OnClick="()=>item.OnClick.InvokeAsync()">
+                    <MListItem OnClick="item.OnClick">
                         <MListItemIcon>
                             <MIcon Class="list-item-icon">
                                 @(item.Icon)
@@ -132,7 +132,7 @@
 <RadioDialog @bind-Value="theme"
              @bind-Visible="showTheme"
              Title="@(I18n.T("Mine.Night"))"
-             OnChange="ThemeStateChanged"
+             OnChange="ThemeChanged"
              TItem="KeyValuePair<string,Shared.Theme>"
              TItemValue="Shared.Theme"
              Items="themeItems">

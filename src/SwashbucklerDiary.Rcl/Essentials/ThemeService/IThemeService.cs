@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
     {
         Theme RealTheme { get; }
 
-        event Func<Theme, Task>? OnChanged;
+        event Action<Theme>? OnChanged;
 
         Task SetThemeAsync(Theme theme);
     }

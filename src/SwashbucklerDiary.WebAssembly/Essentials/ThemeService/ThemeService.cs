@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 
         private readonly SystemThemeJSModule _systemThemeJSModule;
 
-        public event Func<Theme, Task>? OnChanged;
+        public event Action<Theme>? OnChanged;
 
         public Theme RealTheme => _theme switch
         {
@@ -23,11 +23,11 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             _systemThemeJSModule = systemThemeJSModule;
         }
 
-        public async Task SetThemeAsync(Theme theme)
+        public Task SetThemeAsync(Theme theme)
         {
             if (_theme == theme)
             {
-                return;
+                return Task.CompletedTask;
             }
 
             //跟随系统主题改变
@@ -43,20 +43,19 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 
             _theme = theme;
 
-            await InternalNotifyStateChanged();
+            InternalNotifyStateChanged();
+            return Task.CompletedTask;
         }
 
-        private async Task HandleAppThemeChanged(Theme theme)
+        private Task HandleAppThemeChanged(Theme theme)
         {
-            await InternalNotifyStateChanged();
+            InternalNotifyStateChanged();
+            return Task.CompletedTask;
         }
 
-        private async Task InternalNotifyStateChanged()
+        private void InternalNotifyStateChanged()
         {
-            if (OnChanged is not null)
-            {
-                await OnChanged.Invoke(RealTheme);
-            }
+            OnChanged?.Invoke(RealTheme);
         }
     }
 }

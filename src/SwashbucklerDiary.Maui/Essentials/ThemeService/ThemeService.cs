@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.Maui.Essentials
     {
         private Theme? _theme;
 
-        public event Func<Theme, Task>? OnChanged;
+        public event Action<Theme>? OnChanged;
 
         public Theme RealTheme => _theme switch
         {
@@ -16,11 +16,11 @@ namespace SwashbucklerDiary.Maui.Essentials
             _ => Theme.Light
         };
 
-        public async Task SetThemeAsync(Theme theme)
+        public Task SetThemeAsync(Theme theme)
         {
             if (_theme == theme)
             {
-                return;
+                return Task.CompletedTask;
             }
 
             //跟随系统主题改变
@@ -36,20 +36,18 @@ namespace SwashbucklerDiary.Maui.Essentials
 
             _theme = theme;
 
-            await InternalNotifyStateChanged();
+            InternalNotifyStateChanged();
+            return Task.CompletedTask;
         }
 
-        private async void HandleAppThemeChanged(object? sender, AppThemeChangedEventArgs e)
+        private void HandleAppThemeChanged(object? sender, AppThemeChangedEventArgs e)
         {
-            await InternalNotifyStateChanged();
+            InternalNotifyStateChanged();
         }
 
-        private async Task InternalNotifyStateChanged()
+        private void InternalNotifyStateChanged()
         {
-            if (OnChanged is not null)
-            {
-                await OnChanged.Invoke(RealTheme);
-            }
+            OnChanged?.Invoke(RealTheme);
 
             TitleBarOrStatusBar.SetTitleBarOrStatusBar(RealTheme);
         }

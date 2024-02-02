@@ -6,8 +6,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class AchievementCard : MyComponentBase
     {
+        [CascadingParameter(Name = "IsDark")]
+        public bool Dark { get; set; }
+
         [Parameter]
         public AchievementModel Value { get; set; } = default!;
+
+        protected bool Light => !Dark;
 
         private string IconColor
             => Value.UserAchievement.IsCompleted && Light ? "black" : "";
