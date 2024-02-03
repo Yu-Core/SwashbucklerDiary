@@ -16,7 +16,7 @@
             }
 
             var module = await Module;
-            return module.Invoke<bool>("openUri", uri, blank);
+            return await module.InvokeAsync<bool>("openUri", [uri, blank]);
         }
     }
 }

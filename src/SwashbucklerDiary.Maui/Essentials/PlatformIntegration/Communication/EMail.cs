@@ -6,16 +6,15 @@ namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-        public ValueTask<bool> IsMailSupported()
+        public async Task<bool> SendEmail(string? subject, string? body, List<string>? recipients)
         {
-            return ValueTask.FromResult(Email.Default.IsComposeSupported);
-        }
-
-        public Task SendEmail(string? subject, string? body, List<string>? recipients)
-        {
+            if (!Email.Default.IsComposeSupported)
+            {
+                return false;
+            }
 #if WINDOWS
             var uri = EmailHelper.CreateMailToUri(subject, body, recipients);
-            return Launcher.TryOpenAsync(uri);
+            return await Launcher.TryOpenAsync(uri);
 #else
             var message = new EmailMessage
             {
@@ -23,7 +22,8 @@ namespace SwashbucklerDiary.Maui.Essentials
                 Body = body,
                 To = recipients
             };
-            return Email.Default.ComposeAsync(message);
+            await Email.Default.ComposeAsync(message);
+            return true;
 #endif
         }
     }

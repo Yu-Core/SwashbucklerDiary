@@ -158,14 +158,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             var mail = FeedbackTypeDatas["Email"];
             try
             {
-                bool isMailSupported = await PlatformIntegration.IsMailSupported();
-                if (isMailSupported)
-                {
-                    List<string> recipients = new() { mail };
-
-                    await PlatformIntegration.SendEmail(null, null, recipients);
-                }
-                else
+                List<string> recipients = [mail];
+                bool isSuccess = await PlatformIntegration.SendEmail(null, null, recipients);
+                if (!isSuccess)
                 {
                     await PlatformIntegration.SetClipboard(mail);
                     await AlertService.Success(I18n.T("Mine.MailCopy"));

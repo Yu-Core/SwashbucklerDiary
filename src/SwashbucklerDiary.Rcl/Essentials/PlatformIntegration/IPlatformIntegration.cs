@@ -1,5 +1,4 @@
 ﻿using SwashbucklerDiary.Shared;
-using System.Text;
 
 namespace SwashbucklerDiary.Rcl.Essentials
 {
@@ -62,19 +61,13 @@ namespace SwashbucklerDiary.Rcl.Essentials
         Task<string?> CapturePhotoAsync();
 
         /// <summary>
-        /// 是否支持电子邮件
-        /// </summary>
-        /// <returns></returns>
-        ValueTask<bool> IsMailSupported();
-
-        /// <summary>
         /// 发送电子邮件
         /// </summary>
         /// <param name="subject">主题</param>
         /// <param name="body">正文</param>
         /// <param name="recipients">联系人</param>
         /// <returns></returns>
-        Task SendEmail(string? subject, string? body, List<string>? recipients);
+        Task<bool> SendEmail(string? subject, string? body, List<string>? recipients);
 
         /// <summary>
         /// 打开浏览器
