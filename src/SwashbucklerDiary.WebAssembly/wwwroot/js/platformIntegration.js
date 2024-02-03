@@ -27,34 +27,58 @@ export async function tryCameraPermission() {
 }
 
 export function openUri(uri, blank) {
-    // 创建一个新的<a>元素
-    const a = document.createElement("a");
-    // 设置href属性为传入的URI
-    a.href = uri;
+    return new Promise((resolve, reject) => {
+        // 检测页面状态的标志
+        let pageHiddenOrBlurred = false;
 
-    if (blank) {
-        // 设置打开链接时使用新的标签页
-        a.target = "_blank";
-    }
-    // 设置样式以使<a>元素不显示
-    a.style.display = "none";
-    if (typeof a.protocol === "undefined") {
-        return false;
-    }
-    // 将<a>元素添加到文档中
-    document.body.appendChild(a);
-    // 触发点击事件打开新标签页
-    a.click();
-    // 移除<a>元素
-    a.remove();
-    return true;
+        // 处理页面状态变化的事件
+        function handlePageChange() {
+            pageHiddenOrBlurred = true;
+            cleanup();
+            // 页面状态变化，认为链接被打开了
+            resolve(true);
+        }
+
+        // 移除事件监听并清理
+        function cleanup() {
+            window.removeEventListener('blur', handlePageChange);
+            window.removeEventListener('pagehide', handlePageChange);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        }
+
+        // 处理页面可见性变化的事件
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                handlePageChange();
+            }
+        }
+
+        // 监听页面状态变化的事件
+        window.addEventListener('blur', handlePageChange);
+        window.addEventListener('pagehide', handlePageChange);
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        // 创建并点击<a>元素以尝试打开链接
+        const a = document.createElement("a");
+        a.href = uri;
+        if (blank) {
+            a.target = "_blank";
+        }
+        a.style.display = "none";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        // 设置超时检查
+        setTimeout(() => {
+            cleanup();
+            if (!pageHiddenOrBlurred) {
+                // 如果指定时间内页面状态没有变化，认为链接没有被打开
+                reject(false);
+            }
+        }, 1000);
+    });
 };
-
-export function isMailSupported() {
-    var a = document.createElement("a");
-    a.href = "mailto:test@example.com";
-    return typeof a.protocol !== "undefined" && a.protocol === "mailto:";
-}
 
 export function capturePhotoAsync() {
     return '';
@@ -146,7 +170,7 @@ export function pickFileAsync(accept, suffix) {
         input.accept = accept;
         input.style.display = 'none';
 
-        function handlePickFile() {
+        function handleSelectedFile() {
             const file = input.files[0];
             if (file) {
                 if (suffix && !file.name.endsWith(suffix)) {
@@ -180,23 +204,30 @@ export function pickFileAsync(accept, suffix) {
             input.remove();
         }
 
-        function handleFocus() {
+        function afterChooseFile() {
             setTimeout(() => {
-                handlePickFile();
+                handleSelectedFile();
                 // 移除事件监听器，确保代码只执行一次
-                window.removeEventListener("focus", handleFocus);
+                window.removeEventListener("focus", afterChooseFile);
+                document.removeEventListener("touchstart", afterChooseFile);
                 document.removeEventListener("visibilitychange", handleVisibilityChange);
+                input.removeEventListener("change", afterChooseFile);
+                input.remove();
             }, 200);
+
         }
 
         function handleVisibilityChange() {
             if (document.visibilityState === "visible") {
-                handleFocus();
-            } 
+                afterChooseFile();
+            }
         }
 
-        window.addEventListener("focus", handleFocus, { once: true });
+        window.addEventListener("focus", afterChooseFile, { once: true });
+        document.addEventListener("touchstart", afterChooseFile, { once: true });
         document.addEventListener("visibilitychange", handleVisibilityChange);
+        input.addEventListener("change", afterChooseFile, { once: true });
+
         input.click();
     });
 }
