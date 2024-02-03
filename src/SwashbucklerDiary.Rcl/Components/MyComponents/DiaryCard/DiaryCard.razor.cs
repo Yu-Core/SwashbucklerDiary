@@ -7,10 +7,6 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class DiaryCard : MyComponentBase
     {
-        private string? title;
-
-        private string? text;
-
         private bool showMenu;
 
         private List<DynamicListItem> menuItems = [];
@@ -33,16 +29,11 @@ namespace SwashbucklerDiary.Rcl.Components
             LoadView();
         }
 
-        protected override void OnParametersSet()
-        {
-            title = GetTitle();
-            text = GetText();
-            base.OnParametersSet();
-        }
+        private string? Title => GetTitle();
 
-        private bool HasTitle => !string.IsNullOrWhiteSpace(Value?.Title);
+        private string? Text => GetText();
 
-        private bool HasContent => !string.IsNullOrWhiteSpace(Value?.Content);
+        private string ValueContent => Value.Content ?? string.Empty;
 
         private DateTime Time => Value.CreateTime;
 
@@ -120,37 +111,26 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string? GetTitle()
         {
-            if (HasTitle)
+            if (!string.IsNullOrWhiteSpace(Value.Title))
             {
-                return Value.Title!;
+                return Value.Title;
             }
-
-            if (HasContent)
+            else
             {
-                char[] separators = { ',', '，', '.', '。', '?', '？', '!', '！', ';', '；', '\n' }; // 定义分隔符
-                int index = Value.Content!.IndexOfAny(separators);
-                if (index > -1)
-                {
-                    return Value.Content!.Substring(0, index + 1);
-                }
-                else
-                {
-                    return SubText(Value.Content, 0, 200);
-                }
+                return CreateTitleFormText();
             }
-
-            return null;
         }
 
         private string? GetText()
         {
             string text = SubText(Value.Content, 0, 2000);
-            if (!HasTitle && title is not null && HasContent)
+            if (string.IsNullOrWhiteSpace(Value.Title))
             {
-                var subText = SubText(text, title.Length);
-                if (!string.IsNullOrWhiteSpace(subText))
+                int index = ExtractTitleIndex();
+                var subText = SubText(text, index + 1);
+                if (subText != string.Empty)
                 {
-                    text = subText;
+                    return subText;
                 }
             }
 
@@ -193,6 +173,35 @@ namespace SwashbucklerDiary.Rcl.Components
         private void ToRead()
         {
             NavigateService.PushAsync($"read?Id={Value.Id}");
+        }
+
+        private string CreateTitleFormText()
+        {
+            int index = ExtractTitleIndex();
+            if (index > -1)
+            {
+                return ValueContent.Substring(0, index + 1);
+            }
+            else
+            {
+                return SubText(ValueContent, 0, 200);
+            }
+        }
+
+        private int ExtractTitleIndex()
+        {
+            char[] separators = [']', '。', '\n']; // 定义分隔符
+            int index = ValueContent.IndexOfAny(separators);
+            if (index == -1 || index == ValueContent.Length - 1)
+            {
+                index = ValueContent.IndexOf(". ");
+                if (index > -1)
+                {
+                    index++;
+                }
+            }
+
+            return index != ValueContent.Length - 1 ? index : -1;
         }
     }
 }
