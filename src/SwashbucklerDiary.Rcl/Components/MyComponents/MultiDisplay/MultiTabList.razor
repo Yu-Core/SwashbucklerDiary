@@ -1,0 +1,35 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+
+<MultiDisplay>
+    <MobileContent>
+        <MTabs Value="Value"
+               ValueChanged="ValueChanged"
+               ActiveClass="text-h6 font-weight-bold"
+               HideSlider>
+            @foreach (var item in Items)
+            {
+                <MTab Class="my-tab"
+                      Ripple="false">
+                    @(I18n.T(item))
+                </MTab>
+            }
+        </MTabs>
+    </MobileContent>
+    <DesktopContent>
+        <MChipGroup Value="Value"
+                    ValueChanged="ValueChanged"
+                    ActiveClass="font-weight-bold"
+                    Class="my-tabs-chip rounded-pill second-background"
+                    Mandatory="true">
+            @foreach (var item in Items)
+            {
+                <MChip Large="true"
+                       Class="my-tab-chip">
+                    @(I18n.T(item))
+                </MChip>
+            }
+        </MChipGroup>
+    </DesktopContent>
+</MultiDisplay>
+
+

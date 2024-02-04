@@ -20,6 +20,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private SwiperTabItem swiperTabItem2 = default!;
 
+        private readonly List<string> tabNames = ["Index.All", "Index.Tag"];
+
         [Inject]
         private IVersionUpdataManager VersionManager { get; set; } = default!;
 

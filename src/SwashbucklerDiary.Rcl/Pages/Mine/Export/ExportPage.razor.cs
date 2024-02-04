@@ -10,6 +10,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private readonly List<string> views = new() { "Local", "LAN" };
 
+        private readonly List<string> tabNames = ["Export.Local.Name", "Export.LAN.Name"];
+
         [Parameter]
         [SupplyParameterFromQuery]
         public string? View { get; set; }

@@ -2,12 +2,11 @@
 @inherits MainLayoutNavBase
 
 <MNavigationDrawer App="true"
-                   Floating="true"
                    Value="Show"
                    Stateless="true"
                    MiniVariant="true"
-                   MiniVariantWidth="72">
-    <MList Flat="true">
+                   MiniVariantWidth="76">
+    <MList Nav>
         @foreach (var item in Items)
         {
             <MainLayoutNavDrawerItem Value="item">

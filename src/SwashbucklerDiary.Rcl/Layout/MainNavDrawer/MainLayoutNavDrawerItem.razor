@@ -5,7 +5,7 @@
            Ripple="false"
            OnClick="Value.OnClick">
     <MListItemIcon>
-        <MIcon Size="28">
+        <MIcon Size="24">
             @Icon
         </MIcon>
     </MListItemIcon>
@@ -14,5 +14,5 @@
 @code {
     private string ActiveClass => Activated ? "m-list-item--active" : "";
 
-    private string Class => $"{ActiveClass} mb-2";
+    private string Class => $"{ActiveClass} rounded-lg mb-2";
 }

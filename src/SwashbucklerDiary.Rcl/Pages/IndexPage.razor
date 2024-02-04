@@ -3,18 +3,9 @@
 @inherits DiariesPageComponentBase
 
 <MyAppBar>
-    <MTabs @bind-Value="tab"
-           ActiveClass="text-h6 font-weight-bold"
-           HideSlider>
-        <MTab Class="my-tab"
-              Ripple="false">
-            @(I18n.T("Index.All"))
-        </MTab>
-        <MTab Class="my-tab"
-              Ripple="false">
-            @(I18n.T("Index.Tag"))
-        </MTab>
-    </MTabs>
+    <MultiTabList @bind-Value="tab"
+                  Items="tabNames">
+    </MultiTabList>
 
     <MSpacer></MSpacer>
 

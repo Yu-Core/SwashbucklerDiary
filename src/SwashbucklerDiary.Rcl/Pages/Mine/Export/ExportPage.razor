@@ -10,18 +10,11 @@
             mdi-arrow-left
         </MIcon>
     </MButton>
-    <MTabs @bind-Value="tab"
-           ActiveClass="text-h6 font-weight-bold"
-           HideSlider="true">
-        <MTab Class="my-tab"
-              Ripple="false">
-            @(I18n.T("Export.Local.Name"))
-        </MTab>
-        <MTab Class="my-tab"
-              Ripple="false">
-            @(I18n.T("Export.LAN.Name"))
-        </MTab>
-    </MTabs>
+
+    <MultiTabList @bind-Value="tab"
+                  Items="tabNames">
+    </MultiTabList>
+
     <MSpacer></MSpacer>
 </MyAppBar>
 
