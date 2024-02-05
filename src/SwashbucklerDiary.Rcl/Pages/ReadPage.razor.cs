@@ -87,7 +87,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task UpdateDiary()
         {
             var diary = await DiaryService.FindAsync(Id);
-            if (diary == null)
+            if (diary is null)
             {
                 await NavigateToBack();
                 return;

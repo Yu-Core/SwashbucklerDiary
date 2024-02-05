@@ -63,7 +63,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void ToTagPage()
         {
-            NavigateService.PushAsync($"tag/{Value.Id}");
+            NavigateService.PushAsync($"tag?Id={Value.Id}");
         }
     }
 }

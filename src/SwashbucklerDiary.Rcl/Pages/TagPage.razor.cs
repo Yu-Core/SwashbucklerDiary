@@ -8,11 +8,18 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string? tagName;
 
         [Parameter]
+        [SupplyParameterFromQuery]
         public Guid Id { get; set; }
 
         protected override async Task UpdateDiariesAsync()
         {
             var tag = await TagService.FindIncludesAsync(Id);
+            if(tag is null)
+            {
+                await NavigateToBack();
+                return;
+            }
+
             tagName = tag?.Name;
             Diaries = tag?.Diaries ?? [];
         }
