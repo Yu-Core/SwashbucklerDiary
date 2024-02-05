@@ -9,5 +9,7 @@
         Task FirstEnter();
 
         Task UpdateVersion();
+
+        Task<bool> CheckForUpdates();
     }
 }

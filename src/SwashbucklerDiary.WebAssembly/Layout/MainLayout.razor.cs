@@ -54,7 +54,7 @@ namespace SwashbucklerDiary.WebAssembly.Layout
 
         private async Task InitVersionUpdateAsync()
         {
-            await VersionTracking.Track(typeof(App).Assembly);
+            await ((VersionTracking)VersionTracking).Track(typeof(App).Assembly);
             await VersionManager.UpdateVersion();
         }
 

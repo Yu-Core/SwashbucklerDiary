@@ -6,17 +6,15 @@ namespace SwashbucklerDiary.Maui.Services
 {
     public class VersionUpdataManager : Rcl.Services.VersionUpdataManager
     {
-        public VersionUpdataManager(IDiaryService diaryService, 
-            IResourceService resourceService, 
-            Rcl.Essentials.IPreferences preferences, 
-            IMediaResourceManager mediaResourceManager) : 
-            base(diaryService, resourceService, preferences, mediaResourceManager)
+        public VersionUpdataManager(IDiaryService diaryService,
+            IResourceService resourceService,
+            Rcl.Essentials.IPreferences preferences,
+            IMediaResourceManager mediaResourceManager,
+            II18nService i18n,
+            Rcl.Essentials.IVersionTracking versionTracking) :
+            base(diaryService, resourceService, preferences, mediaResourceManager, i18n, versionTracking)
         {
         }
-
-        protected override string? PreviousVersion => VersionTracking.Default.PreviousVersion;
-
-        protected override bool IsFirstLaunchForCurrentVersion => VersionTracking.Default.IsFirstLaunchForCurrentVersion;
 
         public override async Task UpdateVersion()
         {

@@ -7,9 +7,13 @@ namespace SwashbucklerDiary.Maui.Essentials
     {
         private readonly ILogger _logger;
 
-        public PlatformIntegration(ILogger<PlatformIntegration> logger)
+        private readonly Rcl.Essentials.IVersionTracking _versionTracking;
+
+        public PlatformIntegration(ILogger<PlatformIntegration> logger,
+            Rcl.Essentials.IVersionTracking versionTracking)
         {
             _logger = logger;
+            _versionTracking = versionTracking;
         }
     }
 }

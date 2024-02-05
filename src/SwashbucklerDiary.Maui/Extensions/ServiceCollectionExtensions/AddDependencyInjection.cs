@@ -34,6 +34,7 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddSingleton<Rcl.Essentials.IPreferences, Essentials.Preferences>();
             services.AddSingleton<IAlertService, AlertService>();
             services.AddSingleton<II18nService, Services.I18nService>();
+            services.AddSingleton<Rcl.Essentials.IVersionTracking, Essentials.VersionTracking>();
             services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
 
             services.AddSingleton<IAppLifecycle, AppLifecycle>();

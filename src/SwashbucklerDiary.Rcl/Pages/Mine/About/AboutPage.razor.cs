@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
-using System.Net.Http.Json;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -25,10 +23,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private ILogger<AboutPage> Logger { get; set; } = default!;
 
-        private class Release
-        {
-            public string? Tag_Name { get; set; }
-        }
+        [Inject]
+        private IVersionUpdataManager VersionUpdataManager { get; set; } = default!;
 
         protected override void OnInitialized()
         {
@@ -55,7 +51,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                     new(this, "About.SourceCode.Name","mdi-book-open-page-variant-outline",() => showSourceCode = true),
                     new(this, "About.Agreement.Name","mdi-file-document-multiple-outline",() => To("user-agreement")),
                     new(this, "About.Privacy.Name","mdi-lock-outline",() => To("privacy-policy")),
-                    new(this, "About.Check for updates.Name","mdi-update",VersionUpdate),
+                    new(this, "About.Check for updates.Name","mdi-update",CheckForUpdates),
                 },
                 new()
                 {
@@ -70,11 +66,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task LoadViewAsync()
         {
             var codeSources = await StaticWebAssets.ReadJsonAsync<List<CodeSource>>("json/code-source/code-source.json");
-            foreach (var item in codeSources)
-            {
-                DynamicListItem codeSourceListItem = new(this, item.Name, item.Icon, () => ViewSourceCode(item.Url));
-                codeSourceListItems.Add(codeSourceListItem);
-            }
+            codeSourceListItems = codeSources.Select(it => new DynamicListItem(this, it.Name, it.Icon, () => ViewSourceCode(it.Url))).ToList();
         }
 
         private async Task ViewSourceCode(string? url)
@@ -92,22 +84,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        private async Task VersionUpdate()
+        private async Task CheckForUpdates()
         {
             try
             {
-                using HttpClient httpClient = new();
-                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)");
-                var release = await httpClient.GetFromJsonAsync<Release>(I18n.T("VersionUpdate.LatestVersionUrl"));
-                if (release is null || release.Tag_Name is null)
-                {
-                    await AlertService.Error(I18n.T("VersionUpdate.Check failed"));
-                    return;
-                }
-
-                string latestVersion = release.Tag_Name.TrimStart('v').Replace(".0", "");
-                string currentVersion = AppVersion.Replace(".0", "");
-                if (latestVersion == currentVersion)
+                bool hasNewVersion = await VersionUpdataManager.CheckForUpdates();
+                if (!hasNewVersion)
                 {
                     await AlertService.Info(I18n.T("VersionUpdate.No updates"));
                 }

@@ -1,26 +1,19 @@
 ﻿using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.WebAssembly.Essentials;
 
 namespace SwashbucklerDiary.WebAssembly.Services
 {
     public class VersionUpdataManager :  Rcl.Services.VersionUpdataManager
     {
-        private readonly IVersionTracking _versionTracking;
-
         public VersionUpdataManager(IDiaryService diaryService, 
             IResourceService resourceService, 
             IPreferences preferences, 
             IMediaResourceManager mediaResourceManager,
+            II18nService i18n,
             IVersionTracking versionTracking) : 
-            base(diaryService, resourceService, preferences, mediaResourceManager)
+            base(diaryService, resourceService, preferences, mediaResourceManager, i18n, versionTracking)
         {
-            _versionTracking = versionTracking;
         }
-
-        protected override string? PreviousVersion => _versionTracking.PreviousVersion;
-
-        protected override bool IsFirstLaunchForCurrentVersion => _versionTracking.IsFirstLaunchForCurrentVersion;
 
         public override async Task UpdateVersion()
         {

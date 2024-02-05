@@ -1,17 +1,10 @@
-﻿using System.Reflection;
-
-namespace SwashbucklerDiary.WebAssembly.Essentials
+﻿namespace SwashbucklerDiary.Rcl.Essentials
 {
     /// <summary>
     /// The VersionTracking API provides an easy way to track an app's version on a device.
     /// </summary>
     public interface IVersionTracking
     {
-        /// <summary>
-        /// Starts tracking version information.
-        /// </summary>
-        Task Track(Assembly assembly);
-
         /// <summary>
         /// Gets a value indicating whether this is the first time this app has ever been launched on this device.
         /// </summary>
