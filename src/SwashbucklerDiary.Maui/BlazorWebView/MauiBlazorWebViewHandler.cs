@@ -47,6 +47,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 return false;
             }
 
+            uri = new Uri(uri).GetLeftPart(UriPartial.Path);
             var urlRelativePath = uri[BaseUri.Length..];
             return UrlRelativePathToFilePath(urlRelativePath, out path);
         }
