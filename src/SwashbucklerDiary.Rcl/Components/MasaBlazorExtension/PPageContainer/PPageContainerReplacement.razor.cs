@@ -106,11 +106,11 @@ namespace SwashbucklerDiary.Rcl.Components
             InvokeAsync(StateHasChanged);
         }
 
-        protected override ValueTask DisposeAsync(bool disposing)
+        protected override ValueTask DisposeAsyncCore()
         {
             NavigationManager.LocationChanged -= NavigationManagerOnLocationChanged;
 
-            return base.DisposeAsync(disposing);
+            return base.DisposeAsyncCore();
         }
     }
 }
