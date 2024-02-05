@@ -29,6 +29,8 @@ function getIndexedDBUrlPrefix() {
     return self.location.origin + newPathname + '/';
 }
 
-function getIndexedDBFilePath(url) {
-    return dbName + '/' + url.replace(indexedDBUrlPrefix, '');
+function getIndexedDBFilePath(urlString) {
+    const url = new URL(urlString);
+    const urlPath = url.origin + url.pathname;
+    return dbName + '/' + urlPath.replace(indexedDBUrlPrefix, '');
 }
