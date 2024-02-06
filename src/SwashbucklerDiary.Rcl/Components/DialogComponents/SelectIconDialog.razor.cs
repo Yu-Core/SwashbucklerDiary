@@ -23,6 +23,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public Func<KeyValuePair<string, string>, string>? Text { get; set; }
 
+        [Parameter]
+        public bool Mandatory { get; set; }
+
         protected override void OnInitialized()
         {
             SetIconListItems();

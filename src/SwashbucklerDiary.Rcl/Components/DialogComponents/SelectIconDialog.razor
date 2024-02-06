@@ -20,7 +20,8 @@
         <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
             <MChipGroup Value="Value"
                         ValueChanged="ValueChanged"
-                        Column="true">
+                        Column="true"
+                        Mandatory="Mandatory">
                 @foreach (var item in iconListItems)
                 {
                     <MChip @key="item.Name"
