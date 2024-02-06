@@ -1,9 +1,11 @@
 ﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
+using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Layout
 {
@@ -42,6 +44,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         protected MasaBlazor MasaBlazor { get; set; } = default!;
 
+        [Inject]
+        protected IJSRuntime JSRuntime { get; set; } = default!;
+
         public void Dispose()
         {
             OnDispose();
@@ -54,7 +59,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             LoadView();
             NavigateService.Initialize(Navigation, NavigationButtons.Select(it => it.Href).ToList());
             AlertService.Initialize(PopupService);
-            I18n.OnChanged += StateHasChanged;
+            I18n.OnChanged += LanguageChanged;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -70,7 +75,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected virtual void OnDispose()
         {
-            I18n.OnChanged -= StateHasChanged;
+            I18n.OnChanged -= LanguageChanged;
         }
 
         protected async Task UpdateSettings()
@@ -94,6 +99,12 @@ namespace SwashbucklerDiary.Rcl.Layout
             {
                 MasaBlazor.ToggleTheme();
             }
+        }
+
+        protected async void LanguageChanged(CultureInfo cultureInfo)
+        {
+            StateHasChanged();
+            await JSRuntime.InvokeVoidAsync("changeLanguage", cultureInfo.Name);
         }
     }
 }

@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>SwashbucklerDiary.Maui</title>
     <base href="/" />
+    <script>
+        (function () {
+            var lang = localStorage.getItem('Language');
+
+            if (lang) {
+                document.documentElement.lang = lang;
+            }
+        }());
+    </script>
     <link href="_content/Masa.Blazor/css/masa-blazor.min.css" rel="stylesheet">
 
     <link href="_content/SwashbucklerDiary.Rcl/css/materialdesign/v7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
@@ -14,7 +23,7 @@
 
     <link href="_content/SwashbucklerDiary.Rcl/css/extend/masa-blazor-extend.css" rel="stylesheet" />
     <link href="_content/SwashbucklerDiary.Rcl/css/extend/vditor-extend.css" rel="stylesheet" />
-    
+
     <link href="SwashbucklerDiary.Maui.styles.css" rel="stylesheet" />
     <link href="_content/SwashbucklerDiary.Rcl/css/app.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />

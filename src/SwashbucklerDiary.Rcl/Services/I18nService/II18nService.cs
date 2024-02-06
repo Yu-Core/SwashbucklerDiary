@@ -4,7 +4,7 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public interface II18nService
     {
-        event Action OnChanged;
+        event Action<CultureInfo> OnChanged;
 
         CultureInfo Culture { get; }
 

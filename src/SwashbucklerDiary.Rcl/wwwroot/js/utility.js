@@ -7,3 +7,7 @@ function preventDefaultOnmousedown(el) {
         e.preventDefault();
     }
 }
+
+function changeLanguage(lang) {
+    document.documentElement.lang = lang;
+}

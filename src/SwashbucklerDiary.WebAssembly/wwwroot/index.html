@@ -39,6 +39,15 @@
             window.location.replace(window.location.origin + window.location.pathname + '/' + window.location.search);
         }
     </script>
+    <script>
+        (function () {
+            var lang = localStorage.getItem('Language');
+
+            if (lang) {
+                document.documentElement.lang = lang;
+            }
+        }());
+    </script>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link href="manifest.webmanifest" rel="manifest" />
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />

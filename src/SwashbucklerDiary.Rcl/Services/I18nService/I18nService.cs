@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public abstract Dictionary<string, string> Languages { get; }
         
-        public event Action? OnChanged;
+        public event Action<CultureInfo>? OnChanged;
 
         public I18nService(I18n i18n)
         {
@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Rcl.Services
         public void SetCulture(string culture)
         {
             _i18n.SetCulture(new CultureInfo(culture));
-            OnChanged?.Invoke();
+            OnChanged?.Invoke(Culture);
         }
 
         public string T(string? key) => T(key, true) ?? key ?? string.Empty;
