@@ -439,6 +439,10 @@
           "Name": "Achievement",
           "Path": "Setting / Alert / Achievement"
         }
+      },
+      "StatisticsCard": {
+        "Name": "Statistics card",
+        "Path": "Setting / Statistics card"
       }
     }
   },

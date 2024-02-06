@@ -17,6 +17,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showClearCache;
 
+        private bool showStatisticsCard;
+
         private string? cacheSize;
 
         [Inject]
@@ -44,6 +46,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await UpdatePrivatePassword();
             privacy = await Preferences.Get<bool>(Setting.PrivacyMode);
+            showStatisticsCard = await Preferences.Get<bool>(Setting.StatisticsCard);
         }
 
         private async Task PrivacyChange(bool value)

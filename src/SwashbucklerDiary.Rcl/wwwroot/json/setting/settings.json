@@ -21,5 +21,6 @@
   "AchievementsAlert": true,
   "LANDeviceName": "",
   "LANScanPort": 5299,
-  "LANTransmissionPort": 52099
+  "LANTransmissionPort": 52099,
+  "StatisticsCard": true
 }

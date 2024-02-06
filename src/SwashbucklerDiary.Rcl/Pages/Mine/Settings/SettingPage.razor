@@ -115,6 +115,27 @@
                     <MIcon>mdi-chevron-right</MIcon>
                 </MListItemAction>
             </MListItem>
+            <MDivider Class="mx-3"></MDivider>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-chart-line
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.StatisticsCard.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="showStatisticsCard"
+                             TValue="bool"
+                             OnChange="SettingChange(Setting.StatisticsCard)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white"
+                             TrackColor="@MSwitchTrackColor(showStatisticsCard)">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
         </MList>
     </MCard>
 

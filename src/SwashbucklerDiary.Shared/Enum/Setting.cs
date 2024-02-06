@@ -24,5 +24,6 @@
         LANDeviceName,
         LANScanPort,
         LANTransmissionPort,
+        StatisticsCard
     }
 }

@@ -105,23 +105,6 @@ namespace SwashbucklerDiary.Rcl.Components
             LoadView();
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-
-            if (firstRender)
-            {
-                await UpdateSettings();
-                StateHasChanged();
-            }
-        }
-
-        protected override async Task OnResume()
-        {
-            await UpdateSettings();
-            await base.OnResume();
-        }
-
         protected override IEnumerable<DiaryModel> Sort(IEnumerable<DiaryModel> value)
         {
             return base.Sort(value).OrderByDescending(it => it.Top);
@@ -133,11 +116,21 @@ namespace SwashbucklerDiary.Rcl.Components
             set => selectedDiary.Tags = value;
         }
 
-        private async Task UpdateSettings()
+        protected override async Task UpdateSettings()
         {
-            ShowPrivacy = await Preferences.Get<bool>(Setting.PrivacyMode);
-            ShowIcon = await Preferences.Get<bool>(Setting.DiaryCardIcon);
-            DateFormat = await Preferences.Get<string>(Setting.DiaryCardDateFormat);
+            var showPrivacyTask = Preferences.Get<bool>(Setting.PrivacyMode);
+            var showIconTask =  Preferences.Get<bool>(Setting.DiaryCardIcon);
+            var  dateFormatTask =  Preferences.Get<string>(Setting.DiaryCardDateFormat);
+            Task[] tasks = [
+                base.UpdateSettings(),
+                showPrivacyTask, 
+                showIconTask, 
+                dateFormatTask,
+            ];
+            await Task.WhenAll(tasks);
+            ShowPrivacy = showPrivacyTask.Result;
+            ShowIcon = showIconTask.Result;
+            DateFormat = dateFormatTask.Result;
         }
 
         private async Task ConfirmDelete()

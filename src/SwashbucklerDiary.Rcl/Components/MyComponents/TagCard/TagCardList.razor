@@ -14,7 +14,7 @@
             </Virtualize>
         </CascadingValue>
     </div>
-    @if (Value.Any())
+    @if (Value.Count > 0 && showStatisticsCard)
     {
         <MultiDisplay Tablet="true">
             <DesktopContent>
@@ -28,7 +28,7 @@
     }
 </div>
 
-<EmptyResult Show="!Value.Any()"
+<EmptyResult Show="Value.Count == 0"
               Text="@(I18n.T("Tag.NoTag"))">
 </EmptyResult>
 

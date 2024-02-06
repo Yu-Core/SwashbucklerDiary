@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -9,6 +11,8 @@ namespace SwashbucklerDiary.Rcl.Components
         protected string? sortItem;
 
         protected bool showSort;
+
+        protected bool showStatisticsCard;
 
         protected Dictionary<string, Func<IEnumerable<T>, IEnumerable<T>>> sortOptions = [];
 
@@ -26,6 +30,28 @@ namespace SwashbucklerDiary.Rcl.Components
         }
 
         protected List<string> SortItems => sortOptions.Keys.ToList();
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                await UpdateSettings();
+                StateHasChanged();
+            }
+        }
+
+        protected override async Task OnResume()
+        {
+            await UpdateSettings();
+            await base.OnResume();
+        }
+
+        protected virtual async Task UpdateSettings()
+        {
+            showStatisticsCard = await Preferences.Get<bool>(Setting.StatisticsCard);
+        }
 
         protected virtual IEnumerable<T> Sort(IEnumerable<T> value)
         {
