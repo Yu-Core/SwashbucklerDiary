@@ -36,14 +36,6 @@
     color: #fff;
 }
 
-.vditor-reset img {
-    border-radius: 8px;
-}
-
-.vditor-reset video {
-    border-radius: 8px;
-}
-
 .vditor-reset iframe {
     width: 100%;
     aspect-ratio: 2/1;
@@ -62,7 +54,25 @@
 .vditor-reset {
     padding-left: 0px !important;
     padding-right: 0px !important;
-    --editor-bottom: 50px;
+}
+
+    .vditor-reset video {
+        border-radius: 8px;
+        max-height: unset;
+    }
+
+    .vditor-reset img {
+        border-radius: 8px;
+    }
+
+@media screen and (min-width:600px) {
+    .vditor-reset video {
+        max-height: 55vh;
+    }
+
+    .vditor-reset img {
+        max-height: 55vh;
+    }
 }
 
 .vditor-panel--arrow::before {
@@ -101,4 +111,8 @@
             transform: rotateX(180deg);
             filter: drop-shadow(0.1px 0.1px 1px rgba(0, 0, 0, .2));
         }
+
+    .vditor-reset {
+        --editor-bottom: 50px;
+    }
 }

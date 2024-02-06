@@ -23,8 +23,9 @@
                     Mandatory="true">
             @foreach (var item in Items)
             {
-                <MChip Large="true"
-                       Class="my-tab-chip">
+                <MChip Class="my-tab-chip"
+                       Large="true"
+                       Ripple="true">
                     @(I18n.T(item))
                 </MChip>
             }

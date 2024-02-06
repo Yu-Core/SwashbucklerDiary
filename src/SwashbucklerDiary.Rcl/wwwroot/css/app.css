@@ -228,7 +228,8 @@ a, .btn-link {
 
 @media screen and (min-width:600px) {
     .my-container {
-        padding: 24px !important;
+        padding-left: 24px !important;
+        padding-right: 24px !important;
     }
 }
 
@@ -421,7 +422,7 @@ a, .btn-link {
 }
 
 .my-tab-chip {
-    height: 36px !important;
+    height: 38px !important;
     background-color: transparent !important;
     margin: 2px !important;
 }
