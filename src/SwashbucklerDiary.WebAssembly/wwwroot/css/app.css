@@ -113,3 +113,126 @@ code {
             min-width: 344px !important;
         }
 }
+
+.loading-container {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    --h: calc(var(--percent) / 100 * 360);
+    color: hsl(var(--h), 100%, 5%);
+    animation: changecolor 5s linear infinite;
+}
+
+    .loading-container > span {
+        position: absolute;
+        --diameter: calc(50px + (var(--n) - 1) * 30px);
+        width: var(--diameter);
+        height: var(--diameter);
+        border-style: solid;
+        border-color: currentColor transparent;
+        border-width: 10px 10px 0 0;
+        border-radius: 50%;
+        animation: rotating linear infinite;
+        animation-duration: calc(5s / (9 - var(--n) + 1));
+        content: "";
+        box-sizing: content-box;
+    }
+
+    .loading-container > span::after {
+        content: "";
+        position: absolute;
+        left: calc(var(--diameter) / 4 * calc(sqrt(2) + 2));
+        bottom: calc(var(--diameter) / 4 * calc(sqrt(2) + 2));
+        width: 10px;
+        height: 10px;
+        background-color: currentColor; 
+        border-radius: 50%;
+        box-sizing: border-box;
+    }
+
+    .loading-container > span:nth-child(1) {
+        --n: 1;
+    }
+
+    .loading-container > span:nth-child(2) {
+        --n: 2;
+    }
+
+    .loading-container > span:nth-child(3) {
+        --n: 3;
+    }
+
+    .loading-container > span:nth-child(4) {
+        --n: 4;
+    }
+
+    .loading-container > span:nth-child(5) {
+        --n: 5;
+    }
+
+    .loading-container > span:nth-child(6) {
+        --n: 6;
+    }
+
+    .loading-container > span:nth-child(7) {
+        --n: 7;
+    }
+
+    .loading-container > span:nth-child(8) {
+        --n: 8;
+    }
+
+    .loading-container > span:nth-child(9) {
+        --n: 9;
+    }
+
+@keyframes rotating {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes changecolor {
+    0%, 100% {
+        --percent: 0;
+    }
+
+    10% {
+        --percent: 10;
+    }
+
+    20% {
+        --percent: 20;
+    }
+
+    30% {
+        --percent: 30;
+    }
+
+    40% {
+        --percent: 40;
+    }
+
+    50% {
+        --percent: 50;
+    }
+
+    60% {
+        --percent: 60;
+    }
+
+    70% {
+        --percent: 70;
+    }
+
+    80% {
+        --percent: 80;
+    }
+
+    90% {
+        --percent: 90;
+    }
+}
