@@ -19,13 +19,13 @@
 
     <MSpacer></MSpacer>
 
-    <MButtonExtension Icon="true"
-                      OnMousedownPreventDefault="true"
-                      OnClick="InsertTimestamp">
+    <MButton @onmousedown:preventDefault
+             Icon="true"
+             OnClick="InsertTimestamp">
         <MIcon>
             mdi-clock-outline
         </MIcon>
-    </MButtonExtension>
+    </MButton>
 
     <MButton Icon="true"
              OnClick="()=>showSelectTag = true">
