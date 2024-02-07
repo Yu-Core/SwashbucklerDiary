@@ -12,50 +12,57 @@
     <MultiSearch OnSearch="Search"></MultiSearch>
 </MyAppBar>
 
+<SwiperTabItems @ref="swiperTabItems"
+                @bind-Value="tab">
+    <SwiperTabItem>
+        <MContainer Class="my-container"
+                    Fluid="true">
+            <div class="pl-2">
+                @if (showDate)
+                {
+                    <div class="text--secondary mb-2">
+                        @(DateTime.Now.ToString("yyyy/MM/dd") + " " + I18n.ToWeek())
+                    </div>
+                }
 
-<SwiperTabItems @bind-Value="tab">
-    <SwiperTabItem @ref="swiperTabItem">
-        <div class="pl-2">
-            @if (showDate)
-            {
-                <div class="text--secondary mb-2">
-                    @(DateTime.Now.ToString("yyyy/MM/dd") + " " + I18n.ToWeek())
-                </div>
-            }
+                @if (showWelcomeText)
+                {
+                    <div class="text-h6 mb-5">
+                        @GetWelcomeText()
+                    </div>
+                }
 
-            @if (showWelcomeText)
-            {
-                <div class="text-h6 mb-5">
-                    @GetWelcomeText()
-                </div>
-            }
+            </div>
 
-        </div>
+            <DiaryCardList @bind-Tags="Tags"
+                           Value="Diaries">
+            </DiaryCardList>
+        </MContainer>
 
-        <DiaryCardList @bind-Tags="Tags"
-                       Value="Diaries">
-        </DiaryCardList>
     </SwiperTabItem>
-    <SwiperTabItem @ref="swiperTabItem2">
-        <TagCardList @bind-Value="Tags"
-                     Diaries="Diaries">
-        </TagCardList>
+    <SwiperTabItem>
+        <MContainer Class="my-container"
+                    Fluid="true">
+            <TagCardList @bind-Value="Tags"
+                         Diaries="Diaries">
+
+            </TagCardList>
+        </MContainer>
     </SwiperTabItem>
 </SwiperTabItems>
 
-@if (tab == 0)
-{
-    <RightBottomFloatButton Icon="mdi-pencil"
-                            OnClick="@(()=>To("write"))">
-    </RightBottomFloatButton>
-}
-
-@if (tab == 1)
-{
-    <RightBottomFloatButton Icon="mdi-plus"
-                            OnClick="()=>ShowAddTag=true">
-    </RightBottomFloatButton>
-}
+<MWindow Value="tab" Style="height:0;z-index:1;">
+    <MWindowItem Transition="">
+        <RightBottomFloatButton Icon="mdi-pencil"
+                                OnClick="@(()=>To("write"))">
+        </RightBottomFloatButton>
+    </MWindowItem>
+    <MWindowItem Transition="">
+        <RightBottomFloatButton Icon="mdi-plus"
+                                OnClick="()=>ShowAddTag=true">
+        </RightBottomFloatButton>
+    </MWindowItem>
+</MWindow>
 
 <InputDialog @bind-Visible="ShowAddTag"
              Title="@(I18n.T("Tag.Add"))"

@@ -15,7 +15,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool Show;
 
-        private readonly string Id = $"swiper-{Guid.NewGuid()}";
+        private DotNetObjectReference<object> dotNetObjectReference = default!;
+
+        private readonly List<SwiperTabItem> ChildTabItems = [];
+
+        private int _registeredTabItemsIndex;
 
         [Inject]
         private IJSRuntime JS { get; set; } = default!;
@@ -33,6 +37,8 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 
+        public SwiperTabItem ActiveItem => ChildTabItems[_value.ToInt32()];
+
         [JSInvokable]
         public async Task UpdateValue(int value)
         {
@@ -43,10 +49,25 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
+        public void RegisterTabItem(SwiperTabItem tabItem)
+        {
+            tabItem.Value ??= _registeredTabItemsIndex++;
+
+            if (ChildTabItems.Any(item => item.Value != null && item.Value.Equals(tabItem.Value))) return;
+
+            ChildTabItems.Add(tabItem);
+        }
+
+        public void UnregisterTabItem(SwiperTabItem tabItem)
+        {
+            ChildTabItems.Remove(tabItem);
+        }
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
             Show = Value == 0;
+            dotNetObjectReference = DotNetObjectReference.Create<object>(this);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -56,10 +77,9 @@ namespace SwashbucklerDiary.Rcl.Components
             if (firstRender)
             {
                 module = await JS.ImportRclJsModule("js/swiper-helper.js");
-                var dotNetCallbackRef = DotNetObjectReference.Create(this);
-                await module.InvokeVoidAsync("initSwiper", [dotNetCallbackRef, "UpdateValue", ElementRef, $"#{Id}", Value.ToInt32()]);
+                await module.InvokeVoidAsync("initSwiper", [dotNetObjectReference, "UpdateValue", ElementRef, Value.ToInt32()]);
                 Show = true;
-                await InvokeAsync(StateHasChanged);
+                StateHasChanged();
             }
         }
 
@@ -68,15 +88,17 @@ namespace SwashbucklerDiary.Rcl.Components
             if (_value != value)
             {
                 _value = value;
-                if (Show)
-                {
-                    UpdateSwiper(value);
-                }
+                UpdateSwiper(value);
             }
         }
 
         private async void UpdateSwiper(StringNumber value)
         {
+            if (module is null)
+            {
+                return;
+            }
+
             await module.InvokeVoidAsync("slideTo", [ElementRef, value.ToInt32()]);
         }
 
@@ -84,6 +106,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (module is not null)
             {
+                await module.InvokeVoidAsync("dispose", ElementRef);
                 await module.DisposeAsync();
             }
 

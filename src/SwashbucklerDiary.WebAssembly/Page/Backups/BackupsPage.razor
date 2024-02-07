@@ -19,11 +19,16 @@
 
 <SwiperTabItems @bind-Value="tab">
     <SwiperTabItem>
-        <LocalBackups></LocalBackups>
+        <MContainer Class="my-container"
+                    Fluid="true">
+            <LocalBackups></LocalBackups>
+        </MContainer>
     </SwiperTabItem>
     <SwiperTabItem>
-        <WebDAVBackups></WebDAVBackups>
+        <MContainer Class="my-container"
+                    Fluid="true">
+            <WebDAVBackups></WebDAVBackups>
+        </MContainer>
     </SwiperTabItem>
 </SwiperTabItems>
-
 

@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class ScrollContainer
     {
-        [Inject]
-        private IJSRuntime JS { get; set; } = default!;
-
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 
@@ -25,9 +21,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public string? ContentStyle { get; set; }
-
-        [Parameter]
-        public EventCallback OnContextmenu { get; set; }
 
         public ElementReference Ref { get; set; }
     }

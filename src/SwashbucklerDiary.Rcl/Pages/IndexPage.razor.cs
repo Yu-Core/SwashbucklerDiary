@@ -16,9 +16,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private StringNumber tab = 0;
 
-        private SwiperTabItem swiperTabItem = default!;
-
-        private SwiperTabItem swiperTabItem2 = default!;
+        private SwiperTabItems swiperTabItems = default!;
 
         private readonly List<string> tabNames = ["Index.All", "Index.Tag"];
 
@@ -142,8 +140,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (thisPageUrl == args.PreviousUri && thisPageUrl == args.NextUri)
             {
-                var element = tab == 0 ? swiperTabItem.Ref : swiperTabItem2.Ref;
-                await JS.ScrollTo(element, 0);
+                await JS.ScrollTo(swiperTabItems.ActiveItem.Ref, 0);
             }
         }
     }

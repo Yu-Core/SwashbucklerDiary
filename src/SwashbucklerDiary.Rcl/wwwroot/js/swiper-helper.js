@@ -1,9 +1,9 @@
-export function initSwiper(dotNetCallbackRef, callbackMethod, dom, selector, index) {
-    if (dom == null) {
+export function initSwiper(dotNetObjectReference, callbackMethod, element, index) {
+    if (!element) {
         return;
     }
 
-    dom.Swiper = new Swiper(selector, {
+    element.Swiper = new Swiper(element, {
         observer: true,
         observeParents: true,
         observeSlideChildren: true,
@@ -12,13 +12,25 @@ export function initSwiper(dotNetCallbackRef, callbackMethod, dom, selector, ind
         initialSlide: index,//设定初始化时slide的索引
         resistanceRatio: 0.7,
         on: {
-            slideChangeTransitionStart: function () {
-                dotNetCallbackRef.invokeMethodAsync(callbackMethod, this.activeIndex);
+            slideChangeTransitionEnd: function () {
+                dotNetObjectReference.invokeMethodAsync(callbackMethod, this.activeIndex);
             },
         }
     });
 }
 
-export function slideTo(dom, value) {
-    dom.Swiper.slideTo(value);
+export function slideTo(element, value) {
+    if (!element) {
+        return;
+    }
+
+    element.Swiper.slideTo(value);
+}
+
+export function dispose(element) {
+    if (!element) {
+        return;
+    }
+
+    element.Swiper.destroy(true, true);
 }

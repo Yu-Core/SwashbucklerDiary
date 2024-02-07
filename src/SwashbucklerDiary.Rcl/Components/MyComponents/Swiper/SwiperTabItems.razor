@@ -1,7 +1,10 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
 
-<div @ref="ElementRef" id="@Id" class="swiper" style=@($"{(Show?"":"display:none;")}height:100%;")>
+<div @ref="ElementRef" class="swiper" style=@($"{(Show?"":"display:none;")}")>
     <div class="swiper-wrapper">
-        @ChildContent
+        <CascadingValue Value="this"
+                        IsFixed="true">
+            @ChildContent
+        </CascadingValue>
     </div>
 </div>
