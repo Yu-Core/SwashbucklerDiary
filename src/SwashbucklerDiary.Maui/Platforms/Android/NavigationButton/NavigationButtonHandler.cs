@@ -25,11 +25,7 @@ namespace SwashbucklerDiary
             {
                 if (e.Action == KeyEventActions.Down)
                 {
-                    bool flag = NavigateService.OnBackButtonPressed();
-                    if (!flag)
-                    {
-                        QuitApp();
-                    }
+                    InternalOnBackButtonPressed();
                 }
 
                 return true;
@@ -38,11 +34,22 @@ namespace SwashbucklerDiary
             return false;
         }
 
-        public static void QuitApp()
+        private static void InternalOnBackButtonPressed()
+        {
+            bool flag = NavigateService.OnBackButtonPressed();
+            if (flag)
+            {
+                return;
+            }
+
+            QuitApp();
+        }
+
+        private static void QuitApp()
         {
             string text = I18n.T("Press again to exit");
 
-            if(string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(text))
             {
                 return;
             }

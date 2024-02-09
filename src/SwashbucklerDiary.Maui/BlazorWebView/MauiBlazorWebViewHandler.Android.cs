@@ -11,6 +11,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
         {
             base.ConnectHandler(platformView);
             platformView.SetWebViewClient(new MyWebViewClient(platformView.WebViewClient));
+            platformView.SetWebChromeClient(new MauiBlazorWebChromeClient(platformView.WebChromeClient, this.MauiContext, platformView));
         }
 
 #nullable disable
