@@ -428,22 +428,6 @@ a, .btn-link {
     margin: 2px !important;
 }
 
-    .my-tab-chip.theme--light.m-chip:hover::before {
-        opacity: 0;
-    }
-
-    .my-tab-chip.theme--dark.m-chip:hover::before {
-        opacity: 0;
-    }
-
-    .my-tab-chip.theme--light.m-chip.m-chip--active:hover::before {
-        opacity: .12;
-    }
-
-    .my-tab-chip.theme--dark.m-chip.m-chip--active:hover::before {
-        opacity: .24;
-    }
-
     .my-tab-chip .m-chip__content {
         min-width: 64px;
         justify-content: center;
@@ -454,3 +438,7 @@ a, .btn-link {
         margin-left: 12px;
         margin-right: 12px;
     }
+
+.m-chip m-chip--outlined {
+    padding: 0 16px;
+}

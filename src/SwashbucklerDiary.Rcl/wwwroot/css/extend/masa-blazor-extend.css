@@ -62,16 +62,36 @@
 
 /*解决移动端悬停问题*/
 @media (hover: none) {
-    .m-btn:hover::before {
-        display: none;
+    .theme--light.m-btn:hover::before {
+        opacity: 0;
     }
 
-    .m-input--selection-controls__input:hover .m-input--selection-controls__ripple:before {
-        display: none;
+    .theme--light.m-btn:focus::before {
+        opacity: 0;
     }
 
-    .m-icon:hover::before {
-        display: inline-block !important;
+    .theme--light.m-btn--active:hover::before, .theme--light.m-btn--active::before {
+        opacity: 0;
+    }
+
+    .theme--light.m-btn--active:focus::before {
+        opacity: 0;
+    }
+
+    .theme--dark.m-btn:hover::before {
+        opacity: 0;
+    }
+
+    .theme--dark.m-btn:focus::before {
+        opacity: 0;
+    }
+
+    .theme--dark.m-btn--active:hover::before, .theme--dark.m-btn--active::before {
+        opacity: 0;
+    }
+
+    .theme--dark.m-btn--active:focus::before {
+        opacity: 0;
     }
 }
 
@@ -172,3 +192,81 @@
     .m-window-item.m-window-item--active > * {
         flex-grow: 0 !important;
     }
+
+.m-chip--clickable:active {
+    box-shadow: unset;
+}
+
+.theme--light.m-chip:hover::before {
+    opacity: 0;
+}
+
+.theme--light.m-chip:focus::before {
+    opacity: 0;
+}
+
+.theme--light.m-chip--active:hover::before, .theme--light.m-chip--active::before {
+    opacity: 0.12;
+}
+
+.theme--light.m-chip--active:focus::before {
+    opacity: 0.12;
+}
+
+.theme--dark.m-chip:hover::before {
+    opacity: 0;
+}
+
+.theme--dark.m-chip:focus::before {
+    opacity: 0;
+}
+
+.theme--dark.m-chip--active:hover::before, .theme--dark.m-chip--active::before {
+    opacity: 0.24;
+}
+
+.theme--dark.m-chip--active:focus::before {
+    opacity: 0.24;
+}
+
+@media (hover: none) {
+    .theme--light.m-list-item:hover::before {
+        opacity: 0;
+    }
+
+    .theme--light.m-list-item:focus::before {
+        opacity: 0;
+    }
+
+    .theme--light.m-list-item--active:hover::before, .theme--light.m-list-item--active::before {
+        opacity: 0.12;
+    }
+
+    .theme--light.m-list-item--active:focus::before {
+        opacity: 0.12;
+    }
+
+    .theme--light.m-list-item.m-list-item--highlighted::before {
+        opacity: 0.12;
+    }
+
+    .theme--dark.m-list-item:hover::before {
+        opacity: 0
+    }
+
+    .theme--dark.m-list-item:focus::before {
+        opacity: 0
+    }
+
+    .theme--dark.m-list-item--active::before, .theme--dark.m-list-item--active:hover::before {
+        opacity: .24
+    }
+
+    .theme--dark.m-list-item--active:focus::before {
+        opacity: .24
+    }
+
+    .theme--dark.m-list-item.m-list-item--highlighted::before {
+        opacity: .24
+    }
+}
