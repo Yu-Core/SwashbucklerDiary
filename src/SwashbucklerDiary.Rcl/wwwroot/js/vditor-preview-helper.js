@@ -5,6 +5,7 @@ export function previewVditor(dotNetCallbackRef, element, text, options) {
             fixLink(element);
             fixCopyDisplaySoftKeyboard(element);
             fixVideoNotDisplayFirstFrame(element);
+            fixIframeAllowFullscreen(element);
             dotNetCallbackRef.invokeMethodAsync('After');
         }
     }
@@ -45,13 +46,13 @@ function fixCopyDisplaySoftKeyboard(element) {
     const textareas = element.querySelectorAll("textarea"); // 获取所有textarea标签
     textareas.forEach(textarea => {
         textarea.readOnly = true;
-    })
+    });
 }
 
 function fixVideoNotDisplayFirstFrame(element) {
     const videos = element.querySelectorAll("video");
     videos.forEach(video => {
-        video.playsinline = "true";
+        video.playsInline = "true";
         if (video.hasAttribute('src')) {
             const url = new URL(video.src);
             if (!url.hash) {
@@ -69,5 +70,12 @@ function fixVideoNotDisplayFirstFrame(element) {
                 source.src += '#t=0.1';
             }
         });
+    });
+}
+
+function fixIframeAllowFullscreen(element) {
+    const iframes = element.querySelectorAll("iframe");
+    iframes.forEach(iframe => {
+        iframe.allowFullscreen = true;
     });
 }
