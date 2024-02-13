@@ -12,7 +12,7 @@ export function initSwiper(dotNetObjectReference, callbackMethod, element, index
         initialSlide: index,//设定初始化时slide的索引
         resistanceRatio: 0.7,
         on: {
-            slideChangeTransitionEnd: function () {
+            slideChangeTransitionStart: function () {
                 dotNetObjectReference.invokeMethodAsync(callbackMethod, this.activeIndex);
             },
         }
