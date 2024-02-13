@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         protected override async Task UpdateDiariesAsync()
         {
             var tag = await TagService.FindIncludesAsync(Id);
-            if(tag is null)
+            if (tag is null)
             {
                 await NavigateToBack();
                 return;
@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void NavigateToWrite()
         {
-            NavigateService.PushAsync($"/write?tagId={Id}");
+            NavigateService.PushAsync($"write?tagId={Id}");
         }
     }
 }

@@ -57,14 +57,14 @@
     <div>
         <div class="px-3 px-sm-1 d-flex align-end">
             <button class="d-flex align-center text-h6 font-weight-bold" @onclick="()=>showCreateTime=true">
-                @(CreateTime.ToString("yyyy/MM/dd"))
+                @(DiaryCreateTime.ToString("yyyy/MM/dd"))
                 <MIcon Class="ml-2">
                     mdi-pencil-outline
                 </MIcon>
             </button>
 
             <span class="pl-5 text-subtitle-1">
-                @(I18n.ToWeek(CreateTime))
+                @(I18n.ToWeek(DiaryCreateTime))
             </span>
             <MSpacer></MSpacer>
             <span class="text-subtitle-1">
@@ -94,7 +94,7 @@
                 <MIcon Left>
                     mdi-map-marker-outline
                 </MIcon>
-                @(string.IsNullOrEmpty(Location) ? I18n.T("Write.Location") : Location)
+                @(string.IsNullOrEmpty(SelectedLocation) ? I18n.T("Write.Location") : SelectedLocation)
             </MChip>
         </div>
     </div>
@@ -160,25 +160,25 @@
 </SelectTagsDialog>
 
 <SelectIconDialog @bind-Visible="showWeather"
-                  @bind-Value="@Weather"
+                  @bind-Value="@SelectedWeather"
                   Title="@(I18n.T("Write.SelectWeather"))"
                   Items="WeatherIcons"
                   Text="@(item=>I18n.T("Weather." + item.Key))">
 </SelectIconDialog>
 
 <SelectIconDialog @bind-Visible="showMood"
-                  @bind-Value="@Mood"
+                  @bind-Value="@SelectedMood"
                   Title="@(I18n.T("Write.SelectMood"))"
                   Items="MoodIcons"
                   Text="@(item=>I18n.T("Mood." + item.Key))">
 </SelectIconDialog>
 
 <SelectLocationDialog @bind-Visible="showLocation"
-                      @bind-Value="Location">
+                      @bind-Value="SelectedLocation">
 </SelectLocationDialog>
 
 <MultiDatePicker @bind-Visible="showCreateTime"
-                 @bind-Value="CreateDate">
+                 @bind-Value="SelectedDate">
 </MultiDatePicker>
 
 <MOverlay Value="overlay"

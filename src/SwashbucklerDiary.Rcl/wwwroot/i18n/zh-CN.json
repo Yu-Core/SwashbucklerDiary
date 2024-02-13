@@ -95,7 +95,10 @@
       "Day": "导出该日期日记",
       "Month": "导出该月份日记",
       "Year": "导出该年份日记"
-    }
+    },
+    "Add diary": "添加日记",
+    "Reset date": "重置日期",
+    "Export diaries": "导出日记"
   },
   "Write": {
     "EnableTitle": "开启标题",

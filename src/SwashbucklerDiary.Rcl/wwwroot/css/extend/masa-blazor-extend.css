@@ -164,7 +164,7 @@
 
 /*日历提示圆点位置*/
 .m-date-picker-table--date .m-date-picker-table__events {
-    bottom: 4px;
+    bottom: 2px;
 }
 
 /*自适应海拔*/

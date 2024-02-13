@@ -53,7 +53,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if(firstRender)
+            if (firstRender)
             {
                 await UpdateData();
                 StateHasChanged();
@@ -146,7 +146,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private Task OnEdit()
         {
-            return NavigateService.PushAsync($"/write?DiaryId={Id}", false);
+            return NavigateService.PushAsync($"write?DiaryId={Id}", false);
         }
 
         private async Task OnTopping()

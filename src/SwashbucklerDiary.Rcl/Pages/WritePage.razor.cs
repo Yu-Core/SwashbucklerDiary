@@ -81,6 +81,10 @@ namespace SwashbucklerDiary.Rcl.Pages
         [SupplyParameterFromQuery]
         public Guid? DiaryId { get; set; }
 
+        [Parameter]
+        [SupplyParameterFromQuery]
+        public DateOnly? CreateDate { get; set; }
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -102,6 +106,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                     UpdateSettings(),
                     InitDiary(),
                     InitTags());
+                InitCreateTime();
                 StateHasChanged();
             }
         }
@@ -135,7 +140,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnDispose();
         }
 
-        private DateTime CreateTime
+        private DateTime DiaryCreateTime
         {
             get => (createMode && diary.CreateTime == default) ? DateTime.Now : diary.CreateTime;
             set => diary.CreateTime = value;
@@ -147,28 +152,28 @@ namespace SwashbucklerDiary.Rcl.Pages
             set => diary.Tags = value;
         }
 
-        private StringNumber? Weather
+        private StringNumber? SelectedWeather
         {
             get => diary.Weather;
             set => diary.Weather = value?.ToString();
         }
 
-        private StringNumber? Mood
+        private StringNumber? SelectedMood
         {
             get => diary.Mood;
             set => diary.Mood = value?.ToString();
         }
 
-        private string? Location
+        private string? SelectedLocation
         {
             get => diary.Location;
             set => diary.Location = value;
         }
 
-        private DateOnly CreateDate
+        private DateOnly SelectedDate
         {
-            get => DateOnly.FromDateTime(CreateTime);
-            set => CreateTime = value.ToDateTime(TimeOnly.FromDateTime(DateTime.Now));
+            get => DateOnly.FromDateTime(DiaryCreateTime);
+            set => DiaryCreateTime = value.ToDateTime();
         }
 
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
@@ -199,7 +204,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (DiaryId is null && TagId is not null)
             {
-                var tag = Tags.Find(it=>it.Id == TagId);
+                var tag = Tags.Find(it => it.Id == TagId);
                 if (tag is not null)
                 {
                     SelectedTags.Add(tag);
@@ -223,6 +228,16 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             this.diary = diary;
             enableTitle = !string.IsNullOrEmpty(diary.Title);
+        }
+
+        private void InitCreateTime()
+        {
+            if (CreateDate is null)
+            {
+                return;
+            }
+
+            SelectedDate = (DateOnly)CreateDate;
         }
 
         private async Task UpdateSettings()
@@ -292,6 +307,10 @@ namespace SwashbucklerDiary.Rcl.Pages
                 if (diary.CreateTime == default)
                 {
                     diary.CreateTime = DateTime.Now;
+                }
+                else
+                {
+                    diary.CreateTime = DateOnly.FromDateTime(diary.CreateTime).ToDateTime();
                 }
 
                 bool flag = await DiaryService.AddAsync(diary);

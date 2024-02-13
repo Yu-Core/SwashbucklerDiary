@@ -1,13 +1,14 @@
 ﻿using BlazorComponent.JSInterop;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class HistoryPage : DiariesPageComponentBase
     {
-        private DateOnly _pickedDate = DateOnly.FromDateTime(DateTime.Now);
+        private DateOnly _selectedDate = DateOnly.FromDateTime(DateTime.Now);
 
         private bool normalCalendarVisible = true;
 
@@ -15,18 +16,23 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showExportThisTime;
 
+        private bool showMenu;
+
         private ScrollContainer scrollContainer = default!;
 
         private DateOnly[] eventsDates = [];
 
-        private List<DiaryModel> pickedDiaries = [];
+        private List<DiaryModel> selectedDiaries = [];
 
         private Guid datePickerKey = Guid.NewGuid();
+
+        private List<DynamicListItem> menuItems = [];
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
+            LoadView();
             NavigateService.BeforePopToRoot += BeforePopToRoot;
         }
 
@@ -41,24 +47,34 @@ namespace SwashbucklerDiary.Rcl.Pages
             var diaries = await DiaryService.QueryAsync(it => !it.Private);
             Diaries = diaries;
             UpdateEventsDates(diaries);
-            UpdatePickedDiaries(diaries);
+            UpdateSelectedDiaries(diaries);
         }
 
-        private DateOnly PickedDate
+        private void LoadView()
         {
-            get => _pickedDate;
-            set => SetPickedDate(value);
+            menuItems = new List<DynamicListItem>()
+            {
+                new(this, "History.Add diary","mdi-pencil", ()=>To($"write?CreateDate={SelectedDate}")),
+                new(this, "History.Reset date","mdi-calendar-refresh", ResetDatePicker),
+                new(this, "History.Export diaries","mdi-export", ()=>showExportThisTime = true),
+            };
         }
 
-        private void SetPickedDate(DateOnly value)
+        private DateOnly SelectedDate
         {
-            if (_pickedDate == value)
+            get => _selectedDate;
+            set => SetSelectedDate(value);
+        }
+
+        private void SetSelectedDate(DateOnly value)
+        {
+            if (_selectedDate == value)
             {
                 return;
             }
 
-            _pickedDate = value;
-            UpdatePickedDiaries(Diaries);
+            _selectedDate = value;
+            UpdateSelectedDiaries(Diaries);
             StateHasChanged();
             Task.Run(async () =>
             {
@@ -81,11 +97,11 @@ namespace SwashbucklerDiary.Rcl.Pages
                    .ToArray();
         }
 
-        private void UpdatePickedDiaries(List<DiaryModel> diaries)
+        private void UpdateSelectedDiaries(List<DiaryModel> diaries)
         {
-            pickedDiaries = diaries.Where(it
+            selectedDiaries = diaries.Where(it
                 => !it.Private
-                && DateOnly.FromDateTime(it.CreateTime) == _pickedDate)
+                && DateOnly.FromDateTime(it.CreateTime) == _selectedDate)
                 .ToList();
         }
 
@@ -108,7 +124,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private void ResetDatePicker()
         {
             datePickerKey = Guid.NewGuid();
-            PickedDate = DateOnly.FromDateTime(DateTime.Now);
+            SelectedDate = DateOnly.FromDateTime(DateTime.Now);
         }
     }
 }

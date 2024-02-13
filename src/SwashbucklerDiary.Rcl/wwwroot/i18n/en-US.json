@@ -95,7 +95,10 @@
       "Day": "Export all diaries for this date",
       "Month": "Export all diaries for this month",
       "Year": "Export all diaries for this year"
-    }
+    },
+    "Add diary": "Add diary",
+    "Reset date": "Reset date",
+    "Export diaries": "Export diaries"
   },
   "Write": {
     "EnableTitle": "Enable title",
