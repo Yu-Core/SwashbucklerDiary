@@ -2,14 +2,14 @@
 
 English | [简体中文](./README.md)
 
-"Swashbuckler Diary" is an open source, cross platform local diary application. Half a lifetime of wind and rain, half a lifetime of travel, one's Jianghu, always needs to leave something to be wonderful.
+"Swashbuckler Diary" is an open source, cross platform local diary application.
 
-Everyone has a swashbuckler in their heart, like a shadow following the wind, accompanying you to see the scenery all the way and remembering all your wonderful moments.
+Not all diaries are called daily records. This is a secret book of a swashbuckler! Record the details of your life and write your legend in the Jianghu.
 
 ## Online preview
-[Live Demo（GitHub）](https://yu-core.github.io/SwashbucklerDiary/)
+[Live Demo 1（GitHub Pages）](https://yu-core.github.io/SwashbucklerDiary/)
 
-[Live Demo（Gitee）](https://yu-core.gitee.io/swashbucklerDiary/)
+[Live Demo 2（Gitee Pages）](https://yu-core.gitee.io/swashbucklerDiary/)
 
 ## Main Technology Stack
 - [MAUI](https://learn.microsoft.com/dotnet/maui/)
@@ -40,27 +40,26 @@ Everyone has a swashbuckler in their heart, like a shadow following the wind, ac
 - Export
 - Sharing
 - Achievements
-- Logs
 
 ## Screenshot
 
- <table>
+<table>
     <tr>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/30a8309f-eeab-4b78-8754-2bd25d0ecc37"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/b3019503-cf36-4f90-b711-da9014619932"/></td>
+        <td><img src="./res/screenshots/Windows(1).png"/></td>
+        <td><img src="./res/screenshots/Windows(2).png"/></td>
     </tr>
     <tr>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/386a1795-5e33-4380-84a3-76bc99e9a85d"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/632e4c5d-f679-4f9f-8b4c-4b33dacc2cec"/></td>
+        <td><img src="./res/screenshots/Windows(3).png"/></td>
+        <td><img src="./res/screenshots/Windows(4).png"/></td>
     </tr>
  </table>
 
  <table>
     <tr>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/6297bcda-424d-460a-b3c3-31928aecd177"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/b45e412f-a3aa-4a38-b52e-83ef19b75dc6"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/6de2b7dc-4f99-4730-b924-ffcaccee6057"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/cf3f27bb-3b89-4aea-ab19-f97bf4830f84"/></td>
+        <td><img src="./res/screenshots/Android(1).png"/></td>
+        <td><img src="./res/screenshots/Android(2).png"/></td>
+        <td><img src="./res/screenshots/Android(3).png"/></td>
+        <td><img src="./res/screenshots/Android(4).png"/></td>
     </tr>
  </table>
 

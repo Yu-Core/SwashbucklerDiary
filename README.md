@@ -4,12 +4,12 @@
 
 「 侠客日记 」是一个开源、跨平台的本地日记APP。
 
-每个人的心底都有一个侠客，如影随风，陪你看过一路的风景，记得你所有的精彩。
+不是所有日记都叫流水账，这本是侠客的秘籍！记录生活点滴，书写你的江湖传说。
 
 ## 在线预览
-[在线演示地址（GitHub）](https://yu-core.github.io/SwashbucklerDiary/)
+[在线演示地址1（GitHub Pages）](https://yu-core.github.io/SwashbucklerDiary/)
 
-[在线演示地址（Gitee）](https://yu-core.gitee.io/swashbucklerDiary/)
+[在线演示地址2（Gitee Pages）](https://yu-core.gitee.io/swashbucklerDiary/)
 
 ## 主要技术栈
 - [MAUI](https://learn.microsoft.com/dotnet/maui/)
@@ -40,27 +40,26 @@
 - 导出
 - 分享
 - 成就
-- 日志
 
 ## 截图
 
 <table>
     <tr>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/30a8309f-eeab-4b78-8754-2bd25d0ecc37"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/b3019503-cf36-4f90-b711-da9014619932"/></td>
+        <td><img src="./res/screenshots/Windows(1).png"/></td>
+        <td><img src="./res/screenshots/Windows(2).png"/></td>
     </tr>
     <tr>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/386a1795-5e33-4380-84a3-76bc99e9a85d"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/632e4c5d-f679-4f9f-8b4c-4b33dacc2cec"/></td>
+        <td><img src="./res/screenshots/Windows(3).png"/></td>
+        <td><img src="./res/screenshots/Windows(4).png"/></td>
     </tr>
  </table>
 
  <table>
     <tr>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/6297bcda-424d-460a-b3c3-31928aecd177"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/b45e412f-a3aa-4a38-b52e-83ef19b75dc6"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/6de2b7dc-4f99-4730-b924-ffcaccee6057"/></td>
-        <td><img src="https://github.com/Yu-Core/SwashbucklerDiary/assets/96511239/cf3f27bb-3b89-4aea-ab19-f97bf4830f84"/></td>
+        <td><img src="./res/screenshots/Android(1).png"/></td>
+        <td><img src="./res/screenshots/Android(2).png"/></td>
+        <td><img src="./res/screenshots/Android(3).png"/></td>
+        <td><img src="./res/screenshots/Android(4).png"/></td>
     </tr>
  </table>
 
