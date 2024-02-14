@@ -31,10 +31,10 @@
                         </MListItemAvatar>
                         <MListItemContent>
                             <MListItemTitle Class="text-h6 font-weight-bold">
-                                @(userName)
+                                @(userName ?? I18n.T("AppName"))
                             </MListItemTitle>
                             <MListItemSubtitle>
-                                @(sign)
+                                @(sign ?? I18n.T("Mine.Sign"))
                             </MListItemSubtitle>
                         </MListItemContent>
                         <MListItemAction Style="align-self:unset;">

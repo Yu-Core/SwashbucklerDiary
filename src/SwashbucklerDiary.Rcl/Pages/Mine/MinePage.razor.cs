@@ -6,6 +6,7 @@ using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
+using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -68,6 +69,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             LoadView();
             NavigateService.BeforePopToRoot += BeforePopToRoot;
+            I18n.OnChanged += UpdateStatisticalData;
         }
 
         protected override async Task OnInitializedAsync()
@@ -83,7 +85,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                await UpdateData();
+                await UpdateDataAsync();
 
                 StateHasChanged();
             }
@@ -91,13 +93,14 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override async Task OnResume()
         {
-            await UpdateData();
+            await UpdateDataAsync();
             await base.OnResume();
         }
 
         protected override void OnDispose()
         {
             NavigateService.BeforePopToRoot -= BeforePopToRoot;
+            I18n.OnChanged -= UpdateStatisticalData;
             base.OnDispose();
         }
 
@@ -149,8 +152,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             I18n.SetCulture(value);
             await SettingService.Set(Setting.Language, value);
-            userName = await SettingService.Get(Setting.UserName, I18n.T("AppName"));
-            sign = await SettingService.Get(Setting.Sign, I18n.T("Mine.Sign"));
         }
 
         private async Task SendMail()
@@ -181,7 +182,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task ThemeChanged(Theme value)
         {
-            await Task.WhenAll( 
+            await Task.WhenAll(
                 ThemeService.SetThemeAsync(value),
                 SettingService.Set(Setting.Theme, (int)value));
         }
@@ -220,8 +221,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task UpdateSettings()
         {
             var languageTask = SettingService.Get<string>(Setting.Language);
-            var userNameTask = SettingService.Get(Setting.UserName, I18n.T("AppName"));
-            var signTask = SettingService.Get(Setting.Sign, I18n.T("Mine.Sign"));
+            var userNameTask = SettingService.Get<string?>(Setting.UserName, null);
+            var signTask = SettingService.Get<string?>(Setting.Sign, null);
             var themeTask = SettingService.Get<int>(Setting.Theme);
             var avatarTask = SettingService.Get<string>(Setting.Avatar);
 
@@ -239,7 +240,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             avatar = avatarTask.Result;
         }
 
-        private async Task UpdateStatisticalData()
+        private async Task UpdateStatisticalDataAsync()
         {
             var diries = await DiaryService.QueryAsync(it => !it.Private);
             diaryCount = diries.Count;
@@ -247,11 +248,17 @@ namespace SwashbucklerDiary.Rcl.Pages
             activeDayCount = diries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
         }
 
-        private Task UpdateData()
+        private async void UpdateStatisticalData(CultureInfo _)
+        {
+            await UpdateStatisticalDataAsync();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        private Task UpdateDataAsync()
         {
             return Task.WhenAll(
                 UpdateSettings(),
-                UpdateStatisticalData());
+                UpdateStatisticalDataAsync());
         }
 
         private async Task BeforePopToRoot(PopEventArgs args)

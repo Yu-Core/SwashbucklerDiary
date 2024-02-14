@@ -44,6 +44,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
+        private string? UserName => userName ?? I18n.T("AppName");
+
+        private string? Sign => sign ?? I18n.T("Mine.Sign");
+
         private void LoadView()
         {
             editAvatarMethods = new()
@@ -55,8 +59,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateSettings()
         {
-            var userNameTask = SettingService.Get(Setting.UserName, I18n.T("AppName"));
-            var signTask = SettingService.Get(Setting.Sign, I18n.T("Mine.Sign"));
+            var userNameTask = SettingService.Get<string>(Setting.UserName, null);
+            var signTask = SettingService.Get<string>(Setting.Sign, null);
             var avatarTask = SettingService.Get<string>(Setting.Avatar);
 
             await Task.WhenAll(

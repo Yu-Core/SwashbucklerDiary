@@ -45,7 +45,7 @@
 
                  <MListItemContent>
                      <MListItemSubtitle Class="text-right">
-                         @userName
+                        @UserName
                     </MListItemSubtitle>
                 </MListItemContent>
 
@@ -72,7 +72,7 @@
 
                 <MListItemContent>
                     <MListItemSubtitle Class="text-right">
-                        @sign
+                        @Sign
                     </MListItemSubtitle>
                 </MListItemContent>
 
@@ -90,14 +90,14 @@
 </MultiListDialog>
 
 <InputDialog @bind-Visible="showEditUserName"
-             Text="@userName"
+             Text="@UserName"
              Title="@(I18n.T("User.EditUserName"))"
              Placeholder="@(I18n.T("User.UserNamePlace"))"
              OnOK="SaveUserName">
 </InputDialog>
 
 <InputDialog @bind-Visible="showEditSign"
-             Text="@sign"
+             Text="@Sign"
              Title="@(I18n.T("User.EditSign"))"
              MaxLength="100"
              Placeholder="@(I18n.T("User.SignPlace"))"
