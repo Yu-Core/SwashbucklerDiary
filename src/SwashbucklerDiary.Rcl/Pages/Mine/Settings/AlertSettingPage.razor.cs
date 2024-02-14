@@ -39,8 +39,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateSettings()
         {
-            _timeout = await Preferences.Get<int>(Setting.AlertTimeout);
-            achievementsAlert = await Preferences.Get<bool>(Setting.AchievementsAlert);
+            _timeout = await SettingService.Get<int>(Setting.AlertTimeout);
+            achievementsAlert = await SettingService.Get<bool>(Setting.AchievementsAlert);
         }
 
         private async void SetTimeout(StringNumber value)
@@ -52,7 +52,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             _timeout = value.ToInt32() * 1000;
             AlertService.SetTimeout(_timeout);
-            await Preferences.Set(Setting.AlertTimeout, _timeout);
+            await SettingService.Set(Setting.AlertTimeout, _timeout);
         }
 
         private void SetTimeouts()

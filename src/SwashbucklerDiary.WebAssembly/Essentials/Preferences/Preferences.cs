@@ -4,32 +4,31 @@ using System.Text.Json;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
-    public class Preferences : Rcl.Essentials.Preferences
+    public class Preferences : IPreferences
     {
         private readonly ISyncLocalStorageService _localStorage;
 
-        public Preferences(IStaticWebAssets staticWebAssets,
-            ISyncLocalStorageService localStorage) : base(staticWebAssets)
+        public Preferences(ISyncLocalStorageService localStorage)
         {
             _localStorage = localStorage;
         }
 
-        public override Task Clear()
+        public Task Clear()
         {
             _localStorage.Clear();
             return Task.CompletedTask;
         }
 
-        public override Task<bool> ContainsKey(string key)
+        public Task<bool> ContainsKey(string key)
         {
             var result = _localStorage.ContainKey(key);
             return Task.FromResult(result);
         }
 
-        public override Task<T> Get<T>(string key, T defaultValue)
+        public Task<T> Get<T>(string key, T defaultValue)
         {
             string result = _localStorage.GetItemAsString(key);
-            if(result is null)
+            if (result is null)
             {
                 return Task.FromResult(defaultValue);
             }
@@ -38,19 +37,19 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             return Task.FromResult(t);
         }
 
-        public override Task Remove(string key)
+        public Task Remove(string key)
         {
             _localStorage.RemoveItem(key);
             return Task.CompletedTask;
         }
 
-        public override Task Remove(IEnumerable<string> keys)
+        public Task Remove(IEnumerable<string> keys)
         {
             _localStorage.RemoveItems(keys);
             return Task.CompletedTask;
         }
 
-        public override Task Set<T>(string key, T value)
+        public Task Set<T>(string key, T value)
         {
             string json = JsonSerializer.Serialize(value);
             _localStorage.SetItemAsString(key, json);

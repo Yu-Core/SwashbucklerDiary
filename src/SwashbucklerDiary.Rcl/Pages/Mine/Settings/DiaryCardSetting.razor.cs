@@ -32,13 +32,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateSettings()
         {
-            diaryCardIcon = await Preferences.Get<bool>(Setting.DiaryCardIcon);
-            diaryCardDateFormat = await Preferences.Get<string>(Setting.DiaryCardDateFormat);
+            diaryCardIcon = await SettingService.Get<bool>(Setting.DiaryCardIcon);
+            diaryCardDateFormat = await SettingService.Get<string>(Setting.DiaryCardDateFormat);
         }
 
         private async Task DiaryCardDateFormatChanged(string value)
         {
-            await Preferences.Set(Setting.DiaryCardDateFormat, value);
+            await SettingService.Set(Setting.DiaryCardDateFormat, value);
         }
     }
 }

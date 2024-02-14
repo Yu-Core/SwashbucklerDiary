@@ -50,7 +50,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected Func<bool, Task> SettingChange(Setting type)
         {
-            return (bool value) => Preferences.Set(type, value);
+            return (bool value) => SettingService.Set(type, value);
         }
 
         protected string? MSwitchTrackColor(bool value)

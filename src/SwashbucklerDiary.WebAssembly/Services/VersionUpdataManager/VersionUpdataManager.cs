@@ -7,11 +7,11 @@ namespace SwashbucklerDiary.WebAssembly.Services
     {
         public VersionUpdataManager(IDiaryService diaryService, 
             IResourceService resourceService, 
-            IPreferences preferences, 
+            ISettingService settingService, 
             IMediaResourceManager mediaResourceManager,
             II18nService i18n,
             IVersionTracking versionTracking) : 
-            base(diaryService, resourceService, preferences, mediaResourceManager, i18n, versionTracking)
+            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking)
         {
         }
 
@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
         protected override async Task UpdateVersion697()
         {
             string[] keys = ["ThemeState", "Date"];
-            await _preferences.Remove(keys);
+            await _settingService.Remove(keys);
         }
     }
 }

@@ -8,11 +8,11 @@ namespace SwashbucklerDiary.Maui.Services
     {
         public VersionUpdataManager(IDiaryService diaryService,
             IResourceService resourceService,
-            Rcl.Essentials.IPreferences preferences,
+            ISettingService settingService,
             IMediaResourceManager mediaResourceManager,
             II18nService i18n,
             Rcl.Essentials.IVersionTracking versionTracking) :
-            base(diaryService, resourceService, preferences, mediaResourceManager, i18n, versionTracking)
+            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking)
         {
         }
 
@@ -26,9 +26,9 @@ namespace SwashbucklerDiary.Maui.Services
         //此版本之后更改了资源的链接
         private async Task UpdateVersion647()
         {
-            string avatar = await _preferences.Get<string>(Setting.Avatar);
+            string avatar = await _settingService.Get<string>(Setting.Avatar);
             avatar = avatar.Replace("appdata:///", "appdata/");
-            await _preferences.Set(Setting.Avatar, avatar);
+            await _settingService.Set(Setting.Avatar, avatar);
 
             var diaries = await _diaryService.QueryAsync();
             await _resourceService.DeleteAsync();
@@ -43,9 +43,9 @@ namespace SwashbucklerDiary.Maui.Services
 
         protected override async Task UpdateVersion697()
         {
-            var webDAVServerAddressTask = _preferences.Get<string>("WebDAVServerAddress");
-            var webDAVAccountTask = _preferences.Get<string>("WebDAVAccount");
-            var webDAVPasswordTask = _preferences.Get<string>("WebDAVPassword");
+            var webDAVServerAddressTask = _settingService.Get<string>("WebDAVServerAddress", string.Empty);
+            var webDAVAccountTask = _settingService.Get<string>("WebDAVAccount", string.Empty);
+            var webDAVPasswordTask = _settingService.Get<string>("WebDAVPassword", string.Empty);
             await Task.WhenAll(webDAVServerAddressTask, webDAVAccountTask, webDAVPasswordTask);
             var webDAVServerAddress = webDAVServerAddressTask.Result;
             if (!string.IsNullOrEmpty(webDAVServerAddress))
@@ -57,11 +57,11 @@ namespace SwashbucklerDiary.Maui.Services
                     Password = webDAVPasswordTask.Result,
                 };
                 string webDavConfigJson = JsonSerializer.Serialize(config);
-                await _preferences.Set(Setting.WebDavConfig, webDavConfigJson);
+                await _settingService.Set(Setting.WebDavConfig, webDavConfigJson);
             }
 
             string[] keys = ["ThemeState", "WebDAVServerAddress", "WebDAVAccount", "WebDAVPassword", "Date"];
-            await _preferences.Remove(keys);
+            await _settingService.Remove(keys);
         }
     }
 }

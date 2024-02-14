@@ -118,9 +118,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override async Task UpdateSettings()
         {
-            var showPrivacyTask = Preferences.Get<bool>(Setting.PrivacyMode);
-            var showIconTask =  Preferences.Get<bool>(Setting.DiaryCardIcon);
-            var  dateFormatTask =  Preferences.Get<string>(Setting.DiaryCardDateFormat);
+            var showPrivacyTask = SettingService.Get<bool>(Setting.PrivacyMode);
+            var showIconTask =  SettingService.Get<bool>(Setting.DiaryCardIcon);
+            var  dateFormatTask =  SettingService.Get<string>(Setting.DiaryCardDateFormat);
             Task[] tasks = [
                 base.UpdateSettings(),
                 showPrivacyTask, 

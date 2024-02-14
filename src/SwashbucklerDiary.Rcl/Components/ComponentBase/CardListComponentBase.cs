@@ -50,7 +50,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected virtual async Task UpdateSettings()
         {
-            showStatisticsCard = await Preferences.Get<bool>(Setting.StatisticsCard);
+            showStatisticsCard = await SettingService.Get<bool>(Setting.StatisticsCard);
         }
 
         protected virtual IEnumerable<T> Sort(IEnumerable<T> value)

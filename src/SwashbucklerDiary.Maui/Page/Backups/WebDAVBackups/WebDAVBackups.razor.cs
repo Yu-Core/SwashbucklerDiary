@@ -51,13 +51,13 @@ namespace SwashbucklerDiary.Maui.Pages
 
         private async Task UpdateSettings()
         {
-            var configJson = await Preferences.Get<string>(Setting.WebDavConfig);
+            var configJson = await SettingService.Get<string>(Setting.WebDavConfig);
             if (!string.IsNullOrEmpty(configJson))
             {
                 configModel = JsonSerializer.Deserialize<WebDavConfigForm>(configJson) ?? new();
             }
 
-            includeDiaryResources = await Preferences.Get<bool>(Setting.WebDAVCopyResources);
+            includeDiaryResources = await SettingService.Get<bool>(Setting.WebDAVCopyResources);
         }
 
         private async Task SaveWebDavConfig(WebDavConfigForm webDavConfig)
@@ -69,7 +69,7 @@ namespace SwashbucklerDiary.Maui.Pages
                 showConfig = false;
                 await AlertService.Success(I18n.T("Backups.Config.Success"));
                 var configJson = JsonSerializer.Serialize(configModel);
-                await Preferences.Set(Setting.WebDavConfig, configJson);
+                await SettingService.Set(Setting.WebDavConfig, configJson);
             }
         }
 

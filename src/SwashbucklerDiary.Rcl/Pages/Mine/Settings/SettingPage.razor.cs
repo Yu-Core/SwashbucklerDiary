@@ -45,14 +45,14 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task UpdateSettings()
         {
             await UpdatePrivatePassword();
-            privacy = await Preferences.Get<bool>(Setting.PrivacyMode);
-            showStatisticsCard = await Preferences.Get<bool>(Setting.StatisticsCard);
+            privacy = await SettingService.Get<bool>(Setting.PrivacyMode);
+            showStatisticsCard = await SettingService.Get<bool>(Setting.StatisticsCard);
         }
 
         private async Task PrivacyChange(bool value)
         {
             privacy = value;
-            await Preferences.Set(Setting.PrivacyMode, value);
+            await SettingService.Set(Setting.PrivacyMode, value);
             if (!value)
             {
                 await AlertService.Success(I18n.T("Setting.Safe.CamouflageSuccess"));
@@ -68,7 +68,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             showPPSet = false;
             privatePassword = value;
-            await Preferences.Set(Setting.PrivatePassword, value.MD5Encrytp32());
+            await SettingService.Set(Setting.PrivatePassword, value.MD5Encrytp32());
             await AlertService.Success(I18n.T("Setting.Safe.PrivatePasswordSetSuccess"));
         }
 
@@ -104,7 +104,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdatePrivatePassword()
         {
-            privatePassword = await Preferences.Get<string>(Setting.PrivatePassword);
+            privatePassword = await SettingService.Get<string>(Setting.PrivatePassword);
         }
 
         private string? GetPrivatePasswordSetState()

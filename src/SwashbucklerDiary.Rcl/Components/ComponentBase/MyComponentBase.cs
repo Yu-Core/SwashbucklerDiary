@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Rcl.Components
         protected IAchievementService AchievementService { get; set; } = default!;
 
         [Inject]
-        protected IPreferences Preferences { get; set; } = default!;
+        protected ISettingService SettingService { get; set; } = default!;
 
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }
@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected async Task AlertAchievements(List<string> messages)
         {
-            bool achievementsAlert = await Preferences.Get<bool>(Setting.AchievementsAlert);
+            bool achievementsAlert = await SettingService.Get<bool>(Setting.AchievementsAlert);
             if (!achievementsAlert)
             {
                 return;

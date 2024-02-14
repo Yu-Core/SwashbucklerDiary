@@ -64,7 +64,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateSettings()
         {
-            privacy = await Preferences.Get<bool>(Setting.PrivacyMode);
+            privacy = await SettingService.Get<bool>(Setting.PrivacyMode);
         }
 
         private void UpdateAppFunctions(List<AppFunction> appFunctions)

@@ -12,6 +12,8 @@ namespace SwashbucklerDiary.Maui.Extensions
         public static IServiceCollection AddDependencyInjection(this IServiceCollection services)
         {
             services.AddSingleton<IStaticWebAssets, Essentials.StaticWebAssets>();
+            services.AddSingleton<Rcl.Essentials.IPreferences, Essentials.Preferences>();
+
             services.AddRclDependencyInjection();
 
             services.AddSingleton<IDiaryRepository, DiaryRepository>();
@@ -31,7 +33,7 @@ namespace SwashbucklerDiary.Maui.Extensions
 
             services.AddSingleton<INavigateService, NavigateService>();
             services.AddSingleton<IIconService, Services.IconService>();
-            services.AddSingleton<Rcl.Essentials.IPreferences, Essentials.Preferences>();
+            services.AddSingleton<ISettingService, SettingService>();
             services.AddSingleton<IAlertService, AlertService>();
             services.AddSingleton<II18nService, Services.I18nService>();
             services.AddSingleton<Rcl.Essentials.IVersionTracking, Essentials.VersionTracking>();

@@ -148,9 +148,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task LanguageChanged(string value)
         {
             I18n.SetCulture(value);
-            await Preferences.Set(Setting.Language, value);
-            userName = await Preferences.Get(Setting.UserName, I18n.T("AppName"));
-            sign = await Preferences.Get(Setting.Sign, I18n.T("Mine.Sign"));
+            await SettingService.Set(Setting.Language, value);
+            userName = await SettingService.Get(Setting.UserName, I18n.T("AppName"));
+            sign = await SettingService.Get(Setting.Sign, I18n.T("Mine.Sign"));
         }
 
         private async Task SendMail()
@@ -183,7 +183,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await Task.WhenAll( 
                 ThemeService.SetThemeAsync(value),
-                Preferences.Set(Setting.Theme, (int)value));
+                SettingService.Set(Setting.Theme, (int)value));
         }
 
         private async Task OpenQQGroup()
@@ -219,11 +219,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateSettings()
         {
-            var languageTask = Preferences.Get<string>(Setting.Language);
-            var userNameTask = Preferences.Get(Setting.UserName, I18n.T("AppName"));
-            var signTask = Preferences.Get(Setting.Sign, I18n.T("Mine.Sign"));
-            var themeTask = Preferences.Get<int>(Setting.Theme);
-            var avatarTask = Preferences.Get<string>(Setting.Avatar);
+            var languageTask = SettingService.Get<string>(Setting.Language);
+            var userNameTask = SettingService.Get(Setting.UserName, I18n.T("AppName"));
+            var signTask = SettingService.Get(Setting.Sign, I18n.T("Mine.Sign"));
+            var themeTask = SettingService.Get<int>(Setting.Theme);
+            var avatarTask = SettingService.Get<string>(Setting.Avatar);
 
             await Task.WhenAll(
                 languageTask,

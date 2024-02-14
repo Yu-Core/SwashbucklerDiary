@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         private IDiaryService DiaryService { get; set; } = default!;
 
         [Inject]
-        private IPreferences Preferences { get; set; } = default!;
+        private ISettingService SettingService { get; set; } = default!;
 
         [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
@@ -44,8 +44,8 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         private async Task UpdateSettings()
         {
-            var langTask = Preferences.Get<bool>(Setting.FirstSetLanguage);
-            var agreeTask = Preferences.Get<bool>(Setting.FirstAgree);
+            var langTask = SettingService.Get<bool>(Setting.FirstSetLanguage);
+            var agreeTask = SettingService.Get<bool>(Setting.FirstAgree);
             await Task.WhenAll(langTask, agreeTask);
 
             var lang = langTask.Result;
@@ -79,8 +79,8 @@ namespace SwashbucklerDiary.Rcl.Layout
             Task[] tasks =
             [
                 insertTask,
-                Preferences.Set(Setting.FirstSetLanguage, true),
-                Preferences.Set(Setting.Language, value)
+                SettingService.Set(Setting.FirstSetLanguage, true),
+                SettingService.Set(Setting.Language, value)
             ];
             await Task.WhenAll(tasks);
         }
@@ -94,7 +94,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
             showAgreement = false;
             show = false;
-            await Preferences.Set(Setting.FirstAgree, true);
+            await SettingService.Set(Setting.FirstAgree, true);
         }
 
         private void Disagree()

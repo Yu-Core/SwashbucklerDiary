@@ -242,8 +242,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateSettings()
         {
-            enableTitle = await Preferences.Get<bool>(Setting.Title);
-            enableMarkdown = await Preferences.Get<bool>(Setting.Markdown);
+            enableTitle = await SettingService.Get<bool>(Setting.Title);
+            enableMarkdown = await SettingService.Get<bool>(Setting.Markdown);
         }
 
         private void LoadView()
@@ -406,7 +406,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private Task SettingChange(Setting setting, ref bool value)
         {
             value = !value;
-            return Preferences.Set(setting, value);
+            return SettingService.Set(setting, value);
         }
 
         private async Task InsertTimestamp()

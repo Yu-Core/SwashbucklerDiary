@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Maui.Layout
         private async Task InitThemeAsync()
         {
             ThemeService.OnChanged += ThemeChanged;
-            var themeState = await Preferences.Get<int>(Setting.Theme);
+            var themeState = await SettingService.Get<int>(Setting.Theme);
             await ThemeService.SetThemeAsync((Theme)themeState);
         }
     }

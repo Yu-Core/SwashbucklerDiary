@@ -98,8 +98,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateSettings()
         {
-            var markdownTask = Preferences.Get<bool>(Setting.Markdown);
-            var privacyTask = Preferences.Get<bool>(Setting.PrivacyMode);
+            var markdownTask = SettingService.Get<bool>(Setting.Markdown);
+            var privacyTask = SettingService.Get<bool>(Setting.PrivacyMode);
             await Task.WhenAll(markdownTask, privacyTask);
             enableMarkdown = markdownTask.Result;
             enablePrivacy = privacyTask.Result;
@@ -206,7 +206,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task MarkdownChanged()
         {
             enableMarkdown = !enableMarkdown;
-            await Preferences.Set(Setting.Markdown, enableMarkdown);
+            await SettingService.Set(Setting.Markdown, enableMarkdown);
             StateHasChanged();
         }
 

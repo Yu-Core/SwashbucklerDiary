@@ -42,13 +42,13 @@ namespace SwashbucklerDiary.WebAssembly.Layout
         {
             ThemeService.OnChanged += ThemeChanged;
             await SystemThemeJSModule.InitializedAsync();
-            var themeState = await Preferences.Get<int>(Setting.Theme);
+            var themeState = await SettingService.Get<int>(Setting.Theme);
             await ThemeService.SetThemeAsync((Theme)themeState);
         }
 
         private async Task InitLanguageAsync()
         {
-            var language = await Preferences.Get<string>(Setting.Language);
+            var language = await SettingService.Get<string>(Setting.Language);
             I18n.SetCulture(language);
         }
 

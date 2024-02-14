@@ -22,8 +22,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateSettings()
         {
-            title = await Preferences.Get<bool>(Setting.Title);
-            markdown = await Preferences.Get<bool>(Setting.Markdown);
+            title = await SettingService.Get<bool>(Setting.Title);
+            markdown = await SettingService.Get<bool>(Setting.Markdown);
         }
     }
 }

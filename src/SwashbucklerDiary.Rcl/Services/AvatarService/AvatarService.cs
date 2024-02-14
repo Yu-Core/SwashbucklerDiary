@@ -5,7 +5,7 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public abstract class AvatarService : IAvatarService
     {
-        protected readonly Rcl.Essentials.IPreferences _preferences;
+        protected readonly ISettingService _settingService;
 
         protected readonly IMediaResourceManager _mediaResourceManager;
 
@@ -17,13 +17,13 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly static string avatarDirectoryName = "Avatar";
 
-        public AvatarService(Rcl.Essentials.IPreferences preferences,
+        public AvatarService(ISettingService settingService,
             IMediaResourceManager mediaResourceManager,
             IPlatformIntegration platformIntegration,
             II18nService i18n,
             IAlertService alertService)
         {
-            _preferences = preferences;
+            _settingService = settingService;
             _mediaResourceManager = mediaResourceManager;
             _platformIntegration = platformIntegration;
             _i18n = i18n;
@@ -45,6 +45,6 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected abstract Task<string> SetAvatar(string filePath);
 
-        
+
     }
 }

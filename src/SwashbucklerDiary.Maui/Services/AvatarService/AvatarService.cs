@@ -9,24 +9,24 @@ namespace SwashbucklerDiary.Maui.Services
     {
         private readonly string targetDirectoryPath = Path.Combine(FileSystem.AppDataDirectory, avatarDirectoryName);
 
-        public AvatarService(Rcl.Essentials.IPreferences preferences, 
-            IMediaResourceManager mediaResourceManager, 
-            IPlatformIntegration platformIntegration, 
-            II18nService i18n, 
-            IAlertService alertService) : base(preferences, mediaResourceManager, platformIntegration, i18n, alertService)
+        public AvatarService(ISettingService settingService,
+            IMediaResourceManager mediaResourceManager,
+            IPlatformIntegration platformIntegration,
+            II18nService i18n,
+            IAlertService alertService) : base(settingService, mediaResourceManager, platformIntegration, i18n, alertService)
         {
         }
 
         protected override async Task<string> SetAvatar(string filePath)
         {
-            string previousAvatarUri = await _preferences.Get<string>(Setting.Avatar); 
+            string previousAvatarUri = await _settingService.Get<string>(Setting.Avatar);
             string previousAvatarPath = MauiBlazorWebViewHandler.UrlRelativePathToFilePath(previousAvatarUri);
             if (!string.IsNullOrEmpty(previousAvatarPath))
             {
                 File.Delete(previousAvatarPath);
             }
             string uri = await _mediaResourceManager.CreateMediaResourceFileAsync(targetDirectoryPath, filePath) ?? string.Empty;
-            await _preferences.Set(Setting.Avatar, uri);
+            await _settingService.Set(Setting.Avatar, uri);
             return uri;
         }
 

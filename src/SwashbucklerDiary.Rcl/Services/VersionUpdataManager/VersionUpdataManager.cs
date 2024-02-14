@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IResourceService _resourceService;
 
-        protected readonly IPreferences _preferences;
+        protected readonly ISettingService _settingService;
 
         protected readonly IMediaResourceManager _mediaResourceManager;
 
@@ -32,14 +32,14 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public VersionUpdataManager(IDiaryService diaryService,
             IResourceService resourceService,
-            IPreferences preferences,
+            ISettingService settingService,
             IMediaResourceManager mediaResourceManager,
             II18nService i18n,
             IVersionTracking versionTracking)
         {
             _diaryService = diaryService;
             _resourceService = resourceService;
-            _preferences = preferences;
+            _settingService = settingService;
             _mediaResourceManager = mediaResourceManager;
             httpClient = new HttpClient();
             _i18n = i18n;

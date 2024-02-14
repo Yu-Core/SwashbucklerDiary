@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected II18nService I18n { get; set; } = default!;
 
         [Inject]
-        protected IPreferences Preferences { get; set; } = default!;
+        protected ISettingService SettingService { get; set; } = default!;
 
         [Inject]
         protected IPopupService PopupService { get; set; } = default!;
@@ -80,7 +80,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected async Task UpdateSettings()
         {
-            var timeout = await Preferences.Get<int>(Setting.AlertTimeout);
+            var timeout = await SettingService.Get<int>(Setting.AlertTimeout);
             AlertService.SetTimeout(timeout);
         }
 

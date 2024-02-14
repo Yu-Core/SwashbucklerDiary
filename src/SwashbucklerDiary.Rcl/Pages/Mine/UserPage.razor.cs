@@ -55,9 +55,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateSettings()
         {
-            var userNameTask = Preferences.Get(Setting.UserName, I18n.T("AppName"));
-            var signTask = Preferences.Get(Setting.Sign, I18n.T("Mine.Sign"));
-            var avatarTask = Preferences.Get<string>(Setting.Avatar);
+            var userNameTask = SettingService.Get(Setting.UserName, I18n.T("AppName"));
+            var signTask = SettingService.Get(Setting.Sign, I18n.T("Mine.Sign"));
+            var avatarTask = SettingService.Get<string>(Setting.Avatar);
 
             await Task.WhenAll(
                 userNameTask,
@@ -75,7 +75,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (!string.IsNullOrWhiteSpace(tagName) && tagName != sign)
             {
                 sign = tagName;
-                await Preferences.Set(Setting.Sign, sign);
+                await SettingService.Set(Setting.Sign, sign);
             }
             await HandleAchievements(Achievement.Sign);
         }
@@ -86,7 +86,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (!string.IsNullOrWhiteSpace(tagName) && tagName != userName)
             {
                 userName = tagName;
-                await Preferences.Set(Setting.UserName, userName);
+                await SettingService.Set(Setting.UserName, userName);
             }
             await HandleAchievements(Achievement.NickName);
         }
