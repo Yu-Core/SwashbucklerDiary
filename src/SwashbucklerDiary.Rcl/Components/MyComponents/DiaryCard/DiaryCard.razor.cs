@@ -7,7 +7,13 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class DiaryCard : MyComponentBase
     {
+        private string? title;
+
+        private string? text;
+
         private bool showMenu;
+
+        private DiaryModel previousValue = default!;
 
         private List<DynamicListItem> menuItems = [];
 
@@ -26,12 +32,16 @@ namespace SwashbucklerDiary.Rcl.Components
         protected override void OnInitialized()
         {
             base.OnInitialized();
+
             LoadView();
         }
 
-        private string? Title => GetTitle();
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
 
-        private string? Text => GetText();
+            SetContent();
+        }
 
         private string ValueContent => Value.Content ?? string.Empty;
 
@@ -109,7 +119,7 @@ namespace SwashbucklerDiary.Rcl.Components
             return DiaryCardList.MovePrivacy(Value);
         }
 
-        private string? GetTitle()
+        private string? CreateDiaryTitle()
         {
             if (!string.IsNullOrWhiteSpace(Value.Title))
             {
@@ -121,7 +131,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        private string? GetText()
+        private string? CreateDiaryText()
         {
             string text = SubText(Value.Content, 0, 2000);
             if (string.IsNullOrWhiteSpace(Value.Title))
@@ -202,6 +212,16 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             return index != ValueContent.Length - 1 ? index : -1;
+        }
+
+        private void SetContent()
+        {
+            if (previousValue != Value)
+            {
+                previousValue = Value;
+                title = CreateDiaryTitle();
+                text = CreateDiaryText();
+            }
         }
     }
 }
