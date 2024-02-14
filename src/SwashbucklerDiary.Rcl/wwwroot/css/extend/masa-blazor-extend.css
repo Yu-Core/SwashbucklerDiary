@@ -93,6 +93,17 @@
     .theme--dark.m-btn--active:focus::before {
         opacity: 0;
     }
+
+    .m-input--selection-controls .m-radio--is-focused .m-input--selection-controls__ripple:before, .m-input--selection-controls.m-input--is-focused .m-input--selection-controls__ripple:before {
+        background: transparent;
+        transform: scale(1.2)
+    }
+
+    .m-input--selection-controls__input:hover .m-input--selection-controls__ripple:before {
+        background: transparent;
+        transform: scale(1.2);
+        transition: none;
+    }
 }
 
 /*配色*/
