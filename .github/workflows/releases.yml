@@ -1,0 +1,82 @@
+name: releases
+
+on:
+  workflow_dispatch:
+
+env:
+  DOTNET_NOLOGO: true                     # Disable the .NET logo
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
+  DOTNET_CLI_TELEMETRY_OPTOUT: true       # Disable sending .NET CLI telemetry
+  CSPROJ_PATH: 'src/SwashbucklerDiary.Maui'
+  CSPROJ_FILE_PATH: 'src/SwashbucklerDiary.Maui/SwashbucklerDiary.Maui.csproj'
+  APK_PATH: 'src/SwashbucklerDiary.Maui/bin/Release/net8.0-android/android-arm64/publish'
+  APK_FILE_PATH: 'src/SwashbucklerDiary.Maui/bin/Release/net8.0-android/android-arm64/publish/com.yucore.swashbucklerdiary-Signed.apk'
+  APP_NAME: 'SwashbucklerDiary'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      # Checkout the code
+      - uses: actions/checkout@v3
+        with:
+           fetch-depth: 0
+
+      # Install .NET SDK
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+           dotnet-version: '8.0.x'
+
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'microsoft'
+          java-version: '11'
+           
+      - name: Install MAUI Workloads
+        run: |
+          dotnet workload install android --ignore-failed-sources
+          dotnet workload install maui --ignore-failed-sources
+      - name: Restore Dependencies
+        run: dotnet restore ${{ env.CSPROJ_FILE_PATH }}
+
+      # Get the commit count and format the version
+      - name: Get commit count and format version
+        id: version
+        run: |
+          commit_count=$(git rev-list --count HEAD)
+          major=$((commit_count / 1000))
+          minor=$((commit_count % 1000 / 10))
+          patch=$((commit_count % 10))
+          formatted_version="$major.$minor.$patch"
+          echo "APPLICATION_DISPLAY_VERSION=$formatted_version" >> $GITHUB_ENV
+          echo "APPLICATION_VERSION=$commit_count" >> $GITHUB_ENV
+        shell: bash
+
+      # Replace the version in the csproj file
+      - name: Version the app
+        uses: managedcode/MAUIAppVersion@v1
+        with: 
+          csproj: ${{ env.CSPROJ_FILE_PATH }}
+          version: ${{ env.APPLICATION_VERSION }}
+          displayVersion: ${{ env.APPLICATION_DISPLAY_VERSION }}
+
+      - name: Decode Keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileDir: ${{ env.CSPROJ_PATH }}
+          fileName: ${{secrets.ANDROIDSIGNINGKEYSTORE}}
+          encodedString: ${{ secrets.KEYSTORE_BASE64 }}
+
+      - name: Publish MAUI Android
+        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c:Release -p:AndroidPackageFormat=apk -f:net8.0-android -r android-arm64 --sc -p:PublishTrimmed=true -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=${{secrets.ANDROIDSIGNINGKEYSTORE}} -p:AndroidSigningKeyAlias=${{secrets.ANDROIDSIGNINGKEYALIAS}} -p:AndroidSigningKeyPass=${{secrets.ANDROIDSIGNINGKEYPASS}} -p:AndroidSigningStorePass=${{secrets.ANDROIDSIGNINGSTOREPASS}} --no-restore
+
+      - run: ren ${{env.APK_FILE_PATH}} ${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk
+
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: '${{env.APK_PATH}}/${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk'
+          token: ${{ github.token }}
+          name: ${{ env.APPLICATION_DISPLAY_VERSION }}
+          tag: 'v${{ env.APPLICATION_DISPLAY_VERSION }}'
