@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -158,14 +159,14 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task OnCopy()
         {
-            var content = GetDiaryCopyContent();
+            var content = diary.CreateCopyContent();
             await PlatformIntegration.SetClipboard(content);
             await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
 
         private async Task ShareText()
         {
-            var content = GetDiaryCopyContent();
+            var content = diary.CreateCopyContent();
             await PlatformIntegration.ShareTextAsync(I18n.T("Share.Share"), content);
             await HandleAchievements(Achievement.Share);
         }
@@ -248,17 +249,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             exportDiaries = [diary];
             showExport = true;
             StateHasChanged();
-        }
-
-        private string GetDiaryCopyContent()
-        {
-            var content = diary.Content!;
-            if (string.IsNullOrEmpty(diary.Title))
-            {
-                return content;
-            }
-
-            return diary.Title + "\n" + content;
         }
 
         private Task UpdateData()

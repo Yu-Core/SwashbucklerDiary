@@ -59,8 +59,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateSettings()
         {
-            var userNameTask = SettingService.Get<string>(Setting.UserName, null);
-            var signTask = SettingService.Get<string>(Setting.Sign, null);
+            var userNameTask = SettingService.Get<string>(Setting.UserName, default!);
+            var signTask = SettingService.Get<string>(Setting.Sign, default!);
             var avatarTask = SettingService.Get<string>(Setting.Avatar);
 
             await Task.WhenAll(

@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private II18nService I18n { get; set; } = default!;
 
         [Parameter]
-        public List<TagModel> Tags { get; set; } = new();
+        public List<TagModel> Value { get; set; } = new();
 
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }
@@ -18,24 +18,14 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public List<DiaryModel> Diaries { get; set; } = new();
 
-        private int TagCount => Tags.Count;
+        private int TagCount => Value.Count;
 
         private int DiaryCount => Diaries.Count(d => d.Tags != null && d.Tags.Any());
 
-        private string? EarliestDate => GetEarliestDate(Tags);
+        private string? EarliestDate
+            => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("yyyy-MM-dd");
 
-        private string? LastDate => GetLastDate(Tags);
-
-        private static string? GetEarliestDate(List<TagModel> tags)
-        {
-            var earliestDate = tags.OrderBy(d => d.CreateTime).FirstOrDefault();
-            return earliestDate is null ? string.Empty : earliestDate.CreateTime.ToString("yyyy-MM-dd");
-        }
-
-        private static string? GetLastDate(List<TagModel> tags)
-        {
-            var earliestDate = tags.OrderByDescending(d => d.CreateTime).FirstOrDefault();
-            return earliestDate is null ? string.Empty : earliestDate.CreateTime.ToString("yyyy-MM-dd");
-        }
+        private string? LastDate
+            => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("yyyy-MM-dd");
     }
 }

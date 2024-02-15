@@ -19,19 +19,17 @@
                     @(Value.Name)
                 </MListItemTitle>
             </MListItemContent>
-            <MListItemAction>
-                <div @onclick:stopPropagation="true">
-                    <MultiMenu @bind-Visible="ShowMenu"
-                               DynamicListItems="MenuItems"
-                               Context="menuContext">
-                        <ActivatorContent>
-                            <MButton @attributes="@menuContext.Attrs"
-                                     Icon="true">
-                                <MIcon>mdi-pencil-outline</MIcon>
-                            </MButton>
-                        </ActivatorContent>
-                    </MultiMenu>
-                </div>
+            <MListItemAction @onclick:stopPropagation="true">
+                <MultiMenu @bind-Visible="ShowMenu"
+                           DynamicListItems="MenuItems"
+                           Context="menuContext">
+                    <ActivatorContent>
+                        <MButton @attributes="@menuContext.Attrs"
+                                 Icon="true">
+                            <MIcon>mdi-pencil-outline</MIcon>
+                        </MButton>
+                    </ActivatorContent>
+                </MultiMenu>
             </MListItemAction>
         </MListItem>
     </MCard>

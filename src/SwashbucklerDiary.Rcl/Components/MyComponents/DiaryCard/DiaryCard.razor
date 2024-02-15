@@ -23,27 +23,26 @@
                     }
                 </div>
             </MListItemContent>
-            <MListItemAction>
+            <MListItemAction @onclick:stopPropagation="true">
                 @if (IsTop)
                 {
                     <MIcon>
                         mdi-format-vertical-align-top
                     </MIcon>
                 }
-                <div @onclick:stopPropagation="true">
-                    <MultiMenu @bind-Visible="showMenu"
-                               DynamicListItems="menuItems"
-                               Context="menuContext">
-                        <ActivatorContent>
-                            <MButton @attributes="@menuContext.Attrs"
-                                     Icon="true">
-                                <MIcon Class="@($"chevron-down {(showMenu?"chevron-down-rotate-x":"")}")">
-                                    mdi-chevron-down
-                                </MIcon>
-                            </MButton>
-                        </ActivatorContent>
-                    </MultiMenu>
-                </div>
+
+                <MultiMenu @bind-Visible="showMenu"
+                           DynamicListItems="menuItems"
+                           Context="menuContext">
+                    <ActivatorContent>
+                        <MButton @attributes="@menuContext.Attrs"
+                                 Icon="true">
+                            <MIcon Class="@($"chevron-down {(showMenu?"chevron-down-rotate-x":"")}")">
+                                mdi-chevron-down
+                            </MIcon>
+                        </MButton>
+                    </ActivatorContent>
+                </MultiMenu>
             </MListItemAction>
         </MListItem>
         <MDivider Class="mx-3"></MDivider>

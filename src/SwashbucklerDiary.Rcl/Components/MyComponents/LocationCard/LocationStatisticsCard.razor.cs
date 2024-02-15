@@ -13,24 +13,14 @@ namespace SwashbucklerDiary.Rcl.Components
         public string? Culture { get; set; }
 
         [Parameter]
-        public List<LocationModel> Locations { get; set; } = new();
+        public List<LocationModel> Value { get; set; } = new();
 
-        private int LocationCount => Locations.Count;
+        private int LocationCount => Value.Count;
 
-        private string? EarliestDate => GetEarliestDate(Locations);
+        private string? EarliestDate
+            => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("yyyy-MM-dd");
 
-        private string? LastDate => GetLastDate(Locations);
-
-        private static string? GetEarliestDate(List<LocationModel> locations)
-        {
-            var earliestDate = locations.OrderBy(d => d.CreateTime).FirstOrDefault();
-            return earliestDate is null ? string.Empty : earliestDate.CreateTime.ToString("yyyy-MM-dd");
-        }
-
-        private static string? GetLastDate(List<LocationModel> locations)
-        {
-            var earliestDate = locations.OrderByDescending(d => d.CreateTime).FirstOrDefault();
-            return earliestDate is null ? string.Empty : earliestDate.CreateTime.ToString("yyyy-MM-dd");
-        }
+        private string? LastDate
+            => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("yyyy-MM-dd");
     }
 }

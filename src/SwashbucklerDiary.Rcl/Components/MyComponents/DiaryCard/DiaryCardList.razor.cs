@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -54,7 +55,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public async Task Copy(DiaryModel diaryModel)
         {
-            var text = DiaryCopyContent(diaryModel);
+            var text = diaryModel.CreateCopyContent();
             await PlatformIntegration.SetClipboard(text);
             await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
@@ -119,12 +120,12 @@ namespace SwashbucklerDiary.Rcl.Components
         protected override async Task UpdateSettings()
         {
             var showPrivacyTask = SettingService.Get<bool>(Setting.PrivacyMode);
-            var showIconTask =  SettingService.Get<bool>(Setting.DiaryCardIcon);
-            var  dateFormatTask =  SettingService.Get<string>(Setting.DiaryCardDateFormat);
+            var showIconTask = SettingService.Get<bool>(Setting.DiaryCardIcon);
+            var dateFormatTask = SettingService.Get<string>(Setting.DiaryCardDateFormat);
             Task[] tasks = [
                 base.UpdateSettings(),
-                showPrivacyTask, 
-                showIconTask, 
+                showPrivacyTask,
+                showIconTask,
                 dateFormatTask,
             ];
             await Task.WhenAll(tasks);
@@ -162,16 +163,6 @@ namespace SwashbucklerDiary.Rcl.Components
             showSelectTag = false;
             selectedDiary.UpdateTime = DateTime.Now;
             await DiaryService.UpdateTagsAsync(selectedDiary);
-        }
-
-        private static string DiaryCopyContent(DiaryModel diary)
-        {
-            if (string.IsNullOrEmpty(diary.Title))
-            {
-                return diary.Content!;
-            }
-
-            return diary.Title + "\n" + diary.Content;
         }
 
         private void LoadView()

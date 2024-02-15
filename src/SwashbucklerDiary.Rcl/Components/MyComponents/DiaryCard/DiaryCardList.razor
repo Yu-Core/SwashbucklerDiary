@@ -6,12 +6,13 @@
         <CascadingValue Value="this"
                         IsFixed="true">
             <Virtualize Items="Value"
-                        ItemSize="150"
+                        ItemSize="155"
                         Context="item">
                 <DiaryCard @key="item.Id"
                            Value="item">
                 </DiaryCard>
             </Virtualize>
+            
         </CascadingValue>
     </div>
     @if (Value.Count > 0 && showStatisticsCard)
@@ -19,7 +20,7 @@
         <MultiDisplay Tablet="true">
             <DesktopContent>
                 <div class="card-list-assist-info">
-                    <DiaryStatisticsCard Diaries="Value"></DiaryStatisticsCard>
+                    <DiaryStatisticsCard Value="Value"></DiaryStatisticsCard>
                 </div>
             </DesktopContent>
         </MultiDisplay>

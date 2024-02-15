@@ -9,6 +9,9 @@ dotnet_diagnostic.BL0005.severity = none
 dotnet_diagnostic.BL0007.severity = none
 
 [*.cs]
+dotnet_diagnostic.CS8632.severity = none
+
+[*.cs]
 #### 命名样式 ####
 
 # 命名规则

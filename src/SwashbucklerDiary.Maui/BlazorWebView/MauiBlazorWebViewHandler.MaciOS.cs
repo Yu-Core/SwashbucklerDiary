@@ -141,7 +141,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
 
                     statusCode = 404;
                     contentType = string.Empty;
-                    return Array.Empty<byte>();
+                    return [];
                 }
             }
 
@@ -186,7 +186,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                         dic.Add((NSString)"Accept-Ranges", (NSString)"bytes");
                         dic.Add((NSString)"Content-Range", (NSString)$"bytes {rangeStart}-{rangeEnd}/{length}");
                     }
-                    
+
                     dic.Add((NSString)"Content-Length", (NSString)(rangeEnd - rangeStart + 1).ToString());
                     dic.Add((NSString)"Content-Type", (NSString)contentType);
                     // Disable local caching. This will prevent user scripts from executing correctly.
