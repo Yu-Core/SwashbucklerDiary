@@ -34,8 +34,12 @@ namespace SwashbucklerDiary.Maui.Services
             await _resourceService.DeleteAsync();
             foreach (var diary in diaries)
             {
-                diary.Content = diary.Content!.Replace("appdata:///", "appdata/");
-                diary.Resources = _mediaResourceManager.GetDiaryResources(diary.Content);
+                if (diary.Content is not null)
+                {
+                    diary.Content = diary.Content.Replace("appdata:///", "appdata/");
+                    diary.Resources = _mediaResourceManager.GetDiaryResources(diary.Content);
+                }
+
                 diary.UpdateTime = DateTime.Now;
             }
             await _diaryService.UpdateIncludesAsync(diaries);
