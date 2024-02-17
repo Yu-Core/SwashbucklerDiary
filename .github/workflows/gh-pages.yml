@@ -2,8 +2,15 @@ name: github pages
 
 on:
   release:
-    types: [created]
+    types: [released]
   workflow_dispatch:
+
+env:
+  DOTNET_NOLOGO: true                     # Disable the .NET logo
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
+  DOTNET_CLI_TELEMETRY_OPTOUT: true       # Disable sending .NET CLI telemetry
+  DOTNET_VERSION: '8.0'
+  CSPROJ_FILE_PATH: 'src/SwashbucklerDiary.WebAssembly/SwashbucklerDiary.WebAssembly.csproj'
 
 jobs:
   deploy:
@@ -18,7 +25,7 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
-           dotnet-version: '8.0.x'
+           dotnet-version: '${{ env.DOTNET_VERSION }}.x'
            
       - name: Install .NET WebAssembly Tools
         run: dotnet workload install wasm-tools
@@ -38,11 +45,11 @@ jobs:
       - name: Update version in csproj
         run: |
           sed -i "s/<Version>.*<\/Version>/<Version>${{ env.FORMATTED_VERSION }}<\/Version>/" \
-          src/SwashbucklerDiary.WebAssembly/SwashbucklerDiary.WebAssembly.csproj
+          ${{ env.CSPROJ_FILE_PATH }}
 
       # Publish the site
       - name: Publish
-        run: dotnet publish src/SwashbucklerDiary.WebAssembly/SwashbucklerDiary.WebAssembly.csproj -c Release -o public -p GHPages=true
+        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c Release -o public -p GHPages=true
 
       # Deploy the site
       - name: Deploy
