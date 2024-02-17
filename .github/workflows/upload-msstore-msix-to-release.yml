@@ -1,0 +1,39 @@
+name: Upload MSStore MSIX to release
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch: 
+
+env:
+    APP_NAME: 'SwashbucklerDiary'
+    STORE_ID: '9P6PBVBF466L'
+
+jobs:
+  upload-store-msix-to-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the code
+    - uses: actions/checkout@v3
+      with:
+         fetch-depth: 0
+
+    # Get the commit count and format the version
+    - name: Get commit count and format version
+      id: version
+      run: |
+        commit_count=$(git rev-list --count HEAD)
+        major=$((commit_count / 1000))
+        minor=$((commit_count % 1000 / 10))
+        patch=$((commit_count % 10))
+        formatted_version="$major.$minor.$patch"
+        echo "APPLICATION_DISPLAY_VERSION=$formatted_version" >> $GITHUB_ENV
+
+    - name: Upload MSStore MSIX to release
+      uses: JasonWei512/Upload-Microsoft-Store-MSIX-Package-to-GitHub-Release@v1
+      with:
+        store-id: ${{ env.STORE_ID }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        asset-name-pattern: '${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-windows-x64'

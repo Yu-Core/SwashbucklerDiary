@@ -27,7 +27,6 @@
 		
 		<!-- App Identifier -->
 		<ApplicationId>com.yucore.swashbucklerdiary</ApplicationId>
-		<ApplicationIdGuid>DBFF20FC-EF94-4EE2-A049-931177D2CB18</ApplicationIdGuid>
 		
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -41,7 +40,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 
 		<DefaultLanguage>zh-CN</DefaultLanguage>
-		
+
 	</PropertyGroup>
 
 	<!-- Android -->

@@ -7,11 +7,11 @@ env:
   DOTNET_NOLOGO: true                     # Disable the .NET logo
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
   DOTNET_CLI_TELEMETRY_OPTOUT: true       # Disable sending .NET CLI telemetry
+  DOTNET_VERSION: '8.0'
   CSPROJ_PATH: 'src/SwashbucklerDiary.Maui'
   CSPROJ_FILE_PATH: 'src/SwashbucklerDiary.Maui/SwashbucklerDiary.Maui.csproj'
-  APK_PATH: 'src/SwashbucklerDiary.Maui/bin/Release/net8.0-android/android-arm64/publish'
-  APK_FILE_PATH: 'src/SwashbucklerDiary.Maui/bin/Release/net8.0-android/android-arm64/publish/com.yucore.swashbucklerdiary-Signed.apk'
   APP_NAME: 'SwashbucklerDiary'
+  STORE_ID: '9P6PBVBF466L'
 
 jobs:
   build:
@@ -26,13 +26,15 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
-           dotnet-version: '8.0.x'
+           dotnet-version: '${{ env.DOTNET_VERSION }}.x'
 
+      # Install Java
       - uses: actions/setup-java@v2
         with:
           distribution: 'microsoft'
           java-version: '11'
-           
+         
+      # Install MAUI Workloads
       - name: Install MAUI Workloads
         run: |
           dotnet workload install android --ignore-failed-sources
@@ -43,6 +45,7 @@ jobs:
       # Get the commit count and format the version
       - name: Get commit count and format version
         id: version
+        shell: bash
         run: |
           commit_count=$(git rev-list --count HEAD)
           major=$((commit_count / 1000))
@@ -51,7 +54,6 @@ jobs:
           formatted_version="$major.$minor.$patch"
           echo "APPLICATION_DISPLAY_VERSION=$formatted_version" >> $GITHUB_ENV
           echo "APPLICATION_VERSION=$commit_count" >> $GITHUB_ENV
-        shell: bash
 
       # Replace the version in the csproj file
       - name: Version the app
@@ -61,6 +63,7 @@ jobs:
           version: ${{ env.APPLICATION_VERSION }}
           displayVersion: ${{ env.APPLICATION_DISPLAY_VERSION }}
 
+      # Decode Keystore
       - name: Decode Keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
@@ -69,14 +72,38 @@ jobs:
           fileName: ${{secrets.ANDROIDSIGNINGKEYSTORE}}
           encodedString: ${{ secrets.KEYSTORE_BASE64 }}
 
+      # Publish MAUI Android
       - name: Publish MAUI Android
-        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c:Release -p:AndroidPackageFormat=apk -f:net8.0-android -r android-arm64 --sc -p:PublishTrimmed=true -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=${{secrets.ANDROIDSIGNINGKEYSTORE}} -p:AndroidSigningKeyAlias=${{secrets.ANDROIDSIGNINGKEYALIAS}} -p:AndroidSigningKeyPass=${{secrets.ANDROIDSIGNINGKEYPASS}} -p:AndroidSigningStorePass=${{secrets.ANDROIDSIGNINGSTOREPASS}} --no-restore
+        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c:Release -p:AndroidPackageFormat=apk -f:net${{ env.DOTNET_VERSION }}-android -r android-arm64 --sc -p:PublishTrimmed=true -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=${{secrets.ANDROIDSIGNINGKEYSTORE}} -p:AndroidSigningKeyAlias=${{secrets.ANDROIDSIGNINGKEYALIAS}} -p:AndroidSigningKeyPass=${{secrets.ANDROIDSIGNINGKEYPASS}} -p:AndroidSigningStorePass=${{secrets.ANDROIDSIGNINGSTOREPASS}} --no-restore
 
-      - run: ren ${{env.APK_FILE_PATH}} ${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk
+      - name: Rename apk
+        run: ren ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-arm64/publish/*Signed.apk ${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk
 
+      # Update to Github Releases
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: '${{env.APK_PATH}}/${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk'
+          artifacts: '${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-arm64/publish/${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk'
           token: ${{ github.token }}
           name: ${{ env.APPLICATION_DISPLAY_VERSION }}
           tag: 'v${{ env.APPLICATION_DISPLAY_VERSION }}'
+
+      # Replace the version in Package.appxmanifest
+      - name: Update version in Package.appxmanifest
+        shell: bash
+        run: |
+          sed -i "s/Version=\"0\.0\.0\.0\"/Version=\"${{ env.APPLICATION_DISPLAY_VERSION }}.0\"/" \
+          ${{ env.CSPROJ_PATH }}/Platforms/Windows/Package.appxmanifest
+
+      # Publish MAUI Windows
+      - name: Publish MAUI Windows
+        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64
+
+      # Update to Microsoft Store
+      - name: Setup Microsoft Store Developer CLI
+        uses: microsoft/setup-msstore-cli@v1
+
+      - name: Configure Microsoft Store Developer CLI
+        run: msstore reconfigure --tenantId ${{ secrets.PARTNER_CENTER_TENANT_ID }} --sellerId ${{ secrets.PARTNER_CENTER_SELLER_ID }} --clientId ${{ secrets.PARTNER_CENTER_CLIENT_ID }} --clientSecret ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
+
+      - name: Update to Microsoft Store
+        run: msstore publish ${{env.CSPROJ_PATH}} -i ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/AppPackages -id ${{env.STORE_ID}}
