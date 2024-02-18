@@ -22,6 +22,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool enablePrivacy;
 
+        private bool afterRender;
+
         private DiaryModel diary = new();
 
         private List<DynamicListItem> menuItems = [];
@@ -56,6 +58,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
+                afterRender = true;
                 await UpdateData();
                 StateHasChanged();
             }

@@ -2,7 +2,7 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-@if (enableMarkdown)
+@if (afterRender && enableMarkdown)
 {
     <OnlyThisPage>
         <link href="@cssHref" />
@@ -115,20 +115,23 @@
     }
 
     <div class="write-input-wrap">
-        @if (enableMarkdown)
+        @if (afterRender)
         {
-            <MarkdownEdit @ref="markdownEdit"
-                          @bind-Value="diary.Content"
-                          WrapClass="write-markdown-wrap"
-                          Class="my-sm-4 px-3 rounded-lg write-markdown">
-            </MarkdownEdit>
-        }
-        else
-        {
-            <TextareaEdit @ref="textareaEdit"
-                          @bind-Value="diary.Content"
-                          Class="my-sm-4 rounded-lg">
-            </TextareaEdit>
+            @if (enableMarkdown)
+            {
+                <MarkdownEdit @ref="markdownEdit"
+                              @bind-Value="diary.Content"
+                              WrapClass="write-markdown-wrap"
+                              Class="my-sm-4 px-3 rounded-lg write-markdown">
+                </MarkdownEdit>
+            }
+            else
+            {
+                <TextareaEdit @ref="textareaEdit"
+                              @bind-Value="diary.Content"
+                              Class="my-sm-4 rounded-lg">
+                </TextareaEdit>
+            }
         }
     </div>
 
@@ -145,7 +148,7 @@
         </div>
     </div>
 
-    @if (enableMarkdown)
+    @if (afterRender && enableMarkdown)
     {
         <div class="vditor-toolbar-help"></div>
     }

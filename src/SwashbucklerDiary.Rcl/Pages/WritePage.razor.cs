@@ -33,6 +33,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool overlay;
 
+        private bool afterRender;
+
         private MarkdownEdit markdownEdit = default!;
 
         private TextareaEdit textareaEdit = default!;
@@ -102,6 +104,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
+                afterRender = true;
                 await Task.WhenAll(
                     UpdateSettings(),
                     InitDiary(),

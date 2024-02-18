@@ -109,27 +109,31 @@
                         maxlength="20">
             </MTextField>
         }
-        @if (enableMarkdown)
-        {
-            <MarkdownPreview Value="@(diary.Content)"
-                             Class="my-sm-4 px-3"
-                             Style="padding-top:10px">
-            </MarkdownPreview>
-        }
-        else
-        {
-            <MTextarea Value="@(diary.Content)"
-                       Class="my-sm-4 user-select"
-                       Solo="true"
-                       Flat="true"
-                       HideDetails="@("auto")"
-                       Readonly="true"
-                       AutoGrow="true"
-                       Rows="8"
-                       RowHeight="30">
-            </MTextarea>
-        }
 
+        @if (afterRender)
+        {
+            @if (enableMarkdown)
+            {
+                <MarkdownPreview Value="@(diary.Content)"
+                                 Class="my-sm-4 px-3"
+                                 Style="padding-top:10px">
+                </MarkdownPreview>
+            }
+            else
+            {
+                <MTextarea Value="@(diary.Content)"
+                           Class="my-sm-4 user-select"
+                           Solo="true"
+                           Flat="true"
+                           HideDetails="@("auto")"
+                           Readonly="true"
+                           AutoGrow="true"
+                           Rows="8"
+                           RowHeight="30">
+                </MTextarea>
+            }
+        }
+        
         <div class="mb-5">
             <MChipGroup Column="true">
                 @foreach (var item in Tags)
