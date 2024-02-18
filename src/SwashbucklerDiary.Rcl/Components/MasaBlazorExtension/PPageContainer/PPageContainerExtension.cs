@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void PopedToRoot(PopEventArgs e)
         {
-            var rootPaths = NavigateService.RootPaths.Select(it => new Uri(it).AbsolutePath);
+            var rootPaths = NavigateService.RootPaths.Select(it => new Uri(it).AbsolutePath.ToLower());
             var paths = _patternPaths.Where(p => rootPaths.Contains(p.AbsolutePath))
                 .Select(p => p.AbsolutePath)
                 .ToArray();
