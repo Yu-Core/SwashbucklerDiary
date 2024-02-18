@@ -141,53 +141,53 @@ code {
         box-sizing: content-box;
     }
 
-    .loading-container > span::after {
-        content: "";
-        position: absolute;
-        left: calc(var(--diameter) / 4 * calc(sqrt(2) + 2));
-        bottom: calc(var(--diameter) / 4 * calc(sqrt(2) + 2));
-        width: 10px;
-        height: 10px;
-        background-color: currentColor; 
-        border-radius: 50%;
-        box-sizing: border-box;
-    }
+        .loading-container > span::after {
+            content: "";
+            position: absolute;
+            left: calc(var(--diameter) / 4 * (1.4142 + 2));
+            bottom: calc(var(--diameter) / 4 * (1.4142 + 2));
+            width: 10px;
+            height: 10px;
+            background-color: currentColor;
+            border-radius: 50%;
+            box-sizing: border-box;
+        }
 
-    .loading-container > span:nth-child(1) {
-        --n: 1;
-    }
+        .loading-container > span:nth-child(1) {
+            --n: 1;
+        }
 
-    .loading-container > span:nth-child(2) {
-        --n: 2;
-    }
+        .loading-container > span:nth-child(2) {
+            --n: 2;
+        }
 
-    .loading-container > span:nth-child(3) {
-        --n: 3;
-    }
+        .loading-container > span:nth-child(3) {
+            --n: 3;
+        }
 
-    .loading-container > span:nth-child(4) {
-        --n: 4;
-    }
+        .loading-container > span:nth-child(4) {
+            --n: 4;
+        }
 
-    .loading-container > span:nth-child(5) {
-        --n: 5;
-    }
+        .loading-container > span:nth-child(5) {
+            --n: 5;
+        }
 
-    .loading-container > span:nth-child(6) {
-        --n: 6;
-    }
+        .loading-container > span:nth-child(6) {
+            --n: 6;
+        }
 
-    .loading-container > span:nth-child(7) {
-        --n: 7;
-    }
+        .loading-container > span:nth-child(7) {
+            --n: 7;
+        }
 
-    .loading-container > span:nth-child(8) {
-        --n: 8;
-    }
+        .loading-container > span:nth-child(8) {
+            --n: 8;
+        }
 
-    .loading-container > span:nth-child(9) {
-        --n: 9;
-    }
+        .loading-container > span:nth-child(9) {
+            --n: 9;
+        }
 
 @keyframes rotating {
     to {
