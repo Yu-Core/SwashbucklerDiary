@@ -329,7 +329,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 if (flag)
                 {
-                    await HandleAchievements();
+                    _ = HandleAchievements();
                 }
             }
             else
