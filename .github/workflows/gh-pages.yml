@@ -1,8 +1,6 @@
 name: github pages
 
 on:
-  release:
-    types: [released]
   workflow_dispatch:
 
 env:
