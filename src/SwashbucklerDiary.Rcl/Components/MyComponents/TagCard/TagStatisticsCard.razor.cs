@@ -23,9 +23,9 @@ namespace SwashbucklerDiary.Rcl.Components
         private int DiaryCount => Diaries.Count(d => d.Tags != null && d.Tags.Any());
 
         private string? EarliestDate
-            => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("yyyy-MM-dd");
+            => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("d");
 
         private string? LastDate
-            => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("yyyy-MM-dd");
+            => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("d");
     }
 }

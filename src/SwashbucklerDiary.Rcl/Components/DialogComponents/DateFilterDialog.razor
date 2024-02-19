@@ -88,11 +88,10 @@
 
 <MultiDatePicker @bind-Visible="showMinDate"
                  @bind-Value="MinDate"
-                 Max="@(MaxDate > Today ? Today : MaxDate)">
+                 Max="MaxDate">
 </MultiDatePicker>
 
 <MultiDatePicker @bind-Visible="showMaxDate"
                  @bind-Value="MaxDate"
-                 Min="MinDate"
-                 Max="Today">
+                 Min="MinDate">
 </MultiDatePicker>

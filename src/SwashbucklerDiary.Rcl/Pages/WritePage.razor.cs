@@ -44,8 +44,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private DiaryModel diary = new()
         {
             Tags = [],
-            Resources = [],
-            CreateTime = default
+            Resources = []
         };
 
         private List<TagModel> Tags = [];
@@ -143,12 +142,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnDispose();
         }
 
-        private DateTime DiaryCreateTime
-        {
-            get => (createMode && diary.CreateTime == default) ? DateTime.Now : diary.CreateTime;
-            set => diary.CreateTime = value;
-        }
-
         private List<TagModel> SelectedTags
         {
             get => diary.Tags!;
@@ -175,8 +168,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private DateOnly SelectedDate
         {
-            get => DateOnly.FromDateTime(DiaryCreateTime);
-            set => DiaryCreateTime = value.ToDateTime();
+            get => DateOnly.FromDateTime(diary.CreateTime);
+            set => diary.CreateTime = value.ToDateTime();
         }
 
         private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
@@ -193,13 +186,14 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string MoodText =>
             string.IsNullOrEmpty(diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + diary.Mood)!;
 
-        private WordCountStatistics WordCountType => (WordCountStatistics)Enum.Parse(typeof(WordCountStatistics), I18n.T("Write.WordCountType")!);
+        private WordCountStatistics WordCountType
+            => (WordCountStatistics)Enum.Parse(typeof(WordCountStatistics), I18n.T("Write.WordCountType")!);
 
-        private string SetTitleText() => enableTitle ? "Write.CloseTitle" : "Write.EnableTitle";
+        private string TitleSwitchText() => enableTitle ? "Write.CloseTitle" : "Write.EnableTitle";
 
-        private string SetMarkdownText() => enableMarkdown ? "Diary.Text" : "Diary.Markdown";
+        private string MarkdownSwitchText() => enableMarkdown ? "Diary.Text" : "Diary.Markdown";
 
-        private string SetMarkdownIcon() => enableMarkdown ? "mdi-format-text" : "mdi-language-markdown-outline";
+        private string MarkdownSwitchIcon() => enableMarkdown ? "mdi-format-text" : "mdi-language-markdown-outline";
 
         private async Task InitTags()
         {
@@ -253,8 +247,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems = new()
             {
-                new(this, SetTitleText, "mdi-format-title", ()=> SettingChange(Setting.Title, ref enableTitle)),
-                new(this, SetMarkdownText, SetMarkdownIcon, ()=> SettingChange(Setting.Markdown, ref enableMarkdown)),
+                new(this, TitleSwitchText, "mdi-format-title", ()=> SettingChange(Setting.Title, ref enableTitle)),
+                new(this, MarkdownSwitchText, MarkdownSwitchIcon, ()=> SettingChange(Setting.Markdown, ref enableMarkdown)),
             };
             WeatherIcons = IconService.GetWeatherIcons();
             MoodIcons = IconService.GetMoodIcons();
@@ -307,15 +301,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (createMode)
             {
                 createMode = false;
-                if (diary.CreateTime == default)
-                {
-                    diary.CreateTime = DateTime.Now;
-                }
-                else
-                {
-                    diary.CreateTime = DateOnly.FromDateTime(diary.CreateTime).ToDateTime();
-                }
-
                 bool flag = await DiaryService.AddAsync(diary);
 
                 if (alert)

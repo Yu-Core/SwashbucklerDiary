@@ -23,7 +23,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public DateFilterForm Value { get; set; } = new();
-        
+
         [Parameter]
         public EventCallback<DateFilterForm> ValueChanged { get; set; }
 
@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Rcl.Components
             return Task.CompletedTask;
         }
 
-        private static Dictionary<string, DateOnly> DefaultDates 
+        private static Dictionary<string, DateOnly> DefaultDates
             => DateFilterForm.DefaultDates;
 
         private StringNumber DefaultDate
@@ -64,12 +64,12 @@ namespace SwashbucklerDiary.Rcl.Components
         }
 
         private string MinDateText
-            => MinDate == DateOnly.MinValue ? I18n.T("Filter.Start time") : ((DateOnly)MinDate).ToString("yyyy-MM-dd");
-        
+            => MinDate == DateOnly.MinValue ? I18n.T("Filter.Start time") : MinDate.ToString("d").Replace('/', '-');
+
         private string MaxDateText
-            => MaxDate == DateOnly.MaxValue ? I18n.T("Filter.End time") : ((DateOnly)MaxDate).ToString("yyyy-MM-dd");
-        
-        private DateOnly Today => DateOnly.FromDateTime(DateTime.Now);
+            => MaxDate == DateOnly.MaxValue ? I18n.T("Filter.End time") : MaxDate.ToString("d").Replace('/', '-');
+
+        private static DateOnly Today => DateOnly.FromDateTime(DateTime.Now);
 
         private void SetVisible(bool value)
         {

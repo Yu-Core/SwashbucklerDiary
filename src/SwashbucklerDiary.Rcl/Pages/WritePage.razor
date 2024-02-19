@@ -55,48 +55,51 @@
 <ScrollContainer ContentClass="d-flex flex-column"
                  ContentStyle="height:100%;padding-top:0px;">
     <div>
-        <div class="px-3 px-sm-1 d-flex align-end">
-            <button class="d-flex align-center text-h6 font-weight-bold" @onclick="()=>showCreateTime=true">
-                @(DiaryCreateTime.ToString("yyyy/MM/dd"))
-                <MIcon Class="ml-2">
-                    mdi-pencil-outline
-                </MIcon>
-            </button>
+        @if (afterRender)
+        {
+            <div class="px-3 px-sm-1 d-flex align-end">
+                <button class="d-flex align-center text-h6 font-weight-bold" @onclick="()=>showCreateTime=true">
+                    @(diary.CreateTime.ToString("d"))
+                    <MIcon Class="ml-2">
+                        mdi-pencil-outline
+                    </MIcon>
+                </button>
 
-            <span class="pl-5 text-subtitle-1">
-                @(I18n.ToWeek(DiaryCreateTime))
-            </span>
-            <MSpacer></MSpacer>
-            <span class="text-subtitle-1">
-                @(CounterValue())
-            </span>
-        </div>
-        <div class="px-2 px-sm-0">
-            <MChip Class="my-2 mr-2"
-                   Outlined="true"
-                   OnClick="()=>showWeather=true">
-                <MIcon Left>
-                    @(WeatherIcon)
-                </MIcon>
-                @WeatherText
-            </MChip>
-            <MChip Class="my-2 mr-2"
-                   Outlined="true"
-                   OnClick="()=>showMood=true">
-                <MIcon Left>
-                    @(MoodIcon)
-                </MIcon>
-                @MoodText
-            </MChip>
-            <MChip Class="my-2 mr-2"
-                   Outlined="true"
-                   OnClick="()=>showLocation=true">
-                <MIcon Left>
-                    mdi-map-marker-outline
-                </MIcon>
-                @(string.IsNullOrEmpty(SelectedLocation) ? I18n.T("Write.Location") : SelectedLocation)
-            </MChip>
-        </div>
+                <span class="pl-5 text-subtitle-1">
+                    @(I18n.ToWeek(diary.CreateTime))
+                </span>
+                <MSpacer></MSpacer>
+                <span class="text-subtitle-1">
+                    @(CounterValue())
+                </span>
+            </div>
+            <div class="px-2 px-sm-0">
+                <MChip Class="my-2 mr-2"
+                       Outlined="true"
+                       OnClick="()=>showWeather=true">
+                    <MIcon Left>
+                        @(WeatherIcon)
+                    </MIcon>
+                    @WeatherText
+                </MChip>
+                <MChip Class="my-2 mr-2"
+                       Outlined="true"
+                       OnClick="()=>showMood=true">
+                    <MIcon Left>
+                        @(MoodIcon)
+                    </MIcon>
+                    @MoodText
+                </MChip>
+                <MChip Class="my-2 mr-2"
+                       Outlined="true"
+                       OnClick="()=>showLocation=true">
+                    <MIcon Left>
+                        mdi-map-marker-outline
+                    </MIcon>
+                    @(string.IsNullOrEmpty(SelectedLocation) ? I18n.T("Write.Location") : SelectedLocation)
+                </MChip>
+            </div>
+        }
     </div>
     @if (enableTitle)
     {

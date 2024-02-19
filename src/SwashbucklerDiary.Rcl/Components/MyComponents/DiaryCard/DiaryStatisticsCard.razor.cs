@@ -53,10 +53,10 @@ namespace SwashbucklerDiary.Rcl.Components
         private string? MostMoodIcon => MostMood is null ? string.Empty : IIconService.GetMoodIcon(MostMood);
 
         private string? EarliestDate
-            => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("yyyy-MM-dd");
+            => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("d");
 
         private string? LastDate
-            => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("yyyy-MM-dd");
+            => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("d");
 
         private int GetWordCount(List<DiaryModel> diaries)
         {
