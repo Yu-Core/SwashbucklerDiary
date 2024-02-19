@@ -30,14 +30,8 @@ namespace SwashbucklerDiary.Maui.Extensions
                         }
 
                         column.IfTable<DiaryModel>()
-                        .UpdateProperty(it => it.Tags, it =>
-                        {
-                            it.Navigat = new(typeof(DiaryTagModel), nameof(DiaryTagModel.DiaryId), nameof(DiaryTagModel.TagId));
-                        })
-                        .UpdateProperty(it => it.Resources, it =>
-                        {
-                            it.Navigat = new(typeof(DiaryResourceModel), nameof(DiaryResourceModel.DiaryId), nameof(DiaryResourceModel.ResourceUri));
-                        });
+                        .ManyToMany(it => it.Tags, typeof(DiaryTagModel), nameof(DiaryTagModel.DiaryId), nameof(DiaryTagModel.TagId))
+                        .ManyToMany(it => it.Resources, typeof(DiaryResourceModel), nameof(DiaryResourceModel.DiaryId), nameof(DiaryResourceModel.ResourceUri));
 
                         column.IfTable<LogModel>()
                         .UpdateProperty(it => it.Level, it =>
@@ -52,10 +46,7 @@ namespace SwashbucklerDiary.Maui.Extensions
                         });
 
                         column.IfTable<TagModel>()
-                        .UpdateProperty(it => it.Diaries, it =>
-                        {
-                            it.Navigat = new(typeof(DiaryTagModel), nameof(DiaryTagModel.TagId), nameof(DiaryTagModel.DiaryId));
-                        });
+                        .ManyToMany(it => it.Diaries, typeof(DiaryTagModel), nameof(DiaryTagModel.TagId), nameof(DiaryTagModel.DiaryId));
 
                         /***高版C#写法***/
                         //支持string?和string  
