@@ -447,6 +447,6 @@ a, .btn-link {
         margin-right: 12px;
     }
 
-.m-chip m-chip--outlined {
+.m-chip.m-chip--outlined {
     padding: 0 16px;
 }
