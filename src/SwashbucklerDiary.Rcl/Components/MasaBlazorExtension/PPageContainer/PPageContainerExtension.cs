@@ -28,7 +28,6 @@ namespace SwashbucklerDiary.Rcl.Components
         private void Poped(PopEventArgs e)
         {
             Remove(e.NextUri);
-            InvokeAsync(StateHasChanged);
         }
 
         private void Pushed(PushEventArgs e)
@@ -37,16 +36,12 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 Remove(e.PreviousUri);
             }
-
-            InvokeAsync(StateHasChanged);
         }
 
         private void PopedToRoot(PopEventArgs e)
         {
-            var rootPaths = NavigateService.RootPaths.Select(it => new Uri(it).AbsolutePath.ToLower());
-            var paths = _patternPaths.Where(p => rootPaths.Contains(p.AbsolutePath))
-                .Select(p => p.AbsolutePath)
-                .ToArray();
+            var rootPaths = NavigateService.RootPaths.Select(it => new Uri(it).AbsolutePath);
+            var paths = _patternPaths.Where(p => rootPaths.Contains(p.AbsolutePath)).Select(p => p.Pattern);
             _patternPaths.RemoveAll(_patternPaths.Keys.Except(paths));
             InvokeAsync(StateHasChanged);
         }
@@ -61,6 +56,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             _patternPaths.Remove(pattern.Pattern);
+            InvokeAsync(StateHasChanged);
         }
     }
 }
