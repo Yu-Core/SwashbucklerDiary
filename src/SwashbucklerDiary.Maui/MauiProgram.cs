@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using MauiBlazorToolkit.Extensions;
 using Microsoft.AspNetCore.Components.WebView.Maui;
-using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Maui.BlazorWebView;
 using SwashbucklerDiary.Maui.Extensions;
 

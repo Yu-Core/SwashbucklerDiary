@@ -10,9 +10,6 @@ namespace SwashbucklerDiary.WebAssembly.Layout
     public partial class MainLayout : MainLayoutBase
     {
         [Inject]
-        private IJSRuntime JSRuntime { get; set; } = default!;
-
-        [Inject]
         private SystemThemeJSModule SystemThemeJSModule { get; set; } = default!;
 
         [Inject]

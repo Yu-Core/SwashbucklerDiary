@@ -8,17 +8,18 @@ namespace SwashbucklerDiary.WebAssembly.Services
     {
         private readonly string targetDirectoryPath = Path.Combine(FileSystem.AppDataDirectory, avatarDirectoryName);
 
-        public AvatarService(ISettingService settingService, 
-            IMediaResourceManager mediaResourceManager, 
-            IPlatformIntegration platformIntegration, 
-            II18nService i18n, 
-            IAlertService alertService) : base(settingService, mediaResourceManager, platformIntegration, i18n, alertService)
+        public AvatarService(ISettingService settingService,
+            IMediaResourceManager mediaResourceManager,
+            IPlatformIntegration platformIntegration,
+            II18nService i18n,
+            IAlertService alertService)
+            : base(settingService, mediaResourceManager, platformIntegration, i18n, alertService)
         {
         }
 
         protected override async Task<string> SetAvatar(string filePath)
         {
-            string previousAvatarUri = await _settingService.Get<string>(Setting.Avatar); 
+            string previousAvatarUri = await _settingService.Get<string>(Setting.Avatar);
             if (File.Exists(previousAvatarUri))
             {
                 File.Delete(previousAvatarUri);

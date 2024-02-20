@@ -16,11 +16,11 @@ namespace SwashbucklerDiary.Rcl.Components
         public string? Culture { get; set; }
 
         [Parameter]
-        public List<DiaryModel> Diaries { get; set; } = new();
+        public List<DiaryModel> Diaries { get; set; } = [];
 
         private int TagCount => Value.Count;
 
-        private int DiaryCount => Diaries.Count(d => d.Tags != null && d.Tags.Any());
+        private int DiaryCount => Diaries.Count(d => d.Tags is not null && d.Tags.Count != 0);
 
         private string? EarliestDate
             => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("d");

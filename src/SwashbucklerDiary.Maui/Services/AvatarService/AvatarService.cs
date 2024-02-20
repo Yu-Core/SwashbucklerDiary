@@ -13,7 +13,8 @@ namespace SwashbucklerDiary.Maui.Services
             IMediaResourceManager mediaResourceManager,
             IPlatformIntegration platformIntegration,
             II18nService i18n,
-            IAlertService alertService) : base(settingService, mediaResourceManager, platformIntegration, i18n, alertService)
+            IAlertService alertService)
+            : base(settingService, mediaResourceManager, platformIntegration, i18n, alertService)
         {
         }
 
