@@ -25,6 +25,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IVersionTracking _versionTracking;
 
+        protected readonly IDiaryFileManager _diaryFileManager;
+
         private class Release
         {
             public string? Tag_Name { get; set; }
@@ -35,7 +37,8 @@ namespace SwashbucklerDiary.Rcl.Services
             ISettingService settingService,
             IMediaResourceManager mediaResourceManager,
             II18nService i18n,
-            IVersionTracking versionTracking)
+            IVersionTracking versionTracking,
+            IDiaryFileManager diaryFileManager)
         {
             _diaryService = diaryService;
             _resourceService = resourceService;
@@ -44,6 +47,7 @@ namespace SwashbucklerDiary.Rcl.Services
             httpClient = new HttpClient();
             _i18n = i18n;
             _versionTracking = versionTracking;
+            _diaryFileManager = diaryFileManager;
         }
 
         public async Task FirstEnter()
@@ -104,14 +108,12 @@ namespace SwashbucklerDiary.Rcl.Services
 
             var latestVersion = new Version(release.Tag_Name.TrimStart('v'));
             var currentVersion = new Version(_versionTracking.CurrentVersion);
-            if(latestVersion.CompareTo(currentVersion) > 0)
+            if (latestVersion.CompareTo(currentVersion) > 0)
             {
                 return true;
             }
 
             return false;
         }
-
-
     }
 }

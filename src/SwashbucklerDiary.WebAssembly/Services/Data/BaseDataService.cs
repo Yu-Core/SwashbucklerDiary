@@ -1,5 +1,5 @@
-﻿using SwashbucklerDiary.Repository;
-using SwashbucklerDiary.Rcl.Services;
+﻿using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Repository;
 using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.WebAssembly.Services
@@ -51,6 +51,11 @@ namespace SwashbucklerDiary.WebAssembly.Services
         public virtual Task<bool> DeleteAsync(Guid id)
         {
             return _iBaseRepository.DeleteByIdAsync(id);
+        }
+
+        public virtual Task<bool> DeleteAsync(List<TEntity> entities)
+        {
+            return _iBaseRepository.DeleteAsync(entities);
         }
 
         public virtual Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> expression)

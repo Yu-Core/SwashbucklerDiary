@@ -1,5 +1,4 @@
 ﻿using ClosedXML.Excel;
-using DocumentFormat.OpenXml.InkML;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 using System.Data;
@@ -22,6 +21,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IDiaryService _diaryService;
 
+        protected readonly IResourceService _resourceService;
+
         protected const string exportFileNamePrefix = "SDExport";
 
         protected const string backupFileNamePrefix = "SDBackup";
@@ -36,13 +37,15 @@ namespace SwashbucklerDiary.Rcl.Services
             IPlatformIntegration platformIntegration,
             II18nService i18nService,
             IMediaResourceManager mediaResourceManager,
-            IDiaryService diaryService)
+            IDiaryService diaryService,
+            IResourceService resourceService)
         {
             _appFileManager = appFileManager;
             _platformIntegration = platformIntegration;
             _i18n = i18nService;
             _mediaResourceManager = mediaResourceManager;
             _diaryService = diaryService;
+            _resourceService = resourceService;
         }
 
         public abstract Task<string> ExportDBAsync(bool copyResources);
@@ -337,7 +340,7 @@ namespace SwashbucklerDiary.Rcl.Services
             return InternalGetExportFileName(backupFileNamePrefix, ".zip");
         }
 
-        private string InternalGetExportFileName(string prefix,string suffix)
+        private string InternalGetExportFileName(string prefix, string suffix)
         {
             string dataTime = DateTime.Now.ToString("yyyyMMddHHmmss");
             string version = _platformIntegration.AppVersion;
@@ -355,11 +358,11 @@ namespace SwashbucklerDiary.Rcl.Services
             return flag;
         }
 
-        protected Task<bool> InternalImportDBAsync(string filePath, string outputFolder)
+        protected async Task<bool> InternalImportDBAsync(string filePath, string outputFolder)
         {
             if (!File.Exists(filePath))
             {
-                return Task.FromResult(false);
+                return false;
             }
 
 
@@ -374,9 +377,10 @@ namespace SwashbucklerDiary.Rcl.Services
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
             var versionJsonPath = Path.Combine(outputFolder, "version.json");
+            bool needUpdateResourceUri = false;
             if (!File.Exists(versionJsonPath))
             {
-                return Task.FromResult(false);
+                needUpdateResourceUri = true;
             }
             else
             {
@@ -387,13 +391,25 @@ namespace SwashbucklerDiary.Rcl.Services
             string[] jsonFiles = Directory.GetFiles(outputFolder, "*.db3");
             if (jsonFiles.Length == 0)
             {
-                return Task.FromResult(false);
+                return false;
             }
 
             File.Copy(jsonFiles[0], GetDatabasePath(), true);
+            if (needUpdateResourceUri)
+            {
+                await UpdateAllResourceUri();
+            }
+
             ClearAllDiaryResources();
-            RestoreDiaryResource(outputFolder);
-            return Task.FromResult(true);
+            if (needUpdateResourceUri)
+            {
+                RestoreOldDiaryResource(outputFolder);
+            }
+            else
+            {
+                RestoreDiaryResource(outputFolder);
+            }
+            return true;
         }
 
         public abstract Task<bool> ImportJsonAsync(string filePath);
@@ -416,9 +432,10 @@ namespace SwashbucklerDiary.Rcl.Services
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
             var versionJsonPath = Path.Combine(outputFolder, "version.json");
+            bool needUpdateResourceUri = false;
             if (!File.Exists(versionJsonPath))
             {
-                return false;
+                needUpdateResourceUri = true;
             }
             else
             {
@@ -443,13 +460,46 @@ namespace SwashbucklerDiary.Rcl.Services
                 }
             }
 
-            RestoreDiaryResource(outputFolder);
+            if (needUpdateResourceUri)
+            {
+                UpdateResourceUri(diaries);
+                RestoreOldDiaryResource(outputFolder);
+            }
+            else
+            {
+                RestoreDiaryResource(outputFolder);
+            }
+
             return await _diaryService.ImportAsync(diaries);
         }
 
         protected abstract void ClearAllDiaryResources();
 
         protected abstract void RestoreDiaryResource(string outputFolder);
+
+        protected abstract void RestoreOldDiaryResource(string outputFolder);
+
+        public void UpdateResourceUri(List<DiaryModel> diaries)
+        {
+            foreach (var diary in diaries)
+            {
+                if (!string.IsNullOrEmpty(diary.Content))
+                {
+                    diary.Content = diary.Content.Replace("appdata:///", "appdata/");
+                    diary.Resources = _mediaResourceManager.GetDiaryResources(diary.Content);
+                }
+
+                diary.UpdateTime = DateTime.Now;
+            }
+        }
+
+        public async Task UpdateAllResourceUri()
+        {
+            var diaries = await _diaryService.QueryAsync();
+            await _resourceService.DeleteAsync();
+            UpdateResourceUri(diaries);
+            await _diaryService.UpdateIncludesAsync(diaries);
+        }
     }
 
     public class ExportVersionInfo

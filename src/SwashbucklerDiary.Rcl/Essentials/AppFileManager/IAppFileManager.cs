@@ -19,5 +19,7 @@
         long GetFolderSize(string folderPath);
 
         void CopyFolder(string sourceFolder, string destinationFolder, SearchOption searchOption);
+
+        void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption);
     }
 }

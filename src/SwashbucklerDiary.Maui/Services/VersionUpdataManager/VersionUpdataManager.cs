@@ -11,8 +11,9 @@ namespace SwashbucklerDiary.Maui.Services
             ISettingService settingService,
             IMediaResourceManager mediaResourceManager,
             II18nService i18n,
-            Rcl.Essentials.IVersionTracking versionTracking) :
-            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking)
+            Rcl.Essentials.IVersionTracking versionTracking,
+            IDiaryFileManager diaryFileManager) :
+            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager)
         {
         }
 
@@ -30,19 +31,7 @@ namespace SwashbucklerDiary.Maui.Services
             avatar = avatar.Replace("appdata:///", "appdata/");
             await _settingService.Set(Setting.Avatar, avatar);
 
-            var diaries = await _diaryService.QueryAsync();
-            await _resourceService.DeleteAsync();
-            foreach (var diary in diaries)
-            {
-                if (diary.Content is not null)
-                {
-                    diary.Content = diary.Content.Replace("appdata:///", "appdata/");
-                    diary.Resources = _mediaResourceManager.GetDiaryResources(diary.Content);
-                }
-
-                diary.UpdateTime = DateTime.Now;
-            }
-            await _diaryService.UpdateIncludesAsync(diaries);
+            await _diaryFileManager.UpdateAllResourceUri();
         }
 
         protected override async Task UpdateVersion697()

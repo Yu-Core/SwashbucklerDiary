@@ -23,5 +23,9 @@ namespace SwashbucklerDiary.Rcl.Services
         Task<bool> ImportDBAsync(Stream stream);
 
         Task<bool> ImportJsonAsync(string filePath);
+
+        void UpdateResourceUri(List<DiaryModel> diaries);
+
+        Task UpdateAllResourceUri();
     }
 }

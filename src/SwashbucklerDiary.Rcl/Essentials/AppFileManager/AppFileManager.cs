@@ -145,5 +145,24 @@ namespace SwashbucklerDiary.Rcl.Essentials
                 }
             }
         }
+
+        public void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption)
+        {
+            string[] files = Directory.GetFiles(sourceFolder, "*", searchOption);
+
+            foreach (string file in files)
+            {
+                string relativePath = Path.GetRelativePath(sourceFolder, file);
+
+                string destinationPath = Path.Combine(destinationFolder, relativePath);
+
+                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
+
+                if (!File.Exists(destinationPath))
+                {
+                    File.Move(file, destinationPath);
+                }
+            }
+        }
     }
 }

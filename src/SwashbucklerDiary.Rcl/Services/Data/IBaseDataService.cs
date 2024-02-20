@@ -18,6 +18,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<bool> DeleteAsync(Guid id);
 
+        Task<bool> DeleteAsync(List<TEntity> entities);
+
         Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> expression);
 
         Task<bool> UpdateAsync(TEntity entity);

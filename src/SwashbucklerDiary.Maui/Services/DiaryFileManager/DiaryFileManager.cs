@@ -11,8 +11,9 @@ namespace SwashbucklerDiary.Maui.Services
             IPlatformIntegration platformIntegration,
             II18nService i18nService,
             IMediaResourceManager mediaResourceManager,
-            IDiaryService diaryService)
-            : base(appFileManager, platformIntegration, i18nService, mediaResourceManager, diaryService)
+            IDiaryService diaryService,
+            IResourceService resourceService)
+            : base(appFileManager, platformIntegration, i18nService, mediaResourceManager, diaryService, resourceService)
         {
         }
 
@@ -114,8 +115,20 @@ namespace SwashbucklerDiary.Maui.Services
                 }
 
                 var targetDir = Path.Combine(FileSystem.AppDataDirectory, item);
-                _appFileManager.CopyFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
+                _appFileManager.MoveFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
             }
+        }
+
+        protected override void RestoreOldDiaryResource(string outputFolder)
+        {
+            var sourceDir = Path.Combine(outputFolder, "Image");
+            if (!Directory.Exists(sourceDir))
+            {
+                return;
+            }
+
+            var targetDir = Path.Combine(FileSystem.AppDataDirectory, "Image");
+            _appFileManager.MoveFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
         }
 
         protected override string GetDatabasePath()
