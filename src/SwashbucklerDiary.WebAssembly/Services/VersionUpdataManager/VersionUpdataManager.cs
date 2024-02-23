@@ -3,15 +3,16 @@ using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.WebAssembly.Services
 {
-    public class VersionUpdataManager :  Rcl.Services.VersionUpdataManager
+    public class VersionUpdataManager : Rcl.Services.VersionUpdataManager
     {
-        public VersionUpdataManager(IDiaryService diaryService, 
-            IResourceService resourceService, 
-            ISettingService settingService, 
+        public VersionUpdataManager(IDiaryService diaryService,
+            IResourceService resourceService,
+            ISettingService settingService,
             IMediaResourceManager mediaResourceManager,
             II18nService i18n,
-            IVersionTracking versionTracking) : 
-            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking)
+            IVersionTracking versionTracking,
+            IDiaryFileManager diaryFileManager) :
+            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager)
         {
         }
 
