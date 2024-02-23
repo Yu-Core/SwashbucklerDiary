@@ -9,7 +9,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
-    public partial class WritePage : ImportantComponentBase, IDisposable
+    public partial class WritePage : ImportantComponentBase
     {
         private readonly static string cssHref = $"_content/{Rcl.Essentials.StaticWebAssets.RclAssemblyName}/css/extend/masa-blazor-extend-enqueued-snackbars-write.css";
 
@@ -34,6 +34,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private bool overlay;
 
         private bool afterRender;
+
+        private PeriodicTimer? timer;
 
         private MarkdownEdit markdownEdit = default!;
 
@@ -110,27 +112,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                     InitTags());
                 InitCreateTime();
                 StateHasChanged();
+                _ = CreateTimer();
             }
-        }
-
-        private async Task BeforePop(PopEventArgs e)
-        {
-            if (!IsCurrentPage)
-            {
-                return;
-            }
-
-            await SaveDiaryAsync();
-        }
-
-        private async Task BeforePopToRoot(PopEventArgs e)
-        {
-            if (!IsCurrentPage)
-            {
-                return;
-            }
-
-            await SaveDiaryAsync();
         }
 
         protected override void OnDispose()
@@ -139,6 +122,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             NavigateService.BeforePop -= BeforePop;
             NavigateService.BeforePopToRoot -= BeforePopToRoot;
             AppLifecycle.Stopped -= LeaveAppSaveDiary;
+            timer?.Dispose();
             base.OnDispose();
         }
 
@@ -270,25 +254,31 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async void LeaveAppSaveDiary()
         {
-            await SaveDiaryAsync(false);
+            await SaveDiaryAsync(true);
         }
 
-        private Task SaveDiaryAsync() => SaveDiaryAsync(true);
+        private Task SaveDiaryAsync() => SaveDiaryAsync(false);
 
-        private async Task SaveDiaryAsync(bool alert)
+        private async Task SaveDiaryAsync(bool background)
         {
             if (enableMarkdown)
             {
                 // vditor 每次输入会触发渲染，所以有1秒左右的防抖
                 // https://github.com/Vanessa219/vditor/issues/1307
                 // https://github.com/Vanessa219/vditor/issues/574
-                overlay = true;
-                await InvokeAsync(StateHasChanged);
+                if (!background)
+                {
+                    overlay = true;
+                    await InvokeAsync(StateHasChanged);
+                }
 
                 await Task.Delay(800);
 
-                overlay = false;
-                await InvokeAsync(StateHasChanged);
+                if (!background)
+                {
+                    overlay = false;
+                    await InvokeAsync(StateHasChanged);
+                }
             }
 
             if (string.IsNullOrWhiteSpace(diary.Content))
@@ -303,7 +293,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 createMode = false;
                 bool flag = await DiaryService.AddAsync(diary);
 
-                if (alert)
+                if (!background)
                 {
                     if (flag)
                     {
@@ -317,13 +307,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 if (flag)
                 {
-                    _ = HandleAchievements();
+                    _ = HandleAchievements(background);
                 }
             }
             else
             {
                 bool flag = await DiaryService.UpdateIncludesAsync(diary);
-                if (alert)
+                if (!background)
                 {
                     if (flag)
                     {
@@ -382,13 +372,16 @@ namespace SwashbucklerDiary.Rcl.Pages
             return len + " " + I18n.T("Write.CountUnit");
         }
 
-        protected async Task HandleAchievements()
+        private async Task HandleAchievements(bool background = false)
         {
             var messages = await AchievementService.UpdateUserState(Achievement.Diary);
             var wordCount = await DiaryService.GetWordCount(WordCountType);
             var messages2 = await AchievementService.UpdateUserState(Achievement.Word, wordCount);
-            messages.AddRange(messages2);
-            await AlertAchievements(messages);
+            if (!background)
+            {
+                messages.AddRange(messages2);
+                await AlertAchievements(messages);
+            }
         }
 
         private Task SettingChange(Setting setting, ref bool value)
@@ -407,6 +400,35 @@ namespace SwashbucklerDiary.Rcl.Pages
             else
             {
                 await textareaEdit.InsertValueAsync(dateTimeNow);
+            }
+        }
+
+        private async Task BeforePop(PopEventArgs e)
+        {
+            if (!IsCurrentPage)
+            {
+                return;
+            }
+
+            await SaveDiaryAsync();
+        }
+
+        private async Task BeforePopToRoot(PopEventArgs e)
+        {
+            if (!IsCurrentPage)
+            {
+                return;
+            }
+
+            await SaveDiaryAsync();
+        }
+
+        private async Task CreateTimer()
+        {
+            timer = new PeriodicTimer(TimeSpan.FromMinutes(1));
+            while (await timer.WaitForNextTickAsync())
+            {
+                await SaveDiaryAsync(true);
             }
         }
     }
