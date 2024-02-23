@@ -251,7 +251,8 @@
     },
     "Sponsor": {
       "Name": "Sponsor we",
-      "Path": "About / Sponsor we"
+      "Path": "About / Sponsor we",
+      "Sponsor": "Sponsor"
     },
     "Introduction": "An open source, cross-platform local diary app",
     "Filing number": "APP Filing number: "
@@ -658,16 +659,13 @@
   "Sponsor": {
     "Type": {
       "QQ": {
-        "Name": "QQ Wallet",
-        "Url": "https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/assets/Assets/Images/QQ.png"
+        "Name": "QQ Wallet"
       },
       "WeChat": {
-        "Name": "WeChat Pay",
-        "Url": "https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/assets/Assets/Images/WeChat.png"
+        "Name": "WeChat Pay"
       },
       "Alipay": {
-        "Name": "Alipay",
-        "Url": "https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/assets/Assets/Images/Alipay.jpg"
+        "Name": "Alipay"
       }
     },
     "Introduce": {

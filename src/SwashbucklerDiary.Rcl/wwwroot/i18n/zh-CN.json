@@ -251,7 +251,8 @@
     },
     "Sponsor": {
       "Name": "捐助我们",
-      "Path": "关于 / 捐助我们"
+      "Path": "关于 / 捐助我们",
+      "Sponsor": "捐助"
     },
     "Introduction": "一款开源、跨平台的本地日记APP",
     "Filing number": "APP备案号："
@@ -658,16 +659,13 @@
   "Sponsor": {
     "Type": {
       "QQ": {
-        "Name": "QQ钱包",
-        "Url": "https://gitee.com/Yu-core/SwashbucklerDiary/raw/assets/Assets/Images/QQ.png"
+        "Name": "QQ钱包"
       },
       "WeChat": {
-        "Name": "微信支付",
-        "Url": "https://gitee.com/Yu-core/SwashbucklerDiary/raw/assets/Assets/Images/WeChat.png"
+        "Name": "微信支付"
       },
       "Alipay": {
-        "Name": "支付宝",
-        "Url": "https://gitee.com/Yu-core/SwashbucklerDiary/raw/assets/Assets/Images/Alipay.jpg"
+        "Name": "支付宝"
       }
     },
     "Introduce": {

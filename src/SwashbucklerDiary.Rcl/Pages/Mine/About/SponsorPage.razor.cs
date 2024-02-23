@@ -6,7 +6,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class SponsorPage : ImportantComponentBase
     {
-        private readonly List<DynamicListItem> sponsorTypeListItems = [];
+        private string? title;
+        private string? src;
+        private bool show;
+        private List<DynamicListItem> sponsorTypeListItems = [];
 
         protected override async Task OnInitializedAsync()
         {
@@ -15,19 +18,22 @@ namespace SwashbucklerDiary.Rcl.Pages
             await LoadViewAsync();
         }
 
-        private async Task ToSponsor(string? url)
+        private void OpenSponsorDialog(string? src)
         {
-            await PlatformIntegration.OpenBrowser(url);
+            this.src = src;
+            show = true;
         }
 
         private async Task LoadViewAsync()
         {
             var sponsorTypes = await StaticWebAssets.ReadJsonAsync<List<CodeSource>>("json/sponsor-type/sponsor-type.json");
+            List<DynamicListItem> listItems = [];
             foreach (var item in sponsorTypes)
             {
-                DynamicListItem sponsorTypeListItem = new(this, item.Name, item.Icon, () => ToSponsor(I18n.T(item.Url)));
-                sponsorTypeListItems.Add(sponsorTypeListItem);
+                DynamicListItem sponsorTypeListItem = new(this, item.Name!, item.Icon!, () => OpenSponsorDialog(item.Url));
+                listItems.Add(sponsorTypeListItem);
             }
+            sponsorTypeListItems = listItems;
         }
     }
 }
