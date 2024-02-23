@@ -9,7 +9,8 @@
                         ItemSize="60"
                         Context="item">
                 <LocationCard @key="item.Id"
-                              Value="item">
+                              Value="item"
+                              OnMenu="OpenMenu">
                 </LocationCard>
             </Virtualize>
         </CascadingValue>
@@ -17,7 +18,7 @@
 
     @if (Value.Count > 0 && showStatisticsCard)
     {
-        <MultiDisplay Tablet="true">
+        <MultiDisplay MdAndUp="true">
             <DesktopContent>
                 <div class="card-list-assist-info">
                     <LocationStatisticsCard Value="Value">
@@ -33,7 +34,7 @@
 </EmptyResult>
 
 <InputDialog @bind-Visible="ShowRename"
-             Text="@(SelectedLocation.Name)"
+             Text="@(SelectedItemValue.Name)"
              Title="@(I18n.T("Location.Rename"))"
              Placeholder="@(I18n.T("Location.Placeholder"))"
              OnOK="ConfirmRename">

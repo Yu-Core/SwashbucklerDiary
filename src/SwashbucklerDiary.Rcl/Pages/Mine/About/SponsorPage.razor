@@ -21,7 +21,7 @@
     <MCard Class="mb-5"
            Elevation="0"
            Rounded="@("lg")">
-        <MList>
+        <MList Class="dynamic-list-item-collection">
             @foreach (var item in sponsorTypeListItems)
             {
                 <MListItem OnClick="item.OnClick">
@@ -38,10 +38,7 @@
                     </MListItemAction>
                 </MListItem>
 
-                if (sponsorTypeListItems.Last() != item)
-                {
-                    <MDivider Class="mx-3"></MDivider>
-                }
+                <MDivider Class="mx-3"></MDivider>
             }
 
         </MList>

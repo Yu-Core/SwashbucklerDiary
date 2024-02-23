@@ -6,12 +6,24 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class MultiMenu : DialogComponentBase
     {
-        [EditorRequired]
         [Parameter]
         public RenderFragment<ActivatorProps> ActivatorContent { get; set; } = default!;
 
         [Parameter]
         public List<DynamicListItem> DynamicListItems { get; set; } = [];
+
+        public Dictionary<string, object> ActivatorAttributes { get; set; } = [];
+
+        protected RenderFragment? ComputedActivatorContent(ActivatorProps props)
+        {
+            ActivatorAttributes = props.Attrs;
+            if (ActivatorContent is null)
+            {
+                return null;
+            }
+
+            return ActivatorContent(props);
+        }
 
         private async Task UpdateDisplay(bool value)
         {
@@ -20,6 +32,5 @@ namespace SwashbucklerDiary.Rcl.Components
                 await InternalVisibleChanged(false);
             }
         }
-
     }
 }

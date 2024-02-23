@@ -1,60 +1,50 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
-@inherits MyComponentBase
+@inherits CardComponentBase<DiaryModel>
 
-<MHover>
-    <MCard @attributes="context.Attrs"
-           @oncontextmenu="()=>showMenu=true"
-           Class="@($"diary-card {(context.Hover?"elevation-sm-2":"")} {Class}")"
-           OnClick="ToRead"
-           Elevation="0"
-           Ripple="false"
-           Rounded="@("lg")"
-           __internal_preventDefault_oncontextmenu>
-        <MListItem Dense>
-            <MListItemContent>
-                <div class="d-flex align-center">
-                    <span class="text--secondary mr-3" style="font-size:1.1rem;">
-                        @(Time.ToString(DateFormat))
-                    </span>
-                    @if (ShowIcon)
-                    {
-                        <DiaryCardIcon Value="@WeatherIcon" />
-                        <DiaryCardIcon Value="@MoodIcon" />
-                    }
-                </div>
-            </MListItemContent>
-            <MListItemAction @onclick:stopPropagation="true">
-                @if (IsTop)
+<MCard Class="@($"diary-card elevation-sm-2--active {Class}")"
+       OnClick="ToRead"
+       Elevation="0"
+       Ripple="false"
+       Rounded="@("lg")">
+    <MListItem Style="height:60px;" Dense>
+        <MListItemContent>
+            <div class="d-flex align-center">
+                <span class="text--secondary mr-3" style="font-size:1.1rem;">
+                    @(Date)
+                </span>
+                @if (ShowIcon)
                 {
-                    <MIcon>
-                        mdi-format-vertical-align-top
-                    </MIcon>
+                    <DiaryCardIcon Value="@weatherIcon" />
+                    <DiaryCardIcon Value="@moodIcon" />
                 }
+            </div>
+        </MListItemContent>
+        <MListItemAction @onclick:stopPropagation="true">
+            @if (IsTop)
+            {
+                <MIcon>
+                    mdi-format-vertical-align-top
+                </MIcon>
+            }
 
-                <MultiMenu @bind-Visible="showMenu"
-                           DynamicListItems="menuItems"
-                           Context="menuContext">
-                    <ActivatorContent>
-                        <MButton @attributes="@menuContext.Attrs"
-                                 Icon="true">
-                            <MIcon Class="@($"chevron-down {(showMenu?"chevron-down-rotate-x":"")}")">
-                                mdi-chevron-down
-                            </MIcon>
-                        </MButton>
-                    </ActivatorContent>
-                </MultiMenu>
-            </MListItemAction>
-        </MListItem>
-        <MDivider Class="mx-3"></MDivider>
-        <MListItem ThreeLine>
-            <MListItemContent>
-                <div class="diary-card-title">
-                    @(title ?? I18n.T("Diary.Untitled"))
-                </div>
-                <MListItemSubtitle>
-                    @text
-                </MListItemSubtitle>
-            </MListItemContent>
-        </MListItem>
-    </MCard>
-</MHover>
+            <MButton @attributes="activatorAttributes"
+                     Icon="true"
+                     OnClick="OpenMenu">
+                <MIcon Class="@($"chevron-down {(IsActive && ShowMenu?"chevron-down-rotate-x":"")}")">
+                    mdi-chevron-down
+                </MIcon>
+            </MButton>
+        </MListItemAction>
+    </MListItem>
+    <MDivider Class="mx-3"></MDivider>
+    <MListItem ThreeLine>
+        <MListItemContent>
+            <div class="diary-card-title">
+                @title
+            </div>
+            <MListItemSubtitle>
+                @text
+            </MListItemSubtitle>
+        </MListItemContent>
+    </MListItem>
+</MCard>

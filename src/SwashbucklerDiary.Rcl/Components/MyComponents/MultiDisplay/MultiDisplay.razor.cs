@@ -5,6 +5,8 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class MultiDisplay : IDisposable
     {
+        private bool _isDesktop;
+
         [Inject]
         public MasaBlazor MasaBlazor { get; set; } = default!;
 
@@ -15,12 +17,11 @@ namespace SwashbucklerDiary.Rcl.Components
         public RenderFragment? DesktopContent { get; set; }
 
         [Parameter]
-        public bool Tablet { get; set; }
+        public bool MdAndUp { get; set; }
 
         [Parameter]
         public EventCallback<bool> OnUpdate { get; set; }
 
-        private bool Show;
 
         public void Dispose()
         {
@@ -32,23 +33,23 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
-            Show = Tablet ? MasaBlazor.Breakpoint.MdAndUp : MasaBlazor.Breakpoint.SmAndUp;
+            _isDesktop = MdAndUp ? MasaBlazor.Breakpoint.MdAndUp : MasaBlazor.Breakpoint.SmAndUp;
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
         }
 
         private async void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
         {
-            var show = Tablet ? MasaBlazor.Breakpoint.MdAndUp : MasaBlazor.Breakpoint.SmAndUp;
-            bool update = Show != show;
-            if(update)
+            var isDesktop = MdAndUp ? MasaBlazor.Breakpoint.MdAndUp : MasaBlazor.Breakpoint.SmAndUp;
+            bool update = _isDesktop != isDesktop;
+            if (update)
             {
                 if (OnUpdate.HasDelegate)
                 {
-                    await OnUpdate.InvokeAsync(Show);
+                    await OnUpdate.InvokeAsync(_isDesktop);
                 }
 
-                Show = show;
-                StateHasChanged();
+                _isDesktop = isDesktop;
+                await InvokeAsync(StateHasChanged);
             }
         }
     }

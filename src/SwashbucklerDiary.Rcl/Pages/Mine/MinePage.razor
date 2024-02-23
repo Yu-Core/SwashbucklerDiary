@@ -12,38 +12,35 @@
 
 <ScrollContainer @ref="scrollContainer">
     <div class="d-sm-flex flex-sm-row justify-space-between">
-        <MHover>
-            <MCard @attributes="context.Attrs"
-                   Class="@($"setting-info mb-5 py-sm-3 py-md-5 {(context.Hover?"elevation-sm-2":"")}")"
-                   Elevation="0"
-                   Rounded="@("lg")"
-                   Ripple="false"
-                   OnClick="@(()=>To("user"))">
-                <MList>
-                    <MListItem ThreeLine>
-                        <MListItemAvatar Class="ml-sm-2 ml-md-4 mr-md-6"
-                                         Rounded="@("lg")"
-                                         Size="70"
-                                         @onclick:stopPropagation="true">
-                            <MImage Src="@(avatar)"
-                                    @onclick="()=>showPreviewImage=true">
-                            </MImage>
-                        </MListItemAvatar>
-                        <MListItemContent>
-                            <MListItemTitle Class="text-h6 font-weight-bold">
-                                @(userName ?? I18n.T("AppName"))
-                            </MListItemTitle>
-                            <MListItemSubtitle>
-                                @(sign ?? I18n.T("Mine.Sign"))
-                            </MListItemSubtitle>
-                        </MListItemContent>
-                        <MListItemAction Style="align-self:unset;">
-                            <MIcon>mdi-chevron-right</MIcon>
-                        </MListItemAction>
-                    </MListItem>
-                </MList>
-            </MCard>
-        </MHover>
+        <MCard Class="setting-info mb-5 py-sm-3 py-md-5 elevation-sm-2--active"
+               Elevation="0"
+               Rounded="@("lg")"
+               Ripple="false"
+               OnClick="@(()=>To("user"))">
+            <MList>
+                <MListItem ThreeLine>
+                    <MListItemAvatar Class="ml-sm-2 ml-md-4 mr-md-6"
+                                     Rounded="@("lg")"
+                                     Size="70"
+                                     @onclick:stopPropagation="true">
+                        <MImage Src="@(avatar)"
+                                @onclick="()=>showPreviewImage=true">
+                        </MImage>
+                    </MListItemAvatar>
+                    <MListItemContent>
+                        <MListItemTitle Class="text-h6 font-weight-bold">
+                            @(userName ?? I18n.T("AppName"))
+                        </MListItemTitle>
+                        <MListItemSubtitle>
+                            @(sign ?? I18n.T("Mine.Sign"))
+                        </MListItemSubtitle>
+                    </MListItemContent>
+                    <MListItemAction Style="align-self:unset;">
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+            </MList>
+        </MCard>
 
         <MCard Class="setting-info mb-5 ml-sm-5 d-flex"
                Elevation="0"
@@ -90,7 +87,7 @@
         <MCard Class="setting-card"
                Elevation="0"
                Rounded="@("lg")">
-            <MList>
+            <MList Class="dynamic-list-item-collection">
                 @foreach (var item in list.Value)
                 {
                     <MListItem OnClick="item.OnClick">
@@ -107,10 +104,7 @@
                         </MListItemAction>
                     </MListItem>
 
-                    if (list.Value.Last() != item)
-                    {
-                        <MDivider Class="mx-3"></MDivider>
-                    }
+                    <MDivider Class="mx-3"></MDivider>
                 }
 
             </MList>

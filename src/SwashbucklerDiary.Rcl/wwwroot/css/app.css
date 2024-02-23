@@ -178,12 +178,6 @@ a, .btn-link {
     }
 }
 
-@media screen and (max-width:600px) {
-    .diary-card:last-child {
-        margin-bottom: 0px !important;
-    }
-}
-
 .diary-card .theme--light.m-divider {
     border-color: rgba(0,0,0,.04);
 }
@@ -237,7 +231,6 @@ a, .btn-link {
     .my-container {
         padding-top: 0px !important;
         padding-bottom: 0px !important;
-        
     }
 }
 
@@ -449,4 +442,8 @@ a, .btn-link {
 
 .m-chip.m-chip--outlined {
     padding: 0 16px;
+}
+
+.dynamic-list-item-collection > .m-divider__wrapper:last-child {
+    display: none !important;
 }

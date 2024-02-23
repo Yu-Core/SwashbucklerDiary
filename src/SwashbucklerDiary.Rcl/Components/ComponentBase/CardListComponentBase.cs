@@ -1,10 +1,12 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public abstract class CardListComponentBase<T> : ImportantComponentBase
+    public abstract class CardListComponentBase<T> : ImportantComponentBase where T : BaseModel, new()
     {
         protected List<T> _value = [];
 
@@ -15,6 +17,15 @@ namespace SwashbucklerDiary.Rcl.Components
         protected bool showStatisticsCard;
 
         protected Dictionary<string, Func<IEnumerable<T>, IEnumerable<T>>> sortOptions = [];
+
+        protected List<DynamicListItem> menuItems = [];
+
+        protected MultiMenu? multiMenu;
+
+        protected Dictionary<string, object> previousActivatorAttributes = [];
+
+        [Inject]
+        protected MasaBlazor MasaBlazor { get; set; } = default!;
 
         [Parameter]
         public virtual List<T> Value
@@ -29,7 +40,20 @@ namespace SwashbucklerDiary.Rcl.Components
             InvokeAsync(StateHasChanged);
         }
 
+        public bool ShowMenu { get; set; }
+
+        public T SelectedItemValue { get; set; } = new();
+
         protected List<string> SortItems => sortOptions.Keys.ToList();
+
+        protected Dictionary<string, object>? ActivatorAttributes => multiMenu?.ActivatorAttributes;
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
+        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -48,6 +72,13 @@ namespace SwashbucklerDiary.Rcl.Components
             await base.OnResume();
         }
 
+        protected override void OnDispose()
+        {
+            base.OnDispose();
+
+            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
+        }
+
         protected virtual async Task UpdateSettings()
         {
             showStatisticsCard = await SettingService.Get<bool>(Setting.StatisticsCard);
@@ -61,6 +92,37 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             return sortOption.Invoke(value);
+        }
+
+        protected void OpenMenu((T value, Dictionary<string, object> activatorAttributes) args)
+        {
+            if (SelectedItemValue.Id != args.value.Id)
+            {
+                SelectedItemValue = args.value;
+                if (ActivatorAttributes is not null)
+                {
+                    //清除旧的Activator的属性，必须这样写，直接Clear是无效的
+                    foreach (var key in ActivatorAttributes.Keys)
+                    {
+                        previousActivatorAttributes[key] = false;
+                    }
+
+                    foreach (var item in ActivatorAttributes)
+                    {
+                        args.activatorAttributes[item.Key] = item.Value;
+                    }
+
+                    previousActivatorAttributes = args.activatorAttributes;
+                }
+            }
+
+            ShowMenu = true;
+            InvokeAsync(StateHasChanged);
+        }
+
+        private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
+        {
+            InvokeAsync(StateHasChanged);
         }
     }
 }

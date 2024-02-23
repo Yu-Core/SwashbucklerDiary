@@ -10,24 +10,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         bool ShowDelete;
 
-        LocationModel SelectedLocation = new();
-
         [Inject]
         public ILocationService LocationService { get; set; } = default!;
-
-        public async Task Delete(LocationModel location)
-        {
-            SelectedLocation = location;
-            ShowDelete = true;
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public async Task Rename(LocationModel location)
-        {
-            SelectedLocation = location;
-            ShowRename = true;
-            await InvokeAsync(StateHasChanged);
-        }
 
         protected override void OnInitialized()
         {
@@ -38,7 +22,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task ConfirmDelete()
         {
-            var location = SelectedLocation;
+            var location = SelectedItemValue;
             ShowDelete = false;
             bool flag = await LocationService.DeleteAsync(location);
             if (flag)
@@ -67,9 +51,9 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            SelectedLocation.Name = name;
-            SelectedLocation.UpdateTime = DateTime.Now;
-            bool flag = await LocationService.UpdateAsync(SelectedLocation);
+            SelectedItemValue.Name = name;
+            SelectedItemValue.UpdateTime = DateTime.Now;
+            bool flag = await LocationService.UpdateAsync(SelectedItemValue);
             if (flag)
             {
                 await AlertService.Success(I18n.T("Share.EditSuccess"));
@@ -88,6 +72,22 @@ namespace SwashbucklerDiary.Rcl.Components
                 {"Sort.CreateTime.Asc", it => it.OrderBy(l => l.CreateTime) },
             };
             sortItem = SortItems.First();
+            menuItems = new()
+            {
+                new(this, "Share.Rename", "mdi-rename-outline", Rename),
+                new(this, "Share.Delete", "mdi-delete-outline", Delete),
+                new(this, "Share.Sort", "mdi-sort-variant", Sort),
+            };
+        }
+
+        private void Delete()
+        {
+            ShowDelete = true;
+        }
+
+        private void Rename()
+        {
+            ShowRename = true;
         }
     }
 }

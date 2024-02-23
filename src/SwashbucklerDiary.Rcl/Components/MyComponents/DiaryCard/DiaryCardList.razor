@@ -6,18 +6,19 @@
         <CascadingValue Value="this"
                         IsFixed="true">
             <Virtualize Items="Value"
-                        ItemSize="155"
+                        ItemSize="@ItemHeight"
                         Context="item">
                 <DiaryCard @key="item.Id"
-                           Value="item">
+                           Value="item"
+                           OnMenu="OpenMenu">
                 </DiaryCard>
             </Virtualize>
-            
+
         </CascadingValue>
     </div>
     @if (Value.Count > 0 && showStatisticsCard)
     {
-        <MultiDisplay Tablet="true">
+        <MultiDisplay MdAndUp="true">
             <DesktopContent>
                 <div class="card-list-assist-info">
                     <DiaryStatisticsCard Value="Value"></DiaryStatisticsCard>
@@ -53,3 +54,8 @@
              Title="@(I18n.T("Share.Sort"))"
              Items="SortItems">
 </RadioDialog>
+
+<MultiMenu @ref="multiMenu"
+           @bind-Visible="ShowMenu"
+           DynamicListItems="menuItems">
+</MultiMenu>

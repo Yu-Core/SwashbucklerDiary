@@ -8,12 +8,12 @@
                                ContentClass="rounded-t-lg"
                                Eager="true">
             <ActivatorContent>
-                @(ActivatorContent(context))
+                @(ComputedActivatorContent(context))
             </ActivatorContent>
             <ChildContent>
                 <MCard Class="rounded-t-lg py-2">
                     <MList>
-                        <div @onclick="HandleOnCancel">
+                        <div @onclick="HandleOnCancel" class="dynamic-list-item-collection">
                             @foreach (var item in DynamicListItems)
                             {
                                 @if (item.Show)
@@ -28,10 +28,8 @@
                                             @(I18n.T(item.Text))
                                         </MListItemContent>
                                     </MListItem>
-                                    if (DynamicListItems.Last(it => it.Show) != item)
-                                    {
-                                        <MDivider></MDivider>
-                                    }
+
+                                    <MDivider></MDivider>
                                 }
                             }
                         </div>
@@ -59,7 +57,7 @@
                         Eager="true"
                         Transition="scroll-x-reverse-transition">
             <ActivatorContent>
-                @(ActivatorContent(context))
+                @(ComputedActivatorContent(context))
             </ActivatorContent>
             <ChildContent>
                 <MList MinWidth="150">

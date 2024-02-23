@@ -1,36 +1,27 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
-@inherits MyComponentBase
+@inherits CardComponentBase<LocationModel>
 
-<MHover>
-    <MCard @attributes="context.Attrs"
-           @oncontextmenu="()=>ShowMenu=true"
-           Class="@($"mb-5 my-tag-card {(context.Hover?"elevation-sm-2":"")}")"
-           Elevation="0"
-           Ripple="false"
-           Rounded="@("lg")">
-        <MListItem>
-            <MListItemIcon>
-                <MIcon Class="list-item-icon">
-                    mdi-map-marker-outline
-                </MIcon>
-            </MListItemIcon>
-            <MListItemContent>
-                <MListItemTitle>
-                    @(Value.Name)
-                </MListItemTitle>
-            </MListItemContent>
-            <MListItemAction @onclick:stopPropagation="true">
-                <MultiMenu @bind-Visible="ShowMenu"
-                           DynamicListItems="MenuItems"
-                           Context="menuContext">
-                    <ActivatorContent>
-                        <MButton @attributes="@menuContext.Attrs"
-                                 Icon="true">
-                            <MIcon>mdi-pencil-outline</MIcon>
-                        </MButton>
-                    </ActivatorContent>
-                </MultiMenu>
-            </MListItemAction>
-        </MListItem>
-    </MCard>
-</MHover>
+<MCard Class="mb-5 my-tag-card elevation-sm-2--active"
+       Elevation="0"
+       Ripple="false"
+       Rounded="@("lg")">
+    <MListItem>
+        <MListItemIcon>
+            <MIcon Class="list-item-icon">
+                mdi-map-marker-outline
+            </MIcon>
+        </MListItemIcon>
+        <MListItemContent>
+            <MListItemTitle>
+                @(Value.Name)
+            </MListItemTitle>
+        </MListItemContent>
+        <MListItemAction @onclick:stopPropagation="true">
+            <MButton @attributes="@activatorAttributes"
+                     Icon="true"
+                     OnClick="OpenMenu">
+                <MIcon>mdi-pencil-outline</MIcon>
+            </MButton>
+        </MListItemAction>
+    </MListItem>
+</MCard>

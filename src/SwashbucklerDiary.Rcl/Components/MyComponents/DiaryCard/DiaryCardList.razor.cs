@@ -13,8 +13,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool showExport;
 
-        private DiaryModel selectedDiary = new();
-
         private List<DiaryModel> exportDiaries = [];
 
         [Inject]
@@ -38,67 +36,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public string? DateFormat { get; set; }
 
-        public async Task Topping(DiaryModel diaryModel)
-        {
-            diaryModel.Top = !diaryModel.Top;
-            diaryModel.UpdateTime = DateTime.Now;
-            await InvokeAsync(StateHasChanged);
-            await DiaryService.UpdateAsync(diaryModel);
-        }
-
-        public void Delete(DiaryModel diaryModel)
-        {
-            selectedDiary = diaryModel;
-            showDeleteDiary = true;
-            InvokeAsync(StateHasChanged);
-        }
-
-        public async Task Copy(DiaryModel diaryModel)
-        {
-            var text = diaryModel.CreateCopyContent();
-            await PlatformIntegration.SetClipboard(text);
-            await AlertService.Success(I18n.T("Share.CopySuccess"));
-        }
-
-        public async Task ChangeTag(DiaryModel diary)
-        {
-            selectedDiary = diary;
-            SelectedTags = await DiaryService.GetTagsAsync(selectedDiary.Id);
-            await InvokeAsync(StateHasChanged);
-            showSelectTag = true;
-            await InvokeAsync(StateHasChanged);
-        }
-
-
-        public async Task MovePrivacy(DiaryModel diaryModel)
-        {
-            diaryModel.Private = !diaryModel.Private;
-            diaryModel.UpdateTime = DateTime.Now;
-            await DiaryService.UpdateAsync(diaryModel);
-
-            var index = _value.FindIndex(it => it.Id == diaryModel.Id);
-            if (index < 0)
-            {
-                return;
-            }
-
-            _value.RemoveAt(index);
-            await InvokeAsync(StateHasChanged);
-            await OnRemove.InvokeAsync(diaryModel);
-            if (diaryModel.Private)
-            {
-                await AlertService.Success(I18n.T("Read.PrivacyAlert"));
-            }
-        }
-
-        public async Task Export(DiaryModel diary)
-        {
-            var newDiary = await DiaryService.FindAsync(diary.Id);
-            exportDiaries = [newDiary];
-            showExport = true;
-            await InvokeAsync(StateHasChanged);
-        }
-
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -109,12 +46,6 @@ namespace SwashbucklerDiary.Rcl.Components
         protected override IEnumerable<DiaryModel> Sort(IEnumerable<DiaryModel> value)
         {
             return base.Sort(value).OrderByDescending(it => it.Top);
-        }
-
-        private List<TagModel> SelectedTags
-        {
-            get => selectedDiary.Tags ?? new();
-            set => selectedDiary.Tags = value;
         }
 
         protected override async Task UpdateSettings()
@@ -134,14 +65,88 @@ namespace SwashbucklerDiary.Rcl.Components
             DateFormat = dateFormatTask.Result;
         }
 
+        private float ItemHeight => MasaBlazor.Breakpoint.Xs ? 156.8f : (MasaBlazor.Breakpoint.Sm ? 164.8f : 172.8f);
+
+        private List<TagModel> SelectedTags
+        {
+            get => SelectedItemValue.Tags ?? new();
+            set => SelectedItemValue.Tags = value;
+        }
+
+        private string TopText()
+            => SelectedItemValue.Top ? "Diary.CancelTop" : "Diary.Top";
+
+        private string PrivateText()
+            => SelectedItemValue.Private ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
+
+        private string PrivateIcon()
+            => SelectedItemValue.Private ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
+
+        private async Task Topping()
+        {
+            SelectedItemValue.Top = !SelectedItemValue.Top;
+            SelectedItemValue.UpdateTime = DateTime.Now;
+            await InvokeAsync(StateHasChanged);
+            await DiaryService.UpdateAsync(SelectedItemValue);
+        }
+
+        private void Delete()
+        {
+            showDeleteDiary = true;
+            InvokeAsync(StateHasChanged);
+        }
+
+        private async Task Copy()
+        {
+            var text = SelectedItemValue.CreateCopyContent();
+            await PlatformIntegration.SetClipboard(text);
+            await AlertService.Success(I18n.T("Share.CopySuccess"));
+        }
+
+        private async Task ChangeTag()
+        {
+            SelectedTags = await DiaryService.GetTagsAsync(SelectedItemValue.Id);
+            await InvokeAsync(StateHasChanged);
+            showSelectTag = true;
+            await InvokeAsync(StateHasChanged);
+        }
+
+        private async Task MovePrivacy()
+        {
+            SelectedItemValue.Private = !SelectedItemValue.Private;
+            SelectedItemValue.UpdateTime = DateTime.Now;
+            await DiaryService.UpdateAsync(SelectedItemValue);
+
+            var index = _value.FindIndex(it => it.Id == SelectedItemValue.Id);
+            if (index < 0)
+            {
+                return;
+            }
+
+            _value.RemoveAt(index);
+            await InvokeAsync(StateHasChanged);
+            await OnRemove.InvokeAsync(SelectedItemValue);
+            if (SelectedItemValue.Private)
+            {
+                await AlertService.Success(I18n.T("Read.PrivacyAlert"));
+            }
+        }
+
+        private async Task Export()
+        {
+            var newDiary = await DiaryService.FindAsync(SelectedItemValue.Id);
+            exportDiaries = [newDiary];
+            showExport = true;
+            await InvokeAsync(StateHasChanged);
+        }
+
         private async Task ConfirmDelete()
         {
-            var diaryModel = selectedDiary;
             showDeleteDiary = false;
-            bool flag = await DiaryService.DeleteAsync(diaryModel);
+            bool flag = await DiaryService.DeleteAsync(SelectedItemValue);
             if (flag)
             {
-                var index = _value.FindIndex(it => it.Id == diaryModel.Id);
+                var index = _value.FindIndex(it => it.Id == SelectedItemValue.Id);
                 if (index < 0)
                 {
                     return;
@@ -155,14 +160,15 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 await AlertService.Error(I18n.T("Share.DeleteFail"));
             }
-            await OnRemove.InvokeAsync(diaryModel);
+
+            await OnRemove.InvokeAsync(SelectedItemValue);
         }
 
         private async Task SaveSelectTags()
         {
             showSelectTag = false;
-            selectedDiary.UpdateTime = DateTime.Now;
-            await DiaryService.UpdateTagsAsync(selectedDiary);
+            SelectedItemValue.UpdateTime = DateTime.Now;
+            await DiaryService.UpdateTagsAsync(SelectedItemValue);
         }
 
         private void LoadView()
@@ -173,6 +179,16 @@ namespace SwashbucklerDiary.Rcl.Components
                 {"Sort.CreateTime.Asc",it => it.OrderBy(d => d.CreateTime) },
             };
             sortItem = SortItems.First();
+            menuItems = new()
+            {
+                new(this, "Diary.Tag", "mdi-label-outline", ChangeTag),
+                new(this, "Share.Copy", "mdi-content-copy", Copy),
+                new(this, "Share.Delete", "mdi-delete-outline", Delete),
+                new(this, TopText, "mdi-format-vertical-align-top", Topping),
+                new(this, "Diary.Export", "mdi-export", Export),
+                new(this, "Share.Sort", "mdi-sort-variant", Sort),
+                new(this, PrivateText, PrivateIcon, MovePrivacy, ()=>ShowPrivacy)
+            };
         }
     }
 }

@@ -9,14 +9,15 @@
                         ItemSize="60"
                         Context="item">
                 <TagCard @key="item.Id"
-                         Value="item">
+                         Value="item"
+                         OnMenu="OpenMenu">
                 </TagCard>
             </Virtualize>
         </CascadingValue>
     </div>
     @if (Value.Count > 0 && showStatisticsCard)
     {
-        <MultiDisplay Tablet="true">
+        <MultiDisplay MdAndUp="true">
             <DesktopContent>
                 <div class="card-list-assist-info">
                     <TagStatisticsCard Value="Value"
@@ -29,11 +30,11 @@
 </div>
 
 <EmptyResult Show="Value.Count == 0"
-              Text="@(I18n.T("Tag.NoTag"))">
+             Text="@(I18n.T("Tag.NoTag"))">
 </EmptyResult>
 
 <InputDialog @bind-Visible="ShowRename"
-             Text="@(SelectedTag.Name)"
+             Text="@(SelectedItemValue.Name)"
              Title="@(I18n.T("Tag.Rename"))"
              Placeholder="@(I18n.T("Tag.Placeholder"))"
              OnOK="ConfirmRename">
@@ -54,3 +55,8 @@
              Title="@(I18n.T("Share.Sort"))"
              Items="SortItems">
 </RadioDialog>
+
+<MultiMenu @ref="multiMenu"
+           @bind-Visible="ShowMenu"
+           DynamicListItems="menuItems">
+</MultiMenu>

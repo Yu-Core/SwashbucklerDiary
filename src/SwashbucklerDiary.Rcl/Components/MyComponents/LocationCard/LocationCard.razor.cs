@@ -1,49 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Rcl.Models;
-using SwashbucklerDiary.Shared;
+﻿using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class LocationCard : MyComponentBase
+    public partial class LocationCard : CardComponentBase<LocationModel>
     {
-        private bool ShowMenu;
-
-        private List<DynamicListItem> MenuItems = new();
-
-        [CascadingParameter]
-        public LocationCardList LocationCardList { get; set; } = default!;
-
-        [Parameter]
-        public LocationModel Value { get; set; } = default!;
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            LoadView();
-        }
-
-        private Task Delete()
-        {
-            return LocationCardList.Delete(Value);
-        }
-
-        private Task Rename()
-        {
-            return LocationCardList.Rename(Value);
-        }
-
-        private void Sort()
-            => LocationCardList.Sort();
-
-        void LoadView()
-        {
-            MenuItems = new()
-            {
-                new(this, "Share.Rename","mdi-rename-outline",Rename),
-                new(this, "Share.Delete","mdi-delete-outline",Delete),
-                new(this, "Share.Sort","mdi-sort-variant",Sort),
-            };
-        }
     }
 }

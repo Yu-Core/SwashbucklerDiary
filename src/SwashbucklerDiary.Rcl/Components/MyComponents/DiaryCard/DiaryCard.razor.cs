@@ -1,40 +1,26 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class DiaryCard : MyComponentBase
+    public partial class DiaryCard : CardComponentBase<DiaryModel>
     {
         private string? title;
 
         private string? text;
 
-        private bool showMenu;
+        private string? weatherIcon;
 
-        private DiaryModel previousValue = default!;
+        private string? moodIcon;
 
-        private List<DynamicListItem> menuItems = [];
+        private DiaryModel previousValue = new();
 
         [Inject]
         private IIconService IconService { get; set; } = default!;
 
         [CascadingParameter]
         public DiaryCardList DiaryCardList { get; set; } = default!;
-
-        [Parameter]
-        public DiaryModel Value { get; set; } = default!;
-
-        [Parameter]
-        public string? Class { get; set; }
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            LoadView();
-        }
 
         protected override void OnParametersSet()
         {
@@ -43,81 +29,19 @@ namespace SwashbucklerDiary.Rcl.Components
             SetContent();
         }
 
+        private bool IsActive => Value.Id == DiaryCardList.SelectedItemValue.Id;
+
+        private bool ShowMenu => DiaryCardList.ShowMenu;
+
         private string ValueContent => Value.Content ?? string.Empty;
 
-        private DateTime Time => Value.CreateTime;
-
         private bool IsTop => Value.Top;
-
-        private bool IsPrivate => Value.Private;
-
-        private bool ShowPrivacy => DiaryCardList.ShowPrivacy;
 
         private bool ShowIcon => DiaryCardList.ShowIcon;
 
         private string? DateFormat => DiaryCardList.DateFormat;
 
-        private string TopText()
-            => IsTop ? "Diary.CancelTop" : "Diary.Top";
-
-        private string PrivateText()
-            => IsPrivate ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
-
-        private string PrivateIcon()
-            => IsPrivate ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
-
-        private string? WeatherIcon =>
-            string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetWeatherIcon(Value.Weather);
-
-        private string? MoodIcon =>
-            string.IsNullOrWhiteSpace(Value.Mood) ? null : IconService.GetMoodIcon(Value.Mood);
-
-        private void LoadView()
-        {
-            menuItems = new()
-            {
-                new(this,"Diary.Tag","mdi-label-outline",ChangeTag),
-                new(this, "Share.Copy","mdi-content-copy",Copy),
-                new(this, "Share.Delete","mdi-delete-outline",Delete),
-                new(this, TopText,"mdi-format-vertical-align-top",Topping),
-                new(this, "Diary.Export","mdi-export",Export),
-                new(this, "Share.Sort","mdi-sort-variant",Sort),
-                new(this, PrivateText, PrivateIcon, MovePrivacy,()=>ShowPrivacy)
-            };
-        }
-
-        private Task Topping()
-        {
-            return DiaryCardList.Topping(Value);
-        }
-
-        private void Delete()
-        {
-            DiaryCardList.Delete(Value);
-        }
-
-        private Task Copy()
-        {
-            return DiaryCardList.Copy(Value);
-        }
-
-        private Task ChangeTag()
-        {
-            return DiaryCardList.ChangeTag(Value);
-        }
-
-        private Task Export()
-        {
-            return DiaryCardList.Export(Value);
-        }
-
-        private void Sort()
-            => DiaryCardList.Sort();
-
-        private Task MovePrivacy()
-        {
-            return DiaryCardList.MovePrivacy(Value);
-        }
+        private string? Date => DateFormat is null ? null : Value.CreateTime.ToString(DateFormat);
 
         private string? CreateDiaryTitle()
         {
@@ -216,11 +140,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void SetContent()
         {
-            if (previousValue != Value)
+            if (previousValue.Id != Value.Id)
             {
                 previousValue = Value;
                 title = CreateDiaryTitle();
                 text = CreateDiaryText();
+                weatherIcon = string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetWeatherIcon(Value.Weather);
+                moodIcon = string.IsNullOrWhiteSpace(Value.Mood) ? null : IconService.GetMoodIcon(Value.Mood);
             }
         }
     }
