@@ -1,4 +1,5 @@
 ﻿using SqlSugar;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Repository
 {
@@ -8,5 +9,7 @@ namespace SwashbucklerDiary.Repository
         Task<bool> DeleteAsync();
 
         Task<int> CountAsync();
+
+        Task<bool> UpdateAsync(T entity, Expression<Func<T, object>> columns);
     }
 }

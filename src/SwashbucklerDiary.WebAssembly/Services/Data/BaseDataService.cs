@@ -88,6 +88,11 @@ namespace SwashbucklerDiary.WebAssembly.Services
             return _iBaseRepository.UpdateAsync(entity);
         }
 
+        public Task<bool> UpdateAsync(TEntity entity, Expression<Func<TEntity, object>> columns)
+        {
+            return _iBaseRepository.UpdateAsync(entity, columns);
+        }
+
         public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
         {
             return _iBaseRepository.IsAnyAsync(expression);

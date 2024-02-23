@@ -24,6 +24,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<bool> UpdateAsync(TEntity entity);
 
+        Task<bool> UpdateAsync(TEntity entity, Expression<Func<TEntity, object>> columns);
+
         Task<List<TEntity>> QueryAsync();
 
         Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> expression);

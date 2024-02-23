@@ -87,7 +87,7 @@ namespace SwashbucklerDiary.Rcl.Components
             SelectedItemValue.Top = !SelectedItemValue.Top;
             SelectedItemValue.UpdateTime = DateTime.Now;
             await InvokeAsync(StateHasChanged);
-            await DiaryService.UpdateAsync(SelectedItemValue);
+            await DiaryService.UpdateAsync(SelectedItemValue, it => new { it.Top, it.UpdateTime });
         }
 
         private void Delete()
@@ -115,7 +115,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             SelectedItemValue.Private = !SelectedItemValue.Private;
             SelectedItemValue.UpdateTime = DateTime.Now;
-            await DiaryService.UpdateAsync(SelectedItemValue);
+            await DiaryService.UpdateAsync(SelectedItemValue, it => new { it.Private, it.UpdateTime });
 
             var index = _value.FindIndex(it => it.Id == SelectedItemValue.Id);
             if (index < 0)

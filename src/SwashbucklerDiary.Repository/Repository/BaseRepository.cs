@@ -1,4 +1,5 @@
 ﻿using SqlSugar;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Repository
 {
@@ -17,6 +18,11 @@ namespace SwashbucklerDiary.Repository
         public Task<bool> DeleteAsync()
         {
             return base.Context.Deleteable<T>().ExecuteCommandHasChangeAsync();
+        }
+
+        public Task<bool> UpdateAsync(T entity, Expression<Func<T, object>> columns)
+        {
+            return base.Context.Updateable(entity).UpdateColumns(columns).ExecuteCommandHasChangeAsync();
         }
     }
 }

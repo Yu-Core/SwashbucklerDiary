@@ -156,7 +156,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task OnTopping()
         {
             diary.Top = !diary.Top;
-            await DiaryService.UpdateAsync(diary);
+            diary.UpdateTime = DateTime.Now;
+            await DiaryService.UpdateAsync(diary, it => new { it.Top, it.UpdateTime });
             StateHasChanged();
         }
 
@@ -219,7 +220,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             diary.Private = !diary.Private;
             diary.UpdateTime = DateTime.Now;
-            await DiaryService.UpdateAsync(diary);
+            await DiaryService.UpdateAsync(diary, it => new { it.Private, it.UpdateTime });
             await AlertService.Success(I18n.T("Read.PrivacyAlert"));
         }
 
