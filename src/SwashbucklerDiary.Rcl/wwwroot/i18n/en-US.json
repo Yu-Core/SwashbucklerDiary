@@ -421,6 +421,10 @@
           "Name": "Markdown",
           "Path": "Setting / Diary / Markdown"
         },
+        "EditAutoSave": {
+          "Name": "Auto save",
+          "Path": "Setting / Diary / Auto save"
+        },
         "Location": {
           "Name": "Location",
           "Path": "Setting / Diary / Location"

@@ -2,13 +2,13 @@
 {
     public enum Setting
     {
-        Language, 
-        Title, 
+        Language,
+        Title,
         Markdown,
         UserName,
         Sign,
         Avatar,
-        PrivacyMode, 
+        PrivacyMode,
         PrivatePassword,
         Theme,
         FirstSetLanguage,
@@ -24,6 +24,7 @@
         LANDeviceName,
         LANScanPort,
         LANTransmissionPort,
-        StatisticsCard
+        StatisticsCard,
+        EditAutoSave
     }
 }

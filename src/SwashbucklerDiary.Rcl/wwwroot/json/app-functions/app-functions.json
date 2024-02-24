@@ -194,6 +194,12 @@
     "Href": "diarySetting"
   },
   {
+    "Name": "Setting.Display.Diary.EditAutoSave.Name",
+    "Icon": "mdi-content-save-edit-outline",
+    "Path": "Setting.Display.Diary.EditAutoSave.Path",
+    "Href": "diarySetting"
+  },
+  {
     "Name": "Setting.Display.Diary.Location.Name",
     "Icon": "mdi-map-marker-outline",
     "Path": "Setting.Display.Diary.Location.Path",
@@ -240,6 +246,12 @@
     "Icon": "mdi-calendar-clock",
     "Path": "Setting.Display.DiaryCard.DateFormat.Path",
     "Href": "diaryCardSetting"
+  },
+  {
+    "Name": "Setting.Display.StatisticsCard.Name",
+    "Icon": " mdi-chart-line",
+    "Path": "Setting.Display.StatisticsCard.Path",
+    "Href": "setting"
   },
   {
     "Name": "About.SourceCode.Name",

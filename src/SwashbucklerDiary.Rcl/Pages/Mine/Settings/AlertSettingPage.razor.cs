@@ -14,10 +14,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private readonly Dictionary<string, string> timeoutItems = [];
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
-            SetTimeouts();
-            await base.OnInitializedAsync();
+            base.OnInitialized();
+
+            InitTimeoutItems();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -45,7 +46,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async void SetTimeout(StringNumber value)
         {
-            if(_timeout == value)
+            if (_timeout == value)
             {
                 return;
             }
@@ -55,7 +56,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await SettingService.Set(Setting.AlertTimeout, _timeout);
         }
 
-        private void SetTimeouts()
+        private void InitTimeoutItems()
         {
             for (int i = 0; i < 5; i++)
             {

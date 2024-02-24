@@ -54,6 +54,27 @@
                     </MSwitch>
                 </MListItemAction>
             </MListItem>
+
+            <MDivider Class="mx-3"></MDivider>
+
+            <MListItem OnClick="()=>showEditAutoSave=true">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-content-save-edit-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.EditAutoSave.Name"))
+                </MListItemContent>
+                <MListItemContent Class="setting-state">
+                    <MListItemSubtitle>
+                        @(editAutoSave.ToString() + "s")
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
         </MList>
     </MCard>
 
@@ -92,3 +113,11 @@
         </MList>
     </MCard>
 </ScrollContainer>
+
+<SelectIconDialog @bind-Visible="showEditAutoSave"
+                  @bind-Value="@EditAutoSave"
+                  Title="@(I18n.T("Setting.Display.Diary.EditAutoSave.Name"))"
+                  Items="editAutoSaveItems"
+                  Text="@(item=>item.Key + "s")"
+                  Mandatory="true">
+</SelectIconDialog>

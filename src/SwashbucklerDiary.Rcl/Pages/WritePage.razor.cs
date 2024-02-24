@@ -35,6 +35,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool afterRender;
 
+        private int editAutoSave;
+
         private PeriodicTimer? timer;
 
         private MarkdownEdit markdownEdit = default!;
@@ -95,7 +97,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             LoadView();
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
             NavigateService.BeforePop += BeforePop;
-            NavigateService.BeforePopToRoot += BeforePopToRoot;
+            NavigateService.BeforePopToRoot += BeforePop;
             AppLifecycle.Stopped += LeaveAppSaveDiary;
         }
 
@@ -120,7 +122,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
             NavigateService.BeforePop -= BeforePop;
-            NavigateService.BeforePopToRoot -= BeforePopToRoot;
+            NavigateService.BeforePopToRoot -= BeforePop;
             AppLifecycle.Stopped -= LeaveAppSaveDiary;
             timer?.Dispose();
             base.OnDispose();
@@ -223,8 +225,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateSettings()
         {
-            enableTitle = await SettingService.Get<bool>(Setting.Title);
-            enableMarkdown = await SettingService.Get<bool>(Setting.Markdown);
+            var titleTask = SettingService.Get<bool>(Setting.Title);
+            var markdownTask = SettingService.Get<bool>(Setting.Markdown);
+            var editAutoSaveTask = SettingService.Get<int>(Setting.EditAutoSave);
+            await Task.WhenAll(titleTask, markdownTask, editAutoSaveTask);
+            enableTitle = titleTask.Result;
+            enableMarkdown = markdownTask.Result;
+            editAutoSave = editAutoSaveTask.Result;
         }
 
         private void LoadView()
@@ -410,22 +417,13 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            await SaveDiaryAsync();
-        }
-
-        private async Task BeforePopToRoot(PopEventArgs e)
-        {
-            if (!IsCurrentPage)
-            {
-                return;
-            }
-
+            timer?.Dispose();
             await SaveDiaryAsync();
         }
 
         private async Task CreateTimer()
         {
-            timer = new PeriodicTimer(TimeSpan.FromMinutes(1));
+            timer = new PeriodicTimer(TimeSpan.FromSeconds(editAutoSave));
             while (await timer.WaitForNextTickAsync())
             {
                 await SaveDiaryAsync(true);

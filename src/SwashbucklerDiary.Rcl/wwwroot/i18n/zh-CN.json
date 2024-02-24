@@ -421,6 +421,10 @@
           "Name": "Markdown",
           "Path": "设置 / 日记 / Markdown"
         },
+        "EditAutoSave": {
+          "Name": "自动保存",
+          "Path": "设置 / 日记 / 自动保存"
+        },
         "Location": {
           "Name": "位置",
           "Path": "设置 / 日记 / 位置"
