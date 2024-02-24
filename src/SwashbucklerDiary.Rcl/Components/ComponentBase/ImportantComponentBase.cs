@@ -53,11 +53,6 @@ namespace SwashbucklerDiary.Rcl.Components
             return (bool value) => SettingService.Set(type, value);
         }
 
-        protected string? MSwitchTrackColor(bool value)
-        {
-            return value && Light ? "black" : null;
-        }
-
         protected virtual void OnDispose()
         {
             Navigation.LocationChanged -= NavigationManagerOnLocationChanged;

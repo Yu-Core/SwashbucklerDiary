@@ -447,3 +447,8 @@ a, .btn-link {
 .dynamic-list-item-collection > .m-divider__wrapper:last-child {
     display: none !important;
 }
+
+.theme--light.m-input--switch--inset.white--text .theme--light.m-input--switch__track.white--text {
+    color: #000 !important;
+    opacity: .8;
+}

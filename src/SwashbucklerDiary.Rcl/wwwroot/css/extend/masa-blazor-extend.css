@@ -147,10 +147,6 @@
     background-color: inherit !important;
 }
 
-.theme--light.m-input--switch__track.black--text {
-    opacity: .8;
-}
-
 .p-mobile-date-picker__content {
     border-radius: 8px 8px 0 0 !important;
 }
