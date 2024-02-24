@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -7,7 +8,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private string? SearchContent;
 
         [Parameter]
-        public Func<string?,Task>? OnSearch { get; set; }
+        public Func<string?, Task>? OnSearch { get; set; }
 
         protected override async Task OnResume()
         {
@@ -17,12 +18,20 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task Search()
         {
-            if(OnSearch is null)
+            if (OnSearch is null)
             {
                 return;
             }
 
             await OnSearch.Invoke(SearchContent);
+        }
+
+        protected async Task HandleOnEnter(KeyboardEventArgs args)
+        {
+            if (args.Key == "Enter")
+            {
+                await Search();
+            }
         }
     }
 }
