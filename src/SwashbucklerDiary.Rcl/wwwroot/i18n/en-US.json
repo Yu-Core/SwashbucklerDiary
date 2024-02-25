@@ -156,7 +156,7 @@
   "Read": {
     "OpenPrivacy": "Private",
     "ClosePrivacy": "Cancel private",
-    "PrivacyAlert": "Moved into the privacy library"
+    "PrivacyAlert": "Moved into the safety box"
   },
   "AppName": "Swashbuckler Diary",
   "Mine": {
@@ -362,16 +362,16 @@
     "Safe": {
       "Name": "Safe",
       "PrivacyLibrary": {
-        "Name": "Privacy library",
-        "Path": "Setting / Privacy library"
+        "Name": "Safety box",
+        "Path": "Setting / Safety box"
       },
       "DisplayPrivacy": {
-        "Name": "Privacy Visibility",
-        "Path": "Setting / Privacy Visibility"
+        "Name": "Display safety box",
+        "Path": "Setting / Display safety box"
       },
       "PrivacyPassword": {
-        "Name": "Privacy password",
-        "Path": "Setting / Privacy password"
+        "Name": "Safety box password",
+        "Path": "Setting / Safety box password"
       },
       "Mask": {
         "Name": "Invalidate data",

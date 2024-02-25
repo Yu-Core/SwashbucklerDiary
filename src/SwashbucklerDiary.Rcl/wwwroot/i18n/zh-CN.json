@@ -156,7 +156,7 @@
   "Read": {
     "OpenPrivacy": "设为私密",
     "ClosePrivacy": "取消私密",
-    "PrivacyAlert": "已移动至隐私库"
+    "PrivacyAlert": "已移动至保险箱"
   },
   "AppName": "侠客日记",
   "Mine": {
@@ -362,16 +362,16 @@
     "Safe": {
       "Name": "安全",
       "PrivacyLibrary": {
-        "Name": "隐私库",
-        "Path": "设置 / 隐私库"
+        "Name": "保险箱",
+        "Path": "设置 / 保险箱"
       },
       "DisplayPrivacy": {
-        "Name": "隐私库可见性",
-        "Path": "设置 / 隐私库可见性"
+        "Name": "显示保险箱",
+        "Path": "设置 / 显示保险箱"
       },
       "PrivacyPassword": {
-        "Name": "隐私库密码",
-        "Path": "设置 / 隐私库密码"
+        "Name": "保险箱密码",
+        "Path": "设置 / 保险箱密码"
       },
       "Mask": {
         "Name": "清除所有数据",
