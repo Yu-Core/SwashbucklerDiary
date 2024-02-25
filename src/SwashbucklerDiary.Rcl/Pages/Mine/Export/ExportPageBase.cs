@@ -4,13 +4,13 @@ using SwashbucklerDiary.Rcl.Components;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
-    public partial class ExportPage : ImportantComponentBase
+    public abstract class ExportPageBase : ImportantComponentBase
     {
-        private StringNumber tab = 0;
+        protected StringNumber tab = 0;
 
-        private readonly List<string> views = new() { "Local", "LAN" };
+        protected readonly List<string> views = new() { "Local", "LAN" };
 
-        private readonly List<string> tabNames = ["Export.Local.Name", "Export.LAN.Name"];
+        protected readonly List<string> tabNames = ["Export.Local.Name", "Export.LAN.Name"];
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -23,7 +23,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             InitTab();
         }
 
-        private void InitTab()
+        protected void InitTab()
         {
             if (string.IsNullOrEmpty(View))
             {

@@ -4,7 +4,7 @@ using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
-    public partial class LocalBackups : ImportantComponentBase
+    public partial class LocalBackupsPage : ImportantComponentBase
     {
         private bool showBackups;
 

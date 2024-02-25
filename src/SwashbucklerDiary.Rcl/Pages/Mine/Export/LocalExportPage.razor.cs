@@ -6,7 +6,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
-    public partial class LocalExport : ImportantComponentBase
+    public partial class LocalExportPage : ImportantComponentBase
     {
         private bool showExport;
 
@@ -23,7 +23,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private IDiaryFileManager DiaryFileManager { get; set; } = default!;
 
         [Inject]
-        private ILogger<LocalExport> Logger { get; set; } = default!;
+        private ILogger<LocalExportPage> Logger { get; set; } = default!;
 
         private async Task Export()
         {

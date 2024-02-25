@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace SwashbucklerDiary.Maui.Pages
 {
     // TODO: 写的不好，暂时先将就着，以后需要重写
-    public partial class WebDAVBackups : ImportantComponentBase
+    public partial class WebDAVBackupsPage : ImportantComponentBase
     {
         private bool showConfig;
 
@@ -29,7 +29,7 @@ namespace SwashbucklerDiary.Maui.Pages
         private IWebDAV WebDAVService { get; set; } = default!;
 
         [Inject]
-        private ILogger<WebDAVBackups> Logger { get; set; } = default!;
+        private ILogger<WebDAVBackupsPage> Logger { get; set; } = default!;
 
         [Inject]
         private IDiaryFileManager DiaryFileManager { get; set; } = default!;
@@ -38,7 +38,7 @@ namespace SwashbucklerDiary.Maui.Pages
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if(firstRender)
+            if (firstRender)
             {
                 await UpdateSettings();
                 StateHasChanged();
