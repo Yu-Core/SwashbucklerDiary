@@ -80,10 +80,12 @@ namespace SwashbucklerDiary.Rcl.Pages
                 if (!isSuccess)
                 {
                     await AlertService.Error(I18n.T("Export.Import.Fail"));
-                    return;
+                }
+                else
+                {
+                    await AlertService.Success(I18n.T("Export.Import.Success"));
                 }
 
-                await AlertService.Success(I18n.T("Export.Import.Success"));
             }
             catch (Exception e)
             {

@@ -628,13 +628,15 @@
     "No network connection": "No network connection",
     "Sending": "Sending",
     "Send successfully": "Send successfully",
-    "Send failed": "Send failed"
+    "Send failed": "Send failed",
+    "Send canceled": "Send canceled"
   },
   "lanReceiver": {
     "Waiting for connection": "Waiting for connection...",
     "Receiving": "Receiving",
     "Receive successfully": "Receive successfully",
-    "Receive failed": "Receive failed"
+    "Receive failed": "Receive failed",
+    "Receive canceled": "Receive canceled"
   },
   "Storage": {
     "Content": "Are you sure to clear all caches?",

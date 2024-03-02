@@ -11,10 +11,10 @@ namespace SwashbucklerDiary.Rcl.Components
         public int Ps { get; set; }
 
         [Parameter]
-        public long TotalBytesToReceive { get; set; }
+        public long TotalBytes { get; set; }
 
         [Parameter]
-        public long BytesReceived { get; set; }
+        public long Bytes { get; set; }
 
         [Parameter]
         public EventCallback OnCancel { get; set; }

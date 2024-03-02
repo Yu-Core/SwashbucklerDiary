@@ -27,6 +27,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected const string backupFileNamePrefix = "SDBackup";
 
+        protected const string versionInfoFileName = "version.json";
+
         protected JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
         {
             WriteIndented = true,
@@ -263,7 +265,7 @@ namespace SwashbucklerDiary.Rcl.Services
             string jsonString = JsonSerializer.Serialize(exportVersionInfo);
 
             // 将 JSON 字符串写入文件
-            var jsonPath = Path.Combine(outputFolder, "version.json");
+            var jsonPath = Path.Combine(outputFolder, versionInfoFileName);
             File.WriteAllText(jsonPath, jsonString);
         }
 
@@ -376,7 +378,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
-            var versionJsonPath = Path.Combine(outputFolder, "version.json");
+            var versionJsonPath = Path.Combine(outputFolder, versionInfoFileName);
             bool needUpdateResourceUri = false;
             if (!File.Exists(versionJsonPath))
             {
@@ -431,7 +433,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
-            var versionJsonPath = Path.Combine(outputFolder, "version.json");
+            var versionJsonPath = Path.Combine(outputFolder, versionInfoFileName);
             bool needUpdateResourceUri = false;
             if (!File.Exists(versionJsonPath))
             {

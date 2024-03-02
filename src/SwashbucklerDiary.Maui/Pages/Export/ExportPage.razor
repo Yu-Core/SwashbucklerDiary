@@ -1,0 +1,35 @@
+﻿@page "/export"
+@namespace SwashbucklerDiary.Maui.Pages
+@inherits ExportPageBase
+
+
+<MyAppBar>
+    <MButton Icon
+             OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MultiTabList @bind-Value="tab"
+                  Items="tabNames">
+    </MultiTabList>
+
+    <MSpacer></MSpacer>
+</MyAppBar>
+
+<SwiperTabItems @bind-Value="tab">
+    <SwiperTabItem>
+        <MContainer Class="my-container"
+                    Fluid="true">
+            <LocalExportPage></LocalExportPage>
+        </MContainer>
+    </SwiperTabItem>
+    <SwiperTabItem>
+        <MContainer Class="my-container"
+                    Fluid="true">
+            <LANTransferPage></LANTransferPage>
+        </MContainer>
+    </SwiperTabItem>
+</SwiperTabItems>
+

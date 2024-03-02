@@ -628,13 +628,15 @@
     "No network connection": "没有网络连接",
     "Sending": "正在发送",
     "Send successfully": "发送成功",
-    "Send failed": "发送失败"
+    "Send failed": "发送失败",
+    "Send canceled": "发送已取消"
   },
   "lanReceiver": {
     "Waiting for connection": "等待连接中...",
     "Receiving": "正在接收",
     "Receive successfully": "接收成功",
-    "Receive failed": "接收失败"
+    "Receive failed": "接收失败",
+    "Receive canceled": "接收已取消"
   },
   "Storage": {
     "Content": "确定清除所有缓存吗？",

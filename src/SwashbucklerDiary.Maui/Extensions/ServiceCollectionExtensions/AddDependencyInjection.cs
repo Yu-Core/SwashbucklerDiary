@@ -51,6 +51,8 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddSingleton<IStorageSpace, Services.StorageSpace>();
             services.AddSingleton<IVersionUpdataManager, Services.VersionUpdataManager>();
             services.AddSingleton<IWebDAV, Essentials.WebDAV>();
+            services.AddSingleton<ILANSenderService, LANSenderService>();
+            services.AddSingleton<ILANReceiverService, LANReceiverService>();
 
             return services;
         }

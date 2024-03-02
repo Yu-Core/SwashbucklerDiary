@@ -90,24 +90,6 @@
     "Href": "export?View=LAN"
   },
   {
-    "Name": "Export.LAN.Config.Name",
-    "Icon": "mdi-cog-transfer-outline",
-    "Path": "Export.LAN.Config.Path",
-    "Href": "export?View=LAN"
-  },
-  {
-    "Name": "Export.Send.Name",
-    "Icon": "mdi-send-outline",
-    "Path": "Export.Send.Path",
-    "Href": "lanSender"
-  },
-  {
-    "Name": "Export.Receive.Name",
-    "Icon": "mdi-printer-pos-outline",
-    "Path": "Export.Receive.Path",
-    "Href": "lanReceiver"
-  },
-  {
     "Name": "Mine.Achievement.Name",
     "Icon": "mdi-trophy-outline",
     "Path": "Mine.Achievement.Path",
