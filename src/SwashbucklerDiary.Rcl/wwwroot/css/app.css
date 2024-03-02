@@ -452,3 +452,19 @@ a, .btn-link {
     color: #000 !important;
     opacity: .8;
 }
+
+.theme--light.m-btn.m-btn--readonly {
+    color: rgba(0,0,0,.87) !important;
+}
+
+    .theme--light.m-btn.m-btn--readonly .m-btn__loading, .theme--light.m-btn.m-btn--readonly .m-icon {
+        color: rgba(0,0,0,.87) !important;
+    }
+
+.theme--dark.m-btn.m-btn--readonly {
+    color: #fff !important
+}
+
+    .theme--dark.m-btn.m-btn--readonly .m-btn__loading, .theme--dark.m-btn.m-btn--readonly .m-icon {
+        color: #fff !important
+    }

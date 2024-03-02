@@ -139,8 +139,12 @@
     background: #fff !important;
 }
 
-.m-toolbar.m-sheet {
-    background: inherit !important;
+.theme--light.m-toolbar.m-sheet {
+    background-color: inherit
+}
+
+.theme--dark.m-toolbar.m-sheet {
+    background-color: inherit
 }
 
 .m-text-field .m-input__slot {

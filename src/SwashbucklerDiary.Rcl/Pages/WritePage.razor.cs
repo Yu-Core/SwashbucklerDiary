@@ -172,6 +172,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string MoodText =>
             string.IsNullOrEmpty(diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + diary.Mood)!;
 
+        private string LocationText =>
+            string.IsNullOrEmpty(SelectedLocation) ? I18n.T("Write.Location") : SelectedLocation;
+
         private WordCountStatistics WordCountType
             => (WordCountStatistics)Enum.Parse(typeof(WordCountStatistics), I18n.T("Write.WordCountType")!);
 

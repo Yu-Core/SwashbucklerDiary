@@ -146,12 +146,12 @@
     "happy": "喜",
     "kiss": "亲亲",
     "lol": "乐",
-    "neutral": "无情",
-    "poop": "便便",
+    "neutral": "无感",
+    "poop": "糟糕",
     "sad": "悲",
     "sick": "病了",
-    "tongue": "略略略",
-    "wink": "你懂的"
+    "tongue": "好吃",
+    "wink": "眨眼"
   },
   "Read": {
     "OpenPrivacy": "设为私密",

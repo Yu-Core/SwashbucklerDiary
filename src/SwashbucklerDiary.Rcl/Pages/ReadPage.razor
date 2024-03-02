@@ -51,7 +51,7 @@
     <div id="screenshot" class="primary-background">
         @if (afterRender)
         {
-            <div class="px-3 d-flex align-end">
+            <div class="px-3 mb-sm-1 d-flex align-end">
                 <span class="text-h6 font-weight-bold">
                     @(diary.CreateTime.ToString("d"))
                 </span>
@@ -63,39 +63,53 @@
                     @(CounterValue())
                 </span>
             </div>
-            <div class="px-2">
+
+            <div>
                 @if (ShowWeather)
                 {
-                    <MChip Class="my-2 mr-2"
-                           Outlined="true">
-                        <MIcon Left="true">
-                            @(GetWeatherIcon())
+                    <MButton Class="m-btn--readonly"
+                             Style="letter-spacing:unset;"
+                             Text
+                             Rounded
+                             Disabled
+                             Ripple="false">
+                        <MIcon Left Size="20">
+                            @(WeatherIcon)
                         </MIcon>
-                        @(I18n.T("Weather." + diary.Weather))
-                    </MChip>
+                        @WeatherText
+                    </MButton>
                 }
 
                 @if (ShowMood)
                 {
-                    <MChip Class="my-2 mr-2"
-                           Outlined="true">
-                        <MIcon Left="true">
-                            @(GetMoodIcon())
+                    <MButton Class="m-btn--readonly"
+                             Style="letter-spacing:unset;"
+                             Text
+                             Rounded
+                             Disabled
+                             Ripple="false">
+                        <MIcon Left Size="20">
+                            @(MoodIcon)
                         </MIcon>
-                        @(I18n.T("Mood." + diary.Mood))
-                    </MChip>
+                        @MoodText
+                    </MButton>
                 }
 
                 @if (ShowLocation)
                 {
-                    <MChip Class="my-2 mr-2"
-                           Outlined="true">
-                        <MIcon Left="true">
+                    <MButton Class="m-btn--readonly"
+                             Style="letter-spacing:unset;"
+                             Text
+                             Rounded
+                             Disabled
+                             Ripple="false">
+                        <MIcon Left Size="20">
                             mdi-map-marker-outline
                         </MIcon>
-                        @(diary.Location)
-                    </MChip>
+                        @LocationText
+                    </MButton>
                 }
+
             </div>
 
             @if (ShowTitle)
@@ -112,28 +126,30 @@
                 </MTextField>
             }
 
-            @if (enableMarkdown)
-            {
-                <MarkdownPreview Value="@(diary.Content)"
-                                 Class="my-sm-4 px-3"
-                                 Style="padding-top:10px">
-                </MarkdownPreview>
-            }
-            else
-            {
-                <MTextarea Value="@(diary.Content)"
-                           Class="my-sm-4 user-select"
-                           Solo="true"
-                           Flat="true"
-                           HideDetails="@("auto")"
-                           Readonly="true"
-                           AutoGrow="true"
-                           Rows="8"
-                           RowHeight="30">
-                </MTextarea>
-            }
+            <div class="my-sm-3">
+                @if (enableMarkdown)
+                {
+                    <MarkdownPreview Value="@(diary.Content)"
+                                     Class="px-3"
+                                     Style="padding-top:10px">
+                    </MarkdownPreview>
+                }
+                else
+                {
+                    <MTextarea Value="@(diary.Content)"
+                               Class="user-select"
+                               Solo="true"
+                               Flat="true"
+                               HideDetails="@("auto")"
+                               Readonly="true"
+                               AutoGrow="true"
+                               Rows="8"
+                               RowHeight="30">
+                    </MTextarea>
+                }
+            </div>
         }
-        
+
         <div class="mb-5">
             <MChipGroup Column="true">
                 @foreach (var item in Tags)

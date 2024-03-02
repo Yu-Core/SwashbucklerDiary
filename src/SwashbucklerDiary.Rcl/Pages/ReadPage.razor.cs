@@ -78,6 +78,16 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool ShowLocation => !string.IsNullOrEmpty(diary.Location);
 
+        private string? WeatherIcon => IconService.GetWeatherIcon(diary.Weather!);
+
+        private string? WeatherText => I18n.T("Weather." + diary.Weather);
+
+        private string? MoodIcon => IconService.GetMoodIcon(diary.Mood!);
+
+        private string? MoodText => I18n.T("Mood." + diary.Mood);
+
+        private string? LocationText => diary.Location;
+
         private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
 
         private string MarkdownText() => enableMarkdown ? "Diary.Text" : "Diary.Markdown";
@@ -186,26 +196,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             await InvokeAsync(StateHasChanged);
 
             await HandleAchievements(Achievement.Share);
-        }
-
-        private string GetWeatherIcon()
-        {
-            if (string.IsNullOrWhiteSpace(diary.Weather))
-            {
-                return "mdi-weather-cloudy";
-            }
-
-            return IconService.GetWeatherIcon(diary.Weather);
-        }
-
-        private string GetMoodIcon()
-        {
-            if (string.IsNullOrWhiteSpace(diary.Mood))
-            {
-                return "mdi-emoticon-outline";
-            }
-
-            return IconService.GetMoodIcon(diary.Mood);
         }
 
         private async Task MarkdownChanged()
