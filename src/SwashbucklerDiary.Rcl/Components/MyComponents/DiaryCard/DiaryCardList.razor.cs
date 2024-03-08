@@ -48,21 +48,13 @@ namespace SwashbucklerDiary.Rcl.Components
             return base.Sort(value).OrderByDescending(it => it.Top);
         }
 
-        protected override async Task UpdateSettings()
+        protected override void UpdateSettings()
         {
-            var showPrivacyTask = SettingService.Get<bool>(Setting.PrivacyMode);
-            var showIconTask = SettingService.Get<bool>(Setting.DiaryCardIcon);
-            var dateFormatTask = SettingService.Get<string>(Setting.DiaryCardDateFormat);
-            Task[] tasks = [
-                base.UpdateSettings(),
-                showPrivacyTask,
-                showIconTask,
-                dateFormatTask,
-            ];
-            await Task.WhenAll(tasks);
-            ShowPrivacy = showPrivacyTask.Result;
-            ShowIcon = showIconTask.Result;
-            DateFormat = dateFormatTask.Result;
+            base.UpdateSettings();
+
+            ShowPrivacy = SettingService.Get<bool>(Setting.PrivacyMode);
+            ShowIcon = SettingService.Get<bool>(Setting.DiaryCardIcon);
+            DateFormat = SettingService.Get<string>(Setting.DiaryCardDateFormat);
         }
 
         private float ItemHeight => MasaBlazor.Breakpoint.Xs ? 156.8f : (MasaBlazor.Breakpoint.Sm ? 164.8f : 172.8f);

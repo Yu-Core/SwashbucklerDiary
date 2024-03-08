@@ -21,27 +21,18 @@ namespace SwashbucklerDiary.Rcl.Pages
             InitTimeoutItems();
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override void UpdateSettings()
         {
-            await base.OnAfterRenderAsync(firstRender);
+            base.UpdateSettings();
 
-            if (firstRender)
-            {
-                await UpdateSettings();
-                StateHasChanged();
-            }
+            _timeout = SettingService.Get<int>(Setting.AlertTimeout);
+            achievementsAlert = SettingService.Get<bool>(Setting.AchievementsAlert);
         }
 
         private StringNumber Timeout
         {
             get => (_timeout / 1000).ToString();
             set => SetTimeout(value);
-        }
-
-        private async Task UpdateSettings()
-        {
-            _timeout = await SettingService.Get<int>(Setting.AlertTimeout);
-            achievementsAlert = await SettingService.Get<bool>(Setting.AchievementsAlert);
         }
 
         private async void SetTimeout(StringNumber value)

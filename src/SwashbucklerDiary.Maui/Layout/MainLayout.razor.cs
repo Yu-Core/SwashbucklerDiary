@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Maui.Layout
         {
             await base.OnInitializedAsync();
             await VersionManager.UpdateVersion();
-            await InitThemeAsync();
+            await InitSettingsAsync();
         }
 
         protected override void OnDispose()
@@ -18,10 +18,16 @@ namespace SwashbucklerDiary.Maui.Layout
             base.OnDispose();
         }
 
+        protected override async Task InitSettingsAsync()
+        {
+            await base.InitSettingsAsync();
+            await InitThemeAsync();
+        }
+
         private async Task InitThemeAsync()
         {
             ThemeService.OnChanged += ThemeChanged;
-            var themeState = await SettingService.Get<int>(Setting.Theme);
+            var themeState = SettingService.Get<int>(Setting.Theme);
             await ThemeService.SetThemeAsync((Theme)themeState);
         }
     }

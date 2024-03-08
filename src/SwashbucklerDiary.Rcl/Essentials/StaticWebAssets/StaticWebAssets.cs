@@ -1,4 +1,6 @@
-﻿namespace SwashbucklerDiary.Rcl.Essentials
+﻿using System.Text.Json;
+
+namespace SwashbucklerDiary.Rcl.Essentials
 {
     public abstract class StaticWebAssets : IStaticWebAssets
     {
@@ -6,7 +8,7 @@
 
         public static string? RclAssemblyName => _rclAssemblyName.Value;
 
-        public abstract Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true);
+        public abstract Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true, JsonSerializerOptions? jsonSerializerOptions = null);
 
         public abstract Task<string> ReadContentAsync(string relativePath, bool isRcl = true);
     }

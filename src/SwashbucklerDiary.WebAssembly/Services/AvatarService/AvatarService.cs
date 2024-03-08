@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         protected override async Task<string> SetAvatar(string filePath)
         {
-            string previousAvatarUri = await _settingService.Get<string>(Setting.Avatar);
+            string previousAvatarUri = _settingService.Get<string>(Setting.Avatar);
             if (File.Exists(previousAvatarUri))
             {
                 File.Delete(previousAvatarUri);

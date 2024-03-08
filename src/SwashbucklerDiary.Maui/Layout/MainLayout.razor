@@ -4,17 +4,20 @@
     <CascadingValue Value="@I18n.Culture.Name" Name="Culture">
         <ErrorBoundary>
             <ChildContent>
-                <FirstLaunchDialog />
+                @if (afterInitSetting)
+                {
+                    <FirstLaunchDialog />
 
-                <MainLayoutNavDrawer Items="NavigationButtons"></MainLayoutNavDrawer>
+                    <MainLayoutNavDrawer Items="NavigationButtons"></MainLayoutNavDrawer>
 
-                <MMain>
-                    <PPageContainerExtension>
-                        @Body
-                    </PPageContainerExtension>
-                </MMain>
+                    <MMain>
+                        <PPageContainerExtension>
+                            @Body
+                        </PPageContainerExtension>
+                    </MMain>
 
-                <MainLayoutBottomNav Items="NavigationButtons"></MainLayoutBottomNav>
+                    <MainLayoutBottomNav Items="NavigationButtons"></MainLayoutBottomNav>
+                }
             </ChildContent>
 
             <ErrorContent>

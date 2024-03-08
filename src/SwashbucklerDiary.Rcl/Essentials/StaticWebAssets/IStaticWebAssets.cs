@@ -1,4 +1,6 @@
-﻿namespace SwashbucklerDiary.Rcl.Essentials
+﻿using System.Text.Json;
+
+namespace SwashbucklerDiary.Rcl.Essentials
 {
     public interface IStaticWebAssets
     {
@@ -8,7 +10,7 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="relativePath"></param>
         /// <returns></returns>
-        Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true);
+        Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true, JsonSerializerOptions? jsonSerializerOptions = null);
 
         /// <summary>
         /// 读取静态web资产的文本内容

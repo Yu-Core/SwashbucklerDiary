@@ -12,15 +12,15 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             _httpClient = httpClient;
         }
 
-        private readonly JsonSerializerOptions jsonSerializerOptions = new()
+        private readonly JsonSerializerOptions defaultJsonSerializerOptions = new()
         {
             PropertyNameCaseInsensitive = true
         };
 
-        public override async Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true)
+        public override async Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true, JsonSerializerOptions? jsonSerializerOptions = null)
         {
             string path = RelativePathToPath(relativePath, isRcl);
-            var result = await _httpClient.GetFromJsonAsync<T>(path, jsonSerializerOptions);
+            var result = await _httpClient.GetFromJsonAsync<T>(path, jsonSerializerOptions ?? defaultJsonSerializerOptions);
             return result ?? throw new($"{relativePath} deserialize fail");
         }
 

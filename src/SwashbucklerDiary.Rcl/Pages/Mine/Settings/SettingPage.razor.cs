@@ -31,22 +31,13 @@ namespace SwashbucklerDiary.Rcl.Pages
             UpdateCacheSize();
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override void UpdateSettings()
         {
-            await base.OnAfterRenderAsync(firstRender);
+            base.UpdateSettings();
 
-            if (firstRender)
-            {
-                await UpdateSettings();
-                StateHasChanged();
-            }
-        }
-
-        private async Task UpdateSettings()
-        {
-            await UpdatePrivatePassword();
-            privacy = await SettingService.Get<bool>(Setting.PrivacyMode);
-            showStatisticsCard = await SettingService.Get<bool>(Setting.StatisticsCard);
+            UpdatePrivatePassword();
+            privacy = SettingService.Get<bool>(Setting.PrivacyMode);
+            showStatisticsCard = SettingService.Get<bool>(Setting.StatisticsCard);
         }
 
         private async Task PrivacyChange(bool value)
@@ -80,7 +71,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            await UpdatePrivatePassword();
+            UpdatePrivatePassword();
             if (privatePassword != value.MD5Encrytp32())
             {
                 await AlertService.Error(I18n.T("Setting.Safe.PasswordError"));
@@ -92,7 +83,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task PrivacyClick()
         {
-            await UpdatePrivatePassword();
+            UpdatePrivatePassword();
             if (!string.IsNullOrEmpty(privatePassword) && !privacy)
             {
                 showPPInput = true;
@@ -102,9 +93,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             await PrivacyChange(!privacy);
         }
 
-        private async Task UpdatePrivatePassword()
+        private void UpdatePrivatePassword()
         {
-            privatePassword = await SettingService.Get<string>(Setting.PrivatePassword);
+            privatePassword = SettingService.Get<string>(Setting.PrivatePassword);
         }
 
         private string? GetPrivatePasswordSetState()
@@ -119,7 +110,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             showClearCache = false;
             StorageSpace.ClearCache();
-            UpdateCacheSize(); 
+            UpdateCacheSize();
             await AlertService.Success(I18n.T("Storage.ClearSuccess"));
         }
     }

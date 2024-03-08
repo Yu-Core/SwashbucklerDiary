@@ -4,21 +4,21 @@ namespace SwashbucklerDiary.Maui.Essentials
 {
     public class StaticWebAssets : Rcl.Essentials.StaticWebAssets
     {
-        private readonly JsonSerializerOptions jsonSerializerOptions = new()
+        private readonly JsonSerializerOptions defaultJsonSerializerOptions = new()
         {
             PropertyNameCaseInsensitive = true
         };
 
-        public override async Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true)
+        public override async Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true, JsonSerializerOptions? jsonSerializerOptions = null)
         {
             var contents = await ReadContentAsync(relativePath, isRcl).ConfigureAwait(false);
-            return JsonSerializer.Deserialize<T>(contents, jsonSerializerOptions) ?? throw new($"{relativePath} deserialize fail");
+            return JsonSerializer.Deserialize<T>(contents, jsonSerializerOptions ?? defaultJsonSerializerOptions) ?? throw new($"{relativePath} deserialize fail");
         }
 
         public override async Task<string> ReadContentAsync(string relativePath, bool isRcl = true)
         {
             string path;
-            if(isRcl)
+            if (isRcl)
             {
                 path = $"wwwroot/_content/{RclAssemblyName}/{relativePath}";
             }
@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             {
                 path = $"wwwroot/{relativePath}";
             }
-            
+
             bool exists = await FileSystem.AppPackageFileExistsAsync(path).ConfigureAwait(false);
             if (!exists)
             {

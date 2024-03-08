@@ -31,25 +31,17 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         private IStaticWebAssets StaticWebAssets { get; set; } = default!;
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override void OnInitialized()
         {
-            await base.OnAfterRenderAsync(firstRender);
+            base.OnInitialized();
 
-            if (firstRender)
-            {
-                await UpdateSettings();
-                StateHasChanged();
-            }
+            UpdateSettings();
         }
 
-        private async Task UpdateSettings()
+        private void UpdateSettings()
         {
-            var langTask = SettingService.Get<bool>(Setting.FirstSetLanguage);
-            var agreeTask = SettingService.Get<bool>(Setting.FirstAgree);
-            await Task.WhenAll(langTask, agreeTask);
-
-            var lang = langTask.Result;
-            var agree = agreeTask.Result;
+            var lang = SettingService.Get<bool>(Setting.FirstSetLanguage);
+            var agree = SettingService.Get<bool>(Setting.FirstAgree);
 
             if (lang && agree)
             {

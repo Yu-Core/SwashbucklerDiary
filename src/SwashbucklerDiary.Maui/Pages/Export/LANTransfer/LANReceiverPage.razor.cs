@@ -49,7 +49,6 @@ namespace SwashbucklerDiary.Maui.Pages
 
             if (firstRender)
             {
-                await LoadSettings();
                 await InitializeLANReceiverService();
                 StateHasChanged();
             }
@@ -67,11 +66,13 @@ namespace SwashbucklerDiary.Maui.Pages
             LANReceiverService.ReceiveProgressChanged -= ReceiveProgressChanged;
         }
 
-        private async Task LoadSettings()
+        protected override void UpdateSettings()
         {
-            multicastPort = await SettingService.Get<int>(Setting.LANScanPort);
-            tcpPort = await SettingService.Get<int>(Setting.LANTransmissionPort);
-            deviceName = await SettingService.Get<string>(Setting.LANDeviceName);
+            base.UpdateSettings();
+
+            multicastPort = SettingService.Get<int>(Setting.LANScanPort);
+            tcpPort = SettingService.Get<int>(Setting.LANTransmissionPort);
+            deviceName = SettingService.Get<string>(Setting.LANDeviceName);
         }
 
         private async Task InitializeLANReceiverService()

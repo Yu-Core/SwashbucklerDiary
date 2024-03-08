@@ -34,31 +34,20 @@ namespace SwashbucklerDiary.Maui.Pages
         [Inject]
         private IDiaryFileManager DiaryFileManager { get; set; } = default!;
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override void UpdateSettings()
         {
-            await base.OnAfterRenderAsync(firstRender);
-
-            if (firstRender)
-            {
-                await UpdateSettings();
-                StateHasChanged();
-            }
-        }
-
-        private bool Configured => !string.IsNullOrEmpty(configModel.ServerAddress);
-
-        private string ConfiguredText => Configured ? I18n.T("Backups.Config.Configured") : I18n.T("Backups.Config.NotConfigured");
-
-        private async Task UpdateSettings()
-        {
-            var configJson = await SettingService.Get<string>(Setting.WebDavConfig);
+            var configJson = SettingService.Get<string>(Setting.WebDavConfig);
             if (!string.IsNullOrEmpty(configJson))
             {
                 configModel = JsonSerializer.Deserialize<WebDavConfigForm>(configJson) ?? new();
             }
 
-            includeDiaryResources = await SettingService.Get<bool>(Setting.WebDAVCopyResources);
+            includeDiaryResources = SettingService.Get<bool>(Setting.WebDAVCopyResources);
         }
+
+        private bool Configured => !string.IsNullOrEmpty(configModel.ServerAddress);
+
+        private string ConfiguredText => Configured ? I18n.T("Backups.Config.Configured") : I18n.T("Backups.Config.NotConfigured");
 
         private async Task SaveWebDavConfig(WebDavConfigForm webDavConfig)
         {

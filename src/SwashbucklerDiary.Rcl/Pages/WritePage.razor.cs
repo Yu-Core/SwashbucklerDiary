@@ -33,8 +33,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool overlay;
 
-        private bool afterRender;
-
         private int editAutoSave;
 
         private PeriodicTimer? timer;
@@ -107,9 +105,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                afterRender = true;
                 await Task.WhenAll(
-                    UpdateSettings(),
                     InitDiary(),
                     InitTags());
                 InitCreateTime();
@@ -126,6 +122,15 @@ namespace SwashbucklerDiary.Rcl.Pages
             AppLifecycle.Stopped -= LeaveAppSaveDiary;
             timer?.Dispose();
             base.OnDispose();
+        }
+
+        protected override void UpdateSettings()
+        {
+            base.UpdateSettings();
+
+            enableTitle = SettingService.Get<bool>(Setting.Title);
+            enableMarkdown = SettingService.Get<bool>(Setting.Markdown);
+            editAutoSave = SettingService.Get<int>(Setting.EditAutoSave);
         }
 
         private List<TagModel> SelectedTags
@@ -224,17 +229,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             SelectedDate = (DateOnly)CreateDate;
-        }
-
-        private async Task UpdateSettings()
-        {
-            var titleTask = SettingService.Get<bool>(Setting.Title);
-            var markdownTask = SettingService.Get<bool>(Setting.Markdown);
-            var editAutoSaveTask = SettingService.Get<int>(Setting.EditAutoSave);
-            await Task.WhenAll(titleTask, markdownTask, editAutoSaveTask);
-            enableTitle = titleTask.Result;
-            enableMarkdown = markdownTask.Result;
-            editAutoSave = editAutoSaveTask.Result;
         }
 
         private void LoadView()

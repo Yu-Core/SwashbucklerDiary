@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private List<AppFunction> AllAppFunctions = [];
 
         private List<AppFunction> AppFunctions = [];
-        
+
         [Parameter]
         [SupplyParameterFromQuery]
         public string? Query { get; set; }
@@ -29,20 +29,24 @@ namespace SwashbucklerDiary.Rcl.Pages
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
-            if(firstRender)
+            if (firstRender)
             {
-                await Task.WhenAll(
-                    UpdateSettings(),
-                    LoadAppFunctions());
+                await LoadAppFunctions();
                 StateHasChanged();
             }
         }
 
         protected override async Task OnResume()
         {
-            await UpdateSettings();
             UpdateAppFunctions();
             await base.OnResume();
+        }
+
+        protected override void UpdateSettings()
+        {
+            base.UpdateSettings();
+
+            privacy = SettingService.Get<bool>(Setting.PrivacyMode);
         }
 
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(search);
@@ -60,11 +64,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             var appFunctions = await StaticWebAssets.ReadJsonAsync<List<AppFunction>>("json/app-functions/app-functions.json");
             AllAppFunctions = appFunctions;
             UpdateAppFunctions(appFunctions);
-        }
-
-        private async Task UpdateSettings()
-        {
-            privacy = await SettingService.Get<bool>(Setting.PrivacyMode);
         }
 
         private void UpdateAppFunctions(List<AppFunction> appFunctions)

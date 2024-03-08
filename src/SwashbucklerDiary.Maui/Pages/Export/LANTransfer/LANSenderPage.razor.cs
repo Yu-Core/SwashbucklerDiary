@@ -75,7 +75,6 @@ namespace SwashbucklerDiary.Maui.Pages
 
             if (firstRender)
             {
-                await LoadSettings();
                 await InitializeLANSenderService();
                 StateHasChanged();
             }
@@ -94,10 +93,12 @@ namespace SwashbucklerDiary.Maui.Pages
             LANSenderService.SendAborted -= SendAborted;
         }
 
-        private async Task LoadSettings()
+        protected override void UpdateSettings()
         {
-            multicastPort = await SettingService.Get<int>(Setting.LANScanPort);
-            tcpPort = await SettingService.Get<int>(Setting.LANTransmissionPort);
+            base.UpdateSettings();
+
+            multicastPort = SettingService.Get<int>(Setting.LANScanPort);
+            tcpPort = SettingService.Get<int>(Setting.LANTransmissionPort);
         }
 
         private async Task InitializeLANSenderService()

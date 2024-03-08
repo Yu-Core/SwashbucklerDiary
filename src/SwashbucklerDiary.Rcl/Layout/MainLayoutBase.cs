@@ -11,6 +11,8 @@ namespace SwashbucklerDiary.Rcl.Layout
 {
     public partial class MainLayoutBase : LayoutComponentBase, IDisposable
     {
+        protected bool afterInitSetting;
+
         protected List<NavigationButton> NavigationButtons = [
             new("Main.Diary", "mdi-notebook-outline", "mdi-notebook", ""),
             new("Main.History", "mdi-clock-outline", "mdi-clock", "history"),
@@ -62,25 +64,16 @@ namespace SwashbucklerDiary.Rcl.Layout
             I18n.OnChanged += LanguageChanged;
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-
-            if (firstRender)
-            {
-                await UpdateSettings();
-                StateHasChanged();
-            }
-        }
-
         protected virtual void OnDispose()
         {
             I18n.OnChanged -= LanguageChanged;
         }
 
-        protected async Task UpdateSettings()
+        protected virtual async Task InitSettingsAsync()
         {
-            var timeout = await SettingService.Get<int>(Setting.AlertTimeout);
+            await SettingService.InitializeAsync();
+            afterInitSetting = true;
+            var timeout = SettingService.Get<int>(Setting.AlertTimeout);
             AlertService.SetTimeout(timeout);
         }
 

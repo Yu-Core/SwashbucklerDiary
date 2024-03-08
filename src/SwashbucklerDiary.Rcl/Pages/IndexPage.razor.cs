@@ -23,15 +23,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private IVersionUpdataManager VersionManager { get; set; } = default!;
 
-        public async Task UpdateSettings()
-        {
-            var welcomeTextTask = SettingService.Get<bool>(Setting.WelcomeText);
-            var dateTask = SettingService.Get<bool>(Setting.IndexDate);
-            await Task.WhenAll(welcomeTextTask, dateTask);
-            showWelcomeText = welcomeTextTask.Result;
-            showDate = dateTask.Result;
-        }
-
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -39,16 +30,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             VersionManager.AfterFirstEnter += UpdateDiariesAndStateHasChanged;
             VersionManager.AfterUpdateVersion += UpdateDiariesAndStateHasChanged;
             NavigateService.BeforePopToRoot += BeforePopToRoot;
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-            if (firstRender)
-            {
-                await UpdateSettings();
-                StateHasChanged();
-            }
         }
 
         protected override void OnDispose()
@@ -59,10 +40,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnDispose();
         }
 
-        protected override async Task OnResume()
+        protected override void UpdateSettings()
         {
-            await UpdateSettings();
-            await base.OnResume();
+            base.UpdateSettings();
+
+            showWelcomeText = SettingService.Get<bool>(Setting.WelcomeText);
+            showDate = SettingService.Get<bool>(Setting.IndexDate);
         }
 
         private bool ShowAddTag { get; set; }

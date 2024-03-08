@@ -9,21 +9,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool date;
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override void UpdateSettings()
         {
-            await base.OnAfterRenderAsync(firstRender);
-
-            if (firstRender)
-            {
-                await UpdateSettings();
-                StateHasChanged();
-            }
-        }
-
-        private async Task UpdateSettings()
-        {
-            welcomText = await SettingService.Get<bool>(Setting.WelcomeText);
-            date = await SettingService.Get<bool>(Setting.IndexDate);
+            welcomText = SettingService.Get<bool>(Setting.WelcomeText);
+            date = SettingService.Get<bool>(Setting.IndexDate);
         }
     }
 }

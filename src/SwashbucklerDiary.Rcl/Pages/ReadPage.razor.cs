@@ -22,8 +22,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool enablePrivacy;
 
-        private bool afterRender;
-
         private DiaryModel diary = new();
 
         private List<DynamicListItem> menuItems = [];
@@ -58,10 +56,17 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                afterRender = true;
-                await UpdateData();
+                await UpdateDiary();
                 StateHasChanged();
             }
+        }
+
+        protected override void UpdateSettings()
+        {
+            base.UpdateSettings();
+
+            enableMarkdown = SettingService.Get<bool>(Setting.Markdown);
+            enablePrivacy = SettingService.Get<bool>(Setting.PrivacyMode);
         }
 
         private List<TagModel> Tags => diary.Tags ?? new();
@@ -108,15 +113,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             this.diary = diary;
-        }
-
-        private async Task UpdateSettings()
-        {
-            var markdownTask = SettingService.Get<bool>(Setting.Markdown);
-            var privacyTask = SettingService.Get<bool>(Setting.PrivacyMode);
-            await Task.WhenAll(markdownTask, privacyTask);
-            enableMarkdown = markdownTask.Result;
-            enablePrivacy = privacyTask.Result;
         }
 
         private void LoadView()
@@ -243,13 +239,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             exportDiaries = [diary];
             showExport = true;
             StateHasChanged();
-        }
-
-        private Task UpdateData()
-        {
-            return Task.WhenAll(
-                UpdateSettings(),
-                UpdateDiary());
         }
     }
 }

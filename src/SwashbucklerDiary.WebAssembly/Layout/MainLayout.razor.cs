@@ -23,10 +23,7 @@ namespace SwashbucklerDiary.WebAssembly.Layout
             await base.OnInitializedAsync();
 
             await InitVersionUpdateAsync();
-            await Task.WhenAll(
-                InitThemeAsync(),
-                InitLanguageAsync(),
-                ((AppLifecycle)AppLifecycle).InitializedAsync());
+            await InitSettingsAsync();
         }
 
         protected override void OnDispose()
@@ -35,18 +32,28 @@ namespace SwashbucklerDiary.WebAssembly.Layout
             base.OnDispose();
         }
 
+        protected override async Task InitSettingsAsync()
+        {
+            await base.InitSettingsAsync();
+            await Task.WhenAll(
+                InitThemeAsync(),
+                InitLanguageAsync(),
+                ((AppLifecycle)AppLifecycle).InitializedAsync());
+        }
+
         private async Task InitThemeAsync()
         {
             ThemeService.OnChanged += ThemeChanged;
             await SystemThemeJSModule.InitializedAsync();
-            var themeState = await SettingService.Get<int>(Setting.Theme);
+            var themeState = SettingService.Get<int>(Setting.Theme);
             await ThemeService.SetThemeAsync((Theme)themeState);
         }
 
-        private async Task InitLanguageAsync()
+        private Task InitLanguageAsync()
         {
-            var language = await SettingService.Get<string>(Setting.Language);
+            var language = SettingService.Get<string>(Setting.Language);
             I18n.SetCulture(language);
+            return Task.CompletedTask;
         }
 
         private async Task InitVersionUpdateAsync()

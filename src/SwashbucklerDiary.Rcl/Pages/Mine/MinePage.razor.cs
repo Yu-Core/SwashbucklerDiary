@@ -85,7 +85,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                await UpdateDataAsync();
+                await UpdateStatisticalDataAsync();
 
                 StateHasChanged();
             }
@@ -93,7 +93,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override async Task OnResume()
         {
-            await UpdateDataAsync();
+            await UpdateStatisticalDataAsync();
             await base.OnResume();
         }
 
@@ -102,6 +102,17 @@ namespace SwashbucklerDiary.Rcl.Pages
             NavigateService.BeforePopToRoot -= BeforePopToRoot;
             I18n.OnChanged -= UpdateStatisticalData;
             base.OnDispose();
+        }
+
+        protected override void UpdateSettings()
+        {
+            base.UpdateSettings();
+
+            language = SettingService.Get<string>(Setting.Language);
+            userName = SettingService.Get<string?>(Setting.UserName, null);
+            sign = SettingService.Get<string?>(Setting.Sign, null);
+            theme = (Theme)SettingService.Get<int>(Setting.Theme);
+            avatar = SettingService.Get<string>(Setting.Avatar);
         }
 
         private void LoadView()
@@ -218,28 +229,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             return DiaryService.GetWordCount(diaries, type);
         }
 
-        private async Task UpdateSettings()
-        {
-            var languageTask = SettingService.Get<string>(Setting.Language);
-            var userNameTask = SettingService.Get<string?>(Setting.UserName, null);
-            var signTask = SettingService.Get<string?>(Setting.Sign, null);
-            var themeTask = SettingService.Get<int>(Setting.Theme);
-            var avatarTask = SettingService.Get<string>(Setting.Avatar);
-
-            await Task.WhenAll(
-                languageTask,
-                userNameTask,
-                signTask,
-                themeTask,
-                avatarTask);
-
-            language = languageTask.Result;
-            userName = userNameTask.Result;
-            sign = signTask.Result;
-            theme = (Theme)themeTask.Result;
-            avatar = avatarTask.Result;
-        }
-
         private async Task UpdateStatisticalDataAsync()
         {
             var diries = await DiaryService.QueryAsync(it => !it.Private);
@@ -252,13 +241,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await UpdateStatisticalDataAsync();
             await InvokeAsync(StateHasChanged);
-        }
-
-        private Task UpdateDataAsync()
-        {
-            return Task.WhenAll(
-                UpdateSettings(),
-                UpdateStatisticalDataAsync());
         }
 
         private async Task BeforePopToRoot(PopEventArgs args)

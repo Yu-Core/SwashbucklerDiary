@@ -23,32 +23,19 @@ namespace SwashbucklerDiary.Rcl.Pages
             InitEditAutoSaveItems();
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override void UpdateSettings()
         {
-            await base.OnAfterRenderAsync(firstRender);
+            base.UpdateSettings();
 
-            if (firstRender)
-            {
-                await UpdateSettings();
-                StateHasChanged();
-            }
+            title = SettingService.Get<bool>(Setting.Title);
+            markdown = SettingService.Get<bool>(Setting.Markdown);
+            editAutoSave = SettingService.Get<int>(Setting.EditAutoSave);
         }
 
         private StringNumber EditAutoSave
         {
             get => editAutoSave.ToString();
             set => SetEditAutoSave(value);
-        }
-
-        private async Task UpdateSettings()
-        {
-            var titleTask = SettingService.Get<bool>(Setting.Title);
-            var markdownTask = SettingService.Get<bool>(Setting.Markdown);
-            var editAutoSaveTask = SettingService.Get<int>(Setting.EditAutoSave);
-            await Task.WhenAll(titleTask, markdownTask, editAutoSaveTask);
-            title = titleTask.Result;
-            markdown = markdownTask.Result;
-            editAutoSave = editAutoSaveTask.Result;
         }
 
         private async void SetEditAutoSave(StringNumber value)

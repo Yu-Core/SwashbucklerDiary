@@ -30,18 +30,15 @@ namespace SwashbucklerDiary.Rcl.Pages
             await base.OnInitializedAsync();
 
             LoadView();
-            await UpdateSettings();
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override void UpdateSettings()
         {
-            await base.OnAfterRenderAsync(firstRender);
+            base.UpdateSettings();
 
-            if (firstRender)
-            {
-                await UpdateSettings();
-                StateHasChanged();
-            }
+            userName = SettingService.Get<string>(Setting.UserName, default!);
+            sign = SettingService.Get<string>(Setting.Sign, default!);
+            avatar = SettingService.Get<string>(Setting.Avatar);
         }
 
         private string? UserName => userName ?? I18n.T("AppName");
@@ -55,22 +52,6 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, "User.Photos","mdi-image-outline",PickPhoto),
                 new(this, "User.Capture","mdi-camera-outline",OnCapture),
             };
-        }
-
-        private async Task UpdateSettings()
-        {
-            var userNameTask = SettingService.Get<string>(Setting.UserName, default!);
-            var signTask = SettingService.Get<string>(Setting.Sign, default!);
-            var avatarTask = SettingService.Get<string>(Setting.Avatar);
-
-            await Task.WhenAll(
-                userNameTask,
-                signTask,
-                avatarTask);
-
-            userName = userNameTask.Result;
-            sign = signTask.Result;
-            avatar = avatarTask.Result;
         }
 
         private async Task SaveSign(string tagName)

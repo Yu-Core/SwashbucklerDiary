@@ -22,15 +22,19 @@ namespace SwashbucklerDiary.Maui.Pages
             LoadView();
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override void UpdateSettings()
         {
-            await base.OnAfterRenderAsync(firstRender);
+            base.UpdateSettings();
 
-            if (firstRender)
+            configModel.DeviceName = SettingService.Get<string>(Setting.LANDeviceName);
+            defaultDeviceName = LANHelper.GetLocalDeviceName();
+            if (string.IsNullOrEmpty(configModel.DeviceName))
             {
-                await LoadSettings();
-                StateHasChanged();
+                configModel.DeviceName = defaultDeviceName;
             }
+
+            configModel.ScanPort = SettingService.Get<int>(Setting.LANScanPort);
+            configModel.TransmissionPort = SettingService.Get<int>(Setting.LANTransmissionPort);
         }
 
         private void LoadView()
@@ -40,19 +44,6 @@ namespace SwashbucklerDiary.Maui.Pages
                 new(this,"Export.Send.Name","mdi-send-outline",()=>To("lanSender")),
                 new(this,"Export.Receive.Name","mdi-printer-pos-outline",()=>To("lanReceiver")),
             };
-        }
-
-        private async Task LoadSettings()
-        {
-            configModel.DeviceName = await SettingService.Get<string>(Setting.LANDeviceName);
-            defaultDeviceName = LANHelper.GetLocalDeviceName();
-            if (string.IsNullOrEmpty(configModel.DeviceName))
-            {
-                configModel.DeviceName = defaultDeviceName;
-            }
-
-            configModel.ScanPort = await SettingService.Get<int>(Setting.LANScanPort);
-            configModel.TransmissionPort = await SettingService.Get<int>(Setting.LANTransmissionPort);
         }
 
         private async Task SaveConfig(LANConfigForm value)
@@ -74,7 +65,7 @@ namespace SwashbucklerDiary.Maui.Pages
             await SettingService.Remove(Setting.LANDeviceName);
             await SettingService.Remove(Setting.LANScanPort);
             await SettingService.Remove(Setting.LANTransmissionPort);
-            await LoadSettings();
+            UpdateSettings();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Maui.Services
 
         protected override async Task<string> SetAvatar(string filePath)
         {
-            string previousAvatarUri = await _settingService.Get<string>(Setting.Avatar);
+            string previousAvatarUri = _settingService.Get<string>(Setting.Avatar);
             string previousAvatarPath = MauiBlazorWebViewHandler.UrlRelativePathToFilePath(previousAvatarUri);
             if (!string.IsNullOrEmpty(previousAvatarPath))
             {

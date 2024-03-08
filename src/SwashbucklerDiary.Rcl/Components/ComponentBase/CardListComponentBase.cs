@@ -55,23 +55,6 @@ namespace SwashbucklerDiary.Rcl.Components
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-
-            if (firstRender)
-            {
-                await UpdateSettings();
-                StateHasChanged();
-            }
-        }
-
-        protected override async Task OnResume()
-        {
-            await UpdateSettings();
-            await base.OnResume();
-        }
-
         protected override void OnDispose()
         {
             base.OnDispose();
@@ -79,9 +62,11 @@ namespace SwashbucklerDiary.Rcl.Components
             MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
         }
 
-        protected virtual async Task UpdateSettings()
+        protected override void UpdateSettings()
         {
-            showStatisticsCard = await SettingService.Get<bool>(Setting.StatisticsCard);
+            base.UpdateSettings();
+
+            showStatisticsCard = SettingService.Get<bool>(Setting.StatisticsCard);
         }
 
         protected virtual IEnumerable<T> Sort(IEnumerable<T> value)

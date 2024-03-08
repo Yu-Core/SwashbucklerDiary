@@ -2,7 +2,7 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-@if (afterRender && enableMarkdown)
+@if (enableMarkdown)
 {
     <OnlyThisPage>
         <link href="@cssHref" />
@@ -55,54 +55,52 @@
 <ScrollContainer ContentClass="d-flex flex-column"
                  ContentStyle="height:100%;padding-top:0px;">
     <div>
-        @if (afterRender)
-        {
-            <div class="px-3 mb-sm-1 d-flex align-end">
-                <button class="d-flex align-center text-h6 font-weight-bold" @onclick="()=>showCreateTime=true">
-                    @(diary.CreateTime.ToString("d"))
-                </button>
+        <div class="px-3 mb-sm-1 d-flex align-end">
+            <button class="d-flex align-center text-h6 font-weight-bold" @onclick="()=>showCreateTime=true">
+                @(diary.CreateTime.ToString("d"))
+            </button>
 
-                <span class="pl-5 text-subtitle-1">
-                    @(I18n.ToWeek(diary.CreateTime))
-                </span>
-                <MSpacer></MSpacer>
-                <span class="text-subtitle-1">
-                    @(CounterValue())
-                </span>
-            </div>
-            <div>
-                <MButton Style="letter-spacing:unset;"
-                         Text
-                         Rounded
-                         Ripple="false"
-                         OnClick="()=>showWeather=true">
-                    <MIcon Left Size="20">
-                        @(WeatherIcon)
-                    </MIcon>
-                    @WeatherText
-                </MButton>
-                <MButton Style="letter-spacing:unset;"
-                         Text
-                         Rounded
-                         Ripple="false"
-                         OnClick="()=>showMood=true">
-                    <MIcon Left Size="20">
-                        @(MoodIcon)
-                    </MIcon>
-                    @MoodText
-                </MButton>
-                <MButton Style="letter-spacing:unset;"
-                         Text
-                         Rounded
-                         Ripple="false"
-                         OnClick="()=>showLocation=true">
-                    <MIcon Left Size="20">
-                        mdi-map-marker-outline
-                    </MIcon>
-                    @LocationText
-                </MButton>
-            </div>
-        }
+            <span class="pl-5 text-subtitle-1">
+                @(I18n.ToWeek(diary.CreateTime))
+            </span>
+            <MSpacer></MSpacer>
+            <span class="text-subtitle-1">
+                @(CounterValue())
+            </span>
+        </div>
+        <div>
+            <MButton Style="letter-spacing:unset;"
+                     Text
+                     Rounded
+                     Ripple="false"
+                     OnClick="()=>showWeather=true">
+                <MIcon Left Size="20">
+                    @(WeatherIcon)
+                </MIcon>
+                @WeatherText
+            </MButton>
+            <MButton Style="letter-spacing:unset;"
+                     Text
+                     Rounded
+                     Ripple="false"
+                     OnClick="()=>showMood=true">
+                <MIcon Left Size="20">
+                    @(MoodIcon)
+                </MIcon>
+                @MoodText
+            </MButton>
+            <MButton Style="letter-spacing:unset;"
+                     Text
+                     Rounded
+                     Ripple="false"
+                     OnClick="()=>showLocation=true">
+                <MIcon Left Size="20">
+                    mdi-map-marker-outline
+                </MIcon>
+                @LocationText
+            </MButton>
+        </div>
+
     </div>
     @if (enableTitle)
     {
@@ -121,23 +119,20 @@
     }
 
     <div class="write-input-wrap my-sm-3">
-        @if (afterRender)
+        @if (enableMarkdown)
         {
-            @if (enableMarkdown)
-            {
-                <MarkdownEdit @ref="markdownEdit"
-                              @bind-Value="diary.Content"
-                              WrapClass="write-markdown-wrap"
-                              Class="px-3 rounded-lg write-markdown">
-                </MarkdownEdit>
-            }
-            else
-            {
-                <TextareaEdit @ref="textareaEdit"
-                              @bind-Value="diary.Content"
-                              Class="rounded-lg">
-                </TextareaEdit>
-            }
+            <MarkdownEdit @ref="markdownEdit"
+                          @bind-Value="diary.Content"
+                          WrapClass="write-markdown-wrap"
+                          Class="px-3 rounded-lg write-markdown">
+            </MarkdownEdit>
+        }
+        else
+        {
+            <TextareaEdit @ref="textareaEdit"
+                          @bind-Value="diary.Content"
+                          Class="rounded-lg">
+            </TextareaEdit>
         }
     </div>
 
@@ -154,7 +149,7 @@
         </div>
     </div>
 
-    @if (afterRender && enableMarkdown)
+    @if (enableMarkdown)
     {
         <div class="vditor-toolbar-help"></div>
     }

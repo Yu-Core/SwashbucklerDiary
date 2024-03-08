@@ -5,9 +5,11 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public interface ISettingService : IPreferences
     {
-        Task<T> Get<T>(Setting setting);
+        Task InitializeAsync();
 
-        Task<T> Get<T>(Setting setting, T defaultValue);
+        T Get<T>(Setting setting);
+
+        T Get<T>(Setting setting, T defaultValue);
 
         Task Set<T>(Setting setting, T value);
 

@@ -4,21 +4,24 @@
     <CascadingValue Value="@I18n.Culture.ToString()" Name="Culture">
         <MErrorHandler DisablePopupIfErrorContentRender>
             <ChildContent>
-                <PageTitle>@(I18n.T("AppName"))</PageTitle>
+                @if (afterInitSetting)
+                {
+                    <PageTitle>@(I18n.T("AppName"))</PageTitle>
 
-                <FirstLaunchDialog />
+                    <FirstLaunchDialog />
 
-                <MainLayoutNavDrawer Items="NavigationButtons"></MainLayoutNavDrawer>
+                    <MainLayoutNavDrawer Items="NavigationButtons"></MainLayoutNavDrawer>
 
-                <MMain>
-                    <PPageContainerExtension>
-                        @Body
-                    </PPageContainerExtension>
-                </MMain>
+                    <MMain>
+                        <PPageContainerExtension>
+                            @Body
+                        </PPageContainerExtension>
+                    </MMain>
 
-                <MainLayoutBottomNav Items="NavigationButtons"></MainLayoutBottomNav>
+                    <MainLayoutBottomNav Items="NavigationButtons"></MainLayoutBottomNav>
 
-                <PwaSnackbar OnRefresh="@RefreshToSkipWaiting"></PwaSnackbar>
+                    <PwaSnackbar OnRefresh="@RefreshToSkipWaiting"></PwaSnackbar>
+                }
             </ChildContent>
             <ErrorContent>
                 <MContainer Class="fill-height justify-center">

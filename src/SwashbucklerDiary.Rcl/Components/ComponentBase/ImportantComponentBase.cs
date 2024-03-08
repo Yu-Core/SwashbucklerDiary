@@ -40,6 +40,7 @@ namespace SwashbucklerDiary.Rcl.Components
             base.OnInitialized();
 
             InitializedUrl();
+            UpdateSettings();
             Navigation.LocationChanged += NavigationManagerOnLocationChanged;
         }
 
@@ -58,8 +59,13 @@ namespace SwashbucklerDiary.Rcl.Components
             Navigation.LocationChanged -= NavigationManagerOnLocationChanged;
         }
 
+        protected virtual void UpdateSettings()
+        {
+        }
+
         protected virtual async Task OnResume()
         {
+            UpdateSettings();
             await InvokeAsync(StateHasChanged);
         }
 
