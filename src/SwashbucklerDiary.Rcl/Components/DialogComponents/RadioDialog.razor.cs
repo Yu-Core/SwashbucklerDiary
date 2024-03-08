@@ -4,8 +4,6 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class RadioDialog<TItem, TItemValue> : DialogComponentBase
     {
-        private bool afterRender;
-
         [Parameter]
         public TItemValue Value { get; set; } = default!;
 
@@ -30,25 +28,13 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public Func<TItem, TItemValue>? ItemValue { get; set; }
 
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender)
-            {
-                afterRender = true;
-            }
-
-            base.OnAfterRender(firstRender);
-        }
+        [Parameter]
+        public bool Row { get; set; }
 
         private string MRadioColor => Dark ? "white" : "black";
 
         private async Task InternalValueChanged(TItemValue value)
         {
-            if (!afterRender || EqualityComparer<TItemValue>.Default.Equals(Value, value))
-            {
-                return;
-            }
-
             Value = value;
             if (ValueChanged.HasDelegate)
             {

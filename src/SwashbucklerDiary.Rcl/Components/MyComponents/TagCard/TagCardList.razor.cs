@@ -32,6 +32,17 @@ namespace SwashbucklerDiary.Rcl.Components
             LoadView();
         }
 
+        protected override void UpdateSettings()
+        {
+            base.UpdateSettings();
+
+            var tagSort = SettingService.Get<string>(Setting.TagSort);
+            if (!string.IsNullOrEmpty(tagSort))
+            {
+                sortItem = tagSort;
+            }
+        }
+
         private async Task ConfirmDelete()
         {
             var tag = SelectedItemValue;
@@ -86,12 +97,19 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             sortOptions = new()
             {
-                {"Sort.DiaryCount.Desc", it => it.OrderByDescending(GetDiaryCount) },
-                {"Sort.DiaryCount.Asc", it => it.OrderBy(GetDiaryCount) },
-                {"Sort.CreateTime.Desc", it => it.OrderByDescending(t => t.CreateTime) },
-                {"Sort.CreateTime.Asc", it => it.OrderBy(t => t.CreateTime) },
+                {"Sort.Name.Desc", it => it.OrderByDescending(t => t.Name) },
+                {"Sort.Name.Asc", it => it.OrderBy(t => t.Name) },
+                {"Sort.Count.Desc", it => it.OrderByDescending(GetDiaryCount) },
+                {"Sort.Count.Asc", it => it.OrderBy(GetDiaryCount) },
+                {"Sort.Time.Desc", it => it.OrderByDescending(t => t.CreateTime) },
+                {"Sort.Time.Asc", it => it.OrderBy(t => t.CreateTime) },
             };
-            sortItem = SortItems.First();
+
+            if (string.IsNullOrEmpty(sortItem))
+            {
+                sortItem = SortItems.First();
+            }
+
             menuItems = new()
             {
                 new(this, "Share.Rename", "mdi-rename-outline", Rename),
@@ -123,6 +141,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
             ExportDiaries = diaries;
             ShowExport = true;
+        }
+
+        private async Task SortChanged(string value)
+        {
+            await SettingService.Set(Setting.TagSort, value);
         }
     }
 }

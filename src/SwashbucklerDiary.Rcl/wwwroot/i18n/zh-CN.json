@@ -698,13 +698,17 @@
     "AddVideo": "添加视频"
   },
   "Sort": {
-    "CreateTime": {
-      "Asc": "创建时间-正序",
-      "Desc": "创建时间-倒序"
+    "Time": {
+      "Asc": "时间-正序",
+      "Desc": "时间-倒序"
     },
-    "DiaryCount": {
-      "Asc": "日记数量-正序",
-      "Desc": "日记数量-倒序"
+    "Count": {
+      "Asc": "数量-正序",
+      "Desc": "数量-倒序"
+    },
+    "Name": {
+      "Asc": "名称-正序",
+      "Desc": "名称-倒序"
     }
   },
   "Image": {

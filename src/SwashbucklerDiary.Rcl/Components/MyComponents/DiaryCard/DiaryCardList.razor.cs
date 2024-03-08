@@ -55,6 +55,11 @@ namespace SwashbucklerDiary.Rcl.Components
             ShowPrivacy = SettingService.Get<bool>(Setting.PrivacyMode);
             ShowIcon = SettingService.Get<bool>(Setting.DiaryCardIcon);
             DateFormat = SettingService.Get<string>(Setting.DiaryCardDateFormat);
+            var diarySort = SettingService.Get<string>(Setting.DiarySort);
+            if (!string.IsNullOrEmpty(diarySort))
+            {
+                sortItem = diarySort;
+            }
         }
 
         private float ItemHeight => MasaBlazor.Breakpoint.Xs ? 156.8f : (MasaBlazor.Breakpoint.Sm ? 164.8f : 172.8f);
@@ -167,10 +172,15 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             sortOptions = new()
             {
-                {"Sort.CreateTime.Desc",it => it.OrderByDescending(d => d.CreateTime) },
-                {"Sort.CreateTime.Asc",it => it.OrderBy(d => d.CreateTime) },
+                {"Sort.Time.Desc",it => it.OrderByDescending(d => d.CreateTime) },
+                {"Sort.Time.Asc",it => it.OrderBy(d => d.CreateTime) },
             };
-            sortItem = SortItems.First();
+
+            if (string.IsNullOrEmpty(sortItem))
+            {
+                sortItem = SortItems.First();
+            }
+
             menuItems = new()
             {
                 new(this, "Diary.Tag", "mdi-label-outline", ChangeTag),
@@ -181,6 +191,11 @@ namespace SwashbucklerDiary.Rcl.Components
                 new(this, "Share.Sort", "mdi-sort-variant", Sort),
                 new(this, PrivateText, PrivateIcon, MovePrivacy, ()=>ShowPrivacy)
             };
+        }
+
+        private async Task SortChanged(string value)
+        {
+            await SettingService.Set(Setting.DiarySort, value);
         }
     }
 }

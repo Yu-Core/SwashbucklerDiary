@@ -698,13 +698,17 @@
     "AddVideo": "Add Video"
   },
   "Sort": {
-    "CreateTime": {
-      "Asc": "CreateTime-Asc",
-      "Desc": "CreateTime-Desc"
+    "Time": {
+      "Asc": "Time-Asc",
+      "Desc": "Time-Desc"
     },
-    "DiaryCount": {
-      "Asc": "DiaryCount-Asc",
-      "Desc": "DiaryCount-Desc"
+    "Count": {
+      "Asc": "Count-Asc",
+      "Desc": "Count-Desc"
+    },
+    "Name": {
+      "Asc": "Name-Asc",
+      "Desc": "Name-Desc"
     }
   },
   "Image": {

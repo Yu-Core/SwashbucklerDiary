@@ -23,9 +23,10 @@
                          ValueChanged="InternalValueChanged"
                          OnChange="OnChange"
                          Class="mt-0 pb-1"
-                         OnClick="HandleOnCancel"
+                         Row="@Row"
                          HideDetails="@("auto")"
-                         Mandatory="true">
+                         Mandatory="true"
+                         OnClick="HandleOnCancel">
                 @foreach (var item in Items)
                 {
                     <MRadio Label="@InternalItemText(item)"

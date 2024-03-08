@@ -281,3 +281,7 @@
         opacity: .24
     }
 }
+
+.m-input--radio-group--row .m-input--radio-group__input {
+    justify-content: space-between;
+}

@@ -20,6 +20,17 @@ namespace SwashbucklerDiary.Rcl.Components
             LoadView();
         }
 
+        protected override void UpdateSettings()
+        {
+            base.UpdateSettings();
+
+            var locationSort = SettingService.Get<string>(Setting.LocationSort);
+            if (!string.IsNullOrEmpty(locationSort))
+            {
+                sortItem = locationSort;
+            }
+        }
+
         private async Task ConfirmDelete()
         {
             var location = SelectedItemValue;
@@ -68,10 +79,15 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             sortOptions = new()
             {
-                {"Sort.CreateTime.Desc", it => it.OrderByDescending(l => l.CreateTime) },
-                {"Sort.CreateTime.Asc", it => it.OrderBy(l => l.CreateTime) },
+                {"Sort.Time.Desc", it => it.OrderByDescending(l => l.CreateTime) },
+                {"Sort.Time.Asc", it => it.OrderBy(l => l.CreateTime) },
             };
-            sortItem = SortItems.First();
+
+            if (string.IsNullOrEmpty(sortItem))
+            {
+                sortItem = SortItems.First();
+            }
+
             menuItems = new()
             {
                 new(this, "Share.Rename", "mdi-rename-outline", Rename),
@@ -88,6 +104,11 @@ namespace SwashbucklerDiary.Rcl.Components
         private void Rename()
         {
             ShowRename = true;
+        }
+
+        private async Task SortChanged(string value)
+        {
+            await SettingService.Set(Setting.LocationSort, value);
         }
     }
 }

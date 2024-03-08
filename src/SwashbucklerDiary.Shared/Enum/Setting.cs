@@ -25,6 +25,9 @@
         LANScanPort,
         LANTransmissionPort,
         StatisticsCard,
-        EditAutoSave
+        EditAutoSave,
+        DiarySort,
+        TagSort,
+        LocationSort
     }
 }

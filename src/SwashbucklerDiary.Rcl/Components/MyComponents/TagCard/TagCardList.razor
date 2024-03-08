@@ -52,7 +52,11 @@
 
 <RadioDialog @bind-Value="sortItem"
              @bind-Visible="showSort"
+             OnChange="SortChanged"
+             TItem="string"
+             TItemValue="string"
              Title="@(I18n.T("Share.Sort"))"
+             Row="true"
              Items="SortItems">
 </RadioDialog>
 
