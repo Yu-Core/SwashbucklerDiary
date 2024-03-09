@@ -9,7 +9,14 @@
                 return false;
             }
 
-            return await Browser.Default.OpenAsync(url, BrowserLaunchMode.External);
+            try
+            {
+                return await Browser.Default.OpenAsync(url, BrowserLaunchMode.External);
+            }
+            catch (Exception)
+            {
+                return await Browser.Default.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
+            }
         }
     }
 }
