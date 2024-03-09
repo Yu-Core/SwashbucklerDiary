@@ -468,3 +468,43 @@ a, .btn-link {
     .theme--dark.m-btn.m-btn--readonly .m-btn__loading, .theme--dark.m-btn.m-btn--readonly .m-icon {
         color: #fff !important
     }
+
+.preview-image-dialog--toolbar {
+    z-index: 2;
+    background-color: transparent !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+    .preview-image-dialog--toolbar .theme--light.m-btn--icon::before {
+        background-color: #f7f8f9 !important;
+        opacity: 1 !important;
+    }
+
+    .preview-image-dialog--toolbar .theme--dark.m-btn--icon::before {
+        background-color: #121212 !important;
+        opacity: 1 !important;
+    }
+
+.preview-image-dialog--image__wraper {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+}
+
+.preview-image-dialog--image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+    .preview-image-dialog--image img {
+        max-width: 100%;
+        max-height: 100%;
+    }

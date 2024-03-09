@@ -1,14 +1,14 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
-@inherits DialogComponentBase
+@inherits ShowContentDialogComponentBase
 
-<MDialogExtension MyValue="Visible"
+<MDialogExtension @ref="mDialogExtension"
+                  MyValue="Visible"
                   MyValueChanged="InternalVisibleChanged"
                   Fullscreen="true"
                   Transition="">
-    <MCard Class="fill-height primary-background d-flex flex-column"
+    <MCard Class="fill-height primary-background"
            Ripple="false">
-        <MToolbar Class="flex-grow-0"
-                  Style="z-index:2;background-color:transparent !important;"
+        <MToolbar Class="preview-image-dialog--toolbar"
                   Elevation="0">
             <MButton Icon="true"
                      OnClick="()=>InternalVisibleChanged(false)">
@@ -33,27 +33,12 @@
             </MButton>
         </MToolbar>
 
-        <div style="position:relative;z-index:1;height:100%;">
-            <MImage Id="@id"
-                    Style="position:absolute;"
-                    Src="@Src"
-                    Width="@("100%")"
-                    Height="@("100%")"
-                    Contain="true">
-                <PlaceholderContent>
-                    <MRow Class="fill-height ma-0"
-                          Align="@AlignTypes.Center"
-                          Justify="@JustifyTypes.Center">
-                        <MProgressCircular Indeterminate="true">
-                        </MProgressCircular>
-                    </MRow>
-                </PlaceholderContent>
-            </MImage>
+        <div class="preview-image-dialog--image__wraper">
+            <div id="@id" class="preview-image-dialog--image">
+                <img src="@Src" />
+            </div>
         </div>
 
-        <MToolbar Class="flex-grow-0"
-                  Style="background-color:transparent !important;"
-                  Elevation="0">
-        </MToolbar>
+
     </MCard>
 </MDialogExtension>

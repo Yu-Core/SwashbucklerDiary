@@ -21,11 +21,8 @@
                 <MListItem ThreeLine>
                     <MListItemAvatar Class="ml-sm-2 ml-md-4 mr-md-6"
                                      Rounded="@("lg")"
-                                     Size="70"
-                                     @onclick:stopPropagation="true">
-                        <MImage Src="@(avatar)"
-                                @onclick="()=>showPreviewImage=true">
-                        </MImage>
+                                     Size="70">
+                        <img src="@(avatar)" @onclick="()=>showPreviewImage=true" @onclick:stopPropagation="true" />
                     </MListItemAvatar>
                     <MListItemContent>
                         <MListItemTitle Class="text-h6 font-weight-bold">

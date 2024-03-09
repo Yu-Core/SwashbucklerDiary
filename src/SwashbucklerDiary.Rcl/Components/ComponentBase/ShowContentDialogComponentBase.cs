@@ -2,7 +2,7 @@
 {
     public abstract class ShowContentDialogComponentBase : DialogComponentBase
     {
-        protected MDialogExtension mDialog = default!;
+        protected MDialogExtension mDialogExtension = default!;
 
         protected override void OnAfterRender(bool firstRender)
         {
@@ -10,8 +10,8 @@
 
             if (firstRender)
             {
-                mDialog.BeforeShowContent = BeforeShowContent;
-                mDialog.AfterShowContent = AfterShowContent;
+                mDialogExtension.BeforeShowContent = BeforeShowContent;
+                mDialogExtension.AfterShowContent = AfterShowContent;
             }
         }
 

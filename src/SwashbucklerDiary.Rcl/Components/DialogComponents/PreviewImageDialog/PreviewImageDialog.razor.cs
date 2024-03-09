@@ -4,9 +4,11 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class PreviewImageDialog : DialogComponentBase
+    public partial class PreviewImageDialog : ShowContentDialogComponentBase
     {
         private readonly string id = $"zoom-image-{Guid.NewGuid()}";
+
+        private bool isInitialized;
 
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
@@ -24,13 +26,14 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public string? Src { get; set; }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override async Task BeforeShowContent()
         {
-            await base.OnAfterRenderAsync(firstRender);
+            await base.BeforeShowContent();
 
-            if (firstRender)
+            if (!isInitialized)
             {
                 await Module.Init($"#{id}");
+                isInitialized = true;
             }
         }
 
@@ -42,7 +45,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             base.Visible = value;
-            if (!value && Module is not null)
+            if (!value && Module is not null && isInitialized)
             {
                 await Module.Reset($"#{id}");
             }
@@ -72,7 +75,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             var isSuccess = await MediaResourceManager.ShareImageAsync(I18n.T("Share.Share"), Src);
-            if(isSuccess)
+            if (isSuccess)
             {
                 await HandleAchievements(Achievement.Share);
             }
