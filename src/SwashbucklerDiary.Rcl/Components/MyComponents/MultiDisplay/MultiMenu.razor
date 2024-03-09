@@ -5,8 +5,7 @@
     <MobileContent>
         <MBottomSheetExtension MyValue="Visible"
                                MyValueChanged="InternalVisibleChanged"
-                               ContentClass="rounded-t-lg"
-                               Eager="true">
+                               ContentClass="rounded-t-lg">
             <ActivatorContent>
                 @(ComputedActivatorContent(context))
             </ActivatorContent>
@@ -54,7 +53,6 @@
                         Rounded="@("lg")"
                         Bottom="true"
                         Right="true"
-                        Eager="true"
                         Transition="scroll-x-reverse-transition">
             <ActivatorContent>
                 @(ComputedActivatorContent(context))

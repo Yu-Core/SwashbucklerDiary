@@ -41,16 +41,6 @@ namespace SwashbucklerDiary.Rcl.Components
             SetOptions();
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-
-            if (firstRender)
-            {
-                await AfterMarkdownRender();
-            }
-        }
-
         private void SetOptions()
         {
             string lang = I18n.Culture.Name.Replace("-", "_");
@@ -58,7 +48,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var previewTheme = new Dictionary<string, object?>()
             {
                 { "current", theme },
-                { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.9.8/dist/css/content-theme" }
+                { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.10.1/dist/css/content-theme" }
             };
             var previewMarkdown = new Dictionary<string, object?>()
             {
@@ -107,7 +97,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "mode", "ir" },
                 { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link",btnImage,btnAudio,btnVideo}},
                 { "placeholder", I18n.T("Write.ContentPlace")! },
-                { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.9.8" },
+                { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.10.1" },
                 { "lang", lang },
                 { "icon","material" },
                 { "theme", theme },
@@ -118,7 +108,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task AfterMarkdownRender()
         {
-            await Task.Delay(1000);
             await Module.PreventInputLoseFocus();
         }
 

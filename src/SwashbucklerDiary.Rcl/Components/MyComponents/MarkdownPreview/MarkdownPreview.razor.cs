@@ -42,7 +42,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var theme = new Dictionary<string, object?>()
             {
                 { "current", mode },
-                { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.9.8/dist/css/content-theme" }
+                { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.10.1/dist/css/content-theme" }
             };
             var markdown = new Dictionary<string, object>()
             {
@@ -52,7 +52,7 @@ namespace SwashbucklerDiary.Rcl.Components
             _options = new()
             {
                 { "mode", mode },
-                { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.9.8" },
+                { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.10.1" },
                 { "lang", lang },
                 { "theme", theme },
                 { "icon", "material" },
