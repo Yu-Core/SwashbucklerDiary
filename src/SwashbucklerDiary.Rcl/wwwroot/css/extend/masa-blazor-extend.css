@@ -160,6 +160,11 @@
         padding: 16px;
     }
 
+.theme--dark .m-overlay__scrim {
+    background-color: #424242 !important;
+    border-color: #424242 !important;
+}
+
 /*自适应圆角*/
 @media screen and (min-width:600px) {
     .m-application .rounded-b-sm-lg {
