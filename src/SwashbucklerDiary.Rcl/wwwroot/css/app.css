@@ -83,15 +83,68 @@ a, .btn-link {
     }
 }
 
+html::-webkit-scrollbar {
+    display: none !important;
+}
 
-* {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+html {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
 }
-/*去除滚动条*/
+
+@media (hover: none) {
+    * {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
+
 ::-webkit-scrollbar {
-    display: none;
+    width: 5px;
+    height: 5px;
+    margin: 5px 0;
 }
+
+@media (hover: hover) {
+    ::-webkit-scrollbar {
+        width: 13px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-style: dashed;
+        border-color: transparent;
+        border-width: 4px;
+        background-clip: padding-box;
+    }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-clip: initial;
+        }
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 15px;
+    margin: 5px 0;
+}
+
+::-webkit-scrollbar-thumb {
+    margin: 5px 0;
+    border-radius: 15px;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(170 168 168)), color-stop(0.72, rgb(170 168 168)), color-stop(0.86, rgb(170 168 168)));
+}
+
+.scroll-show {
+    -ms-overflow-style: initial !important;
+    scrollbar-width: initial !important;
+}
+
+    .scroll-show::-webkit-scrollbar {
+        display: initial !important;
+    }
 
 .my-tab {
     text-transform: none !important;
@@ -112,24 +165,6 @@ a, .btn-link {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none; /*禁止选中内容*/
-}
-/*滚动条*/
-.scroll-show::-webkit-scrollbar-track {
-    border-radius: 15px;
-    margin: 5px 0;
-}
-
-.scroll-show::-webkit-scrollbar {
-    display: initial;
-    width: 5px;
-    height: 5px;
-    margin: 5px 0;
-}
-
-.scroll-show::-webkit-scrollbar-thumb {
-    margin: 5px 0;
-    border-radius: 15px;
-    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(170 168 168)), color-stop(0.72, rgb(170 168 168)), color-stop(0.86, rgb(170 168 168)));
 }
 
 .user-select * {
