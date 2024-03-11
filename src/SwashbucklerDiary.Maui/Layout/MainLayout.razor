@@ -1,11 +1,11 @@
 ﻿@inherits MainLayoutBase
 
-<MApp>
-    <CascadingValue Value="@I18n.Culture.Name" Name="Culture">
-        <ErrorBoundary>
-            <ChildContent>
-                @if (afterInitSetting)
-                {
+@if (afterInitSetting)
+{
+    <MApp>
+        <CascadingValue Value="@I18n.Culture.Name" Name="Culture">
+            <ErrorBoundary>
+                <ChildContent>
                     <FirstLaunchDialog />
 
                     <MainLayoutNavDrawer Items="NavigationButtons"></MainLayoutNavDrawer>
@@ -17,13 +17,12 @@
                     </MMain>
 
                     <MainLayoutBottomNav Items="NavigationButtons"></MainLayoutBottomNav>
-                }
-            </ChildContent>
+                </ChildContent>
 
-            <ErrorContent>
-                <ErrorDialog></ErrorDialog>
-            </ErrorContent>
-        </ErrorBoundary>
-    </CascadingValue>
-</MApp>
-
+                <ErrorContent>
+                    <ErrorDialog></ErrorDialog>
+                </ErrorContent>
+            </ErrorBoundary>
+        </CascadingValue>
+    </MApp>
+}

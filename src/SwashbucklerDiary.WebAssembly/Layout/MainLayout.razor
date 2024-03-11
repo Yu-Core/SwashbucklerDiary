@@ -1,11 +1,11 @@
 ﻿@inherits MainLayoutBase
 
-<MApp>
-    <CascadingValue Value="@I18n.Culture.ToString()" Name="Culture">
-        <MErrorHandler DisablePopupIfErrorContentRender>
-            <ChildContent>
-                @if (afterInitSetting)
-                {
+@if (afterInitSetting)
+{
+    <MApp>
+        <CascadingValue Value="@I18n.Culture.ToString()" Name="Culture">
+            <MErrorHandler DisablePopupIfErrorContentRender>
+                <ChildContent>
                     <PageTitle>@(I18n.T("AppName"))</PageTitle>
 
                     <FirstLaunchDialog />
@@ -21,25 +21,24 @@
                     <MainLayoutBottomNav Items="NavigationButtons"></MainLayoutBottomNav>
 
                     <PwaSnackbar OnRefresh="@RefreshToSkipWaiting"></PwaSnackbar>
-                }
-            </ChildContent>
-            <ErrorContent>
-                <MContainer Class="fill-height justify-center">
-                    <div style="white-space: pre-wrap; max-width: 100vw;">
-                        <h1 class="error--text text-center mb-6">Something went wrong</h1>
-                        <p class="error--text" style="font-size: 1rem;">@context.Message</p>
-                        <p class="info--text">This could be a browser cache issue. Refresh and try again, or manually hard reload (<kbd>Ctrl+F5</kbd> for Windows, <kbd>Command+Shift+R</kbd> for Mac).</p>
-                        <MButton Block
-                                 Class="text-capitalize"
-                                 Large
-                                 Color="primary"
-                                 OnClick="RefreshPage">
-                            @I18n.T("pwa.refresh")
-                        </MButton>
-                    </div>
-                </MContainer>
-            </ErrorContent>
-        </MErrorHandler>
-    </CascadingValue>
-</MApp>
-
+                </ChildContent>
+                <ErrorContent>
+                    <MContainer Class="fill-height justify-center">
+                        <div style="white-space: pre-wrap; max-width: 100vw;">
+                            <h1 class="error--text text-center mb-6">Something went wrong</h1>
+                            <p class="error--text" style="font-size: 1rem;">@context.Message</p>
+                            <p class="info--text">This could be a browser cache issue. Refresh and try again, or manually hard reload (<kbd>Ctrl+F5</kbd> for Windows, <kbd>Command+Shift+R</kbd> for Mac).</p>
+                            <MButton Block
+                                     Class="text-capitalize"
+                                     Large
+                                     Color="primary"
+                                     OnClick="RefreshPage">
+                                @I18n.T("pwa.refresh")
+                            </MButton>
+                        </div>
+                    </MContainer>
+                </ErrorContent>
+            </MErrorHandler>
+        </CascadingValue>
+    </MApp>
+}
