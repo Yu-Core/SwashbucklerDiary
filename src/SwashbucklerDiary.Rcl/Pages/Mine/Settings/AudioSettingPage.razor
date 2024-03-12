@@ -1,4 +1,4 @@
-﻿@page "/imageSetting"
+﻿@page "/audioSetting"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
@@ -11,7 +11,7 @@
     </MButton>
 
     <MToolbarTitle Class="font-weight-bold">
-        @(I18n.T("Setting.Display.Diary.Image.Name"))
+        @(I18n.T("Setting.Display.Diary.Audio.Name"))
     </MToolbarTitle>
     <MSpacer></MSpacer>
     <MButton Icon="true"
@@ -23,11 +23,11 @@
 </MyAppBar>
 
 <ScrollContainer>
-    <ImageResourceCardList Value="imageResources"></ImageResourceCardList>
+    @(I18n.T("ToDo.Title"))
 </ScrollContainer>
 
 <DeleteDialog @bind-Visible="showConfimDelete"
               Title="@(I18n.T("Share.Delete"))"
-              Content="@(I18n.T("Setting.Display.Diary.Image.DeleteUnused"))"
-              OnOK="DeleteUnusedImageResources">
+              Content="@(I18n.T("Setting.Display.Diary.Audio.DeleteUnused"))"
+              OnOK="DeleteUnusedResources">
 </DeleteDialog>

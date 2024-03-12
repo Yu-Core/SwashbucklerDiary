@@ -108,6 +108,38 @@
                     <MIcon>mdi-chevron-right</MIcon>
                 </MListItemAction>
             </MListItem>
+
+            <MDivider Class="mx-3"></MDivider>
+
+            <MListItem OnClick="@(()=>To("audioSetting"))">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-music
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.Audio.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-3"></MDivider>
+
+            <MListItem OnClick="@(()=>To("videoSetting"))">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-movie-open-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.Video.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
         </MList>
     </MCard>
 </ScrollContainer>

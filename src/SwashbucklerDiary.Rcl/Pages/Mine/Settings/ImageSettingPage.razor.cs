@@ -38,6 +38,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
             }
+
+            await UpdateImageResourcesAsync();
         }
 
     }

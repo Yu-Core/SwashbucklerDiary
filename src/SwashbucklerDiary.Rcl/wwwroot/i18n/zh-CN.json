@@ -432,8 +432,20 @@
         "Image": {
           "Name": "图片",
           "Path": "设置 / 日记 / 图片",
-          "DeleteUnusedImage": "确认删除未使用的图片？",
+          "DeleteUnused": "确认删除未使用的图片？",
           "NoImage": "暂无图片"
+        },
+        "Audio": {
+          "Name": "音频",
+          "Path": "设置 / 日记 / 音频",
+          "DeleteUnused": "确认删除未使用的音频？",
+          "NoAudio": "暂无音频"
+        },
+        "Video": {
+          "Name": "视频",
+          "Path": "设置 / 日记 / 视频",
+          "DeleteUnused": "确认删除未使用的视频？",
+          "NoVideo": "暂无视频"
         }
       },
       "Alert": {

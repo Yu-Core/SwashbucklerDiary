@@ -432,8 +432,20 @@
         "Image": {
           "Name": "Image",
           "Path": "Setting / Diary / Image Manage",
-          "DeleteUnusedImage": "Are you sure to delete unused images?",
+          "DeleteUnused": "Are you sure to delete unused images?",
           "NoImage": "No image"
+        },
+        "Audio": {
+          "Name": "Audio",
+          "Path": "Setting / Diary / Audio Manage",
+          "DeleteUnused": "Are you sure to delete unused audios?",
+          "NoAudio": "No audio"
+        },
+        "Video": {
+          "Name": "Video",
+          "Path": "Setting / Diary / Video Manage",
+          "DeleteUnused": "Are you sure to delete unused videos?",
+          "NoVideo": "No video"
         }
       },
       "Alert": {
