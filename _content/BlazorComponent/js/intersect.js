@@ -1,0 +1,2 @@
+class e{constructor(e,s,t){this.el=e,this.dotnetHelper=s,this.observer=new IntersectionObserver(((e=[],t)=>{e.some((e=>e.isIntersecting))&&s.invokeMethodAsync("invoke")}),null!=t?t:{}),this.observer.observe(e)}dispose(){this.dotnetHelper.dispose&&(this.observer.unobserve(this.el),this.dotnetHelper.dispose())}}function s(s,t,o){return new e(s,t,o)}export{s as init};
+//# sourceMappingURL=intersect.js.map

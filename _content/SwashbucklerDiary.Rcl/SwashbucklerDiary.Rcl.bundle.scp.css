@@ -1,0 +1,62 @@
+/* _content/SwashbucklerDiary.Rcl/Pages/History/HistoryPage.razor.rz.scp.css */
+.float-calendar[b-8l4hbvo626]  input {
+    cursor: pointer;
+}
+/* _content/SwashbucklerDiary.Rcl/Pages/Mine/Achievement/AchievementPage.razor.rz.scp.css */
+[b-9ckp2kao79] .achievement-card {
+    width: 100%;
+}
+
+@media screen and (min-width:600px) {
+    [b-9ckp2kao79] .achievement-card {
+        width: 48%;
+    }
+}
+/* _content/SwashbucklerDiary.Rcl/Pages/ReadPage.razor.rz.scp.css */
+[b-i04eun7ay5] .vditor-reset img {
+    cursor: pointer;
+}
+/* _content/SwashbucklerDiary.Rcl/Pages/WritePage.razor.rz.scp.css */
+[b-cls2osdxhj] .m-input__control {
+    flex-grow: 1;
+}
+
+[b-cls2osdxhj] .m-input__slot {
+    flex-grow: 1;
+}
+
+[b-cls2osdxhj] .m-text-field__details {
+    flex-grow: 0;
+}
+
+.write-input-wrap[b-cls2osdxhj]{
+    display:flex;
+    flex-grow:1;
+    flex-direction:column;
+    min-height:0;
+    overflow:auto;
+}
+
+[b-cls2osdxhj] .write-markdown-wrap {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    min-height:0;
+}
+
+[b-cls2osdxhj] .write-markdown {
+    flex-grow:1;
+    min-height: 0;
+    overflow: visible;
+}
+
+@media (hover: none) {
+    .write-chip-group[b-cls2osdxhj] {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+.write-chip-group[b-cls2osdxhj]  .m-chip {
+    margin: 4px 8px 4px 0;
+}
