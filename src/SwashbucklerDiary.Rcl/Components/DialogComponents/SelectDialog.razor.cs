@@ -4,7 +4,7 @@ using SwashbucklerDiary.Rcl.Models;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class SelectIconDialog : DialogComponentBase
+    public partial class SelectDialog : DialogComponentBase
     {
         private List<IconListItem> iconListItems = [];
 
@@ -28,9 +28,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override void OnInitialized()
         {
-            SetIconListItems();
-
             base.OnInitialized();
+
+            SetIconListItems();
         }
 
         private void SetIconListItems()
