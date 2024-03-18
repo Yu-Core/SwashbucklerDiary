@@ -13,7 +13,7 @@
   },
   {
     "Name": "User.UserName.Name",
-    "Icon": "mdi-card-account-details-outline",
+    "Icon": "mdi-account-details-outline",
     "Path": "User.UserName.Path",
     "Href": "user"
   },

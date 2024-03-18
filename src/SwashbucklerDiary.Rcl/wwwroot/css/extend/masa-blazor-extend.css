@@ -290,3 +290,7 @@
 .m-input--radio-group--row .m-input--radio-group__input {
     justify-content: space-between;
 }
+
+    .m-input--radio-group--row .m-input--radio-group__input > * {
+        flex-grow: 1;
+    }
