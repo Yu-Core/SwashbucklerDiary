@@ -1,4 +1,5 @@
-﻿using BlazorComponent;
+﻿using BemIt;
+using BlazorComponent;
 using BlazorComponent.Attributes;
 using Masa.Blazor.Presets;
 using Masa.Blazor.Presets.PageContainer;
@@ -10,15 +11,14 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class PPageContainerReplacement : PatternPathComponentBase
     {
-        [Parameter]
-        public RenderFragment? ChildContent { get; set; }
+        [Parameter] public RenderFragment? ChildContent { get; set; }
 
         /// <summary>
         /// A list of regular expression patterns to match.
         /// The content of the matched path would not be cached in the DOM.
         /// </summary>
         [Parameter]
-        public IEnumerable<string>? ExcludePatterns { get; set; }
+        public IEnumerable<string> ExcludePatterns { get; set; } = Array.Empty<string>();
 
         /// <summary>
         /// A list of regular expression patterns to match.
@@ -26,44 +26,90 @@ namespace SwashbucklerDiary.Rcl.Components
         /// </summary>
         [Parameter]
         [MasaApiParameter(ReleasedOn = "v1.0.2")]
-        public IEnumerable<string>? IncludePatterns { get; set; }
+        public IEnumerable<string> IncludePatterns { get; set; } = Array.Empty<string>();
 
         /// <summary>
         /// Max number of cached pages.
         /// </summary>
-        [Parameter][MasaApiParameter(10, "v1.0.2")]
+        [Parameter]
+        [MasaApiParameter(10, "v1.0.2")]
         public int Max { get; set; } = 10;
+
+        [Parameter] public string? Transition { get; set; } = "";
+
+        /// <summary>
+        /// Whether to only render the content if the path is included in the <see cref="IncludePatterns"/>.
+        /// </summary>
+        [Parameter]
+        public bool OnlyRenderIncluded { get; set; }
 
         protected readonly LRUCache<string, PatternPath> _patternPaths = new(10);
 
-        private string? _previousPath;
+        private readonly Block _block = new("p-page-container");
 
+        private string? _previousPath;
         private PatternPath? _currentPatternPath;
+
+        private HashSet<string> _prevIncludePatterns = new();
+        private HashSet<string> _prevExcludePatterns = new();
+
+        private HashSet<Regex> _cachedIncludePatternRegexes = new();
+        private HashSet<Regex> _cachedExcludePatternRegexes = new();
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
-            var patternPath = GetCurrentPatternPath();
-            _currentPatternPath = patternPath;
-            _patternPaths.Put(patternPath.Pattern, patternPath);
+            UpdateCacheRegexes();
 
-            _previousPath = patternPath.AbsolutePath;
+            var patternPath = GetCurrentPatternPath();
+
+            if (!OnlyRenderIncluded || _cachedIncludePatternRegexes.Any(r => r.IsMatch(patternPath.AbsolutePath)))
+            {
+                _currentPatternPath = patternPath;
+                _patternPaths.Put(patternPath.Pattern, patternPath);
+                _previousPath = patternPath.AbsolutePath;
+            }
 
             NavigationManager.LocationChanged += NavigationManagerOnLocationChanged;
         }
 
-        protected override void SetComponentCss()
+        protected override void OnParametersSet()
         {
-            base.SetComponentCss();
+            base.OnParametersSet();
 
-            CssProvider.Apply(css => { css.Add("p-page-container"); }, style => { style.Add("height: 100%"); });
+            UpdateCacheRegexes();
+        }
+
+        private void UpdateCacheRegexes()
+        {
+            if (!_prevIncludePatterns.SetEquals(IncludePatterns))
+            {
+                _prevIncludePatterns = new HashSet<string>(IncludePatterns);
+                _cachedIncludePatternRegexes =
+                    IncludePatterns.Select(p => new Regex(p, RegexOptions.IgnoreCase)).ToHashSet();
+            }
+
+            if (!_prevExcludePatterns.SetEquals(ExcludePatterns))
+            {
+                _prevExcludePatterns = new HashSet<string>(ExcludePatterns);
+                _cachedExcludePatternRegexes =
+                    ExcludePatterns.Select(p => new Regex(p, RegexOptions.IgnoreCase)).ToHashSet();
+            }
+        }
+
+        protected override IEnumerable<string> BuildComponentClass()
+        {
+            yield return "p-page-container";
         }
 
         private void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
-            var currentPatternPath = GetCurrentPatternPath();
-            var currentPath = currentPatternPath.AbsolutePath;
+            var currentPath = NavigationManager.GetAbsolutePath();
+            if (OnlyRenderIncluded && !_cachedIncludePatternRegexes.Any(r => r.IsMatch(currentPath)))
+            {
+                return;
+            }
 
             // only the path is changed, not the query string
             if (_previousPath == currentPath)
@@ -71,9 +117,11 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
+            var currentPatternPath = GetCurrentPatternPath();
+
             if (currentPatternPath.IsSelf)
             {
-                if (_patternPaths.TryGetValue(currentPath, out var renderedPathPattern))
+                if (_patternPaths.TryGetValue(currentPatternPath.Pattern, out var renderedPathPattern))
                 {
                     renderedPathPattern.UpdatePath(NavigationManager.GetAbsolutePath());
                     InvokeAsync(StateHasChanged);
@@ -83,10 +131,10 @@ namespace SwashbucklerDiary.Rcl.Components
             // if the previous path is excluded or not included, remove it from the PatternPaths
             if (_previousPath is not null)
             {
-                if ((ExcludePatterns?.Any() is true &&
-                     ExcludePatterns.Any(pattern => new Regex(pattern, RegexOptions.IgnoreCase).IsMatch(_previousPath))) ||
-                    (IncludePatterns?.Any() is true &&
-                     !IncludePatterns.Any(pattern => new Regex(pattern, RegexOptions.IgnoreCase).IsMatch(_previousPath))))
+                if ((_cachedExcludePatternRegexes.Count > 0
+                     && _cachedExcludePatternRegexes.Any(r => r.IsMatch(_previousPath)))
+                    || (_cachedIncludePatternRegexes.Count > 0
+                        && !_cachedIncludePatternRegexes.Any(r => r.IsMatch(_previousPath))))
                 {
                     var previousPatternPath = _patternPaths.FirstOrDefault(p => p.AbsolutePath == _previousPath);
                     if (previousPatternPath is not null)

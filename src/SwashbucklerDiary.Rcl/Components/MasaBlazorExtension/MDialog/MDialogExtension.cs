@@ -24,14 +24,14 @@ namespace SwashbucklerDiary.Rcl.Components
             set => base.ValueChanged = value;
         }
 
-        protected override Task DeleteContent()
+        protected override ValueTask DisposeAsyncCore()
         {
             if (Value)
             {
                 NavigateService.Action -= Close;
             }
 
-            return base.DeleteContent();
+            return base.DisposeAsyncCore();
         }
 
         private void SetValue(bool value)

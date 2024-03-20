@@ -200,12 +200,13 @@
     padding-bottom: 12px;
 }
 
-.m-window-item.m-window-item--active {
-    display: flex !important;
-    flex-direction: column !important;
+.p-page-container__item {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-    .m-window-item.m-window-item--active > * {
+    .p-page-container__item > * {
         flex-grow: 0 !important;
     }
 
