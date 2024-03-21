@@ -26,5 +26,6 @@
   "EditAutoSave": 30,
   "DiarySort": "",
   "TagSort": "",
-  "LocationSort": ""
+  "LocationSort": "",
+  "UpdateNotPrompt": false
 }

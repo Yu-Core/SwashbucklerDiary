@@ -73,32 +73,4 @@
                  DynamicListItems="codeSourceListItems">
 </MultiListDialog>
 
-<MDialogExtension @bind-MyValue="showVersionUpdate"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420">
-    <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("About.Check for updates.Name"))
-            <MSpacer></MSpacer>
-            <MButton Icon="true"
-                     OnClick="()=>showVersionUpdate=false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText Class="pb-0">
-            @(I18n.T("VersionUpdate.Need updates"))
-        </MCardText>
-        <MCardActions>
-            <MSpacer></MSpacer>
-            <MButton Text="true"
-                     OnClick="()=>showVersionUpdate=false">
-                @(I18n.T("Share.Cancel"))
-            </MButton>
-            <MButton Text="true"
-                     Color="primary"
-                     OnClick="ToUpdate">
-                @(I18n.T("Share.OK"))
-            </MButton>
-        </MCardActions>
-    </MCard>
-</MDialogExtension>
+<UpdateDialog @bind-Visible="showUpdate"></UpdateDialog>

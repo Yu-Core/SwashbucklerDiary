@@ -4,12 +4,18 @@
     {
         public event Func<Task>? AfterFirstEnter;
 
-        public event Func<Task>? AfterUpdateVersion;
+        public event Func<Task>? AfterVersionUpdate;
 
-        Task FirstEnter();
+        public event Func<Task>? AfterCheckFirstLaunch;
 
-        Task UpdateVersion();
+        Task NotifyAfterFirstEnter();
+
+        Task HandleVersionUpdate();
+
+        Task NotifyAfterCheckFirstLaunch();
 
         Task<bool> CheckForUpdates();
+
+        Task ToUpdate();
     }
 }

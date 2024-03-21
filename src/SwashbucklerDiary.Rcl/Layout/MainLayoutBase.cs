@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected IThemeService ThemeService { get; set; } = default!;
 
         [Inject]
-        protected IVersionUpdataManager VersionManager { get; set; } = default!;
+        protected IVersionUpdataManager VersionUpdataManager { get; set; } = default!;
 
         [Inject]
         protected MasaBlazor MasaBlazor { get; set; } = default!;

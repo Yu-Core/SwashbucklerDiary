@@ -38,18 +38,20 @@ namespace SwashbucklerDiary.Rcl.Layout
             UpdateSettings();
         }
 
-        private void UpdateSettings()
+        private async void UpdateSettings()
         {
-            var lang = SettingService.Get<bool>(Setting.FirstSetLanguage);
+            var setLang = SettingService.Get<bool>(Setting.FirstSetLanguage);
             var agree = SettingService.Get<bool>(Setting.FirstAgree);
 
-            if (lang && agree)
+            if (setLang && agree)
             {
                 show = false;
+                await VersionManager.NotifyAfterCheckFirstLaunch();
             }
             else
             {
-                showLanguga = !lang;
+                //如果没选择语言就显示语言弹窗，没同意隐私政策就显示隐私政策弹窗
+                showLanguga = !setLang;
                 showAgreement = !agree;
             }
         }
@@ -66,7 +68,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             Task insertTask = Task.Run(async () =>
             {
                 await InsertDefaultDiaries();
-                await VersionManager.FirstEnter();
+                await VersionManager.NotifyAfterFirstEnter();
             });
             Task[] tasks =
             [
@@ -87,6 +89,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             showAgreement = false;
             show = false;
             await SettingService.Set(Setting.FirstAgree, true);
+            await VersionManager.NotifyAfterCheckFirstLaunch();
         }
 
         private void Disagree()
@@ -96,7 +99,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         private async Task InsertDefaultDiaries()
         {
-            string[] defaultdiaries = { "FilePath.Functional Description", "FilePath.Diary Meaning", "FilePath.Markdown Syntax" };
+            string[] defaultdiaries = ["FilePath.Functional Description", "FilePath.Diary Meaning", "FilePath.Markdown Syntax"];
             var diaries = await GetDefaultDiaries(defaultdiaries);
             await DiaryService.AddAsync(diaries);
         }

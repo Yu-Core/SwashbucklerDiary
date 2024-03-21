@@ -28,6 +28,7 @@
         EditAutoSave,
         DiarySort,
         TagSort,
-        LocationSort
+        LocationSort,
+        UpdateNotPrompt
     }
 }

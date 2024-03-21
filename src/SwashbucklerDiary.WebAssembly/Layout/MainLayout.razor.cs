@@ -59,7 +59,7 @@ namespace SwashbucklerDiary.WebAssembly.Layout
         private async Task InitVersionUpdateAsync()
         {
             await ((VersionTracking)VersionTracking).Track(typeof(App).Assembly);
-            await VersionManager.UpdateVersion();
+            await VersionUpdataManager.HandleVersionUpdate();
         }
 
         private async Task RefreshPage()

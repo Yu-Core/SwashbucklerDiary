@@ -7,7 +7,9 @@ namespace SwashbucklerDiary.Rcl.Services
     {
         public event Func<Task>? AfterFirstEnter;
 
-        public event Func<Task>? AfterUpdateVersion;
+        public event Func<Task>? AfterVersionUpdate;
+
+        public event Func<Task>? AfterCheckFirstLaunch;
 
         protected int updateCount;
 
@@ -50,9 +52,9 @@ namespace SwashbucklerDiary.Rcl.Services
             _diaryFileManager = diaryFileManager;
         }
 
-        public async Task FirstEnter()
+        public async Task NotifyAfterFirstEnter()
         {
-            if (AfterFirstEnter == null)
+            if (AfterFirstEnter is null)
             {
                 return;
             }
@@ -60,15 +62,37 @@ namespace SwashbucklerDiary.Rcl.Services
             await AfterFirstEnter.Invoke();
         }
 
-        public virtual async Task UpdateVersion()
+        public virtual async Task HandleVersionUpdate()
         {
-            if (AfterUpdateVersion != null && updateCount > 0)
+            if (AfterVersionUpdate is not null && updateCount > 0)
             {
-                await AfterUpdateVersion.Invoke();
+                await AfterVersionUpdate.Invoke();
             }
         }
 
-        protected async Task UpdateVersion(string version, Func<Task> func)
+        public async Task<bool> CheckForUpdates()
+        {
+            using HttpClient httpClient = new();
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)");
+            var release = await httpClient.GetFromJsonAsync<Release>(_i18n.T("VersionUpdate.LatestVersionUrl"));
+            if (release is null || release.Tag_Name is null)
+            {
+                throw new Exception();
+            }
+
+            var latestVersion = new Version(release.Tag_Name.TrimStart('v'));
+            var currentVersion = new Version(_versionTracking.CurrentVersion);
+            if (latestVersion.CompareTo(currentVersion) > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public abstract Task ToUpdate();
+
+        protected async Task HandleVersionUpdate(string version, Func<Task> func)
         {
             string? strPreviousVersion = _versionTracking.PreviousVersion;
             if (string.IsNullOrEmpty(strPreviousVersion))
@@ -94,26 +118,16 @@ namespace SwashbucklerDiary.Rcl.Services
             await func.Invoke();
         }
 
-        protected abstract Task UpdateVersion697();
+        protected abstract Task HandleVersionUpdate697();
 
-        public async Task<bool> CheckForUpdates()
+        public async Task NotifyAfterCheckFirstLaunch()
         {
-            using HttpClient httpClient = new();
-            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)");
-            var release = await httpClient.GetFromJsonAsync<Release>(_i18n.T("VersionUpdate.LatestVersionUrl"));
-            if (release is null || release.Tag_Name is null)
+            if (AfterCheckFirstLaunch is null)
             {
-                throw new Exception();
+                return;
             }
 
-            var latestVersion = new Version(release.Tag_Name.TrimStart('v'));
-            var currentVersion = new Version(_versionTracking.CurrentVersion);
-            if (latestVersion.CompareTo(currentVersion) > 0)
-            {
-                return true;
-            }
-
-            return false;
+            await AfterCheckFirstLaunch.Invoke();
         }
     }
 }

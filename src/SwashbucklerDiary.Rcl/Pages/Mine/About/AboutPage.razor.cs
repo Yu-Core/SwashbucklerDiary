@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Rcl.Pages
     {
         private bool showSourceCode;
 
-        private bool showVersionUpdate;
+        private bool showUpdate;
 
         private List<DynamicListItem> codeSourceListItems = [];
 
@@ -95,7 +95,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 }
                 else
                 {
-                    showVersionUpdate = true;
+                    showUpdate = true;
                 }
             }
             catch (Exception e)
@@ -103,14 +103,6 @@ namespace SwashbucklerDiary.Rcl.Pages
                 await AlertService.Error(I18n.T("VersionUpdate.Check failed"));
                 Logger.LogError(e, "VersionUpdate check failed");
             }
-
-        }
-
-        private Task ToUpdate()
-        {
-            showVersionUpdate = false;
-            StateHasChanged();
-            return OpenAppDetails();
         }
     }
 }

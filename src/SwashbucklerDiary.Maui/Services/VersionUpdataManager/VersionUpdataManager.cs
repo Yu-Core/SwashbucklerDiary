@@ -6,26 +6,34 @@ namespace SwashbucklerDiary.Maui.Services
 {
     public class VersionUpdataManager : Rcl.Services.VersionUpdataManager
     {
+        private readonly IAccessExternal _accessExternal;
+
+        private readonly IAlertService _alertService;
+
         public VersionUpdataManager(IDiaryService diaryService,
             IResourceService resourceService,
             ISettingService settingService,
             IMediaResourceManager mediaResourceManager,
             II18nService i18n,
             Rcl.Essentials.IVersionTracking versionTracking,
-            IDiaryFileManager diaryFileManager) :
+            IDiaryFileManager diaryFileManager,
+            IAccessExternal accessExternal,
+            IAlertService alertService) :
             base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager)
         {
+            _accessExternal = accessExternal;
+            _alertService = alertService;
         }
 
-        public override async Task UpdateVersion()
+        public override async Task HandleVersionUpdate()
         {
-            await UpdateVersion("0.64.7", UpdateVersion647);
-            await UpdateVersion("0.69.7", UpdateVersion697);
-            await base.UpdateVersion();
+            await HandleVersionUpdate("0.64.7", HandleVersionUpdate647);
+            await HandleVersionUpdate("0.69.7", HandleVersionUpdate697);
+            await base.HandleVersionUpdate();
         }
 
         //此版本之后更改了资源的链接
-        private async Task UpdateVersion647()
+        private async Task HandleVersionUpdate647()
         {
             string avatar = await _settingService.Get<string>("Avatar", "");
             avatar = avatar.Replace("appdata:///", "appdata/");
@@ -34,7 +42,7 @@ namespace SwashbucklerDiary.Maui.Services
             await _diaryFileManager.UpdateAllResourceUri();
         }
 
-        protected override async Task UpdateVersion697()
+        protected override async Task HandleVersionUpdate697()
         {
             var webDAVServerAddressTask = _settingService.Get<string>("WebDAVServerAddress", string.Empty);
             var webDAVAccountTask = _settingService.Get<string>("WebDAVAccount", string.Empty);
@@ -55,6 +63,15 @@ namespace SwashbucklerDiary.Maui.Services
 
             string[] keys = ["ThemeState", "WebDAVServerAddress", "WebDAVAccount", "WebDAVPassword", "Date"];
             await _settingService.Remove(keys);
+        }
+
+        public override async Task ToUpdate()
+        {
+            bool flag = await _accessExternal.OpenAppStoreAppDetails();
+            if (!flag)
+            {
+                await _alertService.Error(_i18n.T("About.OpenAppStoreFail"));
+            }
         }
     }
 }

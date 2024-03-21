@@ -631,7 +631,8 @@
     "LatestVersionUrl": "https://gitee.com/api/v5/repos/Yu-core/SwashbucklerDiary/releases/latest",
     "No updates": "当前已是最新版本",
     "Need updates": "检测到最新版本，是否前往更新？",
-    "Check failed": "检测失败，原因未知"
+    "Check failed": "检测失败，原因未知",
+    "Not prompting": "下次不再提示"
   },
   "lanSender": {
     "List of available devices": "可用设备列表",

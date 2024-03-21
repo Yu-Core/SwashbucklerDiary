@@ -28,14 +28,14 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             VersionManager.AfterFirstEnter += UpdateDiariesAndStateHasChanged;
-            VersionManager.AfterUpdateVersion += UpdateDiariesAndStateHasChanged;
+            VersionManager.AfterVersionUpdate += UpdateDiariesAndStateHasChanged;
             NavigateService.BeforePopToRoot += BeforePopToRoot;
         }
 
         protected override void OnDispose()
         {
             VersionManager.AfterFirstEnter -= UpdateDiariesAndStateHasChanged;
-            VersionManager.AfterUpdateVersion -= UpdateDiariesAndStateHasChanged;
+            VersionManager.AfterVersionUpdate -= UpdateDiariesAndStateHasChanged;
             NavigateService.BeforePopToRoot -= BeforePopToRoot;
             base.OnDispose();
         }

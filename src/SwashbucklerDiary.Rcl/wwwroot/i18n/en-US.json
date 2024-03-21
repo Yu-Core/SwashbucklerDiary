@@ -631,7 +631,8 @@
     "LatestVersionUrl": "https://api.github.com/repos/Yu-Core/SwashbucklerDiary/releases/latest",
     "No updates": "Currently the latest version",
     "Need updates": "Detected the latest version, do you want to proceed to update?",
-    "Check failed": "Detection failed for unknown reason"
+    "Check failed": "Detection failed for unknown reason",
+    "Not prompting": "Don't prompt again next time"
   },
   "lanSender": {
     "List of available devices": "List of available devices",
