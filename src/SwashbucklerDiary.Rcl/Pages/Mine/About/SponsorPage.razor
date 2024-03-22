@@ -45,20 +45,4 @@
     </MCard>
 </ScrollContainer>
 
-<MDialogExtension @bind-MyValue="show"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420">
-    <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("About.Sponsor.Sponsor"))
-            <MSpacer></MSpacer>
-            <MButton Icon="true"
-                     OnClick="()=>show=false">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText Class="d-flex justify-center pb-6">
-            <img style="max-width:100%;max-height:300px;" src="@src" />
-        </MCardText>
-    </MCard>
-</MDialogExtension>
+<PreviewImageDialog @bind-Visible="showPreviewImage" Src="@src"></PreviewImageDialog>

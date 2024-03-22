@@ -6,9 +6,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class SponsorPage : ImportantComponentBase
     {
-        private string? title;
         private string? src;
-        private bool show;
+
+        private bool showPreviewImage;
+
         private List<DynamicListItem> sponsorTypeListItems = [];
 
         protected override async Task OnInitializedAsync()
@@ -21,7 +22,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private void OpenSponsorDialog(string? src)
         {
             this.src = src;
-            show = true;
+            showPreviewImage = true;
         }
 
         private async Task LoadViewAsync()
