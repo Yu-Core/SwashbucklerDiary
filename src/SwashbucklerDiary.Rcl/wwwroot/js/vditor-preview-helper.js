@@ -1,37 +1,28 @@
 export function previewVditor(dotNetCallbackRef, element, text, options) {
+    if (!text) {
+        element.innerHTML = '';
+        return;
+    }
+
     let VditorOptions = {
         ...options,
         after: () => {
-            fixLink(element);
-            fixCopyDisplaySoftKeyboard(element);
-            fixVideoNotDisplayFirstFrame(element);
-            fixIframeAllowFullscreen(element);
+            handlePreviewElement(element);
             dotNetCallbackRef.invokeMethodAsync('After');
         }
     }
     Vditor.preview(element, text, VditorOptions);
 }
 
-export function copy(dotNetCallbackRef, callbackMethod, element) {
-    const items = element.querySelectorAll('.vditor-copy');
-    items.forEach(item => {
-        item.addEventListener('click', function () {
-            dotNetCallbackRef.invokeMethodAsync(callbackMethod);
-        });
-    });
-}
-
-export function previewImage(dotNetCallbackRef, callbackMethod, element) {
-    const imgs = element.querySelectorAll("img");
-    imgs.forEach(img => {
-        img.addEventListener('click', function () {
-            dotNetCallbackRef.invokeMethodAsync(callbackMethod, this.getAttribute('src'));
-        });
-    });
+function handlePreviewElement(previewElement) {
+    handleA(previewElement);
+    handleTextarea(previewElement);
+    handleVideo(previewElement);
+    handleIframe(previewElement);
 }
 
 //修复点击链接的一些错误
-function fixLink(element) {
+function handleA(element) {
     const links = element.querySelectorAll("a"); // 获取所有a标签
     links.forEach(link => {
         var href = link.getAttribute('href');
@@ -42,14 +33,16 @@ function fixLink(element) {
     });
 }
 
-function fixCopyDisplaySoftKeyboard(element) {
+//fix Copy Display Soft Keyboard
+function handleTextarea(element) {
     const textareas = element.querySelectorAll("textarea"); // 获取所有textarea标签
     textareas.forEach(textarea => {
         textarea.readOnly = true;
     });
 }
 
-function fixVideoNotDisplayFirstFrame(element) {
+//fix Video Not Display First Frame
+function handleVideo(element) {
     const videos = element.querySelectorAll("video");
     videos.forEach(video => {
         video.playsInline = "true";
@@ -61,9 +54,9 @@ function fixVideoNotDisplayFirstFrame(element) {
 
             return;
         }
-        
+
         const sources = video.querySelectorAll('source');
-        
+
         sources.forEach(source => {
             const url = new URL(source.src);
             if (!url.hash) {
@@ -73,7 +66,8 @@ function fixVideoNotDisplayFirstFrame(element) {
     });
 }
 
-function fixIframeAllowFullscreen(element) {
+//fix Iframe AllowFullscreen
+function handleIframe(element) {
     const iframes = element.querySelectorAll("iframe");
     iframes.forEach(iframe => {
         iframe.allowFullscreen = true;

@@ -1,15 +1,31 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class MarkdownPreview
+    public partial class MarkdownPreview : IAsyncDisposable
     {
+        private bool showPreviewImage;
+
+        private string? previewImageSrc;
+
+        private IJSObjectReference module = default!;
+
+        private VditorMarkdownPreview vditorMarkdownPreview = default!;
+
         private Dictionary<string, object>? _options;
 
         [Inject]
         protected II18nService I18n { get; set; } = default!;
+
+        [Inject]
+        private IAlertService AlertService { get; set; } = default!;
+
+        [Inject]
+        public IJSRuntime JS { get; set; } = default!;
 
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }
@@ -26,13 +42,51 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public string? Style { get; set; }
 
-        private bool Show => !string.IsNullOrEmpty(Value) && _options is not null;
+        [JSInvokable]
+        public async Task CopySuccess()
+        {
+            await AlertService.Success(I18n.T("Share.CopySuccess"));
+        }
+
+        [JSInvokable]
+        public async Task PreviewImage(string src)
+        {
+            previewImageSrc = src;
+            showPreviewImage = true;
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (module is not null)
+            {
+                await module.DisposeAsync();
+            }
+
+            GC.SuppressFinalize(this);
+        }
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
             SetOptions();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                module = await JS.ImportRclJsModule("js/markdown-preview-helper.js");
+                var dotNetCallbackRef = DotNetObjectReference.Create(this);
+
+                //点击复制按钮提示复制成功
+                await module.InvokeVoidAsync("copy", [dotNetCallbackRef, "CopySuccess", vditorMarkdownPreview.Ref]);
+                //图片预览
+                await module.InvokeVoidAsync("previewImage", [dotNetCallbackRef, "PreviewImage", vditorMarkdownPreview.Ref]);
+            }
         }
 
         private void SetOptions()

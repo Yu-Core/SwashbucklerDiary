@@ -1,10 +1,12 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
 
-@if (Show)
-{
-    <MarkdownPreviewContent Value="@Value"
-                            Class="@Class"
-                            Style="@Style"
-                            Options="_options">
-    </MarkdownPreviewContent>
-}
+<VditorMarkdownPreview @ref="vditorMarkdownPreview"
+                       Value="@Value"
+                       Class="@Class"
+                       Style="@Style"
+                       Options="_options">
+</VditorMarkdownPreview>
+
+<PreviewImageDialog @bind-Visible="showPreviewImage"
+                    Src="@previewImageSrc">
+</PreviewImageDialog>
