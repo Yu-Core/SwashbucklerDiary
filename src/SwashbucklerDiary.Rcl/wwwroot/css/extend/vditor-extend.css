@@ -7,7 +7,7 @@
     --vditor-toolbar-height: 70px;
 }
 
-/*软键盘遮挡问题*/
+/*防止工具栏遮挡内容*/
 @media screen and (max-width:600px) {
     .vditor-toolbar-help {
         margin-bottom: var(--vditor-toolbar-height);
@@ -43,7 +43,6 @@
 }
 
 .vditor-toolbar {
-    background-color: transparent;
     padding-left: 0px !important;
 }
 
@@ -91,9 +90,12 @@
         position: fixed;
         bottom: 0px;
         left: 0px;
+        right: 0px;
         padding-left: 12px !important;
         border: none;
         z-index: 10;
+        overflow-x: hidden;
+        overflow-y: auto;
         /*box-shadow: 0 -3px 5px -3px rgba(0,0,0,.2);*/
     }
 
@@ -101,16 +103,17 @@
             padding: 0px 8px !important;
         }
 
-    .vditor-panel--arrow {
-        bottom: 35px;
+    button[data-type="headings"].vditor-tooltipped + .vditor-panel--arrow {
+        position: fixed;
+        bottom: var(--vditor-toolbar-height);
     }
 
-        .vditor-panel--arrow::before {
-            top: unset;
-            bottom: -14px;
-            transform: rotateX(180deg);
-            filter: drop-shadow(0.1px 0.1px 1px rgba(0, 0, 0, .2));
-        }
+    button[data-type="headings"].vditor-tooltipped + .vditor-panel--arrow::before {
+        top: unset;
+        bottom: -14px;
+        transform: rotateX(180deg);
+        filter: drop-shadow(0.1px 0.1px 1px rgba(0, 0, 0, .2));
+    }
 
     .vditor-reset {
         --editor-bottom: 50px;

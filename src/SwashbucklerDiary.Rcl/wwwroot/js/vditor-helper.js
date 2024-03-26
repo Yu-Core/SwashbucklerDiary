@@ -1,53 +1,21 @@
-﻿/**
- * 点击Vditor工具栏，输入框不失去焦点
- * @returns
- */
-export function preventInputLoseFocus() {
+﻿export function after() {
+    handleToolbar();
+}
+
+export function focus(domRef) {
+    domRef.Vditor.focus();
+}
+
+//点击Vditor工具栏，输入框不失去焦点
+function handleToolbar() {
     var toolbar = document.getElementsByClassName("vditor-toolbar")[0];
     if (toolbar == null) {
         console.log("Vditor toolbar does not exist");
         return;
     }
 
+    //prevent Input Lose Focus
     toolbar.onmousedown = (e) => {
         e.preventDefault();
-    }
-}
-
-export function moveCursorForward(length) {
-    const selection = window.getSelection();
-    const range = selection.getRangeAt(0);
-    const startContainer = range.startContainer;
-    const startOffset = range.startOffset + length;
-    const endContainer = range.endContainer;
-    const endOffset = range.endOffset + length;
-
-    if (startContainer.nodeType === Node.TEXT_NODE) {
-        if (startOffset <= startContainer.length) {
-            range.setStart(startContainer, startOffset);
-        } else {
-            const nextNode = startContainer.nextSibling;
-            if (nextNode) {
-                range.setStart(nextNode, startOffset - startContainer.length);
-            }
-        }
-    }
-
-    if (endContainer.nodeType === Node.TEXT_NODE) {
-        if (endOffset <= endContainer.length) {
-            range.setEnd(endContainer, endOffset);
-        } else {
-            const nextNode = endContainer.nextSibling;
-            if (nextNode) {
-                range.setEnd(nextNode, endOffset - endContainer.length);
-            }
-        }
-    }
-
-    selection.removeAllRanges();
-    selection.addRange(range);
-}
-
-export function focus(domRef) {
-    domRef.Vditor.focus();
+    };
 }

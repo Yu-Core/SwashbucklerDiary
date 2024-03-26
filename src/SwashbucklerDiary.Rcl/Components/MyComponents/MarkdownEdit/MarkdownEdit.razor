@@ -2,15 +2,12 @@
 @inherits MyComponentBase
 
 <div class="@WrapClass">
-    @if (Show)
-    {
-        <MMarkdown @ref="MMarkdown"
-                   Value="@Value"
-                   ValueChanged="ValueChanged"
-                   Class="@Class"
-                   Options="_options"
-                   OnAfter="AfterMarkdownRender"
-                   OnToolbarButtonClick="HandleToolbarButtonClick">
-        </MMarkdown>
-    }
+    <MMarkdown @ref="MMarkdown"
+               Value="@Value"
+               ValueChanged="ValueChanged"
+               Class="@Class"
+               Options="_options"
+               OnAfter="AfterMarkdownRender"
+               OnToolbarButtonClick="HandleToolbarButtonClick">
+    </MMarkdown>
 </div>

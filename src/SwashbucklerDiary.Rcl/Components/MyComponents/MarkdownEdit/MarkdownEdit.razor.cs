@@ -32,8 +32,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public string? WrapClass { get; set; }
 
-        private bool Show => _options is not null;
-
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -95,8 +93,8 @@ namespace SwashbucklerDiary.Rcl.Components
             _options = new()
             {
                 { "mode", "ir" },
-                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link",btnImage,btnAudio,btnVideo}},
-                { "placeholder", I18n.T("Write.ContentPlace")! },
+                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link",btnImage,btnAudio,btnVideo,"fullscreen"}},
+                { "placeholder", I18n.T("Write.ContentPlace") },
                 { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.10.1" },
                 { "lang", lang },
                 { "icon","material" },
@@ -108,7 +106,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task AfterMarkdownRender()
         {
-            await Module.PreventInputLoseFocus();
+            await Module.After();
         }
 
         private async void HandleToolbarButtonClick(string btnName)
@@ -167,7 +165,6 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await Module.Focus(MMarkdown.Ref);
             await MMarkdown.InsertValueAsync(value);
-            await Module.MoveCursorForward(value.Length);
         }
     }
 }

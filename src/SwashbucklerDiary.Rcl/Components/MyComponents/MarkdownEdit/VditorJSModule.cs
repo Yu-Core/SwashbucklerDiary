@@ -10,15 +10,9 @@ namespace SwashbucklerDiary.Rcl.Components
         {
         }
 
-        public async Task PreventInputLoseFocus()
+        public async Task After()
         {
-            //点击工具栏不会丢失焦点
-            await base.InvokeVoidAsync("preventInputLoseFocus", null);
-        }
-
-        public async Task MoveCursorForward(int length)
-        {
-            await base.InvokeVoidAsync("moveCursorForward", length);
+            await base.InvokeVoidAsync("after", null);
         }
 
         public async Task Focus(ElementReference Ref)
