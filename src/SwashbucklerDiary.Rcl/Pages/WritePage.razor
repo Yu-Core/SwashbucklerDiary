@@ -164,17 +164,21 @@
 </SelectTagsDialog>
 
 <SelectDialog @bind-Visible="showWeather"
-                  @bind-Value="@SelectedWeather"
-                  Title="@(I18n.T("Write.SelectWeather"))"
-                  Items="WeatherIcons"
-                  Text="@(item=>I18n.T("Weather." + item.Key))">
+              @bind-Value="@SelectedWeather"
+              Title="@(I18n.T("Write.SelectWeather"))"
+              Items="WeatherIcons"
+              ItemValue="it=>it.Key"
+              ItemText="@(item=>I18n.T("Weather." + item.Key))"
+              ItemIcon="it=>it.Value">
 </SelectDialog>
 
 <SelectDialog @bind-Visible="showMood"
-                  @bind-Value="@SelectedMood"
-                  Title="@(I18n.T("Write.SelectMood"))"
-                  Items="MoodIcons"
-                  Text="@(item=>I18n.T("Mood." + item.Key))">
+              @bind-Value="@SelectedMood"
+              Title="@(I18n.T("Write.SelectMood"))"
+              Items="MoodIcons"
+              ItemValue="it=>it.Key"
+              ItemText="@(item=>I18n.T("Mood." + item.Key))"
+              ItemIcon="it=>it.Value">
 </SelectDialog>
 
 <SelectLocationDialog @bind-Visible="showLocation"

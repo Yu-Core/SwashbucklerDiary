@@ -35,6 +35,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             set => SetTimeout(value);
         }
 
+        private string TimeoutText => timeoutItems.FirstOrDefault(it => it.Value == Timeout).Key;
+
         private async void SetTimeout(StringNumber value)
         {
             if (_timeout == value)
@@ -51,7 +53,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             for (int i = 0; i < 5; i++)
             {
-                timeoutItems.Add((i + 1).ToString(), string.Empty);
+                timeoutItems.Add($"{i + 1}s", (i + 1).ToString());
             }
         }
     }

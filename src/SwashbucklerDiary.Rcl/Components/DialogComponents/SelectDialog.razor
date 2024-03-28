@@ -21,17 +21,17 @@
                         ValueChanged="ValueChanged"
                         Column="true"
                         Mandatory="Mandatory">
-                @foreach (var item in iconListItems)
+                @foreach (var item in Items)
                 {
-                    <MChip @key="item.Name"
-                           Value="@(item.Name)"
+                    <MChip @key="item.Key"
+                           Value="@InternalItemValue(item)"
                            Filter="true"
                            Outlined="true"
                            OnClick="HandleOnCancel">
                         <MIcon Left="true">
-                            @(item.Icon)
+                            @InternalItemIcon(item)
                         </MIcon>
-                        @(item.Text)
+                        @InternalItemText(item)
                     </MChip>
                 }
             </MChipGroup>

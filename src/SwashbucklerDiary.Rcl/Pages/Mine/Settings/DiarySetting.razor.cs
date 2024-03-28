@@ -38,6 +38,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             set => SetEditAutoSave(value);
         }
 
+        private string? EditAutoSaveText => I18n.T(editAutoSaveItems.FirstOrDefault(it => it.Value == EditAutoSave).Key);
+
         private async void SetEditAutoSave(StringNumber value)
         {
             if (editAutoSave == value)
@@ -51,9 +53,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void InitEditAutoSaveItems()
         {
+            editAutoSaveItems.Add("Setting.Display.Diary.EditAutoSave.Close", "0");
             for (int i = 0; i < 6; i++)
             {
-                editAutoSaveItems.Add(((i + 1) * 10).ToString(), string.Empty);
+                editAutoSaveItems.Add($"{(i + 1) * 10}s", ((i + 1) * 10).ToString());
             }
         }
     }

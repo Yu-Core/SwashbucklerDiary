@@ -420,6 +420,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task CreateTimer()
         {
+            if (editAutoSave == 0)
+            {
+                return;
+            }
+
             timer = new PeriodicTimer(TimeSpan.FromSeconds(editAutoSave));
             while (await timer.WaitForNextTickAsync())
             {

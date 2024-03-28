@@ -1,13 +1,10 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Rcl.Models;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class SelectDialog : DialogComponentBase
     {
-        private List<IconListItem> iconListItems = [];
-
         [Parameter]
         public string? Title { get; set; }
 
@@ -21,26 +18,45 @@ namespace SwashbucklerDiary.Rcl.Components
         public EventCallback<StringNumber> ValueChanged { get; set; }
 
         [Parameter]
-        public Func<KeyValuePair<string, string>, string>? Text { get; set; }
-
-        [Parameter]
         public bool Mandatory { get; set; }
 
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
+        [Parameter]
+        public Func<KeyValuePair<string, string>, string>? ItemText { get; set; }
 
-            SetIconListItems();
+        [Parameter]
+        public Func<KeyValuePair<string, string>, string>? ItemValue { get; set; }
+
+        [Parameter]
+        public Func<KeyValuePair<string, string>, string>? ItemIcon { get; set; }
+
+        private string InternalItemText(KeyValuePair<string, string> item)
+        {
+            if (ItemText is not null)
+            {
+                return ItemText.Invoke(item);
+            }
+
+            return I18n.T(item.Key);
         }
 
-        private void SetIconListItems()
+        private string InternalItemValue(KeyValuePair<string, string> item)
         {
-            iconListItems = Items.Select(it => new IconListItem()
+            if (ItemValue is not null)
             {
-                Name = it.Key,
-                Icon = it.Value,
-                Text = Text?.Invoke(it)
-            }).ToList();
+                return ItemValue.Invoke(item);
+            }
+
+            return item.Value;
+        }
+
+        private string InternalItemIcon(KeyValuePair<string, string> item)
+        {
+            if (ItemIcon is not null)
+            {
+                return ItemIcon.Invoke(item);
+            }
+
+            return string.Empty;
         }
     }
 }

@@ -423,7 +423,8 @@
         },
         "EditAutoSave": {
           "Name": "自动保存",
-          "Path": "设置 / 日记 / 自动保存"
+          "Path": "设置 / 日记 / 自动保存",
+          "Close": "关闭"
         },
         "Location": {
           "Name": "位置",

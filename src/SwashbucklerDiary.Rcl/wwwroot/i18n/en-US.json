@@ -423,7 +423,8 @@
         },
         "EditAutoSave": {
           "Name": "Auto save",
-          "Path": "Setting / Diary / Auto save"
+          "Path": "Setting / Diary / Auto save",
+          "Close": "Close"
         },
         "Location": {
           "Name": "Location",
