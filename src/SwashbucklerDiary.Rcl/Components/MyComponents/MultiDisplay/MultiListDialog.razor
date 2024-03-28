@@ -13,7 +13,8 @@
                         {
                             @if (item.Show)
                             {
-                                <MListItem OnClick="item.OnClick">
+                                <MListItem @key="item"
+                                           OnClick="item.OnClick">
                                     <MListItemIcon>
                                         <MIcon>
                                             @(item.Icon)
@@ -62,7 +63,8 @@
                         {
                             @if (item.Show)
                             {
-                                <MListItem Class="px-0"
+                                <MListItem @key="item"
+                                           Class="px-0"
                                            OnClick="item.OnClick">
                                     <MListItemIcon Class="my-3">
                                         <MIcon Class="list-item-icon">

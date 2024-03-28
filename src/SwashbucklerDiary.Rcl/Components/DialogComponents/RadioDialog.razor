@@ -28,7 +28,8 @@
                          OnClick="HandleOnCancel">
                 @foreach (var item in Items)
                 {
-                    <MRadio Label="@InternalItemText(item)"
+                    <MRadio @key="InternalItemValue(item)"
+                            Label="@InternalItemText(item)"
                             Class="my-2"
                             Value="InternalItemValue(item)"
                             Color="@MRadioColor">

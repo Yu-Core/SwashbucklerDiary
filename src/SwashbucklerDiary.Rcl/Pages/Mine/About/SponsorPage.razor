@@ -24,7 +24,8 @@
         <MList Class="dynamic-list-item-collection">
             @foreach (var item in sponsorTypeListItems)
             {
-                <MListItem OnClick="item.OnClick">
+                <MListItem @key="item"
+                           OnClick="item.OnClick">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">
                             @(item.Icon)

@@ -22,7 +22,8 @@
                    Style="max-height:300px;">
             @foreach (var item in Locations)
             {
-                <MListItem Class="px-0"
+                <MListItem @key="item.Id"
+                           Class="px-0"
                            OnClick="()=>SetSelectedLocation(item)">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">

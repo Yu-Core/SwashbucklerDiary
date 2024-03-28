@@ -12,7 +12,9 @@
                    App="true">
     @foreach (var item in Items)
     {
-        <MainLayoutBottomNavItem Value="item"></MainLayoutBottomNavItem>
+        <MainLayoutBottomNavItem @key="item"
+                                 Value="item">
+        </MainLayoutBottomNavItem>
     }
 </MBottomNavigation>
 

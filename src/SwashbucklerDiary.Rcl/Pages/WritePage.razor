@@ -140,7 +140,8 @@
         <div class="write-chip-group" style="width:100%;">
             @foreach (var item in SelectedTags)
             {
-                <MChip Close="true"
+                <MChip @key="item.Id"
+                       Close="true"
                        Outlined="true"
                        OnCloseClick="()=>RemoveSelectedTag(item)">
                     @(item.Name)

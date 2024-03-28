@@ -81,13 +81,15 @@
             @(I18n.T(list.Key))
         </div>
 
-        <MCard Class="setting-card"
+        <MCard @key="list"
+               Class="setting-card"
                Elevation="0"
                Rounded="@("lg")">
             <MList Class="dynamic-list-item-collection">
                 @foreach (var item in list.Value)
                 {
-                    <MListItem OnClick="item.OnClick">
+                    <MListItem @key="item"
+                               OnClick="item.OnClick">
                         <MListItemIcon>
                             <MIcon Class="list-item-icon">
                                 @(item.Icon)

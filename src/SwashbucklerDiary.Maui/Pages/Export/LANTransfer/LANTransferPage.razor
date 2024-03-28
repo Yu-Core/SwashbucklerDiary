@@ -7,7 +7,7 @@
     <MList>
         @foreach (var item in DynamicLists)
         {
-            <MListItem OnClick="item.OnClick">
+            <MListItem @key="item" OnClick="item.OnClick">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
                         @item.Icon

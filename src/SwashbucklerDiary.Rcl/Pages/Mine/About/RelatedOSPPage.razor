@@ -9,7 +9,8 @@
 <ScrollContainer>
     @foreach (var item in oSPs)
     {
-        <MCard Class="mb-5"
+        <MCard @key="item"
+               Class="mb-5"
                Elevation="0"
                Rounded="@("lg")"
                OnClick="()=>OpenBrowser(item.Url)">

@@ -39,13 +39,15 @@
 
     @foreach (var list in viewLists)
     {
-        <MCard Class="@($"{(viewLists.Last() != list?"mb-5":"")}")"
+        <MCard @key="list"
+               Class="@($"{(viewLists.Last() != list?"mb-5":"")}")"
                Elevation="0"
                Rounded="@("lg")">
             <MList Class="dynamic-list-item-collection">
                 @foreach (var item in list)
                 {
-                    <MListItem OnClick="item.OnClick">
+                    <MListItem @key="item"
+                               OnClick="item.OnClick">
                         <MListItemIcon>
                             <MIcon Class="list-item-icon">
                                 @(item.Icon)

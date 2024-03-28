@@ -151,7 +151,8 @@
             <MChipGroup Column="true">
                 @foreach (var item in Tags)
                 {
-                    <MChip Outlined="true">
+                    <MChip @key="item.Id"
+                           Outlined="true">
                         @(item.Name)
                     </MChip>
                 }

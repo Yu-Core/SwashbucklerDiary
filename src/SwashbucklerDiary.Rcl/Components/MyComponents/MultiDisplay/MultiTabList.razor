@@ -8,7 +8,8 @@
                HideSlider>
             @foreach (var item in Items)
             {
-                <MTab Class="my-tab"
+                <MTab @key="item"
+                      Class="my-tab"
                       Ripple="false">
                     @(I18n.T(item))
                 </MTab>
@@ -23,7 +24,8 @@
                     Mandatory="true">
             @foreach (var item in Items)
             {
-                <MChip Class="my-tab-chip"
+                <MChip @key="item"
+                       Class="my-tab-chip"
                        Large="true"
                        Ripple="false">
                     @(I18n.T(item))

@@ -17,7 +17,8 @@
                             {
                                 @if (item.Show)
                                 {
-                                    <MListItem OnClick="item.OnClick">
+                                    <MListItem @key="item"
+                                               OnClick="item.OnClick">
                                         <MListItemIcon>
                                             <MIcon>
                                                 @(item.Icon)
@@ -63,7 +64,8 @@
                     {
                         @if (item.Show)
                         {
-                            <MListItem Dense="true"
+                            <MListItem @key="item"
+                                       Dense="true"
                                        OnClick="item.OnClick">
                                 <MListItemIcon Class="mr-3">
                                     <MIcon Size="20">

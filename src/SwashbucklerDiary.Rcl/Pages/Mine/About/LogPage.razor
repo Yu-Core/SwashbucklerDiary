@@ -52,14 +52,16 @@
     <div class="px-4 text-subtitle-1 user-select" style="word-wrap:break-word;">
         @foreach (var item in logs)
         {
-            <div class="mb-4 font-weight-bold">
-                <span>@item.Timestamp</span>
-                <span>[@item.Level]</span>
-            </div>
-            <div class="mb-10">
-                @item.RenderedMessage
-                <br />
-                @item.Exception
+            <div @key="item.Id">
+                <div class="mb-4 font-weight-bold">
+                    <span>@item.Timestamp</span>
+                    <span>[@item.Level]</span>
+                </div>
+                <div class="mb-10">
+                    @item.RenderedMessage
+                    <br />
+                    @item.Exception
+                </div>
             </div>
         }
     </div>

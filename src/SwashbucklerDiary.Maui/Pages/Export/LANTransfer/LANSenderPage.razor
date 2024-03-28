@@ -24,7 +24,8 @@
             <div class="dynamic-list-item-collection">
                 @foreach (var item in lanDeviceInfoListItems)
                 {
-                    <MListItem OnClick="item.OnClick">
+                    <MListItem @key="item.IPAddress"
+                               OnClick="item.OnClick">
                         <MListItemIcon>
                             <MIcon Class="list-item-icon">
                                 @(item.DeviceIcon)
@@ -43,7 +44,7 @@
                     <MDivider Class="mx-3"></MDivider>
                 }
             </div>
-            
+
             @if (LANSenderService.IsSearching)
             {
                 <MListItem>

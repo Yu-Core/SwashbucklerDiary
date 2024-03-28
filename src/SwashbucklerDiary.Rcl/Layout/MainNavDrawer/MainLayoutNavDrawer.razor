@@ -9,7 +9,8 @@
     <MList Nav>
         @foreach (var item in Items)
         {
-            <MainLayoutNavDrawerItem Value="item">
+            <MainLayoutNavDrawerItem @key="item"
+                                     Value="item">
             </MainLayoutNavDrawerItem>
         }
     </MList>

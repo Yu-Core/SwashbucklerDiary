@@ -148,7 +148,8 @@
                    Style="max-height:300px;">
             @foreach (var item in fileList)
             {
-                <MListItem Class="px-0"
+                <MListItem @key="item"
+                           Class="px-0"
                            OnClick="()=>Download(item)">
                     <MListItemIcon>
                         <MIcon Class="list-item-icon">

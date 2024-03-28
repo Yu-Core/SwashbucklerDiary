@@ -23,7 +23,7 @@
                         Multiple="true">
                 @foreach (var item in Items)
                 {
-                    <MChip @key="@(item.Id.ToString())"
+                    <MChip @key="item.Id"
                            Value="@(item.Id.ToString())"
                            Filter="true"
                            Outlined="true">

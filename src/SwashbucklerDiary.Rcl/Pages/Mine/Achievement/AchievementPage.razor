@@ -28,7 +28,9 @@
     <div class="d-flex justify-space-between flex-wrap">
         @foreach (var item in achievements)
         {
-            <AchievementCard Value="item"></AchievementCard>
+            <AchievementCard @key="item"
+                             Value="item">
+            </AchievementCard>
         }
     </div>
 
