@@ -1,17 +1,5 @@
-﻿/*隐藏输入处的提示*/
-/*.vditor-panel {
-    display: none !important;
-}*/
-
-:root {
+﻿:root {
     --vditor-toolbar-height: 70px;
-}
-
-/*防止工具栏遮挡内容*/
-@media screen and (max-width:600px) {
-    .vditor-toolbar-help {
-        margin-bottom: var(--vditor-toolbar-height);
-    }
 }
 
 /*改变配色*/
@@ -23,9 +11,13 @@
     background: #121212 !important;
 }
 
-.vditor-reset {
-    border-radius: 8px;
+.vditor-toolbar {
+    padding-left: 0px !important;
 }
+
+    .vditor-toolbar .vditor-toolbar__item {
+        padding: 0px 8px !important;
+    }
 
 .theme--light .vditor-reset {
     background-color: #f7f8f9 !important;
@@ -36,24 +28,17 @@
     color: #fff;
 }
 
-.vditor-reset iframe {
-    width: 100%;
-    aspect-ratio: 2/1;
-    border-radius: 8px;
-}
-
-.vditor-toolbar {
-    padding-left: 0px !important;
-}
-
-    .vditor-toolbar .vditor-toolbar__item {
-        padding: 0px 8px !important;
-    }
-
 .vditor-reset {
     padding-left: 0px !important;
     padding-right: 0px !important;
+    border-radius: 8px;
 }
+
+    .vditor-reset iframe {
+        width: 100%;
+        aspect-ratio: 2/1;
+        border-radius: 8px;
+    }
 
     .vditor-reset video {
         border-radius: 8px;
@@ -108,14 +93,18 @@
         bottom: var(--vditor-toolbar-height);
     }
 
-    button[data-type="headings"].vditor-tooltipped + .vditor-panel--arrow::before {
-        top: unset;
-        bottom: -14px;
-        transform: rotateX(180deg);
-        filter: drop-shadow(0.1px 0.1px 1px rgba(0, 0, 0, .2));
-    }
+        button[data-type="headings"].vditor-tooltipped + .vditor-panel--arrow::before {
+            top: unset;
+            bottom: -14px;
+            transform: rotateX(180deg);
+            filter: drop-shadow(0.1px 0.1px 1px rgba(0, 0, 0, .2));
+        }
 
     .vditor-reset {
         --editor-bottom: 50px;
+    }
+
+    .vditor-toolbar-help {
+        min-height: var(--vditor-toolbar-height);
     }
 }
