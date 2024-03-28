@@ -108,5 +108,6 @@
 - [SqlSugar](https://github.com/DotNetNext/SqlSugar)
 - [Swiper](https://github.com/nolimits4web/swiper)
 - [WebDavClient](https://github.com/skazantsev/WebDavClient)
+- [wc-waterfall](https://github.com/huodoushigemi/wc-flow-layout)
 - [Vditor](https://github.com/Vanessa219/vditor)
 - [Zoom](https://github.com/anitasv/zoom)

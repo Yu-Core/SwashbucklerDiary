@@ -2,16 +2,15 @@
 @inherits MyComponentBase
 
 
-<div class="my-image-card-list">
-    <CascadingValue Value="@this"
-                    IsFixed="true">
-        @foreach (var item in internalValue)
+<div>
+    <wc-waterfall @ref="elementReference" gap="@Gap" cols="@Cols">
+        @foreach (var src in imageSrcs)
         {
-            <ImageResourceCard Value="item"></ImageResourceCard>
+            <img @key="src" class="image-card rounded-lg" src="@src" />
         }
-    </CascadingValue>
+    </wc-waterfall>
 
-    @if (internalValue.Any())
+    @if (imageSrcs.Count > 0)
     {
         <MInfiniteScroll Style="width:100%;"
                          OnLoad="@OnLoad"
@@ -31,10 +30,10 @@
 
 </div>
 
-<EmptyResult Show="!Value.Any()"
+<EmptyResult Show="Value.Count == 0"
               Text="@(I18n.T("Setting.Display.Diary.Image.NoImage"))">
 </EmptyResult>
 
-<PreviewImageDialog @bind-Visible="showPreview"
+<PreviewImageDialog @bind-Visible="showPreviewImage"
                     Src="@previewImageSrc">
 </PreviewImageDialog>

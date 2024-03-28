@@ -343,27 +343,8 @@ html {
     flex: none !important;
 }
 
-.my-image-card-list {
-    column-count: 2;
-    column-gap: 16px;
-}
-
-.my-image-card {
-    -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid;
-    margin-bottom: 16px;
-}
-
-@media screen and (min-width:600px) {
-    .my-image-card-list {
-        column-count: 3;
-        column-gap: 24px;
-    }
-
-    .my-image-card {
-        margin-bottom: 24px;
-    }
+.image-card {
+    cursor:pointer;
 }
 
 /*消息条提示样式，仿照masa旧版中的Toast*/
@@ -544,3 +525,7 @@ html {
         height: 100%;
         object-fit: contain;
     }
+
+wc-waterfall > * {
+    transition: all .3s;
+}
