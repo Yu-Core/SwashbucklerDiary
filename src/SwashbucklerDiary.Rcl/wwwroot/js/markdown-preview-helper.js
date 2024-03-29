@@ -1,4 +1,4 @@
-import { previewImage as internalPreviewImage } from './previewImage.js';
+import { previewImage as internalPreviewImage } from './previewMediaElement.js';
 
 export function copy(dotNetCallbackRef, callbackMethod, element) {
     element.addEventListener('click', function (event) {

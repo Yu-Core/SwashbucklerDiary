@@ -5,3 +5,13 @@ export function previewImage(dotNetCallbackRef, callbackMethod, element) {
         }
     });
 }
+
+export function previewVideo(element) {
+    element.addEventListener('click', function (event) {
+        if (event.target.tagName === 'VIDEO') {
+            if (event.target.requestFullscreen) {
+                event.target.requestFullscreen();
+            }
+        }
+    });
+}

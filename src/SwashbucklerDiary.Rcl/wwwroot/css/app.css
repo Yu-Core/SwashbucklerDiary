@@ -344,7 +344,7 @@ html {
 }
 
 .image-card {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 /*消息条提示样式，仿照masa旧版中的Toast*/
@@ -527,5 +527,5 @@ html {
     }
 
 wc-waterfall > * {
-    transition: all .3s;
+    transition: all .2s;
 }

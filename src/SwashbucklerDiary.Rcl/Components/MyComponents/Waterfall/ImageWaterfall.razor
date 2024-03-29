@@ -1,16 +1,15 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
-@inherits MyComponentBase
-
+@inherits WaterfallBase
 
 <div>
     <wc-waterfall @ref="elementReference" gap="@Gap" cols="@Cols">
-        @foreach (var src in imageSrcs)
+        @foreach (var src in srcs)
         {
             <img @key="src" class="image-card rounded-lg" src="@src" />
         }
     </wc-waterfall>
 
-    @if (imageSrcs.Count > 0)
+    @if (srcs.Count > 0)
     {
         <MInfiniteScroll Style="width:100%;"
                          OnLoad="@OnLoad"
@@ -31,7 +30,7 @@
 </div>
 
 <EmptyResult Show="Value.Count == 0"
-              Text="@(I18n.T("Setting.Display.Diary.Image.NoImage"))">
+             Text="@(I18n.T("Setting.Display.Diary.Image.NoImage"))">
 </EmptyResult>
 
 <PreviewImageDialog @bind-Visible="showPreviewImage"
