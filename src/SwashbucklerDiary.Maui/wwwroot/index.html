@@ -6,13 +6,11 @@
     <title>SwashbucklerDiary.Maui</title>
     <base href="/" />
     <script>
-        (function () {
-            var lang = localStorage.getItem('Language');
-
-            if (lang) {
-                document.documentElement.lang = lang;
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'F5' || (event.ctrlKey && event.key === 'r') || (event.ctrlKey && event.keyCode == 82)) {
+                event.preventDefault();
             }
-        }());
+        });
     </script>
     <link href="_content/Masa.Blazor/css/masa-blazor.min.css" rel="stylesheet">
 

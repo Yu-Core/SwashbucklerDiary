@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Maui
             e.WebView.CoreWebView2.ContainsFullScreenElementChanged += FullScreen;
         }
 
-        private void FullScreen(CoreWebView2 coreWebView2,object args)
+        private void FullScreen(CoreWebView2 coreWebView2, object args)
         {
             if (coreWebView2.ContainsFullScreenElement)
             {
