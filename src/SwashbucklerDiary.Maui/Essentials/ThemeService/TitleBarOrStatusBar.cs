@@ -1,4 +1,5 @@
 ﻿using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Rcl;
 
 #if WINDOWS || MACCATALYST
 using MauiBlazorToolkit;
@@ -13,13 +14,13 @@ namespace SwashbucklerDiary.Maui.Essentials
 #pragma warning disable CA1416
     public class TitleBarOrStatusBar
     {
-        public static Color LightColor { get; set; } = Color.FromArgb("#f7f8f9");
+        private static readonly Color lightColor = Color.FromArgb(ThemeColor.LightSurface);
 
-        public static Color DarkColor { get; set; } = Color.FromArgb("#121212");
+        private static readonly Color darkColor = Color.FromArgb(ThemeColor.DarkSurface);
 
         public static void SetTitleBarOrStatusBar(Theme theme)
         {
-            Color backgroundColor = theme == Theme.Dark ? DarkColor : LightColor;
+            Color backgroundColor = theme == Theme.Dark ? darkColor : lightColor;
             SetTitleBarOrStatusBar(theme, backgroundColor);
         }
 

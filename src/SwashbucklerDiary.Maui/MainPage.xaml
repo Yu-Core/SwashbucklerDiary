@@ -8,8 +8,8 @@
              BackgroundColor="{DynamicResource PageBackgroundColor}">
     
     <ContentPage.Behaviors>
-        <toolkit:StatusBarBehavior StatusBarColor="#f7f8f9" StatusBarStyle="DarkContent" />
-        <mauiBlazorToolkit:TitleBarBehavior TitleBarColor="#f7f8f9" TitleBarStyle="DarkContent"></mauiBlazorToolkit:TitleBarBehavior>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource PageBackgroundColor}" StatusBarStyle="DarkContent" />
+        <mauiBlazorToolkit:TitleBarBehavior TitleBarColor="{StaticResource PageBackgroundColor}" TitleBarStyle="DarkContent"></mauiBlazorToolkit:TitleBarBehavior>
     </ContentPage.Behaviors>
 
     <BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html">

@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+﻿using SwashbucklerDiary.Rcl;
+using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Maui
 {
@@ -9,6 +10,8 @@ namespace SwashbucklerDiary.Maui
         public App(IAppLifecycle appLifecycle)
         {
             InitializeComponent();
+
+            this.Resources["PageBackgroundColor"] = Color.FromArgb(ThemeColor.LightSurface);
 
             MainPage = new MainPage();
 

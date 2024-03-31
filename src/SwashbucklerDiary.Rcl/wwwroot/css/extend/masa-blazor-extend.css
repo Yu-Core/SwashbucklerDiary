@@ -107,9 +107,6 @@
 }
 
 /*配色*/
-.theme--light.m-application {
-    background: #f7f8f9 !important;
-}
 
 .theme--light.m-divider {
     border-color: rgba(0,0,0,.06);

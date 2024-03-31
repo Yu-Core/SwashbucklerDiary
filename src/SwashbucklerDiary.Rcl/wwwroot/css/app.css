@@ -1,7 +1,7 @@
 ﻿
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background: #f7f8f9;
+    background: var( --m-theme-surface);
 }
 
 h1:focus {
@@ -446,12 +446,8 @@ html {
     color: #fff;
 }
 
-.theme--light.m-application .primary-background {
-    background-color: #f7f8f9 !important;
-}
-
-.theme--dark.m-application .primary-background {
-    background-color: #121212 !important;
+.primary-background {
+    background-color: var(--m-theme-surface) !important;
 }
 
 .theme--light.m-application .second-background {
@@ -531,13 +527,8 @@ html {
     width: 100%;
 }
 
-    .preview-image-dialog--toolbar .theme--light.m-btn--icon::before {
-        background-color: #f7f8f9 !important;
-        opacity: 1 !important;
-    }
-
-    .preview-image-dialog--toolbar .theme--dark.m-btn--icon::before {
-        background-color: #121212 !important;
+    .preview-image-dialog--toolbar .m-btn--icon::before {
+        background-color: var(--m-theme-surface) !important;
         opacity: 1 !important;
     }
 

@@ -8,7 +8,7 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <Color x:Key="PageBackgroundColor">#f7f8f9</Color>
+            <Color x:Key="PageBackgroundColor">white</Color>
             <Color x:Key="PrimaryTextColor">black</Color>
 
             <Style TargetType="Label">
