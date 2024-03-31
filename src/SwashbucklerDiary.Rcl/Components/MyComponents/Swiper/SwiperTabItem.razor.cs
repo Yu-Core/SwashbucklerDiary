@@ -5,6 +5,10 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class SwiperTabItem : IDisposable
     {
+        private bool activated;
+
+        private bool rendered;
+
         [CascadingParameter]
         public SwiperTabItems? TabItems { get; set; }
 
@@ -13,9 +17,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
-
-        [Parameter]
-        public RenderFragment? FixContent { get; set; }
 
         public ElementReference Ref { get; set; }
 
@@ -28,10 +29,48 @@ namespace SwashbucklerDiary.Rcl.Components
             TabItems?.RegisterTabItem(this);
         }
 
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+
+            CheckActivated();
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+            if (firstRender)
+            {
+                rendered = true;
+                CheckActivated();
+                StateHasChanged();
+            }
+        }
+
         public void Dispose()
         {
             TabItems?.UnregisterTabItem(this);
             GC.SuppressFinalize(this);
+        }
+
+        private void CheckActivated()
+        {
+            if (!rendered)
+            {
+                return;
+            }
+
+            if (activated)
+            {
+                return;
+            }
+
+            if (TabItems is null || TabItems.ActiveItem != this)
+            {
+                return;
+            }
+
+            activated = true;
         }
     }
 }

@@ -13,10 +13,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private StringNumber _value = 0;
 
-        private bool Show;
-
-        private DotNetObjectReference<object> dotNetObjectReference = default!;
-
         private readonly List<SwiperTabItem> ChildTabItems = [];
 
         private int _registeredTabItemsIndex;
@@ -37,7 +33,18 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 
-        public SwiperTabItem ActiveItem => ChildTabItems[_value.ToInt32()];
+        public SwiperTabItem? ActiveItem
+        {
+            get
+            {
+                if (ChildTabItems.Count == 0)
+                {
+                    return null;
+                }
+
+                return ChildTabItems[_value.ToInt32()];
+            }
+        }
 
         [JSInvokable]
         public async Task UpdateValue(int value)
@@ -63,23 +70,15 @@ namespace SwashbucklerDiary.Rcl.Components
             ChildTabItems.Remove(tabItem);
         }
 
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            Show = Value == 0;
-            dotNetObjectReference = DotNetObjectReference.Create<object>(this);
-        }
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
 
             if (firstRender)
             {
+                var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
                 module = await JS.ImportRclJsModule("js/swiper-helper.js");
                 await module.InvokeVoidAsync("initSwiper", [dotNetObjectReference, "UpdateValue", ElementRef, Value.ToInt32()]);
-                Show = true;
-                StateHasChanged();
             }
         }
 
@@ -88,11 +87,11 @@ namespace SwashbucklerDiary.Rcl.Components
             if (_value != value)
             {
                 _value = value;
-                UpdateSwiper(value);
+                _ = UpdateSwiper(value);
             }
         }
 
-        private async void UpdateSwiper(StringNumber value)
+        private async Task UpdateSwiper(StringNumber value)
         {
             if (module is null)
             {

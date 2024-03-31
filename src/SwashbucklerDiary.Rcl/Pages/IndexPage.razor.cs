@@ -121,10 +121,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task BeforePopToRoot(PopEventArgs args)
         {
-            if (thisPageUrl == args.PreviousUri && thisPageUrl == args.NextUri)
-            {
-                await JS.ScrollTo(swiperTabItems.ActiveItem.Ref, 0);
-            }
+            if (thisPageUrl != args.PreviousUri) return;
+
+            if (thisPageUrl != args.NextUri) return;
+
+            if (swiperTabItems.ActiveItem is null) return;
+
+            await JS.ScrollTo(swiperTabItems.ActiveItem.Ref, 0);
         }
     }
 }

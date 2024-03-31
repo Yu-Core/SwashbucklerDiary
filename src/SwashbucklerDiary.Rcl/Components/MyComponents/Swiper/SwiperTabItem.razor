@@ -4,6 +4,9 @@
     <CascadingValue Value="Ref"
                     Name="ScrollElement"
                     IsFixed="true">
-        @ChildContent
+        @if (activated)
+        {
+            @ChildContent
+        }
     </CascadingValue>
 </div>
