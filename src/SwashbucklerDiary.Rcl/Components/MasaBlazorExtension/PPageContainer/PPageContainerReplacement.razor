@@ -11,9 +11,9 @@
     {
         <div class="@_block.Element("item").AddClass("d-none", path.Pattern != _currentPatternPath?.Pattern)"
              @key="path.Pattern">
-            <PPageContainerItem Value="@(path.Pattern == GetCurrentPatternPath().Pattern)">
+            <BShouldRender Value="@(path.Pattern == GetCurrentPatternPath().Pattern)">
                 @ChildContent
-            </PPageContainerItem>
+            </BShouldRender>
         </div>
     }
 </div>

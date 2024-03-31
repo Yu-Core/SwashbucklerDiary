@@ -38,6 +38,11 @@ namespace SwashbucklerDiary.Rcl.Extensions
                     }
                 }
             };
+            options.ConfigureTheme(theme =>
+            {
+                theme.Themes.Light.Surface = ThemeColor.LightSurface;
+                theme.Themes.Dark.Surface = ThemeColor.DarkSurface;
+            });
         }
     }
 }
