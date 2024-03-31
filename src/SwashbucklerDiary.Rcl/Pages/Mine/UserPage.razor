@@ -7,7 +7,8 @@
 </MyAppBar>
 
 <ScrollContainer>
-    <MCard Elevation="0"
+    <MCard Class="list-item-card"
+           Elevation="0"
            Rounded="@("lg")">
         <MList>
             <MListItem OnClick="()=>showEditAvatar=true">
@@ -25,26 +26,26 @@
                     <MAvatar Rounded="@("lg")"
                              Size="32">
                         <img src="@avatar" />
-                     </MAvatar>
-                     <MIcon>mdi-chevron-right</MIcon>
-                 </MListItemAction>
-             </MListItem>
+                    </MAvatar>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
 
-             <MDivider Class="mx-3"></MDivider>
+            <MDivider Class="mx-3"></MDivider>
 
-             <MListItem OnClick="()=>showEditUserName=true">
-                 <MListItemIcon>
-                     <MIcon Class="list-item-icon">
+            <MListItem OnClick="()=>showEditUserName=true">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
                         mdi-account-details-outline
-                     </MIcon>
-                 </MListItemIcon>
+                    </MIcon>
+                </MListItemIcon>
 
-                 <MListItemContent>
-                     @(I18n.T("User.UserName.Name"))
-                 </MListItemContent>
+                <MListItemContent>
+                    @(I18n.T("User.UserName.Name"))
+                </MListItemContent>
 
-                 <MListItemContent>
-                     <MListItemSubtitle Class="text-right">
+                <MListItemContent>
+                    <MListItemSubtitle Class="text-right">
                         @UserName
                     </MListItemSubtitle>
                 </MListItemContent>

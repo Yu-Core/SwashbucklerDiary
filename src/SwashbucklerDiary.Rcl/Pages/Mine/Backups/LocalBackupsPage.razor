@@ -1,7 +1,8 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MCard Elevation="0"
+<MCard Class="list-item-card"
+       Elevation="0"
        Rounded="@("lg")">
     <MList>
         <MListItem OnClick="()=>showBackups=true">
@@ -47,8 +48,8 @@
 </MCard>
 
 <MDialogExtension @bind-MyValue="showBackups"
-          ContentClass="rounded-lg"
-          MaxWidth="420">
+                  ContentClass="rounded-lg"
+                  MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Backups.Backups.Title"))
@@ -77,8 +78,8 @@
 </MDialogExtension>
 
 <MDialogExtension @bind-MyValue="showRestore"
-          ContentClass="rounded-lg"
-          MaxWidth="420">
+                  ContentClass="rounded-lg"
+                  MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Backups.Restore.ConfirmRestore.Title"))

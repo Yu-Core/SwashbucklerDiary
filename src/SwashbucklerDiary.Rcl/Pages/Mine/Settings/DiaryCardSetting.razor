@@ -7,49 +7,51 @@
 </MyAppBar>
 
 <ScrollContainer>
-    <MCard Class="setting-card"
+    <MCard Class="list-item-card"
            Elevation="0"
            Rounded="@("lg")">
-        <MListItem>
-            <MListItemIcon>
-                <MIcon Class="list-item-icon">
-                    mdi-emoticon-happy-outline
-                </MIcon>
-            </MListItemIcon>
-            <MListItemContent>
-                @(I18n.T("Setting.Display.DiaryCard.Icon.Name"))
-            </MListItemContent>
-            <MListItemAction>
-                <MSwitch @bind-Value="diaryCardIcon"
-                         TValue="bool"
-                         OnChange="SettingChange(Setting.DiaryCardIcon)"
-                         Dense="true"
-                         Inset="true"
-                         Color="white">
-                </MSwitch>
-            </MListItemAction>
-        </MListItem>
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-emoticon-happy-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.DiaryCard.Icon.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="diaryCardIcon"
+                             TValue="bool"
+                             OnChange="SettingChange(Setting.DiaryCardIcon)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
 
-        <MDivider Class="mx-3"></MDivider>
+            <MDivider Class="mx-3"></MDivider>
 
-        <MListItem OnClick="@(()=>showDiaryCardDateFormat=true)">
-            <MListItemIcon>
-                <MIcon Class="list-item-icon">
-                    mdi-calendar-clock
-                </MIcon>
-            </MListItemIcon>
-            <MListItemContent>
-                @(I18n.T("Setting.Display.DiaryCard.DateFormat.Name"))
-            </MListItemContent>
-            <MListItemContent Class="setting-state">
-                <MListItemSubtitle>
-                    @(I18n.T(DiaryCardDateFormatKey))
-                </MListItemSubtitle>
-            </MListItemContent>
-            <MListItemAction>
-                <MIcon>mdi-chevron-right</MIcon>
-            </MListItemAction>
-        </MListItem>
+            <MListItem OnClick="@(()=>showDiaryCardDateFormat=true)">
+                <MListItemIcon>
+                    <MIcon Class="list-item-icon">
+                        mdi-calendar-clock
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.DiaryCard.DateFormat.Name"))
+                </MListItemContent>
+                <MListItemContent Class="setting-state">
+                    <MListItemSubtitle>
+                        @(I18n.T(DiaryCardDateFormatKey))
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
     </MCard>
 </ScrollContainer>
 

@@ -387,8 +387,45 @@ html {
     padding-left: 4px;
 }
 
-.setting-card {
+.list-item-card {
     margin-bottom: 20px;
+}
+
+@media screen and (max-width:600px) {
+    .list-item-card .m-list {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+
+    .list-item-card .m-list-item:first-child {
+        border-top-left-radius: inherit;
+        border-top-right-radius: inherit;
+    }
+
+        .list-item-card .m-list-item:first-child::before {
+            border-top-left-radius: inherit;
+            border-top-right-radius: inherit;
+        }
+
+    .list-item-card .m-list-item:last-child {
+        border-bottom-left-radius: inherit;
+        border-bottom-right-radius: inherit;
+    }
+
+        .list-item-card .m-list-item:last-child::before {
+            border-bottom-left-radius: inherit;
+            border-bottom-right-radius: inherit;
+        }
+
+    .list-item-card .dynamic-list-item-collection .m-list-item:nth-last-child(2) {
+        border-bottom-left-radius: inherit;
+        border-bottom-right-radius: inherit;
+    }
+
+        .list-item-card .dynamic-list-item-collection .m-list-item:nth-last-child(2)::before {
+            border-bottom-left-radius: inherit;
+            border-bottom-right-radius: inherit;
+        }
 }
 
 @media screen and (min-width:600px) {
