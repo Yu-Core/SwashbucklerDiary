@@ -1,7 +1,6 @@
 ﻿using BlazorComponent;
 using Masa.Blazor;
 using Masa.Blazor.Presets;
-using SwashbucklerDiary.Rcl.Components;
 
 namespace SwashbucklerDiary.Rcl.Extensions
 {
@@ -21,27 +20,21 @@ namespace SwashbucklerDiary.Rcl.Extensions
                     }
                 },
                 {
-                    nameof(MImage), new Dictionary<string, object?>()
+                    nameof(MDialog), new Dictionary<string, object?>()
                     {
-                        { nameof(MImage.Eager), true }
+                        { nameof(MDialog.Eager), true }
                     }
                 },
                 {
-                    nameof(MDialogExtension), new Dictionary<string, object?>()
+                    nameof(MBottomSheet), new Dictionary<string, object?>()
                     {
-                        { nameof(MDialogExtension.Eager), true }
+                        { nameof(MBottomSheet.Eager), true }
                     }
                 },
                 {
-                    nameof(MBottomSheetExtension), new Dictionary<string, object?>()
+                    nameof(MMenu), new Dictionary<string, object?>()
                     {
-                        { nameof(MBottomSheetExtension.Eager), true }
-                    }
-                },
-                {
-                    nameof(MMenuExtension), new Dictionary<string, object?>()
-                    {
-                        { nameof(MMenuExtension.Eager), true }
+                        { nameof(MMenu.Eager), true }
                     }
                 }
             };
