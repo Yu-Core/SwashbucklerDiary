@@ -27,22 +27,36 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(search);
 
-        private bool IsDateFiltered => DateOnlyMin != DateOnly.MinValue || DateOnlyMax != DateOnly.MaxValue;
+        private bool IsDateFiltered => DateOnlyMin != default || DateOnlyMax != default;
 
         private Expression<Func<DiaryModel, bool>> GetExpression()
         {
-            Expression<Func<DiaryModel, bool>> expPrivate;
-            Expression<Func<DiaryModel, bool>> expSearch;
-            Expression<Func<DiaryModel, bool>> expDate;
+            Expression<Func<DiaryModel, bool>>? exp = null;
 
-            expPrivate = it => it.Private;
-            expSearch = it => (it.Title ?? string.Empty).ToLower().Contains((search ?? string.Empty).ToLower()) ||
-                            (it.Content ?? string.Empty).ToLower().Contains((search ?? string.Empty).ToLower());
-            
-            DateTime DateTimeMin = DateOnlyMin.ToDateTime(default);
-            DateTime DateTimeMax = DateOnlyMax.ToDateTime(TimeOnly.MaxValue);
-            expDate = it => it.CreateTime >= DateTimeMin && it.CreateTime <= DateTimeMax;
-            return expPrivate.And(expDate).AndIF(IsSearchFiltered, expSearch);
+            if (DateOnlyMin != default)
+            {
+                DateTime DateTimeMin = DateOnlyMin.ToDateTime(default);
+                Expression<Func<DiaryModel, bool>> expMinDate = it => it.CreateTime >= DateTimeMin;
+                exp = exp.And(expMinDate);
+            }
+
+            if (DateOnlyMax != default)
+            {
+                DateTime DateTimeMax = DateOnlyMax.ToDateTime(TimeOnly.MaxValue);
+                Expression<Func<DiaryModel, bool>> expMaxDate = it => it.CreateTime <= DateTimeMax;
+                exp = exp.And(expMaxDate);
+            }
+
+            if (IsSearchFiltered)
+            {
+                Expression<Func<DiaryModel, bool>> expSearch
+                    = it => (it.Title ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase)
+                    || (it.Content ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase);
+                exp = exp.And(expSearch);
+            }
+
+            Expression<Func<DiaryModel, bool>> expPrivate = it => it.Private;
+            return exp.And(expPrivate);
         }
     }
 }

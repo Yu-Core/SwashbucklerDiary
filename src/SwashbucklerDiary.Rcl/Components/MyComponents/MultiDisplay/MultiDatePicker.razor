@@ -6,18 +6,18 @@
         <PMobileDatePickerExtension MyVisible="Visible"
                                     MyVisibleChanged="InternalVisibleChanged"
                                     Value="Value"
-                                    ValueChanged="ValueChanged"
-                                    Min="Min??default"
-                                    Max="Max??default">
+                                    ValueChanged="InternalValueChanged"
+                                    Min="MobileMin"
+                                    Max="MobileMax">
         </PMobileDatePickerExtension>
     </MobileContent>
     <DesktopContent>
         <DatePickerDialog Visible="Visible"
                           VisibleChanged="InternalVisibleChanged"
                           Value="Value"
-                          ValueChanged="ValueChanged"
-                          Min="Min"
-                          Max="Max">
+                          ValueChanged="InternalValueChanged"
+                          Min="DesktopMin"
+                          Max="DesktopMax">
         </DatePickerDialog>
     </DesktopContent>
 </MultiDisplay>

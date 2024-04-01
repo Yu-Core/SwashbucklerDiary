@@ -54,7 +54,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if(firstRender)
+            if (firstRender)
             {
                 await UpdateLogsAsync();
                 StateHasChanged();
@@ -75,7 +75,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private DateOnly DateOnlyMin => dateFilterForm.GetDateMinValue();
         private DateOnly DateOnlyMax => dateFilterForm.GetDateMaxValue();
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(search);
-        private bool IsDateFiltered => DateOnlyMin != DateOnly.MinValue || DateOnlyMax != DateOnly.MaxValue;
+        private bool IsDateFiltered => DateOnlyMin != default || DateOnlyMax != default;
 
         private void LoadView()
         {
@@ -178,19 +178,39 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private Expression<Func<LogModel, bool>> GetExpression()
         {
-            Expression<Func<LogModel, bool>> expSearch;
-            Expression<Func<LogModel, bool>> expDate;
-            expSearch = it => (it.RenderedMessage ?? string.Empty).ToLower().Contains((search ?? string.Empty).ToLower());
+            Expression<Func<LogModel, bool>>? exp = null;
 
-            DateTime MinDateTime = DateOnlyMin.ToDateTime(default);
-            DateTime MaxDateTime = DateOnlyMax.ToDateTime(TimeOnly.MaxValue);
-            if (DateOnlyMax != DateOnly.MaxValue)
+            if (DateOnlyMin != default)
             {
-                MaxDateTime = MaxDateTime.AddDays(1);
+                DateTime DateTimeMin = DateOnlyMin.ToDateTime(default);
+                Expression<Func<LogModel, bool>> expMinDate = it => it.Timestamp >= DateTimeMin;
+                exp = exp.And(expMinDate);
             }
 
-            expDate = it => it.Timestamp >= MinDateTime && it.Timestamp <= MaxDateTime;
-            return expDate.AndIF(IsSearchFiltered, expSearch);
+            if (DateOnlyMax != default)
+            {
+                DateTime DateTimeMax = DateOnlyMax.ToDateTime(TimeOnly.MaxValue);
+                DateTimeMax = DateTimeMax.AddDays(1);
+                Expression<Func<LogModel, bool>> expMaxDate = it => it.Timestamp <= DateTimeMax;
+                exp = exp.And(expMaxDate);
+            }
+
+
+            if (IsSearchFiltered)
+            {
+                Expression<Func<LogModel, bool>> expSearch
+                    = it => (it.RenderedMessage ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase);
+                exp = exp.And(expSearch);
+            }
+
+            if (exp == null)
+            {
+                return it => true;
+            }
+            else
+            {
+                return exp;
+            }
         }
     }
 }

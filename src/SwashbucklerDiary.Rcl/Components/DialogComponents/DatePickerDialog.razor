@@ -1,11 +1,12 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
-@inherits DialogComponentBase
+@inherits ShowContentDialogComponentBase
 
-<MDialogExtension MyValue="Visible"
+<MDialogExtension @ref="mDialogExtension"
+                  MyValue="Visible"
                   MyValueChanged="InternalVisibleChanged"
                   ContentClass="rounded-lg"
                   MaxWidth="420">
-    <MDatePicker @bind-Value="InternalDate"
+    <MDatePicker @bind-Value="internalDate"
                  Class="rounded-lg pt-4 my-picker"
                  FullWidth="true"
                  NoTitle="true"

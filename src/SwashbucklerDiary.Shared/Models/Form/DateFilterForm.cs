@@ -4,10 +4,9 @@
     {
         public string DefaultDate { get; set; } = string.Empty;
 
-        public DateOnly MinDate { get; set; } = DateOnly.MinValue;
+        public DateOnly MinDate { get; set; }
 
-        public DateOnly MaxDate { get; set; } = DateOnly.MaxValue;
-
+        public DateOnly MaxDate { get; set; }
 
         public static readonly Dictionary<string, DateOnly> DefaultDates = new()
         {
@@ -24,22 +23,12 @@
                 return DefaultDates[defaultDate];
             }
 
-            if (MinDate != DateOnly.MinValue)
-            {
-                return MinDate;
-            }
-
-            return DateOnly.MinValue;
+            return MinDate;
         }
 
         public DateOnly GetDateMaxValue()
         {
-            if (MaxDate != DateOnly.MaxValue)
-            {
-                return MaxDate;
-            }
-
-            return DateOnly.MaxValue;
+            return MaxDate;
         }
     }
 }

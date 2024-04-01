@@ -64,10 +64,10 @@ namespace SwashbucklerDiary.Rcl.Components
         }
 
         private string MinDateText
-            => MinDate == DateOnly.MinValue ? I18n.T("Filter.Start time") : MinDate.ToString("d").Replace('/', '-');
+            => MinDate == default ? I18n.T("Filter.Start time") : MinDate.ToString("d").Replace('/', '-');
 
         private string MaxDateText
-            => MaxDate == DateOnly.MaxValue ? I18n.T("Filter.End time") : MaxDate.ToString("d").Replace('/', '-');
+            => MaxDate == default ? I18n.T("Filter.End time") : MaxDate.ToString("d").Replace('/', '-');
 
         private static DateOnly Today => DateOnly.FromDateTime(DateTime.Now);
 
@@ -85,8 +85,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void SelectDeafultDate()
         {
-            MinDate = DateOnly.MinValue;
-            MaxDate = DateOnly.MaxValue;
+            MinDate = default;
+            MaxDate = default;
         }
 
         private void OpenMinDateDialog()

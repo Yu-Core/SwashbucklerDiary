@@ -3,34 +3,19 @@ using OneOf;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class DatePickerDialog : DialogComponentBase
+    public partial class DatePickerDialog : ShowContentDialogComponentBase
     {
-        private bool _visible;
-
         private DateOnly _date = DateOnly.FromDateTime(DateTime.Now);
 
-        private DateOnly _internalDate;
-
-        private DateOnly InternalDate
-        {
-            get => _internalDate;
-            set
-            {
-                _internalDate = (value == DateOnly.MinValue || value == DateOnly.MaxValue) ? DateOnly.FromDateTime(DateTime.Now) : value;
-            }
-        }
+        private DateOnly internalDate;
 
         [Parameter]
-        public override bool Visible
-        {
-            get => _visible;
-            set => SetVisible(value);
-        }
+        public override bool Visible { get; set; }
 
         [Parameter]
         public DateOnly Value
         {
-            get => (_date == DateOnly.MinValue || _date == DateOnly.MaxValue) ? DateOnly.FromDateTime(DateTime.Now) : _date;
+            get => _date == default ? DateOnly.FromDateTime(DateTime.Now) : _date;
             set => _date = value;
         }
 
@@ -47,27 +32,23 @@ namespace SwashbucklerDiary.Rcl.Components
         public OneOf<DateOnly[], Func<DateOnly, bool>>? Events { get; set; }
 
         [Parameter]
-        public OneOf<string, Func<DateOnly, string>, Func<DateOnly, string[]>>? EventColor {get;set;}
+        public OneOf<string, Func<DateOnly, string>, Func<DateOnly, string[]>>? EventColor { get; set; }
 
-        private void SetVisible(bool value)
+        protected override async Task BeforeShowContent()
         {
-            if (value != Visible)
-            {
-                if (value)
-                {
-                    InternalDate = Value;
-                }
-                _visible = value;
-            }
+            await base.BeforeShowContent();
+
+            internalDate = Value;
         }
 
         private async Task HandleOnOK()
         {
-            Value = InternalDate;
+            Value = internalDate;
             if (ValueChanged.HasDelegate)
             {
                 await ValueChanged.InvokeAsync(Value);
             }
+
             await InternalVisibleChanged(false);
         }
     }
