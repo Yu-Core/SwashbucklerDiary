@@ -46,6 +46,9 @@ namespace SwashbucklerDiary.Maui.Layout
             await ThemeService.SetThemeAsync((Theme)themeState);
         }
 
+#if DEBUG
+        private Task CheckForUpdates() => Task.CompletedTask;
+#else
         private async Task CheckForUpdates()
         {
             bool notPrompt = SettingService.Get<bool>(Setting.UpdateNotPrompt);
@@ -67,6 +70,8 @@ namespace SwashbucklerDiary.Maui.Layout
             {
                 Logger.LogError(e, "VersionUpdate check failed");
             }
-        }
+
+    }
+#endif
     }
 }
