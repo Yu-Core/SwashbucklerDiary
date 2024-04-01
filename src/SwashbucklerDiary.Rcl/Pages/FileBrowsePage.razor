@@ -1,0 +1,56 @@
+﻿@page "/fileBrowse"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar>
+    <MultiTabList @bind-Value="tab"
+                  Items="tabNames">
+    </MultiTabList>
+
+    <MSpacer></MSpacer>
+
+    <MultiMenu @bind-Visible="showMenu"
+               DynamicListItems="menuItems">
+        <ActivatorContent>
+            <MButton @attributes="@context.Attrs"
+                     Icon="true">
+                <MultiDisplay>
+                    <DesktopContent>
+                        <MIcon>mdi-dots-horizontal</MIcon>
+                    </DesktopContent>
+                    <MobileContent>
+                        <MIcon>mdi-dots-vertical</MIcon>
+                    </MobileContent>
+                </MultiDisplay>
+            </MButton>
+        </ActivatorContent>
+    </MultiMenu>
+</MyAppBar>
+
+<SwiperTabItems @ref="swiperTabItems"
+                @bind-Value="tab">
+    <SwiperTabItem>
+        <MContainer Class="my-container"
+                    Fluid="true">
+            <ImageWaterfall Value="imageResources"></ImageWaterfall>
+        </MContainer>
+    </SwiperTabItem>
+    <SwiperTabItem>
+        <MContainer Class="my-container"
+                    Fluid="true">
+            @I18n.T("ToDo.Title")
+        </MContainer>
+    </SwiperTabItem>
+    <SwiperTabItem>
+        <MContainer Class="my-container"
+                    Fluid="true">
+            <VideoWaterfall Value="videoResources"></VideoWaterfall>
+        </MContainer>
+    </SwiperTabItem>
+</SwiperTabItems>
+
+<DeleteDialog @bind-Visible="showDelete"
+              Title="@(I18n.T("Share.Delete"))"
+              Content="@(I18n.T("FileBrowse.ConfirmDeleteUnused"))"
+              OnOK="DeleteUnusedResources">
+</DeleteDialog>

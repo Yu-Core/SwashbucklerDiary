@@ -79,68 +79,19 @@
     <MCard Class="list-item-card"
            Elevation="0"
            Rounded="@("lg")">
-        <MList>
-            <MListItem OnClick="@(()=>To("locationSetting"))">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-map-marker-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Setting.Display.Diary.Location.Name"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-            <MDivider Class="mx-3"></MDivider>
-
-            <MListItem OnClick="@(()=>To("imageSetting"))">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-image-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Setting.Display.Diary.Image.Name"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3"></MDivider>
-
-            <MListItem OnClick="@(()=>To("audioSetting"))">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-music
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Setting.Display.Diary.Audio.Name"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-3"></MDivider>
-
-            <MListItem OnClick="@(()=>To("videoSetting"))">
-                <MListItemIcon>
-                    <MIcon Class="list-item-icon">
-                        mdi-movie-open-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Setting.Display.Diary.Video.Name"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MList>
+        <MListItem OnClick="@(()=>To("locationSetting"))">
+            <MListItemIcon>
+                <MIcon Class="list-item-icon">
+                    mdi-map-marker-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                @(I18n.T("Setting.Display.Diary.Location.Name"))
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>mdi-chevron-right</MIcon>
+            </MListItemAction>
+        </MListItem>
     </MCard>
 </ScrollContainer>
 

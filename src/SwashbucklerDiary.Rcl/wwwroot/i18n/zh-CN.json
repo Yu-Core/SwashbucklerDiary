@@ -31,7 +31,8 @@
   },
   "Main": {
     "Diary": "日记",
-    "History": "回忆",
+    "History": "日历",
+    "FileBrowse": "文件",
     "Mine": "我的"
   },
   "Index": {
@@ -429,24 +430,6 @@
         "Location": {
           "Name": "位置",
           "Path": "设置 / 日记 / 位置"
-        },
-        "Image": {
-          "Name": "图片",
-          "Path": "设置 / 日记 / 图片",
-          "DeleteUnused": "确认删除未使用的图片？",
-          "NoImage": "暂无图片"
-        },
-        "Audio": {
-          "Name": "音频",
-          "Path": "设置 / 日记 / 音频",
-          "DeleteUnused": "确认删除未使用的音频？",
-          "NoAudio": "暂无音频"
-        },
-        "Video": {
-          "Name": "视频",
-          "Path": "设置 / 日记 / 视频",
-          "DeleteUnused": "确认删除未使用的视频？",
-          "NoVideo": "暂无视频"
         }
       },
       "Alert": {
@@ -727,5 +710,21 @@
   },
   "Image": {
     "Not exist": "图片不存在"
+  },
+  "FileBrowse": {
+    "Image": {
+      "Name": "图片",
+      "NoImage": "暂无图片"
+    },
+    "Audio": {
+      "Name": "音频",
+      "NoAudio": "暂无音频"
+    },
+    "Video": {
+      "Name": "视频",
+      "NoVideo": "暂无视频"
+    },
+    "DeleteUnused": "删除未使用文件",
+    "ConfirmDeleteUnused": "确认删除未使用的文件？"
   }
 }

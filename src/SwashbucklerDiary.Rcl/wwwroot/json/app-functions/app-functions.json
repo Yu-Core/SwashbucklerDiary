@@ -188,12 +188,6 @@
     "Href": "locationSetting"
   },
   {
-    "Name": "Setting.Display.Diary.Image.Name",
-    "Icon": "mdi-image-outline",
-    "Path": "Setting.Display.Diary.Image.Path",
-    "Href": "imageSetting"
-  },
-  {
     "Name": "Setting.Display.Alert.Name",
     "Icon": "mdi-alert-box-outline",
     "Path": "Setting.Display.Alert.Path",

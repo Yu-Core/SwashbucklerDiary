@@ -56,9 +56,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (previousValue != Value)
             {
+                int previousValueCount = previousValue.Count;
                 previousValue = Value;
                 srcs = [];
-                srcs = MockRequest();
+                srcs = MockRequest(previousValueCount);
             }
         }
 
@@ -84,9 +85,14 @@ namespace SwashbucklerDiary.Rcl.Components
             srcs.AddRange(append);
         }
 
-        protected virtual List<string?> MockRequest()
+        protected virtual List<string?> MockRequest(int requestCount = 0)
         {
-            return Value.Skip(srcs.Count).Take(loadCount).Select(it => it.ResourceUri).ToList();
+            if (requestCount < loadCount)
+            {
+                requestCount = loadCount;
+            }
+
+            return Value.Skip(srcs.Count).Take(requestCount).Select(it => it.ResourceUri).ToList();
         }
 
         protected async void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)

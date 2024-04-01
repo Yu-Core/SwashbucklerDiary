@@ -11,3 +11,7 @@ function preventDefaultOnmousedown(el) {
 function changeLanguage(lang) {
     document.documentElement.lang = lang;
 }
+
+function elementScrollTop(el) {
+    return el.scrollTop;
+}

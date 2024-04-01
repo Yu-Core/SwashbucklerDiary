@@ -31,7 +31,8 @@
   },
   "Main": {
     "Diary": "Diary",
-    "History": "History",
+    "History": "Calendar",
+    "FileBrowse": "File",
     "Mine": "Mine"
   },
   "Index": {
@@ -429,24 +430,6 @@
         "Location": {
           "Name": "Location",
           "Path": "Setting / Diary / Location"
-        },
-        "Image": {
-          "Name": "Image",
-          "Path": "Setting / Diary / Image Manage",
-          "DeleteUnused": "Are you sure to delete unused images?",
-          "NoImage": "No image"
-        },
-        "Audio": {
-          "Name": "Audio",
-          "Path": "Setting / Diary / Audio Manage",
-          "DeleteUnused": "Are you sure to delete unused audios?",
-          "NoAudio": "No audio"
-        },
-        "Video": {
-          "Name": "Video",
-          "Path": "Setting / Diary / Video Manage",
-          "DeleteUnused": "Are you sure to delete unused videos?",
-          "NoVideo": "No video"
         }
       },
       "Alert": {
@@ -727,5 +710,21 @@
   },
   "Image": {
     "Not exist": "Image does not exist"
+  },
+  "FileBrowse": {
+    "Image": {
+      "Name": "Image",
+      "NoImage": "No image"
+    },
+    "Audio": {
+      "Name": "Audio",
+      "NoAudio": "No audio"
+    },
+    "Video": {
+      "Name": "Video",
+      "NoVideo": "No video"
+    },
+    "DeleteUnused": "Delete unused files",
+    "ConfirmDeleteUnused": "Are you sure to delete unused files?"
   }
 }

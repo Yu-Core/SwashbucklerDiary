@@ -16,6 +16,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected List<NavigationButton> NavigationButtons = [
             new("Main.Diary", "mdi-notebook-outline", "mdi-notebook", ""),
             new("Main.History", "mdi-clock-outline", "mdi-clock", "history"),
+            new("Main.FileBrowse", "mdi-file-outline", "mdi-file", "fileBrowse"),
             new("Main.Mine",  "mdi-account-outline", "mdi-account", "mine"),
         ];
 
@@ -79,9 +80,8 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected void LoadView()
         {
-            for (int i = 0; i < NavigationButtons.Count; i++)
+            foreach (var button in NavigationButtons)
             {
-                var button = NavigationButtons[i];
                 button.OnClick = () => NavigateService.PopToRootAsync(button.Href);
             }
         }

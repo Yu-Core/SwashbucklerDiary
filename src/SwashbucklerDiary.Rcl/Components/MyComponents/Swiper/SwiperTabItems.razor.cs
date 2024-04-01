@@ -7,13 +7,11 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class SwiperTabItems : IAsyncDisposable
     {
-        private ElementReference ElementRef;
+        private ElementReference elementRef;
 
         private IJSObjectReference module = default!;
 
         private StringNumber _value = 0;
-
-        private readonly List<SwiperTabItem> ChildTabItems = [];
 
         private int _registeredTabItemsIndex;
 
@@ -45,6 +43,8 @@ namespace SwashbucklerDiary.Rcl.Components
                 return ChildTabItems[_value.ToInt32()];
             }
         }
+
+        public List<SwiperTabItem> ChildTabItems { get; } = [];
 
         [JSInvokable]
         public async Task UpdateValue(int value)
@@ -78,7 +78,7 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
                 module = await JS.ImportRclJsModule("js/swiper-helper.js");
-                await module.InvokeVoidAsync("initSwiper", [dotNetObjectReference, "UpdateValue", ElementRef, Value.ToInt32()]);
+                await module.InvokeVoidAsync("initSwiper", [dotNetObjectReference, "UpdateValue", elementRef, Value.ToInt32()]);
             }
         }
 
@@ -98,14 +98,14 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            await module.InvokeVoidAsync("slideTo", [ElementRef, value.ToInt32()]);
+            await module.InvokeVoidAsync("slideTo", [elementRef, value.ToInt32()]);
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
             if (module is not null)
             {
-                await module.InvokeVoidAsync("dispose", ElementRef);
+                await module.InvokeVoidAsync("dispose", elementRef);
                 await module.DisposeAsync();
             }
 

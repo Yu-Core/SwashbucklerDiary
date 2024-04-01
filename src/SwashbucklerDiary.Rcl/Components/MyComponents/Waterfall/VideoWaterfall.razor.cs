@@ -17,9 +17,14 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        protected override List<string?> MockRequest()
+        protected override List<string?> MockRequest(int requestCount = 0)
         {
-            return Value.Skip(srcs.Count).Take(loadCount).Select(it => HandleSrc(it.ResourceUri)).ToList();
+            if (requestCount < loadCount)
+            {
+                requestCount = loadCount;
+            }
+
+            return Value.Skip(srcs.Count).Take(requestCount).Select(it => HandleSrc(it.ResourceUri)).ToList();
         }
 
         private static string? HandleSrc(string? src)

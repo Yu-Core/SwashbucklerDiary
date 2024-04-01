@@ -1,15 +1,24 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Layout
 @inherits MainLayoutNavItemBase
 
-<MListItem Class="@Class"
-           Ripple="false"
-           OnClick="Value.OnClick">
-    <MListItemIcon>
-        <MIcon Size="24">
-            @Icon
-        </MIcon>
-    </MListItemIcon>
-</MListItem>
+<MTooltip Right>
+    <ActivatorContent>
+        <MListItem @attributes="@context.Attrs"
+                   Class="@Class"
+                   Ripple="false"
+                   OnClick="Value.OnClick">
+            <MListItemIcon>
+                <MIcon Size="24">
+                    @Icon
+                </MIcon>
+            </MListItemIcon>
+        </MListItem>
+    </ActivatorContent>
+    <ChildContent>
+        <span>@I18n.T(Value.Text)</span>
+    </ChildContent>
+</MTooltip>
+
 
 @code {
     private string ActiveClass => Activated ? "m-list-item--active" : "";
