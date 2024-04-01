@@ -23,9 +23,9 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IResourceService _resourceService;
 
-        protected const string exportFileNamePrefix = "SDExport";
+        protected const string exportFileNamePrefix = "SwashbucklerDiaryExport";
 
-        protected const string backupFileNamePrefix = "SDBackup";
+        protected const string backupFileNamePrefix = "SwashbucklerDiaryBackup";
 
         protected const string versionInfoFileName = "version.json";
 
