@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
         public void Initialize(object navigation, List<string> rootPaths)
         {
             Navigation = (NavigationManager)navigation;
-            RootPaths = rootPaths.Select(it=> Navigation.ToAbsoluteUri(it).ToString()).ToList();
+            RootPaths = rootPaths.Select(it => Navigation.ToAbsoluteUri(it).ToString()).ToList();
         }
 
         public async Task PushAsync(string url, bool isCachePrevious = true)
@@ -38,7 +38,15 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
             if (BeforePush is not null)
             {
-                await BeforePush.Invoke(args);
+                var delegates = BeforePush.GetInvocationList().Cast<Func<PushEventArgs, Task>>();
+                var tasks = new List<Task>();
+
+                foreach (var del in delegates)
+                {
+                    tasks.Add(del(args));
+                }
+
+                await Task.WhenAll(tasks);
             }
 
             string currentURL = Navigation.Uri;
@@ -55,7 +63,15 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
             if (BeforePop is not null)
             {
-                await BeforePop.Invoke(args);
+                var delegates = BeforePop.GetInvocationList().Cast<Func<PopEventArgs, Task>>();
+                var tasks = new List<Task>();
+
+                foreach (var del in delegates)
+                {
+                    tasks.Add(del(args));
+                }
+
+                await Task.WhenAll(tasks);
             }
 
             if (HistoryURLs.Count > 0)
@@ -63,7 +79,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
                 var lastIndex = HistoryURLs.Count - 1;
                 HistoryURLs.RemoveAt(lastIndex);
             }
-            
+
             Navigation.NavigateTo(previousUri, replace: true);
 
             Poped?.Invoke(args);
@@ -72,11 +88,19 @@ namespace SwashbucklerDiary.Rcl.Essentials
         public async Task PopToRootAsync(string url)
         {
             url = Navigation.ToAbsoluteUri(url).ToString();
- 
+
             PopEventArgs args = new(url, Navigation.Uri);
             if (BeforePopToRoot is not null)
             {
-                await BeforePopToRoot.Invoke(args);
+                var delegates = BeforePopToRoot.GetInvocationList().Cast<Func<PopEventArgs, Task>>();
+                var tasks = new List<Task>();
+
+                foreach (var del in delegates)
+                {
+                    tasks.Add(del(args));
+                }
+
+                await Task.WhenAll(tasks);
             }
 
             if (Navigation.Uri.EqualsAbsolutePath(url))
