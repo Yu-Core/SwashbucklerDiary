@@ -20,21 +20,9 @@ namespace SwashbucklerDiary.Rcl.Extensions
                     }
                 },
                 {
-                    nameof(MDialog), new Dictionary<string, object?>()
-                    {
-                        { nameof(MDialog.Eager), true }
-                    }
-                },
-                {
                     nameof(MBottomSheet), new Dictionary<string, object?>()
                     {
                         { nameof(MBottomSheet.Eager), true }
-                    }
-                },
-                {
-                    nameof(MMenu), new Dictionary<string, object?>()
-                    {
-                        { nameof(MMenu.Eager), true }
                     }
                 }
             };
