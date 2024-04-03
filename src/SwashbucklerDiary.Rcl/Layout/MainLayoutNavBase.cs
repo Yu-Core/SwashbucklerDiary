@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         public string? Culture { get; set; }
 
         [Parameter]
-        public List<NavigationButton> Items { get; set; } = new();
+        public List<NavigationButton> Items { get; set; } = [];
 
         public void Dispose()
         {

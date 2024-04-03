@@ -83,9 +83,9 @@ namespace SwashbucklerDiary.Rcl.Components
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
 
                 //点击复制按钮提示复制成功
-                await module.InvokeVoidAsync("copy", [dotNetCallbackRef, "CopySuccess", vditorMarkdownPreview.Ref]);
+                await module.InvokeVoidAsync("copy", [dotNetCallbackRef, nameof(CopySuccess), vditorMarkdownPreview.Ref]);
                 //图片预览
-                await module.InvokeVoidAsync("previewImage", [dotNetCallbackRef, "PreviewImage", vditorMarkdownPreview.Ref]);
+                await module.InvokeVoidAsync("previewImage", [dotNetCallbackRef, nameof(PreviewImage), vditorMarkdownPreview.Ref]);
             }
         }
 

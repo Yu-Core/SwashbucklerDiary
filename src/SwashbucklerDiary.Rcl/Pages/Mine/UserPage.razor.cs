@@ -47,11 +47,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void LoadView()
         {
-            editAvatarMethods = new()
-            {
+            editAvatarMethods =
+            [
                 new(this, "User.Photos","mdi-image-outline",PickPhoto),
                 new(this, "User.Capture","mdi-camera-outline",OnCapture),
-            };
+            ];
         }
 
         private async Task SaveSign(string tagName)

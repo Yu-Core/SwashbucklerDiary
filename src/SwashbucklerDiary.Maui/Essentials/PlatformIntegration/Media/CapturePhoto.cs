@@ -9,7 +9,7 @@
 
         public async Task<string?> CapturePhotoAsync()
         {
-            FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
+            FileResult? photo = await MediaPicker.Default.CapturePhotoAsync();
             return photo?.FullPath;
         }
     }

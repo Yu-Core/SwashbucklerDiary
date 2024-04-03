@@ -50,11 +50,11 @@ namespace SwashbucklerDiary.Rcl.Components
         private string? _previousPath;
         private PatternPath? _currentPatternPath;
 
-        private HashSet<string> _prevIncludePatterns = new();
-        private HashSet<string> _prevExcludePatterns = new();
+        private HashSet<string> _prevIncludePatterns = [];
+        private HashSet<string> _prevExcludePatterns = [];
 
-        private HashSet<Regex> _cachedIncludePatternRegexes = new();
-        private HashSet<Regex> _cachedExcludePatternRegexes = new();
+        private HashSet<Regex> _cachedIncludePatternRegexes = [];
+        private HashSet<Regex> _cachedExcludePatternRegexes = [];
 
         protected override void OnInitialized()
         {

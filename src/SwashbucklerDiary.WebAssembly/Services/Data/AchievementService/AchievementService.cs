@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         private readonly IUserStateModelRepository _userStateModelRepository;
 
-        public readonly List<AchievementModel> Achievements = new();
+        public readonly List<AchievementModel> Achievements = [];
 
         public AchievementService(IUserAchievementRepository userAchievementRepository,
             IUserStateModelRepository userStateModelRepository,
@@ -44,7 +44,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
         {
             var type = userState.Type;
             var achievements = Achievements.Where(it => it.Kind == type).ToList();
-            List<string> messages = new();
+            List<string> messages = [];
             foreach (var item in achievements)
             {
                 var userAchievement = await _userAchievementRepository.GetFirstAsync(it => it.AchievementName == item.Name);

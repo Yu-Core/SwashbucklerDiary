@@ -271,7 +271,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private void CopyDiaryResource(List<DiaryModel> diaries, string outputFolder)
         {
-            var resources = diaries.SelectMany(a => a.Resources ?? new()).Distinct().ToList();
+            var resources = diaries.SelectMany(a => a.Resources ?? []).Distinct().ToList();
 
             foreach (var resource in resources)
             {

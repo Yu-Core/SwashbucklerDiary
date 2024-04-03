@@ -73,23 +73,26 @@ namespace SwashbucklerDiary.Rcl.Pages
         }
 
         private DateOnly DateOnlyMin => dateFilterForm.GetDateMinValue();
+
         private DateOnly DateOnlyMax => dateFilterForm.GetDateMaxValue();
+
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(search);
+
         private bool IsDateFiltered => DateOnlyMin != default || DateOnlyMax != default;
 
         private void LoadView()
         {
-            menuItems = new List<DynamicListItem>()
-            {
+            menuItems =
+            [
                 new(this, "Log.Clear", "mdi-delete-outline", OpenDeleteDialog),
                 new(this, "Share.Share", "mdi-share-variant-outline", OpenShareDialog),
-            };
+            ];
 
-            shareItems = new()
-            {
+            shareItems =
+            [
                 new(this, "Share.TextShare","mdi-format-text", ShareText),
                 new(this, "Share.FileShare","mdi-file-outline", ShareLogFile),
-            };
+            ];
         }
 
         private async Task OpenShareDialog()

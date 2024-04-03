@@ -33,12 +33,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public EventCallback OnReset { get; set; }
 
-        protected virtual Task DialogAfterRenderAsync()
-        {
-            internalForm = Value.DeepCopy();
-            return Task.CompletedTask;
-        }
-
         private static Dictionary<string, DateOnly> DefaultDates
             => DateFilterForm.DefaultDates;
 

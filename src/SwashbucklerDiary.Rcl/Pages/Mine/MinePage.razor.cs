@@ -146,12 +146,12 @@ namespace SwashbucklerDiary.Rcl.Pages
                     }
                 }
             };
-            FeedbackTypes = new()
-            {
+            FeedbackTypes =
+            [
                 new(this, "Email","mdi-email-outline",SendMail),
                 new(this, "Github","mdi-github",ToGithub),
                 new(this, "QQGroup","mdi-qqchat",OpenQQGroup),
-            };
+            ];
         }
 
         private async Task LoadViewAsync()

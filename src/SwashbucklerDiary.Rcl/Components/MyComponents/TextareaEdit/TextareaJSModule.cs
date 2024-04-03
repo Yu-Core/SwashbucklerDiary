@@ -10,9 +10,9 @@ namespace SwashbucklerDiary.Rcl.Components
         {
         }
 
-        public ValueTask<string> InsertText(ElementReference elementReference, string value)
+        public ValueTask<string?> InsertText(ElementReference elementReference, string value)
         {
-            return base.InvokeAsync<string>("insertText", [elementReference, value]);
+            return base.InvokeAsync<string?>("insertText", [elementReference, value]);
         }
     }
 }

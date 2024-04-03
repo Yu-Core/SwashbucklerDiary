@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 var dotNetCallbackRef = DotNetObjectReference.Create(this);
 
                 //图片预览
-                await module.InvokeVoidAsync("previewImage", [dotNetCallbackRef, "PreviewImage", elementReference]);
+                await module.InvokeVoidAsync("previewImage", [dotNetCallbackRef, nameof(PreviewImage), elementReference]);
             }
         }
     }

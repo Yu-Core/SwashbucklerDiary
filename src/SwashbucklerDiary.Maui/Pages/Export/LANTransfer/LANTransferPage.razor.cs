@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Maui.Pages
     {
         private bool ShowConfig;
 
-        private List<DynamicListItem> DynamicLists = new();
+        private List<DynamicListItem> DynamicLists = [];
 
         private LANConfigForm configModel = new();
 
@@ -39,11 +39,11 @@ namespace SwashbucklerDiary.Maui.Pages
 
         private void LoadView()
         {
-            DynamicLists = new()
-            {
+            DynamicLists =
+            [
                 new(this,"Export.Send.Name","mdi-send-outline",()=>To("lanSender")),
                 new(this,"Export.Receive.Name","mdi-printer-pos-outline",()=>To("lanReceiver")),
-            };
+            ];
         }
 
         private async Task SaveConfig(LANConfigForm value)

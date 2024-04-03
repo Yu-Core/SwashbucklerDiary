@@ -52,12 +52,12 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void LoadView()
         {
-            menuItems = new List<DynamicListItem>()
-            {
+            menuItems =
+            [
                 new(this, "History.Add diary","mdi-pencil", ()=>To($"write?CreateDate={SelectedDate}")),
                 new(this, "History.Reset date","mdi-calendar-refresh", ResetDatePicker),
                 new(this, "History.Export diaries","mdi-export", ()=>showExportThisTime = true),
-            };
+            ];
         }
 
         private DateOnly SelectedDate

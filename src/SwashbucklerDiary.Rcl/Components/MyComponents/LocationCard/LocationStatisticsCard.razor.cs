@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public string? Culture { get; set; }
 
         [Parameter]
-        public List<LocationModel> Value { get; set; } = new();
+        public List<LocationModel> Value { get; set; } = [];
 
         private int LocationCount => Value.Count;
 

@@ -66,7 +66,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private List<TagModel> SelectedTags
         {
-            get => SelectedItemValue.Tags ?? new();
+            get => SelectedItemValue.Tags ?? [];
             set => SelectedItemValue.Tags = value;
         }
 
@@ -181,8 +181,8 @@ namespace SwashbucklerDiary.Rcl.Components
                 sortItem = SortItems.First();
             }
 
-            menuItems = new()
-            {
+            menuItems =
+            [
                 new(this, "Diary.Tag", "mdi-label-outline", ChangeTag),
                 new(this, "Share.Copy", "mdi-content-copy", Copy),
                 new(this, "Share.Delete", "mdi-delete-outline", Delete),
@@ -190,7 +190,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 new(this, "Diary.Export", "mdi-export", Export),
                 new(this, "Share.Sort", "mdi-sort-variant", Sort),
                 new(this, PrivateText, PrivateIcon, MovePrivacy, ()=>ShowPrivacy)
-            };
+            ];
         }
 
         private async Task SortChanged(string value)

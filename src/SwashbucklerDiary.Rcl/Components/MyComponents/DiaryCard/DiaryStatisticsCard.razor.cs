@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public string? Culture { get; set; }
 
         [Parameter]
-        public List<DiaryModel> Value { get; set; } = new();
+        public List<DiaryModel> Value { get; set; } = [];
 
         private int DiaryCount => Value.Count;
 

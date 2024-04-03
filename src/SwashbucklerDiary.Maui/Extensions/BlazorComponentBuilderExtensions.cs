@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.Maui.Extensions
             using StreamReader readerCultures = new(streamCultures);
             string contents = readerCultures.ReadToEnd();
             string[] cultures = JsonSerializer.Deserialize<string[]>(contents) ?? throw new Exception("Failed to read supportedCultures json file data!");
-            List<(string culture, Dictionary<string, string>)> locales = new();
+            List<(string culture, Dictionary<string, string>)> locales = [];
             foreach (string culture in cultures)
             {
                 string culturePath = localesDirectory + "/" + culture + ".json";

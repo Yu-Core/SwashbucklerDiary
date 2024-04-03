@@ -233,11 +233,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void LoadView()
         {
-            menuItems = new()
-            {
+            menuItems =
+            [
                 new(this, TitleSwitchText, "mdi-format-title", ()=> SettingChange(Setting.Title, ref enableTitle)),
                 new(this, MarkdownSwitchText, MarkdownSwitchIcon, ()=> SettingChange(Setting.Markdown, ref enableMarkdown)),
-            };
+            ];
             WeatherIcons = IconService.GetWeatherIcons();
             MoodIcons = IconService.GetMoodIcons();
         }

@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool ShowExport;
 
-        private List<DiaryModel> ExportDiaries = new();
+        private List<DiaryModel> ExportDiaries = [];
 
         [Inject]
         private ITagService TagService { get; set; } = default!;
@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public EventCallback<List<TagModel>> ValueChanged { get; set; }
 
         [Parameter]
-        public List<DiaryModel> Diaries { get; set; } = new();
+        public List<DiaryModel> Diaries { get; set; } = [];
 
         public int GetDiaryCount(TagModel tag)
             => Diaries.Count(d => d.Tags != null && d.Tags.Any(t => t.Id == tag.Id));
@@ -110,13 +110,13 @@ namespace SwashbucklerDiary.Rcl.Components
                 sortItem = SortItems.First();
             }
 
-            menuItems = new()
-            {
+            menuItems =
+            [
                 new(this, "Share.Rename", "mdi-rename-outline", Rename),
                 new(this, "Share.Delete", "mdi-delete-outline", Delete),
                 new(this, "Diary.Export", "mdi-export", Export),
                 new(this, "Share.Sort", "mdi-sort-variant", Sort),
-            };
+            ];
         }
 
         private void Rename()

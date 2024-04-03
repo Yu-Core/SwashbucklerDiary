@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private II18nService I18n { get; set; } = default!;
 
         [Parameter]
-        public List<TagModel> Value { get; set; } = new();
+        public List<TagModel> Value { get; set; } = [];
 
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }

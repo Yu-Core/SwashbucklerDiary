@@ -7,8 +7,7 @@
         <MIcon>mdi-arrow-left</MIcon>
     </MButton>
 
-    <SearchTextField @bind-Visible="showSearch"
-                     @bind-Value="search"
+    <SearchTextField @bind-Value="search"
                      Placeholder="@(I18n.T("Search.Please enter diary keywords"))"
                      OnChanged="UpdateDiariesAsync">
     </SearchTextField>

@@ -44,29 +44,27 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void LoadView()
         {
-            viewLists = new()
-            {
-                new()
-                {
+            viewLists =
+            [
+                [
                     new(this, "About.SourceCode.Name","mdi-book-open-page-variant-outline",() => showSourceCode = true),
                     new(this, "About.Agreement.Name","mdi-file-document-multiple-outline",() => To("user-agreement")),
                     new(this, "About.Privacy.Name","mdi-lock-outline",() => To("privacy-policy")),
                     new(this, "About.Check for updates.Name","mdi-update",CheckForUpdates),
-                },
-                new()
-                {
+                ],
+                [
                     new(this, "About.Related.Name","mdi-xml",() => To("relatedOSP")),
                     new(this, "About.LogFile.Name","mdi-file-document-edit-outline",() => To("log")),
                     new(this, "About.Evaluation.Name","mdi-star-outline",OpenAppDetails),
                     new(this, "About.Sponsor.Name","mdi-hand-heart-outline",()=>To("sponsor")),
-                }
-            };
+                ]
+            ];
         }
 
         private async Task LoadViewAsync()
         {
             var codeSources = await StaticWebAssets.ReadJsonAsync<List<CodeSource>>("json/code-source/code-source.json");
-            codeSourceListItems = codeSources.Select(it => new DynamicListItem(this, it.Name, it.Icon, () => ViewSourceCode(it.Url))).ToList();
+            codeSourceListItems = codeSources.Select(it => new DynamicListItem(this, it.Name ?? string.Empty, it.Icon ?? string.Empty, () => ViewSourceCode(it.Url))).ToList();
         }
 
         private async Task ViewSourceCode(string? url)

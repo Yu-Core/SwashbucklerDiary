@@ -31,13 +31,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void LoadView()
         {
-            items = new()
-            {
+            items =
+            [
                 new(this,"Txt", "mdi-format-text", ExportTxtAsync),
                 new(this,"Md", "mdi-language-markdown-outline", ExportMdAsync),
                 new(this,"Json", "mdi-code-braces", ExportJsonAsync),
                 new(this,"Xlsx", "mdi-table-large", ExportXlsxAsync),
-            };
+            ];
         }
 
         private Task ExportTxtAsync() => Export(DiaryFileManager.ExportTxtAsync, ExportKind.Txt);

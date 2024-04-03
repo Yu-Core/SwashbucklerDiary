@@ -69,7 +69,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             enablePrivacy = SettingService.Get<bool>(Setting.PrivacyMode);
         }
 
-        private List<TagModel> Tags => diary.Tags ?? new();
+        private List<TagModel> Tags => diary.Tags ?? [];
 
         private bool IsTop => diary.Top;
 
@@ -117,20 +117,20 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void LoadView()
         {
-            menuItems = new List<DynamicListItem>()
-            {
+            menuItems =
+            [
                 new(this, "Share.Copy","mdi-content-copy", OnCopy),
                 new(this, TopText,"mdi-format-vertical-align-top", OnTopping),
                 new(this, "Diary.Export","mdi-export", OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon, MarkdownChanged),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>enablePrivacy)
-            };
+            ];
 
-            shareItems = new()
-            {
+            shareItems =
+            [
                 new(this, "Share.TextShare","mdi-format-text", ShareText),
                 new(this, "Share.ImageShare","mdi-image-outline", ShareImage),
-            };
+            ];
         }
 
         private void OpenDeleteDialog()

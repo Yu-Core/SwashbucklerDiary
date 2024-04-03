@@ -12,9 +12,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected ITagService TagService { get; set; } = default!;
 
-        protected virtual List<DiaryModel> Diaries { get; set; } = new();
+        protected virtual List<DiaryModel> Diaries { get; set; } = [];
 
-        protected virtual List<TagModel> Tags { get; set; } = new();
+        protected virtual List<TagModel> Tags { get; set; } = [];
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {

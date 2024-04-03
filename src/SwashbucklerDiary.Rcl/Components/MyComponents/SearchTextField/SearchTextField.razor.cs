@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Rcl.Components
             get => _visible;
             set => SetValue(value);
         }
-        
+
         [Parameter]
         public string? Value { get; set; }
 
@@ -63,7 +63,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public void Dispose()
         {
-            if(Visible)
+            if (Visible)
             {
                 NavigateService.Action -= CloseSearch;
             }

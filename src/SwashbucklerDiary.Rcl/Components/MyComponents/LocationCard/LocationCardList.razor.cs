@@ -88,12 +88,12 @@ namespace SwashbucklerDiary.Rcl.Components
                 sortItem = SortItems.First();
             }
 
-            menuItems = new()
-            {
+            menuItems =
+            [
                 new(this, "Share.Rename", "mdi-rename-outline", Rename),
                 new(this, "Share.Delete", "mdi-delete-outline", Delete),
                 new(this, "Share.Sort", "mdi-sort-variant", Sort),
-            };
+            ];
         }
 
         private void Delete()

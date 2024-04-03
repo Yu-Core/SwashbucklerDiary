@@ -42,12 +42,12 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void LoadView()
         {
-            exportTimeItems = new()
-            {
+            exportTimeItems =
+            [
                 new(this,"History.ExportTime.Day","mdi-alpha-d",ExportThisDay),
                 new(this,"History.ExportTime.Month","mdi-alpha-m",ExportThisMonth),
                 new(this,"History.ExportTime.Year","mdi-alpha-y",ExportThisYear),
-            };
+            ];
         }
 
         private Task ExportThisDay()
@@ -65,9 +65,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             await InvokeAsync(StateHasChanged);
 
             Expression<Func<DiaryModel, bool>> exp = it => !it.Private;
-            exp =exp.And(expression);
+            exp = exp.And(expression);
             exportDiaries = await DiaryService.QueryAsync(exp);
-            if (!exportDiaries.Any())
+            if (exportDiaries.Count == 0)
             {
                 await AlertService.Info(I18n.T("Diary.NoDiary"));
                 return;

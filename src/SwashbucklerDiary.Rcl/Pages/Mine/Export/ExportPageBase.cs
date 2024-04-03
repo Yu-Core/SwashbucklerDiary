@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Rcl.Pages
     {
         protected StringNumber tab = 0;
 
-        protected readonly List<string> views = new() { "Local", "LAN" };
+        protected readonly List<string> views = ["Local", "LAN"];
 
         protected readonly List<string> tabNames = ["Export.Local.Name", "Export.LAN.Name"];
 

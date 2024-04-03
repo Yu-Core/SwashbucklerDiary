@@ -78,7 +78,7 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
                 module = await JS.ImportRclJsModule("js/swiper-helper.js");
-                await module.InvokeVoidAsync("initSwiper", [dotNetObjectReference, "UpdateValue", elementRef, Value.ToInt32()]);
+                await module.InvokeVoidAsync("initSwiper", [dotNetObjectReference, nameof(UpdateValue), elementRef, Value.ToInt32()]);
             }
         }
 

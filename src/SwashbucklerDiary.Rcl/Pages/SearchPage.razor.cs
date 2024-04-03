@@ -9,8 +9,6 @@ namespace SwashbucklerDiary.Rcl.Pages
     {
         private bool showFilter;
 
-        private bool showSearch = true;
-
         private string? search;
 
         private DateFilterForm dateFilter = new();

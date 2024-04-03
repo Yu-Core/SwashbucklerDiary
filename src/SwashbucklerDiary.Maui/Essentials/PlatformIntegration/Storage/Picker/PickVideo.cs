@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Maui.Essentials
 #pragma warning restore CA1422 // 验证平台兼容性
             return await PickFileAsync(types, videoSuffixName);
 #else
-            FileResult fileResult = await MediaPicker.Default.PickVideoAsync();
+            FileResult? fileResult = await MediaPicker.Default.PickVideoAsync();
             return fileResult?.FullPath;
 #endif
         }

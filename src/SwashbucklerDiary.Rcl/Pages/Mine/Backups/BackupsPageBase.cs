@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Rcl.Pages
     {
         protected StringNumber tab = 0;
 
-        protected readonly List<string> views = new() { "Local", "WebDAV" };
+        protected readonly List<string> views = ["Local", "WebDAV"];
 
         protected readonly List<string> tabNames = ["Backups.Local.Name", "Backups.WebDAV.Name"];
 
