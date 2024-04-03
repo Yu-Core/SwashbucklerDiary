@@ -529,7 +529,7 @@ html {
 
     .preview-image-dialog--toolbar .m-btn--icon::before {
         background-color: var(--m-theme-surface) !important;
-        opacity: 1 !important;
+        opacity: 0.5 !important;
     }
 
 .preview-image-dialog--image__wraper {
