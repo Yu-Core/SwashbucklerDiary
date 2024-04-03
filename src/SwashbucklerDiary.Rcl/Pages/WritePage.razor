@@ -2,11 +2,9 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-@if (enableMarkdown)
+@if (enableMarkdown && IsCurrentPage)
 {
-    <OnlyThisPage>
-        <link href="@cssHref" />
-    </OnlyThisPage>
+    <link href="@cssHref" rel="stylesheet" />
 }
 
 <MyAppBar>
