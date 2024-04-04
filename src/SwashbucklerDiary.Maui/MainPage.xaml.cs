@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Maui
             blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;
 
 #if IOS
-            RegisterForKeyboardNotifications();
+            Initialize();
 #endif
         }
 

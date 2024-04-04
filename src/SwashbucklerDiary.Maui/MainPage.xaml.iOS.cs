@@ -7,13 +7,21 @@ namespace SwashbucklerDiary.Maui
 #nullable disable
     public partial class MainPage
     {
+        double paddingBottom = 10;
+
         NSObject _keyboardShowObserver;
-        
+
         NSObject _keyboardHideObserver;
 
         ~MainPage()
         {
             UnregisterForKeyboardNotifications();
+        }
+
+        void Initialize()
+        {
+            this.Padding = new(Padding.Left, Padding.Top, Padding.Right, paddingBottom);
+            RegisterForKeyboardNotifications();
         }
 
         //On the iOS platform, adjust the window size when the soft keyboard pops up
@@ -23,12 +31,13 @@ namespace SwashbucklerDiary.Maui
             NSValue result = (NSValue)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.FrameEndUserInfoKey));
             CGSize keyboardSize = result.RectangleFValue.Size;
 
-            this.Padding = new Thickness(0, 0, 0, keyboardSize.Height);
+            paddingBottom = this.Padding.Bottom;
+            this.Padding = new Thickness(Padding.Left, Padding.Top, Padding.Right, keyboardSize.Height);
         }
 
         void OnKeyboardHide(object sender, UIKeyboardEventArgs args)
         {
-            this.Padding = new Thickness(0);
+            this.Padding = new Thickness(Padding.Left, Padding.Top, Padding.Right, paddingBottom);
         }
 
         void RegisterForKeyboardNotifications()
