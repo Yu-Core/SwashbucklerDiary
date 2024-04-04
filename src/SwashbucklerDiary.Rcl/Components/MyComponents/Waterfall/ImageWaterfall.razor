@@ -3,13 +3,13 @@
 
 <div>
     <wc-waterfall @ref="elementReference" gap="@Gap" cols="@Cols">
-        @foreach (var src in srcs)
+        @foreach (var item in LoadedItems)
         {
-            <img @key="src" class="image-card rounded-lg" src="@src" />
+            <img @key="item.ResourceUri" class="image-card rounded-lg" src="@item.ResourceUri" />
         }
     </wc-waterfall>
 
-    @if (srcs.Count > 0)
+    @if (LoadedItems.Count > 0)
     {
         <MInfiniteScroll Style="width:100%;"
                          OnLoad="@OnLoad"

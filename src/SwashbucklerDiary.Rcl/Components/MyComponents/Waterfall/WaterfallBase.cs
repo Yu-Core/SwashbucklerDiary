@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected List<ResourceModel> previousValue = [];
 
-        protected List<string?> srcs = [];
+        protected List<ResourceModel> LoadedItems = [];
 
         [Inject]
         protected IJSRuntime JS { get; set; } = default!;
@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected int Cols => MasaBlazor.Breakpoint.Xs ? 2 : 3;
 
-        protected bool ShowLoadMore => srcs.Count != 0 && srcs.Count < Value.Count;
+        protected bool ShowLoadMore => LoadedItems.Count != 0 && LoadedItems.Count < Value.Count;
 
         protected override void OnInitialized()
         {
@@ -56,10 +56,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (previousValue != Value)
             {
-                int previousValueCount = previousValue.Count;
                 previousValue = Value;
-                srcs = [];
-                srcs = MockRequest(previousValueCount);
+                int loadedCount = LoadedItems.Count;
+                LoadedItems = [];
+                LoadedItems = MockRequest(loadedCount);
             }
         }
 
@@ -82,17 +82,17 @@ namespace SwashbucklerDiary.Rcl.Components
 
             var append = MockRequest();
 
-            srcs.AddRange(append);
+            LoadedItems.AddRange(append);
         }
 
-        protected virtual List<string?> MockRequest(int requestCount = 0)
+        protected virtual List<ResourceModel> MockRequest(int requestCount = 0)
         {
             if (requestCount < loadCount)
             {
                 requestCount = loadCount;
             }
 
-            return Value.Skip(srcs.Count).Take(requestCount).Select(it => it.ResourceUri).ToList();
+            return Value.Skip(LoadedItems.Count).Take(requestCount).ToList();
         }
 
         protected async void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)

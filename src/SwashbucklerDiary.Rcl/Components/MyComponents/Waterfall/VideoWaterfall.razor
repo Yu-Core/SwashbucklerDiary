@@ -4,13 +4,13 @@
 
 <div>
     <wc-waterfall @ref="elementReference" class="video-waterfall" gap="@Gap" cols="@Cols">
-        @foreach (var src in srcs)
+        @foreach (var item in LoadedItems)
         {
-            <video @key="src" class="rounded-lg" src="@src" />
+            <video @key="item.ResourceUri" class="rounded-lg" src="@item.ResourceUri" />
         }
     </wc-waterfall>
 
-    @if (srcs.Count > 0)
+    @if (LoadedItems.Count > 0)
     {
         <MInfiniteScroll Style="width:100%;"
                          OnLoad="@OnLoad"

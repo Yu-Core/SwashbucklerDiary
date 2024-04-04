@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -17,14 +18,14 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        protected override List<string?> MockRequest(int requestCount = 0)
+        protected override List<ResourceModel> MockRequest(int requestCount = 0)
         {
-            if (requestCount < loadCount)
+            var items = base.MockRequest(requestCount);
+            foreach (var item in items)
             {
-                requestCount = loadCount;
+                item.ResourceUri = HandleSrc(item.ResourceUri);
             }
-
-            return Value.Skip(srcs.Count).Take(requestCount).Select(it => HandleSrc(it.ResourceUri)).ToList();
+            return items;
         }
 
         private static string? HandleSrc(string? src)
