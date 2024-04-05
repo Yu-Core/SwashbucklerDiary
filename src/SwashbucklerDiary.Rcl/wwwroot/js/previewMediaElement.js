@@ -9,9 +9,21 @@ export function previewImage(dotNetCallbackRef, callbackMethod, element) {
 export function previewVideo(element) {
     element.addEventListener('click', function (event) {
         if (event.target.tagName === 'VIDEO') {
-            if (event.target.requestFullscreen) {
-                event.target.requestFullscreen();
-            }
+            launchFullscreen(event.target);
         }
     });
+}
+
+function launchFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    } else if (element.webkitEnterFullscreen) {
+        element.webkitEnterFullscreen();
+    } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    }
 }
