@@ -74,15 +74,15 @@ jobs:
 
       # Publish MAUI Android
       - name: Publish MAUI Android
-        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c:Release -p:AndroidPackageFormat=apk -f:net${{ env.DOTNET_VERSION }}-android -r android-arm64 --sc -p:PublishTrimmed=true -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=${{secrets.ANDROIDSIGNINGKEYSTORE}} -p:AndroidSigningKeyAlias=${{secrets.ANDROIDSIGNINGKEYALIAS}} -p:AndroidSigningKeyPass=${{secrets.ANDROIDSIGNINGKEYPASS}} -p:AndroidSigningStorePass=${{secrets.ANDROIDSIGNINGSTOREPASS}} --no-restore
+        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c:Release -p:AndroidPackageFormat=apk -f:net${{ env.DOTNET_VERSION }}-android -r android-arm64 --sc -p:PublishTrimmed=true -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=${{secrets.ANDROIDSIGNINGKEYSTORE}} -p:AndroidSigningKeyAlias=${{secrets.ANDROIDSIGNINGKEYALIAS}} -p:AndroidSigningKeyPass=${{secrets.ANDROIDSIGNINGKEYPASS}} -p:AndroidSigningStorePass=${{secrets.ANDROIDSIGNINGSTOREPASS}} --no-restore --output Releases
 
       - name: Rename apk
-        run: ren ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-arm64/publish/*Signed.apk ${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk
+        run: ren Releases/*Signed.apk ${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk
 
       # Update to Github Releases
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: '${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-arm64/publish/${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk'
+          artifacts: 'publish/${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk'
           token: ${{ github.token }}
           name: ${{ env.APPLICATION_DISPLAY_VERSION }}
           tag: 'v${{ env.APPLICATION_DISPLAY_VERSION }}'
@@ -96,7 +96,7 @@ jobs:
 
       # Publish MAUI Windows
       - name: Publish MAUI Windows
-        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64
+        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64 --output Releases
 
       # Update to Microsoft Store
       - name: Setup Microsoft Store Developer CLI
@@ -106,4 +106,4 @@ jobs:
         run: msstore reconfigure --tenantId ${{ secrets.PARTNER_CENTER_TENANT_ID }} --sellerId ${{ secrets.PARTNER_CENTER_SELLER_ID }} --clientId ${{ secrets.PARTNER_CENTER_CLIENT_ID }} --clientSecret ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
 
       - name: Update to Microsoft Store
-        run: msstore publish ${{env.CSPROJ_PATH}} -i ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/AppPackages -id ${{env.STORE_ID}}
+        run: msstore publish ${{env.CSPROJ_PATH}} -i Releases -id ${{env.STORE_ID}}
