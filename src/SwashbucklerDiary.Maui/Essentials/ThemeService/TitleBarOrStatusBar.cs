@@ -41,6 +41,10 @@ namespace SwashbucklerDiary.Maui.Essentials
             StatusBarStyle statusBarStyle = dark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
             StatusBar.SetStyle(statusBarStyle);
 #endif
+
+#if IOS
+            MainPage.SetIOSGapColor(backgroundColor);
+#endif
         }
     }
 }
