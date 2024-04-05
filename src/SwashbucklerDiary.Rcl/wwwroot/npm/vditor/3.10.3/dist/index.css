@@ -1,5 +1,5 @@
 /*!
- * Vditor v3.10.1 - A markdown editor written in TypeScript.
+ * Vditor v3.10.3 - A markdown editor written in TypeScript.
  *
  * MIT License
  *
@@ -864,6 +864,9 @@
 }
 .vditor-reset li + li {
   margin-top: 0.25em;
+}
+.vditor-reset li p {
+  margin-top: 16px;
 }
 .vditor-reset audio {
   max-width: 100%;
