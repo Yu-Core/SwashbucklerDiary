@@ -1,0 +1,15 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+
+<MTabs Value="Value"
+       ValueChanged="ValueChanged"
+       ActiveClass="text-h6 font-weight-bold"
+       HideSlider>
+    @foreach (var item in Items)
+    {
+        <MTab @key="item"
+              Class="my-tab"
+              Ripple="false">
+            @(I18n.T(item))
+        </MTab>
+    }
+</MTabs>

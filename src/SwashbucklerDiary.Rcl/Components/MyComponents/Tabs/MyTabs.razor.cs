@@ -4,7 +4,7 @@ using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class MultiTabList
+    public partial class MyTabs
     {
         [Inject]
         private II18nService I18n { get; set; } = default!;
@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public EventCallback<StringNumber?> ValueChanged { get; set; }
-        
+
         [Parameter]
         public List<string> Items { get; set; } = [];
     }

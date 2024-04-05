@@ -468,27 +468,6 @@ html {
     }
 }
 
-.my-tabs-chip.m-chip-group .m-slide-group__content {
-    padding: 0;
-}
-
-.my-tab-chip {
-    height: 38px !important;
-    background-color: transparent !important;
-    margin: 2px !important;
-}
-
-    .my-tab-chip .m-chip__content {
-        min-width: 64px;
-        justify-content: center;
-        transition: margin-left ease .2s, margin-right ease .2s;
-    }
-
-    .my-tab-chip.m-chip--active .m-chip__content {
-        margin-left: 12px;
-        margin-right: 12px;
-    }
-
 .m-chip.m-chip--outlined {
     padding: 0 16px;
 }
