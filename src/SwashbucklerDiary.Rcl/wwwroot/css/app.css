@@ -536,3 +536,7 @@ html {
 wc-waterfall > * {
     transition: all .2s;
 }
+
+html.m-overlay-scroll-blocked {
+    position: initial;
+}
