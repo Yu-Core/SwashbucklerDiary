@@ -258,13 +258,6 @@
     "Introduction": "An open source, cross-platform local diary app",
     "Filing number": "APP Filing number: "
   },
-  "FilePath": {
-    "UserAgreement": "docs/user-agreement/en-US.md",
-    "PrivacyPolicy": "docs/privacy-policy/en-US.md",
-    "Functional Description": "docs/functional-description/en-US.md",
-    "Diary Meaning": "docs/diary-meaning/en-US.md",
-    "Markdown Syntax": "docs/markdown-syntax/en-US.md"
-  },
   "FunctionalDescription": "Functional Description",
   "ErrorHandle": {
     "Title": "Error",

@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Rcl.Services;
+﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Text.Json;
 
@@ -18,8 +19,9 @@ namespace SwashbucklerDiary.Maui.Services
             Rcl.Essentials.IVersionTracking versionTracking,
             IDiaryFileManager diaryFileManager,
             IAccessExternal accessExternal,
-            IAlertService alertService) :
-            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager)
+            IAlertService alertService,
+            IStaticWebAssets staticWebAssets) :
+            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager, staticWebAssets)
         {
             _accessExternal = accessExternal;
             _alertService = alertService;
@@ -28,7 +30,6 @@ namespace SwashbucklerDiary.Maui.Services
         public override async Task HandleVersionUpdate()
         {
             await HandleVersionUpdate("0.64.7", HandleVersionUpdate647);
-            await HandleVersionUpdate("0.69.7", HandleVersionUpdate697);
             await base.HandleVersionUpdate();
         }
 

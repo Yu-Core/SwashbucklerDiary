@@ -4,7 +4,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class UserAgreementPage : ImportantComponentBase
     {
-        private string? content { get; set; }
+        private string? content;
 
         protected override async Task OnInitializedAsync()
         {
@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LoadingData()
         {
-            var uri = I18n.T("FilePath.UserAgreement")!;
+            var uri = $"docs/user-agreement/{I18n.Culture}.md";
             content = await StaticWebAssets.ReadContentAsync(uri);
         }
     }

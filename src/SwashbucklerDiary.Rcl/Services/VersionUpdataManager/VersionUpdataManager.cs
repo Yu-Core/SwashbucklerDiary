@@ -1,4 +1,5 @@
 ﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Shared;
 using System.Net.Http.Json;
 
 namespace SwashbucklerDiary.Rcl.Services
@@ -29,6 +30,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IDiaryFileManager _diaryFileManager;
 
+        protected readonly IStaticWebAssets _staticWebAssets;
+
         private class Release
         {
             public string? Tag_Name { get; set; }
@@ -40,7 +43,8 @@ namespace SwashbucklerDiary.Rcl.Services
             IMediaResourceManager mediaResourceManager,
             II18nService i18n,
             IVersionTracking versionTracking,
-            IDiaryFileManager diaryFileManager)
+            IDiaryFileManager diaryFileManager,
+            IStaticWebAssets staticWebAssets)
         {
             _diaryService = diaryService;
             _resourceService = resourceService;
@@ -50,6 +54,7 @@ namespace SwashbucklerDiary.Rcl.Services
             _i18n = i18n;
             _versionTracking = versionTracking;
             _diaryFileManager = diaryFileManager;
+            _staticWebAssets = staticWebAssets;
         }
 
         public async Task NotifyAfterFirstEnter()
@@ -64,6 +69,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public virtual async Task HandleVersionUpdate()
         {
+            await HandleVersionUpdate("0.69.7", HandleVersionUpdate697);
+            await HandleVersionUpdate("0.80.9", HandleVersionUpdate809);
             if (AfterVersionUpdate is not null && updateCount > 0)
             {
                 await AfterVersionUpdate.Invoke();
@@ -72,7 +79,6 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task<bool> CheckForUpdates()
         {
-            using HttpClient httpClient = new();
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)");
             var release = await httpClient.GetFromJsonAsync<Release>(_i18n.T("VersionUpdate.LatestVersionUrl"));
             if (release is null || release.Tag_Name is null)
@@ -103,6 +109,8 @@ namespace SwashbucklerDiary.Rcl.Services
             var previousVersion = new Version(strPreviousVersion);
             var targetVersion = new Version(version);
             int result = previousVersion.CompareTo(targetVersion);
+
+            // The previous run version is greater than the target version
             if (result > 0)
             {
                 return;
@@ -128,6 +136,17 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             await AfterCheckFirstLaunch.Invoke();
+        }
+
+        private async Task HandleVersionUpdate809()
+        {
+            var uri = $"docs/vditor-tutorial/{_i18n.Culture}.md";
+            var content = await _staticWebAssets.ReadContentAsync(uri);
+            var diary = new DiaryModel()
+            {
+                Content = content,
+            };
+            await _diaryService.AddAsync(diary);
         }
     }
 }

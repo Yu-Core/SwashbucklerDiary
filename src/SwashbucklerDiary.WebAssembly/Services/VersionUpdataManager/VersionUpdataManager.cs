@@ -14,16 +14,11 @@ namespace SwashbucklerDiary.WebAssembly.Services
             II18nService i18n,
             IVersionTracking versionTracking,
             IDiaryFileManager diaryFileManager,
-            IPlatformIntegration platformIntegration) :
-            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager)
+            IPlatformIntegration platformIntegration,
+            IStaticWebAssets staticWebAssets) :
+            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager, staticWebAssets)
         {
             _platformIntegration = platformIntegration;
-        }
-
-        public override async Task HandleVersionUpdate()
-        {
-            await HandleVersionUpdate("0.69.7", HandleVersionUpdate697);
-            await base.HandleVersionUpdate();
         }
 
         public override async Task ToUpdate()

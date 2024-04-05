@@ -22,6 +22,7 @@ namespace SwashbucklerDiary.Maui.Layout
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
+
             await VersionUpdataManager.HandleVersionUpdate();
             await InitSettingsAsync();
         }

@@ -99,17 +99,18 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         private async Task InsertDefaultDiaries()
         {
-            string[] defaultdiaries = ["FilePath.Functional Description", "FilePath.Diary Meaning", "FilePath.Markdown Syntax"];
-            var diaries = await GetDefaultDiaries(defaultdiaries);
+            string[] initWriteDocPaths = await StaticWebAssets.ReadJsonAsync<string[]>("json/Init-write-doc/doc-path.json");
+            var diaries = await GetDefaultDiaries(initWriteDocPaths);
             await DiaryService.AddAsync(diaries);
         }
 
-        private async Task<List<DiaryModel>> GetDefaultDiaries(string[] keys)
+        private async Task<List<DiaryModel>> GetDefaultDiaries(string[] paths)
         {
             var diaries = new List<DiaryModel>();
-            foreach (string key in keys)
+            foreach (string path in paths)
             {
-                var content = await StaticWebAssets.ReadContentAsync(I18n.T(key)!);
+                var uri = $"{path}{I18n.Culture}.md";
+                var content = await StaticWebAssets.ReadContentAsync(uri);
                 var diary = new DiaryModel()
                 {
                     Content = content,

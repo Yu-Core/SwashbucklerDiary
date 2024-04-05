@@ -258,13 +258,6 @@
     "Introduction": "一款开源、跨平台的本地日记APP",
     "Filing number": "APP备案号："
   },
-  "FilePath": {
-    "UserAgreement": "docs/user-agreement/zh-CN.md",
-    "PrivacyPolicy": "docs/privacy-policy/zh-CN.md",
-    "Functional Description": "docs/functional-description/zh-CN.md",
-    "Diary Meaning": "docs/diary-meaning/zh-CN.md",
-    "Markdown Syntax": "docs/markdown-syntax/zh-CN.md"
-  },
   "FunctionalDescription": "功能说明",
   "ErrorHandle": {
     "Title": "错误",
