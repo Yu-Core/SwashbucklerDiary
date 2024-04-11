@@ -1,20 +1,13 @@
-﻿using System.Text;
-
-namespace SwashbucklerDiary.Rcl.Essentials
+﻿namespace SwashbucklerDiary.Rcl.Essentials
 {
     public static class EmailHelper
     {
         public static string CreateMailToUri(string? subject, string? body, List<string>? recipients)
         {
-            StringBuilder emailAddress = new();
-            if (recipients != null)
+            string emailAddress = string.Empty;
+            if (recipients is not null)
             {
-                foreach (string mail in recipients)
-                {
-                    emailAddress.Append(mail);
-                    emailAddress.Append(';');
-                }
-                emailAddress.Length--;
+                emailAddress = string.Join(";", recipients);
             }
 
             return $"mailto:{emailAddress}?subject={subject}&body={body}";
