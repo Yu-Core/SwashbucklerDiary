@@ -92,10 +92,11 @@
         @if (ShowTitle)
         {
             <MTextField Value="@(diary.Title)"
+                        TValue="string"
                         Class="pb-0 my-sm-4 user-select font-weight-bold"
                         Solo="true"
                         Flat="true"
-                        TValue="string"
+                        BackgroundColor="transparent"
                         HideDetails="@("auto")"
                         Dense="true"
                         Readonly="true"
@@ -117,6 +118,7 @@
                            Class="user-select"
                            Solo="true"
                            Flat="true"
+                           BackgroundColor="transparent"
                            HideDetails="@("auto")"
                            Readonly="true"
                            AutoGrow="true"

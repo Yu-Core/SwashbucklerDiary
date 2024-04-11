@@ -144,10 +144,6 @@
     background-color: inherit
 }
 
-.m-text-field .m-input__slot {
-    background-color: inherit !important;
-}
-
 .p-mobile-date-picker__content {
     border-radius: 8px 8px 0 0 !important;
 }
