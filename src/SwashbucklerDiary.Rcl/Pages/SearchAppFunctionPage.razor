@@ -16,9 +16,9 @@
 </MyAppBar>
 
 <ScrollContainer>
-    @if (AppFunctions.Any())
+    @if (appFunctions.Any())
     {
-        @foreach (var item in AppFunctions)
+        @foreach (var item in appFunctions)
         {
             <MCard @key="item"
                    Class="mb-5"
@@ -46,6 +46,6 @@
         }
     }
 
-    <EmptyResult Show="!AppFunctions.Any()"></EmptyResult>
+    <EmptyResult Show="!appFunctions.Any()"></EmptyResult>
 
 </ScrollContainer>

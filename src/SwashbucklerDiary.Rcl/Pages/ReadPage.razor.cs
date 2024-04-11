@@ -61,9 +61,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             enableMarkdown = SettingService.Get<bool>(Setting.Markdown);
             enablePrivacy = SettingService.Get<bool>(Setting.PrivacyMode);

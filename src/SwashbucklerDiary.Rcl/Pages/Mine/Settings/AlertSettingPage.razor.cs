@@ -21,9 +21,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             InitTimeoutItems();
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             _timeout = SettingService.Get<int>(Setting.AlertTimeout);
             achievementsAlert = SettingService.Get<bool>(Setting.AchievementsAlert);

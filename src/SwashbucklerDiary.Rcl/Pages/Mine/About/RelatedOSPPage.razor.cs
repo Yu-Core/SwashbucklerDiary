@@ -5,7 +5,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class RelatedOSPPage : ImportantComponentBase
     {
-        private List<OpenSourceProject> oSPs = [];
+        private List<OpenSourceProject> openSourceProjects = [];
 
         protected override async Task OnInitializedAsync()
         {
@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task ReadJson()
         {
-            oSPs = await StaticWebAssets.ReadJsonAsync<List<OpenSourceProject>>("json/open-source-project/open-source-project.json");
+            openSourceProjects = await StaticWebAssets.ReadJsonAsync<List<OpenSourceProject>>("json/open-source-project/open-source-project.json");
         }
     }
 }

@@ -40,9 +40,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnDispose();
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             showWelcomeText = SettingService.Get<bool>(Setting.WelcomeText);
             showDate = SettingService.Get<bool>(Setting.IndexDate);

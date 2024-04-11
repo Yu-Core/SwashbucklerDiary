@@ -62,9 +62,9 @@ namespace SwashbucklerDiary.Rcl.Components
             MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             showStatisticsCard = SettingService.Get<bool>(Setting.StatisticsCard);
         }

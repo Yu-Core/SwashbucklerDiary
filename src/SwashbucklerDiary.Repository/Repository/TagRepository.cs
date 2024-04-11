@@ -25,26 +25,6 @@ namespace SwashbucklerDiary.Repository
                 .ToListAsync();
         }
 
-        public override Task<bool> InsertAsync(TagModel model)
-        {
-            return base.InsertAsync(model);
-        }
-
-        public override Task<int> InsertReturnIdentityAsync(TagModel model)
-        {
-            return base.InsertReturnIdentityAsync(model);
-        }
-
-        public override Task<TagModel> InsertReturnEntityAsync(TagModel model)
-        {
-            return base.InsertReturnEntityAsync(model);
-        }
-
-        public override Task<bool> UpdateAsync(TagModel model)
-        {
-            return base.UpdateAsync(model);
-        }
-
         public override Task<bool> DeleteAsync(TagModel tag)
         {
             return base.Context.DeleteNav(tag)

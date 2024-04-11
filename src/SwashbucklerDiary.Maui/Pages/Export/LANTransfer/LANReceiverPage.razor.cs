@@ -66,9 +66,9 @@ namespace SwashbucklerDiary.Maui.Pages
             LANReceiverService.ReceiveProgressChanged -= ReceiveProgressChanged;
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             multicastPort = SettingService.Get<int>(Setting.LANScanPort);
             tcpPort = SettingService.Get<int>(Setting.LANTransmissionPort);
@@ -140,7 +140,7 @@ namespace SwashbucklerDiary.Maui.Pages
                     await AlertService.Error(I18n.T("lanReceiver.Receive canceled"));
                 }
 
-                if (IsCurrentPage)
+                if (IsThisPage)
                 {
                     await NavigateToBack();
                 }

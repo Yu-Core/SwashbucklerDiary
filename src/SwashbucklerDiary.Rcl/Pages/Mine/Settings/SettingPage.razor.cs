@@ -31,9 +31,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             UpdateCacheSize();
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             UpdatePrivatePassword();
             privacy = SettingService.Get<bool>(Setting.PrivacyMode);

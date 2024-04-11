@@ -32,9 +32,9 @@ namespace SwashbucklerDiary.Rcl.Components
             LoadView();
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             var tagSort = SettingService.Get<string>(Setting.TagSort);
             if (!string.IsNullOrEmpty(tagSort))

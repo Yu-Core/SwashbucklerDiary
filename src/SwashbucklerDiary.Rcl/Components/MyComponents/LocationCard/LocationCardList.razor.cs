@@ -20,9 +20,9 @@ namespace SwashbucklerDiary.Rcl.Components
             LoadView();
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             var locationSort = SettingService.Get<string>(Setting.LocationSort);
             if (!string.IsNullOrEmpty(locationSort))

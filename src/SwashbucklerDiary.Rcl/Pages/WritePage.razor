@@ -2,7 +2,7 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-@if (enableMarkdown && IsCurrentPage)
+@if (enableMarkdown && IsThisPage)
 {
     <link href="@cssHref" rel="stylesheet" />
 }
@@ -147,14 +147,14 @@
 
 <SelectTagsDialog @bind-Visible="showSelectTag"
                   @bind-Value="SelectedTags"
-                  @bind-Items="Tags"
+                  @bind-Items="tags"
                   OnSave="SaveSelectTags">
 </SelectTagsDialog>
 
 <SelectDialog @bind-Visible="showWeather"
               @bind-Value="@SelectedWeather"
               Title="@(I18n.T("Write.SelectWeather"))"
-              Items="WeatherIcons"
+              Items="weatherIcons"
               ItemValue="it=>it.Key"
               ItemText="@(item=>I18n.T("Weather." + item.Key))"
               ItemIcon="it=>it.Value">
@@ -163,7 +163,7 @@
 <SelectDialog @bind-Visible="showMood"
               @bind-Value="@SelectedMood"
               Title="@(I18n.T("Write.SelectMood"))"
-              Items="MoodIcons"
+              Items="moodIcons"
               ItemValue="it=>it.Key"
               ItemText="@(item=>I18n.T("Mood." + item.Key))"
               ItemIcon="it=>it.Value">

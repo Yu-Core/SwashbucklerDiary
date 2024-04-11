@@ -93,9 +93,9 @@ namespace SwashbucklerDiary.Maui.Pages
             LANSenderService.SendAborted -= SendAborted;
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             multicastPort = SettingService.Get<int>(Setting.LANScanPort);
             tcpPort = SettingService.Get<int>(Setting.LANTransmissionPort);
@@ -198,7 +198,7 @@ namespace SwashbucklerDiary.Maui.Pages
                     await AlertService.Error(I18n.T("lanSender.Send canceled"));
                 }
 
-                if (IsCurrentPage)
+                if (IsThisPage)
                 {
                     await NavigateToBack();
                 }

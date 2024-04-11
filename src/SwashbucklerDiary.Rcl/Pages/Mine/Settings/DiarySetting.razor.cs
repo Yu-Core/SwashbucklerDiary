@@ -23,9 +23,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             InitEditAutoSaveItems();
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             title = SettingService.Get<bool>(Setting.Title);
             markdown = SettingService.Get<bool>(Setting.Markdown);

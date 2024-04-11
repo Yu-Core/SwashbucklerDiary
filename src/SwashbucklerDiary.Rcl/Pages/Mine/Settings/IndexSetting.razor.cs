@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool date;
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
             welcomText = SettingService.Get<bool>(Setting.WelcomeText);
             date = SettingService.Get<bool>(Setting.IndexDate);

@@ -107,7 +107,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void HandleIntersectChanged(bool value)
         {
-            if (IsCurrentPage)
+            if (IsThisPage)
             {
                 normalCalendarVisible = value;
             }

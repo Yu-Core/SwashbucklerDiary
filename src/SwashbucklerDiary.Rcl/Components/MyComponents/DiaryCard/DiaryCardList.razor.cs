@@ -48,9 +48,9 @@ namespace SwashbucklerDiary.Rcl.Components
             return base.Sort(value).OrderByDescending(it => it.Top);
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             ShowPrivacy = SettingService.Get<bool>(Setting.PrivacyMode);
             ShowIcon = SettingService.Get<bool>(Setting.DiaryCardIcon);

@@ -104,9 +104,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnDispose();
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             language = SettingService.Get<string>(Setting.Language);
             userName = SettingService.Get<string?>(Setting.UserName, null);

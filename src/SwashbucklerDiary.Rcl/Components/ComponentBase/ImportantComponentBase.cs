@@ -31,7 +31,7 @@ namespace SwashbucklerDiary.Rcl.Components
             GC.SuppressFinalize(this);
         }
 
-        protected bool IsCurrentPage => thisPageUrl is null || thisPageUrl.EqualsAbsolutePath(Navigation.Uri);
+        protected bool IsThisPage => thisPageUrl is null || thisPageUrl.EqualsAbsolutePath(Navigation.Uri);
 
         protected bool Light => !Dark;
 
@@ -40,7 +40,7 @@ namespace SwashbucklerDiary.Rcl.Components
             base.OnInitialized();
 
             InitializedUrl();
-            UpdateSettings();
+            ReadSettings();
             Navigation.LocationChanged += NavigationManagerOnLocationChanged;
         }
 
@@ -59,13 +59,13 @@ namespace SwashbucklerDiary.Rcl.Components
             Navigation.LocationChanged -= NavigationManagerOnLocationChanged;
         }
 
-        protected virtual void UpdateSettings()
+        protected virtual void ReadSettings()
         {
         }
 
         protected virtual async Task OnResume()
         {
-            UpdateSettings();
+            ReadSettings();
             await InvokeAsync(StateHasChanged);
         }
 

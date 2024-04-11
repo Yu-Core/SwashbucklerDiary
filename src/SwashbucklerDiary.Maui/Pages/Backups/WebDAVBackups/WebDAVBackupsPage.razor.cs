@@ -34,7 +34,7 @@ namespace SwashbucklerDiary.Maui.Pages
         [Inject]
         private IDiaryFileManager DiaryFileManager { get; set; } = default!;
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
             var configJson = SettingService.Get<string>(Setting.WebDavConfig);
             if (!string.IsNullOrEmpty(configJson))

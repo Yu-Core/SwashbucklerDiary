@@ -11,21 +11,21 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showDiaryCardDateFormat;
 
-        private readonly static Dictionary<string, string> DiaryCardDateFormats = new()
+        private readonly static Dictionary<string, string> diaryCardDateFormats = new()
         {
             {"DateTimeFormat.MM/dd","MM/dd" },
             {"DateTimeFormat.yyyy/MM/dd","yyyy/MM/dd" },
         };
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             diaryCardIcon = SettingService.Get<bool>(Setting.DiaryCardIcon);
             diaryCardDateFormat = SettingService.Get<string>(Setting.DiaryCardDateFormat);
         }
 
-        private string DiaryCardDateFormatKey => DiaryCardDateFormats.FirstOrDefault(x => x.Value == diaryCardDateFormat).Key;
+        private string DiaryCardDateFormatKey => diaryCardDateFormats.FirstOrDefault(x => x.Value == diaryCardDateFormat).Key;
 
         private async Task DiaryCardDateFormatChanged(string value)
         {

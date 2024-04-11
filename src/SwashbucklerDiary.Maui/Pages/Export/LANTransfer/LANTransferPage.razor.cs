@@ -22,9 +22,9 @@ namespace SwashbucklerDiary.Maui.Pages
             LoadView();
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             configModel.DeviceName = SettingService.Get<string>(Setting.LANDeviceName);
             defaultDeviceName = LANHelper.GetLocalDeviceName();
@@ -65,7 +65,7 @@ namespace SwashbucklerDiary.Maui.Pages
             await SettingService.Remove(Setting.LANDeviceName);
             await SettingService.Remove(Setting.LANScanPort);
             await SettingService.Remove(Setting.LANTransmissionPort);
-            UpdateSettings();
+            ReadSettings();
         }
     }
 }

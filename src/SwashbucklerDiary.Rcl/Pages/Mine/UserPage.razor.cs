@@ -32,9 +32,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             LoadView();
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             userName = SettingService.Get<string>(Setting.UserName, default!);
             sign = SettingService.Get<string>(Setting.Sign, default!);

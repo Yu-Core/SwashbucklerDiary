@@ -49,11 +49,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             Resources = []
         };
 
-        private List<TagModel> Tags = [];
+        private List<TagModel> tags = [];
 
-        private Dictionary<string, string> WeatherIcons = [];
+        private Dictionary<string, string> weatherIcons = [];
 
-        private Dictionary<string, string> MoodIcons = [];
+        private Dictionary<string, string> moodIcons = [];
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
@@ -119,9 +119,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnDispose();
         }
 
-        protected override void UpdateSettings()
+        protected override void ReadSettings()
         {
-            base.UpdateSettings();
+            base.ReadSettings();
 
             enableTitle = SettingService.Get<bool>(Setting.Title);
             enableMarkdown = SettingService.Get<bool>(Setting.Markdown);
@@ -182,11 +182,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task InitTags()
         {
-            Tags = await TagService.QueryAsync();
+            tags = await TagService.QueryAsync();
 
             if (DiaryId is null && TagId is not null)
             {
-                var tag = Tags.Find(it => it.Id == TagId);
+                var tag = tags.Find(it => it.Id == TagId);
                 if (tag is not null)
                 {
                     SelectedTags.Add(tag);
@@ -229,8 +229,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, TitleSwitchText, "mdi-format-title", ()=> SettingChange(Setting.Title, ref enableTitle)),
                 new(this, MarkdownSwitchText, MarkdownSwitchIcon, ()=> SettingChange(Setting.Markdown, ref enableMarkdown)),
             ];
-            WeatherIcons = IconService.GetWeatherIcons();
-            MoodIcons = IconService.GetMoodIcons();
+            weatherIcons = IconService.GetWeatherIcons();
+            moodIcons = IconService.GetMoodIcons();
         }
 
         private void RemoveSelectedTag(TagModel tag)
@@ -400,7 +400,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task BeforePop(PopEventArgs e)
         {
-            if (!IsCurrentPage)
+            if (!IsThisPage)
             {
                 return;
             }
