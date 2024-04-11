@@ -17,10 +17,9 @@
             </MButton>
         </MCardTitle>
 
-        <MCardText @ref="mCardText"
-                   Class="scroll-show pb-0"
+        <MCardText Class="scroll-show pb-0"
                    Style="max-height:300px;">
-            @foreach (var item in Locations)
+            @foreach (var item in locations)
             {
                 <MListItem @key="item.Id"
                            Class="px-0"

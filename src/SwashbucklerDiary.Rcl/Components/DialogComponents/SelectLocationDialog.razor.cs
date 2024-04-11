@@ -1,5 +1,4 @@
-﻿using BlazorComponent.JSInterop;
-using Masa.Blazor;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Services;
@@ -11,11 +10,9 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         private bool showAdd;
 
-        private List<LocationModel> _locations = [];
-
-        private MCardText mCardText = default!;
-
         private string? internalLocation;
+
+        private List<LocationModel> locations = [];
 
         [Inject]
         ILocationService LocationService { get; set; } = default!;
@@ -29,46 +26,41 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public EventCallback<string> ValueChanged { get; set; }
 
-        protected override async Task AfterShowContent(bool isLazyContent)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await base.AfterShowContent(isLazyContent);
-            await ScrollToTop();
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                locations = await LocationService.QueryAsync();
+                StateHasChanged();
+            }
         }
 
         protected override async Task BeforeShowContent()
         {
             await base.BeforeShowContent();
-            await SetLocations();
-        }
 
-        private List<LocationModel> Locations
-        {
-            get => _locations.OrderByDescending(it => it.Name == internalLocation).ToList();
-            set => _locations = value;
-        }
-
-        private async Task SetLocations()
-        {
-            Locations = await LocationService.QueryAsync();
             internalLocation = Value;
         }
 
-        private async Task SetSelectedLocation(LocationModel location)
+        private void SetSelectedLocation(LocationModel location)
         {
             var name = internalLocation == location.Name ? string.Empty : location.Name;
             internalLocation = name;
-            await ScrollToTop();
         }
 
         private async Task SaveAdd(string name)
         {
             showAdd = false;
+            StateHasChanged();
+
             if (string.IsNullOrWhiteSpace(name))
             {
                 return;
             }
 
-            if (Locations.Any(it => it.Name == name))
+            if (this.locations.Any(it => it.Name == name))
             {
                 await AlertService.Warning(I18n.T("Location.Repeat.Title"), I18n.T("Location.Repeat.Content"));
                 return;
@@ -83,12 +75,9 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             await AlertService.Success(I18n.T("Share.AddSuccess"));
-            var locations = Locations;
-            locations.Add(location);
-            Locations = locations;
+            locations.Insert(0, location);
             internalLocation = location.Name;
-            await InvokeAsync(StateHasChanged);
-            await ScrollToTop();
+            StateHasChanged();
         }
 
         private async Task HandleOnOK()
@@ -98,14 +87,6 @@ namespace SwashbucklerDiary.Rcl.Components
             if (ValueChanged.HasDelegate)
             {
                 await ValueChanged.InvokeAsync(internalLocation);
-            }
-        }
-
-        private async Task ScrollToTop()
-        {
-            if (mCardText?.Ref != null)
-            {
-                await JS.ScrollTo(mCardText.Ref, 0);
             }
         }
     }
