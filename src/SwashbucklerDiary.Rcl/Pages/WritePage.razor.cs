@@ -56,9 +56,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         private Dictionary<string, string> MoodIcons = [];
 
         [Inject]
-        private MasaBlazor MasaBlazor { get; set; } = default!;
-
-        [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
 
         [Inject]
@@ -93,7 +90,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadView();
-            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
             NavigateService.BeforePop += BeforePop;
             NavigateService.BeforePopToRoot += BeforePop;
             AppLifecycle.Stopped += LeaveAppSaveDiary;
@@ -116,7 +112,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override void OnDispose()
         {
-            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
             NavigateService.BeforePop -= BeforePop;
             NavigateService.BeforePopToRoot -= BeforePop;
             AppLifecycle.Stopped -= LeaveAppSaveDiary;
@@ -162,10 +157,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             get => DateOnly.FromDateTime(diary.CreateTime);
             set => diary.CreateTime = value.ToDateTime();
         }
-
-        private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
-
-        private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
 
         private string WeatherIcon => GetWeatherIcon(diary.Weather);
 

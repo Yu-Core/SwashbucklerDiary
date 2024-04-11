@@ -2,9 +2,14 @@
     --vditor-toolbar-height: 70px;
 }
 
+.vditor {
+    border: none;
+}
+
 .vditor-toolbar {
     background: var(--m-theme-surface) !important;
     padding-left: 0px !important;
+    border: none;
 }
 
     .vditor-toolbar .vditor-toolbar__item {
@@ -38,6 +43,10 @@
     }
 
 @media screen and (min-width:600px) {
+    .vditor-toolbar {
+        margin-left: -10px;
+    }
+
     .vditor-reset video {
         max-height: 55vh;
     }
@@ -52,10 +61,6 @@
 }
 
 @media screen and (max-width:600px) {
-    .vditor {
-        border: none;
-    }
-
     .vditor-toolbar {
         max-height: var(--vditor-toolbar-height);
         display: flex;

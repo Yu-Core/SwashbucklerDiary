@@ -1,12 +1,11 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
 
-<MTextarea @ref="MTextarea"
+<MTextarea @ref="mTextarea"
            Value="@Value"
            ValueChanged="ValueChanged"
            Class="@($"{Class} user-select flex-grow-1 flex-column")"
-           Solo="Mobile"
-           Flat="Mobile"
-           Outlined="Desktop"
+           Solo="true"
+           Flat="true"
            HideDetails="@("auto")"
            NoResize="true"
            spellcheck="false"

@@ -5,9 +5,6 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class MyAppBar
     {
-        [Inject]
-        private NavigationManager NavigationManager { get; set; } = default!;
-
         [Parameter]
         public string? Title { get; set; }
 

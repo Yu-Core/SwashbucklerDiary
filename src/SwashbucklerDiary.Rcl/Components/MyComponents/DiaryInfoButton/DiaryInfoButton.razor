@@ -1,0 +1,15 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+
+<MButton Class="@($"text--secondary{(ReadOnly ? " m-btn--readonly":"")}")"
+         Style="letter-spacing:unset;text-transform:none;"
+         Rounded
+         Text
+         Small
+         Ripple="false"
+         OnClick="@OnClick">
+    <MIcon Class="mr-1"
+           Small>
+        @Icon
+    </MIcon>
+    <span class="text-caption">@Text</span>
+</MButton>

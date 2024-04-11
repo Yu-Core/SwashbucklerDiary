@@ -4,12 +4,9 @@ using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class TextareaEdit : IDisposable
+    public partial class TextareaEdit
     {
-        private MTextarea MTextarea = default!;
-
-        [Inject]
-        private MasaBlazor MasaBlazor { get; set; } = default!;
+        private MTextarea mTextarea = default!;
 
         [Inject]
         private II18nService I18n { get; set; } = default!;
@@ -29,35 +26,13 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public string? Class { get; set; }
 
-        public void Dispose()
-        {
-            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
-            GC.SuppressFinalize(this);
-        }
-
         public async Task InsertValueAsync(string value)
         {
-            Value = await Module.InsertText(MTextarea.InputElement, value);
+            Value = await Module.InsertText(mTextarea.InputElement, value);
             if (ValueChanged.HasDelegate)
             {
                 await ValueChanged.InvokeAsync(Value);
             }
-        }
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
-        }
-
-        private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
-
-        private bool Mobile => !MasaBlazor.Breakpoint.SmAndUp;
-
-        private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
-        {
-            StateHasChanged();
         }
     }
 }

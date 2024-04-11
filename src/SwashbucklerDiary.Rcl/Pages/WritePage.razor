@@ -53,60 +53,49 @@
 <ScrollContainer ContentClass="d-flex flex-column"
                  ContentStyle="height:100%;padding-top:0px;">
     <div>
-        <div class="px-3 mb-sm-1 d-flex align-end">
+        <div class="d-flex align-center px-3">
             <button class="d-flex align-center text-h6 font-weight-bold" @onclick="()=>showCreateTime=true">
                 @(diary.CreateTime.ToString("d"))
+                <MIcon Size="20"
+                       Right>
+                    mdi-pencil-outline
+                </MIcon>
             </button>
 
-            <span class="pl-5 text-subtitle-1">
+            <span class="ml-5 text-subtitle-2">
                 @(I18n.ToWeek(diary.CreateTime))
             </span>
+
             <MSpacer></MSpacer>
-            <span class="text-subtitle-1">
+
+            <span class="text-subtitle-2">
                 @(CounterValue())
             </span>
         </div>
         <div>
-            <MButton Style="letter-spacing:unset;"
-                     Text
-                     Rounded
-                     Ripple="false"
-                     OnClick="()=>showWeather=true">
-                <MIcon Left Size="20">
-                    @(WeatherIcon)
-                </MIcon>
-                @WeatherText
-            </MButton>
-            <MButton Style="letter-spacing:unset;"
-                     Text
-                     Rounded
-                     Ripple="false"
-                     OnClick="()=>showMood=true">
-                <MIcon Left Size="20">
-                    @(MoodIcon)
-                </MIcon>
-                @MoodText
-            </MButton>
-            <MButton Style="letter-spacing:unset;"
-                     Text
-                     Rounded
-                     Ripple="false"
-                     OnClick="()=>showLocation=true">
-                <MIcon Left Size="20">
-                    mdi-map-marker-outline
-                </MIcon>
-                @LocationText
-            </MButton>
-        </div>
+            <DiaryInfoButton Icon="@WeatherIcon"
+                             Text="@WeatherText"
+                             OnClick="()=>showWeather=true">
+            </DiaryInfoButton>
+            
+            <DiaryInfoButton Icon="@MoodIcon"
+                             Text="@MoodText"
+                             OnClick="()=>showMood=true">
+            </DiaryInfoButton>
 
+            <DiaryInfoButton Icon="mdi-map-marker-outline"
+                             Text="@LocationText"
+                             OnClick="()=>showLocation=true">
+            </DiaryInfoButton>
+        </div>
     </div>
+
     @if (enableTitle)
     {
         <MTextField @bind-Value="diary.Title"
-                    Class="pb-0 my-sm-4 user-select font-weight-bold flex-grow-0"
-                    Solo="Mobile"
-                    Flat="Mobile"
-                    Outlined="Desktop"
+                    Class="pb-0 mb-sm-4 user-select font-weight-bold flex-grow-0 rounded-lg"
+                    Solo="true"
+                    Flat="true"
                     TValue="string"
                     HideDetails="@("auto")"
                     Dense="true"
@@ -116,7 +105,7 @@
         </MTextField>
     }
 
-    <div class="write-input-wrap my-sm-3">
+    <div class="write-input-wrap mb-sm-3">
         @if (enableMarkdown)
         {
             <MarkdownEdit @ref="markdownEdit"

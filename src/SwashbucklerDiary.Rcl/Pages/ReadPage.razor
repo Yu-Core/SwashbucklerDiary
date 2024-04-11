@@ -47,17 +47,20 @@
     </MultiMenu>
 </MyAppBar>
 
-<ScrollContainer>
+<ScrollContainer ContentStyle="padding-top:0px;">
     <div id="screenshot" class="primary-background">
-        <div class="px-3 mb-sm-1 d-flex align-end">
+        <div class="d-flex align-center px-3">
             <span class="text-h6 font-weight-bold">
                 @(diary.CreateTime.ToString("d"))
             </span>
-            <span class="pl-5 text-subtitle-1">
+
+            <span class="ml-5 text-subtitle-2">
                 @(I18n.ToWeek(diary.CreateTime))
             </span>
+
             <MSpacer></MSpacer>
-            <span class="text-subtitle-1">
+
+            <span class="text-subtitle-2">
                 @(CounterValue())
             </span>
         </div>
@@ -65,47 +68,23 @@
         <div>
             @if (ShowWeather)
             {
-                <MButton Class="m-btn--readonly"
-                         Style="letter-spacing:unset;"
-                         Text
-                         Rounded
-                         Disabled
-                         Ripple="false">
-                    <MIcon Left Size="20">
-                        @(WeatherIcon)
-                    </MIcon>
-                    @WeatherText
-                </MButton>
+                <DiaryInfoButton Icon="@WeatherIcon"
+                                 Text="@WeatherText">
+                </DiaryInfoButton>
             }
 
             @if (ShowMood)
             {
-                <MButton Class="m-btn--readonly"
-                         Style="letter-spacing:unset;"
-                         Text
-                         Rounded
-                         Disabled
-                         Ripple="false">
-                    <MIcon Left Size="20">
-                        @(MoodIcon)
-                    </MIcon>
-                    @MoodText
-                </MButton>
+                <DiaryInfoButton Icon="@MoodIcon"
+                                 Text="@MoodText">
+                </DiaryInfoButton>
             }
 
             @if (ShowLocation)
             {
-                <MButton Class="m-btn--readonly"
-                         Style="letter-spacing:unset;"
-                         Text
-                         Rounded
-                         Disabled
-                         Ripple="false">
-                    <MIcon Left Size="20">
-                        mdi-map-marker-outline
-                    </MIcon>
-                    @LocationText
-                </MButton>
+                <DiaryInfoButton Icon="mdi-map-marker-outline"
+                                 Text="@LocationText">
+                </DiaryInfoButton>
             }
 
         </div>
