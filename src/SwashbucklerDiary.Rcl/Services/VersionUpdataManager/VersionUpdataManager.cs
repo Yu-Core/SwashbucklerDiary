@@ -22,8 +22,6 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IMediaResourceManager _mediaResourceManager;
 
-        protected HttpClient httpClient;
-
         protected readonly II18nService _i18n;
 
         protected readonly IVersionTracking _versionTracking;
@@ -31,6 +29,8 @@ namespace SwashbucklerDiary.Rcl.Services
         protected readonly IDiaryFileManager _diaryFileManager;
 
         protected readonly IStaticWebAssets _staticWebAssets;
+
+        private Lazy<HttpClient> _httpClient;
 
         private class Release
         {
@@ -50,11 +50,11 @@ namespace SwashbucklerDiary.Rcl.Services
             _resourceService = resourceService;
             _settingService = settingService;
             _mediaResourceManager = mediaResourceManager;
-            httpClient = new HttpClient();
             _i18n = i18n;
             _versionTracking = versionTracking;
             _diaryFileManager = diaryFileManager;
             _staticWebAssets = staticWebAssets;
+            _httpClient = new(CreateHttpClient);
         }
 
         public async Task NotifyAfterFirstEnter()
@@ -79,11 +79,10 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task<bool> CheckForUpdates()
         {
-            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)");
-            var release = await httpClient.GetFromJsonAsync<Release>(_i18n.T("VersionUpdate.LatestVersionUrl"));
+            var release = await HttpClient.GetFromJsonAsync<Release>(_i18n.T("VersionUpdate.LatestVersionUrl"));
             if (release is null || release.Tag_Name is null)
             {
-                throw new Exception();
+                throw new Exception("Tag format error");
             }
 
             var latestVersion = new Version(release.Tag_Name.TrimStart('v'));
@@ -97,6 +96,8 @@ namespace SwashbucklerDiary.Rcl.Services
         }
 
         public abstract Task ToUpdate();
+
+        protected HttpClient HttpClient => _httpClient.Value;
 
         protected async Task HandleVersionUpdate(string version, Func<Task> func)
         {
@@ -147,6 +148,13 @@ namespace SwashbucklerDiary.Rcl.Services
                 Content = content,
             };
             await _diaryService.AddAsync(diary);
+        }
+
+        private HttpClient CreateHttpClient()
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)");
+            return httpClient;
         }
     }
 }

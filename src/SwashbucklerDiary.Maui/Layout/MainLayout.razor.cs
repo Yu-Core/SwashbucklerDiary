@@ -58,6 +58,15 @@ namespace SwashbucklerDiary.Maui.Layout
                 return;
             }
 
+            string key = "LastAutoCheckForUpdatesTime";
+            DateTime dateTime = await SettingService.Get(key, DateTime.MinValue);
+            if (dateTime != DateTime.MinValue && (DateTime.Now - dateTime).TotalHours < 2)
+            {
+                return;
+            }
+
+            await SettingService.Set(key, DateTime.Now);
+
             try
             {
                 bool hasNewVersion = await VersionUpdataManager.CheckForUpdates();
@@ -71,8 +80,7 @@ namespace SwashbucklerDiary.Maui.Layout
             {
                 Logger.LogError(e, "VersionUpdate check failed");
             }
-
-    }
+        }
 #endif
     }
 }
