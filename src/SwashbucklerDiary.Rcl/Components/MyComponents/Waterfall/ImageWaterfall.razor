@@ -13,7 +13,7 @@
     {
         <MInfiniteScroll Style="width:100%;"
                          OnLoad="@OnLoad"
-                         Parent="ScrollElement"
+                         Parent="@($"#{ScrollElementId}")"
                          EmptyText="@(string.Empty)"
                          LoadingText="@(string.Empty)">
             <LoadMoreContent Context="load">

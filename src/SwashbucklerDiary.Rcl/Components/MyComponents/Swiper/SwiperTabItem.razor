@@ -1,8 +1,8 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
 
-<div @ref="Ref" id="@Id" class="swiper-slide">
-    <CascadingValue Value="Ref"
-                    Name="ScrollElement"
+<div id="@Id" class="swiper-slide">
+    <CascadingValue Value="@Id"
+                    Name="ScrollElementId"
                     IsFixed="true">
         @if (activated)
         {

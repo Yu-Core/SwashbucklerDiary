@@ -12,6 +12,11 @@ function changeLanguage(lang) {
     document.documentElement.lang = lang;
 }
 
-function elementScrollTop(el) {
-    return el.scrollTop;
+function elementScrollTop(selector) {
+    let el = document.querySelector(selector);
+    if (el) {
+        return el.scrollTop;
+    } else {
+        return 0;
+    }
 }

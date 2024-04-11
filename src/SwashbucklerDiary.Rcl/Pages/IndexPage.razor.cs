@@ -127,7 +127,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (swiperTabItems.ActiveItem is null) return;
 
-            await JS.ScrollTo(swiperTabItems.ActiveItem.Ref, 0);
+            await JS.ScrollTo($"#{swiperTabItems.ActiveItem.Id}", 0);
         }
     }
 }

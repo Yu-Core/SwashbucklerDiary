@@ -1,14 +1,13 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
 
-<div @ref="Ref"
-     id="@Id"
+<div id="@Id"
      class="my-scroll-container @(Class)"
      style="@(Style)">
     <MContainer Class="@("my-container "+ ContentClass)"
                 Style="@ContentStyle"
                 Fluid="true">
-        <CascadingValue Value="Ref"
-                        Name="ScrollElement"
+        <CascadingValue Value="@Id"
+                        Name="ScrollElementId"
                         IsFixed="true">
             @ChildContent
         </CascadingValue>

@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public RenderFragment? ChildContent { get; set; }
 
         [Parameter]
-        public string? Id { get; set; }
+        public string Id { get; set; } = $"scrollElement{Guid.NewGuid()}";
 
         [Parameter]
         public string? Class { get; set; }
@@ -21,7 +21,5 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public string? ContentStyle { get; set; }
-
-        public ElementReference Ref { get; set; }
     }
 }

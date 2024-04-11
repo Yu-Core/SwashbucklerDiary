@@ -197,6 +197,10 @@
     padding-bottom: 12px;
 }
 
+.p-page-container {
+    height: 100%;
+}
+
 .p-page-container__item {
     height: 100%;
     display: flex;

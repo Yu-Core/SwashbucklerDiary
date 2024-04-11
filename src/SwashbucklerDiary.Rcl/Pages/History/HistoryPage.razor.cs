@@ -80,7 +80,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 //直接滚动显得很生硬，所以延时0.2s
                 await Task.Delay(200);
-                await JS.ScrollTo(scrollContainer.Ref, 0);
+                await JS.ScrollTo($"#{scrollContainer.Id}", 0);
             });
         }
 
@@ -117,7 +117,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (thisPageUrl == args.PreviousUri && thisPageUrl == args.NextUri)
             {
-                await JS.ScrollTo(scrollContainer.Ref, 0);
+                await JS.ScrollTo($"#{scrollContainer.Id}", 0);
             }
         }
 

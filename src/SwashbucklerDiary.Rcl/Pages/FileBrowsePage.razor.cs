@@ -71,7 +71,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await Task.Delay(300);
             for (int i = 0; i < swiperTabItems.ChildTabItems.Count; i++)
             {
-                await JS.ScrollTo(swiperTabItems.ChildTabItems[i].Ref, scrollTops[i]);
+                await JS.ScrollTo($"#{swiperTabItems.ChildTabItems[i].Id}", scrollTops[i]);
             }
         }
 
@@ -100,7 +100,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 if (swiperTabItems.ActiveItem is not null)
                 {
-                    await JS.ScrollTo(swiperTabItems.ActiveItem.Ref, 0);
+                    await JS.ScrollTo($"#{swiperTabItems.ActiveItem.Id}", 0);
                 }
 
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
@@ -121,7 +121,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (swiperTabItems.ActiveItem is null) return;
 
-            await JS.ScrollTo(swiperTabItems.ActiveItem.Ref, 0);
+            await JS.ScrollTo($"#{swiperTabItems.ActiveItem.Id}", 0);
         }
 
         private async Task BeforePush(PushEventArgs args)
@@ -136,7 +136,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 List<double> list = [];
                 foreach (var swiperTabItem in swiperTabItems.ChildTabItems)
                 {
-                    double scrollTop = await JS.InvokeAsync<double>("elementScrollTop", swiperTabItem.Ref);
+                    double scrollTop = await JS.InvokeAsync<double>("elementScrollTop", $"#{swiperTabItem.Id}");
                     list.Add(scrollTop);
                 }
                 scrollTops = list;

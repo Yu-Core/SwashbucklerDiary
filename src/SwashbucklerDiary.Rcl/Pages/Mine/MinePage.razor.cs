@@ -247,7 +247,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (thisPageUrl == args.PreviousUri && thisPageUrl == args.NextUri)
             {
-                await JS.ScrollTo(scrollContainer.Ref, 0);
+                await JS.ScrollTo($"#{scrollContainer.Id}", 0);
             }
         }
     }

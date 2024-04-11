@@ -13,12 +13,10 @@ namespace SwashbucklerDiary.Rcl.Components
         public SwiperTabItems? TabItems { get; set; }
 
         [Parameter]
-        public string? Id { get; set; }
+        public string Id { get; set; } = $"scrollElement{Guid.NewGuid()}";
 
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
-
-        public ElementReference Ref { get; set; }
 
         public StringNumber? Value { get; set; }
 

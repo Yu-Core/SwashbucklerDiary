@@ -25,8 +25,8 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected MasaBlazor MasaBlazor { get; set; } = default!;
 
-        [CascadingParameter(Name = "ScrollElement")]
-        public ElementReference ScrollElement { get; set; }
+        [CascadingParameter(Name = "ScrollElementId")]
+        public string? ScrollElementId { get; set; }
 
         [Parameter]
         public List<ResourceModel> Value { get; set; } = [];
