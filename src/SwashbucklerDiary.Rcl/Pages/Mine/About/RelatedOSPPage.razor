@@ -7,31 +7,33 @@
 </MyAppBar>
 
 <ScrollContainer>
-    @foreach (var item in oSPs)
-    {
-        <MCard @key="item"
-               Class="mb-5"
-               Elevation="0"
-               Rounded="@("lg")"
-               OnClick="()=>OpenBrowser(item.Url)">
-            <MList TwoLine="true">
-                <MListItem>
-                    <MListItemContent>
-                        <MListItemTitle Class="font-weight-bold">
-                            @(item.Name)
-                        </MListItemTitle>
-                        <MListItemSubtitle>
-                            @(item.License)
-                        </MListItemSubtitle>
-                        <MListItemSubtitle>
-                            @(item.Url)
-                        </MListItemSubtitle>
-                    </MListItemContent>
-                    <MListItemAction>
-                        <MIcon>mdi-chevron-right</MIcon>
-                    </MListItemAction>
-                </MListItem>
-            </MList>
-        </MCard>
-    }
+    <div class="adaptive-card-container">
+        @foreach (var item in oSPs)
+        {
+            <MCard @key="item"
+                   Class="py-sm-3"
+                   Elevation="0"
+                   Rounded="@("lg")"
+                   OnClick="()=>OpenBrowser(item.Url)">
+                <MList TwoLine="true">
+                    <MListItem>
+                        <MListItemContent>
+                            <MListItemTitle Class="font-weight-bold">
+                                @(item.Name)
+                            </MListItemTitle>
+                            <MListItemSubtitle>
+                                @(item.License)
+                            </MListItemSubtitle>
+                            <MListItemSubtitle>
+                                @(item.Url)
+                            </MListItemSubtitle>
+                        </MListItemContent>
+                        <MListItemAction>
+                            <MIcon>mdi-chevron-right</MIcon>
+                        </MListItemAction>
+                    </MListItem>
+                </MList>
+            </MCard>
+        }
+    </div>
 </ScrollContainer>

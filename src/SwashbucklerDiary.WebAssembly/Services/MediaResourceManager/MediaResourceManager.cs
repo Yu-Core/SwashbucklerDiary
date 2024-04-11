@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -27,7 +26,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
             base(platformIntegration, appFileManager, alertService, i18nService, logger)
         {
             _jSRuntime = jSRuntime;
-             _navigationManager = navigationManager;
+            _navigationManager = navigationManager;
         }
 
         protected override Task<string?> CreateMediaResourceFileAsync(MediaResource mediaResource, string? sourceFilePath)
@@ -66,7 +65,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         public override async Task<bool> ShareImageAsync(string title, string url)
         {
-            if (IsStoredFile(url,out string filePath))
+            if (IsStoredFile(url, out string filePath))
             {
                 await _platformIntegration.ShareFileAsync(title, filePath);
                 return true;
@@ -92,10 +91,45 @@ namespace SwashbucklerDiary.WebAssembly.Services
             }
         }
 
-        bool IsStoredFile (string url, out string filePath)
+        bool IsStoredFile(string url, out string filePath)
         {
             filePath = url.Replace(_navigationManager.BaseUri, "");
             return filePath.StartsWith(FileSystem.AppDataDirectory + "/");
+        }
+
+        public override async Task<AudioFileInfo> GetAudioFileInfo(string uri)
+        {
+            string? filePath = uri;
+            if (!File.Exists(filePath))
+            {
+                return new();
+            }
+
+            var audioFile = TagLib.File.Create(filePath);
+            string pictureUri = string.Empty;
+            if (audioFile.Tag.Pictures.Length > 0)
+            {
+                string fileName = Path.GetFileName(filePath);
+                string extension = audioFile.Tag.Pictures[0].MimeType.Split('/')[1];
+                string pictureFileName = $"{fileName}.{extension}";
+                string pictureFilePath = FileSystem.CacheDirectory + Path.DirectorySeparatorChar + pictureFileName;
+                if (!File.Exists(pictureFilePath))
+                {
+                    await _appFileManager.CreateTempFileAsync(pictureFileName, audioFile.Tag.Pictures[0].Data.Data);
+                    await _jSRuntime.InvokeVoidAsync("MEMFileSystem.syncfs");
+                }
+
+                pictureUri = pictureFilePath;
+            }
+
+            return new()
+            {
+                Title = audioFile.Tag.Title,
+                Artists = audioFile.Tag.Performers,
+                Album = audioFile.Tag.Album,
+                Duration = audioFile.Properties.Duration,
+                PictureUri = pictureUri
+            };
         }
     }
 }

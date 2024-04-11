@@ -1,7 +1,6 @@
 // Caution! Be sure you understand the caveats before publishing an application with
 // offline support. See https://aka.ms/blazor-offline-considerations
 importScripts('./sw-IndexedDB.js');
-const indexedDBUrlPrefix = getIndexedDBUrlPrefix();
 
 self.importScripts('./service-worker-assets.js');
 self.addEventListener('install', event => event.waitUntil(onInstall(event)));
@@ -46,7 +45,7 @@ async function onActivate(event) {
 
 async function onFetch(event) {
     const requestUrl = event.request.url;
-    if (event.request.method == "GET" && requestUrl.startsWith(indexedDBUrlPrefix)) {
+    if (event.request.method == "GET" && intercept(requestUrl)) {
         const url = decodeURI(requestUrl);
         const filePath = getIndexedDBFilePath(url);
         return handleIndexedDBFileRequest(event.request, filePath);
@@ -68,15 +67,25 @@ async function onFetch(event) {
     return cachedResponse || fetch(event.request);
 }
 
-function getIndexedDBUrlPrefix() {
-    const pathname = self.location.pathname;
-    const directory = pathname.substring(0, pathname.lastIndexOf('/') + 1);
-    const newPathname = (directory + dbName).replace('//', '/');
-    return self.location.origin + newPathname + '/';
+function intercept(requestUrl) {
+    if (!requestUrl.startsWith(self.location.origin)) {
+        return false;
+    }
+
+    const href = self.location.href;
+    const directory = href.substring(0, href.lastIndexOf('/') + 1);
+    for (var i = 0; i < dbNames.length; i++) {
+        const prefix = (directory + dbNames[i]).replace('//', '/') + '/';
+        if (requestUrl.startsWith(prefix)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function getIndexedDBFilePath(urlString) {
     const url = new URL(urlString);
-    const urlPath = url.origin + url.pathname;
-    return dbName + '/' + urlPath.replace(indexedDBUrlPrefix, '');
+    const urlPath = url.origin + url.pathname; //Exclude hash and search
+    const href = self.location.href;
+    return urlPath.substring(href.lastIndexOf('/'), urlPath.length);
 }

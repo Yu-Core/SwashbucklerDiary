@@ -711,7 +711,9 @@
     },
     "Audio": {
       "Name": "音频",
-      "NoAudio": "暂无音频"
+      "NoAudio": "暂无音频",
+      "Unknown Title": "未知标题",
+      "Unknown Artist": "未知艺术家"
     },
     "Video": {
       "Name": "视频",

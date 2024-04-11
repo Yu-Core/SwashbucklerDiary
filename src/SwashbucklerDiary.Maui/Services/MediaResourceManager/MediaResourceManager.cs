@@ -148,5 +148,39 @@ namespace SwashbucklerDiary.Maui.Services
             var fileName = Path.GetFileName(url);
             return await _appFileManager.CreateTempFileAsync(fileName, stream);
         }
+
+        public override async Task<AudioFileInfo> GetAudioFileInfo(string uri)
+        {
+            string? filePath = MauiBlazorWebViewHandler.UrlRelativePathToFilePath(uri);
+            if (!File.Exists(filePath))
+            {
+                return new();
+            }
+
+            var audioFile = TagLib.File.Create(filePath);
+            string pictureUri = string.Empty;
+            if (audioFile.Tag.Pictures.Length > 0)
+            {
+                string fileName = Path.GetFileName(filePath);
+                string extension = audioFile.Tag.Pictures[0].MimeType.Split('/')[1];
+                string pictureFileName = $"{fileName}.{extension}";
+                string pictureFilePath = FileSystem.Current.CacheDirectory + Path.DirectorySeparatorChar + pictureFileName;
+                if (!File.Exists(pictureFilePath))
+                {
+                    await _appFileManager.CreateTempFileAsync(pictureFileName, audioFile.Tag.Pictures[0].Data.Data);
+                }
+
+                pictureUri = MauiBlazorWebViewHandler.FilePathToUrlRelativePath(pictureFilePath);
+            }
+
+            return new()
+            {
+                Title = audioFile.Tag.Title,
+                Artists = audioFile.Tag.Performers,
+                Album = audioFile.Tag.Album,
+                Duration = audioFile.Properties.Duration,
+                PictureUri = pictureUri
+            };
+        }
     }
 }

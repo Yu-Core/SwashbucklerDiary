@@ -8,6 +8,7 @@
             Module.FS.mkdir('/cache');
             //Mount IDBFS (indexDB) to MEMFS (memory)
             Module.FS.mount(Module.FS.filesystems.IDBFS, {}, '/appdata');
+            Module.FS.mount(Module.FS.filesystems.IDBFS, {}, '/cache');
             //Synchronize the content of IDBFS to MEMFS
             Module.FS.syncfs(true, function (err) {
                 // handle callback

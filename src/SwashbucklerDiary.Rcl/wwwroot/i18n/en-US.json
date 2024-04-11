@@ -711,7 +711,9 @@
     },
     "Audio": {
       "Name": "Audio",
-      "NoAudio": "No audio"
+      "NoAudio": "No audio",
+      "Unknown Title": "Unknown Title",
+      "Unknown Artist": "Unknown Artist"
     },
     "Video": {
       "Name": "Video",

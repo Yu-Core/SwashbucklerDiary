@@ -1,15 +1,14 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
-@inherits MediaWaterfallBase
-
+@inherits MediaResourceListComponentBase
 
 <div>
-    <wc-waterfall @ref="elementReference" class="video-waterfall" gap="@Gap" cols="@Cols">
+    <div class="adaptive-card-container">
         @foreach (var item in LoadedItems)
         {
-            <video @key="item.ResourceUri" class="rounded-lg" src="@item.ResourceUri" />
+            <AudioCard Value="item"></AudioCard>
         }
-    </wc-waterfall>
-
+    </div>
+    
     @if (LoadedItems.Count > 0)
     {
         <MInfiniteScroll Style="width:100%;"
@@ -31,5 +30,5 @@
 </div>
 
 <EmptyResult Show="Value.Count == 0"
-             Text="@(I18n.T("FileBrowse.Video.NoVideo"))">
+             Text="@(I18n.T("FileBrowse.Audio.NoAudio"))">
 </EmptyResult>

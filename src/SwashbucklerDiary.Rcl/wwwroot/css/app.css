@@ -310,7 +310,7 @@ html {
     padding-top: 10vh !important;
 }
 
-.my-tag-card {
+.tag-card, .location-card {
     width: 100%;
 }
 
@@ -539,4 +539,29 @@ wc-waterfall > * {
 
 html.m-overlay-scroll-blocked {
     position: initial;
+}
+
+.adaptive-card {
+    /*width: 100%;*/
+}
+
+.adaptive-card-container {
+    display: grid;
+    grid-gap: 20px;
+}
+
+.adaptive-card-container {
+    grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 960px) {
+    .adaptive-card-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (min-width: 1264px) {
+    .adaptive-card-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }

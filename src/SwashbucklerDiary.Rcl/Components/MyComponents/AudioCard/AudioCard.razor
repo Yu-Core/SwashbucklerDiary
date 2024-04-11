@@ -1,0 +1,54 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@using SwashbucklerDiary.Rcl.Events
+@using System.Globalization
+@inherits MyComponentBase
+
+<MCard Elevation="0"
+       Ripple="false"
+       Rounded="@("lg")">
+    <MList Class="rounded-lg">
+        <MListItem>
+            <MListItemAvatar Size="75" Tile Rounded="@("lg")">
+                <img class="rounded-lg" src="@AlbumCoverSrc" />
+                <MButton Style="position:absolute;"
+                         Icon="true"
+                         OnClick="PlayOrPause">
+                    <MIcon Color="white">
+                        @(isPlaying ? "mdi-pause" : "mdi-play")
+                    </MIcon>
+                </MButton>
+            </MListItemAvatar>
+
+            <MListItemContent>
+                <MListItemTitle Class="font-weight-bold mb-2">@Title</MListItemTitle>
+
+                <MListItemSubtitle Class="text-subtitle-2">@Artists</MListItemSubtitle>
+
+                <audio @ref="audioElementRef"
+                       src="@Value.ResourceUri"
+                       @oncustomdurationchange="@HandleOnDurationChange"
+                       @oncustomtimeupdate="@HandleOnTimeUpdate"
+                       @oncustomplaybackratechange="@HandleOnPlaybackRateChange"
+                       @onplay="@HandleOnPlay"
+                       @onpause="@HandleOnPause" />
+
+                <div class="player-duration-bar">
+                    <span class="text--secondary">@(TimeSpan.FromSeconds(CurrentTime).ToDurationString())</span>
+
+                    <input type="range"
+                           class="swiper-no-swiping"
+                           min="0"
+                           max="@(duration.ToString("0.00", CultureInfo.InvariantCulture))"
+                           step="1"
+                           value="@(CurrentTime.ToString("0.00", CultureInfo.InvariantCulture) ?? "0")"
+                           @oninput="OnInputCurrentTime"
+                           @onchange="OnChangeCurrentTime"
+                           style="--current-width: @(((CurrentTime / duration) * 100).ToString(" 0.00", CultureInfo.InvariantCulture))%;
+                           --current-color: @(Dark ? "#F5F5F5" : "#212121");--current-track-color: #9E9E9E" />
+
+                    <span class="text--secondary">@(TimeSpan.FromSeconds(duration).ToDurationString())</span>
+                </div>
+            </MListItemContent>
+        </MListItem>
+    </MList>
+</MCard>

@@ -1,0 +1,87 @@
+﻿.player-duration-bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 8px;
+    align-items: center;
+}
+
+input[type=range] {
+    --current-width: 0;
+    --height: 4px;
+    appearance: none;
+    border-radius: 2px;
+    height: 22px;
+    width: 100%;
+    background: transparent;
+    outline: none;
+    position: relative;
+}
+
+input[type="range"]:before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: var(--current-width);
+    height: var(--height);
+    background-color: var(--current-color);
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: var(--height);
+    cursor: pointer;
+    animation: 0.2s;
+    box-shadow: 0 0 0 black;
+    background: var(--current-track-color);
+    border-radius: 2px;
+    border: 0 solid black;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    position: relative;
+    box-shadow: 0 0 0 black;
+    border: 0 solid black;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: var(--current-color);
+    cursor: pointer;
+    -webkit-appearance: none;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+input[type="range"]:hover {
+    cursor: pointer;
+}
+
+input[type=range]::-moz-range-track {
+    width: 100%;
+    height: var(--height);
+    cursor: pointer;
+    animation: 0.2s;
+    box-shadow: 0 0 0 black;
+    background: var(--current-track-color);
+    border-radius: 2px;
+    border: 0 solid black;
+}
+
+input[type=range]::-moz-range-thumb {
+    box-shadow: 0 0 0 black;
+    border: 0 solid black;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: var(--current-color);
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-progress {
+    background-color: var(--current-color);
+    border-radius: 2px;
+    height: var(--height);
+}

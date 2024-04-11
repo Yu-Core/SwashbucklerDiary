@@ -1,9 +1,17 @@
-﻿const dbName = "/appdata";
+﻿const dbNames = ["/appdata", "/cache"];
 const storeName = "FILE_DATA";
 
 function getFileFromIndexedDB(key) {
     return new Promise((resolve, reject) => {
         // 打开 IndexedDB，获取文件
+
+        let dbName;
+        for (var i = 0; i < dbNames.length; i++) {
+            if (key.startsWith(dbNames[i] + '/')) {
+                dbName = dbNames[i];
+                break;
+            }
+        }
         const request = indexedDB.open(dbName, 21);
         request.onerror = () => {
             reject('Database failed to open');

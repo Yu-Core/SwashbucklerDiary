@@ -3,7 +3,7 @@ using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class ImageWaterfall : WaterfallBase
+    public partial class ImageWaterfall : MediaWaterfallBase
     {
         private bool showPreviewImage;
 

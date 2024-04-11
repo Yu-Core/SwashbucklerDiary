@@ -98,6 +98,10 @@ namespace SwashbucklerDiary.Rcl.Services
             };
         }
 
+        public abstract Task<AudioFileInfo> GetAudioFileInfo(string uri);
+
         protected virtual string? CustomPathPrefix { get; }
+
+
     }
 }

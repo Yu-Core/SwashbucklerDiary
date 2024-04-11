@@ -5,7 +5,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class VideoWaterfall : WaterfallBase
+    public partial class VideoWaterfall : MediaWaterfallBase
     {
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
