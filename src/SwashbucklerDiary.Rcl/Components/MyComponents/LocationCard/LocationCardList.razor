@@ -54,3 +54,8 @@
              Title="@(I18n.T("Share.Sort"))"
              Items="SortItems">
 </RadioDialog>
+
+<MultiMenu @ref="multiMenu"
+           @bind-Visible="ShowMenu"
+           DynamicListItems="menuItems">
+</MultiMenu>
