@@ -1,7 +1,6 @@
 ﻿@page "/searchAppFunction"
 @inherits ImportantComponentBase
 
-
 <MyAppBar>
     <MButton Icon
              OnClick="NavigateToBack">
@@ -16,36 +15,34 @@
 </MyAppBar>
 
 <ScrollContainer>
-    @if (appFunctions.Any())
-    {
-        @foreach (var item in appFunctions)
-        {
-            <MCard @key="item"
-                   Class="mb-5"
-                   Elevation="0"
-                   Rounded="@("lg")"
-                   OnClick="()=>To(item.Href!)">
-                <MList>
-                    <MListItem>
-                        <MListItemAvatar>
-                            <MIcon Class="list-item-icon">
-                                @item.Icon
-                            </MIcon>
-                        </MListItemAvatar>
-                        <MListItemContent>
-                            <MListItemTitle>
-                                @(I18n.T(item.Name))
-                            </MListItemTitle>
-                            <MListItemSubtitle>
-                                @(I18n.T(item.Path))
-                            </MListItemSubtitle>
-                        </MListItemContent>
-                    </MListItem>
-                </MList>
-            </MCard>
-        }
-    }
+    <Virtualize Items="_appFunctions"
+                ItemSize="@ItemHeight"
+                Context="item">
+        <MCard @key="item"
+               Class="mb-5 list-item-card"
+               Elevation="0"
+               Rounded="@("lg")"
+               OnClick="()=>To(item.Href!)">
+            <MList>
+                <MListItem>
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            @item.Icon
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        <MListItemTitle Class="mb-2">
+                            @(I18n.T(item.Name))
+                        </MListItemTitle>
+                        <MListItemSubtitle>
+                            @(I18n.T(item.Path))
+                        </MListItemSubtitle>
+                    </MListItemContent>
+                </MListItem>
+            </MList>
+        </MCard>
+    </Virtualize>
 
-    <EmptyResult Show="!appFunctions.Any()"></EmptyResult>
+    <EmptyResult Show="_appFunctions.Count == 0"></EmptyResult>
 
 </ScrollContainer>

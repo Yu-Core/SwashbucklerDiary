@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
@@ -13,7 +14,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private List<AppFunction> allAppFunctions = [];
 
-        private List<AppFunction> appFunctions = [];
+        private List<AppFunction> _appFunctions = [];
+
+        [Inject]
+        protected MasaBlazor MasaBlazor { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -24,6 +28,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadQuery();
+            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -34,6 +39,13 @@ namespace SwashbucklerDiary.Rcl.Pages
                 await LoadAppFunctions();
                 StateHasChanged();
             }
+        }
+
+        protected override void OnDispose()
+        {
+            base.OnDispose();
+
+            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
         }
 
         protected override async Task OnResume()
@@ -50,6 +62,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         }
 
         private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(search);
+
+        private float ItemHeight => MasaBlazor.Breakpoint.Xs ? 68f : 84f;
 
         private void LoadQuery()
         {
@@ -69,7 +83,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private void UpdateAppFunctions(List<AppFunction> appFunctions)
         {
             Expression<Func<AppFunction, bool>> exp = GetExpression();
-            appFunctions = appFunctions.Where(exp.Compile()).ToList();
+            _appFunctions = appFunctions.Where(exp.Compile()).ToList();
         }
 
         private void UpdateAppFunctions()
@@ -78,15 +92,12 @@ namespace SwashbucklerDiary.Rcl.Pages
         private Expression<Func<AppFunction, bool>> GetExpression()
         {
             Expression<Func<AppFunction, bool>>? exp = null;
-            Expression<Func<AppFunction, bool>> expSearch;
-            Expression<Func<AppFunction, bool>> expPrivacy;
-
-            expSearch = it => I18n.T(it.Name ?? string.Empty).ToLower().Contains((search ?? string.Empty).ToLower())
-                || I18n.T(it.Path ?? string.Empty).ToLower().Contains((search ?? string.Empty).ToLower());
-            expPrivacy = it => !it.ConditionalDisplay || it.Privacy == privacy;
 
             if (IsSearchFiltered)
             {
+                Expression<Func<AppFunction, bool>> expSearch
+                    = it => I18n.T(it.Name ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase)
+                    || I18n.T(it.Path ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase);
                 exp = exp.And(expSearch);
             }
 
@@ -96,10 +107,16 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             else
             {
+                Expression<Func<AppFunction, bool>> expPrivacy = it => !it.ConditionalDisplay || it.Privacy == privacy;
                 exp = exp.And(expPrivacy);
             }
 
             return exp;
+        }
+
+        private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
+        {
+            InvokeAsync(StateHasChanged);
         }
     }
 }
