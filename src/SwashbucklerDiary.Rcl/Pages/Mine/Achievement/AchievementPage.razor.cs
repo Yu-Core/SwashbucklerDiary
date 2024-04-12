@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private List<AchievementModel> allAchievements = [];
 
-        private List<AchievementModel> achievements = [];
+        private List<AchievementModel> _achievements = [];
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -39,21 +39,21 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task LoadAchievements()
         {
             var achievements = await AchievementService.GetAchievements();
-            this.achievements = allAchievements = achievements.OrderByDescending(it => it.UserAchievement.IsCompleted).ToList();
+            _achievements = allAchievements = achievements.OrderByDescending(it => it.UserAchievement.IsCompleted).ToList();
         }
 
         private void UpdateAchievements()
         {
             Expression<Func<AchievementModel, bool>> exp = GetExpression();
             var achievements = allAchievements.Where(exp.Compile());
-            this.achievements = achievements.OrderByDescending(it => it.UserAchievement.IsCompleted).ToList();
+            _achievements = achievements.OrderByDescending(it => it.UserAchievement.IsCompleted).ToList();
         }
 
         private Expression<Func<AchievementModel, bool>> GetExpression()
         {
-            Expression<Func<AchievementModel, bool>> expSearch;
-            expSearch = it => I18n.T(it.Name ?? string.Empty).ToLower().Contains((search ?? string.Empty).ToLower()) ||
-                I18n.T(it.Description ?? string.Empty).ToLower().Contains((search ?? string.Empty).ToLower());
+            Expression<Func<AchievementModel, bool>> expSearch
+                = it => I18n.T(it.Name ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase)
+                || I18n.T(it.Description ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase);
 
             return expSearch;
         }

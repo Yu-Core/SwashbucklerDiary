@@ -26,7 +26,7 @@
 
 <ScrollContainer>
     <div class="adaptive-card-container">
-        @foreach (var item in achievements)
+        @foreach (var item in _achievements)
         {
             <AchievementCard @key="item"
                              Value="item">
@@ -34,5 +34,5 @@
         }
     </div>
 
-    <EmptyResult Show="!string.IsNullOrEmpty(search)"></EmptyResult>
+    <EmptyResult Show="_achievements.Count == 0"></EmptyResult>
 </ScrollContainer>
