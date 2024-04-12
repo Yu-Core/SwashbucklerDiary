@@ -38,6 +38,10 @@
         max-height: unset;
     }
 
+    .vditor-reset audio {
+        border-radius: 8px;
+    }
+
     .vditor-reset img {
         border-radius: 8px;
     }

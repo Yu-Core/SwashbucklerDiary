@@ -139,12 +139,21 @@ html {
 
 .scroll-show {
     -ms-overflow-style: initial !important;
-    scrollbar-width: initial !important;
 }
 
     .scroll-show::-webkit-scrollbar {
         display: initial !important;
     }
+
+@-moz-document url-prefix() {
+    * {
+        scrollbar-width: thin;
+    }
+
+    .scroll-show {
+        scrollbar-width: thin !important;
+    }
+}
 
 .my-tab {
     text-transform: none !important;
