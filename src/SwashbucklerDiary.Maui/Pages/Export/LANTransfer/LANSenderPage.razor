@@ -21,9 +21,10 @@
                 </MButton>
             </MSubheader>
 
-            <div class="dynamic-list-item-collection">
-                @foreach (var item in lanDeviceInfoListItems)
-                {
+            <div>
+                <Virtualize Items="lanDeviceInfoListItems"
+                            ItemSize="56"
+                            Context="item">
                     <MListItem @key="item.IPAddress"
                                OnClick="item.OnClick">
                         <MListItemIcon>
@@ -41,8 +42,11 @@
                         </MListItemContent>
                     </MListItem>
 
-                    <MDivider Class="mx-3"></MDivider>
-                }
+                    @if (item != lanDeviceInfoListItems.Last())
+                    {
+                        <MDivider Class="mx-3"></MDivider>
+                    }
+                </Virtualize>
             </div>
 
             @if (LANSenderService.IsSearching)

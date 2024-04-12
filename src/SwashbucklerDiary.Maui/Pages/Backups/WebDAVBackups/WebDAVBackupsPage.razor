@@ -146,8 +146,9 @@
         </MCardTitle>
         <MCardText Class="scroll-show pb-0 mb-5"
                    Style="max-height:300px;">
-            @foreach (var item in fileList)
-            {
+            <Virtualize Items="fileList"
+                        ItemSize="56"
+                        Context="item">
                 <MListItem @key="item"
                            Class="px-0"
                            OnClick="()=>Download(item)">
@@ -160,7 +161,7 @@
                         @item
                     </MListItemContent>
                 </MListItem>
-            }
+            </Virtualize>
         </MCardText>
     </MCard>
 </MDialogExtension>

@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            if (this.locations.Any(it => it.Name == name))
+            if (locations.Any(it => it.Name == name))
             {
                 await AlertService.Warning(I18n.T("Location.Repeat.Title"), I18n.T("Location.Repeat.Content"));
                 return;

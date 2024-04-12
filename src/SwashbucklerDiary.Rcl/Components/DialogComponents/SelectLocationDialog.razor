@@ -19,8 +19,9 @@
 
         <MCardText Class="scroll-show pb-0"
                    Style="max-height:300px;">
-            @foreach (var item in locations)
-            {
+            <Virtualize Items="locations"
+                        ItemSize="56"
+                        Context="item">
                 <MListItem @key="item.Id"
                            Class="px-0"
                            OnClick="()=>SetSelectedLocation(item)">
@@ -42,7 +43,7 @@
                         }
                     </MListItemAction>
                 </MListItem>
-            }
+            </Virtualize>
         </MCardText>
         <MCardActions>
             <MButton Text="true"
@@ -66,5 +67,6 @@
 <InputDialog @bind-Visible="showAdd"
              Title="@(I18n.T("Location.Add"))"
              Placeholder="@(I18n.T("Location.Placeholder"))"
+             MaxLength="50"
              OnOK="SaveAdd">
 </InputDialog>
