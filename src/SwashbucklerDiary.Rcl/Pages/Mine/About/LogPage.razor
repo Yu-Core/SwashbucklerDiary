@@ -13,7 +13,7 @@
     <SearchTextField @bind-Visible="showSearch"
                      @bind-Value="search"
                      Title="@(I18n.T("About.LogFile.Name"))"
-                     OnChanged="UpdateLogsAsync">
+                     OnInput="UpdateLogsAsync">
     </SearchTextField>
 
     <MButton Icon="true"

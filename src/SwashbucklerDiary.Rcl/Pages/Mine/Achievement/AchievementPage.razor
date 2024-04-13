@@ -13,7 +13,7 @@
     <SearchTextField @bind-Visible="showSearch"
                      @bind-Value="search"
                      Title="@(I18n.T("Mine.Achievement.Name"))"
-                     OnChanged="UpdateAchievements">
+                     OnInput="UpdateAchievements">
     </SearchTextField>
 
     <MButton Icon="true"

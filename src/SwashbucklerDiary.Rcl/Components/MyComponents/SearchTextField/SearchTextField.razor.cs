@@ -23,7 +23,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public EventCallback<string> ValueChanged { get; set; }
 
         [Parameter]
-        public EventCallback<string> OnChanged { get; set; }
+        public EventCallback<string> OnInput { get; set; }
 
         [Parameter]
         public string? Title { get; set; }
@@ -76,17 +76,12 @@ namespace SwashbucklerDiary.Rcl.Components
             await InternalVisibleChanged(false);
         }
 
-        private async Task InternalSearchChanged(string? value)
+        private async Task InternalValueChanged(string? value)
         {
             Value = value;
             if (ValueChanged.HasDelegate)
             {
                 await ValueChanged.InvokeAsync(Value);
-            }
-
-            if (OnChanged.HasDelegate)
-            {
-                await OnChanged.InvokeAsync(Value);
             }
         }
     }

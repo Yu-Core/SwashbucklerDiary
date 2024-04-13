@@ -13,7 +13,7 @@
     <SearchTextField @bind-Visible="showSearch"
                      @bind-Value="search"
                      Title="@(I18n.T("Setting.Safe.PrivacyLibrary.Name"))"
-                     OnChanged="UpdateDiariesAsync">
+                     OnInput="UpdateDiariesAsync">
     </SearchTextField>
 
     <MButton Icon="true"

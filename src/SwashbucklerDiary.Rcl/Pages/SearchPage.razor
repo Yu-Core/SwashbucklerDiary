@@ -9,7 +9,7 @@
 
     <SearchTextField @bind-Value="search"
                      Placeholder="@(I18n.T("Search.Please enter diary keywords"))"
-                     OnChanged="UpdateDiariesAsync">
+                     OnInput="UpdateDiariesAsync">
     </SearchTextField>
 
     <MButton Icon="true"
