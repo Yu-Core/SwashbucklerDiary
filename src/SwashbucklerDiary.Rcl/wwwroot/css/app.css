@@ -562,3 +562,7 @@ html.m-overlay-scroll-blocked {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
+
+.user-avatar {
+    object-fit: cover;
+}
