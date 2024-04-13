@@ -14,6 +14,22 @@ export function previewVditor(dotNetCallbackRef, element, text, options) {
     Vditor.preview(element, text, VditorOptions);
 }
 
+export function renderLazyLoadingImage(element) {
+    if (!("IntersectionObserver" in window)) {
+        return;
+    }
+
+    if (window.vditorImageIntersectionObserver) {
+        window.vditorImageIntersectionObserver.disconnect();
+        element.querySelectorAll("img").forEach((imgElement) => {
+            if (imgElement.getAttribute("data-src")) {
+                imgElement.src = imgElement.getAttribute("data-src");
+                imgElement.removeAttribute("data-src");
+            }
+        });
+    }
+}
+
 function handlePreviewElement(previewElement) {
     handleA(previewElement);
     handleTextarea(previewElement);

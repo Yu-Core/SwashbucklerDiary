@@ -51,6 +51,16 @@ namespace SwashbucklerDiary.Rcl.Components
             GC.SuppressFinalize(this);
         }
 
+        public async Task RenderLazyLoadingImage()
+        {
+            if (module is null)
+            {
+                return;
+            }
+
+            await module.InvokeVoidAsync("renderLazyLoadingImage", Ref);
+        }
+
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();

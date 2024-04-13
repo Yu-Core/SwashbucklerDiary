@@ -107,7 +107,8 @@
         <div class="my-sm-3">
             @if (enableMarkdown)
             {
-                <MarkdownPreview Value="@(diary.Content)"
+                <MarkdownPreview @ref="markdownPreview"
+                                 Value="@(diary.Content)"
                                  Class="px-3"
                                  Style="padding-top:10px">
                 </MarkdownPreview>

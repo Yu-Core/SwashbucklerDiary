@@ -66,6 +66,16 @@ namespace SwashbucklerDiary.Rcl.Components
             GC.SuppressFinalize(this);
         }
 
+        public async Task RenderLazyLoadingImage()
+        {
+            if (vditorMarkdownPreview is null)
+            {
+                return;
+            }
+
+            await vditorMarkdownPreview.RenderLazyLoadingImage();
+        }
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -110,7 +120,8 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "lang", lang },
                 { "theme", theme },
                 { "icon", "material" },
-                { "markdown", markdown }
+                { "markdown", markdown },
+                { "lazyLoadImage", $"_content/{StaticWebAssets.RclAssemblyName}/img/loading.gif" }
             };
         }
     }

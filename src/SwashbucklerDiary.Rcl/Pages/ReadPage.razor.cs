@@ -24,6 +24,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private DiaryModel diary = new();
 
+        private MarkdownPreview markdownPreview = default!;
+
         private List<DynamicListItem> menuItems = [];
 
         private List<DynamicListItem> shareItems = [];
@@ -184,6 +186,11 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async void ShareImage()
         {
             await AlertService.StartLoading();
+
+            if (enableMarkdown && markdownPreview is not null)
+            {
+                await markdownPreview.RenderLazyLoadingImage();
+            }
 
             var filePath = await ScreenshotService.CaptureAsync("#screenshot");
             await PlatformIntegration.ShareFileAsync(I18n.T("Share.Share"), filePath);
