@@ -8,7 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.*" />
-		<PackageReference Include="SqlSugarCoreNoDrive" Version="5.1.4.151" />
+		<PackageReference Include="SqlSugarCoreNoDrive" Version="5.1.4.152" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
 	</ItemGroup>
 

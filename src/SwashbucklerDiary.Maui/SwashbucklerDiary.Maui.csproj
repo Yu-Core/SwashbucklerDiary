@@ -21,7 +21,7 @@
 		<EnableDefaultCssItems>false</EnableDefaultCssItems>
 		<Nullable>enable</Nullable>
 		<NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
-		<MauiVersion>8.0.14</MauiVersion>
+		<MauiVersion>8.0.20</MauiVersion>
 		
 		<!-- Display name -->
 		<ApplicationTitle>侠客日记</ApplicationTitle>
