@@ -36,9 +36,12 @@ namespace SwashbucklerDiary.Maui.Services
         //此版本之后更改了资源的链接
         private async Task HandleVersionUpdate647()
         {
-            string avatar = await _settingService.Get<string>("Avatar", "");
-            avatar = avatar.Replace("appdata:///", "appdata/");
-            await _settingService.Set(Setting.Avatar, avatar);
+            string avatar = await _settingService.Get<string>("Avatar", string.Empty);
+            if (avatar != string.Empty)
+            {
+                avatar = avatar.Replace("appdata:///", "appdata/");
+                await _settingService.Set(Setting.Avatar, avatar);
+            }
 
             await _diaryFileManager.UpdateAllResourceUri();
         }
