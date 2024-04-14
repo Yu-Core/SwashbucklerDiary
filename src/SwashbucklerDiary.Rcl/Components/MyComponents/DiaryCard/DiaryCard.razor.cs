@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string? moodIcon;
 
-        private Guid previousValueId;
+        private DiaryModel? previousValue;
 
         [Inject]
         private IIconService IconService { get; set; } = default!;
@@ -47,9 +47,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void SetContent()
         {
-            if (previousValueId != Value.Id)
+            if (previousValue != Value)
             {
-                previousValueId = Value.Id;
+                previousValue = Value;
                 title = Value.ExtractTitle();
                 text = Value.ExtractText();
                 weatherIcon = string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetWeatherIcon(Value.Weather);
