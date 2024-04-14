@@ -8,7 +8,9 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         protected readonly int loadCount = 20;
 
-        protected bool firstLoad = true;
+        protected int previousLoadedCount;
+
+        protected MInfiniteScroll mInfiniteScroll = default!;
 
         protected List<ResourceModel> previousValue = [];
 
@@ -20,39 +22,40 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public List<ResourceModel> Value { get; set; } = [];
 
-        protected bool ShowLoadMore => LoadedItems.Count != 0 && LoadedItems.Count < Value.Count;
+        protected bool HasMore => LoadedItems.Count < Value.Count;
 
-        protected override void OnParametersSet()
+        protected override async Task OnParametersSetAsync()
         {
-            base.OnParametersSet();
+            await base.OnParametersSetAsync();
 
             if (previousValue != Value)
             {
                 previousValue = Value;
-                int loadedCount = LoadedItems.Count;
+                previousLoadedCount = LoadedItems.Count;
                 LoadedItems = [];
-                LoadedItems = MockRequest(loadedCount);
+                if (mInfiniteScroll is not null)
+                {
+                    await mInfiniteScroll.ResetAsync();
+                }
             }
         }
 
         protected void OnLoad(InfiniteScrollLoadEventArgs args)
         {
-            if (firstLoad)
-            {
-                firstLoad = false;
-                return;
-            }
-
             var append = MockRequest();
 
             LoadedItems.AddRange(append);
+
+            args.Status = HasMore ? InfiniteScrollLoadStatus.Ok : InfiniteScrollLoadStatus.Empty;
         }
 
-        protected virtual List<ResourceModel> MockRequest(int requestCount = 0)
+        protected virtual List<ResourceModel> MockRequest()
         {
-            if (requestCount < loadCount)
+            int requestCount = Math.Max(previousLoadedCount, loadCount);
+
+            if (previousLoadedCount != 0)
             {
-                requestCount = loadCount;
+                previousLoadedCount = 0;
             }
 
             return Value.Skip(LoadedItems.Count).Take(requestCount).ToList();

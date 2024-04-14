@@ -9,24 +9,19 @@
         }
     </wc-waterfall>
 
-    @if (LoadedItems.Count > 0)
-    {
-        <MInfiniteScroll Style="width:100%;"
-                         OnLoad="@OnLoad"
-                         Parent="@($"#{ScrollElementId}")"
-                         EmptyText="@(string.Empty)"
-                         LoadingText="@(string.Empty)">
-            <LoadMoreContent Context="load">
-                <div class="@(ShowLoadMore?"":"d-none")">
-                    <MButton Icon="true"
-                             OnClick="@load">
-                        <MIcon>mdi-reload</MIcon>
-                    </MButton>
-                </div>
-            </LoadMoreContent>
-        </MInfiniteScroll>
-    }
-
+    <MInfiniteScroll @ref="mInfiniteScroll"
+                     Class="@($"{(HasMore?"":"py-0")}")"
+                     OnLoad="@OnLoad"
+                     Parent="@($"#{ScrollElementId}")"
+                     EmptyText="@(string.Empty)"
+                     LoadingText="@(string.Empty)">
+        <LoadMoreContent Context="load">
+            <MButton Icon="true"
+                     OnClick="@load">
+                <MIcon>mdi-reload</MIcon>
+            </MButton>
+        </LoadMoreContent>
+    </MInfiniteScroll>
 </div>
 
 <EmptyResult Show="Value.Count == 0"

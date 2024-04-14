@@ -18,9 +18,9 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        protected override List<ResourceModel> MockRequest(int requestCount = 0)
+        protected override List<ResourceModel> MockRequest()
         {
-            var items = base.MockRequest(requestCount);
+            var items = base.MockRequest();
             foreach (var item in items)
             {
                 item.ResourceUri = HandleSrc(item.ResourceUri);
