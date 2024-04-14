@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class PreviewImageDialog : ShowContentDialogComponentBase
     {
-        private readonly string id = $"zoom-image-{Guid.NewGuid()}";
+        private readonly string id = $"B-{Guid.NewGuid()}";
 
         private bool isInitialized;
 
