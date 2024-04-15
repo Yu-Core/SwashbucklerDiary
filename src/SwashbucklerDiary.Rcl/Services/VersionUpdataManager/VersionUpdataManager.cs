@@ -71,6 +71,7 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             await HandleVersionUpdate("0.69.7", HandleVersionUpdate697);
             await HandleVersionUpdate("0.80.9", HandleVersionUpdate809);
+            await HandleVersionUpdate(_versionTracking.CurrentVersion, HandleUpdateInstruction);
             if (AfterVersionUpdate is not null && updateCount > 0)
             {
                 await AfterVersionUpdate.Invoke();
@@ -155,6 +156,17 @@ namespace SwashbucklerDiary.Rcl.Services
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)");
             return httpClient;
+        }
+
+        private async Task HandleUpdateInstruction()
+        {
+            var uri = $"docs/update-instruction/{_i18n.Culture}.md";
+            var content = await _staticWebAssets.ReadContentAsync(uri);
+            var diary = new DiaryModel()
+            {
+                Content = content,
+            };
+            await _diaryService.AddAsync(diary);
         }
     }
 }
