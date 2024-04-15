@@ -96,7 +96,7 @@ jobs:
 
       # Publish MAUI Windows
       - name: Publish MAUI Windows
-        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64 --output Releases
+        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64
 
       # Update to Microsoft Store
       - name: Setup Microsoft Store Developer CLI
@@ -106,4 +106,4 @@ jobs:
         run: msstore reconfigure --tenantId ${{ secrets.PARTNER_CENTER_TENANT_ID }} --sellerId ${{ secrets.PARTNER_CENTER_SELLER_ID }} --clientId ${{ secrets.PARTNER_CENTER_CLIENT_ID }} --clientSecret ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
 
       - name: Update to Microsoft Store
-        run: msstore publish ${{env.CSPROJ_PATH}} -i Releases -id ${{env.STORE_ID}}
+        run: msstore publish ${{env.CSPROJ_PATH}} -i ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/AppPackages -id ${{env.STORE_ID}}
