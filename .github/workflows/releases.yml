@@ -82,7 +82,7 @@ jobs:
       # Update to Github Releases
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: 'publish/${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk'
+          artifacts: 'Releases/${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk'
           token: ${{ github.token }}
           name: ${{ env.APPLICATION_DISPLAY_VERSION }}
           tag: 'v${{ env.APPLICATION_DISPLAY_VERSION }}'
