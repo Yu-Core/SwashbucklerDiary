@@ -1,6 +1,6 @@
 // Caution! Be sure you understand the caveats before publishing an application with
 // offline support. See https://aka.ms/blazor-offline-considerations
-importScripts('./sw-IndexedDB.js');
+importScripts('./sw-custom-path.js');
 
 self.importScripts('./service-worker-assets.js');
 self.addEventListener('install', event => event.waitUntil(onInstall(event)));
@@ -65,27 +65,4 @@ async function onFetch(event) {
     }
 
     return cachedResponse || fetch(event.request);
-}
-
-function intercept(requestUrl) {
-    if (!requestUrl.startsWith(self.location.origin)) {
-        return false;
-    }
-
-    const href = self.location.href;
-    const directory = href.substring(0, href.lastIndexOf('/') + 1);
-    for (var i = 0; i < dbNames.length; i++) {
-        const prefix = (directory + dbNames[i]).replace('//', '/') + '/';
-        if (requestUrl.startsWith(prefix)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-function getIndexedDBFilePath(urlString) {
-    const url = new URL(urlString);
-    const urlPath = url.origin + url.pathname; //Exclude hash and search
-    const href = self.location.href;
-    return urlPath.substring(href.lastIndexOf('/'), urlPath.length);
 }
