@@ -12,9 +12,11 @@ env:
   CSPROJ_FILE_PATH: 'src/SwashbucklerDiary.Maui/SwashbucklerDiary.Maui.csproj'
   APP_NAME: 'SwashbucklerDiary'
   STORE_ID: '9P6PBVBF466L'
+  GITEE_USERNAME: 'Yu-core'
+  GITEE_REPO: 'SwashbucklerDiary'
 
 jobs:
-  build:
+  windowsAndAndroid:
     runs-on: windows-latest
     steps:
       # Checkout the code
@@ -87,6 +89,17 @@ jobs:
           name: ${{ env.APPLICATION_DISPLAY_VERSION }}
           tag: 'v${{ env.APPLICATION_DISPLAY_VERSION }}'
 
+      # Release to Gitee
+      - name: Release to Gitee
+        run: |
+          curl -X POST -H "Content-Type:application/json;charset=UTF-8" -d '{
+            "access_token": "${{ secrets.GITEE_TOKEN }}",
+            "tag_name": "v${{ env.APPLICATION_DISPLAY_VERSION }}",
+            "name": "${{ env.APPLICATION_DISPLAY_VERSION }}",
+            "target_commitish": "master",
+            "body": "Release ${{ env.APPLICATION_DISPLAY_VERSION }}",
+          }' "https://gitee.com/api/v5/repos/${{ env.GITEE_USERNAME }}/${{ env.GITEE_REPO }}/releases"
+
       # Replace the version in Package.appxmanifest
       - name: Update version in Package.appxmanifest
         shell: bash
@@ -107,3 +120,84 @@ jobs:
 
       - name: Update to Microsoft Store
         run: msstore publish ${{env.CSPROJ_PATH}} -i ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/AppPackages -id ${{env.STORE_ID}}
+
+  macOSAndiOS:
+    runs-on: macos-14
+    steps:
+      # Checkout the code
+      - uses: actions/checkout@v3
+        with:
+           fetch-depth: 0
+
+      # Install .NET SDK
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+           dotnet-version: '${{ env.DOTNET_VERSION }}.x'
+
+      # Install MAUI Workloads
+      - name: Install MAUI Workloads
+        run: |
+          dotnet workload install maui --ignore-failed-sources
+      - name: Restore Dependencies
+        run: dotnet restore ${{ env.CSPROJ_FILE_PATH }}
+
+      # Get the commit count and format the version
+      - name: Get commit count and format version
+        id: version
+        shell: bash
+        run: |
+          commit_count=$(git rev-list --count HEAD)
+          major=$((commit_count / 1000))
+          minor=$((commit_count % 1000 / 10))
+          patch=$((commit_count % 10))
+          formatted_version="$major.$minor.$patch"
+          echo "APPLICATION_DISPLAY_VERSION=$formatted_version" >> $GITHUB_ENV
+          echo "APPLICATION_VERSION=$commit_count" >> $GITHUB_ENV
+
+      # Replace the version in the csproj file
+      - name: Version the app
+        uses: managedcode/MAUIAppVersion@v1
+        with: 
+          csproj: ${{ env.CSPROJ_FILE_PATH }}
+          version: ${{ env.APPLICATION_VERSION }}
+          displayVersion: ${{ env.APPLICATION_DISPLAY_VERSION }}
+
+      # Publish MAUI MacCatalyst
+      - name: Publish MAUI MacCatalyst
+        run: |
+          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c Release -f net8.0-maccatalyst --no-restore -r maccatalyst-arm64 --sc -p:PublishTrimmed=true 
+          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c Release -f net8.0-maccatalyst --no-restore -r maccatalyst-x64 --sc -p:PublishTrimmed=true 
+
+      # Publish MAUI iOS
+      - name: Publish MAUI iOS
+        run: |
+          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net8.0-ios -c Release -p:ArchiveOnBuild=true -p:RuntimeIdentifier=ios-arm64 -p:EnableCodeSigning=false -p:EnableOnDemandResources=false -p:MtouchUseLlvm=false -p:AotAssemblies=true
+
+      # Update to Github Releases
+      - name: Update maccatalyst-arm64 to Github Releases
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}maccatalyst/maccatalyst-arm64/publish/*.pkg
+          file_glob: true
+          asset_name: ${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-maccatalys-arm64.pkg
+          tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
+
+      - name: Update maccatalyst-x64 to Github Releases
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}maccatalyst/maccatalyst-x64/publish/*.pkg
+          file_glob: true
+          asset_name: ${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-maccatalys-x64.pkg
+          tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
+
+      - name: Update ios-arm64 to Github Releases
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}ios/ios-arm64/publish/*.ipa
+          file_glob: true
+          asset_name: ${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-ios-arm64.ipa
+          tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
