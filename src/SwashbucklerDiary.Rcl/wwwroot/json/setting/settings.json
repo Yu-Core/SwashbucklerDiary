@@ -14,7 +14,7 @@
   "WebDavConfig": "",
   "WelcomeText": false,
   "IndexDate": false,
-  "DiaryCardIcon": false,
+  "DiaryCardIcon": true,
   "AlertTimeout": 3000,
   "WebDAVCopyResources": false,
   "DiaryCardDateFormat": "MM/dd",
