@@ -187,11 +187,6 @@ html {
     color: rgba(0,0,0,.87) !important;
 }
 
-.theme--light .my-btn-chip {
-    border-color: #BDBDBD !important;
-    color: rgba(0,0,0,.87) !important;
-}
-
 @media (hover: none) {
     .d-no-hover-none {
         display: none;
@@ -475,10 +470,6 @@ html {
     .m-toolbar__content, .m-toolbar__extension {
         padding: 4px 24px
     }
-}
-
-.m-chip.m-chip--outlined {
-    padding: 0 16px;
 }
 
 .dynamic-list-item-collection > .m-divider__wrapper:last-child {

@@ -134,6 +134,7 @@
                 @foreach (var item in Tags)
                 {
                     <MChip @key="item.Id"
+                           Style="pointer-events:none;"
                            Outlined="true">
                         @(item.Name)
                     </MChip>
