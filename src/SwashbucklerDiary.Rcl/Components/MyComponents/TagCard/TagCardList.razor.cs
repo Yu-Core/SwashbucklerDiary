@@ -83,11 +83,7 @@ namespace SwashbucklerDiary.Rcl.Components
             SelectedItemValue.Name = tagName;
             SelectedItemValue.UpdateTime = DateTime.Now;
             bool flag = await TagService.UpdateAsync(SelectedItemValue, it => new { it.Name, it.UpdateTime });
-            if (flag)
-            {
-                await AlertService.Success(I18n.T("Share.EditSuccess"));
-            }
-            else
+            if (!flag)
             {
                 await AlertService.Error(I18n.T("Share.EditFail"));
             }

@@ -96,7 +96,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             avatar = photoPath;
             StateHasChanged();
-            await AlertService.Success(I18n.T("Share.EditSuccess"));
             await HandleAchievements(Achievement.Avatar);
         }
     }

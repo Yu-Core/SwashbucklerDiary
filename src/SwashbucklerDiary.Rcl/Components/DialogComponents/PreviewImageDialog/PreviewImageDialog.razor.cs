@@ -59,11 +59,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            var isSuccess = await MediaResourceManager.SaveImageAsync(Src);
-            if (isSuccess)
-            {
-                await AlertService.Success(I18n.T("Share.SaveSuccess"));
-            }
+            await MediaResourceManager.SaveImageAsync(Src);
         }
 
         private async Task Share()

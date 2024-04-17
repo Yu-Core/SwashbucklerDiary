@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if(firstRender)
+            if (firstRender)
             {
                 await UpdateLocationsAsync();
                 StateHasChanged();
@@ -52,7 +52,6 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            await AlertService.Success(I18n.T("Share.AddSuccess"));
             locations.Add(location);
             StateHasChanged();
         }

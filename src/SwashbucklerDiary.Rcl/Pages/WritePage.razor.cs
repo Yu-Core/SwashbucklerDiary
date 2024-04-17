@@ -290,11 +290,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 if (!background)
                 {
-                    if (flag)
-                    {
-                        await AlertService.Success(I18n.T("Share.AddSuccess"));
-                    }
-                    else
+                    if (!flag)
                     {
                         await AlertService.Error(I18n.T("Share.AddFail"));
                     }
@@ -310,11 +306,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 bool flag = await DiaryService.UpdateIncludesAsync(diary);
                 if (!background)
                 {
-                    if (flag)
-                    {
-                        await AlertService.Success(I18n.T("Share.EditSuccess"));
-                    }
-                    else
+                    if (!flag)
                     {
                         await AlertService.Error(I18n.T("Share.EditFail"));
                     }

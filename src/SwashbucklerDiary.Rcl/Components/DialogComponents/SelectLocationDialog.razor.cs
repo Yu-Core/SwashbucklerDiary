@@ -74,7 +74,6 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            await AlertService.Success(I18n.T("Share.AddSuccess"));
             locations.Insert(0, location);
             internalLocation = location.Name;
             StateHasChanged();

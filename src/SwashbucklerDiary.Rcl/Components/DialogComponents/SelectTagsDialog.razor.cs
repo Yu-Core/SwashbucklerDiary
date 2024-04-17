@@ -97,7 +97,6 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            await AlertService.Success(I18n.T("Share.AddSuccess"));
             Items.Insert(0, tag);
             StateHasChanged();
         }

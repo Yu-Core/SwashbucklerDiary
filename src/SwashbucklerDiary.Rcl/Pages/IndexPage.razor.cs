@@ -75,7 +75,6 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            await AlertService.Success(I18n.T("Share.AddSuccess"));
             Tags.Insert(0, tag);
             StateHasChanged();
         }
