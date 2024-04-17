@@ -23,7 +23,7 @@
   "LANScanPort": 5299,
   "LANTransmissionPort": 52099,
   "StatisticsCard": true,
-  "EditAutoSave": 0,
+  "EditAutoSave": 5,
   "DiarySort": "",
   "TagSort": "",
   "LocationSort": "",

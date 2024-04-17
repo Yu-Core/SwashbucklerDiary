@@ -14,14 +14,17 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showEditAutoSave;
 
-        private readonly Dictionary<string, string> editAutoSaveItems = [];
-
-        protected override void OnInitialized()
+        private readonly Dictionary<string, string> editAutoSaveItems = new()
         {
-            base.OnInitialized();
+            {"Setting.Display.Diary.EditAutoSave.Close" ,"0"},
+            {"5s" ,"5"},
+            {"15s" ,"15"},
+            {"20s" ,"20"},
+            {"30s" ,"30"},
+            {"45s" ,"45"},
+            {"60s" ,"60"},
 
-            InitEditAutoSaveItems();
-        }
+        };
 
         protected override void ReadSettings()
         {
@@ -49,15 +52,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             editAutoSave = value.ToInt32();
             await SettingService.Set(Setting.EditAutoSave, editAutoSave);
-        }
-
-        private void InitEditAutoSaveItems()
-        {
-            editAutoSaveItems.Add("Setting.Display.Diary.EditAutoSave.Close", "0");
-            for (int i = 0; i < 6; i++)
-            {
-                editAutoSaveItems.Add($"{(i + 1) * 10}s", ((i + 1) * 10).ToString());
-            }
         }
     }
 }
