@@ -22,8 +22,8 @@ namespace SwashbucklerDiary.WebAssembly.Layout
         {
             await base.OnInitializedAsync();
 
-            await InitVersionUpdateAsync();
             await InitSettingsAsync();
+            await InitVersionUpdateAsync();
         }
 
         protected override void OnDispose()
