@@ -48,8 +48,6 @@ namespace SwashbucklerDiary.Maui.Essentials
         private void InternalNotifyStateChanged()
         {
             OnChanged?.Invoke(RealTheme);
-
-            TitleBarOrStatusBar.SetTitleBarOrStatusBar(RealTheme);
         }
     }
 }

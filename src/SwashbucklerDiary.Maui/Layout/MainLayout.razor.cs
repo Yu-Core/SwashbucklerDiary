@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Rcl.Layout;
 using SwashbucklerDiary.Shared;
 
@@ -38,6 +39,13 @@ namespace SwashbucklerDiary.Maui.Layout
         {
             await base.InitSettingsAsync();
             await InitThemeAsync();
+        }
+
+        protected override void ThemeChanged(Theme theme)
+        {
+            base.ThemeChanged(theme);
+
+            TitleBarOrStatusBar.SetTitleBarOrStatusBar(theme);
         }
 
         private async Task InitThemeAsync()

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using SwashbucklerDiary.Rcl;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Layout;
 using SwashbucklerDiary.Shared;
@@ -39,6 +40,13 @@ namespace SwashbucklerDiary.WebAssembly.Layout
                 InitThemeAsync(),
                 InitLanguageAsync(),
                 ((AppLifecycle)AppLifecycle).InitializedAsync());
+        }
+
+        protected override async void ThemeChanged(Theme theme)
+        {
+            base.ThemeChanged(theme);
+
+            await JSRuntime.InvokeVoidAsync("setThemeColor", theme == Theme.Dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface);
         }
 
         private async Task InitThemeAsync()

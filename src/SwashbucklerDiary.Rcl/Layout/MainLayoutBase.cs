@@ -86,18 +86,15 @@ namespace SwashbucklerDiary.Rcl.Layout
             }
         }
 
-        protected void ThemeChanged(Theme theme)
+        protected virtual void ThemeChanged(Theme theme)
         {
-            if (MasaBlazor.Theme.Dark != (theme == Theme.Dark))
-            {
-                MasaBlazor.ToggleTheme();
-            }
+            MasaBlazor.SetTheme(theme == Theme.Dark);
         }
 
         protected async void LanguageChanged(CultureInfo cultureInfo)
         {
             StateHasChanged();
-            await JSRuntime.InvokeVoidAsync("changeLanguage", cultureInfo.Name);
+            await JSRuntime.InvokeVoidAsync("setLanguage", cultureInfo.Name);
         }
     }
 }
