@@ -20,3 +20,8 @@ function elementScrollTop(selector) {
         return 0;
     }
 }
+
+function addToHead(html) {
+    const element = document.createRange().createContextualFragment(html);
+    document.getElementsByTagName('head')[0].appendChild(element);
+}

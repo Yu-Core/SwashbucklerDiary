@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Rcl.Layout;
 using SwashbucklerDiary.Shared;
@@ -25,6 +26,9 @@ namespace SwashbucklerDiary.Maui.Layout
             await base.OnInitializedAsync();
 
             await VersionUpdataManager.HandleVersionUpdate();
+#if ANDROID || IOS
+            await AddStatusBarAndNavigationBarCss();
+#endif
             await InitSettingsAsync();
         }
 
@@ -88,6 +92,14 @@ namespace SwashbucklerDiary.Maui.Layout
             {
                 Logger.LogError(e, "VersionUpdate check failed");
             }
+        }
+#endif
+
+#if ANDROID || IOS
+        private async Task AddStatusBarAndNavigationBarCss()
+        {
+            string html = "<link href=\"css/status-bar-and-navigation-bar.css\" rel=\"stylesheet\" />";
+            await JSRuntime.InvokeVoidAsync("addToHead", html);
         }
 #endif
     }

@@ -68,7 +68,7 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
 
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            await Task.Delay(10);
+            await Task.Delay(200);
             _webView.EvaluateJavascript(@"
 				(function() {
                     const fullscreenElement = document.fullscreenElement;

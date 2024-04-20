@@ -1,0 +1,57 @@
+﻿body {
+    padding-top: env(safe-area-inset-top);
+    padding-top: var(--android-status-bar-height);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: var(--android-navigation-bar-height);
+}
+
+.m-application__wrap {
+    min-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    min-height: calc(100vh - var(--android-status-bar-height) - var(--android-navigation-bar-height));
+}
+
+.m-main {
+    transform: scale(1);
+}
+
+.m-item-group.m-bottom-navigation {
+    margin-bottom: env(safe-area-inset-bottom);
+    margin-bottom: var(--android-navigation-bar-height);
+}
+
+    .m-item-group.m-bottom-navigation::after {
+        content: '';
+        display: block;
+        height: env(safe-area-inset-bottom);
+        height: var(--android-navigation-bar-height);
+        width: 100%;
+        bottom: calc(0px - env(safe-area-inset-bottom));
+        bottom: calc(0px - var(--android-navigation-bar-height));
+        position: absolute;
+        background-color: var( --m-theme-surface);
+    }
+
+
+.m-bottom-navigation-hidden {
+    transform: translateY(calc(100% + env(safe-area-inset-bottom))) !important;
+    transform: translateY(calc(100% + var(--android-navigation-bar-height))) !important;
+}
+
+.m-bottom-sheet.m-dialog .m-card::after {
+    content: '';
+    display: block;
+    height: env(safe-area-inset-bottom);
+    height: var(--android-navigation-bar-height);
+}
+
+.m-enqueued-snackbars.m-enqueued-snackbars--bottom::after {
+    content: '';
+    display: block;
+    height: env(safe-area-inset-bottom);
+    height: var(--android-navigation-bar-height);
+}
+
+.m-dialog.m-dialog--active.m-dialog--fullscreen .m-card {
+    padding-top: env(safe-area-inset-top) !important;
+    padding-top: var(--android-status-bar-height) !important;
+}

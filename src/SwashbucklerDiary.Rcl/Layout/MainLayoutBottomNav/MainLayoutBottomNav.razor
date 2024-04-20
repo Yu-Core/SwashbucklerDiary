@@ -7,7 +7,7 @@
 }
 
 <MBottomNavigation InputValue="Show"
-                   Class="d-flex justify-space-around"
+                   Class="@($"justify-space-around {(Show?"":"m-bottom-navigation-hidden")}")"
                    Mandatory="true"
                    App="true">
     @foreach (var item in Items)
