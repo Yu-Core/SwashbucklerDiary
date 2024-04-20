@@ -10,6 +10,8 @@ namespace SwashbucklerDiary.Maui
     {
         double paddingBottom = 0;
 
+        bool showSoftKeyboard;
+
         NSObject _keyboardShowObserver;
 
         NSObject _keyboardHideObserver;
@@ -29,6 +31,12 @@ namespace SwashbucklerDiary.Maui
         // https://github.com/dotnet/maui/issues/10662
         void OnKeyboardShow(object sender, UIKeyboardEventArgs args)
         {
+            if (showSoftKeyboard)
+            {
+                return;
+            }
+
+            showSoftKeyboard = true;
             NSValue result = (NSValue)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.FrameEndUserInfoKey));
             CGSize keyboardSize = result.RectangleFValue.Size;
 
@@ -38,6 +46,13 @@ namespace SwashbucklerDiary.Maui
 
         void OnKeyboardHide(object sender, UIKeyboardEventArgs args)
         {
+            if (!showSoftKeyboard)
+            {
+                return;
+            }
+
+            showSoftKeyboard = false;
+
             this.Padding = new Thickness(Padding.Left, Padding.Top, Padding.Right, paddingBottom);
         }
 
