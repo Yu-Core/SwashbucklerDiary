@@ -8,57 +8,15 @@ namespace SwashbucklerDiary.Maui
 #nullable disable
     public partial class MainPage
     {
-        double paddingBottom = 10;
+        double paddingBottom = 0;
 
         NSObject _keyboardShowObserver;
 
         NSObject _keyboardHideObserver;
 
-        static UIView statusBar;
-
         ~MainPage()
         {
             UnregisterForKeyboardNotifications();
-        }
-
-        public static void SetIOSGapColor(Color color)
-        {
-            statusBar.BackgroundColor = color.ToPlatform();
-        }
-
-        // On the iOS platform, white gap/field below status bar
-        // https://github.com/dotnet/maui/issues/19778
-        protected override void OnHandlerChanged()
-        {
-            base.OnHandlerChanged();
-
-            var window = this.GetParentWindow()?.Handler?.PlatformView as UIWindow;
-            if (window is not null)
-            {
-                var topPadding = window?.SafeAreaInsets.Top ?? 0;
-
-                statusBar = new UIView(new CGRect(0, 0, UIScreen.MainScreen.Bounds.Size.Width, topPadding));
-
-                var view = this.Handler?.PlatformView as UIView;
-                if (view is not null)
-                {
-                    view?.AddSubview(statusBar);
-                }
-
-                DeviceDisplay.Current.MainDisplayInfoChanged += (sender, args) =>
-                {
-                    var orientation = args.DisplayInfo.Orientation;
-                    if (orientation == DisplayOrientation.Landscape)
-                    {
-                        statusBar.Frame = new(0, 0, UIScreen.MainScreen.Bounds.Size.Width, 0);
-                    }
-                    else if (orientation == DisplayOrientation.Portrait)
-                    {
-                        topPadding = window?.SafeAreaInsets.Top ?? 0;
-                        statusBar.Frame = new(0, 0, UIScreen.MainScreen.Bounds.Size.Width, topPadding);
-                    }
-                };
-            }
         }
 
         void Initialize()

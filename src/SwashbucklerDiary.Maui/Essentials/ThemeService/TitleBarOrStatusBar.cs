@@ -44,21 +44,12 @@ namespace SwashbucklerDiary.Maui.Essentials
             TitleBar.SetStyle(titleBarStyle);
 #elif ANDROID
             var window = Platform.CurrentActivity.Window;
-            //window.ClearFlags(WindowManagerFlags.TranslucentStatus);
-            //window.ClearFlags(WindowManagerFlags.TranslucentNavigation);
             var windowController = WindowCompat.GetInsetsController(window, window.DecorView);
             windowController.AppearanceLightStatusBars = !dark;
             windowController.AppearanceLightNavigationBars = !dark;
-            //window.AddFlags(WindowManagerFlags.TranslucentStatus);
-            //window.AddFlags(WindowManagerFlags.TranslucentNavigation);
 #elif IOS14_2_OR_GREATER
-            //StatusBar.SetColor(backgroundColor);
             StatusBarStyle statusBarStyle = dark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
             StatusBar.SetStyle(statusBarStyle);
-#endif
-
-#if IOS
-            MainPage.SetIOSGapColor(backgroundColor);
 #endif
         }
     }
