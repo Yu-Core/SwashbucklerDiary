@@ -63,26 +63,6 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
-.status-bar-safe-area {
-    display: none;
-}
-
-@supports (-webkit-touch-callout: none) {
-    .status-bar-safe-area {
-        display: flex;
-        position: sticky;
-        top: 0;
-        height: env(safe-area-inset-top);
-        background-color: #f7f7f7;
-        width: 100%;
-        z-index: 1;
-    }
-
-    .flex-column, .navbar-brand {
-        padding-left: env(safe-area-inset-left);
-    }
-}
-
 html::-webkit-scrollbar {
     display: none !important;
 }
@@ -488,9 +468,6 @@ html {
 .preview-image-dialog--toolbar {
     z-index: 2;
     background-color: transparent !important;
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
 }
 
@@ -500,9 +477,12 @@ html {
     }
 
 .preview-image-dialog--image__wraper {
-    position: relative;
+    position: fixed;
     z-index: 1;
     height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
 }
 
 .preview-image-dialog--image {

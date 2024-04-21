@@ -41,7 +41,11 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
             }
 
             public override void OnPageFinished(Android.Webkit.WebView view, string url)
-                => WebViewClient.OnPageFinished(view, url);
+            {
+                WebViewClient.OnPageFinished(view, url);
+
+                AndroidSafeArea.Initialize(view);
+            }
 
             protected override void Dispose(bool disposing)
             {

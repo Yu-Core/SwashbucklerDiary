@@ -4,13 +4,19 @@ using SwashbucklerDiary.Rcl;
 #if WINDOWS || MACCATALYST
 using MauiBlazorToolkit;
 using MauiBlazorToolkit.Platform;
-#elif ANDROID || IOS
+#elif IOS
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Core.Platform;
 #endif
 
+#if ANDROID
+using Android.Views;
+using AndroidX.Core.View;
+#endif
+
 namespace SwashbucklerDiary.Maui.Essentials
 {
+#nullable disable
 #pragma warning disable CA1416
     public class TitleBarOrStatusBar
     {
@@ -36,14 +42,14 @@ namespace SwashbucklerDiary.Maui.Essentials
             TitleBar.SetColor(backgroundColor);
             TitleBarStyle titleBarStyle = dark ? TitleBarStyle.LightContent : TitleBarStyle.DarkContent;
             TitleBar.SetStyle(titleBarStyle);
-#elif ANDROID || IOS14_2_OR_GREATER
-            StatusBar.SetColor(backgroundColor);
+#elif ANDROID
+            var window = Platform.CurrentActivity.Window;
+            var windowController = WindowCompat.GetInsetsController(window, window.DecorView);
+            windowController.AppearanceLightStatusBars = !dark;
+            windowController.AppearanceLightNavigationBars = !dark;
+#elif IOS14_2_OR_GREATER
             StatusBarStyle statusBarStyle = dark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
             StatusBar.SetStyle(statusBarStyle);
-#endif
-
-#if IOS
-            MainPage.SetIOSGapColor(backgroundColor);
 #endif
         }
     }
