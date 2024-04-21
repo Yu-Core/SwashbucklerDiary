@@ -1,4 +1,7 @@
-﻿namespace SwashbucklerDiary.Maui
+﻿using Android.Widget;
+using static Android.Resource;
+
+namespace SwashbucklerDiary.Maui
 {
 #nullable disable
     public static class AndroidSafeArea
@@ -14,14 +17,8 @@
 
             initialized = true;
             SetSafeAreaCss(webView);
-            // Trigger when returning to the app
-            Application.Current.Windows[0].Resumed += (s, args) => SetSafeAreaCss(webView);
-            // Trigger when screen rotates
-            DeviceDisplay.Current.MainDisplayInfoChanged += async (sender, args) =>
-            {
-                await Task.Delay(200);
-                SetSafeAreaCss(webView);
-            };
+            FrameLayout content = (FrameLayout)Platform.CurrentActivity.FindViewById(Id.Content);
+            content.GetChildAt(0).ViewTreeObserver.GlobalLayout += (s, o) => SetSafeAreaCss(webView);
         }
 
         private static void SetSafeAreaCss(Android.Webkit.WebView webView)

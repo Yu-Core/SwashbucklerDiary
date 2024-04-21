@@ -39,13 +39,9 @@ namespace SwashbucklerDiary.Maui
                 {
                     frameLayoutParams.Height = usableHeightSansKeyboard - heightDifference + Utilities.GetNavigationBarInsets().Bottom;
                 }
-                else if (heightDifference >= Utilities.GetNavigationBarInsets().Bottom)
-                {
-                    frameLayoutParams.Height = usableHeightSansKeyboard;
-                }
                 else
                 {
-                    frameLayoutParams.Height = usableHeightNow;
+                    frameLayoutParams.Height = usableHeightNow + Utilities.GetNavigationBarInsets().Bottom;
                 }
             }
 
