@@ -14,10 +14,6 @@ namespace SwashbucklerDiary.Maui
         static FrameLayout.LayoutParams frameLayoutParams;
         static int usableHeightPrevious = 0;
 
-        public static event Action SoftKeyboardLifting;
-
-        public static event Action SoftKeyboardDroping;
-
         public static void Initialize()
         {
             FrameLayout content = (FrameLayout)Activity.FindViewById(Id.Content);
@@ -41,17 +37,14 @@ namespace SwashbucklerDiary.Maui
 
                 if (heightDifference > usableHeightSansKeyboard / 4)
                 {
-                    SoftKeyboardLifting?.Invoke();
-                    frameLayoutParams.Height = usableHeightSansKeyboard - heightDifference;
+                    frameLayoutParams.Height = usableHeightSansKeyboard - heightDifference + Utilities.GetNavigationBarInsets().Bottom;
                 }
-                else if (heightDifference >= Utilities.GetNavigationBarHeight())
+                else if (heightDifference >= Utilities.GetNavigationBarInsets().Bottom)
                 {
-                    SoftKeyboardDroping?.Invoke();
                     frameLayoutParams.Height = usableHeightSansKeyboard;
                 }
                 else
                 {
-                    SoftKeyboardDroping?.Invoke();
                     frameLayoutParams.Height = usableHeightNow;
                 }
             }

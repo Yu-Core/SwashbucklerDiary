@@ -468,8 +468,6 @@ html {
 .preview-image-dialog--toolbar {
     z-index: 2;
     background-color: transparent !important;
-    position: absolute;
-    left: 0;
     width: 100%;
 }
 
@@ -484,6 +482,7 @@ html {
     height: 100%;
     width: 100%;
     top: 0;
+    left: 0;
 }
 
 .preview-image-dialog--image {
