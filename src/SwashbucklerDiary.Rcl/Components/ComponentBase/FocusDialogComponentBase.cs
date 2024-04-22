@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (textField is not null && !textField.IsFocused)
             {
-                await Task.Delay(100);
+                await Task.Delay(200);
                 await textField.InputElement.FocusAsync();
             }
         }
