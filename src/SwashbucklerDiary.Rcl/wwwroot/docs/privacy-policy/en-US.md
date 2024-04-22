@@ -1,6 +1,6 @@
 ﻿# Privacy Policy
 
-Update date date: **2023/2/7**
+Update date date: **2024/4/23**
 
 Effective date: **2023/2/7**
 
@@ -51,9 +51,6 @@ We may use the information collected during the process of providing services to
 * Provide you with services;
 * Used for authentication, customer service, security, fraud detection, archiving and backup purposes when we provide services to ensure the security of the products and services we provide to you;
 * Help us design new services and improve our existing services;
-* Make us more aware of how you access and use our services in response to your personalized needs, such as language settings, location settings, personalized help services and instructions, or in response to you and other users;
-* Provide you with more relevant advertisements in place of general advertisements;
-* Evaluate and improve the effectiveness of advertising and other promotional and promotional activities in our services;
 * Software certification or management software upgrade;
 * Let you participate in surveys about our products and services.
 
