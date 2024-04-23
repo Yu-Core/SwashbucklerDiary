@@ -53,6 +53,10 @@
     padding-right: var(--android-safe-area-right-width) !important;
 }
 
+.vditor--fullscreen {
+    height: calc(100vh - var(--android-status-bar-height) - var(--android-navigation-bar-height) - var(--vditor-toolbar-height)) !important;
+}
+
 @supports (-webkit-touch-callout: none) {
     body {
         padding-top: env(safe-area-inset-top);
@@ -94,5 +98,9 @@
         padding-top: env(safe-area-inset-top) !important;
         padding-left: env(safe-area-inset-left) !important;
         padding-right: env(safe-area-inset-right) !important;
+    }
+
+    .vditor--fullscreen {
+        height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - var(--vditor-toolbar-height)) !important;
     }
 }

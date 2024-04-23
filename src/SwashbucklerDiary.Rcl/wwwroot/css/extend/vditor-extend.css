@@ -25,6 +25,7 @@
     border-radius: 8px;
     padding-left: 0px !important;
     padding-right: 0px !important;
+    --editor-bottom: 48px !important;
 }
 
     .vditor-reset iframe {
@@ -96,10 +97,6 @@
             transform: rotateX(180deg);
             filter: drop-shadow(0.1px 0.1px 1px rgba(0, 0, 0, .2));
         }
-
-    .vditor-reset {
-        --editor-bottom: 50px;
-    }
 
     .vditor-toolbar-help {
         min-height: var(--vditor-toolbar-height);

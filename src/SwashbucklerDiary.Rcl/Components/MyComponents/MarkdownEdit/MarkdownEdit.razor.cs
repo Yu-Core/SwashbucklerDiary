@@ -100,7 +100,9 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "icon","material" },
                 { "theme", theme },
                 { "preview", preview },
-                { "link", link }
+                { "link", link },
+                { "typewriterMode", true },
+                { "height", "100%" },
             };
         }
 
