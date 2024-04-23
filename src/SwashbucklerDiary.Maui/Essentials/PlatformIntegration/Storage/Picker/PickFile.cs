@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Maui.Essentials
     {
         private Task<string?> PickFileAsync(IEnumerable<string> types, string suffixName)
         {
-            string[] suffixNames = { suffixName };
+            string[] suffixNames = [suffixName];
             return PickFileAsync(types, suffixNames);
         }
 
@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             {
                 _logger.LogError(e, $"{nameof(PickFileAsync)} wrong");
             }
-            
+
             return null;
         }
     }

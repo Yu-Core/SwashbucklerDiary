@@ -2,12 +2,12 @@
 {
     public partial class PlatformIntegration
     {
-        private readonly string[] audioSuffixNames = [".mp3", ".wav", ".m4a", ".ogg", ".aac", ".flac"];
+        private readonly string[] suffixNames = [".mp3", ".wav", ".m4a", ".ogg", ".aac", ".flac"];
 
         public Task<string?> PickAudioAsync()
         {
 #if WINDOWS
-            var types = audioSuffixNames;
+            var types = suffixNames;
 #elif ANDROID
             var types = new[] { "audio/mpeg", "audio/wav", "audio/mp4", "audio/ogg", "audio/aac", "audio/flac" };
 #elif MACCATALYST || IOS
@@ -15,7 +15,7 @@
 #elif TIZEN
             var types = new[] { "*/*" };
 #endif
-            return PickFileAsync(types, audioSuffixNames);
+            return PickFileAsync(types, suffixNames);
         }
     }
 }
