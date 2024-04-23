@@ -32,7 +32,6 @@ export function renderLazyLoadingImage(element) {
 
 function handlePreviewElement(previewElement) {
     handleA(previewElement);
-    handleTextarea(previewElement);
     handleVideo(previewElement);
     handleIframe(previewElement);
 }
@@ -46,14 +45,6 @@ function handleA(element) {
             href = "https://" + href;
             link.setAttribute("href", href); // 修改每个a标签的href属性
         };
-    });
-}
-
-//fix Copy Display Soft Keyboard
-function handleTextarea(element) {
-    const textareas = element.querySelectorAll("textarea"); // 获取所有textarea标签
-    textareas.forEach(textarea => {
-        textarea.readOnly = true;
     });
 }
 
