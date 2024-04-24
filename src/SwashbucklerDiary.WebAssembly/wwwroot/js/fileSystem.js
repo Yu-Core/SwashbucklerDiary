@@ -1,5 +1,19 @@
 ﻿window.MEMFileSystem = {
-    init: function () {
+    init: async function () {
+        // clear cache
+        const deleteDatabase = (dbName) => {
+            return new Promise((res, rej) => {
+                const request = indexedDB.deleteDatabase(dbName);
+                request.onerror = () => {
+                    rej();
+                };
+                request.onsuccess = () => {
+                    res();
+                };
+            })
+        };
+        await deleteDatabase('/cache');
+
         return new Promise((res, rej) => {
             let synchronizing = false;
             //Create appdata folder
@@ -30,7 +44,7 @@
         });
     },
     //Synchronize the content of MEMFS to IDBFS for immediate use, such as intercepting requests from service worker and searching in indexDB
-    syncfs: function() {
+    syncfs: function () {
         return new Promise((res, rej) => {
             Module.FS.syncfs(function (err) {
                 // handle callback
