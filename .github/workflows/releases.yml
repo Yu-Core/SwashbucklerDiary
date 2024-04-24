@@ -109,7 +109,7 @@ jobs:
 
       # Publish MAUI Windows
       - name: Publish MAUI Windows
-        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64
+        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64 -p:WindowsAppSDKSelfContained=true
 
       # Update to Microsoft Store
       - name: Setup Microsoft Store Developer CLI
@@ -166,8 +166,8 @@ jobs:
       # Publish MAUI MacCatalyst
       - name: Publish MAUI MacCatalyst
         run: |
-          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -r maccatalyst-arm64 --sc -p:PublishTrimmed=true 
-          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -r maccatalyst-x64 --sc -p:PublishTrimmed=true 
+          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -p:RuntimeIdentifier=maccatalyst-arm64 --sc -p:PublishTrimmed=true 
+          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -p:RuntimeIdentifier=maccatalyst-x64 --sc -p:PublishTrimmed=true 
 
       # Publish MAUI iOS
       - name: Publish MAUI iOS
