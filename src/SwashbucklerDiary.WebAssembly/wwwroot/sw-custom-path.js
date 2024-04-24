@@ -26,7 +26,7 @@ function getIndexedDBFilePath(urlString) {
 
 function getFileFromIndexedDB(key) {
     return new Promise((resolve, reject) => {
-        // 打开 IndexedDB，获取文件
+        // Open IndexedDB and retrieve the file
 
         let dbName;
         for (var i = 0; i < dbNames.length; i++) {
@@ -60,45 +60,39 @@ function getFileFromIndexedDB(key) {
 }
 
 async function handleIndexedDBFileRequest(request, filePath) {
-    // 检查请求是否包含 Range 头
-    const rangeHeader = request.headers.get('Range');
-    if (rangeHeader) {
-        try {
-            // 尝试从 IndexedDB 获取文件
-            const file = await getFileFromIndexedDB(filePath);
-            const size = file.size;
+    try {
+        // Attempting to retrieve files from IndexedDB
+        const file = await getFileFromIndexedDB(filePath);
+        const length = file.size;
+        let rangeStart = 0;
+        let rangeEnd = length - 1;
+        let statusCode = 200;
+        let reasonPhrase = "OK";
+        let headers = {};
+
+        // Check if the request contains a Range header
+        const rangeHeader = request.headers.get('Range');
+        if (rangeHeader) {
+            statusCode = 206;
+            reasonPhrase = "Partial Content";
+
             const rangeMatch = rangeHeader.match(/bytes=(\d+)-(\d+)?/);
-            const start = Number(rangeMatch[1]);
-            const end = rangeMatch[2] ? Number(rangeMatch[2]) : size;
-            //const contentLength = end - start + 1;
-            const headers = {
-                "Content-Range": `bytes ${start}-${end - 1}/${size}`,
-                //"Accept-Ranges": "bytes",
-                //"Content-Length": contentLength,
-                //"Content-Type": file.type,
-            };
-            const response = new Response(file.slice(start, end), {
-                status: 206,
-                statusText: 'Partial Content',
-                headers: headers
-            });
-            return response;
-        } catch (error) {
-            // 在出错时返回一个 404 响应
-            return new Response('', { status: 404 });
+            rangeStart = Number(rangeMatch[1]);
+            rangeEnd = rangeMatch[2] ? Number(rangeMatch[2]) : rangeEnd;
+            headers["Content-Range"] = `bytes ${rangeStart}-${rangeEnd}/${length}`;
+            headers["Accept-Ranges"] = "bytes";
         }
-    } else {
-        // 如果没有 Range 头，正常处理请求
-        // ...
-        try {
-            const file = await getFileFromIndexedDB(filePath);
-            const response = new Response(file, {
-                headers: { 'Content-Type': file.type }
-            });
-            return response;
-        } catch (e) {
-            // 在出错时返回一个 404 响应
-            return new Response('', { status: 404 });
-        }
+
+        headers["Content-Length"] = rangeEnd - rangeStart + 1;
+        // The second parameter of file.slice is the index of the first byte that will not be copied into the new Blob. So need + 1
+        const response = new Response(file.slice(rangeStart, rangeEnd + 1), {
+            status: statusCode,
+            statusText: reasonPhrase,
+            headers: headers
+        });
+        return response;
+    } catch (e) {
+        // Return a 404 response when an error occurs
+        return new Response(e.message, { status: 404 });
     }
 }
