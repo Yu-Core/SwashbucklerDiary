@@ -1,58 +1,26 @@
 ﻿# Update Announcement
 
-Ladies and gentlemen, I wish you all a happy May Day in advance
+Focus of this issue: Immersive status bar/navigation bar (more accurately, it should be called transparent status bar/navigation bar), basically no problem, but compatibility issues may occur on a few devices. If there are any issues, please provide feedback as soon as possible.
 
-Sorry, the update that was supposed to be updated in early March has been delayed. We apologize for any inconvenience caused
-
-Thank you to 墨子赋, ***欣, 闲野 for their donations, and we would like to express our special gratitude
-
-This update has been backlogged for a long time, and there are not many new features. The main focus is on repairing and improving previous features to optimize the user experience.
+Updated privacy policy, please go to [privacy policy](https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/privacy-policy/en-US.md) Or check the privacy policy within the app (using a universal template, if a certain app market says it doesn't match the actual situation, then remove the problematic ones)
 
 ## New addition
 
-- Added APP registration number
-- Support adding audio and video
-- Added web version (not very stable, only recommended for trial use), some features have been removed due to browser environment limitations
-- Application name supports localization (when switching system languages, the app name will change accordingly)
-- Support ==mark== syntax
-- Desktop menu has added icons
-- Click on the bottom navigation bar button and scroll to the top
-- Add reset date to calendar page
-- Add a display switch for desktop statistical cards
-- Add a date diary to the calendar page
-- Desktop search box supports carriage return
-- Sorting supports persistence
-- Add update prompt at startup
-- Markdown toolbar adds full screen
-- Add automatic save settings when writing a diary
-- Add special syntax explanation for markdown
-- Enable lazy loading of images
+* Transparent status bar and navigation bar on mobile devices (immersive)
+* On mobile devices, the dark mode on the web supports changing the status bar (requires browser support, Android Chrome and iOS Safari support, Edge does not support, and some browsers that use webview do not support it)
 
 ## Repair
 
-- Screenshots may not include images
-- Changing the language without changing the default username and signature
-- Incorrect changes in the application bar when switching pages on the calendar page
-- Soft keyboard occlusion on iOS
-- When reading the page and copying code, the soft keyboard will pop up
-- Error judgment in comparing version numbers when detecting updates
-- Android may not be able to redirect to the browser
-- The hovering effect still appears when the fingers on the mobile end leave the screen
-- Windows can refresh with f5 or Ctrl+R
-- The label icon is not aligned with the text
+* The user agreement and privacy policy URL address is incorrect
+* The tag on the mobile reading diary page will appear as a shadow when long pressed
+* Windows cannot select images in formats such as. webp and. jfif
+* Unable to request local media files on the web side
+* Incorrect language for web update announcement
+* The height of the APP window is incorrect after input on the iOS end
 
 ## Optimization
 
-- Sort Move to Menu
-- Optimized desktop navigation bar style
-- Rewrote LAN transmission
-- Optimized the logic for reading settings
-- Optimized full screen preview of images
-- Optimize desktop scrollbar style
-- Optimized the theme
-- Change the style of the prompt box when there is too much text
-- Android can open the app store to choose from
-- Renaming Privacy Vault to Safe
-- Change donation page style and text
-- Optimized Markdown rendering
-- Optimized waterfall display in images
+* Automatically save when editing is enabled by default
+* Remove some unnecessary prompts
+* Default display of weather and mood icons on diary cards
+* Markdown input experience
