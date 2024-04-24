@@ -79,12 +79,12 @@ jobs:
         run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c:Release -p:AndroidPackageFormat=apk -f:net${{ env.DOTNET_VERSION }}-android -r android-arm64 --sc -p:PublishTrimmed=true -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=${{secrets.ANDROIDSIGNINGKEYSTORE}} -p:AndroidSigningKeyAlias=${{secrets.ANDROIDSIGNINGKEYALIAS}} -p:AndroidSigningKeyPass=${{secrets.ANDROIDSIGNINGKEYPASS}} -p:AndroidSigningStorePass=${{secrets.ANDROIDSIGNINGSTOREPASS}} --no-restore --output Releases
 
       - name: Rename apk
-        run: ren Releases/*Signed.apk ${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk
+        run: ren Releases/*Signed.apk ${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk
 
       # Update to Github Releases
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: 'Releases/${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-android-arm64.apk'
+          artifacts: 'Releases/${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk'
           token: ${{ github.token }}
           name: ${{ env.APPLICATION_DISPLAY_VERSION }}
           tag: 'v${{ env.APPLICATION_DISPLAY_VERSION }}'
@@ -119,7 +119,7 @@ jobs:
         run: msstore reconfigure --tenantId ${{ secrets.PARTNER_CENTER_TENANT_ID }} --sellerId ${{ secrets.PARTNER_CENTER_SELLER_ID }} --clientId ${{ secrets.PARTNER_CENTER_CLIENT_ID }} --clientSecret ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
 
       - name: Update to Microsoft Store
-        run: msstore publish ${{env.CSPROJ_PATH}} -i ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/AppPackages -id ${{env.STORE_ID}}
+        run: msstore publish ${{ env.CSPROJ_PATH }} -i ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/AppPackages -id ${{ env.STORE_ID }}
 
   macOSAndiOS:
     runs-on: macos-14
@@ -166,13 +166,13 @@ jobs:
       # Publish MAUI MacCatalyst
       - name: Publish MAUI MacCatalyst
         run: |
-          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c Release -f net8.0-maccatalyst --no-restore -r maccatalyst-arm64 --sc -p:PublishTrimmed=true 
-          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c Release -f net8.0-maccatalyst --no-restore -r maccatalyst-x64 --sc -p:PublishTrimmed=true 
+          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -r maccatalyst-arm64 --sc -p:PublishTrimmed=true 
+          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -r maccatalyst-x64 --sc -p:PublishTrimmed=true 
 
       # Publish MAUI iOS
       - name: Publish MAUI iOS
         run: |
-          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net8.0-ios -c Release -p:ArchiveOnBuild=true -p:RuntimeIdentifier=ios-arm64 -p:EnableCodeSigning=false -p:EnableOnDemandResources=false -p:MtouchUseLlvm=false -p:AotAssemblies=true
+          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-ios -c:Release -p:ArchiveOnBuild=true -p:RuntimeIdentifier=ios-arm64 -p:EnableCodeSigning=false -p:EnableOnDemandResources=false -p:MtouchUseLlvm=false -p:AotAssemblies=true
 
       # Update to Github Releases
       - name: Update maccatalyst-arm64 to Github Releases
@@ -181,23 +181,23 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}maccatalyst/maccatalyst-arm64/publish/*.pkg
           file_glob: true
-          asset_name: ${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-maccatalys-arm64.pkg
+          asset_name: ${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalys-arm64.pkg
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
 
       - name: Update maccatalyst-x64 to Github Releases
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}maccatalyst/maccatalyst-x64/publish/*.pkg
+          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}maccatalyst/maccatalyst-x64/publish/*.pkg
           file_glob: true
-          asset_name: ${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-maccatalys-x64.pkg
+          asset_name: ${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalys-x64.pkg
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
 
       - name: Update ios-arm64 to Github Releases
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}ios/ios-arm64/publish/*.ipa
+          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}ios/ios-arm64/publish/*.ipa
           file_glob: true
-          asset_name: ${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-ios-arm64.ipa
+          asset_name: ${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-ios-arm64.ipa
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}

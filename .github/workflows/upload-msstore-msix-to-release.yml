@@ -36,4 +36,4 @@ jobs:
       with:
         store-id: ${{ env.STORE_ID }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        asset-name-pattern: '${{env.APP_Name}}-${{env.APPLICATION_DISPLAY_VERSION}}-windows-x64'
+        asset-name-pattern: ${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-windows-x64
