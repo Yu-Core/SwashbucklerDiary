@@ -356,13 +356,21 @@ html {
     }
 }
 
-.m-snack__wrapper.theme--light * {
+.m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--light{
     color: rgba(0,0,0,.87) !important;
 }
 
-.m-snack__wrapper.theme--dark * {
+    .m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--light .m-snack__action *{
+        color: rgba(0,0,0,.87) !important;
+    }
+
+.m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--dark{
     color: rgba(255,255,255,.87) !important;
 }
+
+    .m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--dark .m-snack__action *{
+        color: rgba(255,255,255,.87) !important;
+    }
 
 .setting-title {
     display: none !important;
