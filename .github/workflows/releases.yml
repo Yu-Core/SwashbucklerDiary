@@ -109,7 +109,7 @@ jobs:
 
       # Publish MAUI Windows
       - name: Publish MAUI Windows
-        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64 -p:WindowsAppSDKSelfContained=true
+        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64 -p:WindowsAppSDKSelfContained=true --sc -p:WindowsAppSdkDeploymentManagerInitialize=false
 
       # Update to Microsoft Store
       - name: Setup Microsoft Store Developer CLI
