@@ -28,7 +28,7 @@
     --editor-bottom: 48px !important;
 }
 
-    .vditor-reset iframe {
+    .vditor-reset iframe.iframe__video {
         width: 100%;
         aspect-ratio: 2/1;
         border-radius: 8px;
@@ -40,8 +40,11 @@
     }
 
     .vditor-reset audio {
-        border-radius: 8px;
+        border-radius: 9999px;
     }
+        .vditor-reset audio::-webkit-media-controls {
+            width: 100%;
+        }
 
     .vditor-reset img {
         border-radius: 8px;
