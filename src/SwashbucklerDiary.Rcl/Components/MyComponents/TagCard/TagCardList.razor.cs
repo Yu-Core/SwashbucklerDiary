@@ -93,10 +93,10 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             sortOptions = new()
             {
-                {"Sort.Name.Desc", it => it.OrderByDescending(t => t.Name) },
-                {"Sort.Name.Asc", it => it.OrderBy(t => t.Name) },
                 {"Sort.Count.Desc", it => it.OrderByDescending(GetDiaryCount) },
                 {"Sort.Count.Asc", it => it.OrderBy(GetDiaryCount) },
+                {"Sort.Name.Desc", it => it.OrderByDescending(t => t.Name) },
+                {"Sort.Name.Asc", it => it.OrderBy(t => t.Name) },
                 {"Sort.Time.Desc", it => it.OrderByDescending(t => t.CreateTime) },
                 {"Sort.Time.Asc", it => it.OrderBy(t => t.CreateTime) },
             };
