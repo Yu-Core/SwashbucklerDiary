@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         public Task OnSystemThemeChanged(bool isDarkTheme)
         {
             SystemTheme = isDarkTheme ? Theme.Dark : Theme.Light;
-            return SystemThemeChanged?.Invoke(SystemTheme) ?? Task.FromResult(0);
+            return SystemThemeChanged?.Invoke(SystemTheme) ?? Task.CompletedTask;
         }
     }
 }

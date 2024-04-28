@@ -331,6 +331,10 @@ html {
     cursor: pointer;
 }
 
+.video-card {
+    cursor: pointer;
+}
+
 /*消息条提示样式，仿照masa旧版中的Toast*/
 .m-snack__wrapper {
     border-radius: 8px !important;
@@ -527,7 +531,7 @@ html.m-overlay-scroll-blocked {
 }
 
 .adaptive-card-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
 }
 
 @media screen and (min-width: 960px) {

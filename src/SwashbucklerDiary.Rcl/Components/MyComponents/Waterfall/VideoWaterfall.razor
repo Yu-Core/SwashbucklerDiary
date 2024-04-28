@@ -5,7 +5,7 @@
     <wc-waterfall @ref="elementReference" class="video-waterfall" gap="@Gap" cols="@Cols">
         @foreach (var item in LoadedItems)
         {
-            <video @key="item.ResourceUri" class="rounded-lg" src="@item.ResourceUri" />
+            <video @key="item.ResourceUri" class="video-card rounded-lg" src="@item.ResourceUri" />
         }
     </wc-waterfall>
 

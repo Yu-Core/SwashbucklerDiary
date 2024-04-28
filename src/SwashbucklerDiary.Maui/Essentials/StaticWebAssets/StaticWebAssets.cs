@@ -4,15 +4,10 @@ namespace SwashbucklerDiary.Maui.Essentials
 {
     public class StaticWebAssets : Rcl.Essentials.StaticWebAssets
     {
-        private readonly JsonSerializerOptions defaultJsonSerializerOptions = new()
-        {
-            PropertyNameCaseInsensitive = true
-        };
-
         public override async Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true, JsonSerializerOptions? jsonSerializerOptions = null)
         {
             var contents = await ReadContentAsync(relativePath, isRcl).ConfigureAwait(false);
-            return JsonSerializer.Deserialize<T>(contents, jsonSerializerOptions ?? defaultJsonSerializerOptions) ?? throw new($"{relativePath} deserialize fail");
+            return JsonSerializer.Deserialize<T>(contents, jsonSerializerOptions ?? DefaultJsonSerializerOptions) ?? throw new($"{relativePath} deserialize fail");
         }
 
         public override async Task<string> ReadContentAsync(string relativePath, bool isRcl = true)

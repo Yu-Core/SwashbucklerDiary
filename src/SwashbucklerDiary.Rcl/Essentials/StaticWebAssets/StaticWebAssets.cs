@@ -8,6 +8,11 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         public static string? RclAssemblyName => _rclAssemblyName.Value;
 
+        protected virtual JsonSerializerOptions DefaultJsonSerializerOptions { get; set; } = new()
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
         public abstract Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true, JsonSerializerOptions? jsonSerializerOptions = null);
 
         public abstract Task<string> ReadContentAsync(string relativePath, bool isRcl = true);
