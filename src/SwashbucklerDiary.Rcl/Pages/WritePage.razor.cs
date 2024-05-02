@@ -33,6 +33,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool overlay;
 
+        private bool autofocus = true;
+
         private int editAutoSave;
 
         private PeriodicTimer? timer;

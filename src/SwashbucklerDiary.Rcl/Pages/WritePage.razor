@@ -77,7 +77,7 @@
                              Text="@WeatherText"
                              OnClick="()=>showWeather=true">
             </DiaryInfoButton>
-            
+
             <DiaryInfoButton Icon="@MoodIcon"
                              Text="@MoodText"
                              OnClick="()=>showMood=true">
@@ -112,14 +112,16 @@
             <MarkdownEdit @ref="markdownEdit"
                           @bind-Value="diary.Content"
                           WrapClass="write-markdown-wrap"
-                          Class="px-3 rounded-lg write-markdown">
+                          Class="px-3 rounded-lg write-markdown"
+                          Autofocus="autofocus">
             </MarkdownEdit>
         }
         else
         {
             <TextareaEdit @ref="textareaEdit"
                           @bind-Value="diary.Content"
-                          Class="rounded-lg">
+                          Class="rounded-lg"
+                          Autofocus="autofocus">
             </TextareaEdit>
         }
     </div>

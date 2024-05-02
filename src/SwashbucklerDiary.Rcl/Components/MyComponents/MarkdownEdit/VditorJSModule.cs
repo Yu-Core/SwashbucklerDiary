@@ -19,5 +19,10 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await base.InvokeVoidAsync("focus", Ref);
         }
+
+        public async Task Autofocus(ElementReference Ref)
+        {
+            await base.InvokeVoidAsync("autofocus", Ref);
+        }
     }
 }

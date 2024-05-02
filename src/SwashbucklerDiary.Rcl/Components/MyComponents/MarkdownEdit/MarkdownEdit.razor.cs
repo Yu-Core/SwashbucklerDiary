@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         private Dictionary<string, object>? _options;
 
-        private MMarkdown MMarkdown = default!;
+        private MMarkdown mMarkdown = default!;
 
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
@@ -31,6 +31,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public string? WrapClass { get; set; }
+
+        [Parameter]
+        public bool Autofocus { get; set; }
 
         protected override void OnInitialized()
         {
@@ -109,6 +112,10 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task AfterMarkdownRender()
         {
             await Module.After();
+            if (Autofocus)
+            {
+                await Module.Autofocus(mMarkdown.Ref);
+            }
         }
 
         private async void HandleToolbarButtonClick(string btnName)
@@ -165,8 +172,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public async Task InsertValueAsync(string value)
         {
-            await Module.Focus(MMarkdown.Ref);
-            await MMarkdown.InsertValueAsync(value);
+            if (string.IsNullOrEmpty(Value))
+            {
+                await Module.Focus(mMarkdown.Ref);
+            }
+
+            await mMarkdown.InsertValueAsync(value);
         }
     }
 }
