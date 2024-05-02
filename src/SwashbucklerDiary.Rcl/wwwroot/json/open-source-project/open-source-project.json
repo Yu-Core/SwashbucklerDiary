@@ -12,7 +12,12 @@
   {
     "Name": "Blazored LocalStorage",
     "License": "MIT license",
-    "Url": "https://github.com/Blazored/LocalStorage"
+    "Url": "https://github.com/Blazored/LocalStorage/blob/main/LICENSE"
+  },
+  {
+    "Name": "Brotli",
+    "License": "MIT license",
+    "Url": "https://github.com/google/brotli/blob/master/LICENSE"
   },
   {
     "Name": "ClosedXML",
@@ -23,6 +28,11 @@
     "Name": "CommunityToolkit.Maui",
     "License": "MIT license",
     "Url": "https://github.com/CommunityToolkit/Maui/blob/main/LICENSE"
+  },
+  {
+    "Name": "hash-wasm",
+    "License": "MIT license",
+    "Url": "https://github.com/Daninet/hash-wasm/blob/master/LICENSE"
   },
   {
     "Name": "html2canvas",
