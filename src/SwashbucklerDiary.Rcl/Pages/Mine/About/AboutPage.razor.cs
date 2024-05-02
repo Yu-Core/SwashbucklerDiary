@@ -9,6 +9,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class AboutPage : ImportantComponentBase
     {
+        private string recordNumber = "辽ICP备2023009191号-2A";
+
         private bool showSourceCode;
 
         private bool showUpdate;
@@ -101,6 +103,12 @@ namespace SwashbucklerDiary.Rcl.Pages
                 await AlertService.Error(I18n.T("VersionUpdate.Check failed"));
                 Logger.LogError(e, "VersionUpdate check failed");
             }
+        }
+
+        private async Task CopyRecordNumber()
+        {
+            await PlatformIntegration.SetClipboard(recordNumber);
+            await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
     }
 }

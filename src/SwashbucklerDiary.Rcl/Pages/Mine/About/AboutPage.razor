@@ -29,8 +29,13 @@
                     </MListItemSubtitle>
                     <MListItemSubtitle>
                         <a href="https://beian.miit.gov.cn/" target="_blank" class="text--disabled text-decoration-none" style="font-size:0.75rem;">
-                            @(I18n.T("About.Filing number"))辽ICP备2023009191号-2A
+                            @(I18n.T("About.Record number") + recordNumber)
                         </a>
+                        <MButton Class="text--disabled"
+                                 IconName="mdi-content-copy"
+                                 XSmall
+                                 OnClick="CopyRecordNumber">
+                        </MButton>
                     </MListItemSubtitle>
                 </MListItemContent>
             </MListItem>
