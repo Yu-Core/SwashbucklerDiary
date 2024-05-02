@@ -7,9 +7,7 @@ English | [简体中文](./README.md)
 Not all diaries are called daily records. This is a secret book of a swashbuckler! Record the details of your life and write your legend in the Jianghu.
 
 ## Online preview
-[Live Demo 1（GitHub Pages）](https://yu-core.github.io/SwashbucklerDiary/)
-
-[Live Demo 2（Gitee Pages）](https://yu-core.gitee.io/swashbucklerDiary/)
+[Live Demo（GitHub Pages）](https://yu-core.github.io/SwashbucklerDiary/)
 
 ## Main Technology Stack
 - [MAUI](https://learn.microsoft.com/dotnet/maui/)
@@ -28,18 +26,22 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [CoolApk](https://www.coolapk.com/apk/937401)
 
 ## Characteristics
-- Minimalist style
-- Tags, weather, mood, location
-- Markdown
-- Multilingual
-- Dark mode
-- All data is stored locally without the need for networking
-- Local backup
-- Webdav backup
-- LAN transmission
-- Export
-- Sharing
-- Achievements
+* Minimalist UI design
+* Markdown real-time rendering
+* Cross platform (Android, Windows, iOS, macOS, Web)
+* Multi size responsive interface layout
+* All data is stored locally without the need for networking
+* Supports images, audio, and video
+* Supports mathematical formulas, brain maps, charts, flowcharts, Gantt c harts, time series diagrams, and staff charts
+* Supports multiple languages
+* Supports dark mode
+* Label classification display
+* Weather, mood, location
+* Export multiple format files
+* Support text and image sharing
+* Support webdav backup
+* Synchronous transmission under the same local area network
+* Perfect immersive status bar navigation bar experience
 
 ## Screenshot
 
