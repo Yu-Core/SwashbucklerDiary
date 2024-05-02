@@ -170,19 +170,19 @@ namespace SwashbucklerDiary.Rcl.Pages
             var mail = FeedbackTypeDatas["Email"];
             try
             {
-                List<string> recipients = [mail];
-                bool isSuccess = await PlatformIntegration.SendEmail(null, null, recipients);
-                if (!isSuccess)
+                bool isSuccess = await PlatformIntegration.SendEmail(null, null, [mail]);
+                if (isSuccess)
                 {
-                    await PlatformIntegration.SetClipboard(mail);
-                    await AlertService.Success(I18n.T("Mine.MailCopy"));
+                    return;
                 }
             }
             catch (Exception e)
             {
                 Logger.LogError(e, "SendMailFail");
-                await AlertService.Error(I18n.T("Mine.SendMailFail"));
             }
+
+            await PlatformIntegration.SetClipboard(mail);
+            await AlertService.Success(I18n.T("Mine.MailCopy"));
         }
 
         private async Task ToGithub()
@@ -200,21 +200,22 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task OpenQQGroup()
         {
-            var qqGroup = FeedbackTypeDatas["QQGroup"];
             try
             {
-                bool flag = await AccessExternal.JoinQQGroup();
-                if (!flag)
+                bool isSuccess = await AccessExternal.JoinQQGroup();
+                if (isSuccess)
                 {
-                    await PlatformIntegration.SetClipboard(qqGroup);
-                    await AlertService.Success(I18n.T("Mine.QQGroupCopy"));
+                    return;
                 }
             }
             catch (Exception e)
             {
                 Logger.LogError(e, "JoinQQGroupError");
-                await AlertService.Error(I18n.T("Mine.QQGroupError"));
             }
+
+            var qqGroup = FeedbackTypeDatas["QQGroup"];
+            await PlatformIntegration.SetClipboard(qqGroup);
+            await AlertService.Success(I18n.T("Mine.QQGroupCopy"));
         }
 
         private Task Search(string? value)

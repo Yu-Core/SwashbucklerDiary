@@ -44,7 +44,7 @@ namespace SwashbucklerDiary.Maui.Services
 
         public override Task<bool> JoinQQGroup()
 #if ANDROID || IOS
-            => Launcher.Default.TryOpenAsync(JoinQQGroupUrl);
+            => Launcher.Default.OpenAsync(JoinQQGroupUrl);
 #else
             => _platformIntegration.OpenBrowser(JoinQQGroupUrl);
 #endif

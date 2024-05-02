@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
-	
+
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
@@ -22,13 +22,13 @@
 		<Nullable>enable</Nullable>
 		<NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
 		<MauiVersion>8.0.21</MauiVersion>
-		
+
 		<!-- Display name -->
 		<ApplicationTitle>侠客日记</ApplicationTitle>
-		
+
 		<!-- App Identifier -->
 		<ApplicationId>com.yucore.swashbucklerdiary</ApplicationId>
-		
+
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
@@ -42,6 +42,11 @@
 
 		<DefaultLanguage>zh-CN</DefaultLanguage>
 
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<!-- Debug configuration settings -->
+		<ApplicationId>com.yucore.swashbucklerdiarydebug</ApplicationId>
 	</PropertyGroup>
 
 	<!-- Android -->
@@ -83,7 +88,7 @@
 		<Compile Remove="**\Windows\**\*.cs" />
 		<None Include="**\Windows\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
 
 		<!-- App icon for android -->
@@ -110,7 +115,7 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-		
+
 	</ItemGroup>
 
 	<!-- Resource Localization -->
@@ -135,8 +140,8 @@
 	</PropertyGroup>
 
 	<ItemGroup  Condition="$(TargetFramework.StartsWith('net8.0-android')) != true AND $(TargetFramework.StartsWith('net8.0-ios')) != true">
-	  <Content Remove="wwwroot\css\status-bar-and-navigation-bar.css" />
-	  <None Include="wwwroot\css\status-bar-and-navigation-bar.css" />
+		<Content Remove="wwwroot\css\status-bar-and-navigation-bar.css" />
+		<None Include="wwwroot\css\status-bar-and-navigation-bar.css" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -144,7 +149,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
 		<ProjectReference Include="..\SwashbucklerDiary.Rcl\SwashbucklerDiary.Rcl.csproj" />
 		<ProjectReference Include="..\SwashbucklerDiary.Repository\SwashbucklerDiary.Repository.csproj" />
@@ -156,5 +161,5 @@
 		<PackageReference Include="WebDav.Client" Version="2.8.0" />
 		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.3.0" />
 	</ItemGroup>
-	
+
 </Project>
