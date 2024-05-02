@@ -10,6 +10,20 @@ namespace SwashbucklerDiary.Repository
         {
         }
 
+        public override async Task<List<ResourceModel>> GetListAsync()
+        {
+            var resources = await base.Context.Queryable<ResourceModel>().ToListAsync();
+            resources.Reverse();
+            return resources;
+        }
+
+        public override async Task<List<ResourceModel>> GetListAsync(Expression<Func<ResourceModel, bool>> expression)
+        {
+            var resources = await base.Context.Queryable<ResourceModel>().Where(expression).ToListAsync();
+            resources.Reverse();
+            return resources;
+        }
+
         public Task<List<ResourceModel>> QueryUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> expression)
         {
             return base.Context.Queryable<ResourceModel>()
