@@ -1,9 +1,9 @@
-export async function checkCameraPermission() {
+ï»¿export async function checkCameraPermission() {
     try {
         const permissionStatus = await navigator.permissions.query({ name: 'camera' });
         return permissionStatus.state === 'granted';
     } catch (error) {
-        console.error('ÎŞ·¨¼ì²éÉãÏñÍ·È¨ÏŞ', error);
+        console.error('æ— æ³•æ£€æŸ¥æ‘„åƒå¤´æƒé™', error);
         return false;
     }
 }
@@ -14,51 +14,51 @@ export function isCaptureSupported() {
 
 export async function tryCameraPermission() {
     try {
-        // Ê¹ÓÃ await µÈ´ı Promise ½âÎö
+        // ä½¿ç”¨ await ç­‰å¾… Promise è§£æ
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        // ÉãÏñÍ·È¨ÏŞÒÑÊÚÓè£¬¿ÉÒÔ¹Ø±Õ»ò´¦Àístream
+        // æ‘„åƒå¤´æƒé™å·²æˆäºˆï¼Œå¯ä»¥å…³é—­æˆ–å¤„ç†stream
         stream.getTracks().forEach(track => track.stop());
-        return true; // ·µ»Ø true ±íÊ¾È¨ÏŞÒÑÊÚÓè
+        return true; // è¿”å› true è¡¨ç¤ºæƒé™å·²æˆäºˆ
     } catch (error) {
-        // ÉãÏñÍ·È¨ÏŞ±»¾Ü¾ø»ò³öÏÖ´íÎó
-        console.error('ÉãÏñÍ·È¨ÏŞÇëÇó´íÎó:', error);
-        return false; // ·µ»Ø false ±íÊ¾È¨ÏŞÎ´ÊÚÓè»ò³ö´í
+        // æ‘„åƒå¤´æƒé™è¢«æ‹’ç»æˆ–å‡ºç°é”™è¯¯
+        console.error('æ‘„åƒå¤´æƒé™è¯·æ±‚é”™è¯¯:', error);
+        return false; // è¿”å› false è¡¨ç¤ºæƒé™æœªæˆäºˆæˆ–å‡ºé”™
     }
 }
 
 export function openUri(uri, blank) {
     return new Promise((resolve, reject) => {
-        // ¼ì²âÒ³Ãæ×´Ì¬µÄ±êÖ¾
+        // æ£€æµ‹é¡µé¢çŠ¶æ€çš„æ ‡å¿—
         let pageHiddenOrBlurred = false;
 
-        // ´¦ÀíÒ³Ãæ×´Ì¬±ä»¯µÄÊÂ¼ş
+        // å¤„ç†é¡µé¢çŠ¶æ€å˜åŒ–çš„äº‹ä»¶
         function handlePageChange() {
             pageHiddenOrBlurred = true;
             cleanup();
-            // Ò³Ãæ×´Ì¬±ä»¯£¬ÈÏÎªÁ´½Ó±»´ò¿ªÁË
+            // é¡µé¢çŠ¶æ€å˜åŒ–ï¼Œè®¤ä¸ºé“¾æ¥è¢«æ‰“å¼€äº†
             resolve(true);
         }
 
-        // ÒÆ³ıÊÂ¼ş¼àÌı²¢ÇåÀí
+        // ç§»é™¤äº‹ä»¶ç›‘å¬å¹¶æ¸…ç†
         function cleanup() {
             window.removeEventListener('blur', handlePageChange);
             window.removeEventListener('pagehide', handlePageChange);
             document.removeEventListener('visibilitychange', handleVisibilityChange);
         }
 
-        // ´¦ÀíÒ³Ãæ¿É¼ûĞÔ±ä»¯µÄÊÂ¼ş
+        // å¤„ç†é¡µé¢å¯è§æ€§å˜åŒ–çš„äº‹ä»¶
         function handleVisibilityChange() {
             if (document.hidden) {
                 handlePageChange();
             }
         }
 
-        // ¼àÌıÒ³Ãæ×´Ì¬±ä»¯µÄÊÂ¼ş
+        // ç›‘å¬é¡µé¢çŠ¶æ€å˜åŒ–çš„äº‹ä»¶
         window.addEventListener('blur', handlePageChange);
         window.addEventListener('pagehide', handlePageChange);
         document.addEventListener('visibilitychange', handleVisibilityChange);
 
-        // ´´½¨²¢µã»÷<a>ÔªËØÒÔ³¢ÊÔ´ò¿ªÁ´½Ó
+        // åˆ›å»ºå¹¶ç‚¹å‡»<a>å…ƒç´ ä»¥å°è¯•æ‰“å¼€é“¾æ¥
         const a = document.createElement("a");
         a.href = uri;
         if (blank) {
@@ -69,11 +69,11 @@ export function openUri(uri, blank) {
         a.click();
         a.remove();
 
-        // ÉèÖÃ³¬Ê±¼ì²é
+        // è®¾ç½®è¶…æ—¶æ£€æŸ¥
         setTimeout(() => {
             cleanup();
             if (!pageHiddenOrBlurred) {
-                // Èç¹ûÖ¸¶¨Ê±¼äÄÚÒ³Ãæ×´Ì¬Ã»ÓĞ±ä»¯£¬ÈÏÎªÁ´½ÓÃ»ÓĞ±»´ò¿ª
+                // å¦‚æœæŒ‡å®šæ—¶é—´å†…é¡µé¢çŠ¶æ€æ²¡æœ‰å˜åŒ–ï¼Œè®¤ä¸ºé“¾æ¥æ²¡æœ‰è¢«æ‰“å¼€
                 reject(false);
             }
         }, 1000);
@@ -99,7 +99,7 @@ export function setClipboard(text) {
         let input = document.createElement('input');
         input.type = 'text';
         input.readOnly = true;
-        input.value = text; 
+        input.value = text;
 
         document.body.appendChild(input);
         input.focus();
@@ -143,7 +143,7 @@ export async function shareFileAsync(title, path) {
         } catch (e) {
             console.error(e);
         }
-    } 
+    }
 }
 
 export function saveFileAsync(fileName, filePath) {
@@ -170,29 +170,28 @@ export function pickFileAsync(accept, suffix) {
         input.accept = accept;
         input.style.display = 'none';
 
-        function handleSelectedFile() {
+        const handleSelectedFile = () => {
             const file = input.files[0];
             if (file) {
                 if (suffix && !file.name.endsWith(suffix)) {
                     resolve("");
                 }
                 else {
-                    // wasmÄ£Ê½£¬C#¼ÆËãmd5±È½ÏÄÑ£¬ËùÒÔÔÚjsÖĞ¼ÆËã
-                    calculateMD5(file)
+                    // wasmæ¨¡å¼ï¼ŒC#è®¡ç®—md5æ¯”è¾ƒéš¾ï¼Œæ‰€ä»¥åœ¨jsä¸­è®¡ç®—
+                    calculateMD5.readFile(file)
                         .then((md5) => {
-                            var newFileName = `${md5}${file.name.substring(file.name.lastIndexOf("."))}`;
-                            var newFile = new File([file], newFileName);
+                            var fileName = `${md5}${file.name.substring(file.name.lastIndexOf("."))}`;
                             var reader = new FileReader();
                             reader.onload = function (event) {
-                                // »ñÈ¡ÎÄ¼şÄÚÈİ
+                                // è·å–æ–‡ä»¶å†…å®¹
                                 var contents = event.target.result;
 
-                                // Ğ´Èë Emscripten ÎÄ¼şÏµÍ³
-                                var filePath = `cache/${newFile.name}`;
+                                // å†™å…¥ Emscripten æ–‡ä»¶ç³»ç»Ÿ
+                                var filePath = `cache/${fileName}`;
                                 Module.FS.writeFile(filePath, new Uint8Array(contents), { encoding: 'binary' });
                                 resolve(filePath);
                             };
-                            reader.readAsArrayBuffer(newFile);
+                            reader.readAsArrayBuffer(file);
                         })
                         .catch(() => {
                             resolve("");
@@ -204,20 +203,21 @@ export function pickFileAsync(accept, suffix) {
             input.remove();
         }
 
-        function afterChooseFile() {
+        const afterChooseFile = () => {
+            // ç§»é™¤äº‹ä»¶ç›‘å¬å™¨ï¼Œç¡®ä¿ä»£ç åªæ‰§è¡Œä¸€æ¬¡
+            window.removeEventListener("focus", afterChooseFile);
+            document.removeEventListener("touchstart", afterChooseFile);
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+            input.removeEventListener("change", afterChooseFile);
+
             setTimeout(() => {
                 handleSelectedFile();
-                // ÒÆ³ıÊÂ¼ş¼àÌıÆ÷£¬È·±£´úÂëÖ»Ö´ĞĞÒ»´Î
-                window.removeEventListener("focus", afterChooseFile);
-                document.removeEventListener("touchstart", afterChooseFile);
-                document.removeEventListener("visibilitychange", handleVisibilityChange);
-                input.removeEventListener("change", afterChooseFile);
                 input.remove();
             }, 200);
 
         }
 
-        function handleVisibilityChange() {
+        const handleVisibilityChange = () => {
             if (document.visibilityState === "visible") {
                 afterChooseFile();
             }
@@ -232,39 +232,42 @@ export function pickFileAsync(accept, suffix) {
     });
 }
 
-function calculateMD5(pickfile) {
-    return new Promise((resolve, reject) => {
-        var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
-            file = pickfile,
-            chunkSize = 2097152,                             // Read in chunks of 2MB
-            chunks = Math.ceil(file.size / chunkSize),
-            currentChunk = 0,
-            spark = new SparkMD5.ArrayBuffer(),
-            fileReader = new FileReader();
+const calculateMD5 = {
+    chunkSize: 64 * 1024 * 1024,
+    fileReader: new FileReader(),
+    hasher: null,
 
-        fileReader.onload = function (e) {
-            console.log('read chunk nr', currentChunk + 1, 'of', chunks);
-            spark.append(e.target.result);                   // Append array buffer
-            currentChunk++;
+    hashChunk: function (chunk) {
+        return new Promise((resolve, reject) => {
+            this.fileReader.onload = async (e) => {
+                const view = new Uint8Array(e.target.result);
+                this.hasher.update(view);
+                resolve();
+            };
 
-            if (currentChunk < chunks) {
-                loadNext();
-            } else {
-                resolve(spark.end());
-            }
-        };
+            this.fileReader.readAsArrayBuffer(chunk);
+        });
+    },
 
-        fileReader.onerror = function (event) {
-            reject("FileReader error: " + event.target.errorCode);
-        };
-
-        function loadNext() {
-            var start = currentChunk * chunkSize,
-                end = ((start + chunkSize) >= file.size) ? file.size : start + chunkSize;
-
-            fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
+    readFile: async function (file) {
+        if (this.hasher) {
+            this.hasher.init();
+        } else {
+            this.hasher = await hashwasm.createMD5();
         }
 
-        loadNext();
-    });
-}
+        const chunkNumber = Math.floor(file.size / this.chunkSize);
+
+        for (let i = 0; i <= chunkNumber; i++) {
+            const chunk = file.slice(
+                this.chunkSize * i,
+                Math.min(this.chunkSize * (i + 1), file.size)
+            );
+            await this.hashChunk(chunk);
+        }
+
+        const hash = this.hasher.digest();
+        return Promise.resolve(hash);
+    }
+};
+
