@@ -41,6 +41,10 @@
     height: var(--android-navigation-bar-height);
 }
 
+.m-bottom-sheet.m-dialog.p-mobile-date-picker__content {
+    padding-bottom: var(--android-navigation-bar-height);
+}
+
 .m-enqueued-snackbars.m-enqueued-snackbars--bottom::after {
     content: '';
     display: block;
@@ -88,6 +92,10 @@
 
     .m-bottom-sheet.m-dialog .m-card::after {
         height: env(safe-area-inset-bottom);
+    }
+
+    .m-bottom-sheet.m-dialog.p-mobile-date-picker__content {
+        padding-bottom: env(safe-area-inset-bottom);
     }
 
     .m-enqueued-snackbars.m-enqueued-snackbars--bottom::after {
