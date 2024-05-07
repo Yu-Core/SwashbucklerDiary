@@ -18,7 +18,6 @@ namespace SwashbucklerDiary.WebAssembly.Services
             base(preferences, staticWebAssets)
         {
             _module = new(() => ((IJSInProcessRuntime)jSRuntime).ImportJsModule("js/setting.js"));
-
         }
 
         public override async Task InitializeAsync()

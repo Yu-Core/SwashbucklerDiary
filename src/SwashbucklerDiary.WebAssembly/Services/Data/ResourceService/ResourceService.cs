@@ -1,35 +1,16 @@
-﻿using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Repository;
+﻿using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Shared;
-using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.WebAssembly.Services
 {
-    public class ResourceService : BaseDataService<ResourceModel>, IResourceService
+    public class ResourceService : Rcl.Services.ResourceService
     {
-        private readonly IResourceRepository _resourceRepository;
-
-        
-        public ResourceService(IResourceRepository resourceRepository)
+        public ResourceService(IResourceRepository resourceRepository) : base(resourceRepository)
         {
-            base._iBaseRepository = resourceRepository;
-            _resourceRepository = resourceRepository;
         }
 
-        public async Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> expression)
+        protected override void DeleteResourceFiles(List<ResourceModel> resources)
         {
-            var resources = await _resourceRepository.QueryUnusedResourcesAsync(expression);
-            if (resources is null || resources.Count == 0)
-            {
-                return false;
-            }
-
-            var flag = await _resourceRepository.DeleteAsync(resources);
-            if (!flag)
-            {
-                return false;
-            }
-
             foreach (var resource in resources)
             {
                 var path = resource.ResourceUri!;
@@ -38,7 +19,6 @@ namespace SwashbucklerDiary.WebAssembly.Services
                     File.Delete(path);
                 }
             }
-            return true;
         }
     }
 }

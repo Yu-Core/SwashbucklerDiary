@@ -2,8 +2,8 @@
 using SwashbucklerDiary.Maui.Services;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Repository;
 
 namespace SwashbucklerDiary.Maui.Extensions
 {
@@ -26,10 +26,10 @@ namespace SwashbucklerDiary.Maui.Extensions
 
             services.AddSingleton<ITagService, TagService>();
             services.AddSingleton<IDiaryService, DiaryService>();
-            services.AddSingleton<IAchievementService, AchievementService>();
+            services.AddSingleton<IAchievementService, Services.AchievementService>();
             services.AddSingleton<ILocationService, LocationService>();
             services.AddSingleton<ILogService, LogService>();
-            services.AddSingleton<IResourceService, ResourceService>();
+            services.AddSingleton<IResourceService, Services.ResourceService>();
 
             services.AddSingleton<INavigateService, NavigateService>();
             services.AddSingleton<IIconService, Services.IconService>();

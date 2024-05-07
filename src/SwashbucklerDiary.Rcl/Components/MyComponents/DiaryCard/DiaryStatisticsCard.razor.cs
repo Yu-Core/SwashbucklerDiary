@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -61,7 +62,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private int GetWordCount(List<DiaryModel> diaries)
         {
             var type = (WordCountStatistics)Enum.Parse(typeof(WordCountStatistics), I18n.T("Write.WordCountType")!);
-            return DiaryService.GetWordCount(diaries, type);
+            return diaries.GetWordCount(type);
         }
     }
 }

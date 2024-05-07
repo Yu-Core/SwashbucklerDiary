@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -115,6 +116,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             avatar = SettingService.Get<string>(Setting.Avatar);
         }
 
+        private WordCountStatistics WordCountType
+            => (WordCountStatistics)Enum.Parse(typeof(WordCountStatistics), I18n.T("Write.WordCountType")!);
+
+
         private void LoadView()
         {
             ViewLists = new()
@@ -224,17 +229,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             return Task.CompletedTask;
         }
 
-        private int GetWordCount(List<DiaryModel> diaries)
-        {
-            var type = (WordCountStatistics)Enum.Parse(typeof(WordCountStatistics), I18n.T("Write.WordCountType")!);
-            return DiaryService.GetWordCount(diaries, type);
-        }
-
         private async Task UpdateStatisticalDataAsync()
         {
             var diries = await DiaryService.QueryAsync(it => !it.Private);
             diaryCount = diries.Count;
-            wordCount = GetWordCount(diries);
+            wordCount = diries.GetWordCount(WordCountType);
             activeDayCount = diries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
         }
 

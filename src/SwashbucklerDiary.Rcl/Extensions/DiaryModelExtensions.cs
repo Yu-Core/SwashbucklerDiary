@@ -60,6 +60,16 @@ namespace SwashbucklerDiary.Rcl.Extensions
             return text;
         }
 
+        public static int GetWordCount(this List<DiaryModel> diaries, WordCountStatistics type)
+        {
+            return type switch
+            {
+                WordCountStatistics.Word => diaries.Sum(d => d.Content?.WordCount() ?? 0),
+                WordCountStatistics.Character => diaries.Sum(d => d.Content?.CharacterCount() ?? 0),
+                _ => default
+            };
+        }
+
         private static string SubText(string? text, int startIndex, int? length = null)
         {
             if (text == null)
