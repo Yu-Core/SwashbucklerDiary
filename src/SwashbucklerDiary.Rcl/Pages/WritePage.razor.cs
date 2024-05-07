@@ -3,6 +3,7 @@ using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -364,7 +365,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task HandleAchievements(bool background = false)
         {
             var messages = await AchievementService.UpdateUserState(Achievement.Diary);
-            var wordCount = await DiaryService.GetWordCount(WordCountType);
+            var alldiaries = await DiaryService.QueryAsync(it => !it.Private);
+            var wordCount = alldiaries.GetWordCount(WordCountType);
             var messages2 = await AchievementService.UpdateUserState(Achievement.Word, wordCount);
             if (!background)
             {

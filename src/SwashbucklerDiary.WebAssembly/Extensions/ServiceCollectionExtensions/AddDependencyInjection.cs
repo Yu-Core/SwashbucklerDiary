@@ -1,9 +1,8 @@
 ﻿using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Repository;
 using SwashbucklerDiary.WebAssembly.Essentials;
-using SwashbucklerDiary.WebAssembly.Services;
 
 namespace SwashbucklerDiary.WebAssembly.Extensions
 {
@@ -26,10 +25,10 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
 
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IDiaryService, DiaryService>();
-            services.AddScoped<IAchievementService, AchievementService>();
+            services.AddScoped<IAchievementService, Services.AchievementService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ILogService, LogService>();
-            services.AddScoped<IResourceService, ResourceService>();
+            services.AddScoped<IResourceService, Services.ResourceService>();
 
             services.AddScoped<INavigateService, NavigateService>();
             services.AddScoped<IIconService, Services.IconService>();

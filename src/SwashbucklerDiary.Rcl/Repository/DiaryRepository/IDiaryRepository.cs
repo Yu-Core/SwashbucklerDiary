@@ -1,8 +1,8 @@
 ﻿using SwashbucklerDiary.Shared;
 
-namespace SwashbucklerDiary.Rcl.Services
+namespace SwashbucklerDiary.Rcl.Repository
 {
-    public interface IDiaryService : IBaseDataService<DiaryModel>
+    public interface IDiaryRepository : IBaseRepository<DiaryModel>
     {
         Task<bool> UpdateTagsAsync(DiaryModel model);
 

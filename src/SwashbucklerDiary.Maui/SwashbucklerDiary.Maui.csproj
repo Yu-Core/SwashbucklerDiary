@@ -139,7 +139,7 @@
 		<IPhoneResourcePrefix>Platforms/MacCatalyst/Resources</IPhoneResourcePrefix>
 	</PropertyGroup>
 
-	<ItemGroup  Condition="$(TargetFramework.StartsWith('net8.0-android')) != true AND $(TargetFramework.StartsWith('net8.0-ios')) != true">
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-android')) != true AND $(TargetFramework.StartsWith('net8.0-ios')) != true">
 		<Content Remove="wwwroot\css\status-bar-and-navigation-bar.css" />
 		<None Include="wwwroot\css\status-bar-and-navigation-bar.css" />
 	</ItemGroup>
@@ -152,7 +152,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\SwashbucklerDiary.Rcl\SwashbucklerDiary.Rcl.csproj" />
-		<ProjectReference Include="..\SwashbucklerDiary.Repository\SwashbucklerDiary.Repository.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

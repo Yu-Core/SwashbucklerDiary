@@ -1,6 +1,5 @@
 ﻿using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
-using SwashbucklerDiary.WebAssembly.Essentials;
 using SwashbucklerDiary.WebAssembly.Services;
 
 namespace SwashbucklerDiary.WebAssembly.Extensions
@@ -21,7 +20,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddKeyedSingleton(nameof(IconService.DevicePlatformIcons), devicePlatformIcons);
 
             var achievements = await staticWebAssets.ReadJsonAsync<Dictionary<Achievement, int[]>>("json/achievement/achievements.json");
-            services.AddKeyedSingleton(nameof(AchievementService.Achievements), achievements);
+            services.AddKeyedSingleton("Achievements", achievements);
 
             var languages = await staticWebAssets.ReadJsonAsync<Dictionary<string, string>>("json/i18n/languages.json");
             services.AddKeyedSingleton(nameof(I18nService.Languages), languages);
