@@ -305,15 +305,15 @@ html {
     z-index: 99;
 }
 
-    .my-first-launch-card .theme--light.agreement-confirm-btn {
-        background-color: #000 !important;
-        color: #fff !important;
-    }
+.theme--light.black-white-btn {
+    background-color: #000 !important;
+    color: #fff !important;
+}
 
-    .my-first-launch-card .theme--dark.agreement-confirm-btn {
-        background-color: #fff !important;
-        color: #000 !important;
-    }
+.theme--dark.black-white-btn {
+    background-color: #fff !important;
+    color: #000 !important;
+}
 
 .chevron-down {
     transition: transform 0.75s;
@@ -360,19 +360,19 @@ html {
     }
 }
 
-.m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--light{
+.m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--light {
     color: rgba(0,0,0,.87) !important;
 }
 
-    .m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--light .m-snack__action *{
+    .m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--light .m-snack__action * {
         color: rgba(0,0,0,.87) !important;
     }
 
-.m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--dark{
+.m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--dark {
     color: rgba(255,255,255,.87) !important;
 }
 
-    .m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--dark .m-snack__action *{
+    .m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--dark .m-snack__action * {
         color: rgba(255,255,255,.87) !important;
     }
 

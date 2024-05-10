@@ -40,7 +40,7 @@ namespace SwashbucklerDiary.Rcl.Components
             InvokeAsync(StateHasChanged);
         }
 
-        public bool ShowMenu { get; set; }
+        public bool ShowMenu { get; protected set; }
 
         public T SelectedItemValue { get; set; } = new();
 

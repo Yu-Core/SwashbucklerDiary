@@ -64,9 +64,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await InternalVisibleChanged(false);
             await InvokeAsync(StateHasChanged);
 
-            Expression<Func<DiaryModel, bool>> exp = it => !it.Private;
-            exp = exp.And(expression);
-            exportDiaries = await DiaryService.QueryAsync(exp);
+            exportDiaries = await DiaryService.QueryAsync(expression);
             if (exportDiaries.Count == 0)
             {
                 await AlertService.Info(I18n.T("Diary.NoDiary"));

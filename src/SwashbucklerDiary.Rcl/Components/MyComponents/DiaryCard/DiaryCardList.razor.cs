@@ -13,6 +13,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool showExport;
 
+        private bool showSetPrivacy;
+
+        private bool privacyMode;
+
         private List<DiaryModel> exportDiaries = [];
 
         [Inject]
@@ -30,11 +34,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public string? NotFoundText { get; set; }
 
-        public bool ShowPrivacy { get; set; }
+        public bool ShowIcon { get; private set; }
 
-        public bool ShowIcon { get; set; }
-
-        public string? DateFormat { get; set; }
+        public string? DateFormat { get; private set; }
 
         protected override void OnInitialized()
         {
@@ -52,7 +54,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.ReadSettings();
 
-            ShowPrivacy = SettingService.Get<bool>(Setting.PrivacyMode);
+            showSetPrivacy = SettingService.Get<bool>(Setting.SetPrivacyDiary);
             ShowIcon = SettingService.Get<bool>(Setting.DiaryCardIcon);
             DateFormat = SettingService.Get<string>(Setting.DiaryCardDateFormat);
             var diarySort = SettingService.Get<string>(Setting.DiarySort);
@@ -60,6 +62,8 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 sortItem = diarySort;
             }
+
+            privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
         }
 
         private float ItemHeight => MasaBlazor.Breakpoint.Xs ? 156.8f : (MasaBlazor.Breakpoint.Sm ? 164.8f : 172.8f);
@@ -189,7 +193,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 new(this, TopText, "mdi-format-vertical-align-top", Topping),
                 new(this, "Diary.Export", "mdi-export", Export),
                 new(this, "Share.Sort", "mdi-sort-variant", Sort),
-                new(this, PrivateText, PrivateIcon, MovePrivacy, ()=>ShowPrivacy)
+                new(this, PrivateText, PrivateIcon, MovePrivacy, ()=>privacyMode || showSetPrivacy)
             ];
         }
 

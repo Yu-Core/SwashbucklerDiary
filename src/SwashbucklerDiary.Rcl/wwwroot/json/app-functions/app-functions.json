@@ -108,38 +108,6 @@
     "Href": "setting"
   },
   {
-    "Name": "Setting.Safe.PrivacyLibrary.Name",
-    "Icon": "mdi-safe",
-    "Path": "Setting.Safe.PrivacyLibrary.Path",
-    "Href": "setting",
-    "ConditionalDisplay": true,
-    "Privacy": true
-  },
-  {
-    "Name": "Setting.Safe.DisplayPrivacy.Name",
-    "Icon": "mdi-lock-outline",
-    "Path": "Setting.Safe.DisplayPrivacy.Path",
-    "Href": "setting",
-    "ConditionalDisplay": true,
-    "Privacy": true
-  },
-  {
-    "Name": "Setting.Safe.PrivacyPassword.Name",
-    "Icon": "mdi-key-outline",
-    "Path": "Setting.Safe.PrivacyPassword.Path",
-    "Href": "setting",
-    "ConditionalDisplay": true,
-    "Privacy": true
-  },
-  {
-    "Name": "Setting.Safe.Mask.Name",
-    "Icon": "mdi-database-remove-outline",
-    "Path": "Setting.Safe.Mask.Path",
-    "Href": "setting",
-    "ConditionalDisplay": true,
-    "Privacy": false
-  },
-  {
     "Name": "Setting.Display.Index.Name",
     "Icon": "mdi-home-outline",
     "Path": "Setting.Display.Index.Path",

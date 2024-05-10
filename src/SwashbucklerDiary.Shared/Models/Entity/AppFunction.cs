@@ -9,9 +9,5 @@
         public string? Path { get; set; }
 
         public string? Href { get; set; }
-
-        public bool ConditionalDisplay { get; set; } 
-
-        public bool Privacy { get; set; }
     }
 }

@@ -7,17 +7,17 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class SettingPage : ImportantComponentBase
     {
-        private bool privacy;
+        private bool privacyMode;
 
-        private string? privatePassword;
-
-        private bool showPPSet;
-
-        private bool showPPInput;
+        private bool hidePrivacyModeEntrance;
 
         private bool showClearCache;
 
         private bool showStatisticsCard;
+
+        private bool showprivacyModeEntrancePasswordDialog;
+
+        private string? privacyModeEntrancePassword;
 
         private string? cacheSize;
 
@@ -35,71 +35,11 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            UpdatePrivatePassword();
-            privacy = SettingService.Get<bool>(Setting.PrivacyMode);
+            privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
+            hidePrivacyModeEntrance = SettingService.Get<bool>(Setting.HidePrivacyModeEntrance);
+            privacyModeEntrancePassword = SettingService.Get<string>(Setting.PrivacyModeEntrancePassword);
             showStatisticsCard = SettingService.Get<bool>(Setting.StatisticsCard);
         }
-
-        private async Task PrivacyChange(bool value)
-        {
-            privacy = value;
-            await SettingService.Set(Setting.PrivacyMode, value);
-            if (!value)
-            {
-                await AlertService.Success(I18n.T("Setting.Safe.CamouflageSuccess"));
-            }
-        }
-
-        private string? GetDisplayPrivacy()
-        {
-            return privacy ? I18n.T("Setting.Safe.DisplayPrivacy.Name") : I18n.T("Setting.Safe.Mask.Name");
-        }
-
-        private async Task SetPassword(string value)
-        {
-            showPPSet = false;
-            privatePassword = value;
-            await SettingService.Set(Setting.PrivatePassword, value.MD5Encrytp32());
-            await AlertService.Success(I18n.T("Setting.Safe.PrivatePasswordSetSuccess"));
-        }
-
-        private async Task InputPassword(string value)
-        {
-            showPPInput = false;
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return;
-            }
-
-            UpdatePrivatePassword();
-            if (privatePassword != value.MD5Encrytp32())
-            {
-                await AlertService.Error(I18n.T("Setting.Safe.PasswordError"));
-                return;
-            }
-
-            await PrivacyChange(true);
-        }
-
-        private async Task PrivacyClick()
-        {
-            UpdatePrivatePassword();
-            if (!string.IsNullOrEmpty(privatePassword) && !privacy)
-            {
-                showPPInput = true;
-                return;
-            }
-
-            await PrivacyChange(!privacy);
-        }
-
-        private void UpdatePrivatePassword()
-        {
-            privatePassword = SettingService.Get<string>(Setting.PrivatePassword);
-        }
-
-        private string? GetPrivatePasswordSetState()
-            => string.IsNullOrEmpty(privatePassword) ? I18n.T("Setting.Safe.NotSetPassword") : null;
 
         private void UpdateCacheSize()
         {
@@ -112,6 +52,42 @@ namespace SwashbucklerDiary.Rcl.Pages
             StorageSpace.ClearCache();
             UpdateCacheSize();
             await AlertService.Success(I18n.T("Storage.ClearSuccess"));
+        }
+
+        private void TryToPrivacyMode()
+        {
+            if (privacyMode || string.IsNullOrEmpty(privacyModeEntrancePassword))
+            {
+                ToPrivacyMode();
+            }
+            else
+            {
+                showprivacyModeEntrancePasswordDialog = true;
+            }
+        }
+
+        private void ToPrivacyMode()
+        {
+            SettingService.SetTemp<bool>(TempSetting.AllowEnterPrivacyMode, true);
+            To("privacyMode");
+        }
+
+        private async Task InputPassword(string value)
+        {
+            showprivacyModeEntrancePasswordDialog = false;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return;
+            }
+
+            string salt = Setting.PrivacyModeEntrancePassword.ToString();
+            if (privacyModeEntrancePassword != (value + salt).MD5Encrytp32())
+            {
+                await AlertService.Error(I18n.T("PrivacyMode.PasswordError"));
+                return;
+            }
+
+            ToPrivacyMode();
         }
     }
 }

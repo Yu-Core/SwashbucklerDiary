@@ -14,5 +14,13 @@ namespace SwashbucklerDiary.Rcl.Services
         Task Set<T>(Setting setting, T value);
 
         Task Remove(Setting setting);
+
+        T GetTemp<T>(TempSetting setting);
+
+        T GetTemp<T>(TempSetting setting, T defaultValue);
+
+        void SetTemp<T>(TempSetting setting, T value);
+
+        void RemoveTemp(TempSetting setting);
     }
 }

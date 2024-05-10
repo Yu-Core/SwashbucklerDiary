@@ -8,9 +8,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class SearchAppFunctionPage : ImportantComponentBase
     {
-        private bool privacy;
-
         private string? search;
+
+        private bool showPrivacyModeSearch;
+
+        private string? privacyModeSearchKey;
 
         private List<AppFunction> allAppFunctions = [];
 
@@ -58,12 +60,13 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            privacy = SettingService.Get<bool>(Setting.PrivacyMode);
+            showPrivacyModeSearch = SettingService.Get<bool>(Setting.HidePrivacyModeEntrance);
+            privacyModeSearchKey = SettingService.Get<string>(Setting.PrivacyModeFunctionSearchKey, I18n.T("PrivacyMode.Name"));
         }
 
-        private bool IsSearchFiltered => !string.IsNullOrWhiteSpace(search);
-
         private float ItemHeight => MasaBlazor.Breakpoint.Xs ? 68f : 84f;
+
+        private bool ShowPrivacyModeItem => showPrivacyModeSearch && !string.IsNullOrWhiteSpace(search) && privacyModeSearchKey == search;
 
         private void LoadQuery()
         {
@@ -93,22 +96,17 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             Expression<Func<AppFunction, bool>>? exp = null;
 
-            if (IsSearchFiltered)
+            if (!string.IsNullOrWhiteSpace(search))
             {
                 Expression<Func<AppFunction, bool>> expSearch
-                    = it => I18n.T(it.Name ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase)
-                    || I18n.T(it.Path ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase);
+                    = it => I18n.T(it.Name ?? string.Empty).Contains(search, StringComparison.CurrentCultureIgnoreCase)
+                    || I18n.T(it.Path ?? string.Empty).Contains(search, StringComparison.CurrentCultureIgnoreCase);
                 exp = exp.And(expSearch);
             }
 
             if (exp == null)
             {
                 return it => false;
-            }
-            else
-            {
-                Expression<Func<AppFunction, bool>> expPrivacy = it => !it.ConditionalDisplay || it.Privacy == privacy;
-                exp = exp.And(expPrivacy);
             }
 
             return exp;
@@ -117,6 +115,12 @@ namespace SwashbucklerDiary.Rcl.Pages
         private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
         {
             InvokeAsync(StateHasChanged);
+        }
+
+        private void ToPrivacyMode()
+        {
+            SettingService.SetTemp<bool>(TempSetting.AllowEnterPrivacyMode, true);
+            To("privacyMode");
         }
     }
 }

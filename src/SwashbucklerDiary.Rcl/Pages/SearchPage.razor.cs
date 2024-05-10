@@ -77,11 +77,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 return it => false;
             }
-            else
-            {
-                Expression<Func<DiaryModel, bool>> expPrivate = it => !it.Private;
-                return exp.And(expPrivate);
-            }
+
+            return exp;
         }
     }
 }

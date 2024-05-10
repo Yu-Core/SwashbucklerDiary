@@ -36,6 +36,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool autofocus = true;
 
+        private bool privacyMode;
+
         private int editAutoSave;
 
         private PeriodicTimer? timer;
@@ -129,6 +131,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             enableTitle = SettingService.Get<bool>(Setting.Title);
             enableMarkdown = SettingService.Get<bool>(Setting.Markdown);
             editAutoSave = SettingService.Get<int>(Setting.EditAutoSave);
+            privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
         }
 
         private List<TagModel> SelectedTags
@@ -286,6 +289,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             diary.Resources = MediaResourceManager.GetDiaryResources(diary.Content);
             diary.UpdateTime = DateTime.Now;
+            diary.Private = privacyMode;
             if (createMode)
             {
                 createMode = false;
@@ -365,7 +369,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task HandleAchievements(bool background = false)
         {
             var messages = await AchievementService.UpdateUserState(Achievement.Diary);
-            var alldiaries = await DiaryService.QueryAsync(it => !it.Private);
+            var alldiaries = await DiaryService.QueryAsync();
             var wordCount = alldiaries.GetWordCount(WordCountType);
             var messages2 = await AchievementService.UpdateUserState(Achievement.Word, wordCount);
             if (!background)

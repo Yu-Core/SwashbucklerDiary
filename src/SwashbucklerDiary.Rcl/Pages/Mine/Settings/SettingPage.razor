@@ -138,101 +138,35 @@
         </MList>
     </MCard>
 
-    <div class="text-h6 setting-title">
-        @(I18n.T("Setting.Safe.Name"))
-    </div>
+    @if (!hidePrivacyModeEntrance || privacyMode)
+    {
+        <div class="text-h6 setting-title">
+            @(I18n.T("Setting.Safe.Name"))
+        </div>
 
-    <MCard Class="list-item-card"
-           Elevation="0"
-           Rounded="@("lg")">
-        <MList>
-            @if (privacy)
-            {
-                <MListItem OnClick="@(()=>To("privacyLibrary"))">
-                    <MListItemIcon>
-                        <MIcon Class="list-item-icon">
-                            mdi-safe
-                        </MIcon>
-                    </MListItemIcon>
-                    <MListItemContent>
-                        @(I18n.T("Setting.Safe.PrivacyLibrary.Name"))
-                    </MListItemContent>
-                    <MListItemAction>
-                        <MIcon>mdi-chevron-right</MIcon>
-                    </MListItemAction>
-                </MListItem>
-
-                <MDivider Class="mx-3"></MDivider>
-            }
-
-            <MListItem>
+        <MCard Class="list-item-card"
+               Elevation="0"
+               Rounded="@("lg")">
+            <MListItem OnClick="TryToPrivacyMode">
                 <MListItemIcon>
                     <MIcon Class="list-item-icon">
-                        @(privacy ? "mdi-lock-outline" : "mdi-database-remove-outline")
+                        mdi-hexagon-slice-3
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(GetDisplayPrivacy())
+                    @(I18n.T("PrivacyMode.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="privacy"
-                             TValue="bool"
-                             Readonly="true"
-                             OnClick="PrivacyClick"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <MIcon>mdi-chevron-right</MIcon>
                 </MListItemAction>
             </MListItem>
-
-            @if (privacy)
-            {
-                <MDivider Class="mx-3"></MDivider>
-
-                <MListItem OnClick="()=>showPPSet = true">
-                    <MListItemIcon>
-                        <MIcon Class="list-item-icon">
-                            mdi-key-outline
-                        </MIcon>
-                    </MListItemIcon>
-                    <MListItemContent>
-                        @(I18n.T("Setting.Safe.PrivacyPassword.Name"))
-                    </MListItemContent>
-                    <MListItemContent Class="setting-state">
-                        <MListItemSubtitle>
-                            @GetPrivatePasswordSetState()
-                        </MListItemSubtitle>
-                    </MListItemContent>
-                    <MListItemAction>
-                        <MIcon>mdi-chevron-right</MIcon>
-                    </MListItemAction>
-                </MListItem>
-            }
-        </MList>
-    </MCard>
-
-    
+        </MCard>
+    }
 </ScrollContainer>
 
-<PasswordDialog @bind-Visible="showPPSet"
-                Title="@(I18n.T("Setting.Safe.SetPassword"))"
-                MaxLength="20"
-                OnOK="SetPassword">
-</PasswordDialog>
-
-<InputDialog @bind-Visible="showPPInput"
-             Title="@(I18n.T("Setting.Safe.ValidatePassword"))"
-             Placeholder="@(I18n.T("Please input a password"))"
-             MaxLength="20"
-             Password="true"
-             OnOK="InputPassword"
-             OKText="@(I18n.T("Share.OK"))">
-</InputDialog>
-
 <MDialogExtension @bind-MyValue="showClearCache"
-          ContentClass="rounded-lg"
-          MaxWidth="420">
+                  ContentClass="rounded-lg"
+                  MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Setting.General.Storage.Name"))
@@ -254,3 +188,15 @@
         </MCardActions>
     </MCard>
 </MDialogExtension>
+
+@if (!hidePrivacyModeEntrance || privacyMode)
+{
+    <InputDialog @bind-Visible="showprivacyModeEntrancePasswordDialog"
+                 Title="@(I18n.T("PrivacyMode.ValidatePassword"))"
+                 Placeholder="@(I18n.T("Please input a password"))"
+                 MaxLength="20"
+                 Password="true"
+                 OnOK="InputPassword"
+                 OKText="@(I18n.T("Share.OK"))">
+    </InputDialog>
+}

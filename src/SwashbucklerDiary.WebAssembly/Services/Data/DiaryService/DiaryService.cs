@@ -1,33 +1,17 @@
 ﻿using SwashbucklerDiary.Rcl.Repository;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
-using System.Linq.Expressions;
 
-namespace SwashbucklerDiary.Rcl.Services
+namespace SwashbucklerDiary.WebAssembly.Services
 {
     public class DiaryService : BaseDataService<DiaryModel>, IDiaryService
     {
         private readonly IDiaryRepository _iDiaryRepository;
 
-        private readonly ISettingService _settingService;
-
-        public DiaryService(IDiaryRepository iDiaryRepository, ISettingService settingService)
+        public DiaryService(IDiaryRepository iDiaryRepository)
         {
             base._iBaseRepository = iDiaryRepository;
             _iDiaryRepository = iDiaryRepository;
-            _settingService = settingService;
-        }
-
-        public override Task<List<DiaryModel>> QueryAsync()
-        {
-            var privacyMode = _settingService.GetTemp<bool>(TempSetting.PrivacyMode);
-            return _iBaseRepository.GetListAsync(it => it.Private == privacyMode);
-        }
-
-        public override Task<List<DiaryModel>> QueryAsync(Expression<Func<DiaryModel, bool>> expression)
-        {
-            var privacyMode = _settingService.GetTemp<bool>(TempSetting.PrivacyMode);
-            expression = expression.And(it => it.Private == privacyMode);
-            return _iBaseRepository.GetListAsync(expression);
         }
 
         public Task<List<TagModel>> GetTagsAsync(Guid id)

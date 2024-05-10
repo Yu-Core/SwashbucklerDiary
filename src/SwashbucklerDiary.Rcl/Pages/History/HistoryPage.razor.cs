@@ -44,10 +44,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override async Task UpdateDiariesAsync()
         {
-            var diaries = await DiaryService.QueryAsync(it => !it.Private);
-            Diaries = diaries;
-            UpdateEventsDates(diaries);
-            UpdateSelectedDiaries(diaries);
+            await base.UpdateDiariesAsync();
+            UpdateEventsDates(Diaries);
+            UpdateSelectedDiaries(Diaries);
         }
 
         private void LoadView()
@@ -99,10 +98,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void UpdateSelectedDiaries(List<DiaryModel> diaries)
         {
-            selectedDiaries = diaries.Where(it
-                => !it.Private
-                && DateOnly.FromDateTime(it.CreateTime) == _selectedDate)
-                .ToList();
+            selectedDiaries = diaries.Where(it => DateOnly.FromDateTime(it.CreateTime) == _selectedDate).ToList();
         }
 
         private void HandleIntersectChanged(bool value)

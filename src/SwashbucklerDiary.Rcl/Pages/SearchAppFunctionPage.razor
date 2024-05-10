@@ -15,6 +15,29 @@
 </MyAppBar>
 
 <ScrollContainer>
+    @if (ShowPrivacyModeItem)
+    {
+        <MCard Class="mb-5 list-item-card"
+               Elevation="0"
+               Rounded="@("lg")"
+               OnClick="ToPrivacyMode">
+            <MList>
+                <MListItem>
+                    <MListItemIcon>
+                        <MIcon Class="list-item-icon">
+                            mdi-hexagon-slice-3
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        <MListItemTitle>
+                            @(I18n.T("PrivacyMode.Name"))
+                        </MListItemTitle>
+                    </MListItemContent>
+                </MListItem>
+            </MList>
+        </MCard>
+    }
+
     <Virtualize Items="_appFunctions"
                 ItemSize="@ItemHeight"
                 Context="item">
@@ -43,6 +66,6 @@
         </MCard>
     </Virtualize>
 
-    <EmptyResult Show="_appFunctions.Count == 0"></EmptyResult>
+    <EmptyResult Show="_appFunctions.Count == 0 && !ShowPrivacyModeItem"></EmptyResult>
 
 </ScrollContainer>
