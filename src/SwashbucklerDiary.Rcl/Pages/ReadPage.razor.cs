@@ -20,7 +20,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool enableMarkdown;
 
-        private bool enablePrivacy;
+        private bool showSetPrivacy;
+
+        private bool privacyMode;
 
         private DiaryModel diary = new();
 
@@ -68,7 +70,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.ReadSettings();
 
             enableMarkdown = SettingService.Get<bool>(Setting.Markdown);
-            enablePrivacy = SettingService.Get<bool>(Setting.PrivacyMode);
+            showSetPrivacy = SettingService.Get<bool>(Setting.SetPrivacyDiary);
+            privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
         }
 
         private List<TagModel> Tags => diary.Tags ?? [];
@@ -125,7 +128,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, TopText,"mdi-format-vertical-align-top", OnTopping),
                 new(this, "Diary.Export","mdi-export", OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon, MarkdownChanged),
-                new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>enablePrivacy)
+                new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
 
             shareItems =

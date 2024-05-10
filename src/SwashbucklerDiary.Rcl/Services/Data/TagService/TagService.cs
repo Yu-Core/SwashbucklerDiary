@@ -1,6 +1,5 @@
 ﻿using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Shared;
-using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
@@ -8,20 +7,22 @@ namespace SwashbucklerDiary.Rcl.Services
     {
         private readonly ITagRepository _tagRepository;
 
-        public TagService(ITagRepository tagRepository)
+        private readonly ISettingService _settingService;
+
+        public TagService(ITagRepository tagRepository, ISettingService settingService)
         {
             base._iBaseRepository = tagRepository;
             _tagRepository = tagRepository;
+            _settingService = settingService;
         }
 
         public Task<TagModel> FindIncludesAsync(Guid id)
         {
-            return _tagRepository.GetByIdIncludesAsync(id);
-        }
-
-        public Task<TagModel> FindIncludesAsync(Expression<Func<TagModel, bool>> expression)
-        {
-            return _tagRepository.GetFirstIncludesAsync(expression);
+            var privacyMode = _settingService.GetTemp<bool>(TempSetting.PrivacyMode);
+            return _tagRepository.GetByIdIncludesAsync(id, it => it.Diaries!
+                                  .Where(d => d.Private == privacyMode)
+                                  .OrderByDescending(it => it.CreateTime)
+                                  .ToList());
         }
     }
 }

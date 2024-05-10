@@ -18,6 +18,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected Dictionary<string, object> defalutSettings = [];
 
+        protected Dictionary<string, object> tempSettings = [];
+
         public SettingService(IPreferences preferences, IStaticWebAssets staticWebAssets)
         {
             _preferences = preferences;
@@ -58,6 +60,45 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             var key = setting.ToString();
             return Remove(key);
+        }
+
+        public T GetTemp<T>(TempSetting setting)
+        {
+            var key = setting.ToString();
+            if (tempSettings.TryGetValue(key, out var settingValue))
+            {
+                return (T)settingValue;
+            }
+
+            if (defalutSettings.TryGetValue(key, out var defaulSettingtValue))
+            {
+                return (T)defaulSettingtValue;
+            }
+
+            return default!;
+        }
+
+        public T GetTemp<T>(TempSetting setting, T defaultValue)
+        {
+            var key = setting.ToString();
+            if (tempSettings.TryGetValue(key, out var settingValue))
+            {
+                return (T)settingValue;
+            }
+
+            return defaultValue;
+        }
+
+        public void SetTemp<T>(TempSetting setting, T value)
+        {
+            var key = setting.ToString();
+            tempSettings[key] = value;
+        }
+
+        public void RemoveTemp(TempSetting setting)
+        {
+            var key = setting.ToString();
+            tempSettings.Remove(key);
         }
 
         public class ObjectToInferredTypesConverter : JsonConverter<object>

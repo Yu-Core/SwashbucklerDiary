@@ -36,7 +36,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected virtual async Task UpdateDiariesAsync()
         {
-            Diaries = await DiaryService.QueryAsync(it => !it.Private);
+            Diaries = await DiaryService.QueryAsync();
         }
 
         protected virtual async Task UpdateTagsAsync()

@@ -12,6 +12,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
         {
             services.AddScoped<IStaticWebAssets, Essentials.StaticWebAssets>();
             services.AddScoped<IPreferences, Preferences>();
+            services.AddScoped<ISettingService, Services.SettingService>();
 
             services.AddRclDependencyInjection();
 
@@ -32,7 +33,6 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
 
             services.AddScoped<INavigateService, NavigateService>();
             services.AddScoped<IIconService, Services.IconService>();
-            services.AddScoped<ISettingService, Services.SettingService>();
             services.AddScoped<IAlertService, AlertService>();
             services.AddScoped<II18nService, Services.I18nService>();
             services.AddScoped<IVersionTracking, VersionTracking>();

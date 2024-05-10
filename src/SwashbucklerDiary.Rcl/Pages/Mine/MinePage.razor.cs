@@ -231,7 +231,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateStatisticalDataAsync()
         {
-            var diries = await DiaryService.QueryAsync(it => !it.Private);
+            var diries = await DiaryService.QueryAsync();
             diaryCount = diries.Count;
             wordCount = diries.GetWordCount(WordCountType);
             activeDayCount = diries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();

@@ -71,6 +71,7 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             await HandleVersionUpdate("0.69.7", HandleVersionUpdate697);
             await HandleVersionUpdate("0.80.9", HandleVersionUpdate809);
+            await HandleVersionUpdate("0.86.0", HandleVersionUpdate860);
             await HandleVersionUpdate(_versionTracking.CurrentVersion, HandleUpdateInstruction);
             if (AfterVersionUpdate is not null && updateCount > 0)
             {
@@ -167,6 +168,12 @@ namespace SwashbucklerDiary.Rcl.Services
                 Content = content,
             };
             await _diaryService.AddAsync(diary);
+        }
+
+        private async Task HandleVersionUpdate860()
+        {
+            string[] keys = ["PrivacyMode", "PrivatePassword"];
+            await _settingService.Remove(keys);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace SwashbucklerDiary.Maui.Extensions
         {
             services.AddSingleton<IStaticWebAssets, Essentials.StaticWebAssets>();
             services.AddSingleton<Rcl.Essentials.IPreferences, Essentials.Preferences>();
+            services.AddSingleton<ISettingService, Services.SettingService>();
 
             services.AddRclDependencyInjection();
 
@@ -33,7 +34,6 @@ namespace SwashbucklerDiary.Maui.Extensions
 
             services.AddSingleton<INavigateService, NavigateService>();
             services.AddSingleton<IIconService, Services.IconService>();
-            services.AddSingleton<ISettingService, Services.SettingService>();
             services.AddSingleton<IAlertService, AlertService>();
             services.AddSingleton<II18nService, Services.I18nService>();
             services.AddSingleton<Rcl.Essentials.IVersionTracking, Essentials.VersionTracking>();

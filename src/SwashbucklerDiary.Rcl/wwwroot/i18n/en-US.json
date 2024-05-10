@@ -157,7 +157,7 @@
   "Read": {
     "OpenPrivacy": "Private",
     "ClosePrivacy": "Cancel private",
-    "PrivacyAlert": "Moved into the safety box"
+    "PrivacyAlert": "Moved to privacy mode"
   },
   "AppName": "Swashbuckler Diary",
   "Mine": {
@@ -354,29 +354,7 @@
       }
     },
     "Safe": {
-      "Name": "Safe",
-      "PrivacyLibrary": {
-        "Name": "Safety box",
-        "Path": "Setting / Safety box"
-      },
-      "DisplayPrivacy": {
-        "Name": "Display safety box",
-        "Path": "Setting / Display safety box"
-      },
-      "PrivacyPassword": {
-        "Name": "Safety box password",
-        "Path": "Setting / Safety box password"
-      },
-      "Mask": {
-        "Name": "Invalidate data",
-        "Path": "Setting / Invalidate data"
-      },
-      "CamouflageSuccess": "Camouflage success",
-      "PrivatePasswordSetSuccess": "PrivatePassword set success",
-      "SetPassword": "Set password",
-      "ValidatePassword": "Validate password",
-      "PasswordError": "Password error",
-      "NotSetPassword": "not set"
+      "Name": "Safe"
     },
     "Display": {
       "Name": "Display",
@@ -721,5 +699,34 @@
     },
     "DeleteUnused": "Delete unused files",
     "ConfirmDeleteUnused": "Are you sure to delete unused files?"
+  },
+  "PrivacyMode": {
+    "Name": "Privacy mode",
+    "ShowSetPrivacyDiary": {
+      "Title": "Display Set as Private",
+      "SubTitle": "Display the Set as Private option in the diary card menu"
+    },
+    "HidePrivacyModeEntrance": {
+      "Title": "Hide default entrance",
+      "SubTitle": "After hiding, it can be accessed through function search, which is located in the upper right corner of the \"Mine\" page"
+    },
+    "PrivacyModeEntrancePassword": "Set default entry password",
+    "Password has been set": "Password has been set",
+    "No password set": "No password set",
+    "PasswordSetSuccess": "Password set successfully",
+    "ValidatePassword": "Verify password",
+    "PasswordError": "Password error",
+    "PrivacyModeFunctionSearchKey": {
+      "Title": "Custom search keywords",
+      "SubTitle": "Enter keywords in the feature search to display privacy mode"
+    },
+    "PrivacyModeFunctionSearchKeyPlaceholder": "Please enter keywords",
+    "EnterPrivacyMode": "Enter privacy mode",
+    "QuitPrivacyMode": "Exit privacy mode",
+    "EnablePrivacyModeDark": {
+      "Title": "Enable dark mode",
+      "SubTitle": "Enable dark mode when entering privacy mode"
+    },
+    "Description": "Privacy mode only applies to diaries, not to tags, locations, files, and other content"
   }
 }

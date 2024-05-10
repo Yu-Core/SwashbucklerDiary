@@ -35,36 +35,12 @@ namespace SwashbucklerDiary.Rcl.Repository
                 .ExecuteCommandAsync();
         }
 
-        public Task<TagModel> GetByIdIncludesAsync(dynamic id)
+        public Task<TagModel> GetByIdIncludesAsync(dynamic id, Expression<Func<TagModel, List<DiaryModel>>> expression)
         {
             return Context.Queryable<TagModel>()
-                .Includes(it => it.Diaries!
-                                  .Where(d => !d.Private)
-                                  .OrderByDescending(it => it.CreateTime)
-                                  .ToList(),
-                          d => d.Tags)
-                .Includes(it => it.Diaries!
-                                  .Where(d => !d.Private)
-                                  .OrderByDescending(it => it.CreateTime)
-                                  .ToList(),
-                          d => d.Resources)
+                .Includes(expression, d => d.Tags)
+                .Includes(expression, d => d.Resources)
                 .InSingleAsync(id);
-        }
-
-        public Task<TagModel> GetFirstIncludesAsync(Expression<Func<TagModel, bool>> expression)
-        {
-            return Context.Queryable<TagModel>()
-                .Includes(it => it.Diaries!
-                                  .Where(d => !d.Private)
-                                  .OrderByDescending(it => it.CreateTime)
-                                  .ToList(),
-                          d => d.Tags)
-                .Includes(it => it.Diaries!
-                                  .Where(d => !d.Private)
-                                  .OrderByDescending(it => it.CreateTime)
-                                  .ToList(),
-                          d => d.Resources)
-                .FirstAsync(expression);
         }
     }
 }

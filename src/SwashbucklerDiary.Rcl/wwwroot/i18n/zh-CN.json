@@ -157,7 +157,7 @@
   "Read": {
     "OpenPrivacy": "设为私密",
     "ClosePrivacy": "取消私密",
-    "PrivacyAlert": "已移动至保险箱"
+    "PrivacyAlert": "已移动至隐私模式"
   },
   "AppName": "侠客日记",
   "Mine": {
@@ -354,29 +354,7 @@
       }
     },
     "Safe": {
-      "Name": "安全",
-      "PrivacyLibrary": {
-        "Name": "保险箱",
-        "Path": "设置 / 保险箱"
-      },
-      "DisplayPrivacy": {
-        "Name": "显示保险箱",
-        "Path": "设置 / 显示保险箱"
-      },
-      "PrivacyPassword": {
-        "Name": "保险箱密码",
-        "Path": "设置 / 保险箱密码"
-      },
-      "Mask": {
-        "Name": "清除所有数据",
-        "Path": "设置 / 清除所有数据"
-      },
-      "CamouflageSuccess": "伪装成功",
-      "PrivatePasswordSetSuccess": "密码设置成功",
-      "SetPassword": "设置密码",
-      "ValidatePassword": "验证密码",
-      "PasswordError": "密码错误",
-      "NotSetPassword": "未设置密码"
+      "Name": "安全"
     },
     "Display": {
       "Name": "显示",
@@ -721,5 +699,34 @@
     },
     "DeleteUnused": "删除未使用文件",
     "ConfirmDeleteUnused": "确认删除未使用的文件？"
+  },
+  "PrivacyMode": {
+    "Name": "隐私模式",
+    "ShowSetPrivacyDiary": {
+      "Title": "显示设为私密",
+      "SubTitle": "在日记卡片菜单中显示设为私密选项"
+    },
+    "HidePrivacyModeEntrance": {
+      "Title": "隐藏默认入口",
+      "SubTitle": "隐藏后可通过功能搜索进入，功能搜索位于\"我的\"页面右上角"
+    },
+    "PrivacyModeEntrancePassword": "设置默认入口密码",
+    "Password has been set": "已设置密码",
+    "No password set": "未设置密码",
+    "PasswordSetSuccess": "密码设置成功",
+    "ValidatePassword": "验证密码",
+    "PasswordError": "密码错误",
+    "PrivacyModeFunctionSearchKey": {
+      "Title": "自定义搜索关键词",
+      "SubTitle": "在功能搜索中输入关键词，即可显示隐私模式"
+    },
+    "PrivacyModeFunctionSearchKeyPlaceholder": "请输入关键词",
+    "EnterPrivacyMode": "进入隐私模式",
+    "QuitPrivacyMode": "退出隐私模式",
+    "EnablePrivacyModeDark": {
+      "Title": "启用深色模式",
+      "SubTitle": "进入隐私模式时启用深色模式"
+    },
+    "Description": "隐私模式只适用于日记，不适用于标签、位置、文件等内容"
   }
 }
