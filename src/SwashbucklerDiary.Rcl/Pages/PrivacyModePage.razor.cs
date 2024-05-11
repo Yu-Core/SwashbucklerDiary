@@ -26,6 +26,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool enablePrivacyModeDark;
 
+        private bool showHidePrivacyModeEntranceConfirmDialog;
+
         [Inject]
         private MasaBlazor MasaBlazor { get; set; } = default!;
 
@@ -122,6 +124,25 @@ namespace SwashbucklerDiary.Rcl.Pages
             string salt = Setting.PrivacyModeEntrancePassword.ToString();
             await SettingService.Set(Setting.PrivacyModeEntrancePassword, (value + salt).MD5Encrytp32());
             await AlertService.Success(I18n.T("PrivacyMode.PasswordSetSuccess"));
+        }
+
+        private async Task SwitchHidePrivacyModeEntrance()
+        {
+            if (!hidePrivacyModeEntrance)
+            {
+                showHidePrivacyModeEntranceConfirmDialog = true;
+                return;
+            }
+
+            hidePrivacyModeEntrance = false;
+            await SettingService.Set(Setting.HidePrivacyModeEntrance, hidePrivacyModeEntrance);
+        }
+
+        private async Task ConfirmHidePrivacyModeEntrance()
+        {
+            showHidePrivacyModeEntranceConfirmDialog = false;
+            hidePrivacyModeEntrance = true;
+            await SettingService.Set(Setting.HidePrivacyModeEntrance, hidePrivacyModeEntrance);
         }
     }
 }

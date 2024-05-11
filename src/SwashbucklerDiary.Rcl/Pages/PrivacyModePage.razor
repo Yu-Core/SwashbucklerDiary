@@ -85,7 +85,8 @@
                 <MListItemAction>
                     <MSwitch @bind-Value="hidePrivacyModeEntrance"
                              TValue="bool"
-                             OnChange="SettingChange(Setting.HidePrivacyModeEntrance)"
+                             Readonly="true"
+                             OnClick="SwitchHidePrivacyModeEntrance"
                              Dense="true"
                              Inset="true"
                              Color="white">
@@ -201,3 +202,35 @@
                 MaxLength="20"
                 OnOK="SetPassword">
 </PasswordDialog>
+
+<MDialogExtension @bind-MyValue="showHidePrivacyModeEntranceConfirmDialog"
+                  ContentClass="rounded-lg"
+                  MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Title"))
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="@(()=>showHidePrivacyModeEntranceConfirmDialog=false)">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Subtitle"))
+            <br />
+            @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Subtitle"))
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text
+                     OnClick="()=>showHidePrivacyModeEntranceConfirmDialog=false">
+                @(I18n.T("Share.Cancel"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="ConfirmHidePrivacyModeEntrance">
+                @(I18n.T("Share.OK"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MDialogExtension>

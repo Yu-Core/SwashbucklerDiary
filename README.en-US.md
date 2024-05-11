@@ -28,9 +28,10 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 ## Characteristics
 * Minimalist UI design
 * Markdown real-time rendering
-* Cross platform (Android, Windows, iOS, macOS, Web)
+* Cross platform (Android, Windows, macOS, Web)
 * Multi size responsive interface layout
 * All data is stored locally without the need for networking
+* Privacy mode, guarding your secret diary
 * Supports images, audio, and video
 * Supports mathematical formulas, brain maps, charts, flowcharts, Gantt c harts, time series diagrams, and staff charts
 * Supports multiple languages
