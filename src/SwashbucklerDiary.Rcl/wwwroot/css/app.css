@@ -353,10 +353,10 @@ html {
         pointer-events: none;
     }
 
-    .m-snack__wrapper {
+    .m-enqueued-snackbar .m-snack__wrapper {
         border-radius: 24px !important;
         width: initial !important;
-        min-width: initial !important;
+        min-width: initial;
     }
 }
 

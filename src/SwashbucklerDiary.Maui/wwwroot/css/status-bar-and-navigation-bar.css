@@ -51,6 +51,10 @@
     height: var(--android-navigation-bar-height);
 }
 
+.m-snackbar--permission {
+    padding-top: calc(1rem + var(--android-status-bar-height)) !important;
+}
+
 .m-dialog.m-dialog--active.m-dialog--fullscreen .m-card {
     padding-top: var(--android-status-bar-height) !important;
     padding-left: var(--android-safe-area-left-width) !important;
@@ -100,6 +104,10 @@
 
     .m-enqueued-snackbars.m-enqueued-snackbars--bottom::after {
         height: env(safe-area-inset-bottom);
+    }
+
+    .m-snackbar--permission {
+        padding-top: calc(1rem + env(safe-area-inset-top)) !important;
     }
 
     .m-dialog.m-dialog--active.m-dialog--fullscreen .m-card {

@@ -1,0 +1,12 @@
+{
+  "PermissionDescription": {
+    "StorageWrite": {
+      "Name": "StorageWrite permission description",
+      "Description": "Used for data backup, import and export, taking pictures, and other scenarios"
+    },
+    "Camera": {
+      "Name": "Camera permission description",
+      "Description": "Used for changing avatars, taking pictures, and other scenes"
+    }
+  }
+}

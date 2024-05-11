@@ -1,1 +1,8 @@
-﻿
+﻿.m-snackbar--permission {
+    padding-top: 1rem !important;
+}
+
+    .m-snackbar--permission .m-snack__wrapper {
+        min-width: 344px !important;
+        max-width: 672px !important;
+    }

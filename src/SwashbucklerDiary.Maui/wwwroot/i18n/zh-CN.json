@@ -1,0 +1,12 @@
+{
+  "PermissionDescription": {
+    "StorageWrite": {
+      "Name": "存储权限说明",
+      "Description": "用于数据备份、导入导出、拍摄图片等场景"
+    },
+    "Camera": {
+      "Name": "相机权限说明",
+      "Description": "用于更换头像、拍摄图片等场景"
+    }
+  }
+}

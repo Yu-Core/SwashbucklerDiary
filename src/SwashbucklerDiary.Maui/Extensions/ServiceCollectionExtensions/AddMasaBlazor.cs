@@ -19,7 +19,9 @@ namespace SwashbucklerDiary.Maui.Extensions
                 options.Locale = new BlazorComponent.Locale(language, "en-US");
             }
 
-            services.AddMasaBlazor(optionsAction).AddI18nForMauiBlazor($"wwwroot/_content/{StaticWebAssets.RclAssemblyName}/i18n");
+            var masaBlazorBuilder = services.AddMasaBlazor(optionsAction);
+            masaBlazorBuilder.AddI18nForMauiBlazor($"wwwroot/_content/{StaticWebAssets.RclAssemblyName}/i18n");
+            masaBlazorBuilder.AddI18nForMauiBlazor($"wwwroot/i18n");
 
             return services;
         }
