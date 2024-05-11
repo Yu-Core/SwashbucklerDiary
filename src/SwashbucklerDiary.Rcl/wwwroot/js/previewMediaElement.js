@@ -1,4 +1,4 @@
-export function previewImage(dotNetCallbackRef, callbackMethod, element) {
+﻿export function previewImage(dotNetCallbackRef, callbackMethod, element) {
     element.addEventListener('click', function (event) {
         if (event.target.tagName === 'IMG') {
             dotNetCallbackRef.invokeMethodAsync(callbackMethod, event.target.getAttribute('src'));
@@ -9,21 +9,29 @@ export function previewImage(dotNetCallbackRef, callbackMethod, element) {
 export function previewVideo(element) {
     element.addEventListener('click', function (event) {
         if (event.target.tagName === 'VIDEO') {
-            launchFullscreen(event.target);
+            const video = event.target;
+            makeVideoFullscreen(video);
+            if (video.mozRequestFullScreen) {
+                video.setAttribute('controls', '');
+                document.addEventListener('fullscreenchange', function () {
+                    video.removeAttribute('controls');
+                }, { once: true });
+            }
         }
     });
 }
 
-function launchFullscreen(element) {
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen();
-    } else if (element.webkitEnterFullscreen) {
-        element.webkitEnterFullscreen();
-    } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-    } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
+// video element Fullscreen
+function makeVideoFullscreen(video) {
+    if (video.requestFullscreen) {
+        video.requestFullscreen();
+    } else if (video.webkitEnterFullscreen) { /* MacCatalyst WebView */
+        video.webkitEnterFullscreen();
+    } else if (video.mozRequestFullScreen) { /* Firefox */
+        video.mozRequestFullScreen();
+    } else if (video.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        video.webkitRequestFullscreen();
+    } else if (video.msRequestFullscreen) { /* IE/Edge */
+        video.msRequestFullscreen();
     }
 }
