@@ -566,3 +566,7 @@ html.m-overlay-scroll-blocked {
         font-family: Roboto,sans-serif !important
     }
 }
+
+.m-snack--top {
+    padding-top: 1rem !important;
+}

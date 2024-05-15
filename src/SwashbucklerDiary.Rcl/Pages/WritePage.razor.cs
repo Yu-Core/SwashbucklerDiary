@@ -293,29 +293,33 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (createMode)
             {
                 createMode = false;
-                bool flag = await DiaryService.AddAsync(diary);
+                bool isSuccess = await DiaryService.AddAsync(diary);
 
                 if (!background)
                 {
-                    if (!flag)
+                    if (!isSuccess)
                     {
                         await AlertService.Error(I18n.T("Share.AddFail"));
                     }
-                }
+                    else
+                    {
+                        _ = HandleAchievements();
 
-                if (flag)
-                {
-                    _ = HandleAchievements(background);
+                    }
                 }
             }
             else
             {
-                bool flag = await DiaryService.UpdateIncludesAsync(diary);
+                bool isSuccess = await DiaryService.UpdateIncludesAsync(diary);
                 if (!background)
                 {
-                    if (!flag)
+                    if (!isSuccess)
                     {
                         await AlertService.Error(I18n.T("Share.EditFail"));
+                    }
+                    else
+                    {
+                        _ = HandleAchievements();
                     }
                 }
             }
@@ -366,17 +370,14 @@ namespace SwashbucklerDiary.Rcl.Pages
             return len + " " + I18n.T("Write.CountUnit");
         }
 
-        private async Task HandleAchievements(bool background = false)
+        private async Task HandleAchievements()
         {
             var messages = await AchievementService.UpdateUserState(Achievement.Diary);
             var alldiaries = await DiaryService.QueryAsync();
             var wordCount = alldiaries.GetWordCount(WordCountType);
             var messages2 = await AchievementService.UpdateUserState(Achievement.Word, wordCount);
-            if (!background)
-            {
-                messages.AddRange(messages2);
-                await AlertAchievements(messages);
-            }
+            messages.AddRange(messages2);
+            await AlertAchievements(messages);
         }
 
         private Task SettingChange(Setting setting, ref bool value)

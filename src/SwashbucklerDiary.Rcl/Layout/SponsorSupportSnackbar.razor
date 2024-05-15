@@ -1,0 +1,31 @@
+﻿@inherits MyComponentBase
+
+<MSnackbar Value="showSnackbar"
+           ContentClass="pb-0"
+           Vertical="true"
+           Top="true"
+           Text="true"
+           Elevation="2"
+           Rounded="@("lg")"
+           Timeout="-1">
+    <ChildContent>
+        <div class="text-subtitle-1 font-weight-bold">
+            @I18n.T("SponsorSupport.Name")
+        </div>
+        <div class="text-subtitle-2">
+            @I18n.T("SponsorSupport.Content")
+        </div>
+    </ChildContent>
+    <ActionContent>
+        <MSpacer></MSpacer>
+        <MButton Text="true"
+                 OnClick="()=>showSnackbar=false">
+            @(I18n.T("Share.Cancel"))
+        </MButton>
+        <MButton Text="true"
+                 Color="primary"
+                 OnClick="ToSupport">
+            @(I18n.T("SponsorSupport.To support"))
+        </MButton>
+    </ActionContent>
+</MSnackbar>

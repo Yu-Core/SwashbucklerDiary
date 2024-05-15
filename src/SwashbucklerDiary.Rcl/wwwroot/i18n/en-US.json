@@ -734,5 +734,10 @@
       "SubTitle": "Enable dark mode when entering privacy mode"
     },
     "Description": "Privacy mode only applies to diaries, not to tags, locations, files, and other content"
+  },
+  "SponsorSupport": {
+    "Name": "Support it",
+    "Content": "If you think this software is pretty good, you can donate and support it. Your support is the greatest motivation for developers.",
+    "To support": "Sponsor"
   }
 }

@@ -11,6 +11,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly List<AchievementModel> _achievements = [];
 
+        public event Action<UserStateModel>? UserStateChanged;
+
         public AchievementService(IUserAchievementRepository userAchievementRepository,
             IUserStateModelRepository userStateModelRepository)
         {
@@ -21,12 +23,14 @@ namespace SwashbucklerDiary.Rcl.Services
         public async Task<List<string>> UpdateUserState(Achievement type)
         {
             var userState = await _userStateModelRepository.InsertOrUpdateAsync(type);
+            UserStateChanged?.Invoke(userState);
             return await CheckAchievement(userState!);
         }
 
         public async Task<List<string>> UpdateUserState(Achievement type, int count)
         {
             var userState = await _userStateModelRepository.InsertOrUpdateAsync(type, count);
+            UserStateChanged?.Invoke(userState);
             return await CheckAchievement(userState!);
         }
 

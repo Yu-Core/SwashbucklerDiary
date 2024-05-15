@@ -51,8 +51,9 @@
     height: var(--android-navigation-bar-height);
 }
 
-.m-snackbar--permission {
-    padding-top: calc(1rem + var(--android-status-bar-height)) !important;
+.m-snack:not(.m-snack--absolute) {
+    height: calc(100vh - var(--android-status-bar-height) - var(--android-navigation-bar-height));
+    top: var(--android-status-bar-height);
 }
 
 .m-dialog.m-dialog--active.m-dialog--fullscreen .m-card {
@@ -106,8 +107,9 @@
         height: env(safe-area-inset-bottom);
     }
 
-    .m-snackbar--permission {
-        padding-top: calc(1rem + env(safe-area-inset-top)) !important;
+    .m-snack:not(.m-snack--absolute) {
+        height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        top: env(safe-area-inset-top);
     }
 
     .m-dialog.m-dialog--active.m-dialog--fullscreen .m-card {
