@@ -16,6 +16,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showMenu;
 
+        private bool contentLoading;
+
         private StringNumber tab = 0;
 
         private SwiperTabItems swiperTabItems = default!;
@@ -65,14 +67,16 @@ namespace SwashbucklerDiary.Rcl.Pages
         protected override async Task OnResume()
         {
             await UpdateResourcesAsync();
-
             await base.OnResume();
 
             await Task.Delay(300);
             for (int i = 0; i < swiperTabItems.ChildTabItems.Count; i++)
             {
-                await JS.ScrollTo($"#{swiperTabItems.ChildTabItems[i].Id}", scrollTops[i]);
+                await JS.ScrollTo($"#{swiperTabItems.ChildTabItems[i].Id}", scrollTops[i], null, ScrollBehavior.Auto);
             }
+
+            contentLoading = false;
+            await InvokeAsync(StateHasChanged);
         }
 
         private void LoadView()
@@ -141,6 +145,9 @@ namespace SwashbucklerDiary.Rcl.Pages
                 }
                 scrollTops = list;
             }
+
+            contentLoading = true;
+            _ = InvokeAsync(StateHasChanged);
         }
     }
 }

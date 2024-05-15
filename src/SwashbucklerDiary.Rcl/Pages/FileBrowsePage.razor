@@ -4,7 +4,7 @@
 
 <MyAppBar>
     <MyTabs @bind-Value="tab"
-                  Items="tabNames">
+            Items="tabNames">
     </MyTabs>
 
     <MSpacer></MSpacer>
@@ -31,18 +31,21 @@
                 @bind-Value="tab">
     <SwiperTabItem>
         <MContainer Class="my-container"
+                    Style="@($"{(contentLoading ? "opacity:0;":"")}")"
                     Fluid="true">
             <ImageWaterfall Value="imageResources"></ImageWaterfall>
         </MContainer>
     </SwiperTabItem>
     <SwiperTabItem>
         <MContainer Class="my-container"
+                    Style="@($"{(contentLoading ? "opacity:0;":"")}")"
                     Fluid="true">
             <AudioCardList Value="audioResources"></AudioCardList>
         </MContainer>
     </SwiperTabItem>
     <SwiperTabItem>
         <MContainer Class="my-container"
+                    Style="@($"{(contentLoading ? "opacity:0;":"")}")"
                     Fluid="true">
             <VideoWaterfall Value="videoResources"></VideoWaterfall>
         </MContainer>
