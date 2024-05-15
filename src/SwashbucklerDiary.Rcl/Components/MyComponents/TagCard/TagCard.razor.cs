@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void ToTagPage()
         {
-            NavigateService.PushAsync($"tag?Id={Value.Id}");
+            NavigateService.PushAsync($"tagDetails?Id={Value.Id}");
         }
     }
 }

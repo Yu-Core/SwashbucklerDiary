@@ -13,7 +13,7 @@
         <MList>
             <MListItem>
                 <MListItemIcon>
-                    <MIcon Class="list-item-icon">
+                    <MIcon Class="evident-icon">
                         mdi-format-title
                     </MIcon>
                 </MListItemIcon>
@@ -35,7 +35,7 @@
 
             <MListItem>
                 <MListItemIcon>
-                    <MIcon Class="list-item-icon">
+                    <MIcon Class="evident-icon">
                         mdi-language-markdown-outline
                     </MIcon>
                 </MListItemIcon>
@@ -57,7 +57,7 @@
 
             <MListItem OnClick="()=>showEditAutoSave=true">
                 <MListItemIcon>
-                    <MIcon Class="list-item-icon">
+                    <MIcon Class="evident-icon">
                         mdi-content-save-edit-outline
                     </MIcon>
                 </MListItemIcon>
@@ -74,24 +74,6 @@
                 </MListItemAction>
             </MListItem>
         </MList>
-    </MCard>
-
-    <MCard Class="list-item-card"
-           Elevation="0"
-           Rounded="@("lg")">
-        <MListItem OnClick="@(()=>To("locationSetting"))">
-            <MListItemIcon>
-                <MIcon Class="list-item-icon">
-                    mdi-map-marker-outline
-                </MIcon>
-            </MListItemIcon>
-            <MListItemContent>
-                @(I18n.T("Setting.Display.Diary.Location.Name"))
-            </MListItemContent>
-            <MListItemAction>
-                <MIcon>mdi-chevron-right</MIcon>
-            </MListItemAction>
-        </MListItem>
     </MCard>
 </ScrollContainer>
 

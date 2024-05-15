@@ -163,7 +163,7 @@ html {
     user-select: text;
 }
 
-.theme--light.list-item-icon.m-icon {
+.theme--light.evident-icon.m-icon {
     color: rgba(0,0,0,.87) !important;
 }
 

@@ -3,7 +3,7 @@ using SwashbucklerDiary.Rcl.Components;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
-    public partial class TagPage : DiariesPageComponentBase
+    public partial class TagDetailsPage : DiariesPageComponentBase
     {
         private string? tagName;
 
