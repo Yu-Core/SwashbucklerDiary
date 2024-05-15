@@ -249,7 +249,6 @@ html {
 @media screen and (max-width:600px) {
     .my-container {
         padding-top: 0px !important;
-        padding-bottom: 0px !important;
     }
 }
 
@@ -555,5 +554,15 @@ html.m-overlay-scroll-blocked {
 @media (max-width: 600px) {
     .mine-user-info {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .m-application .text-caption-xs-only {
+        font-size: .75rem !important;
+        font-weight: 400;
+        line-height: 1.25rem;
+        letter-spacing: .0333333333em !important;
+        font-family: Roboto,sans-serif !important
     }
 }

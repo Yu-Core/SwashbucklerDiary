@@ -20,7 +20,7 @@
                     <MListItemTitle>
                         @(I18n.T("PrivacyMode.ShowSetPrivacyDiary.Title"))
                     </MListItemTitle>
-                    <MListItemSubtitle>
+                    <MListItemSubtitle Class="text-caption-xs-only">
                         @(I18n.T("PrivacyMode.ShowSetPrivacyDiary.Subtitle"))
                     </MListItemSubtitle>
                 </MListItemContent>
@@ -47,7 +47,7 @@
                     <MListItemTitle>
                         @(I18n.T("PrivacyMode.EnablePrivacyModeDark.Title"))
                     </MListItemTitle>
-                    <MListItemSubtitle>
+                    <MListItemSubtitle Class="text-caption-xs-only">
                         @(I18n.T("PrivacyMode.EnablePrivacyModeDark.Subtitle"))
                     </MListItemSubtitle>
                 </MListItemContent>
@@ -78,7 +78,7 @@
                     <MListItemTitle>
                         @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Title"))
                     </MListItemTitle>
-                    <MListItemSubtitle>
+                    <MListItemSubtitle Class="text-caption-xs-only">
                         @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Subtitle"))
                     </MListItemSubtitle>
                 </MListItemContent>
@@ -108,7 +108,7 @@
                         <MListItemTitle>
                             @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Title"))
                         </MListItemTitle>
-                        <MListItemSubtitle>
+                        <MListItemSubtitle Class="text-caption-xs-only">
                             @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Subtitle"))
                         </MListItemSubtitle>
                     </MListItemContent>
@@ -146,15 +146,6 @@
         </MList>
     </MCard>
 
-    <MCard Class="list-item-card"
-           Elevation="0"
-           Rounded="@("lg")">
-        <MCardText>
-            <MIcon Left Size="20">mdi-information-outline</MIcon>
-            @(I18n.T("PrivacyMode.Description"))
-        </MCardText>
-    </MCard>
-
     @if (Desktop)
     {
         <MCard Class="list-item-card"
@@ -175,6 +166,13 @@
             </MListItem>
         </MCard>
     }
+
+    <MAlert Class="mb-5 text-subtitle-2 text--secondary"
+            Elevation="0"
+            Rounded="@("lg")"
+            Icon="@("mdi-information-outline")">
+        @(I18n.T("PrivacyMode.Description"))
+    </MAlert>
 </ScrollContainer>
 
 @if (Mobile)
