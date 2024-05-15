@@ -23,6 +23,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? avatar;
 
+        private string? privacyModeEntrancePassword;
+
         private bool showLanguage;
 
         private bool showTheme;
@@ -31,11 +33,23 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showPreviewImage;
 
+        private bool privacyMode;
+
+        private bool hidePrivacyModeEntrance;
+
+        private bool showprivacyModeEntrancePasswordDialog;
+
         private int diaryCount;
 
         private long wordCount;
 
         private int activeDayCount;
+
+        private int imageCount;
+
+        private int audioCount;
+
+        private int videoCount;
 
         private ScrollContainer scrollContainer = default!;
 
@@ -64,13 +78,16 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         protected IThemeService ThemeService { get; set; } = default!;
 
+        [Inject]
+        protected IResourceService ResourceService { get; set; } = default!;
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
             LoadView();
             NavigateService.BeforePopToRoot += BeforePopToRoot;
-            I18n.OnChanged += UpdateStatisticalData;
+            I18n.OnChanged += I18nChange;
         }
 
         protected override async Task OnInitializedAsync()
@@ -101,7 +118,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         protected override void OnDispose()
         {
             NavigateService.BeforePopToRoot -= BeforePopToRoot;
-            I18n.OnChanged -= UpdateStatisticalData;
+            I18n.OnChanged -= I18nChange;
             base.OnDispose();
         }
 
@@ -114,11 +131,13 @@ namespace SwashbucklerDiary.Rcl.Pages
             sign = SettingService.Get<string?>(Setting.Sign, null);
             theme = (Theme)SettingService.Get<int>(Setting.Theme);
             avatar = SettingService.Get<string>(Setting.Avatar);
+            privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
+            hidePrivacyModeEntrance = SettingService.Get<bool>(Setting.HidePrivacyModeEntrance);
+            privacyModeEntrancePassword = SettingService.Get<string>(Setting.PrivacyModeEntrancePassword);
         }
 
         private WordCountStatistics WordCountType
             => (WordCountStatistics)Enum.Parse(typeof(WordCountStatistics), I18n.T("Write.WordCountType")!);
-
 
         private void LoadView()
         {
@@ -130,7 +149,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                     {
                         new(this, "Mine.Backups","mdi-folder-sync-outline",() => To("backups")),
                         new(this, "Mine.Export","mdi-export",() => To("export")),
-                        new(this, "Mine.Achievement.Name","mdi-trophy-outline",() => To("achievement")),
+                        new(this, "PrivacyMode.Name","mdi-hexagon-slice-3",TryToPrivacyMode,()=>!hidePrivacyModeEntrance || privacyMode),
                     }
                 },
                 {
@@ -140,6 +159,14 @@ namespace SwashbucklerDiary.Rcl.Pages
                         new(this,"Mine.Settings","mdi-cog-outline",() => To("setting")),
                         new(this,"Mine.Languages","mdi-web",() => showLanguage = true),
                         new(this,"Mine.Night","mdi-weather-night",() => showTheme = true),
+                    }
+                },
+                {
+                    "Mine.Function",
+                    new()
+                    {
+                        new(this, "Mine.Achievement.Name","mdi-trophy-outline",() => To("achievement")),
+                        new(this, "Location.Name","mdi-map-marker-outline",() => To("locationSetting")),
                     }
                 },
                 {
@@ -231,15 +258,32 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateStatisticalDataAsync()
         {
+            List<Task> tasks = [];
+            tasks.Add(UpdateDiaryStatisticalDataAsync());
+            tasks.Add(UpdateResourceStatisticalDataAsync());
+            await Task.WhenAll(tasks);
+        }
+
+        private async Task UpdateDiaryStatisticalDataAsync()
+        {
             var diries = await DiaryService.QueryAsync();
             diaryCount = diries.Count;
             wordCount = diries.GetWordCount(WordCountType);
             activeDayCount = diries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
         }
 
-        private async void UpdateStatisticalData(CultureInfo _)
+        private async Task UpdateResourceStatisticalDataAsync()
         {
-            await UpdateStatisticalDataAsync();
+            var resources = await ResourceService.QueryAsync();
+            imageCount = resources.Count(it => it.ResourceType == MediaResource.Image);
+            audioCount = resources.Count(it => it.ResourceType == MediaResource.Audio);
+            videoCount = resources.Count(it => it.ResourceType == MediaResource.Video);
+        }
+
+        private async void I18nChange(CultureInfo _)
+        {
+            var diries = await DiaryService.QueryAsync();
+            wordCount = diries.GetWordCount(WordCountType);
             await InvokeAsync(StateHasChanged);
         }
 
@@ -249,6 +293,42 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 await JS.ScrollTo($"#{scrollContainer.Id}", 0);
             }
+        }
+
+        private void TryToPrivacyMode()
+        {
+            if (privacyMode || string.IsNullOrEmpty(privacyModeEntrancePassword))
+            {
+                ToPrivacyMode();
+            }
+            else
+            {
+                showprivacyModeEntrancePasswordDialog = true;
+            }
+        }
+
+        private void ToPrivacyMode()
+        {
+            SettingService.SetTemp<bool>(TempSetting.AllowEnterPrivacyMode, true);
+            To("privacyMode");
+        }
+
+        private async Task InputPassword(string value)
+        {
+            showprivacyModeEntrancePasswordDialog = false;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return;
+            }
+
+            string salt = Setting.PrivacyModeEntrancePassword.ToString();
+            if (privacyModeEntrancePassword != (value + salt).MD5Encrytp32())
+            {
+                await AlertService.Error(I18n.T("PrivacyMode.PasswordError"));
+                return;
+            }
+
+            ToPrivacyMode();
         }
     }
 }

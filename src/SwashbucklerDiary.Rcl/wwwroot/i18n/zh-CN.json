@@ -181,7 +181,8 @@
     "MailCopy": "邮箱地址已复制到剪贴板",
     "SendMailFail": "发送邮件失败",
     "QQGroupCopy": "QQ群号码已复制到剪贴板",
-    "QQGroupError": "加入QQ群失败"
+    "QQGroupError": "加入QQ群失败",
+    "Function": "功能"
   },
   "ToDo": {
     "Title": "该功能暂未开放",
@@ -397,10 +398,6 @@
           "Name": "自动保存",
           "Path": "设置 / 日记 / 自动保存",
           "Close": "关闭"
-        },
-        "Location": {
-          "Name": "位置",
-          "Path": "设置 / 日记 / 位置"
         }
       },
       "Alert": {
@@ -494,6 +491,8 @@
     }
   },
   "Location": {
+    "Name": "位置",
+    "Path": "位置",
     "Add": "添加位置",
     "Repeat": {
       "Title": "位置已存在",
@@ -658,7 +657,10 @@
     "LastDate": "最后的日期",
     "TagCount": "标签数",
     "LocationCount": "位置数",
-    "Not have": "无"
+    "Not have": "无",
+    "ImageCount": "图片数",
+    "AudioCount": "音频数",
+    "VideoCount": "视频数"
   },
   "Vditor": {
     "AddImage": "添加图片",

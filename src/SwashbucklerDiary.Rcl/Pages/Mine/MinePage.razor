@@ -11,13 +11,13 @@
 </MyAppBar>
 
 <ScrollContainer @ref="scrollContainer">
-    <div class="d-sm-flex flex-sm-row justify-space-between">
-        <MCard Class="setting-info mb-5 py-sm-3 py-md-5 elevation-sm-2--active"
+    <div class="mine-user-info mb-5">
+        <MCard Class="d-flex align-center elevation-sm-2--active"
                Elevation="0"
                Rounded="@("lg")"
                Ripple="false"
                OnClick="@(()=>To("user"))">
-            <MList>
+            <MList Style="width:100%;">
                 <MListItem ThreeLine>
                     <MListItemAvatar Class="ml-sm-2 ml-md-4 mr-md-6"
                                      Rounded="@("lg")"
@@ -39,13 +39,13 @@
             </MList>
         </MCard>
 
-        <MCard Class="setting-info mb-5 ml-sm-5 d-flex"
-               Elevation="0"
+        <MCard Elevation="0"
                Rounded="@("lg")">
-            <MList Class="d-flex flex-grow-1">
+            <MList>
                 <MListItem>
-                    <MListItemContent Class="justify-space-around text-center">
-                        <div style="flex:unset">
+                    <MListItemContent Class="text-center"
+                                      Style="display: grid;grid-template-columns: repeat(3, 1fr);">
+                        <div>
                             <MListItemSubtitle>
                                 @(I18n.T("Statistics.DiaryCount"))
                             </MListItemSubtitle>
@@ -53,7 +53,7 @@
                                 @diaryCount
                             </MListItemTitle>
                         </div>
-                        <div style="flex:unset">
+                        <div>
                             <MListItemSubtitle>
                                 @(I18n.T("Statistics.WordCount"))
                             </MListItemSubtitle>
@@ -61,7 +61,7 @@
                                 @wordCount
                             </MListItemTitle>
                         </div>
-                        <div style="flex:unset">
+                        <div>
                             <MListItemSubtitle>
                                 @(I18n.T("Statistics.ActiveDayCount"))
                             </MListItemSubtitle>
@@ -71,44 +71,107 @@
                         </div>
                     </MListItemContent>
                 </MListItem>
+                <MListItem>
+                    <MListItemContent Class="text-center"
+                                      Style="display: grid;grid-template-columns: repeat(3, 1fr);">
+                        <div>
+                            <MListItemSubtitle>
+                                @(I18n.T("Statistics.ImageCount"))
+                            </MListItemSubtitle>
+                            <MListItemTitle Class="mt-2 font-weight-bold text-h6">
+                                @imageCount
+                            </MListItemTitle>
+                        </div>
+                        <div>
+                            <MListItemSubtitle>
+                                @(I18n.T("Statistics.AudioCount"))
+                            </MListItemSubtitle>
+                            <MListItemTitle Class="mt-2 font-weight-bold text-h6">
+                                @audioCount
+                            </MListItemTitle>
+                        </div>
+                        <div>
+                            <MListItemSubtitle>
+                                @(I18n.T("Statistics.VideoCount"))
+                            </MListItemSubtitle>
+                            <MListItemTitle Class="mt-2 font-weight-bold text-h6">
+                                @videoCount
+                            </MListItemTitle>
+                        </div>
+                    </MListItemContent>
+                </MListItem>
             </MList>
         </MCard>
     </div>
 
-    @foreach (var list in ViewLists)
-    {
-        <div class="text-h6 setting-title">
-            @(I18n.T(list.Key))
-        </div>
+    <MultiDisplay>
+        <DesktopContent>
+            @foreach (var list in ViewLists)
+            {
+                <div class="text-h6 setting-title">
+                    @(I18n.T(list.Key))
+                </div>
 
-        <MCard @key="list"
-               Class="list-item-card"
-               Elevation="0"
-               Rounded="@("lg")">
-            <MList Class="dynamic-list-item-collection">
-                @foreach (var item in list.Value)
+                <MCard @key="list"
+                       Class="list-item-card"
+                       Elevation="0"
+                       Rounded="@("lg")">
+                    <MList Class="dynamic-list-item-collection">
+                        @foreach (var item in list.Value)
+                        {
+                            @if (item.Show)
+                            {
+                                <MListItem @key="item"
+                                           OnClick="item.OnClick">
+                                    <MListItemIcon>
+                                        <MIcon Class="evident-icon">
+                                            @(item.Icon)
+                                        </MIcon>
+                                    </MListItemIcon>
+                                    <MListItemContent>
+                                        @(I18n.T(item.Text))
+                                    </MListItemContent>
+                                    <MListItemAction>
+                                        <MIcon>mdi-chevron-right</MIcon>
+                                    </MListItemAction>
+                                </MListItem>
+
+                                <MDivider Class="mx-3"></MDivider>
+                            }
+                        }
+
+                    </MList>
+                </MCard>
+            }
+        </DesktopContent>
+        <MobileContent>
+            <div class="mb-5" style="display: grid;grid-template-columns: repeat(2, 1fr);gap: 12px;">
+                @foreach (var list in ViewLists)
                 {
-                    <MListItem @key="item"
-                               OnClick="item.OnClick">
-                        <MListItemIcon>
-                                    <MIcon Class="evident-icon">
-                                @(item.Icon)
-                            </MIcon>
-                        </MListItemIcon>
-                        <MListItemContent>
-                            @(I18n.T(item.Text))
-                        </MListItemContent>
-                        <MListItemAction>
-                            <MIcon>mdi-chevron-right</MIcon>
-                        </MListItemAction>
-                    </MListItem>
-
-                    <MDivider Class="mx-3"></MDivider>
+                    @foreach (var item in list.Value)
+                    {
+                        @if (item.Show)
+                        {
+                            <MCard @key="item"
+                                   Elevation="0"
+                                   Rounded="@("lg")">
+                                <MListItem OnClick="item.OnClick">
+                                    <MListItemIcon>
+                                        <MIcon Class="evident-icon">
+                                            @(item.Icon)
+                                        </MIcon>
+                                    </MListItemIcon>
+                                    <MListItemContent>
+                                        @(I18n.T(item.Text))
+                                    </MListItemContent>
+                                </MListItem>
+                            </MCard>
+                        }
+                    }
                 }
-
-            </MList>
-        </MCard>
-    }
+            </div>
+        </MobileContent>
+    </MultiDisplay>
 
 </ScrollContainer>
 
@@ -138,3 +201,15 @@
 <PreviewImageDialog @bind-Visible="showPreviewImage"
                     Src="@avatar">
 </PreviewImageDialog>
+
+@if (!hidePrivacyModeEntrance || privacyMode)
+{
+    <InputDialog @bind-Visible="showprivacyModeEntrancePasswordDialog"
+                 Title="@(I18n.T("PrivacyMode.ValidatePassword"))"
+                 Placeholder="@(I18n.T("Please input a password"))"
+                 MaxLength="20"
+                 Password="true"
+                 OnOK="InputPassword"
+                 OKText="@(I18n.T("Share.OK"))">
+    </InputDialog>
+}

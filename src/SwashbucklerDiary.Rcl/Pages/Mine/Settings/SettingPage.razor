@@ -137,31 +137,6 @@
             </MListItem>
         </MList>
     </MCard>
-
-    @if (!hidePrivacyModeEntrance || privacyMode)
-    {
-        <div class="text-h6 setting-title">
-            @(I18n.T("Setting.Safe.Name"))
-        </div>
-
-        <MCard Class="list-item-card"
-               Elevation="0"
-               Rounded="@("lg")">
-            <MListItem OnClick="TryToPrivacyMode">
-                <MListItemIcon>
-                    <MIcon Class="evident-icon">
-                        mdi-hexagon-slice-3
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("PrivacyMode.Name"))
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
-                </MListItemAction>
-            </MListItem>
-        </MCard>
-    }
 </ScrollContainer>
 
 <MDialogExtension @bind-MyValue="showClearCache"
@@ -188,15 +163,3 @@
         </MCardActions>
     </MCard>
 </MDialogExtension>
-
-@if (!hidePrivacyModeEntrance || privacyMode)
-{
-    <InputDialog @bind-Visible="showprivacyModeEntrancePasswordDialog"
-                 Title="@(I18n.T("PrivacyMode.ValidatePassword"))"
-                 Placeholder="@(I18n.T("Please input a password"))"
-                 MaxLength="20"
-                 Password="true"
-                 OnOK="InputPassword"
-                 OKText="@(I18n.T("Share.OK"))">
-    </InputDialog>
-}

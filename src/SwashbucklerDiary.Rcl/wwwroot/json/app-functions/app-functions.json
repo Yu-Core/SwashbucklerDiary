@@ -150,9 +150,9 @@
     "Href": "diarySetting"
   },
   {
-    "Name": "Setting.Display.Diary.Location.Name",
+    "Name": "Location.Name",
     "Icon": "mdi-map-marker-outline",
-    "Path": "Setting.Display.Diary.Location.Path",
+    "Path": "Location.Path",
     "Href": "locationSetting"
   },
   {

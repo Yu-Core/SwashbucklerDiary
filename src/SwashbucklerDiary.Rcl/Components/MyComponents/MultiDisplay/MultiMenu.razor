@@ -10,40 +10,25 @@
                 @(ComputedActivatorContent(context))
             </ActivatorContent>
             <ChildContent>
-                <MCard Class="rounded-t-lg py-2">
-                    <MList>
-                        <div @onclick="HandleOnCancel" class="dynamic-list-item-collection">
-                            @foreach (var item in DynamicListItems)
+                <MCard Class="primary-background rounded-t-lg">
+                    <div class="px-3 py-8" style="display: grid;grid-template-columns: repeat(5, 1fr);gap: 10px;">
+                        @foreach (var item in DynamicListItems)
+                        {
+                            @if (item.Show)
                             {
-                                @if (item.Show)
-                                {
-                                    <MListItem @key="item"
-                                               OnClick="item.OnClick">
-                                        <MListItemIcon>
-                                            <MIcon>
-                                                @(item.Icon)
-                                            </MIcon>
-                                        </MListItemIcon>
-                                        <MListItemContent>
-                                            @(I18n.T(item.Text))
-                                        </MListItemContent>
-                                    </MListItem>
-
-                                    <MDivider></MDivider>
-                                }
+                                <div class="d-flex flex-column align-center">
+                                    <MButton Class="second-background mb-2"
+                                             Width="56"
+                                             Height="56"
+                                             Icon="true"
+                                             OnClick="@item.OnClick">
+                                        <MIcon>@(item.Icon)</MIcon>
+                                    </MButton>
+                                    <div class="text-caption text-center">@(I18n.T(item.Text))</div>
+                                </div>
                             }
-                        </div>
-                        <MListItem>
-                            <MButton Class="text-subtitle-1"
-                                     Rounded="true"
-                                     Block="true"
-                                     Depressed="true"
-                                     Large="true"
-                                     OnClick="HandleOnCancel">
-                                @(I18n.T("Share.Cancel"))
-                            </MButton>
-                        </MListItem>
-                    </MList>
+                        }
+                    </div>
                 </MCard>
             </ChildContent>
         </MBottomSheetExtension>

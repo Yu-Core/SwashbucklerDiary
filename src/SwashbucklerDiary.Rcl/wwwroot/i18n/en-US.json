@@ -181,7 +181,8 @@
     "MailCopy": "The email address has been copied to the clipboard",
     "SendMailFail": "Send Mail Fail",
     "QQGroupCopy": "The QQ group number has been copied to the clipboard",
-    "QQGroupError": "Failed to join QQ group"
+    "QQGroupError": "Failed to join QQ group",
+    "Function": "Function"
   },
   "ToDo": {
     "Title": "This function is not developed",
@@ -397,10 +398,6 @@
           "Name": "Auto save",
           "Path": "Setting / Diary / Auto save",
           "Close": "Close"
-        },
-        "Location": {
-          "Name": "Location",
-          "Path": "Setting / Diary / Location"
         }
       },
       "Alert": {
@@ -494,6 +491,8 @@
     }
   },
   "Location": {
+    "Name": "Location",
+    "Path": "Location",
     "Add": "Add location",
     "Repeat": {
       "Title": "Location already exists",
@@ -658,7 +657,10 @@
     "LastDate": "Last date",
     "TagCount": "Tags",
     "LocationCount": "Locations",
-    "Not have": "Not have"
+    "Not have": "Not have",
+    "ImageCount": "Images",
+    "AudioCount": "Audios",
+    "VideoCount": "Videos"
   },
   "Vditor": {
     "AddImage": "Add Image",

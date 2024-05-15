@@ -383,6 +383,12 @@ html {
     padding-left: 4px;
 }
 
+@media screen and (min-width:600px) {
+    .setting-title {
+        display: block !important;
+    }
+}
+
 .list-item-card {
     margin-bottom: 20px;
 }
@@ -422,16 +428,6 @@ html {
             border-bottom-left-radius: inherit;
             border-bottom-right-radius: inherit;
         }
-}
-
-@media screen and (min-width:600px) {
-    .setting-title {
-        display: block !important;
-    }
-
-    .setting-info {
-        width: 50%;
-    }
 }
 
 .theme--light.m-application .my-alert-loading {
@@ -548,4 +544,16 @@ html.m-overlay-scroll-blocked {
 
 .user-avatar {
     object-fit: cover;
+}
+
+.mine-user-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 600px) {
+    .mine-user-info {
+        grid-template-columns: 1fr;
+    }
 }
