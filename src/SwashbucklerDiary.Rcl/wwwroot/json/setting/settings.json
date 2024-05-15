@@ -31,5 +31,6 @@
   "DiarySort": "",
   "TagSort": "",
   "LocationSort": "",
-  "UpdateNotPrompt": false
+  "UpdateNotPrompt": false,
+  "ImageLazy": true
 }

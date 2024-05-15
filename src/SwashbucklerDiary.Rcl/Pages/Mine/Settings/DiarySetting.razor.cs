@@ -10,6 +10,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool markdown;
 
+        private bool imageLazy;
+
         private int editAutoSave;
 
         private bool showEditAutoSave;
@@ -33,6 +35,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             title = SettingService.Get<bool>(Setting.Title);
             markdown = SettingService.Get<bool>(Setting.Markdown);
             editAutoSave = SettingService.Get<int>(Setting.EditAutoSave);
+            imageLazy = SettingService.Get<bool>(Setting.ImageLazy);
         }
 
         private StringNumber EditAutoSave

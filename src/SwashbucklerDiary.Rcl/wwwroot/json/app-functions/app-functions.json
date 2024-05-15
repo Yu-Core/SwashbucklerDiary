@@ -150,6 +150,12 @@
     "Href": "diarySetting"
   },
   {
+    "Name": "Setting.Display.Diary.ImageLazy.Name",
+    "Icon": "mdi-image-refresh-outline",
+    "Path": "Setting.Display.Diary.ImageLazy.Path",
+    "Href": "diarySetting"
+  },
+  {
     "Name": "Location.Name",
     "Icon": "mdi-map-marker-outline",
     "Path": "Location.Path",

@@ -3,11 +3,14 @@ using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class MarkdownPreview : IAsyncDisposable
     {
+        private bool imageLazy;
+
         private bool showPreviewImage;
 
         private string? previewImageSrc;
@@ -23,6 +26,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         private IAlertService AlertService { get; set; } = default!;
+
+        [Inject]
+        private ISettingService SettingsService { get; set; } = default!;
 
         [Inject]
         public IJSRuntime JS { get; set; } = default!;
@@ -68,7 +74,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public async Task RenderLazyLoadingImage()
         {
-            if (vditorMarkdownPreview is null)
+            if (vditorMarkdownPreview is null || !imageLazy)
             {
                 return;
             }
@@ -80,6 +86,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
+            ReadSettings();
             SetOptions();
         }
 
@@ -97,6 +104,11 @@ namespace SwashbucklerDiary.Rcl.Components
                 //图片预览
                 await module.InvokeVoidAsync("previewImage", [dotNetCallbackRef, nameof(PreviewImage), vditorMarkdownPreview.Ref]);
             }
+        }
+
+        private void ReadSettings()
+        {
+            imageLazy = SettingsService.Get<bool>(Setting.ImageLazy);
         }
 
         private void SetOptions()
@@ -121,8 +133,12 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "theme", theme },
                 { "icon", "material" },
                 { "markdown", markdown },
-                { "lazyLoadImage", $"_content/{StaticWebAssets.RclAssemblyName}/img/loading.gif" }
             };
+
+            if (imageLazy)
+            {
+                _options.Add("lazyLoadImage", $"_content/{StaticWebAssets.RclAssemblyName}/img/loading.gif");
+            }
         }
     }
 }

@@ -33,6 +33,31 @@
 
             <MDivider Class="mx-3"></MDivider>
 
+            <MListItem OnClick="()=>showEditAutoSave=true">
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-content-save-edit-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.EditAutoSave.Name"))
+                </MListItemContent>
+                <MListItemContent Class="setting-state">
+                    <MListItemSubtitle>
+                        @EditAutoSaveText
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <MCard Class="list-item-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
             <MListItem>
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
@@ -55,22 +80,23 @@
 
             <MDivider Class="mx-3"></MDivider>
 
-            <MListItem OnClick="()=>showEditAutoSave=true">
+            <MListItem>
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
-                        mdi-content-save-edit-outline
+                        mdi-image-refresh-outline
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Diary.EditAutoSave.Name"))
-                </MListItemContent>
-                <MListItemContent Class="setting-state">
-                    <MListItemSubtitle>
-                        @EditAutoSaveText
-                    </MListItemSubtitle>
+                    @(I18n.T("Setting.Display.Diary.ImageLazy.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MIcon>mdi-chevron-right</MIcon>
+                    <MSwitch @bind-Value="imageLazy"
+                             TValue="bool"
+                             OnChange="SettingChange(Setting.ImageLazy)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white">
+                    </MSwitch>
                 </MListItemAction>
             </MListItem>
         </MList>

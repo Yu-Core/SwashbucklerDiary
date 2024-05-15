@@ -398,6 +398,10 @@
           "Name": "Auto save",
           "Path": "Setting / Diary / Auto save",
           "Close": "Close"
+        },
+        "ImageLazy": {
+          "Name": "Image lazy",
+          "Path": "Setting / Diary / Image lazy"
         }
       },
       "Alert": {

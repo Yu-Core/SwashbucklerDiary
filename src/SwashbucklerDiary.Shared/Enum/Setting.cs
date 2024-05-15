@@ -32,6 +32,7 @@
         DiarySort,
         TagSort,
         LocationSort,
-        UpdateNotPrompt
+        UpdateNotPrompt,
+        ImageLazy
     }
 }
