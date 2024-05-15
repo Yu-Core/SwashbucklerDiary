@@ -75,7 +75,6 @@ html {
 @media (hover: none) {
     * {
         -ms-overflow-style: none;
-        scrollbar-width: none;
     }
 
     ::-webkit-scrollbar {
