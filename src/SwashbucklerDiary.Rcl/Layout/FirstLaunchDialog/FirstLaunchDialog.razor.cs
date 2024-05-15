@@ -31,12 +31,17 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         private IStaticWebAssets StaticWebAssets { get; set; } = default!;
 
+        [CascadingParameter(Name = "IsDark")]
+        public bool Dark { get; set; }
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
             UpdateSettings();
         }
+
+        private string BackgroundColor => Dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface;
 
         private async void UpdateSettings()
         {
