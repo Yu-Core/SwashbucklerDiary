@@ -100,6 +100,11 @@
     "Url": "https://github.com/nolimits4web/swiper/blob/master/LICENSE"
   },
   {
+    "Name": "Taglib-sharp",
+    "License": "LGPL-2.1 license",
+    "Url": "https://github.com/mono/taglib-sharp/blob/main/COPYING"
+  },
+  {
     "Name": "WebDavClient",
     "License": "MIT license",
     "Url": "https://github.com/skazantsev/WebDavClient/blob/main/LICENSE.txt"

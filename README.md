@@ -112,6 +112,7 @@
 - [SQLitePCLRaw](https://github.com/ericsink/SQLitePCL.raw)
 - [SqlSugar](https://github.com/DotNetNext/SqlSugar)
 - [Swiper](https://github.com/nolimits4web/swiper)
+- [Taglib-sharp](https://github.com/mono/taglib-sharp)
 - [WebDavClient](https://github.com/skazantsev/WebDavClient)
 - [wc-waterfall](https://github.com/huodoushigemi/wc-flow-layout)
 - [Vditor](https://github.com/Vanessa219/vditor)
