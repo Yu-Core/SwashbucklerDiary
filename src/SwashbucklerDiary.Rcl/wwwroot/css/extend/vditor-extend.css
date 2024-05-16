@@ -28,6 +28,10 @@
     --editor-bottom: 48px !important;
 }
 
+    .vditor-reset *::-webkit-scrollbar {
+        display: initial !important;
+    }
+
     .vditor-reset iframe.iframe__video {
         width: 100%;
         aspect-ratio: 2/1;
@@ -42,6 +46,7 @@
     .vditor-reset audio {
         border-radius: 9999px;
     }
+
         .vditor-reset audio::-webkit-media-controls {
             width: 100%;
         }
