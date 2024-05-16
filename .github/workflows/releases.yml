@@ -179,7 +179,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}maccatalyst/maccatalyst-arm64/publish/*.pkg
+          file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-arm64/publish/*.pkg
           file_glob: true
           asset_name: ${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalys-arm64.pkg
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
@@ -188,7 +188,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}maccatalyst/maccatalyst-x64/publish/*.pkg
+          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-x64/publish/*.pkg
           file_glob: true
           asset_name: ${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalys-x64.pkg
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
@@ -197,7 +197,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}ios/ios-arm64/publish/*.ipa
+          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-ios/ios-arm64/publish/*.ipa
           file_glob: true
           asset_name: ${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-ios-arm64.ipa
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
