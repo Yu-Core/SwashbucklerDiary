@@ -49,14 +49,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task Import()
         {
-            var flag = await PlatformIntegration.TryStorageWritePermission();
-            if (!flag)
-            {
-                await AlertService.Info(I18n.T("Permission.OpenStorageWrite"));
-                return;
-            }
-
-            importFilePath = string.Empty;
             importFilePath = await PlatformIntegration.PickZipFileAsync();
             if (string.IsNullOrEmpty(importFilePath))
             {
