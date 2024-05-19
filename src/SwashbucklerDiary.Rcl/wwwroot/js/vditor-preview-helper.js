@@ -1,4 +1,4 @@
-export function previewVditor(dotNetCallbackRef, element, text, options) {
+ï»¿export function previewVditor(dotNetCallbackRef, element, text, options) {
     if (!text) {
         element.innerHTML = '';
         return;
@@ -36,14 +36,18 @@ function handlePreviewElement(previewElement) {
     handleIframe(previewElement);
 }
 
-//ĞŞ¸´µã»÷Á´½ÓµÄÒ»Ğ©´íÎó
+//ä¿®å¤ç‚¹å‡»é“¾æ¥çš„ä¸€äº›é”™è¯¯
 function handleA(element) {
-    const links = element.querySelectorAll("a"); // »ñÈ¡ËùÓĞa±êÇ©
+    const links = element.querySelectorAll("a"); // è·å–æ‰€æœ‰aæ ‡ç­¾
     links.forEach(link => {
         var href = link.getAttribute('href');
         if (href && !href.includes(':')) {
-            href = "https://" + href;
-            link.setAttribute("href", href); // ĞŞ¸ÄÃ¿¸öa±êÇ©µÄhrefÊôĞÔ
+            if (href.startsWith('#')) {
+                href = location.origin + location.pathname + href;
+            } else {
+                href = "https://" + href;
+            }
+            link.setAttribute("href", href); // ä¿®æ”¹æ¯ä¸ªaæ ‡ç­¾çš„hrefå±æ€§
         };
     });
 }

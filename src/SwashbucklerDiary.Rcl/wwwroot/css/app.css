@@ -242,6 +242,7 @@ html {
     overflow-y: auto !important;
     position: relative !important;
     height: 100% !important;
+    scroll-behavior: smooth;
 }
 
 .my-container {
