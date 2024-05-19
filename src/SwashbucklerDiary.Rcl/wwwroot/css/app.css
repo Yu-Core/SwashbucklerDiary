@@ -564,7 +564,7 @@ html.m-overlay-scroll-blocked {
 
 @media (max-width: 600px) {
     .m-application .text-caption-xs-only {
-        font-size: .75rem !important;
+        font-size: .8rem !important;
         font-weight: 400;
         line-height: 1.25rem;
         letter-spacing: .0333333333em !important;
