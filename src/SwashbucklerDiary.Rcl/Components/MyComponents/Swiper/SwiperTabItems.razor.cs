@@ -7,8 +7,6 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class SwiperTabItems : IAsyncDisposable
     {
-        private ElementReference elementRef;
-
         private IJSObjectReference module = default!;
 
         private StringNumber _value = 0;
@@ -30,6 +28,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
+
+        public ElementReference Ref { get; set; }
 
         public SwiperTabItem? ActiveItem
         {
@@ -78,7 +78,7 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
                 module = await JS.ImportRclJsModule("js/swiper-helper.js");
-                await module.InvokeVoidAsync("initSwiper", [dotNetObjectReference, nameof(UpdateValue), elementRef, Value.ToInt32()]);
+                await module.InvokeVoidAsync("initSwiper", [dotNetObjectReference, nameof(UpdateValue), Ref, Value.ToInt32()]);
             }
         }
 
@@ -98,14 +98,14 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            await module.InvokeVoidAsync("slideTo", [elementRef, value.ToInt32()]);
+            await module.InvokeVoidAsync("slideTo", [Ref, value.ToInt32()]);
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
             if (module is not null)
             {
-                await module.InvokeVoidAsync("dispose", elementRef);
+                await module.InvokeVoidAsync("dispose", Ref);
                 await module.DisposeAsync();
             }
 

@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
-    public partial class FileBrowsePage : ImportantComponentBase
+    public partial class FileBrowsePage : ImportantComponentBase, IAsyncDisposable
     {
         private bool showDelete;
 
@@ -24,7 +25,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private readonly List<string> tabNames = ["FileBrowse.Image.Name", "FileBrowse.Audio.Name", "FileBrowse.Video.Name"];
 
-        private List<double> scrollTops = [];
+        private string scrollInfos = string.Empty;
+
+        private IJSObjectReference module = default!;
 
         private List<ResourceModel> imageResources = [];
 
@@ -36,6 +39,17 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         [Inject]
         protected IResourceService ResourceService { get; set; } = default!;
+
+        public async ValueTask DisposeAsync()
+        {
+            base.OnDispose();
+            if (module is not null)
+            {
+                await module.DisposeAsync();
+            }
+
+            GC.SuppressFinalize(this);
+        }
 
         protected override void OnInitialized()
         {
@@ -52,6 +66,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
+                module = await JS.ImportRclJsModule("js/file-browser-page.js");
                 await UpdateResourcesAsync();
                 StateHasChanged();
             }
@@ -68,15 +83,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await UpdateResourcesAsync();
             await base.OnResume();
-
-            await Task.Delay(300);
-            for (int i = 0; i < swiperTabItems.ChildTabItems.Count; i++)
-            {
-                await JS.ScrollTo($"#{swiperTabItems.ChildTabItems[i].Id}", scrollTops[i], null, ScrollBehavior.Auto);
-            }
-
-            contentLoading = false;
-            await InvokeAsync(StateHasChanged);
+            await RestoreScrollPosition();
         }
 
         private void LoadView()
@@ -98,30 +105,24 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task DeleteUnusedResources()
         {
             showDelete = false;
-
+            StateHasChanged();
             var flag = await ResourceService.DeleteUnusedResourcesAsync(_ => true);
             if (flag)
             {
-                if (swiperTabItems.ActiveItem is not null)
-                {
-                    await JS.ScrollTo($"#{swiperTabItems.ActiveItem.Id}", 0);
-                }
-
+                await UpdateResourcesAsync();
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
             }
-
-            await UpdateResourcesAsync();
         }
 
         private async Task BeforePopToRoot(PopEventArgs args)
         {
+            if (thisPageUrl != args.NextUri) return;
+
             if (thisPageUrl != args.PreviousUri)
             {
-                await RecordScrollTops(args.NextUri);
+                await RecordScrollInfo();
                 return;
             }
-
-            if (thisPageUrl != args.NextUri) return;
 
             if (swiperTabItems.ActiveItem is null) return;
 
@@ -130,24 +131,35 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task BeforePush(PushEventArgs args)
         {
-            await RecordScrollTops(args.PreviousUri);
+            if (args.PreviousUri == thisPageUrl)
+            {
+                await RecordScrollInfo();
+            }
         }
 
-        private async Task RecordScrollTops(string url)
+        private async Task RecordScrollInfo()
         {
-            if (url == thisPageUrl)
+            if (module is null)
             {
-                List<double> list = [];
-                foreach (var swiperTabItem in swiperTabItems.ChildTabItems)
-                {
-                    double scrollTop = await JS.InvokeAsync<double>("elementScrollTop", $"#{swiperTabItem.Id}");
-                    list.Add(scrollTop);
-                }
-                scrollTops = list;
+                return;
             }
 
+            scrollInfos = await module.InvokeAsync<string>("recordScrollInfo", swiperTabItems.ChildTabItems.Select(it => $"#{it.Id}"));
             contentLoading = true;
-            _ = InvokeAsync(StateHasChanged);
+            await InvokeAsync(StateHasChanged);
+        }
+
+        private async Task RestoreScrollPosition()
+        {
+            if (string.IsNullOrEmpty(scrollInfos))
+            {
+                return;
+            }
+
+            await Task.Delay(300);
+            await module.InvokeVoidAsync("restoreScrollPosition", [swiperTabItems.ChildTabItems.Select(it => $"#{it.Id}"), scrollInfos]);
+            contentLoading = false;
+            await InvokeAsync(StateHasChanged);
         }
     }
 }
