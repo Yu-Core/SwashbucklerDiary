@@ -72,7 +72,7 @@ namespace SwashbucklerDiary.Maui.Layout
 
             string key = "LastAutoCheckForUpdatesTime";
             DateTime dateTime = await SettingService.Get(key, DateTime.MinValue);
-            if (dateTime != DateTime.MinValue && (DateTime.Now - dateTime).TotalHours < 2)
+            if (dateTime != DateTime.MinValue && (DateTime.Now - dateTime).TotalHours < 24)
             {
                 return;
             }
