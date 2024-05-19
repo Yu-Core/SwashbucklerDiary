@@ -1,12 +1,12 @@
 ﻿body {
-    padding-top: var(--android-status-bar-height);
-    padding-bottom: var(--android-navigation-bar-height);
-    padding-left: var(--android-safe-area-left-width);
-    padding-right: var(--android-safe-area-right-width);
+    padding-top: var(--safe-area-inset-top, env(safe-area-inset-top));
+    padding-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
+    padding-left: var(--safe-area-inset-left, env(safe-area-inset-left));
+    padding-right: var(--safe-area-inset-right, env(safe-area-inset-right));
 }
 
 .m-application__wrap {
-    min-height: calc(100vh - var(--android-status-bar-height) - var(--android-navigation-bar-height));
+    min-height: calc(100vh - var(--safe-area-inset-top, env(safe-area-inset-top)) - var(--safe-area-inset-bottom, env(safe-area-inset-bottom)));
 }
 
 .m-main {
@@ -14,111 +14,54 @@
 }
 
 .m-item-group.m-bottom-navigation {
-    margin-bottom: var(--android-navigation-bar-height);
+    margin-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
 }
 
     .m-item-group.m-bottom-navigation::after {
         content: '';
         display: block;
-        height: var(--android-navigation-bar-height);
+        height: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
         width: 100%;
-        bottom: calc(0px - var(--android-navigation-bar-height));
+        bottom: calc(0px - var(--safe-area-inset-bottom, env(safe-area-inset-bottom)));
         position: absolute;
         background-color: var( --m-theme-surface);
     }
 
 .m-bottom-navigation-hidden {
-    transform: translateY(calc(100% + var(--android-navigation-bar-height))) !important;
+    transform: translateY(calc(100% + var(--safe-area-inset-bottom, env(safe-area-inset-bottom)))) !important;
 }
 
 .m-navigation-drawer {
-    left: var(--android-safe-area-left-width);
+    left: var(--safe-area-inset-left, env(safe-area-inset-left));
 }
 
 .m-bottom-sheet.m-dialog .m-card::after {
     content: '';
     display: block;
-    height: var(--android-navigation-bar-height);
+    height: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
 }
 
 .m-bottom-sheet.m-dialog.p-mobile-date-picker__content {
-    padding-bottom: var(--android-navigation-bar-height);
+    padding-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
 }
 
 .m-enqueued-snackbars.m-enqueued-snackbars--bottom::after {
     content: '';
     display: block;
-    height: var(--android-navigation-bar-height);
+    height: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
 }
 
 .m-snack:not(.m-snack--absolute) {
-    height: calc(100vh - var(--android-status-bar-height) - var(--android-navigation-bar-height));
-    top: var(--android-status-bar-height);
+    height: calc(100vh - var(--safe-area-inset-top, env(safe-area-inset-top)) - var(--safe-area-inset-bottom, env(safe-area-inset-bottom)));
+    top: var(--safe-area-inset-top, env(safe-area-inset-top));
 }
 
 .m-dialog.m-dialog--active.m-dialog--fullscreen .m-card {
-    padding-top: var(--android-status-bar-height) !important;
-    padding-left: var(--android-safe-area-left-width) !important;
-    padding-right: var(--android-safe-area-right-width) !important;
+    padding-top: var(--safe-area-inset-top, env(safe-area-inset-top)) !important;
+    padding-left: var(--safe-area-inset-left, env(safe-area-inset-left)) !important;
+    padding-right: var(--safe-area-inset-right, env(safe-area-inset-right)) !important;
 }
 
 .vditor--fullscreen {
-    height: calc(100vh - var(--android-status-bar-height) - var(--android-navigation-bar-height) - var(--vditor-toolbar-height)) !important;
-}
-
-@supports (-webkit-touch-callout: none) {
-    body {
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
-    }
-
-    .m-application__wrap {
-        min-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-    }
-
-    .m-item-group.m-bottom-navigation {
-        margin-bottom: env(safe-area-inset-bottom);
-    }
-
-        .m-item-group.m-bottom-navigation::after {
-            height: env(safe-area-inset-bottom);
-            bottom: calc(0px - env(safe-area-inset-bottom));
-        }
-
-    .m-bottom-navigation-hidden {
-        transform: translateY(calc(100% + env(safe-area-inset-bottom))) !important;
-    }
-
-    .m-navigation-drawer {
-        left: env(safe-area-inset-left);
-    }
-
-    .m-bottom-sheet.m-dialog .m-card::after {
-        height: env(safe-area-inset-bottom);
-    }
-
-    .m-bottom-sheet.m-dialog.p-mobile-date-picker__content {
-        padding-bottom: env(safe-area-inset-bottom);
-    }
-
-    .m-enqueued-snackbars.m-enqueued-snackbars--bottom::after {
-        height: env(safe-area-inset-bottom);
-    }
-
-    .m-snack:not(.m-snack--absolute) {
-        height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-        top: env(safe-area-inset-top);
-    }
-
-    .m-dialog.m-dialog--active.m-dialog--fullscreen .m-card {
-        padding-top: env(safe-area-inset-top) !important;
-        padding-left: env(safe-area-inset-left) !important;
-        padding-right: env(safe-area-inset-right) !important;
-    }
-
-    .vditor--fullscreen {
-        height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - var(--vditor-toolbar-height)) !important;
-    }
+    height: calc(100vh - var(--safe-area-inset-top, env(safe-area-inset-top)) - var(--safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--vditor-toolbar-height)) !important;
 }
