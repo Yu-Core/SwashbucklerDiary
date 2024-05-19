@@ -3,17 +3,41 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class TagCard : CardComponentBase<TagModel>
+    public partial class TagCard : CardComponentBase<TagModel>, IDisposable
     {
-        [CascadingParameter]
-        public TagCardList TagCardList { get; set; } = default!;
+        private string? diaryCount;
 
-        private string DiaryCount
+        [CascadingParameter]
+        public TagCardListOptions TagCardListOptions { get; set; } = default!;
+
+        [EditorRequired]
+        [Parameter]
+        public Func<TagModel, int>? OnCalcDiaryCount { get; set; }
+
+        public void Dispose()
         {
-            get
+            TagCardListOptions.DiariesChanged -= UpdateDiaryCount;
+            GC.SuppressFinalize(this);
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+
+            if (firstRender)
             {
-                var count = TagCardList.GetDiaryCount(Value);
-                return count == 0 ? string.Empty : count.ToString();
+                UpdateDiaryCount();
+                TagCardListOptions.DiariesChanged += UpdateDiaryCount;
+            }
+        }
+
+        private void UpdateDiaryCount()
+        {
+            if (OnCalcDiaryCount is not null)
+            {
+                var count = OnCalcDiaryCount.Invoke(Value);
+                diaryCount = count == 0 ? string.Empty : count.ToString();
+                InvokeAsync(StateHasChanged);
             }
         }
 

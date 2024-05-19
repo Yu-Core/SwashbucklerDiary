@@ -9,17 +9,14 @@
                 <span class="text--secondary mr-3" style="font-size:1.1rem;">
                     @Date
                 </span>
-                @if (ShowIcon)
+                @if (!string.IsNullOrEmpty(weatherIcon))
                 {
-                    @if (!string.IsNullOrEmpty(weatherIcon))
-                    {
-                        <i class="m-icon mdi @weatherIcon @Theme ml-2" style="font-size:20px;"></i>
-                    }
+                    <i class="m-icon mdi diary-card-icon @weatherIcon @Theme ml-2" style="font-size:20px;"></i>
+                }
 
-                    @if (!string.IsNullOrEmpty(moodIcon))
-                    {
-                        <i class="m-icon mdi @moodIcon @Theme ml-2" style="font-size:20px;"></i>
-                    }
+                @if (!string.IsNullOrEmpty(moodIcon))
+                {
+                    <i class="m-icon mdi diary-card-icon @moodIcon @Theme ml-2" style="font-size:20px;"></i>
                 }
             </div>
         </div>
@@ -32,7 +29,7 @@
             <MButton @attributes="activatorAttributes"
                      Icon="true"
                      OnClick="OpenMenu">
-                <i class="m-icon mdi mdi-chevron-down @Theme chevron-down @(IsActive && ShowMenu?"chevron-down-rotate-x":"")"></i>
+                <i class="m-icon mdi mdi-chevron-down @Theme card-menu @(IsActive?"card-list-menu__select":"")"></i>
             </MButton>
         </div>
     </div>

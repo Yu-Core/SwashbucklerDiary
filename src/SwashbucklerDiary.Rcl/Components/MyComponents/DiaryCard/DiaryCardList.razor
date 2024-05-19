@@ -2,8 +2,8 @@
 @inherits CardListComponentBase<DiaryModel>
 
 <div class="card-list-wrap">
-    <div class="card-list-main">
-        <CascadingValue Value="this"
+    <div class="card-list-main @(showMenu?"card-list-menu__open":"") @(showIcon?"":"card-list-icon__none")">
+        <CascadingValue Value="options"
                         IsFixed="true">
             <Virtualize Items="Value"
                         ItemSize="@ItemHeight"
@@ -59,6 +59,6 @@
 </RadioDialog>
 
 <MultiMenu @ref="multiMenu"
-           @bind-Visible="ShowMenu"
+           @bind-Visible="showMenu"
            DynamicListItems="menuItems">
 </MultiMenu>

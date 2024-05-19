@@ -2,15 +2,16 @@
 @inherits CardListComponentBase<TagModel>
 
 <div class="card-list-wrap">
-    <div class="card-list-main">
-        <CascadingValue Value="this"
+    <div @ref="elementRef" class="card-list-main">
+        <CascadingValue Value="options"
                         IsFixed="true">
             <Virtualize Items="Value"
                         ItemSize="60"
                         Context="item">
                 <TagCard @key="item.Id"
                          Value="item"
-                         OnMenu="OpenMenu">
+                         OnMenu="OpenMenu"
+                         OnCalcDiaryCount="CalcDiaryCount">
                 </TagCard>
             </Virtualize>
         </CascadingValue>
@@ -61,6 +62,6 @@
 </RadioDialog>
 
 <MultiMenu @ref="multiMenu"
-           @bind-Visible="ShowMenu"
+           @bind-Visible="showMenu"
            DynamicListItems="menuItems">
 </MultiMenu>

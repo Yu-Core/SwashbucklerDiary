@@ -24,5 +24,10 @@ namespace SwashbucklerDiary.Rcl.Services
                                   .OrderByDescending(it => it.CreateTime)
                                   .ToList());
         }
+
+        public Task<Dictionary<Guid, int>> TagsDiaryCount()
+        {
+            return _tagRepository.TagsDiaryCount();
+        }
     }
 }

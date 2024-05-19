@@ -1,21 +1,32 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class TagCardList : CardListComponentBase<TagModel>
+    public partial class TagCardList : CardListComponentBase<TagModel>, IAsyncDisposable
     {
+        private ElementReference elementRef;
+
         private bool ShowDelete;
 
         private bool ShowRename;
 
         private bool ShowExport;
 
+        private readonly TagCardListOptions options = new();
+
         private List<DiaryModel> ExportDiaries = [];
+
+        private Dictionary<Guid, int> TagsDiaryCount = [];
 
         [Inject]
         private ITagService TagService { get; set; } = default!;
+
+        [Inject]
+        private IntersectJSModule IntersectJSModule { get; set; } = default!;
 
         [Parameter]
         public EventCallback<List<TagModel>> ValueChanged { get; set; }
@@ -23,13 +34,28 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public List<DiaryModel> Diaries { get; set; } = [];
 
-        public int GetDiaryCount(TagModel tag)
-            => Diaries.Count(d => d.Tags != null && d.Tags.Any(t => t.Id == tag.Id));
+        public async ValueTask DisposeAsync()
+        {
+            base.OnDispose();
+            await IntersectJSModule.UnobserveAsync(elementRef);
+            GC.SuppressFinalize(this);
+        }
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
             LoadView();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender)
+            {
+                var handle = DotNetObjectReference.Create(new IntersectInvoker(OnIntersectAsync));
+                await IntersectJSModule.ObserverAsync(elementRef, handle);
+            }
         }
 
         protected override void ReadSettings()
@@ -93,8 +119,8 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             sortOptions = new()
             {
-                {"Sort.Count.Desc", it => it.OrderByDescending(GetDiaryCount) },
-                {"Sort.Count.Asc", it => it.OrderBy(GetDiaryCount) },
+                {"Sort.Count.Desc", it => it.OrderByDescending(CalcDiaryCount) },
+                {"Sort.Count.Asc", it => it.OrderBy(CalcDiaryCount) },
                 {"Sort.Name.Desc", it => it.OrderByDescending(t => t.Name) },
                 {"Sort.Name.Asc", it => it.OrderBy(t => t.Name) },
                 {"Sort.Time.Desc", it => it.OrderByDescending(t => t.CreateTime) },
@@ -142,6 +168,31 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task SortChanged(string value)
         {
             await SettingService.Set(Setting.TagSort, value);
+        }
+
+        private int CalcDiaryCount(TagModel tag)
+        {
+            if (TagsDiaryCount.TryGetValue(tag.Id, out var count))
+            {
+                return count;
+            }
+
+            return 0;
+        }
+
+        private async Task UpdateTagsDiaryCount()
+        {
+            TagsDiaryCount = await TagService.TagsDiaryCount();
+        }
+
+        private async Task OnIntersectAsync(IntersectEventArgs args)
+        {
+            if (args.IsIntersecting)
+            {
+                await UpdateTagsDiaryCount();
+                await InvokeAsync(StateHasChanged);
+                options.NotifyDiariesChanged();
+            }
         }
     }
 }

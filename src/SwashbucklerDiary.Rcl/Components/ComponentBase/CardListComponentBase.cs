@@ -16,6 +16,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected bool showStatisticsCard;
 
+        protected bool showMenu;
+
         protected Dictionary<string, Func<IEnumerable<T>, IEnumerable<T>>> sortOptions = [];
 
         protected List<DynamicListItem> menuItems = [];
@@ -40,9 +42,7 @@ namespace SwashbucklerDiary.Rcl.Components
             InvokeAsync(StateHasChanged);
         }
 
-        public bool ShowMenu { get; protected set; }
-
-        public T SelectedItemValue { get; set; } = new();
+        protected virtual T SelectedItemValue { get; set; } = new();
 
         protected List<string> SortItems => sortOptions.Keys.ToList();
 
@@ -101,7 +101,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 }
             }
 
-            ShowMenu = true;
+            showMenu = true;
             InvokeAsync(StateHasChanged);
         }
 

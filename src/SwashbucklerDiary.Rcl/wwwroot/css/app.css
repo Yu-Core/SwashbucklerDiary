@@ -226,6 +226,18 @@ html {
     margin-left: 16px;
 }
 
+.card-list-icon__none .diary-card-icon {
+    display: none;
+}
+
+.card-menu {
+    transition: transform 0.75s;
+}
+
+.card-list-menu__open .card-list-menu__select {
+    transform: rotateX(180deg);
+}
+
 .my-scroll-container {
     overflow-y: auto !important;
     position: relative !important;
@@ -312,14 +324,6 @@ html {
 .theme--dark.black-white-btn {
     background-color: #fff !important;
     color: #000 !important;
-}
-
-.chevron-down {
-    transition: transform 0.75s;
-}
-
-.chevron-down-rotate-x {
-    transform: rotateX(180deg);
 }
 
 .setting-state {

@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private IIconService IconService { get; set; } = default!;
 
         [CascadingParameter]
-        public DiaryCardList DiaryCardList { get; set; } = default!;
+        public DiaryCardListOptions DiaryCardListOptions { get; set; } = default!;
 
         [CascadingParameter(Name = "IsDark")]
         public bool Dark { get; set; }
@@ -33,13 +33,9 @@ namespace SwashbucklerDiary.Rcl.Components
             SetContent();
         }
 
-        private bool IsActive => Value.Id == DiaryCardList.SelectedItemValue.Id;
+        private bool IsActive => Value.Id == DiaryCardListOptions.SelectedItemValue.Id;
 
-        private bool ShowMenu => DiaryCardList.ShowMenu;
-
-        private bool ShowIcon => DiaryCardList.ShowIcon;
-
-        private string? DateFormat => DiaryCardList.DateFormat;
+        private string? DateFormat => DiaryCardListOptions.DateFormat;
 
         private string? Date => DateFormat is null ? null : Value.CreateTime.ToString(DateFormat);
 

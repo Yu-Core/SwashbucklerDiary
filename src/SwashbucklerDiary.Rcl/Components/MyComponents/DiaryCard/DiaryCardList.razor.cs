@@ -15,9 +15,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool showSetPrivacy;
 
+        private bool showIcon;
+
         private bool privacyMode;
 
         private List<DiaryModel> exportDiaries = [];
+
+        private readonly DiaryCardListOptions options = new();
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
@@ -34,9 +38,11 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public string? NotFoundText { get; set; }
 
-        public bool ShowIcon { get; private set; }
-
-        public string? DateFormat { get; private set; }
+        protected override DiaryModel SelectedItemValue
+        {
+            get => options.SelectedItemValue;
+            set => options.SelectedItemValue = value;
+        }
 
         protected override void OnInitialized()
         {
@@ -55,8 +61,8 @@ namespace SwashbucklerDiary.Rcl.Components
             base.ReadSettings();
 
             showSetPrivacy = SettingService.Get<bool>(Setting.SetPrivacyDiary);
-            ShowIcon = SettingService.Get<bool>(Setting.DiaryCardIcon);
-            DateFormat = SettingService.Get<string>(Setting.DiaryCardDateFormat);
+            showIcon = SettingService.Get<bool>(Setting.DiaryCardIcon);
+            options.DateFormat = SettingService.Get<string>(Setting.DiaryCardDateFormat);
             var diarySort = SettingService.Get<string>(Setting.DiarySort);
             if (!string.IsNullOrEmpty(diarySort))
             {

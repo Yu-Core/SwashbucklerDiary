@@ -42,5 +42,18 @@ namespace SwashbucklerDiary.Rcl.Repository
                 .Includes(expression, d => d.Resources)
                 .InSingleAsync(id);
         }
+
+        public async Task<Dictionary<Guid, int>> TagsDiaryCount()
+        {
+            var result = await Context.Queryable<DiaryTagModel>()
+                .GroupBy(it => new { it.TagId })
+                .Select(it => new
+                {
+                    TagId = it.TagId,
+                    Count = SqlFunc.AggregateCount(it.Id)
+                })
+                .ToListAsync();
+            return result.ToDictionary(it => it.TagId, it => it.Count);
+        }
     }
 }
