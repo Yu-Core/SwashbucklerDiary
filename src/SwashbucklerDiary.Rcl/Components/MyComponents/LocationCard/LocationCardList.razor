@@ -3,17 +3,14 @@
 
 <div class="card-list-wrap">
     <div class="card-list-main">
-        <CascadingValue Value="this"
-                        IsFixed="true">
-            <Virtualize Items="Value"
-                        ItemSize="60"
-                        Context="item">
-                <LocationCard @key="item.Id"
-                              Value="item"
-                              OnMenu="OpenMenu">
-                </LocationCard>
-            </Virtualize>
-        </CascadingValue>
+        <Virtualize Items="Value"
+                    ItemSize="60"
+                    Context="item">
+            <LocationCard @key="item.Id"
+                          Value="item"
+                          OnMenu="OpenMenu">
+            </LocationCard>
+        </Virtualize>
     </div>
 
     @if (Value.Count > 0 && showStatisticsCard)

@@ -23,6 +23,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [CascadingParameter]
         public DiaryCardList DiaryCardList { get; set; } = default!;
 
+        [CascadingParameter(Name = "IsDark")]
+        public bool Dark { get; set; }
+
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
@@ -39,6 +42,8 @@ namespace SwashbucklerDiary.Rcl.Components
         private string? DateFormat => DiaryCardList.DateFormat;
 
         private string? Date => DateFormat is null ? null : Value.CreateTime.ToString(DateFormat);
+
+        private string Theme => Dark ? "theme--dark" : "theme--light";
 
         private void ToRead()
         {

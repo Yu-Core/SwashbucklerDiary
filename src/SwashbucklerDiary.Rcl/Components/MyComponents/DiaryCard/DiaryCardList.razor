@@ -7,7 +7,8 @@
                         IsFixed="true">
             <Virtualize Items="Value"
                         ItemSize="@ItemHeight"
-                        Context="item">
+                        Context="item"
+                        OverscanCount="30">
                 <DiaryCard @key="item.Id"
                            Value="item"
                            OnMenu="OpenMenu">

@@ -10,9 +10,6 @@ namespace SwashbucklerDiary.Rcl.Components
         public T Value { get; set; } = default!;
 
         [Parameter]
-        public string? Class { get; set; }
-
-        [Parameter]
         public EventCallback<(T, Dictionary<string, object>)> OnMenu { get; set; }
 
         protected virtual void OpenMenu()
