@@ -1,19 +1,18 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class VditorMarkdownPreview : IAsyncDisposable
+    public partial class VditorMarkdownPreview
     {
-        private IJSObjectReference module = default!;
-
-        private DotNetObjectReference<VditorMarkdownPreview> dotNetObjectReference = default!;
-
         private string? previousValue;
 
+        private bool afterFirstRender;
+
+        private Lazy<DotNetObjectReference<object>> dotNetObjectReference = default!;
+
         [Inject]
-        public IJSRuntime JS { get; set; } = default!;
+        public VditorMarkdownPreviewJSModule VditorMarkdownPreviewJSModule { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
@@ -41,24 +40,16 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        public async ValueTask DisposeAsync()
-        {
-            if (module is not null)
-            {
-                await module.DisposeAsync();
-            }
-
-            GC.SuppressFinalize(this);
-        }
-
         public async Task RenderLazyLoadingImage()
         {
-            if (module is null)
-            {
-                return;
-            }
+            await VditorMarkdownPreviewJSModule.RenderLazyLoadingImage(Ref);
+        }
 
-            await module.InvokeVoidAsync("renderLazyLoadingImage", Ref);
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            dotNetObjectReference = new(() => DotNetObjectReference.Create<object>(this));
         }
 
         protected override async Task OnParametersSetAsync()
@@ -78,20 +69,19 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (firstRender)
             {
-                module = await JS.ImportRclJsModule("js/vditor-preview-helper.js");
+                afterFirstRender = true;
                 await RenderingMarkdown();
             }
         }
 
         private async Task RenderingMarkdown()
         {
-            if (module is null)
+            if (!afterFirstRender)
             {
                 return;
             }
 
-            dotNetObjectReference ??= DotNetObjectReference.Create(this);
-            await module.InvokeVoidAsync("previewVditor", [dotNetObjectReference, Ref, Value, Options]);
+            await VditorMarkdownPreviewJSModule.PreviewVditor(dotNetObjectReference.Value, Ref, Value, Options);
         }
     }
 }

@@ -1,12 +1,20 @@
-﻿export function previewImage(dotNetCallbackRef, callbackMethod, element) {
+﻿export function previewImage(dotNetCallbackRef, element) {
+    if (!element) {
+        return;
+    }
+
     element.addEventListener('click', function (event) {
         if (event.target.tagName === 'IMG') {
-            dotNetCallbackRef.invokeMethodAsync(callbackMethod, event.target.getAttribute('src'));
+            dotNetCallbackRef.invokeMethodAsync("PreviewImage", event.target.getAttribute('src'));
         }
     });
 }
 
 export function previewVideo(element) {
+    if (!element) {
+        return;
+    }
+
     element.addEventListener('click', function (event) {
         if (event.target.tagName === 'VIDEO') {
             const video = event.target;

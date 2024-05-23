@@ -1,21 +1,18 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class MarkdownPreview : IAsyncDisposable
+    public partial class MarkdownPreview
     {
         private bool imageLazy;
 
         private bool showPreviewImage;
 
         private string? previewImageSrc;
-
-        private IJSObjectReference module = default!;
 
         private VditorMarkdownPreview vditorMarkdownPreview = default!;
 
@@ -31,7 +28,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private ISettingService SettingsService { get; set; } = default!;
 
         [Inject]
-        public IJSRuntime JS { get; set; } = default!;
+        public MarkdownPreviewJSModule MarkdownPreviewJSModule { get; set; } = default!;
 
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }
@@ -49,7 +46,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public string? Style { get; set; }
 
         [JSInvokable]
-        public async Task CopySuccess()
+        public async Task Copy()
         {
             await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
@@ -60,16 +57,6 @@ namespace SwashbucklerDiary.Rcl.Components
             previewImageSrc = src;
             showPreviewImage = true;
             await InvokeAsync(StateHasChanged);
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            if (module is not null)
-            {
-                await module.DisposeAsync();
-            }
-
-            GC.SuppressFinalize(this);
         }
 
         public async Task RenderLazyLoadingImage()
@@ -96,13 +83,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (firstRender)
             {
-                module = await JS.ImportRclJsModule("js/markdown-preview-helper.js");
-                var dotNetCallbackRef = DotNetObjectReference.Create(this);
-
-                //点击复制按钮提示复制成功
-                await module.InvokeVoidAsync("copy", [dotNetCallbackRef, nameof(CopySuccess), vditorMarkdownPreview.Ref]);
-                //图片预览
-                await module.InvokeVoidAsync("previewImage", [dotNetCallbackRef, nameof(PreviewImage), vditorMarkdownPreview.Ref]);
+                var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
+                await MarkdownPreviewJSModule.After(dotNetObjectReference, vditorMarkdownPreview.Ref);
             }
         }
 

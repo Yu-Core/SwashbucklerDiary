@@ -1,27 +1,20 @@
 ﻿using BlazorComponent;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class SwiperTabItems : IAsyncDisposable
     {
-        private IJSObjectReference module = default!;
-
-        private StringNumber _value = 0;
+        private StringNumber previousvalue = 0;
 
         private int _registeredTabItemsIndex;
 
         [Inject]
-        private IJSRuntime JS { get; set; } = default!;
+        private SwiperJsModule SwiperJsModule { get; set; } = default!;
 
         [Parameter]
-        public StringNumber Value
-        {
-            get => _value;
-            set => SetValue(value);
-        }
+        public StringNumber Value { get; set; } = 0;
 
         [Parameter]
         public EventCallback<StringNumber> ValueChanged { get; set; }
@@ -32,24 +25,15 @@ namespace SwashbucklerDiary.Rcl.Components
         public ElementReference Ref { get; set; }
 
         public SwiperTabItem? ActiveItem
-        {
-            get
-            {
-                if (ChildTabItems.Count == 0)
-                {
-                    return null;
-                }
-
-                return ChildTabItems[_value.ToInt32()];
-            }
-        }
+            => ChildTabItems.Count == 0 ? null : ChildTabItems[Value.ToInt32()];
 
         public List<SwiperTabItem> ChildTabItems { get; } = [];
 
         [JSInvokable]
         public async Task UpdateValue(int value)
         {
-            _value = value;
+            Value = value;
+            previousvalue = value;
             if (ValueChanged.HasDelegate)
             {
                 await ValueChanged.InvokeAsync(value);
@@ -70,6 +54,17 @@ namespace SwashbucklerDiary.Rcl.Components
             ChildTabItems.Remove(tabItem);
         }
 
+        protected override async Task OnParametersSetAsync()
+        {
+            await base.OnParametersSetAsync();
+
+            if (previousvalue != Value)
+            {
+                previousvalue = Value;
+                await SwiperJsModule.SlideToAsync(Ref, Value.ToInt32());
+            }
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
@@ -77,38 +72,13 @@ namespace SwashbucklerDiary.Rcl.Components
             if (firstRender)
             {
                 var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
-                module = await JS.ImportRclJsModule("js/swiper-helper.js");
-                await module.InvokeVoidAsync("initSwiper", [dotNetObjectReference, nameof(UpdateValue), Ref, Value.ToInt32()]);
+                await SwiperJsModule.Init(dotNetObjectReference, Ref, Value.ToInt32());
             }
-        }
-
-        private void SetValue(StringNumber value)
-        {
-            if (_value != value)
-            {
-                _value = value;
-                _ = UpdateSwiper(value);
-            }
-        }
-
-        private async Task UpdateSwiper(StringNumber value)
-        {
-            if (module is null)
-            {
-                return;
-            }
-
-            await module.InvokeVoidAsync("slideTo", [Ref, value.ToInt32()]);
         }
 
         async ValueTask IAsyncDisposable.DisposeAsync()
         {
-            if (module is not null)
-            {
-                await module.InvokeVoidAsync("dispose", Ref);
-                await module.DisposeAsync();
-            }
-
+            await SwiperJsModule.DisposeAsync(Ref);
             GC.SuppressFinalize(this);
         }
     }

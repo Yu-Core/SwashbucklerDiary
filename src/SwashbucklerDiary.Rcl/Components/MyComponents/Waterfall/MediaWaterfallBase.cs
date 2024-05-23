@@ -4,10 +4,8 @@ using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public abstract class MediaWaterfallBase : MediaResourceListComponentBase, IAsyncDisposable
+    public abstract class MediaWaterfallBase : MediaResourceListComponentBase, IDisposable
     {
-        protected IJSObjectReference module = default!;
-
         protected ElementReference elementReference = default!;
 
         [Inject]
@@ -16,9 +14,12 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected MasaBlazor MasaBlazor { get; set; } = default!;
 
-        public async ValueTask DisposeAsync()
+        [Inject]
+        protected PreviewMediaElementJSModule PreviewMediaElementJSModule { get; set; } = default!;
+
+        public void Dispose()
         {
-            await OnDisposeAsync();
+            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
             GC.SuppressFinalize(this);
         }
 
@@ -31,15 +32,6 @@ namespace SwashbucklerDiary.Rcl.Components
             base.OnInitialized();
 
             MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
-        }
-
-        protected virtual async Task OnDisposeAsync()
-        {
-            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
-            if (module is not null)
-            {
-                await module.DisposeAsync();
-            }
         }
 
         protected async void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)

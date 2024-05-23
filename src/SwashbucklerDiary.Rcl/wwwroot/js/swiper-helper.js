@@ -1,4 +1,4 @@
-export function initSwiper(dotNetObjectReference, callbackMethod, element, index) {
+ï»¿export function init(dotNetObjectReference, element, index) {
     if (!element) {
         return;
     }
@@ -7,20 +7,20 @@ export function initSwiper(dotNetObjectReference, callbackMethod, element, index
         observer: true,
         observeParents: true,
         observeSlideChildren: true,
-        //autoHeight: true,//×Ô¶¯¸ß¶È
-        simulateTouch: false,//½ûÖ¹Êó±êÄ£Äâ
-        initialSlide: index,//Éè¶¨³õÊ¼»¯Ê±slideµÄË÷Òı
+        //autoHeight: true,//è‡ªåŠ¨é«˜åº¦
+        simulateTouch: false,//ç¦æ­¢é¼ æ ‡æ¨¡æ‹Ÿ
+        initialSlide: index,//è®¾å®šåˆå§‹åŒ–æ—¶slideçš„ç´¢å¼•
         resistanceRatio: 0.7,
         on: {
             slideChangeTransitionStart: function () {
-                dotNetObjectReference.invokeMethodAsync(callbackMethod, this.activeIndex);
+                dotNetObjectReference.invokeMethodAsync("UpdateValue", this.activeIndex);
             },
         }
     });
 }
 
 export function slideTo(element, value) {
-    if (!element) {
+    if (!element || !element.Swiper) {
         return;
     }
 
@@ -28,7 +28,7 @@ export function slideTo(element, value) {
 }
 
 export function dispose(element) {
-    if (!element) {
+    if (!element || !element.Swiper) {
         return;
     }
 

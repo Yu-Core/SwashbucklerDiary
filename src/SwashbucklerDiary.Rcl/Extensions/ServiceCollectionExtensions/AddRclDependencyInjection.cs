@@ -12,6 +12,10 @@ namespace SwashbucklerDiary.Rcl.Extensions
             services.TryAddScoped<VditorJSModule>();
             services.TryAddScoped<TextareaJSModule>();
             services.TryAddScoped<AudioInterop>();
+            services.TryAddScoped<SwiperJsModule>();
+            services.TryAddScoped<VditorMarkdownPreviewJSModule>();
+            services.TryAddScoped<MarkdownPreviewJSModule>();
+            services.TryAddScoped<PreviewMediaElementJSModule>();
             return services;
         }
     }

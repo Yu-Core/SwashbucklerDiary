@@ -1,4 +1,8 @@
 ﻿export function previewVditor(dotNetCallbackRef, element, text, options) {
+    if (!element) {
+        return;
+    }
+
     if (!text) {
         element.innerHTML = '';
         return;
@@ -15,6 +19,10 @@
 }
 
 export function renderLazyLoadingImage(element) {
+    if (!element) {
+        return;
+    }
+
     if (!("IntersectionObserver" in window)) {
         return;
     }

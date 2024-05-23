@@ -1,7 +1,4 @@
-﻿
-using Microsoft.JSInterop;
-using SwashbucklerDiary.Rcl.Extensions;
-using SwashbucklerDiary.Shared;
+﻿using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -13,8 +10,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (firstRender)
             {
-                module = await JS.ImportRclJsModule("js/previewMediaElement.js");
-                await module.InvokeVoidAsync("previewVideo", elementReference);
+                await PreviewMediaElementJSModule.PreviewVideo(elementReference);
             }
         }
 

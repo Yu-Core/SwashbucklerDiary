@@ -66,7 +66,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                module = await JS.ImportRclJsModule("js/file-browser-page.js");
+                module = await JS.ImportRclJsModule("Pages/FileBrowsePage.razor.js");
                 await UpdateResourcesAsync();
                 StateHasChanged();
             }

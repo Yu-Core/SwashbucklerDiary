@@ -1,5 +1,4 @@
 ﻿using Microsoft.JSInterop;
-using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -23,11 +22,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (firstRender)
             {
-                module = await JS.ImportRclJsModule("js/previewMediaElement.js");
-                var dotNetCallbackRef = DotNetObjectReference.Create(this);
-
+                var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
                 //图片预览
-                await module.InvokeVoidAsync("previewImage", [dotNetCallbackRef, nameof(PreviewImage), elementReference]);
+                await PreviewMediaElementJSModule.PreviewImage(dotNetObjectReference, elementReference);
             }
         }
     }
