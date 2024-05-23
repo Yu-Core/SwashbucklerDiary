@@ -1,5 +1,5 @@
 ﻿:root {
-    --vditor-toolbar-height: 70px;
+    --vditor-toolbar-height: 0px;
 }
 
 .vditor {
@@ -74,6 +74,10 @@
 }
 
 @media screen and (max-width:600px) {
+    :root {
+        --vditor-toolbar-height: 70px;
+    }
+
     .vditor-toolbar {
         max-height: var(--vditor-toolbar-height);
         display: flex;

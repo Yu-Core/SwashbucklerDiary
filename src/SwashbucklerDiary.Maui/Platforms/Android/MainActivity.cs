@@ -23,7 +23,7 @@ namespace SwashbucklerDiary.Maui
             }
 
             base.OnCreate(savedInstanceState);
-            SoftKeyboardAdjustResize.Initialize();
+            //SoftKeyboardAdjustResize.Initialize();
         }
     }
 }

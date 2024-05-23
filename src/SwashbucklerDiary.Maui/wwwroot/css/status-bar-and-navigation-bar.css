@@ -9,10 +9,6 @@
     min-height: calc(100vh - var(--safe-area-inset-top, env(safe-area-inset-top)) - var(--safe-area-inset-bottom, env(safe-area-inset-bottom)));
 }
 
-.m-main {
-    transform: scale(1);
-}
-
 .m-item-group.m-bottom-navigation {
     margin-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
 }
@@ -63,5 +59,26 @@
 }
 
 .vditor--fullscreen {
-    height: calc(100vh - var(--safe-area-inset-top, env(safe-area-inset-top)) - var(--safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--vditor-toolbar-height)) !important;
+    padding-top: var(--safe-area-inset-top, env(safe-area-inset-top));
+    padding-bottom: calc(max(var(--safe-area-inset-bottom, env(safe-area-inset-bottom)), var(--soft-keyboard-inset-bottom)) + var(--vditor-toolbar-height)) !important;
+    margin-left: var(--safe-area-inset-left, env(safe-area-inset-left)) !important;
+    margin-right: var(--safe-area-inset-right, env(safe-area-inset-right)) !important;
+}
+
+.m-dialog__content.m-dialog__content--active {
+    padding-bottom: max(calc(var(--soft-keyboard-inset-bottom) - var(--safe-area-inset-top)), 0px);
+}
+
+@media screen and (max-width:600px) {
+    .vditor-toolbar {
+        bottom: max(var(--soft-keyboard-inset-bottom), var(--safe-area-inset-bottom, env(safe-area-inset-bottom)));
+    }
+
+    .vditor-toolbar-help {
+        margin-bottom: max(calc(var(--soft-keyboard-inset-bottom) - var(--safe-area-inset-bottom, env(safe-area-inset-bottom))), 0px);
+    }
+
+    .my-btn-fab {
+        bottom: calc(var(--safe-area-inset-bottom, env(safe-area-inset-bottom)) + 1rem + 56px) !important;
+    }
 }
