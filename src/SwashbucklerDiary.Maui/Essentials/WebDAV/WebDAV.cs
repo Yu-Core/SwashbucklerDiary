@@ -60,17 +60,23 @@ namespace SwashbucklerDiary.Maui.Essentials
             }
 
             var webDavClient = GetWebDavClient(uri, userName, password);
+            var result = await webDavClient.Propfind(webDavFolderName);
+            if (!result.IsSuccessful)
+            {
+                if (result.StatusCode != (int)HttpStatusCode.NotFound)
+                {
+                    throw new WebDAVException(result.ToString());
+                }
 
-            var result = await webDavClient.Mkcol(webDavFolderName);
-            if (result.IsSuccessful)
-            {
-                this.webDavClient = webDavClient;
-                Initialized = true;
+                var result2 = await webDavClient.Mkcol(webDavFolderName);
+                if (!result2.IsSuccessful)
+                {
+                    throw new WebDAVException(result2.ToString());
+                }
             }
-            else
-            {
-                throw new WebDAVException(result.ToString());
-            }
+
+            this.webDavClient = webDavClient;
+            Initialized = true;
         }
 
         public async Task UploadAsync(string destFileName, Stream stream)
