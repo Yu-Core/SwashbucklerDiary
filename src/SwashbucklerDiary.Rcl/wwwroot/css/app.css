@@ -201,12 +201,9 @@ html {
     border-color: rgba(0,0,0,.04);
 }
 
-.diary-card-title {
+.diary-card-list-item__title {
     font-weight: 700 !important;
     padding-bottom: 8px !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .card-list-wrap {
@@ -574,4 +571,11 @@ html.m-overlay-scroll-blocked {
 
 .m-snack--top {
     padding-top: 1rem !important;
+}
+
+.webdav-list-item__title {
+    white-space: initial;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
 }
