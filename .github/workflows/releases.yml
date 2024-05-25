@@ -92,13 +92,16 @@ jobs:
       # Release to Gitee
       - name: Release to Gitee
         run: |
-          curl -X POST -H "Content-Type:application/json;charset=UTF-8" -d '{
+          curl -X POST \
+          --header 'Content-Type: application/json;charset=UTF-8' \
+          'https://gitee.com/api/v5/repos/${{ env.GITEE_USERNAME }}/${{ env.GITEE_REPO }}/releases' \
+          -d '{
             "access_token": "${{ secrets.GITEE_TOKEN }}",
             "tag_name": "v${{ env.APPLICATION_DISPLAY_VERSION }}",
             "name": "${{ env.APPLICATION_DISPLAY_VERSION }}",
-            "target_commitish": "master",
             "body": "Release ${{ env.APPLICATION_DISPLAY_VERSION }}",
-          }' "https://gitee.com/api/v5/repos/${{ env.GITEE_USERNAME }}/${{ env.GITEE_REPO }}/releases"
+            "target_commitish": "master"
+          }'
 
       # Replace the version in Package.appxmanifest
       - name: Update version in Package.appxmanifest
@@ -169,11 +172,20 @@ jobs:
           dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -p:RuntimeIdentifier=maccatalyst-arm64 --sc -p:PublishTrimmed=true 
           dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -p:RuntimeIdentifier=maccatalyst-x64 --sc -p:PublishTrimmed=true 
 
+      - name: Rename pkg
+        run: |
+          mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-arm64/publish/*.pkg ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-arm64/publish/${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalys-arm64.pkg
+          mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-x64/publish/*.pkg ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-x64/publish/${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalys-x64.pkg
+
       # Publish MAUI iOS
       - name: Publish MAUI iOS
         run: |
           dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-ios -c:Release -p:ArchiveOnBuild=true -p:RuntimeIdentifier=ios-arm64 -p:EnableCodeSigning=false -p:EnableOnDemandResources=false -p:MtouchUseLlvm=false -p:AotAssemblies=true
 
+      - name: Rename ipa
+        run: |
+          mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-ios/ios-arm64/publish/*.ipa ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-ios/ios-arm64/publish/${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-ios-arm64.ipa
+      
       # Update to Github Releases
       - name: Update maccatalyst-arm64 to Github Releases
         uses: svenstaro/upload-release-action@v2
@@ -181,7 +193,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-arm64/publish/*.pkg
           file_glob: true
-          asset_name: ${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalys-arm64.pkg
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
 
       - name: Update maccatalyst-x64 to Github Releases
@@ -190,7 +201,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-x64/publish/*.pkg
           file_glob: true
-          asset_name: ${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalys-x64.pkg
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
 
       - name: Update ios-arm64 to Github Releases
@@ -199,5 +209,4 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-ios/ios-arm64/publish/*.ipa
           file_glob: true
-          asset_name: ${{ env.APP_Name }}-${{ env.APPLICATION_DISPLAY_VERSION }}-ios-arm64.ipa
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
