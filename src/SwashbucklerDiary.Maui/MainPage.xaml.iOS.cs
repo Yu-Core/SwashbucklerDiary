@@ -7,6 +7,10 @@ namespace SwashbucklerDiary.Maui
 #nullable disable
     public partial class MainPage
     {
+        double paddingBottom = 0;
+
+        bool showSoftKeyboard;
+
         NSObject _keyboardShowObserver;
 
         NSObject _keyboardHideObserver;
@@ -25,19 +29,29 @@ namespace SwashbucklerDiary.Maui
         // https://github.com/dotnet/maui/issues/10662
         void OnKeyboardShow(object sender, UIKeyboardEventArgs args)
         {
+            if (showSoftKeyboard)
+            {
+                return;
+            }
+
+            showSoftKeyboard = true;
             NSValue result = (NSValue)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.FrameEndUserInfoKey));
             CGSize keyboardSize = result.RectangleFValue.Size;
-            SetSoftKeyboardCss(keyboardSize.Height);
+
+            paddingBottom = this.Padding.Bottom;
+            this.Padding = new Thickness(Padding.Left, Padding.Top, Padding.Right, keyboardSize.Height);
         }
 
         void OnKeyboardHide(object sender, UIKeyboardEventArgs args)
         {
-            SetSoftKeyboardCss(0);
-        }
+            if (!showSoftKeyboard)
+            {
+                return;
+            }
 
-        void SetSoftKeyboardCss(nfloat softKeyboardInset)
-        {
-            webView.EvaluateJavaScriptAsync($"document.documentElement.style.setProperty('--soft-keyboard-inset-bottom','{softKeyboardInset}px'");
+            showSoftKeyboard = false;
+
+            this.Padding = new Thickness(Padding.Left, Padding.Top, Padding.Right, paddingBottom);
         }
 
         void RegisterForKeyboardNotifications()

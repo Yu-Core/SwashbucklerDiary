@@ -38,23 +38,20 @@ namespace SwashbucklerDiary.Maui
 
             int safeAreaInsetLeft = navigationBarInsets.Left;
             int safeAreaInsetRight = navigationBarInsets.Right;
-            int softKeyboardInset = Utilities.GetSoftKeyboardInsets().Bottom;
-            SetSafeAreaCss(webView, safeAreaInsetTop, safeAreaInsetBottom, safeAreaInsetLeft, safeAreaInsetRight, softKeyboardInset);
+            SetSafeAreaCss(webView, safeAreaInsetTop, safeAreaInsetBottom, safeAreaInsetLeft, safeAreaInsetRight);
         }
 
         private static void SetSafeAreaCss(Android.Webkit.WebView webView,
             int safeAreaInsetTop,
             int safeAreaInsetBottom,
             int safeAreaInsetLeft,
-            int safeAreaInsetRight,
-            int softKeyboardInset)
+            int safeAreaInsetRight)
         {
             webView.EvaluateJavascript(@$"
                 document.documentElement.style.setProperty('--safe-area-inset-top','{Utilities.PxToDip(safeAreaInsetTop)}px');
                 document.documentElement.style.setProperty('--safe-area-inset-bottom','{Utilities.PxToDip(safeAreaInsetBottom)}px');                
                 document.documentElement.style.setProperty('--safe-area-inset-left','{Utilities.PxToDip(safeAreaInsetLeft)}px');
-                document.documentElement.style.setProperty('--safe-area-inset-right','{Utilities.PxToDip(safeAreaInsetRight)}px');                
-                document.documentElement.style.setProperty('--soft-keyboard-inset-bottom','{Utilities.PxToDip(softKeyboardInset)}px');
+                document.documentElement.style.setProperty('--safe-area-inset-right','{Utilities.PxToDip(safeAreaInsetRight)}px');
             ", null);
         }
     }
