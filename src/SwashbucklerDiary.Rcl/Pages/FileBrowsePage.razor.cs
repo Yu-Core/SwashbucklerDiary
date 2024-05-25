@@ -1,6 +1,7 @@
 ﻿using BlazorComponent;
 using BlazorComponent.JSInterop;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -24,8 +25,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         private SwiperTabItems swiperTabItems = default!;
 
         private readonly List<string> tabNames = ["FileBrowse.Image.Name", "FileBrowse.Audio.Name", "FileBrowse.Video.Name"];
-
-        private string scrollInfos = string.Empty;
 
         private IJSObjectReference module = default!;
 
@@ -57,7 +56,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             LoadView();
             NavigateService.BeforePopToRoot += BeforePopToRoot;
-            NavigateService.BeforePush += BeforePush;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -67,6 +65,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (firstRender)
             {
                 module = await JS.ImportRclJsModule("Pages/FileBrowsePage.razor.js");
+                await RecordScrollInfo();
                 await UpdateResourcesAsync();
                 StateHasChanged();
             }
@@ -75,7 +74,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         protected override void OnDispose()
         {
             NavigateService.BeforePopToRoot -= BeforePopToRoot;
-            NavigateService.BeforePush -= BeforePush;
             base.OnDispose();
         }
 
@@ -84,6 +82,22 @@ namespace SwashbucklerDiary.Rcl.Pages
             await UpdateResourcesAsync();
             await base.OnResume();
             await RestoreScrollPosition();
+        }
+
+        protected override async void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
+        {
+            base.NavigationManagerOnLocationChanged(sender, e);
+            if (!thisPageUrl.EqualsAbsolutePath(Navigation.Uri))
+            {
+                if (module is null)
+                {
+                    return;
+                }
+
+                await module.InvokeVoidAsync("stopRecordScrollInfo", swiperTabItems.ChildTabItems.Select(it => $"#{it.Id}"));
+                contentLoading = true;
+                await InvokeAsync(StateHasChanged);
+            }
         }
 
         private void LoadView()
@@ -118,23 +132,11 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (thisPageUrl != args.NextUri) return;
 
-            if (thisPageUrl != args.PreviousUri)
-            {
-                await RecordScrollInfo();
-                return;
-            }
+            if (thisPageUrl != args.PreviousUri) return;
 
             if (swiperTabItems.ActiveItem is null) return;
 
             await JS.ScrollTo($"#{swiperTabItems.ActiveItem.Id}", 0);
-        }
-
-        private async Task BeforePush(PushEventArgs args)
-        {
-            if (args.PreviousUri == thisPageUrl)
-            {
-                await RecordScrollInfo();
-            }
         }
 
         private async Task RecordScrollInfo()
@@ -144,20 +146,13 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            scrollInfos = await module.InvokeAsync<string>("recordScrollInfo", swiperTabItems.ChildTabItems.Select(it => $"#{it.Id}"));
-            contentLoading = true;
-            await InvokeAsync(StateHasChanged);
+            await module.InvokeVoidAsync("recordScrollInfo", swiperTabItems.ChildTabItems.Select(it => $"#{it.Id}"));
         }
 
         private async Task RestoreScrollPosition()
         {
-            if (string.IsNullOrEmpty(scrollInfos))
-            {
-                return;
-            }
-
             await Task.Delay(300);
-            await module.InvokeVoidAsync("restoreScrollPosition", [swiperTabItems.ChildTabItems.Select(it => $"#{it.Id}"), scrollInfos]);
+            await module.InvokeVoidAsync("restoreScrollPosition", swiperTabItems.ChildTabItems.Select(it => $"#{it.Id}"));
             contentLoading = false;
             await InvokeAsync(StateHasChanged);
         }

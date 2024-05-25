@@ -1,20 +1,46 @@
 ﻿export function recordScrollInfo(selectors) {
-    const getScrollDetails = (ele) => {
-        return {
-            scrollHeight: ele.scrollHeight,
-            scrollTop: ele.scrollTop
-        };
-    };
-
-    const result = selectors.map(s => {
+    selectors.forEach(s => {
         const element = document.querySelector(s);
-        return element ? getScrollDetails(element) : null
-    });
+        if (element) {
+            scrollListener(element, () => {
+                if (element.disallowRecordScrollInfo) {
+                    return;
+                }
 
-    return JSON.stringify(result);
+                element.previousScrollInfo = {
+                    scrollHeight: element.scrollHeight,
+                    scrollTop: element.scrollTop
+                };
+            });
+        }
+    });
 }
 
-export function restoreScrollPosition(selectors, strScrollInfos) {
+export function stopRecordScrollInfo(selectors) {
+    selectors.forEach(s => {
+        const element = document.querySelector(s);
+        if (element) {
+            element.disallowRecordScrollInfo = true;
+        }
+    });
+}
+
+function scrollListener(element, doSomething) {
+    let ticking = false;
+
+    element.addEventListener("scroll", (event) => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                doSomething();
+                ticking = false;
+            });
+
+            ticking = true;
+        }
+    });
+}
+
+export function restoreScrollPosition(selectors) {
     const anchorScroll = (ele, scrollInfo) => {
         const scrollTop = scrollInfo.scrollTop + ele.scrollHeight - scrollInfo.scrollHeight;
         ele.scrollTo({
@@ -22,13 +48,14 @@ export function restoreScrollPosition(selectors, strScrollInfos) {
             left: 0,
             behavior: "auto",
         });
+
+        ele.disallowRecordScrollInfo = false;
     };
 
-    const scrollInfos = JSON.parse(strScrollInfos);
-    for (var i = 0; i < selectors.length; i++) {
-        const element = document.querySelector(selectors[i]);
-        if (element && scrollInfos[i]) {
-            anchorScroll(element, scrollInfos[i]);
+    selectors.forEach(s => {
+        const element = document.querySelector(s);
+        if (element && element.previousScrollInfo) {
+            anchorScroll(element, element.previousScrollInfo);
         }
-    }
+    });
 }

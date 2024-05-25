@@ -74,7 +74,7 @@ namespace SwashbucklerDiary.Rcl.Components
             thisPageUrl = Navigation.Uri;
         }
 
-        private void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
+        protected virtual void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
             if (thisPageUrl.EqualsAbsolutePath(Navigation.Uri))
             {
