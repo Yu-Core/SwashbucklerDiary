@@ -94,7 +94,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                     return;
                 }
 
-                await module.InvokeVoidAsync("stopRecordScrollInfo", swiperTabItems.ChildTabItems.Select(it => $"#{it.Id}"));
+                await module.InvokeVoidAsync("stopRecordScrollInfo");
                 contentLoading = true;
                 await InvokeAsync(StateHasChanged);
             }

@@ -3,7 +3,7 @@
         const element = document.querySelector(s);
         if (element) {
             scrollListener(element, () => {
-                if (element.disallowRecordScrollInfo) {
+                if (disallowRecordScrollInfo) {
                     return;
                 }
 
@@ -16,16 +16,24 @@
     });
 }
 
-export function stopRecordScrollInfo(selectors) {
-    selectors.forEach(s => {
-        const element = document.querySelector(s);
-        if (element) {
-            element.disallowRecordScrollInfo = true;
-        }
-    });
+export function stopRecordScrollInfo() {
+    disallowRecordScrollInfo = true;
 }
 
-function scrollListener(element, doSomething) {
+export function restoreScrollPosition(selectors) {
+    selectors.forEach(s => {
+        const element = document.querySelector(s);
+        if (element && element.previousScrollInfo) {
+            anchorScroll(element, element.previousScrollInfo);
+        }
+    });
+
+    disallowRecordScrollInfo = false;
+}
+
+let disallowRecordScrollInfo = false;
+
+const scrollListener = (element, doSomething) => {
     let ticking = false;
 
     element.addEventListener("scroll", (event) => {
@@ -40,22 +48,11 @@ function scrollListener(element, doSomething) {
     });
 }
 
-export function restoreScrollPosition(selectors) {
-    const anchorScroll = (ele, scrollInfo) => {
-        const scrollTop = scrollInfo.scrollTop + ele.scrollHeight - scrollInfo.scrollHeight;
-        ele.scrollTo({
-            top: scrollTop,
-            left: 0,
-            behavior: "auto",
-        });
-
-        ele.disallowRecordScrollInfo = false;
-    };
-
-    selectors.forEach(s => {
-        const element = document.querySelector(s);
-        if (element && element.previousScrollInfo) {
-            anchorScroll(element, element.previousScrollInfo);
-        }
+const anchorScroll = (ele, scrollInfo) => {
+    const scrollTop = scrollInfo.scrollTop + ele.scrollHeight - scrollInfo.scrollHeight;
+    ele.scrollTo({
+        top: scrollTop,
+        left: 0,
+        behavior: "auto",
     });
-}
+};
