@@ -51,7 +51,7 @@ function handleA(element) {
         var href = link.getAttribute('href');
         if (href && !href.includes(':')) {
             if (href.startsWith('#')) {
-                href = location.origin + location.pathname + href;
+                href = location.origin + location.pathname + location.search + href;
             } else {
                 href = "https://" + href;
             }
