@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class AboutPage : ImportantComponentBase
     {
-        private string recordNumber = "辽ICP备2023009191号-2A";
+        private readonly string recordNumber = "辽ICP备2023009191号-2A";
 
         private bool showSourceCode;
 
