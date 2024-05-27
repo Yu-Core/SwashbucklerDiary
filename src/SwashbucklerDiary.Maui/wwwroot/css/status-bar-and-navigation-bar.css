@@ -45,15 +45,22 @@
     padding-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
 }
 
+.m-enqueued-snackbars.m-enqueued-snackbars--top::before {
+    content: '';
+    display: block;
+    height: var(--safe-area-inset-top, env(safe-area-inset-top));
+}
+
 .m-enqueued-snackbars.m-enqueued-snackbars--bottom::after {
     content: '';
     display: block;
     height: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
 }
 
-.m-snack:not(.m-snack--absolute) {
+.m-snack:not(.m-enqueued-snackbar, .m-snack--absolute) {
     height: calc(100vh - var(--safe-area-inset-top, env(safe-area-inset-top)) - var(--safe-area-inset-bottom, env(safe-area-inset-bottom)));
     top: var(--safe-area-inset-top, env(safe-area-inset-top));
+    bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
 }
 
 .m-dialog.m-dialog--active.m-dialog--fullscreen .m-card {
