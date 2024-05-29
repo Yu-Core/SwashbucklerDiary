@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
+using SwashbucklerDiary.Maui.Essentials;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -20,5 +21,13 @@ namespace SwashbucklerDiary.Maui.WinUI
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+
+        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        {
+            await LaunchActivation.HandleOnLaunchedAsync();
+            base.OnLaunched(args);
+        }
+
+
     }
 }

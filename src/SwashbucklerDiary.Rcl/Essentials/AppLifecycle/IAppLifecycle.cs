@@ -2,6 +2,10 @@
 {
     public interface IAppLifecycle
     {
+        ActivationArguments? ActivationArguments { get; set; }
+
+        event Action<ActivationArguments>? Activated;
+
         event Action Resumed;
 
         event Action Stopped;

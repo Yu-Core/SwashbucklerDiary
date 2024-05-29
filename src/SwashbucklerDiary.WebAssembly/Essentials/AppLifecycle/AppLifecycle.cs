@@ -6,11 +6,15 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public class AppLifecycle : IAppLifecycle
     {
+        public event Action<ActivationArguments>? Activated;
+
         public event Action? Resumed;
 
         public event Action? Stopped;
 
         private readonly Lazy<ValueTask<IJSInProcessObjectReference>> _module;
+
+        public ActivationArguments? ActivationArguments { get; set; }
 
         public AppLifecycle(IJSRuntime jSRuntime)
         {

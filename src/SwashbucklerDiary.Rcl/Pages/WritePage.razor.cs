@@ -38,6 +38,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool privacyMode;
 
+        private bool launchActivation;
+
         private int editAutoSave;
 
         private PeriodicTimer? timer;
@@ -98,6 +100,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             NavigateService.BeforePop += BeforePop;
             NavigateService.BeforePopToRoot += BeforePop;
             AppLifecycle.Stopped += LeaveAppSaveDiary;
+            AppLifecycle.Activated += Activated;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -120,6 +123,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             NavigateService.BeforePop -= BeforePop;
             NavigateService.BeforePopToRoot -= BeforePop;
             AppLifecycle.Stopped -= LeaveAppSaveDiary;
+            AppLifecycle.Activated -= Activated;
             timer?.Dispose();
             base.OnDispose();
         }
@@ -421,6 +425,67 @@ namespace SwashbucklerDiary.Rcl.Pages
             while (await timer.WaitForNextTickAsync())
             {
                 await SaveDiaryAsync(true);
+            }
+        }
+
+        private void HandleLaunchActivation()
+        {
+            if (launchActivation)
+            {
+                return;
+            }
+
+            launchActivation = true;
+            var args = AppLifecycle.ActivationArguments;
+            Activated(args);
+            AppLifecycle.ActivationArguments = null;
+        }
+
+        private void Activated(ActivationArguments? args)
+        {
+            if (args is null || args.Data is null)
+            {
+                return;
+            }
+
+            if (args.Kind == LaunchActivationKind.Share)
+            {
+                HandleShare((ShareActivationArguments)args.Data);
+            }
+        }
+
+        private async void HandleShare(ShareActivationArguments? args)
+        {
+            if (args is null || args.Data is null)
+            {
+                return;
+            }
+
+            string? insertContent = null;
+            if (args.Kind == ShareKind.Text)
+            {
+                insertContent = args.Data as string;
+            }
+            else if (args.Kind == ShareKind.FilePaths)
+            {
+                var filePaths = (List<string>)args.Data;
+                var resources = await MediaResourceManager.ReceiveShareFilesAsync(filePaths);
+                var htmls = resources.Select(it => MarkdownEdit.SrcConvertToHtml(it.ResourceUri!, it.ResourceType));
+                insertContent = string.Join("\n", htmls);
+            }
+
+            if (insertContent is null)
+            {
+                return;
+            }
+
+            if (enableMarkdown)
+            {
+                await markdownEdit.InsertValueAsync(insertContent);
+            }
+            else
+            {
+                await textareaEdit.InsertValueAsync(insertContent);
             }
         }
     }

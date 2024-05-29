@@ -113,7 +113,8 @@
                           @bind-Value="diary.Content"
                           WrapClass="write-markdown-wrap"
                           Class="px-3 rounded-lg write-markdown"
-                          Autofocus="autofocus">
+                          Autofocus="autofocus"
+                          OnAfter="HandleLaunchActivation">
             </MarkdownEdit>
         }
         else
@@ -121,7 +122,8 @@
             <TextareaEdit @ref="textareaEdit"
                           @bind-Value="diary.Content"
                           Class="rounded-lg"
-                          Autofocus="autofocus">
+                          Autofocus="autofocus"
+                          OnAfter="HandleLaunchActivation">
             </TextareaEdit>
         }
     </div>
