@@ -27,7 +27,5 @@ namespace SwashbucklerDiary.Maui.WinUI
             await LaunchActivation.HandleOnLaunchedAsync();
             base.OnLaunched(args);
         }
-
-
     }
 }

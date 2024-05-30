@@ -468,7 +468,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             else if (args.Kind == ShareKind.FilePaths)
             {
-                var filePaths = (List<string>)args.Data;
+                var filePaths = (List<string?>)args.Data;
                 var resources = await MediaResourceManager.ReceiveShareFilesAsync(filePaths);
                 var htmls = resources.Select(it => MarkdownEdit.SrcConvertToHtml(it.ResourceUri!, it.ResourceType));
                 insertContent = string.Join("\n", htmls);

@@ -2,12 +2,29 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
+using SwashbucklerDiary.Maui.Essentials;
+using Intent = Android.Content.Intent;
 
 namespace SwashbucklerDiary.Maui
 {
 #nullable disable
 #pragma warning disable CA1416
-    [Activity(Label = "@string/app_name", Theme = "@style/Maui.SplashTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density | ConfigChanges.KeyboardHidden)]
+    [IntentFilter([Intent.ActionView],
+        Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
+        DataScheme = "swashbucklerdiary",
+        DataHost = "swashbucklerdiary.com")]
+    [IntentFilter([Intent.ActionSend],
+        Categories = [Intent.CategoryDefault],
+        DataMimeType = "text/plain")]
+    //Vidoe files may be relatively large and time-consuming to copy, so they are temporarily disabled
+    [IntentFilter([Intent.ActionSend, Intent.ActionSendMultiple],
+        Categories = [Intent.CategoryDefault],
+        DataMimeTypes = ["image/*", "audio/*", /*"video/*"*/])]
+    [Activity(Label = "@string/app_name",
+        Theme = "@style/Maui.SplashTheme",
+        MainLauncher = true,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density | ConfigChanges.KeyboardHidden,
+        LaunchMode = LaunchMode.SingleTask)]
     public class MainActivity : MauiAppCompatActivity
     {
         public override bool DispatchKeyEvent(KeyEvent e)
@@ -23,7 +40,15 @@ namespace SwashbucklerDiary.Maui
             }
 
             base.OnCreate(savedInstanceState);
+            LaunchActivation.HandleOnLaunched(this.Intent);
             SoftKeyboardAdjustResize.Initialize();
+        }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            base.OnNewIntent(intent);
+
+            LaunchActivation.OnApplicationActivated(intent);
         }
     }
 }

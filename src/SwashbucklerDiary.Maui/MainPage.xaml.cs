@@ -9,9 +9,8 @@ namespace SwashbucklerDiary.Maui
         public MainPage()
         {
             InitializeComponent();
-            HandleLaunchActivation();
 
-            blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializing;
+            blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializingCore;
             blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;
 
 #if IOS
@@ -22,6 +21,12 @@ namespace SwashbucklerDiary.Maui
         private partial void BlazorWebViewInitializing(object? sender, BlazorWebViewInitializingEventArgs e);
 
         private partial void BlazorWebViewInitialized(object? sender, BlazorWebViewInitializedEventArgs e);
+
+        private void BlazorWebViewInitializingCore(object? sender, BlazorWebViewInitializingEventArgs e)
+        {
+            HandleLaunchActivation();
+            BlazorWebViewInitializing(sender, e);
+        }
 
         private void HandleLaunchActivation()
         {
