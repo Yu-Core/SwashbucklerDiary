@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -34,6 +35,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public bool Autofocus { get; set; }
+
+        [Parameter]
+        public EventCallback OnAfter { get; set; }
 
         protected override void OnInitialized()
         {
@@ -116,6 +120,11 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 await Module.Autofocus(mMarkdown.Ref);
             }
+
+            if (OnAfter.HasDelegate)
+            {
+                await OnAfter.InvokeAsync();
+            }
         }
 
         private async void HandleToolbarButtonClick(string btnName)
@@ -137,36 +146,28 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task AddImageAsync()
         {
             string? src = await MediaResourceManager.AddImageAsync();
-            if (string.IsNullOrEmpty(src))
-            {
-                return;
-            }
-
-            string html = $"![]({src})";
-            await InsertValueAsync(html);
+            await AddMediaFileAsync(src, MediaResource.Image);
         }
 
         private async Task AddAudioAsync()
         {
             string? src = await MediaResourceManager.AddAudioAsync();
-            if (string.IsNullOrEmpty(src))
-            {
-                return;
-            }
-
-            string html = $"<audio src=\"{src}\" controls ></audio>";
-            await InsertValueAsync(html);
+            await AddMediaFileAsync(src, MediaResource.Audio);
         }
 
         private async Task AddVideoAsync()
         {
             string? src = await MediaResourceManager.AddVideoAsync();
-            if (string.IsNullOrEmpty(src))
-            {
-                return;
-            }
+            await AddMediaFileAsync(src, MediaResource.Video);
+        }
 
-            string html = $"<video src=\"{src}\" controls ></video>";
+        private async Task AddMediaFileAsync(string? src, MediaResource mediaResource)
+        {
+            if (string.IsNullOrEmpty(src)) return;
+
+            string? html = SrcConvertToHtml(src, mediaResource);
+            if (html is null) return;
+
             await InsertValueAsync(html);
         }
 
@@ -176,8 +177,18 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 await Module.Focus(mMarkdown.Ref);
             }
-
             await mMarkdown.InsertValueAsync(value);
+        }
+
+        public static string? SrcConvertToHtml(string src, MediaResource mediaResource)
+        {
+            return mediaResource switch
+            {
+                MediaResource.Image => $"![]({src})",
+                MediaResource.Audio => $"<audio src=\"{src}\" controls ></audio>",
+                MediaResource.Video => $"<video src=\"{src}\" controls ></video>",
+                _ => null
+            };
         }
     }
 }

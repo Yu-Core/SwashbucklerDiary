@@ -29,6 +29,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public bool Autofocus { get; set; }
 
+        [Parameter]
+        public EventCallback OnAfter { get; set; }
+
         public async Task InsertValueAsync(string value)
         {
             Value = await Module.InsertText(mTextarea.InputElement, value);

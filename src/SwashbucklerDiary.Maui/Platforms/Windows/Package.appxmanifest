@@ -6,41 +6,80 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <Identity Name="36234Yu-Core.12598F3457A93" Publisher="CN=674A8476-AC5C-463D-979D-7EABC67C0A3A" Version="0.0.0.0" />
+	<Identity Name="36234Yu-Core.12598F3457A93" Publisher="CN=674A8476-AC5C-463D-979D-7EABC67C0A3A" Version="0.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="0BB89DB7-95CB-4091-8716-782A7B583CC5" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+	<mp:PhoneIdentity PhoneProductId="0BB89DB7-95CB-4091-8716-782A7B583CC5" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
-  <Properties>
-    <DisplayName>$placeholder$</DisplayName>
-    <PublisherDisplayName>Yu-Core</PublisherDisplayName>
-    <Logo>$placeholder$.png</Logo>
-  </Properties>
+	<Properties>
+		<DisplayName>$placeholder$</DisplayName>
+		<PublisherDisplayName>Yu-Core</PublisherDisplayName>
+		<Logo>$placeholder$.png</Logo>
+	</Properties>
 
-  <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
-  </Dependencies>
+	<Dependencies>
+		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+		<TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+	</Dependencies>
 
-  <Resources>
-    <Resource Language="x-generate" />
-  </Resources>
+	<Resources>
+		<Resource Language="x-generate" />
+	</Resources>
 
-  <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
-      <uap:VisualElements
-        DisplayName="ms-resource:AppDisplayName"
-        Description="$placeholder$"
-        Square150x150Logo="$placeholder$.png"
-        Square44x44Logo="$placeholder$.png"
-        BackgroundColor="transparent">
-        <uap:DefaultTile Square71x71Logo="$placeholder$.png" Wide310x150Logo="$placeholder$.png" Square310x310Logo="$placeholder$.png" />
-        <uap:SplashScreen Image="$placeholder$.png" />
-      </uap:VisualElements>
-    </Application>
-  </Applications>
+	<Applications>
+		<Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
+			<uap:VisualElements
+			  DisplayName="ms-resource:AppDisplayName"
+			  Description="$placeholder$"
+			  Square150x150Logo="$placeholder$.png"
+			  Square44x44Logo="$placeholder$.png"
+			  BackgroundColor="transparent">
+				<uap:DefaultTile Square71x71Logo="$placeholder$.png" Wide310x150Logo="$placeholder$.png" Square310x310Logo="$placeholder$.png" />
+				<uap:SplashScreen Image="$placeholder$.png" />
+			</uap:VisualElements>
+			<Extensions>
+				<uap:Extension Category="windows.protocol">
+					<uap:Protocol Name="swashbucklerdiary">
+						<uap:DisplayName>SwashbucklerDiary URI Scheme</uap:DisplayName>
+					</uap:Protocol>
+				</uap:Extension>
+				<uap:Extension Category="windows.shareTarget">
+					<uap:ShareTarget>
+						<uap:SupportedFileTypes>
+							<uap:FileType>.jpg</uap:FileType>
+							<uap:FileType>.jpeg</uap:FileType>
+							<uap:FileType>.png</uap:FileType>
+							<uap:FileType>.webp</uap:FileType>
+							<uap:FileType>.svg</uap:FileType>
+							<uap:FileType>.jfif</uap:FileType>
+							<uap:FileType>.mp3</uap:FileType>
+							<uap:FileType>.wav</uap:FileType>
+							<uap:FileType>.m4a</uap:FileType>
+							<uap:FileType>.ogg</uap:FileType>
+							<uap:FileType>.aac</uap:FileType>
+							<uap:FileType>.flac</uap:FileType>
+							<uap:FileType>.mp4</uap:FileType>
+							<uap:FileType>.m4v</uap:FileType>
+							<uap:FileType>.mpg</uap:FileType>
+							<uap:FileType>.mpeg</uap:FileType>
+							<uap:FileType>.mp2</uap:FileType>
+							<uap:FileType>.mov</uap:FileType>
+							<uap:FileType>.avi</uap:FileType>
+							<uap:FileType>.mkv</uap:FileType>
+							<uap:FileType>.flv</uap:FileType>
+							<uap:FileType>.gifv</uap:FileType>
+							<uap:FileType>.qt</uap:FileType>
+						</uap:SupportedFileTypes>
+						<uap:DataFormat>StorageItems</uap:DataFormat>
+						<uap:DataFormat>Text</uap:DataFormat>
+						<uap:DataFormat>Uri</uap:DataFormat>
+					</uap:ShareTarget>
+				</uap:Extension>
+			</Extensions>
+		</Application>
+	</Applications>
 
-  <Capabilities>
-    <rescap:Capability Name="runFullTrust" />
-  </Capabilities>
+	<Capabilities>
+		<rescap:Capability Name="runFullTrust" />
+	</Capabilities>
 
 </Package>

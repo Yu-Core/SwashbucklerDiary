@@ -100,8 +100,38 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public abstract Task<AudioFileInfo> GetAudioFileInfo(string uri);
 
+        public async Task<List<ResourceModel>> ReceiveShareFilesAsync(List<string?> filePaths)
+        {
+            List<ResourceModel> resources = new();
+            foreach (var filePath in filePaths)
+            {
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    continue;
+                }
+
+                var kind = GetResourceKind(filePath);
+                if (kind == MediaResource.Unknown)
+                {
+                    continue;
+                }
+
+                string? uri = await CreateMediaResourceFileAsync(kind, filePath);
+                if (string.IsNullOrEmpty(uri))
+                {
+                    continue;
+                }
+
+                resources.Add(new()
+                {
+                    ResourceUri = uri,
+                    ResourceType = kind
+                });
+            }
+
+            return resources;
+        }
+
         protected virtual string? CustomPathPrefix { get; }
-
-
     }
 }
