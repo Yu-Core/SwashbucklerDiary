@@ -5,9 +5,9 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class SwiperTabItem : IDisposable
     {
-        private bool activated;
+        private bool isActivated;
 
-        private bool rendered;
+        private bool isRendered;
 
         [CascadingParameter]
         public SwiperTabItems? TabItems { get; set; }
@@ -27,20 +27,21 @@ namespace SwashbucklerDiary.Rcl.Components
             TabItems?.RegisterTabItem(this);
         }
 
-        protected override void OnParametersSet()
+        protected override async Task OnParametersSetAsync()
         {
-            base.OnParametersSet();
+            await base.OnParametersSetAsync();
 
-            CheckActivated();
+            await ActivateAsync(true);
         }
 
-        protected override void OnAfterRender(bool firstRender)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            base.OnAfterRender(firstRender);
+            await base.OnAfterRenderAsync(firstRender);
+
             if (firstRender)
             {
-                rendered = true;
-                CheckActivated();
+                isRendered = true;
+                await ActivateAsync();
                 StateHasChanged();
             }
         }
@@ -51,14 +52,14 @@ namespace SwashbucklerDiary.Rcl.Components
             GC.SuppressFinalize(this);
         }
 
-        private void CheckActivated()
+        private async Task ActivateAsync(bool needWait = false)
         {
-            if (!rendered)
+            if (!isRendered)
             {
                 return;
             }
 
-            if (activated)
+            if (isActivated)
             {
                 return;
             }
@@ -68,7 +69,12 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            activated = true;
+            if (needWait)
+            {
+                await Task.Delay(300);
+            }
+
+            isActivated = true;
         }
     }
 }
