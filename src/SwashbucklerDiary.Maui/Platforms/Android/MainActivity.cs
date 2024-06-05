@@ -11,8 +11,7 @@ namespace SwashbucklerDiary.Maui
 #pragma warning disable CA1416
     [IntentFilter([Intent.ActionView],
         Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
-        DataScheme = "swashbucklerdiary",
-        DataHost = "swashbucklerdiary.com")]
+        DataScheme = "swashbucklerdiary")]
     [IntentFilter([Intent.ActionSend],
         Categories = [Intent.CategoryDefault],
         DataMimeType = "text/plain")]
