@@ -6,6 +6,7 @@ using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Globalization;
+using Theme = SwashbucklerDiary.Shared.Theme;
 
 namespace SwashbucklerDiary.Rcl.Layout
 {

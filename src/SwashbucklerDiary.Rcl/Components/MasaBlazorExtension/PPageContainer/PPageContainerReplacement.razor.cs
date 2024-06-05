@@ -1,6 +1,6 @@
 ﻿using BemIt;
-using BlazorComponent;
-using BlazorComponent.Attributes;
+using Masa.Blazor;
+using Masa.Blazor.Attributes;
 using Masa.Blazor.Presets;
 using Masa.Blazor.Presets.PageContainer;
 using Microsoft.AspNetCore.Components;
@@ -38,10 +38,11 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter] public string? Transition { get; set; } = "";
 
         /// <summary>
-        /// Whether to only render the content if the path is included in the <see cref="IncludePatterns"/>.
+        /// Strict mode, only the patterns in <see cref="IncludePatterns"/>
+        /// and <see cref="PatternPathComponentBase.SelfPatterns"/> would be rendered.
         /// </summary>
         [Parameter]
-        public bool OnlyRenderIncluded { get; set; }
+        public bool Strict { get; set; }
 
         protected readonly LRUCache<string, PatternPath> _patternPaths = new(10);
 
@@ -50,11 +51,11 @@ namespace SwashbucklerDiary.Rcl.Components
         private string? _previousPath;
         private PatternPath? _currentPatternPath;
 
-        private HashSet<string> _prevIncludePatterns = [];
-        private HashSet<string> _prevExcludePatterns = [];
+        private HashSet<string> _prevIncludePatterns = new();
+        private HashSet<string> _prevExcludePatterns = new();
 
-        private HashSet<Regex> _cachedIncludePatternRegexes = [];
-        private HashSet<Regex> _cachedExcludePatternRegexes = [];
+        private HashSet<Regex> _cachedIncludePatternRegexes = new();
+        private HashSet<Regex> _cachedExcludePatternRegexes = new();
 
         protected override void OnInitialized()
         {
@@ -64,7 +65,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             var patternPath = GetCurrentPatternPath();
 
-            if (!OnlyRenderIncluded || _cachedIncludePatternRegexes.Any(r => r.IsMatch(patternPath.AbsolutePath)))
+            if (!Strict || _cachedIncludePatternRegexes.Any(r => r.IsMatch(patternPath.AbsolutePath)))
             {
                 _currentPatternPath = patternPath;
                 _patternPaths.Put(patternPath.Pattern, patternPath);
@@ -106,7 +107,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
             var currentPath = NavigationManager.GetAbsolutePath();
-            if (OnlyRenderIncluded && !_cachedIncludePatternRegexes.Any(r => r.IsMatch(currentPath)))
+            if (Strict && !_cachedIncludePatternRegexes.Any(r => r.IsMatch(currentPath)))
             {
                 return;
             }
@@ -129,19 +130,18 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             // if the previous path is excluded or not included, remove it from the PatternPaths
-            if (_previousPath is not null)
+            if (_previousPath is not null && (
+                    (_cachedExcludePatternRegexes.Count > 0 &&
+                     _cachedExcludePatternRegexes.Any(r => r.IsMatch(_previousPath))) ||
+                    (_cachedIncludePatternRegexes.Count > 0 &&
+                     !_cachedIncludePatternRegexes.Any(r => r.IsMatch(_previousPath))))
+               )
             {
-                if ((_cachedExcludePatternRegexes.Count > 0
-                     && _cachedExcludePatternRegexes.Any(r => r.IsMatch(_previousPath)))
-                    || (_cachedIncludePatternRegexes.Count > 0
-                        && !_cachedIncludePatternRegexes.Any(r => r.IsMatch(_previousPath))))
+                var previousPatternPath = _patternPaths.FirstOrDefault(p => p.AbsolutePath == _previousPath);
+                if (previousPatternPath is not null)
                 {
-                    var previousPatternPath = _patternPaths.FirstOrDefault(p => p.AbsolutePath == _previousPath);
-                    if (previousPatternPath is not null)
-                    {
-                        _patternPaths.Remove(previousPatternPath.Pattern);
-                        InvokeAsync(StateHasChanged);
-                    }
+                    _patternPaths.Remove(previousPatternPath.Pattern);
+                    InvokeAsync(StateHasChanged);
                 }
             }
 

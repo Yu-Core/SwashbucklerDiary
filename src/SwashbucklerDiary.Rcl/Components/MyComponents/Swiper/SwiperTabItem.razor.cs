@@ -1,4 +1,4 @@
-﻿using BlazorComponent;
+﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Rcl.Components

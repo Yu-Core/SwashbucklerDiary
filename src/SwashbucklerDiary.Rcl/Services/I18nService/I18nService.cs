@@ -1,4 +1,4 @@
-﻿using BlazorComponent.I18n;
+﻿using Masa.Blazor;
 using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Services
@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Rcl.Services
         public CultureInfo Culture => _i18n.Culture;
 
         public abstract Dictionary<string, string> Languages { get; }
-        
+
         public event Action<CultureInfo>? OnChanged;
 
         public I18nService(I18n i18n)

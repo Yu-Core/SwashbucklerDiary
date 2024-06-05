@@ -1,4 +1,4 @@
-﻿using BlazorComponent;
+﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using SwashbucklerDiary.Rcl.Services;

@@ -42,7 +42,10 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             var rootPaths = NavigateService.RootPaths.Select(it => new Uri(it).AbsolutePath);
             var paths = _patternPaths.Where(p => rootPaths.Contains(p.AbsolutePath)).Select(p => p.Pattern);
-            _patternPaths.RemoveAll(_patternPaths.Keys.Except(paths));
+            foreach (var key in _patternPaths.Keys.Except(paths))
+            {
+                _patternPaths.Remove(key);
+            }
             InvokeAsync(StateHasChanged);
         }
 

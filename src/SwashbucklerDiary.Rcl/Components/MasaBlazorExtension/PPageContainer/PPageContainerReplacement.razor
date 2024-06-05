@@ -1,4 +1,6 @@
 ﻿@using Masa.Blazor.Presets.PageContainer
+@using Masa.Blazor.Core
+@using Masa.Blazor.Extensions
 @namespace SwashbucklerDiary.Rcl.Components
 @inherits PatternPathComponentBase
 
@@ -9,11 +11,11 @@
      @attributes="Attributes">
     @foreach (var path in _patternPaths.OrderBy(u => u.CreatedAt))
     {
-        <div class="@_block.Element("item").AddClass("d-none", path.Pattern != _currentPatternPath?.Pattern)"
+        <div class="@_block.Element("item").AppendClasses(("d-none", path.Pattern != _currentPatternPath?.Pattern))"
              @key="path.Pattern">
-            <BShouldRender Value="@(path.Pattern == GetCurrentPatternPath().Pattern)">
+            <MShouldRender Value="@(path.Pattern == GetCurrentPatternPath().Pattern)">
                 @ChildContent
-            </BShouldRender>
+            </MShouldRender>
         </div>
     }
 </div>

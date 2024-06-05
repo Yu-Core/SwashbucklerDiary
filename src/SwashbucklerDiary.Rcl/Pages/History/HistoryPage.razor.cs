@@ -1,4 +1,4 @@
-﻿using BlazorComponent.JSInterop;
+﻿using Masa.Blazor.Extensions;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;

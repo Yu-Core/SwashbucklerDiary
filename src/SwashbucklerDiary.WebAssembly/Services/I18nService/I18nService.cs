@@ -1,4 +1,4 @@
-﻿using BlazorComponent.I18n;
+﻿using Masa.Blazor;
 
 namespace SwashbucklerDiary.WebAssembly.Services
 {

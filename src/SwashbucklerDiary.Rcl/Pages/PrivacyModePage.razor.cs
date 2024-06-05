@@ -1,8 +1,9 @@
-using Masa.Blazor;
+﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
+using Theme = SwashbucklerDiary.Shared.Theme;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {

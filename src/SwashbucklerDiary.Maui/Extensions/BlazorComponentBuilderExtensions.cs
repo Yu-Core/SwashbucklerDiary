@@ -1,11 +1,11 @@
-﻿using BlazorComponent.I18n;
+﻿using Masa.Blazor.Core.I18n;
 using System.Text.Json;
 
 namespace SwashbucklerDiary.Maui.Extensions
 {
     public static class BlazorComponentBuilderExtensions
     {
-        public static IBlazorComponentBuilder AddI18nForMauiBlazor(this IBlazorComponentBuilder builder, string localesDirectory)
+        public static IMasaBlazorBuilder AddI18nForMauiBlazor(this IMasaBlazorBuilder builder, string localesDirectory)
         {
             string supportedCulturesPath = localesDirectory + "/supportedCultures.json";
             bool existsCultures = FileSystem.AppPackageFileExistsAsync(supportedCulturesPath).Result;

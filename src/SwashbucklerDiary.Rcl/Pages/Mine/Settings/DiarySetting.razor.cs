@@ -1,4 +1,4 @@
-﻿using BlazorComponent;
+﻿using Masa.Blazor;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Shared;
 

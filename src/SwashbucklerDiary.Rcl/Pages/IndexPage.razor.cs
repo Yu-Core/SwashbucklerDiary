@@ -1,5 +1,5 @@
-﻿using BlazorComponent;
-using BlazorComponent.JSInterop;
+﻿using Masa.Blazor;
+using Masa.Blazor.Extensions;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;

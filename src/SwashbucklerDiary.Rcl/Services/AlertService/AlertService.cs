@@ -1,5 +1,4 @@
-﻿using BlazorComponent;
-using Masa.Blazor;
+﻿using Masa.Blazor;
 
 namespace SwashbucklerDiary.Rcl.Services
 {

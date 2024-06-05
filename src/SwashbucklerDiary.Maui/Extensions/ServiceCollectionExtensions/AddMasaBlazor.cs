@@ -1,5 +1,4 @@
-﻿using BlazorComponent.I18n;
-using Masa.Blazor;
+﻿using Masa.Blazor;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 
@@ -16,7 +15,7 @@ namespace SwashbucklerDiary.Maui.Extensions
                 Rcl.Extensions.ServiceCollectionExtensions.ConfigMasaBlazorOptions(options);
                 //The reason for setting i18n here is because the Android back button requires i18n to be used
                 var language = Microsoft.Maui.Storage.Preferences.Get(Setting.Language.ToString(), "zh-CN");
-                options.Locale = new BlazorComponent.Locale(language, "en-US");
+                options.Locale = new(language, "en-US");
             }
 
             var masaBlazorBuilder = services.AddMasaBlazor(optionsAction);

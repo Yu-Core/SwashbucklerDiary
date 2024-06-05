@@ -1,9 +1,10 @@
-﻿using Microsoft.JSInterop;
+﻿using Masa.Blazor.JSInterop;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
-    public class SystemThemeJSModule : BlazorComponent.JSInterop.JSModule
+    public class SystemThemeJSModule : JSModule
     {
         public Theme SystemTheme { get; set; }
 

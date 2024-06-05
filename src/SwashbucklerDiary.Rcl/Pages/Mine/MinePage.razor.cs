@@ -1,4 +1,4 @@
-﻿using BlazorComponent.JSInterop;
+﻿using Masa.Blazor.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
