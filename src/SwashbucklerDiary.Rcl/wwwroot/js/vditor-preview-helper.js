@@ -11,7 +11,8 @@
     let VditorOptions = {
         ...options,
         after: () => {
-            handlePreviewElement(element);
+            handlePreviewElement(element, dotNetCallbackRef);
+            handleAnchorScroll();
             dotNetCallbackRef.invokeMethodAsync('After');
         }
     }
@@ -38,20 +39,30 @@ export function renderLazyLoadingImage(element) {
     }
 }
 
-function handlePreviewElement(previewElement) {
-    handleA(previewElement);
+function handlePreviewElement(previewElement, dotNetCallbackRef) {
+    handleA(previewElement, dotNetCallbackRef);
     handleVideo(previewElement);
     handleIframe(previewElement);
 }
 
 //修复点击链接的一些错误
-function handleA(element) {
+function handleA(element, dotNetCallbackRef) {
     const links = element.querySelectorAll("a"); // 获取所有a标签
     links.forEach(link => {
-        var href = link.getAttribute('href');
+        let href = link.getAttribute('href');
         if (href && !href.includes(':')) {
             if (href.startsWith('#')) {
-                href = location.origin + location.pathname + location.search + href;
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const anchor = href.split('#')[1];
+                    const url = location.origin + location.pathname + location.search + href;
+                    //can not use history.replaceState(null, '', url);
+                    dotNetCallbackRef.invokeMethodAsync('ReplaceUrl', url);
+                    const targetElement = document.getElementById(anchor);
+                    if (targetElement) {
+                        targetElement.scrollIntoView();
+                    }
+                });
             } else {
                 href = "https://" + href;
             }
@@ -91,4 +102,16 @@ function handleIframe(element) {
     iframes.forEach(iframe => {
         iframe.allowFullscreen = true;
     });
+}
+
+function handleAnchorScroll() {
+    if (location.hash) {
+        const anchor = location.hash.split('#')[1];
+        if (anchor) {
+            const targetElement = document.getElementById(anchor);
+            if (targetElement) {
+                targetElement.scrollIntoView();
+            }
+        }
+    }
 }

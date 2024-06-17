@@ -12,7 +12,10 @@ namespace SwashbucklerDiary.Rcl.Components
         private Lazy<DotNetObjectReference<object>> dotNetObjectReference = default!;
 
         [Inject]
-        public VditorMarkdownPreviewJSModule VditorMarkdownPreviewJSModule { get; set; } = default!;
+        private VditorMarkdownPreviewJSModule VditorMarkdownPreviewJSModule { get; set; } = default!;
+
+        [Inject]
+        private NavigationManager NavigationManager { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
@@ -38,6 +41,12 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 await OnAfter.InvokeAsync();
             }
+        }
+
+        [JSInvokable]
+        public void ReplaceUrl(string url)
+        {
+            NavigationManager.NavigateTo(url, replace: true);
         }
 
         public async Task RenderLazyLoadingImage()
