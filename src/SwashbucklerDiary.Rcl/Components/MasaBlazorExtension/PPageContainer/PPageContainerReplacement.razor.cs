@@ -44,11 +44,14 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public bool Strict { get; set; }
 
+        [Parameter]
+        public bool UseRegex { get; set; } = true;
+
         protected readonly LRUCache<string, PatternPath> _patternPaths = new(10);
 
         private readonly Block _block = new("p-page-container");
 
-        private string? _previousPath;
+        protected string? _previousPath;
         private PatternPath? _currentPatternPath;
 
         private HashSet<string> _prevIncludePatterns = new();
@@ -65,7 +68,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             var patternPath = GetCurrentPatternPath();
 
-            if (!Strict || _cachedIncludePatternRegexes.Any(r => r.IsMatch(patternPath.AbsolutePath)))
+            if (!Strict || _cachedIncludePatternRegexes.Any(r => IsMatch(r, patternPath.AbsolutePath)))
             {
                 _currentPatternPath = patternPath;
                 _patternPaths.Put(patternPath.Pattern, patternPath);
@@ -107,7 +110,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
             var currentPath = NavigationManager.GetAbsolutePath();
-            if (Strict && !_cachedIncludePatternRegexes.Any(r => r.IsMatch(currentPath)))
+            if (Strict && !_cachedIncludePatternRegexes.Any(r => IsMatch(r, currentPath)))
             {
                 return;
             }
@@ -132,9 +135,9 @@ namespace SwashbucklerDiary.Rcl.Components
             // if the previous path is excluded or not included, remove it from the PatternPaths
             if (_previousPath is not null && (
                     (_cachedExcludePatternRegexes.Count > 0 &&
-                     _cachedExcludePatternRegexes.Any(r => r.IsMatch(_previousPath))) ||
+                     _cachedExcludePatternRegexes.Any(r => IsMatch(r, _previousPath))) ||
                     (_cachedIncludePatternRegexes.Count > 0 &&
-                     !_cachedIncludePatternRegexes.Any(r => r.IsMatch(_previousPath))))
+                     !_cachedIncludePatternRegexes.Any(r => IsMatch(r, _previousPath))))
                )
             {
                 var previousPatternPath = _patternPaths.FirstOrDefault(p => p.AbsolutePath == _previousPath);
@@ -152,6 +155,11 @@ namespace SwashbucklerDiary.Rcl.Components
             _patternPaths.PutOrGet(currentPatternPath.Pattern, currentPatternPath);
 
             InvokeAsync(StateHasChanged);
+        }
+
+        private bool IsMatch(Regex regex, string input)
+        {
+            return UseRegex ? regex.IsMatch(input) : regex.ToString() == input;
         }
 
         protected override ValueTask DisposeAsyncCore()

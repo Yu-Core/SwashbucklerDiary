@@ -1,5 +1,6 @@
 ﻿using Android.Views;
 using Android.Widget;
+using SwashbucklerDiary.Maui.BlazorWebView;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using Application = Android.App.Application;
@@ -36,16 +37,19 @@ namespace SwashbucklerDiary
 
         private static void InternalOnBackButtonPressed()
         {
-            bool flag = NavigateService.OnBackButtonPressed();
-            if (flag)
+            if (NavigateService.Initialized && MauiBlazorWebViewHandler.WebView is not null)
             {
-                return;
+                MauiBlazorWebViewHandler.WebView.EvaluateJavascript(@"
+				history.back();
+			    ", null);
             }
-
-            QuitApp();
+            else
+            {
+                QuitApp();
+            }
         }
 
-        private static void QuitApp()
+        public static void QuitApp()
         {
             string text = I18n.T("Press again to exit");
 

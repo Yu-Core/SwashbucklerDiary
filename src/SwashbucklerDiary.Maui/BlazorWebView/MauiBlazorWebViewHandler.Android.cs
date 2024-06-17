@@ -6,6 +6,8 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
 {
     public partial class MauiBlazorWebViewHandler
     {
+        public static WebView? WebView { get; private set; }
+
 #pragma warning disable CA1416 // 验证平台兼容性
         protected override void ConnectHandler(WebView platformView)
         {
@@ -44,6 +46,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
             {
                 WebViewClient.OnPageFinished(view, url);
 
+                WebView = view;
                 AndroidSafeArea.Initialize(view);
             }
 

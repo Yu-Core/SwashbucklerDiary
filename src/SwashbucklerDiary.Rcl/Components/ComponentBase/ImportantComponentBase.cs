@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -19,9 +20,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected IPlatformIntegration PlatformIntegration { get; set; } = default!;
 
-        [Inject]
-        protected NavigationManager Navigation { get; set; } = default!;
-
         [CascadingParameter(Name = "IsDark")]
         public bool Dark { get; set; }
 
@@ -31,7 +29,7 @@ namespace SwashbucklerDiary.Rcl.Components
             GC.SuppressFinalize(this);
         }
 
-        protected bool IsThisPage => thisPageUrl is null || thisPageUrl.EqualsAbsolutePath(Navigation.Uri);
+        protected bool IsThisPage => thisPageUrl is null || thisPageUrl.EqualsAbsolutePath(NavigationManager.Uri);
 
         protected bool Light => !Dark;
 
@@ -41,12 +39,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
             InitializedUrl();
             ReadSettings();
-            Navigation.LocationChanged += NavigationManagerOnLocationChanged;
+            NavigationManager.LocationChanged += NavigationManagerOnLocationChanged;
         }
 
-        protected virtual Task NavigateToBack()
+        protected virtual async Task NavigateToBack()
         {
-            return NavigateService.PopAsync();
+            await JS.HistoryBack();
         }
 
         protected Func<bool, Task> SettingChange(Setting type)
@@ -56,7 +54,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected virtual void OnDispose()
         {
-            Navigation.LocationChanged -= NavigationManagerOnLocationChanged;
+            NavigationManager.LocationChanged -= NavigationManagerOnLocationChanged;
         }
 
         protected virtual void ReadSettings()
@@ -71,12 +69,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void InitializedUrl()
         {
-            thisPageUrl = Navigation.Uri;
+            thisPageUrl = NavigationManager.Uri;
         }
 
         protected virtual void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
-            if (thisPageUrl.EqualsAbsolutePath(Navigation.Uri))
+            if (thisPageUrl.EqualsAbsolutePath(NavigationManager.Uri))
             {
                 _ = OnResume();
             }

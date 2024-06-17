@@ -54,7 +54,7 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
         if (context is null)
             return;
 
-        NavigateService.Action += OnHideCustomView;
+        NavigateService.AddHistoryAction(OnHideCustomView);
 
         _videoViewCallback = callback;
         _customView = view;
@@ -120,7 +120,7 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
         if (context is null)
             return;
 
-        NavigateService.Action -= OnHideCustomView;
+        NavigateService.RemoveHistoryAction(OnHideCustomView);
 
         // Remove the CustomView
         if (context.Window.DecorView is FrameLayout layout)

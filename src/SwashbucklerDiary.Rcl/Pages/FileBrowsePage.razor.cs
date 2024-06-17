@@ -1,10 +1,8 @@
 ﻿using Masa.Blazor;
-using Masa.Blazor.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -55,7 +53,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadView();
-            NavigateService.BeforePopToRoot += BeforePopToRoot;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -71,12 +68,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        protected override void OnDispose()
-        {
-            NavigateService.BeforePopToRoot -= BeforePopToRoot;
-            base.OnDispose();
-        }
-
         protected override async Task OnResume()
         {
             await UpdateResourcesAsync();
@@ -87,7 +78,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         protected override async void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
             base.NavigationManagerOnLocationChanged(sender, e);
-            if (!thisPageUrl.EqualsAbsolutePath(Navigation.Uri))
+            if (!thisPageUrl.EqualsAbsolutePath(NavigationManager.Uri))
             {
                 if (module is null)
                 {
@@ -126,17 +117,6 @@ namespace SwashbucklerDiary.Rcl.Pages
                 await UpdateResourcesAsync();
                 await AlertService.Success(I18n.T("Share.DeleteSuccess"));
             }
-        }
-
-        private async Task BeforePopToRoot(PopEventArgs args)
-        {
-            if (thisPageUrl != args.NextUri) return;
-
-            if (thisPageUrl != args.PreviousUri) return;
-
-            if (swiperTabItems.ActiveItem is null) return;
-
-            await JS.ScrollTo($"#{swiperTabItems.ActiveItem.Id}", 0);
         }
 
         private async Task RecordScrollInfo()

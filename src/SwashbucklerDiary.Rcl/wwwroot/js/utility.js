@@ -16,3 +16,7 @@ function addToHead(html) {
     const element = document.createRange().createContextualFragment(html);
     document.getElementsByTagName('head')[0].appendChild(element);
 }
+
+function historyLength() {
+    return history.length;
+}

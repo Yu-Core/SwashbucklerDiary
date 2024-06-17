@@ -10,9 +10,9 @@
 
         public string Href { get; set; }
 
-        public Func<Task> OnClick { get; set; } = default!;
+        public Action OnClick { get; set; } = default!;
 
-        public NavigationButton(string text, string notSelectedIcon, string selectedIcon,string href)
+        public NavigationButton(string text, string notSelectedIcon, string selectedIcon, string href)
         {
             Text = text;
             SelectedIcon = selectedIcon;

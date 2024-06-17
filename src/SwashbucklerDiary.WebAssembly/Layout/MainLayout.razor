@@ -10,15 +10,15 @@
 
                     <FirstLaunchDialog />
 
-                    <MainLayoutNavDrawer Items="NavigationButtons"></MainLayoutNavDrawer>
+                    <MainLayoutNavDrawer Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutNavDrawer>
 
                     <MMain>
-                        <PPageContainerExtension>
+                        <MyPageContainer PermanentPaths="permanentPaths">
                             @Body
-                        </PPageContainerExtension>
+                        </MyPageContainer>
                     </MMain>
 
-                    <MainLayoutBottomNav Items="NavigationButtons"></MainLayoutBottomNav>
+                    <MainLayoutBottomNav Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutBottomNav>
 
                     <PwaSnackbar OnRefresh="@RefreshToSkipWaiting"></PwaSnackbar>
                     <SponsorSupportSnackbar></SponsorSupportSnackbar>

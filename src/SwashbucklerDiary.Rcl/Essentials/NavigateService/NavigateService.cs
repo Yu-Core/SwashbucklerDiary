@@ -1,134 +1,55 @@
-﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Shared;
+﻿using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Essentials
 {
-    public class NavigateService : INavigateService
+    public abstract class NavigateService : NavigateActionController, INavigateService
     {
-        public event Action? Action;
+        public event Action<string>? PageCacheRemoved;
 
-        public event Func<PushEventArgs, Task>? BeforePush;
+        public event Func<LocationChangingContext, Task>? LocationChanging;
 
-        public event Func<PopEventArgs, Task>? BeforePop;
+        public List<string> PermanentPaths { get; set; } = [];
 
-        public event Func<PopEventArgs, Task>? BeforePopToRoot;
-
-        public event Action<PushEventArgs>? Pushed;
-
-        public event Action<PopEventArgs>? Poped;
-
-        public event Action<PopEventArgs>? PopedToRoot;
-
-        public List<string> RootPaths { get; set; } = [];
-
-        public NavigationManager Navigation { get; set; } = default!;
-
-        public List<string> HistoryURLs { get; set; } = [];
-
-        public void Initialize(object navigation, List<string> rootPaths)
+        public async Task Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> uris)
         {
-            Navigation = (NavigationManager)navigation;
-            RootPaths = rootPaths.Select(it => Navigation.ToAbsoluteUri(it).ToString()).ToList();
-        }
-
-        public async Task PushAsync(string url, bool isCachePrevious = true)
-        {
-            string nextUri = Navigation.ToAbsoluteUri(url).ToString();
-            PushEventArgs args = new(Navigation.Uri, nextUri, isCachePrevious);
-
-            if (BeforePush is not null)
-            {
-                var delegates = BeforePush.GetInvocationList().Cast<Func<PushEventArgs, Task>>();
-                var tasks = new List<Task>();
-
-                foreach (var del in delegates)
-                {
-                    tasks.Add(del(args));
-                }
-
-                await Task.WhenAll(tasks);
-            }
-
-            string currentURL = Navigation.Uri;
-            HistoryURLs.Add(currentURL);
-
-            Navigation.NavigateTo(url, replace: true);
-            Pushed?.Invoke(args);
-        }
-
-        public async Task PopAsync()
-        {
-            string previousUri = HistoryURLs.LastOrDefault() ?? Navigation.BaseUri;
-            PopEventArgs args = new(previousUri, Navigation.Uri);
-
-            if (BeforePop is not null)
-            {
-                var delegates = BeforePop.GetInvocationList().Cast<Func<PopEventArgs, Task>>();
-                var tasks = new List<Task>();
-
-                foreach (var del in delegates)
-                {
-                    tasks.Add(del(args));
-                }
-
-                await Task.WhenAll(tasks);
-            }
-
-            if (HistoryURLs.Count > 0)
-            {
-                var lastIndex = HistoryURLs.Count - 1;
-                HistoryURLs.RemoveAt(lastIndex);
-            }
-
-            Navigation.NavigateTo(previousUri, replace: true);
-
-            Poped?.Invoke(args);
-        }
-
-        public async Task PopToRootAsync(string url)
-        {
-            url = Navigation.ToAbsoluteUri(url).ToString();
-
-            PopEventArgs args = new(url, Navigation.Uri);
-            if (BeforePopToRoot is not null)
-            {
-                var delegates = BeforePopToRoot.GetInvocationList().Cast<Func<PopEventArgs, Task>>();
-                var tasks = new List<Task>();
-
-                foreach (var del in delegates)
-                {
-                    tasks.Add(del(args));
-                }
-
-                await Task.WhenAll(tasks);
-            }
-
-            if (Navigation.Uri.EqualsAbsolutePath(url))
+            if (Initialized)
             {
                 return;
             }
 
-            Navigation.NavigateTo(url, replace: true);
-            HistoryURLs.Clear();
-            PopedToRoot?.Invoke(args);
+            PermanentPaths = uris.ToList();
+            await base.Init(navigationManager, jSRuntime);
         }
 
-        public bool OnBackButtonPressed()
+        protected override async ValueTask OnLocationChanging(LocationChangingContext context)
         {
-            if (Action != null && Action?.GetInvocationList().Length > 0)
+            if (stackBottomUri == _navigationManager.ToAbsoluteUri(context.TargetLocation).ToString())
             {
-                var delegates = Action.GetInvocationList();
-                (delegates.Last() as Action)!.Invoke();
-                return true;
-            }
+                if (PermanentPaths.Any(it => it == _navigationManager.GetAbsolutePath()))
+                {
+                    await HandleNavigateToStackBottomUri();
+                }
+                else
+                {
+                    _navigationManager.NavigateTo("", replace: true);
+                }
 
-            if (HistoryURLs.Count != 0)
+                context.PreventNavigation();
+            }
+            else if (LocationChanging is not null)
             {
-                _ = PopAsync();
-                return true;
+                await LocationChanging.Invoke(context);
             }
+        }
 
-            return false;
+        protected abstract override Task HandleNavigateToStackBottomUri();
+
+        public void RemovePageCache(string url)
+        {
+            PageCacheRemoved?.Invoke(url);
         }
     }
 }

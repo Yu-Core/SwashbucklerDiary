@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (Value)
             {
-                NavigateService.Action -= Close;
+                NavigateService.RemoveHistoryAction(Close);
             }
 
             return base.DisposeAsyncCore();
@@ -43,11 +43,11 @@ namespace SwashbucklerDiary.Rcl.Components
             base.Value = value;
             if (value)
             {
-                NavigateService.Action += Close;
+                NavigateService.AddHistoryAction(Close);
             }
             else
             {
-                NavigateService.Action -= Close;
+                NavigateService.RemoveHistoryAction(Close);
             }
         }
 
