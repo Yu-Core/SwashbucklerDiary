@@ -4,7 +4,6 @@ using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 using System.Globalization;
 using Theme = SwashbucklerDiary.Shared.Theme;
 
@@ -36,12 +35,6 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected ISettingService SettingService { get; set; } = default!;
 
         [Inject]
-        protected IPopupService PopupService { get; set; } = default!;
-
-        [Inject]
-        protected IAlertService AlertService { get; set; } = default!;
-
-        [Inject]
         protected IThemeService ThemeService { get; set; } = default!;
 
         [Inject]
@@ -66,7 +59,6 @@ namespace SwashbucklerDiary.Rcl.Layout
         {
             base.OnInitialized();
             LoadView();
-            AlertService.Initialize(PopupService);
             I18n.OnChanged += LanguageChanged;
             permanentPaths = navigationButtons.Select(it => NavigationManager.ToAbsoluteUri(it.Href).AbsolutePath).ToList();
         }
@@ -85,8 +77,6 @@ namespace SwashbucklerDiary.Rcl.Layout
         {
             await SettingService.InitializeAsync();
             afterInitSetting = true;
-            var timeout = SettingService.Get<int>(Setting.AlertTimeout);
-            AlertService.SetTimeout(timeout);
             await InitNavigateServiceAsync();
         }
 

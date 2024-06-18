@@ -45,7 +45,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             _timeout = value.ToInt32() * 1000;
-            AlertService.SetTimeout(_timeout);
             await SettingService.Set(Setting.AlertTimeout, _timeout);
         }
 

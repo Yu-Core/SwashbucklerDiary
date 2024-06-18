@@ -356,6 +356,11 @@ html {
     }
 }
 
+.m-snack__content {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
 .m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--light {
     color: rgba(0,0,0,.87) !important;
 }

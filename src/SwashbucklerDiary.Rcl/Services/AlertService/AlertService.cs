@@ -1,21 +1,47 @@
 ﻿using Masa.Blazor;
+using Masa.Blazor.Popup;
+using Masa.Blazor.Popup.Components;
+using Masa.Blazor.Presets;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
     public class AlertService : IAlertService
     {
-        private IPopupService _popupService = default!;
+        private readonly IPopupService _popupService = default!;
 
-        private int timeout;
+        private readonly IPopupProvider _popupProvider = default!;
 
-        public void Initialize(object popupService)
-        {
-            _popupService = (IPopupService)popupService;
-        }
+        private readonly MasaBlazor _masaBlazor = default!;
 
-        public AlertService(IPopupService popupService)
+        private readonly ISettingService _settingService = default!;
+
+        public AlertService(IPopupService popupService,
+            IPopupProvider popupProvider,
+            MasaBlazor masaBlazor,
+            ISettingService settingService)
         {
             _popupService = popupService;
+            _popupProvider = popupProvider;
+            _masaBlazor = masaBlazor;
+            _masaBlazor.BreakpointChanged += OnBreakpointChanged;
+            _settingService = settingService;
+        }
+
+        private void OnBreakpointChanged(object? sender, BreakpointChangedEventArgs e)
+        {
+            var providerItem = _popupProvider.GetItems().FirstOrDefault(it => it.ComponentType == typeof(EnqueuedSnackbars));
+            if (providerItem is not null)
+            {
+                _popupProvider.Remove(providerItem);
+            }
+
+            var parameters = new Dictionary<string, object?>()
+            {
+                {nameof(EnqueuedSnackbars.Position), _masaBlazor.Breakpoint.SmAndUp ? SnackPosition.BottomCenter : SnackPosition.TopCenter}
+            };
+
+            _popupProvider.Add(typeof(EnqueuedSnackbars), parameters, _popupService, nameof(PopupService));
         }
 
         public Task Alert(string? message) => Alert(null, message);
@@ -24,12 +50,13 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task Alert(string? title, string? message, AlertTypes type)
         {
+            int timeout = _settingService.Get<int>(Setting.AlertTimeout);
             await _popupService.EnqueueSnackbarAsync(new()
             {
                 Title = title,
                 Content = message,
                 Type = type,
-                Timeout = timeout
+                Timeout = timeout == 0 ? 2000 : timeout,
             });
         }
 
@@ -67,11 +94,6 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             _popupService.HideProgressCircular();
             return Task.CompletedTask;
-        }
-
-        public void SetTimeout(int value)
-        {
-            timeout = value;
         }
     }
 }

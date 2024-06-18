@@ -8,8 +8,6 @@ namespace SwashbucklerDiary.Maui.Extensions
     {
         public static IServiceCollection AddMasaBlazorConfig(this IServiceCollection services)
         {
-            services.AddSingleton<I18n>();
-
             static void optionsAction(MasaBlazorOptions options)
             {
                 Rcl.Extensions.ServiceCollectionExtensions.ConfigMasaBlazorOptions(options);
@@ -18,7 +16,7 @@ namespace SwashbucklerDiary.Maui.Extensions
                 options.Locale = new(language, "en-US");
             }
 
-            var masaBlazorBuilder = services.AddMasaBlazor(optionsAction);
+            var masaBlazorBuilder = services.AddMasaBlazor(optionsAction, ServiceLifetime.Singleton);
             masaBlazorBuilder.AddI18nForMauiBlazor($"wwwroot/_content/{StaticWebAssets.RclAssemblyName}/i18n");
             masaBlazorBuilder.AddI18nForMauiBlazor($"wwwroot/i18n");
 
