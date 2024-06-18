@@ -35,29 +35,9 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
         //把url相对路径转化为真实的文件路径
         public static string UrlRelativePathToFilePath(string urlRelativePath)
         {
-            UrlRelativePathToFilePath(urlRelativePath, out string path);
-            return path;
-        }
-
-        private static bool Intercept(string uri, out string path)
-        {
-            if (!uri.StartsWith(BaseUri))
-            {
-                path = string.Empty;
-                return false;
-            }
-
-            uri = new Uri(uri).GetLeftPart(UriPartial.Path);
-            var urlRelativePath = uri[BaseUri.Length..];
-            return UrlRelativePathToFilePath(urlRelativePath, out path);
-        }
-
-        private static bool UrlRelativePathToFilePath(string urlRelativePath, out string path)
-        {
             if (string.IsNullOrEmpty(urlRelativePath))
             {
-                path = string.Empty;
-                return false;
+                return string.Empty;
             }
 
             urlRelativePath = Uri.UnescapeDataString(urlRelativePath);
@@ -67,26 +47,35 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 if (urlRelativePath.StartsWith(item.Value + '/'))
                 {
                     string urlRelativePathSub = urlRelativePath[(item.Value.Length + 1)..];
-                    path = Path.Combine(item.Key, urlRelativePathSub.Replace('/', Path.DirectorySeparatorChar));
-                    if (File.Exists(path))
-                    {
-                        return true;
-                    }
+                    return Path.Combine(item.Key, urlRelativePathSub.Replace('/', Path.DirectorySeparatorChar));
                 }
             }
 
             if (urlRelativePath.StartsWith(OtherFileMapPath + '/'))
             {
                 string urlRelativePathSub = urlRelativePath[(OtherFileMapPath.Length + 1)..];
-                path = urlRelativePathSub.Replace('/', Path.DirectorySeparatorChar);
-                if (File.Exists(path))
-                {
-                    return true;
-                }
+                return urlRelativePathSub.Replace('/', Path.DirectorySeparatorChar);
             }
 
-            path = string.Empty;
-            return false;
+            return string.Empty;
+        }
+
+        private static bool Intercept(string uri, out string filePath)
+        {
+            if (!uri.StartsWith(BaseUri))
+            {
+                filePath = string.Empty;
+                return false;
+            }
+
+            var urlRelativePath = new Uri(uri).AbsolutePath.TrimStart('/');
+            filePath = UrlRelativePathToFilePath(urlRelativePath);
+            if (!File.Exists(filePath))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

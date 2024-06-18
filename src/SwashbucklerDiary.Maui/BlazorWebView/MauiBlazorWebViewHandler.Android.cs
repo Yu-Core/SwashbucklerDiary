@@ -63,17 +63,17 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 webResourceResponse = null;
 
                 var uri = request.Url.ToString();
-                if (!Intercept(uri, out string path))
+                if (!Intercept(uri, out string filePath))
                 {
                     return false;
                 }
 
-                if (!File.Exists(path))
+                if (!File.Exists(filePath))
                 {
                     return false;
                 }
 
-                webResourceResponse = CreateWebResourceResponse(request, path);
+                webResourceResponse = CreateWebResourceResponse(request, filePath);
                 return true;
             }
 

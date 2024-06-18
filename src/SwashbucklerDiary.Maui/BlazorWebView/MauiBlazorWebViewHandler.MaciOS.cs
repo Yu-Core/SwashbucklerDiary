@@ -162,23 +162,23 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 }
 
                 string uri = requestUrl.ToString();
-                if (!Intercept(uri, out string path))
+                if (!Intercept(uri, out string filePath))
                 {
                     return false;
                 }
 
-                if (!File.Exists(path))
+                if (!File.Exists(filePath))
                 {
                     return false;
                 }
 
-                using var contentStream = File.OpenRead(path);
+                using var contentStream = File.OpenRead(filePath);
                 var length = contentStream.Length;
                 long rangeStart = 0;
                 long rangeEnd = length - 1;
                 int statusCode = 200;
 
-                string contentType = StaticContentProvider.GetResponseContentTypeOrDefault(path);
+                string contentType = StaticContentProvider.GetResponseContentTypeOrDefault(filePath);
                 using (var dic = new NSMutableDictionary<NSString, NSString>())
                 {
                     bool partial = urlSchemeTask.Request.Headers.TryGetValue((NSString)"Range", out NSObject rangeNSObject);
