@@ -53,6 +53,11 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         private async ValueTask OnLocationChangingCore(LocationChangingContext context)
         {
+            if (!_navigationManager.IsBaseOf(context.TargetLocation))
+            {
+                return;
+            }
+
             var preventNavigation = await HandleNavigateActionAsync();
             if (preventNavigation)
             {

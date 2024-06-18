@@ -2,16 +2,24 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
+using System.Reflection;
 
 namespace SwashbucklerDiary.Rcl.Essentials
 {
     public abstract class NavigateService : NavigateActionController, INavigateService
     {
+        private readonly RouteHelper routeHelper;
+
         public event Action<string>? PageCacheRemoved;
 
         public event Func<LocationChangingContext, Task>? LocationChanging;
 
         public List<string> PermanentPaths { get; set; } = [];
+
+        public NavigateService()
+        {
+            routeHelper = new RouteHelper(Assemblies);
+        }
 
         public async Task Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> uris)
         {
@@ -24,9 +32,13 @@ namespace SwashbucklerDiary.Rcl.Essentials
             await base.Init(navigationManager, jSRuntime);
         }
 
+        protected abstract Assembly[] Assemblies { get; }
+
         protected override async ValueTask OnLocationChanging(LocationChangingContext context)
         {
-            if (stackBottomUri == _navigationManager.ToAbsoluteUri(context.TargetLocation).ToString())
+            var targetUri = _navigationManager.ToAbsoluteUri(context.TargetLocation).ToString();
+
+            if (targetUri == stackBottomUri)
             {
                 if (PermanentPaths.Any(it => it == _navigationManager.GetAbsolutePath()))
                 {
@@ -38,8 +50,16 @@ namespace SwashbucklerDiary.Rcl.Essentials
                 }
 
                 context.PreventNavigation();
+                return;
             }
-            else if (LocationChanging is not null)
+
+            if (!routeHelper.IsMatch(targetUri))
+            {
+                context.PreventNavigation();
+                return;
+            }
+
+            if (LocationChanging is not null)
             {
                 await LocationChanging.Invoke(context);
             }

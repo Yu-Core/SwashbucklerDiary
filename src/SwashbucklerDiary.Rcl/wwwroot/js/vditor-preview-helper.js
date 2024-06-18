@@ -50,24 +50,19 @@ function handleA(element, dotNetCallbackRef) {
     const links = element.querySelectorAll("a"); // 获取所有a标签
     links.forEach(link => {
         let href = link.getAttribute('href');
-        if (href && !href.includes(':')) {
-            if (href.startsWith('#')) {
-                link.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    const anchor = href.split('#')[1];
-                    const url = location.origin + location.pathname + location.search + href;
-                    //can not use history.replaceState(null, '', url);
-                    dotNetCallbackRef.invokeMethodAsync('ReplaceUrl', url);
-                    const targetElement = document.getElementById(anchor);
-                    if (targetElement) {
-                        targetElement.scrollIntoView();
-                    }
-                });
-            } else {
-                href = "https://" + href;
-            }
-            link.setAttribute("href", href); // 修改每个a标签的href属性
-        };
+        if (href.startsWith('#')) {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                const anchor = href.split('#')[1];
+                const url = location.origin + location.pathname + location.search + href;
+                //can not use history.replaceState(null, '', url);
+                dotNetCallbackRef.invokeMethodAsync('ReplaceUrl', url);
+                const targetElement = document.getElementById(anchor);
+                if (targetElement) {
+                    targetElement.scrollIntoView();
+                }
+            });
+        }
     });
 }
 
