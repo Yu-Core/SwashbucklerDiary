@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Layout
 {
@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Parameter]
         public NavigationButton Value { get; set; } = default!;
 
-        protected bool Activated => NavigationManager.Uri.EqualsAbsolutePath(NavigationManager.ToAbsoluteUri(Value.Href));
+        protected bool Activated => NavigationManager.GetAbsolutePath() == NavigationManager.ToAbsoluteUri(Value.Href).AbsolutePath;
 
         protected string Icon => Activated ? Value.SelectedIcon : Value.NotSelectedIcon;
     }

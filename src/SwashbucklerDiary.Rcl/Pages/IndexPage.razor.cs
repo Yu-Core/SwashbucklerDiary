@@ -1,6 +1,7 @@
 ﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -16,7 +17,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private SwiperTabItems swiperTabItems = default!;
 
-        private readonly List<string> tabNames = ["Index.All", "Index.Tag"];
+        private readonly List<TabListItem> tabListItems =
+        [
+            new("Index.All","all"),
+            new("Index.Tag","tag"),
+        ];
 
         [Inject]
         private IVersionUpdataManager VersionManager { get; set; } = default!;
@@ -104,7 +109,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private Task Search(string? value)
         {
-            To($"search?query={value}");
+            string? queryParameters = string.IsNullOrWhiteSpace(value) ? null : $"?query={value}";
+            To($"search{queryParameters}");
             return Task.CompletedTask;
         }
 

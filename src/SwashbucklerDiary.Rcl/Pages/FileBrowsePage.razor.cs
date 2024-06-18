@@ -12,6 +12,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class FileBrowsePage : ImportantComponentBase, IAsyncDisposable
     {
+        private readonly List<TabListItem> tabListItems =
+        [
+            new("FileBrowse.Image.Name","image"),
+            new("FileBrowse.Audio.Name","audio"),
+            new("FileBrowse.Video.Name","video"),
+        ];
+
         private bool showDelete;
 
         private bool showMenu;
@@ -21,8 +28,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         private StringNumber tab = 0;
 
         private SwiperTabItems swiperTabItems = default!;
-
-        private readonly List<string> tabNames = ["FileBrowse.Image.Name", "FileBrowse.Audio.Name", "FileBrowse.Video.Name"];
 
         private IJSObjectReference module = default!;
 
@@ -78,7 +83,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         protected override async void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
             base.NavigationManagerOnLocationChanged(sender, e);
-            if (!thisPageUrl.EqualsAbsolutePath(NavigationManager.Uri))
+            if (thisPagePath != NavigationManager.GetAbsolutePath())
             {
                 if (module is null)
                 {

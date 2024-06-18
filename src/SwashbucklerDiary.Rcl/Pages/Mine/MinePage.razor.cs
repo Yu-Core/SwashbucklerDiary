@@ -249,7 +249,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private Task Search(string? value)
         {
-            To($"searchAppFunction?query={value}");
+            string? queryParameters = string.IsNullOrWhiteSpace(value) ? null : $"?query={value}";
+            To($"searchAppFunction{queryParameters}");
             return Task.CompletedTask;
         }
 

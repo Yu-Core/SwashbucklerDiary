@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -9,7 +10,9 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public abstract class ImportantComponentBase : MyComponentBase, IDisposable
     {
-        protected string? thisPageUrl;
+        private string? previousPath;
+
+        protected string? thisPagePath;
 
         [Inject]
         protected IJSRuntime JS { get; set; } = default!;
@@ -29,7 +32,7 @@ namespace SwashbucklerDiary.Rcl.Components
             GC.SuppressFinalize(this);
         }
 
-        protected bool IsThisPage => thisPageUrl is null || thisPageUrl.EqualsAbsolutePath(NavigationManager.Uri);
+        protected bool IsThisPage => thisPagePath is null || thisPagePath == NavigationManager.GetAbsolutePath();
 
         protected bool Light => !Dark;
 
@@ -37,7 +40,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
-            InitializedUrl();
+            InitializedPath();
             ReadSettings();
             NavigationManager.LocationChanged += NavigationManagerOnLocationChanged;
         }
@@ -67,14 +70,21 @@ namespace SwashbucklerDiary.Rcl.Components
             await InvokeAsync(StateHasChanged);
         }
 
-        private void InitializedUrl()
+        private void InitializedPath()
         {
-            thisPageUrl = NavigationManager.Uri;
+            previousPath = thisPagePath = NavigationManager.GetAbsolutePath();
         }
 
         protected virtual void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
-            if (thisPageUrl.EqualsAbsolutePath(NavigationManager.Uri))
+            var currentPath = NavigationManager.GetAbsolutePath();
+            if (previousPath == currentPath)
+            {
+                return;
+            }
+
+            previousPath = currentPath;
+            if (thisPagePath == currentPath)
             {
                 _ = OnResume();
             }

@@ -27,67 +27,67 @@
     "Name": "Backups.Local.Name",
     "Icon": "mdi-folder-arrow-up-down-outline",
     "Path": "Backups.Local.Path",
-    "Href": "backups?View=Local"
+    "Href": "backups?tabs=local"
   },
   {
     "Name": "Backups.Backups.Title",
     "Icon": "mdi-folder-arrow-down-outline",
     "Path": "Backups.Backups.Path",
-    "Href": "backups?View=Local"
+    "Href": "backups?tabs=local"
   },
   {
     "Name": "Backups.Restore.Title",
     "Icon": "mdi-folder-arrow-up-outline",
     "Path": "Backups.Restore.Path",
-    "Href": "backups?View=Local"
+    "Href": "backups?tabs=local"
   },
   {
     "Name": "Backups.WebDAV.Name",
     "Icon": "mdi-cloud-sync-outline",
     "Path": "Backups.WebDAV.Path",
-    "Href": "backups?View=WebDAV"
+    "Href": "backups?tabs=webDAV"
   },
   {
     "Name": "Backups.Config.Title",
     "Icon": "mdi-cog-sync-outline",
     "Path": "Backups.Config.Path",
-    "Href": "backups?View=WebDAV"
+    "Href": "backups?tabs=webDAV"
   },
   {
     "Name": "Backups.Upload.Title",
     "Icon": "mdi-cloud-arrow-up-outline",
     "Path": "Backups.Upload.Path",
-    "Href": "backups?View=WebDAV"
+    "Href": "backups?tabs=webDAV"
   },
   {
     "Name": "Backups.Download.Title",
     "Icon": "mdi-cloud-arrow-down-outline",
     "Path": "Backups.Download.Path",
-    "Href": "backups?View=WebDAV"
+    "Href": "backups?tabs=webDAV"
   },
   {
     "Name": "Export.Local.Name",
     "Icon": "mdi-file-arrow-up-down-outline",
     "Path": "Export.Local.Path",
-    "Href": "export?View=Local"
+    "Href": "export?tabs=local"
   },
   {
     "Name": "Export.Export.Title",
     "Icon": "mdi-export",
     "Path": "Export.Export.Path",
-    "Href": "export?View=Local"
+    "Href": "export?tabs=local"
   },
   {
     "Name": "Export.Import.Title",
     "Icon": "mdi-import",
     "Path": "Export.Import.Path",
-    "Href": "export?View=Local"
+    "Href": "export?tabs=local"
   },
   {
     "Name": "Export.LAN.Name",
     "Icon": "mdi-lan",
     "Path": "Export.LAN.Path",
-    "Href": "export?View=LAN"
+    "Href": "export?tabs=LAN"
   },
   {
     "Name": "Mine.Achievement.Name",
