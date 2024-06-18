@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (Visible)
             {
-                NavigateService.Action -= Close;
+                NavigateService.RemoveHistoryAction(Close);
             }
 
             GC.SuppressFinalize(this);
@@ -43,11 +43,11 @@ namespace SwashbucklerDiary.Rcl.Components
             base.Visible = value;
             if (value)
             {
-                NavigateService.Action += Close;
+                NavigateService.AddHistoryAction(Close);
             }
             else
             {
-                NavigateService.Action -= Close;
+                NavigateService.RemoveHistoryAction(Close);
             }
         }
 

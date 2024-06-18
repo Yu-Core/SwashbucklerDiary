@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Maui
     public class MainActivity : MauiAppCompatActivity
     {
         public override bool DispatchKeyEvent(KeyEvent e)
-            => NavigationButtonHandler.OnBackButtonPressed(e) || base.DispatchKeyEvent(e);
+            => NavigationButtonHandler.OnBackButtonPressed(e);
 
         protected override void OnCreate(Bundle savedInstanceState)
         {

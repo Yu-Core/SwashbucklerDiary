@@ -99,7 +99,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 await ThemeService.SetThemeAsync((Theme)theme);
             }
 
-            await NavigateService.PopToRootAsync("");
+            To("");
         }
 
         private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)

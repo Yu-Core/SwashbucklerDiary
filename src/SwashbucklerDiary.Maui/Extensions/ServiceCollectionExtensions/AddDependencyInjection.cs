@@ -32,7 +32,7 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddSingleton<ILogService, LogService>();
             services.AddSingleton<IResourceService, Services.ResourceService>();
 
-            services.AddSingleton<INavigateService, NavigateService>();
+            services.AddSingleton<INavigateService, Essentials.NavigateService>();
             services.AddSingleton<IIconService, Services.IconService>();
             services.AddSingleton<IAlertService, AlertService>();
             services.AddSingleton<II18nService, Services.I18nService>();

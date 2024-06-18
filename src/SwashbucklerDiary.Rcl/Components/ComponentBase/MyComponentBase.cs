@@ -11,6 +11,9 @@ namespace SwashbucklerDiary.Rcl.Components
         protected INavigateService NavigateService { get; set; } = default!;
 
         [Inject]
+        protected NavigationManager NavigationManager { get; set; } = default!;
+
+        [Inject]
         protected II18nService I18n { get; set; } = default!;
 
         [Inject]
@@ -32,7 +35,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected void To(string url, bool cacheCurrentURL = true)
         {
-            NavigateService.PushAsync(url, cacheCurrentURL);
+            if (!cacheCurrentURL)
+            {
+                NavigateService.RemovePageCache(NavigationManager.Uri);
+            }
+
+            NavigationManager.NavigateTo(url);
         }
 
         protected virtual async Task HandleAchievements(Achievement type)

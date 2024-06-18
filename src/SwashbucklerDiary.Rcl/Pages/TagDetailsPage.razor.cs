@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void NavigateToWrite()
         {
-            NavigateService.PushAsync($"write?tagId={Id}");
+            NavigationManager.NavigateTo($"write?tagId={Id}");
         }
     }
 }

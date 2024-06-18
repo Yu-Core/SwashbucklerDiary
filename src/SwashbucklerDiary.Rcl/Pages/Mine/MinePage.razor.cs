@@ -1,5 +1,4 @@
-﻿using Masa.Blazor.Extensions;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -86,7 +85,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadView();
-            NavigateService.BeforePopToRoot += BeforePopToRoot;
             I18n.OnChanged += I18nChange;
         }
 
@@ -117,7 +115,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override void OnDispose()
         {
-            NavigateService.BeforePopToRoot -= BeforePopToRoot;
             I18n.OnChanged -= I18nChange;
             base.OnDispose();
         }
@@ -285,14 +282,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             var diries = await DiaryService.QueryAsync();
             wordCount = diries.GetWordCount(WordCountType);
             await InvokeAsync(StateHasChanged);
-        }
-
-        private async Task BeforePopToRoot(PopEventArgs args)
-        {
-            if (thisPageUrl == args.PreviousUri && thisPageUrl == args.NextUri)
-            {
-                await JS.ScrollTo($"#{scrollContainer.Id}", 0);
-            }
         }
 
         private void TryToPrivacyMode()

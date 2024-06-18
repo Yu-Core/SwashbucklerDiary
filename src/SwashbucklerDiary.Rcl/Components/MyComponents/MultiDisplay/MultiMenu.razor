@@ -34,12 +34,12 @@
         </MBottomSheetExtension>
     </MobileContent>
     <DesktopContent>
-        <MMenuExtension MyValue="Visible"
-                        MyValueChanged="InternalVisibleChanged"
-                        Rounded="@("lg")"
-                        Bottom="true"
-                        Right="true"
-                        Transition="scroll-x-reverse-transition">
+        <MMenu Value="Visible"
+               ValueChanged="InternalVisibleChanged"
+               Rounded="@("lg")"
+               Bottom="true"
+               Right="true"
+               Transition="scroll-x-reverse-transition">
             <ActivatorContent>
                 @(ComputedActivatorContent(context))
             </ActivatorContent>
@@ -65,6 +65,6 @@
                     }
                 </MList>
             </ChildContent>
-        </MMenuExtension>
+        </MMenu>
     </DesktopContent>
 </MultiDisplay>

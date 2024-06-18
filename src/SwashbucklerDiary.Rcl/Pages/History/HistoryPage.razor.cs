@@ -1,6 +1,5 @@
 ﻿using Masa.Blazor.Extensions;
 using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
 
@@ -33,13 +32,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadView();
-            NavigateService.BeforePopToRoot += BeforePopToRoot;
-        }
-
-        protected override void OnDispose()
-        {
-            NavigateService.BeforePopToRoot -= BeforePopToRoot;
-            base.OnDispose();
         }
 
         protected override async Task UpdateDiariesAsync()
@@ -106,14 +98,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (IsThisPage)
             {
                 normalCalendarVisible = value;
-            }
-        }
-
-        private async Task BeforePopToRoot(PopEventArgs args)
-        {
-            if (thisPageUrl == args.PreviousUri && thisPageUrl == args.NextUri)
-            {
-                await JS.ScrollTo($"#{scrollContainer.Id}", 0);
             }
         }
 

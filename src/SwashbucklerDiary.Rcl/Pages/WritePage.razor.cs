@@ -96,10 +96,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadView();
-            NavigateService.BeforePop += BeforePop;
-            NavigateService.BeforePopToRoot += BeforePop;
             AppLifecycle.Stopped += LeaveAppSaveDiary;
+            AppLifecycle.Resumed += ResumeApp;
             AppLifecycle.Activated += Activated;
+            NavigateService.AddHistoryAction(LeaveThisPageSaveDiary, false);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -119,9 +119,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override void OnDispose()
         {
-            NavigateService.BeforePop -= BeforePop;
-            NavigateService.BeforePopToRoot -= BeforePop;
             AppLifecycle.Stopped -= LeaveAppSaveDiary;
+            AppLifecycle.Resumed -= ResumeApp;
             AppLifecycle.Activated -= Activated;
             timer?.Dispose();
             base.OnDispose();
@@ -258,7 +257,20 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async void LeaveAppSaveDiary()
         {
+            timer?.Dispose();
             await SaveDiaryAsync(true);
+        }
+
+        private async Task LeaveThisPageSaveDiary()
+        {
+            NavigateService.RemoveHistoryAction(LeaveThisPageSaveDiary);
+            timer?.Dispose();
+            await SaveDiaryAsync(true);
+        }
+
+        private void ResumeApp()
+        {
+            _ = CreateTimer();
         }
 
         private Task SaveDiaryAsync() => SaveDiaryAsync(false);
@@ -400,17 +412,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 await textareaEdit.InsertValueAsync(dateTimeNow);
             }
-        }
-
-        private async Task BeforePop(PopEventArgs e)
-        {
-            if (!IsThisPage)
-            {
-                return;
-            }
-
-            timer?.Dispose();
-            await SaveDiaryAsync();
         }
 
         private async Task CreateTimer()

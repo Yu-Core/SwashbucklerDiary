@@ -1,8 +1,6 @@
 ﻿using Masa.Blazor;
-using Masa.Blazor.Extensions;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -29,14 +27,12 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             VersionManager.AfterFirstEnter += UpdateDiariesAndStateHasChanged;
             VersionManager.AfterVersionUpdate += UpdateDiariesAndStateHasChanged;
-            NavigateService.BeforePopToRoot += BeforePopToRoot;
         }
 
         protected override void OnDispose()
         {
             VersionManager.AfterFirstEnter -= UpdateDiariesAndStateHasChanged;
             VersionManager.AfterVersionUpdate -= UpdateDiariesAndStateHasChanged;
-            NavigateService.BeforePopToRoot -= BeforePopToRoot;
             base.OnDispose();
         }
 
@@ -116,17 +112,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await UpdateDiariesAsync();
             await InvokeAsync(StateHasChanged);
-        }
-
-        private async Task BeforePopToRoot(PopEventArgs args)
-        {
-            if (thisPageUrl != args.PreviousUri) return;
-
-            if (thisPageUrl != args.NextUri) return;
-
-            if (swiperTabItems.ActiveItem is null) return;
-
-            await JS.ScrollTo($"#{swiperTabItems.ActiveItem.Id}", 0);
         }
     }
 }

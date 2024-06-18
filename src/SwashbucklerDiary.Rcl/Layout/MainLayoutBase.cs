@@ -14,15 +14,17 @@ namespace SwashbucklerDiary.Rcl.Layout
     {
         protected bool afterInitSetting;
 
-        protected List<NavigationButton> NavigationButtons = [
+        protected readonly List<NavigationButton> navigationButtons = [
             new("Main.Diary", "mdi-notebook-outline", "mdi-notebook", ""),
             new("Main.History", "mdi-clock-outline", "mdi-clock", "history"),
             new("Main.FileBrowse", "mdi-file-outline", "mdi-file", "fileBrowse"),
             new("Main.Mine",  "mdi-account-outline", "mdi-account", "mine"),
         ];
 
+        protected IEnumerable<string> permanentPaths = [];
+
         [Inject]
-        protected NavigationManager Navigation { get; set; } = default!;
+        protected NavigationManager NavigationManager { get; set; } = default!;
 
         [Inject]
         protected INavigateService NavigateService { get; set; } = default!;
@@ -57,13 +59,21 @@ namespace SwashbucklerDiary.Rcl.Layout
             GC.SuppressFinalize(this);
         }
 
+        protected bool IsPermanentPath
+            => permanentPaths.Any(it => it == NavigationManager.GetAbsolutePath());
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
             LoadView();
-            NavigateService.Initialize(Navigation, NavigationButtons.Select(it => it.Href).ToList());
             AlertService.Initialize(PopupService);
             I18n.OnChanged += LanguageChanged;
+            permanentPaths = navigationButtons.Select(it => NavigationManager.ToAbsoluteUri(it.Href).AbsolutePath).ToList();
+        }
+
+        protected Task InitNavigateServiceAsync()
+        {
+            return NavigateService.Init(NavigationManager, JSRuntime, permanentPaths);
         }
 
         protected virtual void OnDispose()
@@ -77,13 +87,14 @@ namespace SwashbucklerDiary.Rcl.Layout
             afterInitSetting = true;
             var timeout = SettingService.Get<int>(Setting.AlertTimeout);
             AlertService.SetTimeout(timeout);
+            await InitNavigateServiceAsync();
         }
 
         protected void LoadView()
         {
-            foreach (var button in NavigationButtons)
+            foreach (var button in navigationButtons)
             {
-                button.OnClick = () => NavigateService.PopToRootAsync(button.Href);
+                button.OnClick = () => NavigationManager.NavigateTo(button.Href, replace: true);
             }
         }
 
