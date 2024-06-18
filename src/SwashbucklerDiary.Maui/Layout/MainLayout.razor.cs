@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Maui.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Layout;
 using SwashbucklerDiary.Shared;
+using Theme = SwashbucklerDiary.Shared.Theme;
 
 namespace SwashbucklerDiary.Maui.Layout
 {
@@ -14,10 +17,14 @@ namespace SwashbucklerDiary.Maui.Layout
         [Inject]
         private ILogger<MainLayout> Logger { get; set; } = default!;
 
+        [Inject]
+        private IAppLifecycle AppLifecycle { get; set; } = default!;
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
+            AppLifecycle.Activated += Activated;
             VersionUpdataManager.AfterCheckFirstLaunch += CheckForUpdates;
         }
 
@@ -35,6 +42,7 @@ namespace SwashbucklerDiary.Maui.Layout
         protected override void OnDispose()
         {
             ThemeService.OnChanged -= ThemeChanged;
+            AppLifecycle.Activated -= Activated;
             VersionUpdataManager.AfterCheckFirstLaunch -= CheckForUpdates;
             base.OnDispose();
         }
@@ -102,5 +110,26 @@ namespace SwashbucklerDiary.Maui.Layout
             await JSRuntime.InvokeVoidAsync("addToHead", html);
         }
 #endif
+
+        private void Activated(ActivationArguments? args)
+        {
+            if (args is null || args.Data is null)
+            {
+                return;
+            }
+
+            if (args.Kind != LaunchActivationKind.Share)
+            {
+                return;
+            }
+
+            if (NavigationManager.GetAbsolutePath() == "/write")
+            {
+                return;
+            }
+
+            AppLifecycle.ActivationArguments = args;
+            NavigationManager.NavigateTo("/write");
+        }
     }
 }
