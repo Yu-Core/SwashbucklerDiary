@@ -44,7 +44,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         private IScreenshot ScreenshotService { get; set; } = default!;
 
         [Parameter]
-        [SupplyParameterFromQuery]
         public Guid Id { get; set; }
 
         protected override void OnInitialized()
@@ -128,6 +127,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, TopText,"mdi-format-vertical-align-top", OnTopping),
                 new(this, "Diary.Export","mdi-export", OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon, MarkdownChanged),
+                new(this, "Read.CopyReference", "mdi-link-variant", CopyReference),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
 
@@ -249,6 +249,13 @@ namespace SwashbucklerDiary.Rcl.Pages
             exportDiaries = [diary];
             showExport = true;
             StateHasChanged();
+        }
+
+        private async Task CopyReference()
+        {
+            var text = $"[{I18n.T("Read.DiaryLink")}](read/{Id})";
+            await PlatformIntegration.SetClipboard(text);
+            await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
     }
 }

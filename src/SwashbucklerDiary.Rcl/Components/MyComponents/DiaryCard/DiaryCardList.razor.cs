@@ -199,6 +199,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 new(this, TopText, "mdi-format-vertical-align-top", Topping),
                 new(this, "Diary.Export", "mdi-export", Export),
                 new(this, "Share.Sort", "mdi-sort-variant", Sort),
+                new(this, "Read.CopyReference", "mdi-link-variant", CopyReference),
                 new(this, PrivateText, PrivateIcon, MovePrivacy, ()=>privacyMode || showSetPrivacy)
             ];
         }
@@ -206,6 +207,13 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task SortChanged(string value)
         {
             await SettingService.Set(Setting.DiarySort, value);
+        }
+
+        private async Task CopyReference()
+        {
+            var text = $"[{I18n.T("Read.DiaryLink")}](read/{SelectedItemValue.Id})";
+            await PlatformIntegration.SetClipboard(text);
+            await AlertService.Success(I18n.T("Share.CopySuccess"));
         }
     }
 }

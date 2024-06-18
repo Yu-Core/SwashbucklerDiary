@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void ToRead()
         {
-            NavigationManager.NavigateTo($"read?Id={Value.Id}");
+            NavigationManager.NavigateTo($"read/{Value.Id}");
         }
 
         private void SetContent()

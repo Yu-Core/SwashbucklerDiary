@@ -53,6 +53,12 @@ namespace SwashbucklerDiary.Rcl.Essentials
                 return;
             }
 
+            if (targetUri == _navigationManager.Uri)
+            {
+                context.PreventNavigation();
+                return;
+            }
+
             if (!routeHelper.IsMatch(targetUri))
             {
                 context.PreventNavigation();

@@ -157,7 +157,9 @@
   "Read": {
     "OpenPrivacy": "Private",
     "ClosePrivacy": "Cancel private",
-    "PrivacyAlert": "Moved to privacy mode"
+    "PrivacyAlert": "Moved to privacy mode",
+    "CopyReference": "Copy link",
+    "DiaryLink": "Diary link"
   },
   "AppName": "Swashbuckler Diary",
   "Mine": {

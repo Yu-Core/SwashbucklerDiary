@@ -157,7 +157,9 @@
   "Read": {
     "OpenPrivacy": "设为私密",
     "ClosePrivacy": "取消私密",
-    "PrivacyAlert": "已移动至隐私模式"
+    "PrivacyAlert": "已移动至隐私模式",
+    "CopyReference": "复制链接",
+    "DiaryLink": "日记链接"
   },
   "AppName": "侠客日记",
   "Mine": {
