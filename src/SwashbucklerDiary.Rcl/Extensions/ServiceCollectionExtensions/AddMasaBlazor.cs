@@ -12,10 +12,9 @@ namespace SwashbucklerDiary.Rcl.Extensions
                 {
                     PopupComponents.SNACKBAR, new Dictionary<string, object?>()
                     {
-                        { nameof(PEnqueuedSnackbars.Closeable), true },
                         { nameof(PEnqueuedSnackbars.Text), true },
                         { nameof(PEnqueuedSnackbars.Elevation), new StringNumber(2) },
-                        { nameof(PEnqueuedSnackbars.Position), SnackPosition.BottomCenter }
+                        { nameof(PEnqueuedSnackbars.Position), SnackPosition.TopCenter }
                     }
                 },
                 {

@@ -338,7 +338,7 @@ html {
 
 /*消息条提示样式，仿照masa旧版中的Toast*/
 .m-snack__wrapper {
-    border-radius: 8px !important;
+    border-radius: 12px !important;
 }
 
     .m-snack__wrapper::before {
@@ -350,12 +350,7 @@ html {
     }
 
 @media screen and (max-width:600px) {
-    .m-enqueued-snackbars {
-        pointer-events: none;
-    }
-
     .m-enqueued-snackbar .m-snack__wrapper {
-        border-radius: 24px !important;
         width: initial !important;
         min-width: initial;
     }
