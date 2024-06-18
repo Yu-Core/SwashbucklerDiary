@@ -161,7 +161,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void OnEdit()
         {
-            NavigationManager.NavigateTo($"write?DiaryId={Id}", false);
+            To($"write?DiaryId={Id}", false);
         }
 
         private async Task OnTopping()
