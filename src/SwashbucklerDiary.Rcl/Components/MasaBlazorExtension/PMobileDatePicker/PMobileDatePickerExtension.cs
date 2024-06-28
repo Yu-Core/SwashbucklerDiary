@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.Rcl.Components
     public class PMobileDatePickerExtension : PMobileDatePicker, IDisposable
     {
         [Inject]
-        protected INavigateService NavigateService { get; set; } = default!;
+        protected INavigateController NavigateController { get; set; } = default!;
 
         [Parameter]
         public bool MyVisible
@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (Visible)
             {
-                NavigateService.RemoveHistoryAction(Close);
+                NavigateController.RemoveHistoryAction(Close);
             }
 
             GC.SuppressFinalize(this);
@@ -43,11 +43,11 @@ namespace SwashbucklerDiary.Rcl.Components
             base.Visible = value;
             if (value)
             {
-                NavigateService.AddHistoryAction(Close);
+                NavigateController.AddHistoryAction(Close);
             }
             else
             {
-                NavigateService.RemoveHistoryAction(Close);
+                NavigateController.RemoveHistoryAction(Close);
             }
         }
 

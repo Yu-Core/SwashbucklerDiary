@@ -28,9 +28,9 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
     bool _isSystemBarVisible;
     Android.Content.PM.ScreenOrientation screenOrientation;
 
-    private readonly Lazy<INavigateService> _navigateService = new(() => IPlatformApplication.Current!.Services.GetRequiredService<INavigateService>());
+    private readonly Lazy<INavigateController> _navigateController = new(() => IPlatformApplication.Current!.Services.GetRequiredService<INavigateController>());
 
-    private INavigateService NavigateService => _navigateService.Value;
+    private INavigateController NavigateController => _navigateController.Value;
 
     public MauiBlazorWebChromeClient(WebChromeClient blazorWebChromeClient, IMauiContext mauiContext, WebView webView)
     {
@@ -54,7 +54,7 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
         if (context is null)
             return;
 
-        NavigateService.AddHistoryAction(OnHideCustomView);
+        NavigateController.AddHistoryAction(OnHideCustomView);
 
         _videoViewCallback = callback;
         _customView = view;
@@ -120,7 +120,7 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
         if (context is null)
             return;
 
-        NavigateService.RemoveHistoryAction(OnHideCustomView);
+        NavigateController.RemoveHistoryAction(OnHideCustomView);
 
         // Remove the CustomView
         if (context.Window.DecorView is FrameLayout layout)

@@ -68,64 +68,64 @@
         <div>
             @if (ShowWeather)
             {
-                                            <DiaryInfoButton Icon="@WeatherIcon"
-                                                             Text="@WeatherText">
-                                            </DiaryInfoButton>
+                <DiaryInfoButton Icon="@WeatherIcon"
+                                 Text="@WeatherText">
+                </DiaryInfoButton>
             }
 
             @if (ShowMood)
             {
-                                            <DiaryInfoButton Icon="@MoodIcon"
-                                                             Text="@MoodText">
-                                            </DiaryInfoButton>
+                <DiaryInfoButton Icon="@MoodIcon"
+                                 Text="@MoodText">
+                </DiaryInfoButton>
             }
 
             @if (ShowLocation)
             {
-                                            <DiaryInfoButton Icon="mdi-map-marker-outline"
-                                                             Text="@LocationText">
-                                            </DiaryInfoButton>
+                <DiaryInfoButton Icon="mdi-map-marker-outline"
+                                 Text="@LocationText">
+                </DiaryInfoButton>
             }
 
         </div>
 
         @if (ShowTitle)
         {
-                                        <MTextField Value="@(diary.Title)"
-                                                    TValue="string"
-                                                    Class="pb-0 my-sm-4 user-select font-weight-bold"
-                                                    Solo="true"
-                                                    Flat="true"
-                                                    BackgroundColor="transparent"
-                                                    HideDetails="@("auto")"
-                                                    Dense="true"
-                                                    Readonly="true"
-                                                    maxlength="20">
-                                        </MTextField>
+            <MTextField Value="@(diary.Title)"
+                        TValue="string"
+                        Class="pb-0 my-sm-4 user-select font-weight-bold"
+                        Solo="true"
+                        Flat="true"
+                        BackgroundColor="transparent"
+                        HideDetails="@("auto")"
+                        Dense="true"
+                        Readonly="true"
+                        maxlength="20">
+            </MTextField>
         }
 
         <div class="my-sm-3">
             @if (enableMarkdown)
             {
-                                            <MarkdownPreview @ref="markdownPreview"
-                                                             Value="@(diary.Content)"
-                                                             Class="px-3"
-                                                             Style="padding-top:10px">
-                                            </MarkdownPreview>
+                <MarkdownPreview @ref="markdownPreview"
+                                 Value="@(diary.Content)"
+                                 Class="px-3"
+                                 Style="padding-top:10px">
+                </MarkdownPreview>
             }
             else
             {
-                                            <MTextarea Value="@(diary.Content)"
-                                                       Class="user-select"
-                                                       Solo="true"
-                                                       Flat="true"
-                                                       BackgroundColor="transparent"
-                                                       HideDetails="@("auto")"
-                                                       Readonly="true"
-                                                       AutoGrow="true"
-                                                       Rows="8"
-                                                       RowHeight="30">
-                                            </MTextarea>
+                <MTextarea Value="@(diary.Content)"
+                           Class="user-select"
+                           Solo="true"
+                           Flat="true"
+                           BackgroundColor="transparent"
+                           HideDetails="@("auto")"
+                           Readonly="true"
+                           AutoGrow="true"
+                           Rows="8"
+                           RowHeight="30">
+                </MTextarea>
             }
         </div>
 
@@ -133,11 +133,11 @@
             <MChipGroup Column="true">
                 @foreach (var item in Tags)
                 {
-                                                <MChip @key="item.Id"
-                                                       Style="pointer-events:none;"
-                                                       Outlined="true">
+                    <MChip @key="item.Id"
+                           Style="pointer-events:none;"
+                           Outlined="true">
                         @(item.Name)
-                                                </MChip>
+                    </MChip>
                 }
             </MChipGroup>
         </div>

@@ -47,6 +47,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public bool UseRegex { get; set; } = true;
 
+        [Parameter]
+        public bool PageUpdate { get; set; } = true;
+
         protected readonly LRUCache<string, PatternPath> _patternPaths = new(10);
 
         private readonly Block _block = new("p-page-container");
@@ -109,6 +112,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
+            if (!PageUpdate)
+            {
+                return;
+            }
+
             var currentPath = NavigationManager.GetAbsolutePath();
             if (Strict && !_cachedIncludePatternRegexes.Any(r => IsMatch(r, currentPath)))
             {

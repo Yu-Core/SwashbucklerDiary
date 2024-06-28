@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Rcl.Components
     public class MDialogExtension : MDialog
     {
         [Inject]
-        protected INavigateService NavigateService { get; set; } = default!;
+        protected INavigateController NavigateController { get; set; } = default!;
 
         [Parameter]
         public bool MyValue
@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (Value)
             {
-                NavigateService.RemoveHistoryAction(Close);
+                NavigateController.RemoveHistoryAction(Close);
             }
 
             return base.DisposeAsyncCore();
@@ -44,11 +44,11 @@ namespace SwashbucklerDiary.Rcl.Components
             base.Value = value;
             if (value)
             {
-                NavigateService.AddHistoryAction(Close);
+                NavigateController.AddHistoryAction(Close);
             }
             else
             {
-                NavigateService.RemoveHistoryAction(Close);
+                NavigateController.RemoveHistoryAction(Close);
             }
         }
 

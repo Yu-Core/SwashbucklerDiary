@@ -43,12 +43,6 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        [JSInvokable]
-        public void ReplaceUrl(string url)
-        {
-            NavigationManager.NavigateTo(url, replace: true);
-        }
-
         public async Task RenderLazyLoadingImage()
         {
             await VditorMarkdownPreviewJSModule.RenderLazyLoadingImage(Ref);

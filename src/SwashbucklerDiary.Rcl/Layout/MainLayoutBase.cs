@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected NavigationManager NavigationManager { get; set; } = default!;
 
         [Inject]
-        protected INavigateService NavigateService { get; set; } = default!;
+        protected INavigateController NavigateController { get; set; } = default!;
 
         [Inject]
         protected II18nService I18n { get; set; } = default!;
@@ -63,11 +63,6 @@ namespace SwashbucklerDiary.Rcl.Layout
             permanentPaths = navigationButtons.Select(it => NavigationManager.ToAbsoluteUri(it.Href).AbsolutePath).ToList();
         }
 
-        protected Task InitNavigateServiceAsync()
-        {
-            return NavigateService.Init(NavigationManager, JSRuntime, permanentPaths);
-        }
-
         protected virtual void OnDispose()
         {
             I18n.OnChanged -= LanguageChanged;
@@ -76,8 +71,8 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected virtual async Task InitSettingsAsync()
         {
             await SettingService.InitializeAsync();
+            await NavigateController.Init(NavigationManager, JSRuntime, permanentPaths);
             afterInitSetting = true;
-            await InitNavigateServiceAsync();
         }
 
         protected void LoadView()

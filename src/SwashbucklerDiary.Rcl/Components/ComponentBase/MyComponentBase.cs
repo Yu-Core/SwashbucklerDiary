@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Rcl.Components
     public abstract class MyComponentBase : ComponentBase
     {
         [Inject]
-        protected INavigateService NavigateService { get; set; } = default!;
+        protected INavigateController NavigateController { get; set; } = default!;
 
         [Inject]
         protected NavigationManager NavigationManager { get; set; } = default!;
@@ -37,7 +37,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (!cacheCurrentURL)
             {
-                NavigateService.RemovePageCache(NavigationManager.Uri);
+                NavigateController.RemovePageCache(NavigationManager.Uri);
             }
 
             NavigationManager.NavigateTo(url);

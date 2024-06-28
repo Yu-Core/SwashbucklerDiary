@@ -52,12 +52,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (value)
             {
-                NavigateService.AddHistoryAction(CloseSearch);
+                NavigateController.AddHistoryAction(CloseSearch);
             }
             else
             {
                 Value = string.Empty;
-                NavigateService.RemoveHistoryAction(CloseSearch);
+                NavigateController.RemoveHistoryAction(CloseSearch);
             }
         }
 
@@ -65,7 +65,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (Visible)
             {
-                NavigateService.RemoveHistoryAction(CloseSearch);
+                NavigateController.RemoveHistoryAction(CloseSearch);
             }
 
             GC.SuppressFinalize(this);

@@ -2,7 +2,7 @@
 {
     public class HistoryAction
     {
-        public string? Uri { get; set; }
+        public string? Path { get; set; }
 
         public bool PreventNavigation { get; set; } = true;
 

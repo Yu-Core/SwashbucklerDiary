@@ -11,7 +11,7 @@
     let VditorOptions = {
         ...options,
         after: () => {
-            handlePreviewElement(element, dotNetCallbackRef);
+            handlePreviewElement(element);
             handleAnchorScroll();
             dotNetCallbackRef.invokeMethodAsync('After');
         }
@@ -39,31 +39,9 @@ export function renderLazyLoadingImage(element) {
     }
 }
 
-function handlePreviewElement(previewElement, dotNetCallbackRef) {
-    handleA(previewElement, dotNetCallbackRef);
+function handlePreviewElement(previewElement) {
     handleVideo(previewElement);
     handleIframe(previewElement);
-}
-
-//修复点击链接的一些错误
-function handleA(element, dotNetCallbackRef) {
-    const links = element.querySelectorAll("a"); // 获取所有a标签
-    links.forEach(link => {
-        let href = link.getAttribute('href');
-        if (href.startsWith('#')) {
-            link.addEventListener('click', function (event) {
-                event.preventDefault();
-                const anchor = href.split('#')[1];
-                const url = location.origin + location.pathname + location.search + href;
-                //can not use history.replaceState(null, '', url);
-                dotNetCallbackRef.invokeMethodAsync('ReplaceUrl', url);
-                const targetElement = document.getElementById(anchor);
-                if (targetElement) {
-                    targetElement.scrollIntoView();
-                }
-            });
-        }
-    });
 }
 
 //fix Video Not Display First Frame
@@ -100,13 +78,11 @@ function handleIframe(element) {
 }
 
 function handleAnchorScroll() {
-    if (location.hash) {
-        const anchor = location.hash.split('#')[1];
-        if (anchor) {
-            const targetElement = document.getElementById(anchor);
-            if (targetElement) {
-                targetElement.scrollIntoView();
-            }
-        }
+    if (!location.hash) return;
+
+    const anchor = location.hash.substring(1); // 直接从第一个字符后开始截取，跳过"#"
+    const targetElement = document.getElementById(anchor);
+    if (targetElement) {
+        targetElement.scrollIntoView();
     }
 }

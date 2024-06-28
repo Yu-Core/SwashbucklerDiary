@@ -4,11 +4,11 @@ using System.Reflection;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
-    public class NavigateService : Rcl.Essentials.NavigateService
+    public class NavigateController : Rcl.Essentials.NavigateController
     {
         protected override Assembly[] Assemblies => [typeof(MainLayoutBase).Assembly, typeof(Routes).Assembly];
 
-        protected override Task HandleNavigateToStackBottomUri()
+        protected override Task HandleNavigateToStackBottomPath()
         {
 #if ANDROID
             NavigationButtonHandler.QuitApp();

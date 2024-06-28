@@ -14,11 +14,11 @@ namespace SwashbucklerDiary
 
         private static readonly Lazy<II18nService> _i18n = new(() => IPlatformApplication.Current!.Services.GetRequiredService<II18nService>());
 
-        private static readonly Lazy<INavigateService> _navigateService = new(() => IPlatformApplication.Current!.Services.GetRequiredService<INavigateService>());
+        private static readonly Lazy<INavigateController> _navigateController = new(() => IPlatformApplication.Current!.Services.GetRequiredService<INavigateController>());
 
         private static II18nService I18n => _i18n.Value;
 
-        private static INavigateService NavigateService => _navigateService.Value;
+        private static INavigateController NavigateController => _navigateController.Value;
 
         public static bool OnBackButtonPressed(KeyEvent e)
         {
@@ -37,7 +37,7 @@ namespace SwashbucklerDiary
 
         private static void InternalOnBackButtonPressed()
         {
-            if (NavigateService.Initialized && MauiBlazorWebViewHandler.WebView is not null)
+            if (NavigateController.Initialized && MauiBlazorWebViewHandler.WebView is not null)
             {
                 MauiBlazorWebViewHandler.WebView.EvaluateJavascript(@"
 				history.back();

@@ -99,7 +99,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             AppLifecycle.Stopped += LeaveAppSaveDiary;
             AppLifecycle.Resumed += ResumeApp;
             AppLifecycle.Activated += Activated;
-            NavigateService.AddHistoryAction(LeaveThisPageSaveDiary, false);
+            NavigateController.AddHistoryAction(LeaveThisPageSaveDiary, false);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -263,7 +263,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LeaveThisPageSaveDiary()
         {
-            NavigateService.RemoveHistoryAction(LeaveThisPageSaveDiary);
+            NavigateController.RemoveHistoryAction(LeaveThisPageSaveDiary);
             timer?.Dispose();
             await SaveDiaryAsync(true);
         }

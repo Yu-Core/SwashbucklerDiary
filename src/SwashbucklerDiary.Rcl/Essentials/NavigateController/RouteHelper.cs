@@ -17,11 +17,9 @@ namespace SwashbucklerDiary.Rcl.Essentials
             routeTemplates = GetRouteTemplates(assemblies);
         }
 
-        public bool IsMatch(string url)
+        public bool IsMatch(string path)
         {
             // https://q.cnblogs.com/q/146281
-            var urlPath = new Uri(url).AbsolutePath;
-
             IServiceCollection services = new ServiceCollection();
             services.AddOptions<RouteOptions>();
             using ServiceProvider sp = services.BuildServiceProvider();
@@ -33,7 +31,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
                 var values = new RouteValueDictionary();
                 var matcher = new TemplateMatcher(parsedTemplate, values);
-                if (matcher.TryMatch(urlPath, values))
+                if (matcher.TryMatch(path, values))
                 {
                     if (parsedTemplate.Parameters.Count == 0)
                     {

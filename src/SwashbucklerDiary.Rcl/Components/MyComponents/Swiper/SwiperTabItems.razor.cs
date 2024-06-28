@@ -4,7 +4,7 @@ using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class SwiperTabItems : IAsyncDisposable
+    public partial class SwiperTabItems
     {
         private StringNumber previousvalue = 0;
 
@@ -74,12 +74,6 @@ namespace SwashbucklerDiary.Rcl.Components
                 var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
                 await SwiperJsModule.Init(dotNetObjectReference, Ref, Value.ToInt32());
             }
-        }
-
-        async ValueTask IAsyncDisposable.DisposeAsync()
-        {
-            await SwiperJsModule.DisposeAsync(Ref);
-            GC.SuppressFinalize(this);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddScoped<ILogService, LogService>();
             services.AddScoped<IResourceService, Services.ResourceService>();
 
-            services.AddScoped<INavigateService, Essentials.NavigateService>();
+            services.AddScoped<INavigateController, Essentials.NavigateController>();
             services.AddScoped<IIconService, Services.IconService>();
             services.AddScoped<IAlertService, AlertService>();
             services.AddScoped<II18nService, Services.I18nService>();
