@@ -30,9 +30,14 @@ namespace SwashbucklerDiary.Rcl.Extensions
             return jSRuntime.InvokeVoidAsync("history.go", delta);
         }
 
-        public static ValueTask<int> HistoryLength(this IJSRuntime jSRuntime)
+        public static ValueTask EvaluateJavascript(this IJSRuntime jSRuntime, string script)
         {
-            return jSRuntime.InvokeAsync<int>("historyLength");
+            return jSRuntime.InvokeVoidAsync("evaluateJavascript", script);
+        }
+
+        public static ValueTask<T> EvaluateJavascript<T>(this IJSRuntime jSRuntime, string script)
+        {
+            return jSRuntime.InvokeAsync<T>("evaluateJavascript", script);
         }
     }
 }

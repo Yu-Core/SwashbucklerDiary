@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using System.Globalization;
@@ -14,10 +15,10 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected bool afterInitSetting;
 
         protected readonly List<NavigationButton> navigationButtons = [
-            new("Main.Diary", "mdi-notebook-outline", "mdi-notebook", ""),
-            new("Main.History", "mdi-clock-outline", "mdi-clock", "history"),
-            new("Main.FileBrowse", "mdi-file-outline", "mdi-file", "fileBrowse"),
-            new("Main.Mine",  "mdi-account-outline", "mdi-account", "mine"),
+            new("Main.Diary", "mdi-notebook-outline", "mdi-notebook", "/"),
+            new("Main.History", "mdi-clock-outline", "mdi-clock", "/history"),
+            new("Main.FileBrowse", "mdi-file-outline", "mdi-file", "/fileBrowse"),
+            new("Main.Mine",  "mdi-account-outline", "mdi-account", "/mine"),
         ];
 
         protected IEnumerable<string> permanentPaths = [];
@@ -58,7 +59,6 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            LoadView();
             I18n.OnChanged += LanguageChanged;
             permanentPaths = navigationButtons.Select(it => NavigationManager.ToAbsoluteUri(it.Href).AbsolutePath).ToList();
         }
@@ -75,14 +75,6 @@ namespace SwashbucklerDiary.Rcl.Layout
             afterInitSetting = true;
         }
 
-        protected void LoadView()
-        {
-            foreach (var button in navigationButtons)
-            {
-                button.OnClick = () => NavigationManager.NavigateTo(button.Href, replace: true);
-            }
-        }
-
         protected virtual void ThemeChanged(Theme theme)
         {
             MasaBlazor.SetTheme(theme == Theme.Dark);
@@ -91,7 +83,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected async void LanguageChanged(CultureInfo cultureInfo)
         {
             StateHasChanged();
-            await JSRuntime.InvokeVoidAsync("setLanguage", cultureInfo.Name);
+            await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
         }
     }
 }

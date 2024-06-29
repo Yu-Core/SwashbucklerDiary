@@ -63,7 +63,7 @@ namespace SwashbucklerDiary.Rcl.Components
         }
 
         [JSInvokable]
-        public void ReplaceUrl(string url)
+        public void NavigateToReplace(string url)
         {
             NavigationManager.NavigateTo(url, replace: true);
         }

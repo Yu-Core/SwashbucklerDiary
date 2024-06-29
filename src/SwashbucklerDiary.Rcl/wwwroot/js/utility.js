@@ -8,15 +8,12 @@
     }
 }
 
-function setLanguage(lang) {
-    document.documentElement.lang = lang;
-}
-
 function addToHead(html) {
     const element = document.createRange().createContextualFragment(html);
     document.getElementsByTagName('head')[0].appendChild(element);
 }
 
-function historyLength() {
-    return history.length;
+function evaluateJavascript(fn) {
+    let Fn = Function;
+    return new Fn('return ' + fn)();
 }

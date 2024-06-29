@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 
         protected override async Task HandleNavigateToStackBottomPath()
         {
-            var length = await _jSRuntime.HistoryLength();
+            var length = await _jSRuntime.EvaluateJavascript<int>("history.length");
             if (length > 2)
             {
                 await _jSRuntime.HistoryGo(-2);

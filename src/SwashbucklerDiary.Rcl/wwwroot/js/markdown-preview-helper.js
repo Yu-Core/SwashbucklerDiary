@@ -1,4 +1,4 @@
-﻿import { previewImage as internalPreviewImage } from './previewMediaElement.js';
+﻿import { previewImage } from './previewMediaElement.js';
 
 export function after(dotNetCallbackRef, element) {
     if (!element) {
@@ -17,9 +17,6 @@ function copy(dotNetCallbackRef, element) {
         }
     });
 }
-function previewImage(dotNetCallbackRef, element) {
-    return internalPreviewImage(dotNetCallbackRef, element);
-}
 
 function handleA(dotNetCallbackRef, element) {
     element.addEventListener('click', function (event) {
@@ -32,7 +29,7 @@ function handleA(dotNetCallbackRef, element) {
         if (href.startsWith('#')) {
             event.preventDefault();
             const url = location.origin + location.pathname + location.search + href;
-            dotNetCallbackRef.invokeMethodAsync('ReplaceUrl', url);
+            dotNetCallbackRef.invokeMethodAsync('NavigateToReplace', url);
         }
     });
 }

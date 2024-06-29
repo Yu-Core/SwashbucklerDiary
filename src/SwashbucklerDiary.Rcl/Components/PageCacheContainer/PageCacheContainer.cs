@@ -24,10 +24,10 @@ namespace SwashbucklerDiary.Rcl.Components
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             builder.OpenComponent(0, typeof(PPageContainerReplacement));
-            builder.AddAttribute(1, nameof(PPageContainerReplacement.UseRegex), false);
-            builder.AddAttribute(2, nameof(PPageContainerReplacement.PageUpdate), pageUpdate);
-            builder.AddAttribute(3, nameof(PPageContainerReplacement.IncludePatterns), NavigateController.PageCachePaths);
-            builder.AddAttribute(4, nameof(PPageContainerReplacement.ChildContent), ChildContent);
+            builder.AddComponentParameter(1, nameof(PPageContainerReplacement.UseRegex), false);
+            builder.AddComponentParameter(2, nameof(PPageContainerReplacement.PageUpdate), pageUpdate);
+            builder.AddComponentParameter(3, nameof(PPageContainerReplacement.IncludePatterns), NavigateController.PageCachePaths);
+            builder.AddComponentParameter(4, nameof(PPageContainerReplacement.ChildContent), ChildContent);
             builder.CloseComponent();
         }
 

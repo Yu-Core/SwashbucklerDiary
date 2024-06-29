@@ -12,7 +12,7 @@
                    App="true">
     @foreach (var item in Items)
     {
-        <MainLayoutBottomNavItem @key="item"
+        <MainLayoutBottomNavItem @key="item.Href"
                                  Value="item">
         </MainLayoutBottomNavItem>
     }

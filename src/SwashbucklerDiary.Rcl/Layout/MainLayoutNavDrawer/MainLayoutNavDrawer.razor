@@ -10,7 +10,7 @@
     <MList Nav>
         @foreach (var item in Items)
         {
-            <MainLayoutNavDrawerItem @key="item"
+            <MainLayoutNavDrawerItem @key="item.Href"
                                      Value="item">
             </MainLayoutNavDrawerItem>
         }
