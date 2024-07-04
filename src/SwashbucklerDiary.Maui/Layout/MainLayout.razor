@@ -1,5 +1,10 @@
 ﻿@inherits MainLayoutBase
 
+@if (IsAndroidOrIOS)
+{
+    <link href="css/status-bar-and-navigation-bar.css" rel="stylesheet" />
+}
+
 @if (afterInitSetting)
 {
     <MApp>
