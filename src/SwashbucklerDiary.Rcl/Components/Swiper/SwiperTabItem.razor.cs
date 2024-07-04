@@ -71,7 +71,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (needWait)
             {
-                await Task.Delay(300);
+                await Task.Delay(250);
             }
 
             isActivated = true;

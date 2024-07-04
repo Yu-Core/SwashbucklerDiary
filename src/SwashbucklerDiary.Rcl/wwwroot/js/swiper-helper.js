@@ -11,6 +11,7 @@
         simulateTouch: false,//禁止鼠标模拟
         initialSlide: index,//设定初始化时slide的索引
         resistanceRatio: 0.7,
+        speed: 250,
         on: {
             slideChangeTransitionStart: function () {
                 dotNetObjectReference.invokeMethodAsync("UpdateValue", this.activeIndex);
