@@ -2,7 +2,7 @@
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 
-namespace SwashbucklerDiary.Rcl.Component
+namespace SwashbucklerDiary.Rcl.Components
 {
     public class JSModuleExtension : JSModule
     {
