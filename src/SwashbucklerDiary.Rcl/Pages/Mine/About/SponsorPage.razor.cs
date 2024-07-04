@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Rcl.Components;
+﻿using Masa.Blazor;
+using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
 
@@ -6,11 +7,21 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class SponsorPage : ImportantComponentBase
     {
+        private StringNumber tab = 0;
+
         private string? src;
 
         private bool showPreviewImage;
 
         private List<DynamicListItem> sponsorTypeListItems = [];
+
+        private List<string> sponsorList = [];
+
+        private readonly List<TabListItem> tabListItems =
+        [
+            new("About.Sponsor.Name","sponsor"),
+            new("SponsorList.Name","sponsorList"),
+        ];
 
         protected override async Task OnInitializedAsync()
         {
@@ -27,7 +38,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LoadViewAsync()
         {
-            var sponsorTypes = await StaticWebAssets.ReadJsonAsync<List<CodeSource>>("json/sponsor-type/sponsor-type.json");
+            var sponsorTypes = await StaticWebAssets.ReadJsonAsync<List<CodeSource>>("json/sponsor/sponsor-type.json");
             List<DynamicListItem> listItems = [];
             foreach (var item in sponsorTypes)
             {
@@ -35,6 +46,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 listItems.Add(sponsorTypeListItem);
             }
             sponsorTypeListItems = listItems;
+
+            sponsorList = await StaticWebAssets.ReadJsonAsync<List<string>>("json/sponsor/sponsor-list.json");
         }
     }
 }

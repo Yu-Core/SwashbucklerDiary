@@ -2,48 +2,85 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("About.Sponsor.Name"))"
-          OnClick="NavigateToBack">
+<MyAppBar>
+    <MButton Icon
+             OnClick="NavigateToBack">
+        <MIcon>
+            mdi-arrow-left
+        </MIcon>
+    </MButton>
+
+    <MyTabs @bind-Value="tab"
+            Items="tabListItems">
+    </MyTabs>
+
+    <MSpacer></MSpacer>
 </MyAppBar>
 
-<ScrollContainer>
-    <MCard Class="mb-5 user-select pt-2"
-           Elevation="0"
-           Rounded="@("lg")">
-        <MCardTitle Class="text-h5 font-weight-bold py-sm-10" Style="justify-content:center;">
-            @(I18n.T("Sponsor.Introduce.Title"))
-        </MCardTitle>
-        <MCardText Style="text-indent: 2em;">
-            <MMarkdownIt Source="@(I18n.T("Sponsor.Introduce.Content"))"></MMarkdownIt>
-        </MCardText>
-    </MCard>
+<SwiperTabItems @bind-Value="tab">
+    <SwiperTabItem>
+        <MContainer Class="my-container"
+                    Fluid="true">
+            <MCard Class="mb-5 user-select pt-2"
+                   Elevation="0"
+                   Rounded="@("lg")">
+                <MCardTitle Class="text-h5 font-weight-bold py-sm-10" Style="justify-content:center;">
+                    @(I18n.T("Sponsor.Introduce.Title"))
+                </MCardTitle>
+                <MCardText Style="text-indent: 2em;">
+                    <MMarkdownIt Source="@(I18n.T("Sponsor.Introduce.Content"))"></MMarkdownIt>
+                </MCardText>
+            </MCard>
 
-    <MCard Class="mb-5"
-           Elevation="0"
-           Rounded="@("lg")">
-        <MList Class="dynamic-list-item-collection">
-            @foreach (var item in sponsorTypeListItems)
-            {
-                <MListItem @key="item"
-                           OnClick="item.OnClick">
-                    <MListItemIcon>
-                        <MIcon Class="evident-icon">
-                            @(item.Icon)
-                        </MIcon>
-                    </MListItemIcon>
-                    <MListItemContent>
-                        @(I18n.T(item.Text))
-                    </MListItemContent>
-                    <MListItemAction>
-                        <MIcon>mdi-chevron-right</MIcon>
-                    </MListItemAction>
-                </MListItem>
+            <MCard Class="mb-5"
+                   Elevation="0"
+                   Rounded="@("lg")">
+                <MList Class="dynamic-list-item-collection">
+                    @foreach (var item in sponsorTypeListItems)
+                    {
+                        <MListItem @key="item"
+                                   OnClick="item.OnClick">
+                            <MListItemIcon>
+                                <MIcon Class="evident-icon">
+                                    @(item.Icon)
+                                </MIcon>
+                            </MListItemIcon>
+                            <MListItemContent>
+                                @(I18n.T(item.Text))
+                            </MListItemContent>
+                            <MListItemAction>
+                                <MIcon>mdi-chevron-right</MIcon>
+                            </MListItemAction>
+                        </MListItem>
 
-                <MDivider Class="mx-5"></MDivider>
-            }
+                        <MDivider Class="mx-5"></MDivider>
+                    }
 
-        </MList>
-    </MCard>
-</ScrollContainer>
+                </MList>
+            </MCard>
+        </MContainer>
+    </SwiperTabItem>
+    <SwiperTabItem>
+        <MContainer Class="my-container"
+                    Fluid="true">
+            <MSubheader Class="mb-2">@(I18n.T("SponsorList.Text"))</MSubheader>
+            <MCard Class="mb-5"
+                   Elevation="0"
+                   Rounded="@("lg")">
+                <MList Class="dynamic-list-item-collection">
+                    @foreach (var item in sponsorList)
+                    {
+                        <MListItem @key="item">
+                            <MListItemContent>
+                                @item
+                            </MListItemContent>
+                        </MListItem>
+                    }
+
+                </MList>
+            </MCard>
+        </MContainer>
+    </SwiperTabItem>
+</SwiperTabItems>
 
 <PreviewImageDialog @bind-Visible="showPreviewImage" Src="@src"></PreviewImageDialog>
