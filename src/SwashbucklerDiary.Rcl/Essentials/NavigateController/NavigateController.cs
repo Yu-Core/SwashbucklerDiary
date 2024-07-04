@@ -131,7 +131,10 @@ namespace SwashbucklerDiary.Rcl.Essentials
                 var uri = secondaryBackTargetUri;
                 secondaryBackTargetUri = null;
                 PageUpdateChanged?.Invoke(this, true);
-                _navigationManager.NavigateTo(uri);
+                if (uri != _navigationManager.Uri)
+                {
+                    _navigationManager.NavigateTo(uri);
+                }
             }
         }
 
@@ -227,9 +230,9 @@ namespace SwashbucklerDiary.Rcl.Essentials
                         {
                             firstEnter = false;
                             context.PreventNavigation();
+                            secondaryBackTargetUri = targetUri;
                             if (!historyPaths.Contains(targetPath) && isPermanentPath)
                             {
-                                secondaryBackTargetUri = targetUri;
                                 PageUpdateChanged?.Invoke(this, false);
                             }
 

@@ -134,8 +134,8 @@
                 @foreach (var item in Tags)
                 {
                     <MChip @key="item.Id"
-                           Style="pointer-events:none;"
-                           Outlined="true">
+                           Outlined="true"
+                           OnClick="@(()=>To($"tagDetails/{item.Id}"))">
                         @(item.Name)
                     </MChip>
                 }

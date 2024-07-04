@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 
 namespace SwashbucklerDiary.Rcl.Pages
@@ -8,7 +9,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string? tagName;
 
         [Parameter]
-        [SupplyParameterFromQuery]
         public Guid Id { get; set; }
 
         protected override async Task UpdateDiariesAsync()
