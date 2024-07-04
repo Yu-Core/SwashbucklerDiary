@@ -1,5 +1,6 @@
-﻿using Masa.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -8,19 +9,27 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class MarkdownEdit : MyComponentBase
     {
+        private const long maxAllowedSize = 512 * 1024 * 1024;
+
         private bool firstLineIndent;
 
         private bool codeLineNumber;
 
         private Dictionary<string, object>? _options;
 
-        private MMarkdown mMarkdown = default!;
+        private MMarkdownReplacement mMarkdownReplacement = default!;
 
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
         [Inject]
-        private VditorJSModule Module { get; set; } = default!;
+        private IAppFileManager AppFileManager { get; set; } = default!;
+
+        [Inject]
+        private MarkdownJSModule Module { get; set; } = default!;
+
+        [Inject]
+        private ILogger<MarkdownEdit> Logger { get; set; } = default!;
 
         [CascadingParameter(Name = "IsDark")]
         public bool Dark { get; set; }
@@ -113,11 +122,17 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "className", "" },
                 { "icon", "<svg><use xlink:href=\"#vditor-icon-video\"></use></svg>" },
             };
+            string[] accept = ["image/*", "audio/*", "video/*"];
+            var upload = new Dictionary<string, object?>()
+            {
+                { "max", maxAllowedSize },
+                { "accept", accept },
+            };
 
             _options = new()
             {
                 { "mode", "ir" },
-                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link",btnImage,btnAudio,btnVideo,"fullscreen"}},
+                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link",btnImage,btnAudio,btnVideo,"fullscreen","upload"}},
                 { "placeholder", I18n.T("Write.ContentPlace") },
                 { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.10.4" },
                 { "lang", lang },
@@ -127,6 +142,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "link", link },
                 { "typewriterMode", true },
                 { "height", "100%" },
+                { "upload", upload },
             };
         }
 
@@ -135,7 +151,7 @@ namespace SwashbucklerDiary.Rcl.Components
             await Module.After();
             if (Autofocus)
             {
-                await Module.Autofocus(mMarkdown.Ref);
+                await Module.Autofocus(mMarkdownReplacement.Ref);
             }
 
             if (OnAfter.HasDelegate)
@@ -181,23 +197,29 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task AddMediaFileAsync(string? src, MediaResource mediaResource)
         {
             if (string.IsNullOrEmpty(src)) return;
+            var kind = MediaResourceManager.GetResourceKind(src);
+            if (kind == MediaResource.Unknown)
+            {
+                return;
+            }
 
-            string? html = SrcConvertToHtml(src, mediaResource);
-            if (html is null) return;
+            string? insertContent = CreateInsertContent(src, mediaResource);
+            if (insertContent is null) return;
 
-            await InsertValueAsync(html);
+            await InsertValueAsync(insertContent);
         }
 
         public async Task InsertValueAsync(string value)
         {
             if (string.IsNullOrEmpty(Value))
             {
-                await Module.Focus(mMarkdown.Ref);
+                await Module.Focus(mMarkdownReplacement.Ref);
             }
-            await mMarkdown.InsertValueAsync(value);
+
+            await mMarkdownReplacement.InsertValueAsync(value);
         }
 
-        public static string? SrcConvertToHtml(string src, MediaResource mediaResource)
+        private static string? CreateInsertContent(string src, MediaResource mediaResource)
         {
             return mediaResource switch
             {
@@ -206,6 +228,48 @@ namespace SwashbucklerDiary.Rcl.Components
                 MediaResource.Video => $"<video src=\"{src}\" controls ></video>",
                 _ => null
             };
+        }
+
+        public async Task<string?> CreateInsertContent(List<string?> filePaths)
+        {
+            var resources = await MediaResourceManager.CreateMediaResourceFilesAsync(filePaths);
+            var insertContents = resources.Select(it => CreateInsertContent(it.ResourceUri!, it.ResourceType));
+            return string.Join("\n", insertContents);
+        }
+
+        private async void LoadFiles(InputFileChangeEventArgs e)
+        {
+            List<string?> filePaths = [];
+            foreach (var browserFile in e.GetMultipleFiles())
+            {
+                var kind = MediaResourceManager.GetResourceKind(browserFile.Name);
+                if (kind == MediaResource.Unknown)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    var filePath = await AppFileManager.CreateTempFileAsync(browserFile.Name, browserFile.OpenReadStream(maxAllowedSize));
+                    filePaths.Add(filePath);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogInformation(ex, "OpenReadStream error");
+                }
+            }
+            if (filePaths.Count == 0)
+            {
+                return;
+            }
+
+            var insertContent = await CreateInsertContent(filePaths);
+            if (string.IsNullOrEmpty(insertContent))
+            {
+                return;
+            }
+
+            await InsertValueAsync(insertContent);
         }
     }
 }

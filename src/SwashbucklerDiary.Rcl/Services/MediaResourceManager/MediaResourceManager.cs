@@ -100,7 +100,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public abstract Task<AudioFileInfo> GetAudioFileInfo(string uri);
 
-        public async Task<List<ResourceModel>> ReceiveShareFilesAsync(List<string?> filePaths)
+        public async Task<List<ResourceModel>> CreateMediaResourceFilesAsync(List<string?> filePaths)
         {
             List<ResourceModel> resources = new();
             foreach (var filePath in filePaths)

@@ -2,12 +2,13 @@
 @inherits MyComponentBase
 
 <div class="@WrapClass">
-    <MMarkdown @ref="mMarkdown"
-               Value="@Value"
-               ValueChanged="ValueChanged"
-               Class="@($"{Class} {(firstLineIndent?"first-line-indent":"")}")"
-               Options="_options"
-               OnAfter="AfterMarkdownRender"
-               OnToolbarButtonClick="HandleToolbarButtonClick">
-    </MMarkdown>
+    <MMarkdownReplacement @ref="mMarkdownReplacement"
+                          Value="@Value"
+                          ValueChanged="ValueChanged"
+                          Class="@($"{Class} {(firstLineIndent?"first-line-indent":"")}")"
+                          Options="_options"
+                          OnAfter="AfterMarkdownRender"
+                          OnToolbarButtonClick="HandleToolbarButtonClick"
+                          OnInputFileChange="LoadFiles">
+    </MMarkdownReplacement>
 </div>

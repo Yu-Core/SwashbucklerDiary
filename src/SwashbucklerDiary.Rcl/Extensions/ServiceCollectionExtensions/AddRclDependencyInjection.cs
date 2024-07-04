@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
         public static IServiceCollection AddRclDependencyInjection(this IServiceCollection services)
         {
             services.TryAddScoped<ZoomJSModule>();
-            services.TryAddScoped<VditorJSModule>();
+            services.TryAddScoped<MarkdownJSModule>();
             services.TryAddScoped<TextareaJSModule>();
             services.TryAddScoped<AudioInterop>();
             services.TryAddScoped<SwiperJsModule>();
