@@ -404,6 +404,14 @@
         "ImageLazy": {
           "Name": "Image lazy",
           "Path": "Setting / Diary / Image lazy"
+        },
+        "FirstLineIndent": {
+          "Name": "First line indent",
+          "Path": "Setting / Diary / First line indent"
+        },
+        "CodeLineNumber": {
+          "Name": "Code line number",
+          "Path": "Setting / Diary / Code line number"
         }
       },
       "Alert": {

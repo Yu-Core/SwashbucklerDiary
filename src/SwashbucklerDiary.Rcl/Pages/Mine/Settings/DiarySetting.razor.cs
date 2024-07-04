@@ -16,6 +16,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showEditAutoSave;
 
+        private bool firstLineIndent;
+
+        private bool codeLineNumber;
+
         private readonly Dictionary<string, string> editAutoSaveItems = new()
         {
             {"Setting.Display.Diary.EditAutoSave.Close" ,"0"},
@@ -36,6 +40,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             markdown = SettingService.Get<bool>(Setting.Markdown);
             editAutoSave = SettingService.Get<int>(Setting.EditAutoSave);
             imageLazy = SettingService.Get<bool>(Setting.ImageLazy);
+            firstLineIndent = SettingService.Get<bool>(Setting.FirstLineIndent);
+            codeLineNumber = SettingService.Get<bool>(Setting.CodeLineNumber);
         }
 
         private StringNumber EditAutoSave

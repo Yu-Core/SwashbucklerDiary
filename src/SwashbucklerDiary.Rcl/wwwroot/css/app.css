@@ -579,3 +579,11 @@ html.m-overlay-scroll-blocked {
     -webkit-box-orient: vertical;
     display: -webkit-box;
 }
+
+.first-line-indent .vditor-reset > p {
+    text-indent: 2rem;
+}
+
+.first-line-indent.vditor-reset > p {
+    text-indent: 2rem;
+}

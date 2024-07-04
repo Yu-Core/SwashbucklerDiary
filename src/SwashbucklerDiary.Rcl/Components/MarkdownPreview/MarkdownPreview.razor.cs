@@ -10,6 +10,10 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         private bool imageLazy;
 
+        private bool firstLineIndent;
+
+        private bool codeLineNumber;
+
         private bool showPreviewImage;
 
         private string? previewImageSrc;
@@ -25,7 +29,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private IAlertService AlertService { get; set; } = default!;
 
         [Inject]
-        private ISettingService SettingsService { get; set; } = default!;
+        private ISettingService SettingService { get; set; } = default!;
 
         [Inject]
         private MarkdownPreviewJSModule MarkdownPreviewJSModule { get; set; } = default!;
@@ -99,7 +103,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void ReadSettings()
         {
-            imageLazy = SettingsService.Get<bool>(Setting.ImageLazy);
+            imageLazy = SettingService.Get<bool>(Setting.ImageLazy);
+            firstLineIndent = SettingService.Get<bool>(Setting.FirstLineIndent);
+            codeLineNumber = SettingService.Get<bool>(Setting.CodeLineNumber);
         }
 
         private void SetOptions()
@@ -111,9 +117,14 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "current", mode },
                 { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.10.4/dist/css/content-theme" }
             };
+            var hljs = new Dictionary<string, object>()
+            {
+                { "lineNumber", codeLineNumber }
+            };
             var markdown = new Dictionary<string, object>()
             {
-                { "mark", true }
+                { "toc", true },
+                { "mark", true },
             };
 
             _options = new()
@@ -123,6 +134,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "lang", lang },
                 { "theme", theme },
                 { "icon", "material" },
+                { "hljs", hljs },
                 { "markdown", markdown },
             };
 

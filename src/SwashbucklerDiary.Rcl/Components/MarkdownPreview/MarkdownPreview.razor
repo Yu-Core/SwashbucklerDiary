@@ -2,7 +2,7 @@
 
 <VditorMarkdownPreview @ref="vditorMarkdownPreview"
                        Value="@Value"
-                       Class="@Class"
+                       Class="@($"{Class} {(firstLineIndent?"first-line-indent":"")}")"
                        Style="@Style"
                        Options="_options">
 </VditorMarkdownPreview>

@@ -13,6 +13,7 @@
         after: () => {
             handlePreviewElement(element);
             handleAnchorScroll();
+            fixToc(element);
             dotNetCallbackRef.invokeMethodAsync('After');
         }
     }
@@ -85,4 +86,21 @@ function handleAnchorScroll() {
     if (targetElement) {
         targetElement.scrollIntoView();
     }
+}
+
+function fixToc(element) {
+    element.addEventListener('click', function (event) {
+        const tocItem = event.target.closest('[data-target-id]');
+        if (!tocItem) {
+            return;
+        }
+
+        const targetId = tocItem.getAttribute('data-target-id');
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            setTimeout(() => {
+                targetElement.scrollIntoView();
+            }, 100);
+        }
+    });
 }

@@ -156,6 +156,18 @@
     "Href": "diarySetting"
   },
   {
+    "Name": "Setting.Display.Diary.FirstLineIndent.Name",
+    "Icon": "mdi-format-indent-increase",
+    "Path": "Setting.Display.Diary.FirstLineIndent.Path",
+    "Href": "diarySetting"
+  },
+  {
+    "Name": "Setting.Display.Diary.CodeLineNumber.Name",
+    "Icon": "mdi-format-list-numbered",
+    "Path": "Setting.Display.Diary.CodeLineNumber.Path",
+    "Href": "diarySetting"
+  },
+  {
     "Name": "Location.Name",
     "Icon": "mdi-map-marker-outline",
     "Path": "Location.Path",

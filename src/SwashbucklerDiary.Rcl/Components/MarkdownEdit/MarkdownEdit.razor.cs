@@ -8,6 +8,10 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class MarkdownEdit : MyComponentBase
     {
+        private bool firstLineIndent;
+
+        private bool codeLineNumber;
+
         private Dictionary<string, object>? _options;
 
         private MMarkdown mMarkdown = default!;
@@ -43,7 +47,14 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
+            ReadSettings();
             SetOptions();
+        }
+
+        private void ReadSettings()
+        {
+            firstLineIndent = SettingService.Get<bool>(Setting.FirstLineIndent);
+            codeLineNumber = SettingService.Get<bool>(Setting.CodeLineNumber);
         }
 
         private void SetOptions()
@@ -55,13 +66,19 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "current", theme },
                 { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.10.4/dist/css/content-theme" }
             };
+            var previewHljs = new Dictionary<string, object>()
+            {
+                { "lineNumber", codeLineNumber }
+            };
             var previewMarkdown = new Dictionary<string, object?>()
             {
+                { "toc", true },
                 { "mark", true }
             };
             var preview = new Dictionary<string, object?>()
             {
                 { "theme", previewTheme },
+                { "hljs", previewHljs },
                 { "markdown", previewMarkdown },
             };
             var link = new Dictionary<string, object?>()

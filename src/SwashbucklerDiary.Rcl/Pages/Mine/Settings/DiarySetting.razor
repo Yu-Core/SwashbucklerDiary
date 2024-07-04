@@ -33,6 +33,28 @@
 
             <MDivider Class="mx-5"></MDivider>
 
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-language-markdown-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.Markdown.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="markdown"
+                             TValue="bool"
+                             OnChange="SettingChange(Setting.Markdown)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
             <MListItem OnClick="()=>showEditAutoSave=true">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
@@ -61,16 +83,16 @@
             <MListItem>
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
-                        mdi-language-markdown-outline
+                        mdi-image-refresh-outline
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Diary.Markdown.Name"))
+                    @(I18n.T("Setting.Display.Diary.ImageLazy.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="markdown"
+                    <MSwitch @bind-Value="imageLazy"
                              TValue="bool"
-                             OnChange="SettingChange(Setting.Markdown)"
+                             OnChange="SettingChange(Setting.ImageLazy)"
                              Dense="true"
                              Inset="true"
                              Color="white">
@@ -83,16 +105,38 @@
             <MListItem>
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
-                        mdi-image-refresh-outline
+                        mdi-format-indent-increase
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Diary.ImageLazy.Name"))
+                    @(I18n.T("Setting.Display.Diary.FirstLineIndent.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="imageLazy"
+                    <MSwitch @bind-Value="firstLineIndent"
                              TValue="bool"
-                             OnChange="SettingChange(Setting.ImageLazy)"
+                             OnChange="SettingChange(Setting.FirstLineIndent)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-format-list-numbered
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.CodeLineNumber.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="codeLineNumber"
+                             TValue="bool"
+                             OnChange="SettingChange(Setting.CodeLineNumber)"
                              Dense="true"
                              Inset="true"
                              Color="white">

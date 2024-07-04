@@ -33,6 +33,8 @@
         TagSort,
         LocationSort,
         UpdateNotPrompt,
-        ImageLazy
+        ImageLazy,
+        FirstLineIndent,
+        CodeLineNumber
     }
 }

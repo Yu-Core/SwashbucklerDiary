@@ -20,8 +20,8 @@ function copy(dotNetCallbackRef, element) {
 
 function handleA(dotNetCallbackRef, element) {
     element.addEventListener('click', function (event) {
-        var link = event.target.closest('a');
-        if (!link || !link.hasAttribute('href')) {
+        var link = event.target.closest('a[href]');
+        if (!link) {
             return;
         }
 

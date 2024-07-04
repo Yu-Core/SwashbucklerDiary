@@ -44,7 +44,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             // Prevent entry through URL
             if (!allowEnterPrivacyMode)
             {
-                NavigateToBack();
+                _ = NavigateToBack();
             }
             else
             {
