@@ -72,7 +72,8 @@ namespace SwashbucklerDiary.Rcl.Services
             await HandleVersionUpdate("0.69.7", HandleVersionUpdate697);
             await HandleVersionUpdate("0.80.9", HandleVersionUpdate809);
             await HandleVersionUpdate("0.86.0", HandleVersionUpdate860);
-            await HandleVersionUpdate(_versionTracking.CurrentVersion, HandleUpdateInstruction);
+            var version = await _staticWebAssets.ReadJsonAsync<string>("docs/update-instruction/version.json");
+            await HandleVersionUpdate(version, HandleUpdateInstruction);
             if (AfterVersionUpdate is not null && updateCount > 0)
             {
                 await AfterVersionUpdate.Invoke();
@@ -109,18 +110,18 @@ namespace SwashbucklerDiary.Rcl.Services
                 return;
             }
 
+            bool first = _versionTracking.IsFirstLaunchForCurrentVersion;
+            if (!first)
+            {
+                return;
+            }
+
             var previousVersion = new Version(strPreviousVersion);
             var targetVersion = new Version(version);
             int result = previousVersion.CompareTo(targetVersion);
 
             // The previous run version is greater than the target version
             if (result > 0)
-            {
-                return;
-            }
-
-            bool first = _versionTracking.IsFirstLaunchForCurrentVersion;
-            if (!first)
             {
                 return;
             }
