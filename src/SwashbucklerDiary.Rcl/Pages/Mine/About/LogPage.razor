@@ -10,11 +10,18 @@
         </MIcon>
     </MButton>
 
-    <SearchTextField @bind-Visible="showSearch"
-                     @bind-Value="search"
-                     Title="@(I18n.T("About.LogFile.Name"))"
-                     OnInput="UpdateLogsAsync">
-    </SearchTextField>
+    @if (!showSearch)
+    {
+        <MToolbarTitle Class="font-weight-bold">
+            @(I18n.T("About.LogFile.Name"))
+        </MToolbarTitle>
+        <MSpacer></MSpacer>
+    }
+
+    <VisibleTextField @bind-Visible="showSearch"
+                      @bind-Value="search"
+                      OnInput="UpdateLogsAsync">
+    </VisibleTextField>
 
     <MButton Icon="true"
              OnClick="()=>showSearch=!showSearch">

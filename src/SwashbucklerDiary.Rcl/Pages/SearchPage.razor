@@ -7,10 +7,10 @@
         <MIcon>mdi-arrow-left</MIcon>
     </MButton>
 
-    <SearchTextField @bind-Value="search"
-                     Placeholder="@(I18n.T("Search.Please enter diary keywords"))"
-                     OnInput="UpdateDiariesAsync">
-    </SearchTextField>
+    <TransparentTextField @bind-Value="search"
+                          Placeholder="@(I18n.T("Search.Please enter diary keywords"))"
+                          OnInput="UpdateDiariesAsync">
+    </TransparentTextField>
 
     <MButton Icon="true"
              OnClick="()=>showFilter=!showFilter">

@@ -1,0 +1,11 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits OpenCloseComponentBase
+
+@if (Visible)
+{
+    <TransparentTextField Value="@Value"
+                          ValueChanged="InternalValueChanged"
+                          OnInput="OnInput"
+                          Placeholder="@Placeholder">
+    </TransparentTextField>
+}

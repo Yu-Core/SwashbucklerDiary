@@ -94,6 +94,7 @@
 ## 感谢以下开源项目
 - [.NET MAUI](https://github.com/dotnet/maui)
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
+- [betterSearch](https://github.com/jayZOU/betterSearch)
 - [Blazored LocalStorage](https://github.com/Blazored/LocalStorage)
 - [Brotli](https://github.com/google/brotli)
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)

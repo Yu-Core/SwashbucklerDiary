@@ -591,3 +591,16 @@ html.m-overlay-scroll-blocked {
 .vditor-toolbar__item [data-type="upload"] {
     display: none;
 }
+
+.text-preview {
+    padding-top: 10px;
+    padding-left: 12px;
+    padding-right: 24px;
+    white-space: break-spaces;
+    align-self: stretch;
+    flex: 1 1 auto;
+    line-height: 1.75rem;
+    max-width: 100%;
+    min-height: 32px;
+    width: 100%;
+}

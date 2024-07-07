@@ -159,7 +159,9 @@
     "ClosePrivacy": "Cancel private",
     "PrivacyAlert": "Moved to privacy mode",
     "CopyReference": "Copy link",
-    "DiaryLink": "Diary link"
+    "DiaryLink": "Diary link",
+    "Search": "Search",
+    "Search on the page": "Search on the page"
   },
   "AppName": "Swashbuckler Diary",
   "Mine": {

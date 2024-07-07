@@ -16,6 +16,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
             services.TryAddScoped<VditorMarkdownPreviewJSModule>();
             services.TryAddScoped<MarkdownPreviewJSModule>();
             services.TryAddScoped<PreviewMediaElementJSModule>();
+            services.TryAddScoped<BetterSearchJSModule>();
             return services;
         }
     }

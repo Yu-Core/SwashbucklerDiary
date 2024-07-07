@@ -22,6 +22,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showSetPrivacy;
 
+        private bool showHighlightSearch;
+
         private bool privacyMode;
 
         private DiaryModel diary = new();
@@ -33,6 +35,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private List<DynamicListItem> shareItems = [];
 
         private List<DiaryModel> exportDiaries = [];
+
+        private readonly string highlightSearchContainerClass = $"search-{Guid.NewGuid()}";
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
@@ -87,6 +91,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool ShowLocation => !string.IsNullOrEmpty(diary.Location);
 
+        private bool ShowAppBar => !showHighlightSearch;
+
         private string? WeatherIcon => IconService.GetWeatherIcon(diary.Weather!);
 
         private string? WeatherText => I18n.T("Weather." + diary.Weather);
@@ -128,6 +134,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, "Diary.Export","mdi-export", OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon, MarkdownChanged),
                 new(this, "Read.CopyReference", "mdi-link-variant", CopyReference),
+                new(this, "Read.Search", "mdi-text-box-search-outline", ()=>showHighlightSearch=true),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
 

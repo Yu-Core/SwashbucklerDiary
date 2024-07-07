@@ -7,11 +7,10 @@
         <MIcon>mdi-arrow-left</MIcon>
     </MButton>
 
-    <SearchTextField @bind-Value="search"
-                     Visible="true"
-                     Placeholder="@(I18n.T("SearchAppFunction.Placeholder"))"
-                     OnInput="UpdateAppFunctions">
-    </SearchTextField>
+    <TransparentTextField @bind-Value="search"
+                          Placeholder="@(I18n.T("SearchAppFunction.Placeholder"))"
+                          OnInput="UpdateAppFunctions">
+    </TransparentTextField>
 </MyAppBar>
 
 <ScrollContainer>

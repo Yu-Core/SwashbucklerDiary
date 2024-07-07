@@ -2,18 +2,15 @@
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class SearchTextField : OpenCloseComponentBase, IDisposable
+    public partial class VisibleTextField : OpenCloseComponentBase, IDisposable
     {
-        private bool _visible;
-
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
+        protected bool _visible;
 
         [Parameter]
         public override bool Visible
         {
             get => _visible;
-            set => SetValue(value);
+            set => SetVisible(value);
         }
 
         [Parameter]
@@ -26,18 +23,18 @@ namespace SwashbucklerDiary.Rcl.Components
         public EventCallback<string> OnInput { get; set; }
 
         [Parameter]
-        public string? Title { get; set; }
-
-        [Parameter]
         public string? Placeholder { get; set; }
 
-        protected bool Light => !Dark;
+        protected async Task InternalValueChanged(string? value)
+        {
+            Value = value;
+            if (ValueChanged.HasDelegate)
+            {
+                await ValueChanged.InvokeAsync(Value);
+            }
+        }
 
-        private bool ShowTitle => !string.IsNullOrEmpty(Title);
-
-        private string? TextFieldColor => Light ? "grey" : null;
-
-        private void SetValue(bool value)
+        private async void SetVisible(bool value)
         {
             if (_visible == value)
             {
@@ -45,10 +42,6 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             _visible = value;
-            if (!ShowTitle)
-            {
-                return;
-            }
 
             if (value)
             {
@@ -56,8 +49,12 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             else
             {
-                Value = string.Empty;
                 NavigateController.RemoveHistoryAction(CloseSearch);
+                await InternalValueChanged(string.Empty);
+                if (OnInput.HasDelegate)
+                {
+                    await OnInput.InvokeAsync(string.Empty);
+                }
             }
         }
 
@@ -74,15 +71,6 @@ namespace SwashbucklerDiary.Rcl.Components
         private async void CloseSearch()
         {
             await InternalVisibleChanged(false);
-        }
-
-        private async Task InternalValueChanged(string? value)
-        {
-            Value = value;
-            if (ValueChanged.HasDelegate)
-            {
-                await ValueChanged.InvokeAsync(Value);
-            }
         }
     }
 }

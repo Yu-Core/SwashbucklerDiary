@@ -94,6 +94,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 ## Thanks to the following Open Source Projects
 - [.NET MAUI](https://github.com/dotnet/maui)
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
+- [betterSearch](https://github.com/jayZOU/betterSearch)
 - [Blazored LocalStorage](https://github.com/Blazored/LocalStorage)
 - [Brotli](https://github.com/google/brotli)
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)

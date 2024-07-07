@@ -1,51 +1,58 @@
 ﻿@page "/read/{id:guid}"
 @inherits ImportantComponentBase
 
-<MyAppBar>
-    <MButton Icon="true"
-             OnClick="NavigateToBack">
-        <MIcon>
-            mdi-arrow-left
-        </MIcon>
-    </MButton>
+@if (ShowAppBar)
+{
+    <MyAppBar>
+        <MButton Icon="true"
+                 OnClick="NavigateToBack">
+            <MIcon>
+                mdi-arrow-left
+            </MIcon>
+        </MButton>
 
-    <MSpacer></MSpacer>
-    <MButton Icon="true"
-             OnClick="()=>showShare=true">
-        <MIcon>
-            mdi-share-variant-outline
-        </MIcon>
-    </MButton>
-    <MButton Icon="true"
-             OnClick="OpenDeleteDialog">
-        <MIcon>
-            mdi-delete-outline
-        </MIcon>
-    </MButton>
-    <MButton Icon="true"
-             OnClick="OnEdit">
-        <MIcon>
-            mdi-pencil
-        </MIcon>
-    </MButton>
+        <MSpacer></MSpacer>
+        <MButton Icon="true"
+                 OnClick="()=>showShare=true">
+            <MIcon>
+                mdi-share-variant-outline
+            </MIcon>
+        </MButton>
+        <MButton Icon="true"
+                 OnClick="OpenDeleteDialog">
+            <MIcon>
+                mdi-delete-outline
+            </MIcon>
+        </MButton>
+        <MButton Icon="true"
+                 OnClick="OnEdit">
+            <MIcon>
+                mdi-pencil
+            </MIcon>
+        </MButton>
 
-    <MultiMenu @bind-Visible="showMenu"
-               DynamicListItems="menuItems">
-        <ActivatorContent>
-            <MButton @attributes="@context.Attrs"
-                     Icon="true">
-                <MultiDisplay>
-                    <DesktopContent>
-                        <MIcon>mdi-dots-horizontal</MIcon>
-                    </DesktopContent>
-                    <MobileContent>
-                        <MIcon>mdi-dots-vertical</MIcon>
-                    </MobileContent>
-                </MultiDisplay>
-            </MButton>
-        </ActivatorContent>
-    </MultiMenu>
-</MyAppBar>
+        <MultiMenu @bind-Visible="showMenu"
+                   DynamicListItems="menuItems">
+            <ActivatorContent>
+                <MButton @attributes="@context.Attrs"
+                         Icon="true">
+                    <MultiDisplay>
+                        <DesktopContent>
+                            <MIcon>mdi-dots-horizontal</MIcon>
+                        </DesktopContent>
+                        <MobileContent>
+                            <MIcon>mdi-dots-vertical</MIcon>
+                        </MobileContent>
+                    </MultiDisplay>
+                </MButton>
+            </ActivatorContent>
+        </MultiMenu>
+    </MyAppBar>
+}
+
+<HighlightSearchTextField @bind-Visible="showHighlightSearch"
+                          Selector="@($".{highlightSearchContainerClass}")">
+</HighlightSearchTextField>
 
 <ScrollContainer ContentStyle="padding-top:0px;">
     <div id="screenshot" class="primary-background">
@@ -104,28 +111,20 @@
             </MTextField>
         }
 
-        <div class="my-sm-3">
+        <div class="my-sm-3 user-select">
             @if (enableMarkdown)
             {
                 <MarkdownPreview @ref="markdownPreview"
                                  Value="@(diary.Content)"
-                                 Class="px-3"
+                                 Class="@($"px-3 {highlightSearchContainerClass}")"
                                  Style="padding-top:10px">
                 </MarkdownPreview>
             }
             else
             {
-                <MTextarea Value="@(diary.Content)"
-                           Class="user-select"
-                           Solo="true"
-                           Flat="true"
-                           BackgroundColor="transparent"
-                           HideDetails="@("auto")"
-                           Readonly="true"
-                           AutoGrow="true"
-                           Rows="8"
-                           RowHeight="30">
-                </MTextarea>
+                <div class="@($"text-preview {highlightSearchContainerClass}")">
+                    @(diary.Content)
+                </div>
             }
         </div>
 

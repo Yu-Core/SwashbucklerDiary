@@ -159,7 +159,9 @@
     "ClosePrivacy": "取消私密",
     "PrivacyAlert": "已移动至隐私模式",
     "CopyReference": "复制链接",
-    "DiaryLink": "日记链接"
+    "DiaryLink": "日记链接",
+    "Search": "查找",
+    "Search on the page": "在页面上查找"
   },
   "AppName": "侠客日记",
   "Mine": {

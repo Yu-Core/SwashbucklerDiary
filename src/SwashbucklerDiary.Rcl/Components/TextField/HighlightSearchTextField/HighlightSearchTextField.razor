@@ -1,0 +1,35 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits OpenCloseComponentBase
+
+@if (Visible)
+{
+    <MyAppBar>
+        <TransparentTextField @bind-Value="search"
+                              OnInput="Search"
+                              Clearable="false"
+                              Placeholder="@I18n.T("Read.Search on the page")">
+        </TransparentTextField>
+        @if (!string.IsNullOrWhiteSpace(search))
+        {
+            <div class="px-3">@(CurrentNumber)/@(Count)</div>
+        }
+        <MButton Icon="true"
+                 OnClick="Up">
+            <MIcon>
+                mdi-chevron-up
+            </MIcon>
+        </MButton>
+        <MButton Icon="true"
+                 OnClick="Down">
+            <MIcon>
+                mdi-chevron-down
+            </MIcon>
+        </MButton>
+        <MButton Icon="true"
+                 OnClick="()=>InternalVisibleChanged(false)">
+            <MIcon>
+                mdi-close
+            </MIcon>
+        </MButton>
+    </MyAppBar>
+}
