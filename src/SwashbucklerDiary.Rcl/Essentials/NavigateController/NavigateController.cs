@@ -151,7 +151,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
             var currentUri = _navigationManager.Uri;
             var currentPath = new Uri(_navigationManager.Uri).AbsolutePath;
 
-            var route = "/" + _navigationManager.ToBaseRelativePath(targetUri);
+            var route = _navigationManager.ToRoute(targetUri);
             //路由不存在的页面禁止跳转
             if (targetPath != stackBottomPath && !routeHelper.IsMatch(route))
             {
