@@ -8,5 +8,10 @@ namespace SwashbucklerDiary.Rcl.Extensions
         {
             return new Uri(navigationManager.BaseUri).IsBaseOf(new Uri(url, UriKind.RelativeOrAbsolute));
         }
+
+        public static string GetBaseRelativePath(this NavigationManager navigationManager)
+        {
+            return navigationManager.ToBaseRelativePath(navigationManager.Uri);
+        }
     }
 }

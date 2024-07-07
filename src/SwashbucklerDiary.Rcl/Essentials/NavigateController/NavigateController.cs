@@ -101,23 +101,23 @@ namespace SwashbucklerDiary.Rcl.Essentials
             permanentPaths = paths.ToList();
             // Insert a uri on the previous page. This can ensure that OnLocationChanging will definitely trigger
             var uri = _navigationManager.Uri;
-            var stackBottomUri = new Uri(new Uri(_navigationManager.BaseUri), Guid.NewGuid().ToString());
+            var stackBottomUri = _navigationManager.ToAbsoluteUri(Guid.NewGuid().ToString());
             stackBottomPath = stackBottomUri.AbsolutePath;
             await _jSRuntime.HistoryReplaceState(stackBottomUri.ToString());
             historyPaths.Add(stackBottomPath);
 
-            var path = new Uri(uri).AbsolutePath;
-            if (!permanentPaths.Contains(path))
+            var absolutePath = new Uri(uri).AbsolutePath;
+            if (!permanentPaths.Contains(absolutePath))
             {
-                _navigationManager.NavigateTo("/");
-                historyPaths.Add("/");
+                _navigationManager.NavigateTo("");
+                historyPaths.Add(_navigationManager.ToAbsoluteUri("").AbsolutePath);
             }
 
             _navigationManager.NavigateTo(uri);
-            historyPaths.Add(path);
-            if (!permanentPaths.Contains(path))
+            historyPaths.Add(absolutePath);
+            if (!permanentPaths.Contains(absolutePath))
             {
-                pageCachePaths.Add(path);
+                pageCachePaths.Add(absolutePath);
             }
 
             registration = _navigationManager.RegisterLocationChangingHandler(OnLocationChanging);
@@ -151,8 +151,9 @@ namespace SwashbucklerDiary.Rcl.Essentials
             var currentUri = _navigationManager.Uri;
             var currentPath = new Uri(_navigationManager.Uri).AbsolutePath;
 
+            var route = "/" + _navigationManager.ToBaseRelativePath(targetUri);
             //路由不存在的页面禁止跳转
-            if (targetPath != stackBottomPath && !routeHelper.IsMatch(targetPath))
+            if (targetPath != stackBottomPath && !routeHelper.IsMatch(route))
             {
                 context.PreventNavigation();
                 return;
@@ -217,7 +218,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
                         }
                         else
                         {
-                            _navigationManager.NavigateTo("/");
+                            _navigationManager.NavigateTo("");
                         }
                     }
                     else

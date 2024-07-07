@@ -1,8 +1,8 @@
-﻿using Masa.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Layout;
 using SwashbucklerDiary.Shared;
 using Theme = SwashbucklerDiary.Shared.Theme;
@@ -117,13 +117,13 @@ namespace SwashbucklerDiary.Maui.Layout
                 return;
             }
 
-            if (NavigationManager.GetAbsolutePath() == "/write")
+            if (NavigationManager.GetBaseRelativePath() == "write")
             {
                 return;
             }
 
             AppLifecycle.ActivationArguments = args;
-            NavigationManager.NavigateTo("/write");
+            NavigationManager.NavigateTo("write");
         }
     }
 }
