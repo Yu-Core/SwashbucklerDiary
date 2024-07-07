@@ -55,6 +55,10 @@
         border-radius: 8px;
     }
 
+.vditor-ir__node--expand[data-type="code-block"] .vditor-ir__preview {
+    display: none;
+}
+
 @media screen and (min-width:600px) {
     .vditor-toolbar {
         margin-left: -10px;
