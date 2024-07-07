@@ -1,4 +1,6 @@
-# Swashbuckler Diary
+<h1 align="center">Swashbuckler Diary</h1>
+
+<div align="center">
 
 English | [简体中文](./README.md)
 
@@ -6,10 +8,20 @@ English | [简体中文](./README.md)
 
 Not all diaries are called daily records. This is a secret book of a swashbuckler! Record the details of your life and write your legend in the Jianghu.
 
-## Online preview
+![GitHub Repo size](https://img.shields.io/github/repo-size/Yu-Core/SwashbucklerDiary?style=flat-square&color=FF5722)
+[![GitHub license](https://img.shields.io/github/license/Yu-Core/SwashbucklerDiary?style=flat-square)](LICENSE)
+[![GitHub Star](https://img.shields.io/github/stars/Yu-Core/SwashbucklerDiary?style=flat-square&color=FFEE58)](https://github.com/Yu-Core/SwashbucklerDiary/stargazers)
+![Release Download](https://img.shields.io/github/downloads/Yu-Core/SwashbucklerDiary/total?style=flat-square)
+[![Release Version](https://img.shields.io/github/v/release/Yu-Core/SwashbucklerDiary?style=flat-square&color=3cb371)](https://github.com/Yu-Core/SwashbucklerDiary/releases/latest)
+<a href="https://hellogithub.com/repository/f4e1065b09114738915da27ef18ba09b" target="_blank"><img src="https://api.hellogithub.com/v1/widgets/recommend.svg?rid=f4e1065b09114738915da27ef18ba09b&claim_uid=jhAc53UNagbM7I9&theme=small" alt="Featured｜HelloGitHub" /></a>
+[![NET 8.0](https://img.shields.io/badge/dotnet-8.0-purple.svg?style=flat-square&color=512bd4)](https://learn.microsoft.com/zh-cn/dotnet/core/whats-new/dotnet-8)
+
+</div>
+
+## 🌏️ Online preview
 [Live Demo（GitHub Pages）](https://yu-core.github.io/SwashbucklerDiary/)
 
-## Main Technology Stack
+## 🛠️ Main Technology Stack
 - [MAUI](https://learn.microsoft.com/dotnet/maui/)
 - [Blazor Hybrid](https://learn.microsoft.com/aspnet/core/blazor/hybrid/) 
 - [Blazor WebAssembly](https://learn.microsoft.com/aspnet/core/blazor/hosting-models#blazor-webassembly)
@@ -17,7 +29,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [SqlSugar](https://www.donet5.com/Home/Doc) 
 - [Serilog](https://serilog.net/)
 
-## Download Channels
+## 🚀 Download Channels
 - [![Microsoft Store](https://get.microsoft.com/images/en-US%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
 - [GitHub Releases](https://github.com/Yu-Core/SwashbucklerDiary/releases)
 - [lanzou cloud](https://wwfc.lanzouj.com/b04q15i4j) ( Password: 1234 )
@@ -25,7 +37,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [wandoujia](https://www.wandoujia.com/apps/8369224)
 - [CoolApk](https://www.coolapk.com/apk/937401)
 
-## Characteristics
+## ✨ Characteristics
 * Minimalist UI design
 * Markdown real-time rendering
 * Cross platform (Android, Windows, macOS, Web)
@@ -44,7 +56,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 * Synchronous transmission under the same local area network
 * Perfect immersive status bar navigation bar experience
 
-## Screenshot
+## 🧩 Screenshot
 
 <table>
     <tr>
@@ -66,7 +78,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
     </tr>
  </table>
 
-## Supported Platforms
+## 🖥 Supported Platforms
 - Windows (Windows 11 and Windows 10 version 1809 or higher)
 - Android (Android 8.0 (API 26) or higher)
 - iOS (iOS 14 or higher)
@@ -74,7 +86,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - ~~Tizen (Not supported temporarily)~~
 - Web
 
- ## Development Environment
+## ⌨️ Development Environment
 
 [Visual Studio 2022](https://learn.microsoft.com/en-us/visualstudio/install/install-visual-studio?view=vs-2022) 或 [Visual Studio Code](https://code.visualstudio.com/docs)
 
@@ -91,7 +103,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
         - Mobile development using .NET / .NET Multi platform App UI development
         - .NET Desktop Development
 
-## Thanks to the following Open Source Projects
+## 🙏 Thanks to the following Open Source Projects
 - [.NET MAUI](https://github.com/dotnet/maui)
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
 - [betterSearch](https://github.com/jayZOU/betterSearch)

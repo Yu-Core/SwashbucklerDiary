@@ -1,4 +1,6 @@
-# 侠客日记
+<h1 align="center">侠客日记</h1>
+
+<div align="center">
 
 [English](./README.en-US.md) | 简体中文
 
@@ -6,10 +8,20 @@
 
 不是所有日记都叫流水账，这本是侠客的秘籍！记录生活点滴，书写你的江湖传说。
 
-## 在线预览
+![GitHub Repo size](https://img.shields.io/github/repo-size/Yu-Core/SwashbucklerDiary?style=flat-square&color=FF5722)
+[![GitHub license](https://img.shields.io/github/license/Yu-Core/SwashbucklerDiary?style=flat-square)](LICENSE)
+[![GitHub Star](https://img.shields.io/github/stars/Yu-Core/SwashbucklerDiary?style=flat-square&color=FFEE58)](https://github.com/Yu-Core/SwashbucklerDiary/stargazers)
+![Release Download](https://img.shields.io/github/downloads/Yu-Core/SwashbucklerDiary/total?style=flat-square)
+[![Release Version](https://img.shields.io/github/v/release/Yu-Core/SwashbucklerDiary?style=flat-square&color=3cb371)](https://github.com/Yu-Core/SwashbucklerDiary/releases/latest)
+<a href="https://hellogithub.com/repository/f4e1065b09114738915da27ef18ba09b" target="_blank"><img src="https://api.hellogithub.com/v1/widgets/recommend.svg?rid=f4e1065b09114738915da27ef18ba09b&claim_uid=jhAc53UNagbM7I9&theme=small" alt="Featured｜HelloGitHub" /></a>
+[![NET 8.0](https://img.shields.io/badge/dotnet-8.0-purple.svg?style=flat-square&color=512bd4)](https://learn.microsoft.com/zh-cn/dotnet/core/whats-new/dotnet-8)
+
+</div>
+
+## 🌏️ 在线预览
 [在线演示地址（GitHub Pages）](https://yu-core.github.io/SwashbucklerDiary/)
 
-## 主要技术栈
+## 🛠️ 主要技术栈
 - [MAUI](https://learn.microsoft.com/dotnet/maui/)
 - [Blazor Hybrid](https://learn.microsoft.com/aspnet/core/blazor/hybrid/) 
 - [Blazor WebAssembly](https://learn.microsoft.com/aspnet/core/blazor/hosting-models#blazor-webassembly)
@@ -17,7 +29,7 @@
 - [SqlSugar](https://www.donet5.com/Home/Doc) 
 - [Serilog](https://serilog.net/)
 
-## 下载渠道
+## 🚀 下载渠道
 - [![Microsoft 应用商店](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
 - [GitHub 发行版](https://github.com/Yu-Core/SwashbucklerDiary/releases)
 - [蓝奏云](https://wwfc.lanzouj.com/b04q15i4j) （密码：1234）
@@ -25,7 +37,7 @@
 - [豌豆荚](https://www.wandoujia.com/apps/8369224)
 - [酷安](https://www.coolapk.com/apk/937401)
 
-## 特点
+## ✨ 特点
 * 极简风格的UI设计
 * Markdown即时渲染
 * 跨平台（Android，Windows，macOS，Web）
@@ -44,7 +56,7 @@
 * 同一局域网下同步传输
 * 完美的沉浸式状态栏导航栏体验
 
-## 截图
+## 🧩 截图
 
 <table>
     <tr>
@@ -66,7 +78,7 @@
     </tr>
  </table>
 
-## 支持的平台
+## 🖥 支持的平台
 - Windows (Windows 11和Windows 10版本 1809 或更高版本)
 - Android (Android 8.0 (API 26) 或更高版本)
 - iOS (iOS 14 或更高版本)
@@ -74,7 +86,7 @@
 - ~~Tizen (暂不支持)~~
 - Web
 
-## 开发环境
+## ⌨️ 开发环境
 
 [Visual Studio 2022](https://learn.microsoft.com/zh-cn/visualstudio/install/install-visual-studio?view=vs-2022) 或 [Visual Studio Code](https://code.visualstudio.com/docs)
 
@@ -91,7 +103,7 @@
         - 使用 .NET 的移动开发 / .NET Multi-platform App UI 开发
         - .NET 桌面开发
 
-## 感谢以下开源项目
+## 🙏 感谢以下开源项目
 - [.NET MAUI](https://github.com/dotnet/maui)
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
 - [betterSearch](https://github.com/jayZOU/betterSearch)
