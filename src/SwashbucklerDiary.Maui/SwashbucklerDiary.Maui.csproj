@@ -49,6 +49,10 @@
 		<ApplicationId>com.yucore.swashbucklerdiarydebug</ApplicationId>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and $(TargetFramework.Contains('-maccatalyst'))">
+		<MtouchInterpreter>SqlSugar</MtouchInterpreter>
+	</PropertyGroup>
+
 	<!-- Android -->
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-android')) != true">
 		<Compile Remove="**\**\*.Android.cs" />
