@@ -112,18 +112,25 @@ namespace SwashbucklerDiary.Maui.Layout
                 return;
             }
 
-            if (args.Kind != LaunchActivationKind.Share)
+            if (args.Kind == LaunchActivationKind.Share)
             {
-                return;
+                if (NavigationManager.GetBaseRelativePath() == "write")
+                {
+                    return;
+                }
+
+                AppLifecycle.ActivationArguments = args;
+                NavigationManager.NavigateTo("write");
+            }
+            else if (args.Kind == LaunchActivationKind.Scheme)
+            {
+                string? uriString = args?.Data as string;
+                if (Uri.TryCreate(uriString, UriKind.Absolute, out var uri))
+                {
+                    NavigationManager.NavigateTo(uri.AbsolutePath.TrimStart('/'));
+                }
             }
 
-            if (NavigationManager.GetBaseRelativePath() == "write")
-            {
-                return;
-            }
-
-            AppLifecycle.ActivationArguments = args;
-            NavigationManager.NavigateTo("write");
         }
     }
 }

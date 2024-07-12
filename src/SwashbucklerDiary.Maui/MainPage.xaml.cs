@@ -49,8 +49,8 @@ namespace SwashbucklerDiary.Maui
 
         private void HandleScheme()
         {
-            string? url = LaunchActivation.ActivationArguments?.Data as string;
-            if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var uri))
+            string? uriString = LaunchActivation.ActivationArguments?.Data as string;
+            if (Uri.TryCreate(uriString, UriKind.Absolute, out var uri))
             {
                 blazorWebView.StartPath = uri.AbsolutePath;
             }
