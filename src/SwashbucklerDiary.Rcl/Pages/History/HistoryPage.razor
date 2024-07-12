@@ -74,3 +74,33 @@
 <ExportByTimeDialog @bind-Visible="showExportThisTime"
                     Value="SelectedDate">
 </ExportByTimeDialog>
+
+<MDialogExtension @bind-MyValue="showConfirmMerge"
+                  ContentClass="rounded-lg"
+                  MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @(I18n.T("History.Merge diaries.Title"))
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="@(()=>showConfirmMerge=false)">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            @(I18n.T("History.Merge diaries.Content"))
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text
+                     OnClick="()=>showConfirmMerge=false">
+                @(I18n.T("Share.Cancel"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="ConfirmMerge">
+                @(I18n.T("Share.OK"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MDialogExtension>

@@ -99,7 +99,11 @@
     },
     "Add diary": "Add diary",
     "Reset date": "Reset date",
-    "Export diaries": "Export diaries"
+    "Export diaries": "Export diaries",
+    "Merge diaries": {
+      "Title": "Merge diaries",
+      "Content": "Are you sure to merge the selected date diary content? (Other information in the diary, such as the title, weather, will be based on the first article)"
+    }
   },
   "Write": {
     "EnableTitle": "Enable title",

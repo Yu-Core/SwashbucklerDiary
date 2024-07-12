@@ -99,7 +99,11 @@
     },
     "Add diary": "添加日记",
     "Reset date": "重置日期",
-    "Export diaries": "导出日记"
+    "Export diaries": "导出日记",
+    "Merge diaries": {
+      "Title": "合并日记",
+      "Content": "确认合并选中日期日记内容吗？（日记的其他信息，如标题、天气等，会以第一篇为主）"
+    }
   },
   "Write": {
     "EnableTitle": "开启标题",

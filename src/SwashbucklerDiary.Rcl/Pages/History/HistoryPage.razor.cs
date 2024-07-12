@@ -17,6 +17,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showMenu;
 
+        private bool showConfirmMerge;
+
         private ScrollContainer scrollContainer = default!;
 
         private DateOnly[] eventsDates = [];
@@ -48,6 +50,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, "History.Add diary","mdi-pencil", ()=>To($"write?CreateDate={SelectedDate}")),
                 new(this, "History.Reset date","mdi-calendar-refresh", ResetDatePicker),
                 new(this, "History.Export diaries","mdi-export", ()=>showExportThisTime = true),
+                new(this, "History.Merge diaries.Title","mdi-axis-z-arrow", ()=>showConfirmMerge = true),
             ];
         }
 
@@ -105,6 +108,29 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             datePickerKey = Guid.NewGuid();
             SelectedDate = DateOnly.FromDateTime(DateTime.Now);
+        }
+
+        private async void ConfirmMerge()
+        {
+            showConfirmMerge = false;
+            if (selectedDiaries.Count < 2)
+            {
+                return;
+            }
+
+            await AlertService.StartLoading();
+
+            var diaries = selectedDiaries.OrderBy(it => it.CreateTime).ToList();
+            string content = string.Join("\n", diaries.Select(it => it.Content));
+            var firstDiary = diaries.First();
+            firstDiary.Content = content;
+            diaries.Remove(firstDiary);
+            await DiaryService.UpdateAsync(firstDiary, it => it.Content!);
+            await DiaryService.DeleteAsync(diaries);
+            await UpdateDiariesAsync();
+
+            await AlertService.StopLoading();
+            StateHasChanged();
         }
     }
 }
