@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Rcl.Components
             await FocusAsync();
         }
 
-        protected async Task FocusAsync()
+        protected virtual async Task FocusAsync()
         {
             if (textField is not null && !textField.IsFocused)
             {

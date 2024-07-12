@@ -9,7 +9,6 @@
     <MForm @ref="@mForm"
            Model="@configModel"
            OnValidSubmit="HandleOnOK"
-           EnableValidation="true"
            EnableI18n="true">
         <MCard>
             <MCardTitle Class="font-weight-bold">
@@ -22,28 +21,34 @@
             <MCardText Class="pb-0">
                 <MTextField @bind-Value="configModel.ServerAddress"
                             @ref="textField"
-                            Dense="true"
-                            Outlined="true"
+                            Dense
+                            MinHeight="48"
+                            Filled
+                            Rounded
                             spellcheck="false"
-                            Label="@(I18n.T("Backups.Config.ServerAddress"))">
+                            Placeholder="@(I18n.T("Backups.Config.ServerAddress"))">
                 </MTextField>
                 <MTextField @bind-Value="configModel.Account"
-                            Dense="true"
-                            Outlined="true"
+                            Dense
+                            MinHeight="48"
+                            Filled
+                            Rounded
                             spellcheck="false"
-                            Label="@(I18n.T("Backups.Config.Account"))">
+                            Placeholder="@(I18n.T("Backups.Config.Account"))">
                 </MTextField>
                 <MTextField @bind-Value="configModel.Password"
-                            Dense="true"
-                            Outlined="true"
+                            Dense
+                            MinHeight="48"
+                            Filled
+                            Rounded
                             spellcheck="false"
-                            Label="@(I18n.T("Backups.Config.Password"))"
+                            Placeholder="@(I18n.T("Backups.Config.Password"))"
                             AppendIcon="@(showPassword ? "mdi-eye" : "mdi-eye-off")"
                             Type="@(showPassword ? "text" : "password")"
                             OnAppendClick="() => showPassword = !showPassword">
                 </MTextField>
             </MCardText>
-            <MCardActions>
+            <MCardActions Class="pt-0">
                 <MSpacer></MSpacer>
                 <MButton Text="true" OnClick="HandleOnCancel">
                     @(I18n.T("Share.Cancel"))

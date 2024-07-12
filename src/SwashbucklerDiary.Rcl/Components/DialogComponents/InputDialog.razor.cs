@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -10,6 +11,8 @@ namespace SwashbucklerDiary.Rcl.Components
         private string? inputText;
 
         private bool showPassword;
+
+        private MTextarea? mTextarea;
 
         [Parameter]
         public override bool Visible
@@ -39,12 +42,32 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public bool Password { get; set; }
 
+        [Parameter]
+        public bool MultiLine { get; set; }
+
         private string PasswordIcon
             => Password ? (showPassword ? "mdi-eye" : "mdi-eye-off") : string.Empty;
 
         private string PasswordType
             => Password ? (showPassword ? "text" : "password") : string.Empty;
-        
+
+        protected override async Task FocusAsync()
+        {
+            if (!MultiLine)
+            {
+                await base.FocusAsync();
+            }
+            else
+            {
+                if (mTextarea is not null && !mTextarea.IsFocused)
+                {
+                    await Task.Delay(200);
+                    await mTextarea.InputElement.FocusAsync();
+                }
+            }
+
+        }
+
         protected virtual async Task HandleOnEnter(KeyboardEventArgs args)
         {
             if (!_value)

@@ -16,22 +16,43 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
-            <MTextField @bind-Value="inputText"
-                        @ref="textField"
-                        OnKeyDown="HandleOnEnter"
-                        Dense
-                        HideDetails="@("auto")"
-                        Outlined
-                        Counter="@MaxLength"
-                        maxlength="@MaxLength"
-                        spellcheck="false"
-                        Placeholder="@Placeholder"
-                        AppendIcon="@PasswordIcon"
-                        Type="@PasswordType"
-                        OnAppendClick="() => showPassword = !showPassword">
-            </MTextField>
+            @if (!MultiLine)
+            {
+                <MTextField @bind-Value="inputText"
+                            @ref="textField"
+                            OnKeyDown="HandleOnEnter"
+                            Dense
+                            MinHeight="44"
+                            HideDetails="@("auto")"
+                            Filled
+                            Rounded
+                            Counter="@MaxLength"
+                            maxlength="@MaxLength"
+                            spellcheck="false"
+                            Placeholder="@Placeholder"
+                            AppendIcon="@PasswordIcon"
+                            Type="@PasswordType"
+                            OnAppendClick="() => showPassword = !showPassword">
+                </MTextField>
+            }
+            else
+            {
+                <MTextarea @bind-Value="inputText"
+                           @ref="mTextarea"
+                           Class="rounded-lg"
+                           HideDetails="@("auto")"
+                           Filled
+                           Rounded
+                           NoResize
+                           Rows="3"
+                           Counter="@MaxLength"
+                           maxlength="@MaxLength"
+                           spellcheck="false"
+                           Placeholder="@Placeholder">
+                </MTextarea>
+            }
         </MCardText>
-        <MCardActions>
+        <MCardActions Class="pt-0">
             <MSpacer></MSpacer>
             <MButton Text
                      OnClick="HandleOnCancel">

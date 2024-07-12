@@ -9,7 +9,6 @@
     <MForm @ref="@MForm"
            Model="@configModel"
            OnValidSubmit="HandleOnOK"
-           EnableValidation="true"
            EnableI18n="true">
         <MCard>
             <MCardTitle Class="font-weight-bold">
@@ -22,16 +21,20 @@
             <MCardText Class="pb-0">
                 <MTextField @bind-Value="configModel.DeviceName"
                             @ref="textField"
-                            Dense="true"
-                            Outlined="true"
+                            Dense
+                            MinHeight="48"
+                            Filled
+                            Rounded
                             spellcheck="false"
                             Label="@(I18n.T("Export.LAN.Config.DeviceName"))">
                 </MTextField>
                 <MTextField @bind-Value="configModel.ScanPort"
                             Type="number"
                             TValue="int"
-                            Dense="true"
-                            Outlined="true"
+                            Dense
+                            MinHeight="48"
+                            Filled
+                            Rounded
                             spellcheck="false"
                             Label="@(I18n.T("Export.LAN.Config.ScanPort"))"
                             NumberProps="@(prop => { prop.Min = 1204; prop.Max = 65535; prop.HideControl = true; })">
@@ -39,14 +42,16 @@
                 <MTextField @bind-Value="configModel.TransmissionPort"
                             Type="number"
                             TValue="int"
-                            Dense="true"
-                            Outlined="true"
+                            Dense
+                            MinHeight="48"
+                            Filled
+                            Rounded
                             spellcheck="false"
                             Label="@(I18n.T("Export.LAN.Config.TransmissionPort"))"
                             NumberProps="@(prop => { prop.Min = 1204; prop.Max = 65535; prop.HideControl = true; })">
                 </MTextField>
             </MCardText>
-            <MCardActions>
+            <MCardActions Class="pt-0">
                 <MButton Text="true" OnClick="OnReset">
                     @(I18n.T("Share.Restore Default"))
                 </MButton>
