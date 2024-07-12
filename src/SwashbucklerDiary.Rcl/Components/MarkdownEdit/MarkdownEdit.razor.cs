@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -17,7 +18,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private Dictionary<string, object>? _options;
 
-        private MMarkdownReplacement mMarkdownReplacement = default!;
+        private MMarkdown mMarkdown = default!;
+
+        private InputFile? inputFile;
 
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
@@ -151,7 +154,7 @@ namespace SwashbucklerDiary.Rcl.Components
             await Module.After();
             if (Autofocus)
             {
-                await Module.Autofocus(mMarkdownReplacement.Ref);
+                await Module.Autofocus(mMarkdown.Ref);
             }
 
             if (OnAfter.HasDelegate)
@@ -213,10 +216,10 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (string.IsNullOrEmpty(Value))
             {
-                await Module.Focus(mMarkdownReplacement.Ref);
+                await Module.Focus(mMarkdown.Ref);
             }
 
-            await mMarkdownReplacement.InsertValueAsync(value);
+            await mMarkdown.InsertValueAsync(value);
         }
 
         private static string? CreateInsertContent(string src, MediaResource mediaResource)
@@ -235,6 +238,11 @@ namespace SwashbucklerDiary.Rcl.Components
             var resources = await MediaResourceManager.CreateMediaResourceFilesAsync(filePaths);
             var insertContents = resources.Select(it => CreateInsertContent(it.ResourceUri!, it.ResourceType));
             return string.Join("\n", insertContents);
+        }
+
+        private async Task HandleBeforeAllUpload()
+        {
+            await Module.Upload(mMarkdown.Ref, inputFile?.Element);
         }
 
         private async void LoadFiles(InputFileChangeEventArgs e)

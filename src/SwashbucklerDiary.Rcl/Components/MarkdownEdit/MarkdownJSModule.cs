@@ -23,5 +23,10 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await base.InvokeVoidAsync("autofocus", element);
         }
+
+        public async Task Upload(ElementReference element, ElementReference? inputFileElement)
+        {
+            await base.InvokeVoidAsync("upload", element, inputFileElement);
+        }
     }
 }

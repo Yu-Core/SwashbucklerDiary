@@ -17,6 +17,13 @@ export function autofocus(domRef) {
     sel.addRange(range);
 }
 
+export function upload(element, inputFileElement) {
+    if (!element || !inputFileElement) return;
+    const uploadElement = element.querySelector('input[type=file]');
+    inputFileElement.files = uploadElement.files;
+    inputFileElement.dispatchEvent(new CustomEvent('change'));
+}
+
 //点击Vditor工具栏，输入框不失去焦点
 function handleToolbar() {
     var toolbar = document.getElementsByClassName("vditor-toolbar")[0];
