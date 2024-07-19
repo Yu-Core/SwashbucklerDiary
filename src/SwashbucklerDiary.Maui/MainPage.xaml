@@ -3,12 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SwashbucklerDiary.Maui"
              x:Class="SwashbucklerDiary.Maui.MainPage"
-             xmlns:mauiBlazorToolkit="clr-namespace:MauiBlazorToolkit.Behaviors;assembly=MauiBlazorToolkit"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
-
-    <ContentPage.Behaviors>
-        <mauiBlazorToolkit:TitleBarBehavior TitleBarColor="{StaticResource PageBackgroundColor}" TitleBarStyle="DarkContent"></mauiBlazorToolkit:TitleBarBehavior>
-    </ContentPage.Behaviors>
 
     <BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html">
         <BlazorWebView.RootComponents>

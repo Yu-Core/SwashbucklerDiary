@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Layout;
 using SwashbucklerDiary.Shared;
-using Theme = SwashbucklerDiary.Shared.Theme;
 
 namespace SwashbucklerDiary.Maui.Layout
 {
@@ -40,34 +38,13 @@ namespace SwashbucklerDiary.Maui.Layout
 
         protected override void OnDispose()
         {
-            ThemeService.OnChanged -= ThemeChanged;
             AppLifecycle.Activated -= Activated;
             VersionUpdataManager.AfterCheckFirstLaunch -= CheckForUpdates;
             base.OnDispose();
         }
 
-        protected override async Task InitSettingsAsync()
-        {
-            await base.InitSettingsAsync();
-            await InitThemeAsync();
-        }
-
-        protected override void ThemeChanged(Theme theme)
-        {
-            base.ThemeChanged(theme);
-
-            TitleBarOrStatusBar.SetTitleBarOrStatusBar(theme);
-        }
-
         private bool IsAndroidOrIOS
             => PlatformIntegration.CurrentPlatform == AppDevicePlatform.Android || PlatformIntegration.CurrentPlatform == AppDevicePlatform.iOS;
-
-        private async Task InitThemeAsync()
-        {
-            ThemeService.OnChanged += ThemeChanged;
-            var themeState = SettingService.Get<int>(Setting.Theme);
-            await ThemeService.SetThemeAsync((Theme)themeState);
-        }
 
 #if DEBUG
         private Task CheckForUpdates() => Task.CompletedTask;

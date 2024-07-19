@@ -6,9 +6,13 @@ namespace SwashbucklerDiary.Maui
 {
     public partial class MainPage : ContentPage
     {
-        public MainPage()
+        private readonly Color _backgroundColor;
+
+        public MainPage(Color backgroundColor)
         {
             InitializeComponent();
+
+            _backgroundColor = backgroundColor;
 
             blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializingCore;
             blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;

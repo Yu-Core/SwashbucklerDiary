@@ -16,11 +16,11 @@ namespace SwashbucklerDiary.Maui.Essentials
             _ => Theme.Light
         };
 
-        public Task SetThemeAsync(Theme theme)
+        public void SetTheme(Theme theme)
         {
             if (_theme == theme)
             {
-                return Task.CompletedTask;
+                return;
             }
 
             //跟随系统主题改变
@@ -37,6 +37,11 @@ namespace SwashbucklerDiary.Maui.Essentials
             _theme = theme;
 
             InternalNotifyStateChanged();
+        }
+
+        public Task SetThemeAsync(Theme theme)
+        {
+            SetTheme(theme);
             return Task.CompletedTask;
         }
 

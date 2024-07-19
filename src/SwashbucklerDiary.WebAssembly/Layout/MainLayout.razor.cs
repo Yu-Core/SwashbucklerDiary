@@ -19,6 +19,10 @@ namespace SwashbucklerDiary.WebAssembly.Layout
         [Inject]
         private IVersionTracking VersionTracking { get; set; } = default!;
 
+        [Inject]
+        protected IThemeService ThemeService { get; set; } = default!;
+
+
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -42,10 +46,9 @@ namespace SwashbucklerDiary.WebAssembly.Layout
                 ((AppLifecycle)AppLifecycle).InitializedAsync());
         }
 
-        protected override async void ThemeChanged(Theme theme)
+        private async void ThemeChanged(Theme theme)
         {
-            base.ThemeChanged(theme);
-
+            MasaBlazor.SetTheme(theme == Theme.Dark);
             await JSRuntime.InvokeVoidAsync("setThemeColor", theme == Theme.Dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface);
         }
 

@@ -6,7 +6,6 @@ using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using System.Globalization;
-using Theme = SwashbucklerDiary.Shared.Theme;
 
 namespace SwashbucklerDiary.Rcl.Layout
 {
@@ -34,9 +33,6 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         [Inject]
         protected ISettingService SettingService { get; set; } = default!;
-
-        [Inject]
-        protected IThemeService ThemeService { get; set; } = default!;
 
         [Inject]
         protected IVersionUpdataManager VersionUpdataManager { get; set; } = default!;
@@ -73,11 +69,6 @@ namespace SwashbucklerDiary.Rcl.Layout
             await SettingService.InitializeAsync();
             await NavigateController.Init(NavigationManager, JSRuntime, permanentPaths);
             afterInitSetting = true;
-        }
-
-        protected virtual void ThemeChanged(Theme theme)
-        {
-            MasaBlazor.SetTheme(theme == Theme.Dark);
         }
 
         protected async void LanguageChanged(CultureInfo cultureInfo)

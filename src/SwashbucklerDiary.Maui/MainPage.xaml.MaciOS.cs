@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.WebView;
 using Microsoft.Maui.Platform;
-using SwashbucklerDiary.Rcl;
 
 namespace SwashbucklerDiary.Maui
 {
@@ -15,7 +14,7 @@ namespace SwashbucklerDiary.Maui
         private partial void BlazorWebViewInitialized(object? sender, BlazorWebViewInitializedEventArgs e)
         {
             e.WebView.ScrollView.ShowsVerticalScrollIndicator = false; // 关闭滚动条
-            e.WebView.BackgroundColor = Color.FromArgb(ThemeColor.LightSurface).ToPlatform();
+            e.WebView.BackgroundColor = _backgroundColor.ToPlatform();
         }
     }
 }
