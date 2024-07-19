@@ -1,13 +1,13 @@
-﻿using Masa.Blazor;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class RightBottomFloatButton : IDisposable
     {
         [Inject]
-        private MasaBlazor MasaBlazor { get; set; } = default!;
+        private MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
 
         [Parameter]
         public string? Icon { get; set; }
@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public void Dispose()
         {
-            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged -= InvokeStateHasChanged;
             GC.SuppressFinalize(this);
         }
 
@@ -25,13 +25,18 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
-            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged += InvokeStateHasChanged;
         }
 
-        private bool Desktop => MasaBlazor.Breakpoint.MdAndUp;
+        private bool Desktop => MasaBlazorHelper.Breakpoint.MdAndUp;
 
-        private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
+        private void InvokeStateHasChanged(object? sender, MyBreakpointChangedEventArgs e)
         {
+            if (!e.MdAndUpChanged)
+            {
+                return;
+            }
+
             InvokeAsync(StateHasChanged);
         }
     }

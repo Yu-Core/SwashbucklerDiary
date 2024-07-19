@@ -1,13 +1,13 @@
-﻿using Masa.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
+using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Layout
 {
     public abstract class MainLayoutNavBase : ComponentBase, IDisposable
     {
         [Inject]
-        protected MasaBlazor MasaBlazor { get; set; } = default!;
+        protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
 
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }
@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         public void Dispose()
         {
-            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged -= InvokeStateHasChanged;
             GC.SuppressFinalize(this);
         }
 
@@ -28,11 +28,16 @@ namespace SwashbucklerDiary.Rcl.Layout
         {
             await base.OnInitializedAsync();
 
-            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged += InvokeStateHasChanged;
         }
 
-        private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
+        private void InvokeStateHasChanged(object? sender, MyBreakpointChangedEventArgs e)
         {
+            if (!e.XsChanged)
+            {
+                return;
+            }
+
             StateHasChanged();
         }
     }

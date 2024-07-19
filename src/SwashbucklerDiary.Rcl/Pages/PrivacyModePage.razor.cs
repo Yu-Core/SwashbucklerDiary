@@ -1,7 +1,7 @@
-﻿using Masa.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using Theme = SwashbucklerDiary.Shared.Theme;
 
@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private bool showHidePrivacyModeEntranceConfirmDialog;
 
         [Inject]
-        private MasaBlazor MasaBlazor { get; set; } = default!;
+        private MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
 
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
-            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged += InvokeStateHasChanged;
 
             // Prevent entry through URL
             if (!allowEnterPrivacyMode)
@@ -69,10 +69,10 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnDispose();
 
-            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged -= InvokeStateHasChanged;
         }
 
-        private bool Desktop => MasaBlazor.Breakpoint.SmAndUp;
+        private bool Desktop => MasaBlazorHelper.Breakpoint.SmAndUp;
 
         private bool Mobile => !Desktop;
 
@@ -102,8 +102,13 @@ namespace SwashbucklerDiary.Rcl.Pages
             To("");
         }
 
-        private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
+        private void InvokeStateHasChanged(object? sender, MyBreakpointChangedEventArgs e)
         {
+            if (!e.SmAndUpChanged)
+            {
+                return;
+            }
+
             InvokeAsync(StateHasChanged);
         }
 

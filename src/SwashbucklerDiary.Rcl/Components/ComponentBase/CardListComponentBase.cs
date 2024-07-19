@@ -1,7 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
-using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Rcl.Components
         protected Dictionary<string, object> previousActivatorAttributes = [];
 
         [Inject]
-        protected MasaBlazor MasaBlazor { get; set; } = default!;
+        protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
 
         [Parameter]
         public virtual List<T> Value
@@ -52,14 +52,14 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
-            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged += InvokeStateHasChanged;
         }
 
         protected override void OnDispose()
         {
             base.OnDispose();
 
-            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged -= InvokeStateHasChanged;
         }
 
         protected override void ReadSettings()
@@ -105,8 +105,13 @@ namespace SwashbucklerDiary.Rcl.Components
             InvokeAsync(StateHasChanged);
         }
 
-        private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
+        private void InvokeStateHasChanged(object? sender, MyBreakpointChangedEventArgs e)
         {
+            if (!e.XsChanged || !e.SmChanged)
+            {
+                return;
+            }
+
             InvokeAsync(StateHasChanged);
         }
     }

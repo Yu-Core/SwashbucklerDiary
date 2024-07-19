@@ -1,14 +1,14 @@
-﻿using Masa.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class MultiDisplay : IDisposable
     {
-        private bool _isDesktop;
+        private bool IsDesktop => MdAndUp ? MasaBlazorHelper.Breakpoint.MdAndUp : MasaBlazorHelper.Breakpoint.SmAndUp;
 
         [Inject]
-        public MasaBlazor MasaBlazor { get; set; } = default!;
+        public MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
 
         [Parameter]
         public RenderFragment? MobileContent { get; set; }
@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public void Dispose()
         {
-            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged -= InvokeStateHasChanged;
             GC.SuppressFinalize(this);
         }
 
@@ -33,24 +33,23 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
-            _isDesktop = MdAndUp ? MasaBlazor.Breakpoint.MdAndUp : MasaBlazor.Breakpoint.SmAndUp;
-            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged += InvokeStateHasChanged;
         }
 
-        private async void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
+        private async void InvokeStateHasChanged(object? sender, MyBreakpointChangedEventArgs e)
         {
-            var isDesktop = MdAndUp ? MasaBlazor.Breakpoint.MdAndUp : MasaBlazor.Breakpoint.SmAndUp;
-            bool update = _isDesktop != isDesktop;
-            if (update)
+            var changed = MdAndUp ? e.MdAndUpChanged : e.SmAndUpChanged;
+            if (!changed)
             {
-                if (OnUpdate.HasDelegate)
-                {
-                    await OnUpdate.InvokeAsync(_isDesktop);
-                }
-
-                _isDesktop = isDesktop;
-                await InvokeAsync(StateHasChanged);
+                return;
             }
+
+            if (OnUpdate.HasDelegate)
+            {
+                await OnUpdate.InvokeAsync(IsDesktop);
+            }
+
+            await InvokeAsync(StateHasChanged);
         }
     }
 }

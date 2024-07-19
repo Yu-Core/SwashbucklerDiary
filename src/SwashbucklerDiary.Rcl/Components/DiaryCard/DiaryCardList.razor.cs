@@ -72,7 +72,7 @@ namespace SwashbucklerDiary.Rcl.Components
             privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
         }
 
-        private float ItemHeight => MasaBlazor.Breakpoint.Xs ? 156.8f : (MasaBlazor.Breakpoint.Sm ? 164.8f : 172.8f);
+        private float ItemHeight => MasaBlazorHelper.Breakpoint.Xs ? 156.8f : (MasaBlazorHelper.Breakpoint.Sm ? 164.8f : 172.8f);
 
         private List<TagModel> SelectedTags
         {

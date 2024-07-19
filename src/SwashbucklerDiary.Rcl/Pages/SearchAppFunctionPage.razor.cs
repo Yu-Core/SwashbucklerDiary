@@ -1,6 +1,6 @@
-﻿using Masa.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
 
@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private List<AppFunction> _appFunctions = [];
 
         [Inject]
-        protected MasaBlazor MasaBlazor { get; set; } = default!;
+        protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadQuery();
-            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged += InvokeStateHasChanged;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -47,7 +47,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnDispose();
 
-            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged -= InvokeStateHasChanged;
         }
 
         protected override async Task OnResume()
@@ -64,7 +64,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             privacyModeSearchKey = SettingService.Get<string>(Setting.PrivacyModeFunctionSearchKey, I18n.T("PrivacyMode.Name"));
         }
 
-        private float ItemHeight => MasaBlazor.Breakpoint.Xs ? 68f : 84f;
+        private float ItemHeight => MasaBlazorHelper.Breakpoint.Xs ? 68f : 84f;
 
         private bool ShowPrivacyModeItem => showPrivacyModeSearch && !string.IsNullOrWhiteSpace(search) && privacyModeSearchKey == search;
 
@@ -112,8 +112,13 @@ namespace SwashbucklerDiary.Rcl.Pages
             return exp;
         }
 
-        private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
+        private void InvokeStateHasChanged(object? sender, MyBreakpointChangedEventArgs e)
         {
+            if (!e.XsChanged)
+            {
+                return;
+            }
+
             InvokeAsync(StateHasChanged);
         }
 

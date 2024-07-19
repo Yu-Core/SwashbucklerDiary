@@ -21,6 +21,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddScoped<IPlatformIntegration, PlatformIntegration>();
             services.AddScoped<IAppFileManager, Essentials.AppFileManager>();
             services.AddScoped<IMediaResourceManager, Services.MediaResourceManager>();
+            services.AddScoped<MasaBlazorHelper>();
 
             services.AddRclDependencyInjection();
 

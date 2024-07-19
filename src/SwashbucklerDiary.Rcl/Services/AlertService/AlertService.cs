@@ -12,24 +12,29 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private readonly IPopupProvider _popupProvider = default!;
 
-        private readonly MasaBlazor _masaBlazor = default!;
+        private readonly MasaBlazorHelper _masaBlazorHelper = default!;
 
         private readonly ISettingService _settingService = default!;
 
         public AlertService(IPopupService popupService,
             IPopupProvider popupProvider,
-            MasaBlazor masaBlazor,
+            MasaBlazorHelper masaBlazorHelper,
             ISettingService settingService)
         {
             _popupService = popupService;
             _popupProvider = popupProvider;
-            _masaBlazor = masaBlazor;
-            _masaBlazor.BreakpointChanged += OnBreakpointChanged;
+            _masaBlazorHelper = masaBlazorHelper;
+            _masaBlazorHelper.BreakpointChanged += OnBreakpointChanged;
             _settingService = settingService;
         }
 
-        private void OnBreakpointChanged(object? sender, BreakpointChangedEventArgs e)
+        private void OnBreakpointChanged(object? sender, MyBreakpointChangedEventArgs e)
         {
+            if (!e.SmAndUpChanged)
+            {
+                return;
+            }
+
             var providerItem = _popupProvider.GetItems().FirstOrDefault(it => it.ComponentType == typeof(EnqueuedSnackbars));
             if (providerItem is not null)
             {
@@ -38,7 +43,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
             var parameters = new Dictionary<string, object?>()
             {
-                {nameof(EnqueuedSnackbars.Position), _masaBlazor.Breakpoint.SmAndUp ? SnackPosition.BottomCenter : SnackPosition.TopCenter}
+                {nameof(EnqueuedSnackbars.Position), _masaBlazorHelper.Breakpoint.SmAndUp ? SnackPosition.BottomCenter : SnackPosition.TopCenter}
             };
 
             _popupProvider.Add(typeof(EnqueuedSnackbars), parameters, _popupService, nameof(PopupService));

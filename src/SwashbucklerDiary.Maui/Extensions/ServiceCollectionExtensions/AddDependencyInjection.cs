@@ -22,6 +22,7 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
             services.AddSingleton<IAppFileManager, Essentials.AppFileManager>();
             services.AddSingleton<IMediaResourceManager, Services.MediaResourceManager>();
+            services.AddSingleton<MasaBlazorHelper>();
 
             services.AddRclDependencyInjection();
 

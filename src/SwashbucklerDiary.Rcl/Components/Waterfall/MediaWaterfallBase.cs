@@ -1,6 +1,6 @@
-﻿using Masa.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -12,30 +12,35 @@ namespace SwashbucklerDiary.Rcl.Components
         protected IJSRuntime JS { get; set; } = default!;
 
         [Inject]
-        protected MasaBlazor MasaBlazor { get; set; } = default!;
+        protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
 
         [Inject]
         protected PreviewMediaElementJSModule PreviewMediaElementJSModule { get; set; } = default!;
 
         public void Dispose()
         {
-            MasaBlazor.BreakpointChanged -= InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged -= InvokeStateHasChanged;
             GC.SuppressFinalize(this);
         }
 
-        protected int Gap => MasaBlazor.Breakpoint.Xs ? 16 : 24;
+        protected int Gap => MasaBlazorHelper.Breakpoint.Xs ? 16 : 24;
 
-        protected int Cols => MasaBlazor.Breakpoint.Xs ? 2 : 3;
+        protected int Cols => MasaBlazorHelper.Breakpoint.Xs ? 2 : 3;
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
-            MasaBlazor.BreakpointChanged += InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged += InvokeStateHasChanged;
         }
 
-        protected async void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
+        protected async void InvokeStateHasChanged(object? sender, MyBreakpointChangedEventArgs e)
         {
+            if (!e.XsChanged)
+            {
+                return;
+            }
+
             await InvokeAsync(StateHasChanged);
         }
     }
