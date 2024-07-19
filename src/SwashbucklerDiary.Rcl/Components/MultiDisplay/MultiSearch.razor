@@ -1,5 +1,4 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
-@inherits ImportantComponentBase
 
 <MultiDisplay MdAndUp="true">
     <MobileContent>
@@ -10,7 +9,7 @@
         </MButton>
     </MobileContent>
     <DesktopContent>
-        <MTextField @bind-Value="SearchContent"
+        <MTextField @bind-Value="searchText"
                     Class="rounded-pill second-background"
                     Style="max-width:200px;"
                     TValue="string"
@@ -18,9 +17,10 @@
                     Flat="true"
                     Dense="true"
                     HideDetails="@("auto")"
+                    Color="TextFieldColor"
                     AppendIcon="mdi-magnify"
                     OnAppendClick="Search"
-                    OnKeyDown="HandleOnEnter">
+                    OnEnter="Search">
         </MTextField>
     </DesktopContent>
 </MultiDisplay>

@@ -247,11 +247,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             await AlertService.Success(I18n.T("Mine.QQGroupCopy"));
         }
 
-        private Task Search(string? value)
+        private void Search(string? value)
         {
             string? queryParameters = string.IsNullOrWhiteSpace(value) ? null : $"?query={value}";
             To($"searchAppFunction{queryParameters}");
-            return Task.CompletedTask;
         }
 
         private async Task UpdateStatisticalDataAsync()

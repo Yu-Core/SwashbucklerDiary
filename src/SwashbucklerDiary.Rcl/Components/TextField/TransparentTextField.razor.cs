@@ -26,6 +26,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public bool Clearable { get; set; } = true;
 
-        private string? TextFieldColor => Dark ? null : "grey";
+        private string? TextFieldColor => Dark ? "white" : "grey";
     }
 }

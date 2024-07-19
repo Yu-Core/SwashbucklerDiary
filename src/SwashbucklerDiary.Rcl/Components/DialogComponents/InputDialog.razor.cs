@@ -1,6 +1,5 @@
 ﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -68,20 +67,17 @@ namespace SwashbucklerDiary.Rcl.Components
 
         }
 
-        protected virtual async Task HandleOnEnter(KeyboardEventArgs args)
+        private async Task HandleOnEnter()
         {
             if (!_value)
             {
                 return;
             }
 
-            if (args.Key == "Enter")
-            {
-                await HandleOnOK();
-            }
+            await HandleOnOK();
         }
 
-        protected async Task HandleOnOK()
+        private async Task HandleOnOK()
         {
             await OnOK.InvokeAsync(inputText);
         }

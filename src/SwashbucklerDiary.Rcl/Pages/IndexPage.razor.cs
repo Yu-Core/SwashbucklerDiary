@@ -107,11 +107,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             return "Hello World";
         }
 
-        private Task Search(string? value)
+        private void Search(string? value)
         {
             string? queryParameters = string.IsNullOrWhiteSpace(value) ? null : $"?query={value}";
             To($"search{queryParameters}");
-            return Task.CompletedTask;
         }
 
         private async Task UpdateDiariesAndStateHasChanged()

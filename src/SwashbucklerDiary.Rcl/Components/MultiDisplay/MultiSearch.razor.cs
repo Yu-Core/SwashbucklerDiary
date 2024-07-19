@@ -1,37 +1,27 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class MultiSearch : ImportantComponentBase
+    public partial class MultiSearch
     {
-        private string? SearchContent;
+        private string? searchText;
+
+        [CascadingParameter(Name = "IsDark")]
+        public bool Dark { get; set; }
 
         [Parameter]
-        public Func<string?, Task>? OnSearch { get; set; }
+        public EventCallback<string> OnSearch { get; set; }
 
-        protected override async Task OnResume()
-        {
-            SearchContent = string.Empty;
-            await base.OnResume();
-        }
+        private string? TextFieldColor => Dark ? "white" : "grey";
 
         private async Task Search()
         {
-            if (OnSearch is null)
+            if (OnSearch.HasDelegate)
             {
-                return;
+                await OnSearch.InvokeAsync(searchText);
             }
 
-            await OnSearch.Invoke(SearchContent);
-        }
-
-        protected async Task HandleOnEnter(KeyboardEventArgs args)
-        {
-            if (args.Key == "Enter")
-            {
-                await Search();
-            }
+            searchText = string.Empty;
         }
     }
 }
