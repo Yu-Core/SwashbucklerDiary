@@ -1,0 +1,62 @@
+name: Bug report
+description: File a bug report
+title: "[Bug Report]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please give us a detailed description of the issue that you're seeing. You can add screenshots and videos as well.
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: repro-steps
+    attributes:
+      label: Steps to Reproduce
+      description: Describe all the steps we need to take to show the behavior that you have observed. Also, include what you expected to happen and what did actually happen.
+    validations:
+      required: false
+  - type: input
+    id: version-with-bug
+    attributes:
+      label: Version with bug
+    validations:
+      required: true
+  - type: dropdown
+    id: platforms-affected
+    attributes:
+      label: Affected platforms
+      description: Select all or any platform that you see this issue on. This helps us determine if it's something platform-specific or in the core. If you were only able to test on 1 platform, please check the last option to inform us about that.
+      multiple: true
+      options:
+        - Android
+        - iOS
+        - macOS
+        - Web
+        - Windows
+    validations:
+      required: true
+  - type: input
+    id: platform-versions
+    attributes:
+      label: Affected platform versions
+      description: Please provide the version numbers of the platforms you see this issue on.
+      placeholder: E.g. iOS 15, Android 11 and up, Windows SDK 10.0.17134.0, etc.
+    validations:
+      required: true
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Did you find any workaround?
+      description: Did you find any workaround for this issue? This can unblock other people while waiting for this issue to be resolved or even give us a hint on how to fix this.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Is there any content in mine - About - log file? Or some other log information

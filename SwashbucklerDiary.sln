@@ -20,6 +20,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Itms", "Solution I
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{D8B8AC71-0D71-4271-BA3E-6EDB19420A88}"
+	ProjectSection(SolutionItems) = preProject
+		.github\ISSUE_TEMPLATE\bug_report.yml = .github\ISSUE_TEMPLATE\bug_report.yml
+		.github\ISSUE_TEMPLATE\feature_request.yml = .github\ISSUE_TEMPLATE\feature_request.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{76628868-D584-47A6-BEFA-745BAF7D70F6}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\gh-pages.yml = .github\workflows\gh-pages.yml
+		.github\workflows\releases.yml = .github\workflows\releases.yml
+		.github\workflows\sync-gitee-pages.yml = .github\workflows\sync-gitee-pages.yml
+		.github\workflows\upload-msstore-msix-to-release.yml = .github\workflows\upload-msstore-msix-to-release.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +65,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D8B8AC71-0D71-4271-BA3E-6EDB19420A88} = {181F89D9-8AD0-4ED6-A9EB-17828B68BF67}
+		{76628868-D584-47A6-BEFA-745BAF7D70F6} = {181F89D9-8AD0-4ED6-A9EB-17828B68BF67}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F42115DF-9C26-492F-B265-7FA68DE69B03}
