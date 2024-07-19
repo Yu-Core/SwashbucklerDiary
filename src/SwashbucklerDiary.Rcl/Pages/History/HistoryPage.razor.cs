@@ -47,8 +47,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems =
             [
-                new(this, "History.Add diary","mdi-pencil", ()=>To($"write?CreateDate={SelectedDate}")),
-                new(this, "History.Reset date","mdi-calendar-refresh", ResetDatePicker),
                 new(this, "History.Export diaries","mdi-export", ()=>showExportThisTime = true),
                 new(this, "History.Merge diaries.Title","mdi-axis-z-arrow", ()=>showConfirmMerge = true),
             ];
@@ -132,5 +130,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             await PopupServiceHelper.StopLoading();
             StateHasChanged();
         }
+
+        private void ToWrite()
+            => To($"write?CreateDate={SelectedDate}");
     }
 }

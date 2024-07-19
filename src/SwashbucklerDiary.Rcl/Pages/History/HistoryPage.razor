@@ -27,6 +27,11 @@
 
     <MSpacer></MSpacer>
 
+    <MButton Icon="true"
+             OnClick="ResetDatePicker">
+        <MIcon>mdi-calendar-refresh-outline</MIcon>
+    </MButton>
+
     <MultiMenu @bind-Visible="showMenu"
                DynamicListItems="menuItems">
         <ActivatorContent>
@@ -65,6 +70,11 @@
                    OnRemove="HandelOnRemove">
     </DiaryCardList>
 </ScrollContainer>
+
+<RightBottomFloatButton Icon="mdi-pencil"
+                        OnClick="ToWrite">
+</RightBottomFloatButton>
+
 <DatePickerDialog @bind-Value="SelectedDate"
                   @bind-Visible="showFloatCalendar"
                   Events="eventsDates"
