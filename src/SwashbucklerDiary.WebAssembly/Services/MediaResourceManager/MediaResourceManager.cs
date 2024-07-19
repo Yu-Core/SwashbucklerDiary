@@ -131,5 +131,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
                 PictureUri = pictureUri
             };
         }
+
+        public override string UrlRelativePathToFilePath(string urlRelativePath) => urlRelativePath;
     }
 }

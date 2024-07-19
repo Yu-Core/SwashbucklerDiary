@@ -1,5 +1,6 @@
 ﻿
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
@@ -15,19 +16,27 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IAlertService _alertService;
 
+        protected readonly IAppFileManager _appFileManager;
+
         protected readonly static string avatarDirectoryName = "Avatar";
+
+        protected readonly string targetDirectoryPath;
 
         public AvatarService(ISettingService settingService,
             IMediaResourceManager mediaResourceManager,
             IPlatformIntegration platformIntegration,
             II18nService i18n,
-            IAlertService alertService)
+            IAlertService alertService,
+            IAppFileManager appFileManager)
         {
             _settingService = settingService;
             _mediaResourceManager = mediaResourceManager;
             _platformIntegration = platformIntegration;
             _i18n = i18n;
             _alertService = alertService;
+            _appFileManager = appFileManager;
+
+            targetDirectoryPath = Path.Combine(_appFileManager.AppDataDirectory, avatarDirectoryName);
         }
 
         public abstract Task<string> SetAvatarByCapture();
@@ -43,8 +52,18 @@ namespace SwashbucklerDiary.Rcl.Services
             return await SetAvatar(photoPath);
         }
 
-        protected abstract Task<string> SetAvatar(string filePath);
+        protected async Task<string> SetAvatar(string filePath)
+        {
+            string previousAvatarUri = _settingService.Get<string>(Setting.Avatar);
+            string previousAvatarPath = _mediaResourceManager.UrlRelativePathToFilePath(previousAvatarUri);
+            if (File.Exists(previousAvatarPath))
+            {
+                File.Delete(previousAvatarPath);
+            }
 
-
+            string uri = await _mediaResourceManager.CreateMediaResourceFileAsync(targetDirectoryPath, filePath) ?? string.Empty;
+            await _settingService.Set(Setting.Avatar, uri);
+            return uri;
+        }
     }
 }

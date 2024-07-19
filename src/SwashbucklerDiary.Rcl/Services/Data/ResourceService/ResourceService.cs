@@ -4,14 +4,18 @@ using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
-    public abstract class ResourceService : BaseDataService<ResourceModel>, IResourceService
+    public class ResourceService : BaseDataService<ResourceModel>, IResourceService
     {
         protected readonly IResourceRepository _resourceRepository;
 
-        public ResourceService(IResourceRepository resourceRepository)
+        protected readonly IMediaResourceManager _mediaResourceManager;
+
+        public ResourceService(IResourceRepository resourceRepository,
+            IMediaResourceManager mediaResourceManager)
         {
             base._iBaseRepository = resourceRepository;
             _resourceRepository = resourceRepository;
+            _mediaResourceManager = mediaResourceManager;
         }
 
         public async Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> expression)
@@ -32,6 +36,16 @@ namespace SwashbucklerDiary.Rcl.Services
             return true;
         }
 
-        protected abstract void DeleteResourceFiles(List<ResourceModel> resources);
+        private void DeleteResourceFiles(List<ResourceModel> resources)
+        {
+            foreach (var resource in resources)
+            {
+                var path = _mediaResourceManager.UrlRelativePathToFilePath(resource.ResourceUri!);
+                if (!string.IsNullOrEmpty(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
     }
 }

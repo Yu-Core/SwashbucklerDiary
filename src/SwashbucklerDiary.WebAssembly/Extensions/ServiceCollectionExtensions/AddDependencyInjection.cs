@@ -13,6 +13,14 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddScoped<IStaticWebAssets, Essentials.StaticWebAssets>();
             services.AddScoped<IPreferences, Preferences>();
             services.AddScoped<ISettingService, Services.SettingService>();
+            services.AddScoped<INavigateController, Essentials.NavigateController>();
+            services.AddScoped<IIconService, Services.IconService>();
+            services.AddScoped<IAlertService, AlertService>();
+            services.AddScoped<II18nService, Services.I18nService>();
+            services.AddScoped<IVersionTracking, VersionTracking>();
+            services.AddScoped<IPlatformIntegration, PlatformIntegration>();
+            services.AddScoped<IAppFileManager, Essentials.AppFileManager>();
+            services.AddScoped<IMediaResourceManager, Services.MediaResourceManager>();
 
             services.AddRclDependencyInjection();
 
@@ -29,21 +37,13 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddScoped<IAchievementService, Services.AchievementService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ILogService, LogService>();
-            services.AddScoped<IResourceService, Services.ResourceService>();
-
-            services.AddScoped<INavigateController, Essentials.NavigateController>();
-            services.AddScoped<IIconService, Services.IconService>();
-            services.AddScoped<IAlertService, AlertService>();
-            services.AddScoped<II18nService, Services.I18nService>();
-            services.AddScoped<IVersionTracking, VersionTracking>();
-            services.AddScoped<IPlatformIntegration, PlatformIntegration>();
+            services.AddScoped<IResourceService, ResourceService>();
 
             services.AddScoped<IAppLifecycle, AppLifecycle>();
             services.AddScoped<SystemThemeJSModule>();
             services.AddScoped<IThemeService, ThemeService>();
-            services.AddScoped<IAppFileManager, Essentials.AppFileManager>();
             services.AddScoped<IAccessExternal, Services.AccessExternal>();
-            services.AddScoped<IMediaResourceManager, Services.MediaResourceManager>();
+
             services.AddScoped<IDiaryFileManager, Services.DiaryFileManager>();
             services.AddScoped<IAvatarService, Services.AvatarService>();
             services.AddScoped<ScreenshotJSModule>();

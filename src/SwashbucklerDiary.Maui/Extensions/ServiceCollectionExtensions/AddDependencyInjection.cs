@@ -14,6 +14,14 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddSingleton<IStaticWebAssets, Essentials.StaticWebAssets>();
             services.AddSingleton<Rcl.Essentials.IPreferences, Essentials.Preferences>();
             services.AddSingleton<ISettingService, Services.SettingService>();
+            services.AddSingleton<INavigateController, Essentials.NavigateController>();
+            services.AddSingleton<IIconService, Services.IconService>();
+            services.AddSingleton<IAlertService, AlertService>();
+            services.AddSingleton<II18nService, Services.I18nService>();
+            services.AddSingleton<Rcl.Essentials.IVersionTracking, Essentials.VersionTracking>();
+            services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
+            services.AddSingleton<IAppFileManager, Essentials.AppFileManager>();
+            services.AddSingleton<IMediaResourceManager, Services.MediaResourceManager>();
 
             services.AddRclDependencyInjection();
 
@@ -30,20 +38,11 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddSingleton<IAchievementService, Services.AchievementService>();
             services.AddSingleton<ILocationService, LocationService>();
             services.AddSingleton<ILogService, LogService>();
-            services.AddSingleton<IResourceService, Services.ResourceService>();
-
-            services.AddSingleton<INavigateController, Essentials.NavigateController>();
-            services.AddSingleton<IIconService, Services.IconService>();
-            services.AddSingleton<IAlertService, AlertService>();
-            services.AddSingleton<II18nService, Services.I18nService>();
-            services.AddSingleton<Rcl.Essentials.IVersionTracking, Essentials.VersionTracking>();
-            services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
+            services.AddSingleton<IResourceService, ResourceService>();
 
             services.AddSingleton<IAppLifecycle, AppLifecycle>();
             services.AddSingleton<IThemeService, ThemeService>();
-            services.AddSingleton<IAppFileManager, Essentials.AppFileManager>();
             services.AddSingleton<IAccessExternal, Services.AccessExternal>();
-            services.AddSingleton<IMediaResourceManager, Services.MediaResourceManager>();
             services.AddSingleton<IDiaryFileManager, Services.DiaryFileManager>();
             services.AddSingleton<IAvatarService, Services.AvatarService>();
             services.AddScoped<ScreenshotJSModule>();

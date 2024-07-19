@@ -90,9 +90,9 @@ namespace SwashbucklerDiary.Maui.Services
             }
 
             string? filePath;
-            if (IsUrlBasedOnBaseUrl(url))
+            if (IsInternalUrl(url, out string relativePath))
             {
-                filePath = MauiBlazorWebViewHandler.UrlRelativePathToFilePath(url);
+                filePath = MauiBlazorWebViewHandler.UrlRelativePathToFilePath(relativePath);
                 if (string.IsNullOrEmpty(filePath))
                 {
                     filePath = await CopyPackageFileAndCreateTempFileAsync(url);
@@ -111,12 +111,20 @@ namespace SwashbucklerDiary.Maui.Services
             return filePath;
         }
 
-        bool IsUrlBasedOnBaseUrl(string url)
+        bool IsInternalUrl(string uriString, out string relativePath)
         {
-            string baseUrl = MauiBlazorWebViewHandler.BaseUri;
-            Uri baseUri = new Uri(baseUrl);
-            Uri uri = new Uri(url, UriKind.RelativeOrAbsolute);
-            return baseUri.IsBaseOf(uri);
+            string baseUriString = MauiBlazorWebViewHandler.BaseUri;
+            string absoluteUri = new Uri(new Uri(baseUriString), uriString).ToString();
+            if (absoluteUri.StartsWith(baseUriString))
+            {
+                relativePath = absoluteUri.Substring(baseUriString.Length);
+                return true;
+            }
+            else
+            {
+                relativePath = string.Empty;
+                return false;
+            }
         }
 
         async Task<string> DownloadFileAndCreateTempFileAsync(string url)
@@ -182,5 +190,8 @@ namespace SwashbucklerDiary.Maui.Services
                 PictureUri = pictureUri
             };
         }
+
+        public override string UrlRelativePathToFilePath(string urlRelativePath)
+            => MauiBlazorWebViewHandler.UrlRelativePathToFilePath(urlRelativePath);
     }
 }

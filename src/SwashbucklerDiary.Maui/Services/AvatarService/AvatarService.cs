@@ -1,34 +1,18 @@
-﻿using SwashbucklerDiary.Maui.BlazorWebView;
-using SwashbucklerDiary.Rcl.Essentials;
+﻿using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Services
 {
     public class AvatarService : Rcl.Services.AvatarService
     {
-        private readonly string targetDirectoryPath = Path.Combine(FileSystem.AppDataDirectory, avatarDirectoryName);
-
         public AvatarService(ISettingService settingService,
             IMediaResourceManager mediaResourceManager,
             IPlatformIntegration platformIntegration,
             II18nService i18n,
-            IAlertService alertService)
-            : base(settingService, mediaResourceManager, platformIntegration, i18n, alertService)
+            IAlertService alertService,
+            IAppFileManager appFileManager)
+            : base(settingService, mediaResourceManager, platformIntegration, i18n, alertService, appFileManager)
         {
-        }
-
-        protected override async Task<string> SetAvatar(string filePath)
-        {
-            string previousAvatarUri = _settingService.Get<string>(Setting.Avatar);
-            string previousAvatarPath = MauiBlazorWebViewHandler.UrlRelativePathToFilePath(previousAvatarUri);
-            if (!string.IsNullOrEmpty(previousAvatarPath))
-            {
-                File.Delete(previousAvatarPath);
-            }
-            string uri = await _mediaResourceManager.CreateMediaResourceFileAsync(targetDirectoryPath, filePath) ?? string.Empty;
-            await _settingService.Set(Setting.Avatar, uri);
-            return uri;
         }
 
         public override async Task<string> SetAvatarByCapture()

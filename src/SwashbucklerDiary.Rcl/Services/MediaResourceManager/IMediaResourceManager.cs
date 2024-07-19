@@ -58,5 +58,7 @@ namespace SwashbucklerDiary.Rcl.Services
         Task<AudioFileInfo> GetAudioFileInfo(string uri);
 
         Task<List<ResourceModel>> CreateMediaResourceFilesAsync(List<string?> filePaths);
+
+        string UrlRelativePathToFilePath(string urlRelativePath);
     }
 }

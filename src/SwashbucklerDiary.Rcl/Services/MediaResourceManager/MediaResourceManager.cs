@@ -132,6 +132,8 @@ namespace SwashbucklerDiary.Rcl.Services
             return resources;
         }
 
+        public abstract string UrlRelativePathToFilePath(string urlRelativePath);
+
         protected virtual string? CustomPathPrefix { get; }
     }
 }

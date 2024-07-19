@@ -3,11 +3,33 @@ namespace SwashbucklerDiary.Rcl.Essentials
 {
     public abstract class AppFileManager : IAppFileManager
     {
-        public abstract Task<string> CreateTempFileAsync(string fileName, string contents);
+        public abstract string AppDataDirectory { get; }
 
-        public abstract Task<string> CreateTempFileAsync(string fileName, byte[] contents);
+        public abstract string CacheDirectory { get; }
 
-        public abstract Task<string> CreateTempFileAsync(string fileName, Stream stream);
+        public async Task<string> CreateTempFileAsync(string fileName, string contents)
+        {
+            string path = Path.Combine(CacheDirectory, fileName);
+            await File.WriteAllTextAsync(path, contents);
+            return path;
+        }
+
+        public async Task<string> CreateTempFileAsync(string fileName, byte[] contents)
+        {
+            string path = Path.Combine(CacheDirectory, fileName);
+            await File.WriteAllBytesAsync(path, contents);
+            return path;
+        }
+
+        public async Task<string> CreateTempFileAsync(string fileName, Stream stream)
+        {
+            string path = Path.Combine(CacheDirectory, fileName);
+            using (var fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
+            {
+                await stream.CopyToAsync(fileStream);
+            }
+            return path;
+        }
 
         public async Task FileCopyAsync(string targetFilePath, string sourceFilePath)
         {

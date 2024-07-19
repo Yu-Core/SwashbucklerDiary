@@ -2,6 +2,10 @@
 {
     public interface IAppFileManager
     {
+        public string AppDataDirectory { get; }
+
+        public string CacheDirectory { get; }
+
         Task<string> CreateTempFileAsync(string fileName, string contents);
 
         Task<string> CreateTempFileAsync(string fileName, byte[] contents);
