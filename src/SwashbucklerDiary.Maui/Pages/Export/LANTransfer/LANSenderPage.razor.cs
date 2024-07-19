@@ -110,7 +110,7 @@ namespace SwashbucklerDiary.Maui.Pages
             catch (Exception e)
             {
                 Logger.LogError(e, "LANSenderService initialize error");
-                await AlertService.Error(I18n.T("lanSender.No network connection"));
+                await PopupServiceHelper.Error(I18n.T("lanSender.No network connection"));
                 await Task.Delay(1000);
                 await NavigateToBack();
             }
@@ -137,7 +137,7 @@ namespace SwashbucklerDiary.Maui.Pages
                 var diaries = await DiaryService.QueryAsync();
                 if (diaries.Count == 0)
                 {
-                    await AlertService.Info(I18n.T("Diary.NoDiary"));
+                    await PopupServiceHelper.Info(I18n.T("Diary.NoDiary"));
                     return;
                 }
 
@@ -181,7 +181,7 @@ namespace SwashbucklerDiary.Maui.Pages
         {
             InvokeAsync(async () =>
             {
-                await AlertService.Success(I18n.T("lanSender.Send successfully"));
+                await PopupServiceHelper.Success(I18n.T("lanSender.Send successfully"));
             });
         }
 
@@ -191,11 +191,11 @@ namespace SwashbucklerDiary.Maui.Pages
             {
                 if (showTransferDialog)
                 {
-                    await AlertService.Error(I18n.T("lanSender.Send failed"));
+                    await PopupServiceHelper.Error(I18n.T("lanSender.Send failed"));
                 }
                 else
                 {
-                    await AlertService.Error(I18n.T("lanSender.Send canceled"));
+                    await PopupServiceHelper.Error(I18n.T("lanSender.Send canceled"));
                 }
 
                 if (IsThisPage)

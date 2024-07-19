@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddScoped<ISettingService, Services.SettingService>();
             services.AddScoped<INavigateController, Essentials.NavigateController>();
             services.AddScoped<IIconService, Services.IconService>();
-            services.AddScoped<IAlertService, AlertService>();
+            services.AddScoped<IPopupServiceHelper, PopupServiceHelper>();
             services.AddScoped<II18nService, Services.I18nService>();
             services.AddScoped<IVersionTracking, VersionTracking>();
             services.AddScoped<IPlatformIntegration, PlatformIntegration>();

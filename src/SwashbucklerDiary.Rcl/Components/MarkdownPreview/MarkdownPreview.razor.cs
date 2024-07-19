@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Rcl.Components
         protected II18nService I18n { get; set; } = default!;
 
         [Inject]
-        private IAlertService AlertService { get; set; } = default!;
+        private IPopupServiceHelper PopupServiceHelper { get; set; } = default!;
 
         [Inject]
         private ISettingService SettingService { get; set; } = default!;
@@ -55,7 +55,7 @@ namespace SwashbucklerDiary.Rcl.Components
         [JSInvokable]
         public async Task Copy()
         {
-            await AlertService.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
 
         [JSInvokable]

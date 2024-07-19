@@ -211,7 +211,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             await PlatformIntegration.SetClipboard(mail);
-            await AlertService.Success(I18n.T("Mine.MailCopy"));
+            await PopupServiceHelper.Success(I18n.T("Mine.MailCopy"));
         }
 
         private async Task ToGithub()
@@ -244,7 +244,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             var qqGroup = FeedbackTypeDatas["QQGroup"];
             await PlatformIntegration.SetClipboard(qqGroup);
-            await AlertService.Success(I18n.T("Mine.QQGroupCopy"));
+            await PopupServiceHelper.Success(I18n.T("Mine.QQGroupCopy"));
         }
 
         private void Search(string? value)
@@ -313,7 +313,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             string salt = Setting.PrivacyModeEntrancePassword.ToString();
             if (privacyModeEntrancePassword != (value + salt).MD5Encrytp32())
             {
-                await AlertService.Error(I18n.T("PrivacyMode.PasswordError"));
+                await PopupServiceHelper.Error(I18n.T("PrivacyMode.PasswordError"));
                 return;
             }
 

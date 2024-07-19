@@ -6,7 +6,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
-    public class AlertService : IAlertService
+    public class PopupServiceHelper : IPopupServiceHelper
     {
         private readonly IPopupService _popupService = default!;
 
@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private readonly ISettingService _settingService = default!;
 
-        public AlertService(IPopupService popupService,
+        public PopupServiceHelper(IPopupService popupService,
             IPopupProvider popupProvider,
             MasaBlazorHelper masaBlazorHelper,
             ISettingService settingService)
@@ -49,11 +49,11 @@ namespace SwashbucklerDiary.Rcl.Services
             _popupProvider.Add(typeof(EnqueuedSnackbars), parameters, _popupService, nameof(PopupService));
         }
 
-        public Task Alert(string? message) => Alert(null, message);
+        public Task EnqueueSnackbarAsync(string? message) => EnqueueSnackbarAsync(null, message);
 
-        public Task Alert(string? title, string? message) => Alert(title, message, AlertTypes.None);
+        public Task EnqueueSnackbarAsync(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.None);
 
-        public async Task Alert(string? title, string? message, AlertTypes type)
+        private async Task EnqueueSnackbarAsync(string? title, string? message, AlertTypes type)
         {
             int timeout = _settingService.Get<int>(Setting.AlertTimeout);
             await _popupService.EnqueueSnackbarAsync(new()
@@ -62,24 +62,25 @@ namespace SwashbucklerDiary.Rcl.Services
                 Content = message,
                 Type = type,
                 Timeout = timeout == 0 ? 2000 : timeout,
+                Closeable = _masaBlazorHelper.Breakpoint.SmAndUp
             });
         }
 
         public Task Error(string? message) => Error(null, message);
 
-        public Task Error(string? title, string? message) => Alert(title, message, AlertTypes.Error);
+        public Task Error(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Error);
 
         public Task Info(string? message) => Info(null, message);
 
-        public Task Info(string? title, string? message) => Alert(title, message, AlertTypes.Info);
+        public Task Info(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Info);
 
         public Task Success(string? message) => Success(null, message);
 
-        public Task Success(string? title, string? message) => Alert(title, message, AlertTypes.Success);
+        public Task Success(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Success);
 
         public Task Warning(string? message) => Warning(null, message);
 
-        public Task Warning(string? title, string? message) => Alert(title, message, AlertTypes.Warning);
+        public Task Warning(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Warning);
 
         public Task StartLoading(bool opacity = true)
         {

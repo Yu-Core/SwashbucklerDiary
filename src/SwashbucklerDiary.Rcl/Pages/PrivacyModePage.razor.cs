@@ -129,7 +129,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             string salt = Setting.PrivacyModeEntrancePassword.ToString();
             await SettingService.Set(Setting.PrivacyModeEntrancePassword, (value + salt).MD5Encrytp32());
-            await AlertService.Success(I18n.T("PrivacyMode.PasswordSetSuccess"));
+            await PopupServiceHelper.Success(I18n.T("PrivacyMode.PasswordSetSuccess"));
         }
 
         private async Task SwitchHidePrivacyModeEntrance()

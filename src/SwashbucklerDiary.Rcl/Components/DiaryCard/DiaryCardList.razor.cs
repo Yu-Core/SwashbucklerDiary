@@ -107,7 +107,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             var text = SelectedItemValue.CreateCopyContent();
             await PlatformIntegration.SetClipboard(text);
-            await AlertService.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
 
         private async Task ChangeTag()
@@ -135,7 +135,7 @@ namespace SwashbucklerDiary.Rcl.Components
             await OnRemove.InvokeAsync(SelectedItemValue);
             if (SelectedItemValue.Private)
             {
-                await AlertService.Success(I18n.T("Read.PrivacyAlert"));
+                await PopupServiceHelper.Success(I18n.T("Read.PrivacyAlert"));
             }
         }
 
@@ -160,12 +160,12 @@ namespace SwashbucklerDiary.Rcl.Components
                 }
 
                 _value.RemoveAt(index);
-                await AlertService.Success(I18n.T("Share.DeleteSuccess"));
+                await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
                 await InvokeAsync(StateHasChanged);
             }
             else
             {
-                await AlertService.Error(I18n.T("Share.DeleteFail"));
+                await PopupServiceHelper.Error(I18n.T("Share.DeleteFail"));
             }
 
             await OnRemove.InvokeAsync(SelectedItemValue);
@@ -213,7 +213,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             var text = $"[{I18n.T("Read.DiaryLink")}](read/{SelectedItemValue.Id})";
             await PlatformIntegration.SetClipboard(text);
-            await AlertService.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
     }
 }

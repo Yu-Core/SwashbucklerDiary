@@ -61,7 +61,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (Tags.Any(it => it.Name == tagName))
             {
-                await AlertService.Warning(I18n.T("Tag.Repeat.Title"), I18n.T("Tag.Repeat.Content"));
+                await PopupServiceHelper.Warning(I18n.T("Tag.Repeat.Title"), I18n.T("Tag.Repeat.Content"));
                 return;
             }
 
@@ -72,7 +72,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var flag = await TagService.AddAsync(tag);
             if (!flag)
             {
-                await AlertService.Error(I18n.T("Share.AddFail"));
+                await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
                 return;
             }
 

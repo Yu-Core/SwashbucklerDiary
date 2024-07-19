@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (locations.Any(it => it.Name == name))
             {
-                await AlertService.Warning(I18n.T("Location.Repeat.Title"), I18n.T("Location.Repeat.Content"));
+                await PopupServiceHelper.Warning(I18n.T("Location.Repeat.Title"), I18n.T("Location.Repeat.Content"));
                 return;
             }
 
@@ -68,7 +68,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var flag = await LocationService.AddAsync(location);
             if (!flag)
             {
-                await AlertService.Error(I18n.T("Share.AddFail"));
+                await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
                 return;
             }
 

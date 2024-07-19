@@ -16,10 +16,10 @@ namespace SwashbucklerDiary.Maui.Services
 
         public MediaResourceManager(IPlatformIntegration platformIntegration,
             IAppFileManager appFileManager,
-            IAlertService alertService,
+            IPopupServiceHelper popupServiceHelper,
             II18nService i18nService,
             ILogger<MediaResourceManager> logger)
-            : base(platformIntegration, appFileManager, alertService, i18nService, logger)
+            : base(platformIntegration, appFileManager, popupServiceHelper, i18nService, logger)
         {
             _httpClient = new HttpClient();
         }
@@ -105,7 +105,7 @@ namespace SwashbucklerDiary.Maui.Services
 
             if (string.IsNullOrEmpty(filePath))
             {
-                await _alertService.Error(_i18n.T("Image.Not exist"));
+                await _popupServiceHelper.Error(_i18n.T("Image.Not exist"));
             }
 
             return filePath;

@@ -1,10 +1,10 @@
 ﻿namespace SwashbucklerDiary.Rcl.Services
 {
-    public interface IAlertService
+    public interface IPopupServiceHelper
     {
-        Task Alert(string? message);
+        Task EnqueueSnackbarAsync(string? message);
 
-        Task Alert(string? title, string? message);
+        Task EnqueueSnackbarAsync(string? title, string? message);
 
         Task Success(string? message);
 

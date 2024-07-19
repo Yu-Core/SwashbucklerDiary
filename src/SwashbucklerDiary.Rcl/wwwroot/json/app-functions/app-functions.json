@@ -174,21 +174,21 @@
     "Href": "locationSetting"
   },
   {
-    "Name": "Setting.Display.Alert.Name",
+    "Name": "Setting.Display.Snackbars.Name",
     "Icon": "mdi-alert-box-outline",
-    "Path": "Setting.Display.Alert.Path",
+    "Path": "Setting.Display.Snackbars.Path",
     "Href": "alertSetting"
   },
   {
-    "Name": "Setting.Display.Alert.AlertTimeout.Name",
+    "Name": "Setting.Display.Snackbars.AlertTimeout.Name",
     "Icon": "mdi-timer-outline",
-    "Path": "Setting.Display.Alert.AlertTimeout.Path",
+    "Path": "Setting.Display.Snackbars.AlertTimeout.Path",
     "Href": "alertSetting"
   },
   {
-    "Name": "Setting.Display.Alert.Achievement.Name",
+    "Name": "Setting.Display.Snackbars.Achievement.Name",
     "Icon": "mdi-trophy-outline",
-    "Path": "Setting.Display.Alert.Achievement.Path",
+    "Path": "Setting.Display.Snackbars.Achievement.Path",
     "Href": "alertSetting"
   },
   {

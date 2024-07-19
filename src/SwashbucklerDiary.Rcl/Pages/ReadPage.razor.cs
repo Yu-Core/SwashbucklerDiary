@@ -157,12 +157,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             bool flag = await DiaryService.DeleteAsync(diary);
             if (flag)
             {
-                await AlertService.Success(I18n.T("Share.DeleteSuccess"));
+                await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
                 await NavigateToBack();
             }
             else
             {
-                await AlertService.Error(I18n.T("Share.DeleteFail"));
+                await PopupServiceHelper.Error(I18n.T("Share.DeleteFail"));
             }
         }
 
@@ -183,7 +183,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             var content = diary.CreateCopyContent();
             await PlatformIntegration.SetClipboard(content);
-            await AlertService.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
 
         private async Task ShareText()
@@ -195,7 +195,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async void ShareImage()
         {
-            await AlertService.StartLoading();
+            await PopupServiceHelper.StartLoading();
 
             if (enableMarkdown && markdownPreview is not null)
             {
@@ -205,7 +205,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var filePath = await ScreenshotService.CaptureAsync("#screenshot");
             await PlatformIntegration.ShareFileAsync(I18n.T("Share.Share"), filePath);
 
-            await AlertService.StopLoading();
+            await PopupServiceHelper.StopLoading();
             await InvokeAsync(StateHasChanged);
 
             await HandleAchievements(Achievement.Share);
@@ -224,7 +224,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             diary.Private = !diary.Private;
             diary.UpdateTime = DateTime.Now;
             await DiaryService.UpdateAsync(diary, it => new { it.Private, it.UpdateTime });
-            await AlertService.Success(I18n.T("Read.PrivacyAlert"));
+            await PopupServiceHelper.Success(I18n.T("Read.PrivacyAlert"));
         }
 
         private string CounterValue()
@@ -262,7 +262,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             var text = $"[{I18n.T("Read.DiaryLink")}](read/{Id})";
             await PlatformIntegration.SetClipboard(text);
-            await AlertService.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
     }
 }

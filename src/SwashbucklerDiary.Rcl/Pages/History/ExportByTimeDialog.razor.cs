@@ -67,7 +67,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             exportDiaries = await DiaryService.QueryAsync(expression);
             if (exportDiaries.Count == 0)
             {
-                await AlertService.Info(I18n.T("Diary.NoDiary"));
+                await PopupServiceHelper.Info(I18n.T("Diary.NoDiary"));
                 return;
             }
 

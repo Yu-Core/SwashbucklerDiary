@@ -85,10 +85,10 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task SetAvatar(Func<Task<string>> func)
         {
             showEditAvatar = false;
-            await AlertService.StartLoading();
+            await PopupServiceHelper.StartLoading();
             StateHasChanged();
             string? photoPath = await func.Invoke();
-            await AlertService.StopLoading();
+            await PopupServiceHelper.StopLoading();
             if (string.IsNullOrEmpty(photoPath))
             {
                 return;

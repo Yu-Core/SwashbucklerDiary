@@ -53,7 +53,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (string.IsNullOrEmpty(Src))
             {
-                await AlertService.Error(I18n.T("Image.Not exist"));
+                await PopupServiceHelper.Error(I18n.T("Image.Not exist"));
                 return;
             }
 
@@ -64,7 +64,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (string.IsNullOrEmpty(Src))
             {
-                await AlertService.Error(I18n.T("Image.Not exist"));
+                await PopupServiceHelper.Error(I18n.T("Image.Not exist"));
                 return;
             }
 

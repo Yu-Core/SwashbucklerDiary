@@ -18,12 +18,12 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         public MediaResourceManager(IPlatformIntegration platformIntegration,
             IAppFileManager appFileManager,
-            IAlertService alertService,
+            IPopupServiceHelper popupServiceHelper,
             II18nService i18nService,
             ILogger<MediaResourceManager> logger,
             IJSRuntime jSRuntime,
             NavigationManager navigationManager) :
-            base(platformIntegration, appFileManager, alertService, i18nService, logger)
+            base(platformIntegration, appFileManager, popupServiceHelper, i18nService, logger)
         {
             _jSRuntime = jSRuntime;
             _navigationManager = navigationManager;
@@ -72,7 +72,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
             }
             else
             {
-                await _alertService.Error(_i18n.T("External images are not supported"));
+                await _popupServiceHelper.Error(_i18n.T("External images are not supported"));
                 return false;
             }
         }
@@ -86,7 +86,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
             }
             else
             {
-                await _alertService.Error(_i18n.T("External images are not supported"));
+                await _popupServiceHelper.Error(_i18n.T("External images are not supported"));
                 return false;
             }
         }

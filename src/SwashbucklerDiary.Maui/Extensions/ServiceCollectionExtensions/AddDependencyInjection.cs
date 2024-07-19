@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddSingleton<ISettingService, Services.SettingService>();
             services.AddSingleton<INavigateController, Essentials.NavigateController>();
             services.AddSingleton<IIconService, Services.IconService>();
-            services.AddSingleton<IAlertService, AlertService>();
+            services.AddSingleton<IPopupServiceHelper, PopupServiceHelper>();
             services.AddSingleton<II18nService, Services.I18nService>();
             services.AddSingleton<Rcl.Essentials.IVersionTracking, Essentials.VersionTracking>();
             services.AddSingleton<IPlatformIntegration, PlatformIntegration>();

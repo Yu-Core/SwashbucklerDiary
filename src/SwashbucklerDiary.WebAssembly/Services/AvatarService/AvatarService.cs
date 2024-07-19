@@ -9,21 +9,21 @@ namespace SwashbucklerDiary.WebAssembly.Services
             IMediaResourceManager mediaResourceManager,
             IPlatformIntegration platformIntegration,
             II18nService i18n,
-            IAlertService alertService,
+            IPopupServiceHelper popupServiceHelper,
             IAppFileManager appFileManager)
-            : base(settingService, mediaResourceManager, platformIntegration, i18n, alertService, appFileManager)
+            : base(settingService, mediaResourceManager, platformIntegration, i18n, popupServiceHelper, appFileManager)
         {
         }
 
         public override async Task<string> SetAvatarByCapture()
         {
-            await _alertService.Error(_i18n.T("Share.NotSupported"));
+            await _popupServiceHelper.Error(_i18n.T("Share.NotSupported"));
             return string.Empty;
 
             //bool isCaptureSupported = await _platformIntegration.IsCaptureSupported();
             //if (!isCaptureSupported)
             //{
-            //    await _alertService.Error(_i18n.T("User.NoCapture"));
+            //    await _popupServiceHelper.Error(_i18n.T("User.NoCapture"));
             //    return string.Empty;
             //}
 

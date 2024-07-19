@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var flag = await PlatformIntegration.TryStorageWritePermission();
             if (!flag)
             {
-                await AlertService.Info(I18n.T("Permission.OpenStorageWrite"));
+                await PopupServiceHelper.Info(I18n.T("Permission.OpenStorageWrite"));
                 return;
             }
 
@@ -33,7 +33,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            await AlertService.Success(I18n.T("Backups.Backups.Success"));
+            await PopupServiceHelper.Success(I18n.T("Backups.Backups.Success"));
         }
 
         private async Task Restore()
@@ -53,18 +53,18 @@ namespace SwashbucklerDiary.Rcl.Pages
             showRestore = false;
             if (string.IsNullOrEmpty(restoreFilePath))
             {
-                await AlertService.Error(I18n.T("Backups.Restore.Fail"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Restore.Fail"));
                 return;
             }
 
             bool flag = await DiaryFileManager.ImportDBAsync(restoreFilePath);
             if (flag)
             {
-                await AlertService.Success(I18n.T("Backups.Restore.Success"));
+                await PopupServiceHelper.Success(I18n.T("Backups.Restore.Success"));
             }
             else
             {
-                await AlertService.Error(I18n.T("Backups.Restore.Fail"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Restore.Fail"));
             }
         }
     }

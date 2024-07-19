@@ -9,9 +9,9 @@ namespace SwashbucklerDiary.Maui.Services
             IMediaResourceManager mediaResourceManager,
             IPlatformIntegration platformIntegration,
             II18nService i18n,
-            IAlertService alertService,
+            IPopupServiceHelper popupServiceHelper,
             IAppFileManager appFileManager)
-            : base(settingService, mediaResourceManager, platformIntegration, i18n, alertService, appFileManager)
+            : base(settingService, mediaResourceManager, platformIntegration, i18n, popupServiceHelper, appFileManager)
         {
         }
 
@@ -20,21 +20,21 @@ namespace SwashbucklerDiary.Maui.Services
             bool isCaptureSupported = await _platformIntegration.IsCaptureSupported();
             if (!isCaptureSupported)
             {
-                await _alertService.Error(_i18n.T("User.NoCapture"));
+                await _popupServiceHelper.Error(_i18n.T("User.NoCapture"));
                 return string.Empty;
             }
 
             var cameraPermission = await _platformIntegration.TryCameraPermission();
             if (!cameraPermission)
             {
-                await _alertService.Info(_i18n.T("Permission.OpenCamera"));
+                await _popupServiceHelper.Info(_i18n.T("Permission.OpenCamera"));
                 return string.Empty;
             }
 
             var writePermission = await _platformIntegration.TryStorageWritePermission();
             if (!writePermission)
             {
-                await _alertService.Info(_i18n.T("Permission.OpenStorageWrite"));
+                await _popupServiceHelper.Info(_i18n.T("Permission.OpenStorageWrite"));
                 return string.Empty;
             }
 

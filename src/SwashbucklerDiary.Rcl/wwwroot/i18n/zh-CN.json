@@ -420,16 +420,16 @@
           "Path": "设置 / 日记 / 代码行号"
         }
       },
-      "Alert": {
-        "Name": "提示框",
-        "Path": "设置 / 提示框",
+      "Snackbars": {
+        "Name": "消息条",
+        "Path": "设置 / 消息条",
         "AlertTimeout": {
           "Name": "提示时长",
-          "Path": "设置 / 提示框 / 提示时长"
+          "Path": "设置 / 消息条 / 提示时长"
         },
         "Achievement": {
           "Name": "成就",
-          "Path": "设置 / 提示框 / 成就"
+          "Path": "设置 / 消息条 / 成就"
         }
       },
       "StatisticsCard": {

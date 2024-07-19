@@ -83,12 +83,12 @@ namespace SwashbucklerDiary.Rcl.Components
                     return;
                 }
                 _value.RemoveAt(index);
-                await AlertService.Success(I18n.T("Share.DeleteSuccess"));
+                await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
                 StateHasChanged();
             }
             else
             {
-                await AlertService.Error(I18n.T("Share.DeleteFail"));
+                await PopupServiceHelper.Error(I18n.T("Share.DeleteFail"));
             }
         }
 
@@ -102,7 +102,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (Value.Any(it => it.Name == tagName))
             {
-                await AlertService.Warning(I18n.T("Tag.Repeat.Title"), I18n.T("Tag.Repeat.Content"));
+                await PopupServiceHelper.Warning(I18n.T("Tag.Repeat.Title"), I18n.T("Tag.Repeat.Content"));
                 return;
             }
 
@@ -111,7 +111,7 @@ namespace SwashbucklerDiary.Rcl.Components
             bool flag = await TagService.UpdateAsync(SelectedItemValue, it => new { it.Name, it.UpdateTime });
             if (!flag)
             {
-                await AlertService.Error(I18n.T("Share.EditFail"));
+                await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
             }
         }
 
@@ -157,7 +157,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var diaries = newTag.Diaries;
             if (diaries is null || diaries.Count == 0)
             {
-                await AlertService.Info(I18n.T("Diary.NoDiary"));
+                await PopupServiceHelper.Info(I18n.T("Diary.NoDiary"));
                 return;
             }
 

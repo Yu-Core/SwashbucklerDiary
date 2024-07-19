@@ -80,7 +80,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             bool flag = await AccessExternal.OpenAppStoreAppDetails();
             if (!flag)
             {
-                await AlertService.Error(I18n.T("About.OpenAppStoreFail"));
+                await PopupServiceHelper.Error(I18n.T("About.OpenAppStoreFail"));
             }
         }
 
@@ -91,7 +91,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 bool hasNewVersion = await VersionUpdataManager.CheckForUpdates();
                 if (!hasNewVersion)
                 {
-                    await AlertService.Info(I18n.T("VersionUpdate.No updates"));
+                    await PopupServiceHelper.Info(I18n.T("VersionUpdate.No updates"));
                 }
                 else
                 {
@@ -100,7 +100,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             catch (Exception e)
             {
-                await AlertService.Error(I18n.T("VersionUpdate.Check failed"));
+                await PopupServiceHelper.Error(I18n.T("VersionUpdate.Check failed"));
                 Logger.LogError(e, "VersionUpdate check failed");
             }
         }
@@ -108,7 +108,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task CopyRecordNumber()
         {
             await PlatformIntegration.SetClipboard(recordNumber);
-            await AlertService.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
     }
 }

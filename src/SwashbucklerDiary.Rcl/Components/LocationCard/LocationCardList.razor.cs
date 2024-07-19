@@ -39,12 +39,12 @@ namespace SwashbucklerDiary.Rcl.Components
             if (flag)
             {
                 _value.Remove(location);
-                await AlertService.Success(I18n.T("Share.DeleteSuccess"));
+                await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
                 StateHasChanged();
             }
             else
             {
-                await AlertService.Error(I18n.T("Share.DeleteFail"));
+                await PopupServiceHelper.Error(I18n.T("Share.DeleteFail"));
             }
         }
 
@@ -58,7 +58,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (Value.Any(it => it.Name == name))
             {
-                await AlertService.Warning(I18n.T("Location.Repeat.Title"), I18n.T("Location.Repeat.Content"));
+                await PopupServiceHelper.Warning(I18n.T("Location.Repeat.Title"), I18n.T("Location.Repeat.Content"));
                 return;
             }
 
@@ -67,7 +67,7 @@ namespace SwashbucklerDiary.Rcl.Components
             bool flag = await LocationService.UpdateAsync(SelectedItemValue, it => new { it.Name, it.UpdateTime });
             if (!flag)
             {
-                await AlertService.Error(I18n.T("Share.EditFail"));
+                await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
             }
         }
 

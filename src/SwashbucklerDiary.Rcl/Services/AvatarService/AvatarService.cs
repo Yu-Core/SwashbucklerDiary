@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly II18nService _i18n;
 
-        protected readonly IAlertService _alertService;
+        protected readonly IPopupServiceHelper _popupServiceHelper;
 
         protected readonly IAppFileManager _appFileManager;
 
@@ -26,14 +26,14 @@ namespace SwashbucklerDiary.Rcl.Services
             IMediaResourceManager mediaResourceManager,
             IPlatformIntegration platformIntegration,
             II18nService i18n,
-            IAlertService alertService,
+            IPopupServiceHelper popupServiceHelper,
             IAppFileManager appFileManager)
         {
             _settingService = settingService;
             _mediaResourceManager = mediaResourceManager;
             _platformIntegration = platformIntegration;
             _i18n = i18n;
-            _alertService = alertService;
+            _popupServiceHelper = popupServiceHelper;
             _appFileManager = appFileManager;
 
             targetDirectoryPath = Path.Combine(_appFileManager.AppDataDirectory, avatarDirectoryName);

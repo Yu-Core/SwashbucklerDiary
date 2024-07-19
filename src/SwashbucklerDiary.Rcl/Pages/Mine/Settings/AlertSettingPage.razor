@@ -2,7 +2,7 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("Setting.Display.Alert.Name"))"
+<MyAppBar Title="@(I18n.T("Setting.Display.Snackbars.Name"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -17,7 +17,7 @@
                 </MIcon>
             </MListItemIcon>
             <MListItemContent>
-                @(I18n.T("Setting.Display.Alert.AlertTimeout.Name"))
+                @(I18n.T("Setting.Display.Snackbars.AlertTimeout.Name"))
             </MListItemContent>
             <MListItemContent Class="setting-state">
                 <MListItemSubtitle>
@@ -40,7 +40,7 @@
                 </MIcon>
             </MListItemIcon>
             <MListItemContent>
-                @(I18n.T("Setting.Display.Alert.Achievement.Name"))
+                @(I18n.T("Setting.Display.Snackbars.Achievement.Name"))
             </MListItemContent>
             <MListItemAction>
                 <MSwitch @bind-Value="achievementsAlert"
@@ -58,7 +58,7 @@
 
 <SelectDialog @bind-Visible="showTimeout"
               @bind-Value="@Timeout"
-              Title="@(I18n.T("Setting.Display.Alert.AlertTimeout.Name"))"
+              Title="@(I18n.T("Setting.Display.Snackbars.AlertTimeout.Name"))"
               Items="timeoutItems"
               Mandatory="true">
 </SelectDialog>

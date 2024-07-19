@@ -56,7 +56,7 @@ namespace SwashbucklerDiary.Maui.Pages
             {
                 configModel = webDavConfig.DeepCopy();
                 showConfig = false;
-                await AlertService.Success(I18n.T("Backups.Config.Success"));
+                await PopupServiceHelper.Success(I18n.T("Backups.Config.Success"));
                 var configJson = JsonSerializer.Serialize(configModel);
                 await SettingService.Set(Setting.WebDavConfig, configJson);
             }
@@ -71,22 +71,22 @@ namespace SwashbucklerDiary.Maui.Pages
             }
             catch (ArgumentException e)
             {
-                await AlertService.Error(I18n.T("Backups.Config.Fail.ConfigInfo"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Config.Fail.ConfigInfo"));
                 Logger.LogError(e, $"SaveWebDavConfig {nameof(ArgumentException)}");
             }
             catch (HttpRequestException e)
             {
-                await AlertService.Error(I18n.T("Backups.Config.Fail.Network"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Config.Fail.Network"));
                 Logger.LogError(e, $"SaveWebDavConfig {nameof(HttpRequestException)}");
             }
             catch (WebDAVException e)
             {
-                await AlertService.Error(I18n.T("Backups.Config.Fail.ConfigInfo"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Config.Fail.ConfigInfo"));
                 Logger.LogError(e, $"SaveWebDavConfig {nameof(WebDAVException)}");
             }
             catch (Exception e)
             {
-                await AlertService.Error(I18n.T("Backups.Config.Fail.Unknown"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Config.Fail.Unknown"));
                 Logger.LogError(e, "SaveWebDavConfig Unknown");
             }
 
@@ -108,7 +108,7 @@ namespace SwashbucklerDiary.Maui.Pages
         {
             showUpload = false;
 
-            await AlertService.StartLoading();
+            await PopupServiceHelper.StartLoading();
 
             string filePath = await DiaryFileManager.ExportDBAsync(includeDiaryResources);
             using var stream = File.OpenRead(filePath);
@@ -117,21 +117,21 @@ namespace SwashbucklerDiary.Maui.Pages
             try
             {
                 await WebDAVService.UploadAsync(destFileName, stream);
-                await AlertService.Success(I18n.T("Backups.Upload.Success"));
+                await PopupServiceHelper.Success(I18n.T("Backups.Upload.Success"));
             }
             catch (HttpRequestException e)
             {
-                await AlertService.Error(I18n.T("Backups.Config.Fail.Network"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Config.Fail.Network"));
                 Logger.LogError(e, $"OpenDownloadDialog {nameof(HttpRequestException)}");
             }
             catch (Exception e)
             {
-                await AlertService.Error(I18n.T("Backups.Upload.Fail"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Upload.Fail"));
                 Logger.LogError(e, $"Backups Upload Fail");
             }
             finally
             {
-                await AlertService.StopLoading();
+                await PopupServiceHelper.StopLoading();
             }
         }
 
@@ -151,12 +151,12 @@ namespace SwashbucklerDiary.Maui.Pages
             }
             catch (HttpRequestException e)
             {
-                await AlertService.Error(I18n.T("Backups.Config.Fail.Network"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Config.Fail.Network"));
                 Logger.LogError(e, $"OpenDownloadDialog {nameof(HttpRequestException)}");
             }
             catch (Exception e)
             {
-                await AlertService.Error(I18n.T("Backups.Download.Fail"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Download.Fail"));
                 Logger.LogError(e, $"Backups Download Fail");
             }
 
@@ -166,27 +166,27 @@ namespace SwashbucklerDiary.Maui.Pages
         {
             showDownload = false;
 
-            await AlertService.StartLoading();
+            await PopupServiceHelper.StartLoading();
             var destFileName = webDavFolderName + "/" + fileName;
             try
             {
                 using var stream = await WebDAVService.DownloadAsync(destFileName);
                 await DiaryFileManager.ImportDBAsync(stream);
-                await AlertService.Success(I18n.T("Backups.Download.Success"));
+                await PopupServiceHelper.Success(I18n.T("Backups.Download.Success"));
             }
             catch (HttpRequestException e)
             {
-                await AlertService.Error(I18n.T("Backups.Config.Fail.Network"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Config.Fail.Network"));
                 Logger.LogError(e, $"OpenDownloadDialog {nameof(HttpRequestException)}");
             }
             catch (Exception e)
             {
-                await AlertService.Error(I18n.T("Backups.Download.Fail"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Download.Fail"));
                 Logger.LogError(e, "WebDAV Download fail");
             }
             finally
             {
-                await AlertService.StopLoading();
+                await PopupServiceHelper.StopLoading();
             }
         }
 
@@ -194,7 +194,7 @@ namespace SwashbucklerDiary.Maui.Pages
         {
             if (!Configured)
             {
-                await AlertService.Error(I18n.T("Backups.Config.CheckConfigured"));
+                await PopupServiceHelper.Error(I18n.T("Backups.Config.CheckConfigured"));
                 return false;
             }
 

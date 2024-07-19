@@ -314,7 +314,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 {
                     if (!isSuccess)
                     {
-                        await AlertService.Error(I18n.T("Share.AddFail"));
+                        await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
                     }
                     else
                     {
@@ -330,7 +330,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 {
                     if (!isSuccess)
                     {
-                        await AlertService.Error(I18n.T("Share.EditFail"));
+                        await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
                     }
                     else
                     {

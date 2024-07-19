@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Maui.Services
     {
         private readonly IAccessExternal _accessExternal;
 
-        private readonly IAlertService _alertService;
+        private readonly IPopupServiceHelper _popupServiceHelper;
 
         public VersionUpdataManager(IDiaryService diaryService,
             IResourceService resourceService,
@@ -19,12 +19,12 @@ namespace SwashbucklerDiary.Maui.Services
             Rcl.Essentials.IVersionTracking versionTracking,
             IDiaryFileManager diaryFileManager,
             IAccessExternal accessExternal,
-            IAlertService alertService,
+            IPopupServiceHelper popupServiceHelper,
             IStaticWebAssets staticWebAssets) :
             base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager, staticWebAssets)
         {
             _accessExternal = accessExternal;
-            _alertService = alertService;
+            _popupServiceHelper = popupServiceHelper;
         }
 
         public override async Task HandleVersionUpdate()
@@ -74,7 +74,7 @@ namespace SwashbucklerDiary.Maui.Services
             bool flag = await _accessExternal.OpenAppStoreAppDetails();
             if (!flag)
             {
-                await _alertService.Error(_i18n.T("About.OpenAppStoreFail"));
+                await _popupServiceHelper.Error(_i18n.T("About.OpenAppStoreFail"));
             }
         }
     }

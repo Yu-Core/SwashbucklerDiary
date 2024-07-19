@@ -84,7 +84,7 @@ namespace SwashbucklerDiary.Maui.Pages
             catch (Exception e)
             {
                 Logger.LogError(e, "LANReceiverService initialize error");
-                await AlertService.Error(I18n.T("lanSender.No network connection"));
+                await PopupServiceHelper.Error(I18n.T("lanSender.No network connection"));
                 await Task.Delay(1000);
                 await NavigateToBack();
             }
@@ -133,11 +133,11 @@ namespace SwashbucklerDiary.Maui.Pages
             {
                 if (showTransferDialog)
                 {
-                    await AlertService.Error(I18n.T("lanReceiver.Receive failed"));
+                    await PopupServiceHelper.Error(I18n.T("lanReceiver.Receive failed"));
                 }
                 else
                 {
-                    await AlertService.Error(I18n.T("lanReceiver.Receive canceled"));
+                    await PopupServiceHelper.Error(I18n.T("lanReceiver.Receive canceled"));
                 }
 
                 if (IsThisPage)
@@ -155,14 +155,14 @@ namespace SwashbucklerDiary.Maui.Pages
 
                 if (!isSuccess)
                 {
-                    await AlertService.Error(I18n.T("Export.Import.Fail"));
+                    await PopupServiceHelper.Error(I18n.T("Export.Import.Fail"));
                 }
                 else
                 {
                     ps = 100;
                     bytes = totalBytes;
                     StateHasChanged();
-                    await AlertService.Success(I18n.T("lanReceiver.Receive successfully"));
+                    await PopupServiceHelper.Success(I18n.T("lanReceiver.Receive successfully"));
                 }
             });
         }

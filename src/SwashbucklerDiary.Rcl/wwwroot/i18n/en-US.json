@@ -420,16 +420,16 @@
           "Path": "Setting / Diary / Code line number"
         }
       },
-      "Alert": {
-        "Name": "Alert",
-        "Path": "Setting / Alert",
+      "Snackbars": {
+        "Name": "Snackbars",
+        "Path": "Setting / Snackbars",
         "AlertTimeout": {
           "Name": "Alert timeout",
-          "Path": "Setting / Alert / Alert timeout"
+          "Path": "Setting / Snackbars / Alert timeout"
         },
         "Achievement": {
           "Name": "Achievement",
-          "Path": "Setting / Alert / Achievement"
+          "Path": "Setting / Snackbars / Achievement"
         }
       },
       "StatisticsCard": {

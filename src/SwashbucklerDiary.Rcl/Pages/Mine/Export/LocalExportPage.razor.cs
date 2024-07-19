@@ -30,17 +30,17 @@ namespace SwashbucklerDiary.Rcl.Pages
             var flag = await PlatformIntegration.TryStorageWritePermission();
             if (!flag)
             {
-                await AlertService.Info(I18n.T("Permission.OpenStorageWrite"));
+                await PopupServiceHelper.Info(I18n.T("Permission.OpenStorageWrite"));
                 return;
             }
 
-            await AlertService.StartLoading();
+            await PopupServiceHelper.StartLoading();
             diaries = await DiaryService.QueryAsync();
-            await AlertService.StopLoading();
+            await PopupServiceHelper.StopLoading();
 
             if (diaries.Count == 0)
             {
-                await AlertService.Info(I18n.T("Diary.NoDiary"));
+                await PopupServiceHelper.Info(I18n.T("Diary.NoDiary"));
                 return;
             }
 
@@ -62,7 +62,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             showImport = false;
             if (string.IsNullOrEmpty(importFilePath))
             {
-                await AlertService.Error(I18n.T("Export.Import.Fail"));
+                await PopupServiceHelper.Error(I18n.T("Export.Import.Fail"));
                 return;
             }
 
@@ -71,18 +71,18 @@ namespace SwashbucklerDiary.Rcl.Pages
                 bool isSuccess = await DiaryFileManager.ImportJsonAsync(importFilePath);
                 if (!isSuccess)
                 {
-                    await AlertService.Error(I18n.T("Export.Import.Fail"));
+                    await PopupServiceHelper.Error(I18n.T("Export.Import.Fail"));
                 }
                 else
                 {
-                    await AlertService.Success(I18n.T("Export.Import.Success"));
+                    await PopupServiceHelper.Success(I18n.T("Export.Import.Success"));
                 }
 
             }
             catch (Exception e)
             {
                 Logger.LogError(e, "Export Import Fail");
-                await AlertService.Error(I18n.T("Export.Import.Fail"));
+                await PopupServiceHelper.Error(I18n.T("Export.Import.Fail"));
             }
         }
     }
