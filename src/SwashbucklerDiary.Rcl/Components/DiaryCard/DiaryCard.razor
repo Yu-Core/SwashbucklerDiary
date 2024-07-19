@@ -2,7 +2,9 @@
 @inherits CardComponentBase<DiaryModel>
 
 <div class="m-sheet @Theme elevation-0 rounded-lg m-card m-card--link diary-card elevation-sm-2--active"
-     @onclick="ToRead">
+     @onclick="ToRead"
+     @oncontextmenu="OpenMenu"
+     __internal_preventDefault_oncontextmenu>
     <div class="m-list-item m-list-item--dense @Theme" tabindex="-1">
         <div class="m-list-item__content">
             <div class="d-flex align-center">
