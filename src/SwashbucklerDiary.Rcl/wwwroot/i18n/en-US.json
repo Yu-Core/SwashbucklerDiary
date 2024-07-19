@@ -418,6 +418,10 @@
         "CodeLineNumber": {
           "Name": "Code line number",
           "Path": "Setting / Diary / Code line number"
+        },
+        "TaskListLineThrough": {
+          "Name": "Task list line-through",
+          "Path": "Setting / Diary / Task list line-through"
         }
       },
       "Snackbars": {

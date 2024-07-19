@@ -34,5 +34,6 @@
   "UpdateNotPrompt": false,
   "ImageLazy": true,
   "FirstLineIndent": false,
-  "CodeLineNumber": false
+  "CodeLineNumber": false,
+  "TaskListLineThrough": false
 }

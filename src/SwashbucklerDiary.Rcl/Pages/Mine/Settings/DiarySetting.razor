@@ -143,6 +143,28 @@
                     </MSwitch>
                 </MListItemAction>
             </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-checkbox-blank-off-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.TaskListLineThrough.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="taskListLineThrough"
+                             TValue="bool"
+                             OnChange="SettingChange(Setting.TaskListLineThrough)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
         </MList>
     </MCard>
 </ScrollContainer>

@@ -604,3 +604,8 @@ html.m-overlay-scroll-blocked {
     min-height: 32px;
     width: 100%;
 }
+
+.task-list-line-through .vditor-task:has(> input[type="checkbox"][checked]),
+.task-list-line-through .vditor-task--done {
+    text-decoration-line: line-through;
+}

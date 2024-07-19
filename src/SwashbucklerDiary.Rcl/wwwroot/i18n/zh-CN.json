@@ -418,6 +418,10 @@
         "CodeLineNumber": {
           "Name": "代码行号",
           "Path": "设置 / 日记 / 代码行号"
+        },
+        "TaskListLineThrough": {
+          "Name": "任务列表删除线",
+          "Path": "设置 / 日记 / 任务列表删除线"
         }
       },
       "Snackbars": {

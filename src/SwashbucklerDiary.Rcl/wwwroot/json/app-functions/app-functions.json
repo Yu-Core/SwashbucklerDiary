@@ -168,6 +168,12 @@
     "Href": "diarySetting"
   },
   {
+    "Name": "Setting.Display.Diary.TaskListLineThrough.Name",
+    "Icon": "mdi-checkbox-blank-off-outline",
+    "Path": "Setting.Display.Diary.TaskListLineThrough.Path",
+    "Href": "diarySetting"
+  },
+  {
     "Name": "Location.Name",
     "Icon": "mdi-map-marker-outline",
     "Path": "Location.Path",

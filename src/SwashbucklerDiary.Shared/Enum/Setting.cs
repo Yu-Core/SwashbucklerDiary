@@ -35,6 +35,7 @@
         UpdateNotPrompt,
         ImageLazy,
         FirstLineIndent,
-        CodeLineNumber
+        CodeLineNumber,
+        TaskListLineThrough
     }
 }

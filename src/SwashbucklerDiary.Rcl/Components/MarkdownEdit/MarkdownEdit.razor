@@ -5,7 +5,7 @@
     <MMarkdown @ref="mMarkdown"
                Value="@Value"
                ValueChanged="ValueChanged"
-               Class="@($"{Class} {(firstLineIndent?"first-line-indent":"")}")"
+               Class="@InternalClass"
                Options="_options"
                OnAfter="AfterMarkdownRender"
                OnToolbarButtonClick="HandleToolbarButtonClick"

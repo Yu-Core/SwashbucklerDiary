@@ -16,6 +16,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool codeLineNumber;
 
+        private bool taskListLineThrough;
+
         private Dictionary<string, object>? _options;
 
         private MMarkdown mMarkdown = default!;
@@ -63,10 +65,13 @@ namespace SwashbucklerDiary.Rcl.Components
             SetOptions();
         }
 
+        private string? InternalClass => $"{Class} {(firstLineIndent ? "first-line-indent" : "")} {(taskListLineThrough ? "task-list-line-through" : "")}";
+
         private void ReadSettings()
         {
             firstLineIndent = SettingService.Get<bool>(Setting.FirstLineIndent);
             codeLineNumber = SettingService.Get<bool>(Setting.CodeLineNumber);
+            taskListLineThrough = SettingService.Get<bool>(Setting.TaskListLineThrough);
         }
 
         private void SetOptions()
