@@ -36,6 +36,8 @@
 - [百度手机助手](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
 - [豌豆荚](https://www.wandoujia.com/apps/8369224)
 - [酷安](https://www.coolapk.com/apk/937401)
+- [应用宝](https://sj.qq.com/appdetail/com.yucore.swashbucklerdiary)
+- [华为应用市场](https://appgallery.huawei.com/app/C107898911)
 
 ## ✨ 特点
 * 极简风格的UI设计
@@ -81,7 +83,7 @@
 ## 🖥 支持的平台
 - Windows (Windows 11和Windows 10版本 1809 或更高版本)
 - Android (Android 8.0 (API 26) 或更高版本)
-- iOS (iOS 14 或更高版本)
+- ~~iOS (iOS 14 或更高版本)~~
 - macOS (macOS 11 或更高版本)
 - ~~Tizen (暂不支持)~~
 - Web

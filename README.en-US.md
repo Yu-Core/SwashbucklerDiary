@@ -34,8 +34,10 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [GitHub Releases](https://github.com/Yu-Core/SwashbucklerDiary/releases)
 - [lanzou cloud](https://wwfc.lanzouj.com/b04q15i4j) ( Password: 1234 )
 - [Baidu Mobile Assistant](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
-- [wandoujia](https://www.wandoujia.com/apps/8369224)
+- [Wandoujia](https://www.wandoujia.com/apps/8369224)
 - [CoolApk](https://www.coolapk.com/apk/937401)
+- [Tencent App Store](https://sj.qq.com/appdetail/com.yucore.swashbucklerdiary)
+- [HUAWEI AppGallery](https://appgallery.huawei.com/app/C107898911)
 
 ## ✨ Characteristics
 * Minimalist UI design
