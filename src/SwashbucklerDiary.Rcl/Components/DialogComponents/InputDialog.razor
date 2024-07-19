@@ -1,11 +1,11 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
 @inherits FocusDialogComponentBase
 
-<MDialogExtension @ref="mDialogExtension"
-                  MyValue="Visible"
+<MDialogExtension MyValue="Visible"
                   MyValueChanged="InternalVisibleChanged"
                   ContentClass="rounded-lg"
-                  MaxWidth="420">
+                  MaxWidth="420"
+                  OnAfterShowContent="FocusAsync">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @Title

@@ -15,6 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Sinks.SQLite.Simpli
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Itms", "Solution Itms", "{181F89D9-8AD0-4ED6-A9EB-17828B68BF67}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		README.en-US.md = README.en-US.md
 		README.md = README.md
 	EndProjectSection

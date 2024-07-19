@@ -4,7 +4,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class PreviewImageDialog : ShowContentDialogComponentBase
+    public partial class PreviewImageDialog : DialogComponentBase
     {
         private readonly string id = $"B-{Guid.NewGuid()}";
 
@@ -26,10 +26,8 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public string? Src { get; set; }
 
-        protected override async Task BeforeShowContent()
+        protected async Task BeforeShowContent()
         {
-            await base.BeforeShowContent();
-
             if (!isInitialized)
             {
                 await Module.Init($"#{id}");

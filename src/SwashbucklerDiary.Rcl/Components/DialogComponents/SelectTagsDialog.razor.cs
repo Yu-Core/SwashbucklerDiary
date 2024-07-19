@@ -6,7 +6,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class SelectTagsDialog : ShowContentDialogComponentBase
+    public partial class SelectTagsDialog : DialogComponentBase
     {
         private bool showAddTag;
 
@@ -30,9 +30,8 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public EventCallback<List<TagModel>> ItemsChanged { get; set; }
 
-        protected override async Task BeforeShowContent()
+        private async Task BeforeShowContent()
         {
-            await base.BeforeShowContent();
             await SetSelectedTagIds();
         }
 

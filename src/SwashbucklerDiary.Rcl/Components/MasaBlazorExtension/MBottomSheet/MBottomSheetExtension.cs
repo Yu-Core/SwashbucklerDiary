@@ -23,6 +23,20 @@ namespace SwashbucklerDiary.Rcl.Components
             set => base.ValueChanged = value;
         }
 
+        [Parameter]
+        public EventCallback<bool> OnAfterShowContent { get; set; }
+
+        [Parameter]
+        public EventCallback OnBeforeShowContent { get; set; }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            AfterShowContent = HandleOnAfterShowContent;
+            BeforeShowContent = HandleOnBeforeShowContent;
+        }
+
         protected override ValueTask DisposeAsyncCore()
         {
             if (Value)
@@ -57,6 +71,22 @@ namespace SwashbucklerDiary.Rcl.Components
             if (MyValueChanged.HasDelegate)
             {
                 await MyValueChanged.InvokeAsync(false);
+            }
+        }
+
+        private async Task HandleOnAfterShowContent(bool value)
+        {
+            if (OnAfterShowContent.HasDelegate)
+            {
+                await OnAfterShowContent.InvokeAsync(value);
+            }
+        }
+
+        private async Task HandleOnBeforeShowContent()
+        {
+            if (OnBeforeShowContent.HasDelegate)
+            {
+                await OnBeforeShowContent.InvokeAsync();
             }
         }
     }

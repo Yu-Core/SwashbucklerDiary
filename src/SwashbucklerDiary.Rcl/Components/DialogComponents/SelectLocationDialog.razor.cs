@@ -6,7 +6,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class SelectLocationDialog : ShowContentDialogComponentBase
+    public partial class SelectLocationDialog : DialogComponentBase
     {
         private bool showAdd;
 
@@ -37,10 +37,8 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        protected override async Task BeforeShowContent()
+        private void BeforeShowContent()
         {
-            await base.BeforeShowContent();
-
             internalLocation = Value;
         }
 

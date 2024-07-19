@@ -20,10 +20,8 @@ namespace SwashbucklerDiary.Maui.Pages
         [Parameter]
         public EventCallback OnReset { get; set; }
 
-        protected override async Task BeforeShowContent()
+        private void BeforeShowContent()
         {
-            await base.BeforeShowContent();
-
             MForm?.Reset();
             configModel = Form.DeepCopy();
         }

@@ -1,11 +1,12 @@
 ﻿@namespace SwashbucklerDiary.Maui.Pages
 @inherits FocusDialogComponentBase
 
-<MDialogExtension @ref="mDialogExtension"
-                  MyValue="Visible"
+<MDialogExtension MyValue="Visible"
                   MyValueChanged="InternalVisibleChanged"
                   ContentClass="rounded-lg"
-                  MaxWidth="480">
+                  MaxWidth="480"
+                  OnAfterShowContent="FocusAsync"
+                  OnBeforeShowContent="BeforeShowContent">
     <MForm @ref="@mForm"
            Model="@configModel"
            OnValidSubmit="HandleOnOK"

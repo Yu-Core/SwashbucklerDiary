@@ -1,11 +1,11 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
-@inherits ShowContentDialogComponentBase
+@inherits DialogComponentBase
 
-<MDialogExtension @ref="mDialogExtension"
-                  MyValue="Visible"
+<MDialogExtension MyValue="Visible"
                   MyValueChanged="InternalVisibleChanged"
                   Fullscreen="true"
-                  Transition="">
+                  Transition=""
+                  OnBeforeShowContent="BeforeShowContent">
     <MCard Class="fill-height primary-background"
            Ripple="false">
         <MToolbar Class="preview-image-dialog--toolbar"

@@ -3,7 +3,7 @@ using OneOf;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class DatePickerDialog : ShowContentDialogComponentBase
+    public partial class DatePickerDialog : DialogComponentBase
     {
         private DateOnly _date = DateOnly.FromDateTime(DateTime.Now);
 
@@ -34,10 +34,8 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public OneOf<string, Func<DateOnly, string>, Func<DateOnly, string[]>>? EventColor { get; set; }
 
-        protected override async Task BeforeShowContent()
+        private void BeforeShowContent()
         {
-            await base.BeforeShowContent();
-
             internalDate = Value;
         }
 
