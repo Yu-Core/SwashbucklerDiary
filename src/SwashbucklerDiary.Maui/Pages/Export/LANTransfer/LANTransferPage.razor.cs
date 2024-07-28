@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Maui.Services;
+﻿using Force.DeepCloner;
+using SwashbucklerDiary.Maui.Services;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
@@ -49,7 +50,7 @@ namespace SwashbucklerDiary.Maui.Pages
         private async Task SaveConfig(LANConfigForm value)
         {
             ShowConfig = false;
-            configModel = value.DeepCopy();
+            configModel = value.DeepClone();
             if (configModel.DeviceName != defaultDeviceName)
             {
                 await SettingService.Set(Setting.LANDeviceName, configModel.DeviceName);

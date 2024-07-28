@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 

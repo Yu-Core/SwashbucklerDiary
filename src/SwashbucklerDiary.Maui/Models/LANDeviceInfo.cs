@@ -1,4 +1,6 @@
-﻿namespace SwashbucklerDiary.Shared
+﻿using SwashbucklerDiary.Shared;
+
+namespace SwashbucklerDiary.Maui.Models
 {
     public class LANDeviceInfo
     {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Maui.BlazorWebView;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 

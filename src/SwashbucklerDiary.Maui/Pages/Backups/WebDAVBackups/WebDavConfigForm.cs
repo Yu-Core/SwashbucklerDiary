@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SwashbucklerDiary.Shared
+namespace SwashbucklerDiary.Maui.Pages
 {
     public class WebDavConfigForm
     {

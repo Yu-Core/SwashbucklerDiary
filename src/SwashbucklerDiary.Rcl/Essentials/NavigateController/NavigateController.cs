@@ -101,7 +101,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
             permanentPaths = paths.ToList();
             // Insert a uri on the previous page. This can ensure that OnLocationChanging will definitely trigger
             var uri = _navigationManager.Uri;
-            var stackBottomUri = _navigationManager.ToAbsoluteUri(Guid.NewGuid().ToString());
+            var stackBottomUri = _navigationManager.ToAbsoluteUri(Guid.NewGuid().ToString("N"));
             stackBottomPath = stackBottomUri.AbsolutePath;
             await _jSRuntime.HistoryReplaceState(stackBottomUri.ToString());
             historyPaths.Add(stackBottomPath);

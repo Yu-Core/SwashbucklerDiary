@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;

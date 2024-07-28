@@ -36,7 +36,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private List<DiaryModel> exportDiaries = [];
 
-        private readonly string highlightSearchContainerClass = $"search-{Guid.NewGuid()}";
+        private readonly string highlightSearchContainerClass = $"search-{Guid.NewGuid():N}";
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;

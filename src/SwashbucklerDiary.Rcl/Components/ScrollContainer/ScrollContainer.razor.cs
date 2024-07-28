@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public RenderFragment? ChildContent { get; set; }
 
         [Parameter]
-        public string Id { get; set; } = $"B-{Guid.NewGuid()}";
+        public string? Id { get; set; }
 
         [Parameter]
         public string? Class { get; set; }
@@ -21,5 +21,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public string? ContentStyle { get; set; }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            Id ??= $"scroll-container-{Guid.NewGuid():N}";
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Maui.Models;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;

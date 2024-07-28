@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Force.DeepCloner;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -54,7 +55,7 @@ namespace SwashbucklerDiary.Maui.Pages
             bool isSuccess = await SetWebDav(webDavConfig);
             if (isSuccess)
             {
-                configModel = webDavConfig.DeepCopy();
+                configModel = webDavConfig.DeepClone();
                 showConfig = false;
                 await PopupServiceHelper.Success(I18n.T("Backups.Config.Success"));
                 var configJson = JsonSerializer.Serialize(configModel);

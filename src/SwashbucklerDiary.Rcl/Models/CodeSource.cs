@@ -1,6 +1,6 @@
-﻿namespace SwashbucklerDiary.Shared
+﻿namespace SwashbucklerDiary.Rcl.Models
 {
-    public class SponsorType
+    public class CodeSource
     {
         public string? Name { get; set; }
 

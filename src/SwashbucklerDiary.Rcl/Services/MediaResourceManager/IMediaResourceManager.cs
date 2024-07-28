@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Shared;
+﻿using SwashbucklerDiary.Rcl.Models;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Services
 {

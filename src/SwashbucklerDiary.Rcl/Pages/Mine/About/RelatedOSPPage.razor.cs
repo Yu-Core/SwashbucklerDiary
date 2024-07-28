@@ -1,5 +1,5 @@
 ﻿using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Rcl.Models;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {

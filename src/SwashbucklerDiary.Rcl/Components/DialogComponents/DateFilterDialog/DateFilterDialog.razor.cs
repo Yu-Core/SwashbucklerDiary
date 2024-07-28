@@ -1,6 +1,6 @@
-﻿using Masa.Blazor;
+﻿using Force.DeepCloner;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -72,7 +72,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 _visible = value;
                 if (value)
                 {
-                    internalForm = Value.DeepCopy();
+                    internalForm = Value.DeepClone();
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task HandleOnOK()
         {
             await InternalVisibleChanged(false);
-            Value = internalForm.DeepCopy();
+            Value = internalForm.DeepClone();
             await ValueChanged.InvokeAsync(Value);
             await OnOK.InvokeAsync();
         }

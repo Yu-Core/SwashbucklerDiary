@@ -1,4 +1,4 @@
-﻿namespace SwashbucklerDiary.Shared
+﻿namespace SwashbucklerDiary.Rcl.Components
 {
     public class DateFilterForm
     {

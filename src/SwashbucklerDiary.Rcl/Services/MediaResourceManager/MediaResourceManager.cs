@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
 using System.Text.RegularExpressions;
 

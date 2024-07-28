@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Shared;
+﻿using SwashbucklerDiary.Maui.Models;
 
 namespace SwashbucklerDiary.Maui.Services
 {

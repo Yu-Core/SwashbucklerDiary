@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SwashbucklerDiary.Shared;
+using System.ComponentModel.DataAnnotations;
 
-namespace SwashbucklerDiary.Shared
+namespace SwashbucklerDiary.Maui.Pages
 {
     public class LANConfigForm
     {

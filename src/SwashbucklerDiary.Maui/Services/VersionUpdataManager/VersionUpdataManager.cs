@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+﻿using SwashbucklerDiary.Maui.Pages;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Text.Json;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using SwashbucklerDiary.Maui.Models;
 using SwashbucklerDiary.Maui.Services;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Services;

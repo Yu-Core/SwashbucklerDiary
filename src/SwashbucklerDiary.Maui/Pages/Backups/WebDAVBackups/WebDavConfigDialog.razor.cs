@@ -1,7 +1,7 @@
-﻿using Masa.Blazor;
+﻿using Force.DeepCloner;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Pages
 {
@@ -22,7 +22,7 @@ namespace SwashbucklerDiary.Maui.Pages
         private void BeforeShowContent()
         {
             mForm?.Reset();
-            configModel = Form.DeepCopy();
+            configModel = Form.DeepClone();
         }
 
         private async Task HandleOnOK()
