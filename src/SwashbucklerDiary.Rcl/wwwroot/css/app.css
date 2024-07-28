@@ -235,6 +235,10 @@ html {
     transform: rotateX(180deg);
 }
 
+.card-list-tags__none .diary-card-tags {
+    display: none;
+}
+
 .my-scroll-container {
     overflow-y: auto !important;
     position: relative !important;

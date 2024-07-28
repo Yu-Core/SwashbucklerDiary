@@ -2,7 +2,7 @@
 @inherits CardListComponentBase<DiaryModel>
 
 <div class="card-list-wrap">
-    <div class="card-list-main @(showMenu?"card-list-menu__open":"") @(showIcon?"":"card-list-icon__none")">
+    <div class="@InternalClass">
         <CascadingValue Value="options"
                         IsFixed="true">
             <Virtualize Items="Value"

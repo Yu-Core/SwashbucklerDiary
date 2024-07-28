@@ -36,6 +36,7 @@
         ImageLazy,
         FirstLineIndent,
         CodeLineNumber,
-        TaskListLineThrough
+        TaskListLineThrough,
+        DiaryCardTags
     }
 }

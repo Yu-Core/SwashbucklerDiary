@@ -7,6 +7,8 @@ namespace SwashbucklerDiary.Rcl.Pages
     {
         private bool diaryCardIcon;
 
+        private bool diaryCardTags;
+
         private string? diaryCardDateFormat;
 
         private bool showDiaryCardDateFormat;
@@ -22,6 +24,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.ReadSettings();
 
             diaryCardIcon = SettingService.Get<bool>(Setting.DiaryCardIcon);
+            diaryCardTags = SettingService.Get<bool>(Setting.DiaryCardTags);
             diaryCardDateFormat = SettingService.Get<string>(Setting.DiaryCardDateFormat);
         }
 

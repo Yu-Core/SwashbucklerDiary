@@ -210,6 +210,12 @@
     "Href": "diaryCardSetting"
   },
   {
+    "Name": "Setting.Display.DiaryCard.Tags.Name",
+    "Icon": "mdi-label-outline",
+    "Path": "Setting.Display.DiaryCard.Tags.Path",
+    "Href": "diaryCardSetting"
+  },
+  {
     "Name": "Setting.Display.DiaryCard.DateFormat.Name",
     "Icon": "mdi-calendar-clock",
     "Path": "Setting.Display.DiaryCard.DateFormat.Path",

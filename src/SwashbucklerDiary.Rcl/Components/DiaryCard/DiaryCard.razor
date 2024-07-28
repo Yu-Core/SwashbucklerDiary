@@ -48,4 +48,20 @@
             </div>
         </div>
     </div>
+    @if (Value.Tags is not null && Value.Tags.Count > 0)
+    {
+        <div class="px-3 diary-card-tags">
+            <div style="white-space: nowrap;width:100%;overflow-x:hidden;">
+                @foreach (var item in Value.Tags)
+                {
+                    <span @key="item.Id" tabindex="0" class="m-chip m-chip--outlined m-chip--no-color @Theme m-size--default mr-2">
+                        <div class="m-chip__content">
+                            @(item.Name)
+                        </div>
+                    </span>
+                }
+            </div>
+        </div>
+    }
+
 </div>

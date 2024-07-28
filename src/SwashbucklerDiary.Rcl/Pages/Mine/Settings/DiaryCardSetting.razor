@@ -33,6 +33,28 @@
 
             <MDivider Class="mx-5"></MDivider>
 
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-label-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.DiaryCard.Tags.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="diaryCardTags"
+                             TValue="bool"
+                             OnChange="SettingChange(Setting.DiaryCardTags)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
             <MListItem OnClick="@(()=>showDiaryCardDateFormat=true)">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">

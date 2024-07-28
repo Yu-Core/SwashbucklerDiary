@@ -387,6 +387,10 @@
           "Name": "Icon",
           "Path": "Setting / Diary card / Card icon"
         },
+        "Tags": {
+          "Name": "Tags",
+          "Path": "Setting / Diary card / Card tags"
+        },
         "DateFormat": {
           "Name": "Date format",
           "Path": "Setting / Diary card / Date format"

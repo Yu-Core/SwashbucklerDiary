@@ -35,5 +35,6 @@
   "ImageLazy": true,
   "FirstLineIndent": false,
   "CodeLineNumber": false,
-  "TaskListLineThrough": false
+  "TaskListLineThrough": false,
+  "DiaryCardTags": false
 }
