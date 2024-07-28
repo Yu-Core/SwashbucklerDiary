@@ -171,7 +171,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        private void OnEdit()
+        private void ToWrite()
         {
             To($"write?DiaryId={Id}", false);
         }
