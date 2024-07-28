@@ -1,4 +1,4 @@
-.loading-progress {
+﻿.loading-progress {
     position: relative;
     display: block;
     width: 8rem;
@@ -36,15 +36,10 @@ code {
 }
 
 @media screen and (max-width:600px) {
-    .m-snackbar--pwa {
-        justify-content: center !important;
-        align-items: center !important;
+    .m-snackbar--pwa .m-snack__wrapper {
+        border-radius: 12px !important;
+        min-width: 344px !important;
     }
-
-        .m-snackbar--pwa .m-snack__wrapper {
-            border-radius: 12px !important;
-            min-width: 344px !important;
-        }
 }
 
 .loading-container {

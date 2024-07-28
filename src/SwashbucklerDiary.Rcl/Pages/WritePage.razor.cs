@@ -340,7 +340,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        private void InvokeStateHasChanged(object? sender, BreakpointChangedEventArgs e)
+        private void HandleBreakpointChange(object? sender, BreakpointChangedEventArgs e)
         {
             StateHasChanged();
         }

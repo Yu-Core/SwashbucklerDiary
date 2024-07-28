@@ -52,14 +52,14 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
-            MasaBlazorHelper.BreakpointChanged += InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
         }
 
         protected override void OnDispose()
         {
             base.OnDispose();
 
-            MasaBlazorHelper.BreakpointChanged -= InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
         }
 
         protected override void ReadSettings()
@@ -105,7 +105,7 @@ namespace SwashbucklerDiary.Rcl.Components
             InvokeAsync(StateHasChanged);
         }
 
-        private void InvokeStateHasChanged(object? sender, MyBreakpointChangedEventArgs e)
+        private void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)
         {
             if (!e.XsChanged || !e.SmChanged)
             {

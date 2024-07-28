@@ -7,25 +7,12 @@
            Value="false"
            Vertical
            Closeable
-           Right
-           Bottom
+           Top="Top"
+           Right="Rigtht"
+           Bottom="Bottom"
+           Rounded="@("lg")"
            Timeout="-1"
            ActionText="@I18n.T("pwa.refresh")"
            OnClose="Ignore"
            OnAction="OnRefresh">
 </PSnackbar>
-
-@code {
-
-    [CascadingParameter(Name = "Culture")]
-    public string? Culture { get; set; }
-
-    [Parameter]
-    public Func<Task>? OnRefresh { get; set; }
-
-    private async Task Ignore()
-    {
-        await JSRuntime.InvokeVoidAsync("swIgnoreUpdate");
-    }
-
-}

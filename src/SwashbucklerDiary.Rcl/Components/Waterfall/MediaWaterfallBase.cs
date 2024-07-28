@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public void Dispose()
         {
-            MasaBlazorHelper.BreakpointChanged -= InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
             GC.SuppressFinalize(this);
         }
 
@@ -31,10 +31,10 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
-            MasaBlazorHelper.BreakpointChanged += InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
         }
 
-        protected async void InvokeStateHasChanged(object? sender, MyBreakpointChangedEventArgs e)
+        protected async void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)
         {
             if (!e.XsChanged)
             {

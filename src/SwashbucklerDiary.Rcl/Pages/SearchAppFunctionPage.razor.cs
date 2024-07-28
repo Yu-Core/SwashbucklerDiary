@@ -31,7 +31,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadQuery();
-            MasaBlazorHelper.BreakpointChanged += InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -48,7 +48,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnDispose();
 
-            MasaBlazorHelper.BreakpointChanged -= InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
         }
 
         protected override async Task OnResume()
@@ -113,7 +113,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             return exp;
         }
 
-        private void InvokeStateHasChanged(object? sender, MyBreakpointChangedEventArgs e)
+        private void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)
         {
             if (!e.XsChanged)
             {

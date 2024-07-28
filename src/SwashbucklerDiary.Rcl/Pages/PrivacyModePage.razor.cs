@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
-            MasaBlazorHelper.BreakpointChanged += InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
 
             // Prevent entry through URL
             if (!allowEnterPrivacyMode)
@@ -69,7 +69,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnDispose();
 
-            MasaBlazorHelper.BreakpointChanged -= InvokeStateHasChanged;
+            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
         }
 
         private bool Desktop => MasaBlazorHelper.Breakpoint.SmAndUp;
@@ -102,7 +102,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             To("");
         }
 
-        private void InvokeStateHasChanged(object? sender, MyBreakpointChangedEventArgs e)
+        private void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)
         {
             if (!e.SmAndUpChanged)
             {
