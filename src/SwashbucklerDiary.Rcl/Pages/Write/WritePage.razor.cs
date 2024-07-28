@@ -29,8 +29,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool enableMarkdown = true;
 
-        private bool createMode;
-
         private bool overlay;
 
         private bool autofocus = true;
@@ -48,6 +46,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private TextareaEdit textareaEdit = default!;
 
         private List<DynamicListItem> menuItems = [];
+
+        private DiaryEditMode diaryEditMode = DiaryEditMode.Add;
 
         private DiaryModel diary = new()
         {
@@ -206,10 +206,10 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (DiaryId is null)
             {
-                createMode = true;
                 return;
             }
 
+            diaryEditMode = DiaryEditMode.Update;
             var diary = await DiaryService.FindAsync((Guid)DiaryId);
             if (diary is null)
             {
@@ -299,15 +299,21 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (string.IsNullOrWhiteSpace(diary.Content))
             {
+                if (diaryEditMode == DiaryEditMode.Update)
+                {
+                    diaryEditMode = DiaryEditMode.Add;
+                    await DiaryService.DeleteAsync(diary);
+                }
+
                 return;
             }
 
             diary.Resources = MediaResourceManager.GetDiaryResources(diary.Content);
             diary.UpdateTime = DateTime.Now;
             diary.Private = privacyMode;
-            if (createMode)
+            if (diaryEditMode == DiaryEditMode.Add)
             {
-                createMode = false;
+                diaryEditMode = DiaryEditMode.Update;
                 bool isSuccess = await DiaryService.AddAsync(diary);
 
                 if (!background)
