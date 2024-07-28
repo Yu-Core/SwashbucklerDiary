@@ -13,6 +13,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showDate;
 
+        private bool showAddTag;
+
         private StringNumber tab = 0;
 
         private SwiperTabItems swiperTabItems = default!;
@@ -49,11 +51,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             showDate = SettingService.Get<bool>(Setting.IndexDate);
         }
 
-        private bool ShowAddTag { get; set; }
+        private string? SwiperActiveItemSelector
+            => swiperTabItems is null || swiperTabItems.ActiveItem is null ? null : $"#{swiperTabItems.ActiveItem.Id}";
 
         private async Task SaveAddTag(string tagName)
         {
-            ShowAddTag = false;
+            showAddTag = false;
             if (string.IsNullOrWhiteSpace(tagName))
             {
                 return;

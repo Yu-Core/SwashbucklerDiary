@@ -54,7 +54,8 @@
                           Selector="@($".{highlightSearchContainerClass}")">
 </HighlightSearchTextField>
 
-<ScrollContainer ContentStyle="padding-top:0px;">
+<ScrollContainer Id="@scrollContainerId"
+                 ContentStyle="padding-top:0px;">
     <div id="screenshot" class="primary-background">
         <div class="d-flex align-center px-3">
             <span class="text-h6 font-weight-bold">
@@ -142,6 +143,11 @@
         </div>
     </div>
 </ScrollContainer>
+
+<div class="right-bottom-float-area">
+    <BackTopButton Selector="@scrollContainerSelector">
+    </BackTopButton>
+</div>
 
 <MultiListDialog @bind-Visible="showShare"
                  Title="@(I18n.T("Share.SelectShare"))"

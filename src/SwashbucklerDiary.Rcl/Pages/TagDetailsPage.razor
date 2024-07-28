@@ -5,11 +5,16 @@
           OnClick="NavigateToBack">
 </MyAppBar>
 
-<ScrollContainer>
+<ScrollContainer Id="@scrollContainerId">
     <DiaryCardList @bind-Tags="Tags"
                    Value="Diaries" />
 </ScrollContainer>
 
-<RightBottomFloatButton Icon="mdi-pencil"
-                        OnClick="NavigateToWrite">
-</RightBottomFloatButton>
+<div class="right-bottom-float-area">
+    <BackTopButton Class="mb-2"
+                   Selector="@scrollContainerSelector">
+    </BackTopButton>
+    <MyFloatButton Icon="mdi-pencil"
+                   OnClick="ToWrite">
+    </MyFloatButton>
+</div>

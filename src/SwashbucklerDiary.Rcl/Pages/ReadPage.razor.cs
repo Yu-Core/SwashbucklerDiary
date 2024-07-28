@@ -26,6 +26,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool privacyMode;
 
+        private readonly string scrollContainerId = $"scroll-container-{Guid.NewGuid():N}";
+
+        private string scrollContainerSelector = string.Empty;
+
         private DiaryModel diary = new();
 
         private MarkdownPreview markdownPreview = default!;
@@ -54,6 +58,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
+            scrollContainerSelector = $"#{scrollContainerId}";
             LoadView();
         }
 

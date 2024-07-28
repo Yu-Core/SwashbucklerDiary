@@ -19,7 +19,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showConfirmMerge;
 
-        private ScrollContainer scrollContainer = default!;
+        private readonly string scrollContainerId = $"scroll-container-{Guid.NewGuid():N}";
+
+        private string scrollContainerSelector = string.Empty;
 
         private DateOnly[] eventsDates = [];
 
@@ -33,6 +35,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
+            scrollContainerSelector = $"#{scrollContainerId}";
             LoadView();
         }
 
@@ -72,7 +75,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 //直接滚动显得很生硬，所以延时0.2s
                 await Task.Delay(200);
-                await JS.ScrollTo($"#{scrollContainer.Id}", 0);
+                await JS.ScrollTo(scrollContainerSelector, 0);
             });
         }
 

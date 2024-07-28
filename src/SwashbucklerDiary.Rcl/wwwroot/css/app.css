@@ -276,21 +276,24 @@ html {
     overflow: auto !important;
 }
 
-.theme--light .my-btn-fab {
-    background-color: #fff !important;
+.right-bottom-float-area {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 1;
+    bottom: 1rem;
+    right: 1rem;
 }
 
 @media screen and (max-width:600px) {
-    .my-btn-fab {
+    .right-bottom-float-area {
         bottom: calc(1rem + 56px) !important;
         margin-bottom: 8px !important;
     }
 }
 
 @media screen and (min-width:600px) {
-    .my-btn-fab {
-        bottom: 1rem !important;
-        right: 1rem !important;
+    .right-bottom-float-area {
         margin: 8px !important;
     }
 }

@@ -10,8 +10,11 @@
     <LocationCardList Value="locations"></LocationCardList>
 </ScrollContainer>
 
-<RightBottomFloatButton Icon="mdi-plus" OnClick="()=>showAdd=true">
-</RightBottomFloatButton>
+<div class="right-bottom-float-area">
+    <MyFloatButton Icon="mdi-plus"
+                   OnClick="()=>showAdd=true">
+    </MyFloatButton>
+</div>
 
 <InputDialog @bind-Visible="showAdd"
              Title="@(I18n.T("Location.Add"))"

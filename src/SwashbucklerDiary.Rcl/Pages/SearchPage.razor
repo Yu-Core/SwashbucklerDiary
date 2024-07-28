@@ -20,12 +20,17 @@
     </MButton>
 </MyAppBar>
 
-<ScrollContainer>
+<ScrollContainer Id="@scrollContainerId">
     <DiaryCardList @bind-Tags="Tags"
                    Value="Diaries"
                    NotFoundText="@(I18n.T("Search.Not Found"))">
     </DiaryCardList>
 </ScrollContainer>
+
+<div class="right-bottom-float-area">
+    <BackTopButton Selector="@scrollContainerSelector">
+    </BackTopButton>
+</div>
 
 <DateFilterDialog @bind-Visible="showFilter"
                   @bind-Value="dateFilter"

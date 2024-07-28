@@ -50,7 +50,7 @@
     </MultiMenu>
 </MyAppBar>
 
-<ScrollContainer @ref="scrollContainer">
+<ScrollContainer Id="@scrollContainerId">
     <IntersectElement IntersectChanged="HandleIntersectChanged">
         <MDatePicker @key="datePickerKey"
                      @bind-Value="SelectedDate"
@@ -71,9 +71,14 @@
     </DiaryCardList>
 </ScrollContainer>
 
-<RightBottomFloatButton Icon="mdi-pencil"
-                        OnClick="ToWrite">
-</RightBottomFloatButton>
+<div class="right-bottom-float-area">
+    <BackTopButton Class="mb-2"
+                   Selector="@scrollContainerSelector">
+    </BackTopButton>
+    <MyFloatButton Icon="mdi-pencil"
+                   OnClick="ToWrite">
+    </MyFloatButton>
+</div>
 
 <DatePickerDialog @bind-Value="SelectedDate"
                   @bind-Visible="showFloatCalendar"

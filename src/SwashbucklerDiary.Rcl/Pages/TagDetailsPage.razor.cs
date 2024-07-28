@@ -8,8 +8,19 @@ namespace SwashbucklerDiary.Rcl.Pages
     {
         private string? tagName;
 
+        private readonly string scrollContainerId = $"scroll-container-{Guid.NewGuid():N}";
+
+        private string scrollContainerSelector = string.Empty;
+
         [Parameter]
         public Guid Id { get; set; }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            scrollContainerSelector = $"#{scrollContainerId}";
+        }
 
         protected override async Task UpdateDiariesAsync()
         {
@@ -24,7 +35,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             Diaries = tag?.Diaries ?? [];
         }
 
-        private void NavigateToWrite()
+        private void ToWrite()
         {
             NavigationManager.NavigateTo($"write?tagId={Id}");
         }

@@ -11,6 +11,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? search;
 
+        private readonly string scrollContainerId = $"scroll-container-{Guid.NewGuid():N}";
+
+        private string scrollContainerSelector = string.Empty;
+
         private DateFilterForm dateFilter = new();
 
         [Parameter]
@@ -21,6 +25,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
+            scrollContainerSelector = $"#{scrollContainerId}";
             LoadQuery();
         }
 
