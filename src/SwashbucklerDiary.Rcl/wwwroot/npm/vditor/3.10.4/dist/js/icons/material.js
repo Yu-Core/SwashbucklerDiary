@@ -1,4 +1,4 @@
-document.body.insertAdjacentHTML('afterBegin', `<svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg">
+﻿document.body.insertAdjacentHTML('afterBegin', `<svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <symbol id="vditor-icon-comment" viewBox="0 0 32 32">
       <path d="M28.8 24.272l-1.872-1.872h-23.728v-19.2h25.6v21.072zM28.8 0h-25.6c-1.76 0-3.2 1.44-3.2 3.2v19.2c0 1.76 1.44 3.2 3.2 3.2h22.4l6.4 6.4v-28.8c0-1.76-1.44-3.2-3.2-3.2z"></path>
@@ -168,10 +168,10 @@ document.body.insertAdjacentHTML('afterBegin', `<svg style="position: absolute; 
     <symbol id="vditor-icon-bold" viewBox="0 0 32 32">
       <path d="M18.569 26.328q1.498 0 2.462-1.017t0.963-2.408-0.963-2.408-2.462-1.017h-8.027v6.849h8.027zM10.542 5.779v6.85h6.85q1.391 0 2.408-1.017t1.017-2.408-1.017-2.408-2.408-1.017h-6.849zM23.385 15.518q4.923 2.248 4.923 7.813 0 3.639-2.408 6.154t-6.047 2.515h-16.161v-32h14.341q3.853 0 6.475 2.676t2.622 6.528-3.746 6.314z"></path>
     </symbol>
-    <symbol id="vditor-icon-indent" viewBox="0 0 32 32">
+    <symbol id="vditor-icon-outdent" viewBox="0 0 32 32">
       <path d="M14.25 17.75v-3.5h17.75v3.5h-17.75zM14.25 10.667v-3.583h17.75v3.583h-17.75zM0 0h32v3.583h-32v-3.583zM0 32v-3.583h32v3.583h-32zM0 16l7.083-7.083v14.167zM14.25 24.917v-3.583h17.75v3.583h-17.75z"></path>
     </symbol>
-    <symbol id="vditor-icon-outdent" viewBox="0 0 32 32">
+    <symbol id="vditor-icon-indent" viewBox="0 0 32 32">
       <path d="M14.25 17.75v-3.5h17.75v3.5h-17.75zM14.25 10.667v-3.583h17.75v3.583h-17.75zM0 0h32v3.583h-32v-3.583zM14.25 24.917v-3.583h17.75v3.583h-17.75zM0 8.917l7.083 7.083-7.083 7.083v-14.167zM0 32v-3.583h32v3.583h-32z"></path>
     </symbol>
     <symbol id="vditor-icon-italic" viewBox="0 0 32 32">
