@@ -83,24 +83,28 @@
     }
 
     .vditor-toolbar {
-        max-height: var(--vditor-toolbar-height);
-        display: flex;
-        flex-wrap: wrap;
         position: fixed;
         bottom: 0px;
         left: 0px;
         right: 0px;
-        padding-left: 12px !important;
         border: none;
         z-index: 10;
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow-x: auto;
         /*box-shadow: 0 -3px 5px -3px rgba(0,0,0,.2);*/
     }
 
         .vditor-toolbar .vditor-toolbar__item {
             padding: 0px 8px !important;
         }
+
+    .vditor-toolbar-content {
+        min-width: var(--vditor-toolbar-width);
+        max-height: var(--vditor-toolbar-height);
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+    }
 
     button[data-type="headings"].vditor-tooltipped + .vditor-panel--arrow {
         position: fixed;

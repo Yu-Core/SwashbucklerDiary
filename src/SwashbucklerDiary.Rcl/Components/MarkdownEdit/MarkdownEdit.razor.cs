@@ -130,6 +130,11 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "className", "" },
                 { "icon", "<svg><use xlink:href=\"#vditor-icon-video\"></use></svg>" },
             };
+            var btnUpload = new Dictionary<string, object?>()
+            {
+                { "name", "upload" },
+                { "className", "d-none" },
+            };
             string[] accept = ["image/*", "audio/*", "video/*"];
             var upload = new Dictionary<string, object?>()
             {
@@ -140,7 +145,7 @@ namespace SwashbucklerDiary.Rcl.Components
             _options = new()
             {
                 { "mode", "ir" },
-                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code","inline-code","link",btnImage,btnAudio,btnVideo,"fullscreen","upload"}},
+                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list" , "check", "code", "inline-code", "link", btnImage, btnAudio, btnVideo, "undo", "redo", "fullscreen", btnUpload }},
                 { "placeholder", I18n.T("Write.ContentPlace") },
                 { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.10.4" },
                 { "lang", lang },
@@ -156,7 +161,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task AfterMarkdownRender()
         {
-            await Module.After();
+            await Module.After(mMarkdown.Ref);
             if (Autofocus)
             {
                 await Module.Autofocus(mMarkdown.Ref);

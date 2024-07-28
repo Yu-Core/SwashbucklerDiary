@@ -592,10 +592,6 @@ html.m-overlay-scroll-blocked {
     text-indent: 2rem;
 }
 
-.vditor-toolbar__item [data-type="upload"] {
-    display: none;
-}
-
 .text-preview {
     padding-top: 10px;
     padding-left: 12px;
