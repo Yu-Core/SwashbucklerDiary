@@ -27,7 +27,8 @@
     "SaveSuccess": "保存成功",
     "SaveFail": "保存失败",
     "Sort": "排序",
-    "NotSupported": "当前平台不支持"
+    "NotSupported": "当前平台不支持",
+    "Search": "搜索"
   },
   "Main": {
     "Diary": "日记",

@@ -33,7 +33,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public string? Placeholder { get; set; }
 
         [Parameter]
-        public int MaxLength { get; set; } = 20;
+        public int MaxLength { get; set; } = 50;
 
         [Parameter]
         public string? OKText { get; set; }

@@ -12,25 +12,46 @@
             @(I18n.T("Tag.Select"))
             <MSpacer></MSpacer>
             <MButton Icon="true"
+                     OnClick="()=>showSearch=!showSearch">
+                <MIcon>mdi-magnify</MIcon>
+            </MButton>
+            <MButton Icon="true"
                      OnClick="HandleOnCancel">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
-        <MCardText Class="scroll-show pb-0"
-                   Style="max-height:200px;">
-            <MChipGroup @bind-Values="SelectedTagIds"
-                        Column="true"
-                        Multiple="true">
-                @foreach (var item in Items)
-                {
-                    <MChip @key="item.Id"
-                           Value="@(item.Id.ToString())"
-                           Filter="true"
-                           Outlined="true">
-                        @(item.Name)
-                    </MChip>
-                }
-            </MChipGroup>
+        <MCardText Class="pb-0">
+            @if (showSearch)
+            {
+                <MTextFieldExtension @bind-Value="searchText"
+                                     Class="mb-2"
+                                     OnInput="Search"
+                                     Dense
+                                     TValue="string"
+                                     Filled
+                                     Rounded
+                                     Clearable
+                                     Color="@Color"
+                                     HideDetails="@("auto")"
+                                     spellcheck="false"
+                                     Placeholder="@(I18n.T("Share.Search"))"
+                                     PrependInnerIcon="mdi-magnify">
+                </MTextFieldExtension>
+            }
+            <div class="scroll-show" style="max-height:200px;">
+                <MChipGroup @bind-Values="SelectedTagIds"
+                            Column="true"
+                            Multiple="true">
+                    @foreach (var item in internalItems)
+                    {
+                        <MChip @key="item.Id"
+                               Value="@(item.Id.ToString())"
+                               Filter="true">
+                            @(item.Name)
+                        </MChip>
+                    }
+                </MChipGroup>
+            </div>
         </MCardText>
         <MCardActions>
             <MButton Text="true"

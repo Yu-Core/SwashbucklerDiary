@@ -27,7 +27,8 @@
     "SaveSuccess": "Save success",
     "SaveFail": "Save fail",
     "Sort": "Sort",
-    "NotSupported": "Platform Not Supported"
+    "NotSupported": "Platform Not Supported",
+    "Search": "Search"
   },
   "Main": {
     "Diary": "Diary",

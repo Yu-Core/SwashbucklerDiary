@@ -48,13 +48,12 @@ namespace SwashbucklerDiary.Rcl.Repository
                 .FirstAsync(expression);
         }
 
-        public Task<List<TagModel>> GetTagsAsync(Guid id)
+        public async Task<List<TagModel>> GetTagsAsync(Guid id)
         {
-            return base.Context.Queryable<DiaryModel>()
-                .LeftJoin<DiaryTagModel>((d, dt) => d.Id == dt.DiaryId)
-                .LeftJoin<TagModel>((d, dt, t) => dt.TagId == t.Id)
-                .Where(d => d.Id == id)
-                .Select((d, dt, t) => t)
+            return await base.Context.Queryable<DiaryTagModel>()
+                .Where(dt => dt.DiaryId == id)
+                .LeftJoin<TagModel>((dt, t) => dt.TagId == t.Id)
+                .Select((dt, t) => t)
                 .ToListAsync();
         }
 

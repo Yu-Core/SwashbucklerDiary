@@ -12,38 +12,54 @@
             @(I18n.T("Location.Select"))
             <MSpacer></MSpacer>
             <MButton Icon
+                     OnClick="()=>showSearch=!showSearch">
+                <MIcon>mdi-magnify</MIcon>
+            </MButton>
+            <MButton Icon
                      OnClick="HandleOnCancel">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
 
-        <MCardText Class="scroll-show pb-0"
-                   Style="max-height:300px;">
-            <Virtualize Items="locations"
-                        ItemSize="56"
-                        Context="item">
-                <MListItem @key="item.Id"
-                           Class="px-0"
-                           OnClick="()=>SetSelectedLocation(item)">
-                    <MListItemIcon>
-                        <MIcon Class="evident-icon">
-                            mdi-map-marker-outline
-                        </MIcon>
-                    </MListItemIcon>
-                    <MListItemContent>
-                        @(item.Name)
-                    </MListItemContent>
+        <MCardText Class="pb-0">
+            @if (showSearch)
+            {
+                <MTextFieldExtension @bind-Value="searchText"
+                                     Class="mb-2"
+                                     Dense
+                                     TValue="string"
+                                     Filled
+                                     Rounded
+                                     Clearable
+                                     Color="@Color"
+                                     HideDetails="@("auto")"
+                                     spellcheck="false"
+                                     Placeholder="@(I18n.T("Share.Search"))"
+                                     PrependInnerIcon="mdi-magnify">
+                </MTextFieldExtension>
+            }
+            <div class="scroll-show" style="max-height:300px;">
+                <Virtualize Items="FilterLocations"
+                            ItemSize="56"
+                            Context="item">
+                    <MListItem @key="item.Id"
+                               Class="px-0"
+                               OnClick="()=>SetSelectedLocation(item)">
+                        <MListItemContent>
+                            @(item.Name)
+                        </MListItemContent>
 
-                    <MListItemAction>
-                        @if (item.Name == internalLocation)
-                        {
-                            <MIcon>
-                                mdi-check
-                            </MIcon>
-                        }
-                    </MListItemAction>
-                </MListItem>
-            </Virtualize>
+                        <MListItemAction>
+                            @if (item.Name == selectedLocation)
+                            {
+                                <MIcon>
+                                    mdi-check
+                                </MIcon>
+                            }
+                        </MListItemAction>
+                    </MListItem>
+                </Virtualize>
+            </div>
         </MCardText>
         <MCardActions>
             <MButton Text="true"
@@ -67,6 +83,6 @@
 <InputDialog @bind-Visible="showAdd"
              Title="@(I18n.T("Location.Add"))"
              Placeholder="@(I18n.T("Location.Placeholder"))"
-             MaxLength="50"
+             MaxLength="200"
              OnOK="SaveAdd">
 </InputDialog>

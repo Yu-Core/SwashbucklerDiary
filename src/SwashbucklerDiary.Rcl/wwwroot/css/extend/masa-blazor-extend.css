@@ -312,3 +312,7 @@
     margin-top: auto !important;
     margin-bottom: auto !important;
 }
+
+.m-text-field--rounded > .m-input__control > .m-input__slot {
+    padding: 0 12px
+}

@@ -10,7 +10,11 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         private bool showAdd;
 
-        private string? internalLocation;
+        private bool showSearch;
+
+        private string? searchText;
+
+        private string? selectedLocation;
 
         private List<LocationModel> locations = [];
 
@@ -19,6 +23,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         IJSRuntime JS { get; set; } = default!;
+
+        [CascadingParameter(Name = "IsDark")]
+        public bool Dark { get; set; }
 
         [Parameter]
         public string? Value { get; set; }
@@ -37,15 +44,21 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
+        private string? Color => Dark ? "white" : "grey";
+
+        private ICollection<LocationModel> FilterLocations =>
+            string.IsNullOrWhiteSpace(searchText) ? locations : locations.Where(it => !string.IsNullOrEmpty(it.Name) && (it.Name.Contains(searchText) || it.Name == selectedLocation)).ToList();
+
+
         private void BeforeShowContent()
         {
-            internalLocation = Value;
+            selectedLocation = Value;
         }
 
         private void SetSelectedLocation(LocationModel location)
         {
-            var name = internalLocation == location.Name ? string.Empty : location.Name;
-            internalLocation = name;
+            var name = selectedLocation == location.Name ? string.Empty : location.Name;
+            selectedLocation = name;
         }
 
         private async Task SaveAdd(string name)
@@ -73,17 +86,17 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             locations.Insert(0, location);
-            internalLocation = location.Name;
+            selectedLocation = location.Name;
             StateHasChanged();
         }
 
         private async Task HandleOnOK()
         {
             await InternalVisibleChanged(false);
-            Value = internalLocation;
+            Value = selectedLocation;
             if (ValueChanged.HasDelegate)
             {
-                await ValueChanged.InvokeAsync(internalLocation);
+                await ValueChanged.InvokeAsync(selectedLocation);
             }
         }
     }

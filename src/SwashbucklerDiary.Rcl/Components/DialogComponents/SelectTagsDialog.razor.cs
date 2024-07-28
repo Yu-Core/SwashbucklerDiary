@@ -10,13 +10,22 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         private bool showAddTag;
 
+        private bool showSearch;
+
+        private string? searchText;
+
         private List<StringNumber> SelectedTagIds = [];
+
+        private IEnumerable<TagModel> internalItems = [];
 
         [Inject]
         public ITagService TagService { get; set; } = default!;
 
+        [CascadingParameter(Name = "IsDark")]
+        public bool Dark { get; set; }
+
         [Parameter]
-        public List<TagModel> Value { get; set; } = default!;
+        public List<TagModel> Value { get; set; } = [];
 
         [Parameter]
         public EventCallback<List<TagModel>> ValueChanged { get; set; }
@@ -30,12 +39,16 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public EventCallback<List<TagModel>> ItemsChanged { get; set; }
 
+        private string? Color => Dark ? "white" : "grey";
+
         private async Task BeforeShowContent()
         {
+            searchText = string.Empty;
+            internalItems = Items;
             await SetSelectedTagIds();
         }
 
-        protected virtual async Task HandleOnSave(MouseEventArgs _)
+        private async Task HandleOnSave(MouseEventArgs _)
         {
             var tagModels = new List<TagModel>();
             foreach (var item in SelectedTagIds)
@@ -98,6 +111,18 @@ namespace SwashbucklerDiary.Rcl.Components
 
             Items.Insert(0, tag);
             StateHasChanged();
+        }
+
+        private void Search(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                internalItems = Items;
+            }
+            else
+            {
+                internalItems = Items.Where(it => !string.IsNullOrEmpty(it.Name) && (it.Name.Contains(text) || SelectedTagIds.Any(t => t.ToString() == it.Id.ToString())));
+            }
         }
     }
 }

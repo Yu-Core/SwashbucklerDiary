@@ -609,3 +609,7 @@ html.m-overlay-scroll-blocked {
 .task-list-line-through .vditor-task--done {
     text-decoration-line: line-through;
 }
+
+.theme--light.m-chip:not(.m-chip--active) {
+    background: rgba(0, 0, 0, .06);
+}
