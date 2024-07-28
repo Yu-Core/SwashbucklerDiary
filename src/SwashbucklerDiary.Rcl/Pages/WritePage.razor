@@ -53,8 +53,8 @@
 <ScrollContainer ContentClass="d-flex flex-column py-0"
                  ContentStyle="height:100%;">
     <div>
-        <div class="d-flex align-center px-3">
-            <button class="d-flex align-center text-h6 font-weight-bold" @onclick="()=>showCreateTime=true">
+        <div class="d-flex align-center px-3 flex-wrap">
+            <button class="d-flex align-center text-h6 font-weight-bold mr-5" @onclick="()=>showCreateTime=true">
                 @(diary.CreateTime.ToString("d"))
                 <MIcon Size="20"
                        Right>
@@ -62,7 +62,7 @@
                 </MIcon>
             </button>
 
-            <span class="ml-5 text-subtitle-2">
+            <span class="text-subtitle-2">
                 @(I18n.ToWeek(diary.CreateTime))
             </span>
 
@@ -106,7 +106,7 @@
         </MTextField>
     }
 
-    <div class="write-input-wrap mb-sm-3 user-select">
+    <div class="write-input-wrap user-select">
         @if (enableMarkdown)
         {
             <MarkdownEdit @ref="markdownEdit"

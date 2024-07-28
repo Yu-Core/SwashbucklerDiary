@@ -617,3 +617,8 @@ html.m-overlay-scroll-blocked {
 .theme--light.m-chip:not(.m-chip--active) {
     background: rgba(0, 0, 0, .06);
 }
+
+.flex-basic-space {
+    flex-grow: 0;
+    flex-basis: content;
+}
