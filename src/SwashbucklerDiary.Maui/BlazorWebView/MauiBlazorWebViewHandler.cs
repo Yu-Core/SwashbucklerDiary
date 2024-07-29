@@ -4,7 +4,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
 {
     public partial class MauiBlazorWebViewHandler : BlazorWebViewHandler
     {
-        private const string AppHostAddress = "0.0.0.0";
+        public const string AppHostAddress = "0.0.0.0";
 #if IOS || MACCATALYST
         public const string BaseUri = $"app://{AppHostAddress}/";
 #else

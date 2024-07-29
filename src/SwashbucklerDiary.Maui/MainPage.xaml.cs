@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.WebView;
+using SwashbucklerDiary.Maui.BlazorWebView;
 using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 
@@ -16,12 +17,23 @@ namespace SwashbucklerDiary.Maui
 
             blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializingCore;
             blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;
+#if IOS || MACCATALYST
+            blazorWebView.Loaded += BlazorWebViewLoaded;
+#endif
 
 #if IOS
             Initialize();
 #endif
         }
-
+#if IOS || MACCATALYST
+        private void BlazorWebViewLoaded(object? sender, EventArgs e)
+        {
+            if (wKWebView is not null)
+            {
+                wKWebView.NavigationDelegate = new WebViewNavigationDelegate(MauiBlazorWebViewHandler.Default);
+            }
+        }
+#endif
         private partial void BlazorWebViewInitializing(object? sender, BlazorWebViewInitializingEventArgs e);
 
         private partial void BlazorWebViewInitialized(object? sender, BlazorWebViewInitializedEventArgs e);

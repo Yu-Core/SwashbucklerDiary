@@ -15,6 +15,8 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
 #nullable disable
     public partial class MauiBlazorWebViewHandler
     {
+        public static MauiBlazorWebViewHandler Default { get; private set; }
+
         private BlazorWebViewHandlerReflection _base;
 
         private BlazorWebViewHandlerReflection Base => _base ??= new(this);
@@ -22,6 +24,8 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
         [SupportedOSPlatform("ios11.0")]
         protected override WKWebView CreatePlatformView()
         {
+            Default = this;
+
             Base.LoggerCreatingWebKitWKWebView();
 
             var config = new WKWebViewConfiguration();
