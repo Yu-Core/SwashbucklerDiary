@@ -119,7 +119,9 @@
     "SelectWeather": "选择天气",
     "SelectMood": "选择心情",
     "InputLocation": "输入位置",
-    "LocationPlace": "请输入位置"
+    "LocationPlace": "请输入位置",
+    "DisplayIconText": "显示图标文本",
+    "HideIconText": "隐藏图标文本"
   },
   "Weather": {
     "cloudy": "多云",
@@ -406,6 +408,10 @@
         "Markdown": {
           "Name": "Markdown",
           "Path": "设置 / 日记 / Markdown"
+        },
+        "IconText": {
+          "Name": "图标文本",
+          "Path": "设置 / 日记 / 图标文本"
         },
         "EditAutoSave": {
           "Name": "自动保存",

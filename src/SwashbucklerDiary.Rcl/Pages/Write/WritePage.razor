@@ -50,7 +50,7 @@
     </MultiMenu>
 </MyAppBar>
 
-<ScrollContainer ContentClass="d-flex flex-column py-0"
+<ScrollContainer ContentClass="d-flex flex-column pt-0 pb-sm-5"
                  ContentStyle="height:100%;">
     <div>
         <div class="d-flex align-center px-3 flex-wrap">
@@ -71,22 +71,6 @@
             <span class="text-subtitle-2">
                 @(CounterValue())
             </span>
-        </div>
-        <div>
-            <DiaryInfoButton Icon="@WeatherIcon"
-                             Text="@WeatherText"
-                             OnClick="()=>showWeather=true">
-            </DiaryInfoButton>
-
-            <DiaryInfoButton Icon="@MoodIcon"
-                             Text="@MoodText"
-                             OnClick="()=>showMood=true">
-            </DiaryInfoButton>
-
-            <DiaryInfoButton Icon="mdi-map-marker-outline"
-                             Text="@LocationText"
-                             OnClick="()=>showLocation=true">
-            </DiaryInfoButton>
         </div>
     </div>
 
@@ -128,13 +112,54 @@
         }
     </div>
 
-    <div class="mb-sm-5 @(SelectedTags.Any()?"":"d-none")">
+    <div style="position:relative;">
+        <div class="write-right-bottom-float-area">
+            <Transition Name="slide-y-reverse-transition">
+                <ShowTransitionElement Value="showFab"
+                                       Tag="div"
+                                       Class="flex-column justify-center align-center"
+                                       Style="display:flex;">
+                    <MyFloatButton Class="mb-2"
+                                   Elevation="1"
+                                   Icon="@WeatherIcon"
+                                   OnClick="()=>showWeather=true">
+                    </MyFloatButton>
+                    <MyFloatButton Class="mb-2"
+                                   Elevation="1"
+                                   Icon="@MoodIcon"
+                                   OnClick="()=>showMood=true">
+                    </MyFloatButton>
+                    <MyFloatButton Class="mb-2"
+                                   Elevation="1"
+                                   Icon="mdi-map-marker-outline"
+                                   OnClick="()=>showLocation=true">
+                    </MyFloatButton>
+                </ShowTransitionElement>
+            </Transition>
+            <MyFloatButton Elevation="1"
+                           Icon="@(showFab ? "mdi-chevron-down" : "mdi-chevron-up")"
+                           OnClick="()=>showFab=!showFab">
+            </MyFloatButton>
+        </div>
+    </div>
+
+    <div>
+        @if (!string.IsNullOrEmpty(SelectedLocation))
+        {
+            <DiaryInfoButton Class="pl-2"
+                             Icon="mdi-map-marker-outline"
+                             Text="@LocationText"
+                             OnClick="()=>showLocation=true">
+            </DiaryInfoButton>
+        }
+    </div>
+
+    <div class="pl-2 @(SelectedTags.Any()?"":"d-none")">
         <div class="write-chip-group" style="width:100%;">
             @foreach (var item in SelectedTags)
             {
                 <MChip @key="item.Id"
                        Close="true"
-                       Outlined="true"
                        OnCloseClick="()=>RemoveSelectedTag(item)">
                     @(item.Name)
                 </MChip>
@@ -146,8 +171,6 @@
     {
         <div class="vditor-toolbar-help"></div>
     }
-
-
 </ScrollContainer>
 
 <SelectTagsDialog @bind-Visible="showSelectTag"
@@ -156,23 +179,25 @@
                   OnSave="SaveSelectTags">
 </SelectTagsDialog>
 
-<SelectDialog @bind-Visible="showWeather"
-              @bind-Value="@SelectedWeather"
-              Title="@(I18n.T("Write.SelectWeather"))"
-              Items="weatherIcons"
-              ItemValue="it=>it.Key"
-              ItemText="@(item=>I18n.T("Weather." + item.Key))"
-              ItemIcon="it=>it.Value">
-</SelectDialog>
+<SelectChipDialog @bind-Visible="showWeather"
+                  @bind-Value="@SelectedWeather"
+                  Title="@(I18n.T("Write.SelectWeather"))"
+                  ShowText="showIconText"
+                  Items="weatherIcons"
+                  ItemValue="it=>it.Key"
+                  ItemText="@(item=>I18n.T("Weather." + item.Key))"
+                  ItemIcon="it=>it.Value">
+</SelectChipDialog>
 
-<SelectDialog @bind-Visible="showMood"
-              @bind-Value="@SelectedMood"
-              Title="@(I18n.T("Write.SelectMood"))"
-              Items="moodIcons"
-              ItemValue="it=>it.Key"
-              ItemText="@(item=>I18n.T("Mood." + item.Key))"
-              ItemIcon="it=>it.Value">
-</SelectDialog>
+<SelectChipDialog @bind-Visible="showMood"
+                  @bind-Value="@SelectedMood"
+                  Title="@(I18n.T("Write.SelectMood"))"
+                  ShowText="showIconText"
+                  Items="moodIcons"
+                  ItemValue="it=>it.Key"
+                  ItemText="@(item=>I18n.T("Mood." + item.Key))"
+                  ItemIcon="it=>it.Value">
+</SelectChipDialog>
 
 <SelectLocationDialog @bind-Visible="showLocation"
                       @bind-Value="SelectedLocation">

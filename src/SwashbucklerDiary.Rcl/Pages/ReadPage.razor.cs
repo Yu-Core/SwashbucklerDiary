@@ -24,6 +24,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showHighlightSearch;
 
+        private bool showFab = true;
+
         private bool privacyMode;
 
         private readonly string scrollContainerId = $"scroll-container-{Guid.NewGuid():N}";
@@ -100,13 +102,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? WeatherIcon => IconService.GetWeatherIcon(diary.Weather!);
 
-        private string? WeatherText => I18n.T("Weather." + diary.Weather);
-
         private string? MoodIcon => IconService.GetMoodIcon(diary.Mood!);
-
-        private string? MoodText => I18n.T("Mood." + diary.Mood);
-
-        private string? LocationText => diary.Location;
 
         private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
 

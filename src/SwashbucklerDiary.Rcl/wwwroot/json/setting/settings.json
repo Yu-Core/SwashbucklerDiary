@@ -36,5 +36,6 @@
   "FirstLineIndent": false,
   "CodeLineNumber": false,
   "TaskListLineThrough": false,
-  "DiaryCardTags": false
+  "DiaryCardTags": false,
+  "DiaryIconText": false
 }

@@ -37,6 +37,7 @@
         FirstLineIndent,
         CodeLineNumber,
         TaskListLineThrough,
-        DiaryCardTags
+        DiaryCardTags,
+        DiaryIconText
     }
 }

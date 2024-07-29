@@ -22,6 +22,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool taskListLineThrough;
 
+        private bool diaryIconText;
+
         private readonly Dictionary<string, string> editAutoSaveItems = new()
         {
             {"Setting.Display.Diary.EditAutoSave.Close" ,"0"},
@@ -40,6 +42,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             title = SettingService.Get<bool>(Setting.Title);
             markdown = SettingService.Get<bool>(Setting.Markdown);
+            diaryIconText = SettingService.Get<bool>(Setting.DiaryIconText);
             editAutoSave = SettingService.Get<int>(Setting.EditAutoSave);
             imageLazy = SettingService.Get<bool>(Setting.ImageLazy);
             firstLineIndent = SettingService.Get<bool>(Setting.FirstLineIndent);

@@ -18,6 +18,7 @@
         </MCardTitle>
         <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
             <MChipGroup Value="Value"
+                        Class="@(ShowText ? "":"m-chip-group--icon")"
                         ValueChanged="ValueChanged"
                         Column="true"
                         Mandatory="Mandatory">
@@ -25,10 +26,10 @@
                 {
                     <MChip @key="item.Key"
                            Value="@InternalItemValue(item)"
-                           Filter="true"
+                           Filter="ShowText"
                            Outlined="true"
                            OnClick="HandleOnCancel">
-                        <MIcon Left="true">
+                        <MIcon Left="ShowText">
                             @InternalItemIcon(item)
                         </MIcon>
                         @InternalItemText(item)

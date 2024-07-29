@@ -144,6 +144,12 @@
     "Href": "diarySetting"
   },
   {
+    "Name": "Setting.Display.Diary.IconText.Name",
+    "Icon": "mdi-image-text",
+    "Path": "Setting.Display.Diary.IconText.Path",
+    "Href": "diarySetting"
+  },
+  {
     "Name": "Setting.Display.Diary.EditAutoSave.Name",
     "Icon": "mdi-content-save-edit-outline",
     "Path": "Setting.Display.Diary.EditAutoSave.Path",

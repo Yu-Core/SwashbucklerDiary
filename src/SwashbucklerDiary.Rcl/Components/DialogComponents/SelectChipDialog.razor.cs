@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class SelectDialog : DialogComponentBase
+    public partial class SelectChipDialog : DialogComponentBase
     {
         [Parameter]
         public string? Title { get; set; }
@@ -21,6 +21,9 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool Mandatory { get; set; }
 
         [Parameter]
+        public bool ShowText { get; set; }
+
+        [Parameter]
         public Func<KeyValuePair<string, string>, string>? ItemText { get; set; }
 
         [Parameter]
@@ -29,8 +32,13 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public Func<KeyValuePair<string, string>, string>? ItemIcon { get; set; }
 
-        private string InternalItemText(KeyValuePair<string, string> item)
+        private string? InternalItemText(KeyValuePair<string, string> item)
         {
+            if (!ShowText)
+            {
+                return null;
+            }
+
             if (ItemText is not null)
             {
                 return ItemText.Invoke(item);

@@ -56,9 +56,9 @@
 
 </ScrollContainer>
 
-<SelectDialog @bind-Visible="showTimeout"
+<SelectChipDialog @bind-Visible="showTimeout"
               @bind-Value="@Timeout"
               Title="@(I18n.T("Setting.Display.Snackbars.AlertTimeout.Name"))"
               Items="timeoutItems"
               Mandatory="true">
-</SelectDialog>
+</SelectChipDialog>

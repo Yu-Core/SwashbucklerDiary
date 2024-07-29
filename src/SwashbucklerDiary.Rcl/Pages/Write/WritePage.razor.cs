@@ -25,6 +25,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showCreateTime;
 
+        private bool showFab;
+
         private bool enableTitle;
 
         private bool enableMarkdown = true;
@@ -36,6 +38,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private bool privacyMode;
 
         private bool launchActivation;
+
+        private bool showIconText;
 
         private int editAutoSave;
 
@@ -79,6 +83,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
+        [Inject]
+        private MasaBlazor MasaBlazor { get; set; } = default!;
+
         [Parameter]
         [SupplyParameterFromQuery]
         public Guid? TagId { get; set; }
@@ -112,6 +119,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                     InitDiary(),
                     InitTags());
                 InitCreateTime();
+                showFab = MasaBlazor.Breakpoint.SmAndUp || !string.IsNullOrEmpty(diary.Weather) || !string.IsNullOrEmpty(diary.Mood);
                 StateHasChanged();
                 _ = CreateTimer();
             }
@@ -133,6 +141,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             enableTitle = SettingService.Get<bool>(Setting.Title);
             enableMarkdown = SettingService.Get<bool>(Setting.Markdown);
             editAutoSave = SettingService.Get<int>(Setting.EditAutoSave);
+            showIconText = SettingService.Get<bool>(Setting.DiaryIconText);
             privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
         }
 
@@ -168,13 +177,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string WeatherIcon => GetWeatherIcon(diary.Weather);
 
-        private string WeatherText =>
-            string.IsNullOrEmpty(diary.Weather) ? I18n.T("Write.Weather")! : I18n.T("Weather." + diary.Weather)!;
-
         private string MoodIcon => GetMoodIcon(diary.Mood);
-
-        private string MoodText =>
-            string.IsNullOrEmpty(diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + diary.Mood)!;
 
         private string LocationText =>
             string.IsNullOrEmpty(SelectedLocation) ? I18n.T("Write.Location") : SelectedLocation;
@@ -187,6 +190,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string MarkdownSwitchText() => enableMarkdown ? "Diary.Text" : "Diary.Markdown";
 
         private string MarkdownSwitchIcon() => enableMarkdown ? "mdi-format-text" : "mdi-language-markdown-outline";
+
+        private string IconTextSwitchText() => showIconText ? "Write.HideIconText" : "Write.DisplayIconText";
 
         private async Task InitTags()
         {
@@ -236,6 +241,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             [
                 new(this, TitleSwitchText, "mdi-format-title", ()=> SettingChange(Setting.Title, ref enableTitle)),
                 new(this, MarkdownSwitchText, MarkdownSwitchIcon, ()=> SettingChange(Setting.Markdown, ref enableMarkdown)),
+                new(this, IconTextSwitchText, " mdi-image-text", ()=> SettingChange(Setting.DiaryIconText, ref showIconText)),
             ];
             weatherIcons = IconService.GetWeatherIcons();
             moodIcons = IconService.GetMoodIcons();

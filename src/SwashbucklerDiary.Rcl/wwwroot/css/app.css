@@ -621,3 +621,21 @@ html.m-overlay-scroll-blocked {
     flex-grow: 0;
     flex-basis: content;
 }
+
+.m-list-item.rounded:before {
+    border-radius: 4px;
+}
+
+.m-chip-group--icon .m-chip {
+    justify-content: center;
+    margin: 0px !important;
+    border: none !important;
+    height: 48px !important;
+    width: 48px !important;
+    border-radius: 50% !important;
+}
+
+.m-chip-group--icon .m-slide-group__content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+}

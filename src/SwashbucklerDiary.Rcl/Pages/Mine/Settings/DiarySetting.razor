@@ -55,6 +55,28 @@
 
             <MDivider Class="mx-5"></MDivider>
 
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-image-text
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.IconText.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch @bind-Value="diaryIconText"
+                             TValue="bool"
+                             OnChange="SettingChange(Setting.DiaryIconText)"
+                             Dense="true"
+                             Inset="true"
+                             Color="white">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
             <MListItem OnClick="()=>showEditAutoSave=true">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
@@ -169,9 +191,9 @@
     </MCard>
 </ScrollContainer>
 
-<SelectDialog @bind-Visible="showEditAutoSave"
-              @bind-Value="@EditAutoSave"
-              Title="@(I18n.T("Setting.Display.Diary.EditAutoSave.Name"))"
-              Items="editAutoSaveItems"
-              Mandatory="true">
-</SelectDialog>
+<SelectChipDialog @bind-Visible="showEditAutoSave"
+                  @bind-Value="@EditAutoSave"
+                  Title="@(I18n.T("Setting.Display.Diary.EditAutoSave.Name"))"
+                  Items="editAutoSaveItems"
+                  Mandatory="true">
+</SelectChipDialog>

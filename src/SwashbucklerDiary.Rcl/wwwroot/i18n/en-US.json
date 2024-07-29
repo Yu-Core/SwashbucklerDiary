@@ -119,7 +119,9 @@
     "SelectWeather": "Select weather",
     "SelectMood": "Select mood",
     "InputLocation": "Enter location",
-    "LocationPlace": "Please enter the location"
+    "LocationPlace": "Please enter the location",
+    "DisplayIconText": "Display icon text",
+    "HideIconText": "Hide icon text"
   },
   "Weather": {
     "cloudy": "cloudy",
@@ -406,6 +408,10 @@
         "Markdown": {
           "Name": "Markdown",
           "Path": "Setting / Diary / Markdown"
+        },
+        "IconText": {
+          "Name": "Icon text",
+          "Path": "Setting / Diary / Icon text"
         },
         "EditAutoSave": {
           "Name": "Auto save",

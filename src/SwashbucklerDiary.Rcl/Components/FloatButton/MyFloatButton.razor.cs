@@ -15,6 +15,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [CascadingParameter(Name = "IsDark")]
         public bool Dark { get; set; }
 
+        [Parameter(CaptureUnmatchedValues = true)]
+        public virtual IDictionary<string, object> Attributes { get; set; } = new Dictionary<string, object>();
+
         [Parameter]
         public string? Class { get; set; }
 
@@ -23,6 +26,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public bool Show { get; set; } = true;
+
+        [Parameter]
+        public StringNumber Elevation { get; set; } = 2;
 
         [Parameter]
         public EventCallback<MouseEventArgs> OnClick { get; set; }
@@ -35,18 +41,20 @@ namespace SwashbucklerDiary.Rcl.Components
             GC.SuppressFinalize(this);
         }
 
+        protected string InternalClass => $"{Class} {Color}";
+
+        protected virtual StringNumber? Size { get; }
+
+        protected bool Desktop => MasaBlazorHelper.Breakpoint.MdAndUp;
+
+        protected string? Color => Dark ? null : "white";
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
             MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
         }
-
-        private bool Desktop => MasaBlazorHelper.Breakpoint.MdAndUp;
-
-        private string? Color => Dark ? null : "white";
-
-        private string? InternalClass => $"elevation-2 {Class}";
 
         private void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)
         {
