@@ -10,11 +10,7 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         private bool imageLazy;
 
-        private bool firstLineIndent;
-
         private bool codeLineNumber;
-
-        private bool taskListLineThrough;
 
         private bool showPreviewImage;
 
@@ -53,6 +49,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public string? Style { get; set; }
+
+        [Parameter]
+        public bool FirstLineIndent { get; set; }
+
+        [Parameter]
+        public bool TaskListLineThrough { get; set; }
 
         [JSInvokable]
         public async Task Copy()
@@ -103,14 +105,12 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        private string? InternalClass => $"{Class} {(firstLineIndent ? "first-line-indent" : "")} {(taskListLineThrough ? "task-list-line-through" : "")}";
+        private string? InternalClass => $"{Class} {(FirstLineIndent ? "first-line-indent" : "")} {(TaskListLineThrough ? "task-list-line-through" : "")}";
 
         private void ReadSettings()
         {
             imageLazy = SettingService.Get<bool>(Setting.ImageLazy);
-            firstLineIndent = SettingService.Get<bool>(Setting.FirstLineIndent);
             codeLineNumber = SettingService.Get<bool>(Setting.CodeLineNumber);
-            taskListLineThrough = SettingService.Get<bool>(Setting.TaskListLineThrough);
         }
 
         private void SetOptions()

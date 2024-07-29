@@ -28,6 +28,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool privacyMode;
 
+        private bool firstLineIndent;
+
+        private bool taskListLineThrough;
+
         private readonly string scrollContainerId = $"scroll-container-{Guid.NewGuid():N}";
 
         private string scrollContainerSelector = string.Empty;
@@ -81,6 +85,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             enableMarkdown = SettingService.Get<bool>(Setting.Markdown);
             showSetPrivacy = SettingService.Get<bool>(Setting.SetPrivacyDiary);
+            firstLineIndent = SettingService.Get<bool>(Setting.FirstLineIndent);
+            taskListLineThrough = SettingService.Get<bool>(Setting.TaskListLineThrough);
             privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
         }
 

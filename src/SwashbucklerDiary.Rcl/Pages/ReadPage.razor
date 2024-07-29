@@ -95,7 +95,9 @@
                 <MarkdownPreview @ref="markdownPreview"
                                  Value="@(diary.Content)"
                                  Class="@($"px-3 {highlightSearchContainerClass}")"
-                                 Style="padding-top:10px">
+                                 Style="padding-top:10px"
+                                 FirstLineIndent="firstLineIndent"
+                                 TaskListLineThrough="taskListLineThrough">
                 </MarkdownPreview>
             }
             else
