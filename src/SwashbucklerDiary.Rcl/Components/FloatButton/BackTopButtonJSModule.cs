@@ -9,9 +9,10 @@ namespace SwashbucklerDiary.Rcl.Components
         {
         }
 
-        public ValueTask<IJSObjectReference> Init(string selector, ElementReference? element, DotNetObjectReference<object>? dotNetObject)
+        public async ValueTask<BackTopButtonJSObjectReference> Init(string selector, ElementReference? element, DotNetObjectReference<object>? dotNetObject)
         {
-            return InvokeAsync<IJSObjectReference>("init", selector, element, dotNetObject)!;
+            var jSObjectReference = await InvokeAsync<IJSObjectReference>("init", selector, element, dotNetObject);
+            return new BackTopButtonJSObjectReference(jSObjectReference);
         }
     }
 }

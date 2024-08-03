@@ -7,7 +7,7 @@
         this.element.addEventListener('scroll', this.handleScroll);
     }
 
-    removeListening() {
+    removeScrollListener() {
         this.element.removeEventListener('scroll', this.handleScroll);
     }
 

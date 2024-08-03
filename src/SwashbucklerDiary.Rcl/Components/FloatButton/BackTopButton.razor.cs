@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string? _previousSelector;
 
-        private IJSObjectReference? scrollListenerProxy;
+        private BackTopButtonJSObjectReference? backTopButtonJSObjectReference;
 
         private DotNetObjectReference<object>? _objRef;
 
@@ -52,8 +52,8 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 if (isRendered)
                 {
-                    await RemoveListenScroll();
-                    await AddListenScroll();
+                    await RemoveScrollListener();
+                    await AddScrollListener();
                 }
 
                 _previousSelector = Selector;
@@ -67,7 +67,7 @@ namespace SwashbucklerDiary.Rcl.Components
             if (firstRender)
             {
                 isRendered = true;
-                await AddListenScroll();
+                await AddScrollListener();
             }
         }
 
@@ -79,24 +79,32 @@ namespace SwashbucklerDiary.Rcl.Components
             await JS.ScrollTo(Selector, 0);
         }
 
-        private async Task AddListenScroll()
+        private async Task AddScrollListener()
         {
-            var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
             if (string.IsNullOrEmpty(Selector) || myFloatButton?.Ref is null) return;
-            scrollListenerProxy = await Module.Init(Selector, myFloatButton.Ref, _objRef);
+            backTopButtonJSObjectReference = await Module.Init(Selector, myFloatButton.Ref, _objRef);
         }
 
-        private async Task RemoveListenScroll()
+        private async Task RemoveScrollListener()
         {
-            if (scrollListenerProxy is null || string.IsNullOrEmpty(_previousSelector)) return;
+            if (backTopButtonJSObjectReference is null || string.IsNullOrEmpty(_previousSelector)) return;
             _show = false;
-            await scrollListenerProxy.InvokeVoidAsync("removeListening");
-            await scrollListenerProxy.DisposeAsync();
+            await backTopButtonJSObjectReference.RemoveScrollListener();
+            await backTopButtonJSObjectReference.DisposeAsync();
         }
 
         public async ValueTask DisposeAsync()
         {
-            await RemoveListenScroll();
+            try
+            {
+                await RemoveScrollListener();
+            }
+            catch (JSDisconnectedException)
+            {
+                // ignore
+            }
+
+            _objRef?.Dispose();
             GC.SuppressFinalize(this);
         }
     }
