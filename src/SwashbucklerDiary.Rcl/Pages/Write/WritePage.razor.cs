@@ -105,7 +105,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             LoadView();
             AppLifecycle.Stopped += LeaveAppSaveDiary;
             AppLifecycle.Resumed += ResumeApp;
-            AppLifecycle.Activated += Activated;
+            AppLifecycle.Activated += HandleActivated;
             NavigateController.AddHistoryAction(LeaveThisPageSaveDiary, false);
         }
 
@@ -129,7 +129,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             AppLifecycle.Stopped -= LeaveAppSaveDiary;
             AppLifecycle.Resumed -= ResumeApp;
-            AppLifecycle.Activated -= Activated;
+            AppLifecycle.Activated -= HandleActivated;
             timer?.Dispose();
             base.OnDispose();
         }
@@ -440,7 +440,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        private void HandleLaunchActivation()
+        private async Task HandleLaunchActivation()
         {
             if (launchActivation)
             {
@@ -449,11 +449,17 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             launchActivation = true;
             var args = AppLifecycle.ActivationArguments;
-            Activated(args);
+            await HandleActivatedAsync(args);
             AppLifecycle.ActivationArguments = null;
         }
 
-        private void Activated(ActivationArguments? args)
+        private void HandleActivated(ActivationArguments? args)
+        {
+            _ = HandleActivatedAsync(args);
+        }
+
+
+        private async Task HandleActivatedAsync(ActivationArguments? args)
         {
             if (args is null || args.Data is null)
             {
@@ -462,11 +468,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (args.Kind == LaunchActivationKind.Share)
             {
-                HandleShare((ShareActivationArguments)args.Data);
+                await HandleShare((ShareActivationArguments)args.Data);
             }
         }
 
-        private async void HandleShare(ShareActivationArguments? args)
+        private async Task HandleShare(ShareActivationArguments? args)
         {
             if (args is null || args.Data is null)
             {
