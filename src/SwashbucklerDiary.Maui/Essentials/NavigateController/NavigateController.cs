@@ -1,13 +1,7 @@
-﻿
-using SwashbucklerDiary.Rcl.Layout;
-using System.Reflection;
-
-namespace SwashbucklerDiary.Maui.Essentials
+﻿namespace SwashbucklerDiary.Maui.Essentials
 {
     public class NavigateController : Rcl.Essentials.NavigateController
     {
-        protected override Assembly[] Assemblies => [typeof(MainLayoutBase).Assembly, typeof(Routes).Assembly];
-
         protected override Task HandleNavigateToStackBottomPath()
         {
 #if ANDROID

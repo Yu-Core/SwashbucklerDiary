@@ -4,12 +4,15 @@ using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Layout;
 using SwashbucklerDiary.Shared;
+using System.Reflection;
 
 namespace SwashbucklerDiary.Maui.Layout
 {
     public partial class MainLayout : MainLayoutBase
     {
         private bool showUpdate;
+
+        private bool isAndroidOrIOS;
 
         [Inject]
         private ILogger<MainLayout> Logger { get; set; } = default!;
@@ -24,6 +27,7 @@ namespace SwashbucklerDiary.Maui.Layout
         {
             base.OnInitialized();
 
+            isAndroidOrIOS = PlatformIntegration.CurrentPlatform == AppDevicePlatform.Android || PlatformIntegration.CurrentPlatform == AppDevicePlatform.iOS;
             AppLifecycle.Activated += Activated;
             VersionUpdataManager.AfterCheckFirstLaunch += CheckForUpdates;
         }
@@ -43,8 +47,11 @@ namespace SwashbucklerDiary.Maui.Layout
             base.OnDispose();
         }
 
-        private bool IsAndroidOrIOS
-            => PlatformIntegration.CurrentPlatform == AppDevicePlatform.Android || PlatformIntegration.CurrentPlatform == AppDevicePlatform.iOS;
+        protected override async Task InitNavigateControllerAsync()
+        {
+            Assembly[] assemblies = [typeof(MainLayoutBase).Assembly, typeof(Routes).Assembly];
+            await NavigateController.InitAsync(NavigationManager, JSRuntime, permanentPaths, assemblies);
+        }
 
 #if DEBUG
         private Task CheckForUpdates() => Task.CompletedTask;

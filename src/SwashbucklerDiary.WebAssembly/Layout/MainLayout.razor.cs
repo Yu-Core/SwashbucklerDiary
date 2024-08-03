@@ -5,6 +5,7 @@ using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Layout;
 using SwashbucklerDiary.Shared;
 using SwashbucklerDiary.WebAssembly.Essentials;
+using System.Reflection;
 
 namespace SwashbucklerDiary.WebAssembly.Layout
 {
@@ -44,6 +45,12 @@ namespace SwashbucklerDiary.WebAssembly.Layout
                 InitThemeAsync(),
                 InitLanguageAsync(),
                 ((AppLifecycle)AppLifecycle).InitializedAsync());
+        }
+
+        protected override async Task InitNavigateControllerAsync()
+        {
+            Assembly[] assemblies = [typeof(MainLayoutBase).Assembly, typeof(App).Assembly];
+            await NavigateController.InitAsync(NavigationManager, JSRuntime, permanentPaths, assemblies);
         }
 
         private async void ThemeChanged(Theme theme)

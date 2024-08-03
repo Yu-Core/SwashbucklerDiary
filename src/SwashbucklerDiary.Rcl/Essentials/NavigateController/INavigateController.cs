@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Reflection;
 
 namespace SwashbucklerDiary.Rcl.Essentials
 {
@@ -11,7 +12,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         event EventHandler<bool> PageUpdateChanged;
 
-        Task Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> uris);
+        Task InitAsync(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> uris, Assembly[] assemblies);
 
         void RemovePageCache(string url);
 

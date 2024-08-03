@@ -9,7 +9,7 @@ using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Layout
 {
-    public partial class MainLayoutBase : LayoutComponentBase, IDisposable
+    public abstract partial class MainLayoutBase : LayoutComponentBase, IDisposable
     {
         protected bool afterInitSetting;
 
@@ -67,7 +67,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected virtual async Task InitSettingsAsync()
         {
             await SettingService.InitializeAsync();
-            await NavigateController.Init(NavigationManager, JSRuntime, permanentPaths);
+            await InitNavigateControllerAsync();
             afterInitSetting = true;
         }
 
@@ -76,5 +76,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             StateHasChanged();
             await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
         }
+
+        protected abstract Task InitNavigateControllerAsync();
     }
 }
