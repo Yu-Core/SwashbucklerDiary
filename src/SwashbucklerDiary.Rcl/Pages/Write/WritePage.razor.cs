@@ -119,7 +119,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                     InitDiary(),
                     InitTags());
                 InitCreateTime();
-                showFab = MasaBlazor.Breakpoint.SmAndUp || !string.IsNullOrEmpty(diary.Weather) || !string.IsNullOrEmpty(diary.Mood);
+                showFab = !string.IsNullOrEmpty(diary.Weather) || !string.IsNullOrEmpty(diary.Mood);
                 StateHasChanged();
                 _ = CreateTimer();
             }
@@ -361,7 +361,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                return "mdi-weather-cloudy";
+                return "mdi-weather-sunny";
             }
 
             return IconService.GetWeatherIcon(key);
@@ -371,7 +371,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                return "mdi-emoticon-outline";
+                return "mdi-emoticon-happy-outline";
             }
 
             return IconService.GetMoodIcon(key);

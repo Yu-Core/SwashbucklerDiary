@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool Mandatory { get; set; }
 
         [Parameter]
-        public bool ShowText { get; set; }
+        public bool ShowText { get; set; } = true;
 
         [Parameter]
         public Func<KeyValuePair<string, string>, string>? ItemText { get; set; }

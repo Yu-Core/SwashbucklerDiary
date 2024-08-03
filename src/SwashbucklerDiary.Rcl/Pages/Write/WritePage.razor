@@ -159,7 +159,8 @@
             @foreach (var item in SelectedTags)
             {
                 <MChip @key="item.Id"
-                       Close="true"
+                       Outlined
+                       Close
                        OnCloseClick="()=>RemoveSelectedTag(item)">
                     @(item.Name)
                 </MChip>

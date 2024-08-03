@@ -17,23 +17,9 @@
     <SwiperTabItem>
         <MContainer Class="my-container"
                     Fluid="true">
-            <div class="pl-2 pb-3">
-                @if (showDate)
-                {
-                    <div class="text--secondary mb-2">
-                        @(DateTime.Now.ToString("d") + " " + I18n.ToWeek())
-                    </div>
-                }
-
-                @if (showWelcomeText)
-                {
-                    <div class="text-h6 mb-2">
-                        @GetWelcomeText()
-                    </div>
-                }
-
-            </div>
-
+            <IndexHead ShowDate="showDate"
+                       ShowWelcomeText="showWelcomeText">
+            </IndexHead>
             <DiaryCardList @bind-Tags="Tags"
                            Value="Diaries">
             </DiaryCardList>

@@ -1,0 +1,20 @@
+﻿@namespace SwashbucklerDiary.Rcl.Pages
+
+@if (ShowDate || ShowWelcomeText)
+{
+    <div class="pl-2 pb-3">
+        @if (ShowDate)
+        {
+            <div class="text--secondary mb-2">
+                @(DateTime.Now.ToString("d") + " " + I18n.ToWeek())
+            </div>
+        }
+
+        @if (ShowWelcomeText)
+        {
+            <div class="text-h6 mb-2">
+                @GetWelcomeText()
+            </div>
+        }
+    </div>
+}
