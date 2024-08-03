@@ -1,6 +1,7 @@
 ﻿using Android.Widget;
 using SwashbucklerDiary.Rcl;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Shared;
 using static Android.Resource;
 using Activity = Android.App.Activity;
 using Rect = Android.Graphics.Rect;
@@ -48,11 +49,14 @@ namespace SwashbucklerDiary.Maui
         static void SetBackgroundColor()
         {
             var themeService = IPlatformApplication.Current!.Services.GetRequiredService<IThemeService>();
-            themeService.OnChanged += (theme) =>
-            {
-                var color = theme == Shared.Theme.Dark ? darkColor : lightColor;
-                mChildOfContent.RootView.SetBackgroundColor(color);
-            };
+            OnThemeChanged(themeService.RealTheme);
+            themeService.OnChanged += OnThemeChanged;
+        }
+
+        static void OnThemeChanged(Theme theme)
+        {
+            var color = theme == Shared.Theme.Dark ? darkColor : lightColor;
+            mChildOfContent.RootView.SetBackgroundColor(color);
         }
     }
 }

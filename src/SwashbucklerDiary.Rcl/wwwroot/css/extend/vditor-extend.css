@@ -16,6 +16,10 @@
         padding: 0px 8px !important;
     }
 
+.vditor-content {
+    min-height: 0px;
+}
+
 .theme--dark .vditor-reset {
     color: #fff;
 }
