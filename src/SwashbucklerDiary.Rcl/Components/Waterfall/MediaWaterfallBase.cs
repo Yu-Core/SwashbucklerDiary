@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Services;
 
@@ -6,6 +8,10 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public abstract class MediaWaterfallBase : MediaResourceListComponentBase, IDisposable
     {
+        protected bool contentLoading;
+
+        protected string? thisPagePath;
+
         protected ElementReference elementReference = default!;
 
         [Inject]
@@ -17,9 +23,13 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected PreviewMediaElementJSModule PreviewMediaElementJSModule { get; set; } = default!;
 
+        [Inject]
+        protected WaterfallJSModule WaterfallJSModule { get; set; } = default!;
+
         public void Dispose()
         {
             MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
+            NavigationManager.LocationChanged -= NavigationManagerOnLocationChanged;
             GC.SuppressFinalize(this);
         }
 
@@ -31,7 +41,19 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
+            thisPagePath = NavigationManager.GetAbsolutePath();
             MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
+            NavigationManager.LocationChanged += NavigationManagerOnLocationChanged;
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (firstRender && !string.IsNullOrEmpty(ScrollElementId))
+            {
+                await WaterfallJSModule.RecordScrollInfo($"#{ScrollElementId}");
+            }
         }
 
         protected async void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)
@@ -41,6 +63,35 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
+            await InvokeAsync(StateHasChanged);
+        }
+
+        protected virtual async void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
+        {
+            if (thisPagePath != NavigationManager.GetAbsolutePath())
+            {
+                await StopRecordScrollInfo();
+            }
+            else
+            {
+                await RestoreScrollPosition();
+            }
+        }
+
+        private async Task StopRecordScrollInfo()
+        {
+            if (string.IsNullOrEmpty(ScrollElementId)) return;
+            await WaterfallJSModule.StopRecordScrollInfo($"#{ScrollElementId}");
+            contentLoading = true;
+            await InvokeAsync(StateHasChanged);
+        }
+
+        private async Task RestoreScrollPosition()
+        {
+            if (string.IsNullOrEmpty(ScrollElementId)) return;
+            await Task.Delay(300);
+            await WaterfallJSModule.RestoreScrollPosition($"#{ScrollElementId}");
+            contentLoading = false;
             await InvokeAsync(StateHasChanged);
         }
     }

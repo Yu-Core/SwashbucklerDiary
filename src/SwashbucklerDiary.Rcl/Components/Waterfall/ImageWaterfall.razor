@@ -1,7 +1,7 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
 @inherits MediaWaterfallBase
 
-<div>
+<div style="@($"{(contentLoading ? "opacity:0;":"")}")">
     <wc-waterfall @ref="elementReference" gap="@Gap" cols="@Cols">
         @foreach (var item in LoadedItems)
         {
