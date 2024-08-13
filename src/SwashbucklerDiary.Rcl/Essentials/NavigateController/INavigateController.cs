@@ -8,9 +8,9 @@ namespace SwashbucklerDiary.Rcl.Essentials
     {
         bool IsInitialized { get; }
 
-        List<string> PageCachePaths { get; }
+        bool CanPageUpdate { get; }
 
-        event EventHandler<bool> PageUpdateChanged;
+        List<string> PageCachePaths { get; }
 
         void Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> uris, Assembly[] assemblies);
 

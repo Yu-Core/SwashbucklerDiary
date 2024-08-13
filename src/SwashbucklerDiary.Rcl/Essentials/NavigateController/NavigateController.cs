@@ -25,6 +25,8 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         protected List<string> permanentPaths = [];
 
+        protected List<string> NotUpdatePagePaths = [];
+
         protected NavigationManager _navigationManager = default!;
 
         protected readonly List<HistoryAction> historyActions = [];
@@ -37,9 +39,9 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         protected string? stackBottomPath;
 
-        public event EventHandler<bool>? PageUpdateChanged;
-
         public bool IsInitialized { get; protected set; }
+
+        public bool CanPageUpdate { get; protected set; }
 
         public List<string> PageCachePaths => permanentPaths.Union(pageCachePaths).ToList();
 
@@ -96,10 +98,12 @@ namespace SwashbucklerDiary.Rcl.Essentials
             var stackBottomUri = _navigationManager.ToAbsoluteUri(stackBottomRelativePath);
             stackBottomPath = stackBottomUri.AbsolutePath;
 
+            CanPageUpdate = false;
             //When the current page is not a 'stack bottom page', there is no need to replace it
             if (stackBottomPath != absolutePath)
             {
                 _navigationManager.NavigateTo(stackBottomUri.ToString(), replace: true);
+                NotUpdatePagePaths.Add(stackBottomPath);
             }
 
             historyPaths.Add(stackBottomPath);
@@ -107,7 +111,9 @@ namespace SwashbucklerDiary.Rcl.Essentials
             if (!permanentPaths.Contains(absolutePath))
             {
                 _navigationManager.NavigateTo("");
-                historyPaths.Add(_navigationManager.ToAbsoluteUri("").AbsolutePath);
+                var homePageAbsolutePath = _navigationManager.ToAbsoluteUri("").AbsolutePath;
+                historyPaths.Add(homePageAbsolutePath);
+                NotUpdatePagePaths.Add(homePageAbsolutePath);
             }
 
             if (stackBottomPath != absolutePath)
@@ -115,6 +121,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
                 _navigationManager.NavigateTo(uri);
                 historyPaths.Add(absolutePath);
                 AddPageCache(absolutePath);
+                NotUpdatePagePaths.Add(absolutePath);
             }
 
             registration = _navigationManager.RegisterLocationChangingHandler(OnLocationChanging);
@@ -127,12 +134,19 @@ namespace SwashbucklerDiary.Rcl.Essentials
             {
                 var uri = secondaryBackTargetUri;
                 secondaryBackTargetUri = null;
-                PageUpdateChanged?.Invoke(this, true);
+                CanPageUpdate = true;
                 if (uri != _navigationManager.Uri)
                 {
                     _navigationManager.NavigateTo(uri);
                 }
             }
+
+            var currentPath = _navigationManager.GetAbsolutePath();
+            if (NotUpdatePagePaths.Remove(currentPath) && NotUpdatePagePaths.Count == 0)
+            {
+                CanPageUpdate = true;
+            }
+
         }
 
         private async ValueTask OnLocationChanging(LocationChangingContext context)
@@ -242,7 +256,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
                             secondaryBackTargetUri = targetUri;
                             if (!historyPaths.Contains(targetPath) && isPermanentPath)
                             {
-                                PageUpdateChanged?.Invoke(this, false);
+                                CanPageUpdate = false;
                             }
 
                             await _jSRuntime.HistoryGo(targetHistoryIndex - currentHistoryIndex);
