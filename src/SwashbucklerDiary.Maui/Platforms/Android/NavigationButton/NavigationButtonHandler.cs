@@ -37,7 +37,7 @@ namespace SwashbucklerDiary
 
         private static void InternalOnBackButtonPressed()
         {
-            if (NavigateController.Initialized && MauiBlazorWebViewHandler.WebView is not null)
+            if (NavigateController.IsInitialized && MauiBlazorWebViewHandler.WebView is not null)
             {
                 MauiBlazorWebViewHandler.WebView.EvaluateJavascript(@"
 				history.back();

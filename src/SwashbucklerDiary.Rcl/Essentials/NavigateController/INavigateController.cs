@@ -6,13 +6,13 @@ namespace SwashbucklerDiary.Rcl.Essentials
 {
     public interface INavigateController
     {
-        bool Initialized { get; }
+        bool IsInitialized { get; }
 
         List<string> PageCachePaths { get; }
 
         event EventHandler<bool> PageUpdateChanged;
 
-        Task InitAsync(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> uris, Assembly[] assemblies);
+        void Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> uris, Assembly[] assemblies);
 
         void RemovePageCache(string url);
 

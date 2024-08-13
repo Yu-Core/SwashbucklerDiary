@@ -4,5 +4,6 @@
     "new-content-available": "New content is available. Click Refresh to update.",
     "ignore": "Ignore",
     "refresh": "Refresh"
-  }
+  },
+  "Returning again will exit the application": "Returning again will exit the application"
 }

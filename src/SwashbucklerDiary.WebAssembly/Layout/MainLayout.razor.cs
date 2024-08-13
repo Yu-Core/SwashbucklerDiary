@@ -47,10 +47,10 @@ namespace SwashbucklerDiary.WebAssembly.Layout
                 ((AppLifecycle)AppLifecycle).InitializedAsync());
         }
 
-        protected override async Task InitNavigateControllerAsync()
+        protected override void InitNavigateController()
         {
             Assembly[] assemblies = [typeof(MainLayoutBase).Assembly, typeof(App).Assembly];
-            await NavigateController.InitAsync(NavigationManager, JSRuntime, permanentPaths, assemblies);
+            NavigateController.Init(NavigationManager, JSRuntime, permanentPaths, assemblies);
         }
 
         private async void ThemeChanged(Theme theme)

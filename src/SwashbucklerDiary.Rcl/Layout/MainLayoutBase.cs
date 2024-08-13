@@ -57,6 +57,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             base.OnInitialized();
             I18n.OnChanged += LanguageChanged;
             permanentPaths = navigationButtons.Select(it => NavigationManager.ToAbsoluteUri(it.Href).AbsolutePath).ToList();
+            InitNavigateController();
         }
 
         protected virtual void OnDispose()
@@ -67,7 +68,6 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected virtual async Task InitSettingsAsync()
         {
             await SettingService.InitializeAsync();
-            await InitNavigateControllerAsync();
             afterInitSetting = true;
         }
 
@@ -77,6 +77,6 @@ namespace SwashbucklerDiary.Rcl.Layout
             await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
         }
 
-        protected abstract Task InitNavigateControllerAsync();
+        protected abstract void InitNavigateController();
     }
 }

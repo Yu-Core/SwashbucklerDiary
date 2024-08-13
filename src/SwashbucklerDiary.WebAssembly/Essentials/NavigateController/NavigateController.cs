@@ -1,15 +1,24 @@
-﻿using SwashbucklerDiary.Rcl.Extensions;
+﻿using Microsoft.AspNetCore.Components.Routing;
+using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public class NavigateController : Rcl.Essentials.NavigateController
     {
-        protected override async Task HandleNavigateToStackBottomPath()
+        protected override async Task HandleNavigateToStackBottomPath(LocationChangingContext context)
         {
-            var length = await _jSRuntime.EvaluateJavascript<int>("history.length");
-            if (length > 2)
+            // 首次返回
+            if (firstEnter)
             {
-                await _jSRuntime.HistoryGo(-2);
+                firstEnter = false;
+                context.PreventNavigation();
+                await _jSRuntime.HistoryBack();
+            }
+            // 二次返回
+            else
+            {
+                firstEnter = true;
+                historyPaths.RemoveAt(historyPaths.Count - 1);
             }
         }
     }

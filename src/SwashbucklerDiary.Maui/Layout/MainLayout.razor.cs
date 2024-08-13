@@ -47,10 +47,10 @@ namespace SwashbucklerDiary.Maui.Layout
             base.OnDispose();
         }
 
-        protected override async Task InitNavigateControllerAsync()
+        protected override void InitNavigateController()
         {
             Assembly[] assemblies = [typeof(MainLayoutBase).Assembly, typeof(Routes).Assembly];
-            await NavigateController.InitAsync(NavigationManager, JSRuntime, permanentPaths, assemblies);
+            NavigateController.Init(NavigationManager, JSRuntime, permanentPaths, assemblies);
         }
 
 #if DEBUG

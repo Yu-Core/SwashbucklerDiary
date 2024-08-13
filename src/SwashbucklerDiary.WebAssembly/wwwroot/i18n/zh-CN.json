@@ -4,5 +4,6 @@
     "new-content-available": "新内容可用。点击 刷新 进行更新。",
     "ignore": "忽略",
     "refresh": "刷新"
-  }
+  },
+  "Returning again will exit the application": "再返回一次将退出应用"
 }
