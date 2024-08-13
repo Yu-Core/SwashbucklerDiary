@@ -24,13 +24,12 @@
                          Class="mt-0"
                          Row="@Row"
                          HideDetails="@("auto")"
-                         Mandatory="true"
-                         OnClick="HandleOnCancel">
+                         Mandatory="true">
                 @foreach (var item in Items)
                 {
                     <MRadio @key="InternalItemValue(item)"
+                            @onclick="HandleOnCancel"
                             Label="@InternalItemText(item)"
-                            Class="mt-1 mb-2"
                             Value="InternalItemValue(item)"
                             Color="@MRadioColor">
                     </MRadio>
