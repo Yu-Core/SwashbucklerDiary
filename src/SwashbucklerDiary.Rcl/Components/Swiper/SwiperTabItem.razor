@@ -8,5 +8,13 @@
         {
             @ChildContent
         }
+        else if (isRendered)
+        {
+            <div class="d-flex justify-center align-center" style="width:100%;height:100%;">
+                <MProgressCircular Size="40"
+                                   Indeterminate="true">
+                </MProgressCircular>
+            </div>
+        }
     </CascadingValue>
 </div>

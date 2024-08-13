@@ -316,3 +316,7 @@
 .m-btn--plain:not(.m-btn--active):not(.m-btn--loading):not(:focus):not(:hover) .m-btn__content {
     opacity: unset;
 }
+
+.m-text-field--rounded > .m-input__control > .m-input__slot {
+    padding: 0 16px;
+}

@@ -27,7 +27,7 @@
                             Filled
                             Rounded
                             spellcheck="false"
-                            Label="@(I18n.T("Export.LAN.Config.DeviceName"))">
+                            Placeholder="@(I18n.T("Export.LAN.Config.DeviceName"))">
                 </MTextField>
                 <MTextField @bind-Value="configModel.ScanPort"
                             Type="number"
@@ -37,7 +37,7 @@
                             Filled
                             Rounded
                             spellcheck="false"
-                            Label="@(I18n.T("Export.LAN.Config.ScanPort"))"
+                            Placeholder="@(I18n.T("Export.LAN.Config.ScanPort"))"
                             NumberProps="@(prop => { prop.Min = 1204; prop.Max = 65535; prop.HideControl = true; })">
                 </MTextField>
                 <MTextField @bind-Value="configModel.TransmissionPort"
@@ -48,7 +48,7 @@
                             Filled
                             Rounded
                             spellcheck="false"
-                            Label="@(I18n.T("Export.LAN.Config.TransmissionPort"))"
+                            Placeholder="@(I18n.T("Export.LAN.Config.TransmissionPort"))"
                             NumberProps="@(prop => { prop.Min = 1204; prop.Max = 65535; prop.HideControl = true; })">
                 </MTextField>
             </MCardText>
