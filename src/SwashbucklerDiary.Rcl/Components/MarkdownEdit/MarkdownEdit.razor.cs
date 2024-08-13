@@ -57,6 +57,18 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public EventCallback OnAfter { get; set; }
 
+        public async Task InsertValueAsync(string value)
+        {
+            if (string.IsNullOrEmpty(Value))
+            {
+                await Module.Focus(mMarkdown.Ref);
+            }
+
+            await mMarkdown.InsertValueAsync(value);
+        }
+
+        public ValueTask<string?> GetValueAsync() => mMarkdown.GetValueAsync();
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -220,16 +232,6 @@ namespace SwashbucklerDiary.Rcl.Components
             if (insertContent is null) return;
 
             await InsertValueAsync(insertContent);
-        }
-
-        public async Task InsertValueAsync(string value)
-        {
-            if (string.IsNullOrEmpty(Value))
-            {
-                await Module.Focus(mMarkdown.Ref);
-            }
-
-            await mMarkdown.InsertValueAsync(value);
         }
 
         private static string? CreateInsertContent(string src, MediaResource mediaResource)

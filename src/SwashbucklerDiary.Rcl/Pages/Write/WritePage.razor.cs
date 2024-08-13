@@ -295,6 +295,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 }
 
                 await Task.Delay(800);
+                diary.Content = await markdownEdit.GetValueAsync();
 
                 if (!background)
                 {
@@ -457,7 +458,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             _ = HandleActivatedAsync(args);
         }
-
 
         private async Task HandleActivatedAsync(ActivationArguments? args)
         {
