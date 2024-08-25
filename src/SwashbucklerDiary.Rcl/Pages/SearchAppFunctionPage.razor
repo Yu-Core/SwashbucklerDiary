@@ -16,7 +16,7 @@
 <ScrollContainer>
     @if (ShowPrivacyModeItem)
     {
-        <MCard Class="mb-3 list-item-card"
+        <MCard Class="mb-3 my-list-card"
                Elevation="0"
                Rounded="@("lg")"
                OnClick="ToPrivacyMode">
@@ -41,7 +41,7 @@
                 ItemSize="@ItemHeight"
                 Context="item">
         <MCard @key="item"
-               Class="mb-3 list-item-card"
+               Class="mb-3 my-list-card"
                Elevation="0"
                Rounded="@("lg")"
                OnClick="()=>To(item.Href!)">

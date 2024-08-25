@@ -1,8 +1,8 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
 @inherits CardListComponentBase<TagModel>
 
-<div class="card-list-wrap">
-    <div @ref="elementRef" class="card-list-main">
+<div class="card-list__wrap">
+    <div @ref="elementRef" class="card-list__main">
         <CascadingValue Value="options"
                         IsFixed="true">
             <Virtualize Items="Value"
@@ -20,7 +20,7 @@
     {
         <MultiDisplay MdAndUp="true">
             <DesktopContent>
-                <div class="card-list-assist-info">
+                <div class="card-list__assist-info">
                     <TagStatisticsCard Value="Value"
                                        Diaries="Diaries">
                     </TagStatisticsCard>

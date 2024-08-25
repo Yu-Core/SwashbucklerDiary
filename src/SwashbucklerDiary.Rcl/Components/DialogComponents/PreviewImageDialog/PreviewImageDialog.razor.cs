@@ -45,6 +45,7 @@ namespace SwashbucklerDiary.Rcl.Components
             base.Visible = value;
             if (!value && Module is not null && isInitialized)
             {
+                // Cannot be placed in BeforeShowContent, Because you will see the Reset animation
                 await Module.Reset($"#{id}");
             }
         }

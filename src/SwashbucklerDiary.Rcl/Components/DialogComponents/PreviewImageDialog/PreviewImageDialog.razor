@@ -8,7 +8,7 @@
                   OnBeforeShowContent="BeforeShowContent">
     <MCard Class="fill-height primary-background"
            Ripple="false">
-        <MToolbar Class="preview-image-dialog--toolbar"
+        <MToolbar Class="preview-image-dialog__toolbar"
                   Elevation="0">
             <MButton Icon="true"
                      OnClick="()=>InternalVisibleChanged(false)">
@@ -33,8 +33,8 @@
             </MButton>
         </MToolbar>
 
-        <div class="preview-image-dialog--image__wraper">
-            <div id="@id" class="preview-image-dialog--image">
+        <div class="preview-image-dialog__image__wraper">
+            <div id="@id" class="preview-image-dialog__image">
                 <img src="@Src" />
             </div>
         </div>

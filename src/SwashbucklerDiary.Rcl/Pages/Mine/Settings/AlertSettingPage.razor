@@ -7,7 +7,7 @@
 </MyAppBar>
 
 <ScrollContainer>
-    <MCard Class="list-item-card"
+    <MCard Class="my-list-card"
            Elevation="0"
            Rounded="@("lg")">
         <MListItem OnClick="()=>showTimeout=true">
@@ -19,7 +19,7 @@
             <MListItemContent>
                 @(I18n.T("Setting.Display.Snackbars.AlertTimeout.Name"))
             </MListItemContent>
-            <MListItemContent Class="setting-state">
+            <MListItemContent Class="setting-item-state">
                 <MListItemSubtitle>
                     @(Timeout.ToString() + "s")
                 </MListItemSubtitle>
@@ -30,7 +30,7 @@
         </MListItem>
     </MCard>
 
-    <MCard Class="list-item-card"
+    <MCard Class="my-list-card"
            Elevation="0"
            Rounded="@("lg")">
         <MListItem>

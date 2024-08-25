@@ -81,7 +81,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 if (!opacity)
                 {
                     options.BackgroundOpacity = 0;
-                    options.Class = "my-alert-loading";
+                    options.Class = "my-progress-circular";
                 }
             });
             return Task.CompletedTask;

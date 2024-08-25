@@ -31,7 +31,7 @@
             <MButton @attributes="activatorAttributes"
                      Icon="true"
                      OnClick="OpenMenu">
-                <i class="m-icon mdi mdi-chevron-down @Theme card-menu @(IsActive?"card-list-menu__select":"")"></i>
+                <i class="m-icon mdi mdi-chevron-down @Theme card__menu @(IsActive?"card-list__selected-menu":"")"></i>
             </MButton>
         </div>
     </div>
@@ -40,7 +40,7 @@
     </div>
     <div class="m-list-item m-list-item--three-line @Theme" tabindex="-1">
         <div class="m-list-item__content">
-            <div class="m-list-item__title diary-card-list-item__title">
+            <div class="m-list-item__title diary-card__title">
                 @title
             </div>
             <div class="m-list-item__subtitle">
@@ -50,7 +50,7 @@
     </div>
     @if (Value.Tags is not null && Value.Tags.Count > 0)
     {
-        <div class="px-3 diary-card-tags">
+        <div class="px-3 diary-card__tags">
             <div style="white-space: nowrap;width:100%;overflow-x:hidden;">
                 @foreach (var item in Value.Tags)
                 {

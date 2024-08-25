@@ -6,7 +6,7 @@
 </MyAppBar>
 
 <ScrollContainer>
-    <MCard Class="list-item-card"
+    <MCard Class="my-list-card"
            Elevation="0"
            Rounded="@("lg")">
         <MList>
@@ -64,7 +64,7 @@
         </MList>
     </MCard>
 
-    <MCard Class="list-item-card"
+    <MCard Class="my-list-card"
            Elevation="0"
            Rounded="@("lg")">
         <MList>
@@ -112,7 +112,7 @@
                             @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Subtitle"))
                         </MListItemSubtitle>
                     </MListItemContent>
-                    <MListItemContent Class="setting-state">
+                    <MListItemContent Class="setting-item-state">
                         <MListItemSubtitle Class="font-weight-bold">
                             @privacyModeFunctionSearchKey
                         </MListItemSubtitle>
@@ -133,7 +133,7 @@
                     <MListItemContent>
                         @(I18n.T("PrivacyMode.PrivacyModeEntrancePassword"))
                     </MListItemContent>
-                    <MListItemContent Class="setting-state">
+                    <MListItemContent Class="setting-item-state">
                         <MListItemSubtitle>
                             @PrivacyModeEntrancePasswordSetStateText
                         </MListItemSubtitle>
@@ -148,7 +148,7 @@
 
     @if (Desktop)
     {
-        <MCard Class="list-item-card"
+        <MCard Class="my-list-card"
                Elevation="0"
                Rounded="@("lg")">
             <MListItem OnClick="SwitchPrivacyMode">

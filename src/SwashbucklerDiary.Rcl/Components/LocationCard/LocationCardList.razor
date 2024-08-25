@@ -1,8 +1,8 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
 @inherits CardListComponentBase<LocationModel>
 
-<div class="card-list-wrap">
-    <div class="card-list-main">
+<div class="card-list__wrap">
+    <div class="card-list__main">
         <Virtualize Items="Value"
                     ItemSize="60"
                     Context="item">
@@ -17,7 +17,7 @@
     {
         <MultiDisplay MdAndUp="true">
             <DesktopContent>
-                <div class="card-list-assist-info">
+                <div class="card-list__assist-info">
                     <LocationStatisticsCard Value="Value">
                     </LocationStatisticsCard>
                 </div>

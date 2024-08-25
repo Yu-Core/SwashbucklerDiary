@@ -77,7 +77,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private float ItemHeight => MasaBlazorHelper.Breakpoint.Xs ? 156.8f : (MasaBlazorHelper.Breakpoint.Sm ? 164.8f : 172.8f);
 
-        private string? InternalClass => $"card-list-main {(showMenu ? "card-list-menu__open " : "")}{(showIcon ? "" : "card-list-icon__none ")}{(showTags ? "" : "card-list-tags__none")}";
+        private string? InternalClass => $"card-list__main {(showMenu ? "card-list__menu--active " : "")}{(showIcon ? "" : "diary-card-list__icon--hidden ")}{(showTags ? "" : "diary-card-list__tags--hidden")}";
 
         private List<TagModel> SelectedTags
         {
