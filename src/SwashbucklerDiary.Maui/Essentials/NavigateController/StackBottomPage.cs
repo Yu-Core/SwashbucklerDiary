@@ -2,7 +2,7 @@
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
-    [Route($"/stackBottom")]
+    [Route("/stackBottom")]
     public class StackBottomPage : ComponentBase
     {
     }

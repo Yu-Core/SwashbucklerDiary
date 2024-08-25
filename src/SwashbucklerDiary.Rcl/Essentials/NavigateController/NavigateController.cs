@@ -137,7 +137,10 @@ namespace SwashbucklerDiary.Rcl.Essentials
                 CanPageUpdate = true;
                 if (uri != _navigationManager.Uri)
                 {
-                    _navigationManager.NavigateTo(uri);
+                    Task.Run(() =>
+                    {
+                        _navigationManager.NavigateTo(uri);
+                    });
                 }
             }
 
