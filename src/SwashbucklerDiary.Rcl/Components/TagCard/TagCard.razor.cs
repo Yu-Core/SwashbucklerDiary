@@ -3,7 +3,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class TagCard : CardComponentBase<TagModel>, IDisposable
+    public partial class TagCard : CardComponentBase<TagModel>
     {
         private string? diaryCount;
 
@@ -14,10 +14,11 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public Func<TagModel, int>? OnCalcDiaryCount { get; set; }
 
-        public void Dispose()
+        protected override async ValueTask DisposeAsyncCore()
         {
+            await base.DisposeAsyncCore();
+
             TagCardListOptions.DiariesChanged -= UpdateDiaryCount;
-            GC.SuppressFinalize(this);
         }
 
         protected override void OnAfterRender(bool firstRender)

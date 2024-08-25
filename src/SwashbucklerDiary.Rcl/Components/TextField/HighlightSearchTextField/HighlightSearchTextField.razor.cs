@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class HighlightSearchTextField : OpenCloseComponentBase, IDisposable
+    public partial class HighlightSearchTextField : OpenCloseComponentBase
     {
         private bool _visible;
 
@@ -50,6 +50,16 @@ namespace SwashbucklerDiary.Rcl.Components
             if (firstRender)
             {
                 await InitBetterSearchAsync();
+            }
+        }
+
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            if (Visible)
+            {
+                NavigateController.RemoveHistoryAction(CloseSearch);
             }
         }
 
@@ -117,16 +127,6 @@ namespace SwashbucklerDiary.Rcl.Components
                 search = string.Empty;
                 await Clear();
             }
-        }
-
-        public void Dispose()
-        {
-            if (Visible)
-            {
-                NavigateController.RemoveHistoryAction(CloseSearch);
-            }
-
-            GC.SuppressFinalize(this);
         }
 
         private async void CloseSearch()

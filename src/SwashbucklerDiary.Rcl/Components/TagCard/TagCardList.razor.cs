@@ -1,15 +1,12 @@
 ﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class TagCardList : CardListComponentBase<TagModel>, IAsyncDisposable
+    public partial class TagCardList : CardListComponentBase<TagModel>
     {
-        private ElementReference elementRef;
-
         private bool ShowDelete;
 
         private bool ShowRename;
@@ -25,37 +22,21 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private ITagService TagService { get; set; } = default!;
 
-        [Inject]
-        private IntersectJSModule IntersectJSModule { get; set; } = default!;
-
         [Parameter]
-        public EventCallback<List<TagModel>> ValueChanged { get; set; }
-
-        [Parameter]
-        public List<DiaryModel> Diaries { get; set; } = [];
-
-        public async ValueTask DisposeAsync()
+        public List<DiaryModel> Diaries
         {
-            base.OnDispose();
-            await IntersectJSModule.UnobserveAsync(elementRef);
-            GC.SuppressFinalize(this);
+            get => GetValue<List<DiaryModel>>() ?? [];
+            set => SetValue(value);
         }
+
+        [Parameter]
+        public EventCallback<List<DiaryModel>> DiariesChanged { get; set; }
+
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
             LoadView();
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-
-            if (firstRender)
-            {
-                var handle = DotNetObjectReference.Create(new IntersectInvoker(OnIntersectAsync));
-                await IntersectJSModule.ObserverAsync(elementRef, handle);
-            }
         }
 
         protected override void ReadSettings()
@@ -65,26 +46,33 @@ namespace SwashbucklerDiary.Rcl.Components
             var tagSort = SettingService.Get<string>(Setting.TagSort);
             if (!string.IsNullOrEmpty(tagSort))
             {
-                sortItem = tagSort;
+                SortItem = tagSort;
             }
+        }
+
+        protected override void RegisterWatchers(PropertyWatcher watcher)
+        {
+            base.RegisterWatchers(watcher);
+
+            watcher.Watch<List<DiaryModel>>(nameof(Diaries), async () =>
+            {
+                TagsDiaryCount = await TagService.TagsDiaryCount();
+                UpdateInternalValue();
+                options.NotifyDiariesChanged();
+            }, immediate: true);
         }
 
         private async Task ConfirmDelete()
         {
-            var tag = SelectedItemValue;
             ShowDelete = false;
-            bool flag = await TagService.DeleteAsync(tag);
+            bool flag = await TagService.DeleteAsync(SelectedItem);
             if (flag)
             {
-
-                var index = _value.FindIndex(it => it.Id == tag.Id);
-                if (index < 0)
+                if (RemoveSelectedItem())
                 {
-                    return;
+                    await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
+                    StateHasChanged();
                 }
-                _value.RemoveAt(index);
-                await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
-                StateHasChanged();
             }
             else
             {
@@ -106,9 +94,9 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            SelectedItemValue.Name = tagName;
-            SelectedItemValue.UpdateTime = DateTime.Now;
-            bool flag = await TagService.UpdateAsync(SelectedItemValue, it => new { it.Name, it.UpdateTime });
+            SelectedItem.Name = tagName;
+            SelectedItem.UpdateTime = DateTime.Now;
+            bool flag = await TagService.UpdateAsync(SelectedItem, it => new { it.Name, it.UpdateTime });
             if (!flag)
             {
                 await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
@@ -127,9 +115,9 @@ namespace SwashbucklerDiary.Rcl.Components
                 {"Sort.Time.Asc", it => it.OrderBy(t => t.CreateTime) },
             };
 
-            if (string.IsNullOrEmpty(sortItem))
+            if (string.IsNullOrEmpty(SortItem))
             {
-                sortItem = SortItems.First();
+                SortItem = SortItems.First();
             }
 
             menuItems =
@@ -137,7 +125,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 new(this, "Share.Rename", "mdi-rename-outline", Rename),
                 new(this, "Share.Delete", "mdi-delete-outline", Delete),
                 new(this, "Diary.Export", "mdi-export", Export),
-                new(this, "Share.Sort", "mdi-sort-variant", Sort),
+                new(this, "Share.Sort", "mdi-sort-variant", OpenSortDialog),
             ];
         }
 
@@ -153,7 +141,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task Export()
         {
-            var newTag = await TagService.FindIncludesAsync(SelectedItemValue.Id);
+            var newTag = await TagService.FindIncludesAsync(SelectedItem.Id);
             var diaries = newTag.Diaries;
             if (diaries is null || diaries.Count == 0)
             {
@@ -178,21 +166,6 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             return 0;
-        }
-
-        private async Task UpdateTagsDiaryCount()
-        {
-            TagsDiaryCount = await TagService.TagsDiaryCount();
-        }
-
-        private async Task OnIntersectAsync(IntersectEventArgs args)
-        {
-            if (args.IsIntersecting)
-            {
-                await UpdateTagsDiaryCount();
-                await InvokeAsync(StateHasChanged);
-                options.NotifyDiariesChanged();
-            }
         }
     }
 }

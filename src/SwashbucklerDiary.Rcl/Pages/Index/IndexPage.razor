@@ -20,8 +20,8 @@
             <IndexHead ShowDate="showDate"
                        ShowWelcomeText="showWelcomeText">
             </IndexHead>
-            <DiaryCardList @bind-Tags="Tags"
-                           Value="Diaries">
+            <DiaryCardList @bind-Value="Diaries"
+                           @bind-Tags="Tags">
             </DiaryCardList>
         </MContainer>
 
@@ -30,7 +30,7 @@
         <MContainer Class="my-container"
                     Fluid="true">
             <TagCardList @bind-Value="Tags"
-                         Diaries="Diaries">
+                         @bind-Diaries="Diaries">
             </TagCardList>
         </MContainer>
     </SwiperTabItem>
@@ -53,8 +53,6 @@
         </MWindowItem>
     </MWindow>
 </div>
-
-
 
 <InputDialog @bind-Visible="showAddTag"
              Title="@(I18n.T("Tag.Add"))"

@@ -5,6 +5,7 @@
                   MyValueChanged="InternalVisibleChanged"
                   ContentClass="rounded-lg"
                   MaxWidth="420"
+                  OnBeforeShowContent="HandleOnBeforeShowContent"
                   OnAfterShowContent="FocusAsync">
     <MCard>
         <MCardTitle Class="font-weight-bold">
@@ -18,7 +19,7 @@
         <MCardText Class="pb-0">
             @if (!MultiLine)
             {
-                <MTextField @bind-Value="inputText"
+                <MTextField @bind-Value="internalValue"
                             @ref="textField"
                             OnEnter="HandleOnEnter"
                             Dense
@@ -37,7 +38,7 @@
             }
             else
             {
-                <MTextarea @bind-Value="inputText"
+                <MTextarea @bind-Value="internalValue"
                            @ref="mTextarea"
                            Class="rounded-lg"
                            HideDetails="@("auto")"

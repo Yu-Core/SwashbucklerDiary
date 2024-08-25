@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            
+
             AppLifecycle.Resumed += UpdatePermissionStates;
         }
 
@@ -24,17 +24,18 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if(firstRender)
+            if (firstRender)
             {
                 await UpdatePermissionStatesAsync();
                 StateHasChanged();
             }
         }
 
-        protected override void OnDispose()
+        protected override async ValueTask DisposeAsyncCore()
         {
+            await base.DisposeAsyncCore();
+
             AppLifecycle.Resumed -= UpdatePermissionStates;
-            base.OnDispose();
         }
 
         private string? CameraPermission => GetPermissionText(cameraState);

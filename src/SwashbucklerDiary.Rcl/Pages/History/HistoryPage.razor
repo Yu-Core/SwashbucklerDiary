@@ -61,13 +61,12 @@
                      Color="primary"
                      Events="eventsDates"
                      EventColor='"primary"'
-                     SelectedDate Locale="@(I18n.Culture.Name)">
+                     Locale="@(I18n.Culture.Name)">
         </MDatePicker>
     </IntersectElement>
 
-    <DiaryCardList @bind-Tags="Tags"
-                   Value="selectedDiaries"
-                   OnRemove="HandelOnRemove">
+    <DiaryCardList @bind-Value="SelectedDiaries"
+                   @bind-Tags="Tags">
     </DiaryCardList>
 </ScrollContainer>
 

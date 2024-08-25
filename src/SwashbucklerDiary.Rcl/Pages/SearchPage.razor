@@ -21,8 +21,8 @@
 </MyAppBar>
 
 <ScrollContainer Id="@scrollContainerId">
-    <DiaryCardList @bind-Tags="Tags"
-                   Value="Diaries"
+    <DiaryCardList @bind-Value="Diaries"
+                   @bind-Tags="Tags"
                    NotFoundText="@(I18n.T("Search.Not Found"))">
     </DiaryCardList>
 </ScrollContainer>

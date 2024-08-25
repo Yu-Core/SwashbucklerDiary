@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -8,9 +9,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public abstract class CardListComponentBase<T> : ImportantComponentBase where T : BaseModel, new()
     {
-        protected List<T> _value = [];
-
-        protected string? sortItem;
+        protected List<T> InternalValue = [];
 
         protected bool showSort;
 
@@ -30,23 +29,32 @@ namespace SwashbucklerDiary.Rcl.Components
         protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
 
         [Parameter]
-        public virtual List<T> Value
+        public List<T> Value
         {
-            get => Sort(_value).ToList();
-            set => _value = value;
+            get => GetValue<List<T>>() ?? [];
+            set => SetValue(value);
         }
 
-        public void Sort()
+        [Parameter]
+        public EventCallback<List<T>> ValueChanged { get; set; }
+
+        public void OpenSortDialog()
         {
             showSort = true;
             InvokeAsync(StateHasChanged);
         }
 
-        protected virtual T SelectedItemValue { get; set; } = new();
+        protected virtual T SelectedItem { get; set; } = new();
 
         protected List<string> SortItems => sortOptions.Keys.ToList();
 
         protected Dictionary<string, object>? ActivatorAttributes => multiMenu?.ActivatorAttributes;
+
+        protected string? SortItem
+        {
+            get => GetValue<string?>();
+            set => SetValue(value);
+        }
 
         protected override void OnInitialized()
         {
@@ -55,9 +63,9 @@ namespace SwashbucklerDiary.Rcl.Components
             MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
         }
 
-        protected override void OnDispose()
+        protected override async ValueTask DisposeAsyncCore()
         {
-            base.OnDispose();
+            await base.DisposeAsyncCore();
 
             MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
         }
@@ -69,9 +77,23 @@ namespace SwashbucklerDiary.Rcl.Components
             showStatisticsCard = SettingService.Get<bool>(Setting.StatisticsCard);
         }
 
+        protected override void RegisterWatchers(PropertyWatcher watcher)
+        {
+            base.RegisterWatchers(watcher);
+
+            watcher.Watch<List<T>>(nameof(Value), UpdateInternalValue, immediate: true)
+                   .Watch<string?>(nameof(SortItem), UpdateInternalValue, immediate: true);
+        }
+
+        protected virtual void UpdateInternalValue()
+        {
+            InternalValue = Sort(Value).ToList();
+            StateHasChanged();
+        }
+
         protected virtual IEnumerable<T> Sort(IEnumerable<T> value)
         {
-            if (sortItem is null || !sortOptions.TryGetValue(sortItem, out Func<IEnumerable<T>, IEnumerable<T>>? sortOption))
+            if (SortItem is null || !sortOptions.TryGetValue(SortItem, out Func<IEnumerable<T>, IEnumerable<T>>? sortOption))
             {
                 return value;
             }
@@ -81,9 +103,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected void OpenMenu((T value, Dictionary<string, object> activatorAttributes) args)
         {
-            if (SelectedItemValue.Id != args.value.Id)
+            if (SelectedItem.Id != args.value.Id)
             {
-                SelectedItemValue = args.value;
+                SelectedItem = args.value;
                 if (ActivatorAttributes is not null)
                 {
                     //清除旧的Activator的属性，必须这样写，直接Clear是无效的
@@ -103,6 +125,28 @@ namespace SwashbucklerDiary.Rcl.Components
 
             showMenu = true;
             InvokeAsync(StateHasChanged);
+        }
+
+        protected bool RemoveSelectedItem()
+        {
+            var index = Value.FindIndex(it => it.Id == SelectedItem.Id);
+            if (index < 0)
+            {
+                return false;
+            }
+
+            Value.RemoveAt(index);
+            NotifyValueChanged();
+            return true;
+        }
+
+        protected void NotifyValueChanged()
+        {
+            Value = [.. Value];
+            if (ValueChanged.HasDelegate)
+            {
+                ValueChanged.InvokeAsync(Value);
+            }
         }
 
         private void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)

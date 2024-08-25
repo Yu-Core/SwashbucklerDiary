@@ -113,10 +113,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             await base.OnResume();
         }
 
-        protected override void OnDispose()
+        protected override async ValueTask DisposeAsyncCore()
         {
+            await base.DisposeAsyncCore();
+
             I18n.OnChanged -= I18nChange;
-            base.OnDispose();
         }
 
         protected override void ReadSettings()

@@ -5,59 +5,67 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class DiaryStatisticsCard
+    public partial class DiaryStatisticsCard : MyComponentBase
     {
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
 
         [Inject]
-        private II18nService I18n { get; set; } = default!;
-
-        [Inject]
         private IIconService IIconService { get; set; } = default!;
 
-        [CascadingParameter(Name = "Culture")]
-        public string? Culture { get; set; }
-
         [Parameter]
-        public List<DiaryModel> Value { get; set; } = [];
+        public List<DiaryModel> Value
+        {
+            get => GetValue<List<DiaryModel>>() ?? [];
+            set => SetValue(value);
+        }
 
         private int DiaryCount => Value.Count;
 
-        private int WordCount => GetWordCount(Value);
+        private int WordCount => GetComputedValue(() => GetWordCount(Value), [nameof(Value)]);
 
         private int ActiveDayCount
-            => Value.Select(it => DateOnly.FromDateTime(it.CreateTime))
-            .Distinct()
-            .Count();
+            => GetComputedValue(() =>
+            {
+                return Value.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
+            }
+            , [nameof(Value)]);
 
         private string? MostWeather
-            => Value.Where(d => !string.IsNullOrWhiteSpace(d.Weather))
-            .GroupBy(d => d.Weather)
-            .OrderByDescending(d => d.Count())
-            .Select(d => d.Key)
-            .FirstOrDefault();
+            => GetComputedValue(() =>
+            {
+                return Value.Where(d => !string.IsNullOrWhiteSpace(d.Weather))
+                            .GroupBy(d => d.Weather)
+                            .OrderByDescending(d => d.Count())
+                            .Select(d => d.Key)
+                            .FirstOrDefault();
+            }
+            , [nameof(Value)]);
 
         private string? MostWeatherText => MostWeather is null ? I18n.T("Statistics.Not have") : I18n.T("Weather." + MostWeather);
 
         private string? MostWeatherIcon => MostWeather is null ? string.Empty : IIconService.GetWeatherIcon(MostWeather);
 
         private string? MostMood
-            => Value.Where(d => !string.IsNullOrWhiteSpace(d.Mood))
-            .GroupBy(d => d.Mood)
-            .OrderByDescending(d => d.Count())
-            .Select(d => d.Key)
-            .FirstOrDefault();
+            => GetComputedValue(() =>
+            {
+                return Value.Where(d => !string.IsNullOrWhiteSpace(d.Mood))
+                            .GroupBy(d => d.Mood)
+                            .OrderByDescending(d => d.Count())
+                            .Select(d => d.Key)
+                            .FirstOrDefault();
+            }
+            , [nameof(Value)]);
 
         private string? MostMoodText => MostMood is null ? I18n.T("Statistics.Not have") : I18n.T("Mood." + MostMood);
 
         private string? MostMoodIcon => MostMood is null ? string.Empty : IIconService.GetMoodIcon(MostMood);
 
         private string? EarliestDate
-            => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("d");
+            => GetComputedValue(() => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("d"), [nameof(Value)]);
 
         private string? LastDate
-            => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("d");
+            => GetComputedValue(() => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("d"), [nameof(Value)]);
 
         private int GetWordCount(List<DiaryModel> diaries)
         {

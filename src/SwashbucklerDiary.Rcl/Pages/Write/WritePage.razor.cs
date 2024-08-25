@@ -125,13 +125,14 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        protected override void OnDispose()
+        protected override async ValueTask DisposeAsyncCore()
         {
+            await base.DisposeAsyncCore();
+
             AppLifecycle.Stopped -= LeaveAppSaveDiary;
             AppLifecycle.Resumed -= ResumeApp;
             AppLifecycle.Activated -= HandleActivated;
             timer?.Dispose();
-            base.OnDispose();
         }
 
         protected override void ReadSettings()

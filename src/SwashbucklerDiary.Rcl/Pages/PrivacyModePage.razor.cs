@@ -65,9 +65,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             enablePrivacyModeDark = SettingService.Get<bool>(Setting.PrivacyModeDark);
         }
 
-        protected override void OnDispose()
+        protected override async ValueTask DisposeAsyncCore()
         {
-            base.OnDispose();
+            await base.DisposeAsyncCore();
 
             MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
         }

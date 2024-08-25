@@ -6,9 +6,9 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class LocationCardList : CardListComponentBase<LocationModel>
     {
-        bool ShowRename;
+        bool showRename;
 
-        bool ShowDelete;
+        bool showDelete;
 
         [Inject]
         public ILocationService LocationService { get; set; } = default!;
@@ -27,20 +27,21 @@ namespace SwashbucklerDiary.Rcl.Components
             var locationSort = SettingService.Get<string>(Setting.LocationSort);
             if (!string.IsNullOrEmpty(locationSort))
             {
-                sortItem = locationSort;
+                SortItem = locationSort;
             }
         }
 
         private async Task ConfirmDelete()
         {
-            var location = SelectedItemValue;
-            ShowDelete = false;
-            bool flag = await LocationService.DeleteAsync(location);
+            showDelete = false;
+            bool flag = await LocationService.DeleteAsync(SelectedItem);
             if (flag)
             {
-                _value.Remove(location);
-                await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
-                StateHasChanged();
+                if (RemoveSelectedItem())
+                {
+                    await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
+                    StateHasChanged();
+                }
             }
             else
             {
@@ -50,7 +51,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task ConfirmRename(string name)
         {
-            ShowRename = false;
+            showRename = false;
             if (string.IsNullOrWhiteSpace(name))
             {
                 return;
@@ -62,9 +63,9 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            SelectedItemValue.Name = name;
-            SelectedItemValue.UpdateTime = DateTime.Now;
-            bool flag = await LocationService.UpdateAsync(SelectedItemValue, it => new { it.Name, it.UpdateTime });
+            SelectedItem.Name = name;
+            SelectedItem.UpdateTime = DateTime.Now;
+            bool flag = await LocationService.UpdateAsync(SelectedItem, it => new { it.Name, it.UpdateTime });
             if (!flag)
             {
                 await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
@@ -79,27 +80,27 @@ namespace SwashbucklerDiary.Rcl.Components
                 {"Sort.Time.Asc", it => it.OrderBy(l => l.CreateTime) },
             };
 
-            if (string.IsNullOrEmpty(sortItem))
+            if (string.IsNullOrEmpty(SortItem))
             {
-                sortItem = SortItems.First();
+                SortItem = SortItems.First();
             }
 
             menuItems =
             [
                 new(this, "Share.Rename", "mdi-rename-outline", Rename),
                 new(this, "Share.Delete", "mdi-delete-outline", Delete),
-                new(this, "Share.Sort", "mdi-sort-variant", Sort),
+                new(this, "Share.Sort", "mdi-sort-variant", OpenSortDialog),
             ];
         }
 
         private void Delete()
         {
-            ShowDelete = true;
+            showDelete = true;
         }
 
         private void Rename()
         {
-            ShowRename = true;
+            showRename = true;
         }
 
         private async Task SortChanged(string value)

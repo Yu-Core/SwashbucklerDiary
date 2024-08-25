@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private IntersectJSModule IntersectJSModule { get; set; } = default!;
 
         [Parameter]
-        public string? Class { get;set; }
+        public string? Class { get; set; }
 
         [Parameter]
         public string? Style { get; set; }
@@ -22,7 +22,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public EventCallback<bool> IntersectChanged { get; set; }
-
 
         public async ValueTask DisposeAsync()
         {

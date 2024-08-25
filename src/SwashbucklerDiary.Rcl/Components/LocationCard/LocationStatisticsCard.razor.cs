@@ -1,26 +1,23 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class LocationStatisticsCard
+    public partial class LocationStatisticsCard : MyComponentBase
     {
-        [Inject]
-        private II18nService I18n { get; set; } = default!;
-
-        [CascadingParameter(Name = "Culture")]
-        public string? Culture { get; set; }
-
         [Parameter]
-        public List<LocationModel> Value { get; set; } = [];
+        public List<LocationModel> Value
+        {
+            get => GetValue<List<LocationModel>>() ?? [];
+            set => SetValue(value);
+        }
 
         private int LocationCount => Value.Count;
 
         private string? EarliestDate
-            => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("d");
+            => GetComputedValue(() => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("d"), [nameof(Value)]);
 
         private string? LastDate
-            => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("d");
+            => GetComputedValue(() => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("d"), [nameof(Value)]);
     }
 }

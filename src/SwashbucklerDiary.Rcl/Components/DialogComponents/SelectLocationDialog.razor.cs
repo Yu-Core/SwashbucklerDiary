@@ -49,7 +49,6 @@ namespace SwashbucklerDiary.Rcl.Components
         private ICollection<LocationModel> FilterLocations =>
             string.IsNullOrWhiteSpace(searchText) ? locations : locations.Where(it => !string.IsNullOrEmpty(it.Name) && (it.Name.Contains(searchText) || it.Name == selectedLocation)).ToList();
 
-
         private void BeforeShowContent()
         {
             selectedLocation = Value;

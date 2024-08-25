@@ -2,10 +2,10 @@
 @inherits CardListComponentBase<TagModel>
 
 <div class="card-list__wrap">
-    <div @ref="elementRef" class="card-list__main">
+    <div class="card-list__main">
         <CascadingValue Value="options"
                         IsFixed="true">
-            <Virtualize Items="Value"
+            <Virtualize Items="InternalValue"
                         ItemSize="60"
                         Context="item">
                 <TagCard @key="item.Id"
@@ -35,7 +35,7 @@
 </EmptyResult>
 
 <InputDialog @bind-Visible="ShowRename"
-             Text="@(SelectedItemValue.Name)"
+             Text="@(SelectedItem.Name)"
              Title="@(I18n.T("Tag.Rename"))"
              Placeholder="@(I18n.T("Tag.Placeholder"))"
              OnOK="ConfirmRename">
@@ -51,7 +51,7 @@
               Value="ExportDiaries">
 </ExportDialog>
 
-<RadioDialog @bind-Value="sortItem"
+<RadioDialog @bind-Value="SortItem"
              @bind-Visible="showSort"
              OnChange="SortChanged"
              TItem="string"

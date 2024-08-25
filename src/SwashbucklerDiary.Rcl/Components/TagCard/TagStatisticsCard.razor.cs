@@ -1,31 +1,33 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class TagStatisticsCard
+    public partial class TagStatisticsCard : MyComponentBase
     {
-        [Inject]
-        private II18nService I18n { get; set; } = default!;
+        [Parameter]
+        public List<TagModel> Value
+        {
+            get => GetValue<List<TagModel>>() ?? [];
+            set => SetValue(value);
+        }
 
         [Parameter]
-        public List<TagModel> Value { get; set; } = [];
-
-        [CascadingParameter(Name = "Culture")]
-        public string? Culture { get; set; }
-
-        [Parameter]
-        public List<DiaryModel> Diaries { get; set; } = [];
+        public List<DiaryModel> Diaries
+        {
+            get => GetValue<List<DiaryModel>>() ?? [];
+            set => SetValue(value);
+        }
 
         private int TagCount => Value.Count;
 
-        private int DiaryCount => Diaries.Count(d => d.Tags is not null && d.Tags.Count != 0);
+        private int DiaryCount
+            => GetComputedValue(() => Diaries.Count(d => d.Tags is not null && d.Tags.Count != 0), [nameof(Diaries)]);
 
         private string? EarliestDate
-            => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("d");
+            => GetComputedValue(() => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("d"), [nameof(Value)]);
 
         private string? LastDate
-            => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("d");
+            => GetComputedValue(() => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("d"), [nameof(Value)]);
     }
 }

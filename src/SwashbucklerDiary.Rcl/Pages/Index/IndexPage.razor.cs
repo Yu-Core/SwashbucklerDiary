@@ -36,11 +36,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             VersionManager.AfterVersionUpdate += UpdateDiariesAndStateHasChanged;
         }
 
-        protected override void OnDispose()
+        protected override async ValueTask DisposeAsyncCore()
         {
+            await base.DisposeAsyncCore();
+
             VersionManager.AfterFirstEnter -= UpdateDiariesAndStateHasChanged;
             VersionManager.AfterVersionUpdate -= UpdateDiariesAndStateHasChanged;
-            base.OnDispose();
         }
 
         protected override void ReadSettings()
@@ -79,7 +80,9 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            Tags.Insert(0, tag);
+            var tags = Tags;
+            tags.Insert(0, tag);
+            Tags = tags;
             StateHasChanged();
         }
 

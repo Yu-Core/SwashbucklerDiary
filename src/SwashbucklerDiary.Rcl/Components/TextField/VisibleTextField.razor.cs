@@ -2,7 +2,7 @@
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class VisibleTextField : OpenCloseComponentBase, IDisposable
+    public partial class VisibleTextField : OpenCloseComponentBase
     {
         protected bool _visible;
 
@@ -24,6 +24,16 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public string? Placeholder { get; set; }
+
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            if (Visible)
+            {
+                NavigateController.RemoveHistoryAction(CloseSearch);
+            }
+        }
 
         protected async Task InternalValueChanged(string? value)
         {
@@ -56,16 +66,6 @@ namespace SwashbucklerDiary.Rcl.Components
                     await OnInput.InvokeAsync(string.Empty);
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            if (Visible)
-            {
-                NavigateController.RemoveHistoryAction(CloseSearch);
-            }
-
-            GC.SuppressFinalize(this);
         }
 
         private async void CloseSearch()

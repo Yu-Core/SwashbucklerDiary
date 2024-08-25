@@ -6,7 +6,7 @@ using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public abstract class MediaWaterfallBase : MediaResourceListComponentBase, IDisposable
+    public abstract class MediaWaterfallBase : MediaResourceListComponentBase
     {
         protected bool contentLoading;
 
@@ -25,13 +25,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         protected WaterfallJSModule WaterfallJSModule { get; set; } = default!;
-
-        public void Dispose()
-        {
-            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
-            NavigationManager.LocationChanged -= NavigationManagerOnLocationChanged;
-            GC.SuppressFinalize(this);
-        }
 
         protected int Gap => MasaBlazorHelper.Breakpoint.Xs ? 16 : 24;
 
@@ -54,6 +47,14 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 await WaterfallJSModule.RecordScrollInfo($"#{ScrollElementId}");
             }
+        }
+
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
+            NavigationManager.LocationChanged -= NavigationManagerOnLocationChanged;
         }
 
         protected async void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)

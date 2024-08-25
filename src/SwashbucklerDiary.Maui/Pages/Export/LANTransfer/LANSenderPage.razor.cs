@@ -81,9 +81,9 @@ namespace SwashbucklerDiary.Maui.Pages
             }
         }
 
-        protected override void OnDispose()
+        protected override async ValueTask DisposeAsyncCore()
         {
-            base.OnDispose();
+            await base.DisposeAsyncCore();
 
             showTransferDialog = false;
             LANSenderService.Dispose();

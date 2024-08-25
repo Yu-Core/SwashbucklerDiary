@@ -3,7 +3,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Layout
 {
-    public partial class SponsorSupportSnackbar : MyComponentBase, IDisposable
+    public partial class SponsorSupportSnackbar : MyComponentBase
     {
         private bool showSnackbar;
 
@@ -12,6 +12,13 @@ namespace SwashbucklerDiary.Rcl.Layout
             base.OnInitialized();
 
             AchievementService.UserStateChanged += OnUserStateChanged;
+        }
+
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            AchievementService.UserStateChanged -= OnUserStateChanged;
         }
 
         protected async void OnUserStateChanged(UserStateModel userStateModel)
@@ -34,12 +41,6 @@ namespace SwashbucklerDiary.Rcl.Layout
                 await InvokeAsync(StateHasChanged);
                 await SettingService.Set("SponsorSupport", true);
             }
-        }
-
-        public void Dispose()
-        {
-            AchievementService.UserStateChanged -= OnUserStateChanged;
-            GC.SuppressFinalize(this);
         }
 
         private void ToSupport()

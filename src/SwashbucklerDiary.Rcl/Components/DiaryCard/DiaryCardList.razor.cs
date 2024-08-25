@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class DiaryCardList : CardListComponentBase<DiaryModel>
     {
-        private bool showDeleteDiary;
+        private bool showDelete;
 
         private bool showSelectTag;
 
@@ -29,9 +29,6 @@ namespace SwashbucklerDiary.Rcl.Components
         private IDiaryService DiaryService { get; set; } = default!;
 
         [Parameter]
-        public EventCallback<DiaryModel> OnRemove { get; set; }
-
-        [Parameter]
         public List<TagModel> Tags { get; set; } = [];
 
         [Parameter]
@@ -40,7 +37,7 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public string? NotFoundText { get; set; }
 
-        protected override DiaryModel SelectedItemValue
+        protected override DiaryModel SelectedItem
         {
             get => options.SelectedItemValue;
             set => options.SelectedItemValue = value;
@@ -69,7 +66,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var diarySort = SettingService.Get<string>(Setting.DiarySort);
             if (!string.IsNullOrEmpty(diarySort))
             {
-                sortItem = diarySort;
+                SortItem = diarySort;
             }
 
             privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
@@ -81,64 +78,56 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private List<TagModel> SelectedTags
         {
-            get => SelectedItemValue.Tags ?? [];
-            set => SelectedItemValue.Tags = value;
+            get => SelectedItem.Tags ?? [];
+            set => SelectedItem.Tags = value;
         }
 
         private string TopText()
-            => SelectedItemValue.Top ? "Diary.CancelTop" : "Diary.Top";
+            => SelectedItem.Top ? "Diary.CancelTop" : "Diary.Top";
 
         private string PrivateText()
-            => SelectedItemValue.Private ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
+            => SelectedItem.Private ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
 
         private string PrivateIcon()
-            => SelectedItemValue.Private ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
+            => SelectedItem.Private ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
 
         private async Task Topping()
         {
-            SelectedItemValue.Top = !SelectedItemValue.Top;
-            SelectedItemValue.UpdateTime = DateTime.Now;
+            SelectedItem.Top = !SelectedItem.Top;
+            SelectedItem.UpdateTime = DateTime.Now;
+            NotifyValueChanged();
             await InvokeAsync(StateHasChanged);
-            await DiaryService.UpdateAsync(SelectedItemValue, it => new { it.Top, it.UpdateTime });
+            await DiaryService.UpdateAsync(SelectedItem, it => new { it.Top, it.UpdateTime });
         }
 
         private void Delete()
         {
-            showDeleteDiary = true;
+            showDelete = true;
             InvokeAsync(StateHasChanged);
         }
 
         private async Task Copy()
         {
-            var text = SelectedItemValue.CreateCopyContent();
+            var text = SelectedItem.CreateCopyContent();
             await PlatformIntegration.SetClipboard(text);
             await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
 
-        private async Task ChangeTag()
+        private async Task OpenTagDialog()
         {
-            SelectedTags = await DiaryService.GetTagsAsync(SelectedItemValue.Id);
-            await InvokeAsync(StateHasChanged);
+            SelectedTags = await DiaryService.GetTagsAsync(SelectedItem.Id);
             showSelectTag = true;
             await InvokeAsync(StateHasChanged);
         }
 
         private async Task MovePrivacy()
         {
-            SelectedItemValue.Private = !SelectedItemValue.Private;
-            SelectedItemValue.UpdateTime = DateTime.Now;
-            await DiaryService.UpdateAsync(SelectedItemValue, it => new { it.Private, it.UpdateTime });
-
-            var index = _value.FindIndex(it => it.Id == SelectedItemValue.Id);
-            if (index < 0)
-            {
-                return;
-            }
-
-            _value.RemoveAt(index);
+            SelectedItem.Private = !SelectedItem.Private;
+            SelectedItem.UpdateTime = DateTime.Now;
+            await DiaryService.UpdateAsync(SelectedItem, it => new { it.Private, it.UpdateTime });
+            RemoveSelectedItem();
             await InvokeAsync(StateHasChanged);
-            await OnRemove.InvokeAsync(SelectedItemValue);
-            if (SelectedItemValue.Private)
+            if (SelectedItem.Private)
             {
                 await PopupServiceHelper.Success(I18n.T("Read.PrivacyAlert"));
             }
@@ -146,7 +135,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task Export()
         {
-            var newDiary = await DiaryService.FindAsync(SelectedItemValue.Id);
+            var newDiary = await DiaryService.FindAsync(SelectedItem.Id);
             exportDiaries = [newDiary];
             showExport = true;
             await InvokeAsync(StateHasChanged);
@@ -154,33 +143,28 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task ConfirmDelete()
         {
-            showDeleteDiary = false;
-            bool flag = await DiaryService.DeleteAsync(SelectedItemValue);
+            showDelete = false;
+            bool flag = await DiaryService.DeleteAsync(SelectedItem);
             if (flag)
             {
-                var index = _value.FindIndex(it => it.Id == SelectedItemValue.Id);
-                if (index < 0)
+                if (RemoveSelectedItem())
                 {
-                    return;
+                    await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
+                    await InvokeAsync(StateHasChanged);
                 }
-
-                _value.RemoveAt(index);
-                await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
-                await InvokeAsync(StateHasChanged);
             }
             else
             {
                 await PopupServiceHelper.Error(I18n.T("Share.DeleteFail"));
             }
-
-            await OnRemove.InvokeAsync(SelectedItemValue);
         }
 
         private async Task SaveSelectTags()
         {
             showSelectTag = false;
-            SelectedItemValue.UpdateTime = DateTime.Now;
-            await DiaryService.UpdateTagsAsync(SelectedItemValue);
+            SelectedItem.UpdateTime = DateTime.Now;
+            await DiaryService.UpdateTagsAsync(SelectedItem);
+            NotifyValueChanged();
         }
 
         private void LoadView()
@@ -191,19 +175,19 @@ namespace SwashbucklerDiary.Rcl.Components
                 {"Sort.Time.Asc",it => it.OrderBy(d => d.CreateTime) },
             };
 
-            if (string.IsNullOrEmpty(sortItem))
+            if (string.IsNullOrEmpty(SortItem))
             {
-                sortItem = SortItems.First();
+                SortItem = SortItems.First();
             }
 
             menuItems =
             [
-                new(this, "Diary.Tag", "mdi-label-outline", ChangeTag),
+                new(this, "Diary.Tag", "mdi-label-outline", OpenTagDialog),
                 new(this, "Share.Copy", "mdi-content-copy", Copy),
                 new(this, "Share.Delete", "mdi-delete-outline", Delete),
                 new(this, TopText, "mdi-format-vertical-align-top", Topping),
                 new(this, "Diary.Export", "mdi-export", Export),
-                new(this, "Share.Sort", "mdi-sort-variant", Sort),
+                new(this, "Share.Sort", "mdi-sort-variant", OpenSortDialog),
                 new(this, "Read.CopyReference", "mdi-link-variant", CopyReference),
                 new(this, PrivateText, PrivateIcon, MovePrivacy, ()=>privacyMode || showSetPrivacy)
             ];
@@ -216,7 +200,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task CopyReference()
         {
-            var text = $"[{I18n.T("Read.DiaryLink")}](read/{SelectedItemValue.Id})";
+            var text = $"[{I18n.T("Read.DiaryLink")}](read/{SelectedItem.Id})";
             await PlatformIntegration.SetClipboard(text);
             await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
