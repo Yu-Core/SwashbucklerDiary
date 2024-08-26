@@ -3,12 +3,11 @@
 
 <MultiDisplay OnUpdate="UpdateDisplay">
     <MobileContent>
-        <MBottomSheetExtension MyValue="Visible"
+        @ComputedActivatorContent
+        <MBottomSheetExtension @ref="mBottomSheetExtension"
+                               MyValue="Visible"
                                MyValueChanged="InternalVisibleChanged"
                                ContentClass="rounded-t-lg">
-            <ActivatorContent>
-                @(ComputedActivatorContent(context))
-            </ActivatorContent>
             <ChildContent>
                 <MCard Class="primary-background rounded-t-lg">
                     <div class="px-3 py-8" style="display: grid;grid-template-columns: repeat(5, 1fr);gap: 10px;">
@@ -34,14 +33,15 @@
         </MBottomSheetExtension>
     </MobileContent>
     <DesktopContent>
-        <MMenu Value="Visible"
+        <MMenu @ref="mMenu"
+               Value="Visible"
                ValueChanged="InternalVisibleChanged"
                Rounded="@("lg")"
                Bottom="true"
                Right="true"
                Transition="scroll-x-reverse-transition">
             <ActivatorContent>
-                @(ComputedActivatorContent(context))
+                @ComputedActivatorContent
             </ActivatorContent>
             <ChildContent>
                 <MList MinWidth="150">

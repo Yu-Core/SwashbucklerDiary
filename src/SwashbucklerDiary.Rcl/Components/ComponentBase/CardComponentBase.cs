@@ -4,7 +4,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public abstract class CardComponentBase<T> : MyComponentBase
     {
-        protected readonly Dictionary<string, object> activatorAttributes = [];
+        protected Dictionary<string, object> activatorAttributes = [];
 
         [Parameter]
         public T Value { get; set; } = default!;
@@ -14,6 +14,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected virtual void OpenMenu()
         {
+            activatorAttributes = [];
             if (OnMenu.HasDelegate)
             {
                 OnMenu.InvokeAsync((Value, activatorAttributes));

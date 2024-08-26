@@ -6,7 +6,14 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class MultiMenu : DialogComponentBase
     {
+        private MBottomSheetExtension? mBottomSheetExtension;
+
+        private MMenu? mMenu;
+
         private List<DynamicListItem> previousDynamicListItems = [];
+
+        [Inject]
+        private MasaBlazor MasaBlazor { get; set; } = default!;
 
         [Parameter]
         public RenderFragment<ActivatorProps> ActivatorContent { get; set; } = default!;
@@ -14,7 +21,8 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public List<DynamicListItem> DynamicListItems { get; set; } = [];
 
-        public Dictionary<string, object> ActivatorAttributes { get; set; } = [];
+        public Dictionary<string, object> ActivatorAttributes
+            => (MasaBlazor.Breakpoint.SmAndUp ? mMenu?.ActivatorAttributes : mBottomSheetExtension?.ActivatorAttributes) ?? [];
 
         protected override void OnParametersSet()
         {
@@ -30,15 +38,18 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        protected RenderFragment? ComputedActivatorContent(ActivatorProps props)
+        protected RenderFragment? ComputedActivatorContent
         {
-            ActivatorAttributes = props.Attrs;
-            if (ActivatorContent is null)
+            get
             {
-                return null;
-            }
+                if (ActivatorContent is null)
+                {
+                    return null;
+                }
 
-            return ActivatorContent(props);
+                var props = new ActivatorProps(ActivatorAttributes);
+                return ActivatorContent(props);
+            }
         }
 
         private async Task UpdateDisplay(bool value)

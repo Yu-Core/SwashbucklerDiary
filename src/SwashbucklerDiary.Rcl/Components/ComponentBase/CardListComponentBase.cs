@@ -48,7 +48,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected List<string> SortItems => sortOptions.Keys.ToList();
 
-        protected Dictionary<string, object>? ActivatorAttributes => multiMenu?.ActivatorAttributes;
+        protected Dictionary<string, object> ActivatorAttributes => multiMenu?.ActivatorAttributes ?? [];
 
         protected string? SortItem
         {
@@ -103,25 +103,19 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected void OpenMenu((T value, Dictionary<string, object> activatorAttributes) args)
         {
-            if (SelectedItem.Id != args.value.Id)
+            SelectedItem = args.value;
+            //清除旧的Activator的属性，直接Clear是无效的
+            foreach (var key in previousActivatorAttributes.Keys)
             {
-                SelectedItem = args.value;
-                if (ActivatorAttributes is not null)
-                {
-                    //清除旧的Activator的属性，必须这样写，直接Clear是无效的
-                    foreach (var key in ActivatorAttributes.Keys)
-                    {
-                        previousActivatorAttributes[key] = false;
-                    }
-
-                    foreach (var item in ActivatorAttributes)
-                    {
-                        args.activatorAttributes[item.Key] = item.Value;
-                    }
-
-                    previousActivatorAttributes = args.activatorAttributes;
-                }
+                previousActivatorAttributes[key] = false;
             }
+
+            foreach (var item in ActivatorAttributes)
+            {
+                args.activatorAttributes[item.Key] = item.Value;
+            }
+
+            previousActivatorAttributes = args.activatorAttributes;
 
             showMenu = true;
             InvokeAsync(StateHasChanged);
