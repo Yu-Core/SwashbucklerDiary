@@ -60,34 +60,30 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             await PopupServiceHelper.StartLoading();
-            _ = Task.Run(async () =>
+            try
             {
-                try
+                string path = await func(Value);
+                if (!string.IsNullOrEmpty(path))
                 {
-                    string path = await func(Value);
-                    if (!string.IsNullOrEmpty(path))
+                    string fileName = DiaryFileManager.GetExportFileName(exportKind);
+                    bool flag = await PlatformIntegration.SaveFileAsync(fileName, path);
+                    if (flag)
                     {
-                        string fileName = DiaryFileManager.GetExportFileName(exportKind);
-                        bool flag = await PlatformIntegration.SaveFileAsync(fileName, path);
-                        if (flag)
-                        {
-                            await PopupServiceHelper.Success(I18n.T("Export.Export.Success"));
-                            await HandleAchievements(Achievement.Export);
-                        }
+                        await PopupServiceHelper.Success(I18n.T("Export.Export.Success"));
+                        await HandleAchievements(Achievement.Export);
                     }
+                }
 
-                }
-                catch (Exception e)
-                {
-                    Logger.LogError(new EventId(1, "Error"), e, "Create file wrong");
-                    await PopupServiceHelper.Error(I18n.T("Export.Export.Fail"));
-                }
-                finally
-                {
-                    await PopupServiceHelper.StopLoading();
-                }
-            });
-
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(new EventId(1, "Error"), e, "Create file wrong");
+                await PopupServiceHelper.Error(I18n.T("Export.Export.Fail"));
+            }
+            finally
+            {
+                await PopupServiceHelper.StopLoading();
+            }
         }
     }
 }

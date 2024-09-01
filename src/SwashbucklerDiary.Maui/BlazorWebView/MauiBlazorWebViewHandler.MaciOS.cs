@@ -264,7 +264,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
             });
             _appOriginUri = new(() =>
             {
-                var property = Type.GetField("AppOriginUri", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+                var property = Type.GetProperty("AppOriginUri", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
                 return (Uri)property?.GetValue(_blazorWebViewHandler);
             });
         }
