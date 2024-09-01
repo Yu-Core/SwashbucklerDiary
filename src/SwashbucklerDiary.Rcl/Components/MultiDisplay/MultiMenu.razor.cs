@@ -22,7 +22,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public List<DynamicListItem> DynamicListItems { get; set; } = [];
 
         public Dictionary<string, object> ActivatorAttributes
-            => (MasaBlazor.Breakpoint.SmAndUp ? mMenu?.ActivatorAttributes : mBottomSheetExtension?.ActivatorAttributes) ?? [];
+            => (IsDesktop ? mMenu?.ActivatorAttributes : mBottomSheetExtension?.ActivatorAttributes) ?? [];
 
         protected override void OnParametersSet()
         {
@@ -52,18 +52,36 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
+        private bool IsDesktop => MasaBlazor.Breakpoint.SmAndUp;
+
         private async Task UpdateDisplay(bool value)
         {
-            if (Visible)
+            if (!Visible)
             {
-                await InternalVisibleChanged(false);
+                return;
+            }
+
+            if (IsDesktop)
+            {
+                if (mBottomSheetExtension is not null)
+                {
+                    await mBottomSheetExtension.HandleOnOutsideClickAsync();
+                }
+            }
+            else
+            {
+                if (mMenu is not null)
+                {
+                    await mMenu.HandleOnOutsideClickAsync();
+                }
             }
         }
 
         private async Task HandleOnContentClick(EventCallback eventCallback)
         {
             await InternalVisibleChanged(false);
-            _ = eventCallback.InvokeAsync();
+            StateHasChanged();
+            await eventCallback.InvokeAsync();
         }
     }
 }

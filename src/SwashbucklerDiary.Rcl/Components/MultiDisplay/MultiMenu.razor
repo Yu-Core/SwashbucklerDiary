@@ -3,11 +3,13 @@
 
 <MultiDisplay OnUpdate="UpdateDisplay">
     <MobileContent>
-        @ComputedActivatorContent
         <MBottomSheetExtension @ref="mBottomSheetExtension"
                                MyValue="Visible"
                                MyValueChanged="InternalVisibleChanged"
                                ContentClass="rounded-t-lg">
+            <ActivatorContent>
+                @ComputedActivatorContent
+            </ActivatorContent>
             <ChildContent>
                 <MCard Class="primary-background rounded-t-lg">
                     <div class="px-3 py-8" style="display: grid;grid-template-columns: repeat(5, 1fr);gap: 10px;">
