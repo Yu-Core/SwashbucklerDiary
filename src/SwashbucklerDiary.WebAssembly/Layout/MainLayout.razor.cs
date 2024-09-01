@@ -80,9 +80,9 @@ namespace SwashbucklerDiary.WebAssembly.Layout
             await VersionUpdataManager.HandleVersionUpdate();
         }
 
-        private async Task RefreshPage()
+        private async Task ForceRefresh()
         {
-            await RefreshToSkipWaiting();
+            await JSRuntime.InvokeVoidAsync("forceRefresh");
         }
 
         private async Task RefreshToSkipWaiting()

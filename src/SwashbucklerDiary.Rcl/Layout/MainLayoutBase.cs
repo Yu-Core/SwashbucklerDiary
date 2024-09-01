@@ -73,7 +73,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected async void LanguageChanged(CultureInfo cultureInfo)
         {
-            StateHasChanged();
+            await InvokeAsync(StateHasChanged);
             await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
         }
 

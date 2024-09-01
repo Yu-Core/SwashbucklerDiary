@@ -5,5 +5,8 @@
     "ignore": "Ignore",
     "refresh": "Refresh"
   },
-  "Returning again will exit the application": "Returning again will exit the application"
+  "Returning again will exit the application": "Returning again will exit the application",
+  "Something went wrong": "Something went wrong",
+  "This could be a browser cache issue. Refresh and try again, or manually hard reload (<kbd>Ctrl+F5</kbd> for Windows, <kbd>Command+Shift+R</kbd> for macOS).": "This could be a browser cache issue. Refresh and try again, or manually hard reload (<kbd>Ctrl+F5</kbd> for Windows, <kbd>Command+Shift+R</kbd> for macOS).",
+  "Force refresh": "Force refresh"
 }

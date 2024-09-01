@@ -35,5 +35,17 @@ function setThemeColor(color) {
         meta.content = color;
         document.getElementsByTagName('head')[0].appendChild(meta);
     }
-    
+
+}
+
+function forceRefresh() {
+    if ('caches' in window) {
+        caches.keys().then(cacheNames => {
+            cacheNames.forEach(cacheName => {
+                caches.delete(cacheName);
+            });
+        });
+    }
+
+    window.location.reload();
 }
