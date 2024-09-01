@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
+    [Route($"/{NavigateControllerHelper.StackBottomRelativePath}")]
     public partial class StackBottomPage
     {
         [Inject]

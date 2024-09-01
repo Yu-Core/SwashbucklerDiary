@@ -9,8 +9,6 @@ namespace SwashbucklerDiary.Rcl.Essentials
 {
     public abstract class NavigateController : INavigateController, IDisposable
     {
-        protected const string stackBottomRelativePath = "stackBottom";
-
         protected bool firstEnter = true;
 
         protected bool waitNavigate;
@@ -31,7 +29,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         protected readonly List<HistoryAction> historyActions = [];
 
-        protected RouteHelper? routeHelper;
+        protected RouteMatcher? routeMatcher;
 
         protected object _lock = new();
 
@@ -91,11 +89,11 @@ namespace SwashbucklerDiary.Rcl.Essentials
             _navigationManager = navigationManager;
             _jSRuntime = jSRuntime;
             permanentPaths = paths.ToList();
-            routeHelper = new RouteHelper(assemblies);
+            routeMatcher = new RouteMatcher(assemblies);
             // Insert a uri on the previous page. This can ensure that OnLocationChanging will definitely trigger
             var uri = _navigationManager.Uri;
             var absolutePath = new Uri(uri).AbsolutePath;
-            var stackBottomUri = _navigationManager.ToAbsoluteUri(stackBottomRelativePath);
+            var stackBottomUri = _navigationManager.ToAbsoluteUri(NavigateControllerHelper.StackBottomRelativePath);
             stackBottomPath = stackBottomUri.AbsolutePath;
 
             CanPageUpdate = false;
@@ -173,7 +171,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
             //路由不存在的页面禁止跳转
             var route = _navigationManager.ToRoute(targetUri);
-            if (routeHelper is not null && !routeHelper.IsMatch(route))
+            if (routeMatcher is not null && !routeMatcher.IsMatch(route))
             {
                 context.PreventNavigation();
                 return;

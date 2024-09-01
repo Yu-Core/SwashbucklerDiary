@@ -8,11 +8,11 @@ using System.Reflection;
 namespace SwashbucklerDiary.Rcl.Essentials
 {
     // ToDo:写的不好，以后可能要改
-    public class RouteHelper
+    public class RouteMatcher
     {
         private readonly List<string> routeTemplates = [];
 
-        public RouteHelper(Assembly[] assemblies)
+        public RouteMatcher(Assembly[] assemblies)
         {
             routeTemplates = GetRouteTemplates(assemblies);
         }
