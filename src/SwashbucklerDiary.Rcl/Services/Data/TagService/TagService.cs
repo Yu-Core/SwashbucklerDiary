@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public Task<TagModel> FindIncludesAsync(Guid id)
         {
-            var privacyMode = _settingService.GetTemp<bool>(TempSetting.PrivacyMode);
+            var privacyMode = _settingService.GetTemp(s => s.PrivacyMode);
             return _tagRepository.GetByIdIncludesAsync(id, it => it.Diaries!
                                   .Where(d => d.Private == privacyMode)
                                   .OrderByDescending(it => it.CreateTime)

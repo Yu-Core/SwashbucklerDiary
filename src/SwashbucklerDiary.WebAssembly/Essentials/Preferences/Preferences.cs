@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             _localStorage = localStorage;
         }
 
-        public Task Clear()
+        public Task ClearAsync()
         {
             _localStorage.Clear();
             return Task.CompletedTask;
@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             return Task.FromResult(result);
         }
 
-        public Task<T> Get<T>(string key, T defaultValue)
+        public Task<T> GetAsync<T>(string key, T defaultValue)
         {
             string result = _localStorage.GetItemAsString(key);
             if (result is null)
@@ -37,19 +37,19 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             return Task.FromResult(t);
         }
 
-        public Task Remove(string key)
+        public Task RemoveAsync(string key)
         {
             _localStorage.RemoveItem(key);
             return Task.CompletedTask;
         }
 
-        public Task Remove(IEnumerable<string> keys)
+        public Task RemoveAsync(IEnumerable<string> keys)
         {
             _localStorage.RemoveItems(keys);
             return Task.CompletedTask;
         }
 
-        public Task Set<T>(string key, T value)
+        public Task SetAsync<T>(string key, T value)
         {
             string json = JsonSerializer.Serialize(value);
             _localStorage.SetItemAsString(key, json);

@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Rcl.Layout
                 return;
             }
 
-            var flag = await SettingService.Get("SponsorSupport", false);
+            var flag = await SettingService.GetAsync("SponsorSupport", false);
             if (flag)
             {
                 return;
@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Rcl.Layout
                 await Task.Delay(1000);
                 showSnackbar = true;
                 await InvokeAsync(StateHasChanged);
-                await SettingService.Set("SponsorSupport", true);
+                await SettingService.SetAsync("SponsorSupport", true);
             }
         }
 

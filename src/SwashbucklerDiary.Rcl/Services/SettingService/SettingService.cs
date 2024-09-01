@@ -1,7 +1,6 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Shared;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Masa.Blazor;
+using SwashbucklerDiary.Rcl.Essentials;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
@@ -9,119 +8,158 @@ namespace SwashbucklerDiary.Rcl.Services
     {
         private readonly IPreferences _preferences;
 
-        private readonly IStaticWebAssets _staticWebAssets;
+        protected Dictionary<string, object> _defalutSettings = [];
 
-        protected readonly JsonSerializerOptions jsonSerializerOptions = new()
-        {
-            PropertyNameCaseInsensitive = true
-        };
+        protected Dictionary<string, object> _tempSettings = [];
 
-        protected Dictionary<string, object> defalutSettings = [];
-
-        protected Dictionary<string, object> tempSettings = [];
-
-        public SettingService(IPreferences preferences, IStaticWebAssets staticWebAssets)
+        public SettingService(IPreferences preferences)
         {
             _preferences = preferences;
-            _staticWebAssets = staticWebAssets;
-            jsonSerializerOptions.Converters.Add(new ObjectToInferredTypesConverter());
         }
 
-        public virtual async Task InitializeAsync()
+        public virtual Task InitializeAsync()
         {
-            defalutSettings = await _staticWebAssets.ReadJsonAsync<Dictionary<string, object>>("json/setting/settings.json", true, jsonSerializerOptions);
+            var defaultSettings = new Setting().ToParameters().ToDictionary();
+            var defaultTempSettings = new TempSetting().ToParameters().ToDictionary();
+
+            AddDefaultSettings(defaultSettings);
+            AddDefaultSettings(defaultTempSettings);
+
+            return Task.CompletedTask;
         }
 
-        public abstract T Get<T>(Setting setting);
+        private void AddDefaultSettings(Dictionary<string, object?> dictionary)
+        {
+            foreach (var item in dictionary)
+            {
+                if (item.Value is not null)
+                {
+                    _defalutSettings.Add(item.Key, item.Value);
+                }
+            }
+        }
 
-        public abstract T Get<T>(Setting setting, T defaultValue);
+        public abstract T Get<T>(string key);
 
-        public abstract Task Set<T>(Setting setting, T value);
+        public abstract T Get<T>(string key, T defaultValue);
 
-        public Task<bool> ContainsKey(string key)
+        public virtual Task<bool> ContainsKey(string key)
             => _preferences.ContainsKey(key);
 
-        public Task<T> Get<T>(string key, T defaultValue)
-            => _preferences.Get(key, defaultValue);
+        public virtual Task<T> GetAsync<T>(string key, T defaultValue)
+            => _preferences.GetAsync(key, defaultValue);
 
-        public Task Remove(string key)
-            => _preferences.Remove(key);
+        public virtual Task RemoveAsync(string key)
+            => _preferences.RemoveAsync(key);
 
-        public Task Remove(IEnumerable<string> keys)
-            => _preferences.Remove(keys);
+        public virtual Task RemoveAsync(IEnumerable<string> keys)
+            => _preferences.RemoveAsync(keys);
 
-        public Task Set<T>(string key, T value)
-            => _preferences.Set(key, value);
+        public virtual Task SetAsync<T>(string key, T value)
+            => _preferences.SetAsync(key, value);
 
-        public Task Clear()
-            => _preferences.Clear();
+        public virtual Task ClearAsync()
+            => _preferences.ClearAsync();
 
-        public Task Remove(Setting setting)
+        public T GetTemp<T>(string key)
         {
-            var key = setting.ToString();
-            return Remove(key);
-        }
-
-        public T GetTemp<T>(TempSetting setting)
-        {
-            var key = setting.ToString();
-            if (tempSettings.TryGetValue(key, out var settingValue))
+            if (_tempSettings.TryGetValue(key, out var value))
             {
-                return (T)settingValue;
+                return (T)value;
             }
 
-            if (defalutSettings.TryGetValue(key, out var defaulSettingtValue))
+            if (_defalutSettings.TryGetValue(key, out var defaulValue))
             {
-                return (T)defaulSettingtValue;
+                return (T)defaulValue;
             }
 
             return default!;
         }
 
-        public T GetTemp<T>(TempSetting setting, T defaultValue)
+        public T GetTemp<T>(string key, T defaultValue)
         {
-            var key = setting.ToString();
-            if (tempSettings.TryGetValue(key, out var settingValue))
+            if (_tempSettings.TryGetValue(key, out var value))
             {
-                return (T)settingValue;
+                return (T)value;
             }
 
             return defaultValue;
         }
 
-        public void SetTemp<T>(TempSetting setting, T value)
+        public void SetTemp<T>(string key, T value)
         {
-            var key = setting.ToString();
-            tempSettings[key] = value;
+            _tempSettings[key] = value;
         }
 
-        public void RemoveTemp(TempSetting setting)
+        public void RemoveTemp(string key)
         {
-            var key = setting.ToString();
-            tempSettings.Remove(key);
+            _tempSettings.Remove(key);
         }
 
-        public class ObjectToInferredTypesConverter : JsonConverter<object>
+        public T Get<T>(Expression<Func<Setting, T>> expr)
         {
-            public override object Read(
-                ref Utf8JsonReader reader,
-                Type typeToConvert,
-                JsonSerializerOptions options) => reader.TokenType switch
-                {
-                    JsonTokenType.True => true,
-                    JsonTokenType.False => false,
-                    JsonTokenType.Number when reader.TryGetInt32(out int i) => i,
-                    JsonTokenType.Number => reader.GetDouble(),
-                    JsonTokenType.String when reader.TryGetDateTime(out DateTime datetime) => datetime,
-                    JsonTokenType.String => reader.GetString()!,
-                    _ => JsonDocument.ParseValue(ref reader).RootElement.Clone()
-                };
+            if (expr.Body is MemberExpression memberExpr)
+            {
+                return Get<T>(memberExpr.Member.Name);
+            }
 
-            public override void Write(
-                Utf8JsonWriter writer,
-                object objectToWrite,
-                JsonSerializerOptions options) =>
-                JsonSerializer.Serialize(writer, objectToWrite, objectToWrite.GetType(), options);
+            throw new ArgumentException("Expression does not contain a member access.");
+        }
+
+        public Task SetAsync<T>(Expression<Func<Setting, T>> expr, T value)
+        {
+            var key = GetSettingKey(expr);
+            return SetAsync(key, value);
+        }
+
+        private static string GetSettingKey<T>(Expression<Func<Setting, T>> expr) => GetExpressionMemberName(expr);
+
+        private static string GetTempSettingKey<T>(Expression<Func<TempSetting, T>> expr) => GetExpressionMemberName(expr);
+
+        private static string GetExpressionMemberName<T, TResult>(Expression<Func<T, TResult>> expr)
+        {
+            if (expr.Body is MemberExpression memberExpr)
+            {
+                return memberExpr.Member.Name;
+            }
+
+            throw new ArgumentException("Expression does not contain a member access.");
+        }
+
+        public T GetTemp<T>(Expression<Func<TempSetting, T>> expr)
+        {
+            var key = GetTempSettingKey(expr);
+            return GetTemp<T>(key);
+        }
+
+        public T GetTemp<T>(Expression<Func<TempSetting, T>> expr, T defaultValue)
+        {
+            var key = GetTempSettingKey(expr);
+            return GetTemp<T>(key, defaultValue);
+        }
+
+        public void SetTemp<T>(Expression<Func<TempSetting, T>> expr, T value)
+        {
+            var key = GetTempSettingKey(expr);
+            SetTemp<T>(key, value);
+        }
+
+        public void RemoveTemp<T>(Expression<Func<TempSetting, T>> expr)
+        {
+            var key = GetTempSettingKey(expr);
+            RemoveTemp(key);
+        }
+
+        public T Get<T>(Expression<Func<Setting, T>> expr, T defaultValue)
+        {
+            var key = GetSettingKey(expr);
+            return GetTemp(key, defaultValue);
+        }
+
+        public Task RemoveAsync<T>(Expression<Func<Setting, T>> expr)
+        {
+            var key = GetSettingKey(expr);
+            return RemoveAsync(key);
         }
     }
 }

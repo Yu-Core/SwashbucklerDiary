@@ -174,7 +174,7 @@ namespace SwashbucklerDiary.Rcl.Services
         private async Task HandleVersionUpdate860()
         {
             string[] keys = ["PrivacyMode", "PrivatePassword"];
-            await _settingService.Remove(keys);
+            await _settingService.RemoveAsync(keys);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -11,8 +10,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override void ReadSettings()
         {
-            welcomText = SettingService.Get<bool>(Setting.WelcomeText);
-            date = SettingService.Get<bool>(Setting.IndexDate);
+            welcomText = SettingService.Get(s => s.WelcomeText);
+            date = SettingService.Get(s => s.IndexDate);
         }
     }
 }

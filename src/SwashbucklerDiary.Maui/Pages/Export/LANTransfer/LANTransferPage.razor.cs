@@ -2,7 +2,6 @@
 using SwashbucklerDiary.Maui.Services;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Pages
 {
@@ -27,15 +26,15 @@ namespace SwashbucklerDiary.Maui.Pages
         {
             base.ReadSettings();
 
-            configModel.DeviceName = SettingService.Get<string>(Setting.LANDeviceName);
+            configModel.DeviceName = SettingService.Get(s => s.LANDeviceName);
             defaultDeviceName = LANHelper.GetLocalDeviceName();
             if (string.IsNullOrEmpty(configModel.DeviceName))
             {
                 configModel.DeviceName = defaultDeviceName;
             }
 
-            configModel.ScanPort = SettingService.Get<int>(Setting.LANScanPort);
-            configModel.TransmissionPort = SettingService.Get<int>(Setting.LANTransmissionPort);
+            configModel.ScanPort = SettingService.Get(s => s.LANScanPort);
+            configModel.TransmissionPort = SettingService.Get(s => s.LANTransmissionPort);
         }
 
         private void LoadView()
@@ -53,19 +52,19 @@ namespace SwashbucklerDiary.Maui.Pages
             configModel = value.DeepClone();
             if (configModel.DeviceName != defaultDeviceName)
             {
-                await SettingService.Set(Setting.LANDeviceName, configModel.DeviceName);
+                await SettingService.SetAsync(s => s.LANDeviceName, configModel.DeviceName);
             }
 
-            await SettingService.Set(Setting.LANScanPort, configModel.ScanPort);
-            await SettingService.Set(Setting.LANTransmissionPort, configModel.TransmissionPort);
+            await SettingService.SetAsync(s => s.LANScanPort, configModel.ScanPort);
+            await SettingService.SetAsync(s => s.LANTransmissionPort, configModel.TransmissionPort);
         }
 
         private async Task Reset()
         {
             ShowConfig = false;
-            await SettingService.Remove(Setting.LANDeviceName);
-            await SettingService.Remove(Setting.LANScanPort);
-            await SettingService.Remove(Setting.LANTransmissionPort);
+            await SettingService.RemoveAsync(s => s.LANDeviceName);
+            await SettingService.RemoveAsync(s => s.LANScanPort);
+            await SettingService.RemoveAsync(s => s.LANTransmissionPort);
             ReadSettings();
         }
     }

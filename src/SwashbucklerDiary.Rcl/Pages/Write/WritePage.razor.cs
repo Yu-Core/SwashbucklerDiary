@@ -133,11 +133,11 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            enableTitle = SettingService.Get<bool>(Setting.Title);
-            enableMarkdown = SettingService.Get<bool>(Setting.Markdown);
-            editAutoSave = SettingService.Get<int>(Setting.EditAutoSave);
-            showIconText = SettingService.Get<bool>(Setting.DiaryIconText);
-            privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
+            enableTitle = SettingService.Get(s => s.Title);
+            enableMarkdown = SettingService.Get(s => s.Markdown);
+            editAutoSave = SettingService.Get(s => s.EditAutoSave);
+            showIconText = SettingService.Get(s => s.DiaryIconText);
+            privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
         }
 
         private List<TagModel> SelectedTags
@@ -240,9 +240,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems =
             [
-                new(this, TitleSwitchText, "mdi-format-title", ()=> SettingChange(Setting.Title, ref enableTitle)),
-                new(this, MarkdownSwitchText, MarkdownSwitchIcon, ()=> SettingChange(Setting.Markdown, ref enableMarkdown)),
-                new(this, IconTextSwitchText, " mdi-image-text", ()=> SettingChange(Setting.DiaryIconText, ref showIconText)),
+                new(this, TitleSwitchText, "mdi-format-title", ()=> SettingChange(nameof(Setting.Title), ref enableTitle)),
+                new(this, MarkdownSwitchText, MarkdownSwitchIcon, ()=> SettingChange(nameof(Setting.Markdown), ref enableMarkdown)),
+                new(this, IconTextSwitchText, " mdi-image-text", ()=> SettingChange(nameof(Setting.DiaryIconText), ref showIconText)),
             ];
             weatherIcons = IconService.GetWeatherIcons();
             moodIcons = IconService.GetMoodIcons();
@@ -409,10 +409,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             await AlertAchievements(messages);
         }
 
-        private Task SettingChange(Setting setting, ref bool value)
+        private Task SettingChange(string key, ref bool value)
         {
             value = !value;
-            return SettingService.Set(setting, value);
+            return SettingService.SetAsync(key, value);
         }
 
         private async Task InsertTimestamp()

@@ -2,7 +2,7 @@
 {
     public class Preferences : Rcl.Essentials.IPreferences
     {
-        public Task Clear()
+        public Task ClearAsync()
         {
             Microsoft.Maui.Storage.Preferences.Default.Clear();
             return Task.CompletedTask;
@@ -14,20 +14,20 @@
             return Task.FromResult(result);
         }
 
-        public Task<T> Get<T>(string key, T defaultValue)
+        public Task<T> GetAsync<T>(string key, T defaultValue)
         {
             var result = Microsoft.Maui.Storage.Preferences.Default.Get(key, defaultValue);
             return Task.FromResult(result);
         }
 
 
-        public Task Remove(string key)
+        public Task RemoveAsync(string key)
         {
             Microsoft.Maui.Storage.Preferences.Default.Remove(key);
             return Task.CompletedTask;
         }
 
-        public Task Remove(IEnumerable<string> keys)
+        public Task RemoveAsync(IEnumerable<string> keys)
         {
             foreach (var key in keys)
             {
@@ -36,7 +36,7 @@
             return Task.CompletedTask;
         }
 
-        public Task Set<T>(string key, T value)
+        public Task SetAsync<T>(string key, T value)
         {
             Microsoft.Maui.Storage.Preferences.Default.Set(key, value);
             return Task.CompletedTask;

@@ -43,13 +43,9 @@
                 @(I18n.T("Setting.Display.Snackbars.Achievement.Name"))
             </MListItemContent>
             <MListItemAction>
-                <MSwitch @bind-Value="achievementsAlert"
-                         TValue="bool"
-                         OnChange="SettingChange(Setting.AchievementsAlert)"
-                         Dense="true"
-                         Inset="true"
-                         Color="white">
-                </MSwitch>
+                <SettingSwitch @bind-Value="achievementsAlert"
+                               SettingKey="@nameof(Setting.AchievementsAlert)">
+                </SettingSwitch>
             </MListItemAction>
         </MListItem>
     </MCard>
@@ -57,8 +53,8 @@
 </ScrollContainer>
 
 <SelectChipDialog @bind-Visible="showTimeout"
-              @bind-Value="@Timeout"
-              Title="@(I18n.T("Setting.Display.Snackbars.AlertTimeout.Name"))"
-              Items="timeoutItems"
-              Mandatory="true">
+                  @bind-Value="@Timeout"
+                  Title="@(I18n.T("Setting.Display.Snackbars.AlertTimeout.Name"))"
+                  Items="timeoutItems"
+                  Mandatory="true">
 </SelectChipDialog>

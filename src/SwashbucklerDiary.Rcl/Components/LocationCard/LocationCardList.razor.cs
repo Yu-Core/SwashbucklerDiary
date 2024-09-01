@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.ReadSettings();
 
-            var locationSort = SettingService.Get<string>(Setting.LocationSort);
+            var locationSort = SettingService.Get(s => s.LocationSort);
             if (!string.IsNullOrEmpty(locationSort))
             {
                 SortItem = locationSort;
@@ -105,7 +105,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task SortChanged(string value)
         {
-            await SettingService.Set(Setting.LocationSort, value);
+            await SettingService.SetAsync(s => s.LocationSort, value);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Masa.Blazor;
 using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -40,14 +39,14 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            title = SettingService.Get<bool>(Setting.Title);
-            markdown = SettingService.Get<bool>(Setting.Markdown);
-            diaryIconText = SettingService.Get<bool>(Setting.DiaryIconText);
-            editAutoSave = SettingService.Get<int>(Setting.EditAutoSave);
-            imageLazy = SettingService.Get<bool>(Setting.ImageLazy);
-            firstLineIndent = SettingService.Get<bool>(Setting.FirstLineIndent);
-            codeLineNumber = SettingService.Get<bool>(Setting.CodeLineNumber);
-            taskListLineThrough = SettingService.Get<bool>(Setting.TaskListLineThrough);
+            title = SettingService.Get(s => s.Title);
+            markdown = SettingService.Get(s => s.Markdown);
+            diaryIconText = SettingService.Get(s => s.DiaryIconText);
+            editAutoSave = SettingService.Get(s => s.EditAutoSave);
+            imageLazy = SettingService.Get(s => s.ImageLazy);
+            firstLineIndent = SettingService.Get(s => s.FirstLineIndent);
+            codeLineNumber = SettingService.Get(s => s.CodeLineNumber);
+            taskListLineThrough = SettingService.Get(s => s.TaskListLineThrough);
         }
 
         private StringNumber EditAutoSave
@@ -66,7 +65,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             editAutoSave = value.ToInt32();
-            await SettingService.Set(Setting.EditAutoSave, editAutoSave);
+            await SettingService.SetAsync(s => s.EditAutoSave, editAutoSave);
         }
     }
 }

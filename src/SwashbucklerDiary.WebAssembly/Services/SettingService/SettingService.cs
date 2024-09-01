@@ -10,13 +10,19 @@ namespace SwashbucklerDiary.WebAssembly.Services
     {
         private readonly Lazy<ValueTask<IJSInProcessObjectReference>> _module;
 
+        private readonly JsonSerializerOptions jsonSerializerOptions = new()
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
         private Dictionary<string, object> settings = [];
 
         public SettingService(IPreferences preferences,
             IStaticWebAssets staticWebAssets,
             IJSRuntime jSRuntime) :
-            base(preferences, staticWebAssets)
+            base(preferences)
         {
+            jsonSerializerOptions.Converters.Add(new ObjectToInferredTypesConverter());
             _module = new(() => ((IJSInProcessRuntime)jSRuntime).ImportJsModule("js/setting.js"));
         }
 
@@ -26,25 +32,23 @@ namespace SwashbucklerDiary.WebAssembly.Services
             settings = await ReadSettings();
         }
 
-        public override T Get<T>(Setting setting)
+        public override T Get<T>(string key)
         {
-            var key = setting.ToString();
-            if (settings.TryGetValue(key, out var settingValue))
+            if (settings.TryGetValue(key, out var value))
             {
-                return (T)settingValue;
+                return (T)value;
             }
 
-            if (defalutSettings.TryGetValue(key, out var defaulSettingtValue))
+            if (_defalutSettings.TryGetValue(key, out var defaulValue))
             {
-                return (T)defaulSettingtValue;
+                return (T)defaulValue;
             }
 
             return default!;
         }
 
-        public override T Get<T>(Setting setting, T defaultValue)
+        public override T Get<T>(string key, T defaultValue)
         {
-            var key = setting.ToString();
             if (settings.TryGetValue(key, out var settingValue))
             {
                 return (T)settingValue;
@@ -53,21 +57,45 @@ namespace SwashbucklerDiary.WebAssembly.Services
             return defaultValue;
         }
 
-        public override Task Set<T>(Setting setting, T value)
+        public override Task SetAsync<T>(string key, T value)
         {
-            var key = setting.ToString();
             settings[key] = value;
-            return Set(key, value);
+            return base.SetAsync(key, value);
         }
+
+        public override async Task<T> GetAsync<T>(string key, T defaultValue)
+        {
+            var value = await base.GetAsync<T>(key, defaultValue);
+            settings[key] = value;
+            return value;
+        }
+
+        public override Task RemoveAsync(string key)
+        {
+            settings.Remove(key);
+            return base.RemoveAsync(key);
+        }
+
+        public override Task RemoveAsync(IEnumerable<string> keys)
+        {
+            foreach (var key in keys)
+            {
+                settings.Remove(key);
+            }
+
+            return base.RemoveAsync(keys);
+        }
+
+        public override Task ClearAsync()
+        {
+            settings.Clear();
+            return base.ClearAsync();
+        }
+
 
         private async Task<Dictionary<string, object>> ReadSettings()
         {
-            List<string> keys = [];
-            foreach (Setting item in Enum.GetValues(typeof(Setting)))
-            {
-                var key = item.ToString();
-                keys.Add(key);
-            }
+            List<string> keys = _defalutSettings.Keys.ToList();
 
             var module = await _module.Value;
             var serialisedData = module.Invoke<string>("readSettings", keys);

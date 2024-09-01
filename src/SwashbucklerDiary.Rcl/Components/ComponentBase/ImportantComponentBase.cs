@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -45,11 +44,6 @@ namespace SwashbucklerDiary.Rcl.Components
         protected virtual async Task NavigateToBack()
         {
             await JS.HistoryBack();
-        }
-
-        protected Func<bool, Task> SettingChange(Setting setting)
-        {
-            return (bool value) => SettingService.Set(setting, value);
         }
 
         protected virtual void ReadSettings()

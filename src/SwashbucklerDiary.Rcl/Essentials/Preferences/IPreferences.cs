@@ -4,14 +4,14 @@
     {
         Task<bool> ContainsKey(string key);
 
-        Task<T> Get<T>(string key, T defaultValue);
+        Task<T> GetAsync<T>(string key, T defaultValue);
 
-        Task Set<T>(string key, T value);
+        Task SetAsync<T>(string key, T value);
 
-        Task Remove(string key);
+        Task RemoveAsync(string key);
 
-        Task Remove(IEnumerable<string> keys);
+        Task RemoveAsync(IEnumerable<string> keys);
 
-        Task Clear();
+        Task ClearAsync();
     }
 }

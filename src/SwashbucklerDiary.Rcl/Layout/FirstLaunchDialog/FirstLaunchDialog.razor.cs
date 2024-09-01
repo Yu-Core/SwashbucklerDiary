@@ -45,8 +45,8 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         private async void UpdateSettings()
         {
-            var setLang = SettingService.Get<bool>(Setting.FirstSetLanguage);
-            var agree = SettingService.Get<bool>(Setting.FirstAgree);
+            var setLang = SettingService.Get(s => s.FirstSetLanguage);
+            var agree = SettingService.Get(s => s.FirstAgree);
 
             if (setLang && agree)
             {
@@ -78,8 +78,8 @@ namespace SwashbucklerDiary.Rcl.Layout
             Task[] tasks =
             [
                 insertTask,
-                SettingService.Set(Setting.FirstSetLanguage, true),
-                SettingService.Set(Setting.Language, value)
+                SettingService.SetAsync(s => s.FirstSetLanguage, true),
+                SettingService.SetAsync(s => s.Language, value)
             ];
             await Task.WhenAll(tasks);
         }
@@ -93,7 +93,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
             showAgreement = false;
             show = false;
-            await SettingService.Set(Setting.FirstAgree, true);
+            await SettingService.SetAsync(s => s.FirstAgree, true);
             await VersionManager.NotifyAfterCheckFirstLaunch();
         }
 

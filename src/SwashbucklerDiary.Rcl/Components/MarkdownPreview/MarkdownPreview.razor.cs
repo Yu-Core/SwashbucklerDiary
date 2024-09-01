@@ -2,7 +2,6 @@
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -109,8 +108,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void ReadSettings()
         {
-            imageLazy = SettingService.Get<bool>(Setting.ImageLazy);
-            codeLineNumber = SettingService.Get<bool>(Setting.CodeLineNumber);
+            imageLazy = SettingService.Get(s => s.ImageLazy);
+            codeLineNumber = SettingService.Get(s => s.CodeLineNumber);
         }
 
         private void SetOptions()

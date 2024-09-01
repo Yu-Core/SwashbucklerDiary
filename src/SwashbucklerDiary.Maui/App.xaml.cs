@@ -1,6 +1,7 @@
 ﻿using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Rcl;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui
@@ -46,7 +47,7 @@ namespace SwashbucklerDiary.Maui
 
         private void InitTheme()
         {
-            var themeInt = Microsoft.Maui.Storage.Preferences.Default.Get<int>(Setting.Theme.ToString(), 0);
+            var themeInt = Microsoft.Maui.Storage.Preferences.Default.Get<int>(nameof(Setting.Theme), 0);
             var theme = (Theme)themeInt;
             ((ThemeService)_themeService).SetTheme(theme);
             _themeService.OnChanged += ThemeChanged;

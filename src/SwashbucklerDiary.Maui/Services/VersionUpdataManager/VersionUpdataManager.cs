@@ -1,7 +1,6 @@
 ﻿using SwashbucklerDiary.Maui.Pages;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 using System.Text.Json;
 
 namespace SwashbucklerDiary.Maui.Services
@@ -37,11 +36,11 @@ namespace SwashbucklerDiary.Maui.Services
         //此版本之后更改了资源的链接
         private async Task HandleVersionUpdate647()
         {
-            string avatar = await _settingService.Get<string>("Avatar", string.Empty);
+            string avatar = await _settingService.GetAsync<string>("Avatar", string.Empty);
             if (avatar != string.Empty)
             {
                 avatar = avatar.Replace("appdata:///", "appdata/");
-                await _settingService.Set(Setting.Avatar, avatar);
+                await _settingService.SetAsync(nameof(Setting.Avatar), avatar);
             }
 
             await _diaryFileManager.UpdateAllResourceUri();
@@ -49,9 +48,9 @@ namespace SwashbucklerDiary.Maui.Services
 
         protected override async Task HandleVersionUpdate697()
         {
-            var webDAVServerAddressTask = _settingService.Get<string>("WebDAVServerAddress", string.Empty);
-            var webDAVAccountTask = _settingService.Get<string>("WebDAVAccount", string.Empty);
-            var webDAVPasswordTask = _settingService.Get<string>("WebDAVPassword", string.Empty);
+            var webDAVServerAddressTask = _settingService.GetAsync<string>("WebDAVServerAddress", string.Empty);
+            var webDAVAccountTask = _settingService.GetAsync<string>("WebDAVAccount", string.Empty);
+            var webDAVPasswordTask = _settingService.GetAsync<string>("WebDAVPassword", string.Empty);
             await Task.WhenAll(webDAVServerAddressTask, webDAVAccountTask, webDAVPasswordTask);
             var webDAVServerAddress = webDAVServerAddressTask.Result;
             if (!string.IsNullOrEmpty(webDAVServerAddress))
@@ -63,11 +62,11 @@ namespace SwashbucklerDiary.Maui.Services
                     Password = webDAVPasswordTask.Result,
                 };
                 string webDavConfigJson = JsonSerializer.Serialize(config);
-                await _settingService.Set(Setting.WebDavConfig, webDavConfigJson);
+                await _settingService.SetAsync(s => s.WebDavConfig, webDavConfigJson);
             }
 
             string[] keys = ["ThemeState", "WebDAVServerAddress", "WebDAVAccount", "WebDAVPassword", "Date"];
-            await _settingService.Remove(keys);
+            await _settingService.RemoveAsync(keys);
         }
 
         public override async Task ToUpdate()

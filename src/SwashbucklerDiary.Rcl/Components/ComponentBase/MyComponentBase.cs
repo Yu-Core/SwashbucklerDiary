@@ -77,7 +77,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected async Task AlertAchievements(List<string> messages)
         {
-            bool achievementsAlert = SettingService.Get<bool>(Setting.AchievementsAlert);
+            bool achievementsAlert = SettingService.Get(s => s.AchievementsAlert);
             if (!achievementsAlert)
             {
                 return;

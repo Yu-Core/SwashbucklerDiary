@@ -1,37 +1,25 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Shared;
-
-namespace SwashbucklerDiary.Maui.Services
+﻿namespace SwashbucklerDiary.Maui.Services
 {
     public class SettingService : Rcl.Services.SettingService
     {
-        public SettingService(Rcl.Essentials.IPreferences preferences,
-            IStaticWebAssets staticWebAssets) :
-            base(preferences, staticWebAssets)
+        public SettingService(Rcl.Essentials.IPreferences preferences) :
+            base(preferences)
         {
         }
 
-        public override T Get<T>(Setting setting)
+        public override T Get<T>(string key)
         {
-            var key = setting.ToString();
-            if (defalutSettings.TryGetValue(key, out var defaultValue))
+            if (_defalutSettings.TryGetValue(key, out var defaultValue))
             {
-                return Get(setting, (T)defaultValue);
+                return Get(key, (T)defaultValue);
             }
 
             return default!;
         }
 
-        public override T Get<T>(Setting setting, T defaultValue)
+        public override T Get<T>(string key, T defaultValue)
         {
-            string key = setting.ToString();
             return Preferences.Default.Get(key, defaultValue);
-        }
-
-        public override Task Set<T>(Setting setting, T value)
-        {
-            var key = setting.ToString();
-            return Set(key, value);
         }
     }
 }

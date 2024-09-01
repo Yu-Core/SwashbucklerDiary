@@ -36,9 +36,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            userName = SettingService.Get<string>(Setting.UserName, default!);
-            sign = SettingService.Get<string>(Setting.Sign, default!);
-            avatar = SettingService.Get<string>(Setting.Avatar);
+            userName = SettingService.Get(s => s.UserName, default!);
+            sign = SettingService.Get(s => s.Sign, default!);
+            avatar = SettingService.Get(s => s.Avatar);
         }
 
         private string? UserName => userName ?? I18n.T("AppName");
@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (!string.IsNullOrWhiteSpace(tagName) && tagName != sign)
             {
                 sign = tagName;
-                await SettingService.Set(Setting.Sign, sign);
+                await SettingService.SetAsync(s => s.Sign, sign);
             }
             await HandleAchievements(Achievement.Sign);
         }
@@ -71,7 +71,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (!string.IsNullOrWhiteSpace(tagName) && tagName != userName)
             {
                 userName = tagName;
-                await SettingService.Set(Setting.UserName, userName);
+                await SettingService.SetAsync(s => s.UserName, userName);
             }
             await HandleAchievements(Achievement.NickName);
         }

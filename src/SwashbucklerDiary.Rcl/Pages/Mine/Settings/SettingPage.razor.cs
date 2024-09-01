@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -27,7 +26,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            showStatisticsCard = SettingService.Get<bool>(Setting.StatisticsCard);
+            showStatisticsCard = SettingService.Get(s => s.StatisticsCard);
         }
 
         private void UpdateCacheSize()

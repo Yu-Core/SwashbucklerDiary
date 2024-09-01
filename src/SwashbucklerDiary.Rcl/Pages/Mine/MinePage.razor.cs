@@ -124,14 +124,14 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            language = SettingService.Get<string>(Setting.Language);
-            userName = SettingService.Get<string?>(Setting.UserName, null);
-            sign = SettingService.Get<string?>(Setting.Sign, null);
-            theme = (Theme)SettingService.Get<int>(Setting.Theme);
-            avatar = SettingService.Get<string>(Setting.Avatar);
-            privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
-            hidePrivacyModeEntrance = SettingService.Get<bool>(Setting.HidePrivacyModeEntrance);
-            privacyModeEntrancePassword = SettingService.Get<string>(Setting.PrivacyModeEntrancePassword);
+            language = SettingService.Get(s => s.Language);
+            userName = SettingService.Get(s => s.UserName, null);
+            sign = SettingService.Get(s => s.Sign, null);
+            theme = (Theme)SettingService.Get(s => s.Theme);
+            avatar = SettingService.Get(s => s.Avatar);
+            privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
+            hidePrivacyModeEntrance = SettingService.Get(s => s.HidePrivacyModeEntrance);
+            privacyModeEntrancePassword = SettingService.Get(s => s.PrivacyModeEntrancePassword);
         }
 
         private WordCountStatistics WordCountType
@@ -192,7 +192,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task LanguageChanged(string value)
         {
             I18n.SetCulture(value);
-            await SettingService.Set(Setting.Language, value);
+            await SettingService.SetAsync(s => s.Language, value);
         }
 
         private async Task SendMail()
@@ -225,7 +225,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await Task.WhenAll(
                 ThemeService.SetThemeAsync(value),
-                SettingService.Set(Setting.Theme, (int)value));
+                SettingService.SetAsync(s => s.Theme, (int)value));
         }
 
         private async Task OpenQQGroup()
@@ -299,7 +299,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void ToPrivacyMode()
         {
-            SettingService.SetTemp<bool>(TempSetting.AllowEnterPrivacyMode, true);
+            SettingService.SetTemp(s => s.AllowEnterPrivacyMode, true);
             To("privacyMode");
         }
 
@@ -311,7 +311,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            string salt = Setting.PrivacyModeEntrancePassword.ToString();
+            string salt = nameof(Setting.PrivacyModeEntrancePassword);
             if (privacyModeEntrancePassword != (value + salt).MD5Encrytp32())
             {
                 await PopupServiceHelper.Error(I18n.T("PrivacyMode.PasswordError"));

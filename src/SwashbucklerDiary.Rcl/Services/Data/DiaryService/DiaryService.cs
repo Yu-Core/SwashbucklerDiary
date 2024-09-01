@@ -19,13 +19,13 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public override Task<List<DiaryModel>> QueryAsync()
         {
-            var privacyMode = _settingService.GetTemp<bool>(TempSetting.PrivacyMode);
+            var privacyMode = _settingService.GetTemp(s => s.PrivacyMode);
             return _iBaseRepository.GetListAsync(it => it.Private == privacyMode);
         }
 
         public override Task<List<DiaryModel>> QueryAsync(Expression<Func<DiaryModel, bool>> expression)
         {
-            var privacyMode = _settingService.GetTemp<bool>(TempSetting.PrivacyMode);
+            var privacyMode = _settingService.GetTemp(s => s.PrivacyMode);
             expression = expression.And(it => it.Private == privacyMode);
             return _iBaseRepository.GetListAsync(expression);
         }

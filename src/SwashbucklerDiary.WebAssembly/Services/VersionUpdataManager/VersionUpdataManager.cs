@@ -29,7 +29,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
         protected override async Task HandleVersionUpdate697()
         {
             string[] keys = ["ThemeState", "Date"];
-            await _settingService.Remove(keys);
+            await _settingService.RemoveAsync(keys);
         }
     }
 }

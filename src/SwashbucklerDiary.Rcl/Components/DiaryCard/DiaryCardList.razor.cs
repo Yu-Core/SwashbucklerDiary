@@ -59,17 +59,17 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.ReadSettings();
 
-            showSetPrivacy = SettingService.Get<bool>(Setting.SetPrivacyDiary);
-            showIcon = SettingService.Get<bool>(Setting.DiaryCardIcon);
-            showTags = SettingService.Get<bool>(Setting.DiaryCardTags);
-            options.DateFormat = SettingService.Get<string>(Setting.DiaryCardDateFormat);
-            var diarySort = SettingService.Get<string>(Setting.DiarySort);
+            showSetPrivacy = SettingService.Get(s => s.SetPrivacyDiary);
+            showIcon = SettingService.Get(s => s.DiaryCardIcon);
+            showTags = SettingService.Get(s => s.DiaryCardTags);
+            options.DateFormat = SettingService.Get(s => s.DiaryCardDateFormat);
+            var diarySort = SettingService.Get(s => s.DiarySort);
             if (!string.IsNullOrEmpty(diarySort))
             {
                 SortItem = diarySort;
             }
 
-            privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
+            privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
         }
 
         private float ItemHeight => MasaBlazorHelper.Breakpoint.Xs ? 156.8f : (MasaBlazorHelper.Breakpoint.Sm ? 164.8f : 172.8f);
@@ -195,7 +195,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task SortChanged(string value)
         {
-            await SettingService.Set(Setting.DiarySort, value);
+            await SettingService.SetAsync(s => s.DiarySort, value);
         }
 
         private async Task CopyReference()

@@ -1,5 +1,4 @@
 ﻿using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -23,16 +22,16 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            diaryCardIcon = SettingService.Get<bool>(Setting.DiaryCardIcon);
-            diaryCardTags = SettingService.Get<bool>(Setting.DiaryCardTags);
-            diaryCardDateFormat = SettingService.Get<string>(Setting.DiaryCardDateFormat);
+            diaryCardIcon = SettingService.Get(s => s.DiaryCardIcon);
+            diaryCardTags = SettingService.Get(s => s.DiaryCardTags);
+            diaryCardDateFormat = SettingService.Get(s => s.DiaryCardDateFormat);
         }
 
         private string DiaryCardDateFormatKey => diaryCardDateFormats.FirstOrDefault(x => x.Value == diaryCardDateFormat).Key;
 
         private async Task DiaryCardDateFormatChanged(string value)
         {
-            await SettingService.Set(Setting.DiaryCardDateFormat, value);
+            await SettingService.SetAsync(s => s.DiaryCardDateFormat, value);
         }
     }
 }

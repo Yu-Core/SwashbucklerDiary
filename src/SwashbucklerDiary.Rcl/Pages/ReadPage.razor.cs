@@ -81,11 +81,11 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            enableMarkdown = SettingService.Get<bool>(Setting.Markdown);
-            showSetPrivacy = SettingService.Get<bool>(Setting.SetPrivacyDiary);
-            firstLineIndent = SettingService.Get<bool>(Setting.FirstLineIndent);
-            taskListLineThrough = SettingService.Get<bool>(Setting.TaskListLineThrough);
-            privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
+            enableMarkdown = SettingService.Get(s => s.Markdown);
+            showSetPrivacy = SettingService.Get(s => s.SetPrivacyDiary);
+            firstLineIndent = SettingService.Get(s => s.FirstLineIndent);
+            taskListLineThrough = SettingService.Get(s => s.TaskListLineThrough);
+            privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
         }
 
         private List<TagModel> Tags => diary.Tags ?? [];
@@ -225,7 +225,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task MarkdownChanged()
         {
             enableMarkdown = !enableMarkdown;
-            await SettingService.Set(Setting.Markdown, enableMarkdown);
+            await SettingService.SetAsync(s => s.Markdown, enableMarkdown);
             StateHasChanged();
         }
 

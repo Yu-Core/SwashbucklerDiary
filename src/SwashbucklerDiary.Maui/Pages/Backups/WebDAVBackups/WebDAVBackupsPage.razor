@@ -85,13 +85,9 @@
             @(I18n.T("Backups.WebDAV.IncludeDiaryResources"))
         </MListItemContent>
         <MListItemAction>
-            <MSwitch @bind-Value="includeDiaryResources"
-                     TValue="bool"
-                     OnChange="SettingChange(Setting.WebDAVCopyResources)"
-                     Dense="true"
-                     Inset="true"
-                     Color="white">
-            </MSwitch>
+            <SettingSwitch @bind-Value="includeDiaryResources"
+                           SettingKey="@nameof(Setting.WebDAVCopyResources)">
+            </SettingSwitch>
         </MListItemAction>
     </MListItem>
 </MCard>

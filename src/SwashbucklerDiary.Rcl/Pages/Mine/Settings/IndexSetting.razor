@@ -21,13 +21,9 @@
                     @(I18n.T("Setting.Display.Index.Date.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="date"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.IndexDate)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="date"
+                                   SettingKey="@nameof(Setting.IndexDate)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
             <MDivider Class="mx-5"></MDivider>
@@ -41,13 +37,9 @@
                     @(I18n.T("Setting.Display.Index.WelcomeText.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="welcomText"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.WelcomeText)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="welcomText"
+                                   SettingKey="@nameof(Setting.WelcomeText)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
         </MList>

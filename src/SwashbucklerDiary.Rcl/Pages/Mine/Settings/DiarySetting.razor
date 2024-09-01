@@ -21,13 +21,9 @@
                     @(I18n.T("Setting.Display.Diary.Title.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="title"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.Title)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="title"
+                                   SettingKey="@nameof(Setting.Title)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
 
@@ -43,13 +39,9 @@
                     @(I18n.T("Setting.Display.Diary.Markdown.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="markdown"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.Markdown)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="markdown"
+                                   SettingKey="@nameof(Setting.Markdown)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
 
@@ -65,13 +57,9 @@
                     @(I18n.T("Setting.Display.Diary.IconText.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="diaryIconText"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.DiaryIconText)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="diaryIconText"
+                                   SettingKey="@nameof(Setting.DiaryIconText)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
 
@@ -112,13 +100,9 @@
                     @(I18n.T("Setting.Display.Diary.ImageLazy.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="imageLazy"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.ImageLazy)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="imageLazy"
+                                   SettingKey="@nameof(Setting.ImageLazy)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
 
@@ -134,13 +118,9 @@
                     @(I18n.T("Setting.Display.Diary.FirstLineIndent.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="firstLineIndent"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.FirstLineIndent)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="firstLineIndent"
+                                   SettingKey="@nameof(Setting.FirstLineIndent)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
 
@@ -156,13 +136,9 @@
                     @(I18n.T("Setting.Display.Diary.CodeLineNumber.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="codeLineNumber"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.CodeLineNumber)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="codeLineNumber"
+                                   SettingKey="@nameof(Setting.CodeLineNumber)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
 
@@ -178,13 +154,9 @@
                     @(I18n.T("Setting.Display.Diary.TaskListLineThrough.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="taskListLineThrough"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.TaskListLineThrough)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="taskListLineThrough"
+                                   SettingKey="@nameof(Setting.TaskListLineThrough)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
         </MList>

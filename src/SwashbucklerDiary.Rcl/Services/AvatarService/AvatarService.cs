@@ -1,6 +1,5 @@
 ﻿
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
@@ -54,7 +53,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected async Task<string> SetAvatar(string filePath)
         {
-            string previousAvatarUri = _settingService.Get<string>(Setting.Avatar);
+            string previousAvatarUri = _settingService.Get(s => s.Avatar);
             string previousAvatarPath = _mediaResourceManager.UrlRelativePathToFilePath(previousAvatarUri);
             if (File.Exists(previousAvatarPath))
             {
@@ -62,7 +61,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             string uri = await _mediaResourceManager.CreateMediaResourceFileAsync(targetDirectoryPath, filePath) ?? string.Empty;
-            await _settingService.Set(Setting.Avatar, uri);
+            await _settingService.SetAsync(s => s.Avatar, uri);
             return uri;
         }
     }

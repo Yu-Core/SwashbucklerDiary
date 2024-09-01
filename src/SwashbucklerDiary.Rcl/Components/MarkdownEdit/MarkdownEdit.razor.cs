@@ -81,9 +81,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void ReadSettings()
         {
-            firstLineIndent = SettingService.Get<bool>(Setting.FirstLineIndent);
-            codeLineNumber = SettingService.Get<bool>(Setting.CodeLineNumber);
-            taskListLineThrough = SettingService.Get<bool>(Setting.TaskListLineThrough);
+            firstLineIndent = SettingService.Get(s => s.FirstLineIndent);
+            codeLineNumber = SettingService.Get(s => s.CodeLineNumber);
+            taskListLineThrough = SettingService.Get(s => s.TaskListLineThrough);
         }
 
         private void SetOptions()

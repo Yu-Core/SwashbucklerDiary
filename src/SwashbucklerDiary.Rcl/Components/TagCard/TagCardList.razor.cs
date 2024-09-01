@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.ReadSettings();
 
-            var tagSort = SettingService.Get<string>(Setting.TagSort);
+            var tagSort = SettingService.Get(s => s.TagSort);
             if (!string.IsNullOrEmpty(tagSort))
             {
                 SortItem = tagSort;
@@ -155,7 +155,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task SortChanged(string value)
         {
-            await SettingService.Set(Setting.TagSort, value);
+            await SettingService.SetAsync(s => s.TagSort, value);
         }
 
         private int CalcDiaryCount(TagModel tag)

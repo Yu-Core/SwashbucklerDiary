@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -20,7 +19,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void UpdateSettings()
         {
-            notPrompt = SettingService.Get<bool>(Setting.UpdateNotPrompt);
+            notPrompt = SettingService.Get(s => s.UpdateNotPrompt);
         }
 
         private async Task ToUpdate()
@@ -31,7 +30,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task ChangeUpdateNotPrompt(bool value)
         {
-            await SettingService.Set(Setting.UpdateNotPrompt, value);
+            await SettingService.SetAsync(s => s.UpdateNotPrompt, value);
         }
     }
 }

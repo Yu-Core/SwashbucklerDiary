@@ -71,7 +71,7 @@ namespace SwashbucklerDiary.Maui.Layout
                 return;
             }
 
-            await SettingService.Set(key, DateTime.Now);
+            await SettingService.SetAsync(key, DateTime.Now);
 
             try
             {

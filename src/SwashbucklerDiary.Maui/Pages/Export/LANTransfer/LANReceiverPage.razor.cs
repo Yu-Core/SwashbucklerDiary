@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Maui.Services;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Pages
 {
@@ -70,9 +69,9 @@ namespace SwashbucklerDiary.Maui.Pages
         {
             base.ReadSettings();
 
-            multicastPort = SettingService.Get<int>(Setting.LANScanPort);
-            tcpPort = SettingService.Get<int>(Setting.LANTransmissionPort);
-            deviceName = SettingService.Get<string>(Setting.LANDeviceName);
+            multicastPort = SettingService.Get(s => s.LANScanPort);
+            tcpPort = SettingService.Get(s => s.LANTransmissionPort);
+            deviceName = SettingService.Get(s => s.LANDeviceName);
         }
 
         private async Task InitializeLANReceiverService()

@@ -4,7 +4,6 @@ using SwashbucklerDiary.Maui.Models;
 using SwashbucklerDiary.Maui.Services;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Pages
 {
@@ -98,8 +97,8 @@ namespace SwashbucklerDiary.Maui.Pages
         {
             base.ReadSettings();
 
-            multicastPort = SettingService.Get<int>(Setting.LANScanPort);
-            tcpPort = SettingService.Get<int>(Setting.LANTransmissionPort);
+            multicastPort = SettingService.Get(s => s.LANScanPort);
+            tcpPort = SettingService.Get(s => s.LANTransmissionPort);
         }
 
         private async Task InitializeLANSenderService()

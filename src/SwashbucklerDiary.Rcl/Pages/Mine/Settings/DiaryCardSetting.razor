@@ -21,13 +21,9 @@
                     @(I18n.T("Setting.Display.DiaryCard.Icon.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="diaryCardIcon"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.DiaryCardIcon)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="diaryCardIcon"
+                                   SettingKey="@nameof(Setting.DiaryCardIcon)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
 
@@ -43,13 +39,9 @@
                     @(I18n.T("Setting.Display.DiaryCard.Tags.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="diaryCardTags"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.DiaryCardTags)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="diaryCardTags"
+                                   SettingKey="@nameof(Setting.DiaryCardTags)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
 

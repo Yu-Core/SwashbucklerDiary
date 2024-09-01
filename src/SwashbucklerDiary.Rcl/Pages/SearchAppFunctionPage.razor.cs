@@ -61,8 +61,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            showPrivacyModeSearch = SettingService.Get<bool>(Setting.HidePrivacyModeEntrance);
-            privacyModeSearchKey = SettingService.Get<string>(Setting.PrivacyModeFunctionSearchKey, I18n.T("PrivacyMode.Name"));
+            showPrivacyModeSearch = SettingService.Get(s => s.HidePrivacyModeEntrance);
+            privacyModeSearchKey = SettingService.Get(s => s.PrivacyModeFunctionSearchKey, I18n.T("PrivacyMode.Name"));
         }
 
         private float ItemHeight => MasaBlazorHelper.Breakpoint.Xs ? 68f : 84f;
@@ -125,7 +125,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void ToPrivacyMode()
         {
-            SettingService.SetTemp<bool>(TempSetting.AllowEnterPrivacyMode, true);
+            SettingService.SetTemp(s => s.AllowEnterPrivacyMode, true);
             To("privacyMode");
         }
     }

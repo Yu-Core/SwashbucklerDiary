@@ -1,5 +1,5 @@
 ﻿using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Shared;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
@@ -7,20 +7,32 @@ namespace SwashbucklerDiary.Rcl.Services
     {
         Task InitializeAsync();
 
-        T Get<T>(Setting setting);
+        T Get<T>(string key);
 
-        T Get<T>(Setting setting, T defaultValue);
+        T Get<T>(string key, T defaultValue);
 
-        Task Set<T>(Setting setting, T value);
+        T Get<T>(Expression<Func<Setting, T>> expr);
 
-        Task Remove(Setting setting);
+        T Get<T>(Expression<Func<Setting, T>> expr, T defaultValue);
 
-        T GetTemp<T>(TempSetting setting);
+        Task SetAsync<T>(Expression<Func<Setting, T>> expr, T value);
 
-        T GetTemp<T>(TempSetting setting, T defaultValue);
+        Task RemoveAsync<T>(Expression<Func<Setting, T>> expr);
 
-        void SetTemp<T>(TempSetting setting, T value);
+        T GetTemp<T>(string key);
 
-        void RemoveTemp(TempSetting setting);
+        T GetTemp<T>(Expression<Func<TempSetting, T>> expr);
+
+        T GetTemp<T>(string key, T defaultValue);
+
+        T GetTemp<T>(Expression<Func<TempSetting, T>> expr, T defaultValue);
+
+        void SetTemp<T>(string key, T value);
+
+        void SetTemp<T>(Expression<Func<TempSetting, T>> expr, T value);
+
+        void RemoveTemp(string key);
+
+        void RemoveTemp<T>(Expression<Func<TempSetting, T>> expr);
     }
 }

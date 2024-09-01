@@ -74,7 +74,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.ReadSettings();
 
-            showStatisticsCard = SettingService.Get<bool>(Setting.StatisticsCard);
+            showStatisticsCard = SettingService.Get(s => s.StatisticsCard);
         }
 
         protected override void RegisterWatchers(PropertyWatcher watcher)

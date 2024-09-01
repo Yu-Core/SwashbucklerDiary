@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 using System.Text.Json;
 
 namespace SwashbucklerDiary.Maui.Pages
@@ -37,13 +36,13 @@ namespace SwashbucklerDiary.Maui.Pages
 
         protected override void ReadSettings()
         {
-            var configJson = SettingService.Get<string>(Setting.WebDavConfig);
+            var configJson = SettingService.Get(s => s.WebDavConfig);
             if (!string.IsNullOrEmpty(configJson))
             {
                 configModel = JsonSerializer.Deserialize<WebDavConfigForm>(configJson) ?? new();
             }
 
-            includeDiaryResources = SettingService.Get<bool>(Setting.WebDAVCopyResources);
+            includeDiaryResources = SettingService.Get(s => s.WebDAVCopyResources);
         }
 
         private bool Configured => !string.IsNullOrEmpty(configModel.ServerAddress);
@@ -59,7 +58,7 @@ namespace SwashbucklerDiary.Maui.Pages
                 showConfig = false;
                 await PopupServiceHelper.Success(I18n.T("Backups.Config.Success"));
                 var configJson = JsonSerializer.Serialize(configModel);
-                await SettingService.Set(Setting.WebDavConfig, configJson);
+                await SettingService.SetAsync(s => s.WebDavConfig, configJson);
             }
         }
 

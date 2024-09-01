@@ -1,7 +1,6 @@
 ﻿using Masa.Blazor;
 using Masa.Blazor.Popup.Components;
 using Masa.Blazor.Presets;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
@@ -46,7 +45,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private async Task EnqueueSnackbarAsync(string? title, string? message, AlertTypes type)
         {
-            int timeout = _settingService.Get<int>(Setting.AlertTimeout);
+            int timeout = _settingService.Get(s => s.AlertTimeout);
             await _popupService.EnqueueSnackbarAsync(new()
             {
                 Title = title,

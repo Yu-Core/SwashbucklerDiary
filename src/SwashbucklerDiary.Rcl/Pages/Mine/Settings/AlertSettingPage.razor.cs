@@ -1,6 +1,5 @@
 ﻿using Masa.Blazor;
 using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -25,8 +24,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            _timeout = SettingService.Get<int>(Setting.AlertTimeout);
-            achievementsAlert = SettingService.Get<bool>(Setting.AchievementsAlert);
+            _timeout = SettingService.Get(s => s.AlertTimeout);
+            achievementsAlert = SettingService.Get(s => s.AchievementsAlert);
         }
 
         private StringNumber Timeout
@@ -45,7 +44,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             _timeout = value.ToInt32() * 1000;
-            await SettingService.Set(Setting.AlertTimeout, _timeout);
+            await SettingService.SetAsync(s => s.AlertTimeout, _timeout);
         }
 
         private void InitTimeoutItems()

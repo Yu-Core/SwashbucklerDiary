@@ -49,20 +49,20 @@ namespace SwashbucklerDiary.Rcl.Pages
             else
             {
                 allowEnterPrivacyMode = false;
-                SettingService.SetTemp<bool>(TempSetting.AllowEnterPrivacyMode, allowEnterPrivacyMode);
+                SettingService.SetTemp(s => s.AllowEnterPrivacyMode, allowEnterPrivacyMode);
             }
         }
 
         protected override void ReadSettings()
         {
             base.ReadSettings();
-            privacyMode = SettingService.GetTemp<bool>(TempSetting.PrivacyMode);
-            allowEnterPrivacyMode = SettingService.GetTemp<bool>(TempSetting.AllowEnterPrivacyMode);
-            hidePrivacyModeEntrance = SettingService.Get<bool>(Setting.HidePrivacyModeEntrance);
-            privacyModeEntrancePassword = SettingService.Get<string>(Setting.PrivacyModeEntrancePassword);
-            privacyModeFunctionSearchKey = SettingService.Get<string>(Setting.PrivacyModeFunctionSearchKey, I18n.T("PrivacyMode.Name"));
-            showSetPrivacyDiary = SettingService.Get<bool>(Setting.SetPrivacyDiary);
-            enablePrivacyModeDark = SettingService.Get<bool>(Setting.PrivacyModeDark);
+            privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
+            allowEnterPrivacyMode = SettingService.GetTemp(s => s.AllowEnterPrivacyMode);
+            hidePrivacyModeEntrance = SettingService.Get(s => s.HidePrivacyModeEntrance);
+            privacyModeEntrancePassword = SettingService.Get(s => s.PrivacyModeEntrancePassword);
+            privacyModeFunctionSearchKey = SettingService.Get(s => s.PrivacyModeFunctionSearchKey, I18n.T("PrivacyMode.Name"));
+            showSetPrivacyDiary = SettingService.Get(s => s.SetPrivacyDiary);
+            enablePrivacyModeDark = SettingService.Get(s => s.PrivacyModeDark);
         }
 
         protected override async ValueTask DisposeAsyncCore()
@@ -84,7 +84,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task SwitchPrivacyMode()
         {
             privacyMode = !privacyMode;
-            SettingService.SetTemp<bool>(TempSetting.PrivacyMode, privacyMode);
+            SettingService.SetTemp(s => s.PrivacyMode, privacyMode);
 
             if (privacyMode)
             {
@@ -95,7 +95,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             else
             {
-                int theme = SettingService.Get<int>(Setting.Theme);
+                int theme = SettingService.Get(s => s.Theme);
                 await ThemeService.SetThemeAsync((Theme)theme);
             }
 
@@ -118,7 +118,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (!string.IsNullOrWhiteSpace(value) && value != privacyModeFunctionSearchKey)
             {
                 privacyModeFunctionSearchKey = value;
-                await SettingService.Set(Setting.PrivacyModeFunctionSearchKey, privacyModeFunctionSearchKey);
+                await SettingService.SetAsync(s => s.PrivacyModeFunctionSearchKey, privacyModeFunctionSearchKey);
             }
         }
 
@@ -127,8 +127,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             showPrivacyModeEntrancePasswordDialog = false;
             privacyModeEntrancePassword = value;
 
-            string salt = Setting.PrivacyModeEntrancePassword.ToString();
-            await SettingService.Set(Setting.PrivacyModeEntrancePassword, (value + salt).MD5Encrytp32());
+            string salt = nameof(Setting.PrivacyModeEntrancePassword);
+            await SettingService.SetAsync(s => s.PrivacyModeEntrancePassword, (value + salt).MD5Encrytp32());
             await PopupServiceHelper.Success(I18n.T("PrivacyMode.PasswordSetSuccess"));
         }
 
@@ -141,14 +141,14 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             hidePrivacyModeEntrance = false;
-            await SettingService.Set(Setting.HidePrivacyModeEntrance, hidePrivacyModeEntrance);
+            await SettingService.SetAsync(s => s.HidePrivacyModeEntrance, hidePrivacyModeEntrance);
         }
 
         private async Task ConfirmHidePrivacyModeEntrance()
         {
             showHidePrivacyModeEntranceConfirmDialog = false;
             hidePrivacyModeEntrance = true;
-            await SettingService.Set(Setting.HidePrivacyModeEntrance, hidePrivacyModeEntrance);
+            await SettingService.SetAsync(s => s.HidePrivacyModeEntrance, hidePrivacyModeEntrance);
         }
     }
 }

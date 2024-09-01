@@ -126,13 +126,9 @@
                     @(I18n.T("Setting.Display.StatisticsCard.Name"))
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="showStatisticsCard"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.StatisticsCard)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="showStatisticsCard"
+                                   SettingKey="@nameof(Setting.StatisticsCard)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
         </MList>

@@ -48,8 +48,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            showWelcomeText = SettingService.Get<bool>(Setting.WelcomeText);
-            showDate = SettingService.Get<bool>(Setting.IndexDate);
+            showWelcomeText = SettingService.Get(s => s.WelcomeText);
+            showDate = SettingService.Get(s => s.IndexDate);
         }
 
         private string? SwiperActiveItemSelector

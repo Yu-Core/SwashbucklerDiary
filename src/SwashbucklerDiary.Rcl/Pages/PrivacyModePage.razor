@@ -25,13 +25,9 @@
                     </MListItemSubtitle>
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="showSetPrivacyDiary"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.SetPrivacyDiary)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="showSetPrivacyDiary"
+                                   SettingKey="@nameof(Setting.SetPrivacyDiary)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
 
@@ -52,13 +48,9 @@
                     </MListItemSubtitle>
                 </MListItemContent>
                 <MListItemAction>
-                    <MSwitch @bind-Value="enablePrivacyModeDark"
-                             TValue="bool"
-                             OnChange="SettingChange(Setting.PrivacyModeDark)"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
+                    <SettingSwitch @bind-Value="enablePrivacyModeDark"
+                                   SettingKey="@nameof(Setting.PrivacyModeDark)">
+                    </SettingSwitch>
                 </MListItemAction>
             </MListItem>
         </MList>
