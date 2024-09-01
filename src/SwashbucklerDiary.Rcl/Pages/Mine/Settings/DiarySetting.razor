@@ -50,6 +50,28 @@
             <MListItem>
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
+                        mdi-information-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.OtherInfo.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="otherInfo"
+                                   SettingKey="@nameof(Setting.OtherInfo)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <MCard Class="my-list-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
                         mdi-image-text
                     </MIcon>
                 </MListItemIcon>

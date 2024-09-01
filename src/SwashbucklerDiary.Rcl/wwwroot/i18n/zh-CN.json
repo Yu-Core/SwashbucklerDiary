@@ -121,7 +121,9 @@
     "InputLocation": "输入位置",
     "LocationPlace": "请输入位置",
     "DisplayIconText": "显示图标文本",
-    "HideIconText": "隐藏图标文本"
+    "HideIconText": "隐藏图标文本",
+    "DisplayOtherInfo": "显示其他信息",
+    "HideOtherInfo": "隐藏其他信息"
   },
   "Weather": {
     "cloudy": "多云",
@@ -408,6 +410,10 @@
         "Markdown": {
           "Name": "Markdown",
           "Path": "设置 / 日记 / Markdown"
+        },
+        "OtherInfo": {
+          "Name": "其他信息",
+          "Path": "设置 / 日记 / 其他信息"
         },
         "IconText": {
           "Name": "图标文本",

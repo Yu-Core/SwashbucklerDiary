@@ -72,22 +72,26 @@
                 @(CounterValue())
             </span>
         </div>
-        <div>
-            <DiaryInfoButton Icon="@WeatherIcon"
-                             Text="@WeatherText"
-                             OnClick="()=>showWeather=true">
-            </DiaryInfoButton>
 
-            <DiaryInfoButton Icon="@MoodIcon"
-                             Text="@MoodText"
-                             OnClick="()=>showMood=true">
-            </DiaryInfoButton>
+        @if (showOtherInfo)
+        {
+            <div>
+                <DiaryInfoButton Icon="@WeatherIcon"
+                                 Text="@WeatherText"
+                                 OnClick="()=>showWeather=true">
+                </DiaryInfoButton>
 
-            <DiaryInfoButton Icon="mdi-map-marker-outline"
-                             Text="@LocationText"
-                             OnClick="()=>showLocation=true">
-            </DiaryInfoButton>
-        </div>
+                <DiaryInfoButton Icon="@MoodIcon"
+                                 Text="@MoodText"
+                                 OnClick="()=>showMood=true">
+                </DiaryInfoButton>
+
+                <DiaryInfoButton Icon="mdi-map-marker-outline"
+                                 Text="@LocationText"
+                                 OnClick="()=>showLocation=true">
+                </DiaryInfoButton>
+            </div>
+        }
     </div>
 
     @if (enableTitle)

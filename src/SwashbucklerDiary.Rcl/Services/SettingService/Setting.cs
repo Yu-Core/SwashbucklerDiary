@@ -39,5 +39,6 @@
         public bool TaskListLineThrough { get; set; }
         public bool DiaryCardTags { get; set; }
         public bool DiaryIconText { get; set; }
+        public bool OtherInfo { get; set; } = true;
     }
 }

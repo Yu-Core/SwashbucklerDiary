@@ -39,6 +39,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showIconText;
 
+        private bool showOtherInfo;
+
         private int editAutoSave;
 
         private PeriodicTimer? timer;
@@ -137,6 +139,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             enableMarkdown = SettingService.Get(s => s.Markdown);
             editAutoSave = SettingService.Get(s => s.EditAutoSave);
             showIconText = SettingService.Get(s => s.DiaryIconText);
+            showOtherInfo = SettingService.Get(s => s.OtherInfo);
             privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
         }
 
@@ -192,6 +195,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string MarkdownSwitchIcon() => enableMarkdown ? "mdi-format-text" : "mdi-language-markdown-outline";
 
+        private string OtherInfoSwitchText() => showOtherInfo ? "Write.HideOtherInfo" : "Write.DisplayOtherInfo";
+
         private string IconTextSwitchText() => showIconText ? "Write.HideIconText" : "Write.DisplayIconText";
 
         private async Task InitTags()
@@ -242,7 +247,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             [
                 new(this, TitleSwitchText, "mdi-format-title", ()=> SettingChange(nameof(Setting.Title), ref enableTitle)),
                 new(this, MarkdownSwitchText, MarkdownSwitchIcon, ()=> SettingChange(nameof(Setting.Markdown), ref enableMarkdown)),
-                new(this, IconTextSwitchText, " mdi-image-text", ()=> SettingChange(nameof(Setting.DiaryIconText), ref showIconText)),
+                new(this, IconTextSwitchText, "mdi-image-text", ()=> SettingChange(nameof(Setting.DiaryIconText), ref showIconText)),
+                new(this, OtherInfoSwitchText, "mdi-information-outline", ()=> SettingChange(nameof(Setting.OtherInfo), ref showOtherInfo)),
             ];
             weatherIcons = IconService.GetWeatherIcons();
             moodIcons = IconService.GetMoodIcons();

@@ -121,7 +121,9 @@
     "InputLocation": "Enter location",
     "LocationPlace": "Please enter the location",
     "DisplayIconText": "Display icon text",
-    "HideIconText": "Hide icon text"
+    "HideIconText": "Hide icon text",
+    "DisplayOtherInfo": "Display other info",
+    "HideOtherInfo": "Hide other info"
   },
   "Weather": {
     "cloudy": "cloudy",
@@ -408,6 +410,10 @@
         "Markdown": {
           "Name": "Markdown",
           "Path": "Setting / Diary / Markdown"
+        },
+        "OtherInfo": {
+          "Name": "Other info",
+          "Path": "Setting / Diary / Other info"
         },
         "IconText": {
           "Name": "Icon text",
