@@ -72,6 +72,22 @@
                 @(CounterValue())
             </span>
         </div>
+        <div>
+            <DiaryInfoButton Icon="@WeatherIcon"
+                             Text="@WeatherText"
+                             OnClick="()=>showWeather=true">
+            </DiaryInfoButton>
+
+            <DiaryInfoButton Icon="@MoodIcon"
+                             Text="@MoodText"
+                             OnClick="()=>showMood=true">
+            </DiaryInfoButton>
+
+            <DiaryInfoButton Icon="mdi-map-marker-outline"
+                             Text="@LocationText"
+                             OnClick="()=>showLocation=true">
+            </DiaryInfoButton>
+        </div>
     </div>
 
     @if (enableTitle)
@@ -109,48 +125,6 @@
                           Autofocus="autofocus"
                           OnAfter="HandleLaunchActivation">
             </TextareaEdit>
-        }
-    </div>
-
-    <div style="position:relative;">
-        <div class="write-right-bottom-float-area">
-            <Transition Name="slide-y-reverse-transition">
-                <ShowTransitionElement Value="showFab"
-                                       Tag="div"
-                                       Class="flex-column justify-center align-center"
-                                       Style="display:flex;">
-                    <MyFloatButton Class="mb-2"
-                                   Elevation="1"
-                                   Icon="@WeatherIcon"
-                                   OnClick="()=>showWeather=true">
-                    </MyFloatButton>
-                    <MyFloatButton Class="mb-2"
-                                   Elevation="1"
-                                   Icon="@MoodIcon"
-                                   OnClick="()=>showMood=true">
-                    </MyFloatButton>
-                    <MyFloatButton Class="mb-2"
-                                   Elevation="1"
-                                   Icon="mdi-map-marker-outline"
-                                   OnClick="()=>showLocation=true">
-                    </MyFloatButton>
-                </ShowTransitionElement>
-            </Transition>
-            <MyFloatButton Elevation="1"
-                           Icon="@(showFab ? "mdi-chevron-down" : "mdi-chevron-up")"
-                           OnClick="()=>showFab=!showFab">
-            </MyFloatButton>
-        </div>
-    </div>
-
-    <div>
-        @if (!string.IsNullOrEmpty(SelectedLocation))
-        {
-            <DiaryInfoButton Class="pl-2"
-                             Icon="mdi-map-marker-outline"
-                             Text="@LocationText"
-                             OnClick="()=>showLocation=true">
-            </DiaryInfoButton>
         }
     </div>
 

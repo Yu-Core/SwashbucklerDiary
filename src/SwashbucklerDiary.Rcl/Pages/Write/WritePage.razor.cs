@@ -25,8 +25,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showCreateTime;
 
-        private bool showFab;
-
         private bool enableTitle;
 
         private bool enableMarkdown = true;
@@ -83,9 +81,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
-        [Inject]
-        private MasaBlazor MasaBlazor { get; set; } = default!;
-
         [Parameter]
         [SupplyParameterFromQuery]
         public Guid? TagId { get; set; }
@@ -119,7 +114,6 @@ namespace SwashbucklerDiary.Rcl.Pages
                     InitDiary(),
                     InitTags());
                 InitCreateTime();
-                showFab = !string.IsNullOrEmpty(diary.Weather) || !string.IsNullOrEmpty(diary.Mood);
                 StateHasChanged();
                 _ = CreateTimer();
             }
@@ -179,6 +173,12 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string WeatherIcon => GetWeatherIcon(diary.Weather);
 
         private string MoodIcon => GetMoodIcon(diary.Mood);
+
+        private string WeatherText =>
+            string.IsNullOrEmpty(diary.Weather) ? I18n.T("Write.Weather")! : I18n.T("Weather." + diary.Weather)!;
+
+        private string MoodText =>
+                   string.IsNullOrEmpty(diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + diary.Mood)!;
 
         private string LocationText =>
             string.IsNullOrEmpty(SelectedLocation) ? I18n.T("Write.Location") : SelectedLocation;

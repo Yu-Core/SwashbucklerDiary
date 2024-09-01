@@ -74,6 +74,29 @@
             </span>
         </div>
 
+        <div>
+            @if (ShowWeather)
+            {
+                <DiaryInfoButton Icon="@WeatherIcon"
+                                 Text="@WeatherText">
+                </DiaryInfoButton>
+            }
+
+            @if (ShowMood)
+            {
+                <DiaryInfoButton Icon="@MoodIcon"
+                                 Text="@MoodText">
+                </DiaryInfoButton>
+            }
+
+            @if (ShowLocation)
+            {
+                <DiaryInfoButton Icon="mdi-map-marker-outline"
+                                 Text="@LocationText">
+                </DiaryInfoButton>
+            }
+        </div>
+
         @if (ShowTitle)
         {
             <MTextField Value="@(diary.Title)"
@@ -108,16 +131,6 @@
             }
         </div>
 
-        <div>
-            @if (ShowLocation)
-            {
-                <DiaryInfoButton Class="pl-2"
-                                 Icon="mdi-map-marker-outline"
-                                 Text="@diary.Location">
-                </DiaryInfoButton>
-            }
-        </div>
-
         <div class="pl-2">
             <MChipGroup Column="true">
                 @foreach (var item in Tags)
@@ -136,36 +149,6 @@
 <div class="right-bottom-float-area">
     <BackTopButton Selector="@scrollContainerSelector">
     </BackTopButton>
-    @if (ShowWeather || ShowMood)
-    {
-        <Transition Name="slide-y-reverse-transition">
-            <ShowTransitionElement Value="showFab"
-                                   Tag="div"
-                                   Class="flex-column justify-center align-center"
-                                   Style="display:flex;">
-                @if (ShowWeather)
-                {
-                    <MyFloatButton Class="mt-2"
-                                   Elevation="1"
-                                   Icon="@WeatherIcon">
-                    </MyFloatButton>
-                }
-                @if (ShowMood)
-                {
-                    <MyFloatButton Class="mt-2"
-                                   Elevation="1"
-                                   Icon="@MoodIcon">
-                    </MyFloatButton>
-                }
-
-            </ShowTransitionElement>
-        </Transition>
-        <MyFloatButton Class="mt-2"
-                       Elevation="1"
-                       Icon="@(showFab ? "mdi-chevron-down" : "mdi-chevron-up")"
-                       OnClick="()=>showFab=!showFab">
-        </MyFloatButton>
-    }
 </div>
 
 <MultiListDialog @bind-Visible="showShare"

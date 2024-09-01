@@ -41,20 +41,3 @@
 .write-chip-group ::deep .m-chip {
     margin: 4px 8px 4px 0;
 }
-
-.write-right-bottom-float-area {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    z-index: 1;
-    bottom: 1rem;
-    right: 0;
-}
-
-@media screen and (min-width:600px) {
-    .write-right-bottom-float-area {
-        position: fixed;
-        right: 1rem;
-        margin: 8px !important;
-    }
-}
