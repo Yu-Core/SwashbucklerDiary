@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.Maui;
+using System.Reflection;
 
 namespace SwashbucklerDiary.Maui.BlazorWebView
 {
@@ -10,54 +11,14 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
 #else
         public static string BaseUri { get; } = $"https://{AppHostAddress}/";
 #endif
-        public static readonly Dictionary<string, string> AppFilePathMap = new()
+
+        private static string GetAppHostAddress()
         {
-            { FileSystem.AppDataDirectory, "appdata" },
-            { FileSystem.CacheDirectory, "cache" },
-        };
+            Type type = typeof(Microsoft.AspNetCore.Components.WebView.Maui.BlazorWebView);
+            PropertyInfo propertyInfo = type.GetProperty("AppHostAddress", BindingFlags.NonPublic | BindingFlags.Static)
+                ?? throw new Exception("Property AppHostAddress does not exist");
 
-        private static readonly string OtherFileMapPath = "file";
-
-        //把真实的文件路径转化为url相对路径
-        public static string FilePathToUrlRelativePath(string filePath)
-        {
-            foreach (var item in AppFilePathMap)
-            {
-                if (filePath.StartsWith(item.Key))
-                {
-                    return item.Value + filePath[item.Key.Length..].Replace(Path.DirectorySeparatorChar, '/');
-                }
-            }
-
-            return OtherFileMapPath + "/" + Uri.EscapeDataString(filePath);
-        }
-
-        //把url相对路径转化为真实的文件路径
-        public static string UrlRelativePathToFilePath(string urlRelativePath)
-        {
-            if (string.IsNullOrEmpty(urlRelativePath))
-            {
-                return string.Empty;
-            }
-
-            urlRelativePath = Uri.UnescapeDataString(urlRelativePath);
-
-            foreach (var item in AppFilePathMap)
-            {
-                if (urlRelativePath.StartsWith(item.Value + '/'))
-                {
-                    string urlRelativePathSub = urlRelativePath[(item.Value.Length + 1)..];
-                    return Path.Combine(item.Key, urlRelativePathSub.Replace('/', Path.DirectorySeparatorChar));
-                }
-            }
-
-            if (urlRelativePath.StartsWith(OtherFileMapPath + '/'))
-            {
-                string urlRelativePathSub = urlRelativePath[(OtherFileMapPath.Length + 1)..];
-                return urlRelativePathSub.Replace('/', Path.DirectorySeparatorChar);
-            }
-
-            return string.Empty;
+            return (string?)propertyInfo.GetValue(null)!;
         }
 
         private static bool Intercept(string uri, out string filePath)
@@ -69,7 +30,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
             }
 
             var urlRelativePath = new Uri(uri).AbsolutePath.TrimStart('/');
-            filePath = UrlRelativePathToFilePath(urlRelativePath);
+            filePath = LocalFileWebAccessHelper.UrlRelativePathToFilePath(urlRelativePath);
             if (!File.Exists(filePath))
             {
                 return false;
@@ -78,29 +39,25 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
             return true;
         }
 
-        private static string GetAppHostAddress()
+        private static int ParseRange(string rangeString, ref long rangeStart, ref long rangeEnd)
         {
-#if IOS || MACCATALYST
-				// On iOS/MacCatalyst 18 and higher the 0.0.0.0 address does not work, so we use localhost instead.
-				// This preserves behavior on older versions of those systems, while defaulting to new behavior on
-				// the new system.
+            var ranges = rangeString.Split('=');
+            if (ranges.Length < 2 || string.IsNullOrEmpty(ranges[1]))
+            {
+                return 0;
+            }
 
-				// Note that pre-release versions of iOS/MacCatalyst have the expected Major/Minor values,
-				// but the Build, MajorRevision, MinorRevision, and Revision values are all -1, so we need
-				// to pass in int.MinValue for those values.
-
-				if (System.OperatingSystem.IsIOSVersionAtLeast(major: 18, minor: int.MinValue, build: int.MinValue) ||
-					System.OperatingSystem.IsMacCatalystVersionAtLeast(major: 18, minor: int.MinValue, build: int.MinValue))
-				{
-					return "localhost";
-				}
-				else
-				{
-					return "0.0.0.0";
-				}
-#else
-            return "0.0.0.0";
-#endif
+            string[] rangeDatas = ranges[1].Split("-");
+            rangeStart = Convert.ToInt64(rangeDatas[0]);
+            if (rangeDatas.Length > 1 && !string.IsNullOrEmpty(rangeDatas[1]))
+            {
+                rangeEnd = Convert.ToInt64(rangeDatas[1]);
+                return 2;
+            }
+            else
+            {
+                return 1;
+            }
         }
     }
 }

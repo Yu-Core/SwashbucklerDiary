@@ -12,23 +12,23 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
         protected override void ConnectHandler(WebView platformView)
         {
             base.ConnectHandler(platformView);
-            platformView.SetWebViewClient(new MyWebViewClient(platformView.WebViewClient));
+            platformView.SetWebViewClient(new MauiBlazorWebViewClient(platformView.WebViewClient));
             platformView.SetWebChromeClient(new MauiBlazorWebChromeClient(platformView.WebChromeClient, this.MauiContext, platformView));
         }
 
 #nullable disable
-        private class MyWebViewClient : WebViewClient
+        private class MauiBlazorWebViewClient : WebViewClient
         {
-            private WebViewClient WebViewClient { get; }
+            private readonly WebViewClient _webViewClient;
 
-            public MyWebViewClient(WebViewClient webViewClient)
+            public MauiBlazorWebViewClient(WebViewClient webViewClient)
             {
-                WebViewClient = webViewClient;
+                _webViewClient = webViewClient;
             }
 
             public override bool ShouldOverrideUrlLoading(Android.Webkit.WebView view, IWebResourceRequest request)
             {
-                return WebViewClient.ShouldOverrideUrlLoading(view, request);
+                return _webViewClient.ShouldOverrideUrlLoading(view, request);
             }
 
             public override WebResourceResponse ShouldInterceptRequest(Android.Webkit.WebView view, IWebResourceRequest request)
@@ -39,12 +39,12 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                     return webResourceResponse;
                 }
 
-                return WebViewClient.ShouldInterceptRequest(view, request);
+                return _webViewClient.ShouldInterceptRequest(view, request);
             }
 
             public override void OnPageFinished(Android.Webkit.WebView view, string url)
             {
-                WebViewClient.OnPageFinished(view, url);
+                _webViewClient.OnPageFinished(view, url);
 
                 WebView = view;
                 AndroidSafeArea.Initialize(view);
@@ -55,7 +55,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 if (!disposing)
                     return;
 
-                WebViewClient.Dispose();
+                _webViewClient.Dispose();
             }
 
             private static bool InterceptCustomPathRequest(IWebResourceRequest request, out WebResourceResponse webResourceResponse)
@@ -100,17 +100,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                     stateCode = 206;
                     reasonPhrase = "Partial Content";
 
-                    var ranges = rangeString.Split('=');
-                    if (ranges.Length > 1 && !string.IsNullOrEmpty(ranges[1]))
-                    {
-                        string[] rangeDatas = ranges[1].Split("-");
-                        rangeStart = Convert.ToInt64(rangeDatas[0]);
-                        if (rangeDatas.Length > 1 && !string.IsNullOrEmpty(rangeDatas[1]))
-                        {
-                            rangeEnd = Convert.ToInt64(rangeDatas[1]);
-                        }
-                    }
-
+                    ParseRange(rangeString, ref rangeStart, ref rangeEnd);
                     headers.Add("Accept-Ranges", "bytes");
                     headers.Add("Content-Range", $"bytes {rangeStart}-{rangeEnd}/{length}");
                 }

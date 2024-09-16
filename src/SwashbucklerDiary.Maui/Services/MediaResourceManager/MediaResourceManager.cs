@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Maui.Services
     {
         private readonly HttpClient _httpClient;
 
-        private readonly string _customPathPrefix = MauiBlazorWebViewHandler.AppFilePathMap[FileSystem.AppDataDirectory] + "/";
+        private readonly string _customPathPrefix = LocalFileWebAccessHelper.AppFilePathMap[FileSystem.AppDataDirectory];
 
         protected override string? CustomPathPrefix => _customPathPrefix;
 
@@ -57,7 +57,7 @@ namespace SwashbucklerDiary.Maui.Services
                 }
             }
 
-            return MauiBlazorWebViewHandler.FilePathToUrlRelativePath(targetFilePath);
+            return LocalFileWebAccessHelper.FilePathToUrlRelativePath(targetFilePath);
         }
 
         public override async Task<bool> ShareImageAsync(string title, string url)
@@ -93,7 +93,7 @@ namespace SwashbucklerDiary.Maui.Services
             string? filePath;
             if (IsInternalUrl(url, out string relativePath))
             {
-                filePath = MauiBlazorWebViewHandler.UrlRelativePathToFilePath(relativePath);
+                filePath = LocalFileWebAccessHelper.UrlRelativePathToFilePath(relativePath);
                 if (string.IsNullOrEmpty(filePath))
                 {
                     filePath = await CopyPackageFileAndCreateTempFileAsync(url);
@@ -160,7 +160,7 @@ namespace SwashbucklerDiary.Maui.Services
 
         public override async Task<AudioFileInfo> GetAudioFileInfo(string uri)
         {
-            string? filePath = MauiBlazorWebViewHandler.UrlRelativePathToFilePath(uri);
+            string? filePath = LocalFileWebAccessHelper.UrlRelativePathToFilePath(uri);
             if (!File.Exists(filePath))
             {
                 return new();
@@ -179,7 +179,7 @@ namespace SwashbucklerDiary.Maui.Services
                     await _appFileManager.CreateTempFileAsync(pictureFileName, audioFile.Tag.Pictures[0].Data.Data);
                 }
 
-                pictureUri = MauiBlazorWebViewHandler.FilePathToUrlRelativePath(pictureFilePath);
+                pictureUri = LocalFileWebAccessHelper.FilePathToUrlRelativePath(pictureFilePath);
             }
 
             return new()
@@ -193,6 +193,6 @@ namespace SwashbucklerDiary.Maui.Services
         }
 
         public override string UrlRelativePathToFilePath(string urlRelativePath)
-            => MauiBlazorWebViewHandler.UrlRelativePathToFilePath(urlRelativePath);
+            => LocalFileWebAccessHelper.UrlRelativePathToFilePath(urlRelativePath);
     }
 }

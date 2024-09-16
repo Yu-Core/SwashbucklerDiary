@@ -1,6 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -20,9 +19,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         ILocationService LocationService { get; set; } = default!;
-
-        [Inject]
-        IJSRuntime JS { get; set; } = default!;
 
         [CascadingParameter(Name = "IsDark")]
         public bool Dark { get; set; }

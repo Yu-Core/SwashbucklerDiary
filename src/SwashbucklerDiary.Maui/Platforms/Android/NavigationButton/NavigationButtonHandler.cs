@@ -65,7 +65,7 @@ namespace SwashbucklerDiary
             else if (BackPressCounter == 0)
             {
                 BackPressCounter++;
-                Toast toast = Toast.MakeText(Application.Context, I18n.T("Press again to exit"), ToastLength.Long)!;
+                Toast toast = Toast.MakeText(Application.Context, text, ToastLength.Long)!;
 
                 //定时3.5s后重置次数
                 //ToastLength.Long是3.5s，ToastLength.Short是2s

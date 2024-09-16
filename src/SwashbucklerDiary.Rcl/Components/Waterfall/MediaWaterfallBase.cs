@@ -1,7 +1,6 @@
 ﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -13,9 +12,6 @@ namespace SwashbucklerDiary.Rcl.Components
         protected string? thisPagePath;
 
         protected ElementReference elementReference = default!;
-
-        [Inject]
-        protected IJSRuntime JS { get; set; } = default!;
 
         [Inject]
         protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;

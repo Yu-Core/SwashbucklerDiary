@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.Maui
         {
             if (wKWebView is not null)
             {
-                wKWebView.NavigationDelegate = new WebViewNavigationDelegate(MauiBlazorWebViewHandler.Default);
+                wKWebView.NavigationDelegate = new WebViewNavigationDelegate();
             }
         }
 #endif

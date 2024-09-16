@@ -15,18 +15,10 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
 #nullable disable
     public partial class MauiBlazorWebViewHandler
     {
-        public static MauiBlazorWebViewHandler Default { get; private set; }
-
-        private BlazorWebViewHandlerReflection _base;
-
-        private BlazorWebViewHandlerReflection Base => _base ??= new(this);
-
         [SupportedOSPlatform("ios11.0")]
         protected override WKWebView CreatePlatformView()
         {
-            Default = this;
-
-            Base.LoggerCreatingWebKitWKWebView();
+            Logger.CreatingWebKitWKWebView();
 
             var config = new WKWebViewConfiguration();
 
@@ -49,9 +41,9 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 Configuration = config
             });
 
-            config.UserContentController.AddScriptMessageHandler(Base.CreateWebViewScriptMessageHandler(), "webwindowinterop");
+            config.UserContentController.AddScriptMessageHandler(CreateWebViewScriptMessageHandler(), "webwindowinterop");
             config.UserContentController.AddUserScript(new WKUserScript(
-                new NSString(Base.BlazorInitScript), WKUserScriptInjectionTime.AtDocumentEnd, true));
+                new NSString(BlazorInitScript), WKUserScriptInjectionTime.AtDocumentEnd, true));
 
             // iOS WKWebView doesn't allow handling 'http'/'https' schemes, so we use the fake 'app' scheme
             config.SetUrlSchemeHandler(new SchemeHandler(this), urlScheme: "app");
@@ -62,7 +54,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 AutosizesSubviews = true
             };
 
-            if (Base.DeveloperToolsEnabled)
+            if (GetDeveloperToolsEnabled())
             {
                 // Legacy Developer Extras setting.
                 config.Preferences.SetValueForKey(NSObject.FromObject(true), new NSString("developerExtrasEnabled"));
@@ -74,9 +66,9 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 }
             }
 
-            VirtualView.BlazorWebViewInitialized(Base.CreateBlazorWebViewInitializedEventArgs(webview));
+            VirtualView.BlazorWebViewInitialized(CreateBlazorWebViewInitializedEventArgs(webview));
 
-            Base.LoggerCreatedWebKitWKWebView();
+            Logger.CreatedWebKitWKWebView();
 
             return webview;
         }
@@ -123,12 +115,12 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
 
             private byte[] GetResponseBytes(string? url, out string contentType, out int statusCode)
             {
-                var allowFallbackOnHostPage = _webViewHandler.Base.IsBaseOfPage(_webViewHandler.Base.AppOriginUri, url);
-                url = _webViewHandler.Base.QueryStringHelperRemovePossibleQueryString(url);
+                var allowFallbackOnHostPage = _webViewHandler.AppOriginUri.IsBaseOfPage(url);
+                url = QueryStringHelper.RemovePossibleQueryString(url);
 
-                _webViewHandler.Base.LoggerHandlingWebRequest(url);
+                _webViewHandler.Logger.HandlingWebRequest(url);
 
-                if (_webViewHandler.Base.TryGetResponseContentInternal(url, allowFallbackOnHostPage, out statusCode, out var statusMessage, out var content, out var headers))
+                if (_webViewHandler.TryGetResponseContentInternal(url, allowFallbackOnHostPage, out statusCode, out var statusMessage, out var content, out var headers))
                 {
                     statusCode = 200;
                     using var ms = new MemoryStream();
@@ -138,13 +130,13 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
 
                     contentType = headers["Content-Type"];
 
-                    _webViewHandler?.Base.LoggerResponseContentBeingSent(url, statusCode);
+                    _webViewHandler?.Logger.ResponseContentBeingSent(url, statusCode);
 
                     return ms.ToArray();
                 }
                 else
                 {
-                    _webViewHandler?.Base.LoggerReponseContentNotFound(url);
+                    _webViewHandler?.Logger.ReponseContentNotFound(url);
 
                     statusCode = 404;
                     contentType = string.Empty;
@@ -207,20 +199,6 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 return true;
             }
 
-            static void ParseRange(string rangeString, ref long rangeStart, ref long rangeEnd)
-            {
-                var ranges = rangeString.Split('=');
-                if (ranges.Length > 1 && !string.IsNullOrEmpty(ranges[1]))
-                {
-                    string[] rangeDatas = ranges[1].Split("-");
-                    rangeStart = Convert.ToInt64(rangeDatas[0]);
-                    if (rangeDatas.Length > 1 && !string.IsNullOrEmpty(rangeDatas[1]))
-                    {
-                        rangeEnd = Convert.ToInt64(rangeDatas[1]);
-                    }
-                }
-            }
-
             static byte[] ReadStreamRange(FileStream contentStream, long start, long end)
             {
                 // 检查结束位置是否大于开始位置
@@ -247,139 +225,75 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
         }
     }
 
-    public class BlazorWebViewHandlerReflection
+    public partial class MauiBlazorWebViewHandler
     {
-        public BlazorWebViewHandlerReflection(BlazorWebViewHandler blazorWebViewHandler)
-        {
-            _blazorWebViewHandler = blazorWebViewHandler;
-            _logger = new(() =>
-            {
-                var property = Type.GetProperty("Logger", BindingFlags.NonPublic | BindingFlags.Instance);
-                return (ILogger)property?.GetValue(_blazorWebViewHandler);
-            });
-            _blazorInitScript = new(() =>
-            {
-                var property = Type.GetField("BlazorInitScript", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-                return (string)property?.GetValue(_blazorWebViewHandler);
-            });
-            _appOriginUri = new(() =>
-            {
-                var property = Type.GetProperty("AppOriginUri", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-                return (Uri)property?.GetValue(_blazorWebViewHandler);
-            });
-        }
+        private static readonly Type blazorWebViewHandlerType = typeof(BlazorWebViewHandler);
 
-        private readonly BlazorWebViewHandler _blazorWebViewHandler;
+        private MethodInfo TryGetResponseContentInternalMethod;
 
-        private static readonly Type Type = typeof(BlazorWebViewHandler);
+        private readonly FieldInfo _webviewManagerField = blazorWebViewHandlerType.GetField("_webviewManager", BindingFlags.NonPublic | BindingFlags.Instance)
+            ?? throw new Exception("Field _webviewManager does not exist");
 
-        private static readonly Assembly Assembly = Type.Assembly;
+        private readonly PropertyInfo LoggerProperty = blazorWebViewHandlerType.GetProperty("Logger", BindingFlags.NonPublic | BindingFlags.Instance)
+            ?? throw new Exception("Property Logger does not exist");
 
-        private static readonly Type TypeLog = Assembly.GetType("Microsoft.AspNetCore.Components.WebView.Log")!;
+        private readonly FieldInfo BlazorInitScriptField = blazorWebViewHandlerType.GetField("BlazorInitScript", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
+            ?? throw new Exception("Field BlazorInitScript does not exist");
 
-        private readonly Lazy<ILogger> _logger;
+        private readonly PropertyInfo AppOriginUriProperty = blazorWebViewHandlerType.GetProperty("AppOriginUri", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
+            ?? throw new Exception("Property BlazorInitScript does not exist");
 
-        private readonly Lazy<string> _blazorInitScript;
+        private object WebviewManager => _webviewManagerField.GetValue(this);
 
-        private readonly Lazy<Uri> _appOriginUri;
+        public ILogger Logger => (ILogger)LoggerProperty.GetValue(this);
 
-        private object WebviewManager;
+        private string BlazorInitScript => (string)BlazorInitScriptField.GetValue(this);
 
-        private MethodInfo MethodTryGetResponseContentInternal;
-
-        private MethodInfo MethodIsBaseOfPage;
-
-        private MethodInfo MethodQueryStringHelperRemovePossibleQueryString;
-
-        public ILogger Logger => _logger.Value;
-
-        public string BlazorInitScript => _blazorInitScript.Value;
-
-        public Uri AppOriginUri => _appOriginUri.Value;
-
-        public bool DeveloperToolsEnabled => GetDeveloperToolsEnabled();
-
-        public void LoggerCreatingWebKitWKWebView()
-        {
-            var method = TypeLog.GetMethod("CreatingWebKitWKWebView");
-            method?.Invoke(null, new object[] { Logger });
-        }
-
-        public void LoggerCreatedWebKitWKWebView()
-        {
-            var method = TypeLog.GetMethod("CreatedWebKitWKWebView");
-            method?.Invoke(null, new object[] { Logger });
-        }
-
-        public void LoggerHandlingWebRequest(string url)
-        {
-            var method = TypeLog.GetMethod("HandlingWebRequest");
-            method?.Invoke(null, new object[] { Logger, url });
-        }
-
-        public void LoggerResponseContentBeingSent(string url, int statusCode)
-        {
-            var method = TypeLog.GetMethod("ResponseContentBeingSent");
-            method?.Invoke(null, new object[] { Logger, url, statusCode });
-        }
-
-        public void LoggerReponseContentNotFound(string url)
-        {
-            var method = TypeLog.GetMethod("ReponseContentNotFound");
-            method?.Invoke(null, new object[] { Logger, url });
-        }
+        public Uri AppOriginUri => (Uri)AppOriginUriProperty.GetValue(this);
 
         private bool GetDeveloperToolsEnabled()
         {
-            var PropertyDeveloperTools = Type.GetProperty("DeveloperTools", BindingFlags.NonPublic | BindingFlags.Instance);
-            var DeveloperTools = PropertyDeveloperTools.GetValue(_blazorWebViewHandler);
+            var developerToolsProperty = blazorWebViewHandlerType.GetProperty("DeveloperTools", BindingFlags.NonPublic | BindingFlags.Instance)
+                ?? throw new Exception("Property DeveloperTools does not exist");
+            var developerTools = developerToolsProperty.GetValue(this);
 
-            var type = DeveloperTools.GetType();
-            var Enabled = type.GetProperty("Enabled", BindingFlags.Public | BindingFlags.Instance);
-            return (bool)Enabled?.GetValue(DeveloperTools);
+            var enabledProperty = developerTools.GetType().GetProperty("Enabled", BindingFlags.Public | BindingFlags.Instance)
+                ?? throw new Exception("Property Enabled does not exist");
+            return (bool)enabledProperty.GetValue(developerTools);
         }
 
         public IWKScriptMessageHandler CreateWebViewScriptMessageHandler()
         {
-            Type webViewScriptMessageHandlerType = Type.GetNestedType("WebViewScriptMessageHandler", BindingFlags.NonPublic);
+            Type webViewScriptMessageHandlerType = blazorWebViewHandlerType.GetNestedType("WebViewScriptMessageHandler", BindingFlags.NonPublic)
+                ?? throw new Exception("Type WebViewScriptMessageHandler does not exist");
 
-            if (webViewScriptMessageHandlerType != null)
-            {
-                // 获取 MessageReceived 方法信息
-                MethodInfo messageReceivedMethod = Type.GetMethod("MessageReceived", BindingFlags.Instance | BindingFlags.NonPublic);
+            // 获取 MessageReceived 方法信息
+            MethodInfo messageReceivedMethod = blazorWebViewHandlerType.GetMethod("MessageReceived", BindingFlags.Instance | BindingFlags.NonPublic)
+                ?? throw new Exception("Method MessageReceived does not exist");
 
-                if (messageReceivedMethod != null)
-                {
-                    // 创建 WebViewScriptMessageHandler 实例
-                    object webViewScriptMessageHandlerInstance = Activator.CreateInstance(webViewScriptMessageHandlerType, new object[] { Delegate.CreateDelegate(typeof(Action<Uri, string>), _blazorWebViewHandler, messageReceivedMethod) });
-                    return (IWKScriptMessageHandler)webViewScriptMessageHandlerInstance;
-                }
-            }
-
-            return null;
+            // 创建 WebViewScriptMessageHandler 实例
+            object webViewScriptMessageHandlerInstance = Activator.CreateInstance(webViewScriptMessageHandlerType, [Delegate.CreateDelegate(typeof(Action<Uri, string>), this, messageReceivedMethod)]);
+            return (IWKScriptMessageHandler)webViewScriptMessageHandlerInstance;
         }
 
-        public BlazorWebViewInitializedEventArgs CreateBlazorWebViewInitializedEventArgs(WKWebView wKWebView)
+        private static BlazorWebViewInitializedEventArgs CreateBlazorWebViewInitializedEventArgs(WKWebView wKWebView)
         {
             var blazorWebViewInitializedEventArgs = new BlazorWebViewInitializedEventArgs();
-            PropertyInfo property = typeof(BlazorWebViewInitializedEventArgs).GetProperty("WebView", BindingFlags.Public | BindingFlags.Instance);
+            PropertyInfo property = typeof(BlazorWebViewInitializedEventArgs).GetProperty("WebView", BindingFlags.Public | BindingFlags.Instance)
+                ?? throw new Exception("Property BlazorWebViewInitializedEventArgs.WebView does not exist");
             property.SetValue(blazorWebViewInitializedEventArgs, wKWebView);
             return blazorWebViewInitializedEventArgs;
         }
 
         public bool TryGetResponseContentInternal(string uri, bool allowFallbackOnHostPage, out int statusCode, out string statusMessage, out Stream content, out IDictionary<string, string> headers)
         {
-            if (MethodTryGetResponseContentInternal == null)
-            {
-                var Field_webviewManager = Type.GetField("_webviewManager", BindingFlags.NonPublic | BindingFlags.Instance);
-                WebviewManager = Field_webviewManager.GetValue(_blazorWebViewHandler);
+            TryGetResponseContentInternalMethod ??= WebviewManager.GetType().GetMethod("TryGetResponseContentInternal", BindingFlags.NonPublic | BindingFlags.Instance)
+                ?? throw new Exception("Method TryGetResponseContentInternal does not exist");
 
-                MethodTryGetResponseContentInternal = WebviewManager.GetType().GetMethod("TryGetResponseContentInternal", BindingFlags.NonPublic | BindingFlags.Instance);
-            }
             // 定义参数
-            object[] parameters = new object[] { uri, allowFallbackOnHostPage, 0, null, null, null };
+            object[] parameters = [uri, allowFallbackOnHostPage, 0, null, null, null];
 
-            bool result = (bool)MethodTryGetResponseContentInternal.Invoke(WebviewManager, parameters);
+            bool result = (bool)TryGetResponseContentInternalMethod.Invoke(WebviewManager, parameters);
 
             // 获取返回值和输出参数
             statusCode = (int)parameters[2];
@@ -389,26 +303,5 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
             return result;
         }
 
-        public bool IsBaseOfPage(Uri baseUri, string? uriString)
-        {
-            if (MethodIsBaseOfPage == null)
-            {
-                var type = Assembly.GetType("Microsoft.AspNetCore.Components.WebView.Maui.UriExtensions")!;
-                MethodIsBaseOfPage = type.GetMethod("IsBaseOfPage", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-            }
-
-            return (bool)MethodIsBaseOfPage.Invoke(null, new object[] { baseUri, uriString });
-        }
-
-        public string QueryStringHelperRemovePossibleQueryString(string? url)
-        {
-            if (MethodQueryStringHelperRemovePossibleQueryString == null)
-            {
-                var type = Assembly.GetType("Microsoft.AspNetCore.Components.WebView.QueryStringHelper")!;
-                MethodQueryStringHelperRemovePossibleQueryString = type.GetMethod("RemovePossibleQueryString", BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
-            }
-
-            return (string)MethodQueryStringHelperRemovePossibleQueryString.Invoke(null, new object[] { url });
-        }
     }
 }

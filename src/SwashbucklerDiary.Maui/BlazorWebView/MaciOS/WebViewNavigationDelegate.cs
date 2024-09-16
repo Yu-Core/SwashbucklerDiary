@@ -1,6 +1,5 @@
 ﻿using Foundation;
 using Microsoft.AspNetCore.Components.WebView;
-using Microsoft.AspNetCore.Components.WebView.Maui;
 using UIKit;
 using WebKit;
 
@@ -9,15 +8,8 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
     // Fix iframe unable to open in webview
     internal class WebViewNavigationDelegate : WKNavigationDelegate
     {
-        private readonly BlazorWebViewHandler _webView;
-
         private WKNavigation? _currentNavigation;
         private Uri? _currentUri;
-
-        public WebViewNavigationDelegate(BlazorWebViewHandler webView)
-        {
-            _webView = webView ?? throw new ArgumentNullException(nameof(webView));
-        }
 
         public override void DidStartProvisionalNavigation(WKWebView webView, WKNavigation navigation)
         {
@@ -40,11 +32,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
             else
             {
                 // Invoke the UrlLoading event to allow overriding the default link handling behavior
-                //var callbackArgs = UrlLoadingEventArgs.CreateWithDefaultLoadingStrategy(uri, BlazorWebViewHandler.AppOriginUri);
-                //_webView.UrlLoading(callbackArgs);
-                //_webView.Logger.NavigationEvent(uri, callbackArgs.UrlLoadingStrategy);
 
-                //strategy = callbackArgs.UrlLoadingStrategy;
                 if (navigationAction.NavigationType == WKNavigationType.Other)
                 {
                     strategy = UrlLoadingStrategy.OpenInWebView;

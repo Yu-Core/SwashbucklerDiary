@@ -73,20 +73,11 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                     reasonPhrase = "Partial Content";
 
                     var rangeString = args.Request.Headers.GetHeader("Range");
-                    var ranges = rangeString.Split('=');
-                    if (ranges.Length > 1 && !string.IsNullOrEmpty(ranges[1]))
+                    int rangeDatasLength = ParseRange(rangeString, ref rangeStart, ref rangeEnd);
+                    if (rangeDatasLength == 1)
                     {
-                        string[] rangeDatas = ranges[1].Split("-");
-                        rangeStart = Convert.ToInt64(rangeDatas[0]);
-                        if (rangeDatas.Length > 1 && !string.IsNullOrEmpty(rangeDatas[1]))
-                        {
-                            rangeEnd = Convert.ToInt64(rangeDatas[1]);
-                        }
-                        else
-                        {
-                            //每次加载4Mb，不能设置太多
-                            rangeEnd = Math.Min(rangeEnd, rangeStart + 4 * 1024 * 1024);
-                        }
+                        //每次加载4Mb，不能设置太多
+                        rangeEnd = Math.Min(rangeEnd, rangeStart + 4 * 1024 * 1024);
                     }
 
                     headers.Add("Accept-Ranges", "bytes");

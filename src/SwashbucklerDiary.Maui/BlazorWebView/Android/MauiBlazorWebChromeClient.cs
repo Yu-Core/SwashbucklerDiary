@@ -13,7 +13,7 @@ using SwashbucklerDiary.Rcl.Essentials;
 using View = Android.Views.View;
 using WebView = Android.Webkit.WebView;
 
-namespace SwashbucklerDiary.Maui;
+namespace SwashbucklerDiary.Maui.BlazorWebView;
 
 #nullable disable
 internal class MauiBlazorWebChromeClient : WebChromeClient
@@ -148,48 +148,48 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
 
     // See: https://github.com/dotnet/maui/issues/6565
     public override JniPeerMembers JniPeerMembers => _blazorWebChromeClient.JniPeerMembers;
-    public override Bitmap? DefaultVideoPoster => _blazorWebChromeClient.DefaultVideoPoster;
-    public override View? VideoLoadingProgressView => _blazorWebChromeClient.VideoLoadingProgressView;
-    public override void GetVisitedHistory(IValueCallback? callback)
+    public override Bitmap DefaultVideoPoster => _blazorWebChromeClient.DefaultVideoPoster;
+    public override View VideoLoadingProgressView => _blazorWebChromeClient.VideoLoadingProgressView;
+    public override void GetVisitedHistory(IValueCallback callback)
         => _blazorWebChromeClient.GetVisitedHistory(callback);
-    public override bool OnConsoleMessage(ConsoleMessage? consoleMessage)
+    public override bool OnConsoleMessage(ConsoleMessage consoleMessage)
         => _blazorWebChromeClient.OnConsoleMessage(consoleMessage);
-    public override bool OnCreateWindow(WebView? view, bool isDialog, bool isUserGesture, Message? resultMsg)
+    public override bool OnCreateWindow(WebView view, bool isDialog, bool isUserGesture, Message resultMsg)
         => _blazorWebChromeClient.OnCreateWindow(view, isDialog, isUserGesture, resultMsg);
     public override void OnGeolocationPermissionsHidePrompt()
         => _blazorWebChromeClient.OnGeolocationPermissionsHidePrompt();
-    public override bool OnJsAlert(WebView? view, string? url, string? message, JsResult? result)
+    public override bool OnJsAlert(WebView view, string url, string message, JsResult result)
         => _blazorWebChromeClient.OnJsAlert(view, url, message, result);
-    public override bool OnJsBeforeUnload(WebView? view, string? url, string? message, JsResult? result)
+    public override bool OnJsBeforeUnload(WebView view, string url, string message, JsResult result)
         => _blazorWebChromeClient.OnJsBeforeUnload(view, url, message, result);
-    public override bool OnJsConfirm(WebView? view, string? url, string? message, JsResult? result)
+    public override bool OnJsConfirm(WebView view, string url, string message, JsResult result)
         => _blazorWebChromeClient.OnJsConfirm(view, url, message, result);
-    public override bool OnJsPrompt(WebView? view, string? url, string? message, string? defaultValue, JsPromptResult? result)
+    public override bool OnJsPrompt(WebView view, string url, string message, string defaultValue, JsPromptResult result)
         => _blazorWebChromeClient.OnJsPrompt(view, url, message, defaultValue, result);
-    public override void OnPermissionRequestCanceled(PermissionRequest? request)
+    public override void OnPermissionRequestCanceled(PermissionRequest request)
         => _blazorWebChromeClient.OnPermissionRequestCanceled(request);
-    public override void OnProgressChanged(WebView? view, int newProgress)
+    public override void OnProgressChanged(WebView view, int newProgress)
         => _blazorWebChromeClient.OnProgressChanged(view, newProgress);
-    public override void OnReceivedIcon(WebView? view, Bitmap? icon)
+    public override void OnReceivedIcon(WebView view, Bitmap icon)
         => _blazorWebChromeClient.OnReceivedIcon(view, icon);
-    public override void OnReceivedTitle(WebView? view, string? title)
+    public override void OnReceivedTitle(WebView view, string title)
         => _blazorWebChromeClient.OnReceivedTitle(view, title);
-    public override void OnReceivedTouchIconUrl(WebView? view, string? url, bool precomposed)
+    public override void OnReceivedTouchIconUrl(WebView view, string url, bool precomposed)
         => _blazorWebChromeClient.OnReceivedTouchIconUrl(view, url, precomposed);
-    public override void OnRequestFocus(WebView? view)
+    public override void OnRequestFocus(WebView view)
         => _blazorWebChromeClient.OnRequestFocus(view);
-    public override bool OnShowFileChooser(WebView? webView, IValueCallback? filePathCallback, FileChooserParams? fileChooserParams)
+    public override bool OnShowFileChooser(WebView webView, IValueCallback filePathCallback, FileChooserParams fileChooserParams)
         => _blazorWebChromeClient.OnShowFileChooser(webView, filePathCallback, fileChooserParams);
-    public override void OnCloseWindow(WebView? window)
+    public override void OnCloseWindow(WebView window)
         => _blazorWebChromeClient.OnCloseWindow(window);
-    public override void OnGeolocationPermissionsShowPrompt(string? origin, GeolocationPermissions.ICallback? callback)
+    public override void OnGeolocationPermissionsShowPrompt(string origin, GeolocationPermissions.ICallback callback)
         => _blazorWebChromeClient.OnGeolocationPermissionsShowPrompt(origin, callback);
-    public override void OnPermissionRequest(PermissionRequest? request)
+    public override void OnPermissionRequest(PermissionRequest request)
         => _blazorWebChromeClient.OnPermissionRequest(request);
 
     void SetContext(IMauiContext mauiContext)
     {
-        var activity = (mauiContext?.Context?.GetActivity()) ?? Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
+        var activity = (mauiContext?.Context?.GetActivity()) ?? Platform.CurrentActivity;
 
         if (activity is null)
             mauiContext?.Services.GetService<ILogger<WebViewHandler>>()?.LogWarning($"Failed to set the activity of the WebChromeClient, can't show pickers on the Webview");
@@ -199,15 +199,15 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
 
     private class JavaScriptValueCallback : Java.Lang.Object, IValueCallback
     {
-        private readonly Action<Java.Lang.Object?> _callback;
+        private readonly Action<Java.Lang.Object> _callback;
 
-        public JavaScriptValueCallback(Action<Java.Lang.Object?> callback)
+        public JavaScriptValueCallback(Action<Java.Lang.Object> callback)
         {
             ArgumentNullException.ThrowIfNull(callback);
             _callback = callback;
         }
 
-        public void OnReceiveValue(Java.Lang.Object? value)
+        public void OnReceiveValue(Java.Lang.Object value)
         {
             _callback(value);
         }
