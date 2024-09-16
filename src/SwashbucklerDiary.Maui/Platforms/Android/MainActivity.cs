@@ -40,7 +40,8 @@ namespace SwashbucklerDiary.Maui
 
             base.OnCreate(savedInstanceState);
             LaunchActivation.HandleOnLaunched(this.Intent);
-            SoftKeyboardAdjustResize.Initialize();
+            SoftKeyboardAdjustResize.AssistActivity(this);
+            SoftKeyboardAdjustResizeHelper.InitBackgroundColor(this);
         }
 
         protected override void OnNewIntent(Intent intent)

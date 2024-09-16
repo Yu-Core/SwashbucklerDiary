@@ -1,4 +1,6 @@
-﻿using Android.Widget;
+﻿using Android.App;
+using Android.Widget;
+using SwashbucklerDiary.Maui.Extensions;
 using static Android.Resource;
 
 namespace SwashbucklerDiary.Maui
@@ -6,25 +8,19 @@ namespace SwashbucklerDiary.Maui
 #nullable disable
     public static class AndroidSafeArea
     {
-        private static bool initialized;
-
         public static void Initialize(Android.Webkit.WebView webView)
         {
-            if (initialized)
-            {
-                return;
-            }
-
-            initialized = true;
+            var activity = webView.Context as Activity;
             SetSafeAreaCss(webView);
-            FrameLayout content = (FrameLayout)Platform.CurrentActivity.FindViewById(Id.Content);
+            FrameLayout content = activity.FindViewById<FrameLayout>(Id.Content);
             content.GetChildAt(0).ViewTreeObserver.GlobalLayout += (s, o) => SetSafeAreaCss(webView);
         }
 
         private static void SetSafeAreaCss(Android.Webkit.WebView webView)
         {
-            int safeAreaInsetTop = Utilities.GetStatusBarInsets().Top;
-            AndroidX.Core.Graphics.Insets navigationBarInsets = Utilities.GetNavigationBarInsets();
+            var activity = webView.Context as Activity;
+            int safeAreaInsetTop = activity.GetStatusBarInsets().Top;
+            AndroidX.Core.Graphics.Insets navigationBarInsets = activity.GetNavigationBarInsets();
             int safeAreaInsetBottom;
             // DeviceDisplay.Current.MainDisplayInfo.Orientation is inaccurate first entry, It must be Portrait
             if (DeviceDisplay.Current.MainDisplayInfo.Width > DeviceDisplay.Current.MainDisplayInfo.Height)
@@ -47,11 +43,12 @@ namespace SwashbucklerDiary.Maui
             int safeAreaInsetLeft,
             int safeAreaInsetRight)
         {
+            var activity = webView.Context as Activity;
             webView.EvaluateJavascript(@$"
-                document.documentElement.style.setProperty('--safe-area-inset-top','{Utilities.PxToDip(safeAreaInsetTop)}px');
-                document.documentElement.style.setProperty('--safe-area-inset-bottom','{Utilities.PxToDip(safeAreaInsetBottom)}px');                
-                document.documentElement.style.setProperty('--safe-area-inset-left','{Utilities.PxToDip(safeAreaInsetLeft)}px');
-                document.documentElement.style.setProperty('--safe-area-inset-right','{Utilities.PxToDip(safeAreaInsetRight)}px');
+                document.documentElement.style.setProperty('--safe-area-inset-top','{activity.PxToDip(safeAreaInsetTop)}px');
+                document.documentElement.style.setProperty('--safe-area-inset-bottom','{activity.PxToDip(safeAreaInsetBottom)}px');                
+                document.documentElement.style.setProperty('--safe-area-inset-left','{activity.PxToDip(safeAreaInsetLeft)}px');
+                document.documentElement.style.setProperty('--safe-area-inset-right','{activity.PxToDip(safeAreaInsetRight)}px');
             ", null);
         }
     }

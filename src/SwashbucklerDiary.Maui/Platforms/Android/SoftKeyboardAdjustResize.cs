@@ -1,7 +1,5 @@
 ﻿using Android.Widget;
-using SwashbucklerDiary.Rcl;
-using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Maui.Extensions;
 using static Android.Resource;
 using Activity = Android.App.Activity;
 using Rect = Android.Graphics.Rect;
@@ -10,52 +8,73 @@ using View = Android.Views.View;
 namespace SwashbucklerDiary.Maui
 {
 #nullable disable
-    public static class SoftKeyboardAdjustResize
+    public class SoftKeyboardAdjustResize
     {
-        static Activity Activity => Platform.CurrentActivity ?? throw new InvalidOperationException("Android Activity can't be null.");
-        static View mChildOfContent;
-        static FrameLayout.LayoutParams frameLayoutParams;
-        static int usableHeightPrevious = 0;
-        static readonly Rect rect = new();
+        Activity _activity;
+        bool _edgeToEdge;
+        FrameLayout.LayoutParams frameLayoutParams;
+        int usableHeightPrevious = 0;
+        Rect rect = new();
+        View mChildOfContent;
 
-        public static void Initialize()
+        static Dictionary<Activity, SoftKeyboardAdjustResize> caches = [];
+
+        public SoftKeyboardAdjustResize(Activity activity, bool edgeToEdge)
         {
-            FrameLayout content = (FrameLayout)Activity.FindViewById(Id.Content);
-            mChildOfContent = content.GetChildAt(0);
+            _activity = activity;
+            _edgeToEdge = edgeToEdge;
+            mChildOfContent = _activity.FindViewById<FrameLayout>(Id.Content).GetChildAt(0);
             mChildOfContent.ViewTreeObserver.GlobalLayout += (s, o) => PossiblyResizeChildOfContent();
             frameLayoutParams = (FrameLayout.LayoutParams)mChildOfContent?.LayoutParameters;
-            SetBackgroundColor();
+            SetBackgroundColor(Android.Graphics.Color.White);
         }
 
-        static void PossiblyResizeChildOfContent()
+        public static void AssistActivity(Activity activity, bool edgeToEdge = true)
         {
-            ((FrameLayout)Activity.FindViewById(Id.Content)).GetWindowVisibleDisplayFrame(rect);
+            if (caches.ContainsKey(activity))
+            {
+                return;
+            }
+
+            caches[activity] = new SoftKeyboardAdjustResize(activity, edgeToEdge);
+        }
+
+        public static void SetBackgroundColor(Activity activity, Android.Graphics.Color color)
+        {
+            if (!caches.TryGetValue(activity, out var s))
+            {
+                return;
+            }
+
+            s.SetBackgroundColor(color);
+        }
+
+        void PossiblyResizeChildOfContent()
+        {
+            _activity.FindViewById<FrameLayout>(Id.Content).GetWindowVisibleDisplayFrame(rect);
             var usableHeightNow = rect.Height();
             if (usableHeightNow != usableHeightPrevious)
             {
-                frameLayoutParams.Height = usableHeightNow + Utilities.GetStatusBarInsets().Top + Utilities.GetNavigationBarInsets().Bottom;
-                mChildOfContent.RootView.Top = -Utilities.GetStatusBarInsets().Top;
+                if (_edgeToEdge)
+                {
+                    frameLayoutParams.Height = usableHeightNow + _activity.GetStatusBarInsets().Top + _activity.GetNavigationBarInsets().Bottom;
+                }
+                else
+                {
+                    frameLayoutParams.Height = usableHeightNow;
+                }
 
+                //Resolve anomalies during screen rotation
+                mChildOfContent.RootView.Top = -_activity.GetStatusBarInsets().Top;
                 mChildOfContent.Layout(rect.Left, rect.Top, rect.Right, rect.Bottom);
+
                 mChildOfContent.RequestLayout();
                 usableHeightPrevious = usableHeightNow;
             }
         }
 
-        static readonly Android.Graphics.Color lightColor = Android.Graphics.Color.ParseColor(ThemeColor.LightSurface);
-
-        static readonly Android.Graphics.Color darkColor = Android.Graphics.Color.ParseColor(ThemeColor.DarkSurface);
-
-        static void SetBackgroundColor()
+        void SetBackgroundColor(Android.Graphics.Color color)
         {
-            var themeService = IPlatformApplication.Current!.Services.GetRequiredService<IThemeService>();
-            OnThemeChanged(themeService.RealTheme);
-            themeService.OnChanged += OnThemeChanged;
-        }
-
-        static void OnThemeChanged(Theme theme)
-        {
-            var color = theme == Shared.Theme.Dark ? darkColor : lightColor;
             mChildOfContent.RootView.SetBackgroundColor(color);
         }
     }

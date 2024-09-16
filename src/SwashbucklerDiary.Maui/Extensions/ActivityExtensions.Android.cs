@@ -1,16 +1,17 @@
-﻿using AndroidX.Core.View;
+﻿using Android.App;
+using AndroidX.Core.View;
 using static Android.Resource;
 
-namespace SwashbucklerDiary.Maui
-{
 #nullable disable
-    public static class Utilities
+namespace SwashbucklerDiary.Maui.Extensions
+{
+    public static class ActivityExtensions
     {
         private static readonly AndroidX.Core.Graphics.Insets emptyInsets = AndroidX.Core.Graphics.Insets.Of(0, 0, 0, 0);
 
-        public static AndroidX.Core.Graphics.Insets GetStatusBarInsets()
+        public static AndroidX.Core.Graphics.Insets GetStatusBarInsets(this Activity activity)
         {
-            Android.Views.View decorView = Platform.CurrentActivity.FindViewById(Id.Content);
+            Android.Views.View decorView = activity.FindViewById(Id.Content);
             WindowInsetsCompat windowInsets = ViewCompat.GetRootWindowInsets(decorView);
             if (windowInsets is null)
             {
@@ -20,9 +21,9 @@ namespace SwashbucklerDiary.Maui
             return windowInsets.GetInsets(WindowInsetsCompat.Type.StatusBars());
         }
 
-        public static AndroidX.Core.Graphics.Insets GetNavigationBarInsets()
+        public static AndroidX.Core.Graphics.Insets GetNavigationBarInsets(this Activity activity)
         {
-            Android.Views.View decorView = Platform.CurrentActivity.FindViewById(Id.Content);
+            Android.Views.View decorView = activity.FindViewById(Id.Content);
             WindowInsetsCompat windowInsets = ViewCompat.GetRootWindowInsets(decorView);
             if (windowInsets is null)
             {
@@ -32,9 +33,9 @@ namespace SwashbucklerDiary.Maui
             return windowInsets.GetInsets(WindowInsetsCompat.Type.NavigationBars());
         }
 
-        public static int PxToDip(float value)
+        public static int PxToDip(this Activity activity, float value)
         {
-            float scale = Platform.CurrentActivity.Resources.DisplayMetrics.Density;
+            float scale = activity.Resources.DisplayMetrics.Density;
             return (int)(value / scale + 0.5f);
         }
     }
