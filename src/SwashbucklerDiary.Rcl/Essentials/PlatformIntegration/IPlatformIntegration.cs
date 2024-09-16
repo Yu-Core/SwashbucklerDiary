@@ -36,11 +36,15 @@ namespace SwashbucklerDiary.Rcl.Essentials
         /// <returns>文件路径</returns>
         Task<string?> PickPhotoAsync();
 
+        Task<IEnumerable<string>?> PickMultiplePhotoAsync();
+
         /// <summary>
         /// 选取音频文件
         /// </summary>
         /// <returns>文件路径</returns>
         Task<string?> PickAudioAsync();
+
+        Task<IEnumerable<string>?> PickMultipleAudioAsync();
 
         /// <summary>
         /// 选取视频文件
@@ -48,6 +52,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
         /// <returns>文件路径</returns>
         Task<string?> PickVideoAsync();
 
+        Task<IEnumerable<string>?> PickMultipleVideoAsync();
         /// <summary>
         /// 是否支持摄像头
         /// </summary>

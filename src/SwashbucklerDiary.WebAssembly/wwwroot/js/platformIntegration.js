@@ -163,70 +163,65 @@ export function saveFileAsync(fileName, filePath) {
     URL.revokeObjectURL(url);
 }
 
-export function pickFileAsync(accept, suffix) {
+export function pickFilesAsync(accept, fileExtensions, multiple = false) {
     return new Promise((resolve) => {
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = accept;
+        input.multiple = multiple; // Set based on the parameter
         input.style.display = 'none';
 
-        const handleSelectedFile = () => {
-            const file = input.files[0];
-            if (file) {
-                if (suffix && !file.name.endsWith(suffix)) {
-                    resolve("");
-                }
-                else {
-                    // wasm模式，C#计算md5比较难，所以在js中计算
-                    calculateMD5.readFile(file)
-                        .then((md5) => {
-                            var fileName = `${md5}${file.name.substring(file.name.lastIndexOf("."))}`;
-                            var reader = new FileReader();
-                            reader.onload = function (event) {
-                                // 获取文件内容
-                                var contents = event.target.result;
-
-                                // 写入 Emscripten 文件系统
-                                var filePath = `cache/${fileName}`;
-                                Module.FS.writeFile(filePath, new Uint8Array(contents), { encoding: 'binary' });
-                                resolve(filePath);
-                            };
-                            reader.readAsArrayBuffer(file);
-                        })
-                        .catch(() => {
-                            resolve("");
-                        });
-                }
-            } else {
-                resolve("");
-            }
+        const handleFiles = async () => {
+            const files = input.files;
             input.remove();
-        }
+            const results = [];
 
-        const afterChooseFile = () => {
-            // 移除事件监听器，确保代码只执行一次
-            window.removeEventListener("focus", afterChooseFile);
-            document.removeEventListener("touchstart", afterChooseFile);
-            document.removeEventListener("visibilitychange", handleVisibilityChange);
-            input.removeEventListener("change", afterChooseFile);
+            if (files.length === 0) {
+                resolve(results);
+                return;
+            }
 
-            setTimeout(() => {
-                handleSelectedFile();
-                input.remove();
-            }, 200);
+            for (const file of files) {
+                const fileExtension = file.name.substring(file.name.lastIndexOf("."));
+                if (fileExtensions && fileExtensions.indexOf(fileExtension) < 0) {
+                    continue;
+                }
 
-        }
+                try {
+                    const md5 = await calculateMD5.readFile(file);
+                    const fileName = `${md5}${fileExtension}`;
+                    const contents = await readFileAsArrayBuffer(file);
+
+                    const filePath = `cache/${fileName}`;
+                    Module.FS.writeFile(filePath, new Uint8Array(contents), { encoding: 'binary' });
+                    results.push(filePath);
+                } catch {
+                    results.push(""); // In case of error, add an empty string for the file
+                }
+            }
+
+            resolve(results);
+        };
 
         const handleVisibilityChange = () => {
             if (document.visibilityState === "visible") {
-                afterChooseFile();
+                afterChooseFiles();
             }
-        }
+        };
 
-        window.addEventListener("focus", afterChooseFile, { once: true });
-        document.addEventListener("touchstart", afterChooseFile, { once: true });
+        const afterChooseFiles = () => {
+            window.removeEventListener("focus", afterChooseFiles);
+            document.removeEventListener("touchstart", afterChooseFiles);
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+            input.removeEventListener("change", afterChooseFiles);
+
+            setTimeout(handleFiles, 200);
+        };
+
+        window.addEventListener("focus", afterChooseFiles, { once: true });
+        document.addEventListener("touchstart", afterChooseFiles, { once: true });
         document.addEventListener("visibilitychange", handleVisibilityChange);
-        input.addEventListener("change", afterChooseFile, { once: true });
+        input.addEventListener("change", afterChooseFiles, { once: true });
 
         input.click();
     });
@@ -271,3 +266,12 @@ const calculateMD5 = {
     }
 };
 
+// Utility function to read file as array buffer
+function readFileAsArrayBuffer(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsArrayBuffer(file);
+    });
+}

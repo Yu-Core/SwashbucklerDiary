@@ -25,12 +25,6 @@ namespace SwashbucklerDiary.Maui.Services
             _httpClient = new HttpClient();
         }
 
-        protected override Task<string?> CreateMediaResourceFileAsync(MediaResource mediaResource, string? sourceFilePath)
-        {
-            var targetDirectoryPath = Path.Combine(FileSystem.AppDataDirectory, MediaResourceFolders[mediaResource]);
-            return CreateMediaResourceFileAsync(targetDirectoryPath, sourceFilePath);
-        }
-
         public override async Task<string?> CreateMediaResourceFileAsync(string targetDirectoryPath, string? sourceFilePath)
         {
             if (string.IsNullOrEmpty(sourceFilePath))

@@ -11,19 +11,25 @@ namespace SwashbucklerDiary.Rcl.Services
         /// 添加图片
         /// </summary>
         /// <returns></returns>
-        Task<string?> AddImageAsync();
+        Task<ResourceModel?> AddImageAsync();
+
+        Task<IEnumerable<ResourceModel>?> AddMultipleImageAsync();
 
         /// <summary>
         /// 添加音频
         /// </summary>
         /// <returns></returns>
-        Task<string?> AddAudioAsync();
+        Task<ResourceModel?> AddAudioAsync();
+
+        Task<IEnumerable<ResourceModel>?> AddMultipleAudioAsync();
 
         /// <summary>
         /// 添加视频
         /// </summary>
         /// <returns></returns>
-        Task<string?> AddVideoAsync();
+        Task<ResourceModel?> AddVideoAsync();
+
+        Task<IEnumerable<ResourceModel>?> AddMultipleVideoAsync();
 
         /// <summary>
         /// 从日记中提取出所使用的媒体资源
@@ -58,7 +64,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<AudioFileInfo> GetAudioFileInfo(string uri);
 
-        Task<List<ResourceModel>> CreateMediaResourceFilesAsync(List<string?> filePaths);
+        Task<IEnumerable<ResourceModel>?> AddMediaFilesAsync(IEnumerable<string?> filePaths);
 
         string UrlRelativePathToFilePath(string urlRelativePath);
     }

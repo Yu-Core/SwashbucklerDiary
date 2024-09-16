@@ -2,7 +2,14 @@
 {
     public partial class PlatformIntegration
     {
+        static readonly string[] audioFileExtensions = [".mp3", ".wav", ".m4a", ".ogg", ".aac", ".flac"];
+
+        static readonly string audioMime = "audio/*";
+
         public Task<string?> PickAudioAsync()
-            => PickFileAsync("audio/*");
+            => PickFileAsync(audioMime, audioFileExtensions);
+
+        public Task<IEnumerable<string>?> PickMultipleAudioAsync()
+            => PickFilesAsync(audioMime, audioFileExtensions);
     }
 }

@@ -203,32 +203,34 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task AddImageAsync()
         {
-            string? src = await MediaResourceManager.AddImageAsync();
-            await AddMediaFileAsync(src, MediaResource.Image);
+            var resources = await MediaResourceManager.AddMultipleImageAsync();
+            await AddMediaFilesAsync(resources);
         }
 
         private async Task AddAudioAsync()
         {
-            string? src = await MediaResourceManager.AddAudioAsync();
-            await AddMediaFileAsync(src, MediaResource.Audio);
+            var resources = await MediaResourceManager.AddMultipleAudioAsync();
+            await AddMediaFilesAsync(resources);
         }
 
         private async Task AddVideoAsync()
         {
-            string? src = await MediaResourceManager.AddVideoAsync();
-            await AddMediaFileAsync(src, MediaResource.Video);
+            var resources = await MediaResourceManager.AddMultipleVideoAsync();
+            await AddMediaFilesAsync(resources);
         }
 
-        private async Task AddMediaFileAsync(string? src, MediaResource mediaResource)
-        {
-            if (string.IsNullOrEmpty(src)) return;
-            var kind = MediaResourceManager.GetResourceKind(src);
-            if (kind == MediaResource.Unknown)
-            {
-                return;
-            }
+        //private async Task AddMediaFileAsync(ResourceModel? resource)
+        //{
+        //    if (resource is null) return;
 
-            string? insertContent = CreateInsertContent(src, mediaResource);
+        //    string? insertContent = CreateInsertContent(resource.ResourceUri!, resource.ResourceType);
+        //    if (insertContent is null) return;
+
+        //    await InsertValueAsync(insertContent);
+        //}
+        private async Task AddMediaFilesAsync(IEnumerable<ResourceModel>? resources)
+        {
+            string? insertContent = CreateInsertContent(resources);
             if (insertContent is null) return;
 
             await InsertValueAsync(insertContent);
@@ -247,7 +249,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public async Task<string?> CreateInsertContent(List<string?> filePaths)
         {
-            var resources = await MediaResourceManager.CreateMediaResourceFilesAsync(filePaths);
+            var resources = await MediaResourceManager.AddMediaFilesAsync(filePaths);
+            return CreateInsertContent(resources);
+        }
+
+        static string? CreateInsertContent(IEnumerable<ResourceModel>? resources)
+        {
+            if (resources is null) return null;
             var insertContents = resources.Select(it => CreateInsertContent(it.ResourceUri!, it.ResourceType));
             return string.Join("\n", insertContents);
         }

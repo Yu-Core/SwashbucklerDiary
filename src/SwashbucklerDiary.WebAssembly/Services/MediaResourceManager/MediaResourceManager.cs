@@ -3,7 +3,6 @@ using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.WebAssembly.Services
 {
@@ -28,12 +27,6 @@ namespace SwashbucklerDiary.WebAssembly.Services
         {
             _jSRuntime = jSRuntime;
             _navigationManager = navigationManager;
-        }
-
-        protected override Task<string?> CreateMediaResourceFileAsync(MediaResource mediaResource, string? sourceFilePath)
-        {
-            var targetDirectoryPath = Path.Combine(FileSystem.AppDataDirectory, MediaResourceFolders[mediaResource]);
-            return CreateMediaResourceFileAsync(targetDirectoryPath, sourceFilePath);
         }
 
         public override async Task<string?> CreateMediaResourceFileAsync(string targetDirectoryPath, string? sourceFilePath)

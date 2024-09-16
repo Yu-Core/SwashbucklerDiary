@@ -40,25 +40,55 @@ namespace SwashbucklerDiary.Rcl.Services
             _logger = logger;
         }
 
-        public async Task<string?> AddAudioAsync()
+        public async Task<ResourceModel?> AddAudioAsync()
         {
-            string? pickPath = await _platformIntegration.PickAudioAsync();
-            return await CreateMediaResourceFileAsync(MediaResource.Audio, pickPath);
+            string? filePath = await _platformIntegration.PickAudioAsync();
+            return await AddMediaFileAsync(filePath);
         }
 
-        public async Task<string?> AddImageAsync()
+        public async Task<ResourceModel?> AddImageAsync()
         {
-            string? pickPath = await _platformIntegration.PickPhotoAsync();
-            return await CreateMediaResourceFileAsync(MediaResource.Image, pickPath);
+            string? filePath = await _platformIntegration.PickPhotoAsync();
+            return await AddMediaFileAsync(filePath);
         }
 
-        public async Task<string?> AddVideoAsync()
+        public async Task<ResourceModel?> AddVideoAsync()
         {
-            string? pickPath = await _platformIntegration.PickVideoAsync();
-            return await CreateMediaResourceFileAsync(MediaResource.Video, pickPath);
+            string? filePath = await _platformIntegration.PickVideoAsync();
+            return await AddMediaFileAsync(filePath);
         }
 
-        protected abstract Task<string?> CreateMediaResourceFileAsync(MediaResource mediaResource, string? sourceFilePath);
+        private async Task<ResourceModel?> AddMediaFileAsync(string? filePath)
+        {
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
+                return null;
+            }
+
+            var kind = GetResourceKind(filePath);
+            if (kind == MediaResource.Unknown)
+            {
+                return null;
+            }
+
+            string? uri = await CreateMediaResourceFileAsync(kind, filePath);
+            if (string.IsNullOrEmpty(uri))
+            {
+                return null;
+            }
+
+            return new()
+            {
+                ResourceUri = uri,
+                ResourceType = kind
+            };
+        }
+
+        protected Task<string?> CreateMediaResourceFileAsync(MediaResource mediaResource, string? sourceFilePath)
+        {
+            var targetDirectoryPath = Path.Combine(_appFileManager.AppDataDirectory, MediaResourceFolders[mediaResource]);
+            return CreateMediaResourceFileAsync(targetDirectoryPath, sourceFilePath);
+        }
 
         public abstract Task<string?> CreateMediaResourceFileAsync(string targetDirectoryPath, string? sourceFilePath);
 
@@ -101,39 +131,48 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public abstract Task<AudioFileInfo> GetAudioFileInfo(string uri);
 
-        public async Task<List<ResourceModel>> CreateMediaResourceFilesAsync(List<string?> filePaths)
+        public async Task<IEnumerable<ResourceModel>?> AddMediaFilesAsync(IEnumerable<string?>? filePaths)
         {
-            List<ResourceModel> resources = new();
+            if (filePaths is null)
+            {
+                return null;
+            }
+
+            List<ResourceModel> resources = [];
             foreach (var filePath in filePaths)
             {
-                if (string.IsNullOrEmpty(filePath))
+                var resource = await AddMediaFileAsync(filePath);
+
+                if (resource is null)
                 {
                     continue;
                 }
 
-                var kind = GetResourceKind(filePath);
-                if (kind == MediaResource.Unknown)
-                {
-                    continue;
-                }
-
-                string? uri = await CreateMediaResourceFileAsync(kind, filePath);
-                if (string.IsNullOrEmpty(uri))
-                {
-                    continue;
-                }
-
-                resources.Add(new()
-                {
-                    ResourceUri = uri,
-                    ResourceType = kind
-                });
+                resources.Add(resource);
             }
 
             return resources;
         }
 
         public abstract string UrlRelativePathToFilePath(string urlRelativePath);
+
+        public async Task<IEnumerable<ResourceModel>?> AddMultipleImageAsync()
+        {
+            var filePaths = await _platformIntegration.PickMultiplePhotoAsync();
+            return await AddMediaFilesAsync(filePaths);
+        }
+
+        public async Task<IEnumerable<ResourceModel>?> AddMultipleAudioAsync()
+        {
+            var filePaths = await _platformIntegration.PickMultipleAudioAsync();
+            return await AddMediaFilesAsync(filePaths);
+        }
+
+        public async Task<IEnumerable<ResourceModel>?> AddMultipleVideoAsync()
+        {
+            var filePaths = await _platformIntegration.PickMultipleVideoAsync();
+            return await AddMediaFilesAsync(filePaths);
+        }
 
         protected virtual string? CustomPathPrefix { get; }
     }
