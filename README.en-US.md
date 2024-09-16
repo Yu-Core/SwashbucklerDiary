@@ -56,7 +56,6 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 * Support text and image sharing
 * Support webdav backup
 * Synchronous transmission under the same local area network
-* Perfect immersive status bar navigation bar experience
 
 ## 🧩 Screenshot
 
