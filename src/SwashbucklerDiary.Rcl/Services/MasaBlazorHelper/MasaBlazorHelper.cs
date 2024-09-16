@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Rcl.Services
         readonly MasaBlazor _masaBlazor;
 
         Breakpoint _previousBreakpoint = default!;
-        Breakpoints _previousBreakpointName;
+        Breakpoints? _previousBreakpointName;
 
         public Breakpoint Breakpoint => _masaBlazor.Breakpoint;
 
