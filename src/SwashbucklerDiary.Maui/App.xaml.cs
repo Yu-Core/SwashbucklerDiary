@@ -49,7 +49,11 @@ namespace SwashbucklerDiary.Maui
         {
             var themeInt = Microsoft.Maui.Storage.Preferences.Default.Get<int>(nameof(Setting.Theme), 0);
             var theme = (Theme)themeInt;
-            ((ThemeService)_themeService).SetTheme(theme);
+            if (_themeService is ThemeService themeService)
+            {
+                themeService.SetTheme(theme);
+            }
+
             _themeService.OnChanged += ThemeChanged;
 
             bool dark = _themeService.RealTheme == Shared.Theme.Dark;

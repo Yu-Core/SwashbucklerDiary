@@ -26,6 +26,7 @@ namespace SwashbucklerDiary.Maui
 
             e.WebView.DefaultBackgroundColor = _backgroundColor.ToWindowsColor();
             e.WebView.CoreWebView2.ContainsFullScreenElementChanged += FullScreen;
+            e.WebView.AllowDrop = true;
         }
 
         private void FullScreen(CoreWebView2 coreWebView2, object args)
