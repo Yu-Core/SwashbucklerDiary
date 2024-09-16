@@ -77,6 +77,9 @@ namespace SwashbucklerDiary.Rcl.Layout
             await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
         }
 
-        protected abstract void InitNavigateController();
+        protected void InitNavigateController()
+        {
+            NavigateController.Init(NavigationManager, JSRuntime, permanentPaths);
+        }
     }
 }

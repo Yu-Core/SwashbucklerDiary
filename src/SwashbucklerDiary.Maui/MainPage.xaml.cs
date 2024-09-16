@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.WebView;
 using SwashbucklerDiary.Maui.BlazorWebView;
 using SwashbucklerDiary.Maui.Essentials;
+using SwashbucklerDiary.Maui.Extensions;
 using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Maui
@@ -9,11 +10,14 @@ namespace SwashbucklerDiary.Maui
     {
         private readonly Color _backgroundColor;
 
-        public MainPage(Color backgroundColor)
+        private readonly INavigateController _navigateController;
+
+        public MainPage(Color backgroundColor, INavigateController navigateController)
         {
             InitializeComponent();
 
             _backgroundColor = backgroundColor;
+            _navigateController = navigateController;
 
             blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializingCore;
             blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;
@@ -47,34 +51,36 @@ namespace SwashbucklerDiary.Maui
         private void HandleLaunchActivation()
         {
             var args = LaunchActivation.ActivationArguments;
-            if (args is not null)
+            if (args is null || args.Data is null)
             {
-                switch (args.Kind)
-                {
-                    case LaunchActivationKind.Share:
-                        HandleShare();
-                        break;
-                    case LaunchActivationKind.Scheme:
-                        HandleScheme();
-                        break;
-                    default:
-                        break;
-                }
+                return;
+            }
+
+            switch (args.Kind)
+            {
+                case LaunchActivationKind.Share:
+                    HandleShare(args);
+                    break;
+                case LaunchActivationKind.Scheme:
+                    HandleScheme(args);
+                    break;
+                default:
+                    break;
             }
         }
 
-        private void HandleScheme()
+        private void HandleScheme(ActivationArguments args)
         {
-            string? uriString = LaunchActivation.ActivationArguments?.Data as string;
-            if (Uri.TryCreate(uriString, UriKind.Absolute, out var uri))
+            string? uriString = args.Data as string;
+            if (_navigateController.CheckUrlScheme(uriString, out var path))
             {
-                blazorWebView.StartPath = uri.AbsolutePath;
+                blazorWebView.StartPath = path;
             }
 
             LaunchActivation.ActivationArguments = null;
         }
 
-        private void HandleShare()
+        private void HandleShare(ActivationArguments args)
         {
             blazorWebView.StartPath = "/write";
         }

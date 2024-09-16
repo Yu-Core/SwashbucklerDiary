@@ -12,13 +12,15 @@ namespace SwashbucklerDiary.Maui
     [IntentFilter([Intent.ActionView],
         Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
         DataScheme = "swashbucklerdiary")]
+    [IntentFilter([Intent.ActionView],
+        Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
+        DataScheme = "xiakeriji")]
     [IntentFilter([Intent.ActionSend],
         Categories = [Intent.CategoryDefault],
         DataMimeType = "text/plain")]
-    //Vidoe files may be relatively large and time-consuming to copy, so they are temporarily disabled
     [IntentFilter([Intent.ActionSend, Intent.ActionSendMultiple],
         Categories = [Intent.CategoryDefault],
-        DataMimeTypes = ["image/*", "audio/*", /*"video/*"*/])]
+        DataMimeTypes = ["image/*", "audio/*", "video/*"])]
     [Activity(Label = "@string/app_name",
         Theme = "@style/Maui.SplashTheme",
         MainLauncher = true,

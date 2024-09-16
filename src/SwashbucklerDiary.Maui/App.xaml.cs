@@ -8,15 +8,16 @@ namespace SwashbucklerDiary.Maui
 {
     public partial class App : Application
     {
+        private Color backgroundColor = default!;
+
         private readonly IAppLifecycle _appLifecycle;
 
         private readonly IThemeService _themeService;
 
         private readonly Masa.Blazor.MasaBlazor _masaBlazor;
 
-        private Color backgroundColor = default!;
-
         public App(IAppLifecycle appLifecycle,
+            INavigateController navigateController,
             IThemeService themeService,
             Masa.Blazor.MasaBlazor masaBlazor)
         {
@@ -27,7 +28,7 @@ namespace SwashbucklerDiary.Maui
             _appLifecycle = appLifecycle;
             InitTheme();
 
-            MainPage = new MainPage(backgroundColor);
+            MainPage = new MainPage(backgroundColor, navigateController);
 
         }
 

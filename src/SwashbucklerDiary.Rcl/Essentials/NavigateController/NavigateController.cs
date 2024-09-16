@@ -29,8 +29,6 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         protected readonly List<HistoryAction> historyActions = [];
 
-        protected RouteMatcher? routeMatcher;
-
         protected object _lock = new();
 
         protected string? secondaryBackTargetUri;
@@ -42,6 +40,13 @@ namespace SwashbucklerDiary.Rcl.Essentials
         public bool CanPageUpdate { get; protected set; }
 
         public List<string> PageCachePaths => permanentPaths.Union(pageCachePaths).ToList();
+
+        public RouteMatcher RouteMatcher { get; }
+
+        public NavigateController()
+        {
+            RouteMatcher = new RouteMatcher(Assemblies);
+        }
 
         public void AddHistoryAction(Action action, bool preventNavigation = true)
             => AddHistoryAction(action, null, preventNavigation);
@@ -56,7 +61,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
             GC.SuppressFinalize(this);
         }
 
-        public void Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> paths, Assembly[] assemblies)
+        public void Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> paths)
         {
             if (IsInitialized) return;
 
@@ -64,7 +69,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
             {
                 if (!IsInitialized)
                 {
-                    InitCore(navigationManager, jSRuntime, paths, assemblies);
+                    InitCore(navigationManager, jSRuntime, paths);
                     IsInitialized = true;
                 }
             }
@@ -82,14 +87,15 @@ namespace SwashbucklerDiary.Rcl.Essentials
             pageCachePaths.Remove(absolutePath);
         }
 
+        protected abstract Assembly[] Assemblies { get; }
+
         protected abstract Task HandleNavigateToStackBottomPath(LocationChangingContext context);
 
-        private void InitCore(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> paths, Assembly[] assemblies)
+        private void InitCore(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> paths)
         {
             _navigationManager = navigationManager;
             _jSRuntime = jSRuntime;
             permanentPaths = paths.ToList();
-            routeMatcher = new RouteMatcher(assemblies);
             // Insert a uri on the previous page. This can ensure that OnLocationChanging will definitely trigger
             var uri = _navigationManager.Uri;
             var absolutePath = new Uri(uri).AbsolutePath;
@@ -171,7 +177,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
             //路由不存在的页面禁止跳转
             var route = _navigationManager.ToRoute(targetUri);
-            if (routeMatcher is not null && !routeMatcher.IsMatch(route))
+            if (!RouteMatcher.IsMatch(route))
             {
                 context.PreventNavigation();
                 return;

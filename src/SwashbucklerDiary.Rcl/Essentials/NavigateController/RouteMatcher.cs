@@ -7,24 +7,26 @@ using System.Reflection;
 
 namespace SwashbucklerDiary.Rcl.Essentials
 {
-    // ToDo:写的不好，以后可能要改
     public class RouteMatcher
     {
         private readonly List<string> routeTemplates = [];
+        private readonly DefaultInlineConstraintResolver constraintResolver;
 
         public RouteMatcher(Assembly[] assemblies)
         {
             routeTemplates = GetRouteTemplates(assemblies);
+
+            IServiceCollection services = new ServiceCollection();
+            services.AddOptions<RouteOptions>();
+            ServiceProvider sp = services.BuildServiceProvider();
+            var routeOptions = sp.GetRequiredService<IOptions<RouteOptions>>();
+            constraintResolver = new DefaultInlineConstraintResolver(routeOptions, sp);
         }
 
         public bool IsMatch(string path)
         {
             // https://q.cnblogs.com/q/146281
-            IServiceCollection services = new ServiceCollection();
-            services.AddOptions<RouteOptions>();
-            using ServiceProvider sp = services.BuildServiceProvider();
-            var routeOptions = sp.GetRequiredService<IOptions<RouteOptions>>();
-            var constraintResolver = new DefaultInlineConstraintResolver(routeOptions, sp);
+
             foreach (string routeTemplate in routeTemplates)
             {
                 var parsedTemplate = TemplateParser.Parse(routeTemplate);
@@ -62,7 +64,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
             return false;
         }
 
-        public static List<string> GetRouteTemplates(Assembly[] assemblies)
+        private static List<string> GetRouteTemplates(Assembly[] assemblies)
         {
             var routes = new List<string>();
 
@@ -71,7 +73,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
                 foreach (var type in assembly.GetTypes())
                 {
                     var routeAttribute = type.GetCustomAttribute<RouteAttribute>();
-                    if (routeAttribute != null)
+                    if (routeAttribute is not null)
                     {
                         routes.Add(routeAttribute.Template);
                     }

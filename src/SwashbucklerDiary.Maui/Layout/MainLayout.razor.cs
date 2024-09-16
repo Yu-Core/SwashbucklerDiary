@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using SwashbucklerDiary.Maui.Extensions;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Layout;
 using SwashbucklerDiary.Shared;
-using System.Reflection;
 
 namespace SwashbucklerDiary.Maui.Layout
 {
@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Maui.Layout
             base.OnInitialized();
 
             isAndroidOrIOS = PlatformIntegration.CurrentPlatform == AppDevicePlatform.Android || PlatformIntegration.CurrentPlatform == AppDevicePlatform.iOS;
-            AppLifecycle.Activated += Activated;
+            AppLifecycle.Activated += HandleActivated;
             VersionUpdataManager.AfterCheckFirstLaunch += CheckForUpdates;
         }
 
@@ -42,15 +42,9 @@ namespace SwashbucklerDiary.Maui.Layout
 
         protected override void OnDispose()
         {
-            AppLifecycle.Activated -= Activated;
+            AppLifecycle.Activated -= HandleActivated;
             VersionUpdataManager.AfterCheckFirstLaunch -= CheckForUpdates;
             base.OnDispose();
-        }
-
-        protected override void InitNavigateController()
-        {
-            Assembly[] assemblies = [typeof(MainLayoutBase).Assembly, typeof(Routes).Assembly];
-            NavigateController.Init(NavigationManager, JSRuntime, permanentPaths, assemblies);
         }
 
 #if DEBUG
@@ -89,32 +83,44 @@ namespace SwashbucklerDiary.Maui.Layout
         }
 #endif
 
-        private void Activated(ActivationArguments? args)
+        private void HandleActivated(ActivationArguments? args)
         {
             if (args is null || args.Data is null)
             {
                 return;
             }
 
-            if (args.Kind == LaunchActivationKind.Share)
+            switch (args.Kind)
             {
-                if (NavigationManager.GetBaseRelativePath() == "write")
-                {
-                    return;
-                }
-
-                AppLifecycle.ActivationArguments = args;
-                NavigationManager.NavigateTo("write");
+                case LaunchActivationKind.Share:
+                    HandleShare(args);
+                    break;
+                case LaunchActivationKind.Scheme:
+                    HandleScheme(args);
+                    break;
+                default:
+                    break;
             }
-            else if (args.Kind == LaunchActivationKind.Scheme)
+        }
+
+        private void HandleShare(ActivationArguments args)
+        {
+            if (NavigationManager.GetBaseRelativePath() == "write")
             {
-                string? uriString = args?.Data as string;
-                if (Uri.TryCreate(uriString, UriKind.Absolute, out var uri))
-                {
-                    NavigationManager.NavigateTo(uri.AbsolutePath.TrimStart('/'));
-                }
+                return;
             }
 
+            AppLifecycle.ActivationArguments = args;
+            NavigationManager.NavigateTo("write");
+        }
+
+        private void HandleScheme(ActivationArguments args)
+        {
+            string? uriString = args?.Data as string;
+            if (NavigateController.CheckUrlScheme(uriString, out var path))
+            {
+                NavigationManager.NavigateTo(path.TrimStart('/'));
+            }
         }
     }
 }

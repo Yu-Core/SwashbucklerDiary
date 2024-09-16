@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Reflection;
 
 namespace SwashbucklerDiary.Rcl.Essentials
 {
@@ -12,7 +11,9 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         List<string> PageCachePaths { get; }
 
-        void Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> uris, Assembly[] assemblies);
+        RouteMatcher RouteMatcher { get; }
+
+        void Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> uris);
 
         void RemovePageCache(string url);
 
