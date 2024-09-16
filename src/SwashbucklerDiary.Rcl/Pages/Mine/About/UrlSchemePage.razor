@@ -1,0 +1,50 @@
+﻿@page "/urlScheme"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar Title="UrlScheme"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MChipGroup @bind-Value="scheme"
+                Class="mb-2"
+                Mandatory>
+        @foreach (var item in schemes)
+        {
+            <MChip Value="item"
+                   Filter
+                   Outlined>
+                @item
+            </MChip>
+        }
+    </MChipGroup>
+
+    <MCard Class="my-list-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList Class="dynamic-list-item-collection">
+            @foreach (var item in urlSchemes)
+            {
+                <MListItem @key="item"
+                           OnClick="()=>CopyAsync(item.Path)">
+                    <MListItemContent>
+                        <MListItemTitle>
+                            @(I18n.T(item.Name))
+                        </MListItemTitle>
+                        <MListItemSubtitle>
+                            @($"{scheme}://{item.Path}")
+                        </MListItemSubtitle>
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-content-copy</MIcon>
+                    </MListItemAction>
+                </MListItem>
+
+                <MDivider Class="mx-5"></MDivider>
+            }
+
+        </MList>
+    </MCard>
+</ScrollContainer>
+

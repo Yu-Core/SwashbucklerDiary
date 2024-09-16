@@ -264,6 +264,9 @@
       "Name": "日志文件",
       "Path": "关于 / 日志文件"
     },
+    "UrlScheme": {
+      "Path": "关于 / Url Scheme"
+    },
     "Sponsor": {
       "Name": "捐助我们",
       "Path": "关于 / 捐助我们",
@@ -780,5 +783,18 @@
     "Name": "支持一下",
     "Content": "如果你觉得此软件还不错的话，可以捐助支持一下。你的支持就是开发者最大的动力。",
     "To support": "捐助"
+  },
+  "UrlScheme": {
+    "Index": "首页",
+    "History": "日历",
+    "FileBrowse": "文件",
+    "Mine": "我的",
+    "Search": "搜索",
+    "SearchFunction": "搜索功能",
+    "Write": "创建日记",
+    "Setting": "设置",
+    "Backup": "备份",
+    "Export": "导出",
+    "About": "关于"
   }
 }

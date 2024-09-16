@@ -264,6 +264,9 @@
       "Name": "Log file",
       "Path": "About / Log file"
     },
+    "UrlScheme": {
+      "Path": "About / Url Scheme"
+    },
     "Sponsor": {
       "Name": "Sponsor we",
       "Path": "About / Sponsor we",
@@ -780,5 +783,18 @@
     "Name": "Support it",
     "Content": "If you think this software is pretty good, you can donate and support it. Your support is the greatest motivation for developers.",
     "To support": "Sponsor"
+  },
+  "UrlScheme": {
+    "Index": "Index",
+    "History": "History",
+    "FileBrowse": "File browse",
+    "Mine": "Mine",
+    "Search": "Search",
+    "SearchFunction": "Search function",
+    "Write": "Write diary",
+    "Setting": "Setting",
+    "Backup": "Backup",
+    "Export": "Export",
+    "About": "About"
   }
 }

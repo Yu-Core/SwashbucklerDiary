@@ -276,6 +276,12 @@
     "Href": "log"
   },
   {
+    "Name": "Url Scheme",
+    "Icon": "mdi-link-variant",
+    "Path": "About.UrlScheme.Path",
+    "Href": "urlScheme"
+  },
+  {
     "Name": "About.Evaluation.Name",
     "Icon": "mdi-star-outline",
     "Path": "About.Evaluation.Path",

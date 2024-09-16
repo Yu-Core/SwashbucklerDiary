@@ -1,0 +1,46 @@
+[
+  {
+    "Name": "UrlScheme.Index",
+    "Path": ""
+  },
+  {
+    "Name": "UrlScheme.History",
+    "Path": "history"
+  },
+  {
+    "Name": "UrlScheme.FileBrowse",
+    "Path": "fileBrowse"
+  },
+  {
+    "Name": "UrlScheme.Mine",
+    "Path": "mine"
+  },
+  {
+    "Name": "UrlScheme.Search",
+    "Path": "search?query="
+  },
+  {
+    "Name": "UrlScheme.SearchFunction",
+    "Path": "searchAppFunction?query="
+  },
+  {
+    "Name": "UrlScheme.Write",
+    "Path": "write"
+  },
+  {
+    "Name": "UrlScheme.Setting",
+    "Path": "setting"
+  },
+  {
+    "Name": "UrlScheme.Backup",
+    "Path": "backups"
+  },
+  {
+    "Name": "UrlScheme.Export",
+    "Path": "export"
+  },
+  {
+    "Name": "UrlScheme.About",
+    "Path": "about"
+  }
+]
