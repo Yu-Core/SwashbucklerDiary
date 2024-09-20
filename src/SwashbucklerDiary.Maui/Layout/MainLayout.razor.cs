@@ -52,14 +52,14 @@ namespace SwashbucklerDiary.Maui.Layout
 #else
         private async Task CheckForUpdates()
         {
-            bool notPrompt = SettingService.Get<bool>(Setting.UpdateNotPrompt);
+            bool notPrompt = SettingService.Get(it => it.UpdateNotPrompt);
             if (notPrompt)
             {
                 return;
             }
 
             string key = "LastAutoCheckForUpdatesTime";
-            DateTime dateTime = await SettingService.Get(key, DateTime.MinValue);
+            DateTime dateTime = await SettingService.GetAsync(key, DateTime.MinValue);
             if (dateTime != DateTime.MinValue && (DateTime.Now - dateTime).TotalHours < 24)
             {
                 return;
