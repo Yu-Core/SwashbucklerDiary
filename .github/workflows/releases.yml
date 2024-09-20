@@ -1,4 +1,4 @@
-name: releases
+﻿name: releases
 
 on:
   workflow_dispatch:
@@ -12,8 +12,6 @@ env:
   CSPROJ_FILE_PATH: 'src/SwashbucklerDiary.Maui/SwashbucklerDiary.Maui.csproj'
   APP_NAME: 'SwashbucklerDiary'
   STORE_ID: '9P6PBVBF466L'
-  GITEE_USERNAME: 'Yu-core'
-  GITEE_REPO: 'SwashbucklerDiary'
 
 jobs:
   windowsAndAndroid:
@@ -88,20 +86,6 @@ jobs:
           token: ${{ github.token }}
           name: ${{ env.APPLICATION_DISPLAY_VERSION }}
           tag: 'v${{ env.APPLICATION_DISPLAY_VERSION }}'
-
-      # Release to Gitee
-      - name: Release to Gitee
-        run: |
-          curl -X POST \
-          --header 'Content-Type: application/json;charset=UTF-8' \
-          'https://gitee.com/api/v5/repos/${{ env.GITEE_USERNAME }}/${{ env.GITEE_REPO }}/releases' \
-          -d '{
-            "access_token": "${{ secrets.GITEE_TOKEN }}",
-            "tag_name": "v${{ env.APPLICATION_DISPLAY_VERSION }}",
-            "name": "${{ env.APPLICATION_DISPLAY_VERSION }}",
-            "body": "Release ${{ env.APPLICATION_DISPLAY_VERSION }}",
-            "target_commitish": "master"
-          }'
 
       # Replace the version in Package.appxmanifest
       - name: Update version in Package.appxmanifest
