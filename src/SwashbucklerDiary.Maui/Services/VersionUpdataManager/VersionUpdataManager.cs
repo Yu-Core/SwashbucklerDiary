@@ -36,11 +36,12 @@ namespace SwashbucklerDiary.Maui.Services
         //此版本之后更改了资源的链接
         private async Task HandleVersionUpdate647()
         {
-            string avatar = await _settingService.GetAsync<string>("Avatar", string.Empty);
+            var key = "Avatar";
+            string avatar = await _settingService.GetAsync<string>(key, string.Empty);
             if (avatar != string.Empty)
             {
                 avatar = avatar.Replace("appdata:///", "appdata/");
-                await _settingService.SetAsync(nameof(Setting.Avatar), avatar);
+                await _settingService.SetAsync(key, avatar);
             }
 
             await _diaryFileManager.UpdateAllResourceUri();
@@ -62,7 +63,7 @@ namespace SwashbucklerDiary.Maui.Services
                     Password = webDAVPasswordTask.Result,
                 };
                 string webDavConfigJson = JsonSerializer.Serialize(config);
-                await _settingService.SetAsync(s => s.WebDavConfig, webDavConfigJson);
+                await _settingService.SetAsync("WebDavConfig", webDavConfigJson);
             }
 
             string[] keys = ["ThemeState", "WebDAVServerAddress", "WebDAVAccount", "WebDAVPassword", "Date"];

@@ -47,18 +47,18 @@
 
             <MDivider Class="mx-5"></MDivider>
 
-            <MListItem OnClick="@(()=>showDiaryCardDateFormat=true)">
+            <MListItem OnClick="@(()=>showDiaryCardTimeFormat=true)">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
                         mdi-calendar-clock
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.DiaryCard.DateFormat.Name"))
+                    @(I18n.T("Setting.Display.DiaryCard.TimeFormat.Name"))
                 </MListItemContent>
                 <MListItemContent Class="setting-item-state">
                     <MListItemSubtitle>
-                        @(I18n.T(DiaryCardDateFormatKey))
+                        @(I18n.T(DiaryCardTimeFormatKey))
                     </MListItemSubtitle>
                 </MListItemContent>
                 <MListItemAction>
@@ -69,11 +69,11 @@
     </MCard>
 </ScrollContainer>
 
-<RadioDialog @bind-Value="diaryCardDateFormat"
-             @bind-Visible="showDiaryCardDateFormat"
-             Title="@(I18n.T("Setting.Display.DiaryCard.DateFormat.Name"))"
+<RadioDialog @bind-Value="DiaryCardTimeFormat"
+             @bind-Visible="showDiaryCardTimeFormat"
+             Title="@(I18n.T("Setting.Display.DiaryCard.TimeFormat.Name"))"
              TItemValue="string"
              TItem="KeyValuePair<string,string>"
-             OnChange="DiaryCardDateFormatChanged"
-             Items="diaryCardDateFormats">
+             OnChange="DiaryCardTimeFormatChanged"
+             Items="DiaryCardTimeFormats">
 </RadioDialog>

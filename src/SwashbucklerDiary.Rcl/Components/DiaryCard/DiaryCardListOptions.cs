@@ -6,6 +6,6 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         public DiaryModel SelectedItemValue { get; set; } = new();
 
-        public string? DateFormat { get; set; }
+        public string? TimeFormat { get; set; }
     }
 }

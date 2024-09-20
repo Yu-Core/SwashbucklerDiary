@@ -72,6 +72,8 @@ namespace SwashbucklerDiary.Rcl.Services
             await HandleVersionUpdate("0.69.7", HandleVersionUpdate697);
             await HandleVersionUpdate("0.80.9", HandleVersionUpdate809);
             await HandleVersionUpdate("0.86.0", HandleVersionUpdate860);
+            await HandleVersionUpdate("0.86.0", HandleVersionUpdate860);
+            await HandleVersionUpdate("1.01.5", HandleVersionUpdate1015);
             var version = await _staticWebAssets.ReadJsonAsync<string>("docs/update-instruction/version.json");
             await HandleVersionUpdate(version, HandleUpdateInstruction);
             if (AfterVersionUpdate is not null && updateCount > 0)
@@ -175,6 +177,17 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             string[] keys = ["PrivacyMode", "PrivatePassword"];
             await _settingService.RemoveAsync(keys);
+        }
+
+        private async Task HandleVersionUpdate1015()
+        {
+            var oldKey = "DiaryCardDateFormat";
+            var diaryCardDatformat = await _settingService.GetAsync(oldKey, string.Empty);
+            if (!string.IsNullOrEmpty(diaryCardDatformat))
+            {
+                await _settingService.RemoveAsync(oldKey);
+                await _settingService.SetAsync("DiaryCardTimeFormat", diaryCardDatformat);
+            }
         }
     }
 }

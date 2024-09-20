@@ -398,9 +398,9 @@
           "Name": "Tags",
           "Path": "Setting / Diary card / Card tags"
         },
-        "DateFormat": {
-          "Name": "Date format",
-          "Path": "Setting / Diary card / Date format"
+        "TimeFormat": {
+          "Name": "Time format",
+          "Path": "Setting / Diary card / Time format"
         }
       },
       "Diary": {
@@ -657,8 +657,12 @@
     "Placeholder": "Please enter the function you want to search for"
   },
   "DateTimeFormat": {
-    "MM/dd": "Month/day",
-    "yyyy/MM/dd": "year/Month/day"
+    "MM/dd": "Month/Day",
+    "yyyy/MM/dd": "Year/Month/Day",
+    "MM/dd HH:mm": "Month/Day Hour:Minute",
+    "yyyy/MM/dd HH:mm": "Year/Month/Day Hour:Minute",
+    "MM/dd HH:mm dddd": "Month/Day Hour:Minute Week",
+    "yyyy/MM/dd HH:mm dddd": "Year/Month/Day Hour:Minute Week"
   },
   "Please input DeviceName": "Please input DeviceName",
   "Please input ScanPort": "Please input ScanPort",

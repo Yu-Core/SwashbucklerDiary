@@ -35,9 +35,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool IsActive => Value.Id == DiaryCardListOptions.SelectedItemValue.Id;
 
-        private string? DateFormat => DiaryCardListOptions.DateFormat;
+        private string? TimeFormat => DiaryCardListOptions.TimeFormat;
 
-        private string? Date => DateFormat is null ? null : Value.CreateTime.ToString(DateFormat);
+        private string? Date => TimeFormat is null ? null : Value.CreateTime.ToString(TimeFormat);
 
         private string Theme => Dark ? "theme--dark" : "theme--light";
 

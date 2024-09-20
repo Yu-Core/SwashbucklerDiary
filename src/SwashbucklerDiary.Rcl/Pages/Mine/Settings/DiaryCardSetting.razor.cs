@@ -8,14 +8,18 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool diaryCardTags;
 
-        private string? diaryCardDateFormat;
+        private string? DiaryCardTimeFormat;
 
-        private bool showDiaryCardDateFormat;
+        private bool showDiaryCardTimeFormat;
 
-        private readonly static Dictionary<string, string> diaryCardDateFormats = new()
+        private readonly static Dictionary<string, string> DiaryCardTimeFormats = new()
         {
             {"DateTimeFormat.MM/dd","MM/dd" },
             {"DateTimeFormat.yyyy/MM/dd","yyyy/MM/dd" },
+            {"DateTimeFormat.MM/dd HH:mm","MM/dd HH:mm" },
+            {"DateTimeFormat.yyyy/MM/dd HH:mm","yyyy/MM/dd HH:mm" },
+            {"DateTimeFormat.MM/dd HH:mm dddd","MM/dd HH:mm dddd" },
+            {"DateTimeFormat.yyyy/MM/dd HH:mm dddd","yyyy/MM/dd HH:mm dddd" },
         };
 
         protected override void ReadSettings()
@@ -24,14 +28,14 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             diaryCardIcon = SettingService.Get(s => s.DiaryCardIcon);
             diaryCardTags = SettingService.Get(s => s.DiaryCardTags);
-            diaryCardDateFormat = SettingService.Get(s => s.DiaryCardDateFormat);
+            DiaryCardTimeFormat = SettingService.Get(s => s.DiaryCardTimeFormat);
         }
 
-        private string DiaryCardDateFormatKey => diaryCardDateFormats.FirstOrDefault(x => x.Value == diaryCardDateFormat).Key;
+        private string DiaryCardTimeFormatKey => DiaryCardTimeFormats.FirstOrDefault(x => x.Value == DiaryCardTimeFormat).Key;
 
-        private async Task DiaryCardDateFormatChanged(string value)
+        private async Task DiaryCardTimeFormatChanged(string value)
         {
-            await SettingService.SetAsync(s => s.DiaryCardDateFormat, value);
+            await SettingService.SetAsync(s => s.DiaryCardTimeFormat, value);
         }
     }
 }

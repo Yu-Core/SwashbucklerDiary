@@ -228,9 +228,9 @@
     "Href": "diaryCardSetting"
   },
   {
-    "Name": "Setting.Display.DiaryCard.DateFormat.Name",
+    "Name": "Setting.Display.DiaryCard.TimeFormat.Name",
     "Icon": "mdi-calendar-clock",
-    "Path": "Setting.Display.DiaryCard.DateFormat.Path",
+    "Path": "Setting.Display.DiaryCard.TimeFormat.Path",
     "Href": "diaryCardSetting"
   },
   {

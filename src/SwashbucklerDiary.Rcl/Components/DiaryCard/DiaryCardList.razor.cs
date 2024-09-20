@@ -62,7 +62,7 @@ namespace SwashbucklerDiary.Rcl.Components
             showSetPrivacy = SettingService.Get(s => s.SetPrivacyDiary);
             showIcon = SettingService.Get(s => s.DiaryCardIcon);
             showTags = SettingService.Get(s => s.DiaryCardTags);
-            options.DateFormat = SettingService.Get(s => s.DiaryCardDateFormat);
+            options.TimeFormat = SettingService.Get(s => s.DiaryCardTimeFormat);
             var diarySort = SettingService.Get(s => s.DiarySort);
             if (!string.IsNullOrEmpty(diarySort))
             {
