@@ -579,13 +579,14 @@
     "Import": {
       "Title": "Import",
       "Path": "Export / Local export / Import",
-      "Subtitle": "Import zip file of json type",
+      "Subtitle": "Import zip files in the corresponding format",
       "Success": "Import success",
       "Fail": "Import fail",
       "ConfirmImport": {
         "Title": "Confirm import",
         "Content": "Confirm importing these diaries？"
-      }
+      },
+      "SelectType": "Select import file format"
     },
     "Send": {
       "Name": "Send",

@@ -26,7 +26,7 @@
 
         <MDivider Class="mx-5"></MDivider>
 
-        <MListItem OnClick="Import">
+        <MListItem OnClick="()=>showImport=true">
             <MListItemIcon>
                 <MIcon Class="evident-icon">
                     mdi-import
@@ -51,7 +51,12 @@
               Value="diaries">
 </ExportDialog>
 
-<MDialogExtension @bind-MyValue="showImport"
+<MultiListDialog @bind-Visible="showImport"
+                 Title="@(I18n.T("Export.Import.SelectType"))"
+                 DynamicListItems="importTypes">
+</MultiListDialog>
+
+<MDialogExtension @bind-MyValue="showConfirmImport"
                   ContentClass="rounded-lg"
                   MaxWidth="420">
     <MCard>
@@ -59,7 +64,7 @@
             @(I18n.T("Export.Import.ConfirmImport.Title"))
             <MSpacer></MSpacer>
             <MButton Icon
-                     OnClick="@(()=>showImport=false)">
+                     OnClick="@(()=>showConfirmImport=false)">
                 <MIcon>mdi-close</MIcon>
             </MButton>
         </MCardTitle>
@@ -69,7 +74,7 @@
         <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text
-                     OnClick="()=>showImport=false">
+                     OnClick="()=>showConfirmImport=false">
                 @(I18n.T("Share.Cancel"))
             </MButton>
             <MButton Text

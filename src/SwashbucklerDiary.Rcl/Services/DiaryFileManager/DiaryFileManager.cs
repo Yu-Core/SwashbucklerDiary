@@ -2,8 +2,8 @@
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 using System.Data;
+using System.Globalization;
 using System.IO.Compression;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 
@@ -28,6 +28,8 @@ namespace SwashbucklerDiary.Rcl.Services
         protected const string backupFileNamePrefix = "SwashbucklerDiaryBackup";
 
         protected const string versionInfoFileName = "version.json";
+
+        protected const string exportFileNameDateTimeFormat = "yyyyMMddHHmmss";
 
         protected JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
         {
@@ -123,9 +125,15 @@ namespace SwashbucklerDiary.Rcl.Services
         }
 
         public Task<string> ExportMdAsync(List<DiaryModel> diaries)
+            => ExportTextFileAsync(diaries, "Markdown", ".md");
+
+        public Task<string> ExportTxtAsync(List<DiaryModel> diaries)
+            => ExportTextFileAsync(diaries, "Txt", ".txt");
+
+        private Task<string> ExportTextFileAsync(List<DiaryModel> diaries, string name, string fileExtension)
         {
-            string outputFolder = Path.Combine(_appFileManager.CacheDirectory, "Markdown");
-            string zipFilePath = Path.Combine(_appFileManager.CacheDirectory, $"{exportFileNamePrefix}Markdown.zip");
+            string outputFolder = Path.Combine(_appFileManager.CacheDirectory, name);
+            string zipFilePath = Path.Combine(_appFileManager.CacheDirectory, $"{exportFileNamePrefix}{name}.zip");
 
             if (!Directory.Exists(outputFolder))
             {
@@ -138,45 +146,12 @@ namespace SwashbucklerDiary.Rcl.Services
 
             foreach (var item in diaries)
             {
-                string fileName = item.CreateTime.ToString("yyyy-MM-dd") + ".md";
+                string fileName = item.CreateTime.ToString(exportFileNameDateTimeFormat) + fileExtension;
                 string filePath = Path.Combine(outputFolder, fileName);
-
                 WriteToFile(filePath, item.Content);
             }
 
             CopyDiaryResource(diaries, outputFolder);
-
-            if (File.Exists(zipFilePath))
-            {
-                File.Delete(zipFilePath);
-            }
-
-            // 将所有.md文件添加到压缩包中
-            ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
-            return Task.FromResult(zipFilePath);
-        }
-
-        public Task<string> ExportTxtAsync(List<DiaryModel> diaries)
-        {
-            string outputFolder = Path.Combine(_appFileManager.CacheDirectory, "Txt");
-            string zipFilePath = Path.Combine(_appFileManager.CacheDirectory, $"{exportFileNamePrefix}Txt.zip");
-
-            if (!Directory.Exists(outputFolder))
-            {
-                Directory.CreateDirectory(outputFolder);
-            }
-            else
-            {
-                _appFileManager.ClearFolder(outputFolder);
-            }
-
-            foreach (var item in diaries)
-            {
-                string fileName = item.CreateTime.ToString("yyyy-MM-dd") + ".txt";
-                string filePath = Path.Combine(outputFolder, fileName);
-                string content = CreateTxtContent(item);
-                WriteToFile(filePath, content);
-            }
 
             if (File.Exists(zipFilePath))
             {
@@ -214,10 +189,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 var tags = string.Empty;
                 if (item.Tags is not null && item.Tags.Count > 0)
                 {
-                    foreach (var tag in item.Tags)
-                    {
-                        tags += tag.Name + ", ";
-                    }
+                    tags = string.Join(", ", item.Tags.Select(it => it.Name));
                 }
 
                 var title = item.Title ?? string.Empty;
@@ -324,50 +296,6 @@ namespace SwashbucklerDiary.Rcl.Services
             }
         }
 
-        private string CreateTxtContent(DiaryModel diary)
-        {
-            StringBuilder text = new();
-            text.AppendLine(diary.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"));
-            text.AppendLine();
-
-            if (!string.IsNullOrEmpty(diary.Weather))
-            {
-                text.AppendLine(_i18n.T("Weather." + diary.Weather));
-                text.AppendLine();
-            }
-
-            if (!string.IsNullOrEmpty(diary.Mood))
-            {
-                text.AppendLine(_i18n.T("Mood." + diary.Mood));
-            }
-
-            if (!string.IsNullOrEmpty(diary.Location))
-            {
-                text.AppendLine(diary.Location);
-                text.AppendLine();
-            }
-
-            if (diary.Tags is not null && diary.Tags.Count > 0)
-            {
-                foreach (var tag in diary.Tags)
-                {
-                    text.Append(tag.Name + ", ");
-                }
-                text.AppendLine();
-                text.AppendLine();
-            }
-
-            if (!string.IsNullOrEmpty(diary.Title))
-            {
-                text.AppendLine(diary.Title);
-                text.AppendLine();
-            }
-
-            text.AppendLine(diary.Content);
-            text.AppendLine();
-            return text.ToString();
-        }
-
         public string GetExportFileName(ExportKind exportKind)
         {
             string prefix = exportFileNamePrefix + exportKind.ToString();
@@ -454,11 +382,12 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task<bool> ImportJsonAsync(string filePath)
         {
-            string outputFolder = Path.Combine(_appFileManager.CacheDirectory, "Json");
             if (!File.Exists(filePath))
             {
                 return false;
             }
+
+            string outputFolder = Path.Combine(_appFileManager.CacheDirectory, "Json");
 
             if (!Directory.Exists(outputFolder))
             {
@@ -492,10 +421,10 @@ namespace SwashbucklerDiary.Rcl.Services
             foreach (string jsonFile in jsonFiles)
             {
                 using FileStream openStream = File.OpenRead(jsonFile);
-                var diarie = await JsonSerializer.DeserializeAsync<DiaryModel>(openStream);
-                if (diarie is not null)
+                var diary = await JsonSerializer.DeserializeAsync<DiaryModel>(openStream);
+                if (diary is not null)
                 {
-                    diaries.Add(diarie);
+                    diaries.Add(diary);
                 }
             }
 
@@ -510,6 +439,74 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             return await _diaryService.ImportAsync(diaries);
+        }
+
+        public async Task<bool> ImportMdAsync(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                return false;
+            }
+
+            string outputFolder = Path.Combine(_appFileManager.CacheDirectory, "Markdown");
+
+            if (!Directory.Exists(outputFolder))
+            {
+                Directory.CreateDirectory(outputFolder);
+            }
+            else
+            {
+                _appFileManager.ClearFolder(outputFolder);
+            }
+
+            ZipFile.ExtractToDirectory(filePath, outputFolder);
+
+            string[] mdFilePaths = Directory.GetFiles(outputFolder, "*.md", SearchOption.AllDirectories);
+            if (mdFilePaths.Length == 0)
+            {
+                return false;
+            }
+
+            var diaries = new List<DiaryModel>();
+            foreach (string mdFilePath in mdFilePaths)
+            {
+                var diary = ConvertToDiary(mdFilePath);
+
+                if (diary is not null)
+                {
+                    diaries.Add(diary);
+                }
+            }
+
+            RestoreDiaryResource(outputFolder);
+
+            return await _diaryService.ImportAsync(diaries);
+        }
+
+        private DiaryModel ConvertToDiary(string filePath)
+        {
+            var diary = new DiaryModel();
+            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
+            string dateTimeString = fileNameWithoutExtension.Split('(')[0];
+            diary.CreateTime = diary.UpdateTime = ConvertToDateTime(dateTimeString);
+            diary.Content = File.ReadAllText(filePath);
+            diary.Resources = _mediaResourceManager.GetDiaryResources(diary.Content);
+            return diary;
+        }
+
+        private static DateTime ConvertToDateTime(string dateTimeString)
+        {
+            if (DateTime.TryParseExact(dateTimeString, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateTime))
+            {
+                return dateTime;
+            }
+
+            if (DateTime.TryParse(dateTimeString, out DateTime dateTime2))
+            {
+                return dateTime2;
+            }
+
+            return DateTime.Now;
         }
 
         protected void ClearAllDiaryResources()

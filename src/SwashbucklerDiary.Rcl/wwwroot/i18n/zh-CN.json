@@ -579,13 +579,14 @@
     "Import": {
       "Title": "导入",
       "Path": "导出 / 本地导出 / 导入",
-      "Subtitle": "导入json生成的zip压缩包",
+      "Subtitle": "导入相应格式的zip压缩包",
       "Success": "导入成功",
       "Fail": "导入失败",
       "ConfirmImport": {
         "Title": "确认导入",
         "Content": "确认导入这些日记？"
-      }
+      },
+      "SelectType": "选择导入文件格式"
     },
     "Send": {
       "Name": "发送",
