@@ -154,29 +154,18 @@
 
 <SelectTagsDialog @bind-Visible="showSelectTag"
                   @bind-Value="SelectedTags"
-                  @bind-Items="tags"
-                  OnSave="SaveSelectTags">
+                  @bind-Items="tags">
 </SelectTagsDialog>
 
-<SelectChipDialog @bind-Visible="showWeather"
-                  @bind-Value="@SelectedWeather"
-                  Title="@(I18n.T("Write.SelectWeather"))"
-                  ShowText="showIconText"
-                  Items="weatherIcons"
-                  ItemValue="it=>it.Key"
-                  ItemText="@(item=>I18n.T("Weather." + item.Key))"
-                  ItemIcon="it=>it.Value">
-</SelectChipDialog>
+<SelectWeatherDialog @bind-Visible="showWeather"
+                     @bind-Value="@SelectedWeather"
+                     ShowText="showIconText">
+</SelectWeatherDialog>
 
-<SelectChipDialog @bind-Visible="showMood"
+<SelectMoodDialog @bind-Visible="showMood"
                   @bind-Value="@SelectedMood"
-                  Title="@(I18n.T("Write.SelectMood"))"
-                  ShowText="showIconText"
-                  Items="moodIcons"
-                  ItemValue="it=>it.Key"
-                  ItemText="@(item=>I18n.T("Mood." + item.Key))"
-                  ItemIcon="it=>it.Value">
-</SelectChipDialog>
+                  ShowText="showIconText">
+</SelectMoodDialog>
 
 <SelectLocationDialog @bind-Visible="showLocation"
                       @bind-Value="SelectedLocation">

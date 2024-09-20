@@ -320,3 +320,30 @@
 .m-text-field--rounded > .m-input__control > .m-input__slot {
     padding: 0 16px;
 }
+
+.m-chip-group .m-slide-group__prev--disabled,
+.m-chip-group .m-slide-group__next--disabled {
+    display: none;
+}
+
+@media (hover: none) {
+    .m-chip-group .m-slide-group__prev, .m-chip-group .m-slide-group__next {
+        display: none;
+    }
+}
+
+.m-chip-group .m-slide-group__next, .m-chip-group .m-slide-group__prev {
+    flex-basis: initial;
+    min-width: initial;
+}
+
+.m-chip-group .m-slide-group__wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+    .m-chip-group .m-slide-group__wrapper::-webkit-scrollbar {
+        display: none;
+    }

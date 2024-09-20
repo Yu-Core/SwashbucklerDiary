@@ -43,7 +43,6 @@ namespace SwashbucklerDiary.Rcl.Models
 
         protected DynamicListItem(object receiver, Action actionOnClick, Func<bool>? funcShow) : this(funcShow)
         {
-            _funcShow = funcShow;
             OnClick = EventCallback.Factory.Create(receiver, actionOnClick);
         }
 
@@ -52,22 +51,22 @@ namespace SwashbucklerDiary.Rcl.Models
             OnClick = EventCallback.Factory.Create(receiver, funcOnClick);
         }
 
-        public DynamicListItem(object receiver, string text, Action actionOnClick, Func<bool>? funcShow) : this(receiver, actionOnClick, funcShow)
+        public DynamicListItem(object receiver, string text, Action actionOnClick, Func<bool>? funcShow = null) : this(receiver, actionOnClick, funcShow)
         {
             _text = text;
         }
 
-        public DynamicListItem(object receiver, Func<string> funcText, Action actionOnClick, Func<bool>? funcShow) : this(receiver, actionOnClick, funcShow)
+        public DynamicListItem(object receiver, Func<string> funcText, Action actionOnClick, Func<bool>? funcShow = null) : this(receiver, actionOnClick, funcShow)
         {
             _text = funcText;
         }
 
-        public DynamicListItem(object receiver, string text, Func<Task> funcOnClick, Func<bool>? funcShow) : this(receiver, funcOnClick, funcShow)
+        public DynamicListItem(object receiver, string text, Func<Task> funcOnClick, Func<bool>? funcShow = null) : this(receiver, funcOnClick, funcShow)
         {
             _text = text;
         }
 
-        public DynamicListItem(object receiver, Func<string> funcText, Func<Task> funcOnClick, Func<bool>? funcShow) : this(receiver, funcOnClick, funcShow)
+        public DynamicListItem(object receiver, Func<string> funcText, Func<Task> funcOnClick, Func<bool>? funcShow = null) : this(receiver, funcOnClick, funcShow)
         {
             _text = funcText;
         }
@@ -110,6 +109,19 @@ namespace SwashbucklerDiary.Rcl.Models
         public DynamicListItem(object receiver, Func<string> funcText, Func<string> funcIcon, Func<Task> funcOnClick, Func<bool>? funcShow = null) : this(receiver, funcText, funcOnClick, funcShow)
         {
             _icon = funcIcon;
+        }
+    }
+
+    public class DynamicListItem<T> : DynamicListItem
+    {
+        public T Value { get; set; }
+
+        public DynamicListItem(object receiver, string text, string icon, Func<T, Task> funcOnClick, T value, Func<bool>? funcShow = null) : base(funcShow)
+        {
+            _text = text;
+            _icon = icon;
+            Value = value;
+            OnClick = EventCallback.Factory.Create(this, () => funcOnClick.Invoke(Value));
         }
     }
 

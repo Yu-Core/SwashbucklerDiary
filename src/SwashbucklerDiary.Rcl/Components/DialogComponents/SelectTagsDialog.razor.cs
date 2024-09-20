@@ -66,6 +66,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 await ValueChanged.InvokeAsync(tagModels);
             }
 
+            await InternalVisibleChanged(false);
             await OnSave.InvokeAsync();
         }
 

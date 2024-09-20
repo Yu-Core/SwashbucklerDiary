@@ -161,7 +161,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task SaveSelectTags()
         {
-            showSelectTag = false;
             SelectedItem.UpdateTime = DateTime.Now;
             await DiaryService.UpdateTagsAsync(SelectedItem);
             NotifyValueChanged();

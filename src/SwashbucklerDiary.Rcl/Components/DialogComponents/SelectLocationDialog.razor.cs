@@ -52,8 +52,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void SetSelectedLocation(LocationModel location)
         {
-            var name = selectedLocation == location.Name ? string.Empty : location.Name;
-            selectedLocation = name;
+            selectedLocation = selectedLocation == location.Name ? null : location.Name;
         }
 
         private async Task SaveAdd(string name)

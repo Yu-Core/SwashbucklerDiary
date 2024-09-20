@@ -1,0 +1,81 @@
+﻿@page "/search"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits DiariesPageComponentBase
+
+<MToolbar Elevation="0" Extended>
+    <ChildContent>
+        <MButton Icon="true"
+                 OnClick="NavigateToBack">
+            <MIcon>mdi-arrow-left</MIcon>
+        </MButton>
+
+        <TransparentTextField @bind-Value="search"
+                              Placeholder="@(I18n.T("Search.Please enter diary keywords"))"
+                              OnInput="UpdateDiariesAsync">
+        </TransparentTextField>
+    </ChildContent>
+    <ExtensionContent>
+        <MChip Class="mr-2"
+               Style="min-width:fit-content;"
+               Outlined
+               Active="ShowClearFilter"
+               OnClick="ClearFilter">
+            <MIcon>mdi-filter-variant-remove</MIcon>
+        </MChip>
+        <MChipGroupExtension Style="min-width:0;"
+                             ShowArrows="true">
+            @foreach (var item in filterItems)
+            {
+                <MChip Outlined
+                       IsActive="false"
+                       OnClick="item.OnClick">
+                    <ExpandXTransition>
+                        <MIcon TransitionShow="item.Show"
+                               Icon="@("mdi-check")" Left />
+                    </ExpandXTransition>
+                    @I18n.T(item.Text)
+                    <MIcon Right>mdi-chevron-down</MIcon>
+                </MChip>
+            }
+        </MChipGroupExtension>
+    </ExtensionContent>
+</MToolbar>
+
+<ScrollContainer Id="@scrollContainerId">
+    <DiaryCardList @bind-Value="Diaries"
+                   @bind-Tags="Tags"
+                   NotFoundText="@(I18n.T("Search.Not Found"))">
+    </DiaryCardList>
+</ScrollContainer>
+
+<div class="right-bottom-float-area">
+    <BackTopButton Selector="@scrollContainerSelector">
+    </BackTopButton>
+</div>
+
+<SelectTagsDialog @bind-Visible="showTags"
+                  @bind-Value="SelectedTags"
+                  @bind-Items="Tags">
+</SelectTagsDialog>
+
+<SelectWeatherDialog @bind-Visible="showWeather"
+                     @bind-Value="@SelectedWeather"
+                     ShowText="showIconText">
+</SelectWeatherDialog>
+
+<SelectMoodDialog @bind-Visible="showMood"
+                  @bind-Value="@SelectedMood"
+                  ShowText="showIconText">
+</SelectMoodDialog>
+
+<SelectLocationDialog @bind-Visible="showLocation"
+                      @bind-Value="SelectedLocation">
+</SelectLocationDialog>
+
+<SelectFileTypesDialog @bind-Visible="showFileTypes"
+                       @bind-Value="SelectedFileTypes">
+</SelectFileTypesDialog>
+
+<DateFilterDialog @bind-Visible="showTime"
+                  @bind-Value="DateFilterForm">
+</DateFilterDialog>

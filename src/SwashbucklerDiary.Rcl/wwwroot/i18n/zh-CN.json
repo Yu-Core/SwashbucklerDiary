@@ -88,7 +88,15 @@
   "Search": {
     "Please enter keywords": "请输入关键词",
     "Please enter diary keywords": "请输入日记关键词",
-    "Not Found": "未找到搜索结果"
+    "Not Found": "未找到搜索结果",
+    "Filter": {
+      "Tags": "标签",
+      "Weather": "天气",
+      "Mood": "心情",
+      "Location": "位置",
+      "Time": "时间",
+      "File": "文件"
+    }
   },
   "History": {
     "Calendar": "日历",
@@ -116,8 +124,6 @@
     "ContentPlace": "请输入内容",
     "WordCountType": "Character",
     "CountUnit": "字",
-    "SelectWeather": "选择天气",
-    "SelectMood": "选择心情",
     "InputLocation": "输入位置",
     "LocationPlace": "请输入位置",
     "DisplayIconText": "显示图标文本",
@@ -801,5 +807,8 @@
     "Backup": "备份",
     "Export": "导出",
     "About": "关于"
-  }
+  },
+  "SelectWeather": "选择天气",
+  "SelectMood": "选择心情",
+  "SelectFileTypes": "选择文件类型"
 }

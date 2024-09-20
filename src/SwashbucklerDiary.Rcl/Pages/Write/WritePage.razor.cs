@@ -61,10 +61,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private List<TagModel> tags = [];
 
-        private Dictionary<string, string> weatherIcons = [];
-
-        private Dictionary<string, string> moodIcons = [];
-
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
 
@@ -250,8 +246,6 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, IconTextSwitchText, "mdi-image-text", ()=> SettingChange(nameof(Setting.DiaryIconText), ref showIconText)),
                 new(this, OtherInfoSwitchText, "mdi-information-outline", ()=> SettingChange(nameof(Setting.OtherInfo), ref showOtherInfo)),
             ];
-            weatherIcons = IconService.GetWeatherIcons();
-            moodIcons = IconService.GetMoodIcons();
         }
 
         private void RemoveSelectedTag(TagModel tag)
@@ -261,11 +255,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 SelectedTags.RemoveAt(index);
             }
-        }
-
-        private void SaveSelectTags()
-        {
-            showSelectTag = false;
         }
 
         private async void LeaveAppSaveDiary()

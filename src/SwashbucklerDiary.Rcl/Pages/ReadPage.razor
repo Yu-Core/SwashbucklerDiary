@@ -136,6 +136,7 @@
                 @foreach (var item in Tags)
                 {
                     <MChip @key="item.Id"
+                           IsActive="false"
                            Outlined="true"
                            OnClick="@(()=>To($"tagDetails/{item.Id}"))">
                         @(item.Name)

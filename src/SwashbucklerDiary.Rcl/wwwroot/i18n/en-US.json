@@ -88,7 +88,15 @@
   "Search": {
     "Please enter keywords": "Please enter keywords",
     "Please enter diary keywords": "Please enter diary keywords",
-    "Not Found": "Not Found"
+    "Not Found": "Not Found",
+    "Filter": {
+      "Tags": "Tags",
+      "Weather": "Weather",
+      "Mood": "Mood",
+      "Location": "Location",
+      "Time": "Time",
+      "File": "File"
+    }
   },
   "History": {
     "Calendar": "Calendar",
@@ -116,8 +124,6 @@
     "ContentPlace": "Please enter content",
     "WordCountType": "Word",
     "CountUnit": "words",
-    "SelectWeather": "Select weather",
-    "SelectMood": "Select mood",
     "InputLocation": "Enter location",
     "LocationPlace": "Please enter the location",
     "DisplayIconText": "Display icon text",
@@ -801,5 +807,8 @@
     "Backup": "Backup",
     "Export": "Export",
     "About": "About"
-  }
+  },
+  "SelectWeather": "Select weather",
+  "SelectMood": "Select mood",
+  "SelectFileTypes": "Select file types"
 }
