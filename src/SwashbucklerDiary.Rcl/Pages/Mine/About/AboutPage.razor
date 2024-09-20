@@ -54,22 +54,25 @@
             <MList Class="dynamic-list-item-collection">
                 @foreach (var item in list)
                 {
-                    <MListItem @key="item"
-                               OnClick="item.OnClick">
-                        <MListItemIcon>
-                            <MIcon Class="evident-icon">
-                                @(item.Icon)
-                            </MIcon>
-                        </MListItemIcon>
-                        <MListItemContent>
-                            @(I18n.T(item.Text))
-                        </MListItemContent>
-                        <MListItemAction>
-                            <MIcon>mdi-chevron-right</MIcon>
-                        </MListItemAction>
-                    </MListItem>
+                    @if (item.Show)
+                    {
+                        <MListItem @key="item"
+                                   OnClick="item.OnClick">
+                            <MListItemIcon>
+                                <MIcon Class="evident-icon">
+                                    @(item.Icon)
+                                </MIcon>
+                            </MListItemIcon>
+                            <MListItemContent>
+                                @(I18n.T(item.Text))
+                            </MListItemContent>
+                            <MListItemAction>
+                                <MIcon>mdi-chevron-right</MIcon>
+                            </MListItemAction>
+                        </MListItem>
 
-                    <MDivider Class="mx-5"></MDivider>
+                        <MDivider Class="mx-5"></MDivider>
+                    }
                 }
 
             </MList>
