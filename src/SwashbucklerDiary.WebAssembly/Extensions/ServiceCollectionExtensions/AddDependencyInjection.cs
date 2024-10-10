@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddScoped<II18nService, Services.I18nService>();
             services.AddScoped<IVersionTracking, VersionTracking>();
             services.AddScoped<IPlatformIntegration, PlatformIntegration>();
-            services.AddScoped<IAppFileManager, Essentials.AppFileManager>();
+            services.AddScoped<IAppFileSystem, Essentials.AppFileSystem>();
             services.AddScoped<IMediaResourceManager, Services.MediaResourceManager>();
             services.AddScoped<MasaBlazorHelper>();
 
@@ -49,7 +49,6 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddScoped<IAvatarService, Services.AvatarService>();
             services.AddScoped<ScreenshotJSModule>();
             services.AddScoped<IScreenshot, Screenshot>();
-            services.AddScoped<IStorageSpace, Services.StorageSpace>();
             services.AddScoped<IVersionUpdataManager, Services.VersionUpdataManager>();
 
             return services;

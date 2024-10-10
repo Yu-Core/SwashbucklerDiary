@@ -1,7 +1,7 @@
 ﻿
 namespace SwashbucklerDiary.Rcl.Essentials
 {
-    public abstract class AppFileManager : IAppFileManager
+    public abstract class AppFileSystem : IAppFileSystem
     {
         public abstract string AppDataDirectory { get; }
 
@@ -185,6 +185,30 @@ namespace SwashbucklerDiary.Rcl.Essentials
                     File.Move(file, destinationPath);
                 }
             }
+        }
+
+        public void ClearCache()
+            => ClearFolder(CacheDirectory);
+
+        public string GetCacheSize()
+        {
+            long fileSizeInBytes = GetFolderSize(CacheDirectory);
+            return ConvertBytesToReadable(fileSizeInBytes);
+        }
+
+        protected static string ConvertBytesToReadable(long bytes)
+        {
+            string[] sizes = ["B", "KB", "MB", "GB", "TB"];
+            int i = 0;
+            double size = bytes;
+
+            while (size >= 1024 && i < sizes.Length - 1)
+            {
+                size /= 1024;
+                i++;
+            }
+
+            return $"{size.ToString("0.#")} {sizes[i]}";
         }
     }
 }

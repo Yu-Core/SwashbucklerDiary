@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public abstract class DiaryFileManager : IDiaryFileManager
     {
-        protected readonly IAppFileManager _appFileManager;
+        protected readonly IAppFileSystem _appFileSystem;
 
         protected readonly IPlatformIntegration _platformIntegration;
 
@@ -37,14 +37,14 @@ namespace SwashbucklerDiary.Rcl.Services
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         };
 
-        public DiaryFileManager(IAppFileManager appFileManager,
+        public DiaryFileManager(IAppFileSystem appFileSystem,
             IPlatformIntegration platformIntegration,
             II18nService i18nService,
             IMediaResourceManager mediaResourceManager,
             IDiaryService diaryService,
             IResourceService resourceService)
         {
-            _appFileManager = appFileManager;
+            _appFileSystem = appFileSystem;
             _platformIntegration = platformIntegration;
             _i18n = i18nService;
             _mediaResourceManager = mediaResourceManager;
@@ -54,8 +54,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public Task<string> ExportDBAsync(bool copyResources)
         {
-            string outputFolder = Path.Combine(_appFileManager.CacheDirectory, "DB");
-            string zipFilePath = Path.Combine(_appFileManager.CacheDirectory, $"{backupFileNamePrefix}.zip");
+            string outputFolder = Path.Combine(_appFileSystem.CacheDirectory, "DB");
+            string zipFilePath = Path.Combine(_appFileSystem.CacheDirectory, $"{backupFileNamePrefix}.zip");
 
             if (!Directory.Exists(outputFolder))
             {
@@ -63,7 +63,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileManager.ClearFolder(outputFolder);
+                _appFileSystem.ClearFolder(outputFolder);
             }
 
             string databasePath = GetDatabasePath();
@@ -87,8 +87,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public Task<string> ExportJsonAsync(List<DiaryModel> diaries)
         {
-            string outputFolder = Path.Combine(_appFileManager.CacheDirectory, "Json");
-            string zipFilePath = Path.Combine(_appFileManager.CacheDirectory, $"{exportFileNamePrefix}Json.zip");
+            string outputFolder = Path.Combine(_appFileSystem.CacheDirectory, "Json");
+            string zipFilePath = Path.Combine(_appFileSystem.CacheDirectory, $"{exportFileNamePrefix}Json.zip");
 
             string fileSuffix = ".json";
 
@@ -98,7 +98,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileManager.ClearFolder(outputFolder);
+                _appFileSystem.ClearFolder(outputFolder);
             }
 
             foreach (var item in diaries)
@@ -132,8 +132,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private Task<string> ExportTextFileAsync(List<DiaryModel> diaries, string name, string fileExtension)
         {
-            string outputFolder = Path.Combine(_appFileManager.CacheDirectory, name);
-            string zipFilePath = Path.Combine(_appFileManager.CacheDirectory, $"{exportFileNamePrefix}{name}.zip");
+            string outputFolder = Path.Combine(_appFileSystem.CacheDirectory, name);
+            string zipFilePath = Path.Combine(_appFileSystem.CacheDirectory, $"{exportFileNamePrefix}{name}.zip");
 
             if (!Directory.Exists(outputFolder))
             {
@@ -141,7 +141,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileManager.ClearFolder(outputFolder);
+                _appFileSystem.ClearFolder(outputFolder);
             }
 
             foreach (var item in diaries)
@@ -164,7 +164,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public Task<string> ExportXlsxAsync(List<DiaryModel> diaries)
         {
-            string filePath = Path.Combine(_appFileManager.CacheDirectory, $"{exportFileNamePrefix}Xlsx.xlsx");
+            string filePath = Path.Combine(_appFileSystem.CacheDirectory, $"{exportFileNamePrefix}Xlsx.xlsx");
 
             if (File.Exists(filePath))
             {
@@ -285,14 +285,14 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             foreach (var item in _mediaResourceManager.MediaResourceFolders.Values)
             {
-                var sourceDir = Path.Combine(_appFileManager.AppDataDirectory, item);
+                var sourceDir = Path.Combine(_appFileSystem.AppDataDirectory, item);
                 if (!Directory.Exists(sourceDir))
                 {
                     continue;
                 }
 
                 var targetDir = Path.Combine(outputFolder, "appdata", item);
-                _appFileManager.CopyFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
+                _appFileSystem.CopyFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
             }
         }
 
@@ -318,7 +318,7 @@ namespace SwashbucklerDiary.Rcl.Services
         public async Task<bool> ImportDBAsync(Stream stream)
         {
             string fileName = Guid.NewGuid().ToString() + ".zip";
-            string path = await _appFileManager.CreateTempFileAsync(fileName, stream);
+            string path = await _appFileSystem.CreateTempFileAsync(fileName, stream);
             var flag = await ImportDBAsync(path);
             File.Delete(path);
             return flag;
@@ -326,7 +326,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task<bool> ImportDBAsync(string filePath)
         {
-            string outputFolder = Path.Combine(_appFileManager.CacheDirectory, "DB");
+            string outputFolder = Path.Combine(_appFileSystem.CacheDirectory, "DB");
 
             if (!File.Exists(filePath))
             {
@@ -340,7 +340,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileManager.ClearFolder(outputFolder);
+                _appFileSystem.ClearFolder(outputFolder);
             }
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
@@ -387,7 +387,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 return false;
             }
 
-            string outputFolder = Path.Combine(_appFileManager.CacheDirectory, "Json");
+            string outputFolder = Path.Combine(_appFileSystem.CacheDirectory, "Json");
 
             if (!Directory.Exists(outputFolder))
             {
@@ -395,7 +395,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileManager.ClearFolder(outputFolder);
+                _appFileSystem.ClearFolder(outputFolder);
             }
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
@@ -448,7 +448,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 return false;
             }
 
-            string outputFolder = Path.Combine(_appFileManager.CacheDirectory, "Markdown");
+            string outputFolder = Path.Combine(_appFileSystem.CacheDirectory, "Markdown");
 
             if (!Directory.Exists(outputFolder))
             {
@@ -456,7 +456,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileManager.ClearFolder(outputFolder);
+                _appFileSystem.ClearFolder(outputFolder);
             }
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
@@ -513,8 +513,8 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             foreach (var item in _mediaResourceManager.MediaResourceFolders.Values)
             {
-                var folderPath = Path.Combine(_appFileManager.AppDataDirectory, item);
-                _appFileManager.ClearFolder(folderPath);
+                var folderPath = Path.Combine(_appFileSystem.AppDataDirectory, item);
+                _appFileSystem.ClearFolder(folderPath);
             }
         }
 
@@ -528,8 +528,8 @@ namespace SwashbucklerDiary.Rcl.Services
                     continue;
                 }
 
-                var targetDir = Path.Combine(_appFileManager.AppDataDirectory, item);
-                _appFileManager.MoveFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
+                var targetDir = Path.Combine(_appFileSystem.AppDataDirectory, item);
+                _appFileSystem.MoveFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
             }
         }
 
@@ -541,8 +541,8 @@ namespace SwashbucklerDiary.Rcl.Services
                 return;
             }
 
-            var targetDir = Path.Combine(_appFileManager.AppDataDirectory, "Image");
-            _appFileManager.MoveFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
+            var targetDir = Path.Combine(_appFileSystem.AppDataDirectory, "Image");
+            _appFileSystem.MoveFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
         }
 
         public void UpdateResourceUri(List<DiaryModel> diaries)

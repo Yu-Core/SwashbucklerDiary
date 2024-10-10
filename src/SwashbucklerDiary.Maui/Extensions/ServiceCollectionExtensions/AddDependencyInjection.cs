@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddSingleton<II18nService, Services.I18nService>();
             services.AddSingleton<Rcl.Essentials.IVersionTracking, Essentials.VersionTracking>();
             services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
-            services.AddSingleton<IAppFileManager, Essentials.AppFileManager>();
+            services.AddSingleton<IAppFileSystem, Essentials.AppFileSystem>();
             services.AddSingleton<IMediaResourceManager, Services.MediaResourceManager>();
             services.AddSingleton<MasaBlazorHelper>();
 
@@ -48,7 +48,6 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddSingleton<IAvatarService, Services.AvatarService>();
             services.AddScoped<ScreenshotJSModule>();
             services.AddScoped<Rcl.Essentials.IScreenshot, Essentials.Screenshot>();
-            services.AddSingleton<IStorageSpace, Services.StorageSpace>();
             services.AddSingleton<IVersionUpdataManager, Services.VersionUpdataManager>();
             services.AddSingleton<IWebDAV, Essentials.WebDAV>();
             services.AddSingleton<ILANSenderService, LANSenderService>();

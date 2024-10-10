@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string? cacheSize;
 
         [Inject]
-        private IStorageSpace StorageSpace { get; set; } = default!;
+        private IAppFileSystem AppFileSystem { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -31,13 +31,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void UpdateCacheSize()
         {
-            cacheSize = StorageSpace.GetCacheSize();
+            cacheSize = AppFileSystem.GetCacheSize();
         }
 
         private async Task ClearCache()
         {
             showClearCache = false;
-            StorageSpace.ClearCache();
+            AppFileSystem.ClearCache();
             UpdateCacheSize();
             await PopupServiceHelper.Success(I18n.T("Storage.ClearSuccess"));
         }

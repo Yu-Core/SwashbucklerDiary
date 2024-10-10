@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
         [Inject]
-        private IAppFileManager AppFileManager { get; set; } = default!;
+        private IAppFileSystem AppFileManager { get; set; } = default!;
 
         [Inject]
         private MarkdownJSModule Module { get; set; } = default!;

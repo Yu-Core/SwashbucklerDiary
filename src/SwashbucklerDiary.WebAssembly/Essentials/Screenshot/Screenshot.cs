@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
     {
         private readonly ScreenshotJSModule _module;
 
-        private readonly IAppFileManager _appFileManager;
+        private readonly IAppFileSystem _appFileSystem;
 
         private readonly string screenshotFileName = "Screenshot.png";
 
@@ -16,12 +16,12 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         private readonly II18nService _i18n;
 
         public Screenshot(ScreenshotJSModule module,
-            IAppFileManager appFileManager,
+            IAppFileSystem appFileSystem,
             IPopupServiceHelper popupServiceHelper,
             II18nService i18NService)
         {
             _module = module;
-            _appFileManager = appFileManager;
+            _appFileSystem = appFileSystem;
             _popupServiceHelper = popupServiceHelper;
             _i18n = i18NService;
         }
@@ -29,11 +29,11 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         public async Task<string> CaptureAsync(string selector)
         {
             //var base64 = await ScreenshotToBase64(selector);
-            //return await _appFileManager.CreateTempFileAsync(screenshotFileName, Convert.FromBase64String(base64));
+            //return await _appFileSystem.CreateTempFileAsync(screenshotFileName, Convert.FromBase64String(base64));
             await _popupServiceHelper.Error(_i18n.T("Share.NotSupported"));
             return string.Empty;
         }
-        
+
         protected async Task<string> ScreenshotToBase64(string selector)
         {
             var str = await _module.GetScreenshotBase64(selector);

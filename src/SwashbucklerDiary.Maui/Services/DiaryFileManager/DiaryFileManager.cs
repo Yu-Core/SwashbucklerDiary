@@ -5,13 +5,13 @@ namespace SwashbucklerDiary.Maui.Services
 {
     public class DiaryFileManager : Rcl.Services.DiaryFileManager
     {
-        public DiaryFileManager(IAppFileManager appFileManager,
+        public DiaryFileManager(IAppFileSystem appFileSystem,
             IPlatformIntegration platformIntegration,
             II18nService i18nService,
             IMediaResourceManager mediaResourceManager,
             IDiaryService diaryService,
             IResourceService resourceService)
-            : base(appFileManager, platformIntegration, i18nService, mediaResourceManager, diaryService, resourceService)
+            : base(appFileSystem, platformIntegration, i18nService, mediaResourceManager, diaryService, resourceService)
         {
         }
 

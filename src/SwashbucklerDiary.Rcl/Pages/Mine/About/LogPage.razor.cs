@@ -35,7 +35,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private ILogService LogService { get; set; } = default!;
 
         [Inject]
-        private IAppFileManager AppFileManager { get; set; } = default!;
+        private IAppFileSystem AppFileManager { get; set; } = default!;
 
         protected override void OnInitialized()
         {

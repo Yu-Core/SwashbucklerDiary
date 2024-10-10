@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IPopupServiceHelper _popupServiceHelper;
 
-        protected readonly IAppFileManager _appFileManager;
+        protected readonly IAppFileSystem _appFileSystem;
 
         protected readonly static string avatarDirectoryName = "Avatar";
 
@@ -26,16 +26,16 @@ namespace SwashbucklerDiary.Rcl.Services
             IPlatformIntegration platformIntegration,
             II18nService i18n,
             IPopupServiceHelper popupServiceHelper,
-            IAppFileManager appFileManager)
+            IAppFileSystem appFileSystem)
         {
             _settingService = settingService;
             _mediaResourceManager = mediaResourceManager;
             _platformIntegration = platformIntegration;
             _i18n = i18n;
             _popupServiceHelper = popupServiceHelper;
-            _appFileManager = appFileManager;
+            _appFileSystem = appFileSystem;
 
-            targetDirectoryPath = Path.Combine(_appFileManager.AppDataDirectory, avatarDirectoryName);
+            targetDirectoryPath = Path.Combine(_appFileSystem.AppDataDirectory, avatarDirectoryName);
         }
 
         public abstract Task<string> SetAvatarByCapture();

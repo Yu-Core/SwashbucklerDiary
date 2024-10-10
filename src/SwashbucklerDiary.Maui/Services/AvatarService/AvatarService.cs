@@ -10,8 +10,8 @@ namespace SwashbucklerDiary.Maui.Services
             IPlatformIntegration platformIntegration,
             II18nService i18n,
             IPopupServiceHelper popupServiceHelper,
-            IAppFileManager appFileManager)
-            : base(settingService, mediaResourceManager, platformIntegration, i18n, popupServiceHelper, appFileManager)
+            IAppFileSystem appFileSystem)
+            : base(settingService, mediaResourceManager, platformIntegration, i18n, popupServiceHelper, appFileSystem)
         {
         }
 

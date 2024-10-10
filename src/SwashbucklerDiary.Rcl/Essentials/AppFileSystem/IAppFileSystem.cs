@@ -1,6 +1,6 @@
 ﻿namespace SwashbucklerDiary.Rcl.Essentials
 {
-    public interface IAppFileManager
+    public interface IAppFileSystem
     {
         public string AppDataDirectory { get; }
 
@@ -25,5 +25,16 @@
         void CopyFolder(string sourceFolder, string destinationFolder, SearchOption searchOption);
 
         void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption);
+
+        /// <summary>
+        /// 清除缓存
+        /// </summary>
+        void ClearCache();
+
+        /// <summary>
+        /// 获取缓存大小
+        /// </summary>
+        /// <returns></returns>
+        string GetCacheSize();
     }
 }

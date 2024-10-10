@@ -16,11 +16,11 @@ namespace SwashbucklerDiary.Maui.Services
         protected override string? CustomPathPrefix => _customPathPrefix;
 
         public MediaResourceManager(IPlatformIntegration platformIntegration,
-            IAppFileManager appFileManager,
+            IAppFileSystem appFileSystem,
             IPopupServiceHelper popupServiceHelper,
             II18nService i18nService,
             ILogger<MediaResourceManager> logger)
-            : base(platformIntegration, appFileManager, popupServiceHelper, i18nService, logger)
+            : base(platformIntegration, appFileSystem, popupServiceHelper, i18nService, logger)
         {
             _httpClient = new HttpClient();
         }
@@ -41,13 +41,13 @@ namespace SwashbucklerDiary.Maui.Services
                 if (sourceFilePath.StartsWith(FileSystem.CacheDirectory))
                 {
                     stream.Close();
-                    await _appFileManager.FileMoveAsync(sourceFilePath, targetFilePath);
+                    await _appFileSystem.FileMoveAsync(sourceFilePath, targetFilePath);
                 }
                 else
                 {
                     //将流的位置重置为起始位置
                     stream.Seek(0, SeekOrigin.Begin);
-                    await _appFileManager.FileCopyAsync(targetFilePath, stream);
+                    await _appFileSystem.FileCopyAsync(targetFilePath, stream);
                 }
             }
 
@@ -129,7 +129,7 @@ namespace SwashbucklerDiary.Maui.Services
             {
                 using Stream stream = await _httpClient.GetStreamAsync(url);
                 var fileName = Path.GetFileName(url);
-                filePath = await _appFileManager.CreateTempFileAsync(fileName, stream);
+                filePath = await _appFileSystem.CreateTempFileAsync(fileName, stream);
             }
             catch (Exception e)
             {
@@ -149,7 +149,7 @@ namespace SwashbucklerDiary.Maui.Services
 
             using var stream = await FileSystem.OpenAppPackageFileAsync($"wwwroot/{url}");
             var fileName = Path.GetFileName(url);
-            return await _appFileManager.CreateTempFileAsync(fileName, stream);
+            return await _appFileSystem.CreateTempFileAsync(fileName, stream);
         }
 
         public override async Task<AudioFileInfo> GetAudioFileInfo(string uri)
@@ -170,7 +170,7 @@ namespace SwashbucklerDiary.Maui.Services
                 string pictureFilePath = FileSystem.Current.CacheDirectory + Path.DirectorySeparatorChar + pictureFileName;
                 if (!File.Exists(pictureFilePath))
                 {
-                    await _appFileManager.CreateTempFileAsync(pictureFileName, audioFile.Tag.Pictures[0].Data.Data);
+                    await _appFileSystem.CreateTempFileAsync(pictureFileName, audioFile.Tag.Pictures[0].Data.Data);
                 }
 
                 pictureUri = LocalFileWebAccessHelper.FilePathToUrlRelativePath(pictureFilePath);

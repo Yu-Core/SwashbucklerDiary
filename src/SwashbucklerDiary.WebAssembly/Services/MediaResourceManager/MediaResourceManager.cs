@@ -17,13 +17,13 @@ namespace SwashbucklerDiary.WebAssembly.Services
         private readonly NavigationManager _navigationManager;
 
         public MediaResourceManager(IPlatformIntegration platformIntegration,
-            IAppFileManager appFileManager,
+            IAppFileSystem appFileSystem,
             IPopupServiceHelper popupServiceHelper,
             II18nService i18nService,
             ILogger<MediaResourceManager> logger,
             IJSRuntime jSRuntime,
             NavigationManager navigationManager) :
-            base(platformIntegration, appFileManager, popupServiceHelper, i18nService, logger)
+            base(platformIntegration, appFileSystem, popupServiceHelper, i18nService, logger)
         {
             _jSRuntime = jSRuntime;
             _navigationManager = navigationManager;
@@ -43,11 +43,11 @@ namespace SwashbucklerDiary.WebAssembly.Services
             {
                 if (sourceFilePath.StartsWith(FileSystem.CacheDirectory))
                 {
-                    await _appFileManager.FileMoveAsync(sourceFilePath, targetFilePath);
+                    await _appFileSystem.FileMoveAsync(sourceFilePath, targetFilePath);
                 }
                 else
                 {
-                    await _appFileManager.FileCopyAsync(targetFilePath, sourceFilePath);
+                    await _appFileSystem.FileCopyAsync(targetFilePath, sourceFilePath);
                 }
 
                 //由于设置的从memfs(内存)到idbfs(indexedDB)的同步时间为1s，拦截请求(service worker)那里会找不到文件，所以此处应立即同步
@@ -109,7 +109,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
                 string pictureFilePath = FileSystem.CacheDirectory + Path.DirectorySeparatorChar + pictureFileName;
                 if (!File.Exists(pictureFilePath))
                 {
-                    await _appFileManager.CreateTempFileAsync(pictureFileName, audioFile.Tag.Pictures[0].Data.Data);
+                    await _appFileSystem.CreateTempFileAsync(pictureFileName, audioFile.Tag.Pictures[0].Data.Data);
                     await _jSRuntime.InvokeVoidAsync("MEMFileSystem.syncfs");
                 }
 

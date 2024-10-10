@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Rcl.Services
     {
         protected readonly IPlatformIntegration _platformIntegration;
 
-        protected readonly IAppFileManager _appFileManager;
+        protected readonly IAppFileSystem _appFileSystem;
 
         protected readonly IPopupServiceHelper _popupServiceHelper;
 
@@ -28,13 +28,13 @@ namespace SwashbucklerDiary.Rcl.Services
         public Dictionary<MediaResource, string> MediaResourceFolders => _mediaResourceFolders;
 
         public MediaResourceManager(IPlatformIntegration mauiPlatformService,
-            IAppFileManager appFileManager,
+            IAppFileSystem appFileSystem,
             IPopupServiceHelper popupServiceHelper,
             II18nService i18nService,
             ILogger<MediaResourceManager> logger)
         {
             _platformIntegration = mauiPlatformService;
-            _appFileManager = appFileManager;
+            _appFileSystem = appFileSystem;
             _popupServiceHelper = popupServiceHelper;
             _i18n = i18nService;
             _logger = logger;
@@ -86,7 +86,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected Task<string?> CreateMediaResourceFileAsync(MediaResource mediaResource, string? sourceFilePath)
         {
-            var targetDirectoryPath = Path.Combine(_appFileManager.AppDataDirectory, MediaResourceFolders[mediaResource]);
+            var targetDirectoryPath = Path.Combine(_appFileSystem.AppDataDirectory, MediaResourceFolders[mediaResource]);
             return CreateMediaResourceFileAsync(targetDirectoryPath, sourceFilePath);
         }
 

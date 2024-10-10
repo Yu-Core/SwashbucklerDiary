@@ -6,21 +6,21 @@ namespace SwashbucklerDiary.Maui.Essentials
     {
         private readonly ScreenshotJSModule _module;
 
-        private readonly IAppFileManager _appFileManager;
+        private readonly IAppFileSystem _appFileSystem;
 
         private readonly string screenshotFileName = "Screenshot.png";
 
         public Screenshot(ScreenshotJSModule module,
-            IAppFileManager appFileManager)
+            IAppFileSystem appFileSystem)
         {
             _module = module;
-            _appFileManager = appFileManager;
+            _appFileSystem = appFileSystem;
         }
 
         public async Task<string> CaptureAsync(string selector)
         {
             using var stream = await _module.GetScreenshotStream(selector);
-            return await _appFileManager.CreateTempFileAsync(screenshotFileName, stream);
+            return await _appFileSystem.CreateTempFileAsync(screenshotFileName, stream);
         }
     }
 }
