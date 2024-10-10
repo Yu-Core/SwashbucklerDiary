@@ -2,6 +2,7 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background: var( --m-theme-surface);
+    overscroll-behavior: none;
 }
 
 h1:focus {
