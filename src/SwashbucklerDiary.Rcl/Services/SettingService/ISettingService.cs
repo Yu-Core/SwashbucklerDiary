@@ -130,7 +130,7 @@ namespace SwashbucklerDiary.Rcl.Services
         public T Get<T>(Expression<Func<Setting, T>> expr, T defaultValue)
         {
             var key = GetSettingKey(expr);
-            return GetTemp(key, defaultValue);
+            return Get(key, defaultValue);
         }
 
         public Task RemoveAsync<T>(Expression<Func<Setting, T>> expr)

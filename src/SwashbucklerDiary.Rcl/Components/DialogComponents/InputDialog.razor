@@ -19,7 +19,7 @@
         <MCardText Class="pb-0">
             @if (!MultiLine)
             {
-                <MTextField @bind-Value="internalValue"
+                <MTextField @bind-Value="internalText"
                             @ref="textField"
                             OnEnter="HandleOnEnter"
                             Dense
@@ -38,7 +38,7 @@
             }
             else
             {
-                <MTextarea @bind-Value="internalValue"
+                <MTextarea @bind-Value="internalText"
                            @ref="mTextarea"
                            Class="rounded-lg"
                            HideDetails="@("auto")"

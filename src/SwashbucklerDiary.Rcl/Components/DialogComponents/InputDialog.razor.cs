@@ -5,20 +5,17 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class InputDialog : FocusDialogComponentBase
     {
-        private string? internalValue;
+        private string? internalText;
 
         private bool showPassword;
 
         private MTextarea? mTextarea;
 
         [Parameter]
-        public string? Value { get; set; }
+        public string? Text { get; set; }
 
         [Parameter]
         public string? Title { get; set; }
-
-        [Parameter]
-        public string? Text { get; set; }
 
         [Parameter]
         public EventCallback<string> OnOK { get; set; }
@@ -72,17 +69,21 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task HandleOnOK()
         {
-            if (internalValue == Value) return;
+            if (internalText == Text)
+            {
+                await InternalVisibleChanged(false);
+                return;
+            }
 
             if (OnOK.HasDelegate)
             {
-                await OnOK.InvokeAsync(internalValue);
+                await OnOK.InvokeAsync(internalText);
             }
         }
 
         private void HandleOnBeforeShowContent()
         {
-            internalValue = Value;
+            internalText = Text;
         }
     }
 }
