@@ -30,7 +30,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool taskListLineThrough;
 
+        private bool afterFirstQuery;
+
+        private bool highlightSearchAutofocus = true;
+
         private readonly string scrollContainerId = $"scroll-container-{Guid.NewGuid():N}";
+
+        private string? search;
 
         private string scrollContainerSelector = string.Empty;
 
@@ -58,6 +64,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Parameter]
         public Guid Id { get; set; }
 
+        [SupplyParameterFromQuery]
+        public string? Query { get; set; }
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -74,6 +83,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 await UpdateDiary();
                 StateHasChanged();
+                if (!enableMarkdown)
+                {
+                    await HandleFirstQuery();
+                }
             }
         }
 
@@ -145,7 +158,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, "Diary.Export","mdi-export", OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon, MarkdownChanged),
                 new(this, "Read.CopyReference", "mdi-link-variant", CopyReference),
-                new(this, "Read.Search", "mdi-text-box-search-outline", ()=>showHighlightSearch=true),
+                new(this, "Read.Search", "mdi-text-box-search-outline", OpenSearch),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
 
@@ -274,6 +287,25 @@ namespace SwashbucklerDiary.Rcl.Pages
             var text = $"[{I18n.T("Read.DiaryLink")}](read/{Id})";
             await PlatformIntegration.SetClipboard(text);
             await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
+        }
+
+        private async Task HandleFirstQuery()
+        {
+            if (afterFirstQuery) return;
+            afterFirstQuery = true;
+            if (string.IsNullOrWhiteSpace(Query)) return;
+
+            await Task.Delay(500);
+            search = Query;
+            highlightSearchAutofocus = false;
+            showHighlightSearch = true;
+            StateHasChanged();
+        }
+
+        private void OpenSearch()
+        {
+            highlightSearchAutofocus = true;
+            showHighlightSearch = true;
         }
     }
 }

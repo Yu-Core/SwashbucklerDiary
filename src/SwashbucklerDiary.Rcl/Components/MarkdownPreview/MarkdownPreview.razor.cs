@@ -55,6 +55,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public bool TaskListLineThrough { get; set; }
 
+        [Parameter]
+        public EventCallback OnAfter { get; set; }
+
         [JSInvokable]
         public async Task Copy()
         {

@@ -26,6 +26,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public bool Clearable { get; set; } = true;
 
+        [Parameter]
+        public bool Autofocus { get; set; } = true;
+
         private string? TextFieldColor => Dark ? "white" : "grey";
     }
 }

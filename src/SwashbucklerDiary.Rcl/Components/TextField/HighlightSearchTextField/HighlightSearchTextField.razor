@@ -4,12 +4,14 @@
 @if (Visible)
 {
     <MyAppBar>
-        <TransparentTextField @bind-Value="search"
-                              OnInput="Search"
+        <TransparentTextField Value="@Value"
+                              ValueChanged="HandleValueChanged"
+                              OnInput="HighlightSearch"
                               Clearable="false"
+                              Autofocus="Autofocus"
                               Placeholder="@I18n.T("Read.Search on the page")">
         </TransparentTextField>
-        @if (!string.IsNullOrWhiteSpace(search))
+        @if (!string.IsNullOrWhiteSpace(Value))
         {
             <div class="px-3">@(CurrentNumber)/@(Count)</div>
         }

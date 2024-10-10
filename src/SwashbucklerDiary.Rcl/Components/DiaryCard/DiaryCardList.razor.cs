@@ -37,6 +37,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public string? NotFoundText { get; set; }
 
+        [Parameter]
+        public EventCallback<DiaryModel> OnClick { get; set; }
+
         protected override DiaryModel SelectedItem
         {
             get => options.SelectedItemValue;
@@ -202,6 +205,18 @@ namespace SwashbucklerDiary.Rcl.Components
             var text = $"[{I18n.T("Read.DiaryLink")}](read/{SelectedItem.Id})";
             await PlatformIntegration.SetClipboard(text);
             await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
+        }
+
+        private async void ClickCard(DiaryModel diary)
+        {
+            if (OnClick.HasDelegate)
+            {
+                await OnClick.InvokeAsync(diary);
+            }
+            else
+            {
+                To($"read/{diary.Id}");
+            }
         }
     }
 }

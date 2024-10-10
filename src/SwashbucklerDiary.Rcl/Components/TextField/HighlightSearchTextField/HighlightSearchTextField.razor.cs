@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string? _previousSelector;
 
-        private string? search;
+        private string? _previousValue;
 
         private BetterSearchJSObjectReferenceProxy? _betterSearchProxy;
 
@@ -24,7 +24,16 @@ namespace SwashbucklerDiary.Rcl.Components
         }
 
         [Parameter]
+        public string? Value { get; set; }
+
+        [Parameter]
+        public EventCallback<string> ValueChanged { get; set; }
+
+        [Parameter]
         public string? Selector { get; set; } = default!;
+
+        [Parameter]
+        public bool Autofocus { get; set; } = true;
 
         protected override async Task OnParametersSetAsync()
         {
@@ -41,6 +50,18 @@ namespace SwashbucklerDiary.Rcl.Components
 
                 await InitBetterSearchAsync();
             }
+
+            if (_previousValue != Value)
+            {
+                _previousValue = Value;
+
+                if (_betterSearchProxy is null)
+                {
+                    return;
+                }
+
+                await HighlightSearch(Value);
+            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -50,6 +71,11 @@ namespace SwashbucklerDiary.Rcl.Components
             if (firstRender)
             {
                 await InitBetterSearchAsync();
+                if (!string.IsNullOrWhiteSpace(Value))
+                {
+                    await HighlightSearch(Value);
+                    StateHasChanged();
+                }
             }
         }
 
@@ -77,7 +103,7 @@ namespace SwashbucklerDiary.Rcl.Components
             _betterSearchProxy = await BetterSearchJSModule.Init(Selector);
         }
 
-        private async Task Search(string text)
+        private async Task HighlightSearch(string? text)
         {
             if (_betterSearchProxy is null) return;
             if (string.IsNullOrWhiteSpace(text))
@@ -124,7 +150,12 @@ namespace SwashbucklerDiary.Rcl.Components
             else
             {
                 NavigateController.RemoveHistoryAction(CloseSearch);
-                search = string.Empty;
+                Value = string.Empty;
+                if (ValueChanged.HasDelegate)
+                {
+                    await ValueChanged.InvokeAsync(Value);
+                }
+
                 await Clear();
             }
         }
@@ -132,6 +163,15 @@ namespace SwashbucklerDiary.Rcl.Components
         private async void CloseSearch()
         {
             await InternalVisibleChanged(false);
+        }
+
+        private async Task HandleValueChanged(string value)
+        {
+            Value = _previousValue = value;
+            if (ValueChanged.HasDelegate)
+            {
+                await ValueChanged.InvokeAsync(value);
+            }
         }
     }
 }

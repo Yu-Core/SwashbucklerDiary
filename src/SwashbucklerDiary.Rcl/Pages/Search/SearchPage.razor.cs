@@ -234,5 +234,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             return exp;
         }
+
+        private void ToRead(DiaryModel diary)
+        {
+            string? queryParameters = string.IsNullOrWhiteSpace(search) ? null : $"?query={search}";
+            To($"read/{diary.Id}{queryParameters}");
+        }
     }
 }

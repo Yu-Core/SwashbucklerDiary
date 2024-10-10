@@ -51,7 +51,9 @@
 }
 
 <HighlightSearchTextField @bind-Visible="showHighlightSearch"
-                          Selector="@($".{highlightSearchContainerClass}")">
+                          @bind-Value="@search"
+                          Selector="@($".{highlightSearchContainerClass}")"
+                          Autofocus="highlightSearchAutofocus">
 </HighlightSearchTextField>
 
 <ScrollContainer Id="@scrollContainerId"
@@ -120,7 +122,8 @@
                                  Class="@($"px-3 {highlightSearchContainerClass}")"
                                  Style="padding-top:10px"
                                  FirstLineIndent="firstLineIndent"
-                                 TaskListLineThrough="taskListLineThrough">
+                                 TaskListLineThrough="taskListLineThrough"
+                                 OnAfter="HandleFirstQuery">
                 </MarkdownPreview>
             }
             else

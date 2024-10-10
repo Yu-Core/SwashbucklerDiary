@@ -26,6 +26,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [CascadingParameter(Name = "IsDark")]
         public bool Dark { get; set; }
 
+        [Parameter]
+        public EventCallback<DiaryModel> OnClick { get; set; }
+
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
@@ -41,8 +44,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string Theme => Dark ? "theme--dark" : "theme--light";
 
-        private void ToRead() => To($"read/{Value.Id}");
-
         private void SetContent()
         {
             if (previousValue != Value)
@@ -52,6 +53,14 @@ namespace SwashbucklerDiary.Rcl.Components
                 text = Value.ExtractText();
                 weatherIcon = string.IsNullOrWhiteSpace(Value.Weather) ? null : GlobalConfiguration.GetWeatherIcon(Value.Weather);
                 moodIcon = string.IsNullOrWhiteSpace(Value.Mood) ? null : GlobalConfiguration.GetMoodIcon(Value.Mood);
+            }
+        }
+
+        private async Task HandeOnClick()
+        {
+            if (OnClick.HasDelegate)
+            {
+                await OnClick.InvokeAsync(Value);
             }
         }
     }
