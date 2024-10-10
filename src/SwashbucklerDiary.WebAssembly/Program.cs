@@ -1,4 +1,4 @@
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using SwashbucklerDiary.WebAssembly;
@@ -21,7 +21,5 @@ builder.Services.AddSqlsugarConfig();
 builder.Services.AddSerilogConfig();
 
 builder.Services.AddDependencyInjection();
-
-await builder.Services.AddGlobalAsync();
 
 await builder.Build().RunAsync();

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Maui.Models;
 using SwashbucklerDiary.Maui.Services;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Maui.Pages
@@ -39,7 +40,7 @@ namespace SwashbucklerDiary.Maui.Pages
         private IDiaryFileManager DiaryFileManager { get; set; } = default!;
 
         [Inject]
-        private IIconService IconService { get; set; } = default!;
+        private IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
 
         [Inject]
         private ILogger<LANSenderPage> Logger { get; set; } = default!;
@@ -153,7 +154,7 @@ namespace SwashbucklerDiary.Maui.Pages
             {
                 LANDeviceInfoListItem lanDeviceInfoListItem = new(deviceInfo)
                 {
-                    DeviceIcon = IconService.GetDeviceSystemIcon(deviceInfo.DevicePlatform),
+                    DeviceIcon = GlobalConfiguration.GetPlatformIcon(deviceInfo.DevicePlatform),
                     OnClick = () => Send(deviceInfo.IPAddress)
                 };
 

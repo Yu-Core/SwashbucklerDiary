@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Serilog;
 
 namespace SwashbucklerDiary.Maui.Extensions
 {
@@ -6,8 +6,7 @@ namespace SwashbucklerDiary.Maui.Extensions
     {
         public static IServiceCollection AddMauiExceptionHandler(this IServiceCollection services)
         {
-            var logger = services.BuildServiceProvider().GetRequiredService<ILogger<App>>();
-            MauiExceptions.UnhandledException += (sender, args) => logger.LogError(message: args.ExceptionObject.ToString());
+            MauiExceptions.UnhandledException += (sender, args) => Log.Error(args.ExceptionObject.ToString() ?? "no message");
             return services;
         }
     }

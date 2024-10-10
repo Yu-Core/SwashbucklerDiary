@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private DiaryModel? previousValue;
 
         [Inject]
-        private IIconService IconService { get; set; } = default!;
+        private IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
 
         [CascadingParameter]
         public DiaryCardListOptions DiaryCardListOptions { get; set; } = default!;
@@ -53,8 +53,8 @@ namespace SwashbucklerDiary.Rcl.Components
                 previousValue = Value;
                 title = Value.ExtractTitle();
                 text = Value.ExtractText();
-                weatherIcon = string.IsNullOrWhiteSpace(Value.Weather) ? null : IconService.GetWeatherIcon(Value.Weather);
-                moodIcon = string.IsNullOrWhiteSpace(Value.Mood) ? null : IconService.GetMoodIcon(Value.Mood);
+                weatherIcon = string.IsNullOrWhiteSpace(Value.Weather) ? null : GlobalConfiguration.GetWeatherIcon(Value.Weather);
+                moodIcon = string.IsNullOrWhiteSpace(Value.Mood) ? null : GlobalConfiguration.GetMoodIcon(Value.Mood);
             }
         }
     }

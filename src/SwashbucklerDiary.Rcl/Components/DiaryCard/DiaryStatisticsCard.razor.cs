@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private IDiaryService DiaryService { get; set; } = default!;
 
         [Inject]
-        private IIconService IIconService { get; set; } = default!;
+        private IGlobalConfiguration IGlobalConfiguration { get; set; } = default!;
 
         [Parameter]
         public List<DiaryModel> Value
@@ -44,7 +44,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string? MostWeatherText => MostWeather is null ? I18n.T("Statistics.Not have") : I18n.T("Weather." + MostWeather);
 
-        private string? MostWeatherIcon => MostWeather is null ? string.Empty : IIconService.GetWeatherIcon(MostWeather);
+        private string? MostWeatherIcon => MostWeather is null ? string.Empty : IGlobalConfiguration.GetWeatherIcon(MostWeather);
 
         private string? MostMood
             => GetComputedValue(() =>
@@ -59,7 +59,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string? MostMoodText => MostMood is null ? I18n.T("Statistics.Not have") : I18n.T("Mood." + MostMood);
 
-        private string? MostMoodIcon => MostMood is null ? string.Empty : IIconService.GetMoodIcon(MostMood);
+        private string? MostMoodIcon => MostMood is null ? string.Empty : IGlobalConfiguration.GetMoodIcon(MostMood);
 
         private string? EarliestDate
             => GetComputedValue(() => Value.OrderBy(d => d.CreateTime).FirstOrDefault()?.CreateTime.ToString("d"), [nameof(Value)]);

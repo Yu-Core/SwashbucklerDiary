@@ -8,8 +8,6 @@ namespace SwashbucklerDiary.Rcl.Services
 
         CultureInfo Culture { get; }
 
-        Dictionary<string,string> Languages { get; }
-
         string T(string? key);
 
         string? T(string? key, bool whenNullReturnKey);

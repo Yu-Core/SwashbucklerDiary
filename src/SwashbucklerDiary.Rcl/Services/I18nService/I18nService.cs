@@ -3,13 +3,11 @@ using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
-    public abstract class I18nService : II18nService
+    public class I18nService : II18nService
     {
         private readonly I18n _i18n;
 
         public CultureInfo Culture => _i18n.Culture;
-
-        public abstract Dictionary<string, string> Languages { get; }
 
         public event Action<CultureInfo>? OnChanged;
 

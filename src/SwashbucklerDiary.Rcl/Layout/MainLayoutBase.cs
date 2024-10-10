@@ -43,6 +43,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         protected IJSRuntime JSRuntime { get; set; } = default!;
 
+        [Inject]
+        protected IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
+
         public void Dispose()
         {
             OnDispose();
@@ -68,6 +71,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected virtual async Task InitSettingsAsync()
         {
             await SettingService.InitializeAsync();
+            await GlobalConfiguration.InitializeAsync();
             afterInitSetting = true;
         }
 

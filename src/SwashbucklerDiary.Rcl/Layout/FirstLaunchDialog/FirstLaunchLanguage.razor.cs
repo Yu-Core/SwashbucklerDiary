@@ -11,6 +11,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         private II18nService I18n { get; set; } = default!;
 
+        [Inject]
+        private IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
+
         [Parameter]
         public bool Show { get; set; }
 
@@ -29,7 +32,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         private void SetLanguageListItems()
         {
             var languageListItems = new List<DynamicListItem>();
-            foreach (var language in I18n.Languages)
+            foreach (var language in GlobalConfiguration.Languages)
             {
                 var item = new DynamicListItem(this, language.Key, string.Empty, () => OnClick.InvokeAsync(language.Value));
                 languageListItems.Add(item);

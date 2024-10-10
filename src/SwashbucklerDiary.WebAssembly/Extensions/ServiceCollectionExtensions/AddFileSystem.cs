@@ -1,5 +1,4 @@
 ﻿using Microsoft.JSInterop;
-using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.WebAssembly.Extensions
 {

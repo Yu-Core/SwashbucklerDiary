@@ -68,7 +68,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private ITagService TagService { get; set; } = default!;
 
         [Inject]
-        private IIconService IconService { get; set; } = default!;
+        private IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
 
         [Inject]
         private IResourceService ResourceService { get; set; } = default!;
@@ -361,7 +361,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return "mdi-weather-sunny";
             }
 
-            return IconService.GetWeatherIcon(key);
+            return GlobalConfiguration.GetWeatherIcon(key);
         }
 
         private string GetMoodIcon(string? key)
@@ -371,7 +371,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return "mdi-emoticon-happy-outline";
             }
 
-            return IconService.GetMoodIcon(key);
+            return GlobalConfiguration.GetMoodIcon(key);
         }
 
         private string CounterValue()

@@ -80,6 +80,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         protected IResourceService ResourceService { get; set; } = default!;
 
+        [Inject]
+        protected IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
+
         protected override void OnInitialized()
         {
             base.OnInitialized();

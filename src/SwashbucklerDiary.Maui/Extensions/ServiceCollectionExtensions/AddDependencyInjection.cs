@@ -15,9 +15,9 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddSingleton<Rcl.Essentials.IPreferences, Essentials.Preferences>();
             services.AddSingleton<ISettingService, Services.SettingService>();
             services.AddSingleton<INavigateController, Essentials.NavigateController>();
-            services.AddSingleton<IIconService, Services.IconService>();
+            services.AddSingleton<IGlobalConfiguration, GlobalConfiguration>();
             services.AddSingleton<IPopupServiceHelper, PopupServiceHelper>();
-            services.AddSingleton<II18nService, Services.I18nService>();
+            services.AddSingleton<II18nService, I18nService>();
             services.AddSingleton<Rcl.Essentials.IVersionTracking, Essentials.VersionTracking>();
             services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
             services.AddSingleton<IAppFileSystem, Essentials.AppFileSystem>();
@@ -36,7 +36,7 @@ namespace SwashbucklerDiary.Maui.Extensions
 
             services.AddSingleton<ITagService, TagService>();
             services.AddSingleton<IDiaryService, DiaryService>();
-            services.AddSingleton<IAchievementService, Services.AchievementService>();
+            services.AddSingleton<IAchievementService, AchievementService>();
             services.AddSingleton<ILocationService, LocationService>();
             services.AddSingleton<ILogService, LogService>();
             services.AddSingleton<IResourceService, ResourceService>();

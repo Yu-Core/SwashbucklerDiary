@@ -50,7 +50,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private IDiaryService DiaryService { get; set; } = default!;
 
         [Inject]
-        private IIconService IconService { get; set; } = default!;
+        private IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
 
         [Inject]
         private IScreenshot ScreenshotService { get; set; } = default!;
@@ -104,9 +104,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool ShowAppBar => !showHighlightSearch;
 
-        private string? WeatherIcon => IconService.GetWeatherIcon(diary.Weather!);
+        private string? WeatherIcon => GlobalConfiguration.GetWeatherIcon(diary.Weather!);
 
-        private string? MoodIcon => IconService.GetMoodIcon(diary.Mood!);
+        private string? MoodIcon => GlobalConfiguration.GetMoodIcon(diary.Mood!);
 
         private string? WeatherText => I18n.T("Weather." + diary.Weather);
 

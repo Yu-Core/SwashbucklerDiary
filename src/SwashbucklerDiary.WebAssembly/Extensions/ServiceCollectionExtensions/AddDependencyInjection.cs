@@ -14,9 +14,9 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddScoped<IPreferences, Preferences>();
             services.AddScoped<ISettingService, Services.SettingService>();
             services.AddScoped<INavigateController, Essentials.NavigateController>();
-            services.AddScoped<IIconService, Services.IconService>();
+            services.AddScoped<IGlobalConfiguration, GlobalConfiguration>();
             services.AddScoped<IPopupServiceHelper, PopupServiceHelper>();
-            services.AddScoped<II18nService, Services.I18nService>();
+            services.AddScoped<II18nService, I18nService>();
             services.AddScoped<IVersionTracking, VersionTracking>();
             services.AddScoped<IPlatformIntegration, PlatformIntegration>();
             services.AddScoped<IAppFileSystem, Essentials.AppFileSystem>();
@@ -35,7 +35,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
 
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IDiaryService, DiaryService>();
-            services.AddScoped<IAchievementService, Services.AchievementService>();
+            services.AddScoped<IAchievementService, AchievementService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ILogService, LogService>();
             services.AddScoped<IResourceService, ResourceService>();

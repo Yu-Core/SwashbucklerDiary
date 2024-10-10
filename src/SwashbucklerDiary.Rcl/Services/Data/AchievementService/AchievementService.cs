@@ -3,21 +3,25 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
-    public abstract class AchievementService : IAchievementService
+    public class AchievementService : IAchievementService
     {
         protected readonly IUserAchievementRepository _userAchievementRepository;
 
         protected readonly IUserStateModelRepository _userStateModelRepository;
 
-        protected readonly List<AchievementModel> _achievements = [];
+        protected readonly IGlobalConfiguration _globalConfiguration;
+
+        protected List<AchievementModel> Achievements => _globalConfiguration.Achievements;
 
         public event Action<UserStateModel>? UserStateChanged;
 
         public AchievementService(IUserAchievementRepository userAchievementRepository,
-            IUserStateModelRepository userStateModelRepository)
+            IUserStateModelRepository userStateModelRepository,
+            IGlobalConfiguration globalConfiguration)
         {
             _userAchievementRepository = userAchievementRepository;
             _userStateModelRepository = userStateModelRepository;
+            _globalConfiguration = globalConfiguration;
         }
 
         public async Task<List<string>> UpdateUserState(Achievement type)
@@ -37,7 +41,7 @@ namespace SwashbucklerDiary.Rcl.Services
         private async Task<List<string>> CheckAchievement(UserStateModel userState)
         {
             var type = userState.Type;
-            var achievements = _achievements.Where(it => it.Kind == type).ToList();
+            var achievements = Achievements.Where(it => it.Kind == type).ToList();
             List<string> messages = [];
             foreach (var item in achievements)
             {
@@ -77,12 +81,12 @@ namespace SwashbucklerDiary.Rcl.Services
         public async Task<List<AchievementModel>> GetAchievements()
         {
             var userAchievements = await _userAchievementRepository.GetListAsync();
-            foreach (var item in _achievements)
+            foreach (var item in Achievements)
             {
                 item.UserAchievement = userAchievements.FirstOrDefault(it => it.AchievementName == item.Name) ?? new();
             }
 
-            return _achievements;
+            return Achievements;
         }
     }
 }

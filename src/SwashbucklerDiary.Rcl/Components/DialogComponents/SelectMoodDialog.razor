@@ -7,17 +7,15 @@
                   ValueChanged="ValueChanged"
                   Title="@(I18n.T("SelectMood"))"
                   ShowText="ShowText"
-                  Items="icons"
+                  Items="GlobalConfiguration.MoodIcons"
                   ItemValue="it=>it.Key"
                   ItemText="@(item=>I18n.T("Mood." + item.Key))"
                   ItemIcon="it=>it.Value">
 </SelectChipDialog>
 
 @code {
-    private Dictionary<string, string> icons = [];
-
     [Inject]
-    private IIconService IconService { get; set; } = default!;
+    private IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
 
     [Parameter]
     public StringNumber? Value { get; set; }
@@ -27,11 +25,4 @@
 
     [Parameter]
     public bool ShowText { get; set; }
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        icons = IconService.GetMoodIcons();
-    }
 }
