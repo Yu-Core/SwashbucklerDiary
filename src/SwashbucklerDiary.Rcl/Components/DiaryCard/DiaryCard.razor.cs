@@ -41,10 +41,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string Theme => Dark ? "theme--dark" : "theme--light";
 
-        private void ToRead()
-        {
-            NavigationManager.NavigateTo($"read/{Value.Id}");
-        }
+        private void ToRead() => To($"read/{Value.Id}");
 
         private void SetContent()
         {

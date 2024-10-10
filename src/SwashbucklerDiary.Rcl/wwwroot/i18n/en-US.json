@@ -810,5 +810,6 @@
   },
   "SelectWeather": "Select weather",
   "SelectMood": "Select mood",
-  "SelectFileTypes": "Select file types"
+  "SelectFileTypes": "Select file types",
+  "SwashbucklerDiaryFeedback": "Swashbuckler diary feedback"
 }

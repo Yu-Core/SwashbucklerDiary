@@ -810,5 +810,6 @@
   },
   "SelectWeather": "选择天气",
   "SelectMood": "选择心情",
-  "SelectFileTypes": "选择文件类型"
+  "SelectFileTypes": "选择文件类型",
+  "SwashbucklerDiaryFeedback": "侠客日记反馈"
 }

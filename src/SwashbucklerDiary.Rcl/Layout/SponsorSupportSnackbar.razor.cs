@@ -34,7 +34,7 @@ namespace SwashbucklerDiary.Rcl.Layout
                 return;
             }
 
-            if (userStateModel.Count == 100 || userStateModel.Count == 500 || userStateModel.Count == 1000)
+            if (userStateModel.Count == 100)
             {
                 await Task.Delay(1000);
                 showSnackbar = true;

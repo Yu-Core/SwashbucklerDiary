@@ -203,7 +203,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var mail = FeedbackTypeDatas["Email"];
             try
             {
-                bool isSuccess = await PlatformIntegration.SendEmail(null, null, [mail]);
+                bool isSuccess = await PlatformIntegration.SendEmail(I18n.T("SwashbucklerDiaryFeedback"), null, [mail]);
                 if (isSuccess)
                 {
                     return;

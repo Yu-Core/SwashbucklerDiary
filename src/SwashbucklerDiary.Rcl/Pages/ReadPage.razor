@@ -138,7 +138,7 @@
                     <MChip @key="item.Id"
                            IsActive="false"
                            Outlined="true"
-                           OnClick="@(()=>To($"tagDetails/{item.Id}"))">
+                           Href="@($"tagDetails/{item.Id}")">
                         @(item.Name)
                     </MChip>
                 }

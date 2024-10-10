@@ -2,6 +2,6 @@
 {
     public static class NavigateControllerHelper
     {
-        public const string StackBottomRelativePath = "stackBottom";
+        public const string StackBottomRelativePath = "default";
     }
 }
