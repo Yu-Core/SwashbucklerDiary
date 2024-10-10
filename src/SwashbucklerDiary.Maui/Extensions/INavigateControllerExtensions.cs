@@ -8,10 +8,10 @@ namespace SwashbucklerDiary.Maui.Extensions
         {
             if (Uri.TryCreate(uriString, UriKind.Absolute, out var uri))
             {
-                var resolvedPath = $"/{uri.Host}{uri.AbsolutePath.TrimEnd('/')}{uri.Query}{uri.Fragment}";
-                if (navigateController.RouteMatcher.IsMatch(resolvedPath))
+                var route = $"/{uri.Host}{uri.AbsolutePath.TrimEnd('/')}";
+                if (navigateController.RouteMatcher.IsMatch(route))
                 {
-                    path = resolvedPath;
+                    path = $"{route}{uri.Query}{uri.Fragment}";
                     return true;
                 }
             }
