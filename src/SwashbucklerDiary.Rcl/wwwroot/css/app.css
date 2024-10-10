@@ -585,6 +585,7 @@ html.m-overlay-scroll-blocked {
     padding-left: 12px;
     padding-right: 24px;
     white-space: break-spaces;
+    word-break: break-all;
     align-self: stretch;
     flex: 1 1 auto;
     line-height: 1.75rem;
