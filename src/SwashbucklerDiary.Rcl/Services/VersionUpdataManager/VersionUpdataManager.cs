@@ -54,7 +54,12 @@ namespace SwashbucklerDiary.Rcl.Services
             _versionTracking = versionTracking;
             _diaryFileManager = diaryFileManager;
             _staticWebAssets = staticWebAssets;
-            _httpClient = new(CreateHttpClient);
+            _httpClient = new(() =>
+            {
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)");
+                return httpClient;
+            });
         }
 
         public async Task NotifyAfterFirstEnter()
@@ -153,13 +158,6 @@ namespace SwashbucklerDiary.Rcl.Services
                 Content = content,
             };
             await _diaryService.AddAsync(diary);
-        }
-
-        private HttpClient CreateHttpClient()
-        {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)");
-            return httpClient;
         }
 
         private async Task HandleUpdateInstruction()

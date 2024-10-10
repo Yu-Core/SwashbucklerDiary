@@ -158,12 +158,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 }
 
                 string uri = requestUrl.ToString();
-                if (!Intercept(uri, out string filePath))
-                {
-                    return false;
-                }
-
-                if (!File.Exists(filePath))
+                if (!InterceptLocalFileRequest(uri, out string filePath))
                 {
                     return false;
                 }

@@ -1,18 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.WebAssembly.Services
 {
     public class MediaResourceManager : Rcl.Services.MediaResourceManager
     {
-        private readonly string _customPathPrefix = FileSystem.AppDataDirectory + "/";
-
         private readonly IJSRuntime _jSRuntime;
-
-        protected override string? CustomPathPrefix => _customPathPrefix;
 
         private readonly NavigationManager _navigationManager;
 
@@ -91,41 +86,18 @@ namespace SwashbucklerDiary.WebAssembly.Services
             return filePath.StartsWith(FileSystem.AppDataDirectory + "/");
         }
 
-        public override async Task<AudioFileInfo> GetAudioFileInfo(string uri)
+        public override string UrlRelativePathToFilePath(string urlRelativePath) => urlRelativePath;
+
+        protected override async Task<string> GetAudioFilePicturePath(string fileName, byte[] data)
         {
-            string? filePath = uri;
+            string filePath = Path.Combine(FileSystem.CacheDirectory, fileName);
             if (!File.Exists(filePath))
             {
-                return new();
+                await File.WriteAllBytesAsync(filePath, data);
+                await _jSRuntime.InvokeVoidAsync("MEMFileSystem.syncfs");
             }
 
-            var audioFile = TagLib.File.Create(filePath);
-            string pictureUri = string.Empty;
-            if (audioFile.Tag.Pictures.Length > 0)
-            {
-                string fileName = Path.GetFileName(filePath);
-                string extension = audioFile.Tag.Pictures[0].MimeType.Split('/')[1];
-                string pictureFileName = $"{fileName}.{extension}";
-                string pictureFilePath = FileSystem.CacheDirectory + Path.DirectorySeparatorChar + pictureFileName;
-                if (!File.Exists(pictureFilePath))
-                {
-                    await _appFileSystem.CreateTempFileAsync(pictureFileName, audioFile.Tag.Pictures[0].Data.Data);
-                    await _jSRuntime.InvokeVoidAsync("MEMFileSystem.syncfs");
-                }
-
-                pictureUri = pictureFilePath;
-            }
-
-            return new()
-            {
-                Title = audioFile.Tag.Title,
-                Artists = audioFile.Tag.Performers,
-                Album = audioFile.Tag.Album,
-                Duration = audioFile.Properties.Duration,
-                PictureUri = pictureUri
-            };
+            return filePath;
         }
-
-        public override string UrlRelativePathToFilePath(string urlRelativePath) => urlRelativePath;
     }
 }

@@ -99,7 +99,7 @@ namespace SwashbucklerDiary.Rcl.Services
         public List<ResourceModel> GetDiaryResources(string content)
         {
             var resources = new List<ResourceModel>();
-            string pattern = $@"(?<=\(|"")({CustomPathPrefix}\S+?)(?=\)|"")";
+            string pattern = $@"(?<=\(|"")({customPathPrefix}\S+?)(?=\)|"")";
 
             MatchCollection matches = Regex.Matches(content, pattern);
 
@@ -129,7 +129,35 @@ namespace SwashbucklerDiary.Rcl.Services
             };
         }
 
-        public abstract Task<AudioFileInfo> GetAudioFileInfo(string uri);
+        public async Task<AudioFileInfo> GetAudioFileInfo(string uri)
+        {
+            string? filePath = UrlRelativePathToFilePath(uri);
+            if (!File.Exists(filePath))
+            {
+                return new();
+            }
+
+            var audioFile = TagLib.File.Create(filePath);
+            string pictureUri = string.Empty;
+            if (audioFile.Tag.Pictures.Length > 0)
+            {
+                string fileName = Path.GetFileName(filePath);
+                string extension = StaticContentProvider.GetResponseExtensionOrDefault(audioFile.Tag.Pictures[0].MimeType);
+                string pictureFileName = $"{fileName}{extension}";
+                pictureUri = await GetAudioFilePicturePath(pictureFileName, audioFile.Tag.Pictures[0].Data.Data);
+            }
+
+            return new()
+            {
+                Title = audioFile.Tag.Title,
+                Artists = audioFile.Tag.Performers,
+                Album = audioFile.Tag.Album,
+                Duration = audioFile.Properties.Duration,
+                PictureUri = pictureUri
+            };
+        }
+
+        protected abstract Task<string> GetAudioFilePicturePath(string fileName, byte[] data);
 
         public async Task<IEnumerable<ResourceModel>?> AddMediaFilesAsync(IEnumerable<string?>? filePaths)
         {
@@ -174,6 +202,6 @@ namespace SwashbucklerDiary.Rcl.Services
             return await AddMediaFilesAsync(filePaths);
         }
 
-        protected virtual string? CustomPathPrefix { get; }
+        protected static readonly string customPathPrefix = $"{AppFileSystem.AppDataVirtualDirectoryName}/";
     }
 }

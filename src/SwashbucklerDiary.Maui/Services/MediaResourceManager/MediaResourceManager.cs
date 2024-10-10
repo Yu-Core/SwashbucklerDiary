@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Maui.BlazorWebView;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -10,10 +9,6 @@ namespace SwashbucklerDiary.Maui.Services
     public class MediaResourceManager : Rcl.Services.MediaResourceManager
     {
         private readonly HttpClient _httpClient;
-
-        private readonly string _customPathPrefix = LocalFileWebAccessHelper.AppFilePathMap[FileSystem.AppDataDirectory];
-
-        protected override string? CustomPathPrefix => _customPathPrefix;
 
         public MediaResourceManager(IPlatformIntegration platformIntegration,
             IAppFileSystem appFileSystem,
@@ -152,41 +147,18 @@ namespace SwashbucklerDiary.Maui.Services
             return await _appFileSystem.CreateTempFileAsync(fileName, stream);
         }
 
-        public override async Task<AudioFileInfo> GetAudioFileInfo(string uri)
-        {
-            string? filePath = LocalFileWebAccessHelper.UrlRelativePathToFilePath(uri);
-            if (!File.Exists(filePath))
-            {
-                return new();
-            }
-
-            var audioFile = TagLib.File.Create(filePath);
-            string pictureUri = string.Empty;
-            if (audioFile.Tag.Pictures.Length > 0)
-            {
-                string fileName = Path.GetFileName(filePath);
-                string extension = audioFile.Tag.Pictures[0].MimeType.Split('/')[1];
-                string pictureFileName = $"{fileName}.{extension}";
-                string pictureFilePath = FileSystem.Current.CacheDirectory + Path.DirectorySeparatorChar + pictureFileName;
-                if (!File.Exists(pictureFilePath))
-                {
-                    await _appFileSystem.CreateTempFileAsync(pictureFileName, audioFile.Tag.Pictures[0].Data.Data);
-                }
-
-                pictureUri = LocalFileWebAccessHelper.FilePathToUrlRelativePath(pictureFilePath);
-            }
-
-            return new()
-            {
-                Title = audioFile.Tag.Title,
-                Artists = audioFile.Tag.Performers,
-                Album = audioFile.Tag.Album,
-                Duration = audioFile.Properties.Duration,
-                PictureUri = pictureUri
-            };
-        }
-
         public override string UrlRelativePathToFilePath(string urlRelativePath)
             => LocalFileWebAccessHelper.UrlRelativePathToFilePath(urlRelativePath);
+
+        protected override async Task<string> GetAudioFilePicturePath(string fileName, byte[] data)
+        {
+            string filePath = Path.Combine(FileSystem.Current.CacheDirectory, fileName);
+            if (!File.Exists(filePath))
+            {
+                await File.WriteAllBytesAsync(filePath, data);
+            }
+
+            return LocalFileWebAccessHelper.FilePathToUrlRelativePath(filePath);
+        }
     }
 }

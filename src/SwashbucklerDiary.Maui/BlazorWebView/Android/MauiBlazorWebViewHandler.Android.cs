@@ -63,23 +63,18 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 webResourceResponse = null;
 
                 var uri = request.Url.ToString();
-                if (!Intercept(uri, out string filePath))
+                if (InterceptLocalFileRequest(uri, out string filePath))
                 {
-                    return false;
+                    webResourceResponse = CreateLocalFileResponse(request, filePath);
+                    return true;
                 }
 
-                if (!File.Exists(filePath))
-                {
-                    return false;
-                }
-
-                webResourceResponse = CreateWebResourceResponse(request, filePath);
-                return true;
+                return false;
             }
 
-            //因为Android Webview 的一个bug，所以流只能直接返回，不能做截取
-            //https://bugs.chromium.org/p/chromium/issues/detail?id=1161877#c13
-            private static WebResourceResponse CreateWebResourceResponse(IWebResourceRequest request, string path)
+            // 因为Android Webview 的bug，所以流只能直接返回，不能做截取
+            // https://bugs.chromium.org/p/chromium/issues/detail?id=1161877#c13
+            private static WebResourceResponse CreateLocalFileResponse(IWebResourceRequest request, string path)
             {
                 string contentType = StaticContentProvider.GetResponseContentTypeOrDefault(path);
                 var headers = StaticContentProvider.GetResponseHeaders(contentType);
@@ -111,7 +106,6 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 var response = new WebResourceResponse(contentType, encoding, stateCode, reasonPhrase, headers, stream);
                 return response;
             }
-
         }
     }
 }

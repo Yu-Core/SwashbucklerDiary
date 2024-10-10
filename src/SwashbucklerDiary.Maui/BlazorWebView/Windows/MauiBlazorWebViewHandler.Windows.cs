@@ -34,26 +34,18 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
         static async Task<bool> InterceptCustomPathRequest(CoreWebView2 webview2, CoreWebView2WebResourceRequestedEventArgs args)
         {
             string uri = args.Request.Uri;
-            if (!Intercept(uri, out string filePath))
+            if (!InterceptLocalFileRequest(uri, out string filePath))
             {
                 return false;
             }
 
-            if (File.Exists(filePath))
-            {
-                args.Response = await CreateWebResourceResponse(webview2, args, filePath);
-            }
-            else
-            {
-                args.Response = webview2.Environment.CreateWebResourceResponse(null, 404, "Not Found", string.Empty);
-            }
-
+            args.Response = await CreateLocalFileResponse(webview2, args, filePath);
             return true;
 
             static string GetHeaderString(IDictionary<string, string> headers) =>
                 string.Join(Environment.NewLine, headers.Select(kvp => $"{kvp.Key}: {kvp.Value}"));
 
-            static async Task<CoreWebView2WebResourceResponse> CreateWebResourceResponse(CoreWebView2 webview2, CoreWebView2WebResourceRequestedEventArgs args, string filePath)
+            static async Task<CoreWebView2WebResourceResponse> CreateLocalFileResponse(CoreWebView2 webview2, CoreWebView2WebResourceRequestedEventArgs args, string filePath)
             {
                 var contentType = StaticContentProvider.GetResponseContentTypeOrDefault(filePath);
                 var headers = StaticContentProvider.GetResponseHeaders(contentType);

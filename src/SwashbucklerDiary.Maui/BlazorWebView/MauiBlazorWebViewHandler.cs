@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
             return (string?)propertyInfo.GetValue(null)!;
         }
 
-        private static bool Intercept(string uri, out string filePath)
+        private static bool InterceptLocalFileRequest(string uri, out string filePath)
         {
             if (!uri.StartsWith(BaseUri))
             {

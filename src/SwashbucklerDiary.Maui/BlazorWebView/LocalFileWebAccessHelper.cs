@@ -1,11 +1,13 @@
-﻿namespace SwashbucklerDiary.Maui.BlazorWebView
+﻿using SwashbucklerDiary.Rcl.Essentials;
+
+namespace SwashbucklerDiary.Maui.BlazorWebView
 {
     public static class LocalFileWebAccessHelper
     {
         public static Dictionary<string, string> AppFilePathMap { get; } = new()
         {
-            { FileSystem.AppDataDirectory, "appdata/" },
-            { FileSystem.CacheDirectory, "cache/" },
+            { FileSystem.AppDataDirectory, $"{AppFileSystem.AppDataVirtualDirectoryName}/" },
+            { FileSystem.CacheDirectory, $"{AppFileSystem.CacheVirtualDirectoryName}/" },
         };
 
         private const string otherFileUrlPrefix = "file/";

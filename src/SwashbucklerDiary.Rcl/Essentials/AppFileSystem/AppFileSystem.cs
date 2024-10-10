@@ -1,8 +1,11 @@
-﻿
-namespace SwashbucklerDiary.Rcl.Essentials
+﻿namespace SwashbucklerDiary.Rcl.Essentials
 {
     public abstract class AppFileSystem : IAppFileSystem
     {
+        public static readonly string AppDataVirtualDirectoryName = "appdata";
+
+        public static readonly string CacheVirtualDirectoryName = "cache";
+
         public abstract string AppDataDirectory { get; }
 
         public abstract string CacheDirectory { get; }
