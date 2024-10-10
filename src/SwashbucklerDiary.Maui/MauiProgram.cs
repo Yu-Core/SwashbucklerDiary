@@ -34,6 +34,17 @@ namespace SwashbucklerDiary.Maui
                 handlers.AddHandler<IBlazorWebView>((IServiceProvider _) => new MauiBlazorWebViewHandler());
             });
 
+#if IOS || MACCATALYST
+            BlazorWebViewHandler.BlazorWebViewMapper.AppendToMapping(nameof(IBlazorWebView.HostPage), (handler, view) =>
+            {
+                handler.PlatformView.NavigationDelegate = new WebViewNavigationDelegate();
+            });
+            BlazorWebViewHandler.BlazorWebViewMapper.AppendToMapping(nameof(IBlazorWebView.RootComponents), (handler, view) =>
+            {
+                handler.PlatformView.NavigationDelegate = new WebViewNavigationDelegate();
+            });
+#endif
+
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
