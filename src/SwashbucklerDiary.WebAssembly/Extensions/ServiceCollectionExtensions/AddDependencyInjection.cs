@@ -11,7 +11,6 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
         public static IServiceCollection AddDependencyInjection(this IServiceCollection services)
         {
             services.AddScoped<IStaticWebAssets, Essentials.StaticWebAssets>();
-            services.AddScoped<IPreferences, Preferences>();
             services.AddScoped<ISettingService, Services.SettingService>();
             services.AddScoped<INavigateController, Essentials.NavigateController>();
             services.AddScoped<IGlobalConfiguration, GlobalConfiguration>();

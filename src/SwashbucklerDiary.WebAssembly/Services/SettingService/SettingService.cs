@@ -1,12 +1,14 @@
-﻿using Microsoft.JSInterop;
-using SwashbucklerDiary.Rcl.Essentials;
+﻿using Blazored.LocalStorage;
+using Microsoft.JSInterop;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.WebAssembly.Essentials;
 using SwashbucklerDiary.WebAssembly.Extensions;
 using System.Text.Json;
 
 namespace SwashbucklerDiary.WebAssembly.Services
 {
-    public class SettingService : Rcl.Services.SettingService
+    public class SettingService : Preferences, ISettingService
     {
         private readonly Lazy<ValueTask<IJSInProcessObjectReference>> _module;
 
@@ -17,29 +19,31 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         private Dictionary<string, object> settings = [];
 
-        public SettingService(IPreferences preferences,
-            IStaticWebAssets staticWebAssets,
+        public Dictionary<string, object> DefalutSettings { get; set; } = [];
+        public Dictionary<string, object> TempSettings { get; set; } = [];
+
+        public SettingService(ISyncLocalStorageService localStorage,
             IJSRuntime jSRuntime) :
-            base(preferences)
+            base(localStorage)
         {
             jsonSerializerOptions.Converters.Add(new ObjectToInferredTypesConverter());
             _module = new(() => ((IJSInProcessRuntime)jSRuntime).ImportJsModule("js/setting.js"));
         }
 
-        public override async Task InitializeAsync()
+        public async Task InitializeAsync()
         {
-            await base.InitializeAsync();
+            await ISettingService.DefalutInitializeAsync(DefalutSettings);
             settings = await ReadSettings();
         }
 
-        public override T Get<T>(string key)
+        public T Get<T>(string key)
         {
             if (settings.TryGetValue(key, out var value))
             {
                 return (T)value;
             }
 
-            if (_defalutSettings.TryGetValue(key, out var defaulValue))
+            if (DefalutSettings.TryGetValue(key, out var defaulValue))
             {
                 return (T)defaulValue;
             }
@@ -47,7 +51,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
             return default!;
         }
 
-        public override T Get<T>(string key, T defaultValue)
+        public T Get<T>(string key, T defaultValue)
         {
             if (settings.TryGetValue(key, out var settingValue))
             {
@@ -95,7 +99,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         private async Task<Dictionary<string, object>> ReadSettings()
         {
-            List<string> keys = _defalutSettings.Keys.ToList();
+            List<string> keys = DefalutSettings.Keys.ToList();
 
             var module = await _module.Value;
             var serialisedData = module.Invoke<string>("readSettings", keys);
