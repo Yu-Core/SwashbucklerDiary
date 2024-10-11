@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
-    public partial class SearchAppFunctionPage : ImportantComponentBase
+    public partial class SearchAppFeaturesPage : ImportantComponentBase
     {
         private string? search;
 
@@ -15,9 +15,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? privacyModeSearchKey;
 
-        private List<AppFunction> allAppFunctions = [];
+        private List<AppFeatures> allAppFeatures = [];
 
-        private List<AppFunction> _appFunctions = [];
+        private List<AppFeatures> _appFeatures = [];
 
         [Inject]
         protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                await LoadAppFunctions();
+                await LoadAppFeatures();
                 StateHasChanged();
             }
         }
@@ -53,7 +53,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override async Task OnResume()
         {
-            UpdateAppFunctions();
+            UpdateAppFeatures();
             await base.OnResume();
         }
 
@@ -77,32 +77,37 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        private async Task LoadAppFunctions()
+        private async Task LoadAppFeatures()
         {
-            var appFunctions = await StaticWebAssets.ReadJsonAsync<List<AppFunction>>("json/app-functions/app-functions.json");
-            allAppFunctions = appFunctions;
-            UpdateAppFunctions(appFunctions);
+            var appFeatures = await StaticWebAssets.ReadJsonAsync<List<AppFeatures>>("json/app-features/app-features.json");
+            allAppFeatures = appFeatures;
+            UpdateAppFeatures(appFeatures);
         }
 
-        private void UpdateAppFunctions(List<AppFunction> appFunctions)
+        private void UpdateAppFeatures(List<AppFeatures> appFeatures)
         {
-            Expression<Func<AppFunction, bool>> exp = GetExpression();
-            _appFunctions = appFunctions.Where(exp.Compile()).ToList();
+            Expression<Func<AppFeatures, bool>> exp = GetExpression();
+            _appFeatures = appFeatures.Where(exp.Compile()).ToList();
         }
 
-        private void UpdateAppFunctions()
-            => UpdateAppFunctions(allAppFunctions);
+        private void UpdateAppFeatures()
+            => UpdateAppFeatures(allAppFeatures);
 
-        private Expression<Func<AppFunction, bool>> GetExpression()
+        private Expression<Func<AppFeatures, bool>> GetExpression()
         {
-            Expression<Func<AppFunction, bool>>? exp = null;
+            Expression<Func<AppFeatures, bool>>? exp = null;
 
             if (!string.IsNullOrWhiteSpace(search))
             {
-                Expression<Func<AppFunction, bool>> expSearch
+                Expression<Func<AppFeatures, bool>> expSearch
                     = it => I18n.T(it.Name ?? string.Empty).Contains(search, StringComparison.CurrentCultureIgnoreCase)
                     || I18n.T(it.Path ?? string.Empty).Contains(search, StringComparison.CurrentCultureIgnoreCase);
                 exp = exp.And(expSearch);
+
+                Expression<Func<AppFeatures, bool>> expPlatform
+                    = it => it.HidePlatforms == null
+                    || !it.HidePlatforms.Contains(PlatformIntegration.CurrentPlatform.ToString());
+                exp = exp.And(expPlatform);
             }
 
             if (exp == null)

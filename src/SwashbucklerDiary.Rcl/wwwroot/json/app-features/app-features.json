@@ -45,25 +45,29 @@
     "Name": "Backups.WebDAV.Name",
     "Icon": "mdi-cloud-sync-outline",
     "Path": "Backups.WebDAV.Path",
-    "Href": "backups?tabs=webDAV"
+    "Href": "backups?tabs=webDAV",
+    "HidePlatforms": [ "Browser" ]
   },
   {
     "Name": "Backups.Config.Title",
     "Icon": "mdi-cog-sync-outline",
     "Path": "Backups.Config.Path",
-    "Href": "backups?tabs=webDAV"
+    "Href": "backups?tabs=webDAV",
+    "HidePlatforms": [ "Browser" ]
   },
   {
     "Name": "Backups.Upload.Title",
     "Icon": "mdi-cloud-arrow-up-outline",
     "Path": "Backups.Upload.Path",
-    "Href": "backups?tabs=webDAV"
+    "Href": "backups?tabs=webDAV",
+    "HidePlatforms": [ "Browser" ]
   },
   {
     "Name": "Backups.Download.Title",
     "Icon": "mdi-cloud-arrow-down-outline",
     "Path": "Backups.Download.Path",
-    "Href": "backups?tabs=webDAV"
+    "Href": "backups?tabs=webDAV",
+    "HidePlatforms": [ "Browser" ]
   },
   {
     "Name": "Export.Local.Name",
@@ -87,7 +91,8 @@
     "Name": "Export.LAN.Name",
     "Icon": "mdi-lan",
     "Path": "Export.LAN.Path",
-    "Href": "export?tabs=LAN"
+    "Href": "export?tabs=LAN",
+    "HidePlatforms": [ "Browser" ]
   },
   {
     "Name": "Mine.Achievement.Name",
@@ -279,7 +284,8 @@
     "Name": "Url Scheme",
     "Icon": "mdi-link-variant",
     "Path": "About.UrlScheme.Path",
-    "Href": "urlScheme"
+    "Href": "urlScheme",
+    "HidePlatforms": [ "Browser" ]
   },
   {
     "Name": "About.Evaluation.Name",

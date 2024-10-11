@@ -658,7 +658,7 @@
     "Content": "确定清除所有缓存吗？",
     "ClearSuccess": "清理成功"
   },
-  "SearchAppFunction": {
+  "SearchAppFeatures": {
     "Placeholder": "请输入想要搜索的功能"
   },
   "DateTimeFormat": {

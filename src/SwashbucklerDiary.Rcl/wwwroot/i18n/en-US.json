@@ -658,7 +658,7 @@
     "Content": "Are you sure to clear all caches?",
     "ClearSuccess": "Clear success"
   },
-  "SearchAppFunction": {
+  "SearchAppFeatures": {
     "Placeholder": "Please enter the function you want to search for"
   },
   "DateTimeFormat": {

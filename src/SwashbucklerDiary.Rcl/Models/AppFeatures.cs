@@ -1,6 +1,6 @@
 ﻿namespace SwashbucklerDiary.Rcl.Models
 {
-    public class AppFunction
+    public class AppFeatures
     {
         public string? Name { get; set; }
 
@@ -9,5 +9,7 @@
         public string? Path { get; set; }
 
         public string? Href { get; set; }
+
+        public string[]? HidePlatforms { get; set; }
     }
 }

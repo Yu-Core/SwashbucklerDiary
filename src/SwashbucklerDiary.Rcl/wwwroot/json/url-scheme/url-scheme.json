@@ -21,7 +21,7 @@
   },
   {
     "Name": "UrlScheme.SearchFunction",
-    "Path": "searchAppFunction?query="
+    "Path": "searchAppFeatures?query="
   },
   {
     "Name": "UrlScheme.Write",
