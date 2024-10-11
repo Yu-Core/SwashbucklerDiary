@@ -14,6 +14,7 @@
             handlePreviewElement(element);
             handleAnchorScroll();
             fixToc(element);
+            fixAnchorLink(element);
             dotNetCallbackRef.invokeMethodAsync('After');
         }
     }
@@ -102,5 +103,16 @@ function fixToc(element) {
                 targetElement.scrollIntoView();
             }, 100);
         }
+    });
+}
+
+function fixAnchorLink(element) {
+    element.querySelectorAll("a").forEach(a => {
+        const href = a.getAttribute('href');
+        if (!href || !href.startsWith('#')) {
+            return;
+        }
+
+        a.href = decodeURIComponent(href);
     });
 }

@@ -30,6 +30,13 @@ function handleA(dotNetCallbackRef, element) {
             event.preventDefault();
             const url = location.origin + location.pathname + location.search + href;
             dotNetCallbackRef.invokeMethodAsync('NavigateToReplace', url);
+
+            const targetElement = document.getElementById(href.substring(1));
+            if (targetElement) {
+                setTimeout(() => {
+                    targetElement.scrollIntoView();
+                }, 100);
+            }
         }
     });
 }
