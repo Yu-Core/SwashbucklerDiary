@@ -20,6 +20,9 @@ namespace SwashbucklerDiary.Maui
 
             e.WebView.ScrollView.ShowsVerticalScrollIndicator = false; // 关闭滚动条
             e.WebView.BackgroundColor = _backgroundColor.ToPlatform();
+#if MACCATALYST
+            e.WebView.CustomUserAgent += " iPhone OS Mobile";
+#endif
         }
     }
 }

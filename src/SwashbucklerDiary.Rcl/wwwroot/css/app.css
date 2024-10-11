@@ -625,3 +625,9 @@ html.m-overlay-scroll-blocked {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
 }
+
+.iframe__deck {
+    width: 480px;
+    aspect-ratio: 1/2;
+    border-radius: 8px;
+}

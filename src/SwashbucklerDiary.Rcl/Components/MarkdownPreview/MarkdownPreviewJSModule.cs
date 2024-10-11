@@ -13,5 +13,10 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await InvokeVoidAsync("after", [dotNetObjectReference, element]);
         }
+
+        public async Task CustomRender(ElementReference element)
+        {
+            await InvokeVoidAsync("customRender", [element]);
+        }
     }
 }

@@ -150,5 +150,15 @@ namespace SwashbucklerDiary.Rcl.Components
                 _options.Add("lazyLoadImage", $"_content/{StaticWebAssets.RclAssemblyName}/img/loading.gif");
             }
         }
+
+        private async Task HandleOnAfter()
+        {
+            await MarkdownPreviewJSModule.CustomRender(vditorMarkdownPreview.Ref);
+
+            if (OnAfter.HasDelegate)
+            {
+                await OnAfter.InvokeAsync();
+            }
+        }
     }
 }
