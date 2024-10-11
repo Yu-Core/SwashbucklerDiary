@@ -151,7 +151,7 @@
   },
   {
     "Name": "Setting.Display.Diary.IconText.Name",
-    "Icon": "mdi-image-text",
+    "Icon": "mdi-alphabetical",
     "Path": "Setting.Display.Diary.IconText.Path",
     "Href": "diarySetting"
   },

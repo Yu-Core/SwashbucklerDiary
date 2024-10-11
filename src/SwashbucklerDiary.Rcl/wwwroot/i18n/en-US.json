@@ -126,8 +126,6 @@
     "CountUnit": "words",
     "InputLocation": "Enter location",
     "LocationPlace": "Please enter the location",
-    "DisplayIconText": "Display icon text",
-    "HideIconText": "Hide icon text",
     "DisplayOtherInfo": "Display other info",
     "HideOtherInfo": "Hide other info"
   },
@@ -425,8 +423,8 @@
           "Path": "Setting / Diary / Other info"
         },
         "IconText": {
-          "Name": "Icon text",
-          "Path": "Setting / Diary / Icon text"
+          "Name": "Weather and mood text",
+          "Path": "Setting / Diary / Weather and mood text"
         },
         "EditAutoSave": {
           "Name": "Auto save",
@@ -765,7 +763,7 @@
     "Name": "Privacy mode",
     "ShowSetPrivacyDiary": {
       "Title": "Display Set as Private",
-      "SubTitle": "Display the Set as Private option in the diary card menu"
+      "SubTitle": "Display the Set as Private option in the diary menu"
     },
     "HidePrivacyModeEntrance": {
       "Title": "Hide default entrance",
@@ -779,7 +777,8 @@
     "PasswordError": "Password error",
     "PrivacyModeFunctionSearchKey": {
       "Title": "Custom search keywords",
-      "SubTitle": "Enter keywords in the feature search to display privacy mode"
+      "SubTitle": "Enter keywords in the feature search to display privacy mode",
+      "CurrentKey": "Current key"
     },
     "PrivacyModeFunctionSearchKeyPlaceholder": "Please enter keywords",
     "EnterPrivacyMode": "Enter privacy mode",

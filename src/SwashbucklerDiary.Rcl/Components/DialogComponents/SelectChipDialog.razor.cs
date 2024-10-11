@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool Mandatory { get; set; }
 
         [Parameter]
-        public bool ShowText { get; set; } = true;
+        public bool? ShowText { get; set; }
 
         [Parameter]
         public Func<KeyValuePair<string, string>, string>? ItemText { get; set; }
@@ -32,9 +32,11 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public Func<KeyValuePair<string, string>, string>? ItemIcon { get; set; }
 
+        private bool InternalShowText => ShowText ?? true;
+
         private string? InternalItemText(KeyValuePair<string, string> item)
         {
-            if (!ShowText)
+            if (!InternalShowText)
             {
                 return null;
             }
@@ -65,6 +67,17 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             return string.Empty;
+        }
+
+        private async Task UpdateShowText()
+        {
+            if (ShowText is null)
+            {
+                return;
+            }
+
+            ShowText = !ShowText;
+            await SettingService.SetAsync(it => it.DiaryIconText, (bool)ShowText);
         }
     }
 }

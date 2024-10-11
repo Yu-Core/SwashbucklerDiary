@@ -206,9 +206,16 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
-            @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Subtitle"))
-            <br />
-            @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Subtitle"))
+            <div>
+                @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Subtitle"))
+            </div>
+            <div>
+                @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Subtitle"))
+            </div>
+            <div class="d-flex align-end">
+                @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.CurrentKey"))
+                <div class="font-weight-bold text-h6 ml-2">@privacyModeFunctionSearchKey</div>
+            </div>
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>

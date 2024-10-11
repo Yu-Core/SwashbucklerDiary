@@ -10,6 +10,13 @@
         <MCardTitle Class="font-weight-bold">
             @(Title)
             <MSpacer></MSpacer>
+            @if (ShowText is not null)
+            {
+                <MButton IconName="@((bool)ShowText ? "mdi-alphabetical":"mdi-alphabetical-off")"
+                         OnClick="UpdateShowText">
+                </MButton>
+            }
+
             <MButton Icon="true"
                      OnClick="HandleOnCancel">
                 <MIcon>mdi-close</MIcon>
@@ -17,7 +24,7 @@
         </MCardTitle>
         <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
             <MChipGroup Value="Value"
-                        Class="@(ShowText ? "":"m-chip-group--icon")"
+                        Class="@(InternalShowText ? "":"m-chip-group--icon")"
                         ValueChanged="ValueChanged"
                         Column="true"
                         Mandatory="Mandatory">
@@ -25,10 +32,10 @@
                 {
                     <MChip @key="item.Key"
                            Value="@InternalItemValue(item)"
-                           Filter="ShowText"
+                           Filter="InternalShowText"
                            Outlined="true"
                            OnClick="HandleOnCancel">
-                        <MIcon Left="ShowText">
+                        <MIcon Left="InternalShowText">
                             @InternalItemIcon(item)
                         </MIcon>
                         @InternalItemText(item)

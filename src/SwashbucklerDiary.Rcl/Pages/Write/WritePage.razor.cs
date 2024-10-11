@@ -193,8 +193,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string OtherInfoSwitchText() => showOtherInfo ? "Write.HideOtherInfo" : "Write.DisplayOtherInfo";
 
-        private string IconTextSwitchText() => showIconText ? "Write.HideIconText" : "Write.DisplayIconText";
-
         private async Task InitTags()
         {
             tags = await TagService.QueryAsync();
@@ -243,7 +241,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             [
                 new(this, TitleSwitchText, "mdi-format-title", ()=> SettingChange(nameof(Setting.Title), ref enableTitle)),
                 new(this, MarkdownSwitchText, MarkdownSwitchIcon, ()=> SettingChange(nameof(Setting.Markdown), ref enableMarkdown)),
-                new(this, IconTextSwitchText, "mdi-image-text", ()=> SettingChange(nameof(Setting.DiaryIconText), ref showIconText)),
                 new(this, OtherInfoSwitchText, "mdi-information-outline", ()=> SettingChange(nameof(Setting.OtherInfo), ref showOtherInfo)),
             ];
         }
