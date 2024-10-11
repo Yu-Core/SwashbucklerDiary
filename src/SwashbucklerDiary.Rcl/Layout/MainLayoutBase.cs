@@ -46,6 +46,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         protected IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
 
+        [Inject]
+        protected IThemeService ThemeService { get; set; } = default!;
+
         public void Dispose()
         {
             OnDispose();
@@ -58,14 +61,18 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            I18n.OnChanged += LanguageChanged;
+
             permanentPaths = navigationButtons.Select(it => NavigationManager.ToAbsoluteUri(it.Href).AbsolutePath).ToList();
-            InitNavigateController();
+            NavigateController.Init(NavigationManager, JSRuntime, permanentPaths);
+
+            I18n.OnChanged += HandleLanguageChanged;
+            SettingService.SettingsChanged += HandleSettingsChanged;
         }
 
         protected virtual void OnDispose()
         {
-            I18n.OnChanged -= LanguageChanged;
+            I18n.OnChanged -= HandleLanguageChanged;
+            SettingService.SettingsChanged -= HandleSettingsChanged;
         }
 
         protected virtual async Task InitSettingsAsync()
@@ -75,15 +82,18 @@ namespace SwashbucklerDiary.Rcl.Layout
             afterInitSetting = true;
         }
 
-        protected async void LanguageChanged(CultureInfo cultureInfo)
+        protected async void HandleLanguageChanged(CultureInfo cultureInfo)
         {
             await InvokeAsync(StateHasChanged);
             await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
         }
 
-        protected void InitNavigateController()
+        protected async void HandleSettingsChanged()
         {
-            NavigateController.Init(NavigationManager, JSRuntime, permanentPaths);
+            var theme = SettingService.Get(it => it.Theme);
+            await ThemeService.SetThemeAsync((Shared.Theme)theme);
+            var language = SettingService.Get(it => it.Language);
+            I18n.SetCulture(language);
         }
     }
 }

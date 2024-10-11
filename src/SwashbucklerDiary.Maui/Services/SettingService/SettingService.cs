@@ -5,8 +5,8 @@ namespace SwashbucklerDiary.Maui.Services
     public class SettingService : Essentials.Preferences, ISettingService
     {
         public Dictionary<string, object> DefalutSettings { get; set; } = [];
-
         public Dictionary<string, object> TempSettings { get; set; } = [];
+        public Action? SettingsChanged { get; set; }
 
         public T Get<T>(string key)
         {

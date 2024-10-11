@@ -23,11 +23,15 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IResourceService _resourceService;
 
+        protected readonly ISettingService _settingService;
+
         protected const string exportFileNamePrefix = "SwashbucklerDiaryExport";
 
         protected const string backupFileNamePrefix = "SwashbucklerDiaryBackup";
 
         protected const string versionInfoFileName = "version.json";
+
+        protected const string settingsFileName = "settings.json";
 
         protected const string exportFileNameDateTimeFormat = "yyyyMMddHHmmss";
 
@@ -42,7 +46,8 @@ namespace SwashbucklerDiary.Rcl.Services
             II18nService i18nService,
             IMediaResourceManager mediaResourceManager,
             IDiaryService diaryService,
-            IResourceService resourceService)
+            IResourceService resourceService,
+            ISettingService settingService)
         {
             _appFileSystem = appFileSystem;
             _platformIntegration = platformIntegration;
@@ -50,6 +55,7 @@ namespace SwashbucklerDiary.Rcl.Services
             _mediaResourceManager = mediaResourceManager;
             _diaryService = diaryService;
             _resourceService = resourceService;
+            _settingService = settingService;
         }
 
         public Task<string> ExportDBAsync(bool copyResources)
@@ -74,6 +80,8 @@ namespace SwashbucklerDiary.Rcl.Services
                 CopyDiaryResource(outputFolder);
             }
 
+            CopyAvatar(outputFolder);
+            CreateSettingsFile(outputFolder);
             CreateExportVersionInfo(outputFolder, ".db3");
 
             if (File.Exists(zipFilePath))
@@ -266,6 +274,25 @@ namespace SwashbucklerDiary.Rcl.Services
             File.WriteAllText(jsonPath, jsonString);
         }
 
+        private void CreateSettingsFile(string outputFolder)
+        {
+            var settingsObject = _settingService.SaveSettingsToObject();
+            string jsonString = JsonSerializer.Serialize(settingsObject);
+            var settingsFilePath = Path.Combine(outputFolder, settingsFileName);
+            File.WriteAllText(settingsFilePath, jsonString);
+        }
+
+        private void CopyAvatar(string outputFolder)
+        {
+            var avatar = _settingService.Get(it => it.Avatar, null);
+            if (string.IsNullOrEmpty(avatar))
+            {
+                return;
+            }
+
+            CopyUriFileToOutFolder(avatar, outputFolder);
+        }
+
         private void CopyDiaryResource(List<DiaryModel> diaries, string outputFolder)
         {
             var resources = diaries.SelectMany(a => a.Resources ?? []).Distinct().ToList();
@@ -377,7 +404,22 @@ namespace SwashbucklerDiary.Rcl.Services
             {
                 RestoreDiaryResource(outputFolder);
             }
+
+            RestoreAvatar(outputFolder);
+            await ReadSettingsFile(outputFolder);
             return true;
+        }
+
+        private async Task ReadSettingsFile(string outputFolder)
+        {
+            var settingsJsonPath = Path.Combine(outputFolder, settingsFileName);
+            if (!File.Exists(settingsJsonPath)) return;
+
+            using FileStream stream = File.OpenRead(settingsJsonPath);
+            var settingsObject = JsonSerializer.Deserialize<Setting>(stream);
+            if (settingsObject is null) return;
+
+            await _settingService.SetSettingsFromObjectAsync(settingsObject);
         }
 
         public async Task<bool> ImportJsonAsync(string filePath)
@@ -519,8 +561,11 @@ namespace SwashbucklerDiary.Rcl.Services
         }
 
         protected void RestoreDiaryResource(string outputFolder)
+            => RestoreFolders(outputFolder, _mediaResourceManager.MediaResourceFolders.Values);
+
+        protected void RestoreFolders(string outputFolder, IEnumerable<string> folderNames)
         {
-            foreach (var item in _mediaResourceManager.MediaResourceFolders.Values)
+            foreach (var item in folderNames)
             {
                 var sourceDir = Path.Combine(outputFolder, "appdata", item);
                 if (!Directory.Exists(sourceDir))
@@ -545,6 +590,11 @@ namespace SwashbucklerDiary.Rcl.Services
             _appFileSystem.MoveFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
         }
 
+        private void RestoreAvatar(string outputFolder)
+        {
+            RestoreFolders(outputFolder, [AvatarService.AvatarDirectoryName]);
+        }
+
         public void UpdateResourceUri(List<DiaryModel> diaries)
         {
             foreach (var diary in diaries)
@@ -566,16 +616,5 @@ namespace SwashbucklerDiary.Rcl.Services
             UpdateResourceUri(diaries);
             await _diaryService.UpdateIncludesAsync(diaries);
         }
-    }
-
-    public class ExportVersionInfo
-    {
-        public string? Version { get; set; }
-
-        public string? FileSuffix { get; set; }
-
-        public string? Platform { get; set; }
-
-        public DateTime DateTime { get; set; }
     }
 }

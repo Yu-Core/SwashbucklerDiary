@@ -21,6 +21,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         public Dictionary<string, object> DefalutSettings { get; set; } = [];
         public Dictionary<string, object> TempSettings { get; set; } = [];
+        public Action? SettingsChanged { get; set; }
 
         public SettingService(ISyncLocalStorageService localStorage,
             IJSRuntime jSRuntime) :

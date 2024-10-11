@@ -10,8 +10,9 @@ namespace SwashbucklerDiary.Maui.Services
             II18nService i18nService,
             IMediaResourceManager mediaResourceManager,
             IDiaryService diaryService,
-            IResourceService resourceService)
-            : base(appFileSystem, platformIntegration, i18nService, mediaResourceManager, diaryService, resourceService)
+            IResourceService resourceService,
+            ISettingService settingService)
+            : base(appFileSystem, platformIntegration, i18nService, mediaResourceManager, diaryService, resourceService, settingService)
         {
         }
 

@@ -19,10 +19,6 @@ namespace SwashbucklerDiary.WebAssembly.Layout
         [Inject]
         private IVersionTracking VersionTracking { get; set; } = default!;
 
-        [Inject]
-        protected IThemeService ThemeService { get; set; } = default!;
-
-
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();

@@ -10,6 +10,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected Dictionary<string, object> TempSettings { get; set; }
 
+        public Action? SettingsChanged { get; set; }
+
         public Task InitializeAsync() => DefalutInitializeAsync(DefalutSettings);
 
         protected static Task DefalutInitializeAsync(Dictionary<string, object> dictionary)
@@ -137,6 +139,51 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             var key = GetSettingKey(expr);
             return RemoveAsync(key);
+        }
+
+        public Setting SaveSettingsToObject()
+        {
+            var obj = new Setting();
+            var properties = obj.GetType().GetProperties();
+
+            var method = this.GetType()?.GetMethod(nameof(Get), [typeof(string)])
+                         ?? throw new InvalidOperationException($"{nameof(Get)} does not exist");
+
+            foreach (var property in properties)
+            {
+                if (property.CanWrite)
+                {
+                    var genericMethod = method.MakeGenericMethod(property.PropertyType);
+                    var value = genericMethod.Invoke(this, [property.Name]);
+                    property.SetValue(obj, value);
+                }
+            }
+
+            return obj;
+        }
+
+        public async Task SetSettingsFromObjectAsync(Setting obj)
+        {
+            var properties = obj.GetType().GetProperties();
+            var method = this.GetType()?.GetMethod(nameof(SetAsync))
+                         ?? throw new InvalidOperationException($"{nameof(SetAsync)} does not exist");
+
+            foreach (var property in properties)
+            {
+                if (property.CanRead && DefalutSettings.TryGetValue(property.Name, out var defaultValue))
+                {
+                    var value = property.GetValue(obj);
+                    if (value == defaultValue)
+                    {
+                        continue;
+                    }
+
+                    var genericMethod = method.MakeGenericMethod(property.PropertyType);
+                    await (Task)genericMethod.Invoke(this, [property.Name, value])!;
+                }
+            }
+
+            SettingsChanged?.Invoke();
         }
     }
 }
