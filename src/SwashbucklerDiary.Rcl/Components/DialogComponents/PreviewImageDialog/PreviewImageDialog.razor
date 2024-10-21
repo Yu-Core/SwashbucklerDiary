@@ -34,8 +34,10 @@
         </MToolbar>
 
         <div class="preview-image-dialog__image__wraper">
-            <div id="@id" class="preview-image-dialog__image">
-                <img src="@Src" />
+            <div id="@id" class="preview-image-dialog__image" @onwheel="WeelHandZoom">
+                <img @ref="_previewImg"
+                     src="@Src"
+                     style="position: absolute; left: @_left; top: @_top; transform: translate(-50%, -50%) scale3d(@_zoomOutTimes, @_zoomOutTimes, 1);" />
             </div>
         </div>
 
