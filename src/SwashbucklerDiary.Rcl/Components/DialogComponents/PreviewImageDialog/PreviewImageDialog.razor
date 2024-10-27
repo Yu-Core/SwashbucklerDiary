@@ -18,7 +18,12 @@
             </MButton>
 
             <MSpacer></MSpacer>
-
+            <MButton Icon="true"
+                     OnClick="HandleReset">
+                <MIcon>
+                    mdi-restore
+                </MIcon>
+            </MButton>
             <MButton Icon="true"
                      OnClick="SaveToLocal">
                 <MIcon>
@@ -33,13 +38,8 @@
             </MButton>
         </MToolbar>
 
-        <div class="preview-image-dialog__image__wraper">
-            <div id="@id" class="preview-image-dialog__image" @onwheel="WeelHandZoom">
-                <img @ref="_previewImg"
-                     src="@Src"
-                     style="position: absolute; left: @_left; top: @_top; transform: translate(-50%, -50%) scale3d(@_zoomOutTimes, @_zoomOutTimes, 1);" />
-            </div>
+        <div class="preview-image-dialog-wraper">
+            <img @ref="_previewImg" src="@Src" />
         </div>
-
     </MCard>
 </MDialogExtension>
