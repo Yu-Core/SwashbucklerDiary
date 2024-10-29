@@ -34,9 +34,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override async Task InternalVisibleChanged(bool value)
         {
-            await Module.Reset(_previewImg);
-
             await base.InternalVisibleChanged(value);
+            await Module.Reset(_previewImg);
         }
 
         private async Task HandleReset()
