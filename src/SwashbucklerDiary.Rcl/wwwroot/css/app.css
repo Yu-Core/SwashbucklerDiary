@@ -484,13 +484,21 @@ html {
         opacity: 0.5 !important;
     }
 
-
 .preview-image-dialog-wraper {
+    position: fixed;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.preview-image-dialog-image {
     position: relative;
     height: 100%;
 }
 
-    .preview-image-dialog-wraper img {
+    .preview-image-dialog-image img {
         position: absolute;
         top: 0;
         left: 0;
