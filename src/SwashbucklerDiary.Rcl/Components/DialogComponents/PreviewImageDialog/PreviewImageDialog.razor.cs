@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -17,13 +18,6 @@ namespace SwashbucklerDiary.Rcl.Components
         private ZoomJSModule Module { get; set; } = default!;
 
         [Parameter]
-        public override bool Visible
-        {
-            get => base.Visible;
-            set => SetVisible(value);
-        }
-
-        [Parameter]
         public string? Src { get; set; }
 
         protected async Task BeforeShowContent()
@@ -35,19 +29,10 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        private async void SetVisible(bool value)
+        protected override async Task InternalVisibleChanged(bool value)
         {
-            if (base.Visible == value)
-            {
-                return;
-            }
-
-            base.Visible = value;
-            if (!value && Module is not null && isInitialized)
-            {
-                // Cannot be placed in BeforeShowContent, Because you will see the Reset animation
-                await Module.Reset($"#{id}");
-            }
+            await base.InternalVisibleChanged(value);
+            await Module.Reset($"#{id}");
         }
 
         private async Task SaveToLocal()
