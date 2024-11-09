@@ -7,9 +7,9 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class PreviewImageDialog : DialogComponentBase
     {
-        private bool isInitialized;
+        private readonly string id = $"zoom-{Guid.NewGuid()}";
 
-        private ElementReference _previewImg;
+        private bool isInitialized;
 
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (!isInitialized)
             {
-                await Module.Init(_previewImg);
+                await Module.Init($"#{id}");
                 isInitialized = true;
             }
         }
@@ -35,12 +35,12 @@ namespace SwashbucklerDiary.Rcl.Components
         protected override async Task InternalVisibleChanged(bool value)
         {
             await base.InternalVisibleChanged(value);
-            await Module.Reset(_previewImg);
+            await Module.Reset($"#{id}");
         }
 
         private async Task HandleReset()
         {
-            await Module.Reset(_previewImg);
+            await Module.Reset($"#{id}");
         }
 
         private async Task SaveToLocal()

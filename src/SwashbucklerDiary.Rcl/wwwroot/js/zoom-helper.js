@@ -1,26 +1,32 @@
-export function initZoom(element) {
-    if (!element) {
-        throw new Error('Element not found.');
+export function initZoom(selector) {
+    var el = document.querySelector(selector);
+    if (el == null) {
+        return;
     }
 
-    const panzoom = Panzoom(element, {
-        minScale: 1,
-        maxScale: 5,
+    el.panzoom = panzoom(el, {
+        maxZoom: 6,
+        minZoom: 1,
+        smoothScroll: false,
+        zoomDoubleClickSpeed: 1,
+        onTouch: function (e) {
+            //This is necessary, otherwise the custom double - click event cannot be triggered on the touchscreen device
+            return false; // tells the library to not preventDefault.
+        },
+        onDoubleClick: function (e) {
+            reset(selector);
+            return true; // tells the library to not preventDefault, and not stop propagation
+        }
     });
-
-    panzoom.zoom(1, { animate: true })
-
-    element.parentElement.addEventListener('wheel', function (event) {
-        panzoom.zoomWithWheel(event)
-    })
-
-    element.panzoom = panzoom;
 }
 
-export function reset(element) {
-    if (!element) {
-        throw new Error('Element not found.');
+export function reset(selector) {
+    var el = document.querySelector(selector);
+    if (el == null) {
+        return;
     }
 
-    element.panzoom.reset();
+    el.panzoom.zoomTo(0, 0, 1);
+    el.panzoom.moveTo(0, 0);
+    el.panzoom.zoomAbs(0, 0, 1);
 }

@@ -9,14 +9,14 @@ namespace SwashbucklerDiary.Rcl.Components
         {
         }
 
-        public async Task Init(ElementReference element)
+        public async Task Init(string selector)
         {
-            await base.InvokeVoidAsync("initZoom", element);
+            await base.InvokeVoidAsync("initZoom", selector);
         }
 
-        public async Task Reset(ElementReference element)
+        public async Task Reset(string selector)
         {
-            await base.InvokeVoidAsync("reset", element);
+            await base.InvokeVoidAsync("reset", selector);
         }
     }
 }
