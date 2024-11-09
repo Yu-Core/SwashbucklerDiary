@@ -17,9 +17,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private ZoomJSModule Module { get; set; } = default!;
 
-        [Inject]
-        private IPlatformIntegration PlatformIntegration { get; set; } = default!;
-
         [Parameter]
         public string? Src { get; set; }
 
@@ -35,11 +32,6 @@ namespace SwashbucklerDiary.Rcl.Components
         protected override async Task InternalVisibleChanged(bool value)
         {
             await base.InternalVisibleChanged(value);
-            await Module.Reset($"#{id}");
-        }
-
-        private async Task HandleReset()
-        {
             await Module.Reset($"#{id}");
         }
 
