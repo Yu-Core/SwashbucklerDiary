@@ -108,6 +108,11 @@ namespace SwashbucklerDiary.Rcl.Pages
                     = it => it.HidePlatforms == null
                     || !it.HidePlatforms.Contains(PlatformIntegration.CurrentPlatform.ToString());
                 exp = exp.And(expPlatform);
+
+                Expression<Func<AppFeatures, bool>> expBreakpoint
+                    = it => it.HideBreakpoints == null
+                    || !it.HideBreakpoints.Contains(MasaBlazorHelper.Breakpoint.Name.ToString());
+                exp = exp.And(expBreakpoint);
             }
 
             if (exp == null)

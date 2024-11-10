@@ -19,6 +19,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool taskListLineThrough;
 
+        private bool outline;
+
+        private bool rightOutline;
+
         private bool showAddTable;
 
         private Dictionary<string, object>? _options;
@@ -97,6 +101,8 @@ namespace SwashbucklerDiary.Rcl.Components
             firstLineIndent = SettingService.Get(s => s.FirstLineIndent);
             codeLineNumber = SettingService.Get(s => s.CodeLineNumber);
             taskListLineThrough = SettingService.Get(s => s.TaskListLineThrough);
+            outline = SettingService.Get(s => s.Outline);
+            rightOutline = SettingService.Get(s => s.RigthOutline);
         }
 
         private void SetOptions()
@@ -172,6 +178,12 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "max", maxAllowedSize },
                 { "accept", accept },
             };
+            var outlinePosition = rightOutline ? "right" : "left";
+            var outline = new Dictionary<string, object?>()
+            {
+                { "enable", this.outline },
+                { "position", outlinePosition }
+            };
 
             _options = new()
             {
@@ -187,6 +199,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "typewriterMode", true },
                 { "height", "100%" },
                 { "upload", upload },
+                { "outline", outline },
             };
         }
 

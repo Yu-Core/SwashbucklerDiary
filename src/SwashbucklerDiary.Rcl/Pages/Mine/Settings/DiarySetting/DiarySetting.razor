@@ -112,6 +112,22 @@
            Elevation="0"
            Rounded="@("lg")">
         <MList>
+            <MListItem Class="hidden-sm-and-down" OnClick="@(()=>To("outlineSetting"))">
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-format-list-bulleted
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.Outline.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5 hidden-sm-and-down"></MDivider>
+
             <MListItem>
                 <MListItemIcon>
                     <MIcon Class="evident-icon">

@@ -1,4 +1,4 @@
-﻿export function previewVditor(dotNetCallbackRef, element, text, options) {
+﻿export function previewVditor(dotNetCallbackRef, element, text, options, outline, outlineElement) {
     if (!element) {
         return;
     }
@@ -11,6 +11,9 @@
     let VditorOptions = {
         ...options,
         after: () => {
+            if (outline) {
+                outlineRender(element, outlineElement);
+            }
             handlePreviewElement(element);
             handleAnchorScroll();
             fixToc(element);
@@ -19,6 +22,11 @@
         }
     }
     Vditor.preview(element, text, VditorOptions);
+}
+
+function outlineRender(previewElement, outlineElement) {
+    Vditor.outlineRender(previewElement, outlineElement);
+    fixContents(outlineElement.firstElementChild, previewElement);
 }
 
 export function renderLazyLoadingImage(element) {
@@ -89,21 +97,25 @@ function handleAnchorScroll() {
     }
 }
 
-function fixToc(element) {
-    element.addEventListener('click', function (event) {
+function fixContents(listenElement, previewElement) {
+    listenElement.addEventListener('click', function (event) {
         const tocItem = event.target.closest('[data-target-id]');
         if (!tocItem) {
             return;
         }
 
         const targetId = tocItem.getAttribute('data-target-id');
-        const targetElement = document.getElementById(targetId);
+        const targetElement = previewElement.querySelector('#' + targetId);
         if (targetElement) {
             setTimeout(() => {
                 targetElement.scrollIntoView();
             }, 100);
         }
     });
+}
+
+function fixToc(previewElement) {
+    fixContents(previewElement, previewElement);
 }
 
 function fixAnchorLink(element) {

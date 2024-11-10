@@ -431,6 +431,18 @@
           "Path": "Setting / Diary / Auto save",
           "Close": "Close"
         },
+        "Outline": {
+          "Name": "Outline",
+          "Path": "Setting / Diary / Outline",
+          "Outline": {
+            "Name": "Display Outline",
+            "Path": "Setting / Diary / Outline / Display Outline"
+          },
+          "RightOutline": {
+            "Name": "Position on the right",
+            "Path": "Setting / Diary / Outline / Position on the right"
+          }
+        },
         "FirstLineIndent": {
           "Name": "First line indent",
           "Path": "Setting / Diary / First line indent"

@@ -58,6 +58,12 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool TaskListLineThrough { get; set; }
 
         [Parameter]
+        public bool Outline { get; set; }
+
+        [Parameter]
+        public bool RightOutline { get; set; }
+
+        [Parameter]
         public EventCallback OnAfter { get; set; }
 
         [JSInvokable]

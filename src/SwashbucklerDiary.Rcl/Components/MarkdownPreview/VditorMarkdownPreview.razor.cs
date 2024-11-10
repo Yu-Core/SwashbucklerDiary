@@ -11,6 +11,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private Lazy<DotNetObjectReference<object>> dotNetObjectReference = default!;
 
+        private ElementReference outlineElementRef;
+
         [Inject]
         private VditorMarkdownPreviewJSModule VditorMarkdownPreviewJSModule { get; set; } = default!;
 
@@ -25,6 +27,18 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public string? Style { get; set; }
+
+        [Parameter]
+        public string? OutlineClass { get; set; }
+
+        [Parameter]
+        public string? OutlineStyle { get; set; }
+
+        [Parameter]
+        public bool Outline { get; set; }
+
+        [Parameter]
+        public bool RightOutline { get; set; }
 
         [Parameter]
         public Dictionary<string, object>? Options { get; set; }
@@ -84,7 +98,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            await VditorMarkdownPreviewJSModule.PreviewVditor(dotNetObjectReference.Value, Ref, Value, Options);
+            await VditorMarkdownPreviewJSModule.PreviewVditor(dotNetObjectReference.Value, Ref, Value, Options, Outline, outlineElementRef);
         }
     }
 }

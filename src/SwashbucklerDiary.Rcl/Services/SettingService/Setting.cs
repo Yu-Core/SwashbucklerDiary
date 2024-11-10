@@ -41,5 +41,7 @@
         public bool DiaryIconText { get; set; }
         public bool OtherInfo { get; set; } = true;
         public bool AutoPlay { get; set; }
+        public bool Outline { get; set; }
+        public bool RigthOutline { get; set; }
     }
 }

@@ -11,5 +11,7 @@
         public string? Href { get; set; }
 
         public string[]? HidePlatforms { get; set; }
+
+        public string[]? HideBreakpoints { get; set; }
     }
 }

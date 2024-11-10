@@ -1,12 +1,17 @@
 ﻿body {
-    padding-top: var(--safe-area-inset-top, env(safe-area-inset-top));
-    padding-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
-    padding-left: var(--safe-area-inset-left, env(safe-area-inset-left));
-    padding-right: var(--safe-area-inset-right, env(safe-area-inset-right));
+    padding-top: var(--sait);
+    padding-bottom: var(--saib);
+    padding-left: var(--sail);
+    padding-right: var(--sair);
+    --sait: var(--safe-area-inset-top, env(safe-area-inset-top));
+    --saib: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
+    --sail: var(--safe-area-inset-left, env(safe-area-inset-left));
+    --sair: var(--safe-area-inset-right, env(safe-area-inset-right));
+    --safe-area-height: calc(100vh - var(--sait) - var(--saib));
 }
 
 .m-application__wrap {
-    min-height: calc(100vh - var(--safe-area-inset-top, env(safe-area-inset-top)) - var(--safe-area-inset-bottom, env(safe-area-inset-bottom)));
+    min-height: var(--safe-area-height);
 }
 
 .m-main {
@@ -14,61 +19,69 @@
 }
 
 .m-item-group.m-bottom-navigation {
-    margin-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
+    margin-bottom: var(--saib);
 }
 
     .m-item-group.m-bottom-navigation::after {
         content: '';
         display: block;
-        height: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
+        height: var(--saib);
         width: 100%;
-        bottom: calc(0px - var(--safe-area-inset-bottom, env(safe-area-inset-bottom)));
+        bottom: calc(0px - var(--saib));
         position: absolute;
         background-color: var( --m-theme-surface);
     }
 
 .m-bottom-navigation-hidden {
-    transform: translateY(calc(100% + var(--safe-area-inset-bottom, env(safe-area-inset-bottom)))) !important;
+    transform: translateY(calc(100% + var(--saib))) !important;
 }
 
 .m-navigation-drawer {
-    left: var(--safe-area-inset-left, env(safe-area-inset-left));
+    left: var(--sail);
 }
 
 .m-bottom-sheet.m-dialog .m-card::after {
     content: '';
     display: block;
-    height: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
+    height: var(--saib);
 }
 
 .m-bottom-sheet.m-dialog.p-mobile-date-picker__content {
-    padding-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
+    padding-bottom: var(--saib);
 }
 
 .m-enqueued-snackbars.m-enqueued-snackbars--top::before {
     content: '';
     display: block;
-    height: var(--safe-area-inset-top, env(safe-area-inset-top));
+    height: var(--sait);
 }
 
 .m-enqueued-snackbars.m-enqueued-snackbars--bottom::after {
     content: '';
     display: block;
-    height: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
+    height: var(--saib);
 }
 
 .m-snack:not(.m-enqueued-snackbar, .m-snack--absolute) {
-    height: calc(100vh - var(--safe-area-inset-top, env(safe-area-inset-top)) - var(--safe-area-inset-bottom, env(safe-area-inset-bottom)));
-    top: var(--safe-area-inset-top, env(safe-area-inset-top));
-    bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom));
+    height: var(--safe-area-height);
+    top: var(--sait);
+    bottom: var(--saib);
 }
 
 .m-dialog.m-dialog--active.m-dialog--fullscreen .m-card {
-    padding-top: var(--safe-area-inset-top, env(safe-area-inset-top)) !important;
-    padding-left: var(--safe-area-inset-left, env(safe-area-inset-left)) !important;
-    padding-right: var(--safe-area-inset-right, env(safe-area-inset-right)) !important;
+    padding-top: var(--sait) !important;
+    padding-left: var(--sail) !important;
+    padding-right: var(--sair) !important;
 }
 
 .vditor--fullscreen {
-    height: calc(100vh - var(--safe-area-inset-top, env(safe-area-inset-top)) - var(--safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--vditor-toolbar-height)) !important;
+    height: calc(var(--safe-area-height) - var(--vditor-toolbar-height)) !important;
+}
+
+.card-list__assist-info {
+    height: calc(var(--safe-area-height) - 64px - 24px);
+}
+
+.md-preview__outline {
+    height: calc(var(--safe-area-height) - 64px - 20px - 24px);
 }

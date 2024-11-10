@@ -1,6 +1,16 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
 
-<div @ref="Ref" class="@Class" style="@Style">
+<div class="@WrapClass">
+    <div @ref="outlineElementRef" class="@InternalOutlineClass" style="@InternalOutlineStyle "></div>
+    <div @ref="Ref" class="@Class" style="@InternalStyle"></div>
 </div>
 
+@code {
+    string WrapClass => $"d-flex {(RightOutline ? "flex-row-reverse" : "")}";
 
+    string InternalStyle => $"flex: 1;min-width: 1px; {Style}";
+
+    string InternalOutlineClass => $"vditor-outline {OutlineClass}";
+
+    string InternalOutlineStyle => $"position: sticky;top: 0px; {(Outline ? "display:block;" : "")} {OutlineStyle}";
+}

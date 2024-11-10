@@ -167,6 +167,27 @@
     "Href": "diarySetting"
   },
   {
+    "Name": "Setting.Display.Diary.Outline.Name",
+    "Icon": "mdi-format-list-bulleted",
+    "Path": "Setting.Display.Diary.Outline.Path",
+    "Href": "outlineSetting",
+    "HideBreakpoints": [ "Xs", "Sm" ]
+  },
+  {
+    "Name": "Setting.Display.Diary.Outline.Outline.Name",
+    "Icon": "mdi-format-list-bulleted",
+    "Path": "Setting.Display.Diary.Outline.Outline.Path",
+    "Href": "outlineSetting",
+    "HideBreakpoints": [ "Xs", "Sm" ]
+  },
+  {
+    "Name": "Setting.Display.Diary.Outline.RightOutline.Name",
+    "Icon": "mdi-format-align-right",
+    "Path": "Setting.Display.Diary.Outline.RightOutline.Path",
+    "Href": "outlineSetting",
+    "HideBreakpoints": [ "Xs", "Sm" ]
+  },
+  {
     "Name": "Setting.Display.Diary.FirstLineIndent.Name",
     "Icon": "mdi-format-indent-increase",
     "Path": "Setting.Display.Diary.FirstLineIndent.Path",
@@ -248,7 +269,8 @@
     "Name": "Setting.Display.StatisticsCard.Name",
     "Icon": " mdi-chart-line",
     "Path": "Setting.Display.StatisticsCard.Path",
-    "Href": "setting"
+    "Href": "setting",
+    "HideBreakpoints": [ "Xs", "Sm" ]
   },
   {
     "Name": "About.SourceCode.Name",

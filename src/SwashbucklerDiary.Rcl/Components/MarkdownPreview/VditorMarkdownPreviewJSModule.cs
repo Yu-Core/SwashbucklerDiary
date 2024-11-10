@@ -12,9 +12,11 @@ namespace SwashbucklerDiary.Rcl.Components
         public async Task PreviewVditor(DotNetObjectReference<object> dotNetObjectReference,
             ElementReference element,
             string? value,
-            Dictionary<string, object>? options)
+            Dictionary<string, object>? options,
+            bool outline,
+            ElementReference outlineElement)
         {
-            await InvokeVoidAsync("previewVditor", [dotNetObjectReference, element, value, options]);
+            await InvokeVoidAsync("previewVditor", [dotNetObjectReference, element, value, options, outline, outlineElement]);
         }
 
         public async Task RenderLazyLoadingImage(ElementReference element)

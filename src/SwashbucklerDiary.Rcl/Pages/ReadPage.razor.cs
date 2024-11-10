@@ -30,6 +30,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool taskListLineThrough;
 
+        private bool outline;
+
+        private bool rightOutline;
+
         private bool afterFirstQuery;
 
         private bool highlightSearchAutofocus = true;
@@ -98,6 +102,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             showSetPrivacy = SettingService.Get(s => s.SetPrivacyDiary);
             firstLineIndent = SettingService.Get(s => s.FirstLineIndent);
             taskListLineThrough = SettingService.Get(s => s.TaskListLineThrough);
+            outline = SettingService.Get(s => s.Outline);
+            rightOutline = SettingService.Get(s => s.RigthOutline);
             privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
         }
 

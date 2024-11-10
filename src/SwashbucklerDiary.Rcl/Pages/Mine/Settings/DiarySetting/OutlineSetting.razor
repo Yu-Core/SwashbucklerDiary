@@ -1,0 +1,49 @@
+﻿@page "/outlineSetting"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar Title="@(I18n.T("Setting.Display.Diary.Outline.Name"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MCard Class="my-list-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-format-list-bulleted
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.Outline.Outline.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="showOutline"
+                                   SettingKey="@nameof(Setting.Outline)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-format-align-right
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.Outline.RightOutline.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="rightOutline"
+                                   SettingKey="@nameof(Setting.RigthOutline)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+</ScrollContainer>

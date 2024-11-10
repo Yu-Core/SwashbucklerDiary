@@ -431,6 +431,18 @@
           "Path": "设置 / 日记 / 自动保存",
           "Close": "关闭"
         },
+        "Outline": {
+          "Name": "大纲",
+          "Path": "设置 / 日记 / 大纲",
+          "Outline": {
+            "Name": "显示大纲",
+            "Path": "设置 / 日记 / 大纲 / 显示大纲"
+          },
+          "RightOutline": {
+            "Name": "位置居右",
+            "Path": "设置 / 日记 / 大纲 / 位置居右"
+          }
+        },
         "FirstLineIndent": {
           "Name": "首行缩进",
           "Path": "设置 / 日记 / 首行缩进"

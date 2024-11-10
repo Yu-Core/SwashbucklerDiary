@@ -212,16 +212,16 @@ html {
 }
 
 .card-list__main {
-    flex-grow: 1;
-    min-width: 0px;
+    flex: 1;
+    min-width: 1px;
 }
 
 .card-list__assist-info {
     position: sticky;
     top: 0;
-    height: fit-content;
-    min-width: 300px;
+    width: 300px;
     margin-left: 16px;
+    height: calc(100vh - 64px - 24px);
 }
 
 .diary-card-list__icon--hidden .diary-card-icon {
@@ -630,4 +630,8 @@ html.m-overlay-scroll-blocked {
     width: 480px;
     aspect-ratio: 1/2;
     border-radius: 8px;
+}
+
+.md-preview__outline {
+    height: calc(100vh - 64px - 20px - 24px);
 }
