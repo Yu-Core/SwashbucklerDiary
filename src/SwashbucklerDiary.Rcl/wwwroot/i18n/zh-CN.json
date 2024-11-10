@@ -508,7 +508,7 @@
       "Subtitle": "保存为数据库文件生成的zip压缩包",
       "Success": "备份成功",
       "Fail": "备份失败",
-      "Content": "备份文件包含日记数据和媒体文件"
+      "Content": "备份文件包含日记数据、媒体文件和设置"
     },
     "Restore": {
       "Title": "还原",
@@ -650,7 +650,7 @@
   "VersionUpdate": {
     "LatestVersionUrl": "https://gitee.com/api/v5/repos/Yu-core/SwashbucklerDiary/releases/latest",
     "No updates": "当前已是最新版本",
-    "Need updates": "检测到最新版本，是否前往更新？",
+    "Need updates": "检测到最新版本，是否前往更新？（如未发现新版本，可能正在审核）",
     "Check failed": "检测失败，原因未知",
     "Not prompting": "下次不再提示"
   },
