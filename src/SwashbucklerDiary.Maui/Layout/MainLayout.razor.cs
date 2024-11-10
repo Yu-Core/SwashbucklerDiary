@@ -4,7 +4,6 @@ using SwashbucklerDiary.Maui.Extensions;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Layout;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Layout
 {
@@ -12,22 +11,16 @@ namespace SwashbucklerDiary.Maui.Layout
     {
         private bool showUpdate;
 
-        private bool isAndroidOrIOS;
-
         [Inject]
         private ILogger<MainLayout> Logger { get; set; } = default!;
 
         [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
 
-        [Inject]
-        private IPlatformIntegration PlatformIntegration { get; set; } = default!;
-
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
-            isAndroidOrIOS = PlatformIntegration.CurrentPlatform == AppDevicePlatform.Android || PlatformIntegration.CurrentPlatform == AppDevicePlatform.iOS;
             AppLifecycle.Activated += HandleActivated;
             VersionUpdataManager.AfterCheckFirstLaunch += CheckForUpdates;
         }
