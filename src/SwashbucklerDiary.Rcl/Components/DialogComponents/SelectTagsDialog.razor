@@ -23,9 +23,9 @@
         <MCardText Class="pb-0">
             @if (showSearch)
             {
-                <MTextFieldExtension @bind-Value="searchText"
+                <MTextFieldExtension @bind-Value="_searchText"
                                      Class="mb-2"
-                                     OnInput="Search"
+                                     OnInput="UpdateInternalItems"
                                      Dense
                                      TValue="string"
                                      Filled

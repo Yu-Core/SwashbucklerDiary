@@ -80,9 +80,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            var tags = Tags;
-            tags.Insert(0, tag);
-            Tags = tags;
+            Tags.Insert(0, tag);
+            Tags = [.. Tags];
             StateHasChanged();
         }
 

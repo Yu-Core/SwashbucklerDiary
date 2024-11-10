@@ -52,7 +52,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            locations.Add(location);
+            locations.Insert(0, location);
+            locations = [.. locations];
             StateHasChanged();
         }
     }

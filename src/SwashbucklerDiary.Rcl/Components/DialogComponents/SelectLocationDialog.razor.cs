@@ -11,11 +11,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool showSearch;
 
-        private string? searchText;
+        private string? _searchText;
 
         private string? selectedLocation;
 
-        private List<LocationModel> locations = [];
+        private List<LocationModel> internalItems = [];
+
+        private readonly List<LocationModel> defaultItems = [];
 
         [Inject]
         ILocationService LocationService { get; set; } = default!;
@@ -29,25 +31,41 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public EventCallback<string> ValueChanged { get; set; }
 
+        [Parameter]
+        public List<LocationModel> Items { get; set; } = [];
+
+        [Parameter]
+        public EventCallback<List<LocationModel>> ItemsChanged { get; set; }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            Items = defaultItems;
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
 
             if (firstRender)
             {
-                locations = await LocationService.QueryAsync();
-                StateHasChanged();
+                if (Items == defaultItems)
+                {
+                    Items = await LocationService.QueryAsync();
+                    UpdateInternalItems(_searchText);
+                    StateHasChanged();
+                }
             }
         }
 
         private string? Color => Dark ? "white" : "grey";
 
-        private ICollection<LocationModel> FilterLocations =>
-            string.IsNullOrWhiteSpace(searchText) ? locations : locations.Where(it => !string.IsNullOrEmpty(it.Name) && (it.Name.Contains(searchText) || it.Name == selectedLocation)).ToList();
-
         private void BeforeShowContent()
         {
+            _searchText = string.Empty;
             selectedLocation = Value;
+            internalItems = Items;
         }
 
         private void SetSelectedLocation(LocationModel location)
@@ -65,7 +83,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            if (locations.Any(it => it.Name == name))
+            if (Items.Any(it => it.Name == name))
             {
                 await PopupServiceHelper.Warning(I18n.T("Location.Repeat.Title"), I18n.T("Location.Repeat.Content"));
                 return;
@@ -79,8 +97,9 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            locations.Insert(0, location);
+            Items.Insert(0, location);
             selectedLocation = location.Name;
+            UpdateInternalItems(_searchText);
             StateHasChanged();
         }
 
@@ -91,6 +110,18 @@ namespace SwashbucklerDiary.Rcl.Components
             if (ValueChanged.HasDelegate)
             {
                 await ValueChanged.InvokeAsync(selectedLocation);
+            }
+        }
+
+        private void UpdateInternalItems(string? searchText)
+        {
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                internalItems = Items;
+            }
+            else
+            {
+                internalItems = Items.Where(it => !string.IsNullOrEmpty(it.Name) && (it.Name.Contains(searchText) || it.Name == selectedLocation)).ToList();
             }
         }
     }

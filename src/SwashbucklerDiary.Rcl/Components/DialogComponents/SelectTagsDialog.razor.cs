@@ -12,11 +12,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool showSearch;
 
-        private string? searchText;
+        private string? _searchText;
 
         private List<StringNumber> SelectedTagIds = [];
 
-        private IEnumerable<TagModel> internalItems = [];
+        private List<TagModel> internalItems = [];
 
         [Inject]
         public ITagService TagService { get; set; } = default!;
@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task BeforeShowContent()
         {
-            searchText = string.Empty;
+            _searchText = string.Empty;
             internalItems = Items;
             await SetSelectedTagIds();
         }
@@ -111,18 +111,25 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             Items.Insert(0, tag);
+            UpdateInternalItems(_searchText);
+            Items = [.. Items];
+            if (ItemsChanged.HasDelegate)
+            {
+                await ItemsChanged.InvokeAsync(Items);
+            }
+
             StateHasChanged();
         }
 
-        private void Search(string text)
+        private void UpdateInternalItems(string? searchText)
         {
-            if (string.IsNullOrWhiteSpace(text))
+            if (string.IsNullOrWhiteSpace(searchText))
             {
                 internalItems = Items;
             }
             else
             {
-                internalItems = Items.Where(it => !string.IsNullOrEmpty(it.Name) && (it.Name.Contains(text) || SelectedTagIds.Any(t => t.ToString() == it.Id.ToString())));
+                internalItems = Items.Where(it => !string.IsNullOrEmpty(it.Name) && (it.Name.Contains(searchText) || SelectedTagIds.Any(t => t.ToString() == it.Id.ToString()))).ToList();
             }
         }
     }

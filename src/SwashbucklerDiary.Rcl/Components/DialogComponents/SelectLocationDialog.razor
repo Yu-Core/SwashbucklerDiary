@@ -24,8 +24,9 @@
         <MCardText Class="pb-0">
             @if (showSearch)
             {
-                <MTextFieldExtension @bind-Value="searchText"
+                <MTextFieldExtension @bind-Value="_searchText"
                                      Class="mb-2"
+                                     OnInput="UpdateInternalItems"
                                      Dense
                                      TValue="string"
                                      Filled
@@ -39,7 +40,7 @@
                 </MTextFieldExtension>
             }
             <div class="scroll-show" style="max-height:300px;">
-                <Virtualize Items="FilterLocations"
+                <Virtualize Items="internalItems"
                             ItemSize="56"
                             Context="item">
                     <MListItem @key="item.Id"
