@@ -253,13 +253,13 @@ namespace SwashbucklerDiary.Rcl.Components
         //}
         private async Task AddMediaFilesAsync(IEnumerable<ResourceModel>? resources)
         {
-            string? insertContent = CreateInsertContent(resources);
+            string? insertContent = CreateInsertMediaFilesContent(resources);
             if (insertContent is null) return;
 
             await InsertValueAsync(insertContent);
         }
 
-        private static string? CreateInsertContent(string src, MediaResource mediaResource)
+        private static string? CreateInsertMediaFileContent(string src, MediaResource mediaResource)
         {
             return mediaResource switch
             {
@@ -270,17 +270,18 @@ namespace SwashbucklerDiary.Rcl.Components
             };
         }
 
-        public async Task<string?> CreateInsertContent(List<string?> filePaths)
+        public async Task<string?> CreateInsertMediaFilesContent(List<string?> filePaths)
         {
             var resources = await MediaResourceManager.AddMediaFilesAsync(filePaths);
-            return CreateInsertContent(resources);
+            return CreateInsertMediaFilesContent(resources);
         }
 
-        static string? CreateInsertContent(IEnumerable<ResourceModel>? resources)
+        static string? CreateInsertMediaFilesContent(IEnumerable<ResourceModel>? resources)
         {
             if (resources is null) return null;
-            var insertContents = resources.Select(it => CreateInsertContent(it.ResourceUri!, it.ResourceType));
-            return string.Join("\n", insertContents);
+            var insertContents = resources.Select(it => CreateInsertMediaFileContent(it.ResourceUri!, it.ResourceType));
+            if (insertContents is null || !insertContents.Any()) return null;
+            return $"{string.Join("\n", insertContents)}\n\n";
         }
 
         private async Task HandleBeforeAllUpload()
@@ -314,7 +315,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            var insertContent = await CreateInsertContent(filePaths);
+            var insertContent = await CreateInsertMediaFilesContent(filePaths);
             if (string.IsNullOrEmpty(insertContent))
             {
                 return;

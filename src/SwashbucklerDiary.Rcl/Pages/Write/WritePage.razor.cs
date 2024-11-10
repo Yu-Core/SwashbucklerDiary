@@ -480,7 +480,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             else if (args.Kind == ShareKind.FilePaths)
             {
                 var filePaths = (List<string?>)args.Data;
-                insertContent = await markdownEdit.CreateInsertContent(filePaths);
+                insertContent = await markdownEdit.CreateInsertMediaFilesContent(filePaths);
             }
 
             if (insertContent is null)
