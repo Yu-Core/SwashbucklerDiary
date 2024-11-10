@@ -41,7 +41,14 @@ function handleA(dotNetCallbackRef, element) {
     });
 }
 
-function customRender(element) {
+function afterMarkdown(element, options) {
+    handleCustomRender(element);
+    if (options.autoPlay) {
+        handleAutoPlay(element);
+    }
+}
+
+function handleCustomRender(element) {
     if (!element) {
         return;
     }
@@ -96,4 +103,15 @@ function insertDeckIframe(aElement, url) {
     aElement.remove();
 }
 
-export { after, customRender }
+function handleAutoPlay(element) {
+    if (!element) {
+        return;
+    }
+    const mediaElement = element.querySelector('audio, video');
+    if (mediaElement) {
+        // play() possible error
+        mediaElement.autoplay = true;
+    }
+}
+
+export { after, afterMarkdown }

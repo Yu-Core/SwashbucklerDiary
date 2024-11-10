@@ -25,6 +25,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool otherInfo;
 
+        private bool autoPlay;
+
         private readonly Dictionary<string, string> editAutoSaveItems = new()
         {
             {"Setting.Display.Diary.EditAutoSave.Close" ,"0"},
@@ -50,6 +52,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             firstLineIndent = SettingService.Get(s => s.FirstLineIndent);
             codeLineNumber = SettingService.Get(s => s.CodeLineNumber);
             taskListLineThrough = SettingService.Get(s => s.TaskListLineThrough);
+            autoPlay = SettingService.Get(s => s.AutoPlay);
         }
 
         private StringNumber EditAutoSave

@@ -14,9 +14,9 @@ namespace SwashbucklerDiary.Rcl.Components
             await InvokeVoidAsync("after", [dotNetObjectReference, element]);
         }
 
-        public async Task CustomRender(ElementReference element)
+        public async Task AfterMarkdown(ElementReference element, Dictionary<string, object> options)
         {
-            await InvokeVoidAsync("customRender", [element]);
+            await InvokeVoidAsync("afterMarkdown", [element, options]);
         }
     }
 }

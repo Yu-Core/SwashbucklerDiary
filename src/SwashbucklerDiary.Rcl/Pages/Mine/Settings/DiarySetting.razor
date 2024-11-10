@@ -115,24 +115,6 @@
             <MListItem>
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
-                        mdi-image-refresh-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Setting.Display.Diary.ImageLazy.Name"))
-                </MListItemContent>
-                <MListItemAction>
-                    <SettingSwitch @bind-Value="imageLazy"
-                                   SettingKey="@nameof(Setting.ImageLazy)">
-                    </SettingSwitch>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-5"></MDivider>
-
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="evident-icon">
                         mdi-format-indent-increase
                     </MIcon>
                 </MListItemIcon>
@@ -178,6 +160,46 @@
                 <MListItemAction>
                     <SettingSwitch @bind-Value="taskListLineThrough"
                                    SettingKey="@nameof(Setting.TaskListLineThrough)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <MCard Class="my-list-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-image-refresh-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.ImageLazy.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="imageLazy"
+                                   SettingKey="@nameof(Setting.ImageLazy)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-play-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Diary.AutoPlay.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="autoPlay"
+                                   SettingKey="@nameof(Setting.AutoPlay)">
                     </SettingSwitch>
                 </MListItemAction>
             </MListItem>

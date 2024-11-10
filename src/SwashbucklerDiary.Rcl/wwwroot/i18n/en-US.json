@@ -431,10 +431,6 @@
           "Path": "Setting / Diary / Auto save",
           "Close": "Close"
         },
-        "ImageLazy": {
-          "Name": "Image lazy",
-          "Path": "Setting / Diary / Image lazy"
-        },
         "FirstLineIndent": {
           "Name": "First line indent",
           "Path": "Setting / Diary / First line indent"
@@ -446,6 +442,14 @@
         "TaskListLineThrough": {
           "Name": "Task list line-through",
           "Path": "Setting / Diary / Task list line-through"
+        },
+        "ImageLazy": {
+          "Name": "Image lazy",
+          "Path": "Setting / Diary / Image lazy"
+        },
+        "AutoPlay": {
+          "Name": "Automatic playback of audio and video",
+          "Path": "Setting / Diary / Automatic playback of audio and video"
         }
       },
       "Snackbars": {

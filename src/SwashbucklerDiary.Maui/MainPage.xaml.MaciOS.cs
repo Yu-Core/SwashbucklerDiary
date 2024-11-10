@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Maui
         private partial void BlazorWebViewInitializing(object? sender, BlazorWebViewInitializingEventArgs e)
         {
             e.Configuration.AllowsInlineMediaPlayback = true;
-            //e.Configuration.MediaTypesRequiringUserActionForPlayback = WebKit.WKAudiovisualMediaTypes.None;
+            e.Configuration.MediaTypesRequiringUserActionForPlayback = WebKit.WKAudiovisualMediaTypes.None;
         }
 
         private partial void BlazorWebViewInitialized(object? sender, BlazorWebViewInitializedEventArgs e)

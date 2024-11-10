@@ -7,9 +7,11 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class MarkdownPreview
     {
-        private bool imageLazy;
+        private bool autoPlay;
 
         private bool codeLineNumber;
+
+        private bool imageLazy;
 
         private bool showPreviewImage;
 
@@ -111,8 +113,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void ReadSettings()
         {
-            imageLazy = SettingService.Get(s => s.ImageLazy);
+            autoPlay = SettingService.Get(s => s.AutoPlay);
             codeLineNumber = SettingService.Get(s => s.CodeLineNumber);
+            imageLazy = SettingService.Get(s => s.ImageLazy);
         }
 
         private void SetOptions()
@@ -153,7 +156,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task HandleOnAfter()
         {
-            await MarkdownPreviewJSModule.CustomRender(vditorMarkdownPreview.Ref);
+            var options = new Dictionary<string, object>();
+            if (autoPlay)
+            {
+                options.Add("autoPlay", true);
+            }
+
+            await MarkdownPreviewJSModule.AfterMarkdown(vditorMarkdownPreview.Ref, options);
 
             if (OnAfter.HasDelegate)
             {
