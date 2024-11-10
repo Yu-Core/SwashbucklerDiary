@@ -131,3 +131,14 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [wc-waterfall](https://github.com/huodoushigemi/wc-flow-layout)
 - [Vditor](https://github.com/Vanessa219/vditor)
 - [Zoom](https://github.com/anitasv/zoom)
+
+## ☕Sponsor
+The development of the project cannot do without your support. Please have a cup of coffee with the developers☕
+
+#### Wechat
+
+<img src="./src/SwashbucklerDiary.Rcl/wwwroot/sponsor/wechat.png" width=300>
+
+#### Alipay
+
+<img src="./src/SwashbucklerDiary.Rcl/wwwroot/sponsor/alipay.jpg" width=300>

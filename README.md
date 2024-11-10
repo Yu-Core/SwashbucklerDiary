@@ -131,3 +131,14 @@
 - [wc-waterfall](https://github.com/huodoushigemi/wc-flow-layout)
 - [Vditor](https://github.com/Vanessa219/vditor)
 - [Zoom](https://github.com/anitasv/zoom)
+
+## ☕捐助
+项目的发展离不开你的支持，请作者喝杯咖啡吧☕
+
+#### 微信
+
+<img src="./src/SwashbucklerDiary.Rcl/wwwroot/sponsor/wechat.png" width=300>
+
+#### 支付宝
+
+<img src="./src/SwashbucklerDiary.Rcl/wwwroot/sponsor/alipay.jpg" width=300>
