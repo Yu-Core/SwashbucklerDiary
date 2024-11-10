@@ -1,5 +1,5 @@
-﻿export function after(domRef) {
-    handleToolbar(domRef);
+﻿export function after(dotNetCallbackRef, domRef) {
+    handleToolbar(dotNetCallbackRef, domRef);
 }
 
 export function focus(domRef) {
@@ -24,7 +24,7 @@ export function upload(element, inputFileElement) {
     inputFileElement.dispatchEvent(new CustomEvent('change'));
 }
 
-function handleToolbar(domRef) {
+function handleToolbar(dotNetCallbackRef, domRef) {
     if (!domRef) {
         return;
     }
@@ -49,6 +49,12 @@ function handleToolbar(domRef) {
         const vditorToolbarWidth = itemWidth * Math.round(visibleItems.length / 2) + 'px';
         toolbarContent.style.setProperty('--vditor-toolbar-width', vditorToolbarWidth);
     }
+
+    const btnTable = toolbar.querySelector('button[data-type=table]');
+    if (!btnTable) return;
+    btnTable.addEventListener("click", () => {
+        dotNetCallbackRef.invokeMethodAsync("OpenAddTableDialog");
+    })
 }
 
 function insertMiddleElement(parent, destination) {

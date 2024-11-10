@@ -1,0 +1,55 @@
+﻿@namespace SwashbucklerDiary.Rcl.Components
+@inherits DialogComponentBase
+
+<MDialogExtension MyValue="Visible"
+                  MyValueChanged="InternalVisibleChanged"
+                  ContentClass="rounded-lg"
+                  MaxWidth="420"
+                  OnBeforeShowContent="BeforeShowAddTable">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @I18n.T("AddTable");
+            <MSpacer></MSpacer>
+            <MButton Icon
+                     OnClick="HandleOnCancel">
+                <MIcon>mdi-close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            <MRow>
+                <MCol Cols="6">
+                    <MTextField @bind-Value="rows"
+                                Type="number"
+                                Dense
+                                HideDetails="@("auto")"
+                                spellcheck="false"
+                                NumberProps="@(prop => { prop.Min = minRows; })"
+                                Label="@(I18n.T("Row"))">
+                    </MTextField>
+                </MCol>
+                <MCol Cols="6">
+                    <MTextField @bind-Value="cols"
+                                Type="number"
+                                Dense
+                                HideDetails="@("auto")"
+                                spellcheck="false"
+                                NumberProps="@(prop => { prop.Min = minCols; })"
+                                Label="@(I18n.T("Col"))">
+                    </MTextField>
+                </MCol>
+            </MRow>
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text
+                     OnClick="HandleOnCancel">
+                @(I18n.T("Share.Cancel"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="HandleOnOK">
+                @(I18n.T("Share.OK"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</MDialogExtension>

@@ -12,4 +12,7 @@
                BeforeAllUpload="HandleBeforeAllUpload">
     </MMarkdown>
     <InputFile @ref="inputFile" style="display:none;" OnChange="LoadFiles"></InputFile>
+    <AddTableDialog @bind-Visible="showAddTable"
+                    OnOK="InsertValueAsync">
+    </AddTableDialog>
 </div>

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -18,11 +19,15 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool taskListLineThrough;
 
+        private bool showAddTable;
+
         private Dictionary<string, object>? _options;
 
         private MMarkdown mMarkdown = default!;
 
         private InputFile? inputFile;
+
+        private DotNetObjectReference<object>? _dotNetObjectReference;
 
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
@@ -57,6 +62,13 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public EventCallback OnAfter { get; set; }
 
+        [JSInvokable]
+        public async Task OpenAddTableDialog()
+        {
+            showAddTable = true;
+            await InvokeAsync(StateHasChanged);
+        }
+
         public async Task InsertValueAsync(string value)
         {
             if (string.IsNullOrEmpty(Value))
@@ -73,6 +85,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
+            _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
             ReadSettings();
             SetOptions();
         }
@@ -147,6 +160,12 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "name", "upload" },
                 { "className", "d-none" },
             };
+            var btnTable = new Dictionary<string, object?>()
+            {
+                { "name", "table" },
+                { "suffix", "" },
+                { "prefix", "" }
+            };
             string[] accept = ["image/*", "audio/*", "video/*"];
             var upload = new Dictionary<string, object?>()
             {
@@ -157,7 +176,7 @@ namespace SwashbucklerDiary.Rcl.Components
             _options = new()
             {
                 { "mode", "ir" },
-                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list", "check", "indent", "outdent", "code", "inline-code", "link", btnImage, btnAudio, btnVideo, "undo", "redo", "fullscreen", btnUpload }},
+                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list", "check", "indent", "outdent", btnTable, "code", "inline-code", "link", btnImage, btnAudio, btnVideo, "undo", "redo", "fullscreen", btnUpload }},
                 { "placeholder", I18n.T("Write.ContentPlace") },
                 { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.10.7" },
                 { "lang", lang },
@@ -173,7 +192,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task AfterMarkdownRender()
         {
-            await Module.After(mMarkdown.Ref);
+            if (_dotNetObjectReference is not null)
+            {
+                await Module.After(_dotNetObjectReference, mMarkdown.Ref);
+            }
+
             if (Autofocus)
             {
                 await Module.Autofocus(mMarkdown.Ref);

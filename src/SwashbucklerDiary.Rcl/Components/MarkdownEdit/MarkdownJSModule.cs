@@ -9,9 +9,9 @@ namespace SwashbucklerDiary.Rcl.Components
         {
         }
 
-        public async Task After(ElementReference element)
+        public async Task After(DotNetObjectReference<object> dotNetObjectReference, ElementReference element)
         {
-            await base.InvokeVoidAsync("after", element);
+            await base.InvokeVoidAsync("after", [dotNetObjectReference, element]);
         }
 
         public async Task Focus(ElementReference element)

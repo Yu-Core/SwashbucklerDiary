@@ -810,5 +810,8 @@
   "SelectWeather": "Select weather",
   "SelectMood": "Select mood",
   "SelectFileTypes": "Select file types",
-  "SwashbucklerDiaryFeedback": "Swashbuckler diary feedback"
+  "SwashbucklerDiaryFeedback": "Swashbuckler diary feedback",
+  "Row": "Row",
+  "Col": "Col",
+  "AddTable": "Add table"
 }

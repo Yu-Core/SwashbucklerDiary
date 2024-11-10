@@ -810,5 +810,8 @@
   "SelectWeather": "选择天气",
   "SelectMood": "选择心情",
   "SelectFileTypes": "选择文件类型",
-  "SwashbucklerDiaryFeedback": "侠客日记反馈"
+  "SwashbucklerDiaryFeedback": "侠客日记反馈",
+  "Row": "行",
+  "Col": "列",
+  "AddTable": "添加表格"
 }
