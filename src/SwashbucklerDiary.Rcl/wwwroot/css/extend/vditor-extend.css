@@ -16,6 +16,11 @@
         padding: 0px 8px !important;
     }
 
+.vditor-toolbar__item svg {
+    width: 16px;
+    height: 16px;
+}
+
 .vditor-content {
     min-height: 0px;
 }
