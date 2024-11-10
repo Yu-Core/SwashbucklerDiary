@@ -24,6 +24,9 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool? ShowText { get; set; }
 
         [Parameter]
+        public EventCallback<bool> ShowTextChanged { get; set; }
+
+        [Parameter]
         public Func<KeyValuePair<string, string>, string>? ItemText { get; set; }
 
         [Parameter]
@@ -77,6 +80,11 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             ShowText = !ShowText;
+            if (ShowTextChanged.HasDelegate)
+            {
+                await ShowTextChanged.InvokeAsync((bool)ShowText);
+            }
+
             await SettingService.SetAsync(it => it.DiaryIconText, (bool)ShowText);
         }
     }

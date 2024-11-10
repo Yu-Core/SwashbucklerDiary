@@ -7,6 +7,7 @@
                   ValueChanged="ValueChanged"
                   Title="@(I18n.T("SelectWeather"))"
                   ShowText="ShowText"
+                  ShowTextChanged="ShowTextChanged"
                   Items="GlobalConfiguration.WeatherIcons"
                   ItemValue="it=>it.Key"
                   ItemText="@(item=>I18n.T("Weather." + item.Key))"
@@ -27,4 +28,7 @@
 
     [Parameter]
     public bool ShowText { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> ShowTextChanged { get; set; }
 }
