@@ -84,9 +84,9 @@ namespace SwashbucklerDiary.Rcl.Services
             if (copyResources)
             {
                 await CopyDiaryResource(outputFolder);
+                CopyAvatar(outputFolder);
             }
 
-            CopyAvatar(outputFolder);
             CreateSettingsFile(outputFolder);
             CreateExportVersionInfo(outputFolder, ".db3");
 
@@ -406,8 +406,9 @@ namespace SwashbucklerDiary.Rcl.Services
                 RestoreDiaryResource(outputFolder);
             }
 
-            RestoreAvatar(outputFolder);
+            string previousAvatarUri = _settingService.Get(s => s.Avatar);
             await ReadSettingsFile(outputFolder);
+            await RestoreAvatar(outputFolder, previousAvatarUri);
             return true;
         }
 
@@ -559,7 +560,7 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             foreach (var item in folderNames)
             {
-                var sourceDir = Path.Combine(outputFolder, "appdata", item);
+                var sourceDir = Path.Combine(outputFolder, AppFileSystem.AppDataVirtualDirectoryName, item);
                 if (!Directory.Exists(sourceDir))
                 {
                     continue;
@@ -582,9 +583,31 @@ namespace SwashbucklerDiary.Rcl.Services
             _appFileSystem.MoveFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
         }
 
-        private void RestoreAvatar(string outputFolder)
+        private async Task RestoreAvatar(string outputFolder, string previousAvatarUri)
         {
-            RestoreFolders(outputFolder, [AvatarService.AvatarDirectoryName]);
+            string avatarUri = _settingService.Get(s => s.Avatar);
+            string avatarFileName = Path.GetFileName(avatarUri);
+            string sourceFilePath = Path.Combine(outputFolder, AppFileSystem.AppDataVirtualDirectoryName, AvatarService.AvatarDirectoryName, avatarFileName);
+            if (!File.Exists(sourceFilePath))
+            {
+                return;
+            }
+
+            string targetFilePath = Path.Combine(_appFileSystem.AppDataDirectory, AvatarService.AvatarDirectoryName, avatarFileName);
+            if (File.Exists(targetFilePath))
+            {
+                File.Delete(targetFilePath);
+            }
+
+            await _appFileSystem.FileMoveAsync(sourceFilePath, targetFilePath);
+            if (avatarUri != previousAvatarUri)
+            {
+                string previousAvatarPath = _mediaResourceManager.UrlRelativePathToFilePath(previousAvatarUri);
+                if (File.Exists(previousAvatarPath))
+                {
+                    File.Delete(previousAvatarPath);
+                }
+            }
         }
 
         public void UseNewResourceUri(List<DiaryModel> diaries)
