@@ -62,7 +62,8 @@ namespace SwashbucklerDiary.Rcl.Components
             await PopupServiceHelper.StartLoading();
             try
             {
-                string path = await func(Value);
+                var diaries = Value.OrderBy(x => x.CreateTime).ToList();
+                string path = await func(diaries);
                 if (!string.IsNullOrEmpty(path))
                 {
                     string fileName = DiaryFileManager.GetExportFileName(exportKind);
