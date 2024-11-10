@@ -66,6 +66,10 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<IEnumerable<ResourceModel>?> AddMediaFilesAsync(IEnumerable<string?> filePaths);
 
+        Task<string?> CreateMediaFilesInsertContentAsync(List<string?> filePaths);
+
+        string? CreateMediaFilesInsertContent(IEnumerable<ResourceModel>? resources);
+
         string UrlRelativePathToFilePath(string urlRelativePath);
     }
 }

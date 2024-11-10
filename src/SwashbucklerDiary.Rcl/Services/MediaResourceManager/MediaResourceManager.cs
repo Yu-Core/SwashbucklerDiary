@@ -202,6 +202,33 @@ namespace SwashbucklerDiary.Rcl.Services
             return await AddMediaFilesAsync(filePaths);
         }
 
+
+
+        public async Task<string?> CreateMediaFilesInsertContentAsync(List<string?> filePaths)
+        {
+            var resources = await AddMediaFilesAsync(filePaths);
+            return CreateMediaFilesInsertContent(resources);
+        }
+
+        public string? CreateMediaFilesInsertContent(IEnumerable<ResourceModel>? resources)
+        {
+            if (resources is null) return null;
+            var insertContents = resources.Select(it => CreateMediaFileInsertContent(it.ResourceUri!, it.ResourceType));
+            if (insertContents is null || !insertContents.Any()) return null;
+            return $"{string.Join("\n", insertContents)}\n\n";
+        }
+
         protected static readonly string customPathPrefix = $"{AppFileSystem.AppDataVirtualDirectoryName}/";
+
+        protected static string? CreateMediaFileInsertContent(string src, MediaResource mediaResource)
+        {
+            return mediaResource switch
+            {
+                MediaResource.Image => $"![]({src})",
+                MediaResource.Audio => $"<audio src=\"{src}\" controls ></audio>",
+                MediaResource.Video => $"<video src=\"{src}\" controls ></video>",
+                _ => null
+            };
+        }
     }
 }

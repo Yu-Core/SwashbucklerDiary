@@ -410,13 +410,18 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task InsertTimestamp()
         {
             string dateTimeNow = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+            await InsertValueAsync(dateTimeNow);
+        }
+
+        private async Task InsertValueAsync(string value)
+        {
             if (enableMarkdown)
             {
-                await markdownEdit.InsertValueAsync(dateTimeNow);
+                await markdownEdit.InsertValueAsync(value);
             }
             else
             {
-                await textareaEdit.InsertValueAsync(dateTimeNow);
+                await textareaEdit.InsertValueAsync(value);
             }
         }
 
@@ -480,7 +485,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             else if (args.Kind == ShareKind.FilePaths)
             {
                 var filePaths = (List<string?>)args.Data;
-                insertContent = await markdownEdit.CreateInsertMediaFilesContent(filePaths);
+                insertContent = await MediaResourceManager.CreateMediaFilesInsertContentAsync(filePaths);
             }
 
             if (insertContent is null)
@@ -488,14 +493,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            if (enableMarkdown)
-            {
-                await markdownEdit.InsertValueAsync(insertContent);
-            }
-            else
-            {
-                await textareaEdit.InsertValueAsync(insertContent);
-            }
+            await InsertValueAsync(insertContent);
         }
     }
 }
