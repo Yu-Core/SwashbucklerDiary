@@ -16,9 +16,10 @@ namespace SwashbucklerDiary.Maui.Services
         {
         }
 
-        protected override string GetDatabasePath()
-        {
-            return SQLiteConstants.DatabasePath;
-        }
+        protected override string DatabaseFilename => SQLiteConstants.DatabaseFilename;
+
+        protected override string DatabasePath => SQLiteConstants.DatabasePath;
+
+        protected override string PrivacyDatabasePath => SQLiteConstants.PrivacyDatabasePath;
     }
 }

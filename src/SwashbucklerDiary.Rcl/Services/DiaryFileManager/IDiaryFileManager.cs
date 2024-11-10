@@ -26,8 +26,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<bool> ImportMdAsync(string filePath);
 
-        void UpdateResourceUri(List<DiaryModel> diaries);
+        void UseNewResourceUri(List<DiaryModel> diaries);
 
-        Task UpdateAllResourceUri();
+        Task AllUseNewResourceUriAsync();
     }
 }

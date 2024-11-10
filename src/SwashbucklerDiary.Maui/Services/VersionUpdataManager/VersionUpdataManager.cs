@@ -44,7 +44,7 @@ namespace SwashbucklerDiary.Maui.Services
                 await _settingService.SetAsync(key, avatar);
             }
 
-            await _diaryFileManager.UpdateAllResourceUri();
+            await _diaryFileManager.AllUseNewResourceUriAsync();
         }
 
         protected override async Task HandleVersionUpdate697()

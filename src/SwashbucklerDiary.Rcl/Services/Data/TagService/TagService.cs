@@ -7,20 +7,15 @@ namespace SwashbucklerDiary.Rcl.Services
     {
         private readonly ITagRepository _tagRepository;
 
-        private readonly ISettingService _settingService;
-
-        public TagService(ITagRepository tagRepository, ISettingService settingService)
+        public TagService(ITagRepository tagRepository)
         {
             base._iBaseRepository = tagRepository;
             _tagRepository = tagRepository;
-            _settingService = settingService;
         }
 
         public Task<TagModel> FindIncludesAsync(Guid id)
         {
-            var privacyMode = _settingService.GetTemp(s => s.PrivacyMode);
             return _tagRepository.GetByIdIncludesAsync(id, it => it.Diaries!
-                                  .Where(d => d.Private == privacyMode)
                                   .OrderByDescending(it => it.CreateTime)
                                   .ToList());
         }

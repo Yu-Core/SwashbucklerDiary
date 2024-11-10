@@ -6,6 +6,8 @@ namespace SwashbucklerDiary.Maui
     {
         public const string DatabaseFilename = "SwashbucklerDiary.db3";
 
+        public const string PrivacyDatabaseFilename = "SwashbucklerDiary.privacy.db3";
+
         public const SQLite.SQLiteOpenFlags Flags =
             // open the database in read/write mode
             SQLite.SQLiteOpenFlags.ReadWrite |
@@ -16,9 +18,19 @@ namespace SwashbucklerDiary.Maui
 
         public readonly static string DatabasePath = Path.Combine(FileSystem.AppDataDirectory, DatabaseFilename);
 
+        public readonly static string PrivacyDatabasePath = Path.Combine(FileSystem.AppDataDirectory, PrivacyDatabaseFilename);
+
         public readonly static string ConnectionString = new SqliteConnectionStringBuilder()
         {
             DataSource = DatabasePath,
+            Mode = SqliteOpenMode.ReadWriteCreate,
+            Cache = SqliteCacheMode.Shared
+
+        }.ToString();
+
+        public readonly static string PrivacyConnectionString = new SqliteConnectionStringBuilder()
+        {
+            DataSource = PrivacyDatabasePath,
             Mode = SqliteOpenMode.ReadWriteCreate,
             Cache = SqliteCacheMode.Shared
 

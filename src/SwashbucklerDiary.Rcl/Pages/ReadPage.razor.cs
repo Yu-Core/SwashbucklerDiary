@@ -111,7 +111,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool IsTop => diary.Top;
 
-        private bool IsPrivate => diary.Private;
+        private bool IsPrivate => privacyMode;
 
         private bool ShowTitle => !string.IsNullOrEmpty(diary.Title);
 
@@ -250,11 +250,15 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task DiaryPrivacyChanged()
         {
-
-            diary.Private = !diary.Private;
-            diary.UpdateTime = DateTime.Now;
-            await DiaryService.UpdateAsync(diary, it => new { it.Private, it.UpdateTime });
-            await PopupServiceHelper.Success(I18n.T("Read.PrivacyAlert"));
+            await DiaryService.MovePrivacyDiaryAsync(diary, !privacyMode);
+            if (privacyMode)
+            {
+                await PopupServiceHelper.Success(I18n.T("Read.Removed from privacy mode"));
+            }
+            else
+            {
+                await PopupServiceHelper.Success(I18n.T("Read.Moved to privacy mode"));
+            }
         }
 
         private string CounterValue()

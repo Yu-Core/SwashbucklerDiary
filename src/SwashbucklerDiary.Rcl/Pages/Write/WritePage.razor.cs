@@ -310,7 +310,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             diary.Resources = MediaResourceManager.GetDiaryResources(diary.Content);
             diary.UpdateTime = DateTime.Now;
-            diary.Private = privacyMode;
             if (diaryEditMode == DiaryEditMode.Add)
             {
                 diaryEditMode = DiaryEditMode.Update;

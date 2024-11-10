@@ -35,6 +35,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
 
+        [Inject]
+        private IDiaryService DiaryService { get; set; } = default!;
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -149,6 +152,21 @@ namespace SwashbucklerDiary.Rcl.Pages
             showHidePrivacyModeEntranceConfirmDialog = false;
             hidePrivacyModeEntrance = true;
             await SettingService.SetAsync(s => s.HidePrivacyModeEntrance, hidePrivacyModeEntrance);
+        }
+
+        private async Task MoveOldPrivacyDiaries()
+        {
+            await PopupServiceHelper.StartLoading();
+            var isSuccess = await DiaryService.MovePrivacyDiariesAsync();
+            await PopupServiceHelper.StopLoading();
+            if (isSuccess)
+            {
+                await PopupServiceHelper.Success(I18n.T("PrivacyMode.Successfully moved"));
+            }
+            else
+            {
+                await PopupServiceHelper.Info(I18n.T("PrivacyMode.No diary that needs to be moved"));
+            }
         }
     }
 }

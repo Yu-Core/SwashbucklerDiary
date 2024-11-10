@@ -89,10 +89,10 @@ namespace SwashbucklerDiary.Rcl.Components
             => SelectedItem.Top ? "Diary.CancelTop" : "Diary.Top";
 
         private string PrivateText()
-            => SelectedItem.Private ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
+            => privacyMode ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
 
         private string PrivateIcon()
-            => SelectedItem.Private ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
+            => privacyMode ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
 
         private async Task Topping()
         {
@@ -125,14 +125,16 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task MovePrivacy()
         {
-            SelectedItem.Private = !SelectedItem.Private;
-            SelectedItem.UpdateTime = DateTime.Now;
-            await DiaryService.UpdateAsync(SelectedItem, it => new { it.Private, it.UpdateTime });
+            await DiaryService.MovePrivacyDiaryAsync(SelectedItem, !privacyMode);
             RemoveSelectedItem();
             await InvokeAsync(StateHasChanged);
-            if (SelectedItem.Private)
+            if (privacyMode)
             {
-                await PopupServiceHelper.Success(I18n.T("Read.PrivacyAlert"));
+                await PopupServiceHelper.Success(I18n.T("Read.Removed from privacy mode"));
+            }
+            else
+            {
+                await PopupServiceHelper.Success(I18n.T("Read.Moved to privacy mode"));
             }
         }
 

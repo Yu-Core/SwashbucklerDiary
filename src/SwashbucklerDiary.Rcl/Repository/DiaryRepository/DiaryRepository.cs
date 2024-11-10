@@ -32,6 +32,20 @@ namespace SwashbucklerDiary.Rcl.Repository
                 .ExecuteCommandAsync();
         }
 
+        private static Task<bool> InternalDeleteAsync(ISqlSugarClient context, List<DiaryModel> models)
+        {
+            return context.DeleteNav(models)
+                .Include(it => it.Tags, new DeleteNavOptions()
+                {
+                    ManyToManyIsDeleteA = true
+                })
+                .Include(it => it.Resources, new DeleteNavOptions()
+                {
+                    ManyToManyIsDeleteA = true
+                })
+                .ExecuteCommandAsync();
+        }
+
         public override Task<DiaryModel> GetByIdAsync(dynamic id)
         {
             return Context.Queryable<DiaryModel>()
@@ -67,8 +81,11 @@ namespace SwashbucklerDiary.Rcl.Repository
         }
 
         public override Task<List<DiaryModel>> GetListAsync(Expression<Func<DiaryModel, bool>> expression)
+            => InternalGetListAsync(base.Context, expression);
+
+        private static Task<List<DiaryModel>> InternalGetListAsync(ISqlSugarClient context, Expression<Func<DiaryModel, bool>> expression)
         {
-            return base.Context.Queryable<DiaryModel>()
+            return context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
                 .Includes(it => it.Resources)
                 .Where(expression)
@@ -114,8 +131,11 @@ namespace SwashbucklerDiary.Rcl.Repository
         }
 
         public Task<bool> ImportAsync(List<DiaryModel> diaries)
+            => InternalImportAsync(base.Context, diaries);
+
+        public static Task<bool> InternalImportAsync(ISqlSugarClient context, List<DiaryModel> diaries)
         {
-            return base.Context.UpdateNav(diaries, new UpdateNavRootOptions()
+            return context.UpdateNav(diaries, new UpdateNavRootOptions()
             {
                 IsInsertRoot = true
             })
@@ -130,6 +150,51 @@ namespace SwashbucklerDiary.Rcl.Repository
                 ManyToManyIsUpdateB = true
             })
             .ExecuteCommandAsync();
+        }
+
+        public async Task<bool> MovePrivacyDiaryAsync(DiaryModel diary, bool toPrivacyMode)
+        {
+            var db = Context.AsTenant().GetConnection("0");
+            var privacyDb = Context.AsTenant().GetConnection("1");
+            var (from, to) = toPrivacyMode ? (db, privacyDb) : (privacyDb, db);
+            bool flag = await InternalImportAsync(to, [diary]);
+            if (!flag)
+            {
+                return false;
+            }
+
+            bool flag2 = await InternalDeleteAsync(from, [diary]);
+            if (!flag2)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> MovePrivacyDiariesAsync()
+        {
+            var db = Context.AsTenant().GetConnection("0");
+            var privacyDb = Context.AsTenant().GetConnection("1");
+            var diaries = await InternalGetListAsync(db, it => it.Private == true);
+            if (diaries.Count == 0)
+            {
+                return false;
+            }
+
+            diaries.ForEach(it => it.Private = false);
+            bool flag = await InternalImportAsync(privacyDb, diaries);
+            if (!flag)
+            {
+                return false;
+            }
+
+            bool flag2 = await InternalDeleteAsync(db, diaries);
+            if (!flag2)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

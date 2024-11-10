@@ -13,5 +13,9 @@ namespace SwashbucklerDiary.Rcl.Repository
         Task<bool> UpdateIncludesAsync(List<DiaryModel> models);
 
         Task<bool> ImportAsync(List<DiaryModel> diaries);
+
+        Task<bool> MovePrivacyDiaryAsync(DiaryModel diary, bool toPrivacyMode);
+
+        Task<bool> MovePrivacyDiariesAsync();
     }
 }

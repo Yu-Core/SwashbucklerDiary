@@ -8,25 +8,19 @@ namespace SwashbucklerDiary.Rcl.Services
     {
         private readonly IDiaryRepository _iDiaryRepository;
 
-        private readonly ISettingService _settingService;
-
-        public DiaryService(IDiaryRepository iDiaryRepository, ISettingService settingService)
+        public DiaryService(IDiaryRepository iDiaryRepository)
         {
             base._iBaseRepository = iDiaryRepository;
             _iDiaryRepository = iDiaryRepository;
-            _settingService = settingService;
         }
 
         public override Task<List<DiaryModel>> QueryAsync()
         {
-            var privacyMode = _settingService.GetTemp(s => s.PrivacyMode);
-            return _iBaseRepository.GetListAsync(it => it.Private == privacyMode);
+            return _iBaseRepository.GetListAsync();
         }
 
         public override Task<List<DiaryModel>> QueryAsync(Expression<Func<DiaryModel, bool>> expression)
         {
-            var privacyMode = _settingService.GetTemp(s => s.PrivacyMode);
-            expression = expression.And(it => it.Private == privacyMode);
             return _iBaseRepository.GetListAsync(expression);
         }
 
@@ -53,6 +47,16 @@ namespace SwashbucklerDiary.Rcl.Services
         public Task<bool> ImportAsync(List<DiaryModel> diaries)
         {
             return _iDiaryRepository.ImportAsync(diaries);
+        }
+
+        public Task<bool> MovePrivacyDiaryAsync(DiaryModel diary, bool toPrivacyMode)
+        {
+            return _iDiaryRepository.MovePrivacyDiaryAsync(diary, toPrivacyMode);
+        }
+
+        public Task<bool> MovePrivacyDiariesAsync()
+        {
+            return _iDiaryRepository.MovePrivacyDiariesAsync();
         }
     }
 }

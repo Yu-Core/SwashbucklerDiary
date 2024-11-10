@@ -41,6 +41,12 @@ namespace SwashbucklerDiary.Rcl.Services
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         };
 
+        protected abstract string DatabaseFilename { get; }
+
+        protected abstract string DatabasePath { get; }
+
+        protected abstract string PrivacyDatabasePath { get; }
+
         public DiaryFileManager(IAppFileSystem appFileSystem,
             IPlatformIntegration platformIntegration,
             II18nService i18nService,
@@ -58,7 +64,7 @@ namespace SwashbucklerDiary.Rcl.Services
             _settingService = settingService;
         }
 
-        public Task<string> ExportDBAsync(bool copyResources)
+        public async Task<string> ExportDBAsync(bool copyResources)
         {
             string outputFolder = Path.Combine(_appFileSystem.CacheDirectory, "DB");
             string zipFilePath = Path.Combine(_appFileSystem.CacheDirectory, $"{backupFileNamePrefix}.zip");
@@ -72,12 +78,12 @@ namespace SwashbucklerDiary.Rcl.Services
                 _appFileSystem.ClearFolder(outputFolder);
             }
 
-            string databasePath = GetDatabasePath();
-            var destFileName = Path.Combine(outputFolder, Path.GetFileName(databasePath));
+            string databasePath = GetCurrentDatabasePath();
+            var destFileName = Path.Combine(outputFolder, DatabaseFilename);
             File.Copy(databasePath, destFileName);
             if (copyResources)
             {
-                CopyDiaryResource(outputFolder);
+                await CopyDiaryResource(outputFolder);
             }
 
             CopyAvatar(outputFolder);
@@ -90,7 +96,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
-            return Task.FromResult(zipFilePath);
+            return zipFilePath;
         }
 
         public Task<string> ExportJsonAsync(List<DiaryModel> diaries)
@@ -235,8 +241,6 @@ namespace SwashbucklerDiary.Rcl.Services
             File.Copy(filePath, outFilePath, true);
         }
 
-        protected abstract string GetDatabasePath();
-
         private static void WriteToFile(string fileName, string? content)
         {
             int suffix = 1;
@@ -308,18 +312,17 @@ namespace SwashbucklerDiary.Rcl.Services
             }
         }
 
-        protected void CopyDiaryResource(string outputFolder)
+        protected async Task CopyDiaryResource(string outputFolder)
         {
-            foreach (var item in _mediaResourceManager.MediaResourceFolders.Values)
+            var resources = await _resourceService.QueryAsync();
+            foreach (var resource in resources)
             {
-                var sourceDir = Path.Combine(_appFileSystem.AppDataDirectory, item);
-                if (!Directory.Exists(sourceDir))
+                if (resource.ResourceUri is null)
                 {
                     continue;
                 }
 
-                var targetDir = Path.Combine(outputFolder, "appdata", item);
-                _appFileSystem.CopyFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
+                CopyUriFileToOutFolder(resource.ResourceUri, outputFolder);
             }
         }
 
@@ -360,7 +363,6 @@ namespace SwashbucklerDiary.Rcl.Services
                 return false;
             }
 
-
             if (!Directory.Exists(outputFolder))
             {
                 Directory.CreateDirectory(outputFolder);
@@ -383,19 +385,18 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             // 获取文件夹下的db文件
-            string[] jsonFiles = Directory.GetFiles(outputFolder, "*.db3");
-            if (jsonFiles.Length == 0)
+            string[] dbFiles = Directory.GetFiles(outputFolder, "*.db3");
+            if (dbFiles.Length == 0)
             {
                 return false;
             }
 
-            File.Copy(jsonFiles[0], GetDatabasePath(), true);
+            File.Copy(dbFiles[0], GetCurrentDatabasePath(), true);
             if (needUpdateResourceUri)
             {
-                await UpdateAllResourceUri();
+                await AllUseNewResourceUriAsync();
             }
 
-            ClearAllDiaryResources();
             if (needUpdateResourceUri)
             {
                 RestoreOldDiaryResource(outputFolder);
@@ -472,7 +473,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
             if (needUpdateResourceUri)
             {
-                UpdateResourceUri(diaries);
+                UseNewResourceUri(diaries);
                 RestoreOldDiaryResource(outputFolder);
             }
             else
@@ -551,15 +552,6 @@ namespace SwashbucklerDiary.Rcl.Services
             return DateTime.Now;
         }
 
-        protected void ClearAllDiaryResources()
-        {
-            foreach (var item in _mediaResourceManager.MediaResourceFolders.Values)
-            {
-                var folderPath = Path.Combine(_appFileSystem.AppDataDirectory, item);
-                _appFileSystem.ClearFolder(folderPath);
-            }
-        }
-
         protected void RestoreDiaryResource(string outputFolder)
             => RestoreFolders(outputFolder, _mediaResourceManager.MediaResourceFolders.Values);
 
@@ -595,7 +587,7 @@ namespace SwashbucklerDiary.Rcl.Services
             RestoreFolders(outputFolder, [AvatarService.AvatarDirectoryName]);
         }
 
-        public void UpdateResourceUri(List<DiaryModel> diaries)
+        public void UseNewResourceUri(List<DiaryModel> diaries)
         {
             foreach (var diary in diaries)
             {
@@ -609,12 +601,18 @@ namespace SwashbucklerDiary.Rcl.Services
             }
         }
 
-        public async Task UpdateAllResourceUri()
+        public async Task AllUseNewResourceUriAsync()
         {
             var diaries = await _diaryService.QueryAsync();
-            await _resourceService.DeleteAsync();
-            UpdateResourceUri(diaries);
+            await _resourceService.DeleteAsync(it => it.ResourceUri!.StartsWith("appdata:///"));
+            UseNewResourceUri(diaries);
             await _diaryService.UpdateIncludesAsync(diaries);
+        }
+
+        private string GetCurrentDatabasePath()
+        {
+            bool privacyMode = _settingService.GetTemp(it => it.PrivacyMode);
+            return privacyMode ? PrivacyDatabasePath : DatabasePath;
         }
     }
 }

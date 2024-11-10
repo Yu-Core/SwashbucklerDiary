@@ -159,7 +159,30 @@
         </MCard>
     }
 
-    <MAlert Class="mb-5 text-subtitle-2 text--secondary"
+    <MCard Class="my-list-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MListItem OnClick="MoveOldPrivacyDiaries">
+            <MListItemIcon>
+                <MIcon Class="evident-icon">
+                    mdi-file-move-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <MListItemTitle>
+                    @(I18n.T("PrivacyMode.Move the old version of Privacy Diary.Title"))
+                </MListItemTitle>
+                <MListItemSubtitle Class="text-caption-xs-only">
+                    @(I18n.T("PrivacyMode.Move the old version of Privacy Diary.SubTitle"))
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>mdi-chevron-right</MIcon>
+            </MListItemAction>
+        </MListItem>
+    </MCard>
+
+    <MAlert Class="mb-5 text-subtitle-2 text--secondary text-pre-wrap"
             Elevation="0"
             Rounded="@("lg")"
             Icon="@("mdi-information-outline")">

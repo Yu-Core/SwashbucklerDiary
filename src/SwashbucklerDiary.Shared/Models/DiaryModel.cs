@@ -14,10 +14,11 @@
 
         public bool Top { get; set; }
 
+        [Obsolete("Privacy mode no requires it after 1.3.9")]
         public bool Private { get; set; }
 
         public List<TagModel>? Tags { get; set; }
-        
+
         public List<ResourceModel>? Resources { get; set; }
     }
 }

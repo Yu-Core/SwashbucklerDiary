@@ -10,37 +10,47 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IMediaResourceManager _mediaResourceManager;
 
+        protected readonly ISettingService _settingService;
+
         public ResourceService(IResourceRepository resourceRepository,
-            IMediaResourceManager mediaResourceManager)
+            IMediaResourceManager mediaResourceManager,
+            ISettingService settingService)
         {
             base._iBaseRepository = resourceRepository;
             _resourceRepository = resourceRepository;
             _mediaResourceManager = mediaResourceManager;
+            _settingService = settingService;
         }
 
         public async Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> expression)
         {
-            var resources = await _resourceRepository.QueryUnusedResourcesAsync(expression);
-            if (resources is null || resources.Count == 0)
+            bool privacyMode = _settingService.GetTemp(it => it.PrivacyMode);
+            var (currentUnusedResourceUris, trulyUnusedResourceUris) = await _resourceRepository.QueryUnusedResourcesAsync(expression, privacyMode);
+            if (currentUnusedResourceUris is null || currentUnusedResourceUris.Count == 0)
             {
                 return false;
             }
 
-            var flag = await _resourceRepository.DeleteAsync(resources);
+            var flag = await _resourceRepository.DeleteByIdAsync(currentUnusedResourceUris);
             if (!flag)
             {
                 return false;
             }
 
-            DeleteResourceFiles(resources);
+            DeleteResourceFiles(trulyUnusedResourceUris);
             return true;
         }
 
-        private void DeleteResourceFiles(List<ResourceModel> resources)
+        private void DeleteResourceFiles(List<string?> resourceUris)
         {
-            foreach (var resource in resources)
+            foreach (var resourceUri in resourceUris)
             {
-                var path = _mediaResourceManager.UrlRelativePathToFilePath(resource.ResourceUri!);
+                if (resourceUri is null)
+                {
+                    continue;
+                }
+
+                var path = _mediaResourceManager.UrlRelativePathToFilePath(resourceUri);
                 if (!string.IsNullOrEmpty(path))
                 {
                     File.Delete(path);
