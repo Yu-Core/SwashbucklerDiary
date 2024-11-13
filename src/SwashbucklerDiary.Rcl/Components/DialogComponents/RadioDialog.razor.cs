@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public string? Title { get; set; }
 
         [Parameter, EditorRequired]
-        public ICollection<TItem> Items { get; set; } = default!;
+        public IEnumerable<TItem> Items { get; set; } = default!;
 
         [Parameter]
         public Func<TItem, string>? ItemText { get; set; }

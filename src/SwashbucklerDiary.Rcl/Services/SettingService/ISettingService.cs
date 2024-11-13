@@ -146,7 +146,7 @@ namespace SwashbucklerDiary.Rcl.Services
             var obj = new Setting();
             var properties = obj.GetType().GetProperties();
 
-            var method = this.GetType()?.GetMethod(nameof(Get), [typeof(string)])
+            var getMethod = this.GetType()?.GetMethod(nameof(Get), [typeof(string)])
                          ?? throw new InvalidOperationException($"{nameof(Get)} does not exist");
 
             if (func is not null)
@@ -158,8 +158,8 @@ namespace SwashbucklerDiary.Rcl.Services
             {
                 if (property.CanWrite)
                 {
-                    var genericMethod = method.MakeGenericMethod(property.PropertyType);
-                    var value = genericMethod.Invoke(this, [property.Name]);
+                    var getGenericMethod = getMethod.MakeGenericMethod(property.PropertyType);
+                    var value = getGenericMethod.Invoke(this, [property.Name]);
                     property.SetValue(obj, value);
                 }
             }
@@ -170,28 +170,42 @@ namespace SwashbucklerDiary.Rcl.Services
         public async Task SetSettingsFromObjectAsync(Setting obj, Func<string, bool>? func = null)
         {
             var properties = obj.GetType().GetProperties();
-            var method = this.GetType()?.GetMethod(nameof(SetAsync))
+            var setAsyncMethod = this.GetType()?.GetMethod(nameof(SetAsync))
                          ?? throw new InvalidOperationException($"{nameof(SetAsync)} does not exist");
+            var getMethod = this.GetType()?.GetMethod(nameof(Get), [typeof(string)])
+                         ?? throw new InvalidOperationException($"{nameof(Get)} does not exist");
 
             if (func is not null)
             {
                 properties = properties.Where(it => func.Invoke(it.Name)).ToArray();
             }
 
+            var removeKeys = new List<string>();
             foreach (var property in properties)
             {
                 if (property.CanRead && DefalutSettings.TryGetValue(property.Name, out var defaultValue))
                 {
                     var value = property.GetValue(obj);
-                    if (value == defaultValue)
+                    var getGenericMethod = getMethod.MakeGenericMethod(property.PropertyType);
+                    var currentValue = getGenericMethod.Invoke(this, [property.Name]);
+
+                    if (Object.Equals(value, currentValue))
                     {
                         continue;
                     }
 
-                    var genericMethod = method.MakeGenericMethod(property.PropertyType);
-                    await (Task)genericMethod.Invoke(this, [property.Name, value])!;
+                    if (Object.Equals(value, defaultValue))
+                    {
+                        removeKeys.Add(property.Name);
+                        continue;
+                    }
+
+                    var setAsyncGenericMethod = setAsyncMethod.MakeGenericMethod(property.PropertyType);
+                    await (Task)setAsyncGenericMethod.Invoke(this, [property.Name, value])!;
                 }
             }
+
+            await RemoveAsync(removeKeys);
 
             SettingsChanged?.Invoke();
         }

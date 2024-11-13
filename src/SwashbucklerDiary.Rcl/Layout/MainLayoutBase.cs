@@ -92,8 +92,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         {
             var theme = SettingService.Get(it => it.Theme);
             await ThemeService.SetThemeAsync((Shared.Theme)theme);
-            var language = SettingService.Get(it => it.Language);
-            I18n.SetCulture(language);
+            // A bug, it will cause the language selection RadioDialog to fail to select
+            //var language = SettingService.Get(it => it.Language);
+            //I18n.SetCulture(language);
         }
     }
 }
