@@ -1,6 +1,8 @@
 ﻿using Android.App;
+using Android.Widget;
 using SwashbucklerDiary.Rcl;
 using SwashbucklerDiary.Rcl.Essentials;
+using static Android.Resource;
 
 namespace SwashbucklerDiary.Maui
 {
@@ -13,13 +15,14 @@ namespace SwashbucklerDiary.Maui
         public static void InitBackgroundColor(Activity activity)
         {
             var themeService = IPlatformApplication.Current.Services.GetRequiredService<IThemeService>();
+            var mChildOfContent = activity.FindViewById<FrameLayout>(Id.Content)?.GetChildAt(0);
             HandleOnThemeChanged(themeService.RealTheme);
             themeService.OnChanged += HandleOnThemeChanged;
 
             void HandleOnThemeChanged(Shared.Theme theme)
             {
                 var color = theme == Shared.Theme.Dark ? darkColor : lightColor;
-                SoftKeyboardAdjustResize.SetBackgroundColor(activity, color);
+                mChildOfContent?.RootView?.SetBackgroundColor(color);
             }
         }
     }

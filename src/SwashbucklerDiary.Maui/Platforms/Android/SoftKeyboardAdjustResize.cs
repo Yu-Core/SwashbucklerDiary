@@ -17,8 +17,6 @@ namespace SwashbucklerDiary.Maui
         Rect rect = new();
         View mChildOfContent;
 
-        static Dictionary<Activity, SoftKeyboardAdjustResize> caches = [];
-
         public SoftKeyboardAdjustResize(Activity activity, bool edgeToEdge)
         {
             _activity = activity;
@@ -31,22 +29,7 @@ namespace SwashbucklerDiary.Maui
 
         public static void AssistActivity(Activity activity, bool edgeToEdge = true)
         {
-            if (caches.ContainsKey(activity))
-            {
-                return;
-            }
-
-            caches[activity] = new SoftKeyboardAdjustResize(activity, edgeToEdge);
-        }
-
-        public static void SetBackgroundColor(Activity activity, Android.Graphics.Color color)
-        {
-            if (!caches.TryGetValue(activity, out var s))
-            {
-                return;
-            }
-
-            s.SetBackgroundColor(color);
+            _ = new SoftKeyboardAdjustResize(activity, edgeToEdge);
         }
 
         void PossiblyResizeChildOfContent()
