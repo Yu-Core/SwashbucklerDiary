@@ -142,6 +142,7 @@ namespace SwashbucklerDiary.Maui.Pages
                     return;
                 }
 
+                diaries = diaries.OrderBy(it => it.CreateTime).ToList();
                 filePath = await DiaryFileManager.ExportJsonAsync(diaries);
             }
 
