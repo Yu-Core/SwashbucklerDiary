@@ -121,7 +121,7 @@ namespace SwashbucklerDiary.Rcl.Models
             _text = text;
             _icon = icon;
             Value = value;
-            OnClick = EventCallback.Factory.Create(this, () => funcOnClick.Invoke(Value));
+            OnClick = EventCallback.Factory.Create(receiver, () => funcOnClick.Invoke(Value));
         }
     }
 
