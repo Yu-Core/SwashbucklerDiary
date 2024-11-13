@@ -141,13 +141,18 @@ namespace SwashbucklerDiary.Rcl.Services
             return RemoveAsync(key);
         }
 
-        public Setting SaveSettingsToObject()
+        public Setting SaveSettingsToObject(Func<string, bool>? func = null)
         {
             var obj = new Setting();
             var properties = obj.GetType().GetProperties();
 
             var method = this.GetType()?.GetMethod(nameof(Get), [typeof(string)])
                          ?? throw new InvalidOperationException($"{nameof(Get)} does not exist");
+
+            if (func is not null)
+            {
+                properties = properties.Where(it => func.Invoke(it.Name)).ToArray();
+            }
 
             foreach (var property in properties)
             {
@@ -162,11 +167,16 @@ namespace SwashbucklerDiary.Rcl.Services
             return obj;
         }
 
-        public async Task SetSettingsFromObjectAsync(Setting obj)
+        public async Task SetSettingsFromObjectAsync(Setting obj, Func<string, bool>? func = null)
         {
             var properties = obj.GetType().GetProperties();
             var method = this.GetType()?.GetMethod(nameof(SetAsync))
                          ?? throw new InvalidOperationException($"{nameof(SetAsync)} does not exist");
+
+            if (func is not null)
+            {
+                properties = properties.Where(it => func.Invoke(it.Name)).ToArray();
+            }
 
             foreach (var property in properties)
             {

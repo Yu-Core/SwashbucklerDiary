@@ -47,6 +47,16 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected abstract string PrivacyDatabasePath { get; }
 
+        protected static readonly List<string> excludedSettings =
+        [
+            nameof(Setting.WebDavConfig),
+            nameof(Setting.PrivacyModeEntrancePassword),
+            nameof(Setting.PrivacyModeDark),
+            nameof(Setting.PrivacyModeFunctionSearchKey),
+            nameof(Setting.HidePrivacyModeEntrance),
+            nameof(Setting.SetPrivacyDiary),
+        ];
+
         public DiaryFileManager(IAppFileSystem appFileSystem,
             IPlatformIntegration platformIntegration,
             II18nService i18nService,
@@ -280,7 +290,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private void CreateSettingsFile(string outputFolder)
         {
-            var settingsObject = _settingService.SaveSettingsToObject();
+            var settingsObject = _settingService.SaveSettingsToObject(it => !excludedSettings.Contains(it));
             string jsonString = JsonSerializer.Serialize(settingsObject);
             var settingsFilePath = Path.Combine(outputFolder, settingsFileName);
             File.WriteAllText(settingsFilePath, jsonString);
@@ -421,7 +431,7 @@ namespace SwashbucklerDiary.Rcl.Services
             var settingsObject = JsonSerializer.Deserialize<Setting>(stream);
             if (settingsObject is null) return;
 
-            await _settingService.SetSettingsFromObjectAsync(settingsObject);
+            await _settingService.SetSettingsFromObjectAsync(settingsObject, it => !excludedSettings.Contains(it));
         }
 
         public async Task<bool> ImportJsonAsync(string filePath)
