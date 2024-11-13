@@ -12,7 +12,7 @@
             @(I18n.T("ErrorHandle.Title"))
         </MCardTitle>
         <MCardText Class="pb-0">
-            @(I18n.T("ErrorHandle.Content"))
+            @Text
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
@@ -25,18 +25,3 @@
     </MCard>
 </MDialog>
 
-@code {
-    [Inject]
-    private II18nService I18n { get; set; } = default!;
-
-    [Inject]
-    private IAppLifecycle AppLifecycle { get; set; } = default!;
-
-    [CascadingParameter(Name = "Culture")]
-    public string? Culture { get; set; }
-
-    private void Quit()
-    {
-        AppLifecycle.QuitApp();
-    }
-}

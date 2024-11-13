@@ -283,6 +283,7 @@
   "FunctionalDescription": "功能说明",
   "ErrorHandle": {
     "Title": "错误",
+    "WaitContent": "出现异常，正在保存到日志，请等待...",
     "Content": "出现异常，已保存到日志，请退出应用"
   },
   "Achievement": {

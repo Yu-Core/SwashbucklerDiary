@@ -283,6 +283,7 @@
   "FunctionalDescription": "Functional Description",
   "ErrorHandle": {
     "Title": "Error",
+    "WaitContent": "An exception occurred, saving to log, please wait...",
     "Content": "An exception occurred. It has been saved to the log. Please exit the application"
   },
   "Achievement": {
