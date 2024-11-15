@@ -1,34 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="ClosedXML" Version="0.104.1" />
-    <PackageReference Include="Masa.Blazor" Version="1.8.0-rc.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.*" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.*" />
-    <PackageReference Include="Serilog" Version="4.1.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
-    <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
-    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.10" />
-    <PackageReference Include="SqlSugarCoreNoDrive" Version="5.1.4.170" />
-    <PackageReference Include="System.IO.Packaging" Version="9.0.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="TagLibSharp" Version="2.3.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SwashbucklerDiary.Shared\SwashbucklerDiary.Shared.csproj" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <Content Update="wwwroot\**\*.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="ClosedXML" Version="0.104.1" />
+		<PackageReference Include="Masa.Blazor" Version="1.8.0-rc.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.*" />
+		<PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.2.2" />
+		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.*" />
+		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.*" />
+		<PackageReference Include="Serilog" Version="4.1.0" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+		<PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
+		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.10" />
+		<PackageReference Include="SqlSugarCoreNoDrive" Version="5.1.4.170" />
+		<PackageReference Include="System.IO.Packaging" Version="9.0.0" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+		<PackageReference Include="TagLibSharp" Version="2.3.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\SwashbucklerDiary.Shared\SwashbucklerDiary.Shared.csproj" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<Content Update="wwwroot\**\*.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 </Project>
