@@ -109,7 +109,7 @@ jobs:
         run: msstore publish ${{ env.CSPROJ_PATH }} -i ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/AppPackages -id ${{ env.STORE_ID }}
 
   macOSAndiOS:
-    runs-on: macos-14
+    runs-on: macos-latest
     steps:
       # Checkout the code
       - uses: actions/checkout@v3
