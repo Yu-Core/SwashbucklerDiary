@@ -6,7 +6,7 @@
 
         public bool IsFirstLaunchEver => VersionTrackingDefault.IsFirstLaunchEver;
 
-        public bool IsFirstLaunchForCurrentVersion => VersionTrackingDefault.IsFirstLaunchForCurrentVersion ;
+        public bool IsFirstLaunchForCurrentVersion => VersionTrackingDefault.IsFirstLaunchForCurrentVersion;
 
         public bool IsFirstLaunchForCurrentBuild => VersionTrackingDefault.IsFirstLaunchForCurrentBuild;
 

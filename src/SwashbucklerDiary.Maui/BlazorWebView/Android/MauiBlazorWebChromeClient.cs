@@ -90,7 +90,10 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
                 // Hide the SystemBars and Status bar
                 if (OperatingSystem.IsAndroidVersionAtLeast(30))
                 {
-                    context.Window.SetDecorFitsSystemWindows(false);
+                    if (!OperatingSystem.IsAndroidVersionAtLeast(35))
+                    {
+                        context.Window.SetDecorFitsSystemWindows(false);
+                    }
 
                     var windowInsets = context.Window.DecorView.RootWindowInsets;
                     _isSystemBarVisible = windowInsets.IsVisible(WindowInsetsCompat.Type.NavigationBars()) || windowInsets.IsVisible(WindowInsetsCompat.Type.StatusBars());
@@ -130,7 +133,10 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
         // Show again the SystemBars and Status bar
         if (OperatingSystem.IsAndroidVersionAtLeast(30))
         {
-            context.Window.SetDecorFitsSystemWindows(true);
+            if (!OperatingSystem.IsAndroidVersionAtLeast(35))
+            {
+                context.Window.SetDecorFitsSystemWindows(true);
+            }
 
             if (_isSystemBarVisible)
                 context.Window.InsetsController?.Show(WindowInsets.Type.SystemBars());

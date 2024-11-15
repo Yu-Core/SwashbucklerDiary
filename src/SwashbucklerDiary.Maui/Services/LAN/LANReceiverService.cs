@@ -155,15 +155,15 @@ namespace SwashbucklerDiary.Maui.Services
 
                     // 接收文件大小
                     byte[] fileSizeBytes = new byte[8];
-                    await stream.ReadAsync(fileSizeBytes, 0, fileSizeBytes.Length, tcpClientCTS.Token);
+                    await stream.ReadExactlyAsync(fileSizeBytes, tcpClientCTS.Token);
                     long fileSize = BitConverter.ToInt64(fileSizeBytes, 0);
 
                     // 接收文件名长度和文件名
                     byte[] fileNameLengthBytes = new byte[4];
-                    await stream.ReadAsync(fileNameLengthBytes, 0, fileNameLengthBytes.Length, tcpClientCTS.Token);
+                    await stream.ReadExactlyAsync(fileNameLengthBytes, tcpClientCTS.Token);
                     int fileNameLength = BitConverter.ToInt32(fileNameLengthBytes, 0);
                     byte[] fileNameBytes = new byte[fileNameLength];
-                    await stream.ReadAsync(fileNameBytes, 0, fileNameBytes.Length, tcpClientCTS.Token);
+                    await stream.ReadExactlyAsync(fileNameBytes, tcpClientCTS.Token);
                     string fileName = Encoding.UTF8.GetString(fileNameBytes);
 
                     var path = Path.Combine(FileSystem.CacheDirectory, Guid.NewGuid().ToString() + ".zip");

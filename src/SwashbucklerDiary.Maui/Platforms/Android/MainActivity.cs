@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
+using AndroidX.Activity;
 using SwashbucklerDiary.Maui.Essentials;
 using Intent = Android.Content.Intent;
 
@@ -33,10 +34,14 @@ namespace SwashbucklerDiary.Maui
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            Google.Android.Material.Internal.EdgeToEdgeUtils.ApplyEdgeToEdge(Window, true);
+            EdgeToEdge.Enable(this);
             if (OperatingSystem.IsAndroidVersionAtLeast((int)BuildVersionCodes.Q))
             {
-                Window.StatusBarContrastEnforced = false;
+                if (!OperatingSystem.IsAndroidVersionAtLeast(35))
+                {
+                    Window.StatusBarContrastEnforced = false;
+                }
+
                 Window.NavigationBarContrastEnforced = false;
             }
 

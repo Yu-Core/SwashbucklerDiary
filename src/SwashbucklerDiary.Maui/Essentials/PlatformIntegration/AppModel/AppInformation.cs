@@ -2,7 +2,7 @@
 {
     public partial class PlatformIntegration
     {
-        public string AppVersion 
+        public string AppVersion
             => _versionTracking.CurrentVersion.ToString();
 
         public Task ShowSettingsUI()

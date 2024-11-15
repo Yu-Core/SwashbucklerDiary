@@ -151,13 +151,13 @@ namespace SwashbucklerDiary.Maui.Services
 
                     // 发送文件大小
                     byte[] fileSizeBytes = BitConverter.GetBytes(fileSize);
-                    await stream.WriteAsync(fileSizeBytes, 0, fileSizeBytes.Length, tcpClientCTS.Token);
+                    await stream.WriteAsync(fileSizeBytes, tcpClientCTS.Token);
 
                     // 发送文件名长度和文件名
                     byte[] fileNameBytes = Encoding.UTF8.GetBytes(fileName);
                     byte[] fileNameLengthBytes = BitConverter.GetBytes(fileNameBytes.Length);
-                    await stream.WriteAsync(fileNameLengthBytes, 0, fileNameLengthBytes.Length, tcpClientCTS.Token);
-                    await stream.WriteAsync(fileNameBytes, 0, fileNameBytes.Length, tcpClientCTS.Token);
+                    await stream.WriteAsync(fileNameLengthBytes, tcpClientCTS.Token);
+                    await stream.WriteAsync(fileNameBytes, tcpClientCTS.Token);
 
                     // 发送文件内容
                     byte[] buffer = new byte[1024 * 1024];

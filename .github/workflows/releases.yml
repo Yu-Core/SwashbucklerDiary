@@ -7,7 +7,7 @@ env:
   DOTNET_NOLOGO: true                     # Disable the .NET logo
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
   DOTNET_CLI_TELEMETRY_OPTOUT: true       # Disable sending .NET CLI telemetry
-  DOTNET_VERSION: '8.0'
+  DOTNET_VERSION: '9.0'
   CSPROJ_PATH: 'src/SwashbucklerDiary.Maui'
   CSPROJ_FILE_PATH: 'src/SwashbucklerDiary.Maui/SwashbucklerDiary.Maui.csproj'
   APP_NAME: 'SwashbucklerDiary'
@@ -109,7 +109,7 @@ jobs:
         run: msstore publish ${{ env.CSPROJ_PATH }} -i ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/AppPackages -id ${{ env.STORE_ID }}
 
   macOSAndiOS:
-    runs-on: macos-14
+    runs-on: macos-latest
     steps:
       # Checkout the code
       - uses: actions/checkout@v3

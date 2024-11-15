@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace SwashbucklerDiary.Maui.Extensions
 {
-    public static class BlazorComponentBuilderExtensions
+    public static class IMasaBlazorBuilderExtensions
     {
         public static IMasaBlazorBuilder AddI18nForMauiBlazor(this IMasaBlazorBuilder builder, string localesDirectory)
         {

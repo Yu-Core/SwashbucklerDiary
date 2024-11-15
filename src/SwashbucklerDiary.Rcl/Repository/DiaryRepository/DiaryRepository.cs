@@ -171,11 +171,14 @@ namespace SwashbucklerDiary.Rcl.Repository
             return true;
         }
 
+#pragma warning disable CS0618 // 类型或成员已过时
         public async Task<bool> MovePrivacyDiariesAsync()
         {
             var db = Context.AsTenant().GetConnection("0");
             var privacyDb = Context.AsTenant().GetConnection("1");
+
             var diaries = await InternalGetListAsync(db, it => it.Private == true);
+
             if (diaries.Count == 0)
             {
                 return false;
@@ -196,5 +199,6 @@ namespace SwashbucklerDiary.Rcl.Repository
 
             return true;
         }
+#pragma warning restore CS0618 // 类型或成员已过时
     }
 }
