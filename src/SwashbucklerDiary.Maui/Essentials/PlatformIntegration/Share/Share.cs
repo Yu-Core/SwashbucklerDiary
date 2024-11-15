@@ -21,7 +21,7 @@
 
         public Task ShareTextAsync(string title, string text)
         {
-            if(string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(text))
             {
                 return Task.CompletedTask;
             }

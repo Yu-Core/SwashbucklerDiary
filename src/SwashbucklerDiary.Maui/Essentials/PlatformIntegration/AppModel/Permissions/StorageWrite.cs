@@ -4,7 +4,7 @@
     {
         public async Task<bool> CheckStorageWritePermission()
         {
-            if(OperatingSystem.IsAndroidVersionAtLeast(33))
+            if (OperatingSystem.IsAndroidVersionAtLeast(33))
             {
                 return true;
             }

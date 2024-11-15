@@ -39,9 +39,9 @@ namespace SwashbucklerDiary.Maui.Essentials
 
             bool dark = theme == Theme.Dark;
 #if WINDOWS || MACCATALYST
-            TitleBar.SetColor(backgroundColor);
+            MauiBlazorToolkit.Platform.TitleBar.SetColor(backgroundColor);
             TitleBarStyle titleBarStyle = dark ? TitleBarStyle.LightContent : TitleBarStyle.DarkContent;
-            TitleBar.SetStyle(titleBarStyle);
+            MauiBlazorToolkit.Platform.TitleBar.SetStyle(titleBarStyle);
 #elif ANDROID
             var window = Platform.CurrentActivity.Window;
             var windowController = WindowCompat.GetInsetsController(window, window.DecorView);
