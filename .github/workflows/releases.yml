@@ -86,6 +86,7 @@ jobs:
           token: ${{ github.token }}
           name: ${{ env.APPLICATION_DISPLAY_VERSION }}
           tag: 'v${{ env.APPLICATION_DISPLAY_VERSION }}'
+          prerelease: true
 
       # Replace the version in Package.appxmanifest
       - name: Update version in Package.appxmanifest
