@@ -4,7 +4,7 @@ using SwashbucklerDiary.Rcl.Models;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
-    public abstract class ExportPageBase : ImportantComponentBase
+    public abstract partial class ExportPageBase : ImportantComponentBase
     {
         protected readonly List<TabListItem> tabListItems =
         [
@@ -13,5 +13,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         ];
 
         protected StringNumber tab = 0;
+
+        protected abstract Type LANTransferPageType { get; }
     }
 }

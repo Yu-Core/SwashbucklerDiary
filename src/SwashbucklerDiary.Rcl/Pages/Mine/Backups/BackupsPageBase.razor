@@ -1,7 +1,5 @@
-﻿@page "/export"
-@namespace SwashbucklerDiary.WebAssembly.Pages
-@inherits ExportPageBase
-
+﻿@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
 
 <MyAppBar>
     <MButton Icon
@@ -22,14 +20,15 @@
     <SwiperTabItem>
         <MContainer Class="my-container"
                     Fluid="true">
-            <LocalExportPage></LocalExportPage>
+            <LocalBackupsPage></LocalBackupsPage>
         </MContainer>
     </SwiperTabItem>
     <SwiperTabItem>
         <MContainer Class="my-container"
                     Fluid="true">
-            <LANTransferPage></LANTransferPage>
+            <DynamicComponent Type="WebDAVBackupsPageType" />
         </MContainer>
     </SwiperTabItem>
 </SwiperTabItems>
+
 

@@ -4,7 +4,7 @@ using SwashbucklerDiary.Rcl.Models;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
-    public abstract class BackupsPageBase : ImportantComponentBase
+    public abstract partial class BackupsPageBase : ImportantComponentBase
     {
         protected readonly List<TabListItem> tabListItems =
         [
@@ -13,5 +13,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         ];
 
         protected StringNumber tab = 0;
+
+        protected abstract Type WebDAVBackupsPageType { get; }
     }
 }
