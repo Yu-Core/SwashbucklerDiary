@@ -130,6 +130,13 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
             layout.RemoveView(_customView);
 
         context.RequestedOrientation = screenOrientation;
+
+        _videoViewCallback.OnCustomViewHidden();
+        _customView = null;
+        _videoViewCallback = null;
+        // When in landscape mode, If this is not added, the soft keyboard will not display
+        context.CurrentFocus?.ClearFocus();
+
         // Show again the SystemBars and Status bar
         if (OperatingSystem.IsAndroidVersionAtLeast(30))
         {
@@ -145,11 +152,6 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
 #pragma warning disable CS0618 // Type or member is obsolete
             context.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)_defaultSystemUiVisibility;
 #pragma warning restore CS0618 // Type or member is obsolete
-
-        _videoViewCallback.OnCustomViewHidden();
-        _customView = null;
-        _videoViewCallback = null;
-        context.CurrentFocus?.ClearFocus();
     }
 
     // See: https://github.com/dotnet/maui/issues/6565

@@ -38,18 +38,22 @@ namespace SwashbucklerDiary.Maui
             var usableHeightNow = rect.Height();
             if (usableHeightNow != usableHeightPrevious)
             {
+                int usableHeightSansKeyboard = mChildOfContent.RootView.Height;
+                int heightDifference = usableHeightSansKeyboard - usableHeightNow;
                 if (_edgeToEdge)
                 {
                     frameLayoutParams.Height = usableHeightNow + _activity.GetStatusBarInsets().Top + _activity.GetNavigationBarInsets().Bottom;
+                    if (heightDifference > usableHeightSansKeyboard / 4)
+                    {
+                        //Resolve anomalies during screen rotation
+                        mChildOfContent.RootView.Top = -_activity.GetStatusBarInsets().Top;
+                        mChildOfContent.Layout(rect.Left, rect.Top, rect.Right, rect.Bottom);
+                    }
                 }
                 else
                 {
                     frameLayoutParams.Height = usableHeightNow;
                 }
-
-                //Resolve anomalies during screen rotation
-                mChildOfContent.RootView.Top = -_activity.GetStatusBarInsets().Top;
-                mChildOfContent.Layout(rect.Left, rect.Top, rect.Right, rect.Bottom);
 
                 mChildOfContent.RequestLayout();
                 usableHeightPrevious = usableHeightNow;
