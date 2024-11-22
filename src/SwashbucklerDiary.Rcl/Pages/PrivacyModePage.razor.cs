@@ -9,6 +9,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class PrivacyModePage : ImportantComponentBase
     {
+        private bool _isRender = true;
+
         private bool privacyMode;
 
         private bool allowEnterPrivacyMode;
@@ -47,6 +49,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             // Prevent entry through URL
             if (!allowEnterPrivacyMode)
             {
+                _isRender = false;
                 _ = NavigateToBack();
             }
             else

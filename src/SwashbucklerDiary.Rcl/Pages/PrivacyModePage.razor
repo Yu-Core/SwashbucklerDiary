@@ -2,255 +2,258 @@
 @inherits ImportantComponentBase
 
 <MyAppBar Title="@(I18n.T("PrivacyMode.Name"))"
-          OnClick="NavigateToBack">
+OnClick="NavigateToBack">
 </MyAppBar>
 
-<ScrollContainer>
-    <MCard Class="my-list-card"
-           Elevation="0"
-           Rounded="@("lg")">
-        <MList>
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="evident-icon">
-                        mdi-menu-open
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    <MListItemTitle>
-                        @(I18n.T("PrivacyMode.ShowSetPrivacyDiary.Title"))
-                    </MListItemTitle>
-                    <MListItemSubtitle Class="text-caption-xs-only">
-                        @(I18n.T("PrivacyMode.ShowSetPrivacyDiary.Subtitle"))
-                    </MListItemSubtitle>
-                </MListItemContent>
-                <MListItemAction>
-                    <SettingSwitch @bind-Value="showSetPrivacyDiary"
-                                   SettingKey="@nameof(Setting.SetPrivacyDiary)">
-                    </SettingSwitch>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-5"></MDivider>
-
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="evident-icon">
-                        mdi-weather-night
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    <MListItemTitle>
-                        @(I18n.T("PrivacyMode.EnablePrivacyModeDark.Title"))
-                    </MListItemTitle>
-                    <MListItemSubtitle Class="text-caption-xs-only">
-                        @(I18n.T("PrivacyMode.EnablePrivacyModeDark.Subtitle"))
-                    </MListItemSubtitle>
-                </MListItemContent>
-                <MListItemAction>
-                    <SettingSwitch @bind-Value="enablePrivacyModeDark"
-                                   SettingKey="@nameof(Setting.PrivacyModeDark)">
-                    </SettingSwitch>
-                </MListItemAction>
-            </MListItem>
-        </MList>
-    </MCard>
-
-    <MCard Class="my-list-card"
-           Elevation="0"
-           Rounded="@("lg")">
-        <MList>
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="evident-icon">
-                        mdi-location-enter
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    <MListItemTitle>
-                        @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Title"))
-                    </MListItemTitle>
-                    <MListItemSubtitle Class="text-caption-xs-only">
-                        @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Subtitle"))
-                    </MListItemSubtitle>
-                </MListItemContent>
-                <MListItemAction>
-                    <MSwitch @bind-Value="hidePrivacyModeEntrance"
-                             TValue="bool"
-                             Readonly="true"
-                             OnClick="SwitchHidePrivacyModeEntrance"
-                             Dense="true"
-                             Inset="true"
-                             Color="white">
-                    </MSwitch>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-5"></MDivider>
-
-            @if (hidePrivacyModeEntrance)
-            {
-                <MListItem OnClick="()=>showPrivacyModeFunctionSearchKeyDialog=true">
+@if (_isRender)
+{
+    <ScrollContainer>
+        <MCard Class="my-list-card"
+               Elevation="0"
+               Rounded="@("lg")">
+            <MList>
+                <MListItem>
                     <MListItemIcon>
                         <MIcon Class="evident-icon">
-                            mdi-keyboard-variant
+                            mdi-menu-open
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Title"))
+                            @(I18n.T("PrivacyMode.ShowSetPrivacyDiary.Title"))
                         </MListItemTitle>
                         <MListItemSubtitle Class="text-caption-xs-only">
-                            @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Subtitle"))
-                        </MListItemSubtitle>
-                    </MListItemContent>
-                    <MListItemContent Class="setting-item-state">
-                        <MListItemSubtitle Class="font-weight-bold">
-                            @privacyModeFunctionSearchKey
+                            @(I18n.T("PrivacyMode.ShowSetPrivacyDiary.Subtitle"))
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
-                        <MIcon>mdi-chevron-right</MIcon>
+                        <SettingSwitch @bind-Value="showSetPrivacyDiary"
+                                       SettingKey="@nameof(Setting.SetPrivacyDiary)">
+                        </SettingSwitch>
                     </MListItemAction>
                 </MListItem>
-            }
-            else
-            {
-                <MListItem OnClick="()=>showPrivacyModeEntrancePasswordDialog = true">
+
+                <MDivider Class="mx-5"></MDivider>
+
+                <MListItem>
                     <MListItemIcon>
                         <MIcon Class="evident-icon">
-                            mdi-key-outline
+                            mdi-weather-night
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
-                        @(I18n.T("PrivacyMode.PrivacyModeEntrancePassword"))
-                    </MListItemContent>
-                    <MListItemContent Class="setting-item-state">
-                        <MListItemSubtitle>
-                            @PrivacyModeEntrancePasswordSetStateText
+                        <MListItemTitle>
+                            @(I18n.T("PrivacyMode.EnablePrivacyModeDark.Title"))
+                        </MListItemTitle>
+                        <MListItemSubtitle Class="text-caption-xs-only">
+                            @(I18n.T("PrivacyMode.EnablePrivacyModeDark.Subtitle"))
                         </MListItemSubtitle>
+                    </MListItemContent>
+                    <MListItemAction>
+                        <SettingSwitch @bind-Value="enablePrivacyModeDark"
+                                       SettingKey="@nameof(Setting.PrivacyModeDark)">
+                        </SettingSwitch>
+                    </MListItemAction>
+                </MListItem>
+            </MList>
+        </MCard>
+
+        <MCard Class="my-list-card"
+               Elevation="0"
+               Rounded="@("lg")">
+            <MList>
+                <MListItem>
+                    <MListItemIcon>
+                        <MIcon Class="evident-icon">
+                            mdi-location-enter
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        <MListItemTitle>
+                            @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Title"))
+                        </MListItemTitle>
+                        <MListItemSubtitle Class="text-caption-xs-only">
+                            @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Subtitle"))
+                        </MListItemSubtitle>
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MSwitch @bind-Value="hidePrivacyModeEntrance"
+                                 TValue="bool"
+                                 Readonly="true"
+                                 OnClick="SwitchHidePrivacyModeEntrance"
+                                 Dense="true"
+                                 Inset="true"
+                                 Color="white">
+                        </MSwitch>
+                    </MListItemAction>
+                </MListItem>
+
+                <MDivider Class="mx-5"></MDivider>
+
+                @if (hidePrivacyModeEntrance)
+                {
+                    <MListItem OnClick="()=>showPrivacyModeFunctionSearchKeyDialog=true">
+                        <MListItemIcon>
+                            <MIcon Class="evident-icon">
+                                mdi-keyboard-variant
+                            </MIcon>
+                        </MListItemIcon>
+                        <MListItemContent>
+                            <MListItemTitle>
+                                @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Title"))
+                            </MListItemTitle>
+                            <MListItemSubtitle Class="text-caption-xs-only">
+                                @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Subtitle"))
+                            </MListItemSubtitle>
+                        </MListItemContent>
+                        <MListItemContent Class="setting-item-state">
+                            <MListItemSubtitle Class="font-weight-bold">
+                                @privacyModeFunctionSearchKey
+                            </MListItemSubtitle>
+                        </MListItemContent>
+                        <MListItemAction>
+                            <MIcon>mdi-chevron-right</MIcon>
+                        </MListItemAction>
+                    </MListItem>
+                }
+                else
+                {
+                    <MListItem OnClick="()=>showPrivacyModeEntrancePasswordDialog = true">
+                        <MListItemIcon>
+                            <MIcon Class="evident-icon">
+                                mdi-key-outline
+                            </MIcon>
+                        </MListItemIcon>
+                        <MListItemContent>
+                            @(I18n.T("PrivacyMode.PrivacyModeEntrancePassword"))
+                        </MListItemContent>
+                        <MListItemContent Class="setting-item-state">
+                            <MListItemSubtitle>
+                                @PrivacyModeEntrancePasswordSetStateText
+                            </MListItemSubtitle>
+                        </MListItemContent>
+                        <MListItemAction>
+                            <MIcon>mdi-chevron-right</MIcon>
+                        </MListItemAction>
+                    </MListItem>
+                }
+            </MList>
+        </MCard>
+
+        @if (Desktop)
+        {
+            <MCard Class="my-list-card"
+                   Elevation="0"
+                   Rounded="@("lg")">
+                <MListItem OnClick="SwitchPrivacyMode">
+                    <MListItemIcon>
+                        <MIcon Class="evident-icon">
+                            mdi-swap-horizontal
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        @(I18n.T(SwitchPrivacyModeText))
                     </MListItemContent>
                     <MListItemAction>
                         <MIcon>mdi-chevron-right</MIcon>
                     </MListItemAction>
                 </MListItem>
-            }
-        </MList>
-    </MCard>
+            </MCard>
+        }
 
-    @if (Desktop)
-    {
         <MCard Class="my-list-card"
                Elevation="0"
                Rounded="@("lg")">
-            <MListItem OnClick="SwitchPrivacyMode">
+            <MListItem OnClick="MoveOldPrivacyDiaries">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
-                        mdi-swap-horizontal
+                        mdi-file-move-outline
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T(SwitchPrivacyModeText))
+                    <MListItemTitle>
+                        @(I18n.T("PrivacyMode.Move the old version of Privacy Diary.Title"))
+                    </MListItemTitle>
+                    <MListItemSubtitle Class="text-caption-xs-only">
+                        @(I18n.T("PrivacyMode.Move the old version of Privacy Diary.SubTitle"))
+                    </MListItemSubtitle>
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
                 </MListItemAction>
             </MListItem>
         </MCard>
+
+        <MAlert Class="mb-5 text-subtitle-2 text--secondary text-pre-wrap"
+                Elevation="0"
+                Rounded="@("lg")"
+                Icon="@("mdi-information-outline")">
+            @(I18n.T("PrivacyMode.Description"))
+        </MAlert>
+    </ScrollContainer>
+
+    @if (Mobile)
+    {
+        <MContainer Fluid>
+            <MButton Class="black-white-btn mb-2"
+                     Rounded="true"
+                     Block="true"
+                     Large="true"
+                     OnClick="SwitchPrivacyMode">
+                @(I18n.T(SwitchPrivacyModeText))
+            </MButton>
+        </MContainer>
     }
 
-    <MCard Class="my-list-card"
-           Elevation="0"
-           Rounded="@("lg")">
-        <MListItem OnClick="MoveOldPrivacyDiaries">
-            <MListItemIcon>
-                <MIcon Class="evident-icon">
-                    mdi-file-move-outline
-                </MIcon>
-            </MListItemIcon>
-            <MListItemContent>
-                <MListItemTitle>
-                    @(I18n.T("PrivacyMode.Move the old version of Privacy Diary.Title"))
-                </MListItemTitle>
-                <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("PrivacyMode.Move the old version of Privacy Diary.SubTitle"))
-                </MListItemSubtitle>
-            </MListItemContent>
-            <MListItemAction>
-                <MIcon>mdi-chevron-right</MIcon>
-            </MListItemAction>
-        </MListItem>
-    </MCard>
+    <InputDialog @bind-Visible="showPrivacyModeFunctionSearchKeyDialog"
+                 Text="@privacyModeFunctionSearchKey"
+                 Title="@(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Title"))"
+                 Placeholder="@(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKeyPlaceholder"))"
+                 OnOK="SavePrivacyModeSearchKey">
+    </InputDialog>
 
-    <MAlert Class="mb-5 text-subtitle-2 text--secondary text-pre-wrap"
-            Elevation="0"
-            Rounded="@("lg")"
-            Icon="@("mdi-information-outline")">
-        @(I18n.T("PrivacyMode.Description"))
-    </MAlert>
-</ScrollContainer>
+    <PasswordDialog @bind-Visible="showPrivacyModeEntrancePasswordDialog"
+                    Title="@(I18n.T("PrivacyMode.PrivacyModeEntrancePassword"))"
+                    MaxLength="20"
+                    OnOK="SetPassword">
+    </PasswordDialog>
 
-@if (Mobile)
-{
-    <MContainer Fluid>
-        <MButton Class="black-white-btn mb-2"
-                 Rounded="true"
-                 Block="true"
-                 Large="true"
-                 OnClick="SwitchPrivacyMode">
-            @(I18n.T(SwitchPrivacyModeText))
-        </MButton>
-    </MContainer>
+    <MDialogExtension @bind-MyValue="showHidePrivacyModeEntranceConfirmDialog"
+                      ContentClass="rounded-lg"
+                      MaxWidth="420">
+        <MCard>
+            <MCardTitle Class="font-weight-bold">
+                @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Title"))
+                <MSpacer></MSpacer>
+                <MButton Icon="true"
+                         OnClick="@(()=>showHidePrivacyModeEntranceConfirmDialog=false)">
+                    <MIcon>mdi-close</MIcon>
+                </MButton>
+            </MCardTitle>
+            <MCardText Class="pb-0">
+                <div>
+                    @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Subtitle"))
+                </div>
+                <div>
+                    @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Subtitle"))
+                </div>
+                <div class="d-flex align-end">
+                    @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.CurrentKey"))
+                    <div class="font-weight-bold text-h6 ml-2">@privacyModeFunctionSearchKey</div>
+                </div>
+            </MCardText>
+            <MCardActions>
+                <MSpacer></MSpacer>
+                <MButton Text
+                         OnClick="()=>showHidePrivacyModeEntranceConfirmDialog=false">
+                    @(I18n.T("Share.Cancel"))
+                </MButton>
+                <MButton Text
+                         Color="primary"
+                         OnClick="ConfirmHidePrivacyModeEntrance">
+                    @(I18n.T("Share.OK"))
+                </MButton>
+            </MCardActions>
+        </MCard>
+    </MDialogExtension>
 }
-
-<InputDialog @bind-Visible="showPrivacyModeFunctionSearchKeyDialog"
-             Text="@privacyModeFunctionSearchKey"
-             Title="@(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Title"))"
-             Placeholder="@(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKeyPlaceholder"))"
-             OnOK="SavePrivacyModeSearchKey">
-</InputDialog>
-
-<PasswordDialog @bind-Visible="showPrivacyModeEntrancePasswordDialog"
-                Title="@(I18n.T("PrivacyMode.PrivacyModeEntrancePassword"))"
-                MaxLength="20"
-                OnOK="SetPassword">
-</PasswordDialog>
-
-<MDialogExtension @bind-MyValue="showHidePrivacyModeEntranceConfirmDialog"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420">
-    <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Title"))
-            <MSpacer></MSpacer>
-            <MButton Icon="true"
-                     OnClick="@(()=>showHidePrivacyModeEntranceConfirmDialog=false)">
-                <MIcon>mdi-close</MIcon>
-            </MButton>
-        </MCardTitle>
-        <MCardText Class="pb-0">
-            <div>
-                @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Subtitle"))
-            </div>
-            <div>
-                @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Subtitle"))
-            </div>
-            <div class="d-flex align-end">
-                @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.CurrentKey"))
-                <div class="font-weight-bold text-h6 ml-2">@privacyModeFunctionSearchKey</div>
-            </div>
-        </MCardText>
-        <MCardActions>
-            <MSpacer></MSpacer>
-            <MButton Text
-                     OnClick="()=>showHidePrivacyModeEntranceConfirmDialog=false">
-                @(I18n.T("Share.Cancel"))
-            </MButton>
-            <MButton Text
-                     Color="primary"
-                     OnClick="ConfirmHidePrivacyModeEntrance">
-                @(I18n.T("Share.OK"))
-            </MButton>
-        </MCardActions>
-    </MCard>
-</MDialogExtension>
