@@ -21,10 +21,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected List<DynamicListItem> menuItems = [];
 
-        protected MultiMenu? multiMenu;
-
-        protected Dictionary<string, object> previousActivatorAttributes = [];
-
         [Inject]
         protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
 
@@ -48,7 +44,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected List<string> SortItems => sortOptions.Keys.ToList();
 
-        protected Dictionary<string, object> ActivatorAttributes => multiMenu?.ActivatorAttributes ?? [];
+        protected Dictionary<string, object> menuActivatorAttributes = [];
 
         protected string? SortItem
         {
@@ -101,24 +97,14 @@ namespace SwashbucklerDiary.Rcl.Components
             return sortOption.Invoke(value);
         }
 
-        protected void OpenMenu((T value, Dictionary<string, object> activatorAttributes) args)
+        protected async Task OpenMenu((T value, Dictionary<string, object> activatorAttributes) args)
         {
+            showMenu = false;
+            await Task.Delay(16);
+
             SelectedItem = args.value;
-            //清除旧的Activator的属性，直接Clear是无效的
-            foreach (var key in previousActivatorAttributes.Keys)
-            {
-                previousActivatorAttributes[key] = false;
-            }
-
-            foreach (var item in ActivatorAttributes)
-            {
-                args.activatorAttributes[item.Key] = item.Value;
-            }
-
-            previousActivatorAttributes = args.activatorAttributes;
-
+            menuActivatorAttributes = args.activatorAttributes;
             showMenu = true;
-            InvokeAsync(StateHasChanged);
         }
 
         protected bool RemoveSelectedItem()

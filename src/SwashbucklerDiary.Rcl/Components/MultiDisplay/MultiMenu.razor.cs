@@ -12,6 +12,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private List<DynamicListItem> previousDynamicListItems = [];
 
+        protected Dictionary<string, object> previousActivatorAttributes = [];
+
         [Inject]
         private MasaBlazor MasaBlazor { get; set; } = default!;
 
@@ -21,7 +23,10 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public List<DynamicListItem> DynamicListItems { get; set; } = [];
 
-        public Dictionary<string, object> ActivatorAttributes
+        [Parameter]
+        public Dictionary<string, object> ActivatorAttributes { get; set; } = [];
+
+        public Dictionary<string, object> InternalActivatorAttributes
             => (IsDesktop ? mMenu?.ActivatorAttributes : mBottomSheetExtension?.ActivatorAttributes) ?? [];
 
         protected override void OnParametersSet()
@@ -36,6 +41,22 @@ namespace SwashbucklerDiary.Rcl.Components
                 });
                 previousDynamicListItems = DynamicListItems;
             }
+
+            if (previousActivatorAttributes != ActivatorAttributes)
+            {
+                //清除旧的Activator的属性，直接Clear是无效的
+                foreach (var key in previousActivatorAttributes.Keys)
+                {
+                    previousActivatorAttributes[key] = false;
+                }
+
+                foreach (var item in InternalActivatorAttributes)
+                {
+                    ActivatorAttributes[item.Key] = item.Value;
+                }
+
+                previousActivatorAttributes = ActivatorAttributes;
+            }
         }
 
         protected RenderFragment? ComputedActivatorContent
@@ -47,7 +68,7 @@ namespace SwashbucklerDiary.Rcl.Components
                     return null;
                 }
 
-                var props = new ActivatorProps(ActivatorAttributes);
+                var props = new ActivatorProps(InternalActivatorAttributes);
                 return ActivatorContent(props);
             }
         }
