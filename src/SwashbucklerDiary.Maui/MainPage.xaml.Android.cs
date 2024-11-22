@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.WebView;
-using Microsoft.Maui.Controls.Compatibility.Platform.Android;
+using Microsoft.Maui.Platform;
 
 namespace SwashbucklerDiary.Maui
 {
@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Maui
         {
             e.WebView.VerticalScrollBarEnabled = false; // 关闭滚动条
             e.WebView.Settings.MediaPlaybackRequiresUserGesture = false; // 是否需要用户手势才能播放
-            e.WebView.SetBackgroundColor(_backgroundColor.ToAndroid());
+            e.WebView.SetBackgroundColor(_backgroundColor.ToPlatform());
         }
     }
 }

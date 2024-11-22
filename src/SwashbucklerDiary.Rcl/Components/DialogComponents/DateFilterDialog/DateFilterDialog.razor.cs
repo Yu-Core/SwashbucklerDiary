@@ -1,4 +1,4 @@
-﻿using Force.DeepCloner;
+﻿using DeepCloner.Core;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 

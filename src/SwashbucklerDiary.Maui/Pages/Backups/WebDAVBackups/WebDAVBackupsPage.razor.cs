@@ -1,4 +1,4 @@
-﻿using Force.DeepCloner;
+﻿using DeepCloner.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
