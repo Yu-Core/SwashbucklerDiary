@@ -1,4 +1,4 @@
-{
+﻿{
   "Share": {
     "OK": "确认",
     "Cancel": "取消",
@@ -172,7 +172,8 @@
     "ClosePrivacy": "取消私密",
     "Moved to privacy mode": "已移动至隐私模式",
     "Removed from privacy mode": "已移出隐私模式",
-    "CopyReference": "复制链接",
+    "CopyQuote": "复制引用",
+    "CopyLink": "复制链接",
     "DiaryLink": "日记链接",
     "Search": "查找",
     "Search on the page": "在页面上查找"

@@ -1,4 +1,4 @@
-{
+﻿{
   "Share": {
     "OK": "OK",
     "Cancel": "Cancel",
@@ -172,7 +172,8 @@
     "ClosePrivacy": "Cancel private",
     "Moved to privacy mode": "Moved to privacy mode",
     "Removed from privacy mode": "Removed from privacy mode",
-    "CopyReference": "Copy link",
+    "CopyQuote": "Copy quote",
+    "CopyLink": "Copy link",
     "DiaryLink": "Diary link",
     "Search": "Search",
     "Search on the page": "Search on the page"

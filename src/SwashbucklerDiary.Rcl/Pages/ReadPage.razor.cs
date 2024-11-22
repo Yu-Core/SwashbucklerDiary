@@ -163,7 +163,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, TopText,"mdi-format-vertical-align-top", OnTopping),
                 new(this, "Diary.Export","mdi-export", OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon, MarkdownChanged),
-                new(this, "Read.CopyReference", "mdi-link-variant", CopyReference),
+                new(this, "Read.CopyQuote", "mdi-format-quote-open-outline", CopyQuote),
+                new(this, "Read.CopyLink", "mdi-link-variant", CopyLink),
                 new(this, "Read.Search", "mdi-text-box-search-outline", OpenSearch),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
@@ -292,9 +293,25 @@ namespace SwashbucklerDiary.Rcl.Pages
             StateHasChanged();
         }
 
-        private async Task CopyReference()
+        private async Task CopyQuote()
         {
             var text = $"[{I18n.T("Read.DiaryLink")}](read/{Id})";
+            await PlatformIntegration.SetClipboard(text);
+            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
+        }
+
+        private async Task CopyLink()
+        {
+            string text;
+            if (PlatformIntegration.CurrentPlatform == AppDevicePlatform.Browser)
+            {
+                text = NavigationManager.ToAbsoluteUri($"read/{Id}").ToString();
+            }
+            else
+            {
+                text = $"swashbucklerdiary://read/{Id}";
+            }
+
             await PlatformIntegration.SetClipboard(text);
             await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
