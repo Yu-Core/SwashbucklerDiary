@@ -118,6 +118,7 @@
 - [MASA.Blazor](https://github.com/BlazorComponent/MASA.Blazor)
 - [MauiBlazorToolkit](https://github.com/Yu-Core/MauiBlazorToolkit)
 - [Microsoft.Data.Sqlite](https://github.com/dotnet/efcore#microsoftdatasqlite)
+- [panzoom](https://github.com/anvaka/panzoom)
 - [Serilog](https://github.com/serilog/serilog)
 - [Serilog.Extensions.Logging](https://github.com/serilog/serilog-extensions-logging)
 - [Serilog.Sinks.Debug](https://github.com/serilog/serilog-sinks-debug)
@@ -130,7 +131,6 @@
 - [WebDavClient](https://github.com/skazantsev/WebDavClient)
 - [wc-waterfall](https://github.com/huodoushigemi/wc-flow-layout)
 - [Vditor](https://github.com/Vanessa219/vditor)
-- [Zoom](https://github.com/anitasv/zoom)
 
 ## ☕捐助
 项目的发展离不开你的支持，请作者喝杯咖啡吧☕

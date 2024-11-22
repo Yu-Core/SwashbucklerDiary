@@ -1,4 +1,4 @@
-export function initZoom(selector) {
+﻿export function init(selector) {
     var el = document.querySelector(selector);
     if (el == null) {
         return;

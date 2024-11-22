@@ -4,13 +4,13 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     internal class ZoomJSModule : JSModuleExtension
     {
-        public ZoomJSModule(IJSRuntime js) : base(js, "js/zoom-helper.js")
+        public ZoomJSModule(IJSRuntime js) : base(js, "js/panzoom-helper.js")
         {
         }
 
         public async Task Init(string selector)
         {
-            await base.InvokeVoidAsync("initZoom", selector);
+            await base.InvokeVoidAsync("init", selector);
         }
 
         public async Task Reset(string selector)

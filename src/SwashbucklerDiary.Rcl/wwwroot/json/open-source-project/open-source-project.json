@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "Name": ".NET MAUI",
     "License": "MIT license",
@@ -65,6 +65,11 @@
     "Url": "https://github.com/dotnet/efcore/blob/release/8.0/LICENSE.txt"
   },
   {
+    "Name": "panzoom",
+    "License": "MIT license",
+    "Url": "https://github.com/anvaka/panzoom/blob/main/LICENSE"
+  },
+  {
     "Name": "Serilog",
     "License": "Apache-2.0 license",
     "Url": "https://github.com/serilog/serilog/blob/dev/LICENSE"
@@ -123,10 +128,5 @@
     "Name": "Vditor",
     "License": "MIT license",
     "Url": "https://github.com/Vanessa219/vditor/blob/master/LICENSE"
-  },
-  {
-    "Name": "Zoom",
-    "License": "MIT license",
-    "Url": "https://github.com/anitasv/zoom/blob/master/LICENSE"
   }
 ]
