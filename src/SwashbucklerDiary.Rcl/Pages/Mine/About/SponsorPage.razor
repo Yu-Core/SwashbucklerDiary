@@ -70,11 +70,14 @@
                    Elevation="0"
                    Rounded="@("lg")">
                 <MList Class="dynamic-list-item-collection">
-                    @foreach (var item in sponsorList)
+                    @foreach (var item in sponsorInfos)
                     {
                         <MListItem @key="item">
                             <MListItemContent>
-                                @item
+                                @item.Name
+                            </MListItemContent>
+                            <MListItemContent Style="flex:none;">
+                                @item.Amount
                             </MListItemContent>
                         </MListItem>
                     }
