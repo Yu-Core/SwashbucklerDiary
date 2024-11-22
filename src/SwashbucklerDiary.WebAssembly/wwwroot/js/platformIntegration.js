@@ -129,9 +129,9 @@ export async function shareTextAsync(title, text) {
 export async function shareFileAsync(title, path) {
     if (navigator.share) {
         try {
-            if (Module.FS.analyzePath(path).exists) {
+            if (Blazor.runtime.Module.FS.analyzePath(path).exists) {
                 const fileName = path.split('/').pop();
-                const data = Module.FS.readFile(path);
+                const data = Blazor.runtime.Module.FS.readFile(path);
                 const file = new File([data], fileName, { type: 'image/png' });
                 await navigator.share({
                     title: title,
@@ -148,7 +148,7 @@ export async function shareFileAsync(title, path) {
 
 export function saveFileAsync(fileName, filePath) {
     const path = `/${filePath}`;
-    const fileData = Module.FS.readFile(path);
+    const fileData = Blazor.runtime.Module.FS.readFile(path);
     var blob = new Blob([fileData], { type: 'application/octet-stream' });
     const url = URL.createObjectURL(blob);
 
@@ -193,7 +193,7 @@ export function pickFilesAsync(accept, fileExtensions, multiple = false) {
                     const contents = await readFileAsArrayBuffer(file);
 
                     const filePath = `cache/${fileName}`;
-                    Module.FS.writeFile(filePath, new Uint8Array(contents), { encoding: 'binary' });
+                    Blazor.runtime.Module.FS.writeFile(filePath, new Uint8Array(contents), { encoding: 'binary' });
                     results.push(filePath);
                 } catch {
                     results.push(""); // In case of error, add an empty string for the file

@@ -51,7 +51,7 @@ namespace SwashbucklerDiary.Maui.Services
 
         public override async Task<bool> ShareImageAsync(string title, string url)
         {
-            var filePath = await GetImageFilePathAsync(url);
+            var filePath = await GetResourceFilePathAsync(url);
             if (string.IsNullOrEmpty(filePath))
             {
                 return false;
@@ -61,9 +61,9 @@ namespace SwashbucklerDiary.Maui.Services
             return true;
         }
 
-        public override async Task<bool> SaveImageAsync(string url)
+        public override async Task<bool> SaveFileAsync(string url)
         {
-            var filePath = await GetImageFilePathAsync(url);
+            var filePath = await GetResourceFilePathAsync(url);
             if (string.IsNullOrEmpty(filePath))
             {
                 return false;
@@ -72,7 +72,7 @@ namespace SwashbucklerDiary.Maui.Services
             return await _platformIntegration.SaveFileAsync(filePath);
         }
 
-        private async Task<string> GetImageFilePathAsync(string url)
+        private async Task<string> GetResourceFilePathAsync(string? url)
         {
             if (string.IsNullOrEmpty(url))
             {
@@ -95,7 +95,7 @@ namespace SwashbucklerDiary.Maui.Services
 
             if (string.IsNullOrEmpty(filePath))
             {
-                await _popupServiceHelper.Error(_i18n.T("Image.Not exist"));
+                await _popupServiceHelper.Error(_i18n.T("FileBrowse.Not exist"));
             }
 
             return filePath;

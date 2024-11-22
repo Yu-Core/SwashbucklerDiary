@@ -94,7 +94,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public abstract Task<bool> ShareImageAsync(string title, string url);
 
-        public abstract Task<bool> SaveImageAsync(string url);
+        public abstract Task<bool> SaveFileAsync(string url);
 
         public List<ResourceModel> GetDiaryResources(string content)
         {

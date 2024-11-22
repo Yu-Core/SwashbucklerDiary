@@ -41,6 +41,11 @@ namespace SwashbucklerDiary.Rcl.Services
             return true;
         }
 
+        public Task<ResourceModel> FindIncludesAsync(string id)
+        {
+            return _resourceRepository.FindIncludesAsync(id);
+        }
+
         private void DeleteResourceFiles(List<string?> resourceUris)
         {
             foreach (var resourceUri in resourceUris)

@@ -1,11 +1,14 @@
 ﻿@namespace SwashbucklerDiary.Rcl.Components
 @using SwashbucklerDiary.Rcl.Events
 @using System.Globalization
-@inherits MyComponentBase
+@inherits CardComponentBase<ResourceModel>
 
-<MCard Elevation="0"
+<MCard @oncontextmenu="OpenMenu"
+       @attributes="activatorAttributes"
+       Elevation="0"
        Ripple="false"
-       Rounded="@("lg")">
+       Rounded="@("lg")"
+       __internal_preventDefault_oncontextmenu>
     <MList Class="rounded-lg">
         <MListItem>
             <MListItemAvatar Size="75" Tile Rounded="@("lg")">

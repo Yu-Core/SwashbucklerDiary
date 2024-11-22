@@ -757,9 +757,6 @@
       "Desc": "Name-Desc"
     }
   },
-  "Image": {
-    "Not exist": "Image does not exist"
-  },
   "FileBrowse": {
     "Image": {
       "Name": "Image",
@@ -776,7 +773,10 @@
       "NoVideo": "No video"
     },
     "DeleteUnused": "Delete unused files",
-    "ConfirmDeleteUnused": "Are you sure to delete unused files?"
+    "ConfirmDeleteUnused": "Are you sure to delete unused files?",
+    "Not exist": "File does not exist",
+    "ViewReferences": "View references",
+    "This file is not referenced": "This file is not referenced"
   },
   "PrivacyMode": {
     "Name": "Privacy mode",

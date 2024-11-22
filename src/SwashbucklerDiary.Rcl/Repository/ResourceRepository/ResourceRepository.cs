@@ -10,6 +10,14 @@ namespace SwashbucklerDiary.Rcl.Repository
         {
         }
 
+        public Task<ResourceModel> FindIncludesAsync(string id)
+        {
+            return Context.Queryable<ResourceModel>()
+                        .Includes(r => r.Diaries, d => d.Tags)
+                        .Includes(r => r.Diaries, d => d.Resources)
+                        .InSingleAsync(id);
+        }
+
         public override async Task<List<ResourceModel>> GetListAsync()
         {
             var resources = await base.Context.Queryable<ResourceModel>().ToListAsync();

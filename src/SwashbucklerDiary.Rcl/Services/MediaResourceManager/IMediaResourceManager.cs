@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Rcl.Services
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        Task<bool> SaveImageAsync(string url);
+        Task<bool> SaveFileAsync(string url);
 
         Task<AudioFileInfo> GetAudioFileInfo(string uri);
 

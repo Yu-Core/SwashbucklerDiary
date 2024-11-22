@@ -6,7 +6,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class AudioCard : MyComponentBase
+    public partial class AudioResourceCard : CardComponentBase<ResourceModel>
     {
         private bool isPlaying;
 
@@ -32,9 +32,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [CascadingParameter(Name = "IsDark")]
         public bool Dark { get; set; }
-
-        [Parameter]
-        public ResourceModel Value { get; set; } = default!;
 
         private double CurrentTime => seekingTime ?? currentTime;
 

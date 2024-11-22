@@ -65,7 +65,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected virtual async void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
-            if (thisPagePath != NavigationManager.GetAbsolutePath())
+            var currentPath = NavigationManager.GetAbsolutePath();
+            if (thisPagePath != currentPath)
             {
                 await StopRecordScrollInfo();
             }

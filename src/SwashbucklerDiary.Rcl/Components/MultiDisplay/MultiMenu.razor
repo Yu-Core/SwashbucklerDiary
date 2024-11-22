@@ -41,12 +41,16 @@
                Rounded="@("lg")"
                Bottom="true"
                Right="true"
+               OffsetX="MenuOffsetX"
+               NudgeBottom="@MenuNudgeBottom"
+               NudgeLeft="@MenuNudgeLeft"
+               MinWidth="150"
                Transition="scroll-x-reverse-transition">
             <ActivatorContent>
                 @ComputedActivatorContent
             </ActivatorContent>
             <ChildContent>
-                <MList MinWidth="150">
+                <MList>
                     @foreach (var item in DynamicListItems)
                     {
                         @if (item.Show)

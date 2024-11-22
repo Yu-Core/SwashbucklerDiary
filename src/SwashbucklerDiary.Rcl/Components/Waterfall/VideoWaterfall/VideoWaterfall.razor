@@ -3,9 +3,12 @@
 
 <div style="@($"{(contentLoading ? "opacity:0;":"")}")">
     <wc-waterfall @ref="elementReference" class="video-waterfall" gap="@Gap" cols="@Cols">
-        @foreach (var item in LoadedItems)
+        @foreach (var item in loadedItems)
         {
-            <video @key="item.ResourceUri" class="video-card rounded-lg" src="@item.ResourceUri" />
+            <VideoResourceCard @key="item.ResourceUri"
+                               Value="item"
+                               OnMenu="OpenMenu">
+            </VideoResourceCard>
         }
     </wc-waterfall>
 
@@ -27,3 +30,11 @@
 <EmptyResult Show="Value.Count == 0"
              Text="@(I18n.T("FileBrowse.Video.NoVideo"))">
 </EmptyResult>
+
+<MultiMenu @bind-Visible="showMenu"
+           DynamicListItems="menuItems"
+           ActivatorAttributes="menuActivatorAttributes"
+           MenuOffsetX
+           MenuNudgeLeft="52"
+           MenuNudgeBottom="24">
+</MultiMenu>

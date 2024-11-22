@@ -757,9 +757,6 @@
       "Desc": "名称-倒序"
     }
   },
-  "Image": {
-    "Not exist": "图片不存在"
-  },
   "FileBrowse": {
     "Image": {
       "Name": "图片",
@@ -776,7 +773,10 @@
       "NoVideo": "暂无视频"
     },
     "DeleteUnused": "删除未使用文件",
-    "ConfirmDeleteUnused": "确认删除未使用的文件？"
+    "ConfirmDeleteUnused": "确认删除未使用的文件？",
+    "Not exist": "文件不存在",
+    "ViewReferences": "查看引用",
+    "This file is not referenced": "此文件未被引用"
   },
   "PrivacyMode": {
     "Name": "隐私模式",

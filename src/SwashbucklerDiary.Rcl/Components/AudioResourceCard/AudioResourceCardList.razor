@@ -3,9 +3,12 @@
 
 <div>
     <div class="adaptive-card-container">
-        @foreach (var item in LoadedItems)
+        @foreach (var item in loadedItems)
         {
-            <AudioCard Value="item"></AudioCard>
+            <AudioResourceCard @key="item.ResourceUri"
+                       Value="item"
+                       OnMenu="OpenMenu">
+            </AudioResourceCard>
         }
     </div>
 
@@ -27,3 +30,11 @@
 <EmptyResult Show="Value.Count == 0"
              Text="@(I18n.T("FileBrowse.Audio.NoAudio"))">
 </EmptyResult>
+
+<MultiMenu @bind-Visible="showMenu"
+           DynamicListItems="menuItems"
+           ActivatorAttributes="menuActivatorAttributes"
+           MenuOffsetX
+           MenuNudgeLeft="52"
+           MenuNudgeBottom="24">
+</MultiMenu>

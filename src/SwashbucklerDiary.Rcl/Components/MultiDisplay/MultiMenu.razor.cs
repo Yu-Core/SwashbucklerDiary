@@ -26,6 +26,15 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public Dictionary<string, object> ActivatorAttributes { get; set; } = [];
 
+        [Parameter]
+        public bool MenuOffsetX { get; set; }
+
+        [Parameter]
+        public StringNumber? MenuNudgeLeft { get; set; }
+
+        [Parameter]
+        public StringNumber? MenuNudgeBottom { get; set; }
+
         public Dictionary<string, object> InternalActivatorAttributes
             => (IsDesktop ? mMenu?.ActivatorAttributes : mBottomSheetExtension?.ActivatorAttributes) ?? [];
 

@@ -39,7 +39,8 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
                     .UpdateProperty(it => it.ResourceUri, it =>
                     {
                         it.IsPrimarykey = true;
-                    });
+                    })
+                    .ManyToMany(it => it.Diaries, typeof(DiaryResourceModel), nameof(ResourceModel.ResourceUri), nameof(DiaryResourceModel.DiaryId));
 
                     column.IfTable<TagModel>()
                     .ManyToMany(it => it.Diaries, typeof(DiaryTagModel), nameof(DiaryTagModel.TagId), nameof(DiaryTagModel.DiaryId));

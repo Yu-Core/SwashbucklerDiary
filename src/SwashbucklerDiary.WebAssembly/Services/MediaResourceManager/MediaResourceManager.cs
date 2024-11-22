@@ -61,12 +61,12 @@ namespace SwashbucklerDiary.WebAssembly.Services
             }
             else
             {
-                await _popupServiceHelper.Error(_i18n.T("External images are not supported"));
+                await _popupServiceHelper.Error(_i18n.T("External files are not supported"));
                 return false;
             }
         }
 
-        public override async Task<bool> SaveImageAsync(string url)
+        public override async Task<bool> SaveFileAsync(string url)
         {
             if (IsStoredFile(url, out string filePath))
             {
@@ -75,7 +75,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
             }
             else
             {
-                await _popupServiceHelper.Error(_i18n.T("External images are not supported"));
+                await _popupServiceHelper.Error(_i18n.T("External files are not supported"));
                 return false;
             }
         }

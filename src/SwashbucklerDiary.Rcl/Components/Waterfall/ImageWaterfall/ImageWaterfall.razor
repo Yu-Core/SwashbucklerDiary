@@ -3,9 +3,12 @@
 
 <div style="@($"{(contentLoading ? "opacity:0;":"")}")">
     <wc-waterfall @ref="elementReference" gap="@Gap" cols="@Cols">
-        @foreach (var item in LoadedItems)
+        @foreach (var item in loadedItems)
         {
-            <img @key="item.ResourceUri" class="image-card rounded-lg" src="@item.ResourceUri" />
+            <ImageResourceCard @key="item.ResourceUri"
+                               Value="item"
+                               OnMenu="OpenMenu">
+            </ImageResourceCard>
         }
     </wc-waterfall>
 
@@ -31,3 +34,11 @@
 <PreviewImageDialog @bind-Visible="showPreviewImage"
                     Src="@previewImageSrc">
 </PreviewImageDialog>
+
+<MultiMenu @bind-Visible="showMenu"
+           DynamicListItems="menuItems"
+           ActivatorAttributes="menuActivatorAttributes"
+           MenuOffsetX
+           MenuNudgeLeft="52"
+           MenuNudgeBottom="24">
+</MultiMenu>

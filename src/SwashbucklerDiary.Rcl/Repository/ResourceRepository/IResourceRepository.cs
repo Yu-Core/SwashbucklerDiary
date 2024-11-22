@@ -6,5 +6,7 @@ namespace SwashbucklerDiary.Rcl.Repository
     public interface IResourceRepository : IBaseRepository<ResourceModel>
     {
         Task<(List<string?> currentUnusedResourceUris, List<string?> trulyUnusedResourceUris)> QueryUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> expression, bool privacyMode);
+
+        Task<ResourceModel> FindIncludesAsync(string id);
     }
 }
