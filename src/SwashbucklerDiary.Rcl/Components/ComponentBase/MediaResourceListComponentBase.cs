@@ -114,7 +114,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             var resource = await ResourceService.FindIncludesAsync(SelectedItem.ResourceUri);
-            int count = resource.Diaries?.Count ?? 0;
+            int count = resource?.Diaries?.Count ?? 0;
             if (count < 1)
             {
                 await PopupServiceHelper.Info(I18n.T("FileBrowse.This file is not referenced"));
@@ -122,7 +122,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             else if (count == 1)
             {
-                var diary = resource.Diaries?.FirstOrDefault();
+                var diary = resource?.Diaries?.FirstOrDefault();
                 if (diary is not null)
                 {
                     To($"read/{diary.Id}");
