@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Maui.Essentials
 #if MACCATALYST || WINDOWS || TIZEN
         static readonly string[] imageFileExtensions = [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp", ".jfif"];
 #if MACCATALYST
-        static readonly string[] imageTypes = imageFileExtensions.Select(it => UTType.CreateFromExtension(it)?.Identifier ?? string.Empty).ToArray();
+        static readonly string[] imageTypes = [.. ConvertFileExtensionsToUTTypeIdentifiers(imageFileExtensions)];
 #elif WINDOWS
         static readonly string[] imageTypes = imageFileExtensions;
 #elif TIZEN

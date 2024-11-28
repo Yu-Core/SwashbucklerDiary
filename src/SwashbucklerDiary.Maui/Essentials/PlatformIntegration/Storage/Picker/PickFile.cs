@@ -90,5 +90,23 @@ namespace SwashbucklerDiary.Maui.Essentials
                 FileTypes = new(fileTypes)
             };
         }
+
+#if IOS || MACCATALYST
+        private static List<string> ConvertFileExtensionsToUTTypeIdentifiers(IEnumerable<string> fileExtensions)
+        {
+            var identifiers = new List<string>();
+            foreach (var ext in fileExtensions)
+            {
+                var trimmedExt = ext.TrimStart('.');
+                var identifier = UniformTypeIdentifiers.UTType.CreateFromExtension(trimmedExt)?.Identifier;
+                if (!string.IsNullOrEmpty(identifier))
+                {
+                    identifiers.Add(identifier);
+                }
+            }
+
+            return identifiers;
+        }
+#endif
     }
 }

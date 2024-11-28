@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Maui.Essentials
 #elif ANDROID || TIZEN
         static readonly string[] audioTypes = ["audio/mpeg", "audio/wav", "audio/mp4", "audio/ogg", "audio/aac", "audio/flac"];
 #elif MACCATALYST || IOS
-        static readonly string[] audioTypes = audioFileExtensions.Select(it => UTType.CreateFromExtension(it)?.Identifier ?? string.Empty).ToArray();
+        static readonly string[] audioTypes = [.. ConvertFileExtensionsToUTTypeIdentifiers(audioFileExtensions)];
 #endif
         public Task<string?> PickAudioAsync()
         {

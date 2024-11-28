@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Maui.Essentials
 #if MACCATALYST || WINDOWS || TIZEN
         static readonly string[] videoFileExtensions = [".mp4", ".m4v", ".mpg", ".mpeg", ".mp2", ".mov", ".avi", ".mkv", ".flv", ".gifv", ".qt"];
 #if MACCATALYST
-        static readonly string[] videoTypes = videoFileExtensions.Select(it => UTType.CreateFromExtension(it)?.Identifier ?? string.Empty).ToArray();
+        static readonly string[] videoTypes = [.. ConvertFileExtensionsToUTTypeIdentifiers(videoFileExtensions)];
 #elif WINDOWS
         static readonly string[] videoTypes = videoFileExtensions;
 #elif TIZEN
