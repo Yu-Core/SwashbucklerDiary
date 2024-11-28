@@ -57,5 +57,17 @@
 	<false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh-CN</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>swashbucklerdiary</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>swashbucklerdiary</string>
+				<string>xiakeriji</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

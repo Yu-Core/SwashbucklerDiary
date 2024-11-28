@@ -21,6 +21,17 @@ namespace SwashbucklerDiary.Maui.Layout
         {
             base.OnInitialized();
 
+#if IOS || MACCATALYST
+            if (AppLifecycle.ActivationArguments != null)
+            {
+                if (AppLifecycle.ActivationArguments.Kind == LaunchActivationKind.Scheme)
+                {
+                    HandleScheme(AppLifecycle.ActivationArguments);
+                }
+
+                AppLifecycle.ActivationArguments = null;
+            }
+#endif
             AppLifecycle.Activated += HandleActivated;
             VersionUpdataManager.AfterCheckFirstLaunch += CheckForUpdates;
         }
