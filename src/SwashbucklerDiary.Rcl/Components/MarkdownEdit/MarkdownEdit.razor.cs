@@ -77,7 +77,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (string.IsNullOrEmpty(Value))
             {
-                await Module.Focus(mMarkdown.Ref);
+                await Focus();
             }
 
             await mMarkdown.InsertValueAsync(value);
@@ -212,7 +212,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (Autofocus)
             {
-                await Module.Autofocus(mMarkdown.Ref);
+                await Module.FocusToEnd(mMarkdown.Ref);
             }
 
             if (OnAfter.HasDelegate)
@@ -310,6 +310,11 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             await InsertValueAsync(insertContent);
+        }
+
+        private async Task Focus()
+        {
+            await Module.Focus(mMarkdown.Ref);
         }
     }
 }

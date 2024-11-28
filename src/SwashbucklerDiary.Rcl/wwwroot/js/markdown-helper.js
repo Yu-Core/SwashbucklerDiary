@@ -3,10 +3,18 @@
 }
 
 export function focus(domRef) {
+    const vditor = domRef.Vditor.vditor;
+    const range = vditor[vditor.currentMode].range
+    if (range) {
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+
     domRef.Vditor.focus();
 }
 
-export function autofocus(domRef) {
+export function focusToEnd(domRef) {
     domRef.Vditor.focus();
     const focusElement = document.activeElement;
     let range = document.createRange();

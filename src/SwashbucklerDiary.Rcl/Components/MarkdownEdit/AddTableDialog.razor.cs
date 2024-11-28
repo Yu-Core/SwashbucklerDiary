@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System.Text;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -20,6 +21,15 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public EventCallback<string> OnOK { get; set; }
 
+        [Parameter]
+        public EventCallback OnClose { get; set; }
+
+        protected override async Task HandleOnCancel(MouseEventArgs _)
+        {
+            await Close();
+            await base.HandleOnCancel(_);
+        }
+
         private Task BeforeShowAddTable()
         {
             rows = defaultRows;
@@ -29,8 +39,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task HandleOnOK()
         {
+            await Close();
             await InternalVisibleChanged(false);
-            var md = CreateTableMd();
+            var md = CreateTableMd(rows, cols);
 
             if (OnOK.HasDelegate)
             {
@@ -38,11 +49,8 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        private string CreateTableMd()
+        private static string CreateTableMd(int rows, int cols)
         {
-            int rows = this.rows; // 行数
-            int cols = this.cols; // 列数
-
             // 生成表格
             StringBuilder markdownTable = new StringBuilder();
 
@@ -72,6 +80,19 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             return $"\n{markdownTable}\n\n";
+        }
+
+        private async Task HandleOnOutsideClick()
+        {
+            await Close();
+        }
+
+        private async Task Close()
+        {
+            if (OnClose.HasDelegate)
+            {
+                await OnClose.InvokeAsync();
+            }
         }
     }
 }

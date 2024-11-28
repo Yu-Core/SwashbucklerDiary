@@ -13,6 +13,7 @@
     </MMarkdown>
     <InputFile @ref="inputFile" style="display:none;" OnChange="LoadFiles"></InputFile>
     <AddTableDialog @bind-Visible="showAddTable"
-                    OnOK="InsertValueAsync">
+                    OnOK="InsertValueAsync"
+                    OnClose="Focus">
     </AddTableDialog>
 </div>

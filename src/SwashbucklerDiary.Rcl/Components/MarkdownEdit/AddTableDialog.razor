@@ -5,10 +5,13 @@
                   MyValueChanged="InternalVisibleChanged"
                   ContentClass="rounded-lg"
                   MaxWidth="420"
-                  OnBeforeShowContent="BeforeShowAddTable">
+                  OnBeforeShowContent="BeforeShowAddTable"
+                  DisableAutoFocus
+                  OnMousedownPreventDefault
+                  OnOutsideClick="HandleOnOutsideClick">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @I18n.T("AddTable");
+            @I18n.T("AddTable")
             <MSpacer></MSpacer>
             <MButton Icon
                      OnClick="HandleOnCancel">
@@ -21,6 +24,7 @@
                     <MTextField @bind-Value="rows"
                                 Type="number"
                                 Dense
+                                Autofocus
                                 HideDetails="@("auto")"
                                 spellcheck="false"
                                 NumberProps="@(prop => { prop.Min = minRows; })"
