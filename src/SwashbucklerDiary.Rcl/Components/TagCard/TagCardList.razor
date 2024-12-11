@@ -34,21 +34,21 @@
              Text="@(I18n.T("Tag.NoTag"))">
 </EmptyResult>
 
-<InputDialog @bind-Visible="ShowRename"
+<InputDialog @bind-Visible="showRename"
              Text="@(SelectedItem.Name)"
              Title="@(I18n.T("Tag.Rename"))"
              Placeholder="@(I18n.T("Tag.Placeholder"))"
              OnOK="ConfirmRename">
 </InputDialog>
 
-<DeleteDialog @bind-Visible="ShowDelete"
+<DeleteDialog @bind-Visible="showDelete"
               Title="@(I18n.T("Tag.Delete.Title"))"
               Content="@(I18n.T("Tag.Delete.Content"))"
               OnOK="ConfirmDelete">
 </DeleteDialog>
 
-<ExportDialog @bind-Visible="ShowExport"
-              Value="ExportDiaries">
+<ExportDialog @bind-Visible="showExport"
+              Value="exportDiaries">
 </ExportDialog>
 
 <RadioDialog @bind-Value="SortItem"

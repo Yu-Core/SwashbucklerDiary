@@ -7,17 +7,17 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class TagCardList : CardListComponentBase<TagModel>
     {
-        private bool ShowDelete;
+        private bool showDelete;
 
-        private bool ShowRename;
+        private bool showRename;
 
-        private bool ShowExport;
+        private bool showExport;
 
         private readonly TagCardListOptions options = new();
 
-        private List<DiaryModel> ExportDiaries = [];
+        private List<DiaryModel> exportDiaries = [];
 
-        private Dictionary<Guid, int> TagsDiaryCount = [];
+        private Dictionary<Guid, int> tagsDiaryCount = [];
 
         [Inject]
         private ITagService TagService { get; set; } = default!;
@@ -28,10 +28,6 @@ namespace SwashbucklerDiary.Rcl.Components
             get => GetValue<List<DiaryModel>>() ?? [];
             set => SetValue(value);
         }
-
-        [Parameter]
-        public EventCallback<List<DiaryModel>> DiariesChanged { get; set; }
-
 
         protected override void OnInitialized()
         {
@@ -56,7 +52,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             watcher.Watch<List<DiaryModel>>(nameof(Diaries), async () =>
             {
-                TagsDiaryCount = await TagService.TagsDiaryCount();
+                tagsDiaryCount = await TagService.TagsDiaryCount();
                 UpdateInternalValue();
                 options.NotifyDiariesChanged();
             }, immediate: true);
@@ -64,7 +60,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task ConfirmDelete()
         {
-            ShowDelete = false;
+            showDelete = false;
             bool flag = await TagService.DeleteAsync(SelectedItem);
             if (flag)
             {
@@ -82,7 +78,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task ConfirmRename(string tagName)
         {
-            ShowRename = false;
+            showRename = false;
             if (string.IsNullOrWhiteSpace(tagName))
             {
                 return;
@@ -131,12 +127,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void Rename()
         {
-            ShowRename = true;
+            showRename = true;
         }
 
         private void Delete()
         {
-            ShowDelete = true;
+            showDelete = true;
         }
 
         private async Task Export()
@@ -149,8 +145,8 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            ExportDiaries = diaries;
-            ShowExport = true;
+            exportDiaries = diaries;
+            showExport = true;
         }
 
         private async Task SortChanged(string value)
@@ -160,7 +156,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private int CalcDiaryCount(TagModel tag)
         {
-            if (TagsDiaryCount.TryGetValue(tag.Id, out var count))
+            if (tagsDiaryCount.TryGetValue(tag.Id, out var count))
             {
                 return count;
             }
