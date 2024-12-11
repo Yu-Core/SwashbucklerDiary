@@ -40,7 +40,7 @@
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 
-		<DefaultLanguage>zh-CN</DefaultLanguage>
+		<DefaultLanguage>en-US</DefaultLanguage>
 
 	</PropertyGroup>
 
@@ -132,17 +132,9 @@
 		<BundleResource Include="Platforms\iOS\Resources\**" TargetPath="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
-	<PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
-		<IPhoneResourcePrefix>Platforms/iOS/Resources</IPhoneResourcePrefix>
-	</PropertyGroup>
-
 	<ItemGroup Condition="$(TargetFramework.Contains('-maccatalyst'))">
 		<BundleResource Include="Platforms\MacCatalyst\Resources\**" TargetPath="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
-
-	<PropertyGroup Condition="$(TargetFramework.Contains('-maccatalyst'))">
-		<IPhoneResourcePrefix>Platforms/MacCatalyst/Resources</IPhoneResourcePrefix>
-	</PropertyGroup>
 
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net9.0-android')) != true AND $(TargetFramework.StartsWith('net9.0-ios')) != true">
 		<Content Remove="wwwroot\css\status-bar-and-navigation-bar.css" />
