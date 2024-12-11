@@ -47,6 +47,24 @@
 
             <MDivider Class="mx-5"></MDivider>
 
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-map-marker-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.DiaryCard.Location.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="diaryCardLocation"
+                                   SettingKey="@nameof(Setting.DiaryCardLocation)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
             <MListItem OnClick="@(()=>showDiaryCardTimeFormat=true)">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">

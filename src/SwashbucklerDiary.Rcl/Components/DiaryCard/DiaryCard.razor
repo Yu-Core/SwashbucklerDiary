@@ -63,5 +63,12 @@
             </div>
         </div>
     }
-
+    @if (!string.IsNullOrEmpty(Value.Location))
+    {
+        <div class="diary-card__location">
+            <DiaryInfoButton Icon="mdi-map-marker-outline"
+                             Text="@(Value.Location)">
+            </DiaryInfoButton>
+        </div>
+    }
 </div>

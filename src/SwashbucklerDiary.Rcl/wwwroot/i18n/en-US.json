@@ -405,6 +405,10 @@
           "Name": "Tags",
           "Path": "Setting / Diary card / Card tags"
         },
+        "Location": {
+          "Name": "Location",
+          "Path": "Setting / Diary card / Location"
+        },
         "TimeFormat": {
           "Name": "Time format",
           "Path": "Setting / Diary card / Time format"

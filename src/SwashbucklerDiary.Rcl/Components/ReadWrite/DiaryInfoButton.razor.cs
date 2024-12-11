@@ -18,6 +18,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         bool ReadOnly => !OnClick.HasDelegate;
 
-        string InternalClass => $"{Class} text--secondary{(ReadOnly ? " m-btn--readonly" : "")}";
+        string InternalClass => $"{Class} diary-info-btn text--secondary{(ReadOnly ? " m-btn--readonly" : "")}";
     }
 }

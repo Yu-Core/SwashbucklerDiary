@@ -240,6 +240,10 @@ html {
     display: none;
 }
 
+.diary-card-list__location--hidden .diary-card__location {
+    display: none;
+}
+
 .my-scroll-container {
     overflow-y: auto !important;
     position: relative !important;
@@ -635,3 +639,18 @@ html.m-overlay-scroll-blocked {
 .md-preview__outline {
     height: calc(100vh - 64px - 20px - 24px);
 }
+
+.diary-info-btn {
+    max-width: 100%;
+}
+
+.diary-info-btn .m-btn__content {
+    max-width: 100%;
+}
+
+    .diary-info-btn .m-btn__content span {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }

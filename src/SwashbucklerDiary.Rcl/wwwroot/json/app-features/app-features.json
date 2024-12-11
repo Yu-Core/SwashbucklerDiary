@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "Name": "User.Title",
     "Icon": "mdi-account-cog-outline",
@@ -260,9 +260,15 @@
     "Href": "diaryCardSetting"
   },
   {
-    "Name": "Setting.Display.DiaryCard.TimeFormat.Name",
-    "Icon": "mdi-calendar-clock",
-    "Path": "Setting.Display.DiaryCard.TimeFormat.Path",
+    "Name": "Setting.Display.DiaryCard.Tags.Name",
+    "Icon": "mdi-label-outline",
+    "Path": "Setting.Display.DiaryCard.Tags.Path",
+    "Href": "diaryCardSetting"
+  },
+  {
+    "Name": "Setting.Display.DiaryCard.Location.Name",
+    "Icon": "mdi-map-marker-outline",
+    "Path": "Setting.Display.DiaryCard.Location.Path",
     "Href": "diaryCardSetting"
   },
   {

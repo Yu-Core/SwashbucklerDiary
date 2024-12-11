@@ -43,5 +43,6 @@
         public bool AutoPlay { get; set; }
         public bool Outline { get; set; }
         public bool RigthOutline { get; set; }
+        public bool DiaryCardLocation { get; set; }
     }
 }

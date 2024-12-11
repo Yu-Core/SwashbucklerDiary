@@ -19,6 +19,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool showTags;
 
+        private bool showLocation;
+
         private bool privacyMode;
 
         private List<DiaryModel> exportDiaries = [];
@@ -65,6 +67,7 @@ namespace SwashbucklerDiary.Rcl.Components
             showSetPrivacy = SettingService.Get(s => s.SetPrivacyDiary);
             showIcon = SettingService.Get(s => s.DiaryCardIcon);
             showTags = SettingService.Get(s => s.DiaryCardTags);
+            showLocation = SettingService.Get(s => s.DiaryCardLocation);
             options.TimeFormat = SettingService.Get(s => s.DiaryCardTimeFormat);
             var diarySort = SettingService.Get(s => s.DiarySort);
             if (!string.IsNullOrEmpty(diarySort))
@@ -77,7 +80,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private float ItemHeight => MasaBlazorHelper.Breakpoint.Xs ? 156.8f : (MasaBlazorHelper.Breakpoint.Sm ? 164.8f : 172.8f);
 
-        private string? InternalClass => $"card-list__main {(showMenu ? "card-list__menu--active " : "")}{(showIcon ? "" : "diary-card-list__icon--hidden ")}{(showTags ? "" : "diary-card-list__tags--hidden")}";
+        private string? InternalClass => $"card-list__main" +
+            (showMenu ? " card-list__menu--active" : "") +
+            (showIcon ? "" : " diary-card-list__icon--hidden") +
+            (showTags ? "" : " diary-card-list__tags--hidden") +
+            (showLocation ? "" : " diary-card-list__location--hidden");
 
         private List<TagModel> SelectedTags
         {
