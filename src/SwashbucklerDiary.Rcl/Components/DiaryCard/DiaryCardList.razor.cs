@@ -226,7 +226,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             else
             {
-                text = $"swashbucklerdiary://read/{SelectedItem.Id}";
+                text = $"{SchemeConstants.SwashbucklerDiary}://read/{SelectedItem.Id}";
             }
 
             await PlatformIntegration.SetClipboard(text);

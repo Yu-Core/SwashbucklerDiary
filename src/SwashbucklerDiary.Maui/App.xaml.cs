@@ -18,10 +18,13 @@ namespace SwashbucklerDiary.Maui
 
         private readonly Masa.Blazor.MasaBlazor _masaBlazor;
 
+        private readonly II18nService _i18n;
+
         public App(IAppLifecycle appLifecycle,
             INavigateController navigateController,
             IThemeService themeService,
-            Masa.Blazor.MasaBlazor masaBlazor)
+            Masa.Blazor.MasaBlazor masaBlazor,
+            II18nService i18n)
         {
             InitializeComponent();
 
@@ -29,7 +32,9 @@ namespace SwashbucklerDiary.Maui
             _navigateController = navigateController;
             _masaBlazor = masaBlazor;
             _appLifecycle = appLifecycle;
+            _i18n = i18n;
             InitTheme();
+            InitAppActions();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
@@ -65,6 +70,15 @@ namespace SwashbucklerDiary.Maui
         {
             _masaBlazor.SetTheme(theme == Theme.Dark);
             TitleBarOrStatusBar.SetTitleBarOrStatusBar(theme);
+        }
+
+        private void InitAppActions()
+        {
+            AppActionsHelper.AddAppActions(_i18n);
+            _i18n.OnChanged += _ =>
+            {
+                AppActionsHelper.AddAppActions(_i18n);
+            };
         }
     }
 }

@@ -2,6 +2,7 @@
 using MauiBlazorToolkit.Extensions;
 using Microsoft.AspNetCore.Components.WebView.Maui;
 using SwashbucklerDiary.Maui.BlazorWebView;
+using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Maui.Extensions;
 
 namespace SwashbucklerDiary.Maui
@@ -24,8 +25,12 @@ namespace SwashbucklerDiary.Maui
                 })
                 .ConfigureEssentials(essentials =>
                 {
-                    essentials.UseVersionTracking();
-                }); ;
+                    essentials.UseVersionTracking()
+#if !WINDOWS
+                              .OnAppAction(AppActionsHelper.HandleAppActions)
+#endif
+                              ;
+                });
 
             builder.Services.AddMauiBlazorWebView();
 

@@ -7,12 +7,12 @@ namespace SwashbucklerDiary.Maui.Essentials
 {
     public static partial class LaunchActivation
     {
-        public static void HandleOnLaunched(Intent intent)
+        public static void OnLaunched(Intent intent)
         {
             ActivationArguments = ConvertActivationArguments(intent);
         }
 
-        public static void OnApplicationActivated(Intent intent)
+        public static void OnActivated(Intent intent)
         {
             var activationArguments = ConvertActivationArguments(intent);
             Activated?.Invoke(activationArguments);

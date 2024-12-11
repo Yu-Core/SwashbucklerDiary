@@ -11,7 +11,8 @@ namespace SwashbucklerDiary.Maui
 
         private readonly INavigateController _navigateController;
 
-        public MainPage(Color backgroundColor, INavigateController navigateController)
+        public MainPage(Color backgroundColor,
+            INavigateController navigateController)
         {
             InitializeComponent();
 

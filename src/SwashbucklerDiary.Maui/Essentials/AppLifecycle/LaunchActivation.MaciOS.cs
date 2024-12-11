@@ -1,18 +1,17 @@
-using Foundation;
-using SwashbucklerDiary.Maui.Extensions;
+﻿using Foundation;
 using SwashbucklerDiary.Rcl.Essentials;
-using System.Reflection;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
     public static partial class LaunchActivation
     {
-        public static void HandleOnLaunched(NSUrl nSUrl)
+        public static void OnLaunched(NSUrl nSUrl)
         {
             ActivationArguments = ConvertActivationArguments(nSUrl);
         }
 
-        public static void OnApplicationActivated(NSUrl nSUrl)
+        public static void OnActivated(NSUrl nSUrl)
         {
             var activationArguments = ConvertActivationArguments(nSUrl);
             Activated?.Invoke(activationArguments);
@@ -21,7 +20,8 @@ namespace SwashbucklerDiary.Maui.Essentials
         private static ActivationArguments ConvertActivationArguments(NSUrl nSUrl)
         {
             var urlString = nSUrl.ToString();
-            if(urlString.StartsWith("swashbucklerdiary")||urlString.StartsWith("xiakeriji")){
+            if (SchemeConstants.Schemes.Any(urlString.StartsWith))
+            {
                 return HandleScheme(nSUrl);
             }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Windows.AppLifecycle;
 using SwashbucklerDiary.Rcl.Essentials;
 using System.Diagnostics;
+using System.Reflection;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer;
 
@@ -8,7 +9,7 @@ namespace SwashbucklerDiary.Maui.Essentials
 {
     public static partial class LaunchActivation
     {
-        public static async Task HandleOnLaunchedAsync()
+        public static async Task OnLaunchedAsync()
         {
             var activatedArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
             var mainInstance = AppInstance.FindOrRegisterForKey("main");
@@ -20,11 +21,11 @@ namespace SwashbucklerDiary.Maui.Essentials
                 return;
             }
 
+            mainInstance.Activated += OnActivated;
             ActivationArguments = await ConvertActivationArguments(activatedArgs);
-            AppInstance.GetCurrent().Activated += OnApplicationActivated;
         }
 
-        private static async void OnApplicationActivated(object? sender, AppActivationArguments args)
+        private static async void OnActivated(object? sender, AppActivationArguments args)
         {
             var activationArguments = await ConvertActivationArguments(args);
             Activated?.Invoke(activationArguments);
@@ -36,7 +37,8 @@ namespace SwashbucklerDiary.Maui.Essentials
             {
                 ExtendedActivationKind.Protocol => HandleScheme((ProtocolActivatedEventArgs)args.Data),
                 ExtendedActivationKind.ShareTarget => HandleShare((ShareTargetActivatedEventArgs)args.Data),
-                _ => ValueTask.FromResult(new ActivationArguments() { Kind = LaunchActivationKind.Launch })
+                ExtendedActivationKind.Launch => HandleLaunch((LaunchActivatedEventArgs)args.Data),
+                _ => NewLaunchActivationArguments()
             };
         }
 
@@ -110,6 +112,40 @@ namespace SwashbucklerDiary.Maui.Essentials
             }
 
             return activationArguments;
+        }
+
+        private static ValueTask<ActivationArguments> HandleLaunch(LaunchActivatedEventArgs args)
+        {
+            var id = ArgumentsToId(args.Arguments);
+            if (!string.IsNullOrEmpty(id))
+            {
+                return HandleAppActions(id);
+            }
+
+            return NewLaunchActivationArguments();
+        }
+
+        private static ValueTask<ActivationArguments> NewLaunchActivationArguments()
+            => ValueTask.FromResult(new ActivationArguments() { Kind = LaunchActivationKind.Launch });
+
+        private static async ValueTask<ActivationArguments> HandleAppActions(string id)
+        {
+            var activationArguments = await AppActionsHelper.ConvertActivationArguments(id);
+            if (activationArguments is not null)
+            {
+                return activationArguments;
+            }
+            else
+            {
+                return await NewLaunchActivationArguments();
+            }
+        }
+
+        private readonly static MethodInfo ArgumentsToIdMethod = typeof(AppActionsExtensions).GetMethod("ArgumentsToId", BindingFlags.NonPublic | BindingFlags.Static)
+            ?? throw new Exception("Method ArgumentsToId does not exist");
+        static string? ArgumentsToId(string arguments)
+        {
+            return ArgumentsToIdMethod.Invoke(null, [arguments]) as string;
         }
     }
 }

@@ -13,11 +13,11 @@ namespace SwashbucklerDiary.Maui
         {
             if (LaunchActivation.Activated is null)
             {
-                LaunchActivation.HandleOnLaunched(url);
+                LaunchActivation.OnLaunched(url);
             }
             else
             {
-                LaunchActivation.OnApplicationActivated(url);
+                LaunchActivation.OnActivated(url);
             }
 
             return true;

@@ -8,8 +8,6 @@ namespace SwashbucklerDiary.Rcl.Pages
     {
         private StringNumber? scheme;
 
-        private readonly string[] schemes = ["swashbucklerdiary", "xiakeriji"];
-
         private List<UrlScheme> urlSchemes = [];
 
         protected override async Task OnInitializedAsync()

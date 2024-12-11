@@ -309,7 +309,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             else
             {
-                text = $"swashbucklerdiary://read/{Id}";
+                text = $"{SchemeConstants.SwashbucklerDiary}://read/{Id}";
             }
 
             await PlatformIntegration.SetClipboard(text);

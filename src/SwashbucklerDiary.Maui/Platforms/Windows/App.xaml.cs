@@ -24,7 +24,8 @@ namespace SwashbucklerDiary.Maui.WinUI
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            await LaunchActivation.HandleOnLaunchedAsync();
+            await LaunchActivation.OnLaunchedAsync();
+
             base.OnLaunched(args);
         }
     }

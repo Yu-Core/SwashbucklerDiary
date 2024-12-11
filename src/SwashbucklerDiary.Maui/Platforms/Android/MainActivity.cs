@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Views;
 using AndroidX.Activity;
 using SwashbucklerDiary.Maui.Essentials;
+using SwashbucklerDiary.Shared;
 using Intent = Android.Content.Intent;
 
 namespace SwashbucklerDiary.Maui
@@ -12,16 +13,15 @@ namespace SwashbucklerDiary.Maui
 #pragma warning disable CA1416
     [IntentFilter([Intent.ActionView],
         Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
-        DataScheme = "swashbucklerdiary")]
-    [IntentFilter([Intent.ActionView],
-        Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
-        DataScheme = "xiakeriji")]
+        DataSchemes = [SchemeConstants.SwashbucklerDiary, SchemeConstants.XiaKeRiJi])]
     [IntentFilter([Intent.ActionSend],
         Categories = [Intent.CategoryDefault],
         DataMimeType = "text/plain")]
     [IntentFilter([Intent.ActionSend, Intent.ActionSendMultiple],
         Categories = [Intent.CategoryDefault],
         DataMimeTypes = ["image/*", "audio/*", "video/*"])]
+    [IntentFilter([Platform.Intent.ActionAppAction],
+        Categories = [Intent.CategoryDefault])]
     [Activity(Label = "@string/app_name",
         Theme = "@style/Maui.SplashTheme",
         MainLauncher = true,
@@ -46,16 +46,18 @@ namespace SwashbucklerDiary.Maui
             }
 
             base.OnCreate(savedInstanceState);
-            LaunchActivation.HandleOnLaunched(this.Intent);
+            LaunchActivation.OnLaunched(this.Intent);
             SoftKeyboardAdjustResize.AssistActivity(this);
             SoftKeyboardAdjustResizeHelper.InitBackgroundColor(this);
+            Platform.OnNewIntent(this.Intent);
         }
 
         protected override void OnNewIntent(Intent intent)
         {
             base.OnNewIntent(intent);
 
-            LaunchActivation.OnApplicationActivated(intent);
+            LaunchActivation.OnActivated(intent);
+            Platform.OnNewIntent(intent);
         }
     }
 }
