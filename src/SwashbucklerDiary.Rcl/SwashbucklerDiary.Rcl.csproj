@@ -9,16 +9,16 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="ClosedXML" Version="0.104.2" />
-		<PackageReference Include="Masa.Blazor" Version="1.8.0-rc.4" />
+		<PackageReference Include="Masa.Blazor" Version="1.8.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.*" />
 		<PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.2.2" />
 		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.*" />
 		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.*" />
-		<PackageReference Include="Serilog" Version="4.1.0" />
-		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+		<PackageReference Include="Serilog" Version="4.2.0" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0" />
 		<PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.10" />
-		<PackageReference Include="SqlSugarCoreNoDrive" Version="5.1.4.170" />
+		<PackageReference Include="SqlSugarCoreNoDrive" Version="5.1.4.171" />
 		<PackageReference Include="System.Private.Uri" Version="4.3.2" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
 	</ItemGroup>
