@@ -105,10 +105,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 exp = exp.And(expSearch);
 
                 Expression<Func<AppFeatures, bool>> expPlatform
-                    = it => it.HidePlatforms == null
-                    || !it.HidePlatforms.Contains(PlatformIntegration.CurrentPlatform.ToString());
+                    = it => FilterPlatform(it);
                 exp = exp.And(expPlatform);
-
                 Expression<Func<AppFeatures, bool>> expBreakpoint
                     = it => it.HideBreakpoints == null
                     || !it.HideBreakpoints.Contains(MasaBlazorHelper.Breakpoint.Name.ToString());
@@ -137,6 +135,61 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             SettingService.SetTemp(s => s.AllowEnterPrivacyMode, true);
             To("privacyMode");
+        }
+
+        static bool FilterPlatform(AppFeatures appFeatures)
+        {
+            if (appFeatures.HidePlatforms is not null)
+            {
+                foreach (var item in appFeatures.HidePlatforms)
+                {
+                    var platform = item.Platform;
+                    if (string.IsNullOrEmpty(platform)) continue;
+
+                    var version = item.Version;
+                    if (version is null)
+                    {
+                        if (OperatingSystem.IsOSPlatform(platform))
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (OperatingSystem.IsOSPlatformVersionAtLeast(platform, version.Major, version.Minor, version.Build, version.Revision))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            if (appFeatures.DisplayPlatforms is not null)
+            {
+                foreach (var item in appFeatures.DisplayPlatforms)
+                {
+                    var platform = item.Platform;
+                    if (string.IsNullOrEmpty(platform)) continue;
+
+                    var version = item.Version;
+                    if (version is null)
+                    {
+                        if (!OperatingSystem.IsOSPlatform(platform))
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (!OperatingSystem.IsOSPlatformVersionAtLeast(platform, version.Major, version.Minor, version.Build, version.Revision))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }
