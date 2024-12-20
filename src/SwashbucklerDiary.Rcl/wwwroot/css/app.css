@@ -598,7 +598,10 @@ html.m-overlay-scroll-blocked {
     width: 100%;
 }
 
-.task-list-line-through .vditor-task:has(> input[type="checkbox"][checked]),
+.task-list-line-through .vditor-task:has(> input[type="checkbox"][checked]) {
+    text-decoration-line: line-through;
+}
+
 .task-list-line-through .vditor-task--done {
     text-decoration-line: line-through;
 }
@@ -609,7 +612,7 @@ html.m-overlay-scroll-blocked {
 
 .flex-basic-space {
     flex-grow: 0;
-    flex-basis: content;
+    flex-basis: auto;
 }
 
 .m-list-item.rounded:before {
