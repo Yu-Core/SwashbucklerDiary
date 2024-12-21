@@ -1,4 +1,4 @@
-﻿using Android.Widget;
+using Android.Widget;
 using SwashbucklerDiary.Maui.Extensions;
 using static Android.Resource;
 using Activity = Android.App.Activity;
@@ -17,19 +17,19 @@ namespace SwashbucklerDiary.Maui
         Rect rect = new();
         View mChildOfContent;
 
-        public SoftKeyboardAdjustResize(Activity activity, bool edgeToEdge)
+        public SoftKeyboardAdjustResize(Activity activity, bool edgeToEdge = true)
         {
             _activity = activity;
             _edgeToEdge = edgeToEdge;
             mChildOfContent = _activity.FindViewById<FrameLayout>(Id.Content).GetChildAt(0);
-            mChildOfContent.ViewTreeObserver.GlobalLayout += (s, o) => PossiblyResizeChildOfContent();
+            mChildOfContent.ViewTreeObserver.GlobalLayout += (s, e) => PossiblyResizeChildOfContent();
             frameLayoutParams = (FrameLayout.LayoutParams)mChildOfContent?.LayoutParameters;
             SetBackgroundColor(Android.Graphics.Color.White);
         }
 
-        public static void AssistActivity(Activity activity, bool edgeToEdge = true)
+        public void OnStop()
         {
-            _ = new SoftKeyboardAdjustResize(activity, edgeToEdge);
+            mChildOfContent.RequestLayout();
         }
 
         void PossiblyResizeChildOfContent()

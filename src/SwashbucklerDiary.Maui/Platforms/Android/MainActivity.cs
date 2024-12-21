@@ -1,4 +1,4 @@
-﻿using Android.App;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
@@ -29,6 +29,8 @@ namespace SwashbucklerDiary.Maui
         LaunchMode = LaunchMode.SingleTask)]
     public class MainActivity : MauiAppCompatActivity
     {
+        private SoftKeyboardAdjustResize softKeyboardAdjustResize;
+
         public override bool DispatchKeyEvent(KeyEvent e)
             => NavigationButtonHandler.OnBackButtonPressed(e);
 
@@ -47,7 +49,7 @@ namespace SwashbucklerDiary.Maui
 
             base.OnCreate(savedInstanceState);
             LaunchActivation.OnLaunched(this.Intent);
-            SoftKeyboardAdjustResize.AssistActivity(this);
+            softKeyboardAdjustResize = new SoftKeyboardAdjustResize(this);
             SoftKeyboardAdjustResizeHelper.InitBackgroundColor(this);
             Platform.OnNewIntent(this.Intent);
         }
@@ -58,6 +60,13 @@ namespace SwashbucklerDiary.Maui
 
             LaunchActivation.OnActivated(intent);
             Platform.OnNewIntent(intent);
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+
+            softKeyboardAdjustResize.OnStop();
         }
     }
 }
