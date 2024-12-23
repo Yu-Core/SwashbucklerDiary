@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -278,16 +278,15 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (enableMarkdown)
             {
-                // vditor 每次输入会触发渲染，所以有1秒左右的防抖
-                // https://github.com/Vanessa219/vditor/issues/1307
-                // https://github.com/Vanessa219/vditor/issues/574
                 if (!background)
                 {
                     overlay = true;
                     await InvokeAsync(StateHasChanged);
                 }
 
-                await Task.Delay(800);
+                // https://github.com/Vanessa219/vditor/issues/1307
+                // https://github.com/Vanessa219/vditor/issues/574
+                await Task.Delay(120);
                 diary.Content = await markdownEdit.GetValueAsync();
 
                 if (!background)

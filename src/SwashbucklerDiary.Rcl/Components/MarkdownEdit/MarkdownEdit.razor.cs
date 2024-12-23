@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Logging;
@@ -200,6 +200,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "height", "100%" },
                 { "upload", upload },
                 { "outline", outline },
+                { "undoDelay", 120 }
             };
         }
 
