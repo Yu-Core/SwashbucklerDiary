@@ -1,4 +1,4 @@
-﻿@page "/sponsor"
+@page "/sponsor"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
@@ -70,14 +70,11 @@
                    Elevation="0"
                    Rounded="@("lg")">
                 <MList Class="dynamic-list-item-collection">
-                    @foreach (var item in sponsorInfos)
+                    @foreach (var item in sponsors)
                     {
                         <MListItem @key="item">
                             <MListItemContent>
-                                @item.Name
-                            </MListItemContent>
-                            <MListItemContent Style="flex:none;">
-                                @item.Amount
+                                @item
                             </MListItemContent>
                         </MListItem>
                     }

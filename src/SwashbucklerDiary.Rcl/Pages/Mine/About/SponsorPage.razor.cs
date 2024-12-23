@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 
@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private List<DynamicListItem> sponsorTypeListItems = [];
 
-        private List<SponsorInfo> sponsorInfos = [];
+        private List<string> sponsors = [];
 
         private readonly List<TabListItem> tabListItems =
         [
@@ -46,7 +46,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             sponsorTypeListItems = listItems;
 
-            sponsorInfos = await StaticWebAssets.ReadJsonAsync<List<SponsorInfo>>("json/sponsor/sponsor-list.json");
+            sponsors = await StaticWebAssets.ReadJsonAsync<List<string>>("json/sponsor/sponsor-list.json");
         }
     }
 }

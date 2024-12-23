@@ -1,41 +1,43 @@
-﻿# Update Announcement
+# Update Announcement
 
 [toc]
 
-Hello, knights
+Hello everyone.
 
-Thank you to several heroes such as **俊, 小睡侠, 流浪者, 无名侠客, **亮 for their donations and encouragement. Special thanks
+There isn't too much new content, so the main focus is on fixing bugs.The previously agreed template function has been postponed again, I will definitely do it next time.
 
-The development of the project cannot be separated from everyone's support. Interested friends can support it by [going to donate](sponsor)
+(Passerby A: Why does this author always procrastinate?🤣)
 
-This project has received its first PR submitted by other contributors, and we would like to express our special thanks to [Memoyu](https://github.com/Memoyu )
+Precautions for this update
 
-The focus of this issue is the update of privacy mode. Originally, privacy mode only supported diaries, but now it supports diaries, tags, files, locations, and more.
+* The original copy link was renamed as copy reference in order to redirect references between journals;The new copy link is for external redirection to the link used within the application.
 
 ## New addition
 
-* Desktop image preview supports mouse scroll zoom (from [Memoyu](https://github.com/Memoyu) the contribution)
-* Add table button to toolbar
-* Add audio and video auto play option [direct jump](diarySetting)
-* Desktop add outline option [direct jump](outlineSetting)
-* Privacy mode supports diary, tag, file, location [direct jump](privicyMode)
+* New Copy Link (renamed as Copy Reference)
+* Long press/right-click on the media file to view the diary using it
+* Add display position option to diary card [click to jump](diarCardSetting)
+* Support long press operations for apps (AppActions/shortcut)
+* MacOS client supports URL scheme
 
 ## Repair
 
-* Cannot add files in formats such as. flac. mkv. gifv
-* Clicking on the avatar incorrectly redirects to user settings
-* The pop-up verification containing the form has failed
-* The modification of displaying weather mood text did not take effect immediately in other pop ups
-* Incorrect cursor position after inserting media file
-* When in plain text mode, receiving files from shared sources generates an error message
-* After adding tags and locations, they are not immediately displayed
-* Export order error
-* When restoring a backup, the old avatar may not have been deleted
-* Incorrect writing to default settings during backup recovery
-* Local area network transmission sequence error
+* The setting of whether to display text when selecting weather and mood on the search page was changed but not saved
+* Privacy mode can be briefly accessed through a link and redirected
+* When the diary menu is open, another diary menu cannot be opened
+* Low version webview/browser has a few abnormal styles
+* Android client, Android 13 and above still loads when deselecting images/videos
+* When Android client video is full screen, the interface shakes
+* Occasionally, the interface height may be incorrect when the Android client video is in full screen mode
+* After the Android client software keyboard is folded, the interface height occasionally becomes incorrect
+* Windows client, the mouse cannot be dragged beyond the interface scrollbar
+* MacOS client cannot select files in the correct format
+* MacOS client localized application name invalid
 
 ## Optimization
 
-* Update the icons of some buttons in the toolbar
-* CSS styles related to the status bar take effect faster
-* Ignore settings that may affect security when backing up or restoring backups
+* When adding a table, the soft keyboard no longer collapses
+* Reduce the waiting time when saving a diary
+* Android client, better user experience when selecting images/videos for Android 13 and above
+* URLScheme from about moving to settings
+* Optimize diary card title extraction
