@@ -1,6 +1,6 @@
-﻿namespace SwashbucklerDiary.Rcl.Models
+namespace SwashbucklerDiary.Rcl.Models
 {
-    public class UrlScheme
+    public class UrlSchemePath
     {
         public string Name { get; set; } = string.Empty;
 

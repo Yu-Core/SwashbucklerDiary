@@ -1,13 +1,13 @@
-﻿@page "/urlScheme"
+@page "/urlScheme"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="UrlScheme"
+<MyAppBar Title="Url Scheme"
           OnClick="NavigateToBack">
 </MyAppBar>
 
 <ScrollContainer>
-    <MChipGroup @bind-Value="scheme"
+    <MChipGroup @bind-Value="UrlScheme"
                 Class="mb-2"
                 Mandatory>
         @foreach (var item in SchemeConstants.Schemes)
@@ -24,7 +24,7 @@
            Elevation="0"
            Rounded="@("lg")">
         <MList Class="dynamic-list-item-collection">
-            @foreach (var item in urlSchemes)
+            @foreach (var item in urlSchemePaths)
             {
                 <MListItem @key="item"
                            OnClick="()=>CopyAsync(item.Path)">
@@ -33,7 +33,7 @@
                             @(I18n.T(item.Name))
                         </MListItemTitle>
                         <MListItemSubtitle>
-                            @($"{scheme}://{item.Path}")
+                            @($"{UrlScheme}://{item.Path}")
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>

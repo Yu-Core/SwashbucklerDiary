@@ -1,4 +1,4 @@
-﻿{
+{
   "Share": {
     "OK": "确认",
     "Cancel": "取消",
@@ -270,9 +270,6 @@
       "Name": "日志文件",
       "Path": "关于 / 日志文件"
     },
-    "UrlScheme": {
-      "Path": "关于 / Url Scheme"
-    },
     "Sponsor": {
       "Name": "捐助我们",
       "Path": "关于 / 捐助我们",
@@ -483,6 +480,12 @@
       "StatisticsCard": {
         "Name": "统计卡片",
         "Path": "设置 / 统计卡片"
+      }
+    },
+    "Other": {
+      "Name": "其他",
+      "UrlScheme": {
+        "Path": "设置 / Url Scheme"
       }
     }
   },

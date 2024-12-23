@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
@@ -43,6 +43,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string? search;
 
         private string scrollContainerSelector = string.Empty;
+
+        private string? urlScheme;
 
         private DiaryModel diary = new();
 
@@ -104,6 +106,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             taskListLineThrough = SettingService.Get(s => s.TaskListLineThrough);
             outline = SettingService.Get(s => s.Outline);
             rightOutline = SettingService.Get(s => s.RigthOutline);
+            urlScheme = SettingService.Get(s => s.UrlScheme);
             privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
         }
 
@@ -309,7 +312,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             else
             {
-                text = $"{SchemeConstants.SwashbucklerDiary}://read/{Id}";
+                text = $"{urlScheme}://read/{Id}";
             }
 
             await PlatformIntegration.SetClipboard(text);

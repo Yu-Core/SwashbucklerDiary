@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -22,6 +22,8 @@ namespace SwashbucklerDiary.Rcl.Components
         private bool showLocation;
 
         private bool privacyMode;
+
+        private string? urlScheme;
 
         private List<DiaryModel> exportDiaries = [];
 
@@ -69,6 +71,7 @@ namespace SwashbucklerDiary.Rcl.Components
             showTags = SettingService.Get(s => s.DiaryCardTags);
             showLocation = SettingService.Get(s => s.DiaryCardLocation);
             options.TimeFormat = SettingService.Get(s => s.DiaryCardTimeFormat);
+            urlScheme = SettingService.Get(s => s.UrlScheme);
             var diarySort = SettingService.Get(s => s.DiarySort);
             if (!string.IsNullOrEmpty(diarySort))
             {
@@ -226,7 +229,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             else
             {
-                text = $"{SchemeConstants.SwashbucklerDiary}://read/{SelectedItem.Id}";
+                text = $"{urlScheme}://read/{SelectedItem.Id}";
             }
 
             await PlatformIntegration.SetClipboard(text);

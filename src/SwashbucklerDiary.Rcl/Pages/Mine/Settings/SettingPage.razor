@@ -1,9 +1,9 @@
-﻿@page "/setting"
+@page "/setting"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
 <MyAppBar Title="@(I18n.T("Mine.Settings"))"
-          OnClick="NavigateToBack">
+OnClick="NavigateToBack">
 </MyAppBar>
 
 <ScrollContainer>
@@ -12,8 +12,8 @@
     </div>
 
     <MCard Class="my-list-card"
-           Elevation="0"
-           Rounded="@("lg")">
+    Elevation="0"
+    Rounded="@("lg")">
         <MList>
             <MListItem OnClick="@(()=>To("permissionSetting"))">
                 <MListItemIcon>
@@ -57,8 +57,8 @@
     </div>
 
     <MCard Class="my-list-card"
-           Elevation="0"
-           Rounded="@("lg")">
+    Elevation="0"
+    Rounded="@("lg")">
         <MList>
             <MListItem OnClick="@(()=>To("indexSetting"))">
                 <MListItemIcon>
@@ -127,12 +127,40 @@
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="showStatisticsCard"
-                                   SettingKey="@nameof(Setting.StatisticsCard)">
+                    SettingKey="@nameof(Setting.StatisticsCard)">
                     </SettingSwitch>
                 </MListItemAction>
             </MListItem>
         </MList>
     </MCard>
+
+    @if (PlatformIntegration.CurrentPlatform != AppDevicePlatform.Browser)
+    {
+        <div class="text-h6 setting-title">
+            @(I18n.T("Setting.Other.Name"))
+        </div>
+
+        <MCard Class="my-list-card"
+               Elevation="0"
+               Rounded="@("lg")">
+            <MList>
+                <MListItem OnClick="@(()=>To("urlScheme"))">
+                    <MListItemIcon>
+                        <MIcon Class="evident-icon">
+                            mdi-link-variant
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        Url Scheme
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MIcon>mdi-chevron-right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+            </MList>
+        </MCard>
+    }
+    
 </ScrollContainer>
 
 <MDialogExtension @bind-MyValue="showClearCache"

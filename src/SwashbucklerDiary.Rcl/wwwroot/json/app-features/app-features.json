@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "Name": "User.Title",
     "Icon": "mdi-account-cog-outline",
@@ -279,6 +279,13 @@
     "HideBreakpoints": [ "Xs", "Sm" ]
   },
   {
+    "Name": "Url Scheme",
+    "Icon": "mdi-link-variant",
+    "Path": "Setting.Other.UrlScheme.Path",
+    "Href": "urlScheme",
+    "HidePlatforms": [ { "Platform": "Browser" } ]
+  },
+  {
     "Name": "About.SourceCode.Name",
     "Icon": "mdi-book-open-page-variant-outline",
     "Path": "About.SourceCode.Path",
@@ -313,13 +320,6 @@
     "Icon": "mdi-file-document-edit-outline",
     "Path": "About.LogFile.Path",
     "Href": "log"
-  },
-  {
-    "Name": "Url Scheme",
-    "Icon": "mdi-link-variant",
-    "Path": "About.UrlScheme.Path",
-    "Href": "urlScheme",
-    "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
     "Name": "About.Evaluation.Name",

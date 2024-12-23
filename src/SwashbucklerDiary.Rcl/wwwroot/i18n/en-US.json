@@ -1,4 +1,4 @@
-﻿{
+{
   "Share": {
     "OK": "OK",
     "Cancel": "Cancel",
@@ -270,9 +270,6 @@
       "Name": "Log file",
       "Path": "About / Log file"
     },
-    "UrlScheme": {
-      "Path": "About / Url Scheme"
-    },
     "Sponsor": {
       "Name": "Sponsor we",
       "Path": "About / Sponsor we",
@@ -483,6 +480,12 @@
       "StatisticsCard": {
         "Name": "Statistics card",
         "Path": "Setting / Statistics card"
+      }
+    },
+    "Other": {
+      "Name": "Other",
+      "UrlScheme": {
+        "Path": "Setting / Url Scheme"
       }
     }
   },

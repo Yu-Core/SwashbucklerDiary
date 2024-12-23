@@ -1,4 +1,6 @@
-﻿namespace SwashbucklerDiary.Rcl.Services
+using SwashbucklerDiary.Shared;
+
+namespace SwashbucklerDiary.Rcl.Services
 {
     public class Setting
     {
@@ -44,5 +46,6 @@
         public bool Outline { get; set; }
         public bool RigthOutline { get; set; }
         public bool DiaryCardLocation { get; set; }
+        public string UrlScheme { get; set; } = SchemeConstants.SwashbucklerDiary;
     }
 }

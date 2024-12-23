@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
@@ -49,19 +49,14 @@ namespace SwashbucklerDiary.Rcl.Pages
             viewLists =
             [
                 [
+                    new(this, "About.SourceCode.Name","mdi-book-open-page-variant-outline",() => showSourceCode = true),
                     new(this, "About.Agreement.Name","mdi-file-document-multiple-outline",() => To("user-agreement")),
                     new(this, "About.Privacy.Name","mdi-lock-outline",() => To("privacy-policy")),
-                ],
-                [
                     new(this, "About.Check for updates.Name","mdi-update",CheckForUpdates),
-                    new(this, "About.LogFile.Name","mdi-file-document-edit-outline",() => To("log")),
-                    new(this, "Url Scheme","mdi-link-variant",() => To("urlScheme"),()=>PlatformIntegration.CurrentPlatform != AppDevicePlatform.Browser),
                 ],
                 [
-                    new(this, "About.SourceCode.Name","mdi-book-open-page-variant-outline",() => showSourceCode = true),
                     new(this, "About.Related.Name","mdi-xml",() => To("relatedOSP")),
-                ],
-                [
+                    new(this, "About.LogFile.Name","mdi-file-document-edit-outline",() => To("log")),
                     new(this, "About.Evaluation.Name","mdi-star-outline",OpenAppDetails),
                     new(this, "About.Sponsor.Name","mdi-hand-heart-outline",()=>To("sponsor")),
                 ]
