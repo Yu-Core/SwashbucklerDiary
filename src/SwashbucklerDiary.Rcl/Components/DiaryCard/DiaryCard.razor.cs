@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -49,8 +49,8 @@ namespace SwashbucklerDiary.Rcl.Components
             if (previousValue != Value)
             {
                 previousValue = Value;
-                title = Value.ExtractTitle();
-                text = Value.ExtractText();
+                title = Value.GetDisplayTitle();
+                text = Value.GetDisplayContent(title?.Length ?? 0);
                 weatherIcon = string.IsNullOrWhiteSpace(Value.Weather) ? null : GlobalConfiguration.GetWeatherIcon(Value.Weather);
                 moodIcon = string.IsNullOrWhiteSpace(Value.Mood) ? null : GlobalConfiguration.GetMoodIcon(Value.Mood);
             }

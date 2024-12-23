@@ -1,9 +1,12 @@
-﻿using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Extensions
 {
     public static class DiaryModelExtensions
     {
+        const int maxDisplayTitleLength = 200;
+        const int maxDisplayContentLength = 2000;
+
         public static string CreateCopyContent(this DiaryModel diary)
         {
             if (string.IsNullOrEmpty(diary.Title))
@@ -14,7 +17,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
             return diary.Title + "\n" + diary.Content;
         }
 
-        public static string? ExtractTitle(this DiaryModel diary)
+        public static string? GetDisplayTitle(this DiaryModel diary)
         {
             if (!string.IsNullOrWhiteSpace(diary.Title))
             {
@@ -27,37 +30,33 @@ namespace SwashbucklerDiary.Rcl.Extensions
                     return string.Empty;
                 }
 
-                int index = ExtractTitleIndex(diary.Content);
-                if (index > -1)
+                int length = GetDisplayTitleLengthFromContent(diary.Content, maxDisplayTitleLength);
+                if (length > 0)
                 {
-                    return diary.Content.Substring(0, index + 1);
+                    return diary.Content.Substring(0, length);
                 }
                 else
                 {
-                    return SubText(diary.Content, 0, 200);
+                    return SubText(diary.Content, 0, maxDisplayTitleLength);
                 }
             }
         }
 
-        public static string? ExtractText(this DiaryModel diary)
+        public static string? GetDisplayContent(this DiaryModel diary, int displayTitleLength)
         {
             if (string.IsNullOrWhiteSpace(diary.Content))
             {
                 return string.Empty;
             }
 
-            string text = SubText(diary.Content, 0, 2000);
-            if (string.IsNullOrWhiteSpace(diary.Title))
+            int startIndex = 0;
+            if (string.IsNullOrWhiteSpace(diary.Title) && displayTitleLength < diary.Content.Length)
             {
-                int index = ExtractTitleIndex(diary.Content);
-                var subText = SubText(text, index + 1);
-                if (subText != string.Empty)
-                {
-                    return subText;
-                }
+                startIndex = displayTitleLength;
             }
 
-            return text;
+            string content = SubText(diary.Content, startIndex, maxDisplayContentLength);
+            return content;
         }
 
         public static int GetWordCount(this List<DiaryModel> diaries, WordCountStatistics type)
@@ -103,20 +102,21 @@ namespace SwashbucklerDiary.Rcl.Extensions
             return text.Substring(startIndex, endIndex - startIndex);
         }
 
-        private static int ExtractTitleIndex(string text)
+        private static int GetDisplayTitleLengthFromContent(string content, int maxLength)
         {
+            maxLength = Math.Min(content.Length, maxLength);
             char[] separators = [']', '。', '\n']; // 定义分隔符
-            int index = text.IndexOfAny(separators);
-            if (index == -1 || index == text.Length - 1)
+            int index = content.IndexOfAny(separators, 0, maxLength);
+            if (index == -1 || index == content.Length - 1)
             {
-                index = text.IndexOf(". ");
+                index = content.IndexOf(". ", 0, maxLength);
                 if (index > -1)
                 {
                     index++;
                 }
             }
 
-            return index != text.Length - 1 ? index : -1;
+            return (index != content.Length - 1 ? index : -1) + 1;
         }
     }
 }
