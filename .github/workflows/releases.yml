@@ -1,4 +1,4 @@
-﻿name: releases
+name: releases
 
 on:
   workflow_dispatch:
@@ -80,12 +80,13 @@ jobs:
         run: ren Releases/*Signed.apk ${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk
 
       # Update to Github Releases
-      - uses: ncipollo/release-action@v1
+      - uses: svenstaro/upload-release-action@v2
         with:
-          artifacts: 'Releases/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk'
-          token: ${{ github.token }}
-          name: ${{ env.APPLICATION_DISPLAY_VERSION }}
-          tag: 'v${{ env.APPLICATION_DISPLAY_VERSION }}'
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: Releases/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk
+          file_glob: true
+          release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
+          tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
           prerelease: true
 
       # Replace the version in Package.appxmanifest
@@ -110,12 +111,17 @@ jobs:
         run: msstore publish ${{ env.CSPROJ_PATH }} -i ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/AppPackages -id ${{ env.STORE_ID }}
 
   macOSAndiOS:
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
       # Checkout the code
       - uses: actions/checkout@v3
         with:
            fetch-depth: 0
+
+      # Update Xcode
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+           xcode-version: latest
 
       # Install .NET SDK
       - name: Setup .NET SDK
@@ -179,6 +185,7 @@ jobs:
           file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-arm64/publish/*.pkg
           file_glob: true
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
+          prerelease: true
 
       - name: Update maccatalyst-x64 to Github Releases
         uses: svenstaro/upload-release-action@v2
@@ -187,6 +194,7 @@ jobs:
           file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-x64/publish/*.pkg
           file_glob: true
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
+          prerelease: true
 
       - name: Update ios-arm64 to Github Releases
         uses: svenstaro/upload-release-action@v2
@@ -195,3 +203,4 @@ jobs:
           file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-ios/ios-arm64/publish/*.ipa
           file_glob: true
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
+          prerelease: true
