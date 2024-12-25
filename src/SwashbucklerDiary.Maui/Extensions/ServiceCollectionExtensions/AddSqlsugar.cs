@@ -1,4 +1,4 @@
-﻿using SqlSugar;
+using SqlSugar;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Diagnostics;
@@ -61,7 +61,11 @@ namespace SwashbucklerDiary.Maui.Extensions
                         ConnectionString = SQLiteConstants.ConnectionString,
                         InitKeyType = InitKeyType.Attribute,
                         IsAutoCloseConnection = true,
-                        ConfigureExternalServices =configureExternalServices
+                        ConfigureExternalServices =configureExternalServices,
+                        MoreSettings=new ConnMoreSettings()
+                        {
+                            IsNoReadXmlDescription=true
+                        }
                     },
                     new ConnectionConfig(){
                         ConfigId="1",
@@ -69,7 +73,11 @@ namespace SwashbucklerDiary.Maui.Extensions
                         ConnectionString = SQLiteConstants.PrivacyConnectionString,
                         InitKeyType = InitKeyType.Attribute,
                         IsAutoCloseConnection = true,
-                        ConfigureExternalServices =configureExternalServices
+                        ConfigureExternalServices =configureExternalServices,
+                        MoreSettings=new ConnMoreSettings()
+                        {
+                            IsNoReadXmlDescription=true
+                        }
                     }
                 };
             SqlSugarScope sqlSugar = new(configs

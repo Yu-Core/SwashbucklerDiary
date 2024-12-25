@@ -18,7 +18,7 @@
 		<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0" />
 		<PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.10" />
-		<PackageReference Include="SqlSugarCoreNoDrive" Version="5.1.4.171" />
+		<PackageReference Include="SqlSugarCoreNoDrive.Aot" Version="5.1.4.170" />
 		<PackageReference Include="System.Private.Uri" Version="4.3.2" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
 	</ItemGroup>
