@@ -1,4 +1,4 @@
-﻿<h1 align="center">Swashbuckler Diary</h1>
+<h1 align="center">Swashbuckler Diary</h1>
 
 <div align="center">
 
@@ -30,7 +30,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [Serilog](https://serilog.net/)
 
 ## 🚀 Download Channels
-- [![Microsoft Store](https://get.microsoft.com/images/en-US%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
+- [![Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
 - [GitHub Releases](https://github.com/Yu-Core/SwashbucklerDiary/releases)
 - [lanzou cloud](https://wwfc.lanzouj.com/b04q15i4j) ( Password: 1234 )
 - [Baidu Mobile Assistant](https://shouji.baidu.com/detail/5000042660?source=appbaidu)

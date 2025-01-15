@@ -1,4 +1,4 @@
-﻿<h1 align="center">侠客日记</h1>
+<h1 align="center">侠客日记</h1>
 
 <div align="center">
 
@@ -30,7 +30,7 @@
 - [Serilog](https://serilog.net/)
 
 ## 🚀 下载渠道
-- [![Microsoft 应用商店](https://get.microsoft.com/images/zh-CN%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
+- [![Microsoft 应用商店](https://get.microsoft.com/images/zh-cn%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
 - [GitHub 发行版](https://github.com/Yu-Core/SwashbucklerDiary/releases)
 - [蓝奏云](https://wwfc.lanzouj.com/b04q15i4j) （密码：1234）
 - [百度手机助手](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
