@@ -197,32 +197,35 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             tags = await TagService.QueryAsync();
 
-            if (DiaryId is null && TagId is not null)
+            if (DiaryId is not null || TagId is not Guid tagId)
             {
-                var tag = tags.Find(it => it.Id == TagId);
-                if (tag is not null)
-                {
-                    SelectedTags.Add(tag);
-                }
+                return;
             }
+
+            var tag = tags.Find(it => it.Id == tagId);
+            if (tag is null)
+            {
+                return;
+            }
+
+            SelectedTags.Add(tag);
         }
 
         private async Task InitDiary()
         {
-            if (DiaryId is null)
+            if (DiaryId is not Guid diaryId)
             {
                 return;
             }
 
             diaryEditMode = DiaryEditMode.Update;
-            var diary = await DiaryService.FindAsync((Guid)DiaryId);
+            var diary = await DiaryService.FindAsync(diaryId);
             if (diary is null)
             {
                 return;
             }
 
             this.diary = diary;
-            enableTitle = !string.IsNullOrEmpty(diary.Title);
         }
 
         private void InitCreateTime()
@@ -271,8 +274,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             _ = CreateTimer();
         }
-
-        private Task SaveDiaryAsync() => SaveDiaryAsync(false);
 
         private async Task SaveDiaryAsync(bool background)
         {
