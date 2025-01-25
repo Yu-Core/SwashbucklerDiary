@@ -216,7 +216,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task OnCopy()
         {
             var content = diary.CreateCopyContent();
-            await PlatformIntegration.SetClipboard(content);
+            await PlatformIntegration.SetClipboardAsync(content);
             await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
 
@@ -299,7 +299,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task CopyQuote()
         {
             var text = $"[{I18n.T("Read.DiaryLink")}](read/{Id})";
-            await PlatformIntegration.SetClipboard(text);
+            await PlatformIntegration.SetClipboardAsync(text);
             await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
 
@@ -315,7 +315,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 text = $"{urlScheme}://read/{Id}";
             }
 
-            await PlatformIntegration.SetClipboard(text);
+            await PlatformIntegration.SetClipboardAsync(text);
             await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
 

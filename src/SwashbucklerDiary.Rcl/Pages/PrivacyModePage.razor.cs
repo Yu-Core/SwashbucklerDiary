@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
@@ -87,7 +87,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string? PrivacyModeEntrancePasswordSetStateText
             => string.IsNullOrEmpty(privacyModeEntrancePassword) ? I18n.T("PrivacyMode.No password set") : I18n.T("PrivacyMode.Password has been set");
 
-        private async Task SwitchPrivacyMode()
+        private void SwitchPrivacyMode()
         {
             privacyMode = !privacyMode;
             SettingService.SetTemp(s => s.PrivacyMode, privacyMode);
@@ -96,13 +96,13 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 if (enablePrivacyModeDark)
                 {
-                    await ThemeService.SetThemeAsync(Theme.Dark);
+                    ThemeService.SetTheme(Theme.Dark);
                 }
             }
             else
             {
                 int theme = SettingService.Get(s => s.Theme);
-                await ThemeService.SetThemeAsync((Theme)theme);
+                ThemeService.SetTheme(theme);
             }
 
             To("");

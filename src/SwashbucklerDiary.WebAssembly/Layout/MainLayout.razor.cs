@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -52,8 +52,8 @@ namespace SwashbucklerDiary.WebAssembly.Layout
         {
             ThemeService.OnChanged += ThemeChanged;
             await SystemThemeJSModule.InitializedAsync();
-            var themeState = SettingService.Get(s => s.Theme);
-            await ThemeService.SetThemeAsync((Theme)themeState);
+            var theme = SettingService.Get(s => s.Theme);
+            ThemeService.SetTheme(theme);
         }
 
         private Task InitLanguageAsync()
@@ -65,7 +65,7 @@ namespace SwashbucklerDiary.WebAssembly.Layout
 
         private async Task InitVersionUpdateAsync()
         {
-            await ((VersionTracking)VersionTracking).Track(typeof(App).Assembly);
+            await ((VersionTracking)VersionTracking).Track();
             await VersionUpdataManager.HandleVersionUpdate();
         }
 

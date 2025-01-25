@@ -1,4 +1,4 @@
-﻿using Masa.Blazor.JSInterop;
+using Masa.Blazor.JSInterop;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Shared;
 
@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
     {
         public Theme SystemTheme { get; set; }
 
-        public event Func<Theme, Task>? SystemThemeChanged;
+        public event Action<Theme>? SystemThemeChanged;
 
         public SystemThemeJSModule(IJSRuntime js) : base(js, "./js/systemTheme.js")
         {
@@ -22,10 +22,10 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         }
 
         [JSInvokable]
-        public Task OnSystemThemeChanged(bool isDarkTheme)
+        public void OnSystemThemeChanged(bool isDarkTheme)
         {
             SystemTheme = isDarkTheme ? Theme.Dark : Theme.Light;
-            return SystemThemeChanged?.Invoke(SystemTheme) ?? Task.CompletedTask;
+            SystemThemeChanged?.Invoke(SystemTheme);
         }
     }
 }

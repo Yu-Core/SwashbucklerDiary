@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
@@ -18,16 +18,16 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             _ => Theme.Light
         };
 
-        public ThemeService(SystemThemeJSModule systemThemeJSModule) 
+        public ThemeService(SystemThemeJSModule systemThemeJSModule)
         {
             _systemThemeJSModule = systemThemeJSModule;
         }
 
-        public Task SetThemeAsync(Theme theme)
+        public void SetTheme(Theme theme)
         {
             if (_theme == theme)
             {
-                return Task.CompletedTask;
+                return;
             }
 
             //跟随系统主题改变
@@ -44,13 +44,11 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             _theme = theme;
 
             InternalNotifyStateChanged();
-            return Task.CompletedTask;
         }
 
-        private Task HandleAppThemeChanged(Theme theme)
+        private void HandleAppThemeChanged(Theme theme)
         {
             InternalNotifyStateChanged();
-            return Task.CompletedTask;
         }
 
         private void InternalNotifyStateChanged()

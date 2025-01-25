@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Essentials
 {
@@ -6,14 +6,14 @@ namespace SwashbucklerDiary.Rcl.Essentials
     {
         AppDevicePlatform CurrentPlatform { get; }
 
-        string AppVersion { get; }
+        string AppVersionString { get; }
 
         /// <summary>
         /// 复制到粘贴板
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        Task SetClipboard(string text);
+        Task SetClipboardAsync(string text);
         /// <summary>
         /// 分享文本
         /// </summary>

@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Maui.BlazorWebView;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
@@ -49,48 +49,25 @@ namespace SwashbucklerDiary.Maui.Services
             return LocalFileWebAccessHelper.FilePathToUrlRelativePath(targetFilePath);
         }
 
-        public override async Task<bool> ShareImageAsync(string title, string url)
+        protected override async Task<string> GetResourceFilePathAsync(string? urlString)
         {
-            var filePath = await GetResourceFilePathAsync(url);
-            if (string.IsNullOrEmpty(filePath))
-            {
-                return false;
-            }
-
-            await _platformIntegration.ShareFileAsync(title, filePath);
-            return true;
-        }
-
-        public override async Task<bool> SaveFileAsync(string url)
-        {
-            var filePath = await GetResourceFilePathAsync(url);
-            if (string.IsNullOrEmpty(filePath))
-            {
-                return false;
-            }
-
-            return await _platformIntegration.SaveFileAsync(filePath);
-        }
-
-        private async Task<string> GetResourceFilePathAsync(string? url)
-        {
-            if (string.IsNullOrEmpty(url))
+            if (string.IsNullOrEmpty(urlString))
             {
                 return string.Empty;
             }
 
             string? filePath;
-            if (IsInternalUrl(url, out string relativePath))
+            if (IsInternalUrl(urlString, out string relativePath))
             {
                 filePath = LocalFileWebAccessHelper.UrlRelativePathToFilePath(relativePath);
                 if (string.IsNullOrEmpty(filePath))
                 {
-                    filePath = await CopyPackageFileAndCreateTempFileAsync(url);
+                    filePath = await CopyPackageFileAndCreateTempFileAsync(urlString);
                 }
             }
             else
             {
-                filePath = await DownloadFileAndCreateTempFileAsync(url);
+                filePath = await DownloadFileAndCreateTempFileAsync(urlString);
             }
 
             if (string.IsNullOrEmpty(filePath))
@@ -150,15 +127,7 @@ namespace SwashbucklerDiary.Maui.Services
         public override string UrlRelativePathToFilePath(string urlRelativePath)
             => LocalFileWebAccessHelper.UrlRelativePathToFilePath(urlRelativePath);
 
-        protected override async Task<string> GetAudioFilePicturePath(string fileName, byte[] data)
-        {
-            string filePath = Path.Combine(FileSystem.Current.CacheDirectory, fileName);
-            if (!File.Exists(filePath))
-            {
-                await File.WriteAllBytesAsync(filePath, data);
-            }
-
-            return LocalFileWebAccessHelper.FilePathToUrlRelativePath(filePath);
-        }
+        public override string FilePathToUrlRelativePath(string filePath)
+            => LocalFileWebAccessHelper.FilePathToUrlRelativePath(filePath);
     }
 }

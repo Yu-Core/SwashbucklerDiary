@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -214,7 +214,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 Logger.LogError(e, "SendMailFail");
             }
 
-            await PlatformIntegration.SetClipboard(mail);
+            await PlatformIntegration.SetClipboardAsync(mail);
             await PopupServiceHelper.Success(I18n.T("Mine.MailCopy"));
         }
 
@@ -226,9 +226,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task ThemeChanged(Theme value)
         {
-            await Task.WhenAll(
-                ThemeService.SetThemeAsync(value),
-                SettingService.SetAsync(s => s.Theme, (int)value));
+            ThemeService.SetTheme(value);
+            await SettingService.SetAsync(s => s.Theme, (int)value);
         }
 
         private async Task OpenQQGroup()
@@ -247,7 +246,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             var qqGroup = FeedbackTypeDatas["QQGroup"];
-            await PlatformIntegration.SetClipboard(qqGroup);
+            await PlatformIntegration.SetClipboardAsync(qqGroup);
             await PopupServiceHelper.Success(I18n.T("Mine.QQGroupCopy"));
         }
 

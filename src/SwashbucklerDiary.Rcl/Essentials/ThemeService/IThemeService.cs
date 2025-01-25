@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Essentials
 {
@@ -8,6 +8,21 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         event Action<Theme>? OnChanged;
 
-        Task SetThemeAsync(Theme theme);
+        void SetTheme(Theme theme);
+    }
+
+    public static class IThemeServiceExtensions
+    {
+        public static void SetTheme(this IThemeService themeService, int themeInt)
+        {
+            Theme theme = themeInt switch
+            {
+                0 => Theme.System,
+                1 => Theme.Light,
+                2 => Theme.Dark,
+                _ => Theme.Light
+            };
+            themeService.SetTheme(theme);
+        }
     }
 }

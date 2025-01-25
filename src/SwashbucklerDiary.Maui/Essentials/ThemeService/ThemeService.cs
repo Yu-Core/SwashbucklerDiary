@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Essentials
@@ -37,12 +37,6 @@ namespace SwashbucklerDiary.Maui.Essentials
             _theme = theme;
 
             InternalNotifyStateChanged();
-        }
-
-        public Task SetThemeAsync(Theme theme)
-        {
-            SetTheme(theme);
-            return Task.CompletedTask;
         }
 
         private void HandleAppThemeChanged(object? sender, AppThemeChangedEventArgs e)

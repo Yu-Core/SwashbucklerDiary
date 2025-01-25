@@ -1,8 +1,8 @@
-﻿namespace SwashbucklerDiary.Maui.Essentials
+namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-        public Task SetClipboard(string text)
+        public Task SetClipboardAsync(string text)
             => Clipboard.Default.SetTextAsync(text);
 
         public Task ShareFileAsync(string title, string path)

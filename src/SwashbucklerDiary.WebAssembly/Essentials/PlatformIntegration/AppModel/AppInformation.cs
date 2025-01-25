@@ -1,9 +1,16 @@
-﻿namespace SwashbucklerDiary.WebAssembly.Essentials
+using System.Globalization;
+using System.Reflection;
+
+namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public partial class PlatformIntegration
     {
-        public string AppVersion
-            => _versionTracking.CurrentVersion.ToString();
+        static readonly Version version = Assembly.GetEntryAssembly()!.GetName().Version!;
+        public static string VersionString => version?.ToString() ?? string.Empty;
+        public static string BuildString => version.Revision.ToString(CultureInfo.InvariantCulture);
+
+        public string AppVersionString
+            => VersionString;
 
         public Task ShowSettingsUI()
         {

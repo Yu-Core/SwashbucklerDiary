@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 using System.Net.Http.Json;
 
@@ -137,7 +137,10 @@ namespace SwashbucklerDiary.Rcl.Services
             await func.Invoke();
         }
 
-        protected abstract Task HandleVersionUpdate697();
+        protected virtual Task HandleVersionUpdate697()
+        {
+            return Task.CompletedTask;
+        }
 
         public async Task NotifyAfterCheckFirstLaunch()
         {

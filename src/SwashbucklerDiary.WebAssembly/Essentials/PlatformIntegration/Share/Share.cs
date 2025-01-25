@@ -1,10 +1,10 @@
-﻿using Microsoft.JSInterop;
+using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public partial class PlatformIntegration
     {
-        public async Task SetClipboard(string text)
+        public async Task SetClipboardAsync(string text)
         {
             var module = await Module;
             await module.InvokeVoidAsync("setClipboard", text);

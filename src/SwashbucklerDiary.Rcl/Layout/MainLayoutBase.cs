@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -88,10 +88,10 @@ namespace SwashbucklerDiary.Rcl.Layout
             await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
         }
 
-        protected async void HandleSettingsChanged()
+        protected void HandleSettingsChanged()
         {
             var theme = SettingService.Get(it => it.Theme);
-            await ThemeService.SetThemeAsync((Shared.Theme)theme);
+            ThemeService.SetTheme(theme);
             // A bug, it will cause the language selection RadioDialog to fail to select
             //var language = SettingService.Get(it => it.Language);
             //I18n.SetCulture(language);
