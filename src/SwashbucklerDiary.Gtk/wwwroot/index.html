@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>SwashbucklerDiary.Gtk</title>
+    <base href="/" />
+    <script>
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'F5' || (event.ctrlKey && event.key === 'r') || (event.ctrlKey && event.keyCode == 82)) {
+                event.preventDefault();
+            }
+        });
+    </script>
+    <link href="_content/Masa.Blazor/css/masa-blazor.min.css" rel="stylesheet">
+
+    <link href="_content/SwashbucklerDiary.Rcl/css/materialdesign/v7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="_content/SwashbucklerDiary.Rcl/npm/vditor/3.10.7/dist/index.css" rel="stylesheet" />
+    <link href="_content/SwashbucklerDiary.Rcl/npm/swiper/7.4.1/swiper-bundle.min.css" rel="stylesheet" />
+
+    <link href="_content/SwashbucklerDiary.Rcl/css/extend/masa-blazor-extend.css" rel="stylesheet" />
+    <link href="_content/SwashbucklerDiary.Rcl/css/extend/vditor-extend.css" rel="stylesheet" />
+
+    <link href="SwashbucklerDiary.Maui.styles.css" rel="stylesheet" />
+    <link href="_content/SwashbucklerDiary.Rcl/css/app.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.webview.js"></script>
+    <script src="_content/Masa.Blazor/js/masa-blazor.js"></script>
+    <script src="_content/SwashbucklerDiary.Rcl/npm/vditor/3.10.7/dist/index.min.js"></script>
+    <script src="_content/SwashbucklerDiary.Rcl/npm/swiper/7.4.1/swiper-bundle.min.js"></script>
+    <script src="_content/SwashbucklerDiary.Rcl/npm/panzoom/9.4.3/panzoom.min.js"></script>
+    <script src="_content/SwashbucklerDiary.Rcl/npm/html2canvas/1.4.1/dist/html2canvas.min.js"></script>
+    <script src="_content/SwashbucklerDiary.Rcl/npm/wc-waterfall/0.1.3/dist/index.iife.min.js"></script>
+    <script src="_content/SwashbucklerDiary.Rcl/npm/bettersearch/1.0.1/dist/index.umd.js"></script>
+    <script src="_content/SwashbucklerDiary.Rcl/js/utility.js"></script>
+    <script src="_content/SwashbucklerDiary.Rcl/js/vditor-icons.js"></script>
+    <script src="_content/SwashbucklerDiary.Rcl/js/customEvents.js"></script>
+</body>
+
+</html>
