@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
         protected override Task HandleNavigateToStackBottomPath(LocationChangingContext context)
         {
             context.PreventNavigation();
-            Application.Quit();
+            Application.GetDefault()?.Quit();
             return Task.CompletedTask;
         }
     }

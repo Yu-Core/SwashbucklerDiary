@@ -32,7 +32,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
     /// </summary>
     protected static string AppOrigin(string appHostScheme, string appHostAddress = AppHostAddress) => $"{appHostScheme}://{appHostAddress}/";
 
-    protected static readonly Uri AppOriginUri = new(AppOrigin(AppHostScheme, AppHostAddress));
+    public static readonly Uri AppOriginUri = new(AppOrigin(AppHostScheme, AppHostAddress));
 
     protected Task<bool>? WebviewReadyTask;
 
@@ -91,11 +91,6 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
 
         if (uriSchemeHandler.tryGetResponseContent(uri, false, out int statusCode, out string statusMessage, out Stream content, out IDictionary<string, string> headers))
         {
-            if (statusCode != 200)
-            {
-                return;
-            }
-
             var (inputStream, length) = InputStreamNewFromStream(content);
 
             var response = URISchemeResponse.New(inputStream, length);

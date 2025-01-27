@@ -17,9 +17,6 @@ namespace SwashbucklerDiary.Gtk.Layout
         [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
 
-        [Inject]
-        private GtkSystemThemeManager GtkSystemThemeManager { get; set; } = default!;
-
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -58,7 +55,6 @@ namespace SwashbucklerDiary.Gtk.Layout
         private void InitTheme()
         {
             ThemeService.OnChanged += ThemeChanged;
-            GtkSystemThemeManager.Initialized();
             var theme = SettingService.Get(s => s.Theme);
             ThemeService.SetTheme(theme);
         }

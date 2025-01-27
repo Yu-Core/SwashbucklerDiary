@@ -1,19 +1,23 @@
+using Gio;
+using GLib;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Gtk.Essentials
 {
     public class GtkSystemThemeManager
     {
+        private readonly global::Gtk.Settings _gtkSettings;
+
         public Theme SystemTheme { get; set; }
 
         public event Action<Theme>? SystemThemeChanged;
 
-        public void Initialized()
+        public GtkSystemThemeManager()
         {
-            SystemTheme = GetCurrentSystemTheme();
+            _gtkSettings = global::Gtk.Settings.GetDefault()!;
+            _gtkSettings.OnNotify += OnSystemThemeChanged;
 
-            Adw.StyleManager.GetDefault().OnNotify += OnSystemThemeChanged;
-            //global::Gtk.Settings.GetDefault().OnNotify += OnSystemThemeChanged;
+            SystemTheme = GetCurrentSystemTheme();
         }
 
         private void OnSystemThemeChanged(GObject.Object sender, GObject.Object.NotifySignalArgs args)
@@ -26,9 +30,42 @@ namespace SwashbucklerDiary.Gtk.Essentials
             }
         }
 
-        private static Theme GetCurrentSystemTheme()
+        private Theme GetCurrentSystemTheme()
         {
-            return Adw.StyleManager.GetDefault().Dark ? Theme.Dark : Theme.Light;
+            // from https://github.com/DevToys-app/DevToys/blob/main/src/app/dev/platforms/desktop/DevToys.Linux/Core/ThemeListener.cs
+            try
+            {
+                var bus = DBusConnection.Get(BusType.Session);
+                using var parameters = Variant.NewTuple([
+                    Variant.NewString("org.freedesktop.appearance"), Variant.NewString("color-scheme")
+                ]);
+
+                using Variant ret = bus.CallSync(
+                    busName: "org.freedesktop.portal.Desktop",
+                    objectPath: "/org/freedesktop/portal/desktop",
+                    interfaceName: "org.freedesktop.portal.Settings",
+                    methodName: "Read",
+                    parameters: parameters,
+                    replyType: VariantType.New("(v)"),
+                    flags: DBusCallFlags.None,
+                    timeoutMsec: 2000,
+                    cancellable: null
+                );
+
+                uint userThemePreference = ret.GetChildValue(0).GetVariant().GetVariant().GetUint32();
+                return userThemePreference switch
+                {
+                    1 => Theme.Dark,
+                    2 => Theme.Light,
+                    _ => Theme.Light
+                };
+            }
+            catch (Exception)
+            {
+                return _gtkSettings.GtkThemeName?.Contains("Dark", StringComparison.OrdinalIgnoreCase) ?? false
+                ? Theme.Dark
+                : Theme.Light;
+            }
         }
     }
 }
