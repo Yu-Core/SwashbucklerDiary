@@ -39,9 +39,8 @@ namespace SwashbucklerDiary.Gtk.Layout
         protected override async Task InitSettingsAsync()
         {
             await base.InitSettingsAsync();
-            await Task.WhenAll(
-                InitThemeAsync(),
-                InitLanguageAsync());
+            InitTheme();
+            await InitLanguageAsync();
         }
 
         protected override void OnDispose()
@@ -56,10 +55,10 @@ namespace SwashbucklerDiary.Gtk.Layout
             MasaBlazor.SetTheme(theme == Theme.Dark);
         }
 
-        private async Task InitThemeAsync()
+        private void InitTheme()
         {
             ThemeService.OnChanged += ThemeChanged;
-            await GtkSystemThemeManager.InitializedAsync();
+            GtkSystemThemeManager.Initialized();
             var theme = SettingService.Get(s => s.Theme);
             ThemeService.SetTheme(theme);
         }

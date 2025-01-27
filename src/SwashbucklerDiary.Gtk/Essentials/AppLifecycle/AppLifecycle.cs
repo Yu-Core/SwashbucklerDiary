@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
 
         public void QuitApp()
         {
-            Application.Quit();
+            Application.GetDefault()?.Quit();
         }
     }
 }

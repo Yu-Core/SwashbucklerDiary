@@ -23,35 +23,49 @@ namespace SwashbucklerDiary.Gtk.Essentials
             return isSuccess;
         }
 
-        public async Task<bool> SaveFileAsync(string name, Stream stream)
+        private static Task<bool> SaveFileAsync(string name, Stream stream)
         {
             // Create a new GtkFileChooserNative object and set its properties
-            using var saveFileDialog = new FileChooserNative("Save File",
+            using var fileChooser = FileChooserNative.New("Save File",
                     null,
                     FileChooserAction.Save,
                     "Save",
                     "Cancel");
 
-            if (saveFileDialog.Run() == (int)ResponseType.Accept)
-            {
-                string filename = saveFileDialog.Filename;
+            fileChooser.Modal = true;
+            fileChooser.SetCurrentName(name);
 
-                if (!string.IsNullOrEmpty(filename))
+            var tcs = new TaskCompletionSource<bool>();
+            fileChooser.OnResponse += async (_, e) =>
+            {
+                if (e.ResponseId != (int)global::Gtk.ResponseType.Accept)
+                {
+                    tcs.SetResult(false);
+                    return;
+                }
+
+                string? filePath = fileChooser.GetFile()?.GetPath();
+
+                if (!string.IsNullOrEmpty(filePath))
                 {
                     try
                     {
-                        using var fileStream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write);
+                        using var fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
                         await stream.CopyToAsync(fileStream);
-                        return true;
+                        tcs.SetResult(true);
+                        return;
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("Error saving file: " + ex.Message);
                     }
                 }
-            };
 
-            return false;
+                tcs.SetResult(false);
+            };
+            fileChooser.Show();
+
+            return tcs.Task;
         }
     }
 }

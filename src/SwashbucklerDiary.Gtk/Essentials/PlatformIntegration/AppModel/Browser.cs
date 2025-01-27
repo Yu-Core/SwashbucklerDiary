@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace SwashbucklerDiary.Gtk.Essentials
 {
     public partial class PlatformIntegration
@@ -17,15 +19,22 @@ namespace SwashbucklerDiary.Gtk.Essentials
             return false;
         }
 
-        // from https://github.com/jsuarezruiz/maui-linux/blob/main/src/Essentials/src/Launcher/Launcher.Gtk.cs
-        static async Task<bool> GTKTryOpenAsync(Uri uri)
+        static Task<bool> GTKTryOpenAsync(Uri uri)
         {
-            string stdout, stderr;
-            int exitCode;
-            var task = Task.Run(
-                () => GLib.Process.SpawnCommandLineSync("xdg-open " + uri.ToString(), out stdout, out stderr, out exitCode));
-            var result = await task;
-            return result;
+            try
+            {
+                using var process = new Process();
+
+                process.StartInfo.UseShellExecute = true;
+                process.StartInfo.FileName = "xdg-open";
+                process.StartInfo.Arguments = uri.ToString();
+                bool isSuccess = process.Start();
+                return Task.FromResult(isSuccess);
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(false);
+            }
         }
     }
 }

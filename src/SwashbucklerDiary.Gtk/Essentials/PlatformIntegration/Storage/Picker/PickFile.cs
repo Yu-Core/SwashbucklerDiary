@@ -4,58 +4,87 @@ namespace SwashbucklerDiary.Gtk.Essentials
 {
     public partial class PlatformIntegration
     {
-        private Task<string?> PickFileAsync(IEnumerable<string> types, string fileExtension)
+        private static Task<string?> PickFileAsync(IEnumerable<string> types, string fileExtension)
         {
             string[] fileExtensions = [fileExtension];
             return PickFileAsync(types, fileExtensions);
         }
 
-        private Task<string?> PickFileAsync(IEnumerable<string> types, string[] fileExtensions)
+        private static Task<string?> PickFileAsync(IEnumerable<string> types, string[] fileExtensions)
         {
-            string? filePath = null;
-            using var openFileDialog = new FileChooserNative("Select a File",
+            using var fileChooser = FileChooserNative.New("Select a File",
                     null,
                     FileChooserAction.Open,
                     "Open",
                     "Cancel");
-            openFileDialog.AddFilter(types);
+            fileChooser.AddFilter(types);
 
-            if (openFileDialog.Run() == (int)ResponseType.Accept)
+            var tcs = new TaskCompletionSource<string?>();
+            fileChooser.OnResponse += (_, e) =>
             {
-                var fileExtension = Path.GetExtension(openFileDialog.Filename);
-                if (fileExtensions.Contains(fileExtension))
+                if (e.ResponseId != (int)global::Gtk.ResponseType.Accept)
                 {
-                    filePath = openFileDialog.Filename;
+                    tcs.SetResult(null);
+                    return;
                 }
+
+                var filePath = fileChooser.GetFile()?.GetPath();
+                if (!string.IsNullOrEmpty(filePath) && fileExtensions.Contains(Path.GetExtension(filePath)))
+                {
+                    tcs.SetResult(filePath);
+                    return;
+                }
+
+                tcs.SetResult(null);
             };
 
-            return Task.FromResult(filePath);
+            fileChooser.Show();
+            return tcs.Task;
         }
 
-        private Task<IEnumerable<string>?> PickMultipleFileAsync(IEnumerable<string> types, string[] fileExtensions)
+        private static Task<IEnumerable<string>?> PickMultipleFileAsync(IEnumerable<string> types, string[] fileExtensions)
         {
             List<string> filePaths = [];
-            using var openFileDialog = new FileChooserNative("Select multiple Files",
+            using var fileChooser = FileChooserNative.New("Select multiple Files",
                     null,
                     FileChooserAction.Open,
                     "Open",
                     "Cancel");
-            openFileDialog.SelectMultiple = true;
-            openFileDialog.AddFilter(types);
+            fileChooser.Modal = true;
+            fileChooser.SelectMultiple = true;
+            fileChooser.AddFilter(types);
 
-            if (openFileDialog.Run() == (int)ResponseType.Accept)
+            var tcs = new TaskCompletionSource<IEnumerable<string>?>();
+            fileChooser.OnResponse += (_, e) =>
             {
-                foreach (var filename in openFileDialog.Filenames)
+                if (e.ResponseId != (int)global::Gtk.ResponseType.Accept)
                 {
-                    var fileExtension = Path.GetExtension(filename);
-                    if (fileExtensions.Contains(fileExtension))
+                    tcs.SetResult(filePaths);
+                    return;
+                }
+
+                var files = fileChooser.GetFiles();
+                if (files is not null)
+                {
+                    uint fileCount = files.GetNItems();
+                    for (uint i = 0; i < fileCount; i++)
                     {
-                        filePaths.Add(filename);
+                        nint fileValue = files.GetItem(i);
+                        var file = new Gio.FileHelper(fileValue, true);
+                        string? filePath = file.GetPath();
+
+                        if (!string.IsNullOrEmpty(filePath) && fileExtensions.Contains(Path.GetExtension(filePath)))
+                        {
+                            filePaths.Add(filePath);
+                        }
                     }
                 }
+
+                tcs.SetResult(filePaths);
             };
 
-            return Task.FromResult<IEnumerable<string>?>(filePaths);
+            fileChooser.Show();
+            return tcs.Task;
         }
     }
 
@@ -65,7 +94,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
         {
             foreach (var type in mimeTypes)
             {
-                var fileFilter = new FileFilter();
+                var fileFilter = FileFilter.New();
                 fileFilter.AddMimeType(type);
                 fileChooserNative.AddFilter(fileFilter);
             }

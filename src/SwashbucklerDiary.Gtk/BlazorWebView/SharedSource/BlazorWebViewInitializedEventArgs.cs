@@ -1,5 +1,3 @@
-﻿using System;
-using System.Threading.Tasks;
 #if WEBVIEW2_WINFORMS
 using Microsoft.Web.WebView2.Core;
 using WebView2Control = Microsoft.Web.WebView2.WinForms.WebView2;
@@ -16,16 +14,16 @@ using WebKit;
 #elif TIZEN
 using TWebView = Tizen.NUI.BaseComponents.WebView;
 #elif GTK
-using TWebView = WebKit.WebView;
+using GWebView = WebKit.WebView;
 #endif
 
 namespace Microsoft.AspNetCore.Components.WebView
 {
-	/// <summary>
-	/// Allows configuring the underlying web view after it has been initialized.
-	/// </summary>
-	public class BlazorWebViewInitializedEventArgs : EventArgs
-	{
+    /// <summary>
+    /// Allows configuring the underlying web view after it has been initialized.
+    /// </summary>
+    public class BlazorWebViewInitializedEventArgs : EventArgs
+    {
 #nullable disable
 #if WINDOWS
 		/// <summary>
@@ -49,10 +47,10 @@ namespace Microsoft.AspNetCore.Components.WebView
 		/// </summary>
 		public TWebView WebView { get; internal set; }
 #elif GTK
-		/// <summary>
-		/// Gets the <see cref="TWebView"/> instance that was initialized.
-		/// </summary>
-		public TWebView WebView { get; internal set; }		
+        /// <summary>
+        /// Gets the <see cref="TWebView"/> instance that was initialized.
+        /// </summary>
+        public GWebView WebView { get; internal set; }
 #endif
-	}
+    }
 }

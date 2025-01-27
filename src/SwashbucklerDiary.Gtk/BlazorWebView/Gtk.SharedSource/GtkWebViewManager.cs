@@ -1,16 +1,16 @@
-using GLib;
+using Gio;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebView;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using Soup;
 using SwashbucklerDiary.Gtk.BlazorWebView;
 using SwashbucklerDiary.Shared;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using System.Web;
 using WebKit;
-using Process = System.Diagnostics.Process;
+using File = System.IO.File;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
@@ -32,7 +32,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
     /// </summary>
     protected static string AppOrigin(string appHostScheme, string appHostAddress = AppHostAddress) => $"{appHostScheme}://{appHostAddress}/";
 
-    public static readonly Uri AppOriginUri = new(AppOrigin(AppHostScheme, AppHostAddress));
+    protected static readonly Uri AppOriginUri = new(AppOrigin(AppHostScheme, AppHostAddress));
 
     protected Task<bool>? WebviewReadyTask;
 
@@ -70,9 +70,9 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
     /// <exception cref="Exception"></exception>
     static void HandleUriSchemeRequest(URISchemeRequest request)
     {
-        if (!UriSchemeRequestHandlers.TryGetValue(request.WebView.Handle, out var uriSchemeHandler))
+        if (!UriSchemeRequestHandlers.TryGetValue(request.GetWebView().Handle, out var uriSchemeHandler))
         {
-            throw new Exception($"Invalid scheme \"{request.Scheme}\"");
+            throw new Exception($"Invalid scheme \"{request.GetScheme()}\"");
         }
 
         var intercept = InterceptCustomPathRequest(request);
@@ -82,19 +82,34 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
         }
 
         // fix https://github.com/jsuarezruiz/maui-linux/issues/100
-        var uri = QueryStringHelper.RemovePossibleQueryString(request.Uri);
+        var uri = QueryStringHelper.RemovePossibleQueryString(request.GetUri());
 
-        if (request.Path == "/")
+        if (request.GetPath() == "/")
         {
             uri += uriSchemeHandler._hostPageRelativePath;
         }
 
         if (uriSchemeHandler.tryGetResponseContent(uri, false, out int statusCode, out string statusMessage, out Stream content, out IDictionary<string, string> headers))
         {
+            if (statusCode != 200)
+            {
+                return;
+            }
 
             var (inputStream, length) = InputStreamNewFromStream(content);
 
-            request.Finish(inputStream, length, headers["Content-Type"]);
+            var response = URISchemeResponse.New(inputStream, length);
+
+            response.SetContentType(headers["Content-Type"]);
+            response.SetStatus((uint)statusCode, statusMessage);
+
+            var messageHeaders = MessageHeaders.New(MessageHeadersType.Response);
+            messageHeaders.SetContentLength(length);
+            // Disable local caching. This will prevent user scripts from executing correctly.
+            messageHeaders.Append("Cache-Control", "no-cache, max-age=0, must-revalidate, no-store");
+            response.SetHttpHeaders(messageHeaders);
+
+            request.FinishWithResponse(response);
 
             inputStream?.Dispose();
         }
@@ -157,7 +172,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
 
         if (!HandleUriSchemeRequestIsRegistered)
         {
-            WebView.Context.RegisterUriScheme(AppHostScheme, HandleUriSchemeRequest);
+            WebView.GetContext().RegisterUriScheme(AppHostScheme, HandleUriSchemeRequest);
             HandleUriSchemeRequestIsRegistered = true;
         }
 
@@ -165,7 +180,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
 
         var jsScript = JsScript(MessageQueueId);
 
-        _script = new UserScript(
+        _script = UserScript.New(
             jsScript,
             UserContentInjectedFrames.AllFrames,
             UserScriptInjectionTime.Start,
@@ -173,15 +188,15 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
             null, null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
-        WebView.Destroyed += (o, args) => Detach();
+        WebView.OnDestroy += (o, args) => Detach();
 
         WebView.UserContentManager.AddScript(_script);
 
-        WebView.UserContentManager.ScriptMessageReceived += (o, args) =>
+        WebView.UserContentManager.OnScriptMessageReceived += (o, args) =>
         {
-            var jsValue = args.JsResult.JsValue;
+            var jsValue = args.Value;
 
-            if (!jsValue.IsString)
+            if (!jsValue.IsString())
                 return;
 
             var s = jsValue.ToString();
@@ -199,7 +214,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
             }
         };
 
-        WebView.UserContentManager.RegisterScriptMessageHandler(MessageQueueId);
+        WebView.UserContentManager.RegisterScriptMessageHandler(MessageQueueId, null);
     }
 
     bool _detached = false;
@@ -212,7 +227,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
         if (_detached)
             return;
 
-        WebView.UserContentManager.UnregisterScriptMessageHandler(MessageQueueId);
+        WebView.UserContentManager.UnregisterScriptMessageHandler(MessageQueueId, null);
         WebView.UserContentManager.RemoveScript(_script);
         UriSchemeRequestHandlers.Remove(WebView.Handle);
 
@@ -228,7 +243,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
 
         var script = $"__dispatchMessageCallback(\"{HttpUtility.JavaScriptStringEncode(message)}\")";
 
-        WebView.RunJavascript(script);
+        WebView.EvaluateJavascriptAsync(script);
     }
 
     protected override async ValueTask DisposeAsyncCore()
@@ -237,37 +252,6 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
         await base.DisposeAsyncCore();
     }
 
-    protected static string GetHeaderString(IDictionary<string, string> headers) =>
-        string.Join(Environment.NewLine, headers.Select(kvp => $"{kvp.Key}: {kvp.Value}"));
-
-    protected static string? GetWebView2UserDataFolder()
-    {
-        if (Assembly.GetEntryAssembly() is { } mainAssembly)
-        {
-            // In case the application is running from a non-writable location (e.g., program files if you're not running
-            // elevated), use our own convention of %LocalAppData%\YourApplicationName.WebView.
-            var applicationName = mainAssembly.GetName().Name;
-
-            var result = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                $"{applicationName}.{nameof(WebView)}");
-
-            return result;
-        }
-
-        return null;
-    }
-
-    protected static void LaunchUriInExternalBrowser(Uri uri)
-    {
-        using var launchBrowser = new Process();
-
-        launchBrowser.StartInfo.UseShellExecute = true;
-        launchBrowser.StartInfo.FileName = uri.ToString();
-        launchBrowser.Start();
-    }
-
-
     public static (InputStream inputStream, int length) InputStreamNewFromStream(Stream content)
     {
         using var memoryStream = new MemoryStream();
@@ -275,15 +259,15 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
         content.CopyTo(memoryStream, length);
         var buffer = memoryStream.GetBuffer();
         Array.Resize(ref buffer, length);
-        var bytes = new Bytes(buffer);
-        var inputStream = new MemoryInputStream(bytes);
+        var bytes = GLib.Bytes.New(buffer);
+        var inputStream = Gio.MemoryInputStream.NewFromBytes(bytes);
 
         return (inputStream, length);
     }
 
     private static bool InterceptCustomPathRequest(URISchemeRequest request)
     {
-        string uri = request.Uri;
+        string uri = request.GetUri();
         if (!InterceptLocalFileRequest(uri, out string filePath))
         {
             return false;
@@ -292,8 +276,36 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
         using var contentStream = File.OpenRead(filePath);
         string contentType = StaticContentProvider.GetResponseContentTypeOrDefault(filePath);
         var (inputStream, length) = InputStreamNewFromStream(contentStream);
+        int statusCode = 200;
+        string statusMessage = "OK";
+        long rangeStart = 0;
+        long rangeEnd = length - 1;
+        var messageHeaders = MessageHeaders.New(MessageHeadersType.Response);
 
-        request.Finish(inputStream, length, contentType);
+        //适用于音频视频文件资源的响应
+        string? rangeString = request.GetHttpHeaders().GetOne("Range");
+        bool partial = !string.IsNullOrEmpty(rangeString);
+        if (partial)
+        {
+            //206,可断点续传
+            statusCode = 206;
+            statusMessage = "Partial Content";
+
+            ParseRange(rangeString, ref rangeStart, ref rangeEnd);
+            messageHeaders.Append("Accept-Ranges", "bytes");
+            messageHeaders.Append("Content-Range", $"bytes {rangeStart}-{rangeEnd}/{length}");
+        }
+
+        var response = URISchemeResponse.New(inputStream, length);
+
+        response.SetStatus((uint)statusCode, statusMessage);
+        response.SetContentType(contentType);
+        messageHeaders.SetContentLength(length);
+        // Disable local caching. This will prevent user scripts from executing correctly.
+        messageHeaders.Append("Cache-Control", "no-cache, max-age=0, must-revalidate, no-store");
+        response.SetHttpHeaders(messageHeaders);
+
+        request.FinishWithResponse(response);
 
         inputStream?.Dispose();
         return true;
