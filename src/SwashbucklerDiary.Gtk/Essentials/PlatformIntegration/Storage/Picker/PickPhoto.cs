@@ -1,16 +1,19 @@
+using SwashbucklerDiary.Rcl.Essentials;
+
 namespace SwashbucklerDiary.Gtk.Essentials
 {
     public partial class PlatformIntegration
     {
+        const string imageFilefilterName = "Image file";
 
-        static readonly string[] imageFileExtensions = [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp", ".jfif"];
+        const string imageFilesfilterName = "Image files";
 
-        static readonly string[] imageTypes = ["image/*"];
+        static readonly string[] imagePatterns = GetPatterns(PlatformIntegrationHelper.ImageFileExtensions);
 
         public Task<string?> PickPhotoAsync()
-            => PickFileAsync(imageTypes, imageFileExtensions);
+            => PickFileAsync(imageFilefilterName, imagePatterns, PlatformIntegrationHelper.ImageFileExtensions);
 
         public Task<IEnumerable<string>?> PickMultiplePhotoAsync()
-            => PickMultipleFileAsync(imageTypes, imageFileExtensions);
+            => PickMultipleFileAsync(imageFilesfilterName, imagePatterns, PlatformIntegrationHelper.ImageFileExtensions);
     }
 }

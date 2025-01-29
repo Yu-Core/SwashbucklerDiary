@@ -1,16 +1,19 @@
+using SwashbucklerDiary.Rcl.Essentials;
+
 namespace SwashbucklerDiary.Gtk.Essentials
 {
     public partial class PlatformIntegration
     {
+        const string videoFilefilterName = "Video file";
 
-        static readonly string[] videoFileExtensions = [".mp4", ".m4v", ".mpg", ".mpeg", ".mp2", ".mov", ".avi", ".mkv", ".flv", ".gifv", ".qt"];
+        const string videoFilesfilterName = "Video files";
 
-        static readonly string[] videoTypes = ["video/*"];
+        static readonly string[] videoPatterns = GetPatterns(PlatformIntegrationHelper.VideoFileExtensions);
 
         public Task<string?> PickVideoAsync()
-            => PickFileAsync(videoTypes, videoFileExtensions);
+            => PickFileAsync(videoFilefilterName, videoPatterns, PlatformIntegrationHelper.VideoFileExtensions);
 
         public Task<IEnumerable<string>?> PickMultipleVideoAsync()
-            => PickMultipleFileAsync(videoTypes, videoFileExtensions);
+            => PickMultipleFileAsync(videoFilesfilterName, videoPatterns, PlatformIntegrationHelper.VideoFileExtensions);
     }
 }

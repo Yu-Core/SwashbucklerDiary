@@ -2,11 +2,15 @@ namespace SwashbucklerDiary.Gtk.Essentials
 {
     public partial class PlatformIntegration
     {
-        static readonly string[] zipTypes = ["application/zip"];
+        const string zipFilefilterName = "Zip file";
+
+        static readonly string[] zipFileExtensions = [".zip"];
+
+        static readonly string[] zipPatterns = GetPatterns(zipFileExtensions);
 
         public Task<string?> PickZipFileAsync()
         {
-            return PickFileAsync(zipTypes, ".zip");
+            return PickFileAsync(zipFilefilterName, zipPatterns, zipFileExtensions);
         }
     }
 }

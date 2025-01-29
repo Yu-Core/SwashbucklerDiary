@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
     {
         public Task<bool> SendEmail(string? subject, string? body, List<string>? recipients)
         {
-            var uriString = EmailHelper.CreateMailToUri(subject, body, recipients);
+            var uriString = PlatformIntegrationHelper.CreateMailToUri(subject, body, recipients);
             return OpenLauncher(uriString);
         }
     }

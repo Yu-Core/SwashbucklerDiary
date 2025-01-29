@@ -23,49 +23,31 @@ namespace SwashbucklerDiary.Gtk.Essentials
             return isSuccess;
         }
 
-        private static Task<bool> SaveFileAsync(string name, Stream stream)
+        private static async Task<bool> SaveFileAsync(string name, Stream stream)
         {
-            // Create a new GtkFileChooserNative object and set its properties
-            using var fileChooser = FileChooserNative.New("Save File",
-                    null,
-                    FileChooserAction.Save,
-                    "Save",
-                    "Cancel");
+            using var fileDialog = FileDialog.New();
+            fileDialog.Modal = true;
+            fileDialog.InitialName = name;
 
-            fileChooser.Modal = true;
-            fileChooser.SetCurrentName(name);
+            var file = await fileDialog.SaveAsync();
 
-            var tcs = new TaskCompletionSource<bool>();
-            fileChooser.OnResponse += async (_, e) =>
+            string? filePath = file?.GetPath();
+            if (string.IsNullOrEmpty(filePath))
             {
-                if (e.ResponseId != (int)global::Gtk.ResponseType.Accept)
-                {
-                    tcs.SetResult(false);
-                    return;
-                }
+                return false;
+            }
 
-                string? filePath = fileChooser.GetFile()?.GetPath();
-
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    try
-                    {
-                        using var fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
-                        await stream.CopyToAsync(fileStream);
-                        tcs.SetResult(true);
-                        return;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error saving file: " + ex.Message);
-                    }
-                }
-
-                tcs.SetResult(false);
-            };
-            fileChooser.Show();
-
-            return tcs.Task;
+            try
+            {
+                using var fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
+                await stream.CopyToAsync(fileStream);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error saving file: " + ex.Message);
+                return false;
+            }
         }
     }
 }
