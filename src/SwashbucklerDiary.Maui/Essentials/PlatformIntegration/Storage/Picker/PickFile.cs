@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
+using SwashbucklerDiary.Rcl.Essentials;
 
 #if ANDROID
 using MauiBlazorToolkit.Essentials;
@@ -8,12 +9,6 @@ namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-        private Task<string?> PickFileAsync(IEnumerable<string> types, string fileExtension)
-        {
-            string[] fileExtensions = [fileExtension];
-            return PickFileAsync(types, fileExtensions);
-        }
-
         private async Task<string?> PickFileAsync(IEnumerable<string> types, string[] fileExtensions)
         {
             PickOptions options = GetPickOptions(types);
@@ -21,16 +16,15 @@ namespace SwashbucklerDiary.Maui.Essentials
             try
             {
 #if ANDROID
-                var result = await AndroidFilePicker.Default.PickAsync(options);
+                var fileResult = await AndroidFilePicker.Default.PickAsync(options);
 #else
-                var result = await FilePicker.Default.PickAsync(options);
+                var fileResult = await FilePicker.Default.PickAsync(options);
 #endif
-                if (result is not null)
+                if (fileResult is not null)
                 {
-                    var fileExtension = Path.GetExtension(result.FileName);
-                    if (fileExtensions.Contains(fileExtension))
+                    if (PlatformIntegrationHelper.ValidFileExtension(fileResult.FileName, fileExtensions))
                     {
-                        return result.FullPath;
+                        return fileResult.FullPath;
                     }
                 }
             }
@@ -63,8 +57,7 @@ namespace SwashbucklerDiary.Maui.Essentials
                 {
                     if (fileResult is not null)
                     {
-                        var fileExtension = Path.GetExtension(fileResult.FileName);
-                        if (fileExtensions.Contains(fileExtension))
+                        if (PlatformIntegrationHelper.ValidFileExtension(fileResult.FileName, fileExtensions))
                         {
                             filePaths.Add(fileResult.FullPath);
                         }
@@ -92,7 +85,7 @@ namespace SwashbucklerDiary.Maui.Essentials
         }
 
 #if IOS || MACCATALYST
-        private static List<string> ConvertFileExtensionsToUTTypeIdentifiers(IEnumerable<string> fileExtensions)
+        private static List<string> GetUTTypeIdentifiers(IEnumerable<string> fileExtensions)
         {
             var identifiers = new List<string>();
             foreach (var ext in fileExtensions)

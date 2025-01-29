@@ -1,4 +1,4 @@
-﻿#if MACCATALYST
+#if MACCATALYST
 using UniformTypeIdentifiers;
 #endif
 
@@ -6,24 +6,23 @@ using UniformTypeIdentifiers;
 using MauiBlazorToolkit.Essentials;
 #endif
 
+using SwashbucklerDiary.Rcl.Essentials;
+
 namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-#if MACCATALYST || WINDOWS || TIZEN
-        static readonly string[] imageFileExtensions = [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp", ".jfif"];
 #if MACCATALYST
-        static readonly string[] imageTypes = [.. ConvertFileExtensionsToUTTypeIdentifiers(imageFileExtensions)];
+        static readonly string[] imageTypes = [.. GetUTTypeIdentifiers(PlatformIntegrationHelper.ImageFileExtensions)];
 #elif WINDOWS
-        static readonly string[] imageTypes = imageFileExtensions;
+        static readonly string[] imageTypes = PlatformIntegrationHelper.ImageFileExtensions;
 #elif TIZEN
-        static readonly string[] imageTypes = ["image/*"];
-#endif
+        static readonly string[] imageTypes = PlatformIntegrationHelper.ImageMimeTypes;
 #endif
         public async Task<string?> PickPhotoAsync()
         {
 #if MACCATALYST || WINDOWS
-            return await PickFileAsync(imageTypes, imageFileExtensions);
+            return await PickFileAsync(imageTypes, PlatformIntegrationHelper.ImageFileExtensions);
 #elif ANDROID || IOS
             FileResult? fileResult = await MediaFilePicker.Default.PickPhotoAsync();
             return fileResult?.FullPath;
@@ -36,7 +35,7 @@ namespace SwashbucklerDiary.Maui.Essentials
         public async Task<IEnumerable<string>?> PickMultiplePhotoAsync()
         {
 #if MACCATALYST || WINDOWS || TIZEN
-            return await PickMultipleFileAsync(imageTypes, imageFileExtensions);
+            return await PickMultipleFileAsync(imageTypes, PlatformIntegrationHelper.ImageFileExtensions);
 #elif ANDROID || IOS
             var fileResults = await MediaFilePicker.Default.PickMultiplePhotoAsync();
             if (fileResults is null)

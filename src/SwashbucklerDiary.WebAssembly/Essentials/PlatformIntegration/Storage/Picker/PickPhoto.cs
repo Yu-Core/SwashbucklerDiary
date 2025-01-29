@@ -1,15 +1,13 @@
-﻿namespace SwashbucklerDiary.WebAssembly.Essentials
+using SwashbucklerDiary.Rcl.Essentials;
+
+namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public partial class PlatformIntegration
     {
-        static readonly string[] imageFileExtensions = [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp", ".jfif"];
-
-        static readonly string imageMime = "image/*";
-
         public Task<string?> PickPhotoAsync()
-            => PickFileAsync(imageMime, imageFileExtensions);
+            => PickFileAsync(PlatformIntegrationHelper.ImageMimeTypes, PlatformIntegrationHelper.ImageFileExtensions);
 
         public Task<IEnumerable<string>?> PickMultiplePhotoAsync()
-            => PickFilesAsync(imageMime, imageFileExtensions);
+            => PickFilesAsync(PlatformIntegrationHelper.ImageMimeTypes, PlatformIntegrationHelper.ImageFileExtensions);
     }
 }

@@ -5,12 +5,6 @@ namespace SwashbucklerDiary.Gtk.Essentials
 {
     public partial class PlatformIntegration
     {
-        private static Task<string?> PickFileAsync(string filterName, IEnumerable<string> patterns, string fileExtension)
-        {
-            string[] fileExtensions = [fileExtension];
-            return PickFileAsync(filterName, patterns, fileExtensions);
-        }
-
         private static async Task<string?> PickFileAsync(string filterName, IEnumerable<string> patterns, string[] fileExtensions)
         {
             using var fileDialog = FileDialog.New();
@@ -21,7 +15,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
             {
                 var file = await fileDialog.OpenAsync();
                 var filePath = file?.GetPath();
-                if (PlatformIntegrationHelper.ValidFileExtensions(filePath, fileExtensions))
+                if (PlatformIntegrationHelper.ValidFileExtension(filePath, fileExtensions))
                 {
                     return filePath;
                 }
@@ -51,7 +45,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
                         var file = new Gio.FileHelper(fileValue, true);
                         string? filePath = file.GetPath();
 
-                        if (PlatformIntegrationHelper.ValidFileExtensions(filePath, fileExtensions))
+                        if (PlatformIntegrationHelper.ValidFileExtension(filePath, fileExtensions))
                         {
                             filePaths.Add(filePath!);
                         }

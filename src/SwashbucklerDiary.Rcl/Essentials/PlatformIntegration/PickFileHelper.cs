@@ -14,7 +14,11 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         public static readonly string[] VideoMimeTypes = ["video/mp4", "video/mpeg", "video/quicktime", "video/x-msvideo", "video/x-matroska", "video/x-flv"];
 
-        public static bool ValidFileExtensions(string? filePath, string[] fileExtensions)
+        public static readonly string[] ZipFileExtensions = [".zip"];
+
+        public static readonly string[] ZipMimeTypes = ["application/zip"];
+
+        public static bool ValidFileExtension(string? filePath, string[] fileExtensions)
         {
             if (string.IsNullOrEmpty(filePath))
             {
