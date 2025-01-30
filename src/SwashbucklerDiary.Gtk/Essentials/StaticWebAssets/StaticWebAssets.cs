@@ -23,7 +23,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
 #endif
             path = $"wwwroot/{relativePath}";
 #if !DEBUG
-        }
+            }
 #endif
             if (!File.Exists(path))
             {
