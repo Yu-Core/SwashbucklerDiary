@@ -2,7 +2,7 @@ using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Gtk.BlazorWebView
 {
-    public static class LocalFileWebAccessHelper
+    public static partial class LocalFileWebAccessHelper
     {
         public static Dictionary<string, string> AppFilePathMap { get; } = new()
         {

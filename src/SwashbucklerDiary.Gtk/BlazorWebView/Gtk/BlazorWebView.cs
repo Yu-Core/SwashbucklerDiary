@@ -190,8 +190,8 @@ namespace Microsoft.AspNetCore.Components.WebView.Gtk
                 hostPageRelativePath,
                 (args) => UrlLoading?.Invoke(this, args),
                 (args) => BlazorWebViewInitializing?.Invoke(this, args),
-                (args) => BlazorWebViewInitialized?.Invoke(this, args));
-
+                (args) => BlazorWebViewInitialized?.Invoke(this, args),
+                logger);
 
             StaticContentHotReloadManager.AttachToWebViewManagerIfEnabled(_webviewManager);
 

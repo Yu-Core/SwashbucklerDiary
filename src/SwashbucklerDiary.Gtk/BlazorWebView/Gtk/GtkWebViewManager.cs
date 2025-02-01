@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging;
 using WebKit;
 
 namespace Microsoft.AspNetCore.Components.WebView.Gtk;
@@ -22,14 +23,14 @@ public partial class GtkWebViewManager : GtkSharp.BlazorWebKit.GtkWebViewManager
         if (devTools is not { })
             return;
 
-        if (WebView is not { })
+        if (_webview is not { })
             return;
 
-        Settings settings = WebView.GetSettings();
+        Settings settings = _webview.GetSettings();
         settings.EnableDeveloperExtras = devTools.Enabled;
         settings.EnablePageCache = false;
         settings.EnableOfflineWebApplicationCache = false;
-        WebView.SetSettings(settings);
+        _webview.SetSettings(settings);
     }
 
     //    private void NavigationStarting(object? sender, LoadChangedArgs args)
@@ -88,13 +89,14 @@ public partial class GtkWebViewManager : GtkSharp.BlazorWebKit.GtkWebViewManager
         string hostPagePathWithinFileProvider,
         Action<UrlLoadingEventArgs> urlLoading,
         Action<BlazorWebViewInitializingEventArgs> blazorWebViewInitializing,
-        Action<BlazorWebViewInitializedEventArgs> blazorWebViewInitialized)
-        : base(services, dispatcher, AppOriginUri, fileProvider, jsComponents, hostPagePathWithinFileProvider)
+        Action<BlazorWebViewInitializedEventArgs> blazorWebViewInitialized,
+        ILogger logger)
+        : base(services, dispatcher, fileProvider, jsComponents, contentRootRelativeToAppRoot, hostPagePathWithinFileProvider, logger)
 
     {
         ArgumentNullException.ThrowIfNull(webview);
 
-        WebView = webview;
+        _webview = webview;
         _urlLoading = urlLoading;
         _blazorWebViewInitializing = blazorWebViewInitializing;
         _blazorWebViewInitialized = blazorWebViewInitialized;
@@ -107,7 +109,7 @@ public partial class GtkWebViewManager : GtkSharp.BlazorWebKit.GtkWebViewManager
     {
         _blazorWebViewInitializing?.Invoke(new BlazorWebViewInitializingEventArgs { });
         base.Attach();
-        _blazorWebViewInitialized?.Invoke(new BlazorWebViewInitializedEventArgs { WebView = WebView });
+        _blazorWebViewInitialized?.Invoke(new BlazorWebViewInitializedEventArgs { WebView = _webview });
         this.ApplyDefaultWebViewSettings(_developerTools);
     }
 
