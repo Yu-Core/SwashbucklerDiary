@@ -1,4 +1,3 @@
-using Gio;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebView;
@@ -8,6 +7,7 @@ using Soup;
 using SwashbucklerDiary.Gtk.BlazorWebView;
 using SwashbucklerDiary.Shared;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Channels;
 using System.Web;
 using WebKit;
 using File = System.IO.File;
@@ -49,11 +49,24 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
 
     protected ILogger<GtkWebViewManager>? Logger;
 
+    private readonly Channel<string> _channel;
+
     protected GtkWebViewManager(IServiceProvider provider, Dispatcher dispatcher, Uri appBaseUri, IFileProvider fileProvider, JSComponentConfigurationStore jsComponents, string hostPageRelativePath) :
         base(provider, dispatcher, appBaseUri, fileProvider, jsComponents, hostPageRelativePath)
     {
         _appBaseUri = appBaseUri;
         _hostPageRelativePath = hostPageRelativePath;
+
+        // https://github.com/DevToys-app/DevToys/issues/1194
+        // Forked from https://github.com/tryphotino/photino.Blazor/issues/40
+        //Create channel and start reader
+        _channel = Channel.CreateUnbounded<string>(new UnboundedChannelOptions()
+        {
+            SingleReader = true,
+            SingleWriter = false,
+            AllowSynchronousContinuations = false
+        });
+        Task.Run(SendMessagePump);
     }
 
     delegate bool TryGetResponseContentHandler(string uri, bool allowFallbackOnHostPage, out int statusCode, out string statusMessage, out Stream content, out IDictionary<string, string> headers);
@@ -238,7 +251,28 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
 
         var script = $"__dispatchMessageCallback(\"{HttpUtility.JavaScriptStringEncode(message)}\")";
 
-        WebView.EvaluateJavascriptAsync(script);
+        // https://github.com/DevToys-app/DevToys/issues/1194
+        // Forked from https://github.com/tryphotino/photino.Blazor/issues/40
+        while (!_channel.Writer.TryWrite(script))
+        {
+            Thread.Sleep(200);
+        }
+    }
+
+    private async Task SendMessagePump()
+    {
+        // https://github.com/DevToys-app/DevToys/issues/1194
+        // Forked from https://github.com/tryphotino/photino.Blazor/issues/40
+        ChannelReader<string> reader = _channel.Reader;
+        try
+        {
+            while (true)
+            {
+                string script = await reader.ReadAsync();
+                _ = WebView?.EvaluateJavascriptAsync(script);
+            }
+        }
+        catch (ChannelClosedException) { }
     }
 
     protected override async ValueTask DisposeAsyncCore()
@@ -247,7 +281,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
         await base.DisposeAsyncCore();
     }
 
-    public static (InputStream inputStream, int length) InputStreamNewFromStream(Stream content)
+    public static (Gio.InputStream inputStream, int length) InputStreamNewFromStream(Stream content)
     {
         using var memoryStream = new MemoryStream();
         var length = (int)content.Length;
@@ -371,7 +405,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
         return byteArray;
     }
 
-    static MemoryInputStream InputStreamNewFromBytes(byte[] buffer)
+    static Gio.MemoryInputStream InputStreamNewFromBytes(byte[] buffer)
     {
         var bytes = GLib.Bytes.New(buffer);
         return Gio.MemoryInputStream.NewFromBytes(bytes);
