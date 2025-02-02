@@ -1,4 +1,4 @@
-using GtkSharp.BlazorWebKit;
+using Microsoft.AspNetCore.Components.WebView.Gtk;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Gtk.BlazorWebView;
 using SwashbucklerDiary.Rcl.Essentials;

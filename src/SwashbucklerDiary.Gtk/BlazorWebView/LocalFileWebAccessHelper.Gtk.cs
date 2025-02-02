@@ -1,4 +1,4 @@
-using GtkSharp.BlazorWebKit;
+using Microsoft.AspNetCore.Components.WebView.Gtk;
 using Soup;
 using SwashbucklerDiary.Shared;
 using WebKit;
