@@ -1,11 +1,11 @@
-using System.Threading.Channels;
-using System.Web;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Soup;
 using SwashbucklerDiary.Gtk.BlazorWebView;
+using System.Threading.Channels;
+using System.Web;
 using WebKit;
 
 namespace Microsoft.AspNetCore.Components.WebView.Gtk;
@@ -26,7 +26,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
     const string MessageQueueId = "webview";
     readonly string _contentRootRelativeToAppRoot;
     readonly string _hostPageRelativePath;
-    UserScript? _script;
+    UserScript _script = default!;
     private readonly WebKit.WebView _webview;
     private readonly ILogger _logger;
     private readonly Channel<string> _channel;
@@ -215,7 +215,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
         }
 
         var requestUri = QueryStringHelper.RemovePossibleQueryString(request.GetUri());
-        var allowFallbackOnHostPage = !Path.HasExtension(requestUri) && AppOriginUri.IsBaseOf(new Uri(requestUri));
+        var allowFallbackOnHostPage = AppOriginUri.IsBaseOfPage(requestUri);
 
         _logger.HandlingWebRequest(requestUri);
 
@@ -315,6 +315,8 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
         {
             var callbackArgs = UrlLoadingEventArgs.CreateWithDefaultLoadingStrategy(uri, AppOriginUri);
             var navigationType = args.NavigationAction.GetNavigationType();
+
+            // <iframe> tags should open in webview
             if (navigationType == NavigationType.Other)
             {
                 callbackArgs.UrlLoadingStrategy = UrlLoadingStrategy.OpenInWebView;
@@ -372,13 +374,11 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
     {
         _logger.LaunchExternalBrowser(uri);
 
-        using (var launchBrowser = new System.Diagnostics.Process())
-        {
-            launchBrowser.StartInfo.UseShellExecute = true;
-            launchBrowser.StartInfo.FileName = "xdg-open";
-            launchBrowser.StartInfo.Arguments = uri.ToString();
-            launchBrowser.Start();
-        }
+        using var launchBrowser = new System.Diagnostics.Process();
+        launchBrowser.StartInfo.UseShellExecute = true;
+        launchBrowser.StartInfo.FileName = "xdg-open";
+        launchBrowser.StartInfo.Arguments = uri.ToString();
+        launchBrowser.Start();
     }
 
     protected override async ValueTask DisposeAsyncCore()

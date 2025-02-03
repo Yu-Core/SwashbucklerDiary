@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using SwashbucklerDiary.Gtk.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Layout;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Gtk.Layout
 {
@@ -33,37 +31,11 @@ namespace SwashbucklerDiary.Gtk.Layout
             await InitSettingsAsync();
         }
 
-        protected override async Task InitSettingsAsync()
-        {
-            await base.InitSettingsAsync();
-            InitTheme();
-            await InitLanguageAsync();
-        }
-
         protected override void OnDispose()
         {
             //AppLifecycle.Activated -= HandleActivated;
             VersionUpdataManager.AfterCheckFirstLaunch -= CheckForUpdates;
             base.OnDispose();
-        }
-
-        private void ThemeChanged(Theme theme)
-        {
-            MasaBlazor.SetTheme(theme == Theme.Dark);
-        }
-
-        private void InitTheme()
-        {
-            ThemeService.OnChanged += ThemeChanged;
-            var theme = SettingService.Get(s => s.Theme);
-            ThemeService.SetTheme(theme);
-        }
-
-        private Task InitLanguageAsync()
-        {
-            var language = SettingService.Get(s => s.Language);
-            I18n.SetCulture(language);
-            return Task.CompletedTask;
         }
 
 #if DEBUG

@@ -1,4 +1,3 @@
-using SwashbucklerDiary.Gtk.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Gtk.Services
@@ -8,10 +7,6 @@ namespace SwashbucklerDiary.Gtk.Services
         public Dictionary<string, object> DefalutSettings { get; set; } = [];
         public Dictionary<string, object> TempSettings { get; set; } = [];
         public Action? SettingsChanged { get; set; }
-
-        public SettingService(UnpackagedPreferencesImplementation preferences) : base(preferences)
-        {
-        }
 
         public T Get<T>(string key)
         {
@@ -25,7 +20,7 @@ namespace SwashbucklerDiary.Gtk.Services
 
         public T Get<T>(string key, T defaultValue)
         {
-            return _preferences.Get(key, defaultValue);
+            return Default.Get(key, defaultValue);
         }
     }
 }

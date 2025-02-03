@@ -7,18 +7,14 @@ namespace SwashbucklerDiary.Gtk.Essentials
         const string versionsKey = "VersionTracking.Versions";
         const string buildsKey = "VersionTracking.Builds";
 
-        readonly UnpackagedPreferencesImplementation preferences;
-
         Dictionary<string, List<string>> versionTrail = null!;
 
         string LastInstalledVersion => versionTrail[versionsKey]?.LastOrDefault() ?? string.Empty;
 
         string LastInstalledBuild => versionTrail[buildsKey]?.LastOrDefault() ?? string.Empty;
 
-        public VersionTracking(UnpackagedPreferencesImplementation preferences)
+        public VersionTracking()
         {
-            this.preferences = preferences;
-
             Track();
         }
 
@@ -38,7 +34,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
         /// </remarks>
         internal void InitVersionTracking()
         {
-            IsFirstLaunchEver = !preferences.ContainsKey(versionsKey) || !preferences.ContainsKey(buildsKey);
+            IsFirstLaunchEver = !Preferences.Default.ContainsKey(versionsKey) || !Preferences.Default.ContainsKey(buildsKey);
             if (IsFirstLaunchEver)
             {
                 versionTrail = new(StringComparer.Ordinal)
@@ -129,10 +125,10 @@ namespace SwashbucklerDiary.Gtk.Essentials
         }
 
         string[] ReadHistory(string key)
-            => preferences.Get<string?>(key, null)?.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
+            => Preferences.Default.Get<string?>(key, null)?.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
         void WriteHistory(string key, IEnumerable<string> history)
-            => preferences.Set(key, string.Join("|", history));
+            => Preferences.Default.Set(key, string.Join("|", history));
 
         string? GetPrevious(string key)
         {

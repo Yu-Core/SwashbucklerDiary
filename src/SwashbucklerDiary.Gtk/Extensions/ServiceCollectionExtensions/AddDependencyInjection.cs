@@ -11,7 +11,6 @@ namespace SwashbucklerDiary.Gtk.Extensions
     {
         public static IServiceCollection AddDependencyInjection(this IServiceCollection services)
         {
-            services.AddSingleton<UnpackagedPreferencesImplementation>();
             services.AddSingleton<GtkSystemThemeManager>();
 
             services.AddSingleton<IStaticWebAssets, Essentials.StaticWebAssets>();
