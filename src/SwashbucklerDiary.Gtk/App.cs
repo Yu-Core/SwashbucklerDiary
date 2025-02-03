@@ -23,11 +23,12 @@ namespace SwashbucklerDiary.Gtk
         public App(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-
+            var i18n = _serviceProvider.GetRequiredService<Masa.Blazor.I18n>();
+            
             app = global::Gtk.Application.New(null, Gio.ApplicationFlags.NonUnique);
             GLib.Functions.SetPrgname("SwashbucklerDiary");
             // Set the human-readable application name for app bar and task list.
-            GLib.Functions.SetApplicationName("SwashbucklerDiary");
+            GLib.Functions.SetApplicationName(i18n.T("AppName"));
             app.OnActivate += Activate;
 
             _themeService = _serviceProvider.GetRequiredService<IThemeService>();
