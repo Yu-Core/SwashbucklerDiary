@@ -20,4 +20,4 @@ services.AddDependencyInjection();
 var sp = services.BuildServiceProvider();
 
 var app = new App(sp);
-app.Run();
+return app.Run(args);

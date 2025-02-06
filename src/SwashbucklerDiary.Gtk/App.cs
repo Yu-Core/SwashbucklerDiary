@@ -10,6 +10,8 @@ namespace SwashbucklerDiary.Gtk
 {
     public class App
     {
+        private const string applicationId = "com.yucore.swashbucklerdiary";
+
         private readonly global::Gtk.Application app;
 
         private readonly IServiceProvider _serviceProvider;
@@ -31,7 +33,7 @@ namespace SwashbucklerDiary.Gtk
             _serviceProvider = serviceProvider;
             var i18n = _serviceProvider.GetRequiredService<Masa.Blazor.I18n>();
 
-            app = global::Gtk.Application.New(null, Gio.ApplicationFlags.NonUnique);
+            app = global::Gtk.Application.New(applicationId, Gio.ApplicationFlags.NonUnique);
             GLib.Functions.SetPrgname("SwashbucklerDiary");
             // Set the human-readable application name for app bar and task list.
             GLib.Functions.SetApplicationName(i18n.T("AppName"));
@@ -54,9 +56,18 @@ namespace SwashbucklerDiary.Gtk
             window.Show();
         }
 
-        public void Run()
+        public int Run(string[] args)
         {
-            app.RunWithSynchronizationContext(null);
+            try
+            {
+                string[] argv = [applicationId, .. args];
+                return app.RunWithSynchronizationContext(argv);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                return -1;
+            }
         }
 
         private void InitTheme()
