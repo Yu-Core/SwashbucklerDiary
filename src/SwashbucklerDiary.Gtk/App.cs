@@ -18,27 +18,39 @@ namespace SwashbucklerDiary.Gtk
 
         private readonly Masa.Blazor.MasaBlazor _masaBlazor;
 
+        private readonly IAppLifecycle _appLifecycle;
+
+        private global::Gtk.ApplicationWindow? window;
+
+        private WindowLifecycleHelper? windowLifecycleHelper;
+
         private Gdk.RGBA backgroundColor = default!;
 
         public App(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             var i18n = _serviceProvider.GetRequiredService<Masa.Blazor.I18n>();
-            
+
             app = global::Gtk.Application.New(null, Gio.ApplicationFlags.NonUnique);
             GLib.Functions.SetPrgname("SwashbucklerDiary");
             // Set the human-readable application name for app bar and task list.
             GLib.Functions.SetApplicationName(i18n.T("AppName"));
-            app.OnActivate += Activate;
+            app.OnActivate += ApplicationActivate;
 
             _themeService = _serviceProvider.GetRequiredService<IThemeService>();
             _masaBlazor = _serviceProvider.GetRequiredService<Masa.Blazor.MasaBlazor>();
+            _appLifecycle = _serviceProvider.GetRequiredService<IAppLifecycle>();
             InitTheme();
         }
 
-        private void Activate(Application sender, EventArgs args)
+        private void ApplicationActivate(Application sender, EventArgs args)
         {
-            var window = new MainWindow(app, _serviceProvider, backgroundColor);
+            window = new MainWindow(app, _serviceProvider, backgroundColor);
+
+            windowLifecycleHelper = new WindowLifecycleHelper(window);
+            windowLifecycleHelper.Resumed += (s, e) => _appLifecycle.OnResume();
+            windowLifecycleHelper.Stopped += (s, e) => _appLifecycle.OnStop();
+
             window.Show();
         }
 
@@ -56,9 +68,8 @@ namespace SwashbucklerDiary.Gtk
             _themeService.SetTheme(theme);
 
             bool dark = _themeService.RealTheme == Shared.Theme.Dark;
-            var rgba = new Gdk.RGBA();
-            rgba.Parse(dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface);
-            backgroundColor = rgba;
+            backgroundColor = new Gdk.RGBA();
+            backgroundColor.Parse(dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface);
         }
 
         private void ThemeChanged(Theme theme)

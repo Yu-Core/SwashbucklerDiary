@@ -3,8 +3,8 @@ namespace SwashbucklerDiary.Gtk.Essentials
 {
     public class Preferences : Rcl.Essentials.IPreferences
     {
-        private static readonly UnpackagedPreferencesImplementation? _preferences;
-        public static UnpackagedPreferencesImplementation Default => _preferences ?? new();
+        private static UnpackagedPreferencesImplementation? _preferences;
+        public static UnpackagedPreferencesImplementation Default => _preferences ??= new();
 
         public Task ClearAsync()
         {
