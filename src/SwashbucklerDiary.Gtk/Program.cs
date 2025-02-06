@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SwashbucklerDiary.Gtk;
 using SwashbucklerDiary.Gtk.Extensions;
+using SwashbucklerDiary.Rcl.Extensions;
 
 var services = new ServiceCollection();
 services.AddGtkBlazorWebView();
@@ -12,7 +13,7 @@ services.AddMasaBlazorConfig();
 
 services.AddSerilogConfig();
 
-services.AddSqlsugarConfig();
+services.AddSqlSugarConfig(SQLiteConstants.ConnectionString, SQLiteConstants.PrivacyConnectionString);
 
 services.AddDependencyInjection();
 

@@ -1,14 +1,15 @@
+using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace SwashbucklerDiary.Maui.Extensions
+namespace SwashbucklerDiary.Rcl.Extensions
 {
     public static partial class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddSqlsugarConfig(this IServiceCollection services)
+        public static IServiceCollection AddSqlSugarConfig(this IServiceCollection services, string connectionString, string privacyConnectionString)
         {
             ISettingService? settingService = null;
             var configureExternalServices = new ConfigureExternalServices
@@ -58,7 +59,7 @@ namespace SwashbucklerDiary.Maui.Extensions
                     new ConnectionConfig(){
                         ConfigId="0",
                         DbType = DbType.Sqlite,
-                        ConnectionString = SQLiteConstants.ConnectionString,
+                        ConnectionString = connectionString,
                         InitKeyType = InitKeyType.Attribute,
                         IsAutoCloseConnection = true,
                         ConfigureExternalServices =configureExternalServices,
@@ -70,7 +71,7 @@ namespace SwashbucklerDiary.Maui.Extensions
                     new ConnectionConfig(){
                         ConfigId="1",
                         DbType = DbType.Sqlite,
-                        ConnectionString = SQLiteConstants.PrivacyConnectionString,
+                        ConnectionString = privacyConnectionString,
                         InitKeyType = InitKeyType.Attribute,
                         IsAutoCloseConnection = true,
                         ConfigureExternalServices =configureExternalServices,

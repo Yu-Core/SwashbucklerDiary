@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Rcl.Services;
@@ -10,45 +10,45 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
     {
         public static IServiceCollection AddDependencyInjection(this IServiceCollection services)
         {
-            services.AddScoped<IStaticWebAssets, Essentials.StaticWebAssets>();
-            services.AddScoped<ISettingService, Services.SettingService>();
-            services.AddScoped<INavigateController, Essentials.NavigateController>();
-            services.AddScoped<IGlobalConfiguration, GlobalConfiguration>();
-            services.AddScoped<IPopupServiceHelper, PopupServiceHelper>();
-            services.AddScoped<II18nService, I18nService>();
-            services.AddScoped<IVersionTracking, VersionTracking>();
-            services.AddScoped<IPlatformIntegration, PlatformIntegration>();
-            services.AddScoped<IAppFileSystem, Essentials.AppFileSystem>();
-            services.AddScoped<IMediaResourceManager, Services.MediaResourceManager>();
-            services.AddScoped<MasaBlazorHelper>();
+            services.AddSingleton<IStaticWebAssets, Essentials.StaticWebAssets>();
+            services.AddSingleton<ISettingService, Services.SettingService>();
+            services.AddSingleton<INavigateController, Essentials.NavigateController>();
+            services.AddSingleton<IGlobalConfiguration, GlobalConfiguration>();
+            services.AddSingleton<IPopupServiceHelper, PopupServiceHelper>();
+            services.AddSingleton<II18nService, I18nService>();
+            services.AddSingleton<IVersionTracking, VersionTracking>();
+            services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
+            services.AddSingleton<IAppFileSystem, Essentials.AppFileSystem>();
+            services.AddSingleton<IMediaResourceManager, Services.MediaResourceManager>();
+            services.AddSingleton<MasaBlazorHelper>();
 
             services.AddRclDependencyInjection();
 
-            services.AddScoped<IDiaryRepository, DiaryRepository>();
-            services.AddScoped<ITagRepository, TagRepository>();
-            services.AddScoped<IUserAchievementRepository, UserAchievementRepository>();
-            services.AddScoped<IUserStateModelRepository, UserStateModelRepository>();
-            services.AddScoped<ILocationRepository, LocationRepository>();
-            services.AddScoped<ILogRepository, LogRepository>();
-            services.AddScoped<IResourceRepository, ResourceRepository>();
+            services.AddSingleton<IDiaryRepository, DiaryRepository>();
+            services.AddSingleton<ITagRepository, TagRepository>();
+            services.AddSingleton<IUserAchievementRepository, UserAchievementRepository>();
+            services.AddSingleton<IUserStateModelRepository, UserStateModelRepository>();
+            services.AddSingleton<ILocationRepository, LocationRepository>();
+            services.AddSingleton<ILogRepository, LogRepository>();
+            services.AddSingleton<IResourceRepository, ResourceRepository>();
 
-            services.AddScoped<ITagService, TagService>();
-            services.AddScoped<IDiaryService, DiaryService>();
-            services.AddScoped<IAchievementService, AchievementService>();
-            services.AddScoped<ILocationService, LocationService>();
-            services.AddScoped<ILogService, LogService>();
-            services.AddScoped<IResourceService, ResourceService>();
+            services.AddSingleton<ITagService, TagService>();
+            services.AddSingleton<IDiaryService, DiaryService>();
+            services.AddSingleton<IAchievementService, AchievementService>();
+            services.AddSingleton<ILocationService, LocationService>();
+            services.AddSingleton<ILogService, LogService>();
+            services.AddSingleton<IResourceService, ResourceService>();
 
-            services.AddScoped<IAppLifecycle, AppLifecycle>();
+            services.AddSingleton<IAppLifecycle, AppLifecycle>();
             services.AddScoped<SystemThemeJSModule>();
             services.AddScoped<IThemeService, ThemeService>();
-            services.AddScoped<IAccessExternal, Services.AccessExternal>();
+            services.AddSingleton<IAccessExternal, Services.AccessExternal>();
 
-            services.AddScoped<IDiaryFileManager, Services.DiaryFileManager>();
-            services.AddScoped<IAvatarService, Services.AvatarService>();
+            services.AddSingleton<IDiaryFileManager, Services.DiaryFileManager>();
+            services.AddSingleton<IAvatarService, Services.AvatarService>();
             services.AddScoped<ScreenshotJSModule>();
             services.AddScoped<IScreenshot, Screenshot>();
-            services.AddScoped<IVersionUpdataManager, Services.VersionUpdataManager>();
+            services.AddSingleton<IVersionUpdataManager, Services.VersionUpdataManager>();
 
             return services;
         }
