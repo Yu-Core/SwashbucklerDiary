@@ -1,5 +1,4 @@
-﻿using SwashbucklerDiary.Maui.Essentials;
-using SwashbucklerDiary.Maui.Services;
+using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Repository;
@@ -48,7 +47,7 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddScoped<ScreenshotJSModule>();
             services.AddScoped<Rcl.Essentials.IScreenshot, Essentials.Screenshot>();
             services.AddSingleton<IVersionUpdataManager, Services.VersionUpdataManager>();
-            services.AddSingleton<IWebDAV, Essentials.WebDAV>();
+            services.AddSingleton<IWebDAV, WebDAV>();
             services.AddSingleton<ILANSenderService, LANSenderService>();
             services.AddSingleton<ILANReceiverService, LANReceiverService>();
 

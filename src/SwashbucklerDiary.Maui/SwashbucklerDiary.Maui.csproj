@@ -147,13 +147,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SwashbucklerDiary.Rcl\SwashbucklerDiary.Rcl.csproj" />
+		<ProjectReference Include="..\SwashbucklerDiary.Rcl.Client\SwashbucklerDiary.Rcl.Client.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="10.0.0" />
 		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="1.9.7" />
-		<PackageReference Include="WebDav.Client" Version="2.8.0" />
 		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.4.3" />
 	</ItemGroup>
 

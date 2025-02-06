@@ -16,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SwashbucklerDiary.Rcl\SwashbucklerDiary.Rcl.csproj" />
+		<ProjectReference Include="..\SwashbucklerDiary.Rcl.Client\SwashbucklerDiary.Rcl.Client.csproj" />
 	</ItemGroup>
 
 </Project>

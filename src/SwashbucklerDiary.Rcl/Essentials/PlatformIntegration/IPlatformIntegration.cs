@@ -8,6 +8,8 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         string AppVersionString { get; }
 
+        string DeviceName { get; }
+
         /// <summary>
         /// 复制到粘贴板
         /// </summary>

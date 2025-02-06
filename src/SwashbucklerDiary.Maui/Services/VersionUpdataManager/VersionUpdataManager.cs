@@ -1,5 +1,5 @@
-﻿using SwashbucklerDiary.Maui.Pages;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Pages;
 using SwashbucklerDiary.Rcl.Services;
 using System.Text.Json;
 

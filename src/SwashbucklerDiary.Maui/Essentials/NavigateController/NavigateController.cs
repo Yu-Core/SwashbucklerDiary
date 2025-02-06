@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Components.Routing;
-using SwashbucklerDiary.Rcl.Layout;
+using Microsoft.AspNetCore.Components.Routing;
 using System.Reflection;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
     public class NavigateController : Rcl.Essentials.NavigateController
     {
-        protected override Assembly[] Assemblies => [typeof(MainLayoutBase).Assembly, typeof(Routes).Assembly];
+        protected override Assembly[] Assemblies { get; } = [Routes.Assembly, .. Routes.AdditionalAssemblies];
 
         protected override Task HandleNavigateToStackBottomPath(LocationChangingContext context)
         {

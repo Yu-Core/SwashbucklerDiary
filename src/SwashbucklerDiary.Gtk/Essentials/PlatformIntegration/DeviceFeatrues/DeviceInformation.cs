@@ -6,5 +6,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
     {
         public AppDevicePlatform CurrentPlatform
             => OperatingSystem.IsLinux() ? AppDevicePlatform.Linux : AppDevicePlatform.Unknown;
+
+        public string DeviceName => GLib.Functions.GetUserName();
     }
 }

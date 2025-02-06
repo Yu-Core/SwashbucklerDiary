@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
@@ -18,5 +18,6 @@ namespace SwashbucklerDiary.Maui.Essentials
 #else
            => AppDevicePlatform.Unknown;
 #endif
+        public string DeviceName => DeviceInfo.Current.Name;
     }
 }
