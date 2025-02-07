@@ -53,7 +53,7 @@ namespace SwashbucklerDiary.Gtk
             windowLifecycleHelper.Resumed += (s, e) => _appLifecycle.OnResume();
             windowLifecycleHelper.Stopped += (s, e) => _appLifecycle.OnStop();
 
-            window.Show();
+            window.Present();
         }
 
         public int Run(string[] args)
