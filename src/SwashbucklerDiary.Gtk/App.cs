@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Gtk
 {
     public class App
     {
-        private const string applicationId = "com.yucore.swashbucklerdiary";
+        private static readonly string applicationId = AppInfo.PackageName;
 
         private readonly global::Gtk.Application app;
 

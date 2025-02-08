@@ -1,24 +1,36 @@
-using SwashbucklerDiary.Gtk.Essentials;
-
 namespace SwashbucklerDiary.Gtk
 {
     public static class FileSystem
     {
-        public static string AppDataDirectory => PlatformAppDataDirectory;
+        private static readonly Lazy<string> _platformCacheDirectory = new(valueFactory: () =>
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppSpecificPath, "Cache");
 
-        public static string CacheDirectory => PlatformCacheDirectory;
+            if (!File.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
 
-        static string CleanPath(string path) =>
-            string.Join("_", path.Split(Path.GetInvalidFileNameChars()));
+            return path;
+        });
 
-        static string AppSpecificPath =>
-            Path.Combine(CleanPath(PlatformIntegration.PublisherName), CleanPath(PlatformIntegration.PackageName));
+        private static readonly Lazy<string> _platformAppDataDirectory = new(valueFactory: () =>
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppSpecificPath, "Data");
 
-        static string PlatformCacheDirectory
-           => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppSpecificPath, "Cache");
+            if (!File.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
 
-        static string PlatformAppDataDirectory
-            => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppSpecificPath, "Data");
+            return path;
+        });
+
+        public static string AppDataDirectory => _platformAppDataDirectory.Value;
+
+        public static string CacheDirectory => _platformCacheDirectory.Value;
+
+        static string AppSpecificPath => AppInfo.PackageName;
     }
 }
 

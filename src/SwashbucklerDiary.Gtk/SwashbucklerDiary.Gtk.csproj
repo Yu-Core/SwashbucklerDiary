@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
@@ -6,7 +6,15 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<DefineConstants>$(DefineConstants);GTK;WEBKIT_GTK</DefineConstants>
+		<AssemblyTitle>com.yucore.swashbucklerdiary</AssemblyTitle>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+			<_Parameter1>PackageName</_Parameter1>
+			<_Parameter2>com.yucore.swashbucklerdiary</_Parameter2>
+		</AssemblyAttribute>
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="GirCore.Gtk-4.0" Version="0.6.0-preview.1" />
