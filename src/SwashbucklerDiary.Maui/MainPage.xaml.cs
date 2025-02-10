@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Components.WebView;
+using Microsoft.AspNetCore.Components.WebView;
 using SwashbucklerDiary.Maui.Essentials;
-using SwashbucklerDiary.Maui.Extensions;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Maui
 {
@@ -32,13 +32,13 @@ namespace SwashbucklerDiary.Maui
 
         private void BlazorWebViewInitializingCore(object? sender, BlazorWebViewInitializingEventArgs e)
         {
-            HandleLaunchActivation();
+            HandleAppActivation();
             BlazorWebViewInitializing(sender, e);
         }
 
-        private void HandleLaunchActivation()
+        private void HandleAppActivation()
         {
-            var args = LaunchActivation.ActivationArguments;
+            var args = AppActivation.Arguments;
             if (args is null || args.Data is null)
             {
                 return;
@@ -46,10 +46,10 @@ namespace SwashbucklerDiary.Maui
 
             switch (args.Kind)
             {
-                case LaunchActivationKind.Share:
+                case AppActivationKind.Share:
                     HandleShare(args);
                     break;
-                case LaunchActivationKind.Scheme:
+                case AppActivationKind.Scheme:
                     HandleScheme(args);
                     break;
                 default:
@@ -65,7 +65,7 @@ namespace SwashbucklerDiary.Maui
                 blazorWebView.StartPath = path;
             }
 
-            LaunchActivation.ActivationArguments = null;
+            AppActivation.Arguments = null;
         }
 
         private void HandleShare(ActivationArguments args)

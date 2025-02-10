@@ -1,4 +1,4 @@
-﻿using Microsoft.JSInterop;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.WebAssembly.Extensions;
 
@@ -6,11 +6,11 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public class AppLifecycle : IAppLifecycle
     {
-        public event Action<ActivationArguments>? Activated;
+        public event Action<ActivationArguments>? OnActivated;
 
-        public event Action? Resumed;
+        public event Action? OnResumed;
 
-        public event Action? Stopped;
+        public event Action? OnStopped;
 
         private readonly Lazy<ValueTask<IJSInProcessObjectReference>> _module;
 
@@ -22,10 +22,10 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         }
 
         [JSInvokable]
-        public void OnResume() => Resumed?.Invoke();
+        public void Resume() => OnResumed?.Invoke();
 
         [JSInvokable]
-        public void OnStop() => Stopped?.Invoke();
+        public void Stop() => OnStopped?.Invoke();
 
         public async void QuitApp()
         {
@@ -37,7 +37,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         {
             var module = await _module.Value;
             var dotNetObject = DotNetObjectReference.Create(this);
-            module.InvokeVoid("init", dotNetObject, nameof(OnStop), nameof(OnResume));
+            module.InvokeVoid("init", dotNetObject, nameof(Stop), nameof(Resume));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml;
 using SwashbucklerDiary.Maui.Essentials;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Maui.WinUI
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            await LaunchActivation.OnLaunchedAsync();
+            await AppActivation.LaunchAsync();
 
             base.OnLaunched(args);
         }

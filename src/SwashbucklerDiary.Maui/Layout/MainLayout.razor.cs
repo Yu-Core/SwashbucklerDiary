@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using SwashbucklerDiary.Maui.Extensions;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Layout;
@@ -24,7 +23,7 @@ namespace SwashbucklerDiary.Maui.Layout
 #if IOS || MACCATALYST
             if (AppLifecycle.ActivationArguments != null)
             {
-                if (AppLifecycle.ActivationArguments.Kind == LaunchActivationKind.Scheme)
+                if (AppLifecycle.ActivationArguments.Kind == AppActivationKind.Scheme)
                 {
                     HandleScheme(AppLifecycle.ActivationArguments);
                 }
@@ -32,7 +31,7 @@ namespace SwashbucklerDiary.Maui.Layout
                 AppLifecycle.ActivationArguments = null;
             }
 #endif
-            AppLifecycle.Activated += HandleActivated;
+            AppLifecycle.OnActivated += HandleActivated;
             VersionUpdataManager.AfterCheckFirstLaunch += CheckForUpdates;
         }
 
@@ -46,7 +45,7 @@ namespace SwashbucklerDiary.Maui.Layout
 
         protected override void OnDispose()
         {
-            AppLifecycle.Activated -= HandleActivated;
+            AppLifecycle.OnActivated -= HandleActivated;
             VersionUpdataManager.AfterCheckFirstLaunch -= CheckForUpdates;
             base.OnDispose();
         }
@@ -96,10 +95,10 @@ namespace SwashbucklerDiary.Maui.Layout
 
             switch (args.Kind)
             {
-                case LaunchActivationKind.Share:
+                case AppActivationKind.Share:
                     HandleShare(args);
                     break;
-                case LaunchActivationKind.Scheme:
+                case AppActivationKind.Scheme:
                     HandleScheme(args);
                     break;
                 default:

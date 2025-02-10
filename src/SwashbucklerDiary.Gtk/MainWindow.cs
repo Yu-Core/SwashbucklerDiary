@@ -1,11 +1,19 @@
 using Microsoft.AspNetCore.Components.WebView;
 using Microsoft.AspNetCore.Components.WebView.Gtk;
+using Microsoft.Extensions.DependencyInjection;
+using SwashbucklerDiary.Gtk.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Gtk
 {
     public class MainWindow : global::Gtk.ApplicationWindow
     {
         private readonly Gdk.RGBA _backgroundColor;
+
+        private readonly INavigateController _navigateController;
+
+        private readonly Microsoft.AspNetCore.Components.WebView.Gtk.BlazorWebView blazorWebView;
 
         public MainWindow(
             global::Gtk.Application application,
@@ -14,8 +22,6 @@ namespace SwashbucklerDiary.Gtk
             )
             : base(global::Gtk.Internal.ApplicationWindow.New(application.Handle), false)
         {
-            _backgroundColor = backgroundColor;
-
             SetDefaultSize(1024, 768);
 
             this.OnDestroy += (o, e) =>
@@ -23,24 +29,18 @@ namespace SwashbucklerDiary.Gtk
                 application.Quit();
             };
 
-            var blazorWebView = new Microsoft.AspNetCore.Components.WebView.Gtk.BlazorWebView();
+            blazorWebView = new();
             blazorWebView.HostPage = Path.Combine("wwwroot", "index.html");
             blazorWebView.Services = serviceProvider;
             blazorWebView.RootComponents.Add<Routes>("#app");
 
-            blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;
-
             this.SetChild(blazorWebView);
-        }
 
-        //public static MainWindow New(
-        //    global::Gtk.Application application,
-        //    IServiceProvider serviceProvider,
-        //    Gdk.RGBA backgroundColor)
-        //{
-        //    var applicationwindowHandle = global::Gtk.Internal.ApplicationWindow.New(application.Handle);
-        //    return new MainWindow(applicationwindowHandle, false, application, serviceProvider, backgroundColor);
-        //}
+            _backgroundColor = backgroundColor;
+            _navigateController = serviceProvider.GetRequiredService<INavigateController>();
+            blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializing;
+            blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;
+        }
 
         private void BlazorWebViewInitialized(object? sender, BlazorWebViewInitializedEventArgs e)
         {
@@ -49,6 +49,40 @@ namespace SwashbucklerDiary.Gtk
             settings.UserAgent += " Android Mobile";
             settings.MediaPlaybackRequiresUserGesture = false;
             e.WebView.SetSettings(settings);
+        }
+
+        private void BlazorWebViewInitializing(object? sender, BlazorWebViewInitializingEventArgs e)
+        {
+            HandleAppActivation();
+        }
+
+        private void HandleAppActivation()
+        {
+            var args = AppActivation.Arguments;
+            if (args is null || args.Data is null)
+            {
+                return;
+            }
+
+            switch (args.Kind)
+            {
+                case AppActivationKind.Scheme:
+                    HandleScheme(args);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void HandleScheme(ActivationArguments args)
+        {
+            string? uriString = args.Data as string;
+            if (_navigateController.CheckUrlScheme(uriString, out var path))
+            {
+                blazorWebView.StartPath = path;
+            }
+
+            AppActivation.Arguments = null;
         }
     }
 }

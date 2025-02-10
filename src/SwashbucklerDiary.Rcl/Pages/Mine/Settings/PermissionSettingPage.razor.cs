@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 
@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
-            AppLifecycle.Resumed += UpdatePermissionStates;
+            AppLifecycle.OnResumed += UpdatePermissionStates;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -35,7 +35,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.DisposeAsyncCore();
 
-            AppLifecycle.Resumed -= UpdatePermissionStates;
+            AppLifecycle.OnResumed -= UpdatePermissionStates;
         }
 
         private string? CameraPermission => GetPermissionText(cameraState);

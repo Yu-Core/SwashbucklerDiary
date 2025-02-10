@@ -1,6 +1,6 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 
-namespace SwashbucklerDiary.Maui.Extensions
+namespace SwashbucklerDiary.Rcl.Extensions
 {
     public static class INavigateControllerExtensions
     {

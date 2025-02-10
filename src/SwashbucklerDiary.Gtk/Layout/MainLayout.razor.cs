@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Layout;
 
 namespace SwashbucklerDiary.Gtk.Layout
@@ -19,7 +20,7 @@ namespace SwashbucklerDiary.Gtk.Layout
         {
             base.OnInitialized();
 
-            //AppLifecycle.Activated += HandleActivated;
+            AppLifecycle.OnActivated += HandleActivated;
             VersionUpdataManager.AfterCheckFirstLaunch += CheckForUpdates;
         }
 
@@ -33,7 +34,7 @@ namespace SwashbucklerDiary.Gtk.Layout
 
         protected override void OnDispose()
         {
-            //AppLifecycle.Activated -= HandleActivated;
+            AppLifecycle.OnActivated -= HandleActivated;
             VersionUpdataManager.AfterCheckFirstLaunch -= CheckForUpdates;
             base.OnDispose();
         }
@@ -74,44 +75,30 @@ namespace SwashbucklerDiary.Gtk.Layout
         }
 #endif
 
-        //private void HandleActivated(ActivationArguments? args)
-        //{
-        //    if (args is null || args.Data is null)
-        //    {
-        //        return;
-        //    }
+        private void HandleActivated(ActivationArguments? args)
+        {
+            if (args is null || args.Data is null)
+            {
+                return;
+            }
 
-        //    switch (args.Kind)
-        //    {
-        //        case LaunchActivationKind.Share:
-        //            HandleShare(args);
-        //            break;
-        //        case LaunchActivationKind.Scheme:
-        //            HandleScheme(args);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
+            switch (args.Kind)
+            {
+                case AppActivationKind.Scheme:
+                    HandleScheme(args);
+                    break;
+                default:
+                    break;
+            }
+        }
 
-        //private void HandleShare(ActivationArguments args)
-        //{
-        //    if (NavigationManager.GetBaseRelativePath() == "write")
-        //    {
-        //        return;
-        //    }
-
-        //    AppLifecycle.ActivationArguments = args;
-        //    NavigationManager.NavigateTo("write");
-        //}
-
-        //private void HandleScheme(ActivationArguments args)
-        //{
-        //    string? uriString = args?.Data as string;
-        //    if (NavigateController.CheckUrlScheme(uriString, out var path))
-        //    {
-        //        NavigationManager.NavigateTo(path.TrimStart('/'));
-        //    }
-        //}
+        private void HandleScheme(ActivationArguments args)
+        {
+            string? uriString = args?.Data as string;
+            if (NavigateController.CheckUrlScheme(uriString, out var path))
+            {
+                NavigationManager.NavigateTo(path.TrimStart('/'));
+            }
+        }
     }
 }

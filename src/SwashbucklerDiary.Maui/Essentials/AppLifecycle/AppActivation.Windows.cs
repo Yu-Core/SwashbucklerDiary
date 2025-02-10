@@ -1,4 +1,4 @@
-﻿using Microsoft.Windows.AppLifecycle;
+using Microsoft.Windows.AppLifecycle;
 using SwashbucklerDiary.Rcl.Essentials;
 using System.Diagnostics;
 using System.Reflection;
@@ -7,9 +7,9 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
-    public static partial class LaunchActivation
+    public static partial class AppActivation
     {
-        public static async Task OnLaunchedAsync()
+        public static async Task LaunchAsync()
         {
             var activatedArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
             var mainInstance = AppInstance.FindOrRegisterForKey("main");
@@ -21,24 +21,24 @@ namespace SwashbucklerDiary.Maui.Essentials
                 return;
             }
 
-            mainInstance.Activated += OnActivated;
-            ActivationArguments = await ConvertActivationArguments(activatedArgs);
+            mainInstance.Activated += Activate;
+            Arguments = await CreateArguments(activatedArgs);
         }
 
-        private static async void OnActivated(object? sender, AppActivationArguments args)
+        private static async void Activate(object? sender, AppActivationArguments args)
         {
-            var activationArguments = await ConvertActivationArguments(args);
-            Activated?.Invoke(activationArguments);
+            var activationArguments = await CreateArguments(args);
+            OnActivated?.Invoke(activationArguments);
         }
 
-        private static ValueTask<ActivationArguments> ConvertActivationArguments(AppActivationArguments args)
+        private static ValueTask<ActivationArguments> CreateArguments(AppActivationArguments args)
         {
             return args.Kind switch
             {
                 ExtendedActivationKind.Protocol => HandleScheme((ProtocolActivatedEventArgs)args.Data),
                 ExtendedActivationKind.ShareTarget => HandleShare((ShareTargetActivatedEventArgs)args.Data),
                 ExtendedActivationKind.Launch => HandleLaunch((LaunchActivatedEventArgs)args.Data),
-                _ => NewLaunchActivationArguments()
+                _ => NewAppActivationArguments()
             };
         }
 
@@ -46,7 +46,7 @@ namespace SwashbucklerDiary.Maui.Essentials
         {
             var activationArguments = new ActivationArguments()
             {
-                Kind = LaunchActivationKind.Scheme,
+                Kind = AppActivationKind.Scheme,
                 Data = args.Uri.ToString()
             };
             return ValueTask.FromResult(activationArguments);
@@ -66,7 +66,7 @@ namespace SwashbucklerDiary.Maui.Essentials
                 shareActivationArguments = new()
                 {
                     Title = title,
-                    Kind = ShareKind.FilePaths,
+                    Kind = ShareActivationKind.FilePaths,
                     Data = shareFilePaths
                 };
             }
@@ -76,7 +76,7 @@ namespace SwashbucklerDiary.Maui.Essentials
                 shareActivationArguments = new()
                 {
                     Title = title,
-                    Kind = ShareKind.Text,
+                    Kind = ShareActivationKind.Text,
                     Data = text
                 };
             }
@@ -86,7 +86,7 @@ namespace SwashbucklerDiary.Maui.Essentials
                 shareActivationArguments = new()
                 {
                     Title = title,
-                    Kind = ShareKind.Text,
+                    Kind = ShareActivationKind.Text,
                     Data = uri.ToString()
                 };
             }
@@ -99,7 +99,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             {
                 activationArguments = new()
                 {
-                    Kind = LaunchActivationKind.Share,
+                    Kind = AppActivationKind.Share,
                     Data = shareActivationArguments
                 };
             }
@@ -107,7 +107,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             {
                 activationArguments = new()
                 {
-                    Kind = LaunchActivationKind.Launch,
+                    Kind = AppActivationKind.Launch,
                 };
             }
 
@@ -122,11 +122,11 @@ namespace SwashbucklerDiary.Maui.Essentials
                 return HandleAppActions(id);
             }
 
-            return NewLaunchActivationArguments();
+            return NewAppActivationArguments();
         }
 
-        private static ValueTask<ActivationArguments> NewLaunchActivationArguments()
-            => ValueTask.FromResult(new ActivationArguments() { Kind = LaunchActivationKind.Launch });
+        private static ValueTask<ActivationArguments> NewAppActivationArguments()
+            => ValueTask.FromResult(new ActivationArguments() { Kind = AppActivationKind.Launch });
 
         private static async ValueTask<ActivationArguments> HandleAppActions(string id)
         {
@@ -137,7 +137,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             }
             else
             {
-                return await NewLaunchActivationArguments();
+                return await NewAppActivationArguments();
             }
         }
 

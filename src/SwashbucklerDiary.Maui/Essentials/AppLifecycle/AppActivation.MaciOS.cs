@@ -1,23 +1,23 @@
-﻿using Foundation;
+using Foundation;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
-    public static partial class LaunchActivation
+    public static partial class AppActivation
     {
-        public static void OnLaunched(NSUrl nSUrl)
+        public static void Launch(NSUrl nSUrl)
         {
-            ActivationArguments = ConvertActivationArguments(nSUrl);
+            Arguments = CreateArgumentsFromNSUrl(nSUrl);
         }
 
-        public static void OnActivated(NSUrl nSUrl)
+        public static void Activate(NSUrl nSUrl)
         {
-            var activationArguments = ConvertActivationArguments(nSUrl);
-            Activated?.Invoke(activationArguments);
+            var activationArguments = CreateArgumentsFromNSUrl(nSUrl);
+            OnActivated?.Invoke(activationArguments);
         }
 
-        private static ActivationArguments ConvertActivationArguments(NSUrl nSUrl)
+        private static ActivationArguments CreateArgumentsFromNSUrl(NSUrl nSUrl)
         {
             var urlString = nSUrl.ToString();
             if (SchemeConstants.Schemes.Any(urlString.StartsWith))
@@ -25,14 +25,14 @@ namespace SwashbucklerDiary.Maui.Essentials
                 return HandleScheme(nSUrl);
             }
 
-            return new ActivationArguments() { Kind = LaunchActivationKind.Launch };
+            return new ActivationArguments() { Kind = AppActivationKind.Launch };
         }
 
         private static ActivationArguments HandleScheme(NSUrl nSUrl)
         {
             return new()
             {
-                Kind = LaunchActivationKind.Scheme,
+                Kind = AppActivationKind.Scheme,
                 Data = nSUrl?.ToString()
             };
         }

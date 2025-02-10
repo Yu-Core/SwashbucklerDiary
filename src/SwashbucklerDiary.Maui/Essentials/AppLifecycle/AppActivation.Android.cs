@@ -1,31 +1,31 @@
-﻿using Android.Content;
+using Android.Content;
 using SwashbucklerDiary.Maui.Extensions;
 using SwashbucklerDiary.Rcl.Essentials;
 using System.Reflection;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
-    public static partial class LaunchActivation
+    public static partial class AppActivation
     {
-        public static void OnLaunched(Intent intent)
+        public static void Launch(Intent intent)
         {
-            ActivationArguments = ConvertActivationArguments(intent);
+            Arguments = CreateArgumentsFromIntent(intent);
         }
 
-        public static void OnActivated(Intent intent)
+        public static void Activate(Intent intent)
         {
-            var activationArguments = ConvertActivationArguments(intent);
-            Activated?.Invoke(activationArguments);
+            var activationArguments = CreateArgumentsFromIntent(intent);
+            OnActivated?.Invoke(activationArguments);
         }
 
-        private static ActivationArguments ConvertActivationArguments(Intent intent)
+        private static ActivationArguments CreateArgumentsFromIntent(Intent intent)
         {
             return intent.Action switch
             {
                 Intent.ActionView => HandleScheme(intent),
                 Intent.ActionSend => HandleShare(intent),
                 Intent.ActionSendMultiple => HandleShareMultiple(intent),
-                _ => new ActivationArguments() { Kind = LaunchActivationKind.Launch }
+                _ => new ActivationArguments() { Kind = AppActivationKind.Launch }
             };
         }
 
@@ -34,7 +34,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             var data = intent.Data;
             return new()
             {
-                Kind = LaunchActivationKind.Scheme,
+                Kind = AppActivationKind.Scheme,
                 Data = data?.ToString()
             };
         }
@@ -49,7 +49,7 @@ namespace SwashbucklerDiary.Maui.Essentials
                 string? text = intent.GetStringExtra(Intent.ExtraText);
                 shareActivationArguments = new()
                 {
-                    Kind = ShareKind.Text,
+                    Kind = ShareActivationKind.Text,
                     Data = text,
                     Title = title
                 };
@@ -63,7 +63,7 @@ namespace SwashbucklerDiary.Maui.Essentials
                     List<string> filePaths = [filePath];
                     shareActivationArguments = new()
                     {
-                        Kind = ShareKind.FilePaths,
+                        Kind = ShareActivationKind.FilePaths,
                         Data = filePaths,
                         Title = title
                     };
@@ -84,7 +84,7 @@ namespace SwashbucklerDiary.Maui.Essentials
                 var filePaths = uri.Select(EnsurePhysicalPath).ToList();
                 shareActivationArguments = new()
                 {
-                    Kind = ShareKind.FilePaths,
+                    Kind = ShareActivationKind.FilePaths,
                     Data = filePaths,
                     Title = title
                 };
@@ -100,7 +100,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             {
                 activationArguments = new()
                 {
-                    Kind = LaunchActivationKind.Share,
+                    Kind = AppActivationKind.Share,
                     Data = shareActivationArguments
                 };
             }
@@ -108,7 +108,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             {
                 activationArguments = new()
                 {
-                    Kind = LaunchActivationKind.Launch,
+                    Kind = AppActivationKind.Launch,
                 };
             }
 
