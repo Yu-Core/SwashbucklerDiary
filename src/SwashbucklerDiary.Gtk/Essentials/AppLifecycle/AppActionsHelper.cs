@@ -37,17 +37,8 @@ namespace SwashbucklerDiary.Gtk.Essentials
 
         public static void AddMainOptionEntries(global::Gtk.Application application)
         {
-            List<GLib.OptionEntry> entries = [
-                new(){
-                    LongName=GLib.Constants.OPTION_REMAINING,
-                    ShortName=0,
-                    Flags=0,
-                    Arg = GLib.OptionArg.StringArray,
-                    Description = null,
-                    ArgDescription = null
-                 },
-                 new(){}
-            ];
+            // Don`t change order
+            List<GLib.OptionEntry> entries = [];
 
             foreach (var name in AppActionNames)
             {
@@ -62,6 +53,17 @@ namespace SwashbucklerDiary.Gtk.Essentials
                 });
             }
 
+            entries.Add(new(){
+                    LongName=GLib.Constants.OPTION_REMAINING,
+                    ShortName=0,
+                    Flags=0,
+                    Arg = GLib.OptionArg.StringArray,
+                    Description = null,
+                    ArgDescription = null
+                 });
+            entries.Add(new(){});
+
+            // Gio.Application Unencapsulated AddMainOptionEntries
             Gio.Internal.Application.AddMainOptionEntries(application.Handle, OptionEntryArrayOwnedHandle.Create(entries.ToArray()));
         }
     }
