@@ -304,6 +304,22 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
                 _ => false
             };
         }
+        else if (args.Decision is ResponsePolicyDecision responsePolicyDecision)
+        {
+            if (responsePolicyDecision.IsMainFrameMainResource())
+            {
+                var uriString = responsePolicyDecision.GetRequest().GetUri();
+                if (Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out var uri))
+                {
+                    if (!AppOriginUri.IsBaseOf(uri))
+                    {
+                        responsePolicyDecision.Ignore();
+                        return true;
+                    }
+                }
+
+            }
+        }
 
         return false;
     }
