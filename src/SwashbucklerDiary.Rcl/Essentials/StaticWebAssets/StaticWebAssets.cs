@@ -4,9 +4,9 @@ namespace SwashbucklerDiary.Rcl.Essentials
 {
     public abstract class StaticWebAssets : IStaticWebAssets
     {
-        private static readonly Lazy<string?> _rclAssemblyName = new(() => typeof(StaticWebAssets).Assembly.GetName().Name);
+        private static readonly Lazy<string> _rclAssemblyName = new(() => typeof(StaticWebAssets).Assembly.GetName().Name!);
 
-        public static string? RclAssemblyName => _rclAssemblyName.Value;
+        public static string RclAssemblyName => _rclAssemblyName.Value;
 
         protected virtual JsonSerializerOptions DefaultJsonSerializerOptions { get; set; } = new()
         {

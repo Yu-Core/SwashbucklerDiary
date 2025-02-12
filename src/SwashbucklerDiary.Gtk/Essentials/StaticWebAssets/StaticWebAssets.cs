@@ -16,15 +16,11 @@ namespace SwashbucklerDiary.Gtk.Essentials
 #if !DEBUG
             if (isRcl)
             {
-                path = $"wwwroot/_content/{RclAssemblyName}/{relativePath}";
+                relativePath = Path.Combine("_content", RclAssemblyName, relativePath);
             }
-            else
-            {
-#endif
-            path = $"wwwroot/{relativePath}";
-#if !DEBUG
-            }
-#endif
+#endif     
+            path = Path.Combine(AppContext.BaseDirectory, "wwwroot", relativePath);
+
             if (!File.Exists(path))
             {
                 throw new Exception($"not find {path}");
