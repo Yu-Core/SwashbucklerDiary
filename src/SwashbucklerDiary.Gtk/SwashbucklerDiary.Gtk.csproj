@@ -6,14 +6,39 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<DefineConstants>$(DefineConstants);GTK;WEBKIT_GTK</DefineConstants>
-		<AssemblyTitle>com.yucore.swashbucklerdiary</AssemblyTitle>
+		<ApplicationId>com.yucore.swashbucklerdiary</ApplicationId>
+		<Version>1.0.0</Version>
+
+		<!-- https://github.com/qmfrederik/dotnet-packaging -->
+		<PackagePrefix>$(ApplicationId)</PackagePrefix>
+		<Prefix>/opt/apps/$(ApplicationId)</Prefix>
+		<PackageMaintainer>Yu-Core &lt;yu-core@qq.com&gt;</PackageMaintainer>
+		<PackageDescription>An open source, cross platform local diary application</PackageDescription>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<!-- Debug configuration settings -->
+		<ApplicationId>com.yucore.swashbucklerdiarydebug</ApplicationId>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
 			<_Parameter1>PackageName</_Parameter1>
-			<_Parameter2>com.yucore.swashbucklerdiary</_Parameter2>
+			<_Parameter2>$(ApplicationId)</_Parameter2>
 		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+		<DebDependency Include="libwebkitgtk-6.0-4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Resources/AppIcon/swashbuckler-diary.png" CopyToPublishDirectory="PreserveNewest">
+			<LinuxPath>/usr/share/pixmaps/swashbuckler-diary.png</LinuxPath>
+		</Content>
+		<Content Include="Platform/swashbuckler-diary.desktop" CopyToPublishDirectory="PreserveNewest">
+			<LinuxPath>/usr/share/applications/swashbuckler-diary.desktop</LinuxPath>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>

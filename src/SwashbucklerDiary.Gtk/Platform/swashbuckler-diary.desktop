@@ -1,0 +1,25 @@
+[Desktop Entry]
+Actions=Search;Add;
+Comment=An open source, cross platform local diary application
+Exec=/opt/apps/com.yucore.swashbucklerdiary/SwashbucklerDiary.Gtk %F
+GenericName=Diary
+Icon=swashbuckler-diary
+MimeType=x-scheme-handler/swashbuckler;x-scheme-handler/xiakeriji;
+Name=Swashbuckler Diary
+Terminal=false
+Type=Application
+
+# Translations:
+Comment[zh_CN]=一个开源、跨平台的本地日记应用
+GenericName[zh_CN]=日记
+Name[zh_CN]=侠客日记
+
+[Desktop Action Search]
+Exec=/opt/apps/com.yucore.swashbucklerdiary/SwashbucklerDiary.Gtk --search %F
+Name=Search
+Name[zh_CN]=搜索
+
+[Desktop Action Add]
+Exec=/opt/apps/com.yucore.swashbucklerdiary/SwashbucklerDiary.Gtk --write %F
+Name=Add
+Name[zh_CN]=添加
