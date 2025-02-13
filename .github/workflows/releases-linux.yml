@@ -55,8 +55,12 @@ jobs:
       # Publish deb Package
       - name: Publish
         run: |
-          dotnet restore -r linux-x64
+          dotnet restore ${{ env.CSPROJ_FILE_PATH }} -r linux-x64
           dotnet msbuild ${{ env.CSPROJ_FILE_PATH }} /t:CreateDeb /p:TargetFramework=net${{ env.DOTNET_VERSION }} /p:RuntimeIdentifier=linux-x64 /p:Configuration=Release /p:SelfContained=true
+
+      - name: Rename deb
+        run: |
+          mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/*.deb ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/${{ env.APP_NAME }}-${{ env.FORMATTED_VERSION }}-linux-x64.deb
 
       # Update to Github Releases
       - uses: svenstaro/upload-release-action@v2
@@ -64,7 +68,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/*.deb
           file_glob: true
-          asset_name: ${{ env.APP_NAME }}-${{ env.FORMATTED_VERSION }}-linux-x64.deb
           release_name: ${{ env.FORMATTED_VERSION }}
           tag: v${{ env.FORMATTED_VERSION }}
           prerelease: true
