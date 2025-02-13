@@ -29,6 +29,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{76628868-D584-47A6-BEFA-745BAF7D70F6}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\gh-pages.yml = .github\workflows\gh-pages.yml
+		.github\workflows\releases-linux.yml = .github\workflows\releases-linux.yml
 		.github\workflows\releases.yml = .github\workflows\releases.yml
 		.github\workflows\sync-gitee-pages.yml = .github\workflows\sync-gitee-pages.yml
 		.github\workflows\upload-msstore-msix-to-release.yml = .github\workflows\upload-msstore-msix-to-release.yml
