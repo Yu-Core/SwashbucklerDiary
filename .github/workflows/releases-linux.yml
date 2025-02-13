@@ -14,7 +14,7 @@ env:
 
 jobs:
   release:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       # Checkout the code
       - uses: actions/checkout@v3
