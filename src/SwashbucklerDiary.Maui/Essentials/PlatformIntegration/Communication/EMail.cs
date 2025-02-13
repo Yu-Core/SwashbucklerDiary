@@ -1,4 +1,4 @@
-﻿#if WINDOWS
+#if WINDOWS
 using SwashbucklerDiary.Rcl.Essentials;
 #endif
 
@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Maui.Essentials
                 return false;
             }
 #if WINDOWS
-            var uri = EmailHelper.CreateMailToUri(subject, body, recipients);
+            var uri = PlatformIntegrationHelper.CreateMailToUri(subject, body, recipients);
             return await Launcher.TryOpenAsync(uri);
 #else
             var message = new EmailMessage

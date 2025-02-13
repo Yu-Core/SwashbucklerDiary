@@ -42,7 +42,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await LoadViewAsync();
         }
 
-        private string AppVersion => PlatformIntegration.AppVersion;
+        private string AppVersion => PlatformIntegration.AppVersionString;
 
         private void LoadView()
         {
@@ -107,7 +107,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task CopyRecordNumber()
         {
-            await PlatformIntegration.SetClipboard(recordNumber);
+            await PlatformIntegration.SetClipboardAsync(recordNumber);
             await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
     }

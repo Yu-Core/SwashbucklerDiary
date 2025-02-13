@@ -96,9 +96,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadView();
-            AppLifecycle.Stopped += LeaveAppSaveDiary;
-            AppLifecycle.Resumed += ResumeApp;
-            AppLifecycle.Activated += HandleActivated;
+            AppLifecycle.OnStopped += LeaveAppSaveDiary;
+            AppLifecycle.OnResumed += ResumeApp;
+            AppLifecycle.OnActivated += HandleActivated;
             NavigateController.AddHistoryAction(LeaveThisPageSaveDiary, false);
         }
 
@@ -121,9 +121,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.DisposeAsyncCore();
 
-            AppLifecycle.Stopped -= LeaveAppSaveDiary;
-            AppLifecycle.Resumed -= ResumeApp;
-            AppLifecycle.Activated -= HandleActivated;
+            AppLifecycle.OnStopped -= LeaveAppSaveDiary;
+            AppLifecycle.OnResumed -= ResumeApp;
+            AppLifecycle.OnActivated -= HandleActivated;
             timer?.Dispose();
         }
 
@@ -438,7 +438,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        private async Task HandleLaunchActivation()
+        private async Task HandleAppActivation()
         {
             if (launchActivation)
             {
@@ -463,7 +463,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            if (args.Kind == LaunchActivationKind.Share)
+            if (args.Kind == AppActivationKind.Share)
             {
                 await HandleShare((ShareActivationArguments)args.Data);
             }
@@ -477,11 +477,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             string? insertContent = null;
-            if (args.Kind == ShareKind.Text)
+            if (args.Kind == ShareActivationKind.Text)
             {
                 insertContent = args.Data as string;
             }
-            else if (args.Kind == ShareKind.FilePaths)
+            else if (args.Kind == ShareActivationKind.FilePaths)
             {
                 var filePaths = (List<string?>)args.Data;
                 insertContent = await MediaResourceManager.CreateMediaFilesInsertContentAsync(filePaths);

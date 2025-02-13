@@ -1,18 +1,18 @@
-﻿namespace SwashbucklerDiary.Rcl.Essentials
+namespace SwashbucklerDiary.Rcl.Essentials
 {
     public interface IAppLifecycle
     {
         ActivationArguments? ActivationArguments { get; set; }
 
-        event Action<ActivationArguments>? Activated;
+        event Action<ActivationArguments>? OnActivated;
 
-        event Action Resumed;
+        event Action OnResumed;
 
-        event Action Stopped;
+        event Action OnStopped;
 
-        void OnResume();
+        void Resume();
 
-        void OnStop();
+        void Stop();
 
         /// <summary>
         /// 退出应用

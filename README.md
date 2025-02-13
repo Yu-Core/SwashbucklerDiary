@@ -22,12 +22,13 @@
 [在线演示地址（GitHub Pages）](https://yu-core.github.io/SwashbucklerDiary/)
 
 ## 🛠️ 主要技术栈
-- [MAUI](https://learn.microsoft.com/dotnet/maui/)
 - [Blazor Hybrid](https://learn.microsoft.com/aspnet/core/blazor/hybrid/) 
 - [Blazor WebAssembly](https://learn.microsoft.com/aspnet/core/blazor/hosting-models#blazor-webassembly)
+- [Gir.Core](https://gircore.github.io/)
 - [Masa Blazor](https://docs.masastack.com/blazor/introduction/why-masa-blazor) 
-- [SqlSugar](https://www.donet5.com/Home/Doc) 
+- [MAUI](https://learn.microsoft.com/dotnet/maui/)
 - [Serilog](https://serilog.net/)
+- [SqlSugar](https://www.donet5.com/Home/Doc) 
 
 ## 🚀 下载渠道
 - [![Microsoft 应用商店](https://get.microsoft.com/images/zh-cn%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
@@ -42,7 +43,7 @@
 ## ✨ 特点
 * 极简风格的UI设计
 * Markdown即时渲染
-* 跨平台（Android，Windows，macOS，Web）
+* 跨平台（Android，Windows，macOS，Web，Linux）
 * 多尺寸响应式的界面布局
 * 所有数据存储本地，无需联网
 * 隐私模式，守护你的秘密日记
@@ -86,6 +87,7 @@
 - macOS (macOS 11 或更高版本)
 - ~~Tizen (暂不支持)~~
 - Web
+- Linux
 
 ## ⌨️ 开发环境
 
@@ -112,11 +114,14 @@
 - [Brotli](https://github.com/google/brotli)
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 - [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)
+- [dotnet-packaging](https://github.com/quamotion/dotnet-packaging)
+- [Gir.Core](https://github.com/gircore/gir.core)
 - [hash-wasm](https://github.com/Daninet/hash-wasm)
 - [html2canvas](https://github.com/niklasvh/html2canvas)
 - [Markdown Guide](https://github.com/mattcone/markdown-guide)
 - [MASA.Blazor](https://github.com/BlazorComponent/MASA.Blazor)
 - [MauiBlazorToolkit](https://github.com/Yu-Core/MauiBlazorToolkit)
+- [maui-linux](https://github.com/jsuarezruiz/maui-linux)
 - [Microsoft.Data.Sqlite](https://github.com/dotnet/efcore#microsoftdatasqlite)
 - [panzoom](https://github.com/anvaka/panzoom)
 - [Serilog](https://github.com/serilog/serilog)

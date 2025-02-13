@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
@@ -6,5 +6,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
     {
         public AppDevicePlatform CurrentPlatform
             => AppDevicePlatform.Browser;
+
+        public string DeviceName => string.Empty;
     }
 }

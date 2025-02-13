@@ -1,0 +1,70 @@
+name: releases-linux
+
+on:
+  workflow_dispatch:
+
+env:
+  DOTNET_NOLOGO: true                     # Disable the .NET logo
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
+  DOTNET_CLI_TELEMETRY_OPTOUT: true       # Disable sending .NET CLI telemetry
+  DOTNET_VERSION: '9.0'
+  CSPROJ_PATH: 'src/SwashbucklerDiary.Gtk'
+  CSPROJ_FILE_PATH: 'src/SwashbucklerDiary.Gtk/SwashbucklerDiary.Gtk.csproj'
+  APP_NAME: 'SwashbucklerDiary'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code
+      - uses: actions/checkout@v3
+        with:
+           fetch-depth: 0
+
+      # Install .NET SDK
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+           dotnet-version: '${{ env.DOTNET_VERSION }}.x'
+
+      # Install Packing Tools
+      - name: Setup dotnet-packaging
+        run: |
+          dotnet tool install --global dotnet-deb
+          cd ${{ env.CSPROJ_PATH }}
+          dotnet deb install
+          cd ${{ github.workspace }}
+
+      # Get the commit count and format the version
+      - name: Get commit count and format version
+        id: version
+        run: |
+          commit_count=$(git rev-list --count HEAD)
+          major=$((commit_count / 1000))
+          minor=$((commit_count % 1000 / 10))
+          patch=$((commit_count % 10))
+          formatted_version="$major.$minor.$patch"
+          echo "FORMATTED_VERSION=$formatted_version" >> $GITHUB_ENV
+
+      # Replace the version in the csproj file
+      - name: Update version in csproj
+        run: |
+          sed -i "s/<Version>.*<\/Version>/<Version>${{ env.FORMATTED_VERSION }}<\/Version>/" \
+          ${{ env.CSPROJ_FILE_PATH }}
+
+      # Publish deb Package
+      - name: Publish
+        run: |
+          dotnet restore -r linux-x64
+          dotnet msbuild ${{ env.CSPROJ_FILE_PATH }} /t:CreateDeb /p:TargetFramework=net${{ env.DOTNET_VERSION }} /p:RuntimeIdentifier=linux-x64 /p:Configuration=Release /p:SelfContained=true
+
+      # Update to Github Releases
+      - uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/*.deb
+          file_glob: true
+          asset_name: ${{ env.APP_NAME }}-${{ env.FORMATTED_VERSION }}-linux-x64.deb
+          release_name: ${{ env.FORMATTED_VERSION }}
+          tag: v${{ env.FORMATTED_VERSION }}
+          prerelease: true

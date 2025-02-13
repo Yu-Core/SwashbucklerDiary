@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
@@ -52,34 +52,6 @@ namespace SwashbucklerDiary.WebAssembly.Services
             return targetFilePath;
         }
 
-        public override async Task<bool> ShareImageAsync(string title, string url)
-        {
-            if (IsStoredFile(url, out string filePath))
-            {
-                await _platformIntegration.ShareFileAsync(title, filePath);
-                return true;
-            }
-            else
-            {
-                await _popupServiceHelper.Error(_i18n.T("External files are not supported"));
-                return false;
-            }
-        }
-
-        public override async Task<bool> SaveFileAsync(string url)
-        {
-            if (IsStoredFile(url, out string filePath))
-            {
-                await _platformIntegration.SaveFileAsync(filePath);
-                return true;
-            }
-            else
-            {
-                await _popupServiceHelper.Error(_i18n.T("External files are not supported"));
-                return false;
-            }
-        }
-
         bool IsStoredFile(string url, out string filePath)
         {
             filePath = url.Replace(_navigationManager.BaseUri, "");
@@ -87,6 +59,27 @@ namespace SwashbucklerDiary.WebAssembly.Services
         }
 
         public override string UrlRelativePathToFilePath(string urlRelativePath) => urlRelativePath;
+
+        public override string FilePathToUrlRelativePath(string filePath) => filePath;
+
+        protected override async Task<string> GetResourceFilePathAsync(string? urlString)
+        {
+            if (string.IsNullOrEmpty(urlString))
+            {
+                return string.Empty;
+            }
+
+
+            if (IsStoredFile(urlString, out string filePath))
+            {
+                return filePath;
+            }
+            else
+            {
+                await _popupServiceHelper.Error(_i18n.T("External files are not supported"));
+                return string.Empty;
+            }
+        }
 
         protected override async Task<string> GetAudioFilePicturePath(string fileName, byte[] data)
         {

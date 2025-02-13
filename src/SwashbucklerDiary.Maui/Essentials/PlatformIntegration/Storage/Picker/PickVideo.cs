@@ -1,28 +1,25 @@
-﻿#if MACCATALYST
+#if MACCATALYST
 using UniformTypeIdentifiers;
 #endif
 
 using MauiBlazorToolkit.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-#if MACCATALYST || WINDOWS || TIZEN
-        static readonly string[] videoFileExtensions = [".mp4", ".m4v", ".mpg", ".mpeg", ".mp2", ".mov", ".avi", ".mkv", ".flv", ".gifv", ".qt"];
 #if MACCATALYST
-        static readonly string[] videoTypes = [.. ConvertFileExtensionsToUTTypeIdentifiers(videoFileExtensions)];
+        static readonly string[] videoTypes = [.. GetUTTypeIdentifiers(PlatformIntegrationHelper.VideoFileExtensions)];
 #elif WINDOWS
-        static readonly string[] videoTypes = videoFileExtensions;
+        static readonly string[] videoTypes = PlatformIntegrationHelper.VideoFileExtensions;
 #elif TIZEN
-        static readonly string[] videoTypes = ["video/*"];
-#endif
-
+        static readonly string[] videoTypes = PlatformIntegrationHelper.VideoMimeTypes;
 #endif
         public async Task<string?> PickVideoAsync()
         {
 #if MACCATALYST
-            return await PickFileAsync(videoTypes, videoFileExtensions);
+            return await PickFileAsync(videoTypes, PlatformIntegrationHelper.VideoFileExtensions);
 #elif ANDROID || IOS
             FileResult? fileResult = await MediaFilePicker.Default.PickVideoAsync();
             return fileResult?.FullPath;
@@ -35,7 +32,7 @@ namespace SwashbucklerDiary.Maui.Essentials
         public async Task<IEnumerable<string>?> PickMultipleVideoAsync()
         {
 #if MACCATALYST || WINDOWS || TIZEN
-            return await PickMultipleFileAsync(videoTypes, videoFileExtensions);
+            return await PickMultipleFileAsync(videoTypes, PlatformIntegrationHelper.VideoFileExtensions);
 #elif ANDROID || IOS
             var fileResults = await MediaFilePicker.Default.PickMultipleVideoAsync();
             if (fileResults is null)

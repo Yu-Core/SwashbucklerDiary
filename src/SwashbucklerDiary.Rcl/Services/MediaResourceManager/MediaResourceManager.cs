@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
@@ -92,9 +92,28 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public abstract Task<string?> CreateMediaResourceFileAsync(string targetDirectoryPath, string? sourceFilePath);
 
-        public abstract Task<bool> ShareImageAsync(string title, string url);
+        public async Task<bool> ShareImageAsync(string title, string url)
+        {
+            var filePath = await GetResourceFilePathAsync(url);
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return false;
+            }
 
-        public abstract Task<bool> SaveFileAsync(string url);
+            await _platformIntegration.ShareFileAsync(title, filePath);
+            return true;
+        }
+
+        public async Task<bool> SaveFileAsync(string url)
+        {
+            var filePath = await GetResourceFilePathAsync(url);
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return false;
+            }
+
+            return await _platformIntegration.SaveFileAsync(filePath);
+        }
 
         public List<ResourceModel> GetDiaryResources(string content)
         {
@@ -157,7 +176,18 @@ namespace SwashbucklerDiary.Rcl.Services
             };
         }
 
-        protected abstract Task<string> GetAudioFilePicturePath(string fileName, byte[] data);
+        protected abstract Task<string> GetResourceFilePathAsync(string urlString);
+
+        protected virtual async Task<string> GetAudioFilePicturePath(string fileName, byte[] data)
+        {
+            string filePath = Path.Combine(_appFileSystem.CacheDirectory, fileName);
+            if (!File.Exists(filePath))
+            {
+                await File.WriteAllBytesAsync(filePath, data);
+            }
+
+            return FilePathToUrlRelativePath(filePath);
+        }
 
         public async Task<IEnumerable<ResourceModel>?> AddMediaFilesAsync(IEnumerable<string?>? filePaths)
         {
@@ -183,6 +213,8 @@ namespace SwashbucklerDiary.Rcl.Services
         }
 
         public abstract string UrlRelativePathToFilePath(string urlRelativePath);
+
+        public abstract string FilePathToUrlRelativePath(string filePath);
 
         public async Task<IEnumerable<ResourceModel>?> AddMultipleImageAsync()
         {

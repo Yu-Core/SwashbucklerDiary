@@ -48,7 +48,7 @@ namespace SwashbucklerDiary.Maui
             }
 
             base.OnCreate(savedInstanceState);
-            LaunchActivation.OnLaunched(this.Intent);
+            AppActivation.Launch(this.Intent);
             softKeyboardAdjustResize = new SoftKeyboardAdjustResize(this);
             SoftKeyboardAdjustResizeHelper.InitBackgroundColor(this);
             Platform.OnNewIntent(this.Intent);
@@ -58,7 +58,7 @@ namespace SwashbucklerDiary.Maui
         {
             base.OnNewIntent(intent);
 
-            LaunchActivation.OnActivated(intent);
+            AppActivation.Activate(intent);
             Platform.OnNewIntent(intent);
         }
 

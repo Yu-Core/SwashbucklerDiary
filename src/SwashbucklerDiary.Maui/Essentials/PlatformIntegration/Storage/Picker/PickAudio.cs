@@ -1,27 +1,24 @@
-﻿#if IOS || MACCATALYST
+#if IOS || MACCATALYST
 using UniformTypeIdentifiers;
 #endif
+
+using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-        static readonly string[] audioFileExtensions = [".mp3", ".wav", ".m4a", ".ogg", ".aac", ".flac"];
 #if WINDOWS
-        static readonly string[] audioTypes = audioFileExtensions;
+        static readonly string[] audioTypes = PlatformIntegrationHelper.AudioFileExtensions;
 #elif ANDROID || TIZEN
-        static readonly string[] audioTypes = ["audio/mpeg", "audio/wav", "audio/mp4", "audio/ogg", "audio/aac", "audio/flac"];
+        static readonly string[] audioTypes = PlatformIntegrationHelper.AudioMimeTypes;
 #elif MACCATALYST || IOS
-        static readonly string[] audioTypes = [.. ConvertFileExtensionsToUTTypeIdentifiers(audioFileExtensions)];
+        static readonly string[] audioTypes = [.. GetUTTypeIdentifiers(PlatformIntegrationHelper.AudioFileExtensions)];
 #endif
         public Task<string?> PickAudioAsync()
-        {
-            return PickFileAsync(audioTypes, audioFileExtensions);
-        }
+            => PickFileAsync(audioTypes, PlatformIntegrationHelper.AudioFileExtensions);
 
         public Task<IEnumerable<string>?> PickMultipleAudioAsync()
-        {
-            return PickMultipleFileAsync(audioTypes, audioFileExtensions);
-        }
+            => PickMultipleFileAsync(audioTypes, PlatformIntegrationHelper.AudioFileExtensions);
     }
 }

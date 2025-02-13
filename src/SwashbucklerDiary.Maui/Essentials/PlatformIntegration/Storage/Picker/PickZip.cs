@@ -1,19 +1,17 @@
-﻿namespace SwashbucklerDiary.Maui.Essentials
+using SwashbucklerDiary.Rcl.Essentials;
+
+namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-        public Task<string?> PickZipFileAsync()
-        {
 #if WINDOWS
-            var types = new[] { ".zip" };
-#elif ANDROID
-            var types = new[] { "application/zip" };
+        static readonly string[] zipTypes = PlatformIntegrationHelper.ZipFileExtensions;
+#elif ANDROID || TIZEN
+        static readonly string[] zipTypes = PlatformIntegrationHelper.ZipMimeTypes;
 #elif MACCATALYST || IOS
-            var types = new[] { "public.zip-archive" };
-#elif TIZEN
-            var types = new[] { "*/*" };
+        static readonly string[] zipTypes = [.. GetUTTypeIdentifiers(PlatformIntegrationHelper.ZipFileExtensions)];
 #endif
-            return PickFileAsync(types, ".zip");
-        }
+        public Task<string?> PickZipFileAsync()
+            => PickFileAsync(zipTypes, PlatformIntegrationHelper.ZipFileExtensions);
     }
 }

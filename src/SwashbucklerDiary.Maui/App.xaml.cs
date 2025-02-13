@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Maui.Essentials;
+using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Rcl;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
@@ -40,8 +40,8 @@ namespace SwashbucklerDiary.Maui
         protected override Window CreateWindow(IActivationState? activationState)
         {
             var window = new Window(new MainPage(backgroundColor, _navigateController));
-            window.Resumed += (s, e) => _appLifecycle.OnResume();
-            window.Stopped += (s, e) => _appLifecycle.OnStop();
+            window.Resumed += (s, e) => _appLifecycle.Resume();
+            window.Stopped += (s, e) => _appLifecycle.Stop();
             window.Created += WindowCreated;
             return window;
         }
@@ -55,10 +55,7 @@ namespace SwashbucklerDiary.Maui
         {
             var themeInt = Microsoft.Maui.Storage.Preferences.Default.Get<int>(nameof(Setting.Theme), 0);
             var theme = (Theme)themeInt;
-            if (_themeService is ThemeService themeService)
-            {
-                themeService.SetTheme(theme);
-            }
+            _themeService.SetTheme(theme);
 
             _themeService.OnChanged += ThemeChanged;
 

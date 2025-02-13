@@ -1,0 +1,31 @@
+@inherits MainLayoutBase
+
+@if (afterInitSetting)
+{
+    <MApp>
+        <CascadingValue Value="@I18n.Culture.Name" Name="Culture">
+            <ErrorBoundary>
+                <ChildContent>
+                    <FirstLaunchDialog />
+
+                    <MainLayoutNavDrawer Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutNavDrawer>
+
+                    <MMain>
+                        <PageCacheContainer>
+                            @Body
+                        </PageCacheContainer>
+                    </MMain>
+
+                    <MainLayoutBottomNav Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutBottomNav>
+
+                    <UpdateDialog @bind-Visible="showUpdate"></UpdateDialog>
+                    <SponsorSupportSnackbar></SponsorSupportSnackbar>
+                </ChildContent>
+
+                <ErrorContent>
+                    <ErrorDialog></ErrorDialog>
+                </ErrorContent>
+            </ErrorBoundary>
+        </CascadingValue>
+    </MApp>
+}

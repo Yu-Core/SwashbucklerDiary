@@ -22,12 +22,13 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 [Live Demo（GitHub Pages）](https://yu-core.github.io/SwashbucklerDiary/)
 
 ## 🛠️ Main Technology Stack
-- [MAUI](https://learn.microsoft.com/dotnet/maui/)
 - [Blazor Hybrid](https://learn.microsoft.com/aspnet/core/blazor/hybrid/) 
 - [Blazor WebAssembly](https://learn.microsoft.com/aspnet/core/blazor/hosting-models#blazor-webassembly)
+- [Gir.Core](https://gircore.github.io/)
 - [Masa Blazor](https://docs.masastack.com/blazor/introduction/why-masa-blazor) 
-- [SqlSugar](https://www.donet5.com/Home/Doc) 
+- [MAUI](https://learn.microsoft.com/dotnet/maui/)
 - [Serilog](https://serilog.net/)
+- [SqlSugar](https://www.donet5.com/Home/Doc) 
 
 ## 🚀 Download Channels
 - [![Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
@@ -42,7 +43,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 ## ✨ Characteristics
 * Minimalist UI design
 * Markdown real-time rendering
-* Cross platform (Android, Windows, macOS, Web)
+* Cross platform (Android, Windows, macOS, Web, Linux)
 * Multi size responsive interface layout
 * All data is stored locally without the need for networking
 * Privacy mode, guarding your secret diary
@@ -86,6 +87,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - macOS (macOS 11 or higher)
 - ~~Tizen (Not supported temporarily)~~
 - Web
+- Linux
 
 ## ⌨️ Development Environment
 
@@ -112,11 +114,14 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [Brotli](https://github.com/google/brotli)
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 - [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)
+- [dotnet-packaging](https://github.com/quamotion/dotnet-packaging)
+- [Gir.Core](https://github.com/gircore/gir.core)
 - [hash-wasm](https://github.com/Daninet/hash-wasm)
 - [html2canvas](https://github.com/niklasvh/html2canvas)
 - [Markdown Guide](https://github.com/mattcone/markdown-guide)
 - [MASA.Blazor](https://github.com/BlazorComponent/MASA.Blazor)
 - [MauiBlazorToolkit](https://github.com/Yu-Core/MauiBlazorToolkit)
+- [maui-linux](https://github.com/jsuarezruiz/maui-linux)
 - [Microsoft.Data.Sqlite](https://github.com/dotnet/efcore#microsoftdatasqlite)
 - [panzoom](https://github.com/anvaka/panzoom)
 - [Serilog](https://github.com/serilog/serilog)

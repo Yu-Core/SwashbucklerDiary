@@ -1,9 +1,9 @@
-﻿namespace SwashbucklerDiary.Maui.Essentials
+namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-        public string AppVersion
-            => _versionTracking.CurrentVersion.ToString();
+        public string AppVersionString
+            => AppInfo.VersionString;
 
         public Task ShowSettingsUI()
         {

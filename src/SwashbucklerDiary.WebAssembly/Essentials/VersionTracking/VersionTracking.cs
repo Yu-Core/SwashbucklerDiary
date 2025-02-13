@@ -1,6 +1,5 @@
-﻿using Microsoft.JSInterop;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
-using System.Reflection;
 using System.Text;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
@@ -11,10 +10,6 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         const string buildsKey = "VersionTracking.Builds";
 
         readonly IJSRuntime _jSRuntime;
-
-        string versionString = "1.0.0.0";
-
-        string buildString = "0";
 
         Dictionary<string, List<string>> versionTrail = null!;
 
@@ -27,28 +22,12 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             _jSRuntime = jSRuntime;
         }
 
-        public async Task Track(Assembly assembly)
+        public async Task Track()
         {
             if (versionTrail != null)
                 return;
 
-            InitVersion(assembly);
             await InitVersionTracking();
-        }
-
-        void InitVersion(Assembly assembly)
-        {
-            assembly ??= Assembly.GetExecutingAssembly();
-
-            var assemblyFileVersionAttribute = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
-            if (assemblyFileVersionAttribute == null)
-            {
-                return;
-            }
-
-            var version = new Version(assemblyFileVersionAttribute.Version);
-            versionString = version.ToString();
-            buildString = version.Build.ToString();
         }
 
         /// <summary>
@@ -118,9 +97,9 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 
         public bool IsFirstLaunchForCurrentBuild { get; private set; }
 
-        public string CurrentVersion => versionString;
+        public string CurrentVersion => PlatformIntegration.VersionString;
 
-        public string CurrentBuild => buildString;
+        public string CurrentBuild => PlatformIntegration.BuildString;
 
         public string? PreviousVersion => GetPrevious(versionsKey);
 

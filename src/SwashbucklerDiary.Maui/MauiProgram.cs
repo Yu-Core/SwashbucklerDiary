@@ -1,9 +1,10 @@
-﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui;
 using MauiBlazorToolkit.Extensions;
 using Microsoft.AspNetCore.Components.WebView.Maui;
 using SwashbucklerDiary.Maui.BlazorWebView;
 using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Maui.Extensions;
+using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Maui
 {
@@ -57,7 +58,7 @@ namespace SwashbucklerDiary.Maui
 
             builder.Services.AddSerilogConfig();
 
-            builder.Services.AddSqlsugarConfig();
+            builder.Services.AddSqlSugarConfig(SQLiteConstants.ConnectionString, SQLiteConstants.PrivacyConnectionString);
 
             builder.Services.AddDependencyInjection();
 

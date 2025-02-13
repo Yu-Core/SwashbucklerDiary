@@ -122,7 +122,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task Copy()
         {
             var text = SelectedItem.CreateCopyContent();
-            await PlatformIntegration.SetClipboard(text);
+            await PlatformIntegration.SetClipboardAsync(text);
             await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
 
@@ -216,7 +216,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task CopyQuote()
         {
             var text = $"[{I18n.T("Read.DiaryLink")}](read/{SelectedItem.Id})";
-            await PlatformIntegration.SetClipboard(text);
+            await PlatformIntegration.SetClipboardAsync(text);
             await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
 
@@ -232,7 +232,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 text = $"{urlScheme}://read/{SelectedItem.Id}";
             }
 
-            await PlatformIntegration.SetClipboard(text);
+            await PlatformIntegration.SetClipboardAsync(text);
             await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
         }
 

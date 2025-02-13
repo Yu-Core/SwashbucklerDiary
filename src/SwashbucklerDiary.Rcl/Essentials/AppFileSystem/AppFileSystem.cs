@@ -91,19 +91,22 @@
             }
         }
 
-        public long GetFolderSize(string folderPath)
+        public long GetFolderSize(string path)
         {
             long len = 0;
             //判断该路径是否存在（是否为文件夹）
-            if (!Directory.Exists(folderPath))
+            if (!Directory.Exists(path))
             {
                 //查询文件的大小
-                len = FileSize(folderPath);
+                if (File.Exists(path))
+                {
+                    len = FileSize(path);
+                }
             }
             else
             {
                 //定义一个DirectoryInfo对象
-                DirectoryInfo dir = new DirectoryInfo(folderPath);
+                DirectoryInfo dir = new DirectoryInfo(path);
 
                 //通过GetFiles方法，获取di目录中的所有文件的大小
                 foreach (FileInfo fi in dir.GetFiles())

@@ -1,4 +1,4 @@
-﻿@page "/write"
+@page "/write"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
@@ -118,7 +118,7 @@
                           WrapClass="write-markdown-wrap"
                           Class="px-3 rounded-lg write-markdown"
                           Autofocus="autofocus"
-                          OnAfter="HandleLaunchActivation">
+                          OnAfter="HandleAppActivation">
             </MarkdownEdit>
         }
         else
@@ -127,7 +127,7 @@
                           @bind-Value="diary.Content"
                           Class="rounded-lg"
                           Autofocus="autofocus"
-                          OnAfter="HandleLaunchActivation">
+                          OnAfter="HandleAppActivation">
             </TextareaEdit>
         }
     </div>

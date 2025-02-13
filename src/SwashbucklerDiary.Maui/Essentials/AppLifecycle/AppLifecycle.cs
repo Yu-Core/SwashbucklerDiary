@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
@@ -6,23 +6,23 @@ namespace SwashbucklerDiary.Maui.Essentials
     {
         public ActivationArguments? ActivationArguments
         {
-            get => LaunchActivation.ActivationArguments;
-            set => LaunchActivation.ActivationArguments = value;
+            get => AppActivation.Arguments;
+            set => AppActivation.Arguments = value;
         }
 
-        public event Action<ActivationArguments>? Activated
+        public event Action<ActivationArguments>? OnActivated
         {
-            add => LaunchActivation.Activated += value;
-            remove => LaunchActivation.Activated -= value;
+            add => AppActivation.OnActivated += value;
+            remove => AppActivation.OnActivated -= value;
         }
 
-        public event Action? Resumed;
+        public event Action? OnResumed;
 
-        public event Action? Stopped;
+        public event Action? OnStopped;
 
-        public void OnResume() => Resumed?.Invoke();
+        public void Resume() => OnResumed?.Invoke();
 
-        public void OnStop() => Stopped?.Invoke();
+        public void Stop() => OnStopped?.Invoke();
 
         public void QuitApp()
         {

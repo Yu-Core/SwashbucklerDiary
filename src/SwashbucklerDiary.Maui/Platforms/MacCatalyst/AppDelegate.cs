@@ -1,4 +1,4 @@
-﻿using Foundation;
+using Foundation;
 using SwashbucklerDiary.Maui.Essentials;
 using UIKit;
 
@@ -11,13 +11,13 @@ namespace SwashbucklerDiary.Maui
 
         public override bool OpenUrl(UIApplication application, NSUrl url, NSDictionary options)
         {
-            if (LaunchActivation.Activated is null)
+            if (AppActivation.OnActivated is null)
             {
-                LaunchActivation.OnLaunched(url);
+                AppActivation.Launch(url);
             }
             else
             {
-                LaunchActivation.OnActivated(url);
+                AppActivation.Activate(url);
             }
 
             return true;
@@ -36,7 +36,7 @@ namespace SwashbucklerDiary.Maui
 
         //             // Examine the url here
 
-        //             LaunchActivation.HandleOnLaunched(url);
+        //             AppActivation.HandleOnLaunched(url);
         //         }
         //     }
 

@@ -1,10 +1,10 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
-    public class AppActionsHelper
+    public static class AppActionsHelper
     {
         public static async void HandleAppActions(AppAction action)
         {
@@ -13,13 +13,13 @@ namespace SwashbucklerDiary.Maui.Essentials
             var activationArguments = await ConvertActivationArguments(action.Id);
             if (activationArguments is null) return;
 
-            if (LaunchActivation.Activated is null)
+            if (AppActivation.OnActivated is null)
             {
-                LaunchActivation.ActivationArguments = activationArguments;
+                AppActivation.Arguments = activationArguments;
             }
             else
             {
-                LaunchActivation.Activated.Invoke(activationArguments);
+                AppActivation.OnActivated.Invoke(activationArguments);
             }
         }
 
@@ -31,7 +31,7 @@ namespace SwashbucklerDiary.Maui.Essentials
 
             return new ActivationArguments()
             {
-                Kind = LaunchActivationKind.Scheme,
+                Kind = AppActivationKind.Scheme,
                 Data = $"{SchemeConstants.SwashbucklerDiary}://{id}"
             };
         }

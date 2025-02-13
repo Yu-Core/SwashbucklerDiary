@@ -1,0 +1,12 @@
+<Router AppAssembly="@Assembly" AdditionalAssemblies="@AdditionalAssemblies">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+</Router>
+
+@code{
+    public static System.Reflection.Assembly Assembly { get; } = typeof(MainLayoutBase).Assembly;
+
+    public static IEnumerable<System.Reflection.Assembly> AdditionalAssemblies { get; } = [typeof(Routes).Assembly, typeof(BackupsPage).Assembly];
+}

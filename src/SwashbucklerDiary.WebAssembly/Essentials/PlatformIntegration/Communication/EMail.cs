@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
     {
         public Task<bool> SendEmail(string? subject, string? body, List<string>? recipients)
         {
-            var uri = EmailHelper.CreateMailToUri(subject, body, recipients);
+            var uri = PlatformIntegrationHelper.CreateMailToUri(subject, body, recipients);
             return OpenLauncher(uri);
         }
     }

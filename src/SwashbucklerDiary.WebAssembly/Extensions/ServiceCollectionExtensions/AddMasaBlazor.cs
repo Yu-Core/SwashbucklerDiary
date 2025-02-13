@@ -1,4 +1,6 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using Masa.Blazor;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.WebAssembly.Extensions
 {
@@ -6,7 +8,16 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
     {
         public static async Task<IServiceCollection> AddMasaBlazorConfig(this IServiceCollection services, string baseAddress)
         {
-            var masaBlazorBuilder = services.AddMasaBlazor(Rcl.Extensions.ServiceCollectionExtensions.ConfigMasaBlazorOptions);
+            services.TryAddSingleton(delegate
+            {
+                MasaBlazorOptions masaBlazorOptions = new MasaBlazorOptions();
+                Rcl.Extensions.ServiceCollectionExtensions.ConfigMasaBlazorOptions(masaBlazorOptions);
+                return masaBlazorOptions;
+            });
+
+            services.TryAddSingleton<I18n>();
+
+            var masaBlazorBuilder = services.AddMasaBlazor(ServiceLifetime.Singleton);
             await masaBlazorBuilder.AddI18nForWasmAsync($"{baseAddress}/_content/{StaticWebAssets.RclAssemblyName}/i18n");
             await masaBlazorBuilder.AddI18nForWasmAsync($"{baseAddress}/i18n");
 

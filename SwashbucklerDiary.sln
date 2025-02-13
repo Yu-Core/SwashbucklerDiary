@@ -29,10 +29,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{76628868-D584-47A6-BEFA-745BAF7D70F6}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\gh-pages.yml = .github\workflows\gh-pages.yml
+		.github\workflows\releases-linux.yml = .github\workflows\releases-linux.yml
 		.github\workflows\releases.yml = .github\workflows\releases.yml
 		.github\workflows\sync-gitee-pages.yml = .github\workflows\sync-gitee-pages.yml
 		.github\workflows\upload-msstore-msix-to-release.yml = .github\workflows\upload-msstore-msix-to-release.yml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwashbucklerDiary.Gtk", "src\SwashbucklerDiary.Gtk\SwashbucklerDiary.Gtk.csproj", "{2306ACD4-43FE-44E5-B0D2-77CC601322E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwashbucklerDiary.Rcl.Client", "src\SwashbucklerDiary.Rcl.Client\SwashbucklerDiary.Rcl.Client.csproj", "{8F4685F7-8B34-62C6-6ADE-CD1958735A41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +67,14 @@ Global
 		{C2983DB5-2538-49FE-B65D-69FD6953FCF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2983DB5-2538-49FE-B65D-69FD6953FCF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2983DB5-2538-49FE-B65D-69FD6953FCF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2306ACD4-43FE-44E5-B0D2-77CC601322E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2306ACD4-43FE-44E5-B0D2-77CC601322E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2306ACD4-43FE-44E5-B0D2-77CC601322E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2306ACD4-43FE-44E5-B0D2-77CC601322E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F4685F7-8B34-62C6-6ADE-CD1958735A41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F4685F7-8B34-62C6-6ADE-CD1958735A41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F4685F7-8B34-62C6-6ADE-CD1958735A41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F4685F7-8B34-62C6-6ADE-CD1958735A41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

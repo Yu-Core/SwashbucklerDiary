@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "Name": ".NET MAUI",
     "License": "MIT license",
@@ -35,6 +35,16 @@
     "Url": "https://github.com/CommunityToolkit/Maui/blob/main/LICENSE"
   },
   {
+    "Name": "dotnet-packaging",
+    "License": "MIT license",
+    "Url": "https://github.com/quamotion/dotnet-packaging/blob/master/LICENSE"
+  },
+  {
+    "Name": "Gir.Core",
+    "License": "MIT license",
+    "Url": "https://github.com/gircore/gir.core/blob/main/license.txt"
+  },
+  {
     "Name": "hash-wasm",
     "License": "MIT license",
     "Url": "https://github.com/Daninet/hash-wasm/blob/master/LICENSE"
@@ -58,6 +68,11 @@
     "Name": "MauiBlazorToolkit",
     "License": "MIT license",
     "Url": "https://github.com/Yu-Core/MauiBlazorToolkit/blob/master/LICENSE"
+  },
+  {
+    "Name": "maui-linux",
+    "License": "MIT license",
+    "Url": "https://github.com/jsuarezruiz/maui-linux/blob/main/LICENSE.txt"
   },
   {
     "Name": "Microsoft.Data.Sqlite",

@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Models;
+using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Services
@@ -71,5 +71,7 @@ namespace SwashbucklerDiary.Rcl.Services
         string? CreateMediaFilesInsertContent(IEnumerable<ResourceModel>? resources);
 
         string UrlRelativePathToFilePath(string urlRelativePath);
+
+        string FilePathToUrlRelativePath(string filePath);
     }
 }

@@ -1,4 +1,4 @@
-﻿using ClosedXML.Excel;
+using ClosedXML.Excel;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 using System.Data;
@@ -274,7 +274,7 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             var exportVersionInfo = new ExportVersionInfo()
             {
-                Version = _platformIntegration.AppVersion,
+                Version = _platformIntegration.AppVersionString,
                 FileSuffix = fileSuffix,
                 Platform = _platformIntegration.CurrentPlatform.ToString(),
                 DateTime = DateTime.Now,
@@ -351,7 +351,7 @@ namespace SwashbucklerDiary.Rcl.Services
         private string InternalGetExportFileName(string prefix, string suffix)
         {
             string dataTime = DateTime.Now.ToString("yyyyMMddHHmmss");
-            string version = _platformIntegration.AppVersion;
+            string version = _platformIntegration.AppVersionString;
             return $"{prefix}_{dataTime}_v{version}{suffix}";
         }
 

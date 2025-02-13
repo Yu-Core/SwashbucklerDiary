@@ -1,18 +1,9 @@
-﻿using Microsoft.JSInterop;
+using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public partial class PlatformIntegration
     {
-        private Task<string?> PickFileAsync(string type, string fileExtension)
-            => PickFileAsync([type], [fileExtension]);
-
-        private Task<string?> PickFileAsync(IEnumerable<string> types, string fileExtension)
-            => PickFileAsync(types, [fileExtension]);
-
-        private Task<string?> PickFileAsync(string type, string[] fileExtensions)
-            => PickFileAsync([type], fileExtensions);
-
         private async Task<string?> PickFileAsync(IEnumerable<string> types, string[] fileExtensions)
         {
             var results = await PickFilesAsync(types, fileExtensions, false);
@@ -23,15 +14,6 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 
             return results.FirstOrDefault();
         }
-
-        private Task<IEnumerable<string>?> PickFilesAsync(string type, string fileExtension)
-            => PickFilesAsync([type], [fileExtension]);
-
-        private Task<IEnumerable<string>?> PickFilesAsync(IEnumerable<string> types, string fileExtension)
-            => PickFilesAsync(types, [fileExtension]);
-
-        private Task<IEnumerable<string>?> PickFilesAsync(string type, string[] fileExtensions)
-            => PickFilesAsync([type], fileExtensions);
 
         private async Task<IEnumerable<string>?> PickFilesAsync(IEnumerable<string> types, string[] fileExtensions, bool multiple = true)
         {
