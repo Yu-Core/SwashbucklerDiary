@@ -40,11 +40,11 @@
     "All": "All",
     "Tag": "Tag",
     "Welcome": {
-      "Morning": "Good morning, another new day.",
-      "Noon": "Good noon. Have you had lunch?",
-      "Afternoon": "Good afternoon, enjoy a wonderful afternoon.",
-      "Night": "Good evening. It's time to rest.",
-      "BeforeDawn": "Good before dawn, may you dream."
+      "Morning": "As dawn breaks, may your day be full of energy!",
+      "Noon": "With the warm sun, may your mood be as bright as the clear sky!",
+      "Afternoon": "In the afternoon hours, may you feel relaxed and fulfilled!",
+      "Night": "As night falls, may you shed fatigue and unwind!",
+      "BeforeDawn": "In the quiet of the night, may you sleep peacefully and welcome a wonderful tomorrow!"
     }
   },
   "Tag": {
@@ -719,7 +719,7 @@
     },
     "Introduce": {
       "Title": "Support the development of Swashbuckler Diary",
-      "Content": "Why create this diary app? In junior high school, I particularly enjoyed keeping a diary, recording seemingly trivial and silly things. Nowadays, occasionally taking a look has become the most precious memory, so I don't want to lose this good habit. In this era, paper and pen are no longer used to, and writing diaries on mobile phones and computers has become a natural thing.\n\nI have tried many diary apps, but I always feel that something is lacking. To log in, there is a fee, there are advertisements, the interface is messy, the functions are simple, and the operation is cumbersome. Anyway, it always has to be the same. It's really difficult to keep a good diary, why not create your own app.\n\nSo, I created this diary app to bring back the joy of writing diaries for anyone who loves it. If you think it's good, you can give us a donation to help us better develop and maintain this project. Thank you for your support all the way. May we all become swashbuckler in our own world."
+      "Content": "Why develop this diary app? In junior high school, I particularly enjoyed keeping a diary, recording seemingly trivial and silly things. Nowadays, occasionally taking a look has become the most precious memory, so the good habit of writing a diary should be maintained. In this era, paper and pen are used less, and diary apps that are easier to organize have become mainstream.\n\nI have tried many diary apps, but I always feel that something is lacking. To log in, there is a fee, there are advertisements, the interface is messy, the functions are simple, and the operation is cumbersome. Anyway, it always has to be the same. It's really difficult to keep a good diary, why not create your own app.\n\nSo, I created this diary app to bring back the joy of writing diaries for anyone who loves it. If you think it's good, you can give us a donation to help us better develop and maintain this project. Thank you for your support all the way. May we all become swashbuckler in our own world."
     }
   },
   "SponsorList": {
