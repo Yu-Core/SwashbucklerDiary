@@ -1,0 +1,6 @@
+- SwashbucklerDiary.Gtk : Linux
+- SwashbucklerDiary.Maui : Android macOS Windows
+- SwashbucklerDiary.Rcl : View
+- SwashbucklerDiary.Rcl.Client : Client specific view
+- SwashbucklerDiary.Shared : Some Model and share class
+- SwashbucklerDiary.WebAssembly : Web
