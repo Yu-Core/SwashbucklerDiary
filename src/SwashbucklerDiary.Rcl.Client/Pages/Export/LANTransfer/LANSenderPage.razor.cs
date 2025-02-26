@@ -27,6 +27,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showTransferDialog;
 
+        private string transferDialogTitle = "lanSender.Sending";
+
         private readonly List<LANDeviceInfoListItem> lanDeviceInfoListItems = [];
 
         [Inject]
@@ -182,7 +184,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             InvokeAsync(async () =>
             {
+                transferDialogTitle = "lanSender.Send successfully";
                 await PopupServiceHelper.Success(I18n.T("lanSender.Send successfully"));
+                StateHasChanged();
             });
         }
 
@@ -192,17 +196,16 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 if (showTransferDialog)
                 {
+                    transferDialogTitle = "lanSender.Send failed";
                     await PopupServiceHelper.Error(I18n.T("lanSender.Send failed"));
                 }
                 else
                 {
+                    transferDialogTitle = "lanSender.Send canceled";
                     await PopupServiceHelper.Error(I18n.T("lanSender.Send canceled"));
                 }
 
-                if (IsThisPage)
-                {
-                    await NavigateToBack();
-                }
+                StateHasChanged();
             });
         }
 
@@ -213,10 +216,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 LANSenderService.CancelSend();
             }
-            else
-            {
-                await NavigateToBack();
-            }
+
+            await NavigateToBack();
         }
 
         private void SearchEnded()

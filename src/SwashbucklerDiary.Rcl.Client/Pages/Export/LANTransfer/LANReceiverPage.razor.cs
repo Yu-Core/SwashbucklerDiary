@@ -22,6 +22,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showTransferDialog;
 
+        private string transferDialogTitle = "lanReceiver.Receiving";
+
         [Inject]
         private ILANReceiverService LANReceiverService { get; set; } = default!;
 
@@ -95,10 +97,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 LANReceiverService.CancelReceive();
             }
-            else
-            {
-                await NavigateToBack();
-            }
+
+            await NavigateToBack();
         }
 
         private void ReceiveStart()
@@ -131,17 +131,16 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 if (showTransferDialog)
                 {
+                    transferDialogTitle = "lanReceiver.Receive failed";
                     await PopupServiceHelper.Error(I18n.T("lanReceiver.Receive failed"));
                 }
                 else
                 {
+                    transferDialogTitle = "lanReceiver.Receive canceled";
                     await PopupServiceHelper.Error(I18n.T("lanReceiver.Receive canceled"));
                 }
 
-                if (IsThisPage)
-                {
-                    await NavigateToBack();
-                }
+                StateHasChanged();
             });
         }
 
@@ -153,15 +152,18 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 if (!isSuccess)
                 {
+                    transferDialogTitle = "Export.Import.Fail";
                     await PopupServiceHelper.Error(I18n.T("Export.Import.Fail"));
                 }
                 else
                 {
                     ps = 100;
                     bytes = totalBytes;
-                    StateHasChanged();
+                    transferDialogTitle = "lanReceiver.Receive successfully";
                     await PopupServiceHelper.Success(I18n.T("lanReceiver.Receive successfully"));
                 }
+
+                StateHasChanged();
             });
         }
 
