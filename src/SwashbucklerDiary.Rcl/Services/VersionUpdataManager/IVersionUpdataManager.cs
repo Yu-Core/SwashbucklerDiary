@@ -1,18 +1,18 @@
-﻿namespace SwashbucklerDiary.Rcl.Services
+namespace SwashbucklerDiary.Rcl.Services
 {
     public interface IVersionUpdataManager
     {
-        public event Func<Task>? AfterFirstEnter;
+        public event Action? AfterFirstEnter;
 
-        public event Func<Task>? AfterVersionUpdate;
+        public event Action? AfterVersionUpdate;
 
-        public event Func<Task>? AfterCheckFirstLaunch;
+        public event Action? AfterCheckFirstLaunch;
 
-        Task NotifyAfterFirstEnter();
+        void NotifyAfterFirstEnter();
 
         Task HandleVersionUpdate();
 
-        Task NotifyAfterCheckFirstLaunch();
+        void NotifyAfterCheckFirstLaunch();
 
         Task<bool> CheckForUpdates();
 

@@ -13,6 +13,8 @@ namespace SwashbucklerDiary.Rcl.Layout
     {
         protected bool afterInitSetting;
 
+        protected bool showSponsorSupport;
+
         protected readonly List<NavigationButton> navigationButtons = [
             new("Main.Diary", "mdi-notebook-outline", "mdi-notebook", ""),
             new("Main.History", "mdi-clock-outline", "mdi-clock", "history"),
@@ -67,12 +69,14 @@ namespace SwashbucklerDiary.Rcl.Layout
 
             I18n.OnChanged += HandleLanguageChanged;
             SettingService.SettingsChanged += HandleSettingsChanged;
+            VersionUpdataManager.AfterCheckFirstLaunch += HandleSponsorSupport;
         }
 
         protected virtual void OnDispose()
         {
             I18n.OnChanged -= HandleLanguageChanged;
             SettingService.SettingsChanged -= HandleSettingsChanged;
+            VersionUpdataManager.AfterCheckFirstLaunch -= HandleSponsorSupport;
         }
 
         protected virtual async Task InitSettingsAsync()
@@ -95,6 +99,23 @@ namespace SwashbucklerDiary.Rcl.Layout
             // A bug, it will cause the language selection RadioDialog to fail to select
             //var language = SettingService.Get(it => it.Language);
             //I18n.SetCulture(language);
+        }
+
+        private async void HandleSponsorSupport()
+        {
+            DateTime currentTime = DateTime.Now;
+            if (currentTime.Month == 1)
+            {
+                string key = "LastShowForSponsorSupport";
+                DateTime lastShowTime = SettingService.Get(key, DateTime.MinValue);
+
+                if (currentTime.Year != lastShowTime.Year)
+                {
+                    showSponsorSupport = true;
+                    await InvokeAsync(StateHasChanged);
+                    await SettingService.SetAsync(key, currentTime);
+                }
+            }
         }
     }
 }

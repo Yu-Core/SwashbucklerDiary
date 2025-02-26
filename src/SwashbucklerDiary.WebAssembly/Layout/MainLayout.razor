@@ -1,4 +1,4 @@
-﻿@inherits MainLayoutBase
+@inherits MainLayoutBase
 
 @if (afterInitSetting)
 {
@@ -21,7 +21,7 @@
                     <MainLayoutBottomNav Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutBottomNav>
 
                     <PwaSnackbar OnRefresh="@RefreshToSkipWaiting"></PwaSnackbar>
-                    <SponsorSupportSnackbar></SponsorSupportSnackbar>
+                    <SponsorSupportSnackbar @bind-Visible="showSponsorSupport"></SponsorSupportSnackbar>
                 </ChildContent>
                 <ErrorContent>
                     <MContainer Class="fill-height justify-center">

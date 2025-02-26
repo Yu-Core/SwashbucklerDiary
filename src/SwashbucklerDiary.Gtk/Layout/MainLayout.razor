@@ -19,7 +19,7 @@
                     <MainLayoutBottomNav Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutBottomNav>
 
                     <UpdateDialog @bind-Visible="showUpdate"></UpdateDialog>
-                    <SponsorSupportSnackbar></SponsorSupportSnackbar>
+                    <SponsorSupportSnackbar @bind-Visible="showSponsorSupport"></SponsorSupportSnackbar>
                 </ChildContent>
 
                 <ErrorContent>

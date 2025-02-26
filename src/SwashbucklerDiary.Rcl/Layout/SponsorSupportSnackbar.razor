@@ -1,9 +1,10 @@
-﻿@inherits MyComponentBase
+@inherits DialogComponentBase
 
-<MSnackbar Value="showSnackbar"
+<MSnackbar Value="Visible"
            ContentClass="pb-0"
            Vertical="true"
            Top="true"
+           Right
            Text="true"
            Elevation="2"
            Rounded="@("lg")"
@@ -19,7 +20,7 @@
     <ActionContent>
         <MSpacer></MSpacer>
         <MButton Text="true"
-                 OnClick="()=>showSnackbar=false">
+                 OnClick="HandleOnCancel">
             @(I18n.T("Share.Cancel"))
         </MButton>
         <MButton Text="true"

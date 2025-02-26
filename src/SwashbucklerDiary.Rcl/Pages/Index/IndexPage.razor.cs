@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
@@ -91,7 +91,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             To($"search{queryParameters}");
         }
 
-        private async Task UpdateDiariesAndStateHasChanged()
+        private async void UpdateDiariesAndStateHasChanged()
         {
             await UpdateDiariesAsync();
             await InvokeAsync(StateHasChanged);

@@ -6,11 +6,11 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public abstract class VersionUpdataManager : IVersionUpdataManager
     {
-        public event Func<Task>? AfterFirstEnter;
+        public event Action? AfterFirstEnter;
 
-        public event Func<Task>? AfterVersionUpdate;
+        public event Action? AfterVersionUpdate;
 
-        public event Func<Task>? AfterCheckFirstLaunch;
+        public event Action? AfterCheckFirstLaunch;
 
         protected int updateCount;
 
@@ -62,14 +62,9 @@ namespace SwashbucklerDiary.Rcl.Services
             });
         }
 
-        public async Task NotifyAfterFirstEnter()
+        public void NotifyAfterFirstEnter()
         {
-            if (AfterFirstEnter is null)
-            {
-                return;
-            }
-
-            await AfterFirstEnter.Invoke();
+            AfterFirstEnter?.Invoke();
         }
 
         public virtual async Task HandleVersionUpdate()
@@ -81,9 +76,9 @@ namespace SwashbucklerDiary.Rcl.Services
             await HandleVersionUpdate("1.03.9", HandleVersionUpdate1039);
             var version = await _staticWebAssets.ReadJsonAsync<string>("docs/update-instruction/version.json");
             await HandleVersionUpdate(version, HandleUpdateInstruction);
-            if (AfterVersionUpdate is not null && updateCount > 0)
+            if (updateCount > 0)
             {
-                await AfterVersionUpdate.Invoke();
+                AfterVersionUpdate?.Invoke();
             }
         }
 
@@ -142,14 +137,9 @@ namespace SwashbucklerDiary.Rcl.Services
             return Task.CompletedTask;
         }
 
-        public async Task NotifyAfterCheckFirstLaunch()
+        public void NotifyAfterCheckFirstLaunch()
         {
-            if (AfterCheckFirstLaunch is null)
-            {
-                return;
-            }
-
-            await AfterCheckFirstLaunch.Invoke();
+            AfterCheckFirstLaunch?.Invoke();
         }
 
         private async Task HandleVersionUpdate809()

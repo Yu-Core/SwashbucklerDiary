@@ -1,51 +1,12 @@
-﻿using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Rcl.Components;
 
 namespace SwashbucklerDiary.Rcl.Layout
 {
-    public partial class SponsorSupportSnackbar : MyComponentBase
+    public partial class SponsorSupportSnackbar : DialogComponentBase
     {
-        private bool showSnackbar;
-
-        protected override void OnInitialized()
+        private async Task ToSupport()
         {
-            base.OnInitialized();
-
-            AchievementService.UserStateChanged += OnUserStateChanged;
-        }
-
-        protected override async ValueTask DisposeAsyncCore()
-        {
-            await base.DisposeAsyncCore();
-
-            AchievementService.UserStateChanged -= OnUserStateChanged;
-        }
-
-        protected async void OnUserStateChanged(UserStateModel userStateModel)
-        {
-            if (userStateModel.Type != Achievement.Diary)
-            {
-                return;
-            }
-
-            var flag = await SettingService.GetAsync("SponsorSupport", false);
-            if (flag)
-            {
-                return;
-            }
-
-            if (userStateModel.Count == 100)
-            {
-                await Task.Delay(1000);
-                showSnackbar = true;
-                await InvokeAsync(StateHasChanged);
-                await SettingService.SetAsync("SponsorSupport", true);
-            }
-        }
-
-        private void ToSupport()
-        {
-            showSnackbar = false;
+            await InternalVisibleChanged(false);
             To("sponsor");
         }
     }

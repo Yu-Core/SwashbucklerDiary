@@ -40,9 +40,11 @@ namespace SwashbucklerDiary.Gtk.Layout
         }
 
 #if DEBUG
-        private Task CheckForUpdates() => Task.CompletedTask;
+        private void CheckForUpdates()
+        {
+        }
 #else
-        private async Task CheckForUpdates()
+        private async void CheckForUpdates()
         {
             bool notPrompt = SettingService.Get(it => it.UpdateNotPrompt);
             if (notPrompt)

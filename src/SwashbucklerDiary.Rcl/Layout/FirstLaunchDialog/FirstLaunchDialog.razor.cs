@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         private string BackgroundColor => Dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface;
 
-        private async void UpdateSettings()
+        private void UpdateSettings()
         {
             var setLang = SettingService.Get(s => s.FirstSetLanguage);
             var agree = SettingService.Get(s => s.FirstAgree);
@@ -51,7 +51,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             if (setLang && agree)
             {
                 show = false;
-                await VersionManager.NotifyAfterCheckFirstLaunch();
+                VersionManager.NotifyAfterCheckFirstLaunch();
             }
             else
             {
@@ -73,7 +73,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             Task insertTask = Task.Run(async () =>
             {
                 await InsertDefaultDiaries();
-                await VersionManager.NotifyAfterFirstEnter();
+                VersionManager.NotifyAfterFirstEnter();
             });
             Task[] tasks =
             [
@@ -94,7 +94,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             showAgreement = false;
             show = false;
             await SettingService.SetAsync(s => s.FirstAgree, true);
-            await VersionManager.NotifyAfterCheckFirstLaunch();
+            VersionManager.NotifyAfterCheckFirstLaunch();
         }
 
         private void Disagree()

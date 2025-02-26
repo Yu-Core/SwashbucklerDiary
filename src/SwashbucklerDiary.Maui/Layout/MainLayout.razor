@@ -1,4 +1,4 @@
-﻿@inherits MainLayoutBase
+@inherits MainLayoutBase
 
 @if (afterInitSetting)
 {
@@ -20,7 +20,7 @@
 
                     <UpdateDialog @bind-Visible="showUpdate"></UpdateDialog>
                     <PermissionSnackbar></PermissionSnackbar>
-                    <SponsorSupportSnackbar></SponsorSupportSnackbar>
+                    <SponsorSupportSnackbar @bind-Visible="showSponsorSupport"></SponsorSupportSnackbar>
                 </ChildContent>
 
                 <ErrorContent>
