@@ -70,4 +70,3 @@ jobs:
           file_glob: true
           release_name: ${{ env.FORMATTED_VERSION }}
           tag: v${{ env.FORMATTED_VERSION }}
-          prerelease: true
