@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 	<application android:allowBackup="true"
 				 android:icon="@mipmap/appicon"
@@ -11,12 +11,6 @@
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
 	<uses-permission android:name="android.permission.CAMERA" />
-	<!-- Required only if your app needs to access images or photos that other apps created -->
-	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-	<!-- Required only if your app needs to access videos that other apps created -->
-	<uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-	<!-- Required only if your app needs to access audio files that other apps created -->
-	<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 	<queries>
 		<intent>
 			<action android:name="android.media.action.IMAGE_CAPTURE" />
