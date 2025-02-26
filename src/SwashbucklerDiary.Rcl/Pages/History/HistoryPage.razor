@@ -1,4 +1,4 @@
-﻿@page "/history"
+@page "/history"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits DiariesPageComponentBase
 
@@ -61,6 +61,7 @@
                      Color="primary"
                      Events="eventsDates"
                      EventColor='"primary"'
+                     FirstDayOfWeek="firstDayOfWeek"
                      Locale="@(I18n.Culture.Name)">
         </MDatePicker>
     </IntersectElement>

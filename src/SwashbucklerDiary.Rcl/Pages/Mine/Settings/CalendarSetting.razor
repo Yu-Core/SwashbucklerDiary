@@ -1,0 +1,42 @@
+@page "/calendarSetting"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar Title="@(I18n.T("Setting.Display.Calendar.Name"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MCard Class="my-list-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem OnClick="() => showFirstDayOfWeek = true">
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-calendar-week-begin-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Calendar.FirstDayOfWeek.Name"))
+                </MListItemContent>
+                <MListItemContent Class="setting-item-state">
+                    <MListItemSubtitle>
+                        @FirstDayOfWeekText
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+</ScrollContainer>
+
+<SelectChipDialog @bind-Visible="showFirstDayOfWeek"
+                  @bind-Value="@firstDayOfWeek"
+                  @bind-Value:after="UpdateSetting"
+                  Title="@(I18n.T("Setting.Display.Calendar.FirstDayOfWeek.Name"))"
+                  Items="firstDayOfWeekItems"
+                  Mandatory="true">
+</SelectChipDialog>

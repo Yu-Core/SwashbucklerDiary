@@ -131,6 +131,18 @@
     "Href": "indexSetting"
   },
   {
+    "Name": "Setting.Display.Calendar.Name",
+    "Icon": "mdi-calendar-month-outline",
+    "Path": "Setting.Display.Calendar.Path",
+    "Href": "calendarSetting"
+  },
+  {
+    "Name": "Setting.Display.Calendar.FirstDayOfWeek.Name",
+    "Icon": "mdi-calendar-week-begin-outline",
+    "Path": "Setting.Display.Calendar.FirstDayOfWeek.Path",
+    "Href": "calendarSetting"
+  },
+  {
     "Name": "Setting.Display.Diary.Name",
     "Icon": "mdi-notebook-outline",
     "Path": "Setting.Display.Diary.Path",

@@ -1,21 +1,27 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class SelectChipDialog : DialogComponentBase
+    public partial class SelectChipDialog<TValue> : DialogComponentBase
     {
+        private StringNumber? internalValue;
+
         [Parameter]
         public string? Title { get; set; }
 
         [Parameter, EditorRequired]
-        public Dictionary<string, string> Items { get; set; } = [];
+        public Dictionary<string, TValue> Items { get; set; } = [];
 
         [Parameter]
-        public StringNumber? Value { get; set; }
+        public TValue Value
+        {
+            get => GetValue<TValue>();
+            set => SetValue(value);
+        }
 
         [Parameter]
-        public EventCallback<StringNumber> ValueChanged { get; set; }
+        public EventCallback<TValue> ValueChanged { get; set; }
 
         [Parameter]
         public bool Mandatory { get; set; }
@@ -27,17 +33,44 @@ namespace SwashbucklerDiary.Rcl.Components
         public EventCallback<bool> ShowTextChanged { get; set; }
 
         [Parameter]
-        public Func<KeyValuePair<string, string>, string>? ItemText { get; set; }
+        public Func<KeyValuePair<string, TValue>, string>? ItemText { get; set; }
 
         [Parameter]
-        public Func<KeyValuePair<string, string>, string>? ItemValue { get; set; }
+        public Func<KeyValuePair<string, TValue>, TValue>? ItemValue { get; set; }
 
         [Parameter]
-        public Func<KeyValuePair<string, string>, string>? ItemIcon { get; set; }
+        public Func<KeyValuePair<string, TValue>, string>? ItemIcon { get; set; }
 
         private bool InternalShowText => ShowText ?? true;
 
-        private string? InternalItemText(KeyValuePair<string, string> item)
+        protected override void RegisterWatchers(PropertyWatcher watcher)
+        {
+            base.RegisterWatchers(watcher);
+
+            watcher.Watch<TValue>(nameof(Value), UpdateInternalValue, immediate: true);
+        }
+
+        private void UpdateInternalValue()
+        {
+            internalValue = Items.FirstOrDefault(it => EqualityComparer<TValue>.Default.Equals(Value, InternalItemValue(it))).Key;
+        }
+
+        private async Task InternalValueChanged(StringNumber? value)
+        {
+            if (internalValue == value)
+            {
+                return;
+            }
+
+            if (ValueChanged.HasDelegate)
+            {
+                string? stringValue = value?.ToString();
+                var item = Items.FirstOrDefault(it => it.Key == stringValue);
+                await ValueChanged.InvokeAsync(InternalItemValue(item));
+            }
+        }
+
+        private string? InternalItemText(KeyValuePair<string, TValue> item)
         {
             if (!InternalShowText)
             {
@@ -52,7 +85,7 @@ namespace SwashbucklerDiary.Rcl.Components
             return I18n.T(item.Key);
         }
 
-        private string InternalItemValue(KeyValuePair<string, string> item)
+        private TValue InternalItemValue(KeyValuePair<string, TValue> item)
         {
             if (ItemValue is not null)
             {
@@ -62,7 +95,7 @@ namespace SwashbucklerDiary.Rcl.Components
             return item.Value;
         }
 
-        private string InternalItemIcon(KeyValuePair<string, string> item)
+        private string InternalItemIcon(KeyValuePair<string, TValue> item)
         {
             if (ItemIcon is not null)
             {

@@ -1,4 +1,5 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
+@typeparam TValue
 @inherits DialogComponentBase
 
 <MDialogExtension MyValue="Visible"
@@ -12,7 +13,7 @@
             <MSpacer></MSpacer>
             @if (ShowText is not null)
             {
-                <MButton IconName="@((bool)ShowText ? "mdi-alphabetical":"mdi-alphabetical-off")"
+                <MButton IconName="@((bool)ShowText ? "mdi-alphabetical" : "mdi-alphabetical-off")"
                          OnClick="UpdateShowText">
                 </MButton>
             }
@@ -23,15 +24,15 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
-            <MChipGroup Value="Value"
-                        Class="@(InternalShowText ? "":"m-chip-group--icon")"
-                        ValueChanged="ValueChanged"
+            <MChipGroup Value="internalValue"
+                        ValueChanged="InternalValueChanged"
+                        Class="@(InternalShowText ? "" : "m-chip-group--icon")"
                         Column="true"
                         Mandatory="Mandatory">
                 @foreach (var item in Items)
                 {
                     <MChip @key="item.Key"
-                           Value="@InternalItemValue(item)"
+                           Value="@item.Key"
                            Filter="InternalShowText"
                            Outlined="true"
                            OnClick="HandleOnCancel">

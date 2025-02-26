@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Masa.Blazor.Extensions;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
@@ -17,6 +17,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private bool showMenu;
 
         private bool showConfirmMerge;
+
+        private int firstDayOfWeek;
 
         private readonly string scrollContainerId = $"scroll-container-{Guid.NewGuid():N}";
 
@@ -40,6 +42,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             scrollContainerSelector = $"#{scrollContainerId}";
             LoadView();
+        }
+
+        protected override void ReadSettings()
+        {
+            base.ReadSettings();
+
+            firstDayOfWeek = SettingService.Get(it => it.FirstDayOfWeek);
         }
 
         protected override void RegisterWatchers(PropertyWatcher watcher)

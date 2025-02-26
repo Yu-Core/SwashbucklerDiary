@@ -74,6 +74,20 @@ OnClick="NavigateToBack">
                 </MListItemAction>
             </MListItem>
             <MDivider Class="mx-5"></MDivider>
+            <MListItem OnClick="@(() => To("calendarSetting"))">
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-calendar-month-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Setting.Display.Calendar.Name"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+            <MDivider Class="mx-5"></MDivider>
             <MListItem OnClick="@(()=>To("diarySetting"))">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">

@@ -47,5 +47,6 @@ namespace SwashbucklerDiary.Rcl.Services
         public bool RigthOutline { get; set; }
         public bool DiaryCardLocation { get; set; }
         public string UrlScheme { get; set; } = SchemeConstants.SwashbucklerDiary;
+        public int FirstDayOfWeek { get; set; } = 0;
     }
 }

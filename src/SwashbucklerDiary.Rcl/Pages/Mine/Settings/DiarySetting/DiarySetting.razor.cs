@@ -1,4 +1,3 @@
-﻿using Masa.Blazor;
 using SwashbucklerDiary.Rcl.Components;
 
 namespace SwashbucklerDiary.Rcl.Pages
@@ -27,15 +26,15 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool autoPlay;
 
-        private readonly Dictionary<string, string> editAutoSaveItems = new()
+        private readonly Dictionary<string, int> editAutoSaveItems = new()
         {
-            {"Setting.Display.Diary.EditAutoSave.Close" ,"0"},
-            {"5s" ,"5"},
-            {"15s" ,"15"},
-            {"20s" ,"20"},
-            {"30s" ,"30"},
-            {"45s" ,"45"},
-            {"60s" ,"60"},
+            {"Setting.Display.Diary.EditAutoSave.Close" ,0},
+            {"5s" ,5},
+            {"15s" ,15},
+            {"20s" ,20},
+            {"30s" ,30},
+            {"45s" ,45},
+            {"60s" ,60},
 
         };
 
@@ -55,22 +54,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             autoPlay = SettingService.Get(s => s.AutoPlay);
         }
 
-        private StringNumber EditAutoSave
+        private string? EditAutoSaveText => I18n.T(editAutoSaveItems.FirstOrDefault(it => it.Value == editAutoSave).Key);
+
+        private async Task UpdateSetting()
         {
-            get => editAutoSave.ToString();
-            set => SetEditAutoSave(value);
-        }
-
-        private string? EditAutoSaveText => I18n.T(editAutoSaveItems.FirstOrDefault(it => it.Value == EditAutoSave).Key);
-
-        private async void SetEditAutoSave(StringNumber value)
-        {
-            if (editAutoSave == value)
-            {
-                return;
-            }
-
-            editAutoSave = value.ToInt32();
             await SettingService.SetAsync(s => s.EditAutoSave, editAutoSave);
         }
     }

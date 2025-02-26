@@ -480,6 +480,14 @@
       "StatisticsCard": {
         "Name": "Statistics card",
         "Path": "Setting / Statistics card"
+      },
+      "Calendar": {
+        "Name": "Calendar",
+        "Path": "Setting / Calendar",
+        "FirstDayOfWeek": {
+          "Name": "First day of week",
+          "Path": "Setting / Calendar / First day of week"
+        }
       }
     },
     "Other": {

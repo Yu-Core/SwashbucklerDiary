@@ -1,4 +1,4 @@
-﻿@page "/diarySetting"
+@page "/diarySetting"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
@@ -224,7 +224,8 @@
 </ScrollContainer>
 
 <SelectChipDialog @bind-Visible="showEditAutoSave"
-                  @bind-Value="@EditAutoSave"
+                  @bind-Value="@editAutoSave"
+                  @bind-Value:after="UpdateSetting"
                   Title="@(I18n.T("Setting.Display.Diary.EditAutoSave.Name"))"
                   Items="editAutoSaveItems"
                   Mandatory="true">

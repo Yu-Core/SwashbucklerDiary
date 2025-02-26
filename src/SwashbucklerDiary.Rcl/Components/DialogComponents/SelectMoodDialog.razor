@@ -1,8 +1,9 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits DialogComponentBase
 
 <SelectChipDialog Visible="Visible"
                   VisibleChanged="VisibleChanged"
+                  TValue="string"
                   Value="Value"
                   ValueChanged="ValueChanged"
                   Title="@(I18n.T("SelectMood"))"
@@ -19,10 +20,10 @@
     private IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
 
     [Parameter]
-    public StringNumber? Value { get; set; }
+    public string? Value { get; set; }
 
     [Parameter]
-    public EventCallback<StringNumber> ValueChanged { get; set; }
+    public EventCallback<string> ValueChanged { get; set; }
 
     [Parameter]
     public bool ShowText { get; set; }

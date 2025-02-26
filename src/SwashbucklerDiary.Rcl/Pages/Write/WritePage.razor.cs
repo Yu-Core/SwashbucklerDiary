@@ -145,24 +145,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             set => diary.Tags = value;
         }
 
-        private StringNumber? SelectedWeather
-        {
-            get => diary.Weather;
-            set => diary.Weather = value?.ToString();
-        }
-
-        private StringNumber? SelectedMood
-        {
-            get => diary.Mood;
-            set => diary.Mood = value?.ToString();
-        }
-
-        private string? SelectedLocation
-        {
-            get => diary.Location;
-            set => diary.Location = value;
-        }
-
         private DateOnly SelectedDate
         {
             get => DateOnly.FromDateTime(diary.CreateTime);
@@ -177,10 +159,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             string.IsNullOrEmpty(diary.Weather) ? I18n.T("Write.Weather")! : I18n.T("Weather." + diary.Weather)!;
 
         private string MoodText =>
-                   string.IsNullOrEmpty(diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + diary.Mood)!;
+            string.IsNullOrEmpty(diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + diary.Mood)!;
 
         private string LocationText =>
-            string.IsNullOrEmpty(SelectedLocation) ? I18n.T("Write.Location") : SelectedLocation;
+            string.IsNullOrEmpty(diary.Location) ? I18n.T("Write.Location") : diary.Location;
 
         private WordCountStatistics WordCountType
             => (WordCountStatistics)Enum.Parse(typeof(WordCountStatistics), I18n.T("Write.WordCountType")!);

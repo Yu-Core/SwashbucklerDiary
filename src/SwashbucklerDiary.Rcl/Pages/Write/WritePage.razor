@@ -158,17 +158,17 @@
 </SelectTagsDialog>
 
 <SelectWeatherDialog @bind-Visible="showWeather"
-                     @bind-Value="@SelectedWeather"
+                     @bind-Value="@diary.Weather"
                      @bind-ShowText="showIconText">
 </SelectWeatherDialog>
 
 <SelectMoodDialog @bind-Visible="showMood"
-                  @bind-Value="@SelectedMood"
+                  @bind-Value="@diary.Mood"
                   @bind-ShowText="showIconText">
 </SelectMoodDialog>
 
 <SelectLocationDialog @bind-Visible="showLocation"
-                      @bind-Value="SelectedLocation">
+                      @bind-Value="diary.Location">
 </SelectLocationDialog>
 
 <MultiDatePicker @bind-Visible="showCreateTime"

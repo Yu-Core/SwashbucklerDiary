@@ -1,4 +1,4 @@
-﻿@page "/alertSetting"
+@page "/alertSetting"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
@@ -21,7 +21,7 @@
             </MListItemContent>
             <MListItemContent Class="setting-item-state">
                 <MListItemSubtitle>
-                    @(Timeout.ToString() + "s")
+                    @TimeoutText
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -53,7 +53,8 @@
 </ScrollContainer>
 
 <SelectChipDialog @bind-Visible="showTimeout"
-                  @bind-Value="@Timeout"
+                  @bind-Value="@timeout"
+                  @bind-Value:after="UpdateSetting"
                   Title="@(I18n.T("Setting.Display.Snackbars.AlertTimeout.Name"))"
                   Items="timeoutItems"
                   Mandatory="true">

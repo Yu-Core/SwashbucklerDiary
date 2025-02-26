@@ -1,17 +1,16 @@
-﻿using Masa.Blazor;
 using SwashbucklerDiary.Rcl.Components;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class AlertSettingPage : ImportantComponentBase
     {
-        private int _timeout;
+        private int timeout;
 
         private bool showTimeout;
 
         private bool achievementsAlert;
 
-        private readonly Dictionary<string, string> timeoutItems = [];
+        private readonly Dictionary<string, int> timeoutItems = [];
 
         protected override void OnInitialized()
         {
@@ -24,34 +23,22 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            _timeout = SettingService.Get(s => s.AlertTimeout);
+            timeout = SettingService.Get(s => s.AlertTimeout);
             achievementsAlert = SettingService.Get(s => s.AchievementsAlert);
         }
 
-        private StringNumber Timeout
+        private string TimeoutText => timeoutItems.FirstOrDefault(it => it.Value == timeout).Key;
+
+        private async Task UpdateSetting()
         {
-            get => (_timeout / 1000).ToString();
-            set => SetTimeout(value);
-        }
-
-        private string TimeoutText => timeoutItems.FirstOrDefault(it => it.Value == Timeout).Key;
-
-        private async void SetTimeout(StringNumber value)
-        {
-            if (_timeout == value)
-            {
-                return;
-            }
-
-            _timeout = value.ToInt32() * 1000;
-            await SettingService.SetAsync(s => s.AlertTimeout, _timeout);
+            await SettingService.SetAsync(s => s.AlertTimeout, timeout);
         }
 
         private void InitTimeoutItems()
         {
             for (int i = 0; i < 5; i++)
             {
-                timeoutItems.Add($"{i + 1}s", (i + 1).ToString());
+                timeoutItems.Add($"{i + 1}s", (i + 1) * 1000);
             }
         }
     }

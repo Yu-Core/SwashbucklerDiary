@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
@@ -100,15 +100,15 @@ namespace SwashbucklerDiary.Rcl.Pages
             set => SetValue(value);
         }
 
-        private StringNumber? SelectedWeather
+        private string? SelectedWeather
         {
-            get => GetValue<StringNumber?>();
+            get => GetValue<string?>();
             set => SetValue(value);
         }
 
-        private StringNumber? SelectedMood
+        private string? SelectedMood
         {
-            get => GetValue<StringNumber?>();
+            get => GetValue<string?>();
             set => SetValue(value);
         }
 
@@ -160,8 +160,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task ClearFilter()
         {
             SetValueWithNoEffect<List<TagModel>>([], nameof(SelectedTags));
-            SetValueWithNoEffect<StringNumber>(null, nameof(SelectedWeather));
-            SetValueWithNoEffect<StringNumber>(null, nameof(SelectedMood));
+            SetValueWithNoEffect<string>(null, nameof(SelectedWeather));
+            SetValueWithNoEffect<string>(null, nameof(SelectedMood));
             SetValueWithNoEffect<string>(null, nameof(SelectedLocation));
             SetValueWithNoEffect<List<MediaResource>>([], nameof(SelectedFileTypes));
             SetValueWithNoEffect<DateFilterForm>(new(), nameof(DateFilterForm));
@@ -179,17 +179,15 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (IsWeatherFiltered)
             {
-                var selectedWeather = SelectedWeather?.ToString();
                 Expression<Func<DiaryModel, bool>> expWeather
-                    = it => it.Weather == selectedWeather;
+                    = it => it.Weather == SelectedWeather;
                 exp = exp.And(expWeather);
             }
 
             if (IsMoodFiltered)
             {
-                var selectedMood = SelectedMood?.ToString();
                 Expression<Func<DiaryModel, bool>> expMood
-                    = it => it.Mood == selectedMood;
+                    = it => it.Mood == SelectedMood;
                 exp = exp.And(expMood);
             }
 
