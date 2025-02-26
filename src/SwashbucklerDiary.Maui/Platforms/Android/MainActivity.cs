@@ -31,8 +31,8 @@ namespace SwashbucklerDiary.Maui
     {
         private SoftKeyboardAdjustResize softKeyboardAdjustResize;
 
-        public override bool DispatchKeyEvent(KeyEvent e)
-            => NavigationButtonHandler.OnBackButtonPressed(e);
+        //public override bool DispatchKeyEvent(KeyEvent e)
+        //    => NavigationButtonHandler.OnBackButtonPressed(e);
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -52,6 +52,8 @@ namespace SwashbucklerDiary.Maui
             softKeyboardAdjustResize = new SoftKeyboardAdjustResize(this);
             SoftKeyboardAdjustResizeHelper.InitBackgroundColor(this);
             Platform.OnNewIntent(this.Intent);
+
+            OnBackPressedDispatcher.AddCallback(new MyOnBackPressedCallback(true));
         }
 
         protected override void OnNewIntent(Intent intent)
