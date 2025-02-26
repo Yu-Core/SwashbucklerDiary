@@ -18,8 +18,8 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.TryAddSingleton<I18n>();
 
             var masaBlazorBuilder = services.AddMasaBlazor(ServiceLifetime.Singleton);
-            await masaBlazorBuilder.AddI18nForWasmAsync($"{baseAddress}/_content/{StaticWebAssets.RclAssemblyName}/i18n");
-            await masaBlazorBuilder.AddI18nForWasmAsync($"{baseAddress}/i18n");
+            await masaBlazorBuilder.AddI18nForWasmAsync(Path.Combine(baseAddress, "_content", StaticWebAssets.RclAssemblyName, "i18n"));
+            await masaBlazorBuilder.AddI18nForWasmAsync(Path.Combine(baseAddress, "i18n"));
 
             return services;
         }
