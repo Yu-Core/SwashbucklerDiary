@@ -99,7 +99,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             AppLifecycle.OnStopped += LeaveAppSaveDiary;
             AppLifecycle.OnResumed += ResumeApp;
             AppLifecycle.OnActivated += HandleActivated;
-            NavigateController.AddHistoryAction(LeaveThisPageSaveDiary, false);
+            NavigateController.AddHistoryAction(LeavePageSaveDiary, false);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -263,11 +263,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             await SaveDiaryAsync(true);
         }
 
-        private async Task LeaveThisPageSaveDiary()
+        private async Task LeavePageSaveDiary()
         {
-            NavigateController.RemoveHistoryAction(LeaveThisPageSaveDiary);
+            NavigateController.RemoveHistoryAction(LeavePageSaveDiary);
             timer?.Dispose();
-            await SaveDiaryAsync(true);
+            await SaveDiaryAsync();
         }
 
         private void ResumeApp()
@@ -275,7 +275,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             _ = CreateTimer();
         }
 
-        private async Task SaveDiaryAsync(bool background)
+        private async Task SaveDiaryAsync(bool background = false)
         {
             if (enableMarkdown)
             {
@@ -315,32 +315,25 @@ namespace SwashbucklerDiary.Rcl.Pages
                 diaryEditMode = DiaryEditMode.Update;
                 bool isSuccess = await DiaryService.AddAsync(diary);
 
-                if (!background)
+                if (!isSuccess)
                 {
-                    if (!isSuccess)
-                    {
-                        await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
-                    }
-                    else
-                    {
-                        _ = HandleAchievements();
-
-                    }
+                    await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
+                }
+                else
+                {
+                    _ = HandleAchievements(background, DiaryEditMode.Add);
                 }
             }
             else
             {
                 bool isSuccess = await DiaryService.UpdateIncludesAsync(diary);
-                if (!background)
+                if (!isSuccess)
                 {
-                    if (!isSuccess)
-                    {
-                        await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
-                    }
-                    else
-                    {
-                        _ = HandleAchievements();
-                    }
+                    await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
+                }
+                else
+                {
+                    _ = HandleAchievements(background, DiaryEditMode.Update);
                 }
             }
         }
@@ -390,14 +383,23 @@ namespace SwashbucklerDiary.Rcl.Pages
             return len + " " + I18n.T("Write.CountUnit");
         }
 
-        private async Task HandleAchievements()
+        private async Task HandleAchievements(bool background, DiaryEditMode diaryEditMode)
         {
-            var messages = await AchievementService.UpdateUserState(Achievement.Diary);
-            var alldiaries = await DiaryService.QueryAsync();
-            var wordCount = alldiaries.GetWordCount(WordCountType);
-            var messages2 = await AchievementService.UpdateUserState(Achievement.Word, wordCount);
-            messages.AddRange(messages2);
-            await AlertAchievements(messages);
+            List<string> messages = [];
+            if (diaryEditMode == DiaryEditMode.Add)
+            {
+                var messages1 = await AchievementService.UpdateUserState(Achievement.Diary);
+                messages.AddRange(messages1);
+            }
+
+            if (!background)
+            {
+                var alldiaries = await DiaryService.QueryAsync();
+                var wordCount = alldiaries.GetWordCount(WordCountType);
+                var messages2 = await AchievementService.UpdateUserState(Achievement.Word, wordCount);
+                messages.AddRange(messages2);
+                await AlertAchievements(messages);
+            }
         }
 
         private Task SettingChange(string key, ref bool value)
