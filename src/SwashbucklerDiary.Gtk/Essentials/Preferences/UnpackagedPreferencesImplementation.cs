@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using PreferencesDictionary = System.Collections.Concurrent.ConcurrentDictionary<string, System.Collections.Concurrent.ConcurrentDictionary<string, string>>;
 using ShareNameDictionary = System.Collections.Concurrent.ConcurrentDictionary<string, string>;
 
@@ -55,6 +56,10 @@ namespace SwashbucklerDiary.Gtk.Essentials
 
             if (value is null)
                 prefs.TryRemove(key, out _);
+            else if (value is DateTime dt)
+                prefs[key] = string.Format(CultureInfo.InvariantCulture, "{0}", dt.ToBinary());
+            else if (value is DateTimeOffset dto)
+                prefs[key] = dto.ToString("O");
             else
                 prefs[key] = string.Format(CultureInfo.InvariantCulture, "{0}", value);
 
@@ -67,6 +72,23 @@ namespace SwashbucklerDiary.Gtk.Essentials
             {
                 if (inner.TryGetValue(key, out var value) && value is not null)
                 {
+                    if (defaultValue is DateTime dt)
+                    {
+                        // long for the .NET 9+ format
+                        if (long.TryParse(value, CultureInfo.InvariantCulture, out var longValue))
+                            return (T)(object)DateTime.FromBinary(longValue);
+                        // DateTime string for the .NET 8 format
+                        if (DateTime.TryParse(value, CultureInfo.InvariantCulture, out var datetimeValue))
+                            return (T)(object)datetimeValue;
+                    }
+                    else if (defaultValue is DateTimeOffset dto)
+                    {
+                        if (DateTimeOffset.TryParse((string)value, CultureInfo.InvariantCulture, out var dateTimeOffset))
+                        {
+                            return (T)(object)dateTimeOffset;
+                        }
+                    }
+
                     try
                     {
                         return (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
@@ -90,9 +112,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
             {
                 using var stream = File.OpenRead(AppPreferencesPath);
 
-#pragma warning disable IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
-                var readPreferences = JsonSerializer.Deserialize<PreferencesDictionary>(stream);
-#pragma warning restore IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
+                PreferencesDictionary readPreferences = JsonSerializer.Deserialize(stream, PreferencesJsonSerializerContext.Default.PreferencesDictionary);
 
                 if (readPreferences != null)
                 {
@@ -113,9 +133,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
             Directory.CreateDirectory(dir);
 
             using var stream = File.Create(AppPreferencesPath);
-#pragma warning disable IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
-            JsonSerializer.Serialize(stream, _preferences);
-#pragma warning restore IL2026 // Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code
+            JsonSerializer.Serialize(stream, _preferences, PreferencesJsonSerializerContext.Default.PreferencesDictionary);
         }
 
         static string CleanSharedName(string sharedName) =>
@@ -123,13 +141,14 @@ namespace SwashbucklerDiary.Gtk.Essentials
 
         internal static Type[] SupportedTypes = new Type[]
         {
-                    typeof(string),
-                    typeof(int),
-                    typeof(bool),
-                    typeof(long),
-                    typeof(double),
-                    typeof(float),
-                    typeof(DateTime),
+            typeof(string),
+            typeof(int),
+            typeof(bool),
+            typeof(long),
+            typeof(double),
+            typeof(float),
+            typeof(DateTime),
+            typeof(DateTimeOffset)
         };
 
         internal static void CheckIsSupportedType<T>()
@@ -141,4 +160,9 @@ namespace SwashbucklerDiary.Gtk.Essentials
             }
         }
     }
+}
+
+[JsonSerializable(typeof(PreferencesDictionary), TypeInfoPropertyName = nameof(PreferencesDictionary))]
+internal partial class PreferencesJsonSerializerContext : JsonSerializerContext
+{
 }
