@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Maui
     [Activity(Label = "@string/app_name",
         Theme = "@style/Maui.SplashTheme",
         MainLauncher = true,
-        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density | ConfigChanges.KeyboardHidden,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density | ConfigChanges.KeyboardHidden | ConfigChanges.Keyboard,
         LaunchMode = LaunchMode.SingleTask)]
     public class MainActivity : MauiAppCompatActivity
     {
