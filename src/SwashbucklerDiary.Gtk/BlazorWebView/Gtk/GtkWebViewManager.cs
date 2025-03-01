@@ -4,7 +4,6 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Soup;
 using SwashbucklerDiary.Gtk.BlazorWebView;
-using System.Threading.Channels;
 using System.Web;
 using WebKit;
 
@@ -29,7 +28,6 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
     UserScript _script = default!;
     private readonly WebKit.WebView _webview;
     private readonly ILogger _logger;
-    private readonly Channel<string> _channel;
     private const string BlazorInitScript
         = $$"""
             window.__receiveMessageCallbacks = [];
@@ -98,17 +96,6 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
         _contentRootRelativeToAppRoot = contentRootRelativeToAppRoot;
         _hostPageRelativePath = hostPagePathWithinFileProvider;
 
-        // https://github.com/DevToys-app/DevToys/issues/1194
-        // Forked from https://github.com/tryphotino/photino.Blazor/issues/40
-        //Create channel and start reader
-        _channel = Channel.CreateUnbounded<string>(new UnboundedChannelOptions()
-        {
-            SingleReader = true,
-            SingleWriter = false,
-            AllowSynchronousContinuations = false
-        });
-        Task.Run(SendMessagePump);
-
         Attach();
     }
 
@@ -123,29 +110,9 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
     {
         var script = $"__dispatchMessageCallback(\"{HttpUtility.JavaScriptStringEncode(message)}\")";
 
-        // https://github.com/DevToys-app/DevToys/issues/1194
-        // Forked from https://github.com/tryphotino/photino.Blazor/issues/40
-        while (!_channel.Writer.TryWrite(script))
-        {
-            Thread.Sleep(200);
-        }
+        _webview.EvaluateJavascriptAsync(script);
     }
 
-    private async Task SendMessagePump()
-    {
-        // https://github.com/DevToys-app/DevToys/issues/1194
-        // Forked from https://github.com/tryphotino/photino.Blazor/issues/40
-        ChannelReader<string> reader = _channel.Reader;
-        try
-        {
-            while (true)
-            {
-                string script = await reader.ReadAsync();
-                _ = _webview?.EvaluateJavascriptAsync(script);
-            }
-        }
-        catch (ChannelClosedException) { }
-    }
 
     private void Attach()
     {

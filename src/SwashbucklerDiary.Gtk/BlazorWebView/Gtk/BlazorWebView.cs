@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using MauiDispatcher = Microsoft.Maui.Dispatching.Dispatcher;
 
 namespace Microsoft.AspNetCore.Components.WebView.Gtk
 {
@@ -28,7 +29,7 @@ namespace Microsoft.AspNetCore.Components.WebView.Gtk
         {
             WebKit.Module.Initialize();
 
-            ComponentsDispatcher = Dispatcher.CreateDefault();
+            ComponentsDispatcher = new GtkDispatcher(MauiDispatcher.GetForCurrentThread());
 
             RootComponents.CollectionChanged += HandleRootComponentsCollectionChanged;
 
