@@ -70,5 +70,13 @@ namespace SwashbucklerDiary.Maui
 
             softKeyboardAdjustResize.OnStop();
         }
+
+        class MyOnBackPressedCallback(bool enabled) : OnBackPressedCallback(enabled)
+        {
+            public override void HandleOnBackPressed()
+            {
+                BackPressHelper.BackPressed();
+            }
+        }
     }
 }

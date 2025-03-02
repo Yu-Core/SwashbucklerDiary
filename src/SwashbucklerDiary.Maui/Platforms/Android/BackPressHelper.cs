@@ -1,5 +1,4 @@
 using Android.Widget;
-using AndroidX.Activity;
 using SwashbucklerDiary.Maui.BlazorWebView;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
@@ -7,23 +6,19 @@ using Application = Android.App.Application;
 
 namespace SwashbucklerDiary.Maui
 {
-    public class MyOnBackPressedCallback : OnBackPressedCallback
+    public static class BackPressHelper
     {
-        private byte backPressCounter;
+        private static byte backPressCounter;
 
-        private readonly Lazy<II18nService> _i18n = new(() => IPlatformApplication.Current!.Services.GetRequiredService<II18nService>());
+        private static readonly Lazy<II18nService> _i18n = new(() => IPlatformApplication.Current!.Services.GetRequiredService<II18nService>());
 
-        private readonly Lazy<INavigateController> _navigateController = new(() => IPlatformApplication.Current!.Services.GetRequiredService<INavigateController>());
+        private static readonly Lazy<INavigateController> _navigateController = new(() => IPlatformApplication.Current!.Services.GetRequiredService<INavigateController>());
 
-        private II18nService I18n => _i18n.Value;
+        private static II18nService I18n => _i18n.Value;
 
-        private INavigateController NavigateController => _navigateController.Value;
+        private static INavigateController NavigateController => _navigateController.Value;
 
-        public MyOnBackPressedCallback(bool enabled) : base(enabled)
-        {
-        }
-
-        public override void HandleOnBackPressed()
+        public static void BackPressed()
         {
             if (NavigateController.IsInitialized && MauiBlazorWebViewHandler.WebView is not null)
             {
@@ -33,11 +28,11 @@ namespace SwashbucklerDiary.Maui
             }
             else
             {
-                Quit();
+                QuitApp();
             }
         }
 
-        public void Quit()
+        public static void QuitApp()
         {
             string text = I18n.T("Press again to exit");
 

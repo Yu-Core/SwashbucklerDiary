@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Maui.Essentials
         {
             context.PreventNavigation();
 #if ANDROID
-            NavigationButtonHandler.QuitApp();
+            BackPressHelper.QuitApp();
 #else
             Microsoft.Maui.Controls.Application.Current!.Quit();
 #endif
