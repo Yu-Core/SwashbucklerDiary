@@ -32,6 +32,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private Lazy<HttpClient> _httpClient;
 
+        private readonly SortedDictionary<Version, Func<Task>> _versionHandlers = [];
+
         private class Release
         {
             public string? Tag_Name { get; set; }
@@ -60,6 +62,8 @@ namespace SwashbucklerDiary.Rcl.Services
                 httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)");
                 return httpClient;
             });
+
+            InitializeVersionHandlers();
         }
 
         public void NotifyAfterFirstEnter()
@@ -67,13 +71,13 @@ namespace SwashbucklerDiary.Rcl.Services
             AfterFirstEnter?.Invoke();
         }
 
-        public virtual async Task HandleVersionUpdate()
+        public async Task HandleVersionUpdate()
         {
-            await HandleVersionUpdate("0.69.7", HandleVersionUpdate697);
-            await HandleVersionUpdate("0.80.9", HandleVersionUpdate809);
-            await HandleVersionUpdate("0.86.0", HandleVersionUpdate860);
-            await HandleVersionUpdate("1.01.5", HandleVersionUpdate1015);
-            await HandleVersionUpdate("1.03.9", HandleVersionUpdate1039);
+            foreach (var handler in _versionHandlers)
+            {
+                await HandleVersionUpdate(handler.Key.ToString(), handler.Value);
+            }
+
             var version = await _staticWebAssets.ReadJsonAsync<string>("docs/update-instruction/version.json");
             await HandleVersionUpdate(version, HandleUpdateInstruction);
             if (updateCount > 0)
@@ -103,6 +107,21 @@ namespace SwashbucklerDiary.Rcl.Services
         public abstract Task ToUpdate();
 
         protected HttpClient HttpClient => _httpClient.Value;
+
+        protected virtual void InitializeVersionHandlers()
+        {
+            AddVersionHandler("0.69.7", HandleVersionUpdate697);
+            AddVersionHandler("0.80.9", HandleVersionUpdate809);
+            AddVersionHandler("0.86.0", HandleVersionUpdate860);
+            AddVersionHandler("1.01.5", HandleVersionUpdate1015);
+            AddVersionHandler("1.03.9", HandleVersionUpdate1039);
+        }
+
+        protected void AddVersionHandler(string versionString, Func<Task> handler)
+        {
+            var version = Version.Parse(versionString);
+            _versionHandlers[version] = handler;
+        }
 
         protected async Task HandleVersionUpdate(string version, Func<Task> func)
         {

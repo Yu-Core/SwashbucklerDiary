@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Gtk
 
         private static readonly Lazy<string> _platformAppDataDirectory = new(valueFactory: () =>
         {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppSpecificPath, "Data");
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppSpecificPath, "Data");
 
             if (!File.Exists(path))
             {

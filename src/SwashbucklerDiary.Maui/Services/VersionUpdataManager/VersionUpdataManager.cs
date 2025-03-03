@@ -27,10 +27,11 @@ namespace SwashbucklerDiary.Maui.Services
             _popupServiceHelper = popupServiceHelper;
         }
 
-        public override async Task HandleVersionUpdate()
+        protected override void InitializeVersionHandlers()
         {
-            await HandleVersionUpdate("0.64.7", HandleVersionUpdate647);
-            await base.HandleVersionUpdate();
+            base.InitializeVersionHandlers();
+
+            AddVersionHandler("0.64.7", HandleVersionUpdate647);
         }
 
         //此版本之后更改了资源的链接
