@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -24,6 +25,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         [Inject]
         private IAvatarService AvatarService { get; set; } = default!;
+
+        [Inject]
+        private ILogger<UserPage> Logger { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -87,10 +91,24 @@ namespace SwashbucklerDiary.Rcl.Pages
             showEditAvatar = false;
             await PopupServiceHelper.StartLoading();
             StateHasChanged();
-            string? photoPath = await func.Invoke();
-            await PopupServiceHelper.StopLoading();
+            string? photoPath = null;
+            try
+            {
+                photoPath = await func.Invoke();
+            }
+            catch (Exception e)
+            {
+                await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
+                Logger.LogError(e, I18n.T("Share.EditFail"));
+            }
+            finally
+            {
+                await PopupServiceHelper.StopLoading();
+            }
+
             if (string.IsNullOrEmpty(photoPath))
             {
+                await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
                 return;
             }
 
