@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class MarkdownJSModule : JSModuleExtension
+    public class MarkdownJSModule : CustomJSModule
     {
         public MarkdownJSModule(IJSRuntime js) : base(js, "js/markdown-helper.js")
         {

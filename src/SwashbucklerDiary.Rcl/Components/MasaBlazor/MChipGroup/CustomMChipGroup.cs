@@ -1,9 +1,9 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Masa.Blazor.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class MChipGroupExtension : MChipGroup
+    public class CustomMChipGroup : MChipGroup
     {
         protected override void RegisterWatchers(PropertyWatcher watcher)
         {

@@ -1,7 +1,7 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits DialogComponentBase
 
-<MDialogExtension MyValue="Visible"
+<CustomMDialog MyValue="Visible"
                   MyValueChanged="InternalVisibleChanged"
                   ContentClass="rounded-lg"
                   MaxWidth="420"
@@ -23,7 +23,7 @@
         <MCardText Class="pb-0">
             @if (showSearch)
             {
-                <MTextFieldExtension @bind-Value="_searchText"
+                <CustomMTextField @bind-Value="_searchText"
                                      Class="mb-2"
                                      OnInput="UpdateInternalItems"
                                      Dense
@@ -36,7 +36,7 @@
                                      spellcheck="false"
                                      Placeholder="@(I18n.T("Share.Search"))"
                                      PrependInnerIcon="mdi-magnify">
-                </MTextFieldExtension>
+                </CustomMTextField>
             }
             <div class="scroll-show" style="max-height:200px;">
                 <MChipGroup @bind-Values="SelectedTagIds"
@@ -70,7 +70,7 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MDialogExtension>
+</CustomMDialog>
 
 <InputDialog @bind-Visible="showAddTag"
              Title="@(I18n.T("Tag.Add"))"

@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
 
@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class MultiMenu : DialogComponentBase
     {
-        private MBottomSheetExtension? mBottomSheetExtension;
+        private CustomMBottomSheet? mBottomSheetExtension;
 
         private MMenu? mMenu;
 

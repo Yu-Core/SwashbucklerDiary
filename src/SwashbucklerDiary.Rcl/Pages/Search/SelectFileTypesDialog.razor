@@ -1,9 +1,9 @@
-﻿@namespace SwashbucklerDiary.Rcl.Pages
+@namespace SwashbucklerDiary.Rcl.Pages
 @inherits DialogComponentBase
 
 <MultiDisplay>
     <MobileContent>
-        <MBottomSheetExtension MyValue="Visible"
+        <CustomMBottomSheet MyValue="Visible"
                                MyValueChanged="InternalVisibleChanged"
                                ContentClass="rounded-t-lg">
             <MCard Class="rounded-t-lg py-2">
@@ -43,10 +43,10 @@
                     </MListItem>
                 </MList>
             </MCard>
-        </MBottomSheetExtension>
+        </CustomMBottomSheet>
     </MobileContent>
     <DesktopContent>
-        <MDialogExtension MyValue="Visible"
+        <CustomMDialog MyValue="Visible"
                           MyValueChanged="InternalVisibleChanged"
                           ContentClass="rounded-lg"
                           MaxWidth="420">
@@ -86,6 +86,6 @@
                     }
                 </MCardText>
             </MCard>
-        </MDialogExtension>
+        </CustomMDialog>
     </DesktopContent>
 </MultiDisplay>

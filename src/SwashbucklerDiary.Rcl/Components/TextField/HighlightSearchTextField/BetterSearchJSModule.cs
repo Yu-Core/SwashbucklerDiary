@@ -1,8 +1,8 @@
-﻿using Microsoft.JSInterop;
+using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class BetterSearchJSModule : JSModuleExtension
+    public class BetterSearchJSModule : CustomJSModule
     {
         public BetterSearchJSModule(IJSRuntime js) : base(js, "js/bettersearch-proxy.js")
         {

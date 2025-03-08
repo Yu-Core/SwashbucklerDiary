@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class SwiperJsModule : JSModuleExtension
+    public class SwiperJsModule : CustomJSModule
     {
         public SwiperJsModule(IJSRuntime js) : base(js, "js/swiper-helper.js")
         {

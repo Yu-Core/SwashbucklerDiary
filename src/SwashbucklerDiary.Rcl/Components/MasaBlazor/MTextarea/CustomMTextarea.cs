@@ -1,21 +1,23 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class MButtonExtension : MButton
+    public class CustomMTextarea : MTextarea
     {
         [Parameter]
-        public bool OnMousedownPreventDefault { get; set; }
+        public EventCallback OnAfter { get; set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender && OnMousedownPreventDefault)
+            if (firstRender)
             {
-                await Js.InvokeVoidAsync("preventDefaultOnmousedown", Ref);
+                if (OnAfter.HasDelegate)
+                {
+                    await OnAfter.InvokeAsync();
+                }
             }
         }
     }

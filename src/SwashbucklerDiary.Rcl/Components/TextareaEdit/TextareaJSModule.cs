@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class TextareaJSModule : JSModuleExtension
+    public class TextareaJSModule : CustomJSModule
     {
         public TextareaJSModule(IJSRuntime js) : base(js, "js/mtextarea-helper.js")
         {

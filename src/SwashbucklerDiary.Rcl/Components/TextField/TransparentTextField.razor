@@ -1,6 +1,6 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 
-<MTextFieldExtension TValue="string"
+<CustomMTextField TValue="string"
                      Value="@Value"
                      ValueChanged="ValueChanged"
                      OnInput="OnInput"
@@ -14,4 +14,4 @@
                      Color="@TextFieldColor"
                      spellcheck="false"
                      Placeholder="@(Placeholder ?? I18n.T("Search.Please enter keywords"))">
-</MTextFieldExtension>
+</CustomMTextField>

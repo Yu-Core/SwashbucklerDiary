@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Pages
+@namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
 <MCard Class="my-list-card"
@@ -47,7 +47,7 @@
     </MList>
 </MCard>
 
-<MDialogExtension @bind-MyValue="showBackups"
+<CustomMDialog @bind-MyValue="showBackups"
                   ContentClass="rounded-lg"
                   MaxWidth="420">
     <MCard>
@@ -75,9 +75,9 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MDialogExtension>
+</CustomMDialog>
 
-<MDialogExtension @bind-MyValue="showRestore"
+<CustomMDialog @bind-MyValue="showRestore"
                   ContentClass="rounded-lg"
                   MaxWidth="420">
     <MCard>
@@ -105,4 +105,4 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MDialogExtension>
+</CustomMDialog>

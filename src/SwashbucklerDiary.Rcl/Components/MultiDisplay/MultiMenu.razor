@@ -1,12 +1,12 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits DialogComponentBase
 
 <MultiDisplay OnUpdate="UpdateDisplay">
     <MobileContent>
-        <MBottomSheetExtension @ref="mBottomSheetExtension"
-                               MyValue="Visible"
-                               MyValueChanged="InternalVisibleChanged"
-                               ContentClass="rounded-t-lg">
+        <CustomMBottomSheet @ref="mBottomSheetExtension"
+                            MyValue="Visible"
+                            MyValueChanged="InternalVisibleChanged"
+                            ContentClass="rounded-t-lg">
             <ActivatorContent>
                 @ComputedActivatorContent
             </ActivatorContent>
@@ -32,7 +32,7 @@
                     </div>
                 </MCard>
             </ChildContent>
-        </MBottomSheetExtension>
+        </CustomMBottomSheet>
     </MobileContent>
     <DesktopContent>
         <MMenu @ref="mMenu"

@@ -1,4 +1,4 @@
-﻿@page "/search"
+@page "/search"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits DiariesPageComponentBase
 
@@ -22,7 +22,7 @@
                OnClick="ClearFilter">
             <MIcon>mdi-filter-variant-remove</MIcon>
         </MChip>
-        <MChipGroupExtension Style="min-width:0;"
+        <CustomMChipGroup Style="min-width:0;"
                              ShowArrows="true">
             @foreach (var item in filterItems)
             {
@@ -37,7 +37,7 @@
                     <MIcon Right>mdi-chevron-down</MIcon>
                 </MChip>
             }
-        </MChipGroupExtension>
+        </CustomMChipGroup>
     </ExtensionContent>
 </MToolbar>
 

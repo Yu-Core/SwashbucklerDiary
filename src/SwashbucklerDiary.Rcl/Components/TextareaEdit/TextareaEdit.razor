@@ -1,6 +1,6 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 
-<MTextareaExtension @ref="mTextarea"
+<CustomMTextarea @ref="mTextarea"
                     Value="@Value"
                     ValueChanged="ValueChanged"
                     Class="@($"{Class} user-select flex-grow-1 flex-column")"
@@ -13,4 +13,4 @@
                     OnAfter="OnAfter"
                     spellcheck="false"
                     Placeholder="@(I18n.T("Write.ContentPlace"))">
-</MTextareaExtension>
+</CustomMTextarea>

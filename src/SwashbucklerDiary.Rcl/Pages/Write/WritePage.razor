@@ -17,16 +17,16 @@
 
     <MSpacer></MSpacer>
 
-    <MButtonExtension Icon="true"
-                      OnMousedownPreventDefault="true"
-                      OnClick="InsertTimestamp">
+    <CustomMButton Icon="true"
+                   OnMousedownPreventDefault="true"
+                   OnClick="InsertTimestamp">
         <MIcon>
             mdi-clock-outline
         </MIcon>
-    </MButtonExtension>
+    </CustomMButton>
 
     <MButton Icon="true"
-             OnClick="()=>showSelectTag = true">
+             OnClick="() => showSelectTag = true">
         <MIcon>
             mdi-label-outline
         </MIcon>
@@ -76,17 +76,17 @@
             <div>
                 <DiaryInfoButton Icon="@WeatherIcon"
                                  Text="@WeatherText"
-                                 OnClick="()=>showWeather=true">
+                                 OnClick="() => showWeather = true">
                 </DiaryInfoButton>
 
                 <DiaryInfoButton Icon="@MoodIcon"
                                  Text="@MoodText"
-                                 OnClick="()=>showMood=true">
+                                 OnClick="() => showMood = true">
                 </DiaryInfoButton>
 
                 <DiaryInfoButton Icon="mdi-map-marker-outline"
                                  Text="@LocationText"
-                                 OnClick="()=>showLocation=true">
+                                 OnClick="() => showLocation = true">
                 </DiaryInfoButton>
             </div>
         }
@@ -130,14 +130,14 @@
         }
     </div>
 
-    <div class="pl-2 @(SelectedTags.Any()?"":"d-none")">
+    <div class="pl-2 @(SelectedTags.Any() ? "" : "d-none")">
         <div class="write-chip-group" style="width:100%;">
             @foreach (var item in SelectedTags)
             {
                 <MChip @key="item.Id"
                        Outlined
                        Close
-                       OnCloseClick="()=>RemoveSelectedTag(item)">
+                       OnCloseClick="() => RemoveSelectedTag(item)">
                     @(item.Name)
                 </MChip>
             }
@@ -174,7 +174,7 @@
 </MultiDatePicker>
 
 <MultiTimePicker @bind-Visible="showTime"
-                  @bind-Value="SelectedTime">
+                 @bind-Value="SelectedTime">
 </MultiTimePicker>
 
 <MOverlay Value="overlay"

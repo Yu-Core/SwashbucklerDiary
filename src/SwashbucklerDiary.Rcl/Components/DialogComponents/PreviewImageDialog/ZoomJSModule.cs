@@ -1,8 +1,8 @@
-﻿using Microsoft.JSInterop;
+using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    internal class ZoomJSModule : JSModuleExtension
+    internal class ZoomJSModule : CustomJSModule
     {
         public ZoomJSModule(IJSRuntime js) : base(js, "js/panzoom-helper.js")
         {

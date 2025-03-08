@@ -4,7 +4,7 @@ using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class PMobileTimePickerExtension : PMobileTimePicker
+    public class CustomPMobileTimePicker : PMobileTimePicker
     {
         [Inject]
         protected INavigateController NavigateController { get; set; } = default!;

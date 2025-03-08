@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Pages
+@namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
 <MCard Class="my-list-card"
@@ -56,7 +56,7 @@
                  DynamicListItems="importTypes">
 </MultiListDialog>
 
-<MDialogExtension @bind-MyValue="showConfirmImport"
+<CustomMDialog @bind-MyValue="showConfirmImport"
                   ContentClass="rounded-lg"
                   MaxWidth="420">
     <MCard>
@@ -84,4 +84,4 @@
             </MButton>
         </MCardActions>
     </MCard>
-</MDialogExtension>
+</CustomMDialog>

@@ -1,16 +1,11 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
-using System.Reflection;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    //The significance of extension is to enable dialog or similar components to support back button
-    public class MDialogExtension : MDialog
+    public class CustomMBottomSheet : MBottomSheet
     {
-        private bool firstOpen = true;
-
         [Inject]
         protected INavigateController NavigateController { get; set; } = default!;
 
@@ -34,9 +29,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public EventCallback OnBeforeShowContent { get; set; }
 
-        [Parameter]
-        public bool OnMousedownPreventDefault { get; set; }
-
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -54,9 +46,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
             return base.DisposeAsyncCore();
         }
-
-        private static readonly PropertyInfo overlayRefProperty = typeof(MDialog).GetProperty("OverlayRef", BindingFlags.NonPublic | BindingFlags.Instance)
-                        ?? throw new Exception("Property OverlayRef does not exist");
 
         private void SetValue(bool value)
         {
@@ -87,18 +76,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task HandleOnAfterShowContent(bool value)
         {
-            if (firstOpen)
-            {
-                firstOpen = false;
-                if (OnMousedownPreventDefault)
-                {
-                    ElementReference? overlayRef = overlayRefProperty.GetValue(this) as ElementReference?;
-
-                    List<object> args = [ContentRef, overlayRef];
-                    await Js.InvokeVoidAsync("preventDefaultOnmousedown", args);
-                }
-            }
-
             if (OnAfterShowContent.HasDelegate)
             {
                 await OnAfterShowContent.InvokeAsync(value);

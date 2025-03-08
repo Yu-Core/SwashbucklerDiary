@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class PreviewMediaElementJSModule : JSModuleExtension
+    public class PreviewMediaElementJSModule : CustomJSModule
     {
         public PreviewMediaElementJSModule(IJSRuntime js) : base(js, "js/previewMediaElement.js")
         {

@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class BackTopButtonJSModule : JSModuleExtension
+    public class BackTopButtonJSModule : CustomJSModule
     {
         public BackTopButtonJSModule(IJSRuntime js) : base(js, "Components/FloatButton/BackTopButton.razor.js")
         {

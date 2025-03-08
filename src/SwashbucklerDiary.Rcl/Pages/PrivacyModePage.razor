@@ -1,4 +1,4 @@
-﻿@page "/privacyMode"
+@page "/privacyMode"
 @inherits ImportantComponentBase
 
 <MyAppBar Title="@(I18n.T("PrivacyMode.Name"))"
@@ -218,7 +218,7 @@ OnClick="NavigateToBack">
                     OnOK="SetPassword">
     </PasswordDialog>
 
-    <MDialogExtension @bind-MyValue="showHidePrivacyModeEntranceConfirmDialog"
+    <CustomMDialog @bind-MyValue="showHidePrivacyModeEntranceConfirmDialog"
                       ContentClass="rounded-lg"
                       MaxWidth="420">
         <MCard>
@@ -255,5 +255,5 @@ OnClick="NavigateToBack">
                 </MButton>
             </MCardActions>
         </MCard>
-    </MDialogExtension>
+    </CustomMDialog>
 }

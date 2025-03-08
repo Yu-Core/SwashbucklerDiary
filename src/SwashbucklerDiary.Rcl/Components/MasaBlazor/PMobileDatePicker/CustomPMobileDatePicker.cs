@@ -1,10 +1,10 @@
-﻿using Masa.Blazor.Presets;
+using Masa.Blazor.Presets;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class PMobileDatePickerExtension : PMobileDatePicker, IDisposable
+    public class CustomPMobileDatePicker : PMobileDatePicker, IDisposable
     {
         [Inject]
         protected INavigateController NavigateController { get; set; } = default!;

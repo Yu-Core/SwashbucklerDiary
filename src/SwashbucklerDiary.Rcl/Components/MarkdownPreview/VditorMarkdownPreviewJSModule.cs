@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class VditorMarkdownPreviewJSModule : JSModuleExtension
+    public class VditorMarkdownPreviewJSModule : CustomJSModule
     {
         public VditorMarkdownPreviewJSModule(IJSRuntime js) : base(js, "js/vditor-preview-helper.js")
         {

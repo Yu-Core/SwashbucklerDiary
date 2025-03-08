@@ -1,21 +1,21 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits DialogComponentBase
 
 <MultiDisplay>
     <MobileContent>
-        <MBottomSheetExtension MyValue="Visible"
+        <CustomMBottomSheet MyValue="Visible"
                                MyValueChanged="InternalVisibleChanged"
                                ContentClass="rounded-t-lg">
             @GenCard(GenMobileCardActionsContent())
-        </MBottomSheetExtension>
+        </CustomMBottomSheet>
     </MobileContent>
     <DesktopContent>
-        <MDialogExtension MyValue="Visible"
+        <CustomMDialog MyValue="Visible"
                           MyValueChanged="InternalVisibleChanged"
                           ContentClass="rounded-lg"
                           MaxWidth="420">
             @GenCard(GenDesktopCardActionsContent())
-        </MDialogExtension>
+        </CustomMDialog>
     </DesktopContent>
 </MultiDisplay>
 
