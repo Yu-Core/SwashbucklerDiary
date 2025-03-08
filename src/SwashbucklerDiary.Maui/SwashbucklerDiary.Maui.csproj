@@ -21,7 +21,7 @@
 		<EnableDefaultCssItems>false</EnableDefaultCssItems>
 		<Nullable>enable</Nullable>
 		<NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
-		<MauiVersion>9.0.22</MauiVersion>
+		<MauiVersion>9.0.40</MauiVersion>
 
 		<!-- Display name -->
 		<ApplicationTitle>侠客日记</ApplicationTitle>
@@ -151,7 +151,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="10.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="11.1.0" />
 		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="1.9.7" />
 		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.4.3" />
 	</ItemGroup>
