@@ -1,4 +1,4 @@
-﻿@page "/read/{id:guid}"
+@page "/read/{id:guid}"
 @inherits ImportantComponentBase
 
 @if (ShowAppBar)
@@ -61,11 +61,15 @@
                  ContentStyle="padding-top:0px;">
     <div id="screenshot" class="primary-background">
         <div class="d-flex align-center px-3">
-            <span class="text-h6 font-weight-bold">
+            <span class="text-h6 font-weight-bold mr-3">
                 @(diary.CreateTime.ToString("d"))
             </span>
 
-            <span class="ml-5 text-subtitle-2">
+            <span class="font-weight-bold mr-5">
+                @(diary.CreateTime.ToString("t"))
+            </span>
+
+            <span class="text-subtitle-2">
                 @(I18n.ToWeek(diary.CreateTime))
             </span>
 

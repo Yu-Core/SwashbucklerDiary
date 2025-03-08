@@ -4,18 +4,12 @@
 <MDialogExtension MyValue="Visible"
                   MyValueChanged="InternalVisibleChanged"
                   ContentClass="rounded-lg"
-                  MaxWidth="420"
+                  Width="@("auto")"
                   OnBeforeShowContent="BeforeShowContent">
-    <MDatePicker @bind-Value="internalValue"
-                 Class="rounded-lg pt-4 my-picker"
-                 FullWidth="true"
-                 NoTitle="true"
-                 Scrollable="true"
-                 Color="primary"
-                 Events="Events"
-                 EventColor='EventColor'
-                 Min="Min"
-                 Max="Max">
+    <MTimePicker @bind-Value="internalValue"
+                 Landscape
+                 Format="TimeFormat.Hr24"
+                 Scrollable>
         <MSpacer></MSpacer>
         <MButton Text="true"
                  OnClick="HandleOnCancel">
@@ -26,5 +20,5 @@
                  OnClick="HandleOnOK">
             @(I18n.T("Share.OK"))
         </MButton>
-    </MDatePicker>
+    </MTimePicker>
 </MDialogExtension>

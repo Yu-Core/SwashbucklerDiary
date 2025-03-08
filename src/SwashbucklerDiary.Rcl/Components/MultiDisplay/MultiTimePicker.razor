@@ -1,0 +1,20 @@
+@namespace SwashbucklerDiary.Rcl.Components
+@inherits DialogComponentBase
+
+<MultiDisplay OnUpdate="UpdateDisplay">
+    <MobileContent>
+        <PMobileTimePickerExtension MyVisible="Visible"
+                                    MyVisibleChanged="InternalVisibleChanged"
+                                    Value="Value"
+                                    ValueChanged="InternalValueChanged"
+                                    Precision="TimePrecision.Minute">
+        </PMobileTimePickerExtension>
+    </MobileContent>
+    <DesktopContent>
+        <TimePickerDialog Visible="Visible"
+                          VisibleChanged="InternalVisibleChanged"
+                          Value="Value"
+                          ValueChanged="InternalValueChanged">
+        </TimePickerDialog>
+    </DesktopContent>
+</MultiDisplay>

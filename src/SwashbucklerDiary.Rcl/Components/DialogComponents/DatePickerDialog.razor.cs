@@ -1,23 +1,14 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using OneOf;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class DatePickerDialog : DialogComponentBase
     {
-        private DateOnly _date = DateOnly.FromDateTime(DateTime.Now);
-
-        private DateOnly internalDate;
+        private DateOnly internalValue;
 
         [Parameter]
-        public override bool Visible { get; set; }
-
-        [Parameter]
-        public DateOnly Value
-        {
-            get => _date == default ? DateOnly.FromDateTime(DateTime.Now) : _date;
-            set => _date = value;
-        }
+        public DateOnly Value { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
         [Parameter]
         public EventCallback<DateOnly> ValueChanged { get; set; }
@@ -36,12 +27,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void BeforeShowContent()
         {
-            internalDate = Value;
+            internalValue = Value == default ? DateOnly.FromDateTime(DateTime.Now) : Value;
         }
 
         private async Task HandleOnOK()
         {
-            Value = internalDate;
+            Value = internalValue;
             if (ValueChanged.HasDelegate)
             {
                 await ValueChanged.InvokeAsync(Value);

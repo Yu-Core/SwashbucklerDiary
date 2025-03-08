@@ -49,8 +49,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.RegisterWatchers(watcher);
 
             watcher.Watch<List<TagModel>>(nameof(SelectedTags), UpdateDiariesAndStateHasChangedAsync)
-                   .Watch<StringNumber?>(nameof(SelectedWeather), UpdateDiariesAndStateHasChangedAsync)
-                   .Watch<StringNumber?>(nameof(SelectedMood), UpdateDiariesAndStateHasChangedAsync)
+                   .Watch<string?>(nameof(SelectedWeather), UpdateDiariesAndStateHasChangedAsync)
+                   .Watch<string?>(nameof(SelectedMood), UpdateDiariesAndStateHasChangedAsync)
                    .Watch<string?>(nameof(SelectedLocation), UpdateDiariesAndStateHasChangedAsync)
                    .Watch<List<MediaResource>>(nameof(SelectedFileTypes), UpdateDiariesAndStateHasChangedAsync)
                    .Watch<DateFilterForm>(nameof(DateFilterForm), UpdateDiariesAndStateHasChangedAsync);

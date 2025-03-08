@@ -23,7 +23,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showLocation;
 
-        private bool showCreateTime;
+        private bool showDate;
+
+        private bool showTime;
 
         private bool enableTitle;
 
@@ -148,7 +150,13 @@ namespace SwashbucklerDiary.Rcl.Pages
         private DateOnly SelectedDate
         {
             get => DateOnly.FromDateTime(diary.CreateTime);
-            set => diary.CreateTime = value.ToDateTime();
+            set => diary.CreateTime = value.ToDateTime(SelectedTime);
+        }
+
+        private TimeOnly SelectedTime
+        {
+            get => TimeOnly.FromDateTime(diary.CreateTime);
+            set => diary.CreateTime = SelectedDate.ToDateTime(value);
         }
 
         private string WeatherIcon => GetWeatherIcon(diary.Weather);
