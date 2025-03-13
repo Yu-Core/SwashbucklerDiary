@@ -1,0 +1,5 @@
+﻿@media screen and (max-width:600px) {
+    .m-enqueued-snackbars.m-enqueued-snackbars--bottom {
+        bottom: calc(1rem + 56px) !important;
+    }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "Swashbuckler Diary",
+  "short_name": "Swashbuckler Diary",
+  "id": "./",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f7f9fc",
+  "theme_color": "#f7f9fc",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Search",
+      "url": "./search",
+      "icons": [
+        {
+          "src": "shortcut_magnify.png",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Add",
+      "url": "./write",
+      "icons": [
+        {
+          "src": "shortcut_pencil.png",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

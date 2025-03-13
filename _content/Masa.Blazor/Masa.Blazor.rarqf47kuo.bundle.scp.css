@@ -1,0 +1,54 @@
+/* _content/Masa.Blazor/Components/Pdfjs/MPdfMobileViewer.razor.rz.scp.css */
+.m-pdf-mobile-viewer[b-pnllqkwgpi] {
+    position: absolute;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    --page-margin: 0 auto;
+    --page-border: 8px solid transparent;
+}
+
+.m-pdf-mobile-viewer canvas[b-pnllqkwgpi] {
+    margin: auto;
+    display: block;
+}
+
+.m-pdf-mobile-viewer footer[b-pnllqkwgpi] {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    background-color: var(--m-theme-light-inverse-surface);
+    color: var(--m-theme-light-inverse-on-surface);
+}
+
+.m-pdf-mobile-viewer footer[b-pnllqkwgpi]  > * {
+    flex: 1;
+    color: inherit;
+    text-align: center;
+    margin: auto 0;
+}
+
+.m-pdf-mobile-viewer footer > .pagination[b-pnllqkwgpi] {
+    flex: 3;
+}
+
+.m-pdf-mobile-viewer[b-pnllqkwgpi]  .pdfViewer .canvasWrapper > canvas {
+    width: inherit !important;
+}
+
+.m-pdf-mobile-viewer--has-toolbar[b-pnllqkwgpi] {
+    --pdfViewer-padding-bottom: 36px;
+}
+
+.m-page-stack-item__content .m-pdf-mobile-viewer--has-toolbar[b-pnllqkwgpi] {
+    --pdfViewer-padding-bottom: calc(36px + var(--m-page-stack-item-bar-height));
+}
+
+.m-page-stack-item__content .container .m-pdf-mobile-viewer--has-toolbar[b-pnllqkwgpi] {
+	--pdfViewer-padding-bottom: calc(36px + 12px + var(--m-page-stack-item-bar-height));
+}
