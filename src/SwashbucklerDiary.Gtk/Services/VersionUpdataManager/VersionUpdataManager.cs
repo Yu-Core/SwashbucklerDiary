@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 
@@ -29,18 +30,43 @@ namespace SwashbucklerDiary.Gtk.Services
             await _platformIntegration.OpenBrowser("https://github.com/Yu-Core/SwashbucklerDiary/releases");
         }
 
-        protected override void InitializeVersionHandlers()
+        public void MigrateAppDataDirectory()
         {
-            base.InitializeVersionHandlers();
+            if (!_versionTracking.IsFirstLaunchEver)
+            {
+                return;
+            }
 
-            AddVersionHandler("1.11.7", HandleVersionUpdate1117);
-        }
+            string _oldAppDataParentDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppInfo.PackageName);
+            if (!Path.Exists(_oldAppDataParentDirectory))
+            {
+                return;
+            }
 
-        private Task HandleVersionUpdate1117()
-        {
-            string _oldAppDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppInfo.PackageName, "Data");
-            _appFileSystem.MoveFolder(_oldAppDataDirectory, FileSystem.AppDataDirectory, SearchOption.AllDirectories);
-            return Task.CompletedTask;
+            _appFileSystem.MoveFolder(_oldAppDataParentDirectory, Path.Combine(FileSystem.AppDataDirectory, ".."), SearchOption.AllDirectories, true);
+            Directory.Delete(_oldAppDataParentDirectory, true);
+
+            string command = $"sleep 1 && {Environment.ProcessPath} &";
+
+            // 创建一个 ProcessStartInfo 对象来配置进程
+            ProcessStartInfo processStartInfo = new ProcessStartInfo
+            {
+                FileName = "/bin/bash", // 使用 bash 来执行命令
+                Arguments = $"-c \"{command}\"", // -c 表示执行后面的字符串作为命令
+                RedirectStandardOutput = true, // 重定向标准输出
+                RedirectStandardError = true,  // 重定向标准错误
+                UseShellExecute = false,      // 不使用系统 shell 执行
+                CreateNoWindow = true          // 不创建窗口
+            };
+
+            // 创建并启动进程
+            using Process process = new Process();
+            process.StartInfo = processStartInfo;
+
+            // 启动进程
+            process.Start();
+
+            global::Gtk.Application.GetDefault()?.Quit();
         }
     }
 }

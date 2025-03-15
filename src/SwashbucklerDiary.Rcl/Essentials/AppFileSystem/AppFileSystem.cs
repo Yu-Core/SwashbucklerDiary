@@ -1,4 +1,4 @@
-﻿namespace SwashbucklerDiary.Rcl.Essentials
+namespace SwashbucklerDiary.Rcl.Essentials
 {
     public abstract class AppFileSystem : IAppFileSystem
     {
@@ -47,7 +47,8 @@
             using (FileStream localFileStream = File.OpenWrite(targetFilePath))
             {
                 await sourceStream.CopyToAsync(localFileStream, 1024 * 1024);
-            };
+            }
+            ;
         }
 
         public void ClearFolder(string folderPath, List<string>? exceptPaths = null)
@@ -174,7 +175,7 @@
             }
         }
 
-        public void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption)
+        public void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption, bool fileOverwrite = false)
         {
             string[] files = Directory.GetFiles(sourceFolder, "*", searchOption);
 
@@ -186,10 +187,19 @@
 
                 Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
 
-                if (!File.Exists(destinationPath))
+                if (File.Exists(destinationPath))
                 {
-                    File.Move(file, destinationPath);
+                    if (fileOverwrite)
+                    {
+                        File.Delete(destinationPath);
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
+
+                File.Move(file, destinationPath);
             }
         }
 

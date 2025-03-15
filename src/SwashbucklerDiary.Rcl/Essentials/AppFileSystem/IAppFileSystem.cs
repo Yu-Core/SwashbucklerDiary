@@ -1,4 +1,4 @@
-﻿namespace SwashbucklerDiary.Rcl.Essentials
+namespace SwashbucklerDiary.Rcl.Essentials
 {
     public interface IAppFileSystem
     {
@@ -24,7 +24,7 @@
 
         void CopyFolder(string sourceFolder, string destinationFolder, SearchOption searchOption);
 
-        void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption);
+        void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption, bool fileOverwrite = false);
 
         /// <summary>
         /// 清除缓存
