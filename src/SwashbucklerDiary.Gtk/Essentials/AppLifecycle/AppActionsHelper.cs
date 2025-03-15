@@ -64,7 +64,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
             entries.Add(new(){});
 
             // Gio.Application Unencapsulated AddMainOptionEntries
-            Gio.Internal.Application.AddMainOptionEntries(application.Handle, OptionEntryArrayOwnedHandle.Create(entries.ToArray()));
+            Gio.Internal.Application.AddMainOptionEntries(application.Handle.DangerousGetHandle(), OptionEntryArrayOwnedHandle.Create(entries.ToArray()));
         }
     }
 }

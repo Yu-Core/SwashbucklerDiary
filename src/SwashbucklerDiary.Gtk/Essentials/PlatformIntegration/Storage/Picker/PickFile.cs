@@ -42,7 +42,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
                     for (uint i = 0; i < fileCount; i++)
                     {
                         nint fileValue = files.GetItem(i);
-                        var file = new Gio.FileHelper(fileValue, true);
+                        var file = new Gio.FileHelper(new(fileValue, true));
                         string? filePath = file.GetPath();
 
                         if (PlatformIntegrationHelper.ValidFileExtension(filePath, fileExtensions))

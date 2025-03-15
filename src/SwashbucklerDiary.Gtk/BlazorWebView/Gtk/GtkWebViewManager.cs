@@ -170,7 +170,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
     /// <exception cref="Exception"></exception>
     void HandleUriSchemeRequest(URISchemeRequest request)
     {
-        if (!UriSchemeRequestHandlers.TryGetValue(request.GetWebView().Handle, out var uriSchemeHandler))
+        if (!UriSchemeRequestHandlers.TryGetValue(request.GetWebView().Handle.DangerousGetHandle(), out var uriSchemeHandler))
         {
             throw new Exception($"Invalid scheme \"{request.GetScheme()}\"");
         }
@@ -215,9 +215,9 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
 
     void RegisterUriSchemeRequestHandler()
     {
-        if (!UriSchemeRequestHandlers.TryGetValue(_webview.Handle, out var uriSchemeHandler))
+        if (!UriSchemeRequestHandlers.TryGetValue(_webview.Handle.DangerousGetHandle(), out var uriSchemeHandler))
         {
-            UriSchemeRequestHandlers.Add(_webview.Handle, (_hostPageRelativePath, TryGetResponseContentInternal));
+            UriSchemeRequestHandlers.Add(_webview.Handle.DangerousGetHandle(), (_hostPageRelativePath, TryGetResponseContentInternal));
         }
     }
 
@@ -348,7 +348,7 @@ public partial class GtkWebViewManager : Microsoft.AspNetCore.Components.WebView
         var userContentManager = _webview.GetUserContentManager();
         userContentManager.UnregisterScriptMessageHandler(MessageQueueId, null);
         userContentManager.RemoveScript(_script);
-        UriSchemeRequestHandlers.Remove(_webview.Handle);
+        UriSchemeRequestHandlers.Remove(_webview.Handle.DangerousGetHandle());
 
         _detached = true;
     }

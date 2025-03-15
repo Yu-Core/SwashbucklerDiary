@@ -37,7 +37,8 @@ namespace SwashbucklerDiary.Gtk.Essentials
             {
                 var bus = DBusConnection.Get(BusType.Session);
                 using var parameters = Variant.NewTuple([
-                    Variant.NewString("org.freedesktop.appearance"), Variant.NewString("color-scheme")
+                    Variant.NewString("org.freedesktop.appearance"), 
+                    Variant.NewString("color-scheme")
                 ]);
 
                 using Variant ret = bus.CallSync(

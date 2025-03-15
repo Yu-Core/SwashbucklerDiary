@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Gtk
             IServiceProvider serviceProvider,
             Gdk.RGBA backgroundColor
             )
-            : base(global::Gtk.Internal.ApplicationWindow.New(application.Handle), false)
+            : base(new global::Gtk.Internal.ApplicationWindowHandle(global::Gtk.Internal.ApplicationWindow.New(application.Handle.DangerousGetHandle()), false))
         {
             SetDefaultSize(1024, 768);
 
