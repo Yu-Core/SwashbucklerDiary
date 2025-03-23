@@ -240,20 +240,44 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task AddImageAsync()
         {
-            var resources = await MediaResourceManager.AddMultipleImageAsync();
-            await AddMediaFilesAsync(resources);
+            try
+            {
+                var resources = await MediaResourceManager.AddMultipleImageAsync();
+                await AddMediaFilesAsync(resources);
+            }
+            catch (Exception e)
+            {
+                await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
+                Logger.LogError(e, I18n.T("Share.AddFail"));
+            }
         }
 
         private async Task AddAudioAsync()
         {
-            var resources = await MediaResourceManager.AddMultipleAudioAsync();
-            await AddMediaFilesAsync(resources);
+            try
+            {
+                var resources = await MediaResourceManager.AddMultipleAudioAsync();
+                await AddMediaFilesAsync(resources);
+            }
+            catch (Exception e)
+            {
+                await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
+                Logger.LogError(e, I18n.T("Share.AddFail"));
+            }
         }
 
         private async Task AddVideoAsync()
         {
-            var resources = await MediaResourceManager.AddMultipleVideoAsync();
-            await AddMediaFilesAsync(resources);
+            try
+            {
+                var resources = await MediaResourceManager.AddMultipleVideoAsync();
+                await AddMediaFilesAsync(resources);
+            }
+            catch (Exception e)
+            {
+                await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
+                Logger.LogError(e, I18n.T("Share.AddFail"));
+            }
         }
 
         //private async Task AddMediaFileAsync(ResourceModel? resource)

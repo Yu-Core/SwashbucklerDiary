@@ -153,7 +153,7 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.1.0" />
 		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="1.9.7" />
-		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.4.5" />
+		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.4.6" />
 	</ItemGroup>
 
 </Project>
