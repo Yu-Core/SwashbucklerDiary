@@ -33,13 +33,20 @@ namespace SwashbucklerDiary.Maui.Essentials
 
         private static ValueTask<ActivationArguments> CreateArguments(AppActivationArguments args)
         {
-            return args.Kind switch
+            if (args.Kind == ExtendedActivationKind.Protocol && args.Data is ProtocolActivatedEventArgs protocolActivatedEventArgs)
             {
-                ExtendedActivationKind.Protocol => HandleScheme((ProtocolActivatedEventArgs)args.Data),
-                ExtendedActivationKind.ShareTarget => HandleShare((ShareTargetActivatedEventArgs)args.Data),
-                ExtendedActivationKind.Launch => HandleLaunch((LaunchActivatedEventArgs)args.Data),
-                _ => NewAppActivationArguments()
-            };
+                return HandleScheme(protocolActivatedEventArgs);
+            }
+            else if (args.Kind == ExtendedActivationKind.ShareTarget && args.Data is ShareTargetActivatedEventArgs shareTargetActivatedEventArgs)
+            {
+                return HandleShare(shareTargetActivatedEventArgs);
+            }
+            else if (args.Kind == ExtendedActivationKind.Launch && args.Data is LaunchActivatedEventArgs launchActivatedEventArgs)
+            {
+                return HandleLaunch(launchActivatedEventArgs);
+            }
+
+            return NewAppActivationArguments();
         }
 
         private static ValueTask<ActivationArguments> HandleScheme(ProtocolActivatedEventArgs args)

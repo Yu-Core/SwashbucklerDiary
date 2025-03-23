@@ -11,6 +11,8 @@ namespace SwashbucklerDiary.Maui.Services
 
         private readonly IPopupServiceHelper _popupServiceHelper;
 
+        private readonly IPlatformIntegration _platformIntegration;
+
         public VersionUpdataManager(IDiaryService diaryService,
             IResourceService resourceService,
             ISettingService settingService,
@@ -20,11 +22,13 @@ namespace SwashbucklerDiary.Maui.Services
             IDiaryFileManager diaryFileManager,
             IAccessExternal accessExternal,
             IPopupServiceHelper popupServiceHelper,
-            IStaticWebAssets staticWebAssets) :
+            IStaticWebAssets staticWebAssets,
+            IPlatformIntegration platformIntegration) :
             base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager, staticWebAssets)
         {
             _accessExternal = accessExternal;
             _popupServiceHelper = popupServiceHelper;
+            _platformIntegration = platformIntegration;
         }
 
         protected override void InitializeVersionHandlers()
@@ -73,6 +77,25 @@ namespace SwashbucklerDiary.Maui.Services
 
         public override async Task ToUpdate()
         {
+#if WINDOWS
+            bool IsPackagedApp = false;
+            try
+            {
+                if (Windows.ApplicationModel.Package.Current is not null)
+                {
+                    IsPackagedApp = true;
+                }
+            }
+            catch
+            {
+            }
+            
+            if (!IsPackagedApp)
+            {
+                await _platformIntegration.OpenBrowser("https://github.com/Yu-Core/SwashbucklerDiary/releases");
+                return;
+            }
+#endif
             bool flag = await _accessExternal.OpenAppStoreAppDetails();
             if (!flag)
             {
