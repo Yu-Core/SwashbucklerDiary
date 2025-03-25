@@ -66,6 +66,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
             permanentPaths = navigationButtons.Select(it => NavigationManager.ToAbsoluteUri(it.Href).AbsolutePath).ToList();
             NavigateController.Init(NavigationManager, JSRuntime, permanentPaths);
+            _ = SetHtmlLang(I18n.Culture);
 
             I18n.OnChanged += HandleLanguageChanged;
             SettingService.SettingsChanged += HandleSettingsChanged;
@@ -89,8 +90,13 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected async void HandleLanguageChanged(CultureInfo cultureInfo)
         {
             await InvokeAsync(StateHasChanged);
-            await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
+            await SetHtmlLang(cultureInfo);
         }
+
+        protected async Task SetHtmlLang(CultureInfo cultureInfo)
+        {
+            await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
+        } 
 
         protected void HandleSettingsChanged()
         {

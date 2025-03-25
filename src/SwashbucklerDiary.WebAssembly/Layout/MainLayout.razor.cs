@@ -10,6 +10,8 @@ namespace SwashbucklerDiary.WebAssembly.Layout
 {
     public partial class MainLayout : MainLayoutBase
     {
+        private string? themeColor;
+
         [Inject]
         private SystemThemeJSModule SystemThemeJSModule { get; set; } = default!;
 
@@ -45,7 +47,8 @@ namespace SwashbucklerDiary.WebAssembly.Layout
         private async void ThemeChanged(Theme theme)
         {
             MasaBlazor.SetTheme(theme == Theme.Dark);
-            await JSRuntime.InvokeVoidAsync("setThemeColor", theme == Theme.Dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface);
+            themeColor = theme == Theme.Dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface;
+            await InvokeAsync(StateHasChanged);
         }
 
         private async Task InitThemeAsync()

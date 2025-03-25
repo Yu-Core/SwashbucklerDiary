@@ -1,13 +1,17 @@
 @inherits MainLayoutBase
 
+<PageTitle>@(I18n.T("AppName"))</PageTitle>
+
+<HeadContent>
+    <meta name="theme-color" content="@themeColor">
+</HeadContent>
+
 @if (afterInitSetting)
 {
     <MApp>
         <CascadingValue Value="@I18n.Culture.ToString()" Name="Culture">
             <MErrorHandler DisablePopupIfErrorContentRender>
                 <ChildContent>
-                    <PageTitle>@(I18n.T("AppName"))</PageTitle>
-
                     <FirstLaunchDialog />
 
                     <MainLayoutNavDrawer Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutNavDrawer>

@@ -36,7 +36,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             };
         }
 
-        public static void AddAppActions(II18nService i18n)
+        public static void SetAppActions(II18nService i18n)
         {
             if (AppActions.Current.IsSupported)
             {

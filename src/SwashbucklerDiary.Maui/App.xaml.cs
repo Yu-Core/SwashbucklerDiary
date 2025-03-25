@@ -43,6 +43,9 @@ namespace SwashbucklerDiary.Maui
             window.Resumed += (s, e) => _appLifecycle.Resume();
             window.Stopped += (s, e) => _appLifecycle.Stop();
             window.Created += WindowCreated;
+            window.Title = _i18n.T("AppName");
+            _i18n.OnChanged += _ => SetTitle();
+
             return window;
         }
 
@@ -71,11 +74,21 @@ namespace SwashbucklerDiary.Maui
 
         private void InitAppActions()
         {
-            AppActionsHelper.AddAppActions(_i18n);
-            _i18n.OnChanged += _ =>
+            SetAppActions();
+            _i18n.OnChanged += _ => SetAppActions();
+        }
+
+        private void SetAppActions()
+        {
+            AppActionsHelper.SetAppActions(_i18n);
+        }
+
+        private void SetTitle()
+        {
+            if(Windows.Count > 0)
             {
-                AppActionsHelper.AddAppActions(_i18n);
-            };
+                Windows[0].Title = _i18n.T("AppName");
+            }
         }
     }
 }

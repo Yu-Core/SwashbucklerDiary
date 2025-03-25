@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebView;
 using Microsoft.AspNetCore.Components.WebView.Gtk;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +34,7 @@ namespace SwashbucklerDiary.Gtk
             blazorWebView.HostPage = Path.Combine("wwwroot", "index.html");
             blazorWebView.Services = serviceProvider;
             blazorWebView.RootComponents.Add<Routes>("#app");
+            blazorWebView.RootComponents.Add<HeadOutlet>("head::after");
 
             this.SetChild(blazorWebView);
 
