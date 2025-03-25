@@ -267,25 +267,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string CounterValue()
         {
-            string? value = diary.Content;
-            int len = 0;
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return len + " " + I18n.T("Write.CountUnit");
-            }
-
-            value = value.Trim();
-            if (I18n.T("Write.WordCountType") == WordCountStatistics.Word.ToString())
-            {
-                len = value.WordCount();
-            }
-
-            if (I18n.T("Write.WordCountType") == WordCountStatistics.Character.ToString())
-            {
-                len = value.CharacterCount();
-            }
-
-            return len + " " + I18n.T("Write.CountUnit");
+            return $"{diary.GetWordCount()} {I18n.T("Write.CountUnit")}";
         }
 
         private async Task OpenExportDialog()

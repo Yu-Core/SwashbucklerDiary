@@ -172,9 +172,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string LocationText =>
             string.IsNullOrEmpty(diary.Location) ? I18n.T("Write.Location") : diary.Location;
 
-        private WordCountStatistics WordCountType
-            => (WordCountStatistics)Enum.Parse(typeof(WordCountStatistics), I18n.T("Write.WordCountType")!);
-
         private string TitleSwitchText() => enableTitle ? "Write.CloseTitle" : "Write.EnableTitle";
 
         private string MarkdownSwitchText() => enableMarkdown ? "Diary.Text" : "Diary.Markdown";
@@ -355,22 +352,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string CounterValue()
         {
-            string? value = diary.Content;
-            int len = 0;
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return len + " " + I18n.T("Write.CountUnit");
-            }
-
-            value = value.Trim();
-            len = WordCountType switch
-            {
-                WordCountStatistics.Word => value.WordCount(),
-                WordCountStatistics.Character => value.CharacterCount(),
-                _ => default
-            };
-
-            return len + " " + I18n.T("Write.CountUnit");
+            return $"{diary.GetWordCount()} {I18n.T("Write.CountUnit")}";
         }
 
         private async Task HandleAchievements(bool background, DiaryEditMode diaryEditMode)
@@ -385,7 +367,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (!background)
             {
                 var alldiaries = await DiaryService.QueryAsync();
-                var wordCount = alldiaries.GetWordCount(WordCountType);
+                var wordCount = alldiaries.GetWordCount();
                 var messages2 = await AchievementService.UpdateUserState(Achievement.Word, wordCount);
                 messages.AddRange(messages2);
                 await AlertAchievements(messages);

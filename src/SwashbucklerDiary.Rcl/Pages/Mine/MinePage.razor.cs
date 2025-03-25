@@ -137,9 +137,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             privacyModeEntrancePassword = SettingService.Get(s => s.PrivacyModeEntrancePassword);
         }
 
-        private WordCountStatistics WordCountType
-            => (WordCountStatistics)Enum.Parse(typeof(WordCountStatistics), I18n.T("Write.WordCountType")!);
-
         private void LoadView()
         {
             ViewLists = new()
@@ -268,7 +265,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             var diries = await DiaryService.QueryAsync();
             diaryCount = diries.Count;
-            wordCount = diries.GetWordCount(WordCountType);
+            wordCount = diries.GetWordCount();
             activeDayCount = diries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
         }
 
@@ -283,7 +280,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async void I18nChange(CultureInfo _)
         {
             var diries = await DiaryService.QueryAsync();
-            wordCount = diries.GetWordCount(WordCountType);
+            wordCount = diries.GetWordCount();
             await InvokeAsync(StateHasChanged);
         }
 

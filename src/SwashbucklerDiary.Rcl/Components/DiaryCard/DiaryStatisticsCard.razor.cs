@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -7,9 +7,6 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class DiaryStatisticsCard : MyComponentBase
     {
-        [Inject]
-        private IDiaryService DiaryService { get; set; } = default!;
-
         [Inject]
         private IGlobalConfiguration IGlobalConfiguration { get; set; } = default!;
 
@@ -67,10 +64,9 @@ namespace SwashbucklerDiary.Rcl.Components
         private string? LastDate
             => GetComputedValue(() => Value.OrderBy(d => d.CreateTime).LastOrDefault()?.CreateTime.ToString("d"), [nameof(Value)]);
 
-        private int GetWordCount(List<DiaryModel> diaries)
+        private static int GetWordCount(List<DiaryModel> diaries)
         {
-            var type = (WordCountStatistics)Enum.Parse(typeof(WordCountStatistics), I18n.T("Write.WordCountType")!);
-            return diaries.GetWordCount(type);
+            return diaries.GetWordCount();
         }
     }
 }

@@ -59,14 +59,21 @@ namespace SwashbucklerDiary.Rcl.Extensions
             return content;
         }
 
-        public static int GetWordCount(this List<DiaryModel> diaries, WordCountStatistics type)
+        public static int GetWordCount(this DiaryModel diary)
         {
-            return type switch
+            var wordCount = new WordCount();
+            if (string.IsNullOrWhiteSpace(diary.Content))
             {
-                WordCountStatistics.Word => diaries.Sum(d => d.Content?.WordCount() ?? 0),
-                WordCountStatistics.Character => diaries.Sum(d => d.Content?.CharacterCount() ?? 0),
-                _ => default
-            };
+                return 0;
+            }
+
+            wordCount.GetCountWords(diary.Content);
+            return wordCount.TotalWordCount;
+        }
+
+        public static int GetWordCount(this List<DiaryModel> diaries)
+        {
+            return diaries.Sum(d => d.GetWordCount());
         }
 
         private static string SubText(string? text, int startIndex, int? length = null)
