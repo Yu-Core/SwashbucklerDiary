@@ -10,6 +10,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? src;
 
+        private string? whyDevelopDescription;
+
         private bool showPreviewImage;
 
         private List<DynamicListItem> sponsorTypeListItems = [];
@@ -18,8 +20,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private readonly List<TabListItem> tabListItems =
         [
-            new("About.Sponsor.Name","sponsor"),
-            new("SponsorList.Name","sponsorList"),
+            new("Sponsor us","sponsor"),
+            new("Sponsor list","sponsorList"),
         ];
 
         protected override async Task OnInitializedAsync()
@@ -27,6 +29,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await base.OnInitializedAsync();
 
             await LoadViewAsync();
+            await LoadDataAsync();
         }
 
         private void OpenSponsorDialog(string? src)
@@ -47,6 +50,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             sponsorTypeListItems = listItems;
 
             sponsors = await StaticWebAssets.ReadJsonAsync<List<string>>("json/sponsor/sponsor-list.json");
+        }
+
+        private async Task LoadDataAsync()
+        {
+            var path = $"docs/why-develop/{I18n.Culture}.md";
+            whyDevelopDescription = await StaticWebAssets.ReadContentAsync(path);
         }
     }
 }

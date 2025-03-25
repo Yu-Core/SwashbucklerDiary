@@ -1,4 +1,4 @@
-﻿using DeepCloner.Core;
+using DeepCloner.Core;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 
@@ -58,10 +58,10 @@ namespace SwashbucklerDiary.Rcl.Components
         }
 
         private string MinDateText
-            => MinDate == default ? I18n.T("Filter.Start time") : MinDate.ToString("d").Replace('/', '-');
+            => MinDate == default ? I18n.T("Start time") : MinDate.ToString("d").Replace('/', '-');
 
         private string MaxDateText
-            => MaxDate == default ? I18n.T("Filter.End time") : MaxDate.ToString("d").Replace('/', '-');
+            => MaxDate == default ? I18n.T("End time") : MaxDate.ToString("d").Replace('/', '-');
 
         private static DateOnly Today => DateOnly.FromDateTime(DateTime.Now);
 

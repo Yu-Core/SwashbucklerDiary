@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         {
             //var base64 = await ScreenshotToBase64(selector);
             //return await _appFileSystem.CreateTempFileAsync(screenshotFileName, Convert.FromBase64String(base64));
-            await _popupServiceHelper.Error(_i18n.T("Share.NotSupported"));
+            await _popupServiceHelper.Error(_i18n.T("Not supported on the current platform"));
             return string.Empty;
         }
 

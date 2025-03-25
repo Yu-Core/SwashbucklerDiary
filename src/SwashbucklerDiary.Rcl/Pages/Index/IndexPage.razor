@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits DiariesPageComponentBase
 
@@ -55,7 +55,7 @@
 </div>
 
 <InputDialog @bind-Visible="showAddTag"
-             Title="@(I18n.T("Tag.Add"))"
-             Placeholder="@(I18n.T("Tag.Placeholder"))"
+             Title="@(I18n.T("Add tags"))"
+             Placeholder="@(I18n.T("Please enter a tag name"))"
              OnOK="SaveAddTag">
 </InputDialog>

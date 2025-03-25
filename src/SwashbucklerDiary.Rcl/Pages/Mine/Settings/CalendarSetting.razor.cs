@@ -26,9 +26,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void InitFirstDayOfWeekItems()
         {
-            for (int i = 0; i < 7; i++)
+            var dayOfWeeks = Enum.GetValues<DayOfWeek>();
+            foreach (var dayOfWeek in dayOfWeeks)
             {
-                firstDayOfWeekItems.Add($"Week.{i}", i);
+                firstDayOfWeekItems.Add(dayOfWeek.ToString(), (int)dayOfWeek);
             }
         }
 

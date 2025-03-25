@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Services
@@ -8,6 +8,8 @@ namespace SwashbucklerDiary.Rcl.Services
         private readonly I18n _i18n;
 
         public CultureInfo Culture => _i18n.Culture;
+
+        public IEnumerable<CultureInfo> SupportedCultures => _i18n.SupportedCultures;
 
         public event Action<CultureInfo>? OnChanged;
 
@@ -41,7 +43,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public string ToWeek(DateTime? dateTime = null)
         {
-            return T("Week." + ((int)(dateTime ?? DateTime.Now).DayOfWeek).ToString());
+            return T((dateTime ?? DateTime.Now).DayOfWeek.ToString());
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
@@ -55,7 +55,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var writePermission = await PlatformIntegration.TryStorageWritePermission();
             if (!writePermission)
             {
-                await PopupServiceHelper.Info(I18n.T("Permission.OpenStorageWrite"));
+                await PopupServiceHelper.Info(I18n.T("Please grant permission for storage writing"));
                 return;
             }
 
@@ -70,7 +70,7 @@ namespace SwashbucklerDiary.Rcl.Components
                     bool flag = await PlatformIntegration.SaveFileAsync(fileName, path);
                     if (flag)
                     {
-                        await PopupServiceHelper.Success(I18n.T("Export.Export.Success"));
+                        await PopupServiceHelper.Success(I18n.T("Export successfully"));
                         await HandleAchievements(Achievement.Export);
                     }
                 }
@@ -79,7 +79,7 @@ namespace SwashbucklerDiary.Rcl.Components
             catch (Exception e)
             {
                 Logger.LogError(new EventId(1, "Error"), e, "Create file wrong");
-                await PopupServiceHelper.Error(I18n.T("Export.Export.Fail"));
+                await PopupServiceHelper.Error(I18n.T("Export failed"));
             }
             finally
             {

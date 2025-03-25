@@ -54,9 +54,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private static readonly Dictionary<string, Theme> themeItems = new()
         {
-            { "Theme.System", Theme.System },
-            { "Theme.Light", Theme.Light },
-            { "Theme.Dark", Theme.Dark },
+            { "Follow system", Theme.System },
+            { "Light", Theme.Light },
+            { "Dark", Theme.Dark },
         };
 
         private Dictionary<string, List<DynamicListItem>> ViewLists = [];
@@ -128,7 +128,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.ReadSettings();
 
             language = SettingService.Get(s => s.Language);
-            userName = SettingService.Get(s => s.UserName, null);
+            userName = SettingService.Get(s => s.NickName, null);
             sign = SettingService.Get(s => s.Sign, null);
             theme = (Theme)SettingService.Get(s => s.Theme);
             avatar = SettingService.Get(s => s.Avatar);
@@ -142,37 +142,37 @@ namespace SwashbucklerDiary.Rcl.Pages
             ViewLists = new()
             {
                 {
-                    "Mine.Data",
+                    "Data",
                     new()
                     {
-                        new(this, "Mine.Backups","mdi-folder-sync-outline",() => To("backups")),
-                        new(this, "Mine.Export","mdi-export",() => To("export")),
-                        new(this, "PrivacyMode.Name","mdi-hexagon-slice-3",TryToPrivacyMode,()=>!hidePrivacyModeEntrance || privacyMode),
+                        new(this, "Backup","mdi-folder-sync-outline",() => To("backups")),
+                        new(this, "Export","mdi-export",() => To("export")),
+                        new(this, "Privacy mode","mdi-hexagon-slice-3",TryToPrivacyMode,()=>!hidePrivacyModeEntrance || privacyMode),
                     }
                 },
                 {
-                    "Mine.Settings",
+                    "Setting",
                     new()
                     {
-                        new(this,"Mine.Settings","mdi-cog-outline",() => To("setting")),
-                        new(this,"Mine.Languages","mdi-web",() => showLanguage = true),
-                        new(this,"Mine.Night","mdi-weather-night",() => showTheme = true),
+                        new(this,"Setting","mdi-cog-outline",() => To("setting")),
+                        new(this,"Language","mdi-web",() => showLanguage = true),
+                        new(this,"Night mode","mdi-weather-night",() => showTheme = true),
                     }
                 },
                 {
-                    "Mine.Function",
+                    "Feature",
                     new()
                     {
-                        new(this, "Mine.Achievement.Name","mdi-trophy-outline",() => To("achievement")),
-                        new(this, "Location.Name","mdi-map-marker-outline",() => To("locationSetting")),
+                        new(this, "Achievement","mdi-trophy-outline",() => To("achievement")),
+                        new(this, "Location","mdi-map-marker-outline",() => To("locationSetting")),
                     }
                 },
                 {
-                    "Mine.Other",
+                    "Other",
                     new()
                     {
-                        new(this,"Mine.Feedback","mdi-email-outline",() => showFeedback = true),
-                        new(this,"Mine.About","mdi-information-outline",() => To("about")),
+                        new(this,"Contact us","mdi-email-outline",() => showFeedback = true),
+                        new(this,"About","mdi-information-outline",() => To("about")),
                     }
                 }
             };
@@ -180,7 +180,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             [
                 new(this, "Email","mdi-email-outline",SendMail),
                 new(this, "Github","mdi-github",ToGithub),
-                new(this, "QQGroup","mdi-qqchat",OpenQQGroup),
+                new(this, "QQ Group","mdi-qqchat",OpenQQGroup),
             ];
         }
 
@@ -200,7 +200,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var mail = FeedbackTypeDatas["Email"];
             try
             {
-                bool isSuccess = await PlatformIntegration.SendEmail(I18n.T("SwashbucklerDiaryFeedback"), null, [mail]);
+                bool isSuccess = await PlatformIntegration.SendEmail(I18n.T("Swashbuckler diary feedback"), null, [mail]);
                 if (isSuccess)
                 {
                     return;
@@ -212,7 +212,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             await PlatformIntegration.SetClipboardAsync(mail);
-            await PopupServiceHelper.Success(I18n.T("Mine.MailCopy"));
+            await PopupServiceHelper.Success(I18n.T("The email address has been copied to the clipboard."));
         }
 
         private async Task ToGithub()
@@ -242,9 +242,9 @@ namespace SwashbucklerDiary.Rcl.Pages
                 Logger.LogError(e, "JoinQQGroupError");
             }
 
-            var qqGroup = FeedbackTypeDatas["QQGroup"];
+            var qqGroup = FeedbackTypeDatas["QQ Group"];
             await PlatformIntegration.SetClipboardAsync(qqGroup);
-            await PopupServiceHelper.Success(I18n.T("Mine.QQGroupCopy"));
+            await PopupServiceHelper.Success(I18n.T("The QQ group number has been copied to the clipboard."));
         }
 
         private void Search(string? value)
@@ -313,7 +313,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             string salt = nameof(Setting.PrivacyModeEntrancePassword);
             if (privacyModeEntrancePassword != (value + salt).MD5Encrytp32())
             {
-                await PopupServiceHelper.Error(I18n.T("PrivacyMode.PasswordError"));
+                await PopupServiceHelper.Error(I18n.T("Password error"));
                 return;
             }
 

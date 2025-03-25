@@ -1,11 +1,86 @@
-{
-  "Diary": [ 1, 30, 100, 1000 ],
-  "Word": [ 3000, 10000, 100000 ],
-  "SourceCode": [ 1 ],
-  "Avatar": [ 1 ],
-  "NickName": [ 1 ],
-  "Sign": [ 1 ],
-  "Log": [ 1 ],
-  "Share": [ 1 ],
-  "Export": [ 1 ]
-}
+[
+  {
+    "Name": "Memory begins",
+    "Kind": "Diary",
+    "Description": "Write a diary for the first time",
+    "Steps": 1
+  },
+  {
+    "Name": "Less to more",
+    "Kind": "Diary",
+    "Description": "Write 30 diaries in total",
+    "Steps": 30
+  },
+  {
+    "Name": "Have a niche in history",
+    "Kind": "Diary",
+    "Description": "Write 100 diaries in total",
+    "Steps": 100
+  },
+  {
+    "Name": "The past is gone",
+    "Kind": "Diary",
+    "Description": "Write 1000 diaries in total",
+    "Steps": 1000
+  },
+  {
+    "Name": "First display talent",
+    "Kind": "Word",
+    "Description": "Accumulated 3000 words in diary",
+    "Steps": 3000
+  },
+  {
+    "Name": "Beautiful writings",
+    "Kind": "Word",
+    "Description": "Accumulated 10000 words in diary",
+    "Steps": 10000
+  },
+  {
+    "Name": "Write like a god",
+    "Kind": "Word",
+    "Description": "Accumulated 100000 words in diary",
+    "Steps": 100000
+  },
+  {
+    "Name": "The source of everything",
+    "Kind": "SourceCode",
+    "Description": "View source code for the first time",
+    "Steps": 1
+  },
+  {
+    "Name": "Make only superficial changes",
+    "Kind": "Avatar",
+    "Description": "The first change of avatar",
+    "Steps": 1
+  },
+  {
+    "Name": "Change name and surname",
+    "Kind": "NickName",
+    "Description": "Change the NickName for the first time",
+    "Steps": 1
+  },
+  {
+    "Name": "Have high ambitions",
+    "Kind": "Sign",
+    "Description": "Change signature for the first time",
+    "Steps": 1
+  },
+  {
+    "Name": "Exclude difficulty and anxiety",
+    "Kind": "Log",
+    "Description": "View the log for the first time",
+    "Steps": 1
+  },
+  {
+    "Name": "Show capabilities",
+    "Kind": "Share",
+    "Description": "Share for the first time",
+    "Steps": 1
+  },
+  {
+    "Name": "Be prepared against want",
+    "Kind": "Export",
+    "Description": "First export",
+    "Steps": 1
+  }
+]

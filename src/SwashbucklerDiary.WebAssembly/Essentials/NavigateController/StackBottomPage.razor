@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.WebAssembly.Essentials
+@namespace SwashbucklerDiary.WebAssembly.Essentials
 
 <MDialog Value="true"
          ContentClass="rounded-lg"
@@ -6,7 +6,7 @@
          MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @I18n.T("Share.Quit")
+            @I18n.T("Quit")
         </MCardTitle>
         <MCardText Class="pb-0">
             @I18n.T("Returning again will exit the application")
@@ -15,7 +15,7 @@
             <MSpacer></MSpacer>
             <MButton Text="true"
                      OnClick="HandleOnCancle">
-                @(I18n.T("Share.Cancel"))
+                @(I18n.T("Cancel"))
             </MButton>
         </MCardActions>
     </MCard>

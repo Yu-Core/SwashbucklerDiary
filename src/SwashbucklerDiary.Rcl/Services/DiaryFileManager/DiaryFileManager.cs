@@ -196,19 +196,19 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             var dataTable = new DataTable();
-            dataTable.Columns.Add(_i18n.T("Excel.Time"));
-            dataTable.Columns.Add(_i18n.T("Excel.Weather"));
-            dataTable.Columns.Add(_i18n.T("Excel.Mood"));
-            dataTable.Columns.Add(_i18n.T("Excel.Location"));
-            dataTable.Columns.Add(_i18n.T("Excel.Tags"));
-            dataTable.Columns.Add(_i18n.T("Excel.Title"));
-            dataTable.Columns.Add(_i18n.T("Excel.Content"));
+            dataTable.Columns.Add(_i18n.T("Time"));
+            dataTable.Columns.Add(_i18n.T("Weather"));
+            dataTable.Columns.Add(_i18n.T("Mood"));
+            dataTable.Columns.Add(_i18n.T("Location"));
+            dataTable.Columns.Add(_i18n.T("Tag"));
+            dataTable.Columns.Add(_i18n.T("Title"));
+            dataTable.Columns.Add(_i18n.T("Content"));
 
             foreach (var item in diaries)
             {
                 var time = item.CreateTime.ToString("yyyy/MM/dd HH:mm:ss");
-                var weather = item.Weather is null ? string.Empty : _i18n.T("Weather." + item.Weather);
-                var mood = item.Mood is null ? string.Empty : _i18n.T("Mood." + item.Mood);
+                var weather = item.Weather is null ? string.Empty : _i18n.T(item.Weather);
+                var mood = item.Mood is null ? string.Empty : _i18n.T(item.Mood);
                 var location = item.Location ?? string.Empty;
                 var tags = string.Empty;
                 if (item.Tags is not null && item.Tags.Count > 0)

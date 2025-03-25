@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits CardListComponentBase<DiaryModel>
 
 <div class="card-list__wrap">
@@ -30,7 +30,7 @@
 </div>
 
 <EmptyResult Show="Value.Count == 0"
-             Text="@(NotFoundText ?? I18n.T("Diary.NoDiary"))">
+             Text="@(NotFoundText ?? I18n.T("No diary"))">
 </EmptyResult>
 
 <SelectTagsDialog @bind-Visible="showSelectTag"
@@ -41,8 +41,8 @@
 </SelectTagsDialog>
 
 <DeleteDialog @bind-Visible="showDelete"
-              Title="@(I18n.T("Diary.Delete.Title"))"
-              Content="@(I18n.T("Diary.Delete.Content"))"
+              Title="@(I18n.T("Delete a diary"))"
+              Content="@(I18n.T("Please delete carefully, every diary is a precious memory."))"
               OnOK="ConfirmDelete">
 </DeleteDialog>
 
@@ -55,7 +55,7 @@
              OnChange="SortChanged"
              TItem="string"
              TItemValue="string"
-             Title="@(I18n.T("Share.Sort"))"
+             Title="@(I18n.T("Sort"))"
              Items="SortItems">
 </RadioDialog>
 

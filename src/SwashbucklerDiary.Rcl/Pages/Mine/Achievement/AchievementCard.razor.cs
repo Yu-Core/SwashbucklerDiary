@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Shared;
 
@@ -35,7 +35,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (achievement.UserAchievement.IsCompleted)
             {
-                return $"{I18n.T("Achievement.Completed")} {achievement.UserAchievement.CompletedTime:d}";
+                return $"{I18n.T("Completed")} {achievement.UserAchievement.CompletedTime:d}";
             }
             else
             {

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 
@@ -30,8 +30,8 @@ namespace SwashbucklerDiary.Rcl.Components
         }
 
         private string Text => isCountingDown
-            ? $"{I18n.T("ErrorHandle.WaitContent")}{timeRemaining}s"
-            : I18n.T("ErrorHandle.Content");
+            ? $"{I18n.T("An abnormality occurred. It is being saved to the log. Please wait...")}{timeRemaining}s"
+            : I18n.T("An abnormal situation has occurred. It has been saved to the log. Please exit the application.");
 
         private void Quit()
         {

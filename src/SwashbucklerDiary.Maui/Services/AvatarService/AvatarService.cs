@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Maui.Services
@@ -20,21 +20,21 @@ namespace SwashbucklerDiary.Maui.Services
             bool isCaptureSupported = await _platformIntegration.IsCaptureSupported();
             if (!isCaptureSupported)
             {
-                await _popupServiceHelper.Error(_i18n.T("User.NoCapture"));
+                await _popupServiceHelper.Error(_i18n.T("The current platform is unable to take photos"));
                 return string.Empty;
             }
 
             var cameraPermission = await _platformIntegration.TryCameraPermission();
             if (!cameraPermission)
             {
-                await _popupServiceHelper.Info(_i18n.T("Permission.OpenCamera"));
+                await _popupServiceHelper.Info(_i18n.T("Please grant permission for the camera"));
                 return string.Empty;
             }
 
             var writePermission = await _platformIntegration.TryStorageWritePermission();
             if (!writePermission)
             {
-                await _popupServiceHelper.Info(_i18n.T("Permission.OpenStorageWrite"));
+                await _popupServiceHelper.Info(_i18n.T("Please grant permission for storage writing"));
                 return string.Empty;
             }
 

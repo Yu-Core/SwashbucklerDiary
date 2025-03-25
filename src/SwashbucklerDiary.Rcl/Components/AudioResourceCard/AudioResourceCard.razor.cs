@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Events;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -37,9 +37,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string? AlbumCoverSrc => !string.IsNullOrEmpty(audioFileInfo.PictureUri) ? audioFileInfo.PictureUri : "_content/SwashbucklerDiary.Rcl/img/albumCover.jpeg";
 
-        private string? Title => !string.IsNullOrEmpty(audioFileInfo.Title) ? audioFileInfo.Title : I18n.T("FileBrowse.Audio.Unknown Title");
+        private string? Title => !string.IsNullOrEmpty(audioFileInfo.Title) ? audioFileInfo.Title : I18n.T("Unknown title");
 
-        private string Artists => audioFileInfo.Artists.Length > 0 ? string.Join(" / ", audioFileInfo.Artists) : I18n.T("FileBrowse.Audio.Unknown Artist");
+        private string Artists => audioFileInfo.Artists.Length > 0 ? string.Join(" / ", audioFileInfo.Artists) : I18n.T("Unknown artist");
 
         protected override async Task OnParametersSetAsync()
         {

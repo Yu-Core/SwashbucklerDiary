@@ -27,7 +27,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showTransferDialog;
 
-        private string transferDialogTitle = "lanSender.Sending";
+        private string transferDialogTitle = "Sending";
 
         private readonly List<LANDeviceInfoListItem> lanDeviceInfoListItems = [];
 
@@ -112,7 +112,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             catch (Exception e)
             {
                 Logger.LogError(e, "LANSenderService initialize error");
-                await PopupServiceHelper.Error(I18n.T("lanSender.No network connection"));
+                await PopupServiceHelper.Error(I18n.T("No network connection"));
                 await Task.Delay(1000);
                 await NavigateToBack();
             }
@@ -139,7 +139,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 var diaries = await DiaryService.QueryAsync();
                 if (diaries.Count == 0)
                 {
-                    await PopupServiceHelper.Info(I18n.T("Diary.NoDiary"));
+                    await PopupServiceHelper.Info(I18n.T("No diary"));
                     return;
                 }
 
@@ -184,8 +184,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             InvokeAsync(async () =>
             {
-                transferDialogTitle = "lanSender.Send successfully";
-                await PopupServiceHelper.Success(I18n.T("lanSender.Send successfully"));
+                transferDialogTitle = "Send successfully";
+                await PopupServiceHelper.Success(I18n.T("Send successfully"));
                 StateHasChanged();
             });
         }
@@ -196,13 +196,13 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 if (showTransferDialog)
                 {
-                    transferDialogTitle = "lanSender.Send failed";
-                    await PopupServiceHelper.Error(I18n.T("lanSender.Send failed"));
+                    transferDialogTitle = "Send failed";
+                    await PopupServiceHelper.Error(I18n.T("Send failed"));
                 }
                 else
                 {
-                    transferDialogTitle = "lanSender.Send canceled";
-                    await PopupServiceHelper.Error(I18n.T("lanSender.Send canceled"));
+                    transferDialogTitle = "Send canceled";
+                    await PopupServiceHelper.Error(I18n.T("Send canceled"));
                 }
 
                 StateHasChanged();

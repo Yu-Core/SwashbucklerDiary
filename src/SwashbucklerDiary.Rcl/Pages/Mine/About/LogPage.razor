@@ -1,4 +1,4 @@
-﻿@page "/log"
+@page "/log"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
@@ -13,7 +13,7 @@
     @if (!showSearch)
     {
         <MToolbarTitle Class="font-weight-bold">
-            @(I18n.T("About.LogFile.Name"))
+            @(I18n.T("Log file"))
         </MToolbarTitle>
         <MSpacer></MSpacer>
     }
@@ -74,7 +74,7 @@
     </div>
 
     <EmptyResult Show="!logs.Any()"
-                 Text="@(IsSearchFiltered ? null:I18n.T("Log.NoLog"))">
+                 Text="@(IsSearchFiltered ? null:I18n.T("No logs"))">
     </EmptyResult>
 
 </ScrollContainer>
@@ -86,12 +86,12 @@
 </DateFilterDialog>
 
 <DeleteDialog @bind-Visible="showDelete"
-              Title="@(I18n.T("Log.Delete.Title"))"
-              Content="@(I18n.T("Log.Delete.Content"))"
+              Title="@(I18n.T("Clear logs"))"
+              Content="@(I18n.T("Are you sure you want to clear all the logs?"))"
               OnOK="HandleDelete">
 </DeleteDialog>
 
 <MultiListDialog @bind-Visible="showShare"
-                 Title="@(I18n.T("Share.SelectShare"))"
+                 Title="@(I18n.T("Choose how to Share"))"
                  DynamicListItems="shareItems">
 </MultiListDialog>

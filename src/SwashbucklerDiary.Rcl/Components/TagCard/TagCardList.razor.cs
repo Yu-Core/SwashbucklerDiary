@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -66,13 +66,13 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 if (RemoveSelectedItem())
                 {
-                    await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
+                    await PopupServiceHelper.Success(I18n.T("Delete successfully"));
                     StateHasChanged();
                 }
             }
             else
             {
-                await PopupServiceHelper.Error(I18n.T("Share.DeleteFail"));
+                await PopupServiceHelper.Error(I18n.T("Delete failed"));
             }
         }
 
@@ -86,7 +86,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (Value.Any(it => it.Name == tagName))
             {
-                await PopupServiceHelper.Warning(I18n.T("Tag.Repeat.Title"), I18n.T("Tag.Repeat.Content"));
+                await PopupServiceHelper.Warning(I18n.T("Tag already exists"), I18n.T("Do not add again"));
                 return;
             }
 
@@ -95,7 +95,7 @@ namespace SwashbucklerDiary.Rcl.Components
             bool flag = await TagService.UpdateAsync(SelectedItem, it => new { it.Name, it.UpdateTime });
             if (!flag)
             {
-                await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
+                await PopupServiceHelper.Error(I18n.T("Change failed"));
             }
         }
 
@@ -103,12 +103,12 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             sortOptions = new()
             {
-                {"Sort.Count.Desc", it => it.OrderByDescending(CalcDiaryCount) },
-                {"Sort.Count.Asc", it => it.OrderBy(CalcDiaryCount) },
-                {"Sort.Name.Desc", it => it.OrderByDescending(t => t.Name) },
-                {"Sort.Name.Asc", it => it.OrderBy(t => t.Name) },
-                {"Sort.Time.Desc", it => it.OrderByDescending(t => t.CreateTime) },
-                {"Sort.Time.Asc", it => it.OrderBy(t => t.CreateTime) },
+                {"Count - Reverse order", it => it.OrderByDescending(CalcDiaryCount) },
+                {"Count - Positive order", it => it.OrderBy(CalcDiaryCount) },
+                {"Name - Reverse order", it => it.OrderByDescending(t => t.Name) },
+                {"Name - Positive order", it => it.OrderBy(t => t.Name) },
+                {"Time - Reverse order", it => it.OrderByDescending(t => t.CreateTime) },
+                {"Time - Positive order", it => it.OrderBy(t => t.CreateTime) },
             };
 
             if (string.IsNullOrEmpty(SortItem))
@@ -118,10 +118,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
             menuItems =
             [
-                new(this, "Share.Rename", "mdi-rename-outline", Rename),
-                new(this, "Share.Delete", "mdi-delete-outline", Delete),
-                new(this, "Diary.Export", "mdi-export", Export),
-                new(this, "Share.Sort", "mdi-sort-variant", OpenSortDialog),
+                new(this, "Rename", "mdi-rename-outline", Rename),
+                new(this, "Delete", "mdi-delete-outline", Delete),
+                new(this, "Export", "mdi-export", Export),
+                new(this, "Sort", "mdi-sort-variant", OpenSortDialog),
             ];
         }
 
@@ -141,7 +141,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var diaries = newTag.Diaries;
             if (diaries is null || diaries.Count == 0)
             {
-                await PopupServiceHelper.Info(I18n.T("Diary.NoDiary"));
+                await PopupServiceHelper.Info(I18n.T("No diary"));
                 return;
             }
 

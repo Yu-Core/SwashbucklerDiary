@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private readonly Dictionary<string, int> editAutoSaveItems = new()
         {
-            {"Setting.Display.Diary.EditAutoSave.Close" ,0},
+            {"Close" ,0},
             {"5s" ,5},
             {"15s" ,15},
             {"20s" ,20},

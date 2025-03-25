@@ -61,7 +61,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string GetPermissionText(bool value)
         {
-            return value ? I18n.T("Permission.Enable") : I18n.T("Permission.Disable");
+            return value ? I18n.T("Granted") : I18n.T("Not granted");
         }
     }
 }

@@ -49,16 +49,16 @@ namespace SwashbucklerDiary.Rcl.Pages
             viewLists =
             [
                 [
-                    new(this, "About.SourceCode.Name","mdi-book-open-page-variant-outline",() => showSourceCode = true),
-                    new(this, "About.Agreement.Name","mdi-file-document-multiple-outline",() => To("user-agreement")),
-                    new(this, "About.Privacy.Name","mdi-lock-outline",() => To("privacy-policy")),
-                    new(this, "About.Check for updates.Name","mdi-update",CheckForUpdates),
+                    new(this, "View source","mdi-book-open-page-variant-outline",() => showSourceCode = true),
+                    new(this, "User agreement","mdi-file-document-multiple-outline",() => To("user-agreement")),
+                    new(this, "Privacy policy","mdi-lock-outline",() => To("privacy-policy")),
+                    new(this, "Check for updates","mdi-update",CheckForUpdates),
                 ],
                 [
-                    new(this, "About.Related.Name","mdi-xml",() => To("relatedOSP")),
-                    new(this, "About.LogFile.Name","mdi-file-document-edit-outline",() => To("log")),
-                    new(this, "About.Evaluation.Name","mdi-star-outline",OpenAppDetails),
-                    new(this, "About.Sponsor.Name","mdi-hand-heart-outline",()=>To("sponsor")),
+                    new(this, "Open source related","mdi-xml",() => To("relatedOSP")),
+                    new(this, "Log file","mdi-file-document-edit-outline",() => To("log")),
+                    new(this, "Give a good review","mdi-star-outline",OpenAppDetails),
+                    new(this, "Sponsor us","mdi-hand-heart-outline",()=>To("sponsor")),
                 ]
             ];
         }
@@ -80,7 +80,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             bool flag = await AccessExternal.OpenAppStoreAppDetails();
             if (!flag)
             {
-                await PopupServiceHelper.Error(I18n.T("About.OpenAppStoreFail"));
+                await PopupServiceHelper.Error(I18n.T("Failed to open the application store"));
             }
         }
 
@@ -91,7 +91,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 bool hasNewVersion = await VersionUpdataManager.CheckForUpdates();
                 if (!hasNewVersion)
                 {
-                    await PopupServiceHelper.Info(I18n.T("VersionUpdate.No updates"));
+                    await PopupServiceHelper.Info(I18n.T("This is the latest version"));
                 }
                 else
                 {
@@ -108,7 +108,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task CopyRecordNumber()
         {
             await PlatformIntegration.SetClipboardAsync(recordNumber);
-            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
         }
     }
 }

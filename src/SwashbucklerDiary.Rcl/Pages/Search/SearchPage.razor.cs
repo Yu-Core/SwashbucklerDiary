@@ -142,12 +142,12 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             filterItems =
             [
-                new(this,"Search.Filter.Tags",()=>showTags=true,()=>IsTagsFiltered),
-                new(this,"Search.Filter.Weather",()=>showWeather=true,()=>IsWeatherFiltered),
-                new(this,"Search.Filter.Mood",()=>showMood=true,()=>IsMoodFiltered),
-                new(this,"Search.Filter.Location",()=>showLocation=true,()=>IsLocationFiltered),
-                new(this,"Search.Filter.File",()=>showFileTypes=true,()=>IsFileTypeFiltered),
-                new(this,"Search.Filter.Time",()=>showTime=true,()=>IsTimeFiltered),
+                new(this,"Tag",()=>showTags=true,()=>IsTagsFiltered),
+                new(this,"Weather",()=>showWeather=true,()=>IsWeatherFiltered),
+                new(this,"Mood",()=>showMood=true,()=>IsMoodFiltered),
+                new(this,"Location",()=>showLocation=true,()=>IsLocationFiltered),
+                new(this,"File",()=>showFileTypes=true,()=>IsFileTypeFiltered),
+                new(this,"Time",()=>showTime=true,()=>IsTimeFiltered),
             ];
         }
 

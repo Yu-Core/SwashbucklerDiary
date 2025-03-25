@@ -13,10 +13,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Export.Export.Title"))
+                    @(I18n.T("Export"))
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("Export.Export.Subtitle"))
+                    @(I18n.T("txt, md, json, xlsx"))
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -34,10 +34,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Export.Import.Title"))
+                    @(I18n.T("Import"))
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("Export.Import.Subtitle"))
+                    @(I18n.T("Import zip files in the corresponding format"))
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -52,7 +52,7 @@
 </ExportDialog>
 
 <MultiListDialog @bind-Visible="showImport"
-                 Title="@(I18n.T("Export.Import.SelectType"))"
+                 Title="@(I18n.T("Select the import file format"))"
                  DynamicListItems="importTypes">
 </MultiListDialog>
 
@@ -61,7 +61,7 @@
                   MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Export.Import.ConfirmImport.Title"))
+            @(I18n.T("Confirm import"))
             <MSpacer></MSpacer>
             <MButton Icon
                      OnClick="@(()=>showConfirmImport=false)">
@@ -69,18 +69,18 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
-            @(I18n.T("Export.Import.ConfirmImport.Content"))
+            @(I18n.T("Confirm importing these diaries?"))
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text
                      OnClick="()=>showConfirmImport=false">
-                @(I18n.T("Share.Cancel"))
+                @(I18n.T("Cancel"))
             </MButton>
             <MButton Text
                      Color="primary"
                      OnClick="ConfirmImport">
-                @(I18n.T("Share.OK"))
+                @(I18n.T("OK"))
             </MButton>
         </MCardActions>
     </MCard>

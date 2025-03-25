@@ -193,7 +193,7 @@ namespace Microsoft.AspNetCore.Components.WebView.Gtk
                 (args) => BlazorWebViewInitializing?.Invoke(this, args),
                 (args) => BlazorWebViewInitialized?.Invoke(this, args),
                 logger);
-
+            
             StaticContentHotReloadManager.AttachToWebViewManagerIfEnabled(_webviewManager);
 
             foreach (var rootComponent in RootComponents)

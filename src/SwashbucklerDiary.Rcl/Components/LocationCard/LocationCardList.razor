@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits CardListComponentBase<LocationModel>
 
 <div class="card-list__wrap">
@@ -27,20 +27,20 @@
 </div>
 
 <EmptyResult Show="Value.Count == 0"
-             Text="@(I18n.T("Location.NoLocation"))">
+             Text="@(I18n.T("No location"))">
 </EmptyResult>
 
 <InputDialog @bind-Visible="showRename"
              Text="@(SelectedItem.Name)"
-             Title="@(I18n.T("Location.Rename"))"
-             Placeholder="@(I18n.T("Location.Placeholder"))"
+             Title="@(I18n.T("Rename location"))"
+             Placeholder="@(I18n.T("Please enter a location name"))"
              MaxLength="200"
              OnOK="ConfirmRename">
 </InputDialog>
 
 <DeleteDialog @bind-Visible="showDelete"
-              Title="@(I18n.T("Location.Delete.Title"))"
-              Content="@(I18n.T("Location.Delete.Content"))"
+              Title="@(I18n.T("Delete location"))"
+              Content="@(I18n.T("Only the location is deleted, the location of the existing diary is not deleted"))"
               OnOK="ConfirmDelete">
 </DeleteDialog>
 
@@ -49,7 +49,7 @@
              OnChange="SortChanged"
              TItem="string"
              TItemValue="string"
-             Title="@(I18n.T("Share.Sort"))"
+             Title="@(I18n.T("Sort"))"
              Items="SortItems">
 </RadioDialog>
 

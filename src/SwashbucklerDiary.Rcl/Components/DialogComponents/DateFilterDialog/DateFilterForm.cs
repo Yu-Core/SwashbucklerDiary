@@ -1,4 +1,4 @@
-﻿namespace SwashbucklerDiary.Rcl.Components
+namespace SwashbucklerDiary.Rcl.Components
 {
     public class DateFilterForm
     {
@@ -10,9 +10,9 @@
 
         public static readonly Dictionary<string, DateOnly> DefaultDates = new()
         {
-            { "Filter.Last month", DateOnly.FromDateTime(DateTime.Now.AddMonths(-1)) },
-            { "Filter.Last three months", DateOnly.FromDateTime(DateTime.Now.AddMonths(-3)) },
-            { "Filter.Last six months", DateOnly.FromDateTime(DateTime.Now.AddMonths(-6)) },
+            { "Nearly a month", DateOnly.FromDateTime(DateTime.Now.AddMonths(-1)) },
+            { "Nearly three months", DateOnly.FromDateTime(DateTime.Now.AddMonths(-3)) },
+            { "Nearly six months", DateOnly.FromDateTime(DateTime.Now.AddMonths(-6)) },
         };
 
         public DateOnly GetDateMinValue()

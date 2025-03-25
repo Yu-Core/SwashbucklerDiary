@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits MediaResourceListComponentBase
 
 <div>
@@ -28,7 +28,7 @@
 </div>
 
 <EmptyResult Show="Value.Count == 0"
-             Text="@(I18n.T("FileBrowse.Audio.NoAudio"))">
+             Text="@(I18n.T("No audio"))">
 </EmptyResult>
 
 <MultiMenu @bind-Visible="showMenu"

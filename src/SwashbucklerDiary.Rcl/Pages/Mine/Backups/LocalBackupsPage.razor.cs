@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Services;
 
@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var flag = await PlatformIntegration.TryStorageWritePermission();
             if (!flag)
             {
-                await PopupServiceHelper.Info(I18n.T("Permission.OpenStorageWrite"));
+                await PopupServiceHelper.Info(I18n.T("Please grant permission for storage writing"));
                 return;
             }
 
@@ -33,7 +33,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            await PopupServiceHelper.Success(I18n.T("Backups.Backups.Success"));
+            await PopupServiceHelper.Success(I18n.T("Backup successful"));
         }
 
         private async Task Restore()
@@ -53,18 +53,18 @@ namespace SwashbucklerDiary.Rcl.Pages
             showRestore = false;
             if (string.IsNullOrEmpty(restoreFilePath))
             {
-                await PopupServiceHelper.Error(I18n.T("Backups.Restore.Fail"));
+                await PopupServiceHelper.Error(I18n.T("Restore failed"));
                 return;
             }
 
             bool flag = await DiaryFileManager.ImportDBAsync(restoreFilePath);
             if (flag)
             {
-                await PopupServiceHelper.Success(I18n.T("Backups.Restore.Success"));
+                await PopupServiceHelper.Success(I18n.T("Restore successfully"));
             }
             else
             {
-                await PopupServiceHelper.Error(I18n.T("Backups.Restore.Fail"));
+                await PopupServiceHelper.Error(I18n.T("Restore failed"));
             }
         }
     }

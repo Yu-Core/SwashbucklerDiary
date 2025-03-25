@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Layout
@@ -20,6 +20,6 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Parameter]
         public EventCallback OnCancel { get; set; }
 
-        private string ShowClass => Show ? "" : "d-none";
+        private string ShowClass => Show ? "px-4" : "d-none";
     }
 }

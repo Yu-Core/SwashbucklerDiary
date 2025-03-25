@@ -16,10 +16,10 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected bool showSponsorSupport;
 
         protected readonly List<NavigationButton> navigationButtons = [
-            new("Main.Diary", "mdi-notebook-outline", "mdi-notebook", ""),
-            new("Main.History", "mdi-clock-outline", "mdi-clock", "history"),
-            new("Main.FileBrowse", "mdi-file-outline", "mdi-file", "fileBrowse"),
-            new("Main.Mine",  "mdi-account-outline", "mdi-account", "mine"),
+            new("Diary", "mdi-notebook-outline", "mdi-notebook", ""),
+            new("Calendar", "mdi-clock-outline", "mdi-clock", "history"),
+            new("File", "mdi-file-outline", "mdi-file", "fileBrowse"),
+            new("Mine",  "mdi-account-outline", "mdi-account", "mine"),
         ];
 
         protected IEnumerable<string> permanentPaths = [];

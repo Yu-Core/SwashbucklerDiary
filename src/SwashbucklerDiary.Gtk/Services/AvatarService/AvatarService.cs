@@ -17,7 +17,7 @@ namespace SwashbucklerDiary.Gtk.Services
 
         public override async Task<string> SetAvatarByCapture()
         {
-            await _popupServiceHelper.Error(_i18n.T("Share.NotSupported"));
+            await _popupServiceHelper.Error(_i18n.T("Not supported on the current platform"));
             return string.Empty;
         }
     }

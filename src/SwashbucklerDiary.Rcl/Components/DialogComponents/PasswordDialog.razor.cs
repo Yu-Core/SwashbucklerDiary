@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using System.ComponentModel.DataAnnotations;
 
@@ -34,12 +34,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         class Model
         {
-            [Required(ErrorMessage = "Please input a password")]
+            [Required(ErrorMessage = "Please enter password")]
             [MaxLength(20, ErrorMessage = "Password must be at most 20 characters long")]
             [MinLength(6, ErrorMessage = "Password must be at least 6 characters long")]
             public string? Password { get; set; }
 
-            [Required(ErrorMessage = "Please input a password")]
+            [Required(ErrorMessage = "Please enter password")]
             [Compare("Password",ErrorMessage = "The two passwords are inconsistent")]
             public string? PasswordConfirmation { get; set; }
         }

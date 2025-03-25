@@ -10,7 +10,7 @@
         </MButton>
 
         <TransparentTextField @bind-Value="search"
-                              Placeholder="@(I18n.T("Search.Please enter diary keywords"))"
+                              Placeholder="@(I18n.T("Please enter diary keywords"))"
                               OnInput="UpdateDiariesAsync">
         </TransparentTextField>
     </ChildContent>
@@ -44,7 +44,7 @@
 <ScrollContainer Id="@scrollContainerId">
     <DiaryCardList @bind-Value="Diaries"
                    @bind-Tags="Tags"
-                   NotFoundText="@(I18n.T("Search.Not Found"))"
+                   NotFoundText="@(I18n.T("Not Found"))"
                    OnClick="ToRead">
     </DiaryCardList>
 </ScrollContainer>

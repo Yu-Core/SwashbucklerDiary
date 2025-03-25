@@ -1,8 +1,8 @@
 @page "/privacyMode"
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("PrivacyMode.Name"))"
-OnClick="NavigateToBack">
+<MyAppBar Title="@(I18n.T("Privacy mode"))"
+          OnClick="NavigateToBack">
 </MyAppBar>
 
 @if (_isRender)
@@ -20,10 +20,10 @@ OnClick="NavigateToBack">
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("PrivacyMode.ShowSetPrivacyDiary.Title"))
+                            @(I18n.T("The display is set to private"))
                         </MListItemTitle>
                         <MListItemSubtitle Class="text-caption-xs-only">
-                            @(I18n.T("PrivacyMode.ShowSetPrivacyDiary.Subtitle"))
+                            @(I18n.T("Show the Set Private option in the diary menu"))
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
@@ -43,10 +43,10 @@ OnClick="NavigateToBack">
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("PrivacyMode.EnablePrivacyModeDark.Title"))
+                            @(I18n.T("Enable dark mode"))
                         </MListItemTitle>
                         <MListItemSubtitle Class="text-caption-xs-only">
-                            @(I18n.T("PrivacyMode.EnablePrivacyModeDark.Subtitle"))
+                            @(I18n.T("Enable dark mode when entering privacy mode"))
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
@@ -70,10 +70,10 @@ OnClick="NavigateToBack">
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Title"))
+                            @(I18n.T("Hide default entry"))
                         </MListItemTitle>
                         <MListItemSubtitle Class="text-caption-xs-only">
-                            @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Subtitle"))
+                            @(I18n.T("After hiding, it can be accessed through function search, which is located in the upper right corner of the \"Mine\" page"))
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
@@ -92,7 +92,7 @@ OnClick="NavigateToBack">
 
                 @if (hidePrivacyModeEntrance)
                 {
-                    <MListItem OnClick="()=>showPrivacyModeFunctionSearchKeyDialog=true">
+                    <MListItem OnClick="() => showPrivacyModeFunctionSearchKeyDialog = true">
                         <MListItemIcon>
                             <MIcon Class="evident-icon">
                                 mdi-keyboard-variant
@@ -100,10 +100,10 @@ OnClick="NavigateToBack">
                         </MListItemIcon>
                         <MListItemContent>
                             <MListItemTitle>
-                                @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Title"))
+                                @(I18n.T("Custom search keywords"))
                             </MListItemTitle>
                             <MListItemSubtitle Class="text-caption-xs-only">
-                                @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Subtitle"))
+                                @(I18n.T("Enter keywords in the feature search to display privacy mode"))
                             </MListItemSubtitle>
                         </MListItemContent>
                         <MListItemContent Class="setting-item-state">
@@ -118,14 +118,14 @@ OnClick="NavigateToBack">
                 }
                 else
                 {
-                    <MListItem OnClick="()=>showPrivacyModeEntrancePasswordDialog = true">
+                    <MListItem OnClick="() => showPrivacyModeEntrancePasswordDialog = true">
                         <MListItemIcon>
                             <MIcon Class="evident-icon">
                                 mdi-key-outline
                             </MIcon>
                         </MListItemIcon>
                         <MListItemContent>
-                            @(I18n.T("PrivacyMode.PrivacyModeEntrancePassword"))
+                            @(I18n.T("Set default entry password"))
                         </MListItemContent>
                         <MListItemContent Class="setting-item-state">
                             <MListItemSubtitle>
@@ -172,10 +172,10 @@ OnClick="NavigateToBack">
                 </MListItemIcon>
                 <MListItemContent>
                     <MListItemTitle>
-                        @(I18n.T("PrivacyMode.Move the old version of Privacy Diary.Title"))
+                        @(I18n.T("Move the old version of Privacy Diary"))
                     </MListItemTitle>
                     <MListItemSubtitle Class="text-caption-xs-only">
-                        @(I18n.T("PrivacyMode.Move the old version of Privacy Diary.SubTitle"))
+                        @(I18n.T("Move the data from the old version of the privacy diary to the new version"))
                     </MListItemSubtitle>
                 </MListItemContent>
                 <MListItemAction>
@@ -188,7 +188,7 @@ OnClick="NavigateToBack">
                 Elevation="0"
                 Rounded="@("lg")"
                 Icon="@("mdi-information-outline")">
-            @(I18n.T("PrivacyMode.Description"))
+            @(I18n.T("Privacy mode data from version 1.3.9 and earlier will be automatically migrated to the new version of privacy mode after the update. \nIf the old privacy data is obtained by restoring backups or importing, it will be displayed together with the regular diary. Please click the migration button above to move them to privacy mode."))
         </MAlert>
     </ScrollContainer>
 
@@ -207,51 +207,51 @@ OnClick="NavigateToBack">
 
     <InputDialog @bind-Visible="showPrivacyModeFunctionSearchKeyDialog"
                  Text="@privacyModeFunctionSearchKey"
-                 Title="@(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Title"))"
-                 Placeholder="@(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKeyPlaceholder"))"
+                 Title="@(I18n.T("Custom search keywords"))"
+                 Placeholder="@(I18n.T("Please enter keywords"))"
                  OnOK="SavePrivacyModeSearchKey">
     </InputDialog>
 
     <PasswordDialog @bind-Visible="showPrivacyModeEntrancePasswordDialog"
-                    Title="@(I18n.T("PrivacyMode.PrivacyModeEntrancePassword"))"
+                    Title="@(I18n.T("Set default entry password"))"
                     MaxLength="20"
                     OnOK="SetPassword">
     </PasswordDialog>
 
     <CustomMDialog @bind-MyValue="showHidePrivacyModeEntranceConfirmDialog"
-                      ContentClass="rounded-lg"
-                      MaxWidth="420">
+                   ContentClass="rounded-lg"
+                   MaxWidth="420">
         <MCard>
             <MCardTitle Class="font-weight-bold">
-                @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Title"))
+                @(I18n.T("Hide default entry"))
                 <MSpacer></MSpacer>
                 <MButton Icon="true"
-                         OnClick="@(()=>showHidePrivacyModeEntranceConfirmDialog=false)">
+                         OnClick="@(() => showHidePrivacyModeEntranceConfirmDialog = false)">
                     <MIcon>mdi-close</MIcon>
                 </MButton>
             </MCardTitle>
             <MCardText Class="pb-0">
                 <div>
-                    @(I18n.T("PrivacyMode.HidePrivacyModeEntrance.Subtitle"))
+                    @(I18n.T("After hiding, it can be accessed through function search, which is located in the upper right corner of the \"Mine\" page"))
                 </div>
                 <div>
-                    @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.Subtitle"))
+                    @(I18n.T("Enter keywords in the feature search to display privacy mode"))
                 </div>
                 <div class="d-flex align-end">
-                    @(I18n.T("PrivacyMode.PrivacyModeFunctionSearchKey.CurrentKey"))
+                    @(I18n.T("Current key"))
                     <div class="font-weight-bold text-h6 ml-2">@privacyModeFunctionSearchKey</div>
                 </div>
             </MCardText>
             <MCardActions>
                 <MSpacer></MSpacer>
                 <MButton Text
-                         OnClick="()=>showHidePrivacyModeEntranceConfirmDialog=false">
-                    @(I18n.T("Share.Cancel"))
+                         OnClick="() => showHidePrivacyModeEntranceConfirmDialog = false">
+                    @(I18n.T("Cancel"))
                 </MButton>
                 <MButton Text
                          Color="primary"
                          OnClick="ConfirmHidePrivacyModeEntrance">
-                    @(I18n.T("Share.OK"))
+                    @(I18n.T("OK"))
                 </MButton>
             </MCardActions>
         </MCard>

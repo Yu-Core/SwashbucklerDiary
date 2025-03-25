@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits MyComponentBase
 
 <MCard Class="pa-4"
@@ -6,22 +6,22 @@
        Rounded="@("lg")">
     <MListItem Dense="true">
         <MListItemContent Class="font-weight-bold">
-            @(I18n.T("Statistics.Name"))
+            @(I18n.T("Statistics"))
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Statistics.LocationCount")): @(LocationCount)
+            @(I18n.T("Location count")): @(LocationCount)
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Statistics.EarliestDate")): @(EarliestDate)
+            @(I18n.T("Earliest date")): @(EarliestDate)
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Statistics.LastDate")): @(LastDate)
+            @(I18n.T("Last date")): @(LastDate)
         </MListItemContent>
     </MListItem>
 </MCard>

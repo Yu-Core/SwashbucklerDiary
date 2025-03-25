@@ -1,348 +1,348 @@
 [
   {
-    "Name": "User.Title",
+    "Name": "User Setting",
     "Icon": "mdi-account-cog-outline",
-    "Path": "User.Path",
+    "Path": "User Setting",
     "Href": "user"
   },
   {
-    "Name": "User.Avatar.Name",
+    "Name": "Avatar",
     "Icon": "mdi-account-circle-outline",
-    "Path": "User.Avatar.Path",
+    "Path": "User Setting / Avatar",
     "Href": "user"
   },
   {
-    "Name": "User.UserName.Name",
+    "Name": "NickName",
     "Icon": "mdi-account-details-outline",
-    "Path": "User.UserName.Path",
+    "Path": "User Setting / NickName",
     "Href": "user"
   },
   {
-    "Name": "User.Sign.Name",
+    "Name": "Sign",
     "Icon": "mdi-file-sign",
-    "Path": "User.Sign.Path",
+    "Path": "User Setting / Sign",
     "Href": "user"
   },
   {
-    "Name": "Backups.Local.Name",
+    "Name": "Local backup",
     "Icon": "mdi-folder-arrow-up-down-outline",
-    "Path": "Backups.Local.Path",
+    "Path": "Backup / Local backup",
     "Href": "backups?tabs=local"
   },
   {
-    "Name": "Backups.Backups.Title",
+    "Name": "Backup",
     "Icon": "mdi-folder-arrow-down-outline",
-    "Path": "Backups.Backups.Path",
+    "Path": "Backup / Local backup / Backup",
     "Href": "backups?tabs=local"
   },
   {
-    "Name": "Backups.Restore.Title",
+    "Name": "Restore",
     "Icon": "mdi-folder-arrow-up-outline",
-    "Path": "Backups.Restore.Path",
+    "Path": "Backup / Local backup / Restore",
     "Href": "backups?tabs=local"
   },
   {
-    "Name": "Backups.WebDAV.Name",
+    "Name": "WebDAV",
     "Icon": "mdi-cloud-sync-outline",
-    "Path": "Backups.WebDAV.Path",
+    "Path": "Backup / WebDAV",
     "Href": "backups?tabs=webDAV",
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
-    "Name": "Backups.Config.Title",
+    "Name": "Config",
     "Icon": "mdi-cog-sync-outline",
-    "Path": "Backups.Config.Path",
+    "Path": "Backup / WebDAV / Config",
     "Href": "backups?tabs=webDAV",
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
-    "Name": "Backups.Upload.Title",
+    "Name": "Upload",
     "Icon": "mdi-cloud-arrow-up-outline",
-    "Path": "Backups.Upload.Path",
+    "Path": "Backup / WebDAV / Upload",
     "Href": "backups?tabs=webDAV",
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
-    "Name": "Backups.Download.Title",
+    "Name": "Pull",
     "Icon": "mdi-cloud-arrow-down-outline",
-    "Path": "Backups.Download.Path",
+    "Path": "Backup / WebDAV / Pull",
     "Href": "backups?tabs=webDAV",
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
-    "Name": "Export.Local.Name",
+    "Name": "Local export",
     "Icon": "mdi-file-arrow-up-down-outline",
-    "Path": "Export.Local.Path",
+    "Path": "Export / Local export",
     "Href": "export?tabs=local"
   },
   {
-    "Name": "Export.Export.Title",
+    "Name": "Export",
     "Icon": "mdi-export",
-    "Path": "Export.Export.Path",
+    "Path": "Export / Local export / Export",
     "Href": "export?tabs=local"
   },
   {
-    "Name": "Export.Import.Title",
+    "Name": "Import",
     "Icon": "mdi-import",
-    "Path": "Export.Import.Path",
+    "Path": "Export / Local export / Import",
     "Href": "export?tabs=local"
   },
   {
-    "Name": "Export.LAN.Name",
+    "Name": "LAN",
     "Icon": "mdi-lan",
-    "Path": "Export.LAN.Path",
+    "Path": "Export / LAN",
     "Href": "export?tabs=LAN",
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
-    "Name": "Mine.Achievement.Name",
+    "Name": "Achievement",
     "Icon": "mdi-trophy-outline",
-    "Path": "Mine.Achievement.Path",
+    "Path": "Achievement",
     "Href": "achievement"
   },
   {
-    "Name": "Setting.General.Permission.Name",
+    "Name": "System permission",
     "Icon": "mdi-account-cog-outline",
-    "Path": "Setting.General.Permission.Path",
+    "Path": "Setting / System permission",
     "Href": "permissionSetting"
   },
   {
-    "Name": "Setting.General.Storage.Name",
+    "Name": "Clear cache",
     "Icon": "mdi-trash-can-outline",
-    "Path": "Setting.General.Storage.Path",
+    "Path": "Setting / Clear cache",
     "Href": "setting"
   },
   {
-    "Name": "Setting.Display.Index.Name",
+    "Name": "Home",
     "Icon": "mdi-home-outline",
-    "Path": "Setting.Display.Index.Path",
+    "Path": "Setting / Home",
     "Href": "indexSetting"
   },
   {
-    "Name": "Setting.Display.Index.WelcomeText.Name",
+    "Name": "Greetings",
     "Icon": "mdi-hand-wave-outline",
-    "Path": "Setting.Display.Index.WelcomeText.Path",
+    "Path": "Setting / Home / Greetings",
     "Href": "indexSetting"
   },
   {
-    "Name": "Setting.Display.Index.Date.Name",
+    "Name": "Date",
     "Icon": "mdi-calendar-range-outline",
-    "Path": "Setting.Display.Index.Date.Path",
+    "Path": "Setting / Home / Date",
     "Href": "indexSetting"
   },
   {
-    "Name": "Setting.Display.Calendar.Name",
+    "Name": "Calendar",
     "Icon": "mdi-calendar-month-outline",
-    "Path": "Setting.Display.Calendar.Path",
+    "Path": "Setting / Calendar",
     "Href": "calendarSetting"
   },
   {
-    "Name": "Setting.Display.Calendar.FirstDayOfWeek.Name",
+    "Name": "First day of week",
     "Icon": "mdi-calendar-week-begin-outline",
-    "Path": "Setting.Display.Calendar.FirstDayOfWeek.Path",
+    "Path": "Setting / Calendar / First day of week",
     "Href": "calendarSetting"
   },
   {
-    "Name": "Setting.Display.Diary.Name",
+    "Name": "Diary",
     "Icon": "mdi-notebook-outline",
-    "Path": "Setting.Display.Diary.Path",
+    "Path": "Setting / Diary",
     "Href": "diarySetting"
   },
   {
-    "Name": "Setting.Display.Diary.Title.Name",
+    "Name": "Title",
     "Icon": "mdi-format-title",
-    "Path": "Setting.Display.Diary.Title.Path",
+    "Path": "Setting / Diary / Title",
     "Href": "diarySetting"
   },
   {
-    "Name": "Setting.Display.Diary.Markdown.Name",
+    "Name": "Markdown",
     "Icon": "mdi-language-markdown-outline",
-    "Path": "Setting.Display.Diary.Markdown.Path",
+    "Path": "Setting / Diary / Markdown",
     "Href": "diarySetting"
   },
   {
-    "Name": "Setting.Display.Diary.OtherInfo.Name",
+    "Name": "Other information",
     "Icon": "mdi-information-outline",
-    "Path": "Setting.Display.Diary.OtherInfo.Path",
+    "Path": "Setting / Diary / Other information",
     "Href": "diarySetting"
   },
   {
-    "Name": "Setting.Display.Diary.IconText.Name",
+    "Name": "Weather and mood text",
     "Icon": "mdi-alphabetical",
-    "Path": "Setting.Display.Diary.IconText.Path",
+    "Path": "Setting / Diary /Weather and mood text",
     "Href": "diarySetting"
   },
   {
-    "Name": "Setting.Display.Diary.EditAutoSave.Name",
+    "Name": "Auto save",
     "Icon": "mdi-content-save-edit-outline",
-    "Path": "Setting.Display.Diary.EditAutoSave.Path",
+    "Path": "Setting / Diary /Auto save",
     "Href": "diarySetting"
   },
   {
-    "Name": "Setting.Display.Diary.Outline.Name",
+    "Name": "Outline",
     "Icon": "mdi-format-list-bulleted",
-    "Path": "Setting.Display.Diary.Outline.Path",
+    "Path": "Setting / Diary / Outline",
     "Href": "outlineSetting",
     "HideBreakpoints": [ "Xs", "Sm" ]
   },
   {
-    "Name": "Setting.Display.Diary.Outline.Outline.Name",
+    "Name": "Display outline",
     "Icon": "mdi-format-list-bulleted",
-    "Path": "Setting.Display.Diary.Outline.Outline.Path",
+    "Path": "Setting / Diary / Outline / Display outline",
     "Href": "outlineSetting",
     "HideBreakpoints": [ "Xs", "Sm" ]
   },
   {
-    "Name": "Setting.Display.Diary.Outline.RightOutline.Name",
+    "Name": "Position on the right",
     "Icon": "mdi-format-align-right",
-    "Path": "Setting.Display.Diary.Outline.RightOutline.Path",
+    "Path": "Setting / Diary / Outline / Position on the right",
     "Href": "outlineSetting",
     "HideBreakpoints": [ "Xs", "Sm" ]
   },
   {
-    "Name": "Setting.Display.Diary.FirstLineIndent.Name",
+    "Name": "First line indentation",
     "Icon": "mdi-format-indent-increase",
-    "Path": "Setting.Display.Diary.FirstLineIndent.Path",
+    "Path": "Setting / Diary / First line indentation",
     "Href": "diarySetting"
   },
   {
-    "Name": "Setting.Display.Diary.CodeLineNumber.Name",
+    "Name": "Code line number",
     "Icon": "mdi-format-list-numbered",
-    "Path": "Setting.Display.Diary.CodeLineNumber.Path",
+    "Path": "Setting / Diary / Code line number",
     "Href": "diarySetting"
   },
   {
-    "Name": "Setting.Display.Diary.TaskListLineThrough.Name",
+    "Name": "Task list line-through",
     "Icon": "mdi-checkbox-blank-off-outline",
-    "Path": "Setting.Display.Diary.TaskListLineThrough.Path",
+    "Path": "Setting / Diary / Task list line-through",
     "Href": "diarySetting"
   },
   {
-    "Name": "Setting.Display.Diary.ImageLazy.Name",
+    "Name": "Lazy image load",
     "Icon": "mdi-image-refresh-outline",
-    "Path": "Setting.Display.Diary.ImageLazy.Path",
+    "Path": "Setting / Diary / Lazy image load",
     "Href": "diarySetting"
   },
   {
-    "Name": "Setting.Display.Diary.AutoPlay.Name",
+    "Name": "Audio and video auto play",
     "Icon": "mdi-play-outline",
-    "Path": "Setting.Display.Diary.AutoPlay.Path",
+    "Path": "Setting / Diary / Audio and video auto play",
     "Href": "diarySetting"
   },
   {
-    "Name": "Location.Name",
+    "Name": "Location",
     "Icon": "mdi-map-marker-outline",
-    "Path": "Location.Path",
+    "Path": "Location",
     "Href": "locationSetting"
   },
   {
-    "Name": "Setting.Display.Snackbars.Name",
+    "Name": "Snackbars",
     "Icon": "mdi-alert-box-outline",
-    "Path": "Setting.Display.Snackbars.Path",
+    "Path": "Setting / Snackbars",
     "Href": "alertSetting"
   },
   {
-    "Name": "Setting.Display.Snackbars.AlertTimeout.Name",
+    "Name": "Alert timeout",
     "Icon": "mdi-timer-outline",
-    "Path": "Setting.Display.Snackbars.AlertTimeout.Path",
+    "Path": "Setting / Snackbars / Alert timeout",
     "Href": "alertSetting"
   },
   {
-    "Name": "Setting.Display.Snackbars.Achievement.Name",
+    "Name": "Achievement",
     "Icon": "mdi-trophy-outline",
-    "Path": "Setting.Display.Snackbars.Achievement.Path",
+    "Path": "Setting / Snackbars / Achievement",
     "Href": "alertSetting"
   },
   {
-    "Name": "Setting.Display.DiaryCard.Name",
+    "Name": "Diary card",
     "Icon": "mdi-card-text-outline",
-    "Path": "Setting.Display.DiaryCard.Path",
+    "Path": "Setting / Diary card",
     "Href": "diaryCardSetting"
   },
   {
-    "Name": "Setting.Display.DiaryCard.Icon.Name",
+    "Name": "Icon",
     "Icon": "mdi-emoticon-happy-outline",
-    "Path": "Setting.Display.DiaryCard.Icon.Path",
+    "Path": "Setting / Diary card / Icon",
     "Href": "diaryCardSetting"
   },
   {
-    "Name": "Setting.Display.DiaryCard.Tags.Name",
+    "Name": "Tag",
     "Icon": "mdi-label-outline",
-    "Path": "Setting.Display.DiaryCard.Tags.Path",
+    "Path": "Setting / Diary card / Tag",
     "Href": "diaryCardSetting"
   },
   {
-    "Name": "Setting.Display.DiaryCard.Tags.Name",
-    "Icon": "mdi-label-outline",
-    "Path": "Setting.Display.DiaryCard.Tags.Path",
+    "Name": "Time format",
+    "Icon": "mdi-calendar-clock",
+    "Path": "Setting / Diary card / Time format",
     "Href": "diaryCardSetting"
   },
   {
-    "Name": "Setting.Display.DiaryCard.Location.Name",
+    "Name": "Location",
     "Icon": "mdi-map-marker-outline",
-    "Path": "Setting.Display.DiaryCard.Location.Path",
+    "Path": "Setting / Diary card / Location",
     "Href": "diaryCardSetting"
   },
   {
-    "Name": "Setting.Display.StatisticsCard.Name",
+    "Name": "Statistics card",
     "Icon": " mdi-chart-line",
-    "Path": "Setting.Display.StatisticsCard.Path",
+    "Path": "Setting / Statistics card",
     "Href": "setting",
     "HideBreakpoints": [ "Xs", "Sm" ]
   },
   {
     "Name": "Url Scheme",
     "Icon": "mdi-link-variant",
-    "Path": "Setting.Other.UrlScheme.Path",
+    "Path": "Setting / Url Scheme",
     "Href": "urlScheme",
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
-    "Name": "About.SourceCode.Name",
+    "Name": "View source",
     "Icon": "mdi-book-open-page-variant-outline",
-    "Path": "About.SourceCode.Path",
+    "Path": "About / View source",
     "Href": "about"
   },
   {
-    "Name": "About.Agreement.Name",
+    "Name": "User agreement",
     "Icon": "mdi-file-document-multiple-outline",
-    "Path": "About.Agreement.Path",
+    "Path": "About / User agreement",
     "Href": "user-agreement"
   },
   {
-    "Name": "About.Privacy.Name",
+    "Name": "Privacy policy",
     "Icon": "mdi-lock-outline",
-    "Path": "About.Privacy.Path",
+    "Path": "About / Privacy policy",
     "Href": "privacy-policy"
   },
   {
-    "Name": "About.Check for updates.Name",
+    "Name": "Check for updates",
     "Icon": "mdi-update",
-    "Path": "About.Check for updates.Path",
+    "Path": "About / Check for updates",
     "Href": "about"
   },
   {
-    "Name": "About.Related.Name",
+    "Name": "Open source related",
     "Icon": "mdi-xml",
-    "Path": "About.Related.Path",
+    "Path": "About / Open source related",
     "Href": "relatedOSP"
   },
   {
-    "Name": "About.LogFile.Name",
+    "Name": "Log file",
     "Icon": "mdi-file-document-edit-outline",
-    "Path": "About.LogFile.Path",
+    "Path": "About / Log file",
     "Href": "log"
   },
   {
-    "Name": "About.Evaluation.Name",
+    "Name": "Give a good review",
     "Icon": "mdi-star-outline",
-    "Path": "About.Evaluation.Path",
+    "Path": "About / Give a good review",
     "Href": "about"
   },
   {
-    "Name": "About.Sponsor.Name",
+    "Name": "Sponsor us",
     "Icon": "mdi-hand-heart-outline",
-    "Path": "About.Sponsor.Path",
+    "Path": "About / Sponsor us",
     "Href": "sponsor"
   }
 ]

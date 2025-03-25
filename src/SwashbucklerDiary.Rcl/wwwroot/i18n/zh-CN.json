@@ -1,854 +1,484 @@
 {
-  "Share": {
-    "OK": "确认",
-    "Cancel": "取消",
-    "Save": "保存",
-    "Delete": "删除",
-    "DeleteSuccess": "删除成功",
-    "DeleteFail": "删除失败",
-    "Copy": "复制",
-    "CopySuccess": "复制成功",
-    "Rename": "重命名",
-    "Edit": "修改",
-    "EditSuccess": "修改成功",
-    "EditFail": "修改失败",
-    "Add": "添加",
-    "AddSuccess": "添加成功",
-    "AddFail": "添加失败",
-    "Clear": "清除",
-    "Share": "分享",
-    "SelectShare": "选择分享方式",
-    "TextShare": "文字分享",
-    "ImageShare": "图片分享",
-    "FileShare": "文件分享",
-    "Reset": "重置",
-    "Restore Default": "恢复默认",
-    "Quit": "退出",
-    "SaveSuccess": "保存成功",
-    "SaveFail": "保存失败",
-    "Sort": "排序",
-    "NotSupported": "当前平台不支持",
-    "Search": "搜索"
-  },
-  "Main": {
-    "Diary": "日记",
-    "History": "日历",
-    "FileBrowse": "文件",
-    "Mine": "我的"
-  },
-  "Index": {
-    "All": "全部",
-    "Tag": "标签",
-    "Welcome": {
-      "Morning": "晨光初现，愿你一天充满活力！",
-      "Noon": "阳光正暖，愿你心情如晴空般明朗！",
-      "Afternoon": "午后时光，愿你轻松自在，收获满满！",
-      "Night": "夜幕降临，愿你卸下疲惫，放松身心！",
-      "BeforeDawn": "夜深人静，愿你安心入眠，迎接美好明天！"
-    }
-  },
-  "Tag": {
-    "Add": "添加标签",
-    "Repeat": {
-      "Title": "标签已存在",
-      "Content": "请勿重复添加"
-    },
-    "Placeholder": "请输入标签名称",
-    "Select": "选择标签",
-    "Delete": {
-      "Title": "删除标签",
-      "Content": "仅删除标签，不会删除标签下的日记"
-    },
-    "Rename": "重命名标签",
-    "NoTag": "暂无标签"
-  },
-  "Week": {
-    "0": "周日",
-    "1": "周一",
-    "2": "周二",
-    "3": "周三",
-    "4": "周四",
-    "5": "周五",
-    "6": "周六"
-  },
-  "Diary": {
-    "Tag": "标签",
-    "Top": "置顶",
-    "CancelTop": "取消置顶",
-    "Export": "导出",
-    "Untitled": "无题",
-    "NoDiary": "暂无日记",
-    "Delete": {
-      "Title": "删除日记",
-      "Content": "请慎重删除，每一篇日记都是珍贵的回忆。"
-    },
-    "Markdown": "Markdown模式",
-    "Text": "纯文本模式"
-  },
-  "Search": {
-    "Please enter keywords": "请输入关键词",
-    "Please enter diary keywords": "请输入日记关键词",
-    "Not Found": "未找到搜索结果",
-    "Filter": {
-      "Tags": "标签",
-      "Weather": "天气",
-      "Mood": "心情",
-      "Location": "位置",
-      "Time": "时间",
-      "File": "文件"
-    }
-  },
-  "History": {
-    "Calendar": "日历",
-    "ExportTime": {
-      "Name": "选择时间范围",
-      "Day": "导出该日期日记",
-      "Month": "导出该月份日记",
-      "Year": "导出该年份日记"
-    },
-    "Add diary": "添加日记",
-    "Reset date": "重置日期",
-    "Export diaries": "导出日记",
-    "Merge diaries": {
-      "Title": "合并日记",
-      "Content": "确认合并选中日期日记内容吗？（日记的其他信息，如标题、天气等，会以第一篇为主）"
-    }
-  },
-  "Write": {
-    "EnableTitle": "开启标题",
-    "CloseTitle": "关闭标题",
-    "Weather": "天气",
-    "Mood": "心情",
-    "Location": "位置",
-    "TitlePlace": "请输入标题",
-    "ContentPlace": "请输入内容",
-    "WordCountType": "Character",
-    "CountUnit": "字",
-    "InputLocation": "输入位置",
-    "LocationPlace": "请输入位置",
-    "DisplayOtherInfo": "显示其他信息",
-    "HideOtherInfo": "隐藏其他信息"
-  },
-  "Weather": {
-    "cloudy": "多云",
-    "dust": "沙尘暴",
-    "fog": "雾",
-    "hail": "冰雹",
-    "hazy": "薄雾",
-    "hurricane": "飓风",
-    "lightning": "闪电",
-    "lightning-rainy": "雷阵雨",
-    "pouring": "倾盆大雨",
-    "rainy": "雨",
-    "sleet": "雨夹雪",
-    "snow": "雪",
-    "sunny": "晴",
-    "sunny-off": "阴",
-    "tornado": "龙卷风",
-    "ultraviolet": "紫外线",
-    "windy": "风"
-  },
-  "Mood": {
-    "angry": "怒",
-    "confused": "困惑",
-    "cool": "酷",
-    "cry": "哭",
-    "dead": "难受",
-    "devil": "恶",
-    "excited": "兴奋",
-    "frown": "愁",
-    "happy": "喜",
-    "kiss": "亲亲",
-    "lol": "乐",
-    "neutral": "无感",
-    "poop": "糟糕",
-    "sad": "悲",
-    "sick": "病了",
-    "tongue": "好吃",
-    "wink": "眨眼"
-  },
-  "Read": {
-    "OpenPrivacy": "设为私密",
-    "ClosePrivacy": "取消私密",
-    "Moved to privacy mode": "已移动至隐私模式",
-    "Removed from privacy mode": "已移出隐私模式",
-    "CopyQuote": "复制引用",
-    "CopyLink": "复制链接",
-    "DiaryLink": "日记链接",
-    "Search": "查找",
-    "Search on the page": "在页面上查找"
-  },
-  "AppName": "侠客日记",
-  "Mine": {
-    "Mine": "我的",
-    "Sign": "事了拂衣去，深藏身与名",
-    "Data": "数据",
-    "Backups": "备份",
-    "Export": "导出",
-    "Achievement": {
-      "Name": "成就",
-      "Path": "成就"
-    },
-    "Settings": "设置",
-    "Languages": "语言",
-    "Night": "深色模式",
-    "Other": "其他",
-    "Feedback": "联系我们",
-    "About": "关于",
-    "SelectLanguage": "选择语言",
-    "ContactWay": "联系方式",
-    "MailCopy": "邮箱地址已复制到剪贴板",
-    "SendMailFail": "发送邮件失败",
-    "QQGroupCopy": "QQ群号码已复制到剪贴板",
-    "QQGroupError": "加入QQ群失败",
-    "Function": "功能"
-  },
-  "ToDo": {
-    "Title": "该功能暂未开放",
-    "Content": "敬请期待"
-  },
-  "User": {
-    "Title": "用户设置",
-    "Path": "用户设置",
-    "Avatar": {
-      "Name": "头像",
-      "Path": "用户设置 / 头像"
-    },
-    "UserName": {
-      "Name": "昵称",
-      "Path": "用户设置 / 昵称"
-    },
-    "Sign": {
-      "Name": "签名",
-      "Path": "用户设置 / 签名"
-    },
-    "EditAvatar": "修改头像",
-    "Photos": "相册",
-    "Capture": "相机",
-    "EditUserName": "修改昵称",
-    "UserNamePlace": "请输入昵称",
-    "EditSign": "修改签名",
-    "SignPlace": "请输入签名",
-    "NoCapture": "您的设备不支持拍照"
-  },
-  "Permission": {
-    "Camera": "相机权限",
-    "Storage": "存储权限",
-    "OpenCamera": "请开启相机权限",
-    "OpenStorageWrite": "请开启存储写入权限",
-    "OpenStorageRead": "请开启存储读取权限",
-    "Enable": "已开启",
-    "Disable": "未开启"
-  },
-  "About": {
-    "SourceCode": {
-      "Name": "查看源码",
-      "Path": "关于 / 查看源码"
-    },
-    "Agreement": {
-      "Name": "用户协议",
-      "Path": "关于 / 用户协议"
-    },
-    "Privacy": {
-      "Name": "隐私政策",
-      "Path": "关于 / 隐私政策"
-    },
-    "Check for updates": {
-      "Name": "检查更新",
-      "Path": "关于 / 检查更新"
-    },
-    "Evaluation": {
-      "Name": "给个好评",
-      "Path": "关于 / 给个好评"
-    },
-    "Related": {
-      "Name": "开源相关",
-      "Path": "关于 / 开源相关"
-    },
-    "OpenAppStoreFail": "打开应用商店失败",
-    "LogFile": {
-      "Name": "日志文件",
-      "Path": "关于 / 日志文件"
-    },
-    "Sponsor": {
-      "Name": "捐助我们",
-      "Path": "关于 / 捐助我们",
-      "Sponsor": "捐助"
-    },
-    "Introduction": "一款开源、跨平台的本地日记APP",
-    "Record number": "APP备案号："
-  },
-  "FunctionalDescription": "功能说明",
-  "ErrorHandle": {
-    "Title": "错误",
-    "WaitContent": "出现异常，正在保存到日志，请等待...",
-    "Content": "出现异常，已保存到日志，请退出应用"
-  },
-  "Achievement": {
-    "AchieveAchievements": "达成成就",
-    "Completed": "已完成",
-    "Diary": {
-      "1": {
-        "Name": "记忆开始",
-        "Description": "第一次写日记"
-      },
-      "30": {
-        "Name": "积少成多",
-        "Description": "累计写30篇日记"
-      },
-      "100": {
-        "Name": "青史留名",
-        "Description": "累计写100篇日记"
-      },
-      "1000": {
-        "Name": "过眼云烟",
-        "Description": "累计写1000篇日记"
-      }
-    },
-    "Word": {
-      "3000": {
-        "Name": "初露锋芒",
-        "Description": "累计写日记3000字"
-      },
-      "10000": {
-        "Name": "妙笔生花",
-        "Description": "累计写日记10000字"
-      },
-      "100000": {
-        "Name": "笔下有神",
-        "Description": "累计写日记100000字"
-      }
-    },
-    "SourceCode": {
-      "1": {
-        "Name": "万物之源",
-        "Description": "第一次查看源代码"
-      }
-    },
-    "Avatar": {
-      "1": {
-        "Name": "改头换面",
-        "Description": "第一次更换头像"
-      }
-    },
-    "NickName": {
-      "1": {
-        "Name": "更名改姓",
-        "Description": "第一次更改昵称"
-      }
-    },
-    "Sign": {
-      "1": {
-        "Name": "青云之志",
-        "Description": "第一次更改签名"
-      }
-    },
-    "Log": {
-      "1": {
-        "Name": "排忧解难",
-        "Description": "第一次查看日志"
-      }
-    },
-    "Share": {
-      "1": {
-        "Name": "大展身手",
-        "Description": "第一次分享"
-      }
-    },
-    "Export": {
-      "1": {
-        "Name": "有备无患",
-        "Description": "第一次导出"
-      }
-    }
-  },
-  "Setting": {
-    "General": {
-      "Name": "通用",
-      "Permission": {
-        "Name": "系统权限",
-        "Path": "设置 / 系统权限"
-      },
-      "Storage": {
-        "Name": "清理缓存",
-        "Path": "设置 / 清理缓存"
-      }
-    },
-    "Display": {
-      "Name": "显示",
-      "Index": {
-        "Name": "首页",
-        "Path": "设置 / 首页",
-        "WelcomeText": {
-          "Name": "问候语",
-          "Path": "设置 / 首页 / 问候语"
-        },
-        "Date": {
-          "Name": "日期",
-          "Path": "设置 / 首页 / 日期"
-        }
-      },
-      "DiaryCard": {
-        "Name": "日记卡片",
-        "Path": "设置 / 日记卡片",
-        "Icon": {
-          "Name": "图标",
-          "Path": "设置 / 日记卡片 / 图标"
-        },
-        "Tags": {
-          "Name": "标签",
-          "Path": "设置 / 日记卡片 / 标签"
-        },
-        "Location": {
-          "Name": "位置",
-          "Path": "设置 / 日记卡片 / 位置"
-        },
-        "TimeFormat": {
-          "Name": "时间格式",
-          "Path": "设置 / 日记卡片 / 时间格式"
-        }
-      },
-      "Diary": {
-        "Name": "日记",
-        "Path": "设置 / 日记",
-        "Title": {
-          "Name": "标题",
-          "Path": "设置 / 日记 / 标题"
-        },
-        "Markdown": {
-          "Name": "Markdown",
-          "Path": "设置 / 日记 / Markdown"
-        },
-        "OtherInfo": {
-          "Name": "其他信息",
-          "Path": "设置 / 日记 / 其他信息"
-        },
-        "IconText": {
-          "Name": "天气、心情文本",
-          "Path": "设置 / 日记 / 天气、心情文本"
-        },
-        "EditAutoSave": {
-          "Name": "自动保存",
-          "Path": "设置 / 日记 / 自动保存",
-          "Close": "关闭"
-        },
-        "Outline": {
-          "Name": "大纲",
-          "Path": "设置 / 日记 / 大纲",
-          "Outline": {
-            "Name": "显示大纲",
-            "Path": "设置 / 日记 / 大纲 / 显示大纲"
-          },
-          "RightOutline": {
-            "Name": "位置居右",
-            "Path": "设置 / 日记 / 大纲 / 位置居右"
-          }
-        },
-        "FirstLineIndent": {
-          "Name": "首行缩进",
-          "Path": "设置 / 日记 / 首行缩进"
-        },
-        "CodeLineNumber": {
-          "Name": "代码行号",
-          "Path": "设置 / 日记 / 代码行号"
-        },
-        "TaskListLineThrough": {
-          "Name": "任务列表删除线",
-          "Path": "设置 / 日记 / 任务列表删除线"
-        },
-        "ImageLazy": {
-          "Name": "图片懒加载",
-          "Path": "设置 / 日记 / 图片懒加载"
-        },
-        "AutoPlay": {
-          "Name": "音视频自动播放",
-          "Path": "设置 / 日记 / 音视频自动播放"
-        }
-      },
-      "Snackbars": {
-        "Name": "消息条",
-        "Path": "设置 / 消息条",
-        "AlertTimeout": {
-          "Name": "提示时长",
-          "Path": "设置 / 消息条 / 提示时长"
-        },
-        "Achievement": {
-          "Name": "成就",
-          "Path": "设置 / 消息条 / 成就"
-        }
-      },
-      "StatisticsCard": {
-        "Name": "统计卡片",
-        "Path": "设置 / 统计卡片"
-      },
-      "Calendar": {
-        "Name": "日历",
-        "Path": "设置 / 日历",
-        "FirstDayOfWeek": {
-          "Name": "每周第一天",
-          "Path": "设置 / 日历 / 每周第一天"
-        }
-      }
-    },
-    "Other": {
-      "Name": "其他",
-      "UrlScheme": {
-        "Path": "设置 / Url Scheme"
-      }
-    }
-  },
+  "Word count unit": "字",
+  "OK": "确认",
+  "Cancel": "取消",
+  "Save": "保存",
+  "Delete": "删除",
+  "Delete successfully": "删除成功",
+  "Delete failed": "删除失败",
+  "Copy": "复制",
+  "Copy successfully": "复制成功",
+  "Rename": "重命名",
+  "Change failed": "修改失败",
+  "Add": "添加",
+  "Add failed": "添加失败",
+  "Clear": "清除",
+  "Share": "分享",
+  "Choose how to Share": "选择分享方式",
+  "Text sharing": "文字分享",
+  "Photo sharing": "图片分享",
+  "File sharing": "文件分享",
+  "Reset": "重置",
+  "Restore the default": "恢复默认",
+  "Quit": "退出",
+  "Sort": "排序",
+  "Not supported on the current platform": "当前平台不支持",
+  "Search": "搜索",
+  "Diary": "日记",
+  "Calendar": "日历",
+  "File": "文件",
+  "Mine": "我的",
+  "All": "全部",
+  "Tag": "标签",
+  "As dawn breaks, may your day be full of energy!": "晨光初现，愿你一天充满活力！",
+  "With the warm sun, may your mood be as bright as the clear sky!": "阳光正暖，愿你心情如晴空般明朗！",
+  "In the afternoon hours, may you feel relaxed and fulfilled!": "午后时光，愿你轻松自在，收获满满！",
+  "As night falls, may you shed fatigue and unwind!": "夜幕降临，愿你卸下疲惫，放松身心！",
+  "In the quiet of the night, may you sleep peacefully and welcome a wonderful tomorrow!": "夜深人静，愿你安心入眠，迎接美好明天！",
+  "Add tags": "添加标签",
+  "Tag already exists": "标签已存在",
+  "Do not add again": "请勿重复添加",
+  "Please enter a tag name": "请输入标签名称",
+  "Select tags": "选择标签",
+  "Delete tag": "删除标签",
+  "Just deleting the tag does not delete the diary under the tag": "仅删除标签，不会删除标签下的日记",
+  "Rename tag": "重命名标签",
+  "No tag": "暂无标签",
+  "Sunday": "周日",
+  "Monday": "周一",
+  "Tuesday": "周二",
+  "Wednesday": "周三",
+  "Thursday": "周四",
+  "Friday": "周五",
+  "Saturday": "周六",
+  "Top": "置顶",
+  "Cancel top": "取消置顶",
+  "Export": "导出",
+  "Untitled": "无题",
+  "No diary": "暂无日记",
+  "Delete a diary": "删除日记",
+  "Please delete carefully, every diary is a precious memory.": "请慎重删除，每一篇日记都是珍贵的回忆。",
+  "Markdown mode": "Markdown模式",
+  "Text mode": "纯文本模式",
+  "Please enter keywords": "请输入关键词",
+  "Please enter diary keywords": "请输入日记关键词",
+  "Not Found": "未找到搜索结果",
+  "Weather": "天气",
+  "Mood": "心情",
+  "Location": "位置",
+  "Time": "时间",
+  "Select a time range": "选择时间范围",
+  "Export this day diaries": "导出该日期日记",
+  "Export this month diaries": "导出该月份日记",
+  "Export this year diaries": "导出该年份日记",
+  "Export diaries": "导出日记",
+  "Merge diaries": "合并日记",
+  "Are you sure to merge the selected date diary contents? (Other information of the diary, such as title, weather, etc., will be dominated by the first entry.)": "确认合并选中日期日记内容吗？（日记的其他信息，如标题、天气等，会以第一篇为主）",
+  "Open title": "开启标题",
+  "Close title": "关闭标题",
+  "Please enter title": "请输入标题",
+  "Please enter content": "请输入内容",
+  "Display other information": "显示其他信息",
+  "Hide other information": "隐藏其他信息",
+  "cloudy": "多云",
+  "dust": "沙尘暴",
+  "fog": "雾",
+  "hail": "冰雹",
+  "hazy": "薄雾",
+  "hurricane": "飓风",
+  "lightning": "闪电",
+  "lightning-rainy": "雷阵雨",
+  "pouring": "倾盆大雨",
+  "rainy": "雨",
+  "sleet": "雨夹雪",
+  "snow": "雪",
+  "sunny": "晴",
+  "sunny-off": "阴",
+  "tornado": "龙卷风",
+  "ultraviolet": "紫外线",
+  "windy": "风",
+  "angry": "怒",
+  "confused": "困惑",
+  "cool": "酷",
+  "cry": "哭",
+  "dead": "难受",
+  "devil": "恶",
+  "excited": "兴奋",
+  "frown": "愁",
+  "happy": "喜",
+  "kiss": "亲亲",
+  "lol": "乐",
+  "neutral": "无感",
+  "poop": "糟糕",
+  "sad": "悲",
+  "sick": "病了",
+  "tongue": "好吃",
+  "wink": "眨眼",
+  "Set to private": "设为私密",
+  "Cancel privacy": "取消私密",
+  "Moved to privacy mode": "已移动至隐私模式",
+  "Removed from privacy mode": "已移出隐私模式",
+  "Copy quote": "复制引用",
+  "Copy link": "复制链接",
+  "Diary link": "日记链接",
+  "Look up": "查找",
+  "Look it up on the page": "在页面上查找",
+  "Swashbuckler Diary": "侠客日记",
+  "After the incident, brush off your clothes and hide deep in your name": "事了拂衣去，深藏身与名",
+  "Data": "数据",
+  "Backup": "备份",
+  "Achievement": "成就",
+  "Setting": "设置",
+  "Language": "语言",
+  "Night mode": "深色模式",
+  "Other": "其他",
+  "Contact us": "联系我们",
+  "About": "关于",
+  "Choose language": "选择语言",
+  "Contact information": "联系方式",
+  "The email address has been copied to the clipboard.": "邮箱地址已复制到剪贴板",
+  "The QQ group number has been copied to the clipboard.": "QQ群号码已复制到剪贴板",
+  "Feature": "功能",
+  "This feature is currently unavailable": "该功能暂不可用",
+  "Please look forward": "敬请期待",
+  "User Setting": "用户设置",
+  "Avatar": "头像",
+  "User Setting / Avatar": "用户设置 / 头像",
+  "NickName": "昵称",
+  "User Setting / NickName": "用户设置 / 昵称",
+  "Sign": "签名",
+  "User Setting / Sign": "用户设置 / 签名",
+  "Edit avatar": "修改头像",
+  "Photos": "相册",
+  "Capture": "相机",
+  "Edit NickName": "修改昵称",
+  "Please enter NickName": "请输入昵称",
+  "Edit Sign": "修改签名",
+  "Please enter Sign": "请输入签名",
+  "The current platform is unable to take photos": "当前平台无法拍照",
+  "Camera permission": "相机权限",
+  "Storage permission": "存储权限",
+  "Please grant permission for the camera": "请开启相机权限",
+  "Please grant permission for storage writing": "请开启存储写入权限",
+  "Please grant permission for storage and reading": "请开启存储读取权限",
+  "Granted": "已开启",
+  "Not granted": "未开启",
+  "View source": "查看源码",
+  "About / View source": "关于 / 查看源码",
+  "User agreement": "用户协议",
+  "About / User agreement": "关于 / 用户协议",
+  "Privacy policy": "隐私政策",
+  "About / Privacy policy": "关于 / 隐私政策",
+  "Check for updates": "检查更新",
+  "About / Check for updates": "关于 / 检查更新",
+  "Give a good review": "给个好评",
+  "About / Give a good review": "关于 / 给个好评",
+  "Open source related": "开源相关",
+  "About / Open source related": "关于 / 开源相关",
+  "Failed to open the application store": "打开应用商店失败",
+  "Log file": "日志文件",
+  "About / Log file": "关于 / 日志文件",
+  "Sponsor us": "捐助我们",
+  "About / Sponsor us": "关于 / 捐助我们",
+  "Sponsor": "捐助",
+  "An open-source and cross-platform local diary APP": "一款开源、跨平台的本地日记APP",
+  "App Record number :": "APP备案号：",
+  "Feature description": "功能说明",
+  "Error": "错误",
+  "An abnormality occurred. It is being saved to the log. Please wait...": "出现异常，正在保存到日志，请等待...",
+  "An abnormal situation has occurred. It has been saved to the log. Please exit the application.": "出现异常，已保存到日志，请退出应用",
+  "Achieving Achievements": "达成成就",
+  "Completed": "已完成",
+  "Memory begins": "记忆开始",
+  "Write a diary for the first time": "第一次写日记",
+  "Less to more": "积少成多",
+  "Write 30 diaries in total": "累计写30篇日记",
+  "Have a niche in history": "青史留名",
+  "Write 100 diaries in total": "累计写100篇日记",
+  "The past is gone": "过眼云烟",
+  "Write 1000 diaries in total": "累计写1000篇日记",
+  "First display talent": "初露锋芒",
+  "Accumulated 3000 words in diary": "累计写日记3000字",
+  "Beautiful writings": "妙笔生花",
+  "Accumulated 10000 words in diary": "累计写日记10000字",
+  "Write like a god": "笔下有神",
+  "Accumulated 100000 words in diary": "累计写日记100000字",
+  "The source of everything": "万物之源",
+  "View source code for the first time": "第一次查看源代码",
+  "Make only superficial changes": "改头换面",
+  "The first change of avatar": "第一次更换头像",
+  "Change name and surname": "更名改姓",
+  "Change the NickName for the first time": "第一次更改昵称",
+  "Have high ambitions": "青云之志",
+  "Change signature for the first time": "第一次更改签名",
+  "Exclude difficulty and anxiety": "排忧解难",
+  "View the log for the first time": "第一次查看日志",
+  "Show capabilities": "大展身手",
+  "Share for the first time": "第一次分享",
+  "Be prepared against want": "有备无患",
+  "First export": "第一次导出",
+  "General": "通用",
+  "System permission": "系统权限",
+  "Setting / System permission": "设置 / 系统权限",
+  "Clear cache": "清理缓存",
+  "Setting / Clear cache": "设置 / 清理缓存",
+  "Display": "显示",
+  "Home": "首页",
+  "Setting / Home": "设置 / 首页",
+  "Greetings": "问候语",
+  "Setting / Home / Greetings": "设置 / 首页 / 问候语",
+  "Date": "日期",
+  "Setting / Home / Date": "设置 / 首页 / 日期",
+  "Diary card": "日记卡片",
+  "Setting / Diary card": "设置 / 日记卡片",
+  "Icon": "图标",
+  "Setting / Diary card / Icon": "设置 / 日记卡片 / 图标",
+  "Setting / Diary card / Tag": "设置 / 日记卡片 / 标签",
+  "Setting / Diary card / Location": "设置 / 日记卡片 / 位置",
+  "Time format": "时间格式",
+  "Setting / Diary card / Time format": "设置 / 日记卡片 / 时间格式",
+  "Setting / Diary": "设置 / 日记",
+  "Title": "标题",
+  "Setting / Diary / Title": "设置 / 日记 / 标题",
+  "Markdown": "Markdown",
+  "Setting / Diary / Markdown": "设置 / 日记 / Markdown",
+  "Other information": "其他信息",
+  "Setting / Diary / Other information": "设置 / 日记 / 其他信息",
+  "Weather and mood text": "天气、心情文本",
+  "Setting / Diary /Weather and mood text": "设置 / 日记 / 天气、心情文本",
+  "Auto save": "自动保存",
+  "Setting / Diary /Auto save": "设置 / 日记 / 自动保存",
+  "Close": "关闭",
+  "Outline": "大纲",
+  "Setting / Diary / Outline": "设置 / 日记 / 大纲",
+  "Display outline": "显示大纲",
+  "Setting / Diary / Outline / Display outline": "设置 / 日记 / 大纲 / 显示大纲",
+  "Position on the right": "位置居右",
+  "Setting / Diary / Outline / Position on the right": "设置 / 日记 / 大纲 / 位置居右",
+  "First line indentation": "首行缩进",
+  "Setting / Diary / First line indentation": "设置 / 日记 / 首行缩进",
+  "Code line number": "代码行号",
+  "Setting / Diary / Code line number": "设置 / 日记 / 代码行号",
+  "Task list line-through": "任务列表删除线",
+  "Setting / Diary / Task list line-through": "设置 / 日记 / 任务列表删除线",
+  "Lazy image load": "图片懒加载",
+  "Setting / Diary / Lazy image load": "设置 / 日记 / 图片懒加载",
+  "Audio and video auto play": "音视频自动播放",
+  "Setting / Diary / Audio and video auto play": "设置 / 日记 / 音视频自动播放",
+  "Snackbars": "消息条",
+  "Setting / Snackbars": "设置 / 消息条",
+  "Alert timeout": "提示时长",
+  "Setting / Snackbars / Alert timeout": "设置 / 消息条 / 提示时长",
+  "Setting / Snackbars / Achievement": "设置 / 消息条 / 成就",
+  "Statistics card": "统计卡片",
+  "Setting / Statistics card": "设置 / 统计卡片",
+  "Setting / Calendar": "设置 / 日历",
+  "First day of week": "每周第一天",
+  "Setting / Calendar / First day of week": "设置 / 日历 / 每周第一天",
+  "Setting / Url Scheme": "设置 / Url Scheme",
   "Password must be at most 20 characters long": "密码不得超过20个字符",
   "Password must be at least 6 characters long": "密码不能少于6个字符",
   "The two passwords are inconsistent": "两次密码不一致",
   "Experimental features": "警告！该功能处于实验中",
-  "Please input a password": "请输入密码",
+  "Please enter password": "请输入密码",
   "Please enter the password again": "请再次输入密码",
-  "Please input Password": "请输入密码",
-  "Please input Account": "请输入账户",
-  "Please input ServerAddress": "请输入服务器地址",
-  "Backups": {
-    "Local": {
-      "Name": "本地备份",
-      "Path": "备份 / 本地备份"
-    },
-    "WebDAV": {
-      "Name": "WebDAV",
-      "Path": "备份 / WebDAV",
-      "IncludeDiaryResources": "包含媒体文件"
-    },
-    "Backups": {
-      "Title": "备份",
-      "Path": "备份 / 本地备份 / 备份",
-      "Subtitle": "保存为数据库文件生成的zip压缩包",
-      "Success": "备份成功",
-      "Fail": "备份失败",
-      "Content": "备份文件包含日记数据、媒体文件和设置"
-    },
-    "Restore": {
-      "Title": "还原",
-      "Path": "备份 / 本地备份 / 还原",
-      "Subtitle": "选择包含数据库文件的zip压缩包",
-      "Success": "还原成功",
-      "Fail": "还原失败",
-      "ConfirmRestore": {
-        "Title": "确认还原",
-        "Content": "数据库文件会被覆盖，是否继续？"
-      }
-    },
-    "Invalid backup folder": "无效的备份文件夹",
-    "NoDbFile": "没有数据库文件",
-    "Config": {
-      "Title": "配置",
-      "Path": "备份 / WebDAV / 配置",
-      "ServerAddress": "服务器地址",
-      "Account": "账户",
-      "Password": "密码",
-      "Success": "配置成功",
-      "Fail": {
-        "ConfigInfo": "配置失败,请检查配置信息",
-        "Network": "网络错误",
-        "Unknown": "配置失败,未知原因"
-      },
-      "Configured": "已配置",
-      "NotConfigured": "未配置",
-      "CheckConfigured": "请先配置WebDAV"
-    },
-    "Upload": {
-      "Title": "上传",
-      "Path": "备份 / WebDAV / 上传",
-      "Subtitle": "保存为数据库文件生成的zip压缩包",
-      "Success": "上传成功",
-      "Fail": "上传失败",
-      "Content": "数据会被保存到网盘文件夹"
-    },
-    "Download": {
-      "Title": "拉取",
-      "Path": "备份 / WebDAV / 拉取",
-      "Subtitle": "选择包含数据库文件的zip压缩包",
-      "Success": "拉取成功",
-      "Fail": "拉取失败"
-    }
-  },
-  "Location": {
-    "Name": "位置",
-    "Path": "位置",
-    "Add": "添加位置",
-    "Repeat": {
-      "Title": "位置已存在",
-      "Content": "请勿重复添加"
-    },
-    "Placeholder": "请输入位置名称",
-    "Select": "选择位置",
-    "Delete": {
-      "Title": "删除位置",
-      "Content": "仅删除该位置，以前日记的位置不会被删除"
-    },
-    "Rename": "重命名位置",
-    "NoLocation": "暂无位置"
-  },
+  "Please enter account": "请输入账户",
+  "Please enter the server address": "请输入服务器地址",
+  "Local backup": "本地备份",
+  "Backup / Local backup": "备份 / 本地备份",
+  "WebDAV": "WebDAV",
+  "Backup / WebDAV": "备份 / WebDAV",
+  "Include media files": "包含媒体文件",
+  "Backup / Local backup / Backup": "备份 / 本地备份 / 备份",
+  "Save the zip file generated as a database file": "保存为数据库文件生成的zip压缩包",
+  "Backup successful": "备份成功",
+  "Backup failed": "备份失败",
+  "The backup file contains diary data, media files, and Settings": "备份文件包含日记数据、媒体文件和设置",
+  "Restore": "还原",
+  "Backup / Local backup / Restore": "备份 / 本地备份 / 还原",
+  "Select the zip file containing the database files": "选择包含数据库文件的zip压缩包",
+  "Restore successfully": "还原成功",
+  "Restore failed": "还原失败",
+  "Confirm restore": "确认还原",
+  "The database file will be overwritten. Do you want to continue?": "数据库文件会被覆盖，是否继续？",
+  "Config": "配置",
+  "Backup / WebDAV / Config": "备份 / WebDAV / 配置",
+  "Server address": "服务器地址",
+  "Account": "账户",
+  "Password": "密码",
+  "Configuration successful": "配置成功",
+  "Configuration failed, please check the configuration information": "配置失败,请检查配置信息",
+  "Network error": "网络错误",
+  "Configuration failed for unknown reasons": "配置失败,未知原因",
+  "Configured": "已配置",
+  "Not configured": "未配置",
+  "Configure WebDAV first": "请先配置WebDAV",
+  "Upload": "上传",
+  "Backup / WebDAV / Upload": "备份 / WebDAV / 上传",
+  "Upload successfully": "上传成功",
+  "Upload failed": "上传失败",
+  "The data will be saved to an online folder": "数据会被保存到网盘文件夹",
+  "Pull": "拉取",
+  "Backup / WebDAV / Pull": "备份 / WebDAV / 拉取",
+  "Pull successfully": "拉取成功",
+  "Pull failed": "拉取失败",
+  "Add location": "添加位置",
+  "Location already exists": "位置已存在",
+  "Please enter a location name": "请输入位置名称",
+  "Select location": "选择位置",
+  "Delete location": "删除位置",
+  "Only the location is deleted, the location of the existing diary is not deleted": "仅删除该位置，以前日记的位置不会被删除",
+  "Rename location": "重命名位置",
+  "No location": "暂无位置",
   "Press again to exit": "再按一次退出",
-  "Export": {
-    "Local": {
-      "Name": "本地导出",
-      "Path": "导出 / 本地导出"
-    },
-    "LAN": {
-      "Name": "局域网传输",
-      "Path": "导出 / 局域网传输",
-      "Config": {
-        "Name": "设置",
-        "Path": "导出 / 局域网传输 / 设置",
-        "DeviceName": "设备名",
-        "ScanPort": "扫描端口",
-        "TransmissionPort": "传输端口"
-      }
-    },
-    "Export": {
-      "Title": "导出",
-      "Path": "导出 / 本地导出 / 导出",
-      "Subtitle": "txt、md、json、xlsx",
-      "Success": "导出成功",
-      "Fail": "导出失败",
-      "SelectType": "选择导出文件格式"
-    },
-    "Import": {
-      "Title": "导入",
-      "Path": "导出 / 本地导出 / 导入",
-      "Subtitle": "导入相应格式的zip压缩包",
-      "Success": "导入成功",
-      "Fail": "导入失败",
-      "ConfirmImport": {
-        "Title": "确认导入",
-        "Content": "确认导入这些日记？"
-      },
-      "SelectType": "选择导入文件格式"
-    },
-    "Send": {
-      "Name": "发送",
-      "Path": "导出 / 局域网传输 / 发送"
-    },
-    "Receive": {
-      "Name": "接收",
-      "Path": "导出 / 局域网传输 / 接收"
-    }
-  },
-  "Theme": {
-    "System": "跟随系统",
-    "Light": "浅色",
-    "Dark": "深色"
-  },
-  "AgreementAndPolicy": {
-    "Title": "用户协议与隐私政策",
-    "Content": "您需要同意用户协议与隐私政策后才能使用本应用。如果您不同意，很遗憾我们无法为您提供服务。\n\n您可以阅读 [用户协议](https://gitee.com/Yu-core/SwashbucklerDiary/raw/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/user-agreement/zh-CN.md) 和 [隐私政策](https://gitee.com/Yu-core/SwashbucklerDiary/raw/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/privacy-policy/zh-CN.md) 了解详细信息。如您同意，请点击“同意”开始我们的服务。",
-    "Agree": "同意",
-    "Disagree": "不同意"
-  },
-  "Log": {
-    "NoLog": "暂无日志",
-    "Share": "分享",
-    "Delete": {
-      "Title": "清空日志",
-      "Content": "确定清空所有日志吗？"
-    },
-    "Clear": "清空"
-  },
-  "Filter": {
-    "Last month": "近一个月",
-    "Last three months": "近三个月",
-    "Last six months": "近六个月",
-    "Filter": "筛选",
-    "Start time": "起始时间",
-    "End time": "终止时间"
-  },
-  "QQGroup": "QQ交流群",
-  "VersionUpdate": {
-    "LatestVersionUrl": "https://gitee.com/api/v5/repos/Yu-core/SwashbucklerDiary/releases/latest",
-    "No updates": "当前已是最新版本",
-    "Need updates": "检测到最新版本，是否前往更新？（如未发现新版本，可能正在审核）",
-    "Check failed": "检测失败，原因未知",
-    "Not prompting": "下次不再提示"
-  },
-  "lanSender": {
-    "List of available devices": "可用设备列表",
-    "Searching for available devices": "正在寻找可用设备...",
-    "There are currently no available devices": "暂无可用设备",
-    "No network connection": "没有网络连接",
-    "Sending": "正在发送",
-    "Send successfully": "发送成功",
-    "Send failed": "发送失败",
-    "Send canceled": "发送已取消"
-  },
-  "lanReceiver": {
-    "Waiting for connection": "等待连接中...",
-    "Receiving": "正在接收",
-    "Receive successfully": "接收成功",
-    "Receive failed": "接收失败",
-    "Receive canceled": "接收已取消"
-  },
-  "Storage": {
-    "Content": "确定清除所有缓存吗？",
-    "ClearSuccess": "清理成功"
-  },
-  "SearchAppFeatures": {
-    "Placeholder": "请输入想要搜索的功能"
-  },
-  "DateTimeFormat": {
-    "MM/dd": "月/日",
-    "yyyy/MM/dd": "年/月/日",
-    "MM/dd HH:mm": "月/日 时:分",
-    "yyyy/MM/dd HH:mm": "年/月/日 时:分",
-    "MM/dd HH:mm dddd": "月/日 时:分 星期",
-    "yyyy/MM/dd HH:mm dddd": "年/月/日 时:分 星期"
-  },
-  "Please input DeviceName": "请输入设备名",
-  "Please input ScanPort": "请输入扫描端口",
-  "Please input TransmissionPort": "请输入传输端口",
-  "ScanPort and TransmissionPort cannot be the same": "扫描端口和传输端口不能相同",
-  "Excel": {
-    "Time": "时间",
-    "Weather": "天气",
-    "Mood": "心情",
-    "Location": "位置",
-    "Title": "标题",
-    "Content": "内容",
-    "Tags": "标签"
-  },
-  "Sponsor": {
-    "Type": {
-      "QQ": {
-        "Name": "QQ钱包"
-      },
-      "WeChat": {
-        "Name": "微信支付"
-      },
-      "Alipay": {
-        "Name": "支付宝"
-      }
-    },
-    "Introduce": {
-      "Title": "支持 侠客日记 的开发",
-      "Content": "为什么开发这个日记App？初中的时候，特别喜欢写日记，记一些看起来鸡毛蒜皮、傻里傻气的小事。偶尔看看，已然成了珍贵的回忆，所以写日记这个好习惯应该保持下去。现在这个时代，纸笔用的少了，更加便于整理的日记App也就成了主流。\n\n尝试过很多日记App，总觉得差了点什么。要登录，要收费，有广告，界面乱，功能简陋，操作繁琐，总是要沾上一样的。想好好写个日记确实很难，干脆自己做一个吧。\n\n做这个日记App，是想让每一个热爱写日记的人，都能找回写日记的快乐。如果觉得它还不错，可以给予一份捐助，帮助我们更好地开发和维护这个项目。感谢一路的支持，愿我们都能在自己的江湖里，成为心中的侠客。"
-    }
-  },
-  "SponsorList": {
-    "Name": "捐助列表",
-    "Text": "感谢以下侠客的捐助"
-  },
-  "Statistics": {
-    "Name": "统计",
-    "DiaryCount": "日记数",
-    "WordCount": "总字数",
-    "ActiveDayCount": "活跃天数",
-    "MostWeather": "最多的天气",
-    "MostMood": "最多的心情",
-    "EarliestDate": "最早的日期",
-    "LastDate": "最后的日期",
-    "TagCount": "标签数",
-    "LocationCount": "位置数",
-    "Not have": "无",
-    "ImageCount": "图片数",
-    "AudioCount": "音频数",
-    "VideoCount": "视频数"
-  },
-  "Vditor": {
-    "AddImage": "添加图片",
-    "AddAudio": "添加音频",
-    "AddVideo": "添加视频"
-  },
-  "Sort": {
-    "Time": {
-      "Asc": "时间-正序",
-      "Desc": "时间-倒序"
-    },
-    "Count": {
-      "Asc": "数量-正序",
-      "Desc": "数量-倒序"
-    },
-    "Name": {
-      "Asc": "名称-正序",
-      "Desc": "名称-倒序"
-    }
-  },
-  "FileBrowse": {
-    "Image": {
-      "Name": "图片",
-      "NoImage": "暂无图片"
-    },
-    "Audio": {
-      "Name": "音频",
-      "NoAudio": "暂无音频",
-      "Unknown Title": "未知标题",
-      "Unknown Artist": "未知艺术家"
-    },
-    "Video": {
-      "Name": "视频",
-      "NoVideo": "暂无视频"
-    },
-    "DeleteUnused": "删除未使用文件",
-    "ConfirmDeleteUnused": "确认删除未使用的文件？",
-    "Not exist": "文件不存在",
-    "ViewReferences": "查看引用",
-    "This file is not referenced": "此文件未被引用"
-  },
-  "PrivacyMode": {
-    "Name": "隐私模式",
-    "ShowSetPrivacyDiary": {
-      "Title": "显示设为私密",
-      "SubTitle": "在日记菜单中显示设为私密选项"
-    },
-    "HidePrivacyModeEntrance": {
-      "Title": "隐藏默认入口",
-      "SubTitle": "隐藏后可通过功能搜索进入，功能搜索位于\"我的\"页面右上角"
-    },
-    "PrivacyModeEntrancePassword": "设置默认入口密码",
-    "Password has been set": "已设置密码",
-    "No password set": "未设置密码",
-    "PasswordSetSuccess": "密码设置成功",
-    "ValidatePassword": "验证密码",
-    "PasswordError": "密码错误",
-    "PrivacyModeFunctionSearchKey": {
-      "Title": "自定义搜索关键词",
-      "SubTitle": "在功能搜索中输入关键词，即可显示隐私模式",
-      "CurrentKey": "当前关键词"
-    },
-    "PrivacyModeFunctionSearchKeyPlaceholder": "请输入关键词",
-    "EnterPrivacyMode": "进入隐私模式",
-    "QuitPrivacyMode": "退出隐私模式",
-    "EnablePrivacyModeDark": {
-      "Title": "启用深色模式",
-      "SubTitle": "进入隐私模式时启用深色模式"
-    },
-    "Move the old version of Privacy Diary": {
-      "Title": "迁移旧版本的隐私日记",
-      "SubTitle": "将旧版隐私日记的数据移动到新版中"
-    },
-    "Successfully moved": "移动成功",
-    "No diary that needs to be moved": "没有需要移动的日记",
-    "Description": "1.3.9版本及以前的隐私模式数据，在更新后会自动迁移到新版本的隐私模式中。\n如果是通过恢复备份或导入而来的旧的隐私数据，会与普通日记一起显示，请点击上方的迁移按钮，将它们移动到隐私模式。"
-  },
-  "SponsorSupport": {
-    "Name": "支持一下",
-    "Content": "如果你觉得此软件还不错的话，可以捐助支持一下。你的支持就是开发者最大的动力。",
-    "To support": "捐助"
-  },
-  "UrlScheme": {
-    "Index": "首页",
-    "History": "日历",
-    "FileBrowse": "文件",
-    "Mine": "我的",
-    "Search": "搜索",
-    "SearchFunction": "搜索功能",
-    "Write": "创建日记",
-    "Setting": "设置",
-    "Backup": "备份",
-    "Export": "导出",
-    "About": "关于"
-  },
-  "SelectWeather": "选择天气",
-  "SelectMood": "选择心情",
-  "SelectFileTypes": "选择文件类型",
-  "SwashbucklerDiaryFeedback": "侠客日记反馈",
+  "Local export": "本地导出",
+  "Export / Local export": "导出 / 本地导出",
+  "LAN": "局域网传输",
+  "Export / LAN": "导出 / 局域网传输",
+  "Export / LAN / Setting": "导出 / 局域网传输 / 设置",
+  "Device name": "设备名",
+  "Scan port": "扫描端口",
+  "Transmission port": "传输端口",
+  "Export / Local export / Export": "导出 / 本地导出 / 导出",
+  "txt, md, json, xlsx": "txt、md、json、xlsx",
+  "Export successfully": "导出成功",
+  "Export failed": "导出失败",
+  "Select the export file format": "选择导出文件格式",
+  "Import": "导入",
+  "Export / Local export / Import": "导出 / 本地导出 / 导入",
+  "Import zip files in the corresponding format": "导入相应格式的zip压缩包",
+  "Import successfully": "导入成功",
+  "Import failed": "导入失败",
+  "Confirm import": "确认导入",
+  "Confirm importing these diaries?": "确认导入这些日记？",
+  "Select the import file format": "选择导入文件格式",
+  "Send": "发送",
+  "Export / LAN / Send": "导出 / 局域网传输 / 发送",
+  "Receive": "接收",
+  "Export / LAN / Receive": "导出 / 局域网传输 / 接收",
+  "Follow system": "跟随系统",
+  "Light": "浅色",
+  "Dark": "深色",
+  "User Agreement and Privacy Policy": "用户协议与隐私政策",
+  "You need to agree to the user agreement and privacy policy before using this app.If you do not agree, we regret that we are unable to provide you with services.\n\nYou can read [user agreement](https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/user-agreement/en-US.md) and [privacy policy](https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/privacy-policy/en-US.md) for more information. If you agree, please click\"Agree\"to start our service.": "您需要同意用户协议与隐私政策后才能使用本应用。如果您不同意，很遗憾我们无法为您提供服务。\n\n您可以阅读 [用户协议](https://gitee.com/Yu-core/SwashbucklerDiary/raw/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/user-agreement/zh-CN.md) 和 [隐私政策](https://gitee.com/Yu-core/SwashbucklerDiary/raw/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/privacy-policy/zh-CN.md) 了解详细信息。如您同意，请点击“同意”开始我们的服务。",
+  "Agree": "同意",
+  "Disagree": "不同意",
+  "No logs": "暂无日志",
+  "Clear logs": "清空日志",
+  "Are you sure you want to clear all the logs?": "确定清空所有日志吗？",
+  "Clear out": "清空",
+  "Nearly a month": "近一个月",
+  "Nearly three months": "近三个月",
+  "Nearly six months": "近六个月",
+  "Filter": "筛选",
+  "Start time": "起始时间",
+  "End time": "终止时间",
+  "QQ Group": "QQ交流群",
+  "This is the latest version": "当前已是最新版本",
+  "Latest version detected, do you go to update? (If no new version is found, it may be under review)": "检测到最新版本，是否前往更新？（如未发现新版本，可能正在审核）",
+  "VersionUpdate.Check failed": "检测失败，原因未知",
+  "No more prompts next time": "下次不再提示",
+  "List of available devices": "可用设备列表",
+  "Searching for available devices": "正在搜索可用设备...",
+  "There are currently no available devices": "暂无可用设备",
+  "No network connection": "没有网络连接",
+  "Sending": "正在发送",
+  "Send successfully": "发送成功",
+  "Send failed": "发送失败",
+  "Send canceled": "发送已取消",
+  "Waiting for connection": "等待连接中...",
+  "Receiving": "正在接收",
+  "Receive successfully": "接收成功",
+  "Receive failed": "接收失败",
+  "Receive canceled": "接收已取消",
+  "Are you sure to clear all caches?": "确定清除所有缓存吗？",
+  "Clean up successfully": "清理成功",
+  "Please enter the function you want to search for": "请输入想要搜索的功能",
+  "Month/Day": "月/日",
+  "Year/Month/Day": "年/月/日",
+  "Month/Day Hour:Minute": "月/日 时:分",
+  "Year/Month/Day Hour:Minute": "年/月/日 时:分",
+  "Month/Day Hour:Minute Week": "月/日 时:分 星期",
+  "Year/Month/Day Hour:Minute Week": "年/月/日 时:分 星期",
+  "Please enter device name": "请输入设备名",
+  "Please enter scan port": "请输入扫描端口",
+  "Please enter transmission port": "请输入传输端口",
+  "Scan port and transmission port cannot be the same": "扫描端口和传输端口不能相同",
+  "Content": "内容",
+  "QQ wallet": "QQ钱包",
+  "Wechat Payment": "微信支付",
+  "Alipay": "支付宝",
+  "Support the development of Swashbuckler Diary": "支持 侠客日记 的开发",
+  "Sponsor list": "捐助列表",
+  "Thanks to the following sponsor": "感谢以下捐助",
+  "Statistics": "统计",
+  "Diary count": "日记数",
+  "Word count": "总字数",
+  "Active days": "活跃天数",
+  "Most weather": "最多的天气",
+  "Most mood": "最多的心情",
+  "Earliest date": "最早的日期",
+  "Last date": "最后的日期",
+  "Tag count": "标签数",
+  "Location count": "位置数",
+  "No": "无",
+  "Image count": "图片数",
+  "Audio count": "音频数",
+  "Video count": "视频数",
+  "Add image": "添加图片",
+  "Add audio": "添加音频",
+  "Add video": "添加视频",
+  "Time - Positive order": "时间-正序",
+  "Time - Reverse order": "时间-倒序",
+  "Count - Positive order": "数量-正序",
+  "Count - Reverse order": "数量-倒序",
+  "Name - Positive order": "名称-正序",
+  "Name - Reverse order": "名称-倒序",
+  "Image": "图片",
+  "No image": "暂无图片",
+  "Audio": "音频",
+  "No audio": "暂无音频",
+  "Unknown title": "未知标题",
+  "Unknown artist": "未知艺术家",
+  "Video": "视频",
+  "No video": "暂无视频",
+  "Delete unused files": "删除未使用文件",
+  "Sure to delete unused files?": "确认删除未使用的文件？",
+  "File does not exist": "文件不存在",
+  "View references": "查看引用",
+  "This file is not referenced": "此文件未被引用",
+  "Privacy mode": "隐私模式",
+  "The display is set to private": "显示设为私密",
+  "Show the Set Private option in the diary menu": "在日记菜单中显示设为私密选项",
+  "Hide default entry": "隐藏默认入口",
+  "After hiding, it can be accessed through function search, which is located in the upper right corner of the \"Mine\" page": "隐藏后可通过功能搜索进入，功能搜索位于\"我的\"页面右上角",
+  "Set default entry password": "设置默认入口密码",
+  "Password has been set": "已设置密码",
+  "No password set": "未设置密码",
+  "Password set successfully": "密码设置成功",
+  "Verify password": "验证密码",
+  "Password error": "密码错误",
+  "Custom search keywords": "自定义搜索关键词",
+  "Enter keywords in the feature search to display privacy mode": "在功能搜索中输入关键词，即可显示隐私模式",
+  "Current key": "当前关键词",
+  "Enter privacy mode": "进入隐私模式",
+  "Exit privacy mode": "退出隐私模式",
+  "Enable dark mode": "启用深色模式",
+  "Enable dark mode when entering privacy mode": "进入隐私模式时启用深色模式",
+  "Move the old version of Privacy Diary": "迁移旧版本的隐私日记",
+  "Move the data from the old version of the privacy diary to the new version": "将旧版隐私日记的数据移动到新版中",
+  "Successfully moved": "移动成功",
+  "No diary that needs to be moved": "没有需要移动的日记",
+  "Privacy mode data from version 1.3.9 and earlier will be automatically migrated to the new version of privacy mode after the update. \nIf the old privacy data is obtained by restoring backups or importing, it will be displayed together with the regular diary. Please click the migration button above to move them to privacy mode.": "1.3.9版本及以前的隐私模式数据，在更新后会自动迁移到新版本的隐私模式中。\n如果是通过恢复备份或导入而来的旧的隐私数据，会与普通日记一起显示，请点击上方的迁移按钮，将它们移动到隐私模式。",
+  "Support it": "支持一下",
+  "If you think this software is pretty good, you can donate and support it. Your support is the greatest motivation for developers.": "如果你觉得此软件还不错的话，可以捐助支持一下。你的支持就是开发者最大的动力。",
+  "Feature search": "功能搜索",
+  "Create diary": "创建日记",
+  "Select weather": "选择天气",
+  "Select mood": "选择心情",
+  "Select file types": "选择文件类型",
+  "Swashbuckler diary feedback": "侠客日记反馈",
   "Row": "行",
   "Col": "列",
-  "AddTable": "添加表格"
+  "Add table": "添加表格"
 }

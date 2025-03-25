@@ -1,10 +1,10 @@
-﻿@page "/mine"
+@page "/mine"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
 <MyAppBar>
     <MToolbarTitle Class="font-weight-bold">
-        @(I18n.T("Mine.Mine"))
+        @(I18n.T("Mine"))
     </MToolbarTitle>
     <MSpacer></MSpacer>
     <MultiSearch OnSearch="Search"></MultiSearch>
@@ -16,20 +16,20 @@
                Elevation="0"
                Rounded="@("lg")"
                Ripple="false"
-               OnClick="@(()=>To("user"))">
+               OnClick="@(() => To("user"))">
             <MList Style="width:100%;">
                 <MListItem ThreeLine>
                     <MListItemAvatar Class="ml-sm-2 ml-md-4 mr-md-6"
                                      Rounded="@("lg")"
                                      Size="70">
-                        <img class="user-avatar" src="@(avatar)" @onclick="()=>showPreviewImage=true" @onclick:stopPropagation="true" />
+                        <img class="user-avatar" src="@(avatar)" @onclick="() => showPreviewImage = true" @onclick:stopPropagation="true" />
                     </MListItemAvatar>
                     <MListItemContent>
                         <MListItemTitle Class="text-h6 font-weight-bold">
-                            @(userName ?? I18n.T("AppName"))
+                            @(userName ?? I18n.T("Swashbuckler Diary"))
                         </MListItemTitle>
                         <MListItemSubtitle>
-                            @(sign ?? I18n.T("Mine.Sign"))
+                            @(sign ?? I18n.T("After the incident, brush off your clothes and hide deep in your name"))
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction Style="align-self:unset;">
@@ -47,7 +47,7 @@
                                       Style="display: grid;grid-template-columns: repeat(3, 1fr);">
                         <div>
                             <MListItemSubtitle>
-                                @(I18n.T("Statistics.DiaryCount"))
+                                @(I18n.T("Diary count"))
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
                                 @diaryCount
@@ -55,7 +55,7 @@
                         </div>
                         <div>
                             <MListItemSubtitle>
-                                @(I18n.T("Statistics.WordCount"))
+                                @(I18n.T("Word count"))
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
                                 @wordCount
@@ -63,7 +63,7 @@
                         </div>
                         <div>
                             <MListItemSubtitle>
-                                @(I18n.T("Statistics.ActiveDayCount"))
+                                @(I18n.T("Active days"))
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
                                 @activeDayCount
@@ -76,7 +76,7 @@
                                       Style="display: grid;grid-template-columns: repeat(3, 1fr);">
                         <div>
                             <MListItemSubtitle>
-                                @(I18n.T("Statistics.ImageCount"))
+                                @(I18n.T("Image count"))
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
                                 @imageCount
@@ -84,7 +84,7 @@
                         </div>
                         <div>
                             <MListItemSubtitle>
-                                @(I18n.T("Statistics.AudioCount"))
+                                @(I18n.T("Audio count"))
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
                                 @audioCount
@@ -92,7 +92,7 @@
                         </div>
                         <div>
                             <MListItemSubtitle>
-                                @(I18n.T("Statistics.VideoCount"))
+                                @(I18n.T("Video count"))
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
                                 @videoCount
@@ -177,24 +177,26 @@
 
 <RadioDialog @bind-Value="language"
              @bind-Visible="showLanguage"
-             Title="@(I18n.T("Mine.SelectLanguage"))"
+             Title="@(I18n.T("Choose language"))"
              OnChange="LanguageChanged"
-             TItem="KeyValuePair<string,string>"
+             TItem="System.Globalization.CultureInfo"
              TItemValue="string"
-             Items="GlobalConfiguration.Languages">
+             Items="I18n.SupportedCultures.OrderByDescending(it => it.Name)"
+             ItemText="c => c.NativeName"
+             ItemValue="c => c.Name">
 </RadioDialog>
 
 <RadioDialog @bind-Value="theme"
              @bind-Visible="showTheme"
-             Title="@(I18n.T("Mine.Night"))"
+             Title="@(I18n.T("Night mode"))"
              OnChange="ThemeChanged"
-             TItem="KeyValuePair<string,Shared.Theme>"
+             TItem="KeyValuePair<string, Shared.Theme>"
              TItemValue="Shared.Theme"
              Items="themeItems">
 </RadioDialog>
 
 <MultiListDialog @bind-Visible="showFeedback"
-                 Title="@(I18n.T("Mine.ContactWay"))"
+                 Title="@(I18n.T("Contact information"))"
                  DynamicListItems="FeedbackTypes">
 </MultiListDialog>
 
@@ -205,11 +207,11 @@
 @if (!hidePrivacyModeEntrance || privacyMode)
 {
     <InputDialog @bind-Visible="showprivacyModeEntrancePasswordDialog"
-                 Title="@(I18n.T("PrivacyMode.ValidatePassword"))"
-                 Placeholder="@(I18n.T("Please input a password"))"
+                 Title="@(I18n.T("Verify password"))"
+                 Placeholder="@(I18n.T("Please enter password"))"
                  MaxLength="20"
                  Password="true"
                  OnOK="InputPassword"
-                 OKText="@(I18n.T("Share.OK"))">
+                 OKText="@(I18n.T("OK"))">
     </InputDialog>
 }

@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -56,7 +56,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected Task ToDo()
         {
-            return PopupServiceHelper.Info(I18n.T("ToDo.Title"), I18n.T("ToDo.Content"));
+            return PopupServiceHelper.Info(I18n.T("This feature is currently unavailable"), I18n.T("Please look forward"));
         }
 
         protected void To(string url, bool cacheCurrentURL = true)
@@ -85,7 +85,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             foreach (var item in messages)
             {
-                await PopupServiceHelper.Info(I18n.T("Achievement.AchieveAchievements"), I18n.T(item));
+                await PopupServiceHelper.Info(I18n.T("Achieving Achievements"), I18n.T(item));
             }
         }
 

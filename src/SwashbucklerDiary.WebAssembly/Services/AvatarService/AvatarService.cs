@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.WebAssembly.Services
@@ -17,13 +17,13 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         public override async Task<string> SetAvatarByCapture()
         {
-            await _popupServiceHelper.Error(_i18n.T("Share.NotSupported"));
+            await _popupServiceHelper.Error(_i18n.T("Not supported on the current platform"));
             return string.Empty;
 
             //bool isCaptureSupported = await _platformIntegration.IsCaptureSupported();
             //if (!isCaptureSupported)
             //{
-            //    await _popupServiceHelper.Error(_i18n.T("User.NoCapture"));
+            //    await _popupServiceHelper.Error(_i18n.T("The current platform is unable to take photos"));
             //    return string.Empty;
             //}
 

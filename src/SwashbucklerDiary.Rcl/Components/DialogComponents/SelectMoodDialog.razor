@@ -6,12 +6,12 @@
                   TValue="string"
                   Value="Value"
                   ValueChanged="ValueChanged"
-                  Title="@(I18n.T("SelectMood"))"
+                  Title="@(I18n.T("Select mood"))"
                   ShowText="ShowText"
                   ShowTextChanged="ShowTextChanged"
                   Items="GlobalConfiguration.MoodIcons"
                   ItemValue="it=>it.Key"
-                  ItemText="@(item=>I18n.T("Mood." + item.Key))"
+                  ItemText="@(item=>I18n.T(item.Key))"
                   ItemIcon="it=>it.Value">
 </SelectChipDialog>
 

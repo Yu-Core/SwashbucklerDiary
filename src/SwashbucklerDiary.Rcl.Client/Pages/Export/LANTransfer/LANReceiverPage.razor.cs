@@ -22,7 +22,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showTransferDialog;
 
-        private string transferDialogTitle = "lanReceiver.Receiving";
+        private string transferDialogTitle = "Receiving";
 
         [Inject]
         private ILANReceiverService LANReceiverService { get; set; } = default!;
@@ -84,7 +84,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             catch (Exception e)
             {
                 Logger.LogError(e, "LANReceiverService initialize error");
-                await PopupServiceHelper.Error(I18n.T("lanSender.No network connection"));
+                await PopupServiceHelper.Error(I18n.T("No network connection"));
                 await Task.Delay(1000);
                 await NavigateToBack();
             }
@@ -131,13 +131,13 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 if (showTransferDialog)
                 {
-                    transferDialogTitle = "lanReceiver.Receive failed";
-                    await PopupServiceHelper.Error(I18n.T("lanReceiver.Receive failed"));
+                    transferDialogTitle = "Receive failed";
+                    await PopupServiceHelper.Error(I18n.T("Receive failed"));
                 }
                 else
                 {
-                    transferDialogTitle = "lanReceiver.Receive canceled";
-                    await PopupServiceHelper.Error(I18n.T("lanReceiver.Receive canceled"));
+                    transferDialogTitle = "Receive canceled";
+                    await PopupServiceHelper.Error(I18n.T("Receive canceled"));
                 }
 
                 StateHasChanged();
@@ -152,15 +152,15 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 if (!isSuccess)
                 {
-                    transferDialogTitle = "Export.Import.Fail";
-                    await PopupServiceHelper.Error(I18n.T("Export.Import.Fail"));
+                    transferDialogTitle = "Import failed";
+                    await PopupServiceHelper.Error(I18n.T("Import failed"));
                 }
                 else
                 {
                     ps = 100;
                     bytes = totalBytes;
-                    transferDialogTitle = "lanReceiver.Receive successfully";
-                    await PopupServiceHelper.Success(I18n.T("lanReceiver.Receive successfully"));
+                    transferDialogTitle = "Receive successfully";
+                    await PopupServiceHelper.Success(I18n.T("Receive successfully"));
                 }
 
                 StateHasChanged();

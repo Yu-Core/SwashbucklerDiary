@@ -9,7 +9,7 @@
                   OnBeforeShowContent="BeforeShowContent">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Location.Select"))
+            @(I18n.T("Select location"))
             <MSpacer></MSpacer>
             <MButton Icon
                      OnClick="()=>showSearch=!showSearch">
@@ -35,7 +35,7 @@
                                      Color="@Color"
                                      HideDetails="@("auto")"
                                      spellcheck="false"
-                                     Placeholder="@(I18n.T("Share.Search"))"
+                                     Placeholder="@(I18n.T("Search"))"
                                      PrependInnerIcon="mdi-magnify">
                 </CustomMTextField>
             }
@@ -65,25 +65,25 @@
         <MCardActions>
             <MButton Text="true"
                      OnClick="()=>showAdd = true">
-                @(I18n.T("Share.Add"))
+                @(I18n.T("Add"))
             </MButton>
             <MSpacer></MSpacer>
             <MButton Text="true"
                      OnClick="HandleOnCancel">
-                @(I18n.T("Share.Cancel"))
+                @(I18n.T("Cancel"))
             </MButton>
             <MButton Text="true"
                      Color="primary"
                      OnClick="HandleOnOK">
-                @(I18n.T("Share.OK"))
+                @(I18n.T("OK"))
             </MButton>
         </MCardActions>
     </MCard>
 </CustomMDialog>
 
 <InputDialog @bind-Visible="showAdd"
-             Title="@(I18n.T("Location.Add"))"
-             Placeholder="@(I18n.T("Location.Placeholder"))"
+             Title="@(I18n.T("Add location"))"
+             Placeholder="@(I18n.T("Please enter a location name"))"
              MaxLength="200"
              OnOK="SaveAdd">
 </InputDialog>

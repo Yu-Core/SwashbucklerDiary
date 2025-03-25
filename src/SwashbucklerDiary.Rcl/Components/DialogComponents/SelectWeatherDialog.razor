@@ -6,12 +6,12 @@
                   TValue="string"
                   Value="Value"
                   ValueChanged="ValueChanged"
-                  Title="@(I18n.T("SelectWeather"))"
+                  Title="@(I18n.T("Select weather"))"
                   ShowText="ShowText"
                   ShowTextChanged="ShowTextChanged"
                   Items="GlobalConfiguration.WeatherIcons"
                   ItemValue="it=>it.Key"
-                  ItemText="@(item=>I18n.T("Weather." + item.Key))"
+                  ItemText="@(item=>I18n.T(item.Key))"
                   ItemIcon="it=>it.Value">
 </SelectChipDialog>
 

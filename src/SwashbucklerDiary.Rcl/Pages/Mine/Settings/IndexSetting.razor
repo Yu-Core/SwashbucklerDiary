@@ -1,8 +1,8 @@
-﻿@page "/indexSetting"
+@page "/indexSetting"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("Setting.Display.Index.Name"))"
+<MyAppBar Title="@(I18n.T("Home"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -18,7 +18,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Index.Date.Name"))
+                    @(I18n.T("Date"))
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="date"
@@ -34,7 +34,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Index.WelcomeText.Name"))
+                    @(I18n.T("Greetings"))
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="welcomText"

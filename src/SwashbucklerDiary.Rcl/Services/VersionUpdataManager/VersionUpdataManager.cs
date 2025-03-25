@@ -14,6 +14,10 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected int updateCount;
 
+        protected const string LatestVersionApiUrl = "https://api.github.com/repos/Yu-Core/SwashbucklerDiary/releases/latest";
+
+        protected const string zh_CNLatestVersionApiUrl = "https://gitee.com/api/v5/repos/Yu-core/SwashbucklerDiary/releases/latest";
+
         protected readonly IDiaryService _diaryService;
 
         protected readonly IResourceService _resourceService;
@@ -88,7 +92,10 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task<bool> CheckForUpdates()
         {
-            var release = await HttpClient.GetFromJsonAsync<Release>(_i18n.T("VersionUpdate.LatestVersionUrl"));
+            var url = _i18n.Culture.Name == "zh-CN" 
+                ? zh_CNLatestVersionApiUrl
+                : LatestVersionApiUrl;
+            var release = await HttpClient.GetFromJsonAsync<Release>(url);
             if (release is null || release.Tag_Name is null)
             {
                 throw new Exception("Tag format error");
@@ -115,6 +122,7 @@ namespace SwashbucklerDiary.Rcl.Services
             AddVersionHandler("0.86.0", HandleVersionUpdate860);
             AddVersionHandler("1.01.5", HandleVersionUpdate1015);
             AddVersionHandler("1.03.9", HandleVersionUpdate1039);
+            AddVersionHandler("1.12.9", HandleVersionUpdate1129);
         }
 
         protected void AddVersionHandler(string versionString, Func<Task> handler)
@@ -192,17 +200,28 @@ namespace SwashbucklerDiary.Rcl.Services
         private async Task HandleVersionUpdate1015()
         {
             var oldKey = "DiaryCardDateFormat";
-            var diaryCardDatformat = await _settingService.GetAsync(oldKey, string.Empty);
-            if (!string.IsNullOrEmpty(diaryCardDatformat))
+            var oldValue = await _settingService.GetAsync(oldKey, string.Empty);
+            if (!string.IsNullOrEmpty(oldValue))
             {
                 await _settingService.RemoveAsync(oldKey);
-                await _settingService.SetAsync("DiaryCardTimeFormat", diaryCardDatformat);
+                await _settingService.SetAsync("DiaryCardTimeFormat", oldValue);
             }
         }
 
         private async Task HandleVersionUpdate1039()
         {
             await _diaryService.MovePrivacyDiariesAsync();
+        }
+
+        private async Task HandleVersionUpdate1129()
+        {
+            var oldKey = "UserName";
+            var oldValue = await _settingService.GetAsync(oldKey, string.Empty);
+            if (!string.IsNullOrEmpty(oldValue))
+            {
+                await _settingService.RemoveAsync(oldKey);
+                await _settingService.SetAsync("NickName", oldValue);
+            }
         }
     }
 }

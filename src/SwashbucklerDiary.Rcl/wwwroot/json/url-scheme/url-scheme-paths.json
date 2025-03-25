@@ -1,46 +1,46 @@
 [
   {
-    "Name": "UrlScheme.Index",
+    "Name": "Home",
     "Path": ""
   },
   {
-    "Name": "UrlScheme.History",
+    "Name": "Calendar",
     "Path": "history"
   },
   {
-    "Name": "UrlScheme.FileBrowse",
+    "Name": "File",
     "Path": "fileBrowse"
   },
   {
-    "Name": "UrlScheme.Mine",
+    "Name": "Mine",
     "Path": "mine"
   },
   {
-    "Name": "UrlScheme.Search",
+    "Name": "Search",
     "Path": "search?query="
   },
   {
-    "Name": "UrlScheme.SearchFunction",
+    "Name": "Feature search",
     "Path": "searchAppFeatures?query="
   },
   {
-    "Name": "UrlScheme.Write",
+    "Name": "Create diary",
     "Path": "write"
   },
   {
-    "Name": "UrlScheme.Setting",
+    "Name": "Setting",
     "Path": "setting"
   },
   {
-    "Name": "UrlScheme.Backup",
+    "Name": "Backup",
     "Path": "backups"
   },
   {
-    "Name": "UrlScheme.Export",
+    "Name": "Export",
     "Path": "export"
   },
   {
-    "Name": "UrlScheme.About",
+    "Name": "About",
     "Path": "about"
   }
 ]

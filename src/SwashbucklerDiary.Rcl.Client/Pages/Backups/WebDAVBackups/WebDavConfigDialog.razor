@@ -14,7 +14,7 @@
            EnableI18n="true">
         <MCard>
             <MCardTitle Class="font-weight-bold">
-                @(I18n.T("Backups.Config.Title"))
+                @(I18n.T("Config"))
                 <MSpacer></MSpacer>
                 <MButton Icon="true" OnClick="HandleOnCancel">
                     <MIcon>mdi-close</MIcon>
@@ -28,7 +28,7 @@
                             Filled
                             Rounded
                             spellcheck="false"
-                            Placeholder="@(I18n.T("Backups.Config.ServerAddress"))">
+                            Placeholder="@(I18n.T("Server address"))">
                 </MTextField>
                 <MTextField @bind-Value="configModel.Account"
                             Dense
@@ -36,7 +36,7 @@
                             Filled
                             Rounded
                             spellcheck="false"
-                            Placeholder="@(I18n.T("Backups.Config.Account"))">
+                            Placeholder="@(I18n.T("Account"))">
                 </MTextField>
                 <MTextField @bind-Value="configModel.Password"
                             Dense
@@ -44,7 +44,7 @@
                             Filled
                             Rounded
                             spellcheck="false"
-                            Placeholder="@(I18n.T("Backups.Config.Password"))"
+                            Placeholder="@(I18n.T("Password"))"
                             AppendIcon="@(showPassword ? "mdi-eye" : "mdi-eye-off")"
                             Type="@(showPassword ? "text" : "password")"
                             OnAppendClick="() => showPassword = !showPassword">
@@ -53,12 +53,12 @@
             <MCardActions Class="pt-0">
                 <MSpacer></MSpacer>
                 <MButton Text="true" OnClick="HandleOnCancel">
-                    @(I18n.T("Share.Cancel"))
+                    @(I18n.T("Cancel"))
                 </MButton>
                 <MButton Text="true"
                          Type="submit"
                          Color="primary">
-                    @(I18n.T("Share.OK"))
+                    @(I18n.T("OK"))
                 </MButton>
             </MCardActions>
         </MCard>

@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits OpenCloseComponentBase
 
 @if (Visible)
@@ -9,7 +9,7 @@
                               OnInput="HighlightSearch"
                               Clearable="false"
                               Autofocus="Autofocus"
-                              Placeholder="@I18n.T("Read.Search on the page")">
+                              Placeholder="@I18n.T("Look it up on the page")">
         </TransparentTextField>
         @if (!string.IsNullOrWhiteSpace(Value))
         {

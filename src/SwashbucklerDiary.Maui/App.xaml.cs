@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Maui
             window.Resumed += (s, e) => _appLifecycle.Resume();
             window.Stopped += (s, e) => _appLifecycle.Stop();
             window.Created += WindowCreated;
-            window.Title = _i18n.T("AppName");
+            window.Title = _i18n.T("Swashbuckler Diary");
             _i18n.OnChanged += _ => SetTitle();
 
             return window;
@@ -87,7 +87,7 @@ namespace SwashbucklerDiary.Maui
         {
             if(Windows.Count > 0)
             {
-                Windows[0].Title = _i18n.T("AppName");
+                Windows[0].Title = _i18n.T("Swashbuckler Diary");
             }
         }
     }

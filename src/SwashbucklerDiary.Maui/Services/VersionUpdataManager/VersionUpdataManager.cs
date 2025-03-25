@@ -99,7 +99,7 @@ namespace SwashbucklerDiary.Maui.Services
             bool flag = await _accessExternal.OpenAppStoreAppDetails();
             if (!flag)
             {
-                await _popupServiceHelper.Error(_i18n.T("About.OpenAppStoreFail"));
+                await _popupServiceHelper.Error(_i18n.T("Failed to open the application store"));
             }
         }
     }

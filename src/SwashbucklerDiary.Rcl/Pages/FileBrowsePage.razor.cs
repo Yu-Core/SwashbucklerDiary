@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
@@ -11,9 +11,9 @@ namespace SwashbucklerDiary.Rcl.Pages
     {
         private readonly List<TabListItem> tabListItems =
         [
-            new("FileBrowse.Image.Name","image"),
-            new("FileBrowse.Audio.Name","audio"),
-            new("FileBrowse.Video.Name","video"),
+            new("Image","image"),
+            new("Audio","audio"),
+            new("Video","video"),
         ];
 
         private bool showDelete;
@@ -61,7 +61,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems =
             [
-                new(this, "FileBrowse.DeleteUnused","mdi-delete-outline", ()=>showDelete=true),
+                new(this, "Delete unused files","mdi-delete-outline", ()=>showDelete=true),
             ];
         }
 
@@ -81,7 +81,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (flag)
             {
                 await UpdateResourcesAsync();
-                await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
+                await PopupServiceHelper.Success(I18n.T("Delete successfully"));
             }
         }
     }

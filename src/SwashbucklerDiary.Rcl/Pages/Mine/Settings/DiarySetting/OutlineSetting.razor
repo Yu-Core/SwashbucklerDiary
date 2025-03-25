@@ -1,8 +1,8 @@
-﻿@page "/outlineSetting"
+@page "/outlineSetting"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("Setting.Display.Diary.Outline.Name"))"
+<MyAppBar Title="@(I18n.T("Outline"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -18,7 +18,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Diary.Outline.Outline.Name"))
+                    @(I18n.T("Display outline"))
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="showOutline"
@@ -36,7 +36,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Diary.Outline.RightOutline.Name"))
+                    @(I18n.T("Position on the right"))
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="rightOutline"

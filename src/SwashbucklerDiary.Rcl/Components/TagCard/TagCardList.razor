@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits CardListComponentBase<TagModel>
 
 <div class="card-list__wrap">
@@ -31,19 +31,19 @@
 </div>
 
 <EmptyResult Show="Value.Count == 0"
-             Text="@(I18n.T("Tag.NoTag"))">
+             Text="@(I18n.T("No tag"))">
 </EmptyResult>
 
 <InputDialog @bind-Visible="showRename"
              Text="@(SelectedItem.Name)"
-             Title="@(I18n.T("Tag.Rename"))"
-             Placeholder="@(I18n.T("Tag.Placeholder"))"
+             Title="@(I18n.T("Rename tag"))"
+             Placeholder="@(I18n.T("Please enter a tag name"))"
              OnOK="ConfirmRename">
 </InputDialog>
 
 <DeleteDialog @bind-Visible="showDelete"
-              Title="@(I18n.T("Tag.Delete.Title"))"
-              Content="@(I18n.T("Tag.Delete.Content"))"
+              Title="@(I18n.T("Delete tag"))"
+              Content="@(I18n.T("Just deleting the tag does not delete the diary under the tag"))"
               OnOK="ConfirmDelete">
 </DeleteDialog>
 
@@ -56,7 +56,7 @@
              OnChange="SortChanged"
              TItem="string"
              TItemValue="string"
-             Title="@(I18n.T("Share.Sort"))"
+             Title="@(I18n.T("Sort"))"
              Row="true"
              Items="SortItems">
 </RadioDialog>

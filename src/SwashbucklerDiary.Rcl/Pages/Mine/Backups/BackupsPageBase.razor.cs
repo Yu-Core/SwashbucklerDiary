@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 
@@ -8,8 +8,8 @@ namespace SwashbucklerDiary.Rcl.Pages
     {
         protected readonly List<TabListItem> tabListItems =
         [
-            new("Backups.Local.Name","local"),
-            new("Backups.WebDAV.Name","webDAV"),
+            new("Local backup","local"),
+            new("WebDAV","webDAV"),
         ];
 
         protected StringNumber tab = 0;

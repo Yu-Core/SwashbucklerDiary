@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -44,9 +44,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             exportTimeItems =
             [
-                new(this,"History.ExportTime.Day","mdi-alpha-d",ExportThisDay),
-                new(this,"History.ExportTime.Month","mdi-alpha-m",ExportThisMonth),
-                new(this,"History.ExportTime.Year","mdi-alpha-y",ExportThisYear),
+                new(this,"Export this day diaries","mdi-alpha-d",ExportThisDay),
+                new(this,"Export this month diaries","mdi-alpha-m",ExportThisMonth),
+                new(this,"Export this year diaries","mdi-alpha-y",ExportThisYear),
             ];
         }
 
@@ -67,7 +67,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             exportDiaries = await DiaryService.QueryAsync(expression);
             if (exportDiaries.Count == 0)
             {
-                await PopupServiceHelper.Info(I18n.T("Diary.NoDiary"));
+                await PopupServiceHelper.Info(I18n.T("No diary"));
                 return;
             }
 

@@ -96,10 +96,10 @@ namespace SwashbucklerDiary.Rcl.Components
         }
 
         private string TopText()
-            => SelectedItem.Top ? "Diary.CancelTop" : "Diary.Top";
+            => SelectedItem.Top ? "Cancel top" : "Top";
 
         private string PrivateText()
-            => privacyMode ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
+            => privacyMode ? "Cancel privacy" : "Set to private";
 
         private string PrivateIcon()
             => privacyMode ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
@@ -123,7 +123,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             var text = SelectedItem.CreateCopyContent();
             await PlatformIntegration.SetClipboardAsync(text);
-            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
         }
 
         private async Task OpenTagDialog()
@@ -140,11 +140,11 @@ namespace SwashbucklerDiary.Rcl.Components
             await InvokeAsync(StateHasChanged);
             if (privacyMode)
             {
-                await PopupServiceHelper.Success(I18n.T("Read.Removed from privacy mode"));
+                await PopupServiceHelper.Success(I18n.T("Removed from privacy mode"));
             }
             else
             {
-                await PopupServiceHelper.Success(I18n.T("Read.Moved to privacy mode"));
+                await PopupServiceHelper.Success(I18n.T("Moved to privacy mode"));
             }
         }
 
@@ -164,13 +164,13 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 if (RemoveSelectedItem())
                 {
-                    await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
+                    await PopupServiceHelper.Success(I18n.T("Delete successfully"));
                     await InvokeAsync(StateHasChanged);
                 }
             }
             else
             {
-                await PopupServiceHelper.Error(I18n.T("Share.DeleteFail"));
+                await PopupServiceHelper.Error(I18n.T("Delete failed"));
             }
         }
 
@@ -185,8 +185,8 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             sortOptions = new()
             {
-                {"Sort.Time.Desc",it => it.OrderByDescending(d => d.CreateTime) },
-                {"Sort.Time.Asc",it => it.OrderBy(d => d.CreateTime) },
+                {"Time - Reverse order",it => it.OrderByDescending(d => d.CreateTime) },
+                {"Time - Positive order",it => it.OrderBy(d => d.CreateTime) },
             };
 
             if (string.IsNullOrEmpty(SortItem))
@@ -196,14 +196,14 @@ namespace SwashbucklerDiary.Rcl.Components
 
             menuItems =
             [
-                new(this, "Diary.Tag", "mdi-label-outline", OpenTagDialog),
-                new(this, "Share.Copy", "mdi-content-copy", Copy),
-                new(this, "Share.Delete", "mdi-delete-outline", Delete),
+                new(this, "Tag", "mdi-label-outline", OpenTagDialog),
+                new(this, "Copy", "mdi-content-copy", Copy),
+                new(this, "Delete", "mdi-delete-outline", Delete),
                 new(this, TopText, "mdi-format-vertical-align-top", Topping),
-                new(this, "Diary.Export", "mdi-export", Export),
-                new(this, "Share.Sort", "mdi-sort-variant", OpenSortDialog),
-                new(this, "Read.CopyQuote", "mdi-format-quote-open-outline", CopyQuote),
-                new(this, "Read.CopyLink", "mdi-link-variant", CopyLink),
+                new(this, "Export", "mdi-export", Export),
+                new(this, "Sort", "mdi-sort-variant", OpenSortDialog),
+                new(this, "Copy quote", "mdi-format-quote-open-outline", CopyQuote),
+                new(this, "Copy link", "mdi-link-variant", CopyLink),
                 new(this, PrivateText, PrivateIcon, MovePrivacy, ()=>privacyMode || showSetPrivacy)
             ];
         }
@@ -215,9 +215,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task CopyQuote()
         {
-            var text = $"[{I18n.T("Read.DiaryLink")}](read/{SelectedItem.Id})";
+            var text = $"[{I18n.T("Diary link")}](read/{SelectedItem.Id})";
             await PlatformIntegration.SetClipboardAsync(text);
-            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
         }
 
         private async Task CopyLink()
@@ -233,7 +233,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             await PlatformIntegration.SetClipboardAsync(text);
-            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
         }
 
         private async void ClickCard(DiaryModel diary)

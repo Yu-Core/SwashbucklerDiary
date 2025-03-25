@@ -2,13 +2,13 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("Mine.Settings"))"
+<MyAppBar Title="@(I18n.T("Setting"))"
 OnClick="NavigateToBack">
 </MyAppBar>
 
 <ScrollContainer>
     <div class="text-h6 setting-title">
-        @(I18n.T("Setting.General.Name"))
+        @(I18n.T("General"))
     </div>
 
     <MCard Class="my-list-card"
@@ -22,7 +22,7 @@ OnClick="NavigateToBack">
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.General.Permission.Name"))
+                    @(I18n.T("System permission"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -38,7 +38,7 @@ OnClick="NavigateToBack">
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.General.Storage.Name"))
+                    @(I18n.T("Clear cache"))
                 </MListItemContent>
                 <MListItemContent Class="setting-item-state">
                     <MListItemSubtitle>
@@ -53,7 +53,7 @@ OnClick="NavigateToBack">
     </MCard>
 
     <div class="text-h6 setting-title">
-        @(I18n.T("Setting.Display.Name"))
+        @(I18n.T("Display"))
     </div>
 
     <MCard Class="my-list-card"
@@ -67,7 +67,7 @@ OnClick="NavigateToBack">
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Index.Name"))
+                    @(I18n.T("Home"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -81,7 +81,7 @@ OnClick="NavigateToBack">
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Calendar.Name"))
+                    @(I18n.T("Calendar"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -95,7 +95,7 @@ OnClick="NavigateToBack">
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Diary.Name"))
+                    @(I18n.T("Diary"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -109,7 +109,7 @@ OnClick="NavigateToBack">
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Snackbars.Name"))
+                    @(I18n.T("Snackbars"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -123,7 +123,7 @@ OnClick="NavigateToBack">
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.DiaryCard.Name"))
+                    @(I18n.T("Diary card"))
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>mdi-chevron-right</MIcon>
@@ -137,7 +137,7 @@ OnClick="NavigateToBack">
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.StatisticsCard.Name"))
+                    @(I18n.T("Statistics card"))
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="showStatisticsCard"
@@ -151,7 +151,7 @@ OnClick="NavigateToBack">
     @if (PlatformIntegration.CurrentPlatform != AppDevicePlatform.Browser)
     {
         <div class="text-h6 setting-title">
-            @(I18n.T("Setting.Other.Name"))
+            @(I18n.T("Other"))
         </div>
 
         <MCard Class="my-list-card"
@@ -182,21 +182,21 @@ OnClick="NavigateToBack">
                   MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Setting.General.Storage.Name"))
+            @(I18n.T("Clear cache"))
         </MCardTitle>
         <MCardText Class="pb-0">
-            @(I18n.T("Storage.Content"))
+            @(I18n.T("Are you sure to clear all caches?"))
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text="true"
                      OnClick="()=>showClearCache=false">
-                @(I18n.T("Share.Cancel"))
+                @(I18n.T("Cancel"))
             </MButton>
             <MButton Text="true"
                      Color="red"
                      OnClick="ClearCache">
-                @(I18n.T("Share.OK"))
+                @(I18n.T("OK"))
             </MButton>
         </MCardActions>
     </MCard>

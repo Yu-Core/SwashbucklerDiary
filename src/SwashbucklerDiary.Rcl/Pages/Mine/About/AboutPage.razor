@@ -1,8 +1,8 @@
-﻿@page "/about"
+@page "/about"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("Mine.About"))"
+<MyAppBar Title="@(I18n.T("About"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -19,19 +19,19 @@
                 </MListItemAvatar>
                 <MListItemContent>
                     <MListItemTitle Class="text-h5 my-2 font-weight-bold">
-                        @(I18n.T("AppName"))
+                        @(I18n.T("Swashbuckler Diary"))
                     </MListItemTitle>
                     <MListItemSubtitle Class="mb-2">
                         version @AppVersion
                     </MListItemSubtitle>
                     <MListItemSubtitle Class="mb-2">
-                        @(I18n.T("About.Introduction"))
+                        @(I18n.T("An open-source and cross-platform local diary APP"))
                     </MListItemSubtitle>
                     @if (PlatformIntegration.CurrentPlatform != AppDevicePlatform.Browser)
                     {
                         <MListItemSubtitle>
                             <a href="https://beian.miit.gov.cn/" target="_blank" class="text--disabled text-decoration-none" style="font-size:0.75rem;">
-                                @(I18n.T("About.Record number") + recordNumber)
+                                @(I18n.T("App Record number :") + recordNumber)
                             </a>
                             <MButton Class="text--disabled"
                                      IconName="mdi-content-copy"
@@ -82,7 +82,7 @@
 </ScrollContainer>
 
 <MultiListDialog @bind-Visible="showSourceCode"
-                 Title="@(I18n.T("About.SourceCode.Name"))"
+                 Title="@(I18n.T("View source"))"
                  DynamicListItems="codeSourceListItems">
 </MultiListDialog>
 

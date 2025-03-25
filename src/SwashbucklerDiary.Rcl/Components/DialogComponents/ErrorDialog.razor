@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 
 <MDialog Value="true"
          ContentClass="rounded-lg"
@@ -9,7 +9,7 @@
             <MIcon Class="error--text mr-2">
                 mdi-close-circle-outline
             </MIcon>
-            @(I18n.T("ErrorHandle.Title"))
+            @(I18n.T("Error"))
         </MCardTitle>
         <MCardText Class="pb-0">
             @Text
@@ -19,7 +19,7 @@
             <MButton Text="true"
                      Color="red"
                      OnClick="Quit">
-                @(I18n.T("Share.Quit"))
+                @(I18n.T("Quit"))
             </MButton>
         </MCardActions>
     </MCard>

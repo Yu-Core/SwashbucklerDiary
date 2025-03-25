@@ -2,7 +2,7 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("Export.Send.Name"))"
+<MyAppBar Title="@(I18n.T("Send"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -12,7 +12,7 @@
         <MList>
             <MSubheader>
                 <span>
-                    @(I18n.T("lanSender.List of available devices"))
+                    @(I18n.T("List of available devices"))
                 </span>
                 <MSpacer></MSpacer>
                 <MButton Icon="true"
@@ -61,7 +61,7 @@
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("lanSender.Searching for available devices"))
+                            @(I18n.T("Searching for available devices"))
                         </MListItemTitle>
                     </MListItemContent>
                 </MListItem>
@@ -78,7 +78,7 @@
                         </MListItemIcon>
                         <MListItemContent>
                             <MListItemTitle>
-                                @(I18n.T("lanSender.There are currently no available devices"))
+                                @(I18n.T("There are currently no available devices"))
                             </MListItemTitle>
                         </MListItemContent>
                     </MListItem>

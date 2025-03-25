@@ -1,4 +1,4 @@
-﻿@page "/searchAppFeatures"
+@page "/searchAppFeatures"
 @inherits ImportantComponentBase
 
 <MyAppBar>
@@ -8,7 +8,7 @@
     </MButton>
 
     <TransparentTextField @bind-Value="search"
-                          Placeholder="@(I18n.T("SearchAppFeatures.Placeholder"))"
+                          Placeholder="@(I18n.T("Please enter the function you want to search for"))"
                           OnInput="UpdateAppFeatures">
     </TransparentTextField>
 </MyAppBar>
@@ -29,7 +29,7 @@
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("PrivacyMode.Name"))
+                            @(I18n.T("Privacy mode"))
                         </MListItemTitle>
                     </MListItemContent>
                 </MListItem>

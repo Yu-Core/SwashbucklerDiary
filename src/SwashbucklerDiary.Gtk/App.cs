@@ -36,7 +36,7 @@ namespace SwashbucklerDiary.Gtk
             app = global::Gtk.Application.New(applicationId, Gio.ApplicationFlags.HandlesCommandLine);
             GLib.Functions.SetPrgname("SwashbucklerDiary");
             // Set the human-readable application name for app bar and task list.
-            GLib.Functions.SetApplicationName(i18n.T("AppName"));
+            GLib.Functions.SetApplicationName(i18n.T("Swashbuckler Diary"));
             app.OnActivate += ApplicationActivate;
             app.OnCommandLine += HandleOnCommandLine;
 

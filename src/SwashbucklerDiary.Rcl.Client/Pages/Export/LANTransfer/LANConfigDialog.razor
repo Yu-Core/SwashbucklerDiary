@@ -14,7 +14,7 @@
            EnableI18n="true">
         <MCard>
             <MCardTitle Class="font-weight-bold">
-                @(I18n.T("Export.LAN.Config.Name"))
+                @(I18n.T("Setting"))
                 <MSpacer></MSpacer>
                 <MButton Icon="true" OnClick="HandleOnCancel">
                     <MIcon>mdi-close</MIcon>
@@ -28,7 +28,7 @@
                             Filled
                             Rounded
                             spellcheck="false"
-                            Placeholder="@(I18n.T("Export.LAN.Config.DeviceName"))">
+                            Placeholder="@(I18n.T("Device name"))">
                 </MTextField>
                 <MTextField @bind-Value="configModel.ScanPort"
                             Type="number"
@@ -38,7 +38,7 @@
                             Filled
                             Rounded
                             spellcheck="false"
-                            Placeholder="@(I18n.T("Export.LAN.Config.ScanPort"))"
+                            Placeholder="@(I18n.T("Scan port"))"
                             NumberProps="@(prop => { prop.Min = 1204; prop.Max = 65535; prop.HideControl = true; })">
                 </MTextField>
                 <MTextField @bind-Value="configModel.TransmissionPort"
@@ -49,22 +49,22 @@
                             Filled
                             Rounded
                             spellcheck="false"
-                            Placeholder="@(I18n.T("Export.LAN.Config.TransmissionPort"))"
+                            Placeholder="@(I18n.T("Transmission port"))"
                             NumberProps="@(prop => { prop.Min = 1204; prop.Max = 65535; prop.HideControl = true; })">
                 </MTextField>
             </MCardText>
             <MCardActions Class="pt-0">
                 <MButton Text="true" OnClick="OnReset">
-                    @(I18n.T("Share.Restore Default"))
+                    @(I18n.T("Restore the default"))
                 </MButton>
                 <MSpacer></MSpacer>
                 <MButton Text="true" OnClick="HandleOnCancel">
-                    @(I18n.T("Share.Cancel"))
+                    @(I18n.T("Cancel"))
                 </MButton>
                 <MButton Text="true"
                          Type="submit"
                          Color="primary">
-                    @(I18n.T("Share.OK"))
+                    @(I18n.T("OK"))
                 </MButton>
             </MCardActions>
         </MCard>

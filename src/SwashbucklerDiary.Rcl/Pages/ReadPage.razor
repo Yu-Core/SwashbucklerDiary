@@ -162,13 +162,13 @@
 </div>
 
 <MultiListDialog @bind-Visible="showShare"
-                 Title="@(I18n.T("Share.SelectShare"))"
+                 Title="@(I18n.T("Choose how to Share"))"
                  DynamicListItems="shareItems">
 </MultiListDialog>
 
 <DeleteDialog @bind-Visible="showDelete"
-              Title="@(I18n.T("Diary.Delete.Title"))"
-              Content="@(I18n.T("Diary.Delete.Content"))"
+              Title="@(I18n.T("Delete a diary"))"
+              Content="@(I18n.T("Please delete carefully, every diary is a precious memory."))"
               OnOK="HandleDelete">
 </DeleteDialog>
 

@@ -40,21 +40,21 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.ReadSettings();
 
-            userName = SettingService.Get(s => s.UserName, default!);
+            userName = SettingService.Get(s => s.NickName, default!);
             sign = SettingService.Get(s => s.Sign, default!);
             avatar = SettingService.Get(s => s.Avatar);
         }
 
-        private string? UserName => userName ?? I18n.T("AppName");
+        private string? NickName => userName ?? I18n.T("Swashbuckler Diary");
 
-        private string? Sign => sign ?? I18n.T("Mine.Sign");
+        private string? Sign => sign ?? I18n.T("After the incident, brush off your clothes and hide deep in your name");
 
         private void LoadView()
         {
             editAvatarMethods =
             [
-                new(this, "User.Photos","mdi-image-outline",PickPhoto),
-                new(this, "User.Capture","mdi-camera-outline",OnCapture),
+                new(this, "Photos","mdi-image-outline",PickPhoto),
+                new(this, "Capture","mdi-camera-outline",OnCapture),
             ];
         }
 
@@ -75,7 +75,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (!string.IsNullOrWhiteSpace(tagName) && tagName != userName)
             {
                 userName = tagName;
-                await SettingService.SetAsync(s => s.UserName, userName);
+                await SettingService.SetAsync(s => s.NickName, userName);
             }
             await HandleAchievements(Achievement.NickName);
         }
@@ -98,8 +98,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             catch (Exception e)
             {
-                await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
-                Logger.LogError(e, I18n.T("Share.EditFail"));
+                await PopupServiceHelper.Error(I18n.T("Change failed"));
+                Logger.LogError(e, I18n.T("Change failed"));
             }
             finally
             {
@@ -108,7 +108,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (string.IsNullOrEmpty(photoPath))
             {
-                await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
+                await PopupServiceHelper.Error(I18n.T("Change failed"));
                 return;
             }
 

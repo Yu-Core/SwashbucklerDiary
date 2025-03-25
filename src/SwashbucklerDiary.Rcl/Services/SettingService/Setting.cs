@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.Rcl.Services
         public string Language { get; set; } = "zh-CN";
         public bool Title { get; set; }
         public bool Markdown { get; set; } = true;
-        public string UserName { get; set; } = string.Empty;
+        public string NickName { get; set; } = string.Empty;
         public string Sign { get; set; } = string.Empty;
         public string Avatar { get; set; } = "_content/SwashbucklerDiary.Rcl/logo/logo.jpg";
         public bool HidePrivacyModeEntrance { get; set; }

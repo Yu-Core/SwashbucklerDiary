@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
@@ -53,7 +53,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var flag = await PlatformIntegration.TryStorageWritePermission();
             if (!flag)
             {
-                await PopupServiceHelper.Info(I18n.T("Permission.OpenStorageWrite"));
+                await PopupServiceHelper.Info(I18n.T("Please grant permission for storage writing"));
                 return;
             }
 
@@ -63,7 +63,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (diaries.Count == 0)
             {
-                await PopupServiceHelper.Info(I18n.T("Diary.NoDiary"));
+                await PopupServiceHelper.Info(I18n.T("No diary"));
                 return;
             }
 
@@ -91,7 +91,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             showConfirmImport = false;
             if (string.IsNullOrEmpty(importFilePath))
             {
-                await PopupServiceHelper.Error(I18n.T("Export.Import.Fail"));
+                await PopupServiceHelper.Error(I18n.T("Import failed"));
                 return;
             }
 
@@ -109,18 +109,18 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 if (!isSuccess)
                 {
-                    await PopupServiceHelper.Error(I18n.T("Export.Import.Fail"));
+                    await PopupServiceHelper.Error(I18n.T("Import failed"));
                 }
                 else
                 {
-                    await PopupServiceHelper.Success(I18n.T("Export.Import.Success"));
+                    await PopupServiceHelper.Success(I18n.T("Import successfully"));
                 }
 
             }
             catch (Exception e)
             {
                 Logger.LogError(e, "Export Import Fail");
-                await PopupServiceHelper.Error(I18n.T("Export.Import.Fail"));
+                await PopupServiceHelper.Error(I18n.T("Import failed"));
             }
         }
     }

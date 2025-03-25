@@ -2,7 +2,7 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("Export.Receive.Name"))"
+<MyAppBar Title="@(I18n.T("Receive"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -14,7 +14,7 @@
               Justify="@JustifyTypes.Center">
             <MCol Class="text-subtitle-1 text-center"
                   Cols="12">
-                @(I18n.T("lanReceiver.Waiting for connection"))
+                @(I18n.T("Waiting for connection"))
             </MCol>
             <MCol Cols="6">
                 <MProgressLinear Indeterminate="true"

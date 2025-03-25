@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SwashbucklerDiary.Rcl.Essentials
 {
@@ -10,7 +11,11 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         protected virtual JsonSerializerOptions DefaultJsonSerializerOptions { get; set; } = new()
         {
-            PropertyNameCaseInsensitive = true
+            PropertyNameCaseInsensitive = true,
+            Converters =
+            {
+                new JsonStringEnumConverter()
+            }
         };
 
         public abstract Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true, JsonSerializerOptions? jsonSerializerOptions = null);

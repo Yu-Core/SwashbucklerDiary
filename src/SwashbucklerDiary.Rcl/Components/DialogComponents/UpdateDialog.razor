@@ -8,7 +8,7 @@
                   MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n.T("About.Check for updates.Name"))
+            @(I18n.T("Check for updates"))
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="HandleOnCancel">
@@ -16,7 +16,7 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
-            <div class="text-subtitle-1">@(I18n.T("VersionUpdate.Need updates"))</div>
+            <div class="text-subtitle-1">@(I18n.T("Latest version detected, do you go to update? (If no new version is found, it may be under review)"))</div>
             <MCheckbox @bind-Value="notPrompt"
                        TValue="bool"
                        Dense="true"
@@ -24,7 +24,7 @@
                        OnChange="ChangeUpdateNotPrompt">
                 <LabelContent>
                     <div class="text-subtitle-2">
-                        @(I18n.T("VersionUpdate.Not prompting"))
+                        @(I18n.T("No more prompts next time"))
                     </div>
                 </LabelContent>
             </MCheckbox>
@@ -33,12 +33,12 @@
             <MSpacer></MSpacer>
             <MButton Text="true"
                      OnClick="HandleOnCancel">
-                @(I18n.T("Share.Cancel"))
+                @(I18n.T("Cancel"))
             </MButton>
             <MButton Text="true"
                      Color="primary"
                      OnClick="ToUpdate">
-                @(I18n.T("Share.OK"))
+                @(I18n.T("OK"))
             </MButton>
         </MCardActions>
     </MCard>

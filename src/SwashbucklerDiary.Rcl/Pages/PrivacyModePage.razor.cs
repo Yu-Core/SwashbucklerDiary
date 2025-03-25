@@ -66,7 +66,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             allowEnterPrivacyMode = SettingService.GetTemp(s => s.AllowEnterPrivacyMode);
             hidePrivacyModeEntrance = SettingService.Get(s => s.HidePrivacyModeEntrance);
             privacyModeEntrancePassword = SettingService.Get(s => s.PrivacyModeEntrancePassword);
-            privacyModeFunctionSearchKey = SettingService.Get(s => s.PrivacyModeFunctionSearchKey, I18n.T("PrivacyMode.Name"));
+            privacyModeFunctionSearchKey = SettingService.Get(s => s.PrivacyModeFunctionSearchKey, I18n.T("Privacy mode"));
             showSetPrivacyDiary = SettingService.Get(s => s.SetPrivacyDiary);
             enablePrivacyModeDark = SettingService.Get(s => s.PrivacyModeDark);
         }
@@ -82,10 +82,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool Mobile => !Desktop;
 
-        private string? SwitchPrivacyModeText => privacyMode ? "PrivacyMode.QuitPrivacyMode" : "PrivacyMode.EnterPrivacyMode";
+        private string? SwitchPrivacyModeText => privacyMode ? "Exit privacy mode" : "Enter privacy mode";
 
         private string? PrivacyModeEntrancePasswordSetStateText
-            => string.IsNullOrEmpty(privacyModeEntrancePassword) ? I18n.T("PrivacyMode.No password set") : I18n.T("PrivacyMode.Password has been set");
+            => string.IsNullOrEmpty(privacyModeEntrancePassword) ? I18n.T("No password set") : I18n.T("Password has been set");
 
         private void SwitchPrivacyMode()
         {
@@ -135,7 +135,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             string salt = nameof(Setting.PrivacyModeEntrancePassword);
             await SettingService.SetAsync(s => s.PrivacyModeEntrancePassword, (value + salt).MD5Encrytp32());
-            await PopupServiceHelper.Success(I18n.T("PrivacyMode.PasswordSetSuccess"));
+            await PopupServiceHelper.Success(I18n.T("Password set successfully"));
         }
 
         private async Task SwitchHidePrivacyModeEntrance()
@@ -164,11 +164,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             await PopupServiceHelper.StopLoading();
             if (isSuccess)
             {
-                await PopupServiceHelper.Success(I18n.T("PrivacyMode.Successfully moved"));
+                await PopupServiceHelper.Success(I18n.T("Successfully moved"));
             }
             else
             {
-                await PopupServiceHelper.Info(I18n.T("PrivacyMode.No diary that needs to be moved"));
+                await PopupServiceHelper.Info(I18n.T("No diary that needs to be moved"));
             }
         }
     }

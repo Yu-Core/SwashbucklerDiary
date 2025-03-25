@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 
@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             showClearCache = false;
             AppFileSystem.ClearCache();
             UpdateCacheSize();
-            await PopupServiceHelper.Success(I18n.T("Storage.ClearSuccess"));
+            await PopupServiceHelper.Success(I18n.T("Clean up successfully"));
         }
     }
 }

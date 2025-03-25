@@ -1,8 +1,8 @@
-﻿@page "/permissionSetting"
+@page "/permissionSetting"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("Setting.General.Permission.Name"))"
+<MyAppBar Title="@(I18n.T("System permission"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -18,7 +18,7 @@
                 </MListItemIcon>
 
                 <MListItemContent>
-                    @(I18n.T("Permission.Camera"))
+                    @(I18n.T("Camera permission"))
                 </MListItemContent>
 
                 <MListItemContent Class="setting-item-state">
@@ -42,7 +42,7 @@
                 </MListItemIcon>
 
                 <MListItemContent>
-                    @(I18n.T("Permission.Storage"))
+                    @(I18n.T("Storage permission"))
                 </MListItemContent>
 
                 <MListItemContent Class="setting-item-state">

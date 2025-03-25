@@ -14,7 +14,7 @@
 
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Backups.Config.Title"))
+                    @(I18n.T("Config"))
                 </MListItemTitle>
             </MListItemContent>
 
@@ -39,10 +39,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Backups.Upload.Title"))
+                    @(I18n.T("Upload"))
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("Backups.Backups.Subtitle"))
+                    @(I18n.T("Save the zip file generated as a database file"))
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -60,10 +60,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Backups.Download.Title"))
+                    @(I18n.T("Pull"))
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("Backups.Restore.Subtitle"))
+                    @(I18n.T("Select the zip file containing the database files"))
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -82,7 +82,7 @@
             </MIcon>
         </MListItemIcon>
         <MListItemContent>
-            @(I18n.T("Backups.WebDAV.IncludeDiaryResources"))
+            @(I18n.T("Include media files"))
         </MListItemContent>
         <MListItemAction>
             <SettingSwitch @bind-Value="includeDiaryResources"
@@ -102,7 +102,7 @@
                   MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Backups.Upload.Title"))
+            @(I18n.T("Upload"))
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="@(()=>showUpload=false)">
@@ -110,18 +110,18 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
-            @(I18n.T("Backups.Upload.Content") + webDavFolderName)
+            @(I18n.T("The data will be saved to an online folder") + webDavFolderName)
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text="true"
                      OnClick="()=>showUpload=false">
-                @(I18n.T("Share.Cancel"))
+                @(I18n.T("Cancel"))
             </MButton>
             <MButton Text="true"
                      Color="primary"
                      OnClick="Upload">
-                @(I18n.T("Share.OK"))
+                @(I18n.T("OK"))
             </MButton>
         </MCardActions>
     </MCard>
@@ -133,7 +133,7 @@
                   Scrollable="true">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Backups.Download.Title"))
+            @(I18n.T("Pull"))
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="()=>showDownload=false">

@@ -4,14 +4,14 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public class WebDavConfigForm
     {
-        [Required(ErrorMessage = "Please input ServerAddress")]
-        [Url(ErrorMessage = "Please input ServerAddress")]
+        [Required(ErrorMessage = "Please enter the server address")]
+        [Url(ErrorMessage = "Please enter the server address")]
         public string? ServerAddress { get; set; }
 
-        [Required(ErrorMessage = "Please input Account")]
+        [Required(ErrorMessage = "Please enter account")]
         public string? Account { get; set; }
 
-        [Required(ErrorMessage = "Please input Password")]
+        [Required(ErrorMessage = "Please enter password")]
         public string? Password { get; set; }
     }
 }

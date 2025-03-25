@@ -12,6 +12,18 @@ namespace SwashbucklerDiary.Maui.Layout
 
         private string? subTitle;
 
+        private Dictionary<string, string> RequestPermissionTitles = new()
+        {
+            { nameof(Permissions.Camera), "Camera permission description" },
+            { nameof(Permissions.StorageWrite), "StorageWrite permission description" }
+        };
+
+        private Dictionary<string, string> RequestPermissionDescriptions = new()
+        {
+            { nameof(Permissions.Camera), "Used for changing avatars, taking pictures, and other scenes" },
+            { nameof(Permissions.StorageWrite), "Used for data backup, import and export, taking pictures, and other scenarios" }
+        };
+
         [Inject]
         private II18nService I18n { get; set; } = default!;
 
@@ -32,8 +44,24 @@ namespace SwashbucklerDiary.Maui.Layout
 
         private void OnShowSnackbar(Type type)
         {
-            title = I18n.T($"PermissionDescription.{type.Name}.Name");
-            subTitle = I18n.T($"PermissionDescription.{type.Name}.Description");
+            if (RequestPermissionTitles.TryGetValue(type.Name, out var titleValue))
+            {
+                title = I18n.T(titleValue);
+            }
+            else
+            {
+                title = type.Name;
+            }
+
+            if (RequestPermissionDescriptions.TryGetValue(type.Name, out var descriptionValue))
+            {
+                subTitle = I18n.T(descriptionValue);
+            }
+            else
+            {
+                subTitle = type.Name;
+            }
+
             showSnackbar = true;
             InvokeAsync(StateHasChanged);
         }

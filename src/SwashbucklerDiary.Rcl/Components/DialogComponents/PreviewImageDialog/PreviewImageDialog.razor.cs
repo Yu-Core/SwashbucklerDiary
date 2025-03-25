@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -38,7 +38,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (string.IsNullOrEmpty(Src))
             {
-                await PopupServiceHelper.Error(I18n.T("FileBrowse.Not exist"));
+                await PopupServiceHelper.Error(I18n.T("File does not exist"));
                 return;
             }
 
@@ -49,11 +49,11 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (string.IsNullOrEmpty(Src))
             {
-                await PopupServiceHelper.Error(I18n.T("FileBrowse.Not exist"));
+                await PopupServiceHelper.Error(I18n.T("File does not exist"));
                 return;
             }
 
-            var isSuccess = await MediaResourceManager.ShareImageAsync(I18n.T("Share.Share"), Src);
+            var isSuccess = await MediaResourceManager.ShareImageAsync(I18n.T("Share"), Src);
             if (isSuccess)
             {
                 await HandleAchievements(Achievement.Share);

@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
@@ -7,6 +7,8 @@ namespace SwashbucklerDiary.Rcl.Services
         event Action<CultureInfo> OnChanged;
 
         CultureInfo Culture { get; }
+
+        IEnumerable<CultureInfo> SupportedCultures { get; }
 
         string T(string? key);
 

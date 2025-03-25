@@ -6,7 +6,7 @@
     @if (normalCalendarVisible)
     {
         <MToolbarTitle Class="font-weight-bold">
-            @(I18n.T("History.Calendar"))
+            @(I18n.T("Calendar"))
         </MToolbarTitle>
     }
     else
@@ -95,7 +95,7 @@
                   MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n.T("History.Merge diaries.Title"))
+            @(I18n.T("Merge diaries"))
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="@(()=>showConfirmMerge=false)">
@@ -103,18 +103,18 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
-            @(I18n.T("History.Merge diaries.Content"))
+            @(I18n.T("Are you sure to merge the selected date diary contents? (Other information of the diary, such as title, weather, etc., will be dominated by the first entry.)"))
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text
                      OnClick="()=>showConfirmMerge=false">
-                @(I18n.T("Share.Cancel"))
+                @(I18n.T("Cancel"))
             </MButton>
             <MButton Text
                      Color="primary"
                      OnClick="ConfirmMerge">
-                @(I18n.T("Share.OK"))
+                @(I18n.T("OK"))
             </MButton>
         </MCardActions>
     </MCard>

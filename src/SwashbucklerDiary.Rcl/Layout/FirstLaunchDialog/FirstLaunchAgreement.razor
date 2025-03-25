@@ -1,13 +1,13 @@
-﻿@namespace SwashbucklerDiary.Rcl.Layout
+@namespace SwashbucklerDiary.Rcl.Layout
 
 <div class="@(ShowClass)" style="width:100%;max-width:480px;">
     <div class="text-h5 text-center mb-5" style="font-weight:700;">
-        @(I18n.T("AgreementAndPolicy.Title"))
+        @(I18n.T("User Agreement and Privacy Policy"))
     </div>
 
     <MContainer Class="d-flex justify-center mb-5">
         <MMarkdownIt Class="text-subtitle-2 text--secondary"
-                     Source="@(I18n.T("AgreementAndPolicy.Content"))">
+                     Source="@(I18n.T("You need to agree to the user agreement and privacy policy before using this app.If you do not agree, we regret that we are unable to provide you with services.\n\nYou can read [user agreement](https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/user-agreement/en-US.md) and [privacy policy](https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/privacy-policy/en-US.md) for more information. If you agree, please click\"Agree\"to start our service."))">
         </MMarkdownIt>
     </MContainer>
 
@@ -16,14 +16,14 @@
                  Rounded="true"
                  Large="true"
                  OnClick="OnOK">
-            @(I18n.T("AgreementAndPolicy.Agree"))
+            @(I18n.T("Agree"))
         </MButton>
         <MButton Class="mb-5 flex-grow-1 mr-sm-2"
                  Rounded="true"
                  Outlined="true"
                  Large="true"
                  OnClick="OnCancel">
-            @(I18n.T("AgreementAndPolicy.Disagree"))
+            @(I18n.T("Disagree"))
         </MButton>
     </div>
 

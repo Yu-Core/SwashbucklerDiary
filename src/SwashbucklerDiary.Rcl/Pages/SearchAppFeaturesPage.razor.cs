@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -62,7 +62,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.ReadSettings();
 
             showPrivacyModeSearch = SettingService.Get(s => s.HidePrivacyModeEntrance);
-            privacyModeSearchKey = SettingService.Get(s => s.PrivacyModeFunctionSearchKey, I18n.T("PrivacyMode.Name"));
+            privacyModeSearchKey = SettingService.Get(s => s.PrivacyModeFunctionSearchKey, I18n.T("Privacy mode"));
         }
 
         private float ItemHeight => MasaBlazorHelper.Breakpoint.Xs ? 68f : 84f;

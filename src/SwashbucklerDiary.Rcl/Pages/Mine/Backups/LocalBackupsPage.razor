@@ -13,10 +13,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Backups.Backups.Title"))
+                    @(I18n.T("Backup"))
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("Backups.Backups.Subtitle"))
+                    @(I18n.T("Save the zip file generated as a database file"))
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -34,10 +34,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Backups.Restore.Title"))
+                    @(I18n.T("Restore"))
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("Backups.Restore.Subtitle"))
+                    @(I18n.T("Select the zip file containing the database files"))
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -52,7 +52,7 @@
                   MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Backups.Backups.Title"))
+            @(I18n.T("Backup"))
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="@(()=>showBackups=false)">
@@ -60,18 +60,18 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
-            @(I18n.T("Backups.Backups.Content"))
+            @(I18n.T("The backup file contains diary data, media files, and Settings"))
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text="true"
                      OnClick="()=>showBackups=false">
-                @(I18n.T("Share.Cancel"))
+                @(I18n.T("Cancel"))
             </MButton>
             <MButton Text="true"
                      Color="primary"
                      OnClick="Backups">
-                @(I18n.T("Share.OK"))
+                @(I18n.T("OK"))
             </MButton>
         </MCardActions>
     </MCard>
@@ -82,7 +82,7 @@
                   MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Backups.Restore.ConfirmRestore.Title"))
+            @(I18n.T("Confirm restore"))
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="@(()=>showRestore=false)">
@@ -90,18 +90,18 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
-            @(I18n.T("Backups.Restore.ConfirmRestore.Content"))
+            @(I18n.T("The database file will be overwritten. Do you want to continue?"))
         </MCardText>
         <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text
                      OnClick="()=>showRestore=false">
-                @(I18n.T("Share.Cancel"))
+                @(I18n.T("Cancel"))
             </MButton>
             <MButton Text
                      Color="primary"
                      OnClick="ConfirmRestore">
-                @(I18n.T("Share.OK"))
+                @(I18n.T("OK"))
             </MButton>
         </MCardActions>
     </MCard>

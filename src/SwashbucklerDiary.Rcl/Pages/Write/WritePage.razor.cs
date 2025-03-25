@@ -164,21 +164,21 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string MoodIcon => GetMoodIcon(diary.Mood);
 
         private string WeatherText =>
-            string.IsNullOrEmpty(diary.Weather) ? I18n.T("Write.Weather")! : I18n.T("Weather." + diary.Weather)!;
+            string.IsNullOrEmpty(diary.Weather) ? I18n.T("Weather")! : I18n.T(diary.Weather)!;
 
         private string MoodText =>
-            string.IsNullOrEmpty(diary.Mood) ? I18n.T("Write.Mood")! : I18n.T("Mood." + diary.Mood)!;
+            string.IsNullOrEmpty(diary.Mood) ? I18n.T("Mood")! : I18n.T(diary.Mood)!;
 
         private string LocationText =>
-            string.IsNullOrEmpty(diary.Location) ? I18n.T("Write.Location") : diary.Location;
+            string.IsNullOrEmpty(diary.Location) ? I18n.T("Location") : diary.Location;
 
-        private string TitleSwitchText() => enableTitle ? "Write.CloseTitle" : "Write.EnableTitle";
+        private string TitleSwitchText() => enableTitle ? "Close title" : "Open title";
 
-        private string MarkdownSwitchText() => enableMarkdown ? "Diary.Text" : "Diary.Markdown";
+        private string MarkdownSwitchText() => enableMarkdown ? "Text mode" : "Markdown mode";
 
         private string MarkdownSwitchIcon() => enableMarkdown ? "mdi-format-text" : "mdi-language-markdown-outline";
 
-        private string OtherInfoSwitchText() => showOtherInfo ? "Write.HideOtherInfo" : "Write.DisplayOtherInfo";
+        private string OtherInfoSwitchText() => showOtherInfo ? "Hide other information" : "Display other information";
 
         private async Task InitTags()
         {
@@ -304,7 +304,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 if (!isSuccess)
                 {
-                    await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
+                    await PopupServiceHelper.Error(I18n.T("Add failed"));
                 }
                 else
                 {
@@ -316,7 +316,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 bool isSuccess = await DiaryService.UpdateIncludesAsync(diary);
                 if (!isSuccess)
                 {
-                    await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
+                    await PopupServiceHelper.Error(I18n.T("Change failed"));
                 }
                 else
                 {
@@ -352,7 +352,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string CounterValue()
         {
-            return $"{diary.GetWordCount()} {I18n.T("Write.CountUnit")}";
+            return $"{diary.GetWordCount()} {I18n.T("Word count unit")}";
         }
 
         private async Task HandleAchievements(bool background, DiaryEditMode diaryEditMode)

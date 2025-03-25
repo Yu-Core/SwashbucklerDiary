@@ -1,0 +1,5 @@
+Why develop this diary app? In junior high school, I particularly enjoyed keeping a diary, recording seemingly trivial and silly things. Nowadays, occasionally taking a look has become the most precious memory, so the good habit of writing a diary should be maintained. In this era, paper and pen are used less, and diary apps that are easier to organize have become mainstream.
+
+I have tried many diary apps, but I always feel that something is lacking. To log in, there is a fee, there are advertisements, the interface is messy, the functions are simple, and the operation is cumbersome. Anyway, it always has to be the same. It's really difficult to keep a good diary, why not create your own app.
+
+So, I created this diary app to bring back the joy of writing diaries for anyone who loves it. If you think it's good, you can give us a donation to help us better develop and maintain this project. Thank you for your support all the way. May we all become swashbuckler in our own world.

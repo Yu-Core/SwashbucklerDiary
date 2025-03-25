@@ -1,8 +1,8 @@
-﻿@page "/diaryCardSetting"
+@page "/diaryCardSetting"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("Setting.Display.DiaryCard.Name"))"
+<MyAppBar Title="@(I18n.T("Diary card"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -18,7 +18,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.DiaryCard.Icon.Name"))
+                    @(I18n.T("Icon"))
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="diaryCardIcon"
@@ -36,7 +36,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.DiaryCard.Tags.Name"))
+                    @(I18n.T("Tag"))
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="diaryCardTags"
@@ -54,7 +54,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.DiaryCard.Location.Name"))
+                    @(I18n.T("Location"))
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="diaryCardLocation"
@@ -72,7 +72,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.DiaryCard.TimeFormat.Name"))
+                    @(I18n.T("Time format"))
                 </MListItemContent>
                 <MListItemContent Class="setting-item-state">
                     <MListItemSubtitle>
@@ -89,7 +89,7 @@
 
 <RadioDialog @bind-Value="DiaryCardTimeFormat"
              @bind-Visible="showDiaryCardTimeFormat"
-             Title="@(I18n.T("Setting.Display.DiaryCard.TimeFormat.Name"))"
+             Title="@(I18n.T("Time format"))"
              TItemValue="string"
              TItem="KeyValuePair<string,string>"
              OnChange="DiaryCardTimeFormatChanged"

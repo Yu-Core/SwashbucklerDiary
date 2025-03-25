@@ -130,19 +130,19 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? MoodIcon => GlobalConfiguration.GetMoodIcon(diary.Mood!);
 
-        private string? WeatherText => I18n.T("Weather." + diary.Weather);
+        private string? WeatherText => I18n.T(diary.Weather);
 
-        private string? MoodText => I18n.T("Mood." + diary.Mood);
+        private string? MoodText => I18n.T(diary.Mood);
 
         private string? LocationText => diary.Location;
 
-        private string TopText() => IsTop ? "Diary.CancelTop" : "Diary.Top";
+        private string TopText() => IsTop ? "Cancel top" : "Top";
 
-        private string MarkdownText() => enableMarkdown ? "Diary.Text" : "Diary.Markdown";
+        private string MarkdownText() => enableMarkdown ? "Text mode" : "Markdown mode";
 
         private string MarkdownIcon() => enableMarkdown ? "mdi-format-text" : "mdi-language-markdown-outline";
 
-        private string PrivateText() => IsPrivate ? "Read.ClosePrivacy" : "Read.OpenPrivacy";
+        private string PrivateText() => IsPrivate ? "Cancel privacy" : "Set to private";
 
         private string PrivateIcon() => IsPrivate ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
 
@@ -162,20 +162,20 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems =
             [
-                new(this, "Share.Copy","mdi-content-copy", OnCopy),
+                new(this, "Copy","mdi-content-copy", OnCopy),
                 new(this, TopText,"mdi-format-vertical-align-top", OnTopping),
-                new(this, "Diary.Export","mdi-export", OpenExportDialog),
+                new(this, "Export","mdi-export", OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon, MarkdownChanged),
-                new(this, "Read.CopyQuote", "mdi-format-quote-open-outline", CopyQuote),
-                new(this, "Read.CopyLink", "mdi-link-variant", CopyLink),
-                new(this, "Read.Search", "mdi-text-box-search-outline", OpenSearch),
+                new(this, "Copy quote", "mdi-format-quote-open-outline", CopyQuote),
+                new(this, "Copy link", "mdi-link-variant", CopyLink),
+                new(this, "Look up", "mdi-text-box-search-outline", OpenSearch),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
 
             shareItems =
             [
-                new(this, "Share.TextShare","mdi-format-text", ShareText),
-                new(this, "Share.ImageShare","mdi-image-outline", ShareImage),
+                new(this, "Text sharing","mdi-format-text", ShareText),
+                new(this, "Photo sharing","mdi-image-outline", ShareImage),
             ];
         }
 
@@ -191,12 +191,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             bool flag = await DiaryService.DeleteAsync(diary);
             if (flag)
             {
-                await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
+                await PopupServiceHelper.Success(I18n.T("Delete successfully"));
                 await NavigateToBack();
             }
             else
             {
-                await PopupServiceHelper.Error(I18n.T("Share.DeleteFail"));
+                await PopupServiceHelper.Error(I18n.T("Delete failed"));
             }
         }
 
@@ -217,13 +217,13 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             var content = diary.CreateCopyContent();
             await PlatformIntegration.SetClipboardAsync(content);
-            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
         }
 
         private async Task ShareText()
         {
             var content = diary.CreateCopyContent();
-            await PlatformIntegration.ShareTextAsync(I18n.T("Share.Share"), content);
+            await PlatformIntegration.ShareTextAsync(I18n.T("Share"), content);
             await HandleAchievements(Achievement.Share);
         }
 
@@ -237,7 +237,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             var filePath = await ScreenshotService.CaptureAsync("#screenshot");
-            await PlatformIntegration.ShareFileAsync(I18n.T("Share.Share"), filePath);
+            await PlatformIntegration.ShareFileAsync(I18n.T("Share"), filePath);
 
             await PopupServiceHelper.StopLoading();
             await InvokeAsync(StateHasChanged);
@@ -257,17 +257,17 @@ namespace SwashbucklerDiary.Rcl.Pages
             await DiaryService.MovePrivacyDiaryAsync(diary, !privacyMode);
             if (privacyMode)
             {
-                await PopupServiceHelper.Success(I18n.T("Read.Removed from privacy mode"));
+                await PopupServiceHelper.Success(I18n.T("Removed from privacy mode"));
             }
             else
             {
-                await PopupServiceHelper.Success(I18n.T("Read.Moved to privacy mode"));
+                await PopupServiceHelper.Success(I18n.T("Moved to privacy mode"));
             }
         }
 
         private string CounterValue()
         {
-            return $"{diary.GetWordCount()} {I18n.T("Write.CountUnit")}";
+            return $"{diary.GetWordCount()} {I18n.T("Word count unit")}";
         }
 
         private async Task OpenExportDialog()
@@ -280,9 +280,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task CopyQuote()
         {
-            var text = $"[{I18n.T("Read.DiaryLink")}](read/{Id})";
+            var text = $"[{I18n.T("Diary link")}](read/{Id})";
             await PlatformIntegration.SetClipboardAsync(text);
-            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
         }
 
         private async Task CopyLink()
@@ -298,7 +298,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             await PlatformIntegration.SetClipboardAsync(text);
-            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
         }
 
         private async Task HandleFirstQuery()

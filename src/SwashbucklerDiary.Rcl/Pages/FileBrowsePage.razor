@@ -1,4 +1,4 @@
-﻿@page "/fileBrowse"
+@page "/fileBrowse"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
@@ -49,7 +49,7 @@
 </SwiperTabItems>
 
 <DeleteDialog @bind-Visible="showDelete"
-              Title="@(I18n.T("Share.Delete"))"
-              Content="@(I18n.T("FileBrowse.ConfirmDeleteUnused"))"
+              Title="@(I18n.T("Delete"))"
+              Content="@(I18n.T("Sure to delete unused files?"))"
               OnOK="DeleteUnusedResources">
 </DeleteDialog>

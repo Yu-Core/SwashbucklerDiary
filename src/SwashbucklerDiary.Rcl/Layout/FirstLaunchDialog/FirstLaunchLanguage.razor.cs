@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 
@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Parameter]
         public EventCallback<string> OnClick { get; set; }
 
-        private string ShowClass => Show ? "" : "d-none";
+        private string ShowClass => Show ? "scroll-show px-4" : "d-none";
 
         protected override void OnInitialized()
         {
@@ -32,11 +32,12 @@ namespace SwashbucklerDiary.Rcl.Layout
         private void SetLanguageListItems()
         {
             var languageListItems = new List<DynamicListItem>();
-            foreach (var language in GlobalConfiguration.Languages)
+            foreach (var culture in I18n.SupportedCultures.OrderByDescending(it => it.Name))
             {
-                var item = new DynamicListItem(this, language.Key, string.Empty, () => OnClick.InvokeAsync(language.Value));
+                var item = new DynamicListItem(this, culture.NativeName, string.Empty, () => OnClick.InvokeAsync(culture.Name));
                 languageListItems.Add(item);
-            };
+            }
+            ;
 
             LanguageListItems = languageListItems;
         }

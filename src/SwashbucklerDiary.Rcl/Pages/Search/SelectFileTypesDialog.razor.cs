@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
@@ -25,9 +25,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             items =
             [
-                new(this,"FileBrowse.Image.Name","mdi-image-outline",UpdateValue,MediaResource.Image),
-                new(this,"FileBrowse.Audio.Name","mdi-music",UpdateValue,MediaResource.Audio),
-                new(this,"FileBrowse.Video.Name","mdi-movie-open-outline",UpdateValue,MediaResource.Video),
+                new(this,"Image","mdi-image-outline",UpdateValue,MediaResource.Image),
+                new(this,"Audio","mdi-music",UpdateValue,MediaResource.Audio),
+                new(this,"Video","mdi-movie-open-outline",UpdateValue,MediaResource.Video),
             ];
         }
 

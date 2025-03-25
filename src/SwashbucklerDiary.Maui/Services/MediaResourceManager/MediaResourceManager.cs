@@ -72,7 +72,7 @@ namespace SwashbucklerDiary.Maui.Services
 
             if (string.IsNullOrEmpty(filePath))
             {
-                await _popupServiceHelper.Error(_i18n.T("FileBrowse.Not exist"));
+                await _popupServiceHelper.Error(_i18n.T("File does not exist"));
             }
 
             return filePath;

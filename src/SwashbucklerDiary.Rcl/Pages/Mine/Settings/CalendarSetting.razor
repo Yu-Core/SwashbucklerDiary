@@ -2,7 +2,7 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("Setting.Display.Calendar.Name"))"
+<MyAppBar Title="@(I18n.T("Calendar"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -18,7 +18,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Setting.Display.Calendar.FirstDayOfWeek.Name"))
+                    @(I18n.T("First day of week"))
                 </MListItemContent>
                 <MListItemContent Class="setting-item-state">
                     <MListItemSubtitle>
@@ -36,7 +36,7 @@
 <SelectChipDialog @bind-Visible="showFirstDayOfWeek"
                   @bind-Value="@firstDayOfWeek"
                   @bind-Value:after="UpdateSetting"
-                  Title="@(I18n.T("Setting.Display.Calendar.FirstDayOfWeek.Name"))"
+                  Title="@(I18n.T("First day of week"))"
                   Items="firstDayOfWeekItems"
                   Mandatory="true">
 </SelectChipDialog>

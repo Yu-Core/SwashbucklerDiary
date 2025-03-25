@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
@@ -84,14 +84,14 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems =
             [
-                new(this, "Log.Clear", "mdi-delete-outline", OpenDeleteDialog),
-                new(this, "Share.Share", "mdi-share-variant-outline", OpenShareDialog),
+                new(this, "Clear out", "mdi-delete-outline", OpenDeleteDialog),
+                new(this, "Share", "mdi-share-variant-outline", OpenShareDialog),
             ];
 
             shareItems =
             [
-                new(this, "Share.TextShare","mdi-format-text", ShareText),
-                new(this, "Share.FileShare","mdi-file-outline", ShareLogFile),
+                new(this, "Text sharing","mdi-format-text", ShareText),
+                new(this, "File sharing","mdi-file-outline", ShareLogFile),
             ];
         }
 
@@ -99,7 +99,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (logs.Count == 0)
             {
-                await PopupServiceHelper.Info(I18n.T("Log.NoLog"));
+                await PopupServiceHelper.Info(I18n.T("No logs"));
                 return;
             }
 
@@ -112,7 +112,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             showShare = false;
             if (logs.Count == 0)
             {
-                await PopupServiceHelper.Info(I18n.T("Log.NoLog"));
+                await PopupServiceHelper.Info(I18n.T("No logs"));
                 return string.Empty;
             }
 
@@ -134,7 +134,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            await PlatformIntegration.ShareTextAsync(I18n.T("Share.Share")!, text);
+            await PlatformIntegration.ShareTextAsync(I18n.T("Share")!, text);
         }
 
         private async Task ShareLogFile()
@@ -147,7 +147,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             var fn = "Logs.txt";
             string path = await AppFileManager.CreateTempFileAsync(fn, text);
-            await PlatformIntegration.ShareFileAsync(I18n.T("Log.Share")!, path);
+            await PlatformIntegration.ShareFileAsync(I18n.T("Share")!, path);
         }
 
         private void OpenDeleteDialog()
@@ -164,11 +164,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (flag)
             {
                 logs = [];
-                await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
+                await PopupServiceHelper.Success(I18n.T("Delete successfully"));
             }
             else
             {
-                await PopupServiceHelper.Error(I18n.T("Share.DeleteFail"));
+                await PopupServiceHelper.Error(I18n.T("Delete failed"));
             }
         }
 

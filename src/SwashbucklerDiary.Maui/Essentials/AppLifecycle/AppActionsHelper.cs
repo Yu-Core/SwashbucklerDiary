@@ -41,8 +41,8 @@ namespace SwashbucklerDiary.Maui.Essentials
             if (AppActions.Current.IsSupported)
             {
                 AppActions.Current.SetAsync([
-                   new("write",i18n.T("Share.Add"),icon:"shortcut_pencil"),
-                   new("search",i18n.T("Share.Search"),icon:"shortcut_magnify"),
+                   new("write",i18n.T("Add"),icon:"shortcut_pencil"),
+                   new("search",i18n.T("Search"),icon:"shortcut_magnify"),
                 ]);
             }
         }

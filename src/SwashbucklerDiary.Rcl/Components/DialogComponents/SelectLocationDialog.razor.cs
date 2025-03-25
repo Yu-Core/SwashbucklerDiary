@@ -1,4 +1,4 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -85,7 +85,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (Items.Any(it => it.Name == name))
             {
-                await PopupServiceHelper.Warning(I18n.T("Location.Repeat.Title"), I18n.T("Location.Repeat.Content"));
+                await PopupServiceHelper.Warning(I18n.T("Location already exists"), I18n.T("Do not add again"));
                 return;
             }
 
@@ -93,7 +93,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var flag = await LocationService.AddAsync(location);
             if (!flag)
             {
-                await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
+                await PopupServiceHelper.Error(I18n.T("Add failed"));
                 return;
             }
 

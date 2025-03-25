@@ -138,7 +138,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "hotkey", "⇧⌘I" },
                 { "name", "image" },
                 { "tipPosition", "n" },
-                { "tip", I18n.T("Vditor.AddImage") },
+                { "tip", I18n.T("Add image") },
                 { "className", "" },
                 { "icon", "<svg><use xlink:href=\"#vditor-icon-image\"></use></svg>" },
             };
@@ -148,7 +148,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "hotkey", "⇧⌘A" },
                 { "name", "audio" },
                 { "tipPosition", "n" },
-                { "tip", I18n.T("Vditor.AddAudio") },
+                { "tip", I18n.T("Add audio") },
                 { "className", "" },
                 { "icon", "<svg><use xlink:href=\"#vditor-icon-audio\"></use></svg>" },
             };
@@ -157,7 +157,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "hotkey", "⇧⌘V" },
                 { "name", "video" },
                 { "tipPosition", "n" },
-                { "tip", I18n.T("Vditor.AddVideo") },
+                { "tip", I18n.T("Add video") },
                 { "className", "" },
                 { "icon", "<svg><use xlink:href=\"#vditor-icon-video\"></use></svg>" },
             };
@@ -189,7 +189,7 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 { "mode", "ir" },
                 { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list", "check", "indent", "outdent", btnTable, "code", "inline-code", "link", btnImage, btnAudio, btnVideo, "undo", "redo", "fullscreen", btnUpload }},
-                { "placeholder", I18n.T("Write.ContentPlace") },
+                { "placeholder", I18n.T("Please enter content") },
                 { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.10.7" },
                 { "lang", lang },
                 { "icon","material" },
@@ -247,8 +247,8 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             catch (Exception e)
             {
-                await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
-                Logger.LogError(e, I18n.T("Share.AddFail"));
+                await PopupServiceHelper.Error(I18n.T("Add failed"));
+                Logger.LogError(e, I18n.T("Add failed"));
             }
         }
 
@@ -261,8 +261,8 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             catch (Exception e)
             {
-                await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
-                Logger.LogError(e, I18n.T("Share.AddFail"));
+                await PopupServiceHelper.Error(I18n.T("Add failed"));
+                Logger.LogError(e, I18n.T("Add failed"));
             }
         }
 
@@ -275,8 +275,8 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             catch (Exception e)
             {
-                await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
-                Logger.LogError(e, I18n.T("Share.AddFail"));
+                await PopupServiceHelper.Error(I18n.T("Add failed"));
+                Logger.LogError(e, I18n.T("Add failed"));
             }
         }
 

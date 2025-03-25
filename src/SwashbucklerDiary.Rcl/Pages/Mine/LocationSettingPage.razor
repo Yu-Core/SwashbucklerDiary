@@ -1,8 +1,8 @@
-﻿@page "/locationSetting"
+@page "/locationSetting"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="@(I18n.T("Location.Name"))"
+<MyAppBar Title="@(I18n.T("Location"))"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -17,8 +17,8 @@
 </div>
 
 <InputDialog @bind-Visible="showAdd"
-             Title="@(I18n.T("Location.Add"))"
-             Placeholder="@(I18n.T("Location.Placeholder"))"
+             Title="@(I18n.T("Add location"))"
+             Placeholder="@(I18n.T("Please enter a location name"))"
              MaxLength="200"
              OnOK="SaveAdd">
 </InputDialog>

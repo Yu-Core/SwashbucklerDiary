@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Shared;
 using SwashbucklerDiary.Rcl;
 
 #if WINDOWS || MACCATALYST

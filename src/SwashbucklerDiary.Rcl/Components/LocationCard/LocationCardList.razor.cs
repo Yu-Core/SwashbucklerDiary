@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -39,13 +39,13 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 if (RemoveSelectedItem())
                 {
-                    await PopupServiceHelper.Success(I18n.T("Share.DeleteSuccess"));
+                    await PopupServiceHelper.Success(I18n.T("Delete successfully"));
                     StateHasChanged();
                 }
             }
             else
             {
-                await PopupServiceHelper.Error(I18n.T("Share.DeleteFail"));
+                await PopupServiceHelper.Error(I18n.T("Delete failed"));
             }
         }
 
@@ -59,7 +59,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (Value.Any(it => it.Name == name))
             {
-                await PopupServiceHelper.Warning(I18n.T("Location.Repeat.Title"), I18n.T("Location.Repeat.Content"));
+                await PopupServiceHelper.Warning(I18n.T("Location already exists"), I18n.T("Do not add again"));
                 return;
             }
 
@@ -68,7 +68,7 @@ namespace SwashbucklerDiary.Rcl.Components
             bool flag = await LocationService.UpdateAsync(SelectedItem, it => new { it.Name, it.UpdateTime });
             if (!flag)
             {
-                await PopupServiceHelper.Error(I18n.T("Share.EditFail"));
+                await PopupServiceHelper.Error(I18n.T("Change failed"));
             }
         }
 
@@ -76,8 +76,8 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             sortOptions = new()
             {
-                {"Sort.Time.Desc", it => it.OrderByDescending(l => l.CreateTime) },
-                {"Sort.Time.Asc", it => it.OrderBy(l => l.CreateTime) },
+                {"Time - Reverse order", it => it.OrderByDescending(l => l.CreateTime) },
+                {"Time - Positive order", it => it.OrderBy(l => l.CreateTime) },
             };
 
             if (string.IsNullOrEmpty(SortItem))
@@ -87,9 +87,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
             menuItems =
             [
-                new(this, "Share.Rename", "mdi-rename-outline", Rename),
-                new(this, "Share.Delete", "mdi-delete-outline", Delete),
-                new(this, "Share.Sort", "mdi-sort-variant", OpenSortDialog),
+                new(this, "Rename", "mdi-rename-outline", Rename),
+                new(this, "Delete", "mdi-delete-outline", Delete),
+                new(this, "Sort", "mdi-sort-variant", OpenSortDialog),
             ];
         }
 

@@ -25,10 +25,10 @@
                    Elevation="0"
                    Rounded="@("lg")">
                 <MCardTitle Class="text-h5 font-weight-bold py-sm-10" Style="justify-content:center;">
-                    @(I18n.T("Sponsor.Introduce.Title"))
+                    @(I18n.T("Support the development of Swashbuckler Diary"))
                 </MCardTitle>
                 <MCardText Style="text-indent: 2em;">
-                    <MMarkdownIt Source="@(I18n.T("Sponsor.Introduce.Content"))"
+                    <MMarkdownIt Source="@whyDevelopDescription"
                                  Class="user-select">
                     </MMarkdownIt>
                 </MCardText>
@@ -65,7 +65,7 @@
     <SwiperTabItem>
         <MContainer Class="my-container"
                     Fluid="true">
-            <MSubheader Class="mb-2">@(I18n.T("SponsorList.Text"))</MSubheader>
+            <MSubheader Class="mb-2">@(I18n.T("Thanks to the following sponsor"))</MSubheader>
             <MCard Class="mb-5"
                    Elevation="0"
                    Rounded="@("lg")">

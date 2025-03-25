@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             , [nameof(Value)]);
 
-        private string? MostWeatherText => MostWeather is null ? I18n.T("Statistics.Not have") : I18n.T("Weather." + MostWeather);
+        private string? MostWeatherText => MostWeather is null ? I18n.T("No") : I18n.T(MostWeather);
 
         private string? MostWeatherIcon => MostWeather is null ? string.Empty : IGlobalConfiguration.GetWeatherIcon(MostWeather);
 
@@ -54,7 +54,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             , [nameof(Value)]);
 
-        private string? MostMoodText => MostMood is null ? I18n.T("Statistics.Not have") : I18n.T("Mood." + MostMood);
+        private string? MostMoodText => MostMood is null ? I18n.T("No") : I18n.T(MostMood);
 
         private string? MostMoodIcon => MostMood is null ? string.Empty : IGlobalConfiguration.GetMoodIcon(MostMood);
 

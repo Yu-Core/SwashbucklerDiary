@@ -21,8 +21,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private readonly List<TabListItem> tabListItems =
         [
-            new("Index.All","all"),
-            new("Index.Tag","tag"),
+            new("All","all"),
+            new("Tag","tag"),
         ];
 
         [Inject]
@@ -65,7 +65,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (Tags.Any(it => it.Name == tagName))
             {
-                await PopupServiceHelper.Warning(I18n.T("Tag.Repeat.Title"), I18n.T("Tag.Repeat.Content"));
+                await PopupServiceHelper.Warning(I18n.T("Tag already exists"), I18n.T("Do not add again"));
                 return;
             }
 
@@ -76,7 +76,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var flag = await TagService.AddAsync(tag);
             if (!flag)
             {
-                await PopupServiceHelper.Error(I18n.T("Share.AddFail"));
+                await PopupServiceHelper.Error(I18n.T("Add failed"));
                 return;
             }
 

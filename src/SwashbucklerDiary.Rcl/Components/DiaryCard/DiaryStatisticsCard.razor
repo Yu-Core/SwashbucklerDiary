@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits MyComponentBase
 
 <MCard Class="pa-4"
@@ -6,28 +6,28 @@
        Rounded="@("lg")">
     <MListItem Dense="true">
         <MListItemContent Class="font-weight-bold">
-            @(I18n.T("Statistics.Name"))
+            @(I18n.T("Statistics"))
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Statistics.DiaryCount")): @(DiaryCount)
+            @(I18n.T("Diary count")): @(DiaryCount)
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Statistics.WordCount")): @(WordCount)
+            @(I18n.T("Word count")): @(WordCount)
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Statistics.ActiveDayCount")): @(ActiveDayCount)
+            @(I18n.T("Active days")): @(ActiveDayCount)
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
             <span>
-                @(I18n.T("Statistics.MostWeather")):
+                @(I18n.T("Most weather")):
                 <MIcon Class="mx-1" Size="20">
                     @(MostWeatherIcon)
                 </MIcon>
@@ -38,7 +38,7 @@
     <MListItem Dense="true">
         <MListItemContent>
             <span>
-                @(I18n.T("Statistics.MostMood")):
+                @(I18n.T("Most mood")):
                 <MIcon Class="mx-1" Size="20">
                     @(MostMoodIcon)
                 </MIcon>
@@ -48,12 +48,12 @@
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Statistics.EarliestDate")): @(EarliestDate)
+            @(I18n.T("Earliest date")): @(EarliestDate)
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Statistics.LastDate")): @(LastDate)
+            @(I18n.T("Last date")): @(LastDate)
         </MListItemContent>
     </MListItem>
 </MCard>

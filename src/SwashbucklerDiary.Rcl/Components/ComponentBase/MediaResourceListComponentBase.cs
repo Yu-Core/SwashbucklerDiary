@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -91,8 +91,8 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             menuItems =
             [
-                new(this, "FileBrowse.ViewReferences", "mdi-notebook-outline", ViewReferences),
-                new(this, "Share.Save", "mdi-tray-arrow-down", Save)
+                new(this, "View references", "mdi-notebook-outline", ViewReferences),
+                new(this, "Save", "mdi-tray-arrow-down", Save)
             ];
         }
 
@@ -117,7 +117,7 @@ namespace SwashbucklerDiary.Rcl.Components
             int count = resource?.Diaries?.Count ?? 0;
             if (count < 1)
             {
-                await PopupServiceHelper.Info(I18n.T("FileBrowse.This file is not referenced"));
+                await PopupServiceHelper.Info(I18n.T("This file is not referenced"));
                 return;
             }
             else if (count == 1)

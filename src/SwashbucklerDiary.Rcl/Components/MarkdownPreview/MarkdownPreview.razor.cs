@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
@@ -69,7 +69,7 @@ namespace SwashbucklerDiary.Rcl.Components
         [JSInvokable]
         public async Task Copy()
         {
-            await PopupServiceHelper.Success(I18n.T("Share.CopySuccess"));
+            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
         }
 
         [JSInvokable]
