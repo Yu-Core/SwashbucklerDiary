@@ -22,8 +22,8 @@
                OnClick="ClearFilter">
             <MIcon>mdi-filter-variant-remove</MIcon>
         </MChip>
-        <CustomMChipGroup Style="min-width:0;"
-                             ShowArrows="true">
+        <MChipGroup Style="min-width:0;"
+                    ShowArrows="true">
             @foreach (var item in filterItems)
             {
                 <MChip Outlined
@@ -37,7 +37,7 @@
                     <MIcon Right>mdi-chevron-down</MIcon>
                 </MChip>
             }
-        </CustomMChipGroup>
+        </MChipGroup>
     </ExtensionContent>
 </MToolbar>
 
