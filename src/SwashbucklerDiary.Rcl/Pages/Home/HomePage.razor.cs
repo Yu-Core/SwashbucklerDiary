@@ -7,7 +7,7 @@ using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
-    public partial class IndexPage : DiariesPageComponentBase
+    public partial class HomePage : DiariesPageComponentBase
     {
         private bool showWelcomeText;
 

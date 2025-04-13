@@ -3,7 +3,7 @@ using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
-    public partial class IndexHead
+    public partial class HomeHead
     {
         [Inject]
         private II18nService I18n { get; set; } = default!;
