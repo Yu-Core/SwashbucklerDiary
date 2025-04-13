@@ -1,9 +1,11 @@
 using Masa.Blazor;
+using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -111,7 +113,13 @@ namespace SwashbucklerDiary.Rcl.Components
             SetOptions();
         }
 
-        private string? InternalClass =>  $"vditor {Class} {(firstLineIndent ? "first-line-indent" : "")} {(taskListLineThrough ? "task-list-line-through" : "")} {(Outline ? "": "outline_hide")}";
+        private string? InternalClass => new CssBuilder()
+            .Add("vditor")
+            .Add(Class)
+            .AddIf("first-line-indent", firstLineIndent)
+            .AddIf("task-list-line-through", taskListLineThrough)
+            .AddIf("outline_hide", !Outline)
+            .Build();
 
         private void ReadSettings()
         {

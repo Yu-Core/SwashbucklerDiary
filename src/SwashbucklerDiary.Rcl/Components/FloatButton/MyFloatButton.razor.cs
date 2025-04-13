@@ -1,6 +1,8 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
+using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -41,13 +43,14 @@ namespace SwashbucklerDiary.Rcl.Components
             GC.SuppressFinalize(this);
         }
 
-        protected string InternalClass => $"{Class} {Color}";
+        protected string InternalClass => new CssBuilder()
+            .Add(Class)
+            .AddIf("white", !Dark)
+            .Build();
 
         protected virtual StringNumber? Size { get; }
 
         protected bool Desktop => MasaBlazorHelper.Breakpoint.MdAndUp;
-
-        protected string? Color => Dark ? null : "white";
 
         protected override void OnInitialized()
         {

@@ -13,7 +13,7 @@
     </div>
 
     <MInfiniteScroll @ref="mInfiniteScroll"
-                     Class="@($"{(HasMore?"":"py-0")}")"
+                     Class="@InfiniteScrollClass"
                      OnLoad="@OnLoad"
                      Parent="@($"#{ScrollElementId}")"
                      EmptyText="@(string.Empty)"

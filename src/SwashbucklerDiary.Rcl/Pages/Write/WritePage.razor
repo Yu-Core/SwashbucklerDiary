@@ -7,7 +7,7 @@
     <link href="@cssHref" rel="stylesheet" />
 }
 
-<div style="@($"display: flex;flex-direction: column;height: 100%;{(waitSelectTemplate ? "opacity:0;" : "")}")">
+<div class="d-flex flex-column" style="@WrapStyle">
     <MyAppBar>
         <MButton Icon="true"
                  OnClick="NavigateToBack">
@@ -140,7 +140,7 @@
             }
         </div>
 
-        <div class="pl-2 @(SelectedTags.Any() ? "" : "d-none")">
+        <div class="@TagsWrapClass">
             <div class="write-chip-group" style="width:100%;">
                 @foreach (var item in SelectedTags)
                 {
@@ -202,3 +202,15 @@
 <MOverlay Value="overlay"
           Opacity="0">
 </MOverlay>
+
+@code {
+    private string WrapStyle => new StyleBuilder()
+        .Add("height", "100%")
+        .AddIf("opacity", "0", waitSelectTemplate)
+        .Build();
+
+    private string TagsWrapClass => new CssBuilder()
+        .Add("pl-2")
+        .AddIf("d-none", SelectedTags.Count == 0)
+        .Build();
+}

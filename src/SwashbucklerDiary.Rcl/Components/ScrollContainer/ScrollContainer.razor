@@ -1,9 +1,9 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 
 <div id="@Id"
-     class="my-scroll-container @(Class)"
+     class="@InternalClass"
      style="@(Style)">
-    <MContainer Class="@("my-container "+ ContentClass)"
+    <MContainer Class="@InternalContentClass"
                 Style="@ContentStyle"
                 Fluid="true">
         <CascadingValue Value="@Id"

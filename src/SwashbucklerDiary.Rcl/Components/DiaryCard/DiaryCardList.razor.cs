@@ -1,3 +1,4 @@
+using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
@@ -83,11 +84,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private float ItemHeight => MasaBlazorHelper.Breakpoint.Xs ? 156.8f : (MasaBlazorHelper.Breakpoint.Sm ? 164.8f : 172.8f);
 
-        private string? InternalClass => $"card-list__main" +
-            (showMenu ? " card-list__menu--active" : "") +
-            (showIcon ? "" : " diary-card-list__icon--hidden") +
-            (showTags ? "" : " diary-card-list__tags--hidden") +
-            (showLocation ? "" : " diary-card-list__location--hidden");
+        private string? InternalClass => new CssBuilder()
+            .Add("card-list__main")
+            .AddIf("card-list__menu--active", showMenu)
+            .AddIf("diary-card-list__icon--hidden", !showIcon)
+            .AddIf("diary-card-list__tags--hidden", !showTags)
+            .AddIf("diary-card-list__location--hidden", !showLocation)
+            .Build();
 
         private List<TagModel> SelectedTags
         {

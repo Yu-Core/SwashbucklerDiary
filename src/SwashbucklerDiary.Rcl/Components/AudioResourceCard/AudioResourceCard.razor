@@ -46,8 +46,7 @@
                            value="@(CurrentTime.ToString("0.00", CultureInfo.InvariantCulture) ?? "0")"
                            @oninput="OnInputCurrentTime"
                            @onchange="OnChangeCurrentTime"
-                           style="--current-width: @(((CurrentTime / duration) * 100).ToString(" 0.00", CultureInfo.InvariantCulture))%;
-                           --current-color: @(Dark ? "#F5F5F5" : "#212121");--current-track-color: #9E9E9E" />
+                           style="@InputStyle" />
 
                     <span class="text--secondary">@(TimeSpan.FromSeconds(duration).ToDurationString())</span>
                 </div>

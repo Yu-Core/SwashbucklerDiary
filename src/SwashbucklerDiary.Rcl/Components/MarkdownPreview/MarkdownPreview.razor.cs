@@ -1,6 +1,8 @@
+using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -119,7 +121,10 @@ namespace SwashbucklerDiary.Rcl.Components
             SetOptions();
         }
 
-        private string? InternalClass => $"{Class} {(FirstLineIndent ? "first-line-indent" : "")} {(TaskListLineThrough ? "task-list-line-through" : "")}";
+        private string? InternalClass => new CssBuilder()
+            .AddIf("first-line-indent", FirstLineIndent)
+            .AddIf("task-list-line-through", TaskListLineThrough)
+            .Build();
 
         private void ReadSettings()
         {

@@ -22,7 +22,9 @@
 
 
 @code {
-    private string ActiveClass => Activated ? "m-list-item--active" : "";
-
-    private string Class => $"{ActiveClass} rounded-lg mb-2";
+    private string Class => new CssBuilder()
+        .Add("rounded-lg")
+        .Add("mb-2")
+        .AddIf("m-list-item--active", Activated)
+        .Build();
 }

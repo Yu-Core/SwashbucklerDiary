@@ -2,13 +2,13 @@
 @inherits DialogComponentBase
 
 <CustomMDialog MyValue="Visible"
-                  MyValueChanged="InternalVisibleChanged"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420"
-                  OnBeforeShowContent="BeforeShowAddTable"
-                  DisableAutoFocus
-                  OnMousedownPreventDefault
-                  OnOutsideClick="HandleOnOutsideClick">
+               MyValueChanged="InternalVisibleChanged"
+               ContentClass="rounded-lg"
+               MaxWidth="420"
+               OnBeforeShowContent="BeforeShowAddTable"
+               DisableAutoFocus
+               OnMousedownPreventDefault
+               OnOutsideClick="HandleOnOutsideClick">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @I18n.T("Add table")

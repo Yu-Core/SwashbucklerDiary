@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+using Masa.Blazor.Core;
+using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -18,6 +20,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
         bool ReadOnly => !OnClick.HasDelegate;
 
-        string InternalClass => $"{Class} diary-info-btn text--secondary{(ReadOnly ? " m-btn--readonly" : "")}";
+        string InternalClass => new CssBuilder()
+            .Add(Class)
+            .Add("diary-info-btn")
+            .Add("text--secondary")
+            .AddIf("m-btn--readonly", ReadOnly)
+            .Build();
     }
 }

@@ -4,16 +4,16 @@
 <MultiDisplay>
     <MobileContent>
         <CustomMBottomSheet MyValue="Visible"
-                               MyValueChanged="InternalVisibleChanged"
-                               ContentClass="rounded-t-lg">
+                            MyValueChanged="InternalVisibleChanged"
+                            ContentClass="rounded-t-lg">
             @GenCard(GenMobileCardActionsContent())
         </CustomMBottomSheet>
     </MobileContent>
     <DesktopContent>
         <CustomMDialog MyValue="Visible"
-                          MyValueChanged="InternalVisibleChanged"
-                          ContentClass="rounded-lg"
-                          MaxWidth="420">
+                       MyValueChanged="InternalVisibleChanged"
+                       ContentClass="rounded-lg"
+                       MaxWidth="420">
             @GenCard(GenDesktopCardActionsContent())
         </CustomMDialog>
     </DesktopContent>

@@ -1,3 +1,4 @@
+using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
@@ -35,6 +36,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
             SetContent();
         }
+
+        private string MenuIconClass => new CssBuilder()
+            .Add("card__menu")
+            .AddIf("card-list__selected-menu", IsActive)
+            .Build();
 
         private bool IsActive => Value.Id == DiaryCardListOptions.SelectedItemValue.Id;
 

@@ -1,7 +1,7 @@
 @namespace SwashbucklerDiary.Rcl.Components
 @inherits MediaWaterfallBase
 
-<div style="@($"{(contentLoading ? "opacity:0;":"")}")">
+<div style="@WrapStyle">
     <wc-waterfall @ref="elementReference" class="video-waterfall" gap="@Gap" cols="@Cols">
         @foreach (var item in loadedItems)
         {
@@ -13,7 +13,7 @@
     </wc-waterfall>
 
     <MInfiniteScroll @ref="mInfiniteScroll"
-                     Class="@($"{(HasMore?"":"py-0")}")"
+                     Class="@InfiniteScrollClass"
                      OnLoad="@OnLoad"
                      Parent="@($"#{ScrollElementId}")"
                      EmptyText="@(string.Empty)"

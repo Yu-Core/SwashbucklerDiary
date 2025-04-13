@@ -1,6 +1,8 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
+using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -21,6 +23,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         protected WaterfallJSModule WaterfallJSModule { get; set; } = default!;
+
+        protected string WrapStyle => StyleBuilder.Create()
+            .AddIf("opacity", "0", contentLoading)
+            .Build();
 
         protected int Gap => MasaBlazorHelper.Breakpoint.Xs ? 16 : 24;
 

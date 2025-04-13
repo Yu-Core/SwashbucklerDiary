@@ -1,5 +1,7 @@
 using Masa.Blazor;
+using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -38,6 +40,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public List<ResourceModel> Value { get; set; } = [];
+
+        protected string InfiniteScrollClass => new CssBuilder()
+            .AddIf("py-0", !HasMore)
+            .Build();
 
         protected virtual ResourceModel SelectedItem { get; set; } = new();
 

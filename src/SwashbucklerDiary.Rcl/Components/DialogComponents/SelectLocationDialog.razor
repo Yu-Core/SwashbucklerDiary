@@ -2,17 +2,17 @@
 @inherits DialogComponentBase
 
 <CustomMDialog MyValue="Visible"
-                  MyValueChanged="InternalVisibleChanged"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420"
-                  Scrollable="true"
-                  OnBeforeShowContent="BeforeShowContent">
+               MyValueChanged="InternalVisibleChanged"
+               ContentClass="rounded-lg"
+               MaxWidth="420"
+               Scrollable="true"
+               OnBeforeShowContent="BeforeShowContent">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Select location"))
             <MSpacer></MSpacer>
             <MButton Icon
-                     OnClick="()=>showSearch=!showSearch">
+                     OnClick="() => showSearch = !showSearch">
                 <MIcon>search</MIcon>
             </MButton>
             <MButton Icon
@@ -25,18 +25,18 @@
             @if (showSearch)
             {
                 <CustomMTextField @bind-Value="_searchText"
-                                     Class="mb-2"
-                                     OnInput="UpdateInternalItems"
-                                     Dense
-                                     TValue="string"
-                                     Filled
-                                     Rounded
-                                     Clearable
-                                     Color="@Color"
-                                     HideDetails="@("auto")"
-                                     spellcheck="false"
-                                     Placeholder="@(I18n.T("Search"))"
-                                     PrependInnerIcon="search">
+                                  Class="mb-2"
+                                  OnInput="UpdateInternalItems"
+                                  Dense
+                                  TValue="string"
+                                  Filled
+                                  Rounded
+                                  Clearable
+                                  Color="@Color"
+                                  HideDetails="@("auto")"
+                                  spellcheck="false"
+                                  Placeholder="@(I18n.T("Search"))"
+                                  PrependInnerIcon="search">
                 </CustomMTextField>
             }
             <div class="scroll-show" style="max-height:300px;">
@@ -45,7 +45,7 @@
                             Context="item">
                     <MListItem @key="item.Id"
                                Class="mb-1 rounded"
-                               OnClick="()=>SetSelectedLocation(item)">
+                               OnClick="() => SetSelectedLocation(item)">
                         <MListItemContent>
                             @(item.Name)
                         </MListItemContent>
@@ -64,7 +64,7 @@
         </MCardText>
         <MCardActions>
             <MButton Text="true"
-                     OnClick="()=>showAdd = true">
+                     OnClick="() => showAdd = true">
                 @(I18n.T("Add"))
             </MButton>
             <MSpacer></MSpacer>

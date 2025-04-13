@@ -1,5 +1,7 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
+using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -31,6 +33,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public EventCallback OnAfter { get; set; }
+
+        private string InternalClass => new CssBuilder()
+            .Add(Class)
+            .Add("user-select")
+            .Add("flex-grow-1")
+            .Add("flex-column")
+            .Build();
 
         public async Task InsertValueAsync(string value)
         {

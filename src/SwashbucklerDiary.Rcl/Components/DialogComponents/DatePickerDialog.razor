@@ -2,10 +2,10 @@
 @inherits DialogComponentBase
 
 <CustomMDialog MyValue="Visible"
-                  MyValueChanged="InternalVisibleChanged"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420"
-                  OnBeforeShowContent="BeforeShowContent">
+               MyValueChanged="InternalVisibleChanged"
+               ContentClass="rounded-lg"
+               MaxWidth="420"
+               OnBeforeShowContent="BeforeShowContent">
     <MDatePicker @bind-Value="internalValue"
                  Class="rounded-lg pt-4 my-picker"
                  FullWidth="true"

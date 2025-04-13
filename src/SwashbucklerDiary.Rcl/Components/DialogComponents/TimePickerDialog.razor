@@ -2,10 +2,10 @@
 @inherits DialogComponentBase
 
 <CustomMDialog MyValue="Visible"
-                  MyValueChanged="InternalVisibleChanged"
-                  ContentClass="rounded-lg"
-                  Width="@("auto")"
-                  OnBeforeShowContent="BeforeShowContent">
+               MyValueChanged="InternalVisibleChanged"
+               ContentClass="rounded-lg"
+               Width="@("auto")"
+               OnBeforeShowContent="BeforeShowContent">
     <MTimePicker @bind-Value="internalValue"
                  Landscape
                  Format="TimeFormat.Hr24"
