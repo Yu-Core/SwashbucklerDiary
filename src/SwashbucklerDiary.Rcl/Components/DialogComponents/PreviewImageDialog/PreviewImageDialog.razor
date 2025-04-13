@@ -2,42 +2,38 @@
 @inherits DialogComponentBase
 
 <CustomMDialog MyValue="Visible"
-                  MyValueChanged="InternalVisibleChanged"
-                  Fullscreen="true"
-                  Transition=""
-                  OnBeforeShowContent="BeforeShowContent">
-    <MCard Class="fill-height primary-background"
-           Ripple="false">
-        <MToolbar Class="preview-image-dialog__toolbar"
-                  Elevation="0">
-            <MButton Icon="true"
-                     OnClick="()=>InternalVisibleChanged(false)">
-                <MIcon>
-                    mdi-arrow-left
-                </MIcon>
-            </MButton>
+               MyValueChanged="InternalVisibleChanged"
+               Fullscreen="true"
+               Transition=""
+               OnBeforeShowContent="BeforeShowContent">
+    <MToolbar Class="preview-image-dialog__toolbar"
+              Elevation="0">
+        <MButton Icon="true"
+                 OnClick="() => InternalVisibleChanged(false)">
+            <MIcon>
+                mdi-arrow-left
+            </MIcon>
+        </MButton>
 
-            <MSpacer></MSpacer>
+        <MSpacer></MSpacer>
 
-            <MButton Icon="true"
-                     OnClick="SaveToLocal">
-                <MIcon>
-                    mdi-tray-arrow-down
-                </MIcon>
-            </MButton>
-            <MButton Icon="true"
-                     OnClick="Share">
-                <MIcon>
-                    mdi-share-variant-outline
-                </MIcon>
-            </MButton>
-        </MToolbar>
+        <MButton Icon="true"
+                 OnClick="SaveToLocal">
+            <MIcon>
+                mdi-tray-arrow-down
+            </MIcon>
+        </MButton>
+        <MButton Icon="true"
+                 OnClick="Share">
+            <MIcon>
+                mdi-share-variant-outline
+            </MIcon>
+        </MButton>
+    </MToolbar>
 
-        <div class="preview-image-dialog__image__wraper">
-            <div id="@id" class="preview-image-dialog__image">
-                <img src="@Src" />
-            </div>
+    <div class="preview-image-dialog__image__wraper">
+        <div id="@id" class="preview-image-dialog__image">
+            <img src="@Src" />
         </div>
-
-    </MCard>
+    </div>
 </CustomMDialog>

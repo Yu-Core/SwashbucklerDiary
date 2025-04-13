@@ -480,5 +480,19 @@
   "Swashbuckler diary feedback": "Swashbuckler diary feedback",
   "Row": "Row",
   "Col": "Col",
-  "Add table": "Add table"
+  "Add table": "Add table",
+  "Template": "Template",
+  "Switch to Template": "Switch to Template",
+  "Switch to Diary": "Switch to Diary",
+  "Convert to Template": "Convert to Template",
+  "Convert to Diary": "Convert to Diary",
+  "No templates": "No templates",
+  "Select template": "Select template",
+  "Use Template Method": "Use Template Method",
+  "Cover": "Cover",
+  "Insert": "Insert",
+  "Select template when create": "Select template when create",
+  "Setting / Template": "Setting / Template",
+  "Setting / Template / Use Template Method": "Setting / Template / Use Template Method",
+  "Setting / Template / Select template when create": "Setting / Template / Select template when create"
 }

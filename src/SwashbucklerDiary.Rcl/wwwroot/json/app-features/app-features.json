@@ -230,6 +230,24 @@
     "Href": "diarySetting"
   },
   {
+    "Name": "Template",
+    "Icon": "mdi-view-dashboard-outline",
+    "Path": "Setting / Template",
+    "Href": "templateSetting"
+  },
+  {
+    "Name": "Use Template Method",
+    "Icon": "mdi-plus",
+    "Path": "Setting / Template / Use Template Method",
+    "Href": "templateSetting"
+  },
+  {
+    "Name": "Select template when create",
+    "Icon": "mdi-select",
+    "Path": "Setting / Template / Select template when create",
+    "Href": "templateSetting"
+  },
+  {
     "Name": "Location",
     "Icon": "mdi-map-marker-outline",
     "Path": "Location",

@@ -7,148 +7,163 @@
     <link href="@cssHref" rel="stylesheet" />
 }
 
-<MyAppBar>
-    <MButton Icon="true"
-             OnClick="NavigateToBack">
-        <MIcon>
-            mdi-arrow-left
-        </MIcon>
-    </MButton>
+<div style="@($"display: flex;flex-direction: column;height: 100%;{(waitSelectTemplate ? "opacity:0;" : "")}")">
+    <MyAppBar>
+        <MButton Icon="true"
+                 OnClick="NavigateToBack">
+            <MIcon>
+                mdi-arrow-left
+            </MIcon>
+        </MButton>
 
-    <MSpacer></MSpacer>
+        <MSpacer></MSpacer>
 
-    <CustomMButton Icon="true"
-                   OnMousedownPreventDefault="true"
-                   OnClick="InsertTimestamp">
-        <MIcon>
-            mdi-clock-outline
-        </MIcon>
-    </CustomMButton>
+        <CustomMButton Icon="true"
+                       OnMousedownPreventDefault="true"
+                       OnClick="InsertTimestamp">
+            <MIcon>
+                mdi-clock-outline
+            </MIcon>
+        </CustomMButton>
 
-    <MButton Icon="true"
-             OnClick="() => showSelectTag = true">
-        <MIcon>
-            mdi-label-outline
-        </MIcon>
-    </MButton>
+        <MButton Icon="true"
+                 OnClick="() => showTemplate = true">
+            <MIcon>
+                mdi-view-dashboard-outline
+            </MIcon>
+        </MButton>
 
-    <MultiMenu @bind-Visible="showMenu"
-               DynamicListItems="menuItems">
-        <ActivatorContent>
-            <MButton @attributes="@context.Attrs"
-                     Icon="true">
-                <MultiDisplay>
-                    <DesktopContent>
-                        <MIcon>mdi-dots-horizontal</MIcon>
-                    </DesktopContent>
-                    <MobileContent>
-                        <MIcon>mdi-dots-vertical</MIcon>
-                    </MobileContent>
-                </MultiDisplay>
-            </MButton>
-        </ActivatorContent>
-    </MultiMenu>
-</MyAppBar>
+        <MButton Icon="true"
+                 OnClick="() => showSelectTag = true">
+            <MIcon>
+                mdi-label-outline
+            </MIcon>
+        </MButton>
 
-<ScrollContainer ContentClass="d-flex flex-column pt-0 pb-sm-5"
-                 ContentStyle="height:100%;">
-    <div>
-        <div class="d-flex align-center px-3 flex-wrap">
-            <button class="d-flex align-center text-h6 font-weight-bold mr-3" @onclick="()=>showDate=true">
-                @(diary.CreateTime.ToString("yyyy/MM/dd"))
-            </button>
-            <button class="d-flex align-center font-weight-bold mr-5" @onclick="()=>showTime=true">
-                @(diary.CreateTime.ToString("HH:mm"))
-            </button>
-            <span class="text-subtitle-2">
-                @(I18n.ToWeek(diary.CreateTime))
-            </span>
+        <MultiMenu @bind-Visible="showMenu"
+                   DynamicListItems="menuItems">
+            <ActivatorContent>
+                <MButton @attributes="@context.Attrs"
+                         Icon="true">
+                    <MultiDisplay>
+                        <DesktopContent>
+                            <MIcon>mdi-dots-horizontal</MIcon>
+                        </DesktopContent>
+                        <MobileContent>
+                            <MIcon>mdi-dots-vertical</MIcon>
+                        </MobileContent>
+                    </MultiDisplay>
+                </MButton>
+            </ActivatorContent>
+        </MultiMenu>
+    </MyAppBar>
 
-            <MSpacer></MSpacer>
+    <ScrollContainer ContentClass="d-flex flex-column pt-0 pb-sm-5"
+                     ContentStyle="height:100%;">
+        <div>
+            <div class="d-flex align-center px-3 flex-wrap">
+                <button class="d-flex align-center text-h6 font-weight-bold mr-3" @onclick="()=>showDate=true">
+                    @(diary.CreateTime.ToString("yyyy/MM/dd"))
+                </button>
+                <button class="d-flex align-center font-weight-bold mr-5" @onclick="()=>showTime=true">
+                    @(diary.CreateTime.ToString("HH:mm"))
+                </button>
+                <span class="text-subtitle-2">
+                    @(I18n.ToWeek(diary.CreateTime))
+                </span>
 
-            <span class="text-subtitle-2">
-                @(CounterValue())
-            </span>
-        </div>
+                <MSpacer></MSpacer>
 
-        @if (showOtherInfo)
-        {
-            <div>
-                <DiaryInfoButton Icon="@WeatherIcon"
-                                 Text="@WeatherText"
-                                 OnClick="() => showWeather = true">
-                </DiaryInfoButton>
-
-                <DiaryInfoButton Icon="@MoodIcon"
-                                 Text="@MoodText"
-                                 OnClick="() => showMood = true">
-                </DiaryInfoButton>
-
-                <DiaryInfoButton Icon="mdi-map-marker-outline"
-                                 Text="@LocationText"
-                                 OnClick="() => showLocation = true">
-                </DiaryInfoButton>
+                <span class="text-subtitle-2">
+                    @(CounterValue())
+                </span>
             </div>
-        }
-    </div>
 
-    @if (enableTitle)
-    {
-        <MTextField @bind-Value="diary.Title"
-                    Class="pb-0 mb-sm-4 user-select font-weight-bold flex-grow-0 rounded-lg"
-                    Solo="true"
-                    Flat="true"
-                    TValue="string"
-                    BackgroundColor="transparent"
-                    HideDetails="@("auto")"
-                    Dense="true"
-                    spellcheck="false"
-                    maxlength="50"
-                    Placeholder="@(I18n.T("Please enter title"))">
-        </MTextField>
-    }
-
-    <div class="write-input-wrap user-select">
-        @if (enableMarkdown)
-        {
-            <MarkdownEdit @ref="markdownEdit"
-                          @bind-Value="diary.Content"
-                          WrapClass="write-markdown-wrap"
-                          Class="px-3 rounded-lg write-markdown"
-                          Autofocus="autofocus"
-                          OnAfter="HandleAppActivation">
-            </MarkdownEdit>
-        }
-        else
-        {
-            <TextareaEdit @ref="textareaEdit"
-                          @bind-Value="diary.Content"
-                          Class="rounded-lg"
-                          Autofocus="autofocus"
-                          OnAfter="HandleAppActivation">
-            </TextareaEdit>
-        }
-    </div>
-
-    <div class="pl-2 @(SelectedTags.Any() ? "" : "d-none")">
-        <div class="write-chip-group" style="width:100%;">
-            @foreach (var item in SelectedTags)
+            @if (showOtherInfo)
             {
-                <MChip @key="item.Id"
-                       Outlined
-                       Close
-                       OnCloseClick="() => RemoveSelectedTag(item)">
-                    @(item.Name)
-                </MChip>
+                <div>
+                    <DiaryInfoButton Icon="@WeatherIcon"
+                                     Text="@WeatherText"
+                                     OnClick="() => showWeather = true">
+                    </DiaryInfoButton>
+
+                    <DiaryInfoButton Icon="@MoodIcon"
+                                     Text="@MoodText"
+                                     OnClick="() => showMood = true">
+                    </DiaryInfoButton>
+
+                    <DiaryInfoButton Icon="mdi-map-marker-outline"
+                                     Text="@LocationText"
+                                     OnClick="() => showLocation = true">
+                    </DiaryInfoButton>
+                </div>
             }
         </div>
-    </div>
 
-    @if (enableMarkdown)
-    {
-        <div class="vditor-toolbar-help"></div>
-    }
-</ScrollContainer>
+        @if (enableTitle)
+        {
+            <MTextField @bind-Value="diary.Title"
+                        Class="pb-0 mb-sm-4 user-select font-weight-bold flex-grow-0 rounded-lg"
+                        Solo="true"
+                        Flat="true"
+                        TValue="string"
+                        BackgroundColor="transparent"
+                        HideDetails="@("auto")"
+                        Dense="true"
+                        spellcheck="false"
+                        maxlength="50"
+                        Placeholder="@(I18n.T("Please enter title"))">
+            </MTextField>
+        }
+
+        <div class="write-input-wrap user-select">
+            @if (enableMarkdown)
+            {
+                <MarkdownEdit @ref="markdownEdit"
+                              @bind-Value="diary.Content"
+                              WrapClass="write-markdown-wrap"
+                              Class="px-3 rounded-lg write-markdown"
+                              Autofocus="autofocus"
+                              OnAfter="HandleAppActivation">
+                </MarkdownEdit>
+            }
+            else
+            {
+                <TextareaEdit @ref="textareaEdit"
+                              @bind-Value="diary.Content"
+                              Class="rounded-lg"
+                              Autofocus="autofocus"
+                              OnAfter="HandleAppActivation">
+                </TextareaEdit>
+            }
+        </div>
+
+        <div class="pl-2 @(SelectedTags.Any() ? "" : "d-none")">
+            <div class="write-chip-group" style="width:100%;">
+                @foreach (var item in SelectedTags)
+                {
+                    <MChip @key="item.Id"
+                           Outlined
+                           Close
+                           OnCloseClick="() => RemoveSelectedTag(item)">
+                        @(item.Name)
+                    </MChip>
+                }
+            </div>
+        </div>
+
+        @if (enableMarkdown)
+        {
+            <div class="vditor-toolbar-help"></div>
+        }
+    </ScrollContainer>
+</div>
+
+<SelectTemplateDialog @bind-Visible="showTemplate"
+                      @bind-Tags="tags"
+                      OnOK="UseTemplate"
+                      OnAfterShowContent="() => waitSelectTemplate = false">
+</SelectTemplateDialog>
 
 <SelectTagsDialog @bind-Visible="showSelectTag"
                   @bind-Value="SelectedTags"

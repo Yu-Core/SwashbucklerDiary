@@ -1,4 +1,4 @@
-﻿body {
+body {
     padding-top: var(--sait);
     padding-bottom: var(--saib);
     padding-left: var(--sail);
@@ -68,7 +68,7 @@
     bottom: var(--saib);
 }
 
-.m-dialog.m-dialog--active.m-dialog--fullscreen .m-card {
+.m-dialog.m-dialog--active.m-dialog--fullscreen {
     padding-top: var(--sait) !important;
     padding-left: var(--sail) !important;
     padding-right: var(--sair) !important;

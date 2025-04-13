@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Repository;
+using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Services
@@ -15,9 +15,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public Task<TagModel> FindIncludesAsync(Guid id)
         {
-            return _tagRepository.GetByIdIncludesAsync(id, it => it.Diaries!
-                                  .OrderByDescending(it => it.CreateTime)
-                                  .ToList());
+            return _tagRepository.GetByIdIncludesAsync(id);
         }
 
         public Task<Dictionary<Guid, int>> TagsDiaryCount()

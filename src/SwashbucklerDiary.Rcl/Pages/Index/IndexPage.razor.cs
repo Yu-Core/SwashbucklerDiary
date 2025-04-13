@@ -23,7 +23,10 @@ namespace SwashbucklerDiary.Rcl.Pages
         [
             new("All","all"),
             new("Tag","tag"),
+            new("Template","template"),
         ];
+
+        private List<DiaryModel> templates = [];
 
         [Inject]
         private IVersionUpdataManager VersionManager { get; set; } = default!;
@@ -50,6 +53,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             showWelcomeText = SettingService.Get(s => s.WelcomeText);
             showDate = SettingService.Get(s => s.IndexDate);
+        }
+
+        protected override async Task UpdateDiariesAsync()
+        {
+            await base.UpdateDiariesAsync();
+
+            templates =  await DiaryService.QueryTemplateAsync();
         }
 
         private string? SwiperActiveItemSelector

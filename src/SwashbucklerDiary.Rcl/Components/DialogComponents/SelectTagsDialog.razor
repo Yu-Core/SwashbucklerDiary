@@ -2,17 +2,17 @@
 @inherits DialogComponentBase
 
 <CustomMDialog MyValue="Visible"
-                  MyValueChanged="InternalVisibleChanged"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420"
-                  Scrollable="true"
-                  OnBeforeShowContent="BeforeShowContent">
+               MyValueChanged="InternalVisibleChanged"
+               ContentClass="rounded-lg"
+               MaxWidth="420"
+               Scrollable="true"
+               OnBeforeShowContent="BeforeShowContent">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Select tags"))
             <MSpacer></MSpacer>
             <MButton Icon="true"
-                     OnClick="()=>showSearch=!showSearch">
+                     OnClick="() => showSearch = !showSearch">
                 <MIcon>mdi-magnify</MIcon>
             </MButton>
             <MButton Icon="true"
@@ -24,18 +24,18 @@
             @if (showSearch)
             {
                 <CustomMTextField @bind-Value="_searchText"
-                                     Class="mb-2"
-                                     OnInput="UpdateInternalItems"
-                                     Dense
-                                     TValue="string"
-                                     Filled
-                                     Rounded
-                                     Clearable
-                                     Color="@Color"
-                                     HideDetails="@("auto")"
-                                     spellcheck="false"
-                                     Placeholder="@(I18n.T("Search"))"
-                                     PrependInnerIcon="mdi-magnify">
+                                  Class="mb-2"
+                                  OnInput="UpdateInternalItems"
+                                  Dense
+                                  TValue="string"
+                                  Filled
+                                  Rounded
+                                  Clearable
+                                  Color="@Color"
+                                  HideDetails="@("auto")"
+                                  spellcheck="false"
+                                  Placeholder="@(I18n.T("Search"))"
+                                  PrependInnerIcon="mdi-magnify">
                 </CustomMTextField>
             }
             <div class="scroll-show" style="max-height:200px;">
@@ -55,7 +55,7 @@
         </MCardText>
         <MCardActions>
             <MButton Text="true"
-                     OnClick="()=>showAddTag = true">
+                     OnClick="() => showAddTag = true">
                 @(I18n.T("Add tags"))
             </MButton>
             <MSpacer></MSpacer>

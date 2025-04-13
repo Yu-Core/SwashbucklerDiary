@@ -1,4 +1,4 @@
-﻿namespace SwashbucklerDiary.Shared
+namespace SwashbucklerDiary.Shared
 {
     public class DiaryModel : BaseModel
     {
@@ -16,6 +16,8 @@
 
         [Obsolete("Privacy mode no requires it after 1.3.9")]
         public bool Private { get; set; }
+
+        public bool Template { get; set; }
 
         public List<TagModel>? Tags { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Shared;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Repository
 {
@@ -17,5 +18,11 @@ namespace SwashbucklerDiary.Rcl.Repository
         Task<bool> MovePrivacyDiaryAsync(DiaryModel diary, bool toPrivacyMode);
 
         Task<bool> MovePrivacyDiariesAsync();
+
+        Task<DiaryModel> GetFirstTemplateAsync(Expression<Func<DiaryModel, bool>> whereExpression);
+
+        Task<List<DiaryModel>> GetTemplateListAsync();
+
+        Task<List<DiaryModel>> GetTemplateListAsync(Expression<Func<DiaryModel, bool>> whereExpression);
     }
 }

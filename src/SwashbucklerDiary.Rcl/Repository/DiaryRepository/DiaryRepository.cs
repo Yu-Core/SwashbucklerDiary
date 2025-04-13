@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+using DocumentFormat.OpenXml.InkML;
+using SqlSugar;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
 
@@ -59,6 +60,7 @@ namespace SwashbucklerDiary.Rcl.Repository
             return Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
                 .Includes(it => it.Resources)
+                .Where(it => !it.Template)
                 .FirstAsync(expression);
         }
 
@@ -76,12 +78,19 @@ namespace SwashbucklerDiary.Rcl.Repository
             return base.Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
                 .Includes(it => it.Resources)
+                .Where(it => !it.Template)
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
 
         public override Task<List<DiaryModel>> GetListAsync(Expression<Func<DiaryModel, bool>> expression)
-            => InternalGetListAsync(base.Context, expression);
+            => InternalGetDiaryListAsync(base.Context, expression);
+
+        private static Task<List<DiaryModel>> InternalGetDiaryListAsync(ISqlSugarClient context, Expression<Func<DiaryModel, bool>> expression)
+        {
+            expression = expression.And(it => !it.Template);
+            return InternalGetListAsync(context, expression);
+        }
 
         private static Task<List<DiaryModel>> InternalGetListAsync(ISqlSugarClient context, Expression<Func<DiaryModel, bool>> expression)
         {
@@ -177,7 +186,7 @@ namespace SwashbucklerDiary.Rcl.Repository
             var db = Context.AsTenant().GetConnection("0");
             var privacyDb = Context.AsTenant().GetConnection("1");
 
-            var diaries = await InternalGetListAsync(db, it => it.Private == true);
+            var diaries = await InternalGetDiaryListAsync(db, it => it.Private == true);
 
             if (diaries.Count == 0)
             {
@@ -200,5 +209,31 @@ namespace SwashbucklerDiary.Rcl.Repository
             return true;
         }
 #pragma warning restore CS0618 // 类型或成员已过时
+
+        public Task<DiaryModel> GetFirstTemplateAsync(Expression<Func<DiaryModel, bool>> expression)
+        {
+            return Context.Queryable<DiaryModel>()
+                .Includes(it => it.Tags)
+                .Includes(it => it.Resources)
+                .Where(it => it.Template)
+                .FirstAsync(expression);
+        }
+
+        public Task<List<DiaryModel>> GetTemplateListAsync()
+        {
+            return base.Context.Queryable<DiaryModel>()
+                .Includes(it => it.Tags)
+                .Includes(it => it.Resources)
+                .Where(it => it.Template)
+                .OrderByDescending(it => it.CreateTime)
+                .ToListAsync();
+        }
+
+        public Task<List<DiaryModel>> GetTemplateListAsync(Expression<Func<DiaryModel, bool>> expression)
+        {
+            expression = expression.And(it => it.Template);
+            return InternalGetListAsync(base.Context, expression);
+        }
+
     }
 }

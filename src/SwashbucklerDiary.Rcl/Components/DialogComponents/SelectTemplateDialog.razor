@@ -1,0 +1,55 @@
+@namespace SwashbucklerDiary.Rcl.Components
+@inherits DialogComponentBase
+
+<CustomMDialog MyValue="Visible"
+               MyValueChanged="InternalVisibleChanged"
+               ContentStyle="display: flex;flex-direction: column;"
+               Fullscreen="true"
+               Eager
+               Transition=""
+               OnBeforeShowContent="HandleOnBeforeShowContent"
+               OnAfterShowContent="OnAfterShowContent">
+    <MyAppBar>
+        <MButton Icon="true"
+                 OnClick="HandleOnCancel">
+            <MIcon>
+                mdi-arrow-left
+            </MIcon>
+        </MButton>
+
+        @if (!showSearch)
+        {
+            <MToolbarTitle Class="font-weight-bold">
+                @(I18n.T("Select template"))
+            </MToolbarTitle>
+            <MSpacer></MSpacer>
+        }
+
+        <VisibleTextField @bind-Visible="showSearch"
+                          @bind-Value="search"
+                          OnInput="UpdateItemsAsync">
+        </VisibleTextField>
+
+        <MButton Icon="true"
+                 OnClick="() => showSearch = !showSearch">
+            <MIcon>
+                mdi-magnify
+            </MIcon>
+        </MButton>
+    </MyAppBar>
+
+    <ScrollContainer Id="@scrollContainerId">
+        <DiaryCardList @bind-Value="items"
+                       Tags="Tags"
+                       TagsChanged="TagsChanged"
+                       NotFoundText="@(I18n.T("No templates"))"
+                       HideStatisticsCard
+                       OnClick="OnOK">
+        </DiaryCardList>
+    </ScrollContainer>
+
+    <div class="right-bottom-float-area">
+        <BackTopButton Selector="@($"#{scrollContainerId}")">
+        </BackTopButton>
+    </div>
+</CustomMDialog>

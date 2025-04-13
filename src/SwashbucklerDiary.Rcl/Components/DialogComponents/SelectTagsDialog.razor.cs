@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -41,11 +42,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string? Color => Dark ? "white" : "grey";
 
-        private async Task BeforeShowContent()
+        private void BeforeShowContent()
         {
             _searchText = string.Empty;
-            internalItems = Items;
-            await SetSelectedTagIds();
+            UpdateInternalItems();
+            SetSelectedTagIds();
         }
 
         private async Task HandleOnSave(MouseEventArgs _)
@@ -70,7 +71,7 @@ namespace SwashbucklerDiary.Rcl.Components
             await OnSave.InvokeAsync();
         }
 
-        private Task SetSelectedTagIds()
+        private void SetSelectedTagIds()
         {
             List<StringNumber> selectedTagIds = [];
             foreach (var item in Value)
@@ -82,7 +83,6 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             SelectedTagIds = selectedTagIds;
-            return Task.CompletedTask;
         }
 
         private async Task SaveAddTag(string tagName)
@@ -111,7 +111,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             Items.Insert(0, tag);
-            UpdateInternalItems(_searchText);
+            UpdateInternalItems();
             Items = [.. Items];
             if (ItemsChanged.HasDelegate)
             {
@@ -121,16 +121,28 @@ namespace SwashbucklerDiary.Rcl.Components
             StateHasChanged();
         }
 
-        private void UpdateInternalItems(string? searchText)
+        private void UpdateInternalItems()
         {
-            if (string.IsNullOrWhiteSpace(searchText))
+            Expression<Func<TagModel, bool>> exp = GetExpression();
+            internalItems = Items.Where(exp.Compile()).ToList();
+        }
+
+        private Expression<Func<TagModel, bool>> GetExpression()
+        {
+            Expression<Func<TagModel, bool>>? exp = null;
+            if (!string.IsNullOrWhiteSpace(_searchText))
             {
-                internalItems = Items;
+                Expression<Func<TagModel, bool>> expSearch
+                    = it => !string.IsNullOrEmpty(it.Name) && (it.Name.Contains(_searchText) || SelectedTagIds.Any(t => t.ToString() == it.Id.ToString()));
+                exp = exp.And(expSearch);
             }
-            else
+
+            if (exp == null)
             {
-                internalItems = Items.Where(it => !string.IsNullOrEmpty(it.Name) && (it.Name.Contains(searchText) || SelectedTagIds.Any(t => t.ToString() == it.Id.ToString()))).ToList();
+                return it => true;
             }
+
+            return exp;
         }
     }
 }

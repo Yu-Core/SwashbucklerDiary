@@ -6,6 +6,7 @@ using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
+using System.Threading.Tasks;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -27,6 +28,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showTime;
 
+        private bool showTemplate;
+
         private bool enableTitle;
 
         private bool enableMarkdown = true;
@@ -35,15 +38,19 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool autofocus = true;
 
-        private bool privacyMode;
-
         private bool launchActivation;
 
         private bool showIconText;
 
         private bool showOtherInfo;
 
+        private bool waitSelectTemplate = true;
+
         private int editAutoSave;
+
+        private UseTemplateKind useTemplateMethod;
+
+        private bool selectTemplateWhenCreate;
 
         private PeriodicTimer? timer;
 
@@ -73,25 +80,22 @@ namespace SwashbucklerDiary.Rcl.Pages
         private IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
 
         [Inject]
-        private IResourceService ResourceService { get; set; } = default!;
-
-        [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
 
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
-        [Parameter]
         [SupplyParameterFromQuery]
-        public Guid? TagId { get; set; }
+        private Guid? TagId { get; set; }
 
-        [Parameter]
         [SupplyParameterFromQuery]
-        public Guid? DiaryId { get; set; }
+        private Guid? DiaryId { get; set; }
 
-        [Parameter]
         [SupplyParameterFromQuery]
-        public DateOnly? CreateDate { get; set; }
+        private DateOnly? CreateDate { get; set; }
+
+        [SupplyParameterFromQuery]
+        private bool Template { get; set; }
 
         protected override void OnInitialized()
         {
@@ -113,8 +117,11 @@ namespace SwashbucklerDiary.Rcl.Pages
                 await Task.WhenAll(
                     InitDiary(),
                     InitTags());
+
+                InitTemplate();
                 InitCreateTime();
                 StateHasChanged();
+
                 _ = CreateTimer();
             }
         }
@@ -138,7 +145,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             editAutoSave = SettingService.Get(s => s.EditAutoSave);
             showIconText = SettingService.Get(s => s.DiaryIconText);
             showOtherInfo = SettingService.Get(s => s.OtherInfo);
-            privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
+            useTemplateMethod = (UseTemplateKind)SettingService.Get(it => it.UseTemplateMethod);
+            selectTemplateWhenCreate = SettingService.Get(it => it.SelectTemplateWhenCreate);
         }
 
         private List<TagModel> SelectedTags
@@ -180,6 +188,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string OtherInfoSwitchText() => showOtherInfo ? "Hide other information" : "Display other information";
 
+        private string TemplateSwitchText() => diary.Template ? "Switch to Diary" : "Switch to Template";
+
+        private string TemplateSwitchIcon() => diary.Template ? "mdi-notebook-outline" : "mdi-view-dashboard-outline";
+
         private async Task InitTags()
         {
             tags = await TagService.QueryAsync();
@@ -217,12 +229,33 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void InitCreateTime()
         {
-            if (CreateDate is null)
+            if (DiaryId is not null || CreateDate is not DateOnly createDate)
             {
                 return;
             }
 
-            SelectedDate = (DateOnly)CreateDate;
+            SelectedDate = createDate;
+        }
+
+        private void InitTemplate()
+        {
+            waitSelectTemplate = false;
+
+            if (DiaryId is not null)
+            {
+                return;
+            }
+
+            if (Template)
+            {
+                diary.Template = Template;
+            }
+            else if (selectTemplateWhenCreate)
+            {
+                waitSelectTemplate = true;
+                showTemplate = true;
+                autofocus = false;
+            }
         }
 
         private void LoadView()
@@ -232,6 +265,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, TitleSwitchText, "mdi-format-title", ()=> SettingChange(nameof(Setting.Title), ref enableTitle)),
                 new(this, MarkdownSwitchText, MarkdownSwitchIcon, ()=> SettingChange(nameof(Setting.Markdown), ref enableMarkdown)),
                 new(this, OtherInfoSwitchText, "mdi-information-outline", ()=> SettingChange(nameof(Setting.OtherInfo), ref showOtherInfo)),
+                new(this, TemplateSwitchText, TemplateSwitchIcon, ()=> diary.Template = !diary.Template),
             ];
         }
 
@@ -467,6 +501,30 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             await InsertValueAsync(insertContent);
+        }
+
+        private async Task UseTemplate(DiaryModel template)
+        {
+            showTemplate = false;
+
+            if (useTemplateMethod == UseTemplateKind.Cover)
+            {
+                diary.Title = template.Title;
+                diary.Content = template.Content;
+                diary.Weather = template.Weather;
+                diary.Mood = template.Mood;
+                diary.Location = template.Location;
+                diary.Tags = [.. template.Tags ?? []];
+            }
+            else if (useTemplateMethod == UseTemplateKind.Insert)
+            {
+                if (!string.IsNullOrEmpty(template.Content))
+                {
+                    await InsertValueAsync(template.Content);
+                }
+
+                diary.Tags = (diary.Tags ?? []).Union(template.Tags ?? []).ToList();
+            }
         }
     }
 }

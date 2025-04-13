@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Repository;
+using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
 
@@ -57,6 +57,21 @@ namespace SwashbucklerDiary.Rcl.Services
         public Task<bool> MovePrivacyDiariesAsync()
         {
             return _iDiaryRepository.MovePrivacyDiariesAsync();
+        }
+
+        public Task<DiaryModel> FindTemplateAsync(Expression<Func<DiaryModel, bool>> expression)
+        {
+            return _iDiaryRepository.GetFirstTemplateAsync(expression);
+        }
+
+        public Task<List<DiaryModel>> QueryTemplateAsync()
+        {
+            return _iDiaryRepository.GetTemplateListAsync();
+        }
+
+        public Task<List<DiaryModel>> QueryTemplateAsync(Expression<Func<DiaryModel, bool>> expression)
+        {
+            return _iDiaryRepository.GetTemplateListAsync(expression);
         }
     }
 }

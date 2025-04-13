@@ -1,4 +1,4 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
@@ -21,6 +21,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected List<DynamicListItem> menuItems = [];
 
+        protected Dictionary<string, object> menuActivatorAttributes = [];
+
         [Inject]
         protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
 
@@ -40,11 +42,14 @@ namespace SwashbucklerDiary.Rcl.Components
             InvokeAsync(StateHasChanged);
         }
 
+        [Parameter]
+        public bool HideStatisticsCard { get; set; }
+
         protected virtual T SelectedItem { get; set; } = new();
 
         protected List<string> SortItems => sortOptions.Keys.ToList();
 
-        protected Dictionary<string, object> menuActivatorAttributes = [];
+        protected bool ShowStatisticsCard => Value.Count > 0 && showStatisticsCard && !HideStatisticsCard;
 
         protected string? SortItem
         {

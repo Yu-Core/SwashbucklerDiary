@@ -34,6 +34,16 @@
             </TagCardList>
         </MContainer>
     </SwiperTabItem>
+    <SwiperTabItem>
+        <MContainer Class="my-container"
+                    Fluid="true">
+            <DiaryCardList @bind-Value="templates"
+                           @bind-Tags="Tags"
+                           HideStatisticsCard
+                           NotFoundText="@I18n.T("No templates")">
+            </DiaryCardList>
+        </MContainer>
+    </SwiperTabItem>
 </SwiperTabItems>
 
 <div class="right-bottom-float-area">
@@ -49,6 +59,11 @@
         <MWindowItem Transition="">
             <MyFloatButton Icon="mdi-plus"
                            OnClick="()=>showAddTag=true">
+            </MyFloatButton>
+        </MWindowItem>
+        <MWindowItem Transition="">
+            <MyFloatButton Icon="mdi-pencil"
+                           OnClick="@(() => To("write?Template=true"))">
             </MyFloatButton>
         </MWindowItem>
     </MWindow>

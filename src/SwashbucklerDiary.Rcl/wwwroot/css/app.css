@@ -1,4 +1,4 @@
-﻿
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background: var( --m-theme-surface);
@@ -288,6 +288,7 @@ html {
     z-index: 1;
     bottom: 1rem;
     right: 1rem;
+    width: auto;
 }
 
 @media screen and (max-width:600px) {
@@ -319,7 +320,7 @@ html {
     width: 100%;
 }
 
-.first-launch-card {
+.fullscreen-background-overlay {
     position: fixed !important;
     width: 100%;
     height: 100%;

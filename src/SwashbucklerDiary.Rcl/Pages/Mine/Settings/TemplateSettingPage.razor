@@ -1,0 +1,61 @@
+@page "/templateSetting"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar Title="@(I18n.T("Template"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MCard Class="my-list-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem OnClick="() => showUseTemplateMethod=true">
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-plus
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Use Template Method"))
+                </MListItemContent>
+                <MListItemContent Class="setting-item-state">
+                    <MListItemSubtitle>
+                        @I18n.T(useTemplateKindItems.FirstOrDefault(it=>it.Value == useTemplateMethod).Key)
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-select
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Select template when create"))
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="selectTemplateWhenCreate"
+                                   SettingKey="@nameof(Setting.SelectTemplateWhenCreate)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+</ScrollContainer>
+
+<RadioDialog @bind-Value="useTemplateMethod"
+             @bind-Visible="showUseTemplateMethod"
+             Title="@(I18n.T("Use Template Method"))"
+             OnChange="UseTemplateMethodChanged"
+             TItem="KeyValuePair<string, Shared.UseTemplateKind>"
+             TItemValue="Shared.UseTemplateKind"
+             Items="useTemplateKindItems">
+</RadioDialog>

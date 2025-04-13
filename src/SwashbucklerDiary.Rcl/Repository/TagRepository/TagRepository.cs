@@ -1,4 +1,4 @@
-﻿using SqlSugar;
+using SqlSugar;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
 
@@ -35,8 +35,13 @@ namespace SwashbucklerDiary.Rcl.Repository
                 .ExecuteCommandAsync();
         }
 
-        public Task<TagModel> GetByIdIncludesAsync(dynamic id, Expression<Func<TagModel, List<DiaryModel>>> expression)
+        public Task<TagModel> GetByIdIncludesAsync(dynamic id)
         {
+            Expression<Func<TagModel, List<DiaryModel>>> expression =
+                t => t.Diaries!
+                .Where(d => !d.Template)
+                .OrderByDescending(d => d.CreateTime)
+                .ToList();
             return Context.Queryable<TagModel>()
                 .Includes(expression, d => d.Tags)
                 .Includes(expression, d => d.Resources)
@@ -45,12 +50,15 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public async Task<Dictionary<Guid, int>> TagsDiaryCount()
         {
-            var result = await Context.Queryable<DiaryTagModel>()
-                .GroupBy(it => new { it.TagId })
-                .Select(it => new
+            var result = await Context.Queryable<TagModel>()
+                .LeftJoin<DiaryTagModel>((t, dt) => t.Id == dt.TagId)
+                .LeftJoin<DiaryModel>((t, dt, d) => dt.DiaryId == d.Id)
+                .Where((t, dt, d) => !d.Template)
+                .GroupBy(t => t.Id)
+                .Select((t, dt, d) => new
                 {
-                    TagId = it.TagId,
-                    Count = SqlFunc.AggregateCount(it.Id)
+                    TagId = t.Id,
+                    Count = SqlFunc.AggregateCount(d.Id)
                 })
                 .ToListAsync();
             return result.ToDictionary(it => it.TagId, it => it.Count);

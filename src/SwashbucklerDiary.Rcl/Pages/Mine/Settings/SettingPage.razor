@@ -3,7 +3,7 @@
 @inherits ImportantComponentBase
 
 <MyAppBar Title="@(I18n.T("Setting"))"
-OnClick="NavigateToBack">
+          OnClick="NavigateToBack">
 </MyAppBar>
 
 <ScrollContainer>
@@ -12,10 +12,10 @@ OnClick="NavigateToBack">
     </div>
 
     <MCard Class="my-list-card"
-    Elevation="0"
-    Rounded="@("lg")">
+           Elevation="0"
+           Rounded="@("lg")">
         <MList>
-            <MListItem OnClick="@(()=>To("permissionSetting"))">
+            <MListItem OnClick="@(() => To("permissionSetting"))">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
                         mdi-account-cog-outline
@@ -31,7 +31,7 @@ OnClick="NavigateToBack">
 
             <MDivider Class="mx-5"></MDivider>
 
-            <MListItem OnClick="@(()=>showClearCache=true)">
+            <MListItem OnClick="@(() => showClearCache = true)">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
                         mdi-trash-can-outline
@@ -57,10 +57,10 @@ OnClick="NavigateToBack">
     </div>
 
     <MCard Class="my-list-card"
-    Elevation="0"
-    Rounded="@("lg")">
+           Elevation="0"
+           Rounded="@("lg")">
         <MList>
-            <MListItem OnClick="@(()=>To("indexSetting"))">
+            <MListItem OnClick="@(() => To("indexSetting"))">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
                         mdi-home-outline
@@ -87,8 +87,14 @@ OnClick="NavigateToBack">
                     <MIcon>mdi-chevron-right</MIcon>
                 </MListItemAction>
             </MListItem>
-            <MDivider Class="mx-5"></MDivider>
-            <MListItem OnClick="@(()=>To("diarySetting"))">
+        </MList>
+    </MCard>
+
+    <MCard Class="my-list-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem OnClick="@(() => To("diarySetting"))">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
                         mdi-notebook-outline
@@ -102,7 +108,21 @@ OnClick="NavigateToBack">
                 </MListItemAction>
             </MListItem>
             <MDivider Class="mx-5"></MDivider>
-            <MListItem OnClick="@(()=>To("alertSetting"))">
+            <MListItem OnClick="@(() => To("templateSetting"))">
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        mdi-view-dashboard-outline
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Template"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>mdi-chevron-right</MIcon>
+                </MListItemAction>
+            </MListItem>
+            <MDivider Class="mx-5"></MDivider>
+            <MListItem OnClick="@(() => To("alertSetting"))">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
                         mdi-alert-box-outline
@@ -116,7 +136,7 @@ OnClick="NavigateToBack">
                 </MListItemAction>
             </MListItem>
             <MDivider Class="mx-5"></MDivider>
-            <MListItem OnClick="@(()=>To("diaryCardSetting"))">
+            <MListItem OnClick="@(() => To("diaryCardSetting"))">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
                         mdi-card-text-outline
@@ -141,7 +161,7 @@ OnClick="NavigateToBack">
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="showStatisticsCard"
-                    SettingKey="@nameof(Setting.StatisticsCard)">
+                                   SettingKey="@nameof(Setting.StatisticsCard)">
                     </SettingSwitch>
                 </MListItemAction>
             </MListItem>
@@ -158,7 +178,7 @@ OnClick="NavigateToBack">
                Elevation="0"
                Rounded="@("lg")">
             <MList>
-                <MListItem OnClick="@(()=>To("urlScheme"))">
+                <MListItem OnClick="@(() => To("urlScheme"))">
                     <MListItemIcon>
                         <MIcon Class="evident-icon">
                             mdi-link-variant
@@ -174,12 +194,12 @@ OnClick="NavigateToBack">
             </MList>
         </MCard>
     }
-    
+
 </ScrollContainer>
 
 <CustomMDialog @bind-MyValue="showClearCache"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420">
+               ContentClass="rounded-lg"
+               MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Clear cache"))
@@ -190,7 +210,7 @@ OnClick="NavigateToBack">
         <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text="true"
-                     OnClick="()=>showClearCache=false">
+                     OnClick="() => showClearCache = false">
                 @(I18n.T("Cancel"))
             </MButton>
             <MButton Text="true"

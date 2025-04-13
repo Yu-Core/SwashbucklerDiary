@@ -95,14 +95,11 @@ namespace SwashbucklerDiary.Rcl.Components
             set => SelectedItem.Tags = value;
         }
 
-        private string TopText()
-            => SelectedItem.Top ? "Cancel top" : "Top";
+        private string TopText() => SelectedItem.Top ? "Cancel top" : "Top";
 
-        private string PrivateText()
-            => privacyMode ? "Cancel privacy" : "Set to private";
+        private string PrivateText() => privacyMode ? "Cancel privacy" : "Set to private";
 
-        private string PrivateIcon()
-            => privacyMode ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
+        private string PrivateIcon() => privacyMode ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
 
         private async Task Topping()
         {

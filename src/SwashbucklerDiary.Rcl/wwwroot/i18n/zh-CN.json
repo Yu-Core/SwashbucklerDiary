@@ -480,5 +480,19 @@
   "Swashbuckler diary feedback": "侠客日记反馈",
   "Row": "行",
   "Col": "列",
-  "Add table": "添加表格"
+  "Add table": "添加表格",
+  "Template": "模板",
+  "Switch to Template": "切换为模板",
+  "Switch to Diary": "切换为日记",
+  "Convert to Template": "转换为模板",
+  "Convert to Diary": "转换为日记",
+  "No templates": "暂无模板",
+  "Select template": "选择模板",
+  "Use Template Method": "使用模板方式",
+  "Cover": "覆盖",
+  "Insert": "插入",
+  "Select template when create": "创建时选择模板",
+  "Setting / Template": "设置 / 模板",
+  "Setting / Template / Use Template Method": "设置 / 模板 / 使用模板方式",
+  "Setting / Template / Select template when create": "设置 / 模板 / 创建时选择模板"
 }
