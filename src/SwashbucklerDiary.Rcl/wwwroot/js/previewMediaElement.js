@@ -1,11 +1,12 @@
-﻿export function previewImage(dotNetCallbackRef, element) {
+export function previewImage(dotNetCallbackRef, element) {
     if (!element) {
         return;
     }
 
     element.addEventListener('click', function (event) {
-        if (event.target.tagName === 'IMG') {
-            dotNetCallbackRef.invokeMethodAsync("PreviewImage", event.target.getAttribute('src'));
+        const target = event.target;
+        if (target && target.tagName === 'IMG' && !target.closest('a')) {
+            dotNetCallbackRef.invokeMethodAsync("PreviewImage", target.getAttribute('src'));
         }
     });
 }
