@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits MyComponentBase
 
 <div class="@WrapClass">
@@ -16,4 +16,32 @@
                     OnOK="InsertValueAsync"
                     OnClose="Focus">
     </AddTableDialog>
+
+    <CustomMNavigationDrawer MyValue="MobileOutline"
+                             MyValueChanged="MobileOutlineChanged"
+                             Style="z-index:10;"
+                             Right="rightOutline"
+                             Fixed
+                             Temporary
+                             Touchless
+                             OnAfterShowContent="SetMoblieOutlineAsync">
+        <div style="display: flex;flex-direction: column;height:100%;">
+            <MyAppBar>
+                <MToolbarTitle Class="font-weight-bold">
+                    @I18n.T("Outline")
+                </MToolbarTitle>
+                <MSpacer></MSpacer>
+                <MButton Icon="true"
+                         OnClick="CloseMobileOutline">
+                    <MIcon>close</MIcon>
+                </MButton>
+            </MyAppBar>
+            <ScrollContainer ContentClass="pa-0">
+                <div @ref="moblieOutlineElement"
+                     class="vditor-outline"
+                     style="display: block !important;">
+                </div>
+            </ScrollContainer>
+        </div>
+    </CustomMNavigationDrawer>
 </div>

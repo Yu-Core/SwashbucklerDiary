@@ -121,9 +121,11 @@
             {
                 <MarkdownEdit @ref="markdownEdit"
                               @bind-Value="diary.Content"
+                              @bind-MobileOutline="showMoblieOutline"
                               WrapClass="write-markdown-wrap"
                               Class="px-3 rounded-lg write-markdown"
                               Autofocus="autofocus"
+                              Outline="outline"
                               OnAfter="HandleAppActivation">
                 </MarkdownEdit>
             }

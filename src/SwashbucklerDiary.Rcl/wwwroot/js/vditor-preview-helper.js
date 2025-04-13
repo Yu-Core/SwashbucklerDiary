@@ -1,4 +1,4 @@
-export function previewVditor(dotNetCallbackRef, element, text, options, outline, outlineElement) {
+function previewVditor(dotNetCallbackRef, element, text, options, outline, outlineElement) {
     if (!element) {
         return;
     }
@@ -26,10 +26,10 @@ export function previewVditor(dotNetCallbackRef, element, text, options, outline
 
 function outlineRender(previewElement, outlineElement) {
     Vditor.outlineRender(previewElement, outlineElement);
-    fixContents(outlineElement.firstElementChild, previewElement);
+    addOutlientClick(outlineElement.firstElementChild, previewElement);
 }
 
-export function renderLazyLoadingImage(element) {
+function renderLazyLoadingImage(element) {
     if (!element) {
         return;
     }
@@ -97,29 +97,33 @@ function handleAnchorScroll() {
     }
 }
 
-function fixContents(listenElement, previewElement) {
+function addOutlientClick(listenElement, previewElement) {
     if (!listenElement || !previewElement) {
         return;
     }
 
-    listenElement.addEventListener('click', function (event) {
-        const tocItem = event.target.closest('[data-target-id]');
-        if (!tocItem) {
-            return;
-        }
-
-        const targetId = tocItem.getAttribute('data-target-id');
-        const targetElement = previewElement.querySelector('#' + targetId);
-        if (targetElement) {
-            setTimeout(() => {
-                targetElement.scrollIntoView();
-            }, 100);
-        }
+    listenElement.addEventListener('click', (event) => {
+        scrollToTocItem(previewElement, event.target);
     });
 }
 
+function scrollToTocItem(previewElement, element) {
+    const tocItem = element.closest('[data-target-id]');
+    if (!tocItem) {
+        return;
+    }
+
+    const targetId = tocItem.getAttribute('data-target-id');
+    const targetElement = previewElement.querySelector('#' + targetId);
+    if (targetElement) {
+        setTimeout(() => {
+            targetElement.scrollIntoView();
+        }, 100);
+    }
+}
+
 function fixToc(previewElement) {
-    fixContents(previewElement, previewElement);
+    addOutlientClick(previewElement, previewElement);
 }
 
 function fixAnchorLink(element) {
@@ -132,3 +136,5 @@ function fixAnchorLink(element) {
         a.href = decodeURIComponent(href);
     });
 }
+
+export { previewVditor, scrollToTocItem, renderLazyLoadingImage }

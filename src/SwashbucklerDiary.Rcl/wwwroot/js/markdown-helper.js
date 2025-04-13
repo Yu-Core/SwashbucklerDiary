@@ -1,8 +1,10 @@
-﻿export function after(dotNetCallbackRef, domRef) {
-    handleToolbar(dotNetCallbackRef, domRef);
+import { addOutlientClick } from './markdown-preview-helper.js'
+ function after(dotNetCallbackRef, element, outlineElement) {
+    handleToolbar(dotNetCallbackRef, element);
+    addOutlientClick(dotNetCallbackRef, outlineElement, element);
 }
 
-export function focus(domRef) {
+ function focus(domRef) {
     const vditor = domRef.Vditor.vditor;
     const range = vditor[vditor.currentMode].range
     if (range) {
@@ -14,7 +16,7 @@ export function focus(domRef) {
     domRef.Vditor.focus();
 }
 
-export function focusToEnd(domRef) {
+ function focusToEnd(domRef) {
     domRef.Vditor.focus();
     const focusElement = document.activeElement;
     let range = document.createRange();
@@ -25,7 +27,7 @@ export function focusToEnd(domRef) {
     sel.addRange(range);
 }
 
-export function upload(element, inputFileElement) {
+ function upload(element, inputFileElement) {
     if (!element || !inputFileElement) return;
     const uploadElement = element.querySelector('input[type=file]');
     inputFileElement.files = uploadElement.files;
@@ -71,3 +73,19 @@ function insertMiddleElement(parent, destination) {
     }
     parent.appendChild(destination);
 }
+
+function setMoblieOutline(element, outlineElement) {
+    if (!element || !outlineElement) {
+        return;
+    }
+
+    var outline = element.querySelector(".vditor-outline__content");
+    if (!outline) {
+        console.log("Vditor outline does not exist");
+        return;
+    }
+
+    outlineElement.innerHTML = outline.innerHTML;
+}
+
+export { after, focus, focusToEnd, upload, setMoblieOutline }

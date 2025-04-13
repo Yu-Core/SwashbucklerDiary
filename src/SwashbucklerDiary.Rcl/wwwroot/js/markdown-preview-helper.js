@@ -1,16 +1,7 @@
-﻿import { previewImage } from './previewMediaElement.js';
+import { previewImage } from './previewMediaElement.js';
+import { scrollToTocItem } from './vditor-preview-helper.js'
 
-function after(dotNetCallbackRef, element) {
-    if (!element) {
-        return;
-    }
-
-    copy(dotNetCallbackRef, element);
-    previewImage(dotNetCallbackRef, element);
-    handleA(dotNetCallbackRef, element);
-}
-
-function copy(dotNetCallbackRef, element) {
+function handleCopy(dotNetCallbackRef, element) {
     element.addEventListener('click', function (event) {
         if (event.target.closest('.vditor-copy')) {
             dotNetCallbackRef.invokeMethodAsync("Copy");
@@ -41,11 +32,21 @@ function handleA(dotNetCallbackRef, element) {
     });
 }
 
-function afterMarkdown(element, options) {
+function afterMarkdown(dotNetCallbackRef, element, autoPlay, outlineElement) {
+    if (!element) {
+        return;
+    }
+
+    handleCopy(dotNetCallbackRef, element);
+    previewImage(dotNetCallbackRef, element);
+    handleA(dotNetCallbackRef, element);
+
     handleCustomRender(element);
-    if (options.autoPlay) {
+    if (autoPlay) {
         handleAutoPlay(element);
     }
+
+    outlineRender(dotNetCallbackRef, element, outlineElement);
 }
 
 function handleCustomRender(element) {
@@ -114,4 +115,22 @@ function handleAutoPlay(element) {
     }
 }
 
-export { after, afterMarkdown }
+function outlineRender(dotNetCallbackRef, previewElement, outlineElement) {
+    Vditor.outlineRender(previewElement, outlineElement);
+    addOutlientClick(dotNetCallbackRef, outlineElement.firstElementChild, previewElement);
+}
+
+function addOutlientClick(dotNetCallbackRef, listenElement, previewElement) {
+    if (!listenElement || !previewElement) {
+        return;
+    }
+
+    listenElement.addEventListener('click', (event) => {
+        dotNetCallbackRef.invokeMethodAsync('CloseMobileOutline');
+        setTimeout(() => {
+            scrollToTocItem(previewElement, event.target);
+        }, 200);
+    });
+}
+
+export { afterMarkdown, addOutlientClick }

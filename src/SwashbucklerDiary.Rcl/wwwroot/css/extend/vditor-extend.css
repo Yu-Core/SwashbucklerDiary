@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     --vditor-toolbar-height: 0px;
 }
 
@@ -70,7 +70,7 @@
 }
 
 .vditor-outline {
-    margin-right: 32px;
+    margin-bottom: 8px;
     padding-top: 8px;
     background-color: initial;
     border: none;
@@ -78,11 +78,6 @@
 
     .vditor-outline::-webkit-scrollbar {
         display: initial !important;
-    }
-
-    .vditor-outline.vditor-outline--right {
-        margin-left: 32px;
-        margin-right: initial;
     }
 
 .vditor-outline__title {
@@ -157,4 +152,18 @@
     .vditor-outline {
         display: none !important;
     }
+}
+
+@media screen and (min-width:960px) {
+    .vditor-outline {
+        margin-right: 1em;
+    }
+
+        .vditor-outline.vditor-outline--right {
+            margin-right: initial;
+        }
+
+            .vditor-outline.vditor-outline--right .vditor-outline__content > ul {
+                padding-left: 1em;
+            }
 }

@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 
 <VditorMarkdownPreview @ref="vditorMarkdownPreview"
                        Value="@Value"
@@ -14,3 +14,28 @@
 <PreviewImageDialog @bind-Visible="showPreviewImage"
                     Src="@previewImageSrc">
 </PreviewImageDialog>
+
+<CustomMNavigationDrawer MyValue="MobileOutline"
+                         MyValueChanged="InternalMobileOutlineChanged"
+                         Right="RightOutline"
+                         Fixed
+                         Temporary
+                         Touchless>
+    <div style="display: flex;flex-direction: column;height:100%;">
+        <MyAppBar>
+            <MToolbarTitle Class="font-weight-bold">
+                @I18n.T("Outline")
+            </MToolbarTitle>
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="CloseMobileOutline">
+                <MIcon>close</MIcon>
+            </MButton>
+        </MyAppBar>
+        <ScrollContainer ContentClass="pa-0">
+            <div @ref="moblieOutlineContainerElement"
+                 style="display: block !important;">
+            </div>
+        </ScrollContainer>
+    </div>
+</CustomMNavigationDrawer>

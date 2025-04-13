@@ -9,9 +9,9 @@ namespace SwashbucklerDiary.Rcl.Components
         {
         }
 
-        public async Task After(DotNetObjectReference<object> dotNetObjectReference, ElementReference element)
+        public async Task After(DotNetObjectReference<object> dotNetObjectReference, ElementReference element, ElementReference outlineElement)
         {
-            await base.InvokeVoidAsync("after", [dotNetObjectReference, element]);
+            await base.InvokeVoidAsync("after", [dotNetObjectReference, element, outlineElement]);
         }
 
         public async Task Focus(ElementReference element)
@@ -27,6 +27,11 @@ namespace SwashbucklerDiary.Rcl.Components
         public async Task Upload(ElementReference element, ElementReference? inputFileElement)
         {
             await base.InvokeVoidAsync("upload", element, inputFileElement);
+        }
+
+        public async Task SetMoblieOutline(ElementReference element, ElementReference outlineElement)
+        {
+            await base.InvokeVoidAsync("setMoblieOutline", [element, outlineElement]);
         }
     }
 }

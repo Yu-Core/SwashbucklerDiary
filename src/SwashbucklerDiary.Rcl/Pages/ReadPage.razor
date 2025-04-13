@@ -122,6 +122,7 @@
             @if (enableMarkdown)
             {
                 <MarkdownPreview @ref="markdownPreview"
+                                 @bind-MobileOutline="showMoblieOutline"
                                  Value="@(diary.Content)"
                                  Class="@($"px-3 {highlightSearchContainerClass}")"
                                  Style="padding-top:10px"

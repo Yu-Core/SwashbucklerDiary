@@ -38,6 +38,14 @@ body {
 
 .m-navigation-drawer {
     left: var(--sail);
+    margin-top: calc(0px - var(--sait));
+    padding-top: var(--sait);
+    height: 100vh !important;
+}
+
+.m-navigation-drawer--right {
+    left: auto;
+    right: var(--sair);
 }
 
 .m-bottom-sheet.m-dialog .m-card::after {
@@ -83,5 +91,5 @@ body {
 }
 
 .md-preview__outline {
-    height: calc(var(--safe-area-height) - 64px - 20px - 24px);
+    height: calc(var(--safe-area-height) - 64px - 20px - 24px - 8px);
 }

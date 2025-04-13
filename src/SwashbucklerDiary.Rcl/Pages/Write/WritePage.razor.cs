@@ -46,6 +46,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool waitSelectTemplate = true;
 
+        private bool outline;
+
+        private bool? showMoblieOutline = false;
+
         private int editAutoSave;
 
         private UseTemplateKind useTemplateMethod;
@@ -86,6 +90,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
+
+        [Inject]
+        private MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
 
         [SupplyParameterFromQuery]
         private Guid? TagId { get; set; }
@@ -149,6 +156,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             showOtherInfo = SettingService.Get(s => s.OtherInfo);
             useTemplateMethod = (UseTemplateKind)SettingService.Get(it => it.UseTemplateMethod);
             selectTemplateWhenCreate = SettingService.Get(it => it.SelectTemplateWhenCreate);
+            outline = SettingService.Get(it => it.Outline);
         }
 
         private List<TagModel> SelectedTags
@@ -193,6 +201,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string TemplateSwitchText() => diary.Template ? "Switch to Diary" : "Switch to Template";
 
         private string TemplateSwitchIcon() => diary.Template ? "book" : "space_dashboard";
+
+        private string OutlineText() => outline ? "Hide outline" : "Display outline";
 
         private async Task InitTags()
         {
@@ -269,6 +279,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, OtherInfoSwitchText, "info", ()=> SettingChange(nameof(Setting.OtherInfo), ref showOtherInfo)),
                 new(this, TemplateSwitchText, TemplateSwitchIcon, ()=> diary.Template = !diary.Template),
                 new(this, "Reference diary", "format_quote", ()=> showReference = true),
+                new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!MasaBlazorHelper.Breakpoint.MdAndUp),
+                new(this, OutlineText, "format_list_bulleted", ()=> SettingChange(nameof(Setting.Outline), ref outline), ()=>MasaBlazorHelper.Breakpoint.MdAndUp),
             ];
         }
 

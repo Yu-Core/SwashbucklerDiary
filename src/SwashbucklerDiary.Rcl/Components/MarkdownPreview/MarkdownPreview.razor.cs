@@ -21,6 +21,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private Dictionary<string, object>? _options;
 
+        private ElementReference moblieOutlineContainerElement;
+
         [Inject]
         protected II18nService I18n { get; set; } = default!;
 
@@ -64,6 +66,12 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool RightOutline { get; set; }
 
         [Parameter]
+        public bool? MobileOutline { get; set; }
+
+        [Parameter]
+        public EventCallback<bool?> MobileOutlineChanged { get; set; }
+
+        [Parameter]
         public EventCallback OnAfter { get; set; }
 
         [JSInvokable]
@@ -86,6 +94,13 @@ namespace SwashbucklerDiary.Rcl.Components
             NavigationManager.NavigateTo(url, replace: true);
         }
 
+        [JSInvokable]
+        public async Task CloseMobileOutline()
+        {
+            await InternalMobileOutlineChanged(false);
+            await InvokeAsync(StateHasChanged);
+        }
+
         public async Task RenderLazyLoadingImage()
         {
             if (vditorMarkdownPreview is null || !imageLazy)
@@ -102,17 +117,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
             ReadSettings();
             SetOptions();
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-
-            if (firstRender)
-            {
-                var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
-                await MarkdownPreviewJSModule.After(dotNetObjectReference, vditorMarkdownPreview.Ref);
-            }
         }
 
         private string? InternalClass => $"{Class} {(FirstLineIndent ? "first-line-indent" : "")} {(TaskListLineThrough ? "task-list-line-through" : "")}";
@@ -162,17 +166,21 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task HandleOnAfter()
         {
-            var options = new Dictionary<string, object>();
-            if (autoPlay)
-            {
-                options.Add("autoPlay", true);
-            }
-
-            await MarkdownPreviewJSModule.AfterMarkdown(vditorMarkdownPreview.Ref, options);
+            var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
+            await MarkdownPreviewJSModule.AfterMarkdown(dotNetObjectReference,vditorMarkdownPreview.Ref, autoPlay, moblieOutlineContainerElement);
 
             if (OnAfter.HasDelegate)
             {
                 await OnAfter.InvokeAsync();
+            }
+        }
+
+        private async Task InternalMobileOutlineChanged(bool? value)
+        {
+            MobileOutline = value;
+            if (MobileOutlineChanged.HasDelegate)
+            {
+                await MobileOutlineChanged.InvokeAsync(value);
             }
         }
     }

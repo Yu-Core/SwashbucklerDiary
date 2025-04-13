@@ -19,8 +19,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool taskListLineThrough;
 
-        private bool outline;
-
         private bool rightOutline;
 
         private bool showAddTable;
@@ -32,6 +30,8 @@ namespace SwashbucklerDiary.Rcl.Components
         private InputFile? inputFile;
 
         private DotNetObjectReference<object>? _dotNetObjectReference;
+
+        private ElementReference moblieOutlineElement;
 
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
@@ -64,12 +64,29 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool Autofocus { get; set; }
 
         [Parameter]
+        public bool Outline { get;set; }
+
+        [Parameter]
+        public bool? MobileOutline { get; set; }
+
+        [Parameter]
+        public EventCallback<bool?> MobileOutlineChanged { get; set; }
+
+
+        [Parameter]
         public EventCallback OnAfter { get; set; }
 
         [JSInvokable]
         public async Task OpenAddTableDialog()
         {
             showAddTable = true;
+            await InvokeAsync(StateHasChanged);
+        }
+
+        [JSInvokable]
+        public async Task CloseMobileOutline()
+        {
+            await InternalMobileOutlineChanged(false);
             await InvokeAsync(StateHasChanged);
         }
 
@@ -94,14 +111,13 @@ namespace SwashbucklerDiary.Rcl.Components
             SetOptions();
         }
 
-        private string? InternalClass => $"{Class} {(firstLineIndent ? "first-line-indent" : "")} {(taskListLineThrough ? "task-list-line-through" : "")}";
+        private string? InternalClass =>  $"vditor {Class} {(firstLineIndent ? "first-line-indent" : "")} {(taskListLineThrough ? "task-list-line-through" : "")} {(Outline ? "": "outline_hide")}";
 
         private void ReadSettings()
         {
             firstLineIndent = SettingService.Get(s => s.FirstLineIndent);
             codeLineNumber = SettingService.Get(s => s.CodeLineNumber);
             taskListLineThrough = SettingService.Get(s => s.TaskListLineThrough);
-            outline = SettingService.Get(s => s.Outline);
             rightOutline = SettingService.Get(s => s.RigthOutline);
         }
 
@@ -181,7 +197,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var outlinePosition = rightOutline ? "right" : "left";
             var outline = new Dictionary<string, object?>()
             {
-                { "enable", this.outline },
+                { "enable", true },
                 { "position", outlinePosition }
             };
 
@@ -208,7 +224,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (_dotNetObjectReference is not null)
             {
-                await Module.After(_dotNetObjectReference, mMarkdown.Ref);
+                await Module.After(_dotNetObjectReference, mMarkdown.Ref, moblieOutlineElement);
             }
 
             if (Autofocus)
@@ -340,6 +356,20 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task Focus()
         {
             await Module.Focus(mMarkdown.Ref);
+        }
+
+        private async Task InternalMobileOutlineChanged(bool? value)
+        {
+            MobileOutline = value;
+            if (MobileOutlineChanged.HasDelegate)
+            {
+                await MobileOutlineChanged.InvokeAsync(value);
+            }
+        }
+
+        private async Task SetMoblieOutlineAsync()
+        {
+            await Module.SetMoblieOutline(mMarkdown.Ref, moblieOutlineElement);
         }
     }
 }

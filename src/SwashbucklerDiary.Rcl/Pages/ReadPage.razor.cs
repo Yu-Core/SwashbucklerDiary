@@ -1,4 +1,3 @@
-using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -6,7 +5,6 @@ using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
-using System.Threading.Tasks;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -25,6 +23,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private bool showSetPrivacy;
 
         private bool showHighlightSearch;
+
+        private bool? showMoblieOutline = false;
 
         private bool privacyMode;
 
@@ -68,6 +68,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         [Inject]
         private IScreenshot ScreenshotService { get; set; } = default!;
+
+        [Inject]
+        private MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
 
         [Parameter]
         public Guid Id { get; set; }
@@ -144,6 +147,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string MarkdownIcon() => enableMarkdown ? "description" : "markdown";
 
+        private string OutlineText() => outline ? "Hide outline" : "Display outline";
+
         private string PrivateText() => IsPrivate ? "Cancel privacy" : "Set to private";
 
         private string PrivateIcon() => IsPrivate ? "lock_open" : "lock";
@@ -172,6 +177,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, "Copy link", "mdi:mdi-link-variant", CopyLink),
                 new(this, "Look up", "quick_reference_all", OpenSearch),
                 new(this, "View referenced", "file_export", ViewReferenced),
+                new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!MasaBlazorHelper.Breakpoint.MdAndUp),
+                new(this, OutlineText, "format_list_bulleted", OutlineChanged, ()=>MasaBlazorHelper.Breakpoint.MdAndUp),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
 
@@ -252,6 +259,13 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             enableMarkdown = !enableMarkdown;
             await SettingService.SetAsync(s => s.Markdown, enableMarkdown);
+            StateHasChanged();
+        }
+
+        private async Task OutlineChanged()
+        {
+            outline = !outline;
+            await SettingService.SetAsync(s => s.Outline, outline);
             StateHasChanged();
         }
 

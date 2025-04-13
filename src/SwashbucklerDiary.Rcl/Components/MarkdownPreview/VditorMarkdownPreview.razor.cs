@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -15,9 +15,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         private VditorMarkdownPreviewJSModule VditorMarkdownPreviewJSModule { get; set; } = default!;
-
-        [Inject]
-        private NavigationManager NavigationManager { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
@@ -98,7 +95,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            await VditorMarkdownPreviewJSModule.PreviewVditor(dotNetObjectReference.Value, Ref, Value, Options, Outline, outlineElementRef);
+            await VditorMarkdownPreviewJSModule.PreviewVditor(dotNetObjectReference.Value, Ref, Value, Options, true, outlineElementRef);
         }
     }
 }

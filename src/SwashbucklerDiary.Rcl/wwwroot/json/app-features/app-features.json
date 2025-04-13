@@ -182,8 +182,7 @@
     "Name": "Outline",
     "Icon": "format_list_bulleted",
     "Path": "Setting / Diary / Outline",
-    "Href": "outlineSetting",
-    "HideBreakpoints": [ "Xs", "Sm" ]
+    "Href": "outlineSetting"
   },
   {
     "Name": "Display outline",
@@ -196,8 +195,7 @@
     "Name": "Position on the right",
     "Icon": "format_align_right",
     "Path": "Setting / Diary / Outline / Position on the right",
-    "Href": "outlineSetting",
-    "HideBreakpoints": [ "Xs", "Sm" ]
+    "Href": "outlineSetting"
   },
   {
     "Name": "First line indentation",

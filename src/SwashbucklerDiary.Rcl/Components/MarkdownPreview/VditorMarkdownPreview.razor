@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 
 <div class="@WrapClass">
     <div @ref="outlineElementRef" class="@InternalOutlineClass" style="@InternalOutlineStyle "></div>
@@ -10,7 +10,7 @@
 
     string InternalStyle => $"flex: 1;min-width: 1px; {Style}";
 
-    string InternalOutlineClass => $"vditor-outline {OutlineClass}";
+    string InternalOutlineClass => $"vditor-outline {OutlineClass} {(RightOutline ? "vditor-outline--right" : "")}";
 
     string InternalOutlineStyle => $"position: sticky;top: 0px; {(Outline ? "display:block;" : "")} {OutlineStyle}";
 }

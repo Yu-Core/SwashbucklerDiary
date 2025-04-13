@@ -246,6 +246,7 @@ html {
 
 .my-scroll-container {
     overflow-y: auto !important;
+    overflow-x: hidden;
     position: relative !important;
     height: 100% !important;
     scroll-behavior: smooth;
@@ -641,7 +642,7 @@ html.m-overlay-scroll-blocked {
 }
 
 .md-preview__outline {
-    height: calc(100vh - 64px - 20px - 24px);
+    height: calc(100vh - 64px - 20px - 24px - 8px);
 }
 
 .diary-info-btn {
@@ -706,3 +707,7 @@ html.m-overlay-scroll-blocked {
     .multi-menu-moblie-container .title-container {
         text-align: center;
     }
+
+.vditor.outline_hide .vditor-outline {
+    display: none !important;
+}

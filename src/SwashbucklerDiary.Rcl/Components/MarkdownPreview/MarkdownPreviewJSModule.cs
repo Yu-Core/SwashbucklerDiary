@@ -9,14 +9,9 @@ namespace SwashbucklerDiary.Rcl.Components
         {
         }
 
-        public async Task After(DotNetObjectReference<object> dotNetObjectReference, ElementReference element)
+        public async Task AfterMarkdown(DotNetObjectReference<object> dotNetObjectReference, ElementReference element, bool autoPlay, ElementReference outlineElement)
         {
-            await InvokeVoidAsync("after", [dotNetObjectReference, element]);
-        }
-
-        public async Task AfterMarkdown(ElementReference element, Dictionary<string, object> options)
-        {
-            await InvokeVoidAsync("afterMarkdown", [element, options]);
+            await InvokeVoidAsync("afterMarkdown", [dotNetObjectReference, element, autoPlay, outlineElement]);
         }
     }
 }
