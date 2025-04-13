@@ -1,4 +1,4 @@
-﻿export function previewVditor(dotNetCallbackRef, element, text, options, outline, outlineElement) {
+export function previewVditor(dotNetCallbackRef, element, text, options, outline, outlineElement) {
     if (!element) {
         return;
     }
@@ -98,6 +98,10 @@ function handleAnchorScroll() {
 }
 
 function fixContents(listenElement, previewElement) {
+    if (!listenElement || !previewElement) {
+        return;
+    }
+
     listenElement.addEventListener('click', function (event) {
         const tocItem = event.target.closest('[data-target-id]');
         if (!tocItem) {
