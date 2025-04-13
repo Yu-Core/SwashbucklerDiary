@@ -648,16 +648,16 @@ html.m-overlay-scroll-blocked {
     max-width: 100%;
 }
 
-.diary-info-btn .m-btn__content {
-    max-width: 100%;
-}
-
-    .diary-info-btn .m-btn__content span {
-        width: 100%;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+    .diary-info-btn .m-btn__content {
+        max-width: 100%;
     }
+
+        .diary-info-btn .m-btn__content span {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
 
 .material-symbols-fill {
     font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
@@ -684,3 +684,25 @@ html.m-overlay-scroll-blocked {
         transform: scale(1);
     }
 }
+
+.multi-menu-moblie-container {
+    padding: 32px 12px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+    .multi-menu-moblie-container .menu-item {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .multi-menu-moblie-container .content-container {
+        width: auto;
+        cursor: pointer;
+    }
+
+    .multi-menu-moblie-container .title-container {
+        text-align: center;
+    }

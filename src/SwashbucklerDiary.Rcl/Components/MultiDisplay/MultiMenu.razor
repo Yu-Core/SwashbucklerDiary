@@ -12,20 +12,25 @@
             </ActivatorContent>
             <ChildContent>
                 <MCard Class="primary-background rounded-t-lg">
-                    <div class="px-3 py-8" style="display: grid;grid-template-columns: repeat(5, 1fr);gap: 10px;">
+                    <div class="multi-menu-moblie-container">
                         @foreach (var item in DynamicListItems)
                         {
                             @if (item.Show)
                             {
-                                <div class="d-flex flex-column align-center">
-                                    <MButton Class="second-background mb-2"
-                                             Width="56"
-                                             Height="56"
-                                             Icon="true"
-                                             OnClick="@item.OnClick">
-                                        <MIcon>@(item.Icon)</MIcon>
-                                    </MButton>
-                                    <div class="text-caption text-center">@(I18n.T(item.Text))</div>
+                                <div class="menu-item">
+                                    <div class="content-container"
+                                         @onclick="item.OnClick">
+                                        <MButton Class="second-background mb-2"
+                                                 Width="56"
+                                                 Height="56"
+                                                 Icon="true"
+                                                 OnClick="@item.OnClick">
+                                            <MIcon>@(item.Icon)</MIcon>
+                                        </MButton>
+                                        <div class="title-container text-caption">
+                                            @(I18n.T(item.Text))
+                                        </div>
+                                    </div>
                                 </div>
                             }
                         }
