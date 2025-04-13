@@ -84,14 +84,14 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems =
             [
-                new(this, "Clear out", "mdi-delete-outline", OpenDeleteDialog),
-                new(this, "Share", "mdi-share-variant-outline", OpenShareDialog),
+                new(this, "Clear out", "mdi:mdi-delete-outline", OpenDeleteDialog),
+                new(this, "Share", "share", OpenShareDialog),
             ];
 
             shareItems =
             [
-                new(this, "Text sharing","mdi-format-text", ShareText),
-                new(this, "File sharing","mdi-file-outline", ShareLogFile),
+                new(this, "Text sharing","description", ShareText),
+                new(this, "File sharing","draft", ShareLogFile),
             ];
         }
 

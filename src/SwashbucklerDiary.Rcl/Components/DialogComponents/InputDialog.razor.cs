@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -36,7 +36,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool MultiLine { get; set; }
 
         private string PasswordIcon
-            => Password ? (showPassword ? "mdi-eye" : "mdi-eye-off") : string.Empty;
+            => Password ? (showPassword ? "visibility" : "visibility_off") : string.Empty;
 
         private string PasswordType
             => Password ? (showPassword ? "text" : "password") : string.Empty;

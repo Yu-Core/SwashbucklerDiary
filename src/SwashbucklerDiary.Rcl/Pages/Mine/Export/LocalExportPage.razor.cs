@@ -43,8 +43,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             importTypes = new()
             {
-                new(this,"Md", "mdi-language-markdown-outline", ImportMd),
-                new(this,"Json", "mdi-code-braces", ImportJson),
+                new(this,"Md", "markdown", ImportMd),
+                new(this,"Json", "file_json", ImportJson),
             };
         }
 

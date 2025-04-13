@@ -6,7 +6,7 @@
     <MButton Icon="true"
              OnClick="NavigateToBack">
         <MIcon>
-            mdi-arrow-left
+            arrow_back
         </MIcon>
     </MButton>
 
@@ -26,14 +26,14 @@
     <MButton Icon="true"
              OnClick="()=>showSearch=!showSearch">
         <MIcon>
-            mdi-magnify
+            search
         </MIcon>
     </MButton>
 
     <MButton Icon="true"
              OnClick="()=>showFilter=!showFilter">
         <MIcon>
-            @(IsDateFiltered ? "mdi-filter-check-outline" : "mdi-filter-outline")
+            @(IsDateFiltered ? "mdi:mdi-filter-check-outline" : "mdi:mdi-filter-outline")
         </MIcon>
     </MButton>
 
@@ -44,10 +44,10 @@
                      Icon="true">
                 <MultiDisplay>
                     <DesktopContent>
-                        <MIcon>mdi-dots-horizontal</MIcon>
+                        <MIcon>more_horiz</MIcon>
                     </DesktopContent>
                     <MobileContent>
-                        <MIcon>mdi-dots-vertical</MIcon>
+                        <MIcon>more_vert</MIcon>
                     </MobileContent>
                 </MultiDisplay>
             </MButton>

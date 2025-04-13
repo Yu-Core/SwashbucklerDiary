@@ -1,12 +1,12 @@
 [
   {
     "Name": "QQ wallet",
-    "Icon": "mdi-qqchat",
+    "Icon": "mdi:mdi-qqchat",
     "Url": "_content/SwashbucklerDiary.Rcl/sponsor/qq.png"
   },
   {
     "Name": "Wechat Payment",
-    "Icon": "mdi-wechat",
+    "Icon": "mdi:mdi-wechat",
     "Url": "_content/SwashbucklerDiary.Rcl/sponsor/wechat.png"
   },
   {

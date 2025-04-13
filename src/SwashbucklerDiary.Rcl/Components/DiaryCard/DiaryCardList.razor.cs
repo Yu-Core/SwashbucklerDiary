@@ -99,7 +99,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string PrivateText() => privacyMode ? "Cancel privacy" : "Set to private";
 
-        private string PrivateIcon() => privacyMode ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
+        private string PrivateIcon() => privacyMode ? "lock_open" : "lock";
 
         private async Task Topping()
         {
@@ -193,14 +193,14 @@ namespace SwashbucklerDiary.Rcl.Components
 
             menuItems =
             [
-                new(this, "Tag", "mdi-label-outline", OpenTagDialog),
-                new(this, "Copy", "mdi-content-copy", Copy),
-                new(this, "Delete", "mdi-delete-outline", Delete),
-                new(this, TopText, "mdi-format-vertical-align-top", Topping),
-                new(this, "Export", "mdi-export", Export),
-                new(this, "Sort", "mdi-sort-variant", OpenSortDialog),
-                new(this, "Copy quote", "mdi-format-quote-open-outline", CopyQuote),
-                new(this, "Copy link", "mdi-link-variant", CopyLink),
+                new(this, "Tag", "label", OpenTagDialog),
+                new(this, "Copy", "content_copy", Copy),
+                new(this, "Delete", "mdi:mdi-delete-outline", Delete),
+                new(this, TopText, "vertical_align_top", Topping),
+                new(this, "Export", "mdi:mdi-export", Export),
+                new(this, "Sort", "sort", OpenSortDialog),
+                new(this, "Copy quote", "format_quote", CopyQuote),
+                new(this, "Copy link", "mdi:mdi-link-variant", CopyLink),
                 new(this, PrivateText, PrivateIcon, MovePrivacy, ()=>privacyMode || showSetPrivacy)
             ];
         }

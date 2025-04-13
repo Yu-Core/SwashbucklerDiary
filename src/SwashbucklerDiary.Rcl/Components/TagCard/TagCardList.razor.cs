@@ -118,10 +118,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
             menuItems =
             [
-                new(this, "Rename", "mdi-rename-outline", Rename),
-                new(this, "Delete", "mdi-delete-outline", Delete),
-                new(this, "Export", "mdi-export", Export),
-                new(this, "Sort", "mdi-sort-variant", OpenSortDialog),
+                new(this, "Rename", "edit_square", Rename),
+                new(this, "Delete", "mdi:mdi-delete-outline", Delete),
+                new(this, "Export", "mdi:mdi-export", Export),
+                new(this, "Sort", "sort", OpenSortDialog),
             ];
         }
 

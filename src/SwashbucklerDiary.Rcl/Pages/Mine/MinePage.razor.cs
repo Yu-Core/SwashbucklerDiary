@@ -145,42 +145,42 @@ namespace SwashbucklerDiary.Rcl.Pages
                     "Data",
                     new()
                     {
-                        new(this, "Backup","mdi-folder-sync-outline",() => To("backups")),
-                        new(this, "Export","mdi-export",() => To("export")),
-                        new(this, "Privacy mode","mdi-hexagon-slice-3",TryToPrivacyMode,()=>!hidePrivacyModeEntrance || privacyMode),
+                        new(this, "Backup","mdi:mdi-folder-sync-outline",() => To("backups")),
+                        new(this, "Export","mdi:mdi-export",() => To("export")),
+                        new(this, "Privacy mode","mdi:mdi-hexagon-slice-3",TryToPrivacyMode,()=>!hidePrivacyModeEntrance || privacyMode),
                     }
                 },
                 {
                     "Setting",
                     new()
                     {
-                        new(this,"Setting","mdi-cog-outline",() => To("setting")),
-                        new(this,"Language","mdi-web",() => showLanguage = true),
-                        new(this,"Night mode","mdi-weather-night",() => showTheme = true),
+                        new(this,"Setting","mdi:mdi-cog-outline",() => To("setting")),
+                        new(this,"Language","language",() => showLanguage = true),
+                        new(this,"Night mode","dark_mode",() => showTheme = true),
                     }
                 },
                 {
                     "Feature",
                     new()
                     {
-                        new(this, "Achievement","mdi-trophy-outline",() => To("achievement")),
-                        new(this, "Location","mdi-map-marker-outline",() => To("locationSetting")),
+                        new(this, "Achievement","trophy",() => To("achievement")),
+                        new(this, "Location","location_on",() => To("locationSetting")),
                     }
                 },
                 {
                     "Other",
                     new()
                     {
-                        new(this,"Contact us","mdi-email-outline",() => showFeedback = true),
-                        new(this,"About","mdi-information-outline",() => To("about")),
+                        new(this,"Contact us","mail",() => showFeedback = true),
+                        new(this,"About","info",() => To("about")),
                     }
                 }
             };
             FeedbackTypes =
             [
-                new(this, "Email","mdi-email-outline",SendMail),
-                new(this, "Github","mdi-github",ToGithub),
-                new(this, "QQ Group","mdi-qqchat",OpenQQGroup),
+                new(this, "Email","mail",SendMail),
+                new(this, "Github","mdi:mdi-github",ToGithub),
+                new(this, "QQ Group","mdi:mdi-qqchat",OpenQQGroup),
             ];
         }
 

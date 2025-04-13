@@ -91,8 +91,8 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             menuItems =
             [
-                new(this, "View references", "mdi-notebook-outline", ViewReferences),
-                new(this, "Save", "mdi-tray-arrow-down", Save)
+                new(this, "View references", "book", ViewReferences),
+                new(this, "Save", "mdi:mdi-tray-arrow-down", Save)
             ];
         }
 

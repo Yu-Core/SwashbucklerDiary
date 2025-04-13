@@ -84,8 +84,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems =
             [
-                new(this, "Export diaries","mdi-export", ()=>showExportThisTime = true),
-                new(this, "Merge diaries","mdi-axis-z-arrow", ()=>showConfirmMerge = true),
+                new(this, "Export diaries","mdi:mdi-export", ()=>showExportThisTime = true),
+                new(this, "Merge diaries","merge", ()=>showConfirmMerge = true),
             ];
         }
 

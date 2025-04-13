@@ -1,11 +1,11 @@
-﻿using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Extensions
 {
     public static class IGlobalConfigurationExtension
     {
-        private readonly static string errorIcon = "mdi-close";
+        private readonly static string errorIcon = "close";
 
         public static string GetWeatherIcon(this IGlobalConfiguration globalConfiguration, string key)
         {

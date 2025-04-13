@@ -1,365 +1,365 @@
 [
   {
     "Name": "User Setting",
-    "Icon": "mdi-account-cog-outline",
+    "Icon": "manage_accounts",
     "Path": "User Setting",
     "Href": "user"
   },
   {
     "Name": "Avatar",
-    "Icon": "mdi-account-circle-outline",
+    "Icon": "account_circle",
     "Path": "User Setting / Avatar",
     "Href": "user"
   },
   {
     "Name": "NickName",
-    "Icon": "mdi-account-details-outline",
+    "Icon": "id_card",
     "Path": "User Setting / NickName",
     "Href": "user"
   },
   {
     "Name": "Sign",
-    "Icon": "mdi-file-sign",
+    "Icon": "mdi:mdi-file-sign",
     "Path": "User Setting / Sign",
     "Href": "user"
   },
   {
     "Name": "Local backup",
-    "Icon": "mdi-folder-arrow-up-down-outline",
+    "Icon": "mdi:mdi-folder-arrow-up-down-outline",
     "Path": "Backup / Local backup",
     "Href": "backups?tabs=local"
   },
   {
     "Name": "Backup",
-    "Icon": "mdi-folder-arrow-down-outline",
+    "Icon": "mdi:mdi-folder-arrow-down-outline",
     "Path": "Backup / Local backup / Backup",
     "Href": "backups?tabs=local"
   },
   {
     "Name": "Restore",
-    "Icon": "mdi-folder-arrow-up-outline",
+    "Icon": "mdi:mdi-folder-arrow-up-outline",
     "Path": "Backup / Local backup / Restore",
     "Href": "backups?tabs=local"
   },
   {
     "Name": "WebDAV",
-    "Icon": "mdi-cloud-sync-outline",
+    "Icon": "mdi:mdi-cloud-sync-outline",
     "Path": "Backup / WebDAV",
     "Href": "backups?tabs=webDAV",
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
     "Name": "Config",
-    "Icon": "mdi-cog-sync-outline",
+    "Icon": "mdi:mdi-cog-sync-outline",
     "Path": "Backup / WebDAV / Config",
     "Href": "backups?tabs=webDAV",
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
     "Name": "Upload",
-    "Icon": "mdi-cloud-arrow-up-outline",
+    "Icon": "mdi:mdi-cloud-arrow-up-outline",
     "Path": "Backup / WebDAV / Upload",
     "Href": "backups?tabs=webDAV",
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
     "Name": "Pull",
-    "Icon": "mdi-cloud-arrow-down-outline",
+    "Icon": "mdi:mdi-cloud-arrow-down-outline",
     "Path": "Backup / WebDAV / Pull",
     "Href": "backups?tabs=webDAV",
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
     "Name": "Local export",
-    "Icon": "mdi-file-arrow-up-down-outline",
+    "Icon": "mdi:mdi-file-arrow-up-down-outline",
     "Path": "Export / Local export",
     "Href": "export?tabs=local"
   },
   {
     "Name": "Export",
-    "Icon": "mdi-export",
+    "Icon": "mdi:mdi-export",
     "Path": "Export / Local export / Export",
     "Href": "export?tabs=local"
   },
   {
     "Name": "Import",
-    "Icon": "mdi-import",
+    "Icon": "mdi:mdi-import",
     "Path": "Export / Local export / Import",
     "Href": "export?tabs=local"
   },
   {
     "Name": "LAN",
-    "Icon": "mdi-lan",
+    "Icon": "lan",
     "Path": "Export / LAN",
     "Href": "export?tabs=LAN",
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
     "Name": "Achievement",
-    "Icon": "mdi-trophy-outline",
+    "Icon": "trophy",
     "Path": "Achievement",
     "Href": "achievement"
   },
   {
     "Name": "System permission",
-    "Icon": "mdi-account-cog-outline",
+    "Icon": "manage_accounts",
     "Path": "Setting / System permission",
     "Href": "permissionSetting"
   },
   {
     "Name": "Clear cache",
-    "Icon": "mdi-trash-can-outline",
+    "Icon": "mdi:mdi-trash-can-outline",
     "Path": "Setting / Clear cache",
     "Href": "setting"
   },
   {
     "Name": "Home",
-    "Icon": "mdi-home-outline",
+    "Icon": "home",
     "Path": "Setting / Home",
     "Href": "indexSetting"
   },
   {
     "Name": "Greetings",
-    "Icon": "mdi-hand-wave-outline",
+    "Icon": "waving_hand",
     "Path": "Setting / Home / Greetings",
     "Href": "indexSetting"
   },
   {
     "Name": "Date",
-    "Icon": "mdi-calendar-range-outline",
+    "Icon": "date_range",
     "Path": "Setting / Home / Date",
     "Href": "indexSetting"
   },
   {
     "Name": "Calendar",
-    "Icon": "mdi-calendar-month-outline",
+    "Icon": "calendar_month",
     "Path": "Setting / Calendar",
     "Href": "calendarSetting"
   },
   {
     "Name": "First day of week",
-    "Icon": "mdi-calendar-week-begin-outline",
+    "Icon": "mdi:mdi-calendar-week-begin-outline",
     "Path": "Setting / Calendar / First day of week",
     "Href": "calendarSetting"
   },
   {
     "Name": "Diary",
-    "Icon": "mdi-notebook-outline",
+    "Icon": "book",
     "Path": "Setting / Diary",
     "Href": "diarySetting"
   },
   {
     "Name": "Title",
-    "Icon": "mdi-format-title",
+    "Icon": "title",
     "Path": "Setting / Diary / Title",
     "Href": "diarySetting"
   },
   {
     "Name": "Markdown",
-    "Icon": "mdi-language-markdown-outline",
+    "Icon": "markdown",
     "Path": "Setting / Diary / Markdown",
     "Href": "diarySetting"
   },
   {
     "Name": "Other information",
-    "Icon": "mdi-information-outline",
+    "Icon": "info",
     "Path": "Setting / Diary / Other information",
     "Href": "diarySetting"
   },
   {
     "Name": "Weather and mood text",
-    "Icon": "mdi-alphabetical",
+    "Icon": "mdi:mdi-alphabetical",
     "Path": "Setting / Diary /Weather and mood text",
     "Href": "diarySetting"
   },
   {
     "Name": "Auto save",
-    "Icon": "mdi-content-save-edit-outline",
+    "Icon": "save_as",
     "Path": "Setting / Diary /Auto save",
     "Href": "diarySetting"
   },
   {
     "Name": "Outline",
-    "Icon": "mdi-format-list-bulleted",
+    "Icon": "format_list_bulleted",
     "Path": "Setting / Diary / Outline",
     "Href": "outlineSetting",
     "HideBreakpoints": [ "Xs", "Sm" ]
   },
   {
     "Name": "Display outline",
-    "Icon": "mdi-format-list-bulleted",
+    "Icon": "format_list_bulleted",
     "Path": "Setting / Diary / Outline / Display outline",
     "Href": "outlineSetting",
     "HideBreakpoints": [ "Xs", "Sm" ]
   },
   {
     "Name": "Position on the right",
-    "Icon": "mdi-format-align-right",
+    "Icon": "format_align_right",
     "Path": "Setting / Diary / Outline / Position on the right",
     "Href": "outlineSetting",
     "HideBreakpoints": [ "Xs", "Sm" ]
   },
   {
     "Name": "First line indentation",
-    "Icon": "mdi-format-indent-increase",
+    "Icon": "format_indent_increase",
     "Path": "Setting / Diary / First line indentation",
     "Href": "diarySetting"
   },
   {
     "Name": "Code line number",
-    "Icon": "mdi-format-list-numbered",
+    "Icon": "format_list_numbered",
     "Path": "Setting / Diary / Code line number",
     "Href": "diarySetting"
   },
   {
     "Name": "Task list line-through",
-    "Icon": "mdi-checkbox-blank-off-outline",
+    "Icon": "mdi:mdi-checkbox-blank-off-outline",
     "Path": "Setting / Diary / Task list line-through",
     "Href": "diarySetting"
   },
   {
     "Name": "Lazy image load",
-    "Icon": "mdi-image-refresh-outline",
+    "Icon": "mdi:mdi-image-refresh-outline",
     "Path": "Setting / Diary / Lazy image load",
     "Href": "diarySetting"
   },
   {
     "Name": "Audio and video auto play",
-    "Icon": "mdi-play-outline",
+    "Icon": "play_arrow",
     "Path": "Setting / Diary / Audio and video auto play",
     "Href": "diarySetting"
   },
   {
     "Name": "Template",
-    "Icon": "mdi-view-dashboard-outline",
+    "Icon": "space_dashboard",
     "Path": "Setting / Template",
     "Href": "templateSetting"
   },
   {
     "Name": "Use Template Method",
-    "Icon": "mdi-plus",
+    "Icon": "tactic",
     "Path": "Setting / Template / Use Template Method",
     "Href": "templateSetting"
   },
   {
     "Name": "Select template when create",
-    "Icon": "mdi-select",
+    "Icon": "select",
     "Path": "Setting / Template / Select template when create",
     "Href": "templateSetting"
   },
   {
     "Name": "Location",
-    "Icon": "mdi-map-marker-outline",
+    "Icon": "location_on",
     "Path": "Location",
     "Href": "locationSetting"
   },
   {
     "Name": "Snackbars",
-    "Icon": "mdi-alert-box-outline",
+    "Icon": "call_to_action",
     "Path": "Setting / Snackbars",
     "Href": "alertSetting"
   },
   {
     "Name": "Alert timeout",
-    "Icon": "mdi-timer-outline",
+    "Icon": "timer",
     "Path": "Setting / Snackbars / Alert timeout",
     "Href": "alertSetting"
   },
   {
     "Name": "Achievement",
-    "Icon": "mdi-trophy-outline",
+    "Icon": "trophy",
     "Path": "Setting / Snackbars / Achievement",
     "Href": "alertSetting"
   },
   {
     "Name": "Diary card",
-    "Icon": "mdi-card-text-outline",
+    "Icon": "mdi:mdi-card-text-outline",
     "Path": "Setting / Diary card",
     "Href": "diaryCardSetting"
   },
   {
     "Name": "Icon",
-    "Icon": "mdi-emoticon-happy-outline",
+    "Icon": "mdi:mdi-emoticon-happy-outline",
     "Path": "Setting / Diary card / Icon",
     "Href": "diaryCardSetting"
   },
   {
     "Name": "Tag",
-    "Icon": "mdi-label-outline",
+    "Icon": "label",
     "Path": "Setting / Diary card / Tag",
     "Href": "diaryCardSetting"
   },
   {
     "Name": "Time format",
-    "Icon": "mdi-calendar-clock",
+    "Icon": "calendar_clock",
     "Path": "Setting / Diary card / Time format",
     "Href": "diaryCardSetting"
   },
   {
     "Name": "Location",
-    "Icon": "mdi-map-marker-outline",
+    "Icon": "location_on",
     "Path": "Setting / Diary card / Location",
     "Href": "diaryCardSetting"
   },
   {
     "Name": "Statistics card",
-    "Icon": " mdi-chart-line",
+    "Icon": " show_chart",
     "Path": "Setting / Statistics card",
     "Href": "setting",
     "HideBreakpoints": [ "Xs", "Sm" ]
   },
   {
     "Name": "Url Scheme",
-    "Icon": "mdi-link-variant",
+    "Icon": "mdi:mdi-link-variant",
     "Path": "Setting / Url Scheme",
     "Href": "urlScheme",
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
     "Name": "View source",
-    "Icon": "mdi-book-open-page-variant-outline",
+    "Icon": "auto_stories",
     "Path": "About / View source",
     "Href": "about"
   },
   {
     "Name": "User agreement",
-    "Icon": "mdi-file-document-multiple-outline",
+    "Icon": "mdi:mdi-file-document-multiple-outline",
     "Path": "About / User agreement",
     "Href": "user-agreement"
   },
   {
     "Name": "Privacy policy",
-    "Icon": "mdi-lock-outline",
+    "Icon": "lock",
     "Path": "About / Privacy policy",
     "Href": "privacy-policy"
   },
   {
     "Name": "Check for updates",
-    "Icon": "mdi-update",
+    "Icon": "update",
     "Path": "About / Check for updates",
     "Href": "about"
   },
   {
     "Name": "Open source related",
-    "Icon": "mdi-xml",
+    "Icon": "mdi:mdi-xml",
     "Path": "About / Open source related",
     "Href": "relatedOSP"
   },
   {
     "Name": "Log file",
-    "Icon": "mdi-file-document-edit-outline",
+    "Icon": "mdi:mdi-file-document-edit-outline",
     "Path": "About / Log file",
     "Href": "log"
   },
   {
     "Name": "Give a good review",
-    "Icon": "mdi-star-outline",
+    "Icon": "star",
     "Path": "About / Give a good review",
     "Href": "about"
   },
   {
     "Name": "Sponsor us",
-    "Icon": "mdi-hand-heart-outline",
+    "Icon": "volunteer_activism",
     "Path": "About / Sponsor us",
     "Href": "sponsor"
   }

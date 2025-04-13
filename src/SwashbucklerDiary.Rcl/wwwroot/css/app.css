@@ -658,3 +658,29 @@ html.m-overlay-scroll-blocked {
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+
+.material-symbols-fill {
+    font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.material-symbols_active {
+    font-variation-settings: 'FILL' 1;
+    animation: fill 0.2s ease forwards;
+}
+
+@keyframes fill {
+    0% {
+        font-variation-settings: 'FILL' 0;
+        transform: scale(1);
+    }
+
+    50% {
+        font-variation-settings: 'FILL' 0.5;
+        transform: scale(1.1);
+    }
+
+    100% {
+        font-variation-settings: 'FILL' 1;
+        transform: scale(1);
+    }
+}

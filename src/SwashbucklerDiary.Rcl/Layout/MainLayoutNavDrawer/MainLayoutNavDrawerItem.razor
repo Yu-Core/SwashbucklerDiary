@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Layout
+@namespace SwashbucklerDiary.Rcl.Layout
 @inherits MainLayoutNavItemBase
 
 <MTooltip Right>
@@ -8,8 +8,9 @@
                    Ripple="false"
                    Href="@Value.Href">
             <MListItemIcon>
-                <MIcon Size="24">
-                    @Icon
+                <MIcon Class="@IconClass"
+                       Size="24">
+                    @Value.Icon
                 </MIcon>
             </MListItemIcon>
         </MListItem>

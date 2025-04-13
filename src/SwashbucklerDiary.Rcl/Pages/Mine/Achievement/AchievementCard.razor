@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Pages
+@namespace SwashbucklerDiary.Rcl.Pages
 @inherits MyComponentBase
 
 <MCard Class="py-sm-3"
@@ -9,29 +9,29 @@
         <MListItem>
             <MListItemAvatar>
                 <MIcon XLarge
-                        Color="@IconColor">
-                     @Icon
-                 </MIcon>
-             </MListItemAvatar>
+                       Color="@IconColor">
+                    @Icon
+                </MIcon>
+            </MListItemAvatar>
 
-             <MListItemContent>
-                 <MListItemTitle Class="mb-4 font-weight-bold">
-                     @(I18n.T(Value.Name))
-                 </MListItemTitle>
+            <MListItemContent>
+                <MListItemTitle Class="mb-4 font-weight-bold">
+                    @(I18n.T(Value.Name))
+                </MListItemTitle>
 
-                 <MListItemSubtitle Class="mb-4">
-                     @(I18n.T(Value.Description))
-                 </MListItemSubtitle>
+                <MListItemSubtitle Class="mb-4">
+                    @(I18n.T(Value.Description))
+                </MListItemSubtitle>
 
-                 <MProgressLinear Value="@ProgressRate"
-                                  Class="rounded-pill"
-                                  Color="@ProgressRateColor"
-                                  Height="20">
-                     <strong class="@ProgressRateTextColor">
-                         @ProgressRateText
-                     </strong>
-                 </MProgressLinear>
-             </MListItemContent>
-         </MListItem>
-     </MList>
- </MCard>
+                <MProgressLinear Value="@ProgressRate"
+                                 Class="rounded-pill"
+                                 Color="@ProgressRateColor"
+                                 Height="20">
+                    <strong class="@ProgressRateTextColor">
+                        @ProgressRateText
+                    </strong>
+                </MProgressLinear>
+            </MListItemContent>
+        </MListItem>
+    </MList>
+</MCard>

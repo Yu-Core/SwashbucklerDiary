@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Masa.Blazor.Presets;
 
 namespace SwashbucklerDiary.Rcl.Extensions
@@ -29,6 +29,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
                 theme.Themes.Light.Surface = ThemeColor.LightSurface;
                 theme.Themes.Dark.Surface = ThemeColor.DarkSurface;
             });
+            options.ConfigureIcons("MaterialSymbols", new MaterialSymbolsAliases());
         }
     }
 }

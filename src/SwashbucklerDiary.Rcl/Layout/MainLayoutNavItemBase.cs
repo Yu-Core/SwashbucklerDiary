@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -18,6 +18,6 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected bool Activated => NavigationManager.GetAbsolutePath() == NavigationManager.ToAbsoluteUri(Value.Href).AbsolutePath;
 
-        protected string Icon => Activated ? Value.SelectedIcon : Value.NotSelectedIcon;
+        protected string IconClass => Activated ? "material-symbols_active" : "";
     }
 }

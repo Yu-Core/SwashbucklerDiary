@@ -13,14 +13,14 @@
             <MSpacer></MSpacer>
             @if (ShowText is not null)
             {
-                <MButton IconName="@((bool)ShowText ? "mdi-alphabetical" : "mdi-alphabetical-off")"
+                <MButton IconName="@((bool)ShowText ? "mdi:mdi-alphabetical" : "mdi:mdi-alphabetical-off")"
                          OnClick="UpdateShowText">
                 </MButton>
             }
 
             <MButton Icon="true"
                      OnClick="HandleOnCancel">
-                <MIcon>mdi-close</MIcon>
+                <MIcon>close</MIcon>
             </MButton>
         </MCardTitle>
         <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:300px;">

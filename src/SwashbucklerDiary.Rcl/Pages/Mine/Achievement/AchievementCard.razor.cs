@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             => Value.UserAchievement.IsCompleted && Light ? "black" : "";
 
         private string Icon
-            => Value.UserAchievement.IsCompleted ? "mdi-trophy" : "mdi-trophy-outline";
+            => Value.UserAchievement.IsCompleted ? "trophy-fill" : "trophy";
 
         private int ProgressRate
             => (int)((double)Value.UserAchievement.CompleteRate / Value.Steps * 100);

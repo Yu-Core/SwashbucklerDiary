@@ -12,7 +12,7 @@
         <MButton Icon="true"
                  OnClick="NavigateToBack">
             <MIcon>
-                mdi-arrow-left
+                arrow_back
             </MIcon>
         </MButton>
 
@@ -22,21 +22,21 @@
                        OnMousedownPreventDefault="true"
                        OnClick="InsertTimestamp">
             <MIcon>
-                mdi-clock-outline
+                schedule
             </MIcon>
         </CustomMButton>
 
         <MButton Icon="true"
                  OnClick="() => showTemplate = true">
             <MIcon>
-                mdi-view-dashboard-outline
+                space_dashboard
             </MIcon>
         </MButton>
 
         <MButton Icon="true"
                  OnClick="() => showSelectTag = true">
             <MIcon>
-                mdi-label-outline
+                label
             </MIcon>
         </MButton>
 
@@ -47,10 +47,10 @@
                          Icon="true">
                     <MultiDisplay>
                         <DesktopContent>
-                            <MIcon>mdi-dots-horizontal</MIcon>
+                            <MIcon>more_horiz</MIcon>
                         </DesktopContent>
                         <MobileContent>
-                            <MIcon>mdi-dots-vertical</MIcon>
+                            <MIcon>more_vert</MIcon>
                         </MobileContent>
                     </MultiDisplay>
                 </MButton>
@@ -92,7 +92,7 @@
                                      OnClick="() => showMood = true">
                     </DiaryInfoButton>
 
-                    <DiaryInfoButton Icon="mdi-map-marker-outline"
+                    <DiaryInfoButton Icon="location_on"
                                      Text="@LocationText"
                                      OnClick="() => showLocation = true">
                     </DiaryInfoButton>

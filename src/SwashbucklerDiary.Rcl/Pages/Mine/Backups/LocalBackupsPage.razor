@@ -8,7 +8,7 @@
         <MListItem OnClick="()=>showBackups=true">
             <MListItemIcon>
                 <MIcon Class="evident-icon">
-                    mdi-folder-arrow-down-outline
+                    mdi:mdi-folder-arrow-down-outline
                 </MIcon>
             </MListItemIcon>
             <MListItemContent>
@@ -20,7 +20,7 @@
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
-                <MIcon>mdi-chevron-right</MIcon>
+                <MIcon>chevron_right</MIcon>
             </MListItemAction>
         </MListItem>
 
@@ -29,7 +29,7 @@
         <MListItem OnClick="Restore">
             <MListItemIcon>
                 <MIcon Class="evident-icon">
-                    mdi-folder-arrow-up-outline
+                    mdi:mdi-folder-arrow-up-outline
                 </MIcon>
             </MListItemIcon>
             <MListItemContent>
@@ -41,7 +41,7 @@
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
-                <MIcon>mdi-chevron-right</MIcon>
+                <MIcon>chevron_right</MIcon>
             </MListItemAction>
         </MListItem>
     </MList>
@@ -56,7 +56,7 @@
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="@(()=>showBackups=false)">
-                <MIcon>mdi-close</MIcon>
+                <MIcon>close</MIcon>
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
@@ -86,7 +86,7 @@
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="@(()=>showRestore=false)">
-                <MIcon>mdi-close</MIcon>
+                <MIcon>close</MIcon>
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">

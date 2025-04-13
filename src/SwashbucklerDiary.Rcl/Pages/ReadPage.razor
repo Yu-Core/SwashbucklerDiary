@@ -7,7 +7,7 @@
         <MButton Icon="true"
                  OnClick="NavigateToBack">
             <MIcon>
-                mdi-arrow-left
+                arrow_back
             </MIcon>
         </MButton>
 
@@ -15,19 +15,19 @@
         <MButton Icon="true"
                  OnClick="()=>showShare=true">
             <MIcon>
-                mdi-share-variant-outline
+                share
             </MIcon>
         </MButton>
         <MButton Icon="true"
                  OnClick="OpenDeleteDialog">
             <MIcon>
-                mdi-delete-outline
+                mdi:mdi-delete-outline
             </MIcon>
         </MButton>
         <MButton Icon="true"
                  OnClick="ToWrite">
             <MIcon>
-                mdi-pencil
+                mdi:mdi-pencil
             </MIcon>
         </MButton>
 
@@ -38,10 +38,10 @@
                          Icon="true">
                     <MultiDisplay>
                         <DesktopContent>
-                            <MIcon>mdi-dots-horizontal</MIcon>
+                            <MIcon>more_horiz</MIcon>
                         </DesktopContent>
                         <MobileContent>
-                            <MIcon>mdi-dots-vertical</MIcon>
+                            <MIcon>more_vert</MIcon>
                         </MobileContent>
                     </MultiDisplay>
                 </MButton>
@@ -97,7 +97,7 @@
 
             @if (ShowLocation)
             {
-                <DiaryInfoButton Icon="mdi-map-marker-outline"
+                <DiaryInfoButton Icon="location_on"
                                  Text="@LocationText">
                 </DiaryInfoButton>
             }

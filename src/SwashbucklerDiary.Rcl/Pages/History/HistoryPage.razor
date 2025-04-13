@@ -20,7 +20,7 @@
                         Flat="true"
                         BackgroundColor="transparent"
                         HideDetails="@("auto")"
-                        PrependIcon="mdi-calendar">
+                        PrependIcon="calendar_month">
             </MTextField>
         </div>
     }
@@ -29,7 +29,7 @@
 
     <MButton Icon="true"
              OnClick="ResetDatePicker">
-        <MIcon>mdi-calendar-refresh-outline</MIcon>
+        <MIcon>event_repeat</MIcon>
     </MButton>
 
     <MultiMenu @bind-Visible="showMenu"
@@ -39,10 +39,10 @@
                      Icon="true">
                 <MultiDisplay>
                     <DesktopContent>
-                        <MIcon>mdi-dots-horizontal</MIcon>
+                        <MIcon>more_horiz</MIcon>
                     </DesktopContent>
                     <MobileContent>
-                        <MIcon>mdi-dots-vertical</MIcon>
+                        <MIcon>more_vert</MIcon>
                     </MobileContent>
                 </MultiDisplay>
             </MButton>
@@ -75,7 +75,7 @@
     <BackTopButton Class="mb-2"
                    Selector="@scrollContainerSelector">
     </BackTopButton>
-    <MyFloatButton Icon="mdi-pencil"
+    <MyFloatButton Icon="mdi:mdi-pencil"
                    OnClick="ToWrite">
     </MyFloatButton>
 </div>
@@ -99,7 +99,7 @@
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="@(()=>showConfirmMerge=false)">
-                <MIcon>mdi-close</MIcon>
+                <MIcon>close</MIcon>
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">

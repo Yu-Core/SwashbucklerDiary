@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits CardComponentBase<DiaryModel>
 
 <div class="m-sheet @Theme elevation-0 rounded-lg m-card m-card--link diary-card elevation-sm-2--active"
@@ -13,25 +13,33 @@
                 </span>
                 @if (!string.IsNullOrEmpty(weatherIcon))
                 {
-                    <i class="m-icon mdi diary-card-icon @weatherIcon @Theme ml-2" style="font-size:20px;"></i>
+                    <MIcon Class="diary-card-icon ml-2"
+                           Style="font-size:20px;">
+                        @weatherIcon
+                    </MIcon>
                 }
 
                 @if (!string.IsNullOrEmpty(moodIcon))
                 {
-                    <i class="m-icon mdi diary-card-icon @moodIcon @Theme ml-2" style="font-size:20px;"></i>
+                    <MIcon Class="diary-card-icon ml-2"
+                           Style="font-size:20px;">
+                        @moodIcon
+                    </MIcon>
                 }
             </div>
         </div>
         <div class="m-list-item__action" @onclick:stopPropagation="true">
             @if (Value.Top)
             {
-                <i class="m-icon mdi mdi-format-vertical-align-top @Theme"></i>
+                <MIcon>vertical_align_top</MIcon>
             }
 
             <MButton @attributes="activatorAttributes"
                      Icon="true"
                      OnClick="OpenMenu">
-                <i class="m-icon mdi mdi-chevron-down @Theme card__menu @(IsActive?"card-list__selected-menu":"")"></i>
+                <MIcon Class="@($"card__menu {(IsActive ? "card-list__selected-menu" : "")}")">
+                    keyboard_arrow_down
+                </MIcon>
             </MButton>
         </div>
     </div>
@@ -66,7 +74,7 @@
     @if (!string.IsNullOrEmpty(Value.Location))
     {
         <div class="diary-card__location">
-            <DiaryInfoButton Icon="mdi-map-marker-outline"
+            <DiaryInfoButton Icon="location_on"
                              Text="@(Value.Location)">
             </DiaryInfoButton>
         </div>

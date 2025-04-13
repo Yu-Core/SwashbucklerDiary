@@ -140,11 +140,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string MarkdownText() => enableMarkdown ? "Text mode" : "Markdown mode";
 
-        private string MarkdownIcon() => enableMarkdown ? "mdi-format-text" : "mdi-language-markdown-outline";
+        private string MarkdownIcon() => enableMarkdown ? "description" : "markdown";
 
         private string PrivateText() => IsPrivate ? "Cancel privacy" : "Set to private";
 
-        private string PrivateIcon() => IsPrivate ? "mdi-lock-open-variant-outline" : "mdi-lock-outline";
+        private string PrivateIcon() => IsPrivate ? "lock_open" : "lock";
 
         private async Task UpdateDiary()
         {
@@ -162,20 +162,20 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems =
             [
-                new(this, "Copy","mdi-content-copy", OnCopy),
-                new(this, TopText,"mdi-format-vertical-align-top", OnTopping),
-                new(this, "Export","mdi-export", OpenExportDialog),
+                new(this, "Copy","content_copy", OnCopy),
+                new(this, TopText,"vertical_align_top", OnTopping),
+                new(this, "Export","mdi:mdi-export", OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon, MarkdownChanged),
-                new(this, "Copy quote", "mdi-format-quote-open-outline", CopyQuote),
-                new(this, "Copy link", "mdi-link-variant", CopyLink),
-                new(this, "Look up", "mdi-text-box-search-outline", OpenSearch),
+                new(this, "Copy quote", "format_quote", CopyQuote),
+                new(this, "Copy link", "mdi:mdi-link-variant", CopyLink),
+                new(this, "Look up", "quick_reference_all", OpenSearch),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
 
             shareItems =
             [
-                new(this, "Text sharing","mdi-format-text", ShareText),
-                new(this, "Photo sharing","mdi-image-outline", ShareImage),
+                new(this, "Text sharing","description", ShareText),
+                new(this, "Photo sharing","image", ShareImage),
             ];
         }
 

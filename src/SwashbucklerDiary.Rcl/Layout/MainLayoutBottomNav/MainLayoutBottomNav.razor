@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Layout
+@namespace SwashbucklerDiary.Rcl.Layout
 @inherits MainLayoutNavBase
 
 @if (IsPermanentPath)
@@ -7,7 +7,7 @@
 }
 
 <MBottomNavigation InputValue="Show"
-                   Class="@($"justify-space-around {(Show?"":"m-bottom-navigation-hidden")}")"
+                   Class="@($"elevation-0 justify-space-around {(Show ? "" : "m-bottom-navigation-hidden")}")"
                    Mandatory="true"
                    App="true">
     @foreach (var item in Items)

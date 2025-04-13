@@ -33,10 +33,10 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             items =
             [
-                new(this,"Txt", "mdi-format-text", ExportTxtAsync),
-                new(this,"Md", "mdi-language-markdown-outline", ExportMdAsync),
-                new(this,"Json", "mdi-code-braces", ExportJsonAsync),
-                new(this,"Xlsx", "mdi-table-large", ExportXlsxAsync),
+                new(this,"Txt", "description", ExportTxtAsync),
+                new(this,"Md", "markdown", ExportMdAsync),
+                new(this,"Json", "file_json", ExportJsonAsync),
+                new(this,"Xlsx", "mdi:mdi-microsoft-excel", ExportXlsxAsync),
             ];
         }
 

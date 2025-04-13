@@ -1,10 +1,10 @@
 {
-  "Unknown": "mdi-monitor-cellphone",
-  "Windows": "mdi-microsoft-windows",
-  "Android": "mdi-android",
-  "iOS": "mdi-apple-ios",
-  "MacOS": "mdi-apple",
-  "Tizen": "mdi-alpha-t",
-  "Browser": "mdi-web",
-  "Linux": "mdi-linux"
+  "Unknown": "mdi:mdi-monitor-cellphone",
+  "Windows": "mdi:mdi-microsoft-windows",
+  "Android": "mdi:mdi-android",
+  "iOS": "mdi:mdi-apple-ios",
+  "MacOS": "mdi:mdi-apple",
+  "Tizen": "mdi:mdi-alpha-t",
+  "Browser": "language",
+  "Linux": "mdi:mdi-linux"
 }

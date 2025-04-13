@@ -40,8 +40,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             DynamicLists =
             [
-                new(this,"Send","mdi-send-outline",()=>To("lanSender")),
-                new(this,"Receive","mdi-printer-pos-outline",()=>To("lanReceiver")),
+                new(this,"Send","send",()=>To("lanSender")),
+                new(this,"Receive","print",()=>To("lanReceiver")),
             ];
         }
 

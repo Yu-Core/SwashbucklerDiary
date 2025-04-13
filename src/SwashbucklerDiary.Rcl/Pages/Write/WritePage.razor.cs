@@ -184,13 +184,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string MarkdownSwitchText() => enableMarkdown ? "Text mode" : "Markdown mode";
 
-        private string MarkdownSwitchIcon() => enableMarkdown ? "mdi-format-text" : "mdi-language-markdown-outline";
+        private string MarkdownSwitchIcon() => enableMarkdown ? "description" : "markdown";
 
         private string OtherInfoSwitchText() => showOtherInfo ? "Hide other information" : "Display other information";
 
         private string TemplateSwitchText() => diary.Template ? "Switch to Diary" : "Switch to Template";
 
-        private string TemplateSwitchIcon() => diary.Template ? "mdi-notebook-outline" : "mdi-view-dashboard-outline";
+        private string TemplateSwitchIcon() => diary.Template ? "book" : "space_dashboard";
 
         private async Task InitTags()
         {
@@ -262,9 +262,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems =
             [
-                new(this, TitleSwitchText, "mdi-format-title", ()=> SettingChange(nameof(Setting.Title), ref enableTitle)),
+                new(this, TitleSwitchText, "title", ()=> SettingChange(nameof(Setting.Title), ref enableTitle)),
                 new(this, MarkdownSwitchText, MarkdownSwitchIcon, ()=> SettingChange(nameof(Setting.Markdown), ref enableMarkdown)),
-                new(this, OtherInfoSwitchText, "mdi-information-outline", ()=> SettingChange(nameof(Setting.OtherInfo), ref showOtherInfo)),
+                new(this, OtherInfoSwitchText, "info", ()=> SettingChange(nameof(Setting.OtherInfo), ref showOtherInfo)),
                 new(this, TemplateSwitchText, TemplateSwitchIcon, ()=> diary.Template = !diary.Template),
             ];
         }
@@ -368,7 +368,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                return "mdi-weather-sunny";
+                return "sunny";
             }
 
             return GlobalConfiguration.GetWeatherIcon(key);
@@ -378,7 +378,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                return "mdi-emoticon-happy-outline";
+                return "mdi:mdi-emoticon-happy-outline";
             }
 
             return GlobalConfiguration.GetMoodIcon(key);

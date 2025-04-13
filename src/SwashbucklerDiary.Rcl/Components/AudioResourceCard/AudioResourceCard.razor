@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @using SwashbucklerDiary.Rcl.Events
 @using System.Globalization
 @inherits CardComponentBase<ResourceModel>
@@ -17,7 +17,7 @@
                          Icon="true"
                          OnClick="PlayOrPause">
                     <MIcon Color="white">
-                        @(isPlaying ? "mdi-pause" : "mdi-play")
+                        @(isPlaying ? "pause" : "play_arrow-fill")
                     </MIcon>
                 </MButton>
             </MListItemAvatar>

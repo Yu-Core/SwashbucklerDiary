@@ -17,7 +17,7 @@
                 @(I18n.T("Config"))
                 <MSpacer></MSpacer>
                 <MButton Icon="true" OnClick="HandleOnCancel">
-                    <MIcon>mdi-close</MIcon>
+                    <MIcon>close</MIcon>
                 </MButton>
             </MCardTitle>
             <MCardText Class="pb-0">
@@ -45,7 +45,7 @@
                             Rounded
                             spellcheck="false"
                             Placeholder="@(I18n.T("Password"))"
-                            AppendIcon="@(showPassword ? "mdi-eye" : "mdi-eye-off")"
+                            AppendIcon="@(showPassword ? "visibility" : "visibility_off")"
                             Type="@(showPassword ? "text" : "password")"
                             OnAppendClick="() => showPassword = !showPassword">
                 </MTextField>

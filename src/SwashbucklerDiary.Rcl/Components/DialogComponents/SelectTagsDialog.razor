@@ -13,11 +13,11 @@
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="() => showSearch = !showSearch">
-                <MIcon>mdi-magnify</MIcon>
+                <MIcon>search</MIcon>
             </MButton>
             <MButton Icon="true"
                      OnClick="HandleOnCancel">
-                <MIcon>mdi-close</MIcon>
+                <MIcon>close</MIcon>
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
@@ -35,7 +35,7 @@
                                   HideDetails="@("auto")"
                                   spellcheck="false"
                                   Placeholder="@(I18n.T("Search"))"
-                                  PrependInnerIcon="mdi-magnify">
+                                  PrependInnerIcon="search">
                 </CustomMTextField>
             }
             <div class="scroll-show" style="max-height:200px;">

@@ -61,7 +61,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             menuItems =
             [
-                new(this, "Delete unused files","mdi-delete-outline", ()=>showDelete=true),
+                new(this, "Delete unused files","mdi:mdi-delete-outline", ()=>showDelete=true),
             ];
         }
 

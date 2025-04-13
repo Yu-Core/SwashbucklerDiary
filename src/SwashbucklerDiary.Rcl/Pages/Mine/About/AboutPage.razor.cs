@@ -49,16 +49,16 @@ namespace SwashbucklerDiary.Rcl.Pages
             viewLists =
             [
                 [
-                    new(this, "View source","mdi-book-open-page-variant-outline",() => showSourceCode = true),
-                    new(this, "User agreement","mdi-file-document-multiple-outline",() => To("user-agreement")),
-                    new(this, "Privacy policy","mdi-lock-outline",() => To("privacy-policy")),
-                    new(this, "Check for updates","mdi-update",CheckForUpdates),
+                    new(this, "View source","auto_stories",() => showSourceCode = true),
+                    new(this, "User agreement","mdi:mdi-file-document-multiple-outline",() => To("user-agreement")),
+                    new(this, "Privacy policy","lock",() => To("privacy-policy")),
+                    new(this, "Check for updates","update",CheckForUpdates),
                 ],
                 [
-                    new(this, "Open source related","mdi-xml",() => To("relatedOSP")),
-                    new(this, "Log file","mdi-file-document-edit-outline",() => To("log")),
-                    new(this, "Give a good review","mdi-star-outline",OpenAppDetails),
-                    new(this, "Sponsor us","mdi-hand-heart-outline",()=>To("sponsor")),
+                    new(this, "Open source related","mdi:mdi-xml",() => To("relatedOSP")),
+                    new(this, "Log file","mdi:mdi-file-document-edit-outline",() => To("log")),
+                    new(this, "Give a good review","star",OpenAppDetails),
+                    new(this, "Sponsor us","volunteer_activism",()=>To("sponsor")),
                 ]
             ];
         }

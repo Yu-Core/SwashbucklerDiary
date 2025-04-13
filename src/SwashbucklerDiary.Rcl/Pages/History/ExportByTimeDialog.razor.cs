@@ -44,9 +44,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             exportTimeItems =
             [
-                new(this,"Export this day diaries","mdi-alpha-d",ExportThisDay),
-                new(this,"Export this month diaries","mdi-alpha-m",ExportThisMonth),
-                new(this,"Export this year diaries","mdi-alpha-y",ExportThisYear),
+                new(this,"Export this day diaries","mdi:mdi-alpha-d",ExportThisDay),
+                new(this,"Export this month diaries","mdi:mdi-alpha-m",ExportThisMonth),
+                new(this,"Export this year diaries","mdi:mdi-alpha-y",ExportThisYear),
             ];
         }
 

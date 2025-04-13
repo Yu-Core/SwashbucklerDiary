@@ -25,9 +25,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             items =
             [
-                new(this,"Image","mdi-image-outline",UpdateValue,MediaResource.Image),
-                new(this,"Audio","mdi-music",UpdateValue,MediaResource.Audio),
-                new(this,"Video","mdi-movie-open-outline",UpdateValue,MediaResource.Video),
+                new(this,"Image","image",UpdateValue,MediaResource.Image),
+                new(this,"Audio","mdi:mdi-music",UpdateValue,MediaResource.Audio),
+                new(this,"Video","mdi:mdi-movie-open-outline",UpdateValue,MediaResource.Video),
             ];
         }
 

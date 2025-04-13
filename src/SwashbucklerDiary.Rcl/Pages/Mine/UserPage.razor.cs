@@ -53,8 +53,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             editAvatarMethods =
             [
-                new(this, "Photos","mdi-image-outline",PickPhoto),
-                new(this, "Capture","mdi-camera-outline",OnCapture),
+                new(this, "Photos","image",PickPhoto),
+                new(this, "Capture","photo_camera",OnCapture),
             ];
         }
 

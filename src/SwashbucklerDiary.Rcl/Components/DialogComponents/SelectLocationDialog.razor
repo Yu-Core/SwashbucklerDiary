@@ -13,11 +13,11 @@
             <MSpacer></MSpacer>
             <MButton Icon
                      OnClick="()=>showSearch=!showSearch">
-                <MIcon>mdi-magnify</MIcon>
+                <MIcon>search</MIcon>
             </MButton>
             <MButton Icon
                      OnClick="HandleOnCancel">
-                <MIcon>mdi-close</MIcon>
+                <MIcon>close</MIcon>
             </MButton>
         </MCardTitle>
 
@@ -36,7 +36,7 @@
                                      HideDetails="@("auto")"
                                      spellcheck="false"
                                      Placeholder="@(I18n.T("Search"))"
-                                     PrependInnerIcon="mdi-magnify">
+                                     PrependInnerIcon="search">
                 </CustomMTextField>
             }
             <div class="scroll-show" style="max-height:300px;">
@@ -54,7 +54,7 @@
                             @if (item.Name == selectedLocation)
                             {
                                 <MIcon>
-                                    mdi-check
+                                    check
                                 </MIcon>
                             }
                         </MListItemAction>
