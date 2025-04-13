@@ -18,11 +18,5 @@ namespace SwashbucklerDiary.Rcl.Repository
         Task<bool> MovePrivacyDiaryAsync(DiaryModel diary, bool toPrivacyMode);
 
         Task<bool> MovePrivacyDiariesAsync();
-
-        Task<DiaryModel> GetFirstTemplateAsync(Expression<Func<DiaryModel, bool>> whereExpression);
-
-        Task<List<DiaryModel>> GetTemplateListAsync();
-
-        Task<List<DiaryModel>> GetTemplateListAsync(Expression<Func<DiaryModel, bool>> whereExpression);
     }
 }

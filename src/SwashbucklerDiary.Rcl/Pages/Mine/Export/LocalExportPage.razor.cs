@@ -58,7 +58,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             await PopupServiceHelper.StartLoading();
-            diaries = await DiaryService.QueryAsync();
+            diaries = await DiaryService.QueryDiariesAsync();
             await PopupServiceHelper.StopLoading();
 
             if (diaries.Count == 0)

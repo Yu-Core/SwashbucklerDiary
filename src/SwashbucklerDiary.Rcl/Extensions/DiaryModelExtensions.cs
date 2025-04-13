@@ -1,3 +1,6 @@
+using DocumentFormat.OpenXml.Office2010.Excel;
+using Masa.Blazor;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Extensions
@@ -74,6 +77,11 @@ namespace SwashbucklerDiary.Rcl.Extensions
         public static int GetWordCount(this List<DiaryModel> diaries)
         {
             return diaries.Sum(d => d.GetWordCount());
+        }
+
+        public static string GetReferenceText(this DiaryModel diary, II18nService i18n)
+        {
+            return $"[{i18n.T(diary.Template ? "Template reference" : "Diary reference")}](read/{diary.Id})";
         }
 
         private static string SubText(string? text, int startIndex, int? length = null)

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -36,7 +36,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected virtual async Task UpdateDiariesAsync()
         {
-            Diaries = await DiaryService.QueryAsync();
+            Diaries = await DiaryService.QueryDiariesAsync();
         }
 
         protected virtual async Task UpdateTagsAsync()

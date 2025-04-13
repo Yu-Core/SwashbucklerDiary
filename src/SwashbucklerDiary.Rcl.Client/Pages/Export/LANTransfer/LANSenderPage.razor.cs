@@ -136,7 +136,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (filePath == null)
             {
-                var diaries = await DiaryService.QueryAsync();
+                var diaries = await DiaryService.QueryDiariesAsync();
                 if (diaries.Count == 0)
                 {
                     await PopupServiceHelper.Info(I18n.T("No diary"));

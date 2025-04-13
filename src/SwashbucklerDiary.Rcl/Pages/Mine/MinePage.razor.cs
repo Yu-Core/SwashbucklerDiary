@@ -263,7 +263,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateDiaryStatisticalDataAsync()
         {
-            var diries = await DiaryService.QueryAsync();
+            var diries = await DiaryService.QueryDiariesAsync();
             diaryCount = diries.Count;
             wordCount = diries.GetWordCount();
             activeDayCount = diries.Select(it => DateOnly.FromDateTime(it.CreateTime)).Distinct().Count();
@@ -279,7 +279,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async void I18nChange(CultureInfo _)
         {
-            var diries = await DiaryService.QueryAsync();
+            var diries = await DiaryService.QueryDiariesAsync();
             wordCount = diries.GetWordCount();
             await InvokeAsync(StateHasChanged);
         }

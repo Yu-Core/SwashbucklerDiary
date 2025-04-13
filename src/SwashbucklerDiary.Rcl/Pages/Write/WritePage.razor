@@ -192,6 +192,11 @@
                  @bind-Value="SelectedTime">
 </MultiTimePicker>
 
+<SelectDiaryDialog @bind-Visible="showReference"
+                   @bind-Tags="tags"
+                   OnOK="InsertReferenceAsync">
+</SelectDiaryDialog>
+
 <MOverlay Value="overlay"
           Opacity="0">
 </MOverlay>

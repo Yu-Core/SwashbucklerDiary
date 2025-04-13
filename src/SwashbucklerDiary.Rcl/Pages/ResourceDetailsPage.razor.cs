@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Services;
 
@@ -6,8 +6,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class ResourceDetailsPage : DiariesPageComponentBase
     {
-        private string? resourceName;
-
         private readonly string scrollContainerId = $"scroll-container-{Guid.NewGuid():N}";
 
         private string scrollContainerSelector = string.Empty;
@@ -40,7 +38,6 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            resourceName = Path.GetFileName(resource?.ResourceUri);
             Diaries = resource?.Diaries ?? [];
         }
     }

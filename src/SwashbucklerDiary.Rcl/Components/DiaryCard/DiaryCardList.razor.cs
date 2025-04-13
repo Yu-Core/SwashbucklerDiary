@@ -199,7 +199,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 new(this, TopText, "vertical_align_top", Topping),
                 new(this, "Export", "mdi:mdi-export", Export),
                 new(this, "Sort", "sort", OpenSortDialog),
-                new(this, "Copy quote", "format_quote", CopyQuote),
+                new(this, "Copy reference", "format_quote", CopyReference),
                 new(this, "Copy link", "mdi:mdi-link-variant", CopyLink),
                 new(this, PrivateText, PrivateIcon, MovePrivacy, ()=>privacyMode || showSetPrivacy)
             ];
@@ -210,9 +210,9 @@ namespace SwashbucklerDiary.Rcl.Components
             await SettingService.SetAsync(s => s.DiarySort, value);
         }
 
-        private async Task CopyQuote()
+        private async Task CopyReference()
         {
-            var text = $"[{I18n.T("Diary link")}](read/{SelectedItem.Id})";
+            var text = SelectedItem.GetReferenceText(I18n);
             await PlatformIntegration.SetClipboardAsync(text);
             await PopupServiceHelper.Success(I18n.T("Copy successfully"));
         }

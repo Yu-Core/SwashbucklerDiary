@@ -636,7 +636,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task AllUseNewResourceUriAsync()
         {
-            var diaries = await _diaryService.QueryAsync();
+            var diaries = await _diaryService.QueryDiariesAsync();
             await _resourceService.DeleteAsync(it => it.ResourceUri!.StartsWith("appdata:///"));
             UseNewResourceUri(diaries);
             await _diaryService.UpdateIncludesAsync(diaries);

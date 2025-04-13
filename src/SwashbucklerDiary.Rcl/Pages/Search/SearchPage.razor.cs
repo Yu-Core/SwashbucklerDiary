@@ -66,7 +66,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         protected override async Task UpdateDiariesAsync()
         {
             Expression<Func<DiaryModel, bool>> exp = GetExpression();
-            var diaries = await DiaryService.QueryAsync(exp);
+            var diaries = await DiaryService.QueryDiariesAsync(exp);
             var tagNames = SelectedTags.Select(it => it.Name).ToList();
             Diaries = diaries.WhereIF(IsTagsFiltered, it => it.Tags != null && tagNames.All(tagName => it.Tags.Any(tag => tag.Name == tagName)))
                 .WhereIF(IsFileTypeFiltered, it => it.Resources != null && SelectedFileTypes.All(fileType => it.Resources.Any(r => r.ResourceType == fileType)))

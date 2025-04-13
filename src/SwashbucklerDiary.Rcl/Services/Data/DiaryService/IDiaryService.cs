@@ -19,10 +19,12 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<bool> MovePrivacyDiariesAsync();
 
-        Task<DiaryModel> FindTemplateAsync(Expression<Func<DiaryModel, bool>> expression);
+        Task<List<DiaryModel>> QueryDiariesAsync();
 
-        Task<List<DiaryModel>> QueryTemplateAsync();
+        Task<List<DiaryModel>> QueryDiariesAsync(Expression<Func<DiaryModel, bool>> expression);
 
-        Task<List<DiaryModel>> QueryTemplateAsync(Expression<Func<DiaryModel, bool>> expression);
+        Task<List<DiaryModel>> QueryTemplatesAsync();
+
+        Task<List<DiaryModel>> QueryTemplatesAsync(Expression<Func<DiaryModel, bool>> expression);
     }
 }

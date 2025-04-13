@@ -91,7 +91,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             menuItems =
             [
-                new(this, "View references", "book", ViewReferences),
+                new(this, "View Used", "file_export", ViewReferenced),
                 new(this, "Save", "mdi:mdi-tray-arrow-down", Save)
             ];
         }
@@ -106,7 +106,7 @@ namespace SwashbucklerDiary.Rcl.Components
             await MediaResourceManager.SaveFileAsync(SelectedItem.ResourceUri);
         }
 
-        private async Task ViewReferences()
+        private async Task ViewReferenced()
         {
             if (SelectedItem.ResourceUri is null)
             {
@@ -117,7 +117,7 @@ namespace SwashbucklerDiary.Rcl.Components
             int count = resource?.Diaries?.Count ?? 0;
             if (count < 1)
             {
-                await PopupServiceHelper.Info(I18n.T("This file is not referenced"));
+                await PopupServiceHelper.Info(I18n.T("This file is not used"));
                 return;
             }
             else if (count == 1)

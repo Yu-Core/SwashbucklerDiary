@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class SelectTemplateDialog : DialogComponentBase
+    public partial class SelectDiaryDialog : DialogComponentBase
     {
         private readonly string scrollContainerId = $"scroll-container-{Guid.NewGuid():N}";
 
@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task UpdateItemsAsync()
         {
             Expression<Func<DiaryModel, bool>> exp = GetExpression();
-            items = await DiaryService.QueryTemplatesAsync(exp);
+            items = await DiaryService.QueryDiariesAsync(exp);
         }
 
         private Expression<Func<DiaryModel, bool>> GetExpression()

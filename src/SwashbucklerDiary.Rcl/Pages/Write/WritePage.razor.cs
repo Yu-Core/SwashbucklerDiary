@@ -52,6 +52,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool selectTemplateWhenCreate;
 
+        private bool showReference;
+
         private PeriodicTimer? timer;
 
         private MarkdownEdit markdownEdit = default!;
@@ -266,6 +268,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, MarkdownSwitchText, MarkdownSwitchIcon, ()=> SettingChange(nameof(Setting.Markdown), ref enableMarkdown)),
                 new(this, OtherInfoSwitchText, "info", ()=> SettingChange(nameof(Setting.OtherInfo), ref showOtherInfo)),
                 new(this, TemplateSwitchText, TemplateSwitchIcon, ()=> diary.Template = !diary.Template),
+                new(this, "Reference diary", "format_quote", ()=> showReference = true),
             ];
         }
 
@@ -400,7 +403,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (!background)
             {
-                var alldiaries = await DiaryService.QueryAsync();
+                var alldiaries = await DiaryService.QueryDiariesAsync();
                 var wordCount = alldiaries.GetWordCount();
                 var messages2 = await AchievementService.UpdateUserState(Achievement.Word, wordCount);
                 messages.AddRange(messages2);
@@ -525,6 +528,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 diary.Tags = (diary.Tags ?? []).Union(template.Tags ?? []).ToList();
             }
+        }
+
+        private async Task InsertReferenceAsync(DiaryModel value)
+        {
+            showReference = false;
+            var text = value.GetReferenceText(I18n);
+            await InsertValueAsync(text);
         }
     }
 }

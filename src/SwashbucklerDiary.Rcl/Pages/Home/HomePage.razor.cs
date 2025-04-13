@@ -59,7 +59,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.UpdateDiariesAsync();
 
-            templates =  await DiaryService.QueryTemplateAsync();
+            templates =  await DiaryService.QueryTemplatesAsync();
         }
 
         private string? SwiperActiveItemSelector

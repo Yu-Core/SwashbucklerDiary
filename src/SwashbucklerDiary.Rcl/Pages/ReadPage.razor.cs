@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -5,6 +6,7 @@ using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
+using System.Threading.Tasks;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -166,9 +168,10 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, TopText,"vertical_align_top", OnTopping),
                 new(this, "Export","mdi:mdi-export", OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon, MarkdownChanged),
-                new(this, "Copy quote", "format_quote", CopyQuote),
+                new(this, "Copy reference", "format_quote", CopyReference),
                 new(this, "Copy link", "mdi:mdi-link-variant", CopyLink),
                 new(this, "Look up", "quick_reference_all", OpenSearch),
+                new(this, "View referenced", "file_export", ViewReferenced),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
 
@@ -278,9 +281,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             StateHasChanged();
         }
 
-        private async Task CopyQuote()
+        private async Task CopyReference()
         {
-            var text = $"[{I18n.T("Diary link")}](read/{Id})";
+            var text = diary.GetReferenceText(I18n);
             await PlatformIntegration.SetClipboardAsync(text);
             await PopupServiceHelper.Success(I18n.T("Copy successfully"));
         }
@@ -318,6 +321,27 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             highlightSearchAutofocus = true;
             showHighlightSearch = true;
+        }
+
+        private async Task ViewReferenced()
+        {
+            string referencedText = $"read/{diary.Id}";
+            var exist = await DiaryService.AnyAsync(it => (it.Content ?? string.Empty).Contains(referencedText ?? string.Empty, StringComparison.CurrentCultureIgnoreCase));
+            if (!exist)
+            {
+                if (diary.Template)
+                {
+                    await PopupServiceHelper.Info(I18n.T("This template is not referenced"));
+                }
+                else
+                {
+                    await PopupServiceHelper.Info(I18n.T("This diary is not referenced"));
+                }
+            }
+            else
+            {
+                To($"referencedDetails/{diary.Id}");
+            }
         }
     }
 }

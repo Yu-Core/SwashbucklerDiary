@@ -1,7 +1,7 @@
-@page "/resourceDetails"
+@page "/referencedDetails/{id:guid}"
 @inherits DiariesPageComponentBase
 
-<MyAppBar Title="@I18n.T("Used situation")"
+<MyAppBar Title="@I18n.T("Referenced situation")"
           OnClick="NavigateToBack">
 </MyAppBar>
 
@@ -15,3 +15,5 @@
                    Selector="@scrollContainerSelector">
     </BackTopButton>
 </div>
+
+

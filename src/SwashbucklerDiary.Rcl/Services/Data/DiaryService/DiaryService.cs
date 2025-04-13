@@ -59,19 +59,26 @@ namespace SwashbucklerDiary.Rcl.Services
             return _iDiaryRepository.MovePrivacyDiariesAsync();
         }
 
-        public Task<DiaryModel> FindTemplateAsync(Expression<Func<DiaryModel, bool>> expression)
+        public Task<List<DiaryModel>> QueryDiariesAsync()
         {
-            return _iDiaryRepository.GetFirstTemplateAsync(expression);
+            return QueryAsync(it => !it.Template);
         }
 
-        public Task<List<DiaryModel>> QueryTemplateAsync()
+        public Task<List<DiaryModel>> QueryDiariesAsync(Expression<Func<DiaryModel, bool>> expression)
         {
-            return _iDiaryRepository.GetTemplateListAsync();
+            expression = expression.And(it => !it.Template);
+            return QueryAsync(expression);
         }
 
-        public Task<List<DiaryModel>> QueryTemplateAsync(Expression<Func<DiaryModel, bool>> expression)
+        public Task<List<DiaryModel>> QueryTemplatesAsync()
         {
-            return _iDiaryRepository.GetTemplateListAsync(expression);
+            return QueryAsync(it => it.Template);
+        }
+
+        public Task<List<DiaryModel>> QueryTemplatesAsync(Expression<Func<DiaryModel, bool>> expression)
+        {
+            expression = expression.And(it => it.Template);
+            return QueryAsync(expression);
         }
     }
 }

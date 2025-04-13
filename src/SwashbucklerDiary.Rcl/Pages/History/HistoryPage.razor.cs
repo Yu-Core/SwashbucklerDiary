@@ -73,7 +73,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                     }, immediate: true)
                     .Watch<List<DiaryModel>>(nameof(SelectedDiaries), async () =>
                     {
-                        var diaries = await DiaryService.QueryAsync();
+                        var diaries = await DiaryService.QueryDiariesAsync();
                         SetValueWithNoEffect(diaries, nameof(Diaries));
                         UpdateEventsDates();
                         StateHasChanged();
