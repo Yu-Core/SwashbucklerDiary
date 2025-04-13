@@ -15,9 +15,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? privacyModeSearchKey;
 
-        private List<AppFeatures> allAppFeatures = [];
+        private List<AppFeature> allAppFeatures = [];
 
-        private List<AppFeatures> _appFeatures = [];
+        private List<AppFeature> _appFeatures = [];
 
         [Inject]
         protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
@@ -79,35 +79,35 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LoadAppFeatures()
         {
-            var appFeatures = await StaticWebAssets.ReadJsonAsync<List<AppFeatures>>("json/app-features/app-features.json");
+            var appFeatures = await StaticWebAssets.ReadJsonAsync<List<AppFeature>>("json/app-features/app-features.json");
             allAppFeatures = appFeatures;
             UpdateAppFeatures(appFeatures);
         }
 
-        private void UpdateAppFeatures(List<AppFeatures> appFeatures)
+        private void UpdateAppFeatures(List<AppFeature> appFeatures)
         {
-            Expression<Func<AppFeatures, bool>> exp = GetExpression();
+            Expression<Func<AppFeature, bool>> exp = GetExpression();
             _appFeatures = appFeatures.Where(exp.Compile()).ToList();
         }
 
         private void UpdateAppFeatures()
             => UpdateAppFeatures(allAppFeatures);
 
-        private Expression<Func<AppFeatures, bool>> GetExpression()
+        private Expression<Func<AppFeature, bool>> GetExpression()
         {
-            Expression<Func<AppFeatures, bool>>? exp = null;
+            Expression<Func<AppFeature, bool>>? exp = null;
 
             if (!string.IsNullOrWhiteSpace(search))
             {
-                Expression<Func<AppFeatures, bool>> expSearch
+                Expression<Func<AppFeature, bool>> expSearch
                     = it => I18n.T(it.Name ?? string.Empty).Contains(search, StringComparison.CurrentCultureIgnoreCase)
                     || I18n.T(it.Path ?? string.Empty).Contains(search, StringComparison.CurrentCultureIgnoreCase);
                 exp = exp.And(expSearch);
 
-                Expression<Func<AppFeatures, bool>> expPlatform
+                Expression<Func<AppFeature, bool>> expPlatform
                     = it => FilterPlatform(it);
                 exp = exp.And(expPlatform);
-                Expression<Func<AppFeatures, bool>> expBreakpoint
+                Expression<Func<AppFeature, bool>> expBreakpoint
                     = it => it.HideBreakpoints == null
                     || !it.HideBreakpoints.Contains(MasaBlazorHelper.Breakpoint.Name.ToString());
                 exp = exp.And(expBreakpoint);
@@ -137,11 +137,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             To("privacyMode");
         }
 
-        static bool FilterPlatform(AppFeatures appFeatures)
+        static bool FilterPlatform(AppFeature appFeature)
         {
-            if (appFeatures.HidePlatforms is not null)
+            if (appFeature.HidePlatforms is not null)
             {
-                foreach (var item in appFeatures.HidePlatforms)
+                foreach (var item in appFeature.HidePlatforms)
                 {
                     var platform = item.Platform;
                     if (string.IsNullOrEmpty(platform)) continue;
@@ -164,9 +164,9 @@ namespace SwashbucklerDiary.Rcl.Pages
                 }
             }
 
-            if (appFeatures.DisplayPlatforms is not null)
+            if (appFeature.DisplayPlatforms is not null)
             {
-                foreach (var item in appFeatures.DisplayPlatforms)
+                foreach (var item in appFeature.DisplayPlatforms)
                 {
                     var platform = item.Platform;
                     if (string.IsNullOrEmpty(platform)) continue;
@@ -190,6 +190,17 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             return true;
+        }
+
+        string GetAppFeaturePath(AppFeature appFeature)
+        {
+            if(appFeature.Path is null)
+            {
+                return string.Empty;
+            }
+
+            var splits = appFeature.Path.Split(" / ").Select(it=> I18n.T(it));
+            return string.Join(" / ", splits);
         }
     }
 }

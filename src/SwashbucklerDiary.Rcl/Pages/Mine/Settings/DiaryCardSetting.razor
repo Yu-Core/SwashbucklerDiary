@@ -65,6 +65,24 @@
 
             <MDivider Class="mx-5"></MDivider>
 
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        space_dashboard
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Template"))
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="diaryCardTemplate"
+                                   SettingKey="@nameof(Setting.DiaryCardTemplate)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
             <MListItem OnClick="@(()=>showDiaryCardTimeFormat=true)">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
@@ -87,11 +105,11 @@
     </MCard>
 </ScrollContainer>
 
-<RadioDialog @bind-Value="DiaryCardTimeFormat"
+<RadioDialog @bind-Value="diaryCardTimeFormat"
              @bind-Visible="showDiaryCardTimeFormat"
              Title="@(I18n.T("Time format"))"
              TItemValue="string"
              TItem="KeyValuePair<string,string>"
              OnChange="DiaryCardTimeFormatChanged"
-             Items="DiaryCardTimeFormats">
+             Items="diaryCardTimeFormats">
 </RadioDialog>

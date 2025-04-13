@@ -50,5 +50,6 @@ namespace SwashbucklerDiary.Rcl.Services
         public int FirstDayOfWeek { get; set; } = 0;
         public int UseTemplateMethod { get; set; } = 0;
         public bool SelectTemplateWhenCreate { get; set; }
+        public bool DiaryCardTemplate { get; set; } = true;
     }
 }

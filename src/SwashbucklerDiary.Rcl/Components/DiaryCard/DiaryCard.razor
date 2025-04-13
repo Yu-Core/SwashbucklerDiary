@@ -31,7 +31,12 @@
         <div class="m-list-item__action" @onclick:stopPropagation="true">
             @if (Value.Top)
             {
-                <MIcon>vertical_align_top</MIcon>
+                <MIcon Style="width:36px;">vertical_align_top</MIcon>
+            }
+
+            @if (Value.Template)
+            {
+                <MIcon Style="width:36px;">space_dashboard</MIcon>
             }
 
             <MButton @attributes="activatorAttributes"

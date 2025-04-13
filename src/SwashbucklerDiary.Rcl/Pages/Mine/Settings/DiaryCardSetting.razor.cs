@@ -10,11 +10,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool diaryCardLocation;
 
-        private string? DiaryCardTimeFormat;
+        private bool diaryCardTemplate;
+
+        private string? diaryCardTimeFormat;
 
         private bool showDiaryCardTimeFormat;
 
-        private readonly static Dictionary<string, string> DiaryCardTimeFormats = new()
+        private readonly static Dictionary<string, string> diaryCardTimeFormats = new()
         {
             {"Month/Day","MM/dd" },
             {"Year/Month/Day","yyyy/MM/dd" },
@@ -31,10 +33,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             diaryCardIcon = SettingService.Get(s => s.DiaryCardIcon);
             diaryCardTags = SettingService.Get(s => s.DiaryCardTags);
             diaryCardLocation = SettingService.Get(s => s.DiaryCardLocation);
-            DiaryCardTimeFormat = SettingService.Get(s => s.DiaryCardTimeFormat);
+            diaryCardTemplate = SettingService.Get(s => s.DiaryCardTemplate);
+            diaryCardTimeFormat = SettingService.Get(s => s.DiaryCardTimeFormat);
         }
 
-        private string DiaryCardTimeFormatKey => DiaryCardTimeFormats.FirstOrDefault(x => x.Value == DiaryCardTimeFormat).Key;
+        private string DiaryCardTimeFormatKey => diaryCardTimeFormats.FirstOrDefault(x => x.Value == diaryCardTimeFormat).Key;
 
         private async Task DiaryCardTimeFormatChanged(string value)
         {

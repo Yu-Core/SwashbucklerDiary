@@ -1,6 +1,6 @@
-﻿namespace SwashbucklerDiary.Rcl.Models
+namespace SwashbucklerDiary.Rcl.Models
 {
-    public class AppFeatures
+    public class AppFeature
     {
         public string? Name { get; set; }
 

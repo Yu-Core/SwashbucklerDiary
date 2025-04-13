@@ -169,13 +169,13 @@
   {
     "Name": "Weather and mood text",
     "Icon": "mdi:mdi-alphabetical",
-    "Path": "Setting / Diary /Weather and mood text",
+    "Path": "Setting / Diary / Weather and mood text",
     "Href": "diarySetting"
   },
   {
     "Name": "Auto save",
     "Icon": "save_as",
-    "Path": "Setting / Diary /Auto save",
+    "Path": "Setting / Diary / Auto save",
     "Href": "diarySetting"
   },
   {
@@ -299,6 +299,12 @@
     "Name": "Location",
     "Icon": "location_on",
     "Path": "Setting / Diary card / Location",
+    "Href": "diaryCardSetting"
+  },
+  {
+    "Name": "Template",
+    "Icon": "space_dashboard",
+    "Path": "Setting / Diary card / Template",
     "Href": "diaryCardSetting"
   },
   {
