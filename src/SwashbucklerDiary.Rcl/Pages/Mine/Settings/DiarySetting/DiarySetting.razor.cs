@@ -14,6 +14,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showEditAutoSave;
 
+        private bool showDiaryTimeFormat;
+
         private bool firstLineIndent;
 
         private bool codeLineNumber;
@@ -26,6 +28,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool autoPlay;
 
+        private string? diaryTimeFormat;
+
         private readonly Dictionary<string, int> editAutoSaveItems = new()
         {
             {"Close" ,0},
@@ -35,7 +39,13 @@ namespace SwashbucklerDiary.Rcl.Pages
             {"30s" ,30},
             {"45s" ,45},
             {"60s" ,60},
+        };
 
+        private readonly static Dictionary<string, string> diaryTimeFormats = new()
+        {
+            { "Year/Month/Day Week","yyyy/MM/dd dddd" },
+            { "Year/Month/Day Hour:Minute","yyyy/MM/dd HH:mm" },
+            { "Year/Month/Day Hour:Minute Week","yyyy/MM/dd HH:mm dddd" },
         };
 
         protected override void ReadSettings()
@@ -52,13 +62,21 @@ namespace SwashbucklerDiary.Rcl.Pages
             codeLineNumber = SettingService.Get(s => s.CodeLineNumber);
             taskListLineThrough = SettingService.Get(s => s.TaskListLineThrough);
             autoPlay = SettingService.Get(s => s.AutoPlay);
+            diaryTimeFormat = SettingService.Get(s => s.DiaryTimeFormat);
         }
 
         private string? EditAutoSaveText => I18n.T(editAutoSaveItems.FirstOrDefault(it => it.Value == editAutoSave).Key);
 
-        private async Task UpdateSetting()
+        private string DiaryTimeFormatKey => diaryTimeFormats.FirstOrDefault(x => x.Value == diaryTimeFormat).Key;
+
+        private async Task UpdateEditAutoSaveSetting()
         {
             await SettingService.SetAsync(s => s.EditAutoSave, editAutoSave);
+        }
+
+        private async Task UpdateDiaryTimeFormatSetting(string value)
+        {
+            await SettingService.SetAsync(s => s.DiaryTimeFormat, value);
         }
     }
 }

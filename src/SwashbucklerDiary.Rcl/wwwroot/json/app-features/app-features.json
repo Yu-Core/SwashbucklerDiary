@@ -179,6 +179,12 @@
     "Href": "diarySetting"
   },
   {
+    "Name": "Time format",
+    "Icon": "calendar_clock",
+    "Path": "Setting / Diary / Time format",
+    "Href": "diarySetting"
+  },
+  {
     "Name": "Outline",
     "Icon": "format_list_bulleted",
     "Path": "Setting / Diary / Outline",

@@ -105,6 +105,27 @@
                     <MIcon>chevron_right</MIcon>
                 </MListItemAction>
             </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem OnClick="@(() => showDiaryTimeFormat = true)">
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        calendar_clock
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Time format"))
+                </MListItemContent>
+                <MListItemContent Class="setting-item-state">
+                    <MListItemSubtitle>
+                        @(I18n.TForTimeFormat(DiaryTimeFormatKey))
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
         </MList>
     </MCard>
 
@@ -225,8 +246,18 @@
 
 <SelectChipDialog @bind-Visible="showEditAutoSave"
                   @bind-Value="@editAutoSave"
-                  @bind-Value:after="UpdateSetting"
+                  @bind-Value:after="UpdateEditAutoSaveSetting"
                   Title="@(I18n.T("Auto save"))"
                   Items="editAutoSaveItems"
                   Mandatory="true">
 </SelectChipDialog>
+
+<RadioDialog @bind-Value="diaryTimeFormat"
+             @bind-Visible="showDiaryTimeFormat"
+             Title="@(I18n.T("Time format"))"
+             TItemValue="string"
+             TItem="KeyValuePair<string, string>"
+             OnChange="UpdateDiaryTimeFormatSetting"
+             Items="diaryTimeFormats"
+             ItemText="it => I18n.TForTimeFormat(it.Key)">
+</RadioDialog>

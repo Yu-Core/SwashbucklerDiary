@@ -58,6 +58,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showReference;
 
+        private string? diaryTimeFormat;
+
         private PeriodicTimer? timer;
 
         private MarkdownEdit markdownEdit = default!;
@@ -157,6 +159,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             useTemplateMethod = (UseTemplateKind)SettingService.Get(it => it.UseTemplateMethod);
             selectTemplateWhenCreate = SettingService.Get(it => it.SelectTemplateWhenCreate);
             outline = SettingService.Get(it => it.Outline);
+            diaryTimeFormat = SettingService.Get(it => it.DiaryTimeFormat);
         }
 
         private List<TagModel> SelectedTags

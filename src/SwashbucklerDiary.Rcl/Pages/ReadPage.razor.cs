@@ -48,6 +48,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? urlScheme;
 
+        private string? diaryTimeFormat;
+
         private DiaryModel diary = new();
 
         private MarkdownPreview markdownPreview = default!;
@@ -112,6 +114,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             outline = SettingService.Get(s => s.Outline);
             rightOutline = SettingService.Get(s => s.RigthOutline);
             urlScheme = SettingService.Get(s => s.UrlScheme);
+            diaryTimeFormat = SettingService.Get(s => s.DiaryTimeFormat);
             privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
         }
 
