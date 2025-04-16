@@ -1,3 +1,4 @@
+using Masa.Blazor;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Repository;
@@ -15,7 +16,10 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddSingleton<INavigateController, Essentials.NavigateController>();
             services.AddSingleton<IGlobalConfiguration, GlobalConfiguration>();
             services.AddSingleton<IPopupServiceHelper, PopupServiceHelper>();
-            services.AddSingleton<II18nService, I18nService>();
+            services.AddSingleton<II18nService>(sp =>
+            {
+                return (I18nService)sp.GetRequiredService<I18n>();
+            });
             services.AddSingleton<IVersionTracking, VersionTracking>();
             services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
             services.AddSingleton<IAppFileSystem, Essentials.AppFileSystem>();

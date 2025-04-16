@@ -88,7 +88,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadView();
-            I18n.OnChanged += I18nChange;
+            I18n.CultureChanged += HandleCultureChanged;
         }
 
         protected override async Task OnInitializedAsync()
@@ -120,7 +120,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.DisposeAsyncCore();
 
-            I18n.OnChanged -= I18nChange;
+            I18n.CultureChanged -= HandleCultureChanged;
         }
 
         protected override void ReadSettings()
@@ -191,7 +191,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LanguageChanged(string value)
         {
-            I18n.SetCulture(value);
+            I18n.SetCulture(new(value));
             await SettingService.SetAsync(s => s.Language, value);
         }
 
@@ -277,7 +277,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             videoCount = resources.Count(it => it.ResourceType == MediaResource.Video);
         }
 
-        private async void I18nChange(CultureInfo _)
+        private async void HandleCultureChanged(object? sender, EventArgs args)
         {
             var diries = await DiaryService.QueryDiariesAsync();
             wordCount = diries.GetWordCount();

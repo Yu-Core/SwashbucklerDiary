@@ -44,7 +44,7 @@ namespace SwashbucklerDiary.Maui
             window.Stopped += (s, e) => _appLifecycle.Stop();
             window.Created += WindowCreated;
             window.Title = _i18n.T("Swashbuckler Diary");
-            _i18n.OnChanged += _ => SetTitle();
+            _i18n.CultureChanged += (_, _) => SetTitle();
 
             return window;
         }
@@ -75,7 +75,7 @@ namespace SwashbucklerDiary.Maui
         private void InitAppActions()
         {
             SetAppActions();
-            _i18n.OnChanged += _ => SetAppActions();
+            _i18n.CultureChanged += (_, _) => SetAppActions();
         }
 
         private void SetAppActions()
@@ -85,7 +85,7 @@ namespace SwashbucklerDiary.Maui
 
         private void SetTitle()
         {
-            if(Windows.Count > 0)
+            if (Windows.Count > 0)
             {
                 Windows[0].Title = _i18n.T("Swashbuckler Diary");
             }

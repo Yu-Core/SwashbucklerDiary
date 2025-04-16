@@ -18,12 +18,12 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private readonly static Dictionary<string, string> diaryCardTimeFormats = new()
         {
-            {"Month/Day","MM/dd" },
-            {"Year/Month/Day","yyyy/MM/dd" },
-            {"Month/Day Hour:Minute","MM/dd HH:mm" },
-            {"Year/Month/Day Hour:Minute","yyyy/MM/dd HH:mm" },
-            {"Month/Day Hour:Minute Week","MM/dd HH:mm dddd" },
-            {"Year/Month/Day Hour:Minute Week","yyyy/MM/dd HH:mm dddd" },
+            { "Month/Day","MM/dd" },
+            { "Year/Month/Day","yyyy/MM/dd" },
+            { "Month/Day Hour:Minute","MM/dd HH:mm" },
+            { "Year/Month/Day Hour:Minute","yyyy/MM/dd HH:mm" },
+            { "Month/Day Hour:Minute Week","MM/dd HH:mm dddd" },
+            { "Year/Month/Day Hour:Minute Week","yyyy/MM/dd HH:mm dddd" },
         };
 
         protected override void ReadSettings()

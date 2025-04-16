@@ -62,7 +62,7 @@ namespace SwashbucklerDiary.WebAssembly.Layout
         private Task InitLanguageAsync()
         {
             var language = SettingService.Get(s => s.Language);
-            I18n.SetCulture(language);
+            I18n.SetCulture(new(language));
             return Task.CompletedTask;
         }
 

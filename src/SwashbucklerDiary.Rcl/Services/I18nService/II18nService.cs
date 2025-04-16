@@ -1,21 +1,20 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
     public interface II18nService
     {
-        event Action<CultureInfo> OnChanged;
+        event EventHandler? CultureChanged;
 
         CultureInfo Culture { get; }
 
         IEnumerable<CultureInfo> SupportedCultures { get; }
 
-        string T(string? key);
+        string T(string? key, params object[] args);
 
-        string? T(string? key, bool whenNullReturnKey);
+        string? T(string? key, [DoesNotReturnIf(true)] bool whenNullReturnKey = true, string? defaultValue = null, params object[] args);
 
-        void SetCulture(string culture);
-
-        string ToWeek(DateTime? dateTime = null);
+        public void SetCulture(CultureInfo culture, CultureInfo? uiCulture = null);
     }
 }

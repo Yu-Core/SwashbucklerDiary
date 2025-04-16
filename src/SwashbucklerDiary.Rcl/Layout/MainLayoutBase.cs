@@ -68,14 +68,14 @@ namespace SwashbucklerDiary.Rcl.Layout
             NavigateController.Init(NavigationManager, JSRuntime, permanentPaths);
             _ = UpdateDocumentProperty(I18n.Culture);
 
-            I18n.OnChanged += HandleLanguageChanged;
+            I18n.CultureChanged += HandleLanguageChanged;
             SettingService.SettingsChanged += HandleSettingsChanged;
             VersionUpdataManager.AfterCheckFirstLaunch += HandleSponsorSupport;
         }
 
         protected virtual void OnDispose()
         {
-            I18n.OnChanged -= HandleLanguageChanged;
+            I18n.CultureChanged -= HandleLanguageChanged;
             SettingService.SettingsChanged -= HandleSettingsChanged;
             VersionUpdataManager.AfterCheckFirstLaunch -= HandleSponsorSupport;
         }
@@ -87,10 +87,10 @@ namespace SwashbucklerDiary.Rcl.Layout
             afterInitSetting = true;
         }
 
-        protected async void HandleLanguageChanged(CultureInfo cultureInfo)
+        protected async void HandleLanguageChanged(object? sender, EventArgs e)
         {
             await InvokeAsync(StateHasChanged);
-            await UpdateDocumentProperty(cultureInfo);
+            await UpdateDocumentProperty(I18n.Culture);
         }
 
         protected async Task UpdateDocumentProperty(CultureInfo cultureInfo)

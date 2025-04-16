@@ -1,3 +1,4 @@
+using Masa.Blazor;
 using Microsoft.Extensions.DependencyInjection;
 using SwashbucklerDiary.Gtk.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -18,7 +19,10 @@ namespace SwashbucklerDiary.Gtk.Extensions
             services.AddSingleton<INavigateController, Essentials.NavigateController>();
             services.AddSingleton<IGlobalConfiguration, GlobalConfiguration>();
             services.AddSingleton<IPopupServiceHelper, PopupServiceHelper>();
-            services.AddSingleton<II18nService, I18nService>();
+            services.AddSingleton<II18nService>(sp =>
+            {
+                return (I18nService)sp.GetRequiredService<I18n>();
+            });
             services.AddSingleton<Rcl.Essentials.IVersionTracking, Essentials.VersionTracking>();
             services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
             services.AddSingleton<IAppFileSystem, Essentials.AppFileSystem>();

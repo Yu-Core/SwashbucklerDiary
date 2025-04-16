@@ -58,7 +58,8 @@
              TItemValue="string"
              Title="@(I18n.T("Sort"))"
              Row="true"
-             Items="SortItems">
+             Items="SortItems"
+             ItemText="it => I18n.TForOrder(it)">
 </RadioDialog>
 
 <MultiMenu @bind-Visible="showMenu"

@@ -83,7 +83,7 @@
 
             <MDivider Class="mx-5"></MDivider>
 
-            <MListItem OnClick="@(()=>showDiaryCardTimeFormat=true)">
+            <MListItem OnClick="@(() => showDiaryCardTimeFormat = true)">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
                         calendar_clock
@@ -94,7 +94,7 @@
                 </MListItemContent>
                 <MListItemContent Class="setting-item-state">
                     <MListItemSubtitle>
-                        @(I18n.T(DiaryCardTimeFormatKey))
+                        @(I18n.TForTimeFormat(DiaryCardTimeFormatKey))
                     </MListItemSubtitle>
                 </MListItemContent>
                 <MListItemAction>
@@ -109,7 +109,8 @@
              @bind-Visible="showDiaryCardTimeFormat"
              Title="@(I18n.T("Time format"))"
              TItemValue="string"
-             TItem="KeyValuePair<string,string>"
+             TItem="KeyValuePair<string, string>"
              OnChange="DiaryCardTimeFormatChanged"
-             Items="diaryCardTimeFormats">
+             Items="diaryCardTimeFormats"
+             ItemText="it => I18n.TForTimeFormat(it.Key)">
 </RadioDialog>

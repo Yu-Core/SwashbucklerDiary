@@ -69,7 +69,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             }
 
             showLanguga = false;
-            I18n.SetCulture(value);
+            I18n.SetCulture(new(value));
             Task insertTask = Task.Run(async () =>
             {
                 await InsertDefaultDiaries();

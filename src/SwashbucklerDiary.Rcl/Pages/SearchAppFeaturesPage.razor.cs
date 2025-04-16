@@ -191,16 +191,5 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             return true;
         }
-
-        string GetAppFeaturePath(AppFeature appFeature)
-        {
-            if(appFeature.Path is null)
-            {
-                return string.Empty;
-            }
-
-            var splits = appFeature.Path.Split(" / ").Select(it=> I18n.T(it));
-            return string.Join(" / ", splits);
-        }
     }
 }
