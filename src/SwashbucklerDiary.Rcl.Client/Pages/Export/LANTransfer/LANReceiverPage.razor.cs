@@ -84,7 +84,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             catch (Exception e)
             {
                 Logger.LogError(e, "LANReceiverService initialize error");
-                await PopupServiceHelper.Error(I18n.T("No network connection"));
+                await AlertService.Error(I18n.T("No network connection"));
                 await Task.Delay(1000);
                 await NavigateToBack();
             }
@@ -132,12 +132,12 @@ namespace SwashbucklerDiary.Rcl.Pages
                 if (showTransferDialog)
                 {
                     transferDialogTitle = "Receive failed";
-                    await PopupServiceHelper.Error(I18n.T("Receive failed"));
+                    await AlertService.Error(I18n.T("Receive failed"));
                 }
                 else
                 {
                     transferDialogTitle = "Receive canceled";
-                    await PopupServiceHelper.Error(I18n.T("Receive canceled"));
+                    await AlertService.Error(I18n.T("Receive canceled"));
                 }
 
                 StateHasChanged();
@@ -153,14 +153,14 @@ namespace SwashbucklerDiary.Rcl.Pages
                 if (!isSuccess)
                 {
                     transferDialogTitle = "Import failed";
-                    await PopupServiceHelper.Error(I18n.T("Import failed"));
+                    await AlertService.Error(I18n.T("Import failed"));
                 }
                 else
                 {
                     ps = 100;
                     bytes = totalBytes;
                     transferDialogTitle = "Receive successfully";
-                    await PopupServiceHelper.Success(I18n.T("Receive successfully"));
+                    await AlertService.Success(I18n.T("Receive successfully"));
                 }
 
                 StateHasChanged();

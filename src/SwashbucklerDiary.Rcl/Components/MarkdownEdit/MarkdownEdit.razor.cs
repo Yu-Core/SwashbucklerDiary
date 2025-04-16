@@ -270,7 +270,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             catch (Exception e)
             {
-                await PopupServiceHelper.Error(I18n.T("Add failed"));
+                await AlertService.Error(I18n.T("Add failed"));
                 Logger.LogError(e, I18n.T("Add failed"));
             }
         }
@@ -284,7 +284,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             catch (Exception e)
             {
-                await PopupServiceHelper.Error(I18n.T("Add failed"));
+                await AlertService.Error(I18n.T("Add failed"));
                 Logger.LogError(e, I18n.T("Add failed"));
             }
         }
@@ -298,7 +298,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             catch (Exception e)
             {
-                await PopupServiceHelper.Error(I18n.T("Add failed"));
+                await AlertService.Error(I18n.T("Add failed"));
                 Logger.LogError(e, I18n.T("Add failed"));
             }
         }

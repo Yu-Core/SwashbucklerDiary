@@ -1,9 +1,9 @@
-﻿using DeepCloner.Core;
+using DeepCloner.Core;
 using Masa.Blazor;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
-    public class MasaBlazorHelper
+    public class BreakpointService
     {
         readonly MasaBlazor _masaBlazor;
 
@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public event EventHandler<MyBreakpointChangedEventArgs>? BreakpointChanged;
 
-        public MasaBlazorHelper(MasaBlazor masaBlazor)
+        public BreakpointService(MasaBlazor masaBlazor)
         {
             _masaBlazor = masaBlazor;
             _masaBlazor.BreakpointChanged += MasaBlazorBreakpointChanged;

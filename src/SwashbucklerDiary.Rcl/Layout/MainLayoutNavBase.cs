@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 
@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.Rcl.Layout
     public abstract class MainLayoutNavBase : ComponentBase, IDisposable
     {
         [Inject]
-        protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
+        protected BreakpointService BreakpointService { get; set; } = default!;
 
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }
@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         public void Dispose()
         {
-            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
+            BreakpointService.BreakpointChanged -= HandleBreakpointChange;
             GC.SuppressFinalize(this);
         }
 
@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         {
             await base.OnInitializedAsync();
 
-            MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
+            BreakpointService.BreakpointChanged += HandleBreakpointChange;
         }
 
         private void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)

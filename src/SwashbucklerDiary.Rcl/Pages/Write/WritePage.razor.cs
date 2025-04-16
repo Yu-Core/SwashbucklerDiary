@@ -92,7 +92,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
         [Inject]
-        private MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
+        private BreakpointService BreakpointService { get; set; } = default!;
 
         [SupplyParameterFromQuery]
         private Guid? TagId { get; set; }
@@ -279,8 +279,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, OtherInfoSwitchText, "info", ()=> SettingChange(nameof(Setting.OtherInfo), ref showOtherInfo)),
                 new(this, TemplateSwitchText, TemplateSwitchIcon, ()=> diary.Template = !diary.Template),
                 new(this, "Reference diary", "format_quote", ()=> showReference = true),
-                new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!MasaBlazorHelper.Breakpoint.MdAndUp),
-                new(this, OutlineText, "format_list_bulleted", ()=> SettingChange(nameof(Setting.Outline), ref outline), ()=>MasaBlazorHelper.Breakpoint.MdAndUp),
+                new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!BreakpointService.Breakpoint.MdAndUp),
+                new(this, OutlineText, "format_list_bulleted", ()=> SettingChange(nameof(Setting.Outline), ref outline), ()=>BreakpointService.Breakpoint.MdAndUp),
             ];
         }
 
@@ -353,7 +353,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 if (!isSuccess)
                 {
-                    await PopupServiceHelper.Error(I18n.T("Add failed"));
+                    await AlertService.Error(I18n.T("Add failed"));
                 }
                 else
                 {
@@ -365,7 +365,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 bool isSuccess = await DiaryService.UpdateIncludesAsync(diary);
                 if (!isSuccess)
                 {
-                    await PopupServiceHelper.Error(I18n.T("Change failed"));
+                    await AlertService.Error(I18n.T("Change failed"));
                 }
                 else
                 {

@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Rcl.Components
         protected ElementReference elementReference = default!;
 
         [Inject]
-        protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
+        protected BreakpointService BreakpointService { get; set; } = default!;
 
         [Inject]
         protected PreviewMediaElementJSModule PreviewMediaElementJSModule { get; set; } = default!;
@@ -28,16 +28,16 @@ namespace SwashbucklerDiary.Rcl.Components
             .AddIf("opacity", "0", contentLoading)
             .Build();
 
-        protected int Gap => MasaBlazorHelper.Breakpoint.Xs ? 16 : 24;
+        protected int Gap => BreakpointService.Breakpoint.Xs ? 16 : 24;
 
-        protected int Cols => MasaBlazorHelper.Breakpoint.Xs ? 2 : 3;
+        protected int Cols => BreakpointService.Breakpoint.Xs ? 2 : 3;
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
             thisPagePath = NavigationManager.GetAbsolutePath();
-            MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
+            BreakpointService.BreakpointChanged += HandleBreakpointChange;
             NavigationManager.LocationChanged += NavigationManagerOnLocationChanged;
         }
 
@@ -55,7 +55,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await base.DisposeAsyncCore();
 
-            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
+            BreakpointService.BreakpointChanged -= HandleBreakpointChange;
             NavigationManager.LocationChanged -= NavigationManagerOnLocationChanged;
         }
 

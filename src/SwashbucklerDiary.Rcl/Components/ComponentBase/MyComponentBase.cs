@@ -33,7 +33,7 @@ namespace SwashbucklerDiary.Rcl.Components
         protected II18nService I18n { get; set; } = default!;
 
         [Inject]
-        protected IPopupServiceHelper PopupServiceHelper { get; set; } = default!;
+        protected IAlertService AlertService { get; set; } = default!;
 
         [Inject]
         protected IAchievementService AchievementService { get; set; } = default!;
@@ -56,7 +56,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected Task ToDo()
         {
-            return PopupServiceHelper.Info(I18n.T("This feature is currently unavailable"), I18n.T("Please look forward"));
+            return AlertService.Info(I18n.T("This feature is currently unavailable"), I18n.T("Please look forward"));
         }
 
         protected void To(string url, bool cacheCurrentURL = true)
@@ -85,7 +85,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             foreach (var item in messages)
             {
-                await PopupServiceHelper.Info(I18n.T("Achieving Achievements"), I18n.T(item));
+                await AlertService.Info(I18n.T("Achieving Achievements"), I18n.T(item));
             }
         }
 

@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class MultiDisplay : IDisposable
     {
-        private bool IsDesktop => MdAndUp ? MasaBlazorHelper.Breakpoint.MdAndUp : MasaBlazorHelper.Breakpoint.SmAndUp;
+        private bool IsDesktop => MdAndUp ? BreakpointService.Breakpoint.MdAndUp : BreakpointService.Breakpoint.SmAndUp;
 
         [Inject]
-        public MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
+        public BreakpointService BreakpointService { get; set; } = default!;
 
         [Parameter]
         public RenderFragment? MobileContent { get; set; }
@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public void Dispose()
         {
-            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
+            BreakpointService.BreakpointChanged -= HandleBreakpointChange;
             GC.SuppressFinalize(this);
         }
 
@@ -33,7 +33,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
-            MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
+            BreakpointService.BreakpointChanged += HandleBreakpointChange;
         }
 
         private async void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)

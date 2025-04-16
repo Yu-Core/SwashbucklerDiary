@@ -1,24 +1,24 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Masa.Blazor.Popup.Components;
 using Masa.Blazor.Presets;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
-    public class PopupServiceHelper : IPopupServiceHelper
+    public class AlertService : IAlertService
     {
         private readonly IPopupService _popupService = default!;
 
-        private readonly MasaBlazorHelper _masaBlazorHelper = default!;
+        private readonly BreakpointService _breakpointService = default!;
 
         private readonly ISettingService _settingService = default!;
 
-        public PopupServiceHelper(IPopupService popupService,
-            MasaBlazorHelper masaBlazorHelper,
+        public AlertService(IPopupService popupService,
+            BreakpointService breakpointService,
             ISettingService settingService)
         {
             _popupService = popupService;
-            _masaBlazorHelper = masaBlazorHelper;
-            _masaBlazorHelper.BreakpointChanged += OnBreakpointChanged;
+            _breakpointService = breakpointService;
+            _breakpointService.BreakpointChanged += OnBreakpointChanged;
             _settingService = settingService;
         }
 
@@ -33,7 +33,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
             var parameters = new Dictionary<string, object?>()
             {
-                {nameof(EnqueuedSnackbars.Position), _masaBlazorHelper.Breakpoint.SmAndUp ? SnackPosition.BottomCenter : SnackPosition.TopCenter}
+                {nameof(EnqueuedSnackbars.Position), _breakpointService.Breakpoint.SmAndUp ? SnackPosition.BottomCenter : SnackPosition.TopCenter}
             };
 
             _popupService.Open(typeof(EnqueuedSnackbars), parameters);
@@ -51,8 +51,8 @@ namespace SwashbucklerDiary.Rcl.Services
                 Title = title,
                 Content = message,
                 Type = type,
-                Timeout = timeout == 0 ? 2000 : timeout,
-                Closeable = _masaBlazorHelper.Breakpoint.SmAndUp
+                Timeout = timeout < 1 ? 2000 : timeout,
+                Closeable = _breakpointService.Breakpoint.SmAndUp
             });
         }
 

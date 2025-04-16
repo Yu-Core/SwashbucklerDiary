@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Rcl.Components
         protected Dictionary<string, object> menuActivatorAttributes = [];
 
         [Inject]
-        protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
+        protected BreakpointService BreakpointService { get; set; } = default!;
 
         [Parameter]
         public List<T> Value
@@ -61,14 +61,14 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
-            MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
+            BreakpointService.BreakpointChanged += HandleBreakpointChange;
         }
 
         protected override async ValueTask DisposeAsyncCore()
         {
             await base.DisposeAsyncCore();
 
-            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
+            BreakpointService.BreakpointChanged -= HandleBreakpointChange;
         }
 
         protected override void ReadSettings()

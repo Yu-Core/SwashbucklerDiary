@@ -82,7 +82,7 @@ namespace SwashbucklerDiary.Rcl.Components
             privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
         }
 
-        private float ItemHeight => MasaBlazorHelper.Breakpoint.Xs ? 156.8f : (MasaBlazorHelper.Breakpoint.Sm ? 164.8f : 172.8f);
+        private float ItemHeight => BreakpointService.Breakpoint.Xs ? 156.8f : (BreakpointService.Breakpoint.Sm ? 164.8f : 172.8f);
 
         private string? InternalClass => new CssBuilder()
             .Add("card-list__main")
@@ -123,7 +123,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             var text = SelectedItem.CreateCopyContent();
             await PlatformIntegration.SetClipboardAsync(text);
-            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
+            await AlertService.Success(I18n.T("Copy successfully"));
         }
 
         private async Task OpenTagDialog()
@@ -140,11 +140,11 @@ namespace SwashbucklerDiary.Rcl.Components
             await InvokeAsync(StateHasChanged);
             if (privacyMode)
             {
-                await PopupServiceHelper.Success(I18n.T("Removed from privacy mode"));
+                await AlertService.Success(I18n.T("Removed from privacy mode"));
             }
             else
             {
-                await PopupServiceHelper.Success(I18n.T("Moved to privacy mode"));
+                await AlertService.Success(I18n.T("Moved to privacy mode"));
             }
         }
 
@@ -164,13 +164,13 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 if (RemoveSelectedItem())
                 {
-                    await PopupServiceHelper.Success(I18n.T("Delete successfully"));
+                    await AlertService.Success(I18n.T("Delete successfully"));
                     await InvokeAsync(StateHasChanged);
                 }
             }
             else
             {
-                await PopupServiceHelper.Error(I18n.T("Delete failed"));
+                await AlertService.Error(I18n.T("Delete failed"));
             }
         }
 
@@ -217,7 +217,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             var text = SelectedItem.GetReferenceText(I18n);
             await PlatformIntegration.SetClipboardAsync(text);
-            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
+            await AlertService.Success(I18n.T("Copy successfully"));
         }
 
         private async Task CopyLink()
@@ -233,7 +233,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             await PlatformIntegration.SetClipboardAsync(text);
-            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
+            await AlertService.Success(I18n.T("Copy successfully"));
         }
 
         private async void ClickCard(DiaryModel diary)

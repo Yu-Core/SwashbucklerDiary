@@ -55,11 +55,11 @@ namespace SwashbucklerDiary.Rcl.Components
             var writePermission = await PlatformIntegration.TryStorageWritePermission();
             if (!writePermission)
             {
-                await PopupServiceHelper.Info(I18n.T("Please grant permission for storage writing"));
+                await AlertService.Info(I18n.T("Please grant permission for storage writing"));
                 return;
             }
 
-            await PopupServiceHelper.StartLoading();
+            await AlertService.StartLoading();
             try
             {
                 var diaries = Value.OrderBy(x => x.CreateTime).ToList();
@@ -70,7 +70,7 @@ namespace SwashbucklerDiary.Rcl.Components
                     bool flag = await PlatformIntegration.SaveFileAsync(fileName, path);
                     if (flag)
                     {
-                        await PopupServiceHelper.Success(I18n.T("Export successfully"));
+                        await AlertService.Success(I18n.T("Export successfully"));
                         await HandleAchievements(Achievement.Export);
                     }
                 }
@@ -79,11 +79,11 @@ namespace SwashbucklerDiary.Rcl.Components
             catch (Exception e)
             {
                 Logger.LogError(new EventId(1, "Error"), e, "Create file wrong");
-                await PopupServiceHelper.Error(I18n.T("Export failed"));
+                await AlertService.Error(I18n.T("Export failed"));
             }
             finally
             {
-                await PopupServiceHelper.StopLoading();
+                await AlertService.StopLoading();
             }
         }
     }

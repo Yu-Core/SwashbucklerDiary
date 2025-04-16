@@ -133,7 +133,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            await PopupServiceHelper.StartLoading();
+            await AlertService.StartLoading();
 
             var diaries = SelectedDiaries.OrderBy(it => it.CreateTime).ToList();
             string content = string.Join("\n", diaries.Select(it => it.Content));
@@ -144,7 +144,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await DiaryService.DeleteAsync(diaries);
             await UpdateDiariesAsync();
 
-            await PopupServiceHelper.StopLoading();
+            await AlertService.StopLoading();
             StateHasChanged();
         }
 

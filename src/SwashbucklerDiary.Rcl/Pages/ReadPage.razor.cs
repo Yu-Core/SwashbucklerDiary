@@ -70,7 +70,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private IScreenshot ScreenshotService { get; set; } = default!;
 
         [Inject]
-        private MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
+        private BreakpointService BreakpointService { get; set; } = default!;
 
         [Parameter]
         public Guid Id { get; set; }
@@ -177,8 +177,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, "Copy link", "mdi:mdi-link-variant", CopyLink),
                 new(this, "Look up", "quick_reference_all", OpenSearch),
                 new(this, "View referenced", "file_export", ViewReferenced),
-                new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!MasaBlazorHelper.Breakpoint.MdAndUp),
-                new(this, OutlineText, "format_list_bulleted", OutlineChanged, ()=>MasaBlazorHelper.Breakpoint.MdAndUp),
+                new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!BreakpointService.Breakpoint.MdAndUp),
+                new(this, OutlineText, "format_list_bulleted", OutlineChanged, ()=>BreakpointService.Breakpoint.MdAndUp),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
 
@@ -201,12 +201,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             bool flag = await DiaryService.DeleteAsync(diary);
             if (flag)
             {
-                await PopupServiceHelper.Success(I18n.T("Delete successfully"));
+                await AlertService.Success(I18n.T("Delete successfully"));
                 await NavigateToBack();
             }
             else
             {
-                await PopupServiceHelper.Error(I18n.T("Delete failed"));
+                await AlertService.Error(I18n.T("Delete failed"));
             }
         }
 
@@ -227,7 +227,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             var content = diary.CreateCopyContent();
             await PlatformIntegration.SetClipboardAsync(content);
-            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
+            await AlertService.Success(I18n.T("Copy successfully"));
         }
 
         private async Task ShareText()
@@ -239,7 +239,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async void ShareImage()
         {
-            await PopupServiceHelper.StartLoading();
+            await AlertService.StartLoading();
 
             if (enableMarkdown && markdownPreview is not null)
             {
@@ -249,7 +249,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var filePath = await ScreenshotService.CaptureAsync("#screenshot");
             await PlatformIntegration.ShareFileAsync(I18n.T("Share"), filePath);
 
-            await PopupServiceHelper.StopLoading();
+            await AlertService.StopLoading();
             await InvokeAsync(StateHasChanged);
 
             await HandleAchievements(Achievement.Share);
@@ -274,11 +274,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             await DiaryService.MovePrivacyDiaryAsync(diary, !privacyMode);
             if (privacyMode)
             {
-                await PopupServiceHelper.Success(I18n.T("Removed from privacy mode"));
+                await AlertService.Success(I18n.T("Removed from privacy mode"));
             }
             else
             {
-                await PopupServiceHelper.Success(I18n.T("Moved to privacy mode"));
+                await AlertService.Success(I18n.T("Moved to privacy mode"));
             }
         }
 
@@ -299,7 +299,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             var text = diary.GetReferenceText(I18n);
             await PlatformIntegration.SetClipboardAsync(text);
-            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
+            await AlertService.Success(I18n.T("Copy successfully"));
         }
 
         private async Task CopyLink()
@@ -315,7 +315,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             await PlatformIntegration.SetClipboardAsync(text);
-            await PopupServiceHelper.Success(I18n.T("Copy successfully"));
+            await AlertService.Success(I18n.T("Copy successfully"));
         }
 
         private async Task HandleFirstQuery()
@@ -345,11 +345,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 if (diary.Template)
                 {
-                    await PopupServiceHelper.Info(I18n.T("This template is not referenced"));
+                    await AlertService.Info(I18n.T("This template is not referenced"));
                 }
                 else
                 {
-                    await PopupServiceHelper.Info(I18n.T("This diary is not referenced"));
+                    await AlertService.Info(I18n.T("This diary is not referenced"));
                 }
             }
             else

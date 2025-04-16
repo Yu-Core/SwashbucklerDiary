@@ -11,18 +11,18 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 
         private readonly string screenshotFileName = "Screenshot.png";
 
-        private readonly IPopupServiceHelper _popupServiceHelper;
+        private readonly IAlertService _alertService;
 
         private readonly II18nService _i18n;
 
         public Screenshot(ScreenshotJSModule module,
             IAppFileSystem appFileSystem,
-            IPopupServiceHelper popupServiceHelper,
+            IAlertService alertService,
             II18nService i18NService)
         {
             _module = module;
             _appFileSystem = appFileSystem;
-            _popupServiceHelper = popupServiceHelper;
+            _alertService = alertService;
             _i18n = i18NService;
         }
 
@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         {
             //var base64 = await ScreenshotToBase64(selector);
             //return await _appFileSystem.CreateTempFileAsync(screenshotFileName, Convert.FromBase64String(base64));
-            await _popupServiceHelper.Error(_i18n.T("Not supported on the current platform"));
+            await _alertService.Error(_i18n.T("Not supported on the current platform"));
             return string.Empty;
         }
 

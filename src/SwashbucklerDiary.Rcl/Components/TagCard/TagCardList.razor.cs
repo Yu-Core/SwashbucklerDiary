@@ -66,13 +66,13 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 if (RemoveSelectedItem())
                 {
-                    await PopupServiceHelper.Success(I18n.T("Delete successfully"));
+                    await AlertService.Success(I18n.T("Delete successfully"));
                     StateHasChanged();
                 }
             }
             else
             {
-                await PopupServiceHelper.Error(I18n.T("Delete failed"));
+                await AlertService.Error(I18n.T("Delete failed"));
             }
         }
 
@@ -86,7 +86,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (Value.Any(it => it.Name == tagName))
             {
-                await PopupServiceHelper.Warning(I18n.T("Tag already exists"), I18n.T("Do not add again"));
+                await AlertService.Warning(I18n.T("Tag already exists"), I18n.T("Do not add again"));
                 return;
             }
 
@@ -95,7 +95,7 @@ namespace SwashbucklerDiary.Rcl.Components
             bool flag = await TagService.UpdateAsync(SelectedItem, it => new { it.Name, it.UpdateTime });
             if (!flag)
             {
-                await PopupServiceHelper.Error(I18n.T("Change failed"));
+                await AlertService.Error(I18n.T("Change failed"));
             }
         }
 
@@ -141,7 +141,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var diaries = newTag.Diaries;
             if (diaries is null || diaries.Count == 0)
             {
-                await PopupServiceHelper.Info(I18n.T("No diary"));
+                await AlertService.Info(I18n.T("No diary"));
                 return;
             }
 

@@ -53,17 +53,17 @@ namespace SwashbucklerDiary.Rcl.Pages
             var flag = await PlatformIntegration.TryStorageWritePermission();
             if (!flag)
             {
-                await PopupServiceHelper.Info(I18n.T("Please grant permission for storage writing"));
+                await AlertService.Info(I18n.T("Please grant permission for storage writing"));
                 return;
             }
 
-            await PopupServiceHelper.StartLoading();
+            await AlertService.StartLoading();
             diaries = await DiaryService.QueryDiariesAsync();
-            await PopupServiceHelper.StopLoading();
+            await AlertService.StopLoading();
 
             if (diaries.Count == 0)
             {
-                await PopupServiceHelper.Info(I18n.T("No diary"));
+                await AlertService.Info(I18n.T("No diary"));
                 return;
             }
 
@@ -91,7 +91,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             showConfirmImport = false;
             if (string.IsNullOrEmpty(importFilePath))
             {
-                await PopupServiceHelper.Error(I18n.T("Import failed"));
+                await AlertService.Error(I18n.T("Import failed"));
                 return;
             }
 
@@ -109,18 +109,18 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 if (!isSuccess)
                 {
-                    await PopupServiceHelper.Error(I18n.T("Import failed"));
+                    await AlertService.Error(I18n.T("Import failed"));
                 }
                 else
                 {
-                    await PopupServiceHelper.Success(I18n.T("Import successfully"));
+                    await AlertService.Success(I18n.T("Import successfully"));
                 }
 
             }
             catch (Exception e)
             {
                 Logger.LogError(e, "Export Import Fail");
-                await PopupServiceHelper.Error(I18n.T("Import failed"));
+                await AlertService.Error(I18n.T("Import failed"));
             }
         }
     }

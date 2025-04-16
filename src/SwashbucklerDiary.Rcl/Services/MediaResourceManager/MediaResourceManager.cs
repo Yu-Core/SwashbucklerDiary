@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IAppFileSystem _appFileSystem;
 
-        protected readonly IPopupServiceHelper _popupServiceHelper;
+        protected readonly IAlertService _alertService;
 
         protected readonly II18nService _i18n;
 
@@ -29,13 +29,13 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public MediaResourceManager(IPlatformIntegration mauiPlatformService,
             IAppFileSystem appFileSystem,
-            IPopupServiceHelper popupServiceHelper,
+            IAlertService alertService,
             II18nService i18nService,
             ILogger<MediaResourceManager> logger)
         {
             _platformIntegration = mauiPlatformService;
             _appFileSystem = appFileSystem;
-            _popupServiceHelper = popupServiceHelper;
+            _alertService = alertService;
             _i18n = i18nService;
             _logger = logger;
         }

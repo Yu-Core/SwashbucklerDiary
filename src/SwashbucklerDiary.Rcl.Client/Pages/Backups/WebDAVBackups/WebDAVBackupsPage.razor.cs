@@ -56,7 +56,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 configModel = webDavConfig.DeepClone();
                 showConfig = false;
-                await PopupServiceHelper.Success(I18n.T("Configuration successful"));
+                await AlertService.Success(I18n.T("Configuration successful"));
                 var configJson = JsonSerializer.Serialize(configModel);
                 await SettingService.SetAsync(s => s.WebDavConfig, configJson);
             }
@@ -71,22 +71,22 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             catch (ArgumentException e)
             {
-                await PopupServiceHelper.Error(I18n.T("Configuration failed, please check the configuration information"));
+                await AlertService.Error(I18n.T("Configuration failed, please check the configuration information"));
                 Logger.LogError(e, $"SaveWebDavConfig {nameof(ArgumentException)}");
             }
             catch (HttpRequestException e)
             {
-                await PopupServiceHelper.Error(I18n.T("Network error"));
+                await AlertService.Error(I18n.T("Network error"));
                 Logger.LogError(e, $"SaveWebDavConfig {nameof(HttpRequestException)}");
             }
             catch (WebDAVException e)
             {
-                await PopupServiceHelper.Error(I18n.T("Configuration failed, please check the configuration information"));
+                await AlertService.Error(I18n.T("Configuration failed, please check the configuration information"));
                 Logger.LogError(e, $"SaveWebDavConfig {nameof(WebDAVException)}");
             }
             catch (Exception e)
             {
-                await PopupServiceHelper.Error(I18n.T("Configuration failed for unknown reasons"));
+                await AlertService.Error(I18n.T("Configuration failed for unknown reasons"));
                 Logger.LogError(e, "SaveWebDavConfig Unknown");
             }
 
@@ -108,7 +108,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             showUpload = false;
 
-            await PopupServiceHelper.StartLoading();
+            await AlertService.StartLoading();
 
             string filePath = await DiaryFileManager.ExportDBAsync(includeDiaryResources);
             using var stream = File.OpenRead(filePath);
@@ -117,21 +117,21 @@ namespace SwashbucklerDiary.Rcl.Pages
             try
             {
                 await WebDAVService.UploadAsync(destFileName, stream);
-                await PopupServiceHelper.Success(I18n.T("Upload successfully"));
+                await AlertService.Success(I18n.T("Upload successfully"));
             }
             catch (HttpRequestException e)
             {
-                await PopupServiceHelper.Error(I18n.T("Network error"));
+                await AlertService.Error(I18n.T("Network error"));
                 Logger.LogError(e, $"OpenDownloadDialog {nameof(HttpRequestException)}");
             }
             catch (Exception e)
             {
-                await PopupServiceHelper.Error(I18n.T("Upload failed"));
+                await AlertService.Error(I18n.T("Upload failed"));
                 Logger.LogError(e, $"Backups Upload Fail");
             }
             finally
             {
-                await PopupServiceHelper.StopLoading();
+                await AlertService.StopLoading();
             }
         }
 
@@ -151,12 +151,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             catch (HttpRequestException e)
             {
-                await PopupServiceHelper.Error(I18n.T("Network error"));
+                await AlertService.Error(I18n.T("Network error"));
                 Logger.LogError(e, $"OpenDownloadDialog {nameof(HttpRequestException)}");
             }
             catch (Exception e)
             {
-                await PopupServiceHelper.Error(I18n.T("Pull failed"));
+                await AlertService.Error(I18n.T("Pull failed"));
                 Logger.LogError(e, $"Backups Download Fail");
             }
 
@@ -166,27 +166,27 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             showDownload = false;
 
-            await PopupServiceHelper.StartLoading();
+            await AlertService.StartLoading();
             var destFileName = webDavFolderName + "/" + fileName;
             try
             {
                 using var stream = await WebDAVService.DownloadAsync(destFileName);
                 await DiaryFileManager.ImportDBAsync(stream);
-                await PopupServiceHelper.Success(I18n.T("Pull successfully"));
+                await AlertService.Success(I18n.T("Pull successfully"));
             }
             catch (HttpRequestException e)
             {
-                await PopupServiceHelper.Error(I18n.T("Network error"));
+                await AlertService.Error(I18n.T("Network error"));
                 Logger.LogError(e, $"OpenDownloadDialog {nameof(HttpRequestException)}");
             }
             catch (Exception e)
             {
-                await PopupServiceHelper.Error(I18n.T("Pull failed"));
+                await AlertService.Error(I18n.T("Pull failed"));
                 Logger.LogError(e, "WebDAV Download fail");
             }
             finally
             {
-                await PopupServiceHelper.StopLoading();
+                await AlertService.StopLoading();
             }
         }
 
@@ -194,7 +194,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (!Configured)
             {
-                await PopupServiceHelper.Error(I18n.T("Configure WebDAV first"));
+                await AlertService.Error(I18n.T("Configure WebDAV first"));
                 return false;
             }
 

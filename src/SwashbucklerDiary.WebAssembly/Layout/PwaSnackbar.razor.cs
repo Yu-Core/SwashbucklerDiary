@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Services;
 
@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.WebAssembly.Layout
     public partial class PwaSnackbar : IDisposable
     {
         [Inject]
-        private MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
+        private BreakpointService BreakpointService { get; set; } = default!;
 
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }
@@ -19,14 +19,14 @@ namespace SwashbucklerDiary.WebAssembly.Layout
         {
             base.OnInitialized();
 
-            MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
+            BreakpointService.BreakpointChanged += HandleBreakpointChange;
         }
 
-        private bool Top => MasaBlazorHelper.Breakpoint.Xs;
+        private bool Top => BreakpointService.Breakpoint.Xs;
 
-        private bool Rigtht => MasaBlazorHelper.Breakpoint.SmAndUp;
+        private bool Rigtht => BreakpointService.Breakpoint.SmAndUp;
 
-        private bool Bottom => MasaBlazorHelper.Breakpoint.SmAndUp;
+        private bool Bottom => BreakpointService.Breakpoint.SmAndUp;
 
         private async Task Ignore()
         {
@@ -45,7 +45,7 @@ namespace SwashbucklerDiary.WebAssembly.Layout
 
         public void Dispose()
         {
-            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
+            BreakpointService.BreakpointChanged -= HandleBreakpointChange;
             GC.SuppressFinalize(this);
         }
     }

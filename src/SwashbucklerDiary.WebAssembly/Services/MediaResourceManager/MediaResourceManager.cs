@@ -13,12 +13,12 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         public MediaResourceManager(IPlatformIntegration platformIntegration,
             IAppFileSystem appFileSystem,
-            IPopupServiceHelper popupServiceHelper,
+            IAlertService alertService,
             II18nService i18nService,
             ILogger<MediaResourceManager> logger,
             IJSRuntime jSRuntime,
             NavigationManager navigationManager) :
-            base(platformIntegration, appFileSystem, popupServiceHelper, i18nService, logger)
+            base(platformIntegration, appFileSystem, alertService, i18nService, logger)
         {
             _jSRuntime = jSRuntime;
             _navigationManager = navigationManager;
@@ -76,7 +76,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
             }
             else
             {
-                await _popupServiceHelper.Error(_i18n.T("External files are not supported"));
+                await _alertService.Error(_i18n.T("External files are not supported"));
                 return string.Empty;
             }
         }

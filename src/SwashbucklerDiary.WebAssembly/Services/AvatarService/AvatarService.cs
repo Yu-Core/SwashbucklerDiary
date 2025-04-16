@@ -9,21 +9,21 @@ namespace SwashbucklerDiary.WebAssembly.Services
             IMediaResourceManager mediaResourceManager,
             IPlatformIntegration platformIntegration,
             II18nService i18n,
-            IPopupServiceHelper popupServiceHelper,
+            IAlertService alertService,
             IAppFileSystem appFileSystem)
-            : base(settingService, mediaResourceManager, platformIntegration, i18n, popupServiceHelper, appFileSystem)
+            : base(settingService, mediaResourceManager, platformIntegration, i18n, alertService, appFileSystem)
         {
         }
 
         public override async Task<string> SetAvatarByCapture()
         {
-            await _popupServiceHelper.Error(_i18n.T("Not supported on the current platform"));
+            await _alertService.Error(_i18n.T("Not supported on the current platform"));
             return string.Empty;
 
             //bool isCaptureSupported = await _platformIntegration.IsCaptureSupported();
             //if (!isCaptureSupported)
             //{
-            //    await _popupServiceHelper.Error(_i18n.T("The current platform is unable to take photos"));
+            //    await _alertService.Error(_i18n.T("The current platform is unable to take photos"));
             //    return string.Empty;
             //}
 

@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private MButton? mButton;
 
         [Inject]
-        private MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
+        private BreakpointService BreakpointService { get; set; } = default!;
 
         [CascadingParameter(Name = "IsDark")]
         public bool Dark { get; set; }
@@ -38,7 +38,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public void Dispose()
         {
-            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
+            BreakpointService.BreakpointChanged -= HandleBreakpointChange;
             GC.SuppressFinalize(this);
         }
 
@@ -49,13 +49,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected virtual StringNumber? Size { get; }
 
-        protected bool Desktop => MasaBlazorHelper.Breakpoint.MdAndUp;
+        protected bool Desktop => BreakpointService.Breakpoint.MdAndUp;
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
-            MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
+            BreakpointService.BreakpointChanged += HandleBreakpointChange;
         }
 
         private void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)

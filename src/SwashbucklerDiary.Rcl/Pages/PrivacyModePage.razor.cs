@@ -32,7 +32,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private bool showHidePrivacyModeEntranceConfirmDialog;
 
         [Inject]
-        private MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
+        private BreakpointService BreakpointService { get; set; } = default!;
 
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
@@ -44,7 +44,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
-            MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
+            BreakpointService.BreakpointChanged += HandleBreakpointChange;
 
             // Prevent entry through URL
             if (!allowEnterPrivacyMode)
@@ -75,10 +75,10 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.DisposeAsyncCore();
 
-            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
+            BreakpointService.BreakpointChanged -= HandleBreakpointChange;
         }
 
-        private bool Desktop => MasaBlazorHelper.Breakpoint.SmAndUp;
+        private bool Desktop => BreakpointService.Breakpoint.SmAndUp;
 
         private bool Mobile => !Desktop;
 
@@ -135,7 +135,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             string salt = nameof(Setting.PrivacyModeEntrancePassword);
             await SettingService.SetAsync(s => s.PrivacyModeEntrancePassword, (value + salt).MD5Encrytp32());
-            await PopupServiceHelper.Success(I18n.T("Password set successfully"));
+            await AlertService.Success(I18n.T("Password set successfully"));
         }
 
         private async Task SwitchHidePrivacyModeEntrance()
@@ -159,16 +159,16 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task MoveOldPrivacyDiaries()
         {
-            await PopupServiceHelper.StartLoading();
+            await AlertService.StartLoading();
             var isSuccess = await DiaryService.MovePrivacyDiariesAsync();
-            await PopupServiceHelper.StopLoading();
+            await AlertService.StopLoading();
             if (isSuccess)
             {
-                await PopupServiceHelper.Success(I18n.T("Successfully moved"));
+                await AlertService.Success(I18n.T("Successfully moved"));
             }
             else
             {
-                await PopupServiceHelper.Info(I18n.T("No diary that needs to be moved"));
+                await AlertService.Info(I18n.T("No diary that needs to be moved"));
             }
         }
     }

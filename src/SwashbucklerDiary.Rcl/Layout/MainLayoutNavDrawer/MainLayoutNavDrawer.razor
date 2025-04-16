@@ -19,5 +19,5 @@
 </MNavigationDrawer>
 
 @code {
-    private bool Show => MasaBlazorHelper.Breakpoint.SmAndUp && IsPermanentPath;
+    private bool Show => BreakpointService.Breakpoint.SmAndUp && IsPermanentPath;
 }

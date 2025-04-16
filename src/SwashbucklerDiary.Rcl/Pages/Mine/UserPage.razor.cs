@@ -89,7 +89,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task SetAvatar(Func<Task<string>> func)
         {
             showEditAvatar = false;
-            await PopupServiceHelper.StartLoading();
+            await AlertService.StartLoading();
             StateHasChanged();
             string? photoPath = null;
             try
@@ -98,17 +98,17 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             catch (Exception e)
             {
-                await PopupServiceHelper.Error(I18n.T("Change failed"));
+                await AlertService.Error(I18n.T("Change failed"));
                 Logger.LogError(e, I18n.T("Change failed"));
             }
             finally
             {
-                await PopupServiceHelper.StopLoading();
+                await AlertService.StopLoading();
             }
 
             if (string.IsNullOrEmpty(photoPath))
             {
-                await PopupServiceHelper.Error(I18n.T("Change failed"));
+                await AlertService.Error(I18n.T("Change failed"));
                 return;
             }
 

@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             showClearCache = false;
             AppFileSystem.ClearCache();
             UpdateCacheSize();
-            await PopupServiceHelper.Success(I18n.T("Clean up successfully"));
+            await AlertService.Success(I18n.T("Clean up successfully"));
         }
     }
 }

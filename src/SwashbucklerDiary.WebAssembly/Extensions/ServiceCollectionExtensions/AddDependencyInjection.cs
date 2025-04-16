@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddSingleton<ISettingService, Services.SettingService>();
             services.AddSingleton<INavigateController, Essentials.NavigateController>();
             services.AddSingleton<IGlobalConfiguration, GlobalConfiguration>();
-            services.AddSingleton<IPopupServiceHelper, PopupServiceHelper>();
+            services.AddSingleton<IAlertService, AlertService>();
             services.AddSingleton<II18nService>(sp =>
             {
                 return (I18nService)sp.GetRequiredService<I18n>();
@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
             services.AddSingleton<IAppFileSystem, Essentials.AppFileSystem>();
             services.AddSingleton<IMediaResourceManager, Services.MediaResourceManager>();
-            services.AddSingleton<MasaBlazorHelper>();
+            services.AddSingleton<BreakpointService>();
 
             services.AddRclDependencyInjection();
 

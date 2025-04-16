@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private List<AppFeature> _appFeatures = [];
 
         [Inject]
-        protected MasaBlazorHelper MasaBlazorHelper { get; set; } = default!;
+        protected BreakpointService BreakpointService { get; set; } = default!;
 
         [Parameter]
         [SupplyParameterFromQuery]
@@ -31,7 +31,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadQuery();
-            MasaBlazorHelper.BreakpointChanged += HandleBreakpointChange;
+            BreakpointService.BreakpointChanged += HandleBreakpointChange;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -48,7 +48,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.DisposeAsyncCore();
 
-            MasaBlazorHelper.BreakpointChanged -= HandleBreakpointChange;
+            BreakpointService.BreakpointChanged -= HandleBreakpointChange;
         }
 
         protected override async Task OnResume()
@@ -65,7 +65,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             privacyModeSearchKey = SettingService.Get(s => s.PrivacyModeFunctionSearchKey, I18n.T("Privacy mode"));
         }
 
-        private float ItemHeight => MasaBlazorHelper.Breakpoint.Xs ? 68f : 84f;
+        private float ItemHeight => BreakpointService.Breakpoint.Xs ? 68f : 84f;
 
         private bool ShowPrivacyModeItem => showPrivacyModeSearch && !string.IsNullOrWhiteSpace(search) && privacyModeSearchKey == search;
 
@@ -109,7 +109,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 exp = exp.And(expPlatform);
                 Expression<Func<AppFeature, bool>> expBreakpoint
                     = it => it.HideBreakpoints == null
-                    || !it.HideBreakpoints.Contains(MasaBlazorHelper.Breakpoint.Name.ToString());
+                    || !it.HideBreakpoints.Contains(BreakpointService.Breakpoint.Name.ToString());
                 exp = exp.And(expBreakpoint);
             }
 

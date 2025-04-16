@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Maui.Services
     {
         private readonly IAccessExternal _accessExternal;
 
-        private readonly IPopupServiceHelper _popupServiceHelper;
+        private readonly IAlertService _alertService;
 
         private readonly IPlatformIntegration _platformIntegration;
 
@@ -21,13 +21,13 @@ namespace SwashbucklerDiary.Maui.Services
             Rcl.Essentials.IVersionTracking versionTracking,
             IDiaryFileManager diaryFileManager,
             IAccessExternal accessExternal,
-            IPopupServiceHelper popupServiceHelper,
+            IAlertService alertService,
             IStaticWebAssets staticWebAssets,
             IPlatformIntegration platformIntegration) :
             base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager, staticWebAssets)
         {
             _accessExternal = accessExternal;
-            _popupServiceHelper = popupServiceHelper;
+            _alertService = alertService;
             _platformIntegration = platformIntegration;
         }
 
@@ -99,7 +99,7 @@ namespace SwashbucklerDiary.Maui.Services
             bool flag = await _accessExternal.OpenAppStoreAppDetails();
             if (!flag)
             {
-                await _popupServiceHelper.Error(_i18n.T("Failed to open the application store"));
+                await _alertService.Error(_i18n.T("Failed to open the application store"));
             }
         }
     }

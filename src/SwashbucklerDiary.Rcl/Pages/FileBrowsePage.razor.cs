@@ -81,7 +81,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (flag)
             {
                 await UpdateResourcesAsync();
-                await PopupServiceHelper.Success(I18n.T("Delete successfully"));
+                await AlertService.Success(I18n.T("Delete successfully"));
             }
         }
     }

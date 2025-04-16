@@ -85,7 +85,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (Items.Any(it => it.Name == name))
             {
-                await PopupServiceHelper.Warning(I18n.T("Location already exists"), I18n.T("Do not add again"));
+                await AlertService.Warning(I18n.T("Location already exists"), I18n.T("Do not add again"));
                 return;
             }
 
@@ -93,7 +93,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var flag = await LocationService.AddAsync(location);
             if (!flag)
             {
-                await PopupServiceHelper.Error(I18n.T("Add failed"));
+                await AlertService.Error(I18n.T("Add failed"));
                 return;
             }
 

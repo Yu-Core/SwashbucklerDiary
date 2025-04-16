@@ -123,7 +123,7 @@ namespace SwashbucklerDiary.Rcl.Components
             int count = resource?.Diaries?.Count ?? 0;
             if (count < 1)
             {
-                await PopupServiceHelper.Info(I18n.T("This file is not used"));
+                await AlertService.Info(I18n.T("This file is not used"));
                 return;
             }
             else if (count == 1)
