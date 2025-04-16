@@ -702,6 +702,10 @@ html.m-overlay-scroll-blocked {
     .multi-menu-moblie-container .content-container {
         width: auto;
         cursor: pointer;
+        display: flex;
+        flex-direction:column;
+        justify-content: center;
+        align-items: center;
     }
 
     .multi-menu-moblie-container .title-container {
