@@ -26,7 +26,7 @@
     string InternalOutlineStyle => new StyleBuilder()
         .Add("position", "sticky")
         .Add("top", "0px")
-        .Add("display", "block", Outline)
+        .AddIf("display", "block", Outline)
         .Add(OutlineStyle)
         .ToString();
 }

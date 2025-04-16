@@ -73,7 +73,6 @@
     margin-bottom: 8px;
     padding-top: 8px;
     background-color: initial;
-    border: none;
 }
 
     .vditor-outline::-webkit-scrollbar {
@@ -157,6 +156,7 @@
 @media screen and (min-width:960px) {
     .vditor-outline {
         margin-right: 1em;
+        --border-color: #d1d5da;
     }
 
         .vditor-outline.vditor-outline--right {
