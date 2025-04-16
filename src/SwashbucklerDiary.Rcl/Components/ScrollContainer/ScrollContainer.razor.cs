@@ -1,6 +1,5 @@
 using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -34,11 +33,11 @@ namespace SwashbucklerDiary.Rcl.Components
         private string InternalClass => new CssBuilder()
             .Add("my-scroll-container")
             .Add(Class)
-            .Build();
+            .ToString();
 
         private string InternalContentClass => new CssBuilder()
             .Add("my-container")
             .Add(ContentClass)
-            .Build();
+            .ToString();
     }
 }

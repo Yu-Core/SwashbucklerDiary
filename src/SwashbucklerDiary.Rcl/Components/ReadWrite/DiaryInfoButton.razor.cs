@@ -1,6 +1,5 @@
 using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -24,7 +23,7 @@ namespace SwashbucklerDiary.Rcl.Components
             .Add(Class)
             .Add("diary-info-btn")
             .Add("text--secondary")
-            .AddIf("m-btn--readonly", ReadOnly)
-            .Build();
+            .Add("m-btn--readonly", ReadOnly)
+            .ToString();
     }
 }

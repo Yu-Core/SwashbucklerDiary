@@ -8,8 +8,8 @@
 @code {
     string? WrapClass => new CssBuilder()
         .Add("d-flex")
-        .AddIf("flex-row-reverse", RightOutline)
-        .Build();
+        .Add("flex-row-reverse", RightOutline)
+        .ToString();
 
     string InternalStyle => new StyleBuilder()
         .Add("flex", "1")
@@ -20,13 +20,13 @@
     string InternalOutlineClass => new CssBuilder()
         .Add("vditor-outline")
         .Add(OutlineClass)
-        .AddIf("vditor-outline--right", RightOutline)
-        .Build();
+        .Add("vditor-outline--right", RightOutline)
+        .ToString();
 
     string InternalOutlineStyle => new StyleBuilder()
         .Add("position", "sticky")
         .Add("top", "0px")
-        .AddIf("display", "block", Outline)
+        .Add("display", "block", Outline)
         .Add(OutlineStyle)
-        .Build();
+        .ToString();
 }

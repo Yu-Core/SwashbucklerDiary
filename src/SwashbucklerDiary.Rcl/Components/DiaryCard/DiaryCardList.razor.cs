@@ -86,11 +86,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string? InternalClass => new CssBuilder()
             .Add("card-list__main")
-            .AddIf("card-list__menu--active", showMenu)
-            .AddIf("diary-card-list__icon--hidden", !showIcon)
-            .AddIf("diary-card-list__tags--hidden", !showTags)
-            .AddIf("diary-card-list__location--hidden", !showLocation)
-            .Build();
+            .Add("card-list__menu--active", showMenu)
+            .Add("diary-card-list__icon--hidden", !showIcon)
+            .Add("diary-card-list__tags--hidden", !showTags)
+            .Add("diary-card-list__location--hidden", !showLocation)
+            .ToString();
 
         private List<TagModel> SelectedTags
         {

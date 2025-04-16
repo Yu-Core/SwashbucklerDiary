@@ -39,8 +39,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string MenuIconClass => new CssBuilder()
             .Add("card__menu")
-            .AddIf("card-list__selected-menu", IsActive)
-            .Build();
+            .Add("card-list__selected-menu", IsActive)
+            .ToString();
 
         private bool IsActive => Value.Id == DiaryCardListOptions.SelectedItemValue.Id;
 

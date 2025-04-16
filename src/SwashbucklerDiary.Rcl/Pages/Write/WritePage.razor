@@ -211,6 +211,6 @@
 
     private string TagsWrapClass => new CssBuilder()
         .Add("pl-2")
-        .AddIf("d-none", SelectedTags.Count == 0)
-        .Build();
+        .Add("d-none", SelectedTags.Count == 0)
+        .ToString();
 }

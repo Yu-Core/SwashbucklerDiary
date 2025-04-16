@@ -2,7 +2,6 @@ using Masa.Blazor.Core;
 using Masa.Blazor.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -76,7 +75,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private string InternalClass => new CssBuilder()
             .Add("transition-swing")
             .Add(Class)
-            .Build();
+            .ToString();
 
         private async Task BackTop()
         {

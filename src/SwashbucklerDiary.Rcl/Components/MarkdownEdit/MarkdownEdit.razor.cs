@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -116,10 +115,10 @@ namespace SwashbucklerDiary.Rcl.Components
         private string? InternalClass => new CssBuilder()
             .Add("vditor")
             .Add(Class)
-            .AddIf("first-line-indent", firstLineIndent)
-            .AddIf("task-list-line-through", taskListLineThrough)
-            .AddIf("outline_hide", !Outline)
-            .Build();
+            .Add("first-line-indent", firstLineIndent)
+            .Add("task-list-line-through", taskListLineThrough)
+            .Add("outline_hide", !Outline)
+            .ToString();
 
         private void ReadSettings()
         {

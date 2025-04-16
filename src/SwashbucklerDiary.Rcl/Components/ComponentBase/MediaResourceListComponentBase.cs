@@ -42,8 +42,8 @@ namespace SwashbucklerDiary.Rcl.Components
         public List<ResourceModel> Value { get; set; } = [];
 
         protected string InfiniteScrollClass => new CssBuilder()
-            .AddIf("py-0", !HasMore)
-            .Build();
+            .Add("py-0", !HasMore)
+            .ToString();
 
         protected virtual ResourceModel SelectedItem { get; set; } = new();
 

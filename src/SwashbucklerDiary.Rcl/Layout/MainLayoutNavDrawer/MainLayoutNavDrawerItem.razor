@@ -25,6 +25,6 @@
     private string Class => new CssBuilder()
         .Add("rounded-lg")
         .Add("mb-2")
-        .AddIf("m-list-item--active", Activated)
-        .Build();
+        .Add("m-list-item--active", Activated)
+        .ToString();
 }
