@@ -95,7 +95,8 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected async Task UpdateDocumentProperty(CultureInfo cultureInfo)
         {
-            await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
+            // When html lang is not English, the vertical position of Chinese characters and icons cannot be aligned
+            //await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
             await JSRuntime.EvaluateJavascript($"document.title = '{I18n.T("Swashbuckler Diary")}';");
         } 
 
