@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Layout;
+using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Maui.Layout
 {
@@ -21,14 +22,28 @@ namespace SwashbucklerDiary.Maui.Layout
             base.OnInitialized();
 
 #if IOS || MACCATALYST
+            // IOS || MACCATALYST OpenUrl runs after BlazorWebView Initializ,so can only check ActivationArguments here
             if (AppLifecycle.ActivationArguments != null)
             {
                 if (AppLifecycle.ActivationArguments.Kind == AppActivationKind.Scheme)
                 {
                     HandleScheme(AppLifecycle.ActivationArguments);
                 }
+                else
+                {
+                    QuickRecord();
+                }
 
                 AppLifecycle.ActivationArguments = null;
+            }
+
+            void QuickRecord()
+            {
+                var quickRecord = SettingService.Get(it => it.QuickRecord);
+                if (quickRecord)
+                {
+                    NavigationManager.NavigateTo("write");
+                }
             }
 #endif
             AppLifecycle.OnActivated += HandleActivated;

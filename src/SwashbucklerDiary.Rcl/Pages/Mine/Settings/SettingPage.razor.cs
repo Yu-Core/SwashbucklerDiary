@@ -10,6 +10,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showStatisticsCard;
 
+        private bool showQuickRecord;
+
         private string? cacheSize;
 
         [Inject]
@@ -27,6 +29,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.ReadSettings();
 
             showStatisticsCard = SettingService.Get(s => s.StatisticsCard);
+            showQuickRecord = SettingService.Get(s => s.QuickRecord);
         }
 
         private void UpdateCacheSize()

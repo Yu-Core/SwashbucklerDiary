@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebView;
 using Microsoft.AspNetCore.Components.WebView.Gtk;
 using Microsoft.Extensions.DependencyInjection;
 using SwashbucklerDiary.Gtk.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Gtk
 {
@@ -62,6 +62,7 @@ namespace SwashbucklerDiary.Gtk
             var args = AppActivation.Arguments;
             if (args is null || args.Data is null)
             {
+                HandleDefault();
                 return;
             }
 
@@ -71,6 +72,7 @@ namespace SwashbucklerDiary.Gtk
                     HandleScheme(args);
                     break;
                 default:
+                    HandleDefault();
                     break;
             }
         }
@@ -84,6 +86,21 @@ namespace SwashbucklerDiary.Gtk
             }
 
             AppActivation.Arguments = null;
+        }
+
+        private void HandleDefault()
+        {
+            QuickRecord();
+        }
+
+        private void QuickRecord()
+        {
+            var settingService = blazorWebView.Services.GetRequiredService<ISettingService>();
+            var quickRecord = settingService.Get(it => it.QuickRecord);
+            if (quickRecord)
+            {
+                blazorWebView.StartPath = "/write";
+            }
         }
     }
 }

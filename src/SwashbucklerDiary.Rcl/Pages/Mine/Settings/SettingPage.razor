@@ -191,6 +191,29 @@
                         <MIcon>chevron_right</MIcon>
                     </MListItemAction>
                 </MListItem>
+                
+                <MDivider Class="mx-5"></MDivider>
+
+                <MListItem>
+                    <MListItemIcon>
+                        <MIcon Class="evident-icon">
+                            flash_on
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        <MListItemTitle>
+                            @(I18n.T("Quick record"))
+                        </MListItemTitle>
+                        <MListItemSubtitle>
+                            @(I18n.T("After opening the application, directly enter the editing page"))
+                        </MListItemSubtitle>
+                    </MListItemContent>
+                    <MListItemAction>
+                        <SettingSwitch @bind-Value="showQuickRecord"
+                                       SettingKey="@nameof(Setting.QuickRecord)">
+                        </SettingSwitch>
+                    </MListItemAction>
+                </MListItem>
             </MList>
         </MCard>
     }

@@ -320,6 +320,13 @@
     "HidePlatforms": [ { "Platform": "Browser" } ]
   },
   {
+    "Name": "Quick record",
+    "Icon": "flash_on",
+    "Path": "Setting / Quick record",
+    "Href": "setting",
+    "HidePlatforms": [ { "Platform": "Browser" } ]
+  },
+  {
     "Name": "View source",
     "Icon": "auto_stories",
     "Path": "About / View source",

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.WebView;
 using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Maui
 {
@@ -41,6 +42,7 @@ namespace SwashbucklerDiary.Maui
             var args = AppActivation.Arguments;
             if (args is null || args.Data is null)
             {
+                HandleDefault();
                 return;
             }
 
@@ -53,6 +55,7 @@ namespace SwashbucklerDiary.Maui
                     HandleScheme(args);
                     break;
                 default:
+                    HandleDefault();
                     break;
             }
         }
@@ -71,6 +74,20 @@ namespace SwashbucklerDiary.Maui
         private void HandleShare(ActivationArguments args)
         {
             blazorWebView.StartPath = "/write";
+        }
+
+        private void HandleDefault()
+        {
+            QuickRecord();
+        }
+
+        private void QuickRecord()
+        {
+            var quickRecord = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.QuickRecord), false);
+            if (quickRecord)
+            {
+                blazorWebView.StartPath = "/write";
+            }
         }
     }
 }
