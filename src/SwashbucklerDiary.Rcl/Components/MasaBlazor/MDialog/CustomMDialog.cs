@@ -9,8 +9,6 @@ namespace SwashbucklerDiary.Rcl.Components
     //The significance of extension is to enable dialog or similar components to support back button
     public class CustomMDialog : MDialog
     {
-        private bool firstOpen = true;
-
         [Inject]
         protected INavigateController NavigateController { get; set; } = default!;
 
@@ -55,6 +53,19 @@ namespace SwashbucklerDiary.Rcl.Components
             return base.DisposeAsyncCore();
         }
 
+        protected override async Task OnActiveUpdatedAsync(bool firstActive, bool active)
+        {
+            if (firstActive && OnMousedownPreventDefault)
+            {
+                ElementReference? overlayRef = overlayRefProperty.GetValue(this) as ElementReference?;
+
+                List<object> args = [ContentRef, overlayRef];
+                await Js.InvokeVoidAsync("preventDefaultOnmousedown", args);
+            }
+
+            await base.OnActiveUpdatedAsync(firstActive, active);
+        }
+
         private static readonly PropertyInfo overlayRefProperty = typeof(MDialog).GetProperty("OverlayRef", BindingFlags.NonPublic | BindingFlags.Instance)
                         ?? throw new Exception("Property OverlayRef does not exist");
 
@@ -87,18 +98,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task HandleOnAfterShowContent(bool value)
         {
-            if (firstOpen)
-            {
-                firstOpen = false;
-                if (OnMousedownPreventDefault)
-                {
-                    ElementReference? overlayRef = overlayRefProperty.GetValue(this) as ElementReference?;
-
-                    List<object> args = [ContentRef, overlayRef];
-                    await Js.InvokeVoidAsync("preventDefaultOnmousedown", args);
-                }
-            }
-
             if (OnAfterShowContent.HasDelegate)
             {
                 await OnAfterShowContent.InvokeAsync(value);
