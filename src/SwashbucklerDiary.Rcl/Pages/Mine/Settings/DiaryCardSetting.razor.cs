@@ -10,8 +10,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool diaryCardLocation;
 
-        private bool diaryCardTemplate;
-
         private string? diaryCardTimeFormat;
 
         private bool showDiaryCardTimeFormat;
@@ -33,7 +31,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             diaryCardIcon = SettingService.Get(s => s.DiaryCardIcon);
             diaryCardTags = SettingService.Get(s => s.DiaryCardTags);
             diaryCardLocation = SettingService.Get(s => s.DiaryCardLocation);
-            diaryCardTemplate = SettingService.Get(s => s.DiaryCardTemplate);
             diaryCardTimeFormat = SettingService.Get(s => s.DiaryCardTimeFormat);
         }
 

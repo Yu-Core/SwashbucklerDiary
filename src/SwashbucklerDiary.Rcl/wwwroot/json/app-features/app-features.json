@@ -282,9 +282,9 @@
     "Href": "diaryCardSetting"
   },
   {
-    "Name": "Icon",
+    "Name": "Weather and mood icon",
     "Icon": "mdi:mdi-emoticon-happy-outline",
-    "Path": "Setting / Diary card / Icon",
+    "Path": "Setting / Diary card / Weather and mood icon",
     "Href": "diaryCardSetting"
   },
   {
@@ -303,12 +303,6 @@
     "Name": "Location",
     "Icon": "location_on",
     "Path": "Setting / Diary card / Location",
-    "Href": "diaryCardSetting"
-  },
-  {
-    "Name": "Template",
-    "Icon": "space_dashboard",
-    "Path": "Setting / Diary card / Template",
     "Href": "diaryCardSetting"
   },
   {

@@ -177,7 +177,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, "Export","mdi:mdi-export", OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon, MarkdownChanged),
                 new(this, "Copy reference", "format_quote", CopyReference),
-                new(this, "Copy link", "mdi:mdi-link-variant", CopyLink),
+                new(this, "Copy external link", "mdi:mdi-link-variant", CopyExternalLink),
                 new(this, "Look up", "quick_reference_all", OpenSearch),
                 new(this, "View referenced", "file_export", ViewReferenced),
                 new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!BreakpointService.Breakpoint.MdAndUp),
@@ -305,7 +305,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await AlertService.Success(I18n.T("Copy successfully"));
         }
 
-        private async Task CopyLink()
+        private async Task CopyExternalLink()
         {
             string text;
             if (PlatformIntegration.CurrentPlatform == AppDevicePlatform.Browser)

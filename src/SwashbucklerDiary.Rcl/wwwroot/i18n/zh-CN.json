@@ -119,7 +119,7 @@
   "Moved to privacy mode": "已移动至隐私模式",
   "Removed from privacy mode": "已移出隐私模式",
   "Copy reference": "复制引用",
-  "Copy link": "复制链接",
+  "Copy external link": "复制外部链接",
   "Diary reference": "日记引用",
   "Look up": "查找",
   "Look it up on the page": "在页面上查找",
@@ -442,5 +442,6 @@
   "Referenced situation": "被引用情况",
   "Used situation": "被使用情况",
   "View Used": "查看被使用",
-  "Hide outline": "隐藏大纲"
+  "Hide outline": "隐藏大纲",
+  "Weather and mood icon": "天气、心情图标"
 }

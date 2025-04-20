@@ -119,7 +119,7 @@
   "Moved to privacy mode": "Moved to privacy mode",
   "Removed from privacy mode": "Removed from privacy mode",
   "Copy reference": "Copy reference",
-  "Copy link": "Copy link",
+  "Copy external link": "Copy external link",
   "Diary reference": "Diary reference",
   "Look up": "Look up",
   "Look it up on the page": "Look it up on the page",
@@ -442,5 +442,6 @@
   "Referenced situation": "Referenced situation",
   "Used situation": "Used situation",
   "View Used": "View Used",
-  "Hide outline": "Hide outline"
+  "Hide outline": "Hide outline",
+  "Weather and mood icon": "Weather and mood icon"
 }

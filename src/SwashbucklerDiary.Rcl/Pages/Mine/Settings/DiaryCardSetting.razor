@@ -18,7 +18,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Icon"))
+                    @(I18n.T("Weather and mood icon"))
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="diaryCardIcon"
@@ -59,24 +59,6 @@
                 <MListItemAction>
                     <SettingSwitch @bind-Value="diaryCardLocation"
                                    SettingKey="@nameof(Setting.DiaryCardLocation)">
-                    </SettingSwitch>
-                </MListItemAction>
-            </MListItem>
-
-            <MDivider Class="mx-5"></MDivider>
-
-            <MListItem>
-                <MListItemIcon>
-                    <MIcon Class="evident-icon">
-                        space_dashboard
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Template"))
-                </MListItemContent>
-                <MListItemAction>
-                    <SettingSwitch @bind-Value="diaryCardTemplate"
-                                   SettingKey="@nameof(Setting.DiaryCardTemplate)">
                     </SettingSwitch>
                 </MListItemAction>
             </MListItem>
