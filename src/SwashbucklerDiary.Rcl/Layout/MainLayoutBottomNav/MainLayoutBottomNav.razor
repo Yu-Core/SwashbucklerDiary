@@ -7,7 +7,7 @@
 }
 
 <MBottomNavigation InputValue="Show"
-                   Class="@($"elevation-0 justify-space-around {(Show ? "" : "m-bottom-navigation-hidden")}")"
+                   Class="@Class"
                    Mandatory="true"
                    App="true">
     @foreach (var item in Items)
@@ -22,4 +22,9 @@
     private readonly static string cssHref = $"./_content/{Rcl.Essentials.StaticWebAssets.RclAssemblyName}/css/extend/masa-blazor-extend-enqueued-snackbars.css";
 
     private bool Show => BreakpointService.Breakpoint.Xs && IsPermanentPath;
+
+    private string Class => new CssBuilder()
+        .Add("justify-space-around")
+        .Add("m-bottom-navigation-hidden", !Show)
+        .ToString();
 }

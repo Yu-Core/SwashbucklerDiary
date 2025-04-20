@@ -1,16 +1,31 @@
 @namespace SwashbucklerDiary.Rcl.Components
 @inherits CardComponentBase<DiaryModel>
 
-<div class="m-sheet @Theme elevation-0 rounded-lg m-card m-card--link diary-card elevation-sm-2--active"
-     @onclick="HandeOnClick"
-     @oncontextmenu="OpenMenu"
-     __internal_preventDefault_oncontextmenu>
-    <div class="m-list-item m-list-item--dense @Theme" tabindex="-1">
-        <div class="m-list-item__content">
+<MCard Class="diary-card elevation-sm-2--active"
+       OnClick="HandeOnClick"
+       Elevation="0"
+       Ripple="false"
+       Rounded="@("lg")"
+       @oncontextmenu="OpenMenu"
+       __internal_preventDefault_oncontextmenu>
+    <MListItem Dense>
+        <MListItemContent>
             <div class="d-flex align-center">
-                <span class="text--secondary mr-3" style="font-size:1.1rem;">
-                    @Date
-                </span>
+                @if (TimeFormat is not null)
+                {
+                    var splits = Value.CreateTime.ToString(TimeFormat).Split(' ');
+                    <div class="text--secondary d-flex flex-wrap">
+                        @foreach (var item in splits)
+                        {
+                            bool isFirst = splits.FirstOrDefault() == item;
+                            <span class="@($"mr-2 {(isFirst ? "" : "text-caption")}")"
+                                  style="@(isFirst ? "font-size:1.1rem;" : "")">
+                                @item
+                            </span>
+                        }
+                    </div>
+                }
+
                 @if (!string.IsNullOrEmpty(weatherIcon))
                 {
                     <MIcon Class="diary-card-icon ml-2"
@@ -27,8 +42,8 @@
                     </MIcon>
                 }
             </div>
-        </div>
-        <div class="m-list-item__action" @onclick:stopPropagation="true">
+        </MListItemContent>
+        <MListItemAction @onclick:stopPropagation="true">
             @if (Value.Top)
             {
                 <MIcon Style="width:36px;">vertical_align_top</MIcon>
@@ -46,32 +61,30 @@
                     keyboard_arrow_down
                 </MIcon>
             </MButton>
-        </div>
-    </div>
-    <div class="m-divider__wrapper mx-4" style="display:contents;">
-        <hr class="m-divider mx-4 @Theme">
-    </div>
-    <div class="m-list-item m-list-item--three-line @Theme" tabindex="-1">
-        <div class="m-list-item__content">
-            <div class="m-list-item__title diary-card__title">
+        </MListItemAction>
+    </MListItem>
+    <MDivider Class="mx-4"></MDivider>
+    <MListItem ThreeLine>
+        <MListItemContent>
+            <MListItemTitle Class="diary-card__title">
                 @title
-            </div>
-            <div class="m-list-item__subtitle">
+            </MListItemTitle>
+            <MListItemSubtitle>
                 @text
-            </div>
-        </div>
-    </div>
+            </MListItemSubtitle>
+        </MListItemContent>
+    </MListItem>
     @if (Value.Tags is not null && Value.Tags.Count > 0)
     {
         <div class="px-3 diary-card__tags">
             <div style="white-space: nowrap;width:100%;overflow-x:hidden;">
                 @foreach (var item in Value.Tags)
                 {
-                    <span @key="item.Id" tabindex="0" class="m-chip m-chip--outlined m-chip--no-color @Theme m-size--default mr-2">
-                        <div class="m-chip__content">
-                            @(item.Name)
-                        </div>
-                    </span>
+                    <MChip @key="item.Id"
+                           Class="mr-2"
+                           Outlined>
+                        @(item.Name)
+                    </MChip>
                 }
             </div>
         </div>
@@ -84,4 +97,4 @@
             </DiaryInfoButton>
         </div>
     }
-</div>
+</MCard>

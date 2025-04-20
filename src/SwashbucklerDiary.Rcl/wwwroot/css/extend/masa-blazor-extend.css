@@ -128,10 +128,6 @@
         background: #1e1e1e !important;
     }
 
-.theme--light.m-bottom-navigation {
-    background: #fff !important;
-}
-
 .theme--light.m-toolbar.m-sheet {
     background-color: inherit
 }

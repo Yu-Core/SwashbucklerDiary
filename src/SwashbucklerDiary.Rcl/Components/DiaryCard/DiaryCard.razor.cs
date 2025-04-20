@@ -46,8 +46,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string? TimeFormat => DiaryCardListOptions.TimeFormat;
 
-        private string? Date => TimeFormat is null ? null : Value.CreateTime.ToString(TimeFormat);
-
         private string Theme => Dark ? "theme--dark" : "theme--light";
 
         private void SetContent()
