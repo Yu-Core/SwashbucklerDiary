@@ -445,5 +445,9 @@
   "Hide outline": "Hide outline",
   "Weather and mood icon": "Weather and mood icon",
   "Quick record": "Quick record",
-  "After opening the application, directly enter the editing page": "After opening the application, directly enter the editing page"
+  "After opening the application, directly enter the editing page": "After opening the application, directly enter the editing page",
+  "Set as default template": "Set as default template",
+  "Cancel default template": "Cancel default template",
+  "Defalut": "Defalut",
+  "Only effective when no default template is set": "Only effective when no default template is set"
 }

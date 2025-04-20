@@ -43,6 +43,13 @@ namespace SwashbucklerDiary.Rcl.Components
         public string? NotFoundText { get; set; }
 
         [Parameter]
+        public bool Template
+        {
+            get => options.Template;
+            set => options.Template = value;
+        }
+
+        [Parameter]
         public EventCallback<DiaryModel> OnClick { get; set; }
 
         protected override DiaryModel SelectedItem
@@ -60,7 +67,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override IEnumerable<DiaryModel> Sort(IEnumerable<DiaryModel> value)
         {
-            return base.Sort(value).OrderByDescending(it => it.Top);
+            var diaries = base.Sort(value).OrderByDescending(it => it.Top);
+            if (Template)
+            {
+                diaries = diaries.OrderByDescending(it => it.Template && options.DefaultTemplateId == it.Id);
+            }
+
+            return diaries;
         }
 
         protected override void ReadSettings()
@@ -73,6 +86,12 @@ namespace SwashbucklerDiary.Rcl.Components
             showLocation = SettingService.Get(s => s.DiaryCardLocation);
             options.TimeFormat = SettingService.Get(s => s.DiaryCardTimeFormat);
             urlScheme = SettingService.Get(s => s.UrlScheme);
+            string defaultTemplateIdString = SettingService.Get(s => s.DefaultTemplateId);
+            if (Guid.TryParse(defaultTemplateIdString, out var defaultTemplateId))
+            {
+                options.DefaultTemplateId = defaultTemplateId;
+            }
+
             var diarySort = SettingService.Get(s => s.DiarySort);
             if (!string.IsNullOrEmpty(diarySort))
             {
@@ -99,6 +118,8 @@ namespace SwashbucklerDiary.Rcl.Components
         }
 
         private string TopText() => SelectedItem.Top ? "Cancel top" : "Top";
+
+        private string DefaultTemplateText() => options.DefaultTemplateId != SelectedItem.Id ? "Set as default template" : "Cancel default template";
 
         private string PrivateText() => privacyMode ? "Cancel privacy" : "Set to private";
 
@@ -204,6 +225,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 new(this, "Sort", "sort", OpenSortDialog),
                 new(this, "Copy reference", "format_quote", CopyReference),
                 new(this, "Copy external link", "mdi:mdi-link-variant", CopyExternalLink),
+                new(this, DefaultTemplateText, "space_dashboard", SetDefaultTemplateAsync, ()=>SelectedItem.Template),
                 new(this, PrivateText, PrivateIcon, MovePrivacy, ()=>privacyMode || showSetPrivacy)
             ];
         }
@@ -245,6 +267,25 @@ namespace SwashbucklerDiary.Rcl.Components
             else
             {
                 To($"read/{diary.Id}");
+            }
+        }
+
+        private async Task SetDefaultTemplateAsync()
+        {
+            if (options.DefaultTemplateId == SelectedItem.Id)
+            {
+                options.DefaultTemplateId = null;
+                await SettingService.RemoveAsync(it => it.DefaultTemplateId);
+            }
+            else
+            {
+                options.DefaultTemplateId = SelectedItem.Id;
+                await SettingService.SetAsync(it => it.DefaultTemplateId, options.DefaultTemplateId.ToString());
+            }
+
+            if (Template)
+            {
+                UpdateInternalValue();
             }
         }
     }

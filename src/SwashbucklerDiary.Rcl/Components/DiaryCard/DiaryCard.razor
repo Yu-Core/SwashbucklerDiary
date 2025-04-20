@@ -26,21 +26,30 @@
                     </div>
                 }
 
-                @if (!string.IsNullOrEmpty(weatherIcon))
-                {
-                    <MIcon Class="diary-card-icon ml-2"
-                           Style="font-size:20px;">
-                        @weatherIcon
-                    </MIcon>
-                }
+                <div class="d-flex flex-shrink-0">
+                    @if (!string.IsNullOrEmpty(weatherIcon))
+                    {
+                        <MIcon Class="diary-card-icon mr-2"
+                               Style="font-size:20px;">
+                            @weatherIcon
+                        </MIcon>
+                    }
 
-                @if (!string.IsNullOrEmpty(moodIcon))
-                {
-                    <MIcon Class="diary-card-icon ml-2"
-                           Style="font-size:20px;">
-                        @moodIcon
-                    </MIcon>
-                }
+                    @if (!string.IsNullOrEmpty(moodIcon))
+                    {
+                        <MIcon Class="diary-card-icon mr-2"
+                               Style="font-size:20px;">
+                            @moodIcon
+                        </MIcon>
+                    }
+
+                    @if (DiaryCardListOptions.Template && Value.Template && Value.Id == DiaryCardListOptions.DefaultTemplateId)
+                    {
+                        <MChip Outlined Small>
+                            @I18n.T("Defalut")
+                        </MChip>
+                    }
+                </div>
             </div>
         </MListItemContent>
         <MListItemAction @onclick:stopPropagation="true">
@@ -76,7 +85,7 @@
     </MListItem>
     @if (Value.Tags is not null && Value.Tags.Count > 0)
     {
-        <div class="px-3 diary-card__tags">
+        <div class="px-4 diary-card__tags">
             <div style="white-space: nowrap;width:100%;overflow-x:hidden;">
                 @foreach (var item in Value.Tags)
                 {

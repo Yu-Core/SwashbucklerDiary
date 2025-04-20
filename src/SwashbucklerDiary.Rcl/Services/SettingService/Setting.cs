@@ -52,5 +52,6 @@ namespace SwashbucklerDiary.Rcl.Services
         public bool SelectTemplateWhenCreate { get; set; }
         public string DiaryTimeFormat { get; set; } = "yyyy/MM/dd dddd";
         public bool QuickRecord { get; set; }
+        public string DefaultTemplateId {  get; set; } = string.Empty;
     }
 }

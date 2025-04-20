@@ -6,7 +6,6 @@ using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
-using System.Threading.Tasks;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -59,6 +58,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private bool showReference;
 
         private string? diaryTimeFormat;
+
+        private Guid? defaultTemplateId;
 
         private PeriodicTimer? timer;
 
@@ -127,9 +128,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 await Task.WhenAll(
                     InitDiary(),
-                    InitTags());
+                    InitTags(),
+                    InitTemplate());
 
-                InitTemplate();
                 InitCreateTime();
                 StateHasChanged();
 
@@ -160,6 +161,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             selectTemplateWhenCreate = SettingService.Get(it => it.SelectTemplateWhenCreate);
             outline = SettingService.Get(it => it.Outline);
             diaryTimeFormat = SettingService.Get(it => it.DiaryTimeFormat);
+            string defaultTemplateIdString = SettingService.Get(s => s.DefaultTemplateId);
+            if (Guid.TryParse(defaultTemplateIdString, out var defaultTemplateId))
+            {
+                this.defaultTemplateId = defaultTemplateId;
+            }
         }
 
         private List<TagModel> SelectedTags
@@ -252,7 +258,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             SelectedDate = createDate;
         }
 
-        private void InitTemplate()
+        private async Task InitTemplate()
         {
             waitSelectTemplate = false;
 
@@ -263,9 +269,21 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (Template)
             {
-                diary.Template = Template;
+                this.diary.Template = true;
+                return;
             }
-            else if (selectTemplateWhenCreate)
+
+            if (this.defaultTemplateId is Guid defaultTemplateId)
+            {
+                var template = await DiaryService.FindAsync(defaultTemplateId);
+                if (template is not null && template.Template)
+                {
+                    await UseTemplate(template, UseTemplateKind.Cover);
+                    return;
+                }
+            }
+
+            if (selectTemplateWhenCreate)
             {
                 waitSelectTemplate = true;
                 showTemplate = true;
@@ -521,7 +539,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             await InsertValueAsync(insertContent);
         }
 
-        private async Task UseTemplate(DiaryModel template)
+        private Task UseTemplate(DiaryModel template)
+            => UseTemplate(template, this.useTemplateMethod);
+
+        private async Task UseTemplate(DiaryModel template, UseTemplateKind useTemplateMethod)
         {
             showTemplate = false;
 

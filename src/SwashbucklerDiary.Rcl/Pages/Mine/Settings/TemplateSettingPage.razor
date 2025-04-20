@@ -39,7 +39,12 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Select template when create"))
+                    <MListItemTitle>
+                        @(I18n.T("Select template when create"))
+                    </MListItemTitle>
+                    <MListItemSubtitle>
+                        @(I18n.T("Only effective when no default template is set"))
+                    </MListItemSubtitle>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="selectTemplateWhenCreate"

@@ -50,6 +50,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? diaryTimeFormat;
 
+        private Guid? defaultTemplateId;
+
         private DiaryModel diary = new();
 
         private MarkdownPreview markdownPreview = default!;
@@ -115,6 +117,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             rightOutline = SettingService.Get(s => s.RigthOutline);
             urlScheme = SettingService.Get(s => s.UrlScheme);
             diaryTimeFormat = SettingService.Get(s => s.DiaryTimeFormat);
+            string defaultTemplateIdString = SettingService.Get(s => s.DefaultTemplateId);
+            if (Guid.TryParse(defaultTemplateIdString, out var defaultTemplateId))
+            {
+                this.defaultTemplateId = defaultTemplateId;
+            }
+
             privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
         }
 
@@ -152,6 +160,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string OutlineText() => outline ? "Hide outline" : "Display outline";
 
+        private string DefaultTemplateText() => defaultTemplateId != diary.Id ? "Set as default template" : "Cancel default template";
+
         private string PrivateText() => IsPrivate ? "Cancel privacy" : "Set to private";
 
         private string PrivateIcon() => IsPrivate ? "lock_open" : "lock";
@@ -182,6 +192,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, "View referenced", "file_export", ViewReferenced),
                 new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!BreakpointService.Breakpoint.MdAndUp),
                 new(this, OutlineText, "format_list_bulleted", OutlineChanged, ()=>BreakpointService.Breakpoint.MdAndUp),
+                new(this, DefaultTemplateText, "space_dashboard", SetDefaultTemplateAsync, ()=>diary.Template),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
 
@@ -358,6 +369,20 @@ namespace SwashbucklerDiary.Rcl.Pages
             else
             {
                 To($"referencedDetails/{diary.Id}");
+            }
+        }
+
+        private async Task SetDefaultTemplateAsync()
+        {
+            if (defaultTemplateId == diary.Id)
+            {
+                defaultTemplateId = null;
+                await SettingService.RemoveAsync(it => it.DefaultTemplateId);
+            }
+            else
+            {
+                defaultTemplateId = diary.Id;
+                await SettingService.SetAsync(it => it.DefaultTemplateId, defaultTemplateId.ToString());
             }
         }
     }
