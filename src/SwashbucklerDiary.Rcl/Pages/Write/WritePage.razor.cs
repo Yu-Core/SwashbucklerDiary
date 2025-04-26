@@ -300,7 +300,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, OtherInfoSwitchText, "info", ()=> SettingChange(nameof(Setting.OtherInfo), ref showOtherInfo)),
                 new(this, TemplateSwitchText, TemplateSwitchIcon, ()=> diary.Template = !diary.Template),
                 new(this, "Reference diary", "format_quote", ()=> showReference = true),
-                new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!BreakpointService.Breakpoint.MdAndUp),
+                new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!BreakpointService.Breakpoint.MdAndUp && enableMarkdown),
                 new(this, OutlineText, "format_list_bulleted", ()=> SettingChange(nameof(Setting.Outline), ref outline), ()=>BreakpointService.Breakpoint.MdAndUp),
             ];
         }

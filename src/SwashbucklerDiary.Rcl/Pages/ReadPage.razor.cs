@@ -190,8 +190,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, "Copy external link", "mdi:mdi-link-variant", CopyExternalLink),
                 new(this, "Look up", "quick_reference_all", OpenSearch),
                 new(this, "View referenced", "file_export", ViewReferenced),
-                new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!BreakpointService.Breakpoint.MdAndUp),
-                new(this, OutlineText, "format_list_bulleted", OutlineChanged, ()=>BreakpointService.Breakpoint.MdAndUp),
+                new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!BreakpointService.Breakpoint.MdAndUp && enableMarkdown),
+                new(this, OutlineText, "format_list_bulleted", OutlineChanged, ()=>BreakpointService.Breakpoint.MdAndUp && enableMarkdown),
                 new(this, DefaultTemplateText, "space_dashboard", SetDefaultTemplateAsync, ()=>diary.Template),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
