@@ -121,6 +121,7 @@ namespace SwashbucklerDiary.Rcl.Components
         }
 
         private string? InternalClass => new CssBuilder()
+            .Add(Class)
             .Add("first-line-indent", FirstLineIndent)
             .Add("task-list-line-through", TaskListLineThrough)
             .ToString();
