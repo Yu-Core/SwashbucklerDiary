@@ -23,25 +23,26 @@ env:
   STORE_ID: '9P6PBVBF466L'
 
 jobs:
-  windows&&android:
+  WindowsAndAndroid:
     runs-on: windows-latest
     steps:
       # Checkout the code
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
            fetch-depth: 0
 
       # Install .NET SDK
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
            dotnet-version: '${{ env.DOTNET_VERSION }}.x'
 
-      # Install Java
-      - uses: actions/setup-java@v2
+      # Install JDK
+      - name: Setup JDK
+        uses: actions/setup-java@v4
         with:
-          distribution: 'microsoft'
-          java-version: '11'
+          distribution: "microsoft"
+          java-version: "17"
          
       # Install MAUI Workloads
       - name: Install MAUI Workloads
@@ -106,8 +107,8 @@ jobs:
           sed -i "s/Version=\"0\.0\.0\.0\"/Version=\"${{ env.APPLICATION_DISPLAY_VERSION }}.0\"/" \
           ${{ env.CSPROJ_PATH }}/Platforms/Windows/Package.appxmanifest
 
-      # Publish MAUI Windows
-      - name: Publish MAUI Windows
+      # Publish MAUI Windows packaged
+      - name: Publish MAUI Windows packaged
         run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64 -p:WindowsAppSDKSelfContained=true --sc -p:WindowsAppSdkDeploymentManagerInitialize=false
 
       # Update to Microsoft Store
@@ -120,11 +121,30 @@ jobs:
       - name: Update to Microsoft Store
         run: msstore publish ${{ env.CSPROJ_PATH }} -i ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/AppPackages -id ${{ env.STORE_ID }}
 
-  macOS&&iOS:
+      # Publish MAUI Windows unpackaged
+      - name: Publish MAUI Windows unpackaged
+        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64 -p:WindowsPackageType=None -p:WindowsAppSDKSelfContained=true --sc
+
+      - name: Generate compressed file
+        shell: pwsh
+        run: |
+          Rename-Item -Path "${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/publish" -NewName "${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-windows-x64"
+          Compress-Archive -Path "${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-windows-x64" -DestinationPath "${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-windows-x64.zip" -CompressionLevel Optimal
+
+      # Update to Github Releases
+      - uses: svenstaro/upload-release-action@v2
+        with:
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+            file: ${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-windows-x64.zip
+            file_glob: true
+            release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
+            tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
+            prerelease: ${{ inputs.prerelease }}
+  macOSAndiOS:
     runs-on: macos-15
     steps:
       # Checkout the code
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
            fetch-depth: 0
 
@@ -135,7 +155,7 @@ jobs:
 
       # Install .NET SDK
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
            dotnet-version: '${{ env.DOTNET_VERSION }}.x'
 

@@ -1,4 +1,4 @@
-﻿name: Upload MSStore MSIX to release
+name: Upload MSStore MSIX to release
 
 permissions:
   contents: write
@@ -16,7 +16,7 @@ jobs:
 
     steps:
     # Checkout the code
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
          fetch-depth: 0
 

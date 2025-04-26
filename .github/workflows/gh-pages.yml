@@ -1,4 +1,4 @@
-﻿name: github pages
+name: github pages
 
 on:
   workflow_dispatch:
@@ -15,13 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checkout the code
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
            fetch-depth: 0
 
       # Install .NET SDK
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
            dotnet-version: '${{ env.DOTNET_VERSION }}.x'
            
