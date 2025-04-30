@@ -34,7 +34,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IStaticWebAssets _staticWebAssets;
 
-        private Lazy<HttpClient> _httpClient;
+        private readonly Lazy<HttpClient> _httpClient;
 
         private readonly SortedDictionary<Version, Func<Task>> _versionHandlers = [];
 
@@ -123,6 +123,7 @@ namespace SwashbucklerDiary.Rcl.Services
             AddVersionHandler("1.01.5", HandleVersionUpdate1015);
             AddVersionHandler("1.03.9", HandleVersionUpdate1039);
             AddVersionHandler("1.12.9", HandleVersionUpdate1129);
+            AddVersionHandler("1.16.1", HandleVersionUpdate1161);
         }
 
         protected void AddVersionHandler(string versionString, Func<Task> handler)
@@ -131,10 +132,10 @@ namespace SwashbucklerDiary.Rcl.Services
             _versionHandlers[version] = handler;
         }
 
-        protected async Task HandleVersionUpdate(string version, Func<Task> func)
+        protected async Task HandleVersionUpdate(string versionString, Func<Task> func)
         {
-            string? strPreviousVersion = _versionTracking.PreviousVersion;
-            if (string.IsNullOrEmpty(strPreviousVersion))
+            string? previousVersionString = _versionTracking.PreviousVersion;
+            if (string.IsNullOrEmpty(previousVersionString))
             {
                 return;
             }
@@ -145,12 +146,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 return;
             }
 
-            var previousVersion = new Version(strPreviousVersion);
-            var targetVersion = new Version(version);
-            int result = previousVersion.CompareTo(targetVersion);
-
-            // The previous run version is greater than the target version
-            if (result > 0)
+            if (new Version(previousVersionString) > new Version(versionString))
             {
                 return;
             }
@@ -222,6 +218,11 @@ namespace SwashbucklerDiary.Rcl.Services
                 await _settingService.RemoveAsync(oldKey);
                 await _settingService.SetAsync("NickName", oldValue);
             }
+        }
+
+        private async Task HandleVersionUpdate1161()
+        {
+            await _diaryFileManager.UpdateTemplateForOldDiaryAsync();
         }
     }
 }

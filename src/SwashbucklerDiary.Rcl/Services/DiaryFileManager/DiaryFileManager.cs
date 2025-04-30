@@ -383,17 +383,9 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
-            var versionJsonPath = Path.Combine(outputFolder, versionInfoFileName);
-            bool needUpdateResourceUri = false;
-            if (!File.Exists(versionJsonPath))
-            {
-                needUpdateResourceUri = true;
-            }
-            else
-            {
-                File.Delete(versionJsonPath);
-            }
-
+            
+            Version? version = GetVersion(outputFolder);
+            
             // 获取文件夹下的db文件
             string[] dbFiles = Directory.GetFiles(outputFolder, "*.db3");
             if (dbFiles.Length == 0)
@@ -402,18 +394,18 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             File.Copy(dbFiles[0], GetCurrentDatabasePath(), true);
-            if (needUpdateResourceUri)
+            if (version is null)
             {
                 await AllUseNewResourceUriAsync();
-            }
-
-            if (needUpdateResourceUri)
-            {
                 RestoreOldDiaryResource(outputFolder);
             }
             else
             {
                 RestoreDiaryResource(outputFolder);
+                if(version <= new Version("1.16.1"))
+                {
+                    await UpdateTemplateForOldDiaryAsync();
+                }
             }
 
             string previousAvatarUri = _settingService.Get(s => s.Avatar);
@@ -432,6 +424,27 @@ namespace SwashbucklerDiary.Rcl.Services
             if (settingsObject is null) return;
 
             await _settingService.SetSettingsFromObjectAsync(settingsObject, it => !excludedSettings.Contains(it));
+        }
+
+        private static Version? GetVersion(string outputFolder)
+        {
+            var versionJsonPath = Path.Combine(outputFolder, versionInfoFileName);
+            if (File.Exists(versionJsonPath))
+            {
+                ExportVersionInfo? exportVersionInfo = null;
+                using (FileStream stream = File.OpenRead(versionJsonPath))
+                {
+                    exportVersionInfo = JsonSerializer.Deserialize<ExportVersionInfo>(stream);
+                }
+                
+                File.Delete(versionJsonPath);
+                if (exportVersionInfo?.Version is not null)
+                {
+                    return new Version(exportVersionInfo.Version);
+                }
+            }
+
+            return null;
         }
 
         public async Task<bool> ImportJsonAsync(string filePath)
@@ -453,16 +466,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
-            var versionJsonPath = Path.Combine(outputFolder, versionInfoFileName);
-            bool needUpdateResourceUri = false;
-            if (!File.Exists(versionJsonPath))
-            {
-                needUpdateResourceUri = true;
-            }
-            else
-            {
-                File.Delete(versionJsonPath);
-            }
+            Version? version = GetVersion(outputFolder);
 
             // 获取文件夹下的所有json文件
             string[] jsonFiles = Directory.GetFiles(outputFolder, "*.json");
@@ -482,7 +486,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 }
             }
 
-            if (needUpdateResourceUri)
+            if (version is null)
             {
                 UseNewResourceUri(diaries);
                 RestoreOldDiaryResource(outputFolder);
@@ -637,7 +641,7 @@ namespace SwashbucklerDiary.Rcl.Services
         public async Task AllUseNewResourceUriAsync()
         {
             var diaries = await _diaryService.QueryDiariesAsync();
-            await _resourceService.DeleteAsync(it => it.ResourceUri!.StartsWith("appdata:///"));
+            await _resourceService.DeleteAsync(it => it.ResourceUri.StartsWith("appdata:///"));
             UseNewResourceUri(diaries);
             await _diaryService.UpdateIncludesAsync(diaries);
         }
@@ -646,6 +650,13 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             bool privacyMode = _settingService.GetTemp(it => it.PrivacyMode);
             return privacyMode ? PrivacyDatabasePath : DatabasePath;
+        }
+
+        public async Task UpdateTemplateForOldDiaryAsync()
+        {
+#pragma warning disable CS0472
+            await _diaryService.UpdateAsync(it => new() { Template = false }, it => it.Template == null);
+#pragma warning restore CS0472
         }
     }
 }

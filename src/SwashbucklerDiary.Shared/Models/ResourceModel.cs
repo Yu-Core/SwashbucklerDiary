@@ -1,8 +1,8 @@
-﻿namespace SwashbucklerDiary.Shared
+namespace SwashbucklerDiary.Shared
 {
     public class ResourceModel
     {
-        public string? ResourceUri { get; set; }
+        public string ResourceUri { get; set; }
 
         public MediaResource ResourceType { get; set; }
 

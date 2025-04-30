@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
@@ -25,6 +25,8 @@ namespace SwashbucklerDiary.Rcl.Services
         Task<bool> UpdateAsync(TEntity entity);
 
         Task<bool> UpdateAsync(TEntity entity, Expression<Func<TEntity, object>> columns);
+
+        Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression);
 
         Task<List<TEntity>> QueryAsync();
 

@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
@@ -29,5 +29,7 @@ namespace SwashbucklerDiary.Rcl.Services
         void UseNewResourceUri(List<DiaryModel> diaries);
 
         Task AllUseNewResourceUriAsync();
+
+        Task UpdateTemplateForOldDiaryAsync();
     }
 }

@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Repository;
+using SwashbucklerDiary.Rcl.Repository;
 using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Services
@@ -90,6 +90,11 @@ namespace SwashbucklerDiary.Rcl.Services
         public Task<bool> UpdateAsync(TEntity entity, Expression<Func<TEntity, object>> columns)
         {
             return _iBaseRepository.UpdateAsync(entity, columns);
+        }
+
+        public Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression)
+        {
+            return _iBaseRepository.UpdateAsync(columns, whereExpression);
         }
 
         public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
