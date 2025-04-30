@@ -174,8 +174,6 @@
   "App Record number :": "APP备案号：",
   "Feature description": "功能说明",
   "Error": "错误",
-  "An abnormality occurred. It is being saved to the log. Please wait...": "出现异常，正在保存到日志，请等待...",
-  "An abnormal situation has occurred. It has been saved to the log. Please exit the application.": "出现异常，已保存到日志，请退出应用",
   "Achieving Achievements": "达成成就",
   "Completed": "已完成",
   "Memory begins": "记忆开始",
@@ -449,5 +447,6 @@
   "Set as default template": "设为默认模板",
   "Cancel default template": "取消默认模板",
   "Defalut": "默认",
-  "Only effective when no default template is set": "仅在未设置默认模板时生效"
+  "Only effective when no default template is set": "仅在未设置默认模板时生效",
+  "Copy detailed information": "复制详细信息"
 }

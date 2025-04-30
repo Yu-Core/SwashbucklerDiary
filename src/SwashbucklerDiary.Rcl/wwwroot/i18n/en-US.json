@@ -174,8 +174,6 @@
   "App Record number :": "App Record number :",
   "Feature description": "Feature description",
   "Error": "Error",
-  "An abnormality occurred. It is being saved to the log. Please wait...": "An abnormality occurred. It is being saved to the log. Please wait...",
-  "An abnormal situation has occurred. It has been saved to the log. Please exit the application.": "An abnormal situation has occurred. It has been saved to the log. Please exit the application.",
   "Achieving Achievements": "Achieving Achievements",
   "Completed": "Completed",
   "Memory begins": "Memory begins",
@@ -449,5 +447,6 @@
   "Set as default template": "Set as default template",
   "Cancel default template": "Cancel default template",
   "Defalut": "Defalut",
-  "Only effective when no default template is set": "Only effective when no default template is set"
+  "Only effective when no default template is set": "Only effective when no default template is set",
+  "Copy detailed information": "Copy detailed information"
 }
