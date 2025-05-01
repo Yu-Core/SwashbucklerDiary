@@ -6,7 +6,7 @@ Hello everyone. Wishing everyone a happy May Day International Labor Day
 
 Precautions for this update
 
-* Supported Linux platform (deb package)
+* Supported Linux platform (deb package) (Due to known issues, audio and video loading is not supported)
 * Packaged Windows free installation version (compared to the MSIX package, it lacks features such as sharing and urlscheme)
 
 ## New addition
