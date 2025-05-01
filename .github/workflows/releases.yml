@@ -7,10 +7,6 @@ on:
         description: 'Pre-Release'
         required: false
         type: boolean
-      releasebody:
-        description: 'Release body'
-        required: true
-        type: string
 
 env:
   DOTNET_NOLOGO: true                     # Disable the .NET logo
@@ -98,7 +94,6 @@ jobs:
           release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
           prerelease: ${{ inputs.prerelease }}
-          body: ${{ inputs.releasebody }}
 
       # Replace the version in Package.appxmanifest
       - name: Update version in Package.appxmanifest
@@ -217,7 +212,6 @@ jobs:
           release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
           prerelease: ${{ inputs.prerelease }}
-          body: ${{ inputs.releasebody }}
 
       - name: Update maccatalyst-x64 to Github Releases
         uses: svenstaro/upload-release-action@v2
