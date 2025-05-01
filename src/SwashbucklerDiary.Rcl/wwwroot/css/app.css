@@ -665,7 +665,6 @@ html.m-overlay-scroll-blocked {
 }
 
 .material-symbols_active {
-    font-variation-settings: 'FILL' 1;
     animation: fill 0.2s ease forwards;
 }
 
