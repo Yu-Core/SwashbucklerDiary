@@ -92,7 +92,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task<bool> CheckForUpdates()
         {
-            var url = _i18n.Culture.Name == "zh-CN" 
+            var url = _i18n.Culture.Name == "zh-CN"
                 ? zh_CNLatestVersionApiUrl
                 : LatestVersionApiUrl;
             var release = await HttpClient.GetFromJsonAsync<Release>(url);
@@ -123,7 +123,7 @@ namespace SwashbucklerDiary.Rcl.Services
             AddVersionHandler("1.01.5", HandleVersionUpdate1015);
             AddVersionHandler("1.03.9", HandleVersionUpdate1039);
             AddVersionHandler("1.12.9", HandleVersionUpdate1129);
-            AddVersionHandler("1.16.1", HandleVersionUpdate1161);
+            AddVersionHandler("1.16.8", HandleVersionUpdate1168);
         }
 
         protected void AddVersionHandler(string versionString, Func<Task> handler)
@@ -220,9 +220,12 @@ namespace SwashbucklerDiary.Rcl.Services
             }
         }
 
-        private async Task HandleVersionUpdate1161()
+        private async Task HandleVersionUpdate1168()
         {
             await _diaryFileManager.UpdateTemplateForOldDiaryAsync();
+            _settingService.SetTemp(it => it.PrivacyMode, true);
+            await _diaryFileManager.UpdateTemplateForOldDiaryAsync();
+            _settingService.SetTemp(it => it.PrivacyMode, false);
         }
     }
 }

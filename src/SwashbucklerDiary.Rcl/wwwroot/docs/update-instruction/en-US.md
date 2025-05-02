@@ -27,6 +27,7 @@ Precautions for this update
 * The achievements related to diary writing have not been counted
 * When opening the outline, images may fail to load
 * Images with links, when clicked, a preview of the image will appear
+* Version 1.16.8, privacy mode diary not displayed
 * Android client, encountered an exception after inserting the keyboard
 * Android client, some keys do not work
 * Android 9.0 and below, file selection exception

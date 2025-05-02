@@ -383,9 +383,9 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
-            
+
             Version? version = GetVersion(outputFolder);
-            
+
             // 获取文件夹下的db文件
             string[] dbFiles = Directory.GetFiles(outputFolder, "*.db3");
             if (dbFiles.Length == 0)
@@ -402,7 +402,7 @@ namespace SwashbucklerDiary.Rcl.Services
             else
             {
                 RestoreDiaryResource(outputFolder);
-                if(version <= new Version("1.16.1"))
+                if (version <= new Version("1.16.8"))
                 {
                     await UpdateTemplateForOldDiaryAsync();
                 }
@@ -436,7 +436,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 {
                     exportVersionInfo = JsonSerializer.Deserialize<ExportVersionInfo>(stream);
                 }
-                
+
                 File.Delete(versionJsonPath);
                 if (exportVersionInfo?.Version is not null)
                 {
