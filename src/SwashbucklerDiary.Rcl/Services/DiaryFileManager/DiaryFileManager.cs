@@ -402,7 +402,7 @@ namespace SwashbucklerDiary.Rcl.Services
             else
             {
                 RestoreDiaryResource(outputFolder);
-                if (version <= new Version("1.16.8"))
+                if (version < new Version("1.17.0"))
                 {
                     await UpdateTemplateForOldDiaryAsync();
                 }

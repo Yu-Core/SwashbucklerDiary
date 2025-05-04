@@ -119,11 +119,11 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             AddVersionHandler("0.69.7", HandleVersionUpdate697);
             AddVersionHandler("0.80.9", HandleVersionUpdate809);
-            AddVersionHandler("0.86.0", HandleVersionUpdate860);
+            AddVersionHandler("0.87.8", HandleVersionUpdate878);
             AddVersionHandler("1.01.5", HandleVersionUpdate1015);
-            AddVersionHandler("1.03.9", HandleVersionUpdate1039);
-            AddVersionHandler("1.12.9", HandleVersionUpdate1129);
-            AddVersionHandler("1.16.8", HandleVersionUpdate1168);
+            AddVersionHandler("1.05.5", HandleVersionUpdate1055);
+            AddVersionHandler("1.13.2", HandleVersionUpdate1132);
+            AddVersionHandler("1.17.0", HandleVersionUpdate1170);
         }
 
         protected void AddVersionHandler(string versionString, Func<Task> handler)
@@ -146,7 +146,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 return;
             }
 
-            if (new Version(previousVersionString) > new Version(versionString))
+            if (new Version(previousVersionString) >= new Version(versionString))
             {
                 return;
             }
@@ -187,7 +187,7 @@ namespace SwashbucklerDiary.Rcl.Services
             await _diaryService.AddAsync(diary);
         }
 
-        private async Task HandleVersionUpdate860()
+        private async Task HandleVersionUpdate878()
         {
             string[] keys = ["PrivacyMode", "PrivatePassword"];
             await _settingService.RemoveAsync(keys);
@@ -204,12 +204,12 @@ namespace SwashbucklerDiary.Rcl.Services
             }
         }
 
-        private async Task HandleVersionUpdate1039()
+        private async Task HandleVersionUpdate1055()
         {
             await _diaryService.MovePrivacyDiariesAsync();
         }
 
-        private async Task HandleVersionUpdate1129()
+        private async Task HandleVersionUpdate1132()
         {
             var oldKey = "UserName";
             var oldValue = await _settingService.GetAsync(oldKey, string.Empty);
@@ -220,7 +220,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
         }
 
-        private async Task HandleVersionUpdate1168()
+        private async Task HandleVersionUpdate1170()
         {
             await _diaryFileManager.UpdateTemplateForOldDiaryAsync();
             _settingService.SetTemp(it => it.PrivacyMode, true);

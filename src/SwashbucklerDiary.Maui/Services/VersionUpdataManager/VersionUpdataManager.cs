@@ -35,11 +35,11 @@ namespace SwashbucklerDiary.Maui.Services
         {
             base.InitializeVersionHandlers();
 
-            AddVersionHandler("0.64.7", HandleVersionUpdate647);
+            AddVersionHandler("0.65.5", HandleVersionUpdate655);
         }
 
         //此版本之后更改了资源的链接
-        private async Task HandleVersionUpdate647()
+        private async Task HandleVersionUpdate655()
         {
             var key = "Avatar";
             string avatar = await _settingService.GetAsync<string>(key, string.Empty);
