@@ -14,10 +14,6 @@ body {
     min-height: var(--safe-area-height);
 }
 
-.m-main {
-    transform: scale(1);
-}
-
 .m-item-group.m-bottom-navigation {
     margin-bottom: var(--saib);
 }
@@ -38,8 +34,8 @@ body {
 
 .m-navigation-drawer {
     left: var(--sail);
-    margin-top: calc(0px - var(--sait));
     padding-top: var(--sait);
+    padding-bottom: var(--saib);
     height: 100vh !important;
 }
 
@@ -84,6 +80,9 @@ body {
 
 .vditor--fullscreen {
     height: calc(var(--safe-area-height) - var(--vditor-toolbar-height)) !important;
+    top: var(--sait);
+    left: var(--sail);
+    right: var(--sair);
 }
 
 .card-list__assist-info {
@@ -92,4 +91,28 @@ body {
 
 .md-preview__outline {
     height: calc(var(--safe-area-height) - 64px - 20px - 24px - 8px);
+}
+
+.m-menu__content {
+    transform: translateX(calc(0px - var(--sail) - var(--sair)));
+}
+
+.right-bottom-float-area {
+    bottom: calc(1rem + var(--saib));
+    right: calc(1rem + var(--sair));
+}
+
+@media screen and (max-width: 600px) {
+    .right-bottom-float-area {
+        bottom: calc(1rem + 56px + var(--saib)) !important;
+        /* margin-bottom: 8px !important; */
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .vditor-toolbar {
+        bottom: var(--saib);
+        left: var(--sail);
+        right: var(--sair);
+    }
 }
