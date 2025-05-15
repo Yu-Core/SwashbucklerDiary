@@ -11,25 +11,25 @@
            Elevation="0"
            Rounded="@("lg")">
         <MList>
-            <MListItem OnClick="() => showUseTemplateMethod=true">
+            <MListItem OnClick="() => showDefaultTemplate = true">
                 <MListItemIcon>
                     <MIcon Class="evident-icon">
-                        tactic
+                        space_dashboard
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Use Template Method"))
-                </MListItemContent>
-                <MListItemContent Class="setting-item-state">
+                    <MListItemTitle>
+                        @(I18n.T("Default template"))
+                    </MListItemTitle>
                     <MListItemSubtitle>
-                        @I18n.T(useTemplateKindItems.FirstOrDefault(it=>it.Value == useTemplateMethod).Key)
+                        @(I18n.T("Automatically used when adding diary entries"))
                     </MListItemSubtitle>
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
                 </MListItemAction>
             </MListItem>
-
+            
             <MDivider Class="mx-5"></MDivider>
 
             <MListItem>
@@ -54,6 +54,30 @@
             </MListItem>
         </MList>
     </MCard>
+    <MCard Class="my-list-card"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList>
+            <MListItem OnClick="() => showUseTemplateMethod = true">
+                <MListItemIcon>
+                    <MIcon Class="evident-icon">
+                        tactic
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Use Template Method"))
+                </MListItemContent>
+                <MListItemContent Class="setting-item-state">
+                    <MListItemSubtitle>
+                        @I18n.T(useTemplateKindItems.FirstOrDefault(it => it.Value == useTemplateMethod).Key)
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
 </ScrollContainer>
 
 <RadioDialog @bind-Value="useTemplateMethod"
@@ -64,3 +88,8 @@
              TItemValue="Shared.UseTemplateKind"
              Items="useTemplateKindItems">
 </RadioDialog>
+
+<SelectTemplateDialog @bind-Visible="showDefaultTemplate"
+                      @bind-Tags="tags"
+                      OnOK="SetDefaultTemplateAsync">
+</SelectTemplateDialog>

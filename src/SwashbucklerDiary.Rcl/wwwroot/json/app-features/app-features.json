@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "Name": "User Setting",
     "Icon": "manage_accounts",
@@ -249,6 +249,12 @@
     "Name": "Select template when create",
     "Icon": "select",
     "Path": "Setting / Template / Select template when create",
+    "Href": "templateSetting"
+  },
+  {
+    "Name": "Default template",
+    "Icon": "space_dashboard",
+    "Path": "Setting / Template / Default template",
     "Href": "templateSetting"
   },
   {

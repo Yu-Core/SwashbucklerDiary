@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
@@ -12,6 +12,8 @@ namespace SwashbucklerDiary.Rcl.Components
         private bool showSearch;
 
         private string? search;
+
+        private DiaryCardList? templateList;
 
         private List<DiaryModel> items = [];
 
@@ -34,7 +36,10 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             search = string.Empty;
             showSearch = false;
+
+            templateList?.UpdateSettings();
             await UpdateItemsAsync();
+
             await InvokeAsync(StateHasChanged);
         }
 

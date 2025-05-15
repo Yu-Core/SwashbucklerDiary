@@ -448,5 +448,7 @@
   "Cancel default template": "取消默认模板",
   "Defalut": "默认",
   "Only effective when no default template is set": "仅在未设置默认模板时生效",
-  "Copy detailed information": "复制详细信息"
+  "Copy detailed information": "复制详细信息",
+  "Default template": "默认模板",
+  "Automatically used when adding diary entries": "添加日记时自动使用"
 }

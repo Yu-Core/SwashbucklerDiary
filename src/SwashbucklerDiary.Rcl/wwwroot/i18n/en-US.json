@@ -448,5 +448,7 @@
   "Cancel default template": "Cancel default template",
   "Defalut": "Defalut",
   "Only effective when no default template is set": "Only effective when no default template is set",
-  "Copy detailed information": "Copy detailed information"
+  "Copy detailed information": "Copy detailed information",
+  "Default template": "Default template",
+  "Automatically used when adding diary entries": "Automatically used when adding diary entries"
 }

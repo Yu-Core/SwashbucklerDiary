@@ -1,4 +1,4 @@
-using Masa.Blazor.Core;
+﻿using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
@@ -51,6 +51,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public EventCallback<DiaryModel> OnClick { get; set; }
+
+        public void UpdateSettings()
+            => ReadSettings();
 
         protected override DiaryModel SelectedItem
         {

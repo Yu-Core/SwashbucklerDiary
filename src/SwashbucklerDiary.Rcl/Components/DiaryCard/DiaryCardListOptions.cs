@@ -1,4 +1,4 @@
-using SwashbucklerDiary.Shared;
+﻿using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {

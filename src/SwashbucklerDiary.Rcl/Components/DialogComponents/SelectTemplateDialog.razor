@@ -1,4 +1,4 @@
-@namespace SwashbucklerDiary.Rcl.Components
+﻿@namespace SwashbucklerDiary.Rcl.Components
 @inherits DialogComponentBase
 
 <CustomMDialog MyValue="Visible"
@@ -39,11 +39,13 @@
     </MyAppBar>
 
     <ScrollContainer Id="@scrollContainerId">
-        <DiaryCardList @bind-Value="items"
+        <DiaryCardList @ref="templateList"
+                       @bind-Value="items"
                        Tags="Tags"
                        TagsChanged="TagsChanged"
                        NotFoundText="@(I18n.T("No templates"))"
                        HideStatisticsCard
+                       Template
                        OnClick="OnOK">
         </DiaryCardList>
     </ScrollContainer>
