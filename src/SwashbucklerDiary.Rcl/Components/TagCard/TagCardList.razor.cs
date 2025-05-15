@@ -1,4 +1,4 @@
-using Masa.Blazor;
+﻿using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -107,8 +107,10 @@ namespace SwashbucklerDiary.Rcl.Components
                 {"Count - Positive order", it => it.OrderBy(CalcDiaryCount) },
                 {"Name - Reverse order", it => it.OrderByDescending(t => t.Name) },
                 {"Name - Positive order", it => it.OrderBy(t => t.Name) },
-                {"Time - Reverse order", it => it.OrderByDescending(t => t.CreateTime) },
-                {"Time - Positive order", it => it.OrderBy(t => t.CreateTime) },
+                {"Create Time - Reverse order", it => it.OrderByDescending(t => t.CreateTime) },
+                {"Create Time - Positive order", it => it.OrderBy(t => t.CreateTime) },
+                {"Update Time - Reverse order",it => it.OrderByDescending(t => t.UpdateTime) },
+                {"Update Time - Positive order",it => it.OrderBy(t => t.UpdateTime) },
             };
 
             if (string.IsNullOrEmpty(SortItem))

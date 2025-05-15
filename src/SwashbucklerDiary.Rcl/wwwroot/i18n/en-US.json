@@ -450,5 +450,7 @@
   "Only effective when no default template is set": "Only effective when no default template is set",
   "Copy detailed information": "Copy detailed information",
   "Default template": "Default template",
-  "Automatically used when adding diary entries": "Automatically used when adding diary entries"
+  "Automatically used when adding diary entries": "Automatically used when adding diary entries",
+  "Create Time": "Create Time",
+  "Update Time": "Update Time"
 }

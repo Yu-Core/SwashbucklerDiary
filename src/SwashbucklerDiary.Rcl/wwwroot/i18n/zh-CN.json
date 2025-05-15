@@ -450,5 +450,7 @@
   "Only effective when no default template is set": "仅在未设置默认模板时生效",
   "Copy detailed information": "复制详细信息",
   "Default template": "默认模板",
-  "Automatically used when adding diary entries": "添加日记时自动使用"
+  "Automatically used when adding diary entries": "添加日记时自动使用",
+  "Create Time": "创建时间",
+  "Update Time": "更新时间"
 }

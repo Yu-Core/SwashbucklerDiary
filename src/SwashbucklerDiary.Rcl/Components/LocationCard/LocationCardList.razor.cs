@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -76,8 +76,10 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             sortOptions = new()
             {
-                {"Time - Reverse order", it => it.OrderByDescending(l => l.CreateTime) },
-                {"Time - Positive order", it => it.OrderBy(l => l.CreateTime) },
+                {"Create Time - Reverse order", it => it.OrderByDescending(l => l.CreateTime) },
+                {"Create Time - Positive order", it => it.OrderBy(l => l.CreateTime) },
+                {"Update Time - Reverse order",it => it.OrderByDescending(l => l.UpdateTime) },
+                {"Update Time - Positive order",it => it.OrderBy(l => l.UpdateTime) },
             };
 
             if (string.IsNullOrEmpty(SortItem))

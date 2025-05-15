@@ -210,7 +210,9 @@ namespace SwashbucklerDiary.Rcl.Components
             sortOptions = new()
             {
                 {"Time - Reverse order",it => it.OrderByDescending(d => d.CreateTime) },
-                {"Time - Positive order",it => it.OrderBy(d => d.CreateTime) },
+                {"Time - Positive order",it => it.OrderBy(d => d.CreateTime) },               
+                {"Update Time - Reverse order",it => it.OrderByDescending(d => d.UpdateTime) },
+                {"Update Time - Positive order",it => it.OrderBy(d => d.UpdateTime) },
             };
 
             if (string.IsNullOrEmpty(SortItem))
