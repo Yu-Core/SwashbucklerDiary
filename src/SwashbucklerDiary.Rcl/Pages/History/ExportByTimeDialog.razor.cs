@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -28,18 +28,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             LoadView();
         }
 
-        private Expression<Func<DiaryModel, bool>> ExpressionDay =>
-            it => it.CreateTime.Day == Value.Day &&
-            it.CreateTime.Month == Value.Month &&
-            it.CreateTime.Year == Value.Year;
-
-        private Expression<Func<DiaryModel, bool>> ExpressionMonth =>
-            it => it.CreateTime.Month == Value.Month &&
-            it.CreateTime.Year == Value.Year;
-
-        private Expression<Func<DiaryModel, bool>> ExpressionYear =>
-            it => it.CreateTime.Year == Value.Year;
-
         private void LoadView()
         {
             exportTimeItems =
@@ -51,19 +39,22 @@ namespace SwashbucklerDiary.Rcl.Pages
         }
 
         private Task ExportThisDay()
-            => ExportThisTime(ExpressionDay);
+            => ExportThisTime("yyyy-MM-dd");
 
         private Task ExportThisMonth()
-            => ExportThisTime(ExpressionMonth);
+            => ExportThisTime("yyyy-MM");
 
         private Task ExportThisYear()
-            => ExportThisTime(ExpressionYear);
+            => ExportThisTime("yyyy");
 
-        private async Task ExportThisTime(Expression<Func<DiaryModel, bool>> expression)
+        private async Task ExportThisTime(string format)
         {
             await InternalVisibleChanged(false);
             await InvokeAsync(StateHasChanged);
 
+            var dateTime = Value.ToDateTime(TimeOnly.MinValue);
+            Expression<Func<DiaryModel, bool>> expression = 
+                it=>it.CreateTime.ToString(format) == dateTime.ToString(format);
             exportDiaries = await DiaryService.QueryDiariesAsync(expression);
             if (exportDiaries.Count == 0)
             {
