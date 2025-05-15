@@ -9,9 +9,9 @@
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="ClosedXML" Version="0.104.2" />
-		<PackageReference Include="Masa.Blazor" Version="1.10.0-alpha.1" />
-		<PackageReference Include="Masa.Blazor.MobileComponents" Version="1.10.0-alpha.1" />
+		<PackageReference Include="ClosedXML" Version="0.105.0" />
+		<PackageReference Include="Masa.Blazor" Version="1.10.0-alpha.2" />
+		<PackageReference Include="Masa.Blazor.MobileComponents" Version="1.10.0-alpha.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.*" />
 		<PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.2.2" />
 		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.*" />
