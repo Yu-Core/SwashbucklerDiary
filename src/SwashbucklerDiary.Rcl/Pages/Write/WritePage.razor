@@ -1,4 +1,4 @@
-@page "/write"
+﻿@page "/write"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
@@ -174,6 +174,7 @@
 
 <SelectTemplateDialog @bind-Visible="showTemplate"
                       @bind-Tags="tags"
+                      ExcludeItem="diary"
                       OnOK="UseTemplate"
                       OnAfterShowContent="() => waitSelectTemplate = false">
 </SelectTemplateDialog>
@@ -207,6 +208,7 @@
 
 <SelectDiaryDialog @bind-Visible="showReference"
                    @bind-Tags="tags"
+                   ExcludeItem="diary"
                    OnOK="InsertReferenceAsync">
 </SelectDiaryDialog>
 

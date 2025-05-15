@@ -27,6 +27,9 @@ namespace SwashbucklerDiary.Rcl.Components
         public EventCallback<List<TagModel>> TagsChanged { get; set; }
 
         [Parameter]
+        public DiaryModel? ExcludeItem { get; set; }
+
+        [Parameter]
         public EventCallback<DiaryModel> OnOK { get; set; }
 
         [Parameter]
@@ -58,6 +61,11 @@ namespace SwashbucklerDiary.Rcl.Components
                     = it => (it.Title ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase)
                     || (it.Content ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase);
                 exp = exp.And(expSearch);
+            }
+
+            if (ExcludeItem is not null)
+            {
+                exp = exp.And(it => it.Id != ExcludeItem.Id);
             }
 
             if (exp == null)
