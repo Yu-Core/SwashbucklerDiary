@@ -1,4 +1,4 @@
-﻿using Foundation;
+using Foundation;
 using Microsoft.AspNetCore.Components.WebView;
 using UIKit;
 using WebKit;
@@ -49,9 +49,13 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
             {
                 //_webView.Logger.LaunchExternalBrowser(uri);
 
-#pragma warning disable CA1416, CA1422 // TODO: OpenUrl(...) has [UnsupportedOSPlatform("ios10.0")]
-                UIApplication.SharedApplication.OpenUrl(requestUrl);
-#pragma warning restore CA1416, CA1422
+                UIApplication.SharedApplication.OpenUrl(requestUrl, new UIApplicationOpenUrlOptions(), (success) =>
+                {
+                    //if (!success)
+                    //{
+                    //    _webView.Logger.LogError($"There was an error trying to open URL: {requestUrl}");
+                    //}
+                });
             }
 
             if (strategy != UrlLoadingStrategy.OpenInWebView)
