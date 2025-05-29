@@ -1,7 +1,7 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background: var( --m-theme-surface);
+    background: rgba(var(--m-theme-surface));
     overscroll-behavior: none;
 }
 
@@ -445,7 +445,7 @@ html {
 }
 
 .primary-background {
-    background-color: var(--m-theme-surface) !important;
+    background-color: rgba(var(--m-theme-surface)) !important;
 }
 
 .theme--light.m-application .second-background {
@@ -486,7 +486,7 @@ html {
 }
 
     .preview-image-dialog__toolbar .m-btn--icon::before {
-        background-color: var(--m-theme-surface) !important;
+        background-color: rgba(var(--m-theme-surface)) !important;
         opacity: 0.5 !important;
     }
 

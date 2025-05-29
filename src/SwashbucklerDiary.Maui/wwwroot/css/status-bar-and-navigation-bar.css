@@ -25,7 +25,7 @@ body {
         width: 100%;
         bottom: calc(0px - var(--saib));
         position: absolute;
-        background-color: var( --m-theme-surface);
+        background-color: rgba(var(--m-theme-surface));
     }
 
 .m-bottom-navigation-hidden {
