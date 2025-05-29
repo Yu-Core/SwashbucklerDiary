@@ -1,10 +1,13 @@
 import { addOutlientClick } from './markdown-preview-helper.js'
- function after(dotNetCallbackRef, element, outlineElement) {
+function after(dotNetCallbackRef, element, outlineElement, copyCutPatch) {
     handleToolbar(dotNetCallbackRef, element);
     addOutlientClick(dotNetCallbackRef, outlineElement, element);
+    if (copyCutPatch) {
+        fixCopyCut(dotNetCallbackRef, element);
+    }
 }
 
- function focus(domRef) {
+function focus(domRef) {
     const vditor = domRef.Vditor.vditor;
     const range = vditor[vditor.currentMode].range
     if (range) {
@@ -16,7 +19,7 @@ import { addOutlientClick } from './markdown-preview-helper.js'
     domRef.Vditor.focus();
 }
 
- function focusToEnd(domRef) {
+function focusToEnd(domRef) {
     domRef.Vditor.focus();
     const focusElement = document.activeElement;
     let range = document.createRange();
@@ -27,7 +30,7 @@ import { addOutlientClick } from './markdown-preview-helper.js'
     sel.addRange(range);
 }
 
- function upload(element, inputFileElement) {
+function upload(element, inputFileElement) {
     if (!element || !inputFileElement) return;
     const uploadElement = element.querySelector('input[type=file]');
     inputFileElement.files = uploadElement.files;
@@ -86,6 +89,24 @@ function setMoblieOutline(element, outlineElement) {
     }
 
     outlineElement.innerHTML = outline.innerHTML;
+}
+
+function fixCopyCut(dotNetCallbackRef, element) {
+    const items = element.querySelectorAll('.vditor-reset');
+    const copy = (event) => {
+        event.preventDefault();
+        
+        const textData = event.clipboardData.getData('text/plain');
+        if (textData) {
+            setTimeout(() => {
+                dotNetCallbackRef.invokeMethodAsync("SetClipboard", textData);
+            }, 200);
+        }
+    };
+    items.forEach(item => {
+        item.addEventListener('copy', copy);
+        item.addEventListener('cut', copy);
+    });
 }
 
 export { after, focus, focusToEnd, upload, setMoblieOutline }

@@ -84,31 +84,40 @@ export function capturePhotoAsync() {
     return '';
 }
 
-export function setClipboard(text) {
+export async function setClipboard(text) {
     if (navigator.clipboard) {
         try {
-            navigator.clipboard.writeText(text)
+            await navigator.clipboard.writeText(text);
+            return;
         } catch (e) {
-            execCommand()
+            console.warn('Clipboard API fail，use execCommand:', e);
         }
-    } else {
-        execCommand()
     }
 
-    function execCommand() {
-        let input = document.createElement('input');
-        input.type = 'text';
-        input.readOnly = true;
-        input.value = text;
+    execCommandCopy(text);
+}
 
-        document.body.appendChild(input);
-        input.focus();
-        input.select();
-        if (document.execCommand('copy')) {
-            document.execCommand('copy')
+function execCommandCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+
+    document.body.appendChild(textarea);
+
+    textarea.select();
+    textarea.setSelectionRange(0, textarea.value.length); // 兼容移动设备
+
+    try {
+        const success = document.execCommand('copy');
+        if (!success) {
+            console.warn('Copy failed, please check your browser permissions or try other methods');
         }
-        input.blur();
-        input.remove();
+    } catch (err) {
+        console.error('Copy failed:', err);
+    } finally {
+        document.body.removeChild(textarea);
     }
 }
 

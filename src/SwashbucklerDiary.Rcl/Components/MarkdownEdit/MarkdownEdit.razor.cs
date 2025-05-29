@@ -46,6 +46,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private ILogger<MarkdownEdit> Logger { get; set; } = default!;
 
+        [Inject]
+        private IPlatformIntegration PlatformIntegration { get; set; } = default!;
+
         [CascadingParameter(Name = "IsDark")]
         public bool Dark { get; set; }
 
@@ -89,6 +92,12 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await InternalMobileOutlineChanged(false);
             await InvokeAsync(StateHasChanged);
+        }
+
+        [JSInvokable]
+        public async Task SetClipboard(string text)
+        {
+            await PlatformIntegration.SetClipboardAsync(text);
         }
 
         public async Task InsertValueAsync(string value)
@@ -231,7 +240,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (_dotNetObjectReference is not null)
             {
-                await Module.After(_dotNetObjectReference, mMarkdown.Ref, moblieOutlineElement);
+                await Module.After(_dotNetObjectReference, mMarkdown.Ref, moblieOutlineElement, PlatformIntegration.CurrentPlatform == AppDevicePlatform.macOS);
             }
 
             if (Autofocus)
