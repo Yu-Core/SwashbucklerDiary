@@ -17,6 +17,7 @@ env:
   CSPROJ_FILE_PATH: 'src/SwashbucklerDiary.Maui/SwashbucklerDiary.Maui.csproj'
   APP_NAME: 'SwashbucklerDiary'
   STORE_ID: '9P6PBVBF466L'
+  APPBUNDLENAME: 'Swashbuckler Diary'
 
 jobs:
   WindowsAndAndroid:
@@ -182,11 +183,19 @@ jobs:
           version: ${{ env.APPLICATION_VERSION }}
           displayVersion: ${{ env.APPLICATION_DISPLAY_VERSION }}
 
+      # Add CFBundleExecutable in Info.plist
+      - name: Update MacCatalyst Plist
+        uses: dppeak/update-ios-plist-action@v1.1.0
+        with:
+          info-plist-path: '${{ env.CSPROJ_PATH }}/Platforms/MacCatalyst/Info.plist'
+          key-value-json: '[{"CFBundleExecutable": "${{ env.APPBUNDLENAME }}"}]'
+          print-file: true
+
       # Publish MAUI MacCatalyst
       - name: Publish MAUI MacCatalyst
         run: |
-          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -p:RuntimeIdentifier=maccatalyst-arm64 --sc -p:PublishTrimmed=true 
-          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -p:RuntimeIdentifier=maccatalyst-x64 --sc -p:PublishTrimmed=true 
+          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -p:RuntimeIdentifier=maccatalyst-arm64 --sc -p:PublishTrimmed=true -p:_AppBundleName="${{ env.APPBUNDLENAME }}"
+          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -p:RuntimeIdentifier=maccatalyst-x64 --sc -p:PublishTrimmed=true -p:_AppBundleName="${{ env.APPBUNDLENAME }}"
 
       - name: Rename pkg
         run: |
