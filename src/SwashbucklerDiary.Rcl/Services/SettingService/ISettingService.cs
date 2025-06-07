@@ -31,7 +31,7 @@ namespace SwashbucklerDiary.Rcl.Services
             {
                 if (item.Value is not null)
                 {
-                    dictionary.Add(item.Key, item.Value);
+                    dictionary.TryAdd(item.Key, item.Value);
                 }
             }
         }

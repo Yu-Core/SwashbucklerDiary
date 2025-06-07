@@ -11,7 +11,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public async ValueTask RemoveScrollListener()
         {
+            try
+            {
             await JSObjectReference.InvokeVoidAsync("removeScrollListener");
+        }
+            catch (Exception)
+            {
+            }
         }
     }
 }
