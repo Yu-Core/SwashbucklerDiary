@@ -117,7 +117,8 @@ function handleIframe(element) {
 function handleUrlHash() {
     if (!location.hash) return;
 
-    const anchor = location.hash.substring(1); // 直接从第一个字符后开始截取，跳过"#"
+    let anchor = location.hash.substring(1); // 直接从第一个字符后开始截取，跳过"#"
+    anchor = decodeURIComponent(anchor);
     const targetElement = document.getElementById(anchor);
     if (targetElement) {
         targetElement.scrollIntoView();
@@ -149,8 +150,10 @@ function fixAnchorLinkNavigate(dotNetCallbackRef, element) {
         let href = link.getAttribute('href');
         if (href.startsWith('#')) {
             event.preventDefault();
-            const url = location.origin + location.pathname + location.search + href;
-            dotNetCallbackRef.invokeMethodAsync('NavigateToReplace', url);
+            const hash = href;
+            const url = new URL(window.location.href);
+            url.hash = hash;
+            dotNetCallbackRef.invokeMethodAsync('NavigateToReplace', url.toString());
 
             const targetElement = document.getElementById(href.substring(1));
             if (targetElement) {

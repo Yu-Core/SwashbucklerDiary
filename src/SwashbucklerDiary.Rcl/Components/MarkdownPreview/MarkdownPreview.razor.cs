@@ -146,6 +146,7 @@ namespace SwashbucklerDiary.Rcl.Components
             _options = new()
             {
                 { "mode", mode },
+                { "anchor", 2 },
                 { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.11.1" },
                 { "lang", lang },
                 { "theme", theme },

@@ -311,7 +311,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task CopyReference()
         {
-            var text = diary.GetReferenceText(I18n);
+            // NavigationManager.Uri may not contain hash
+            var hash = await JS.EvaluateJavascript<string>("window.location.hash");
+            var text = $"[{I18n.T(diary.Template ? "Template reference" : "Diary reference")}](read/{diary.Id}{hash})";
             await PlatformIntegration.SetClipboardAsync(text);
             await AlertService.Success(I18n.T("Copy successfully"));
         }
@@ -319,13 +321,14 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task CopyExternalLink()
         {
             string text;
+            var hash = await JS.EvaluateJavascript<string>("window.location.hash");
             if (PlatformIntegration.CurrentPlatform == AppDevicePlatform.Browser)
             {
-                text = NavigationManager.ToAbsoluteUri($"read/{Id}").ToString();
+                text = NavigationManager.ToAbsoluteUri($"read/{Id}{hash}").ToString();
             }
             else
             {
-                text = $"{urlScheme}://read/{Id}";
+                text = $"{urlScheme}://read/{Id}{hash}";
             }
 
             await PlatformIntegration.SetClipboardAsync(text);
