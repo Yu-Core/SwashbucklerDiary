@@ -57,7 +57,7 @@
   "Untitled": "Untitled",
   "No diary": "No diary",
   "Delete a diary": "Delete a diary",
-  "Please delete carefully, every diary is a precious memory.": "Please delete carefully, every diary is a precious memory.",
+  "Please delete carefully, every diary is a precious memory.Once deleted, it cannot be restored.": "Please delete carefully, every diary is a precious memory.Once deleted, it cannot be restored.",
   "Markdown mode": "Markdown mode",
   "Text mode": "Text mode",
   "Please enter keywords": "Please enter keywords",

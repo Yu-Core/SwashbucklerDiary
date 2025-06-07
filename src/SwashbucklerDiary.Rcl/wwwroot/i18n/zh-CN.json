@@ -57,7 +57,7 @@
   "Untitled": "无题",
   "No diary": "暂无日记",
   "Delete a diary": "删除日记",
-  "Please delete carefully, every diary is a precious memory.": "请慎重删除，每一篇日记都是珍贵的回忆。",
+  "Please delete carefully, every diary is a precious memory.Once deleted, it cannot be restored.": "请慎重删除，每一篇日记都是珍贵的回忆。一经删除，无法恢复。",
   "Markdown mode": "Markdown模式",
   "Text mode": "纯文本模式",
   "Please enter keywords": "请输入关键词",
