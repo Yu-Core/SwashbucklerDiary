@@ -50,7 +50,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SwashbucklerDiary.Rcl.Client\SwashbucklerDiary.Rcl.Client.csproj" />
+		<ProjectReference Include="..\SwashbucklerDiary.Rcl.Hybird\SwashbucklerDiary.Rcl.Hybird.csproj" />
 	</ItemGroup>
 
 </Project>
