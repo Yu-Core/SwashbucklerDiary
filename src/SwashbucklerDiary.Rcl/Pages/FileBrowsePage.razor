@@ -53,3 +53,7 @@
               Content="@(I18n.T("Sure to delete unused files?"))"
               OnOK="DeleteUnusedResources">
 </DeleteDialog>
+
+<SelectFileTypesDialog @bind-Visible="showExport"
+                       OnOK="Export">
+</SelectFileTypesDialog>

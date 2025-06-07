@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using OneOf;
 
 namespace SwashbucklerDiary.Rcl.Models
@@ -115,6 +115,14 @@ namespace SwashbucklerDiary.Rcl.Models
     public class DynamicListItem<T> : DynamicListItem
     {
         public T Value { get; set; }
+
+        public DynamicListItem(object receiver, string text, string icon, Action<T> actionOnClick, T value, Func<bool>? funcShow = null) : base(funcShow)
+        {
+            _text = text;
+            _icon = icon;
+            Value = value;
+            OnClick = EventCallback.Factory.Create(receiver, () => actionOnClick.Invoke(Value));
+        }
 
         public DynamicListItem(object receiver, string text, string icon, Func<T, Task> funcOnClick, T value, Func<bool>? funcShow = null) : base(funcShow)
         {

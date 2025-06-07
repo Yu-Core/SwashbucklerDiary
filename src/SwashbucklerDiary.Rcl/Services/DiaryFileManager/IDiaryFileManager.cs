@@ -18,6 +18,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<string> ExportXlsxAsync(List<DiaryModel> diaries);
 
+        string ExportResourceFile(List<ResourceModel> resources);
+
         Task<bool> ImportDBAsync(string filePath);
 
         Task<bool> ImportDBAsync(Stream stream);

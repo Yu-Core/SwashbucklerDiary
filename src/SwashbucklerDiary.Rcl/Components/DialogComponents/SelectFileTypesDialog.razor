@@ -1,0 +1,101 @@
+@namespace SwashbucklerDiary.Rcl.Components
+@inherits DialogComponentBase
+
+<MultiDisplay>
+    <MobileContent>
+        <CustomMBottomSheet MyValue="Visible"
+                            MyValueChanged="InternalVisibleChanged"
+                            ContentClass="rounded-t-lg"
+                            OnBeforeShowContent="HandleBeforeShowContent">
+            @GenCard(GenMobileCardActionsContent())
+        </CustomMBottomSheet>
+    </MobileContent>
+    <DesktopContent>
+        <CustomMDialog MyValue="Visible"
+                       MyValueChanged="InternalVisibleChanged"
+                       ContentClass="rounded-lg"
+                       MaxWidth="420"
+                       OnBeforeShowContent="HandleBeforeShowContent">
+            @GenCard(GenDesktopCardActionsContent())
+        </CustomMDialog>
+    </DesktopContent>
+</MultiDisplay>
+
+@code {
+    private RenderFragment GenCard(RenderFragment cardActionsContent) => __builder =>
+    {
+        <MCard Class="rounded-t-lg">
+            <MCardTitle Class="font-weight-bold">
+                @(I18n.T("Select file types"))
+                <MSpacer></MSpacer>
+                <MButton Icon="true"
+                         OnClick="HandleOnCancel">
+                    <MIcon>close</MIcon>
+                </MButton>
+            </MCardTitle>
+            <MCardText Class="pb-0 px-0">
+                @foreach (var item in items)
+                {
+                    <MListItem Class="px-6"
+                               OnClick="@item.OnClick">
+                        <MListItemIcon>
+                            <MIcon Class="evident-icon">
+                                @(item.Icon)
+                            </MIcon>
+                        </MListItemIcon>
+                        <MListItemContent>
+                            <MListItemTitle>
+                                @(I18n.T(item.Text))
+                            </MListItemTitle>
+                        </MListItemContent>
+                        <MListItemAction>
+                            @if (internalValue.Contains(item.Value))
+                            {
+                                <MIcon>
+                                    check
+                                </MIcon>
+                            }
+                        </MListItemAction>
+                    </MListItem>
+                }
+            </MCardText>
+            <MCardActions>
+                @cardActionsContent
+            </MCardActions>
+        </MCard>
+    };
+
+    private RenderFragment GenMobileCardActionsContent() => __builder =>
+    {
+        <MButton Class="text-subtitle-1 flex-grow-1 mb-2"
+                 Style="flex-basis:0;"
+                 Rounded="true"
+                 Depressed="true"
+                 Large="true"
+                 OnClick="HandleOnCancel">
+            @(I18n.T("Cancel"))
+        </MButton>
+        <MButton Class="text-subtitle-1 flex-grow-1 mb-2"
+                 Style="flex-basis:0;"
+                 Rounded="true"
+                 Depressed="true"
+                 Large="true"
+                 OnClick="HandleOnOK">
+            @(I18n.T("OK"))
+        </MButton>
+    };
+
+    private RenderFragment GenDesktopCardActionsContent() => __builder =>
+    {
+        <MSpacer></MSpacer>
+        <MButton Text="true"
+                 OnClick="HandleOnCancel">
+            @(I18n.T("Cancel"))
+        </MButton>
+        <MButton Text="true"
+                 Color="primary"
+                 OnClick="HandleOnOK">
+            @(I18n.T("OK"))
+        </MButton>
+    };
+}

@@ -452,5 +452,7 @@
   "Default template": "Default template",
   "Automatically used when adding diary entries": "Automatically used when adding diary entries",
   "Create Time": "Create Time",
-  "Update Time": "Update Time"
+  "Update Time": "Update Time",
+  "Export files": "Export files",
+  "No file": "No file"
 }

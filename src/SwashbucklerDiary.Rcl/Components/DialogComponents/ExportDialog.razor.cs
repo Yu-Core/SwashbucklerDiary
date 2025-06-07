@@ -74,7 +74,6 @@ namespace SwashbucklerDiary.Rcl.Components
                         await HandleAchievements(Achievement.Export);
                     }
                 }
-
             }
             catch (Exception e)
             {

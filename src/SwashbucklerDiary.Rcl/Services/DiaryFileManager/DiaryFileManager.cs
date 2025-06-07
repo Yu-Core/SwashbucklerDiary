@@ -93,7 +93,7 @@ namespace SwashbucklerDiary.Rcl.Services
             File.Copy(databasePath, destFileName);
             if (copyResources)
             {
-                await CopyDiaryResource(outputFolder);
+                await CopyDiaryResourceAsync(outputFolder);
                 CopyAvatar(outputFolder);
             }
 
@@ -310,21 +310,17 @@ namespace SwashbucklerDiary.Rcl.Services
         private void CopyDiaryResource(List<DiaryModel> diaries, string outputFolder)
         {
             var resources = diaries.SelectMany(a => a.Resources ?? []).Distinct().ToList();
-
-            foreach (var resource in resources)
-            {
-                if (resource.ResourceUri is null)
-                {
-                    continue;
-                }
-
-                CopyUriFileToOutFolder(resource.ResourceUri, outputFolder);
-            }
+            CopyDiaryResource(resources, outputFolder);
         }
 
-        protected async Task CopyDiaryResource(string outputFolder)
+        private async Task CopyDiaryResourceAsync(string outputFolder)
         {
             var resources = await _resourceService.QueryAsync();
+            CopyDiaryResource(resources, outputFolder);
+        }
+
+        protected void CopyDiaryResource(List<ResourceModel> resources, string outputFolder)
+        {
             foreach (var resource in resources)
             {
                 if (resource.ResourceUri is null)
@@ -657,6 +653,31 @@ namespace SwashbucklerDiary.Rcl.Services
 #pragma warning disable CS0472
             await _diaryService.UpdateAsync(it => new() { Template = false }, it => it.Template == null);
 #pragma warning restore CS0472
+        }
+
+        public string ExportResourceFile(List<ResourceModel> resources)
+        {
+            string outputFolder = Path.Combine(_appFileSystem.CacheDirectory, "ResourceFile");
+            string zipFilePath = Path.Combine(_appFileSystem.CacheDirectory, $"{exportFileNamePrefix}ResourceFile.zip");
+
+            if (!Directory.Exists(outputFolder))
+            {
+                Directory.CreateDirectory(outputFolder);
+            }
+            else
+            {
+                _appFileSystem.ClearFolder(outputFolder);
+            }
+
+            CopyDiaryResource(resources, outputFolder);
+
+            if (File.Exists(zipFilePath))
+            {
+                File.Delete(zipFilePath);
+            }
+
+            ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
+            return zipFilePath;
         }
     }
 }

@@ -1,5 +1,6 @@
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -20,6 +21,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showMenu;
 
+        private bool showExport;
+
         private StringNumber tab = 0;
 
         private List<ResourceModel> imageResources = [];
@@ -32,6 +35,12 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         [Inject]
         protected IResourceService ResourceService { get; set; } = default!;
+
+        [Inject]
+        private IDiaryFileManager DiaryFileManager { get; set; } = default!;
+
+        [Inject]
+        private ILogger<FileBrowsePage> Logger { get; set; } = default!;
 
         protected override void OnInitialized()
         {
@@ -62,6 +71,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             menuItems =
             [
                 new(this, "Delete unused files","mdi:mdi-delete-outline", ()=>showDelete=true),
+                new(this, "Export files","mdi:mdi-export", ()=>showExport=true),
             ];
         }
 
@@ -82,6 +92,49 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 await UpdateResourcesAsync();
                 await AlertService.Success(I18n.T("Delete successfully"));
+            }
+        }
+
+        private async Task Export(List<MediaResource> resourceKinds)
+        {
+            showExport = false;
+
+            var permission = await PlatformIntegration.TryStorageWritePermission();
+            if (!permission)
+            {
+                await AlertService.Info(I18n.T("Please grant permission for storage writing"));
+                return;
+            }
+
+            await AlertService.StartLoading();
+            try
+            {
+                var resources = await ResourceService.QueryAsync(it => resourceKinds.Contains(it.ResourceType));
+                if (resources.Count == 0)
+                {
+                    await AlertService.Info(I18n.T("No file"));
+                    return;
+                }
+
+                var path = DiaryFileManager.ExportResourceFile(resources);
+                if (!string.IsNullOrEmpty(path))
+                {
+                    bool flag = await PlatformIntegration.SaveFileAsync(path);
+                    if (flag)
+                    {
+                        await AlertService.Success(I18n.T("Export successfully"));
+                        await HandleAchievements(Achievement.Export);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e, "Create file wrong");
+                await AlertService.Error(I18n.T("Export failed"));
+            }
+            finally
+            {
+                await AlertService.StopLoading();
             }
         }
     }
