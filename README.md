@@ -29,11 +29,12 @@
 - [MAUI](https://learn.microsoft.com/dotnet/maui/)
 - [Serilog](https://serilog.net/)
 - [SqlSugar](https://www.donet5.com/Home/Doc) 
+- [Vditor](https://b3log.org/vditor/) 
 
 ## 🚀 下载渠道
 - [![Microsoft 应用商店](https://get.microsoft.com/images/zh-cn%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
 - [GitHub 发行版](https://github.com/Yu-Core/SwashbucklerDiary/releases)
-- [蓝奏云](https://wwfc.lanzouj.com/b04q15i4j) （密码：1234）
+- [123云盘](https://www.123912.com/s/eVjxjv-IfnX)
 - [百度手机助手](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
 - [豌豆荚](https://www.wandoujia.com/apps/8369224)
 - [酷安](https://www.coolapk.com/apk/937401)
@@ -140,10 +141,4 @@
 ## ☕捐助
 项目的发展离不开你的支持，请作者喝杯咖啡吧☕
 
-#### 微信
-
-<img src="./src/SwashbucklerDiary.Rcl/wwwroot/sponsor/wechat.png" width=300>
-
-#### 支付宝
-
-<img src="./src/SwashbucklerDiary.Rcl/wwwroot/sponsor/alipay.jpg" width=300>
+<img src="./res/sponsor/sponsor.png" width=300>

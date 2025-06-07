@@ -29,11 +29,12 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [MAUI](https://learn.microsoft.com/dotnet/maui/)
 - [Serilog](https://serilog.net/)
 - [SqlSugar](https://www.donet5.com/Home/Doc) 
+- [Vditor](https://b3log.org/vditor/) 
 
 ## 🚀 Download Channels
 - [![Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
 - [GitHub Releases](https://github.com/Yu-Core/SwashbucklerDiary/releases)
-- [lanzou cloud](https://wwfc.lanzouj.com/b04q15i4j) ( Password: 1234 )
+- [123pan](https://www.123912.com/s/eVjxjv-IfnX)
 - [Baidu Mobile Assistant](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
 - [Wandoujia](https://www.wandoujia.com/apps/8369224)
 - [CoolApk](https://www.coolapk.com/apk/937401)
@@ -140,10 +141,4 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 ## ☕Sponsor
 The development of the project cannot do without your support. Please have a cup of coffee with the developers☕
 
-#### Wechat
-
-<img src="./src/SwashbucklerDiary.Rcl/wwwroot/sponsor/wechat.png" width=300>
-
-#### Alipay
-
-<img src="./src/SwashbucklerDiary.Rcl/wwwroot/sponsor/alipay.jpg" width=300>
+<img src="./res/sponsor/sponsor.png" width=300>
