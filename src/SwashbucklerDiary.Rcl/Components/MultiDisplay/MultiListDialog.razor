@@ -35,6 +35,7 @@
                                  Depressed="true"
                                  Large="true"
                                  Class="text-subtitle-1"
+                                 Color="rgba(var(--m-theme-surface-container-high))"
                                  OnClick="HandleOnCancel">
                             @(I18n.T("Cancel"))
                         </MButton>
@@ -67,7 +68,7 @@
                                            Class="px-0"
                                            OnClick="item.OnClick">
                                     <MListItemIcon Class="my-3">
-                                        <MIcon Class="evident-icon">
+                                        <MIcon>
                                             @(item.Icon)
                                         </MIcon>
                                     </MListItemIcon>

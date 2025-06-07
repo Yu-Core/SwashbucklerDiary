@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Rcl.Components
         /// The content of the matched path would be cached in the DOM.
         /// </summary>
         [Parameter]
-        [MasaApiParameter(ReleasedOn = "v1.0.2")]
+        [MasaApiParameter(ReleasedIn = "v1.0.2")]
         public IEnumerable<string> IncludePatterns { get; set; } = Array.Empty<string>();
 
         /// <summary>
@@ -56,11 +56,11 @@ namespace SwashbucklerDiary.Rcl.Components
         protected string? _previousPath;
         private PatternPath? _currentPatternPath;
 
-        private HashSet<string> _prevIncludePatterns = new();
-        private HashSet<string> _prevExcludePatterns = new();
+        private HashSet<string> _prevIncludePatterns = [];
+        private HashSet<string> _prevExcludePatterns = [];
 
-        private HashSet<Regex> _cachedIncludePatternRegexes = new();
-        private HashSet<Regex> _cachedExcludePatternRegexes = new();
+        private HashSet<Regex> _cachedIncludePatternRegexes = [];
+        private HashSet<Regex> _cachedExcludePatternRegexes = [];
 
         protected override void OnInitialized()
         {

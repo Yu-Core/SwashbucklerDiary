@@ -22,9 +22,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         ILocationService LocationService { get; set; } = default!;
 
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
-
         [Parameter]
         public string? Value { get; set; }
 
@@ -58,8 +55,6 @@ namespace SwashbucklerDiary.Rcl.Components
                 }
             }
         }
-
-        private string? Color => Dark ? "white" : "grey";
 
         private void BeforeShowContent()
         {

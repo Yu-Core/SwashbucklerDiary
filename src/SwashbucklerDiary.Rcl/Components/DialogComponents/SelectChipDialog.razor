@@ -34,7 +34,7 @@
                     <MChip @key="item.Key"
                            Value="@item.Key"
                            Filter="InternalShowText"
-                           Outlined="true"
+                           Outlined="!InternalShowText"
                            OnClick="HandleOnCancel">
                         <MIcon Left="InternalShowText">
                             @InternalItemIcon(item)

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -6,13 +6,8 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         private string? searchText;
 
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
-
         [Parameter]
         public EventCallback<string> OnSearch { get; set; }
-
-        private string? TextFieldColor => Dark ? "white" : "grey";
 
         private async Task Search()
         {

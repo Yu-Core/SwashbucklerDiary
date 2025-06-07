@@ -24,9 +24,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [CascadingParameter]
         public DiaryCardListOptions DiaryCardListOptions { get; set; } = default!;
 
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
-
         [Parameter]
         public EventCallback<DiaryModel> OnClick { get; set; }
 
@@ -45,8 +42,6 @@ namespace SwashbucklerDiary.Rcl.Components
         private bool IsActive => Value.Id == DiaryCardListOptions.SelectedItemValue.Id;
 
         private string? TimeFormat => DiaryCardListOptions.TimeFormat;
-
-        private string Theme => Dark ? "theme--dark" : "theme--light";
 
         private void SetContent()
         {

@@ -49,7 +49,6 @@
                         {
                             <MChip @key="item.Key"
                                    Value="item.Key"
-                                   Outlined="true"
                                    Class="flex-grow-1 justify-center"
                                    Filter="true"
                                    OnClick="SelectDeafultDate">
@@ -61,7 +60,6 @@
                     <MChipGroup Column="true"
                                 Multiple="true">
                         <MChip Class="flex-grow-1 justify-center mx-0"
-                               Outlined="true"
                                IsActive="false"
                                OnClick="OpenMinDateDialog">
                             @MinDateText
@@ -72,7 +70,6 @@
                             </MIcon>
                         </div>
                         <MChip Class="flex-grow-1 justify-center"
-                               Outlined="true"
                                IsActive="false"
                                OnClick="OpenMaxDateDialog">
                             @MaxDateText
@@ -93,6 +90,7 @@
                  Rounded="true"
                  Depressed="true"
                  Large="true"
+                 Color="rgba(var(--m-theme-surface-container-high))"
                  OnClick="HandleOnReset">
             @(I18n.T("Reset"))
         </MButton>
@@ -101,6 +99,7 @@
                  Rounded="true"
                  Depressed="true"
                  Large="true"
+                 Color="rgba(var(--m-theme-surface-container-high))"
                  OnClick="HandleOnOK">
             @(I18n.T("OK"))
         </MButton>

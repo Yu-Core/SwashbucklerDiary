@@ -7,10 +7,10 @@ namespace SwashbucklerDiary.Rcl.Extensions
         public MaterialSymbolsAliases()
         {
             Complete = "check";
-            Cancel = "cancel";
+            Cancel = "cancel-fill";
             Close = "close";
-            Delete = "cancel";
-            Clear = "cancel";
+            Delete = "cancel-fill";
+            Clear = "cancel-fill";
             Success = "check_circle";
             Info = "info";
             Warning = "priority_high";

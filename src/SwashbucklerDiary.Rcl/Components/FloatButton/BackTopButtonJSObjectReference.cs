@@ -1,4 +1,4 @@
-﻿using Masa.Blazor.JSModules;
+using Masa.Blazor.JSModules;
 using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -13,8 +13,8 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             try
             {
-            await JSObjectReference.InvokeVoidAsync("removeScrollListener");
-        }
+                await JSObjectReference.InvokeVoidAsync("removeScrollListener");
+            }
             catch (Exception)
             {
             }

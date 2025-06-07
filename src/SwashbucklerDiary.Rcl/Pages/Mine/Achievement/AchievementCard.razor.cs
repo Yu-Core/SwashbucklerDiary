@@ -6,16 +6,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class AchievementCard : MyComponentBase
     {
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
-
         [Parameter]
         public AchievementModel Value { get; set; } = default!;
 
-        protected bool Light => !Dark;
-
         private string IconColor
-            => Value.UserAchievement.IsCompleted && Light ? "black" : "";
+            => Value.UserAchievement.IsCompleted ? "rgba(var(--m-theme-on-surface))" : "";
 
         private string Icon
             => Value.UserAchievement.IsCompleted ? "trophy-fill" : "trophy";
@@ -24,10 +19,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             => (int)((double)Value.UserAchievement.CompleteRate / Value.Steps * 100);
 
         private string ProgressRateColor
-            => Value.UserAchievement.IsCompleted && Light ? "#2e2e2e" : "grey lighten-1";
+            => Value.UserAchievement.IsCompleted ? "rgba(var(--m-theme-inverse-surface))" : "rgba(var(--m-theme-surface-container-highest))";
 
-        private string ProgressRateTextColor 
-            => Value.UserAchievement.IsCompleted && Light ? "white--text" : "";
+        private string ProgressRateTextColor
+            => Value.UserAchievement.IsCompleted ? "rgba(var(--m-theme-inverse-on-surface))" : "";
 
         private string ProgressRateText => GetProgressRateText(Value);
 

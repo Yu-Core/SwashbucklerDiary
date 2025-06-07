@@ -1,4 +1,4 @@
-﻿@page "/write"
+@page "/write"
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
@@ -156,7 +156,6 @@
                 @foreach (var item in SelectedTags)
                 {
                     <MChip @key="item.Id"
-                           Outlined
                            Close
                            OnCloseClick="() => RemoveSelectedTag(item)">
                         @(item.Name)

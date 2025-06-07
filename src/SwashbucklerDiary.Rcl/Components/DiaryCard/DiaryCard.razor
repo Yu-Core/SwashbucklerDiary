@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits CardComponentBase<DiaryModel>
 
 <MCard Class="diary-card elevation-sm-2--active"
@@ -45,7 +45,7 @@
 
                     @if (DiaryCardListOptions.Template && Value.Template && Value.Id == DiaryCardListOptions.DefaultTemplateId)
                     {
-                        <MChip Outlined Small>
+                        <MChip Small>
                             @I18n.T("Defalut")
                         </MChip>
                     }
@@ -90,8 +90,7 @@
                 @foreach (var item in Value.Tags)
                 {
                     <MChip @key="item.Id"
-                           Class="mr-2"
-                           Outlined>
+                           Class="mr-2">
                         @(item.Name)
                     </MChip>
                 }

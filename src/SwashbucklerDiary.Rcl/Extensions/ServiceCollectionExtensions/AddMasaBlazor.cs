@@ -27,6 +27,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
             options.ConfigureTheme(theme =>
             {
                 theme.Themes.Light.Surface = ThemeColor.LightSurface;
+                theme.Themes.Light.Variables.BorderOpacity = 0.06f;
                 theme.Themes.Dark.Surface = ThemeColor.DarkSurface;
             });
             options.ConfigureIcons("MaterialSymbols", new MaterialSymbolsAliases());

@@ -49,8 +49,8 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private IPlatformIntegration PlatformIntegration { get; set; } = default!;
 
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
+        [Inject]
+        private IThemeService ThemeService { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
@@ -68,7 +68,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool Autofocus { get; set; }
 
         [Parameter]
-        public bool Outline { get;set; }
+        public bool Outline { get; set; }
 
         [Parameter]
         public bool? MobileOutline { get; set; }
@@ -140,7 +140,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private void SetOptions()
         {
             string lang = I18n.Culture.Name.Replace("-", "_");
-            string theme = Dark ? "dark" : "light";
+            string theme = ThemeService.RealTheme == Shared.Theme.Dark ? "dark" : "light";
             var previewTheme = new Dictionary<string, object?>()
             {
                 { "current", theme },

@@ -1,4 +1,4 @@
-﻿.player-duration-bar {
+.player-duration-bar {
     display: grid;
     grid-template-columns: auto 1fr auto;
     gap: 8px;
@@ -8,6 +8,8 @@
 input[type=range] {
     --current-width: 0;
     --height: 4px;
+    --current-color: rgba(var(--m-theme-on-surface), var(--m-low-emphasis-opacity));
+    --current-track-color: currentColor;
     appearance: none;
     border-radius: 2px;
     height: 22px;

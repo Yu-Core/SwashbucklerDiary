@@ -39,7 +39,7 @@
                     <MListItem Class="px-6"
                                OnClick="@item.OnClick">
                         <MListItemIcon>
-                            <MIcon Class="evident-icon">
+                            <MIcon>
                                 @(item.Icon)
                             </MIcon>
                         </MListItemIcon>
@@ -72,6 +72,7 @@
                  Rounded="true"
                  Depressed="true"
                  Large="true"
+                 Color="rgba(var(--m-theme-surface-container-high))"
                  OnClick="HandleOnCancel">
             @(I18n.T("Cancel"))
         </MButton>
@@ -80,6 +81,7 @@
                  Rounded="true"
                  Depressed="true"
                  Large="true"
+                 Color="rgba(var(--m-theme-surface-container-high))"
                  OnClick="HandleOnOK">
             @(I18n.T("OK"))
         </MButton>

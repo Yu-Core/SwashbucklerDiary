@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -6,9 +6,6 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         [Parameter]
         public TItemValue Value { get; set; } = default!;
-
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
 
         [Parameter]
         public EventCallback<TItemValue> ValueChanged { get; set; }
@@ -30,8 +27,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public bool Row { get; set; }
-
-        private string MRadioColor => Dark ? "white" : "black";
 
         private async Task InternalValueChanged(TItemValue value)
         {

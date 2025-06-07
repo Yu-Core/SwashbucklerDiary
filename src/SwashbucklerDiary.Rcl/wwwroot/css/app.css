@@ -164,10 +164,6 @@ html {
     user-select: text;
 }
 
-.theme--light.evident-icon.m-icon {
-    color: rgba(0,0,0,.87) !important;
-}
-
 @media (hover: none) {
     .d-no-hover-none {
         display: none;
@@ -196,10 +192,6 @@ html {
     .diary-card {
         padding-bottom: 16px !important;
     }
-}
-
-.diary-card .theme--light.m-divider {
-    border-color: rgba(0,0,0,.04);
 }
 
 .diary-card__title {
@@ -257,6 +249,10 @@ html {
     padding-right: 14px !important;
     box-sizing: border-box !important;
     position: absolute !important;
+}
+
+.p-page-container__item .container.my-container {
+    height: initial;
 }
 
 @media screen and (min-width:600px) {
@@ -328,16 +324,6 @@ html {
     z-index: 99;
 }
 
-.theme--light.black-white-btn {
-    background-color: #000 !important;
-    color: #fff !important;
-}
-
-.theme--dark.black-white-btn {
-    background-color: #fff !important;
-    color: #000 !important;
-}
-
 .image-card, .video-card {
     cursor: pointer;
 }
@@ -362,21 +348,14 @@ html {
     }
 }
 
-.m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--light {
-    color: rgba(0,0,0,.87) !important;
+.m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper {
+    color: rgba(var(--m-theme-on-surface)) !important;
 }
 
-    .m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--light .m-snack__action * {
-        color: rgba(0,0,0,.87) !important;
+    .m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper .m-snack__action * {
+        color: rgba(var(--m-theme-on-surface)) !important;
     }
 
-.m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--dark {
-    color: rgba(255,255,255,.87) !important;
-}
-
-    .m-snack.m-snack--text.m-enqueued-snackbar .m-snack__wrapper.theme--dark .m-snack__action * {
-        color: rgba(255,255,255,.87) !important;
-    }
 
 .setting-title {
     display: none !important;
@@ -436,26 +415,6 @@ html {
         }
 }
 
-.theme--light.m-application .my-progress-circular {
-    color: #000;
-}
-
-.theme--dark.m-application .my-progress-circular {
-    color: #fff;
-}
-
-.primary-background {
-    background-color: rgba(var(--m-theme-surface)) !important;
-}
-
-.theme--light.m-application .second-background {
-    background-color: #fff !important;
-}
-
-.theme--dark.m-application .second-background {
-    background-color: #1e1e1e !important;
-}
-
 .m-list--nav .m-list-item, .m-list--nav .m-list-item:before {
     border-radius: 8px;
 }
@@ -468,11 +427,6 @@ html {
 
 .dynamic-list-item-collection > .m-divider__wrapper:last-child {
     display: none !important;
-}
-
-.theme--light.m-input--switch--inset.white--text .theme--light.m-input--switch__track.white--text {
-    color: #000 !important;
-    opacity: .8;
 }
 
 .m-btn--readonly {
@@ -608,10 +562,6 @@ html.m-overlay-scroll-blocked {
     text-decoration-line: line-through;
 }
 
-.theme--light.m-chip:not(.m-chip--active) {
-    background: rgba(0, 0, 0, .06);
-}
-
 .flex-basic-space {
     flex-grow: 0;
     flex-basis: auto;
@@ -702,7 +652,7 @@ html.m-overlay-scroll-blocked {
         width: auto;
         cursor: pointer;
         display: flex;
-        flex-direction:column;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
     }

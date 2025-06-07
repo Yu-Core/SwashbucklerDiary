@@ -39,11 +39,11 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private NavigationManager NavigationManager { get; set; } = default!;
 
+        [Inject]
+        private IThemeService ThemeService { get; set; } = default!;
+
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }
-
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
 
         [Parameter]
         public string? Value { get; set; }
@@ -136,7 +136,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private void SetOptions()
         {
             string lang = I18n.Culture.Name.Replace("-", "_");
-            string mode = Dark ? "dark" : "light";
+            string mode = ThemeService.RealTheme == Shared.Theme.Dark ? "dark" : "light";
             var theme = new Dictionary<string, object?>()
             {
                 { "current", mode },
@@ -172,7 +172,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task HandleOnAfter()
         {
             var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
-            await MarkdownPreviewJSModule.AfterMarkdown(dotNetObjectReference,vditorMarkdownPreview.Ref, autoPlay, moblieOutlineContainerElement);
+            await MarkdownPreviewJSModule.AfterMarkdown(dotNetObjectReference, vditorMarkdownPreview.Ref, autoPlay, moblieOutlineContainerElement);
 
             if (OnAfter.HasDelegate)
             {

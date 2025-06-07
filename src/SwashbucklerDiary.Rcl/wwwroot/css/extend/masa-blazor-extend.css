@@ -62,78 +62,43 @@
 
 /*解决移动端悬停问题*/
 @media (hover: none) {
-    .theme--light.m-btn:hover::before {
+    :root {
+        --m-hover-opacity: 0 !important;
+    }
+
+    .theme--light {
+        --m-hover-opacity: 0 !important;
+    }
+
+    .theme--dark {
+        --m-hover-opacity: 0 !important;
+    }
+
+    .m-btn:hover::before {
         opacity: 0;
     }
 
-    .theme--light.m-btn:focus::before {
+    .m-btn:focus-visible::before {
         opacity: 0;
     }
 
-    .theme--light.m-btn--active:hover::before, .theme--light.m-btn--active::before {
+    .m-btn.m-btn--active::before, .m-btn.m-btn--active:hover::before {
         opacity: 0;
     }
 
-    .theme--light.m-btn--active:focus::before {
+    .m-btn.m-btn--active:focus-visible::before {
         opacity: 0;
     }
 
-    .theme--dark.m-btn:hover::before {
+    .m-input--selection-controls__input:hover:before {
         opacity: 0;
-    }
-
-    .theme--dark.m-btn:focus::before {
-        opacity: 0;
-    }
-
-    .theme--dark.m-btn--active:hover::before, .theme--dark.m-btn--active::before {
-        opacity: 0;
-    }
-
-    .theme--dark.m-btn--active:focus::before {
-        opacity: 0;
-    }
-
-    .m-input--selection-controls .m-radio--is-focused .m-input--selection-controls__ripple:before, .m-input--selection-controls.m-input--is-focused .m-input--selection-controls__ripple:before {
-        background: transparent;
-        transform: scale(1.2)
-    }
-
-    .m-input--selection-controls__input:hover .m-input--selection-controls__ripple:before {
-        background: transparent;
-        transform: scale(1.2);
-        transition: none;
     }
 }
 
 /*配色*/
 
-.theme--light.m-divider {
-    border-color: rgba(0,0,0,.06);
-}
-
-.theme--light .m-tab--active {
-    color: #000 !important;
-}
-
-.theme--dark .m-tab--active {
-    color: #fff !important;
-}
-
-.theme--dark .my-picker .m-picker__body {
-    background: #1e1e1e !important;
-}
-
-    .theme--dark .my-picker .m-picker__body + .m-picker__actions {
-        background: #1e1e1e !important;
-    }
-
-.theme--light.m-toolbar.m-sheet {
-    background-color: inherit
-}
-
-.theme--dark.m-toolbar.m-sheet {
-    background-color: inherit
+.m-picker__body {
+    background: inherit;
 }
 
 .p-mobile-date-picker__content {
@@ -145,9 +110,13 @@
         padding: 16px;
     }
 
-.theme--dark .m-overlay__scrim {
-    background-color: #424242 !important;
-    border-color: #424242 !important;
+.m-overlay__scrim {
+    background-color: #000 !important;
+    background-color: #000 !important;
+}
+
+.m-toolbar.m-sheet {
+    background-color: var(--m-theme-surface);
 }
 
 /*自适应圆角*/
@@ -165,7 +134,7 @@
 
 /*日历提示圆点位置*/
 .m-date-picker-table--date .m-date-picker-table__events {
-    bottom: 2px;
+    bottom: 4px;
 }
 
 /*自适应海拔*/
@@ -201,80 +170,6 @@
 
 .m-chip--clickable:active {
     box-shadow: unset;
-}
-
-.theme--light.m-chip:hover::before {
-    opacity: 0;
-}
-
-.theme--light.m-chip:focus::before {
-    opacity: 0;
-}
-
-.theme--light.m-chip--active:hover::before, .theme--light.m-chip--active::before {
-    opacity: 0.12;
-}
-
-.theme--light.m-chip--active:focus::before {
-    opacity: 0.12;
-}
-
-.theme--dark.m-chip:hover::before {
-    opacity: 0;
-}
-
-.theme--dark.m-chip:focus::before {
-    opacity: 0;
-}
-
-.theme--dark.m-chip--active:hover::before, .theme--dark.m-chip--active::before {
-    opacity: 0.24;
-}
-
-.theme--dark.m-chip--active:focus::before {
-    opacity: 0.24;
-}
-
-@media (hover: none) {
-    .theme--light.m-list-item:hover::before {
-        opacity: 0;
-    }
-
-    .theme--light.m-list-item:focus::before {
-        opacity: 0;
-    }
-
-    .theme--light.m-list-item--active:hover::before, .theme--light.m-list-item--active::before {
-        opacity: 0.12;
-    }
-
-    .theme--light.m-list-item--active:focus::before {
-        opacity: 0.12;
-    }
-
-    .theme--light.m-list-item.m-list-item--highlighted::before {
-        opacity: 0.12;
-    }
-
-    .theme--dark.m-list-item:hover::before {
-        opacity: 0
-    }
-
-    .theme--dark.m-list-item:focus::before {
-        opacity: 0
-    }
-
-    .theme--dark.m-list-item--active::before, .theme--dark.m-list-item--active:hover::before {
-        opacity: .24
-    }
-
-    .theme--dark.m-list-item--active:focus::before {
-        opacity: .24
-    }
-
-    .theme--dark.m-list-item.m-list-item--highlighted::before {
-        opacity: .24
-    }
 }
 
 .m-input--radio-group--row .m-input--radio-group__input {
@@ -339,7 +234,3 @@
     .m-chip-group .m-slide-group__wrapper::-webkit-scrollbar {
         display: none;
     }
-
-.theme--dark.m-picker__body {
-    background: initial;
-}

@@ -31,8 +31,8 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         private IStaticWebAssets StaticWebAssets { get; set; } = default!;
 
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
+        [Inject]
+        private IThemeService ThemeService { get; set; } = default!;
 
         protected override void OnInitialized()
         {
@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             UpdateSettings();
         }
 
-        private string BackgroundColor => Dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface;
+        private string BackgroundColor => ThemeService.RealTheme == Theme.Dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface;
 
         private void UpdateSettings()
         {

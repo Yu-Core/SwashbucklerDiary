@@ -25,10 +25,6 @@
     min-height: 0px;
 }
 
-.theme--dark .vditor-reset {
-    color: #fff;
-}
-
 .vditor-reset {
     background-color: rgba(var(--m-theme-surface)) !important;
     border-radius: 8px;

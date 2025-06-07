@@ -13,8 +13,8 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private BreakpointService BreakpointService { get; set; } = default!;
 
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
+        [Inject]
+        private MasaBlazor MasaBlazor { get; set; } = default!;
 
         [Parameter(CaptureUnmatchedValues = true)]
         public virtual IDictionary<string, object> Attributes { get; set; } = new Dictionary<string, object>();
@@ -44,7 +44,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected string InternalClass => new CssBuilder()
             .Add(Class)
-            .Add("white", !Dark)
+            .Add("surface-container")
             .ToString();
 
         protected virtual StringNumber? Size { get; }

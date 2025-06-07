@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -18,12 +18,7 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected IPlatformIntegration PlatformIntegration { get; set; } = default!;
 
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
-
         protected bool IsThisPage => thisPagePath is null || thisPagePath == NavigationManager.GetAbsolutePath();
-
-        protected bool Light => !Dark;
 
         protected override void OnInitialized()
         {

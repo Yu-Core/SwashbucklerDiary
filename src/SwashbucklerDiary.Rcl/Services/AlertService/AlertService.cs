@@ -80,7 +80,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 if (!opacity)
                 {
                     options.BackgroundOpacity = 0;
-                    options.Class = "my-progress-circular";
+                    options.Color = null;
                 }
             });
             return Task.CompletedTask;

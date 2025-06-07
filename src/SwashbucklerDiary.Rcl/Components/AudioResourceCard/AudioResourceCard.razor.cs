@@ -32,13 +32,8 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
-
         private string InputStyle => StyleBuilder.Create()
-            .Add("--current-width", ((CurrentTime / duration) * 100).ToString("0.00", CultureInfo.InvariantCulture) + "%")
-            .Add("--current-color", Dark ? "#F5F5F5" : "#212121")
-            .Add("--current-track-color", "#9E9E9E")
+            .Add("--current-width", (CurrentTime / duration * 100).ToString("0.00", CultureInfo.InvariantCulture) + "%")
             .Build();
 
         private double CurrentTime => seekingTime ?? currentTime;

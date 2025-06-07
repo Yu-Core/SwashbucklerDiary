@@ -17,7 +17,6 @@
     <ExtensionContent>
         <MChip Class="mr-2"
                Style="min-width:fit-content;"
-               Outlined
                Active="ShowClearFilter"
                OnClick="ClearFilter">
             <MIcon>mdi:mdi-filter-variant-remove</MIcon>
@@ -26,8 +25,7 @@
                     ShowArrows="true">
             @foreach (var item in filterItems)
             {
-                <MChip Outlined
-                       IsActive="false"
+                <MChip IsActive="false"
                        OnClick="item.OnClick">
                     <ExpandXTransition>
                         <MIcon TransitionShow="item.Show"

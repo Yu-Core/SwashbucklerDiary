@@ -22,9 +22,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         public ITagService TagService { get; set; } = default!;
 
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
-
         [Parameter]
         public List<TagModel> Value { get; set; } = [];
 
@@ -39,8 +36,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public EventCallback<List<TagModel>> ItemsChanged { get; set; }
-
-        private string? Color => Dark ? "white" : "grey";
 
         private void BeforeShowContent()
         {

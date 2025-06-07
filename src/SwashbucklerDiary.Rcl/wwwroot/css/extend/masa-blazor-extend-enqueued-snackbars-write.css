@@ -1,4 +1,4 @@
-﻿@media screen and (max-width:600px) {
+    @media screen and (max-width:600px) {
     .m-enqueued-snackbars.m-enqueued-snackbars--bottom {
         bottom: calc(1rem + var(--vditor-toolbar-height)) !important;
     }

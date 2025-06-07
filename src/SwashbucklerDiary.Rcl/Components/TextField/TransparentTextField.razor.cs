@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -7,9 +7,6 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         [Inject]
         private II18nService I18n { get; set; } = default!;
-
-        [CascadingParameter(Name = "IsDark")]
-        public bool Dark { get; set; }
 
         [Parameter]
         public string? Value { get; set; }
@@ -28,7 +25,5 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public bool Autofocus { get; set; } = true;
-
-        private string? TextFieldColor => Dark ? "white" : "grey";
     }
 }
