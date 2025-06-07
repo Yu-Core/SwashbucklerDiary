@@ -26,7 +26,6 @@
 }
 
 .vditor-reset {
-    background-color: rgba(var(--m-theme-surface)) !important;
     border-radius: 8px;
     padding-left: 0px !important;
     padding-right: 0px !important;

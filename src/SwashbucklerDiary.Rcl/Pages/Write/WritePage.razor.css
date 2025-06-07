@@ -1,4 +1,4 @@
-﻿::deep .m-input__control {
+::deep .m-input__control {
     flex-grow: 1;
 }
 
@@ -29,6 +29,10 @@
     flex-grow: 1;
     min-height: 0;
     overflow: visible;
+}
+
+::deep .vditor-reset {
+    background-color: rgba(var(--m-theme-surface)) !important;
 }
 
 @media (hover: none) {

@@ -1,33 +1,10 @@
 import { previewImage } from './previewMediaElement.js';
-import { scrollToTocItem } from './vditor-preview-helper.js'
+import { fixMobileOutlientClick } from './markdown/fixMarkdownOutline.js'
 
 function handleCopy(dotNetCallbackRef, element) {
     element.addEventListener('click', function (event) {
         if (event.target.closest('.vditor-copy')) {
             dotNetCallbackRef.invokeMethodAsync("Copy");
-        }
-    });
-}
-
-function handleA(dotNetCallbackRef, element) {
-    element.addEventListener('click', function (event) {
-        var link = event.target.closest('a[href]');
-        if (!link) {
-            return;
-        }
-
-        let href = link.getAttribute('href');
-        if (href.startsWith('#')) {
-            event.preventDefault();
-            const url = location.origin + location.pathname + location.search + href;
-            dotNetCallbackRef.invokeMethodAsync('NavigateToReplace', url);
-
-            const targetElement = document.getElementById(href.substring(1));
-            if (targetElement) {
-                setTimeout(() => {
-                    targetElement.scrollIntoView();
-                }, 100);
-            }
         }
     });
 }
@@ -39,14 +16,13 @@ function afterMarkdown(dotNetCallbackRef, element, autoPlay, outlineElement) {
 
     handleCopy(dotNetCallbackRef, element);
     previewImage(dotNetCallbackRef, element);
-    handleA(dotNetCallbackRef, element);
 
     handleCustomRender(element);
     if (autoPlay) {
         handleAutoPlay(element);
     }
 
-    outlineRender(dotNetCallbackRef, element, outlineElement);
+    renderMobileOutline(dotNetCallbackRef, element, outlineElement);
 }
 
 function handleCustomRender(element) {
@@ -115,22 +91,9 @@ function handleAutoPlay(element) {
     }
 }
 
-function outlineRender(dotNetCallbackRef, previewElement, outlineElement) {
+function renderMobileOutline(dotNetCallbackRef, previewElement, outlineElement) {
     Vditor.outlineRender(previewElement, outlineElement);
-    addOutlientClick(dotNetCallbackRef, outlineElement.firstElementChild, previewElement);
+    fixMobileOutlientClick(dotNetCallbackRef, outlineElement.firstElementChild, previewElement);
 }
 
-function addOutlientClick(dotNetCallbackRef, listenElement, previewElement) {
-    if (!listenElement || !previewElement) {
-        return;
-    }
-
-    listenElement.addEventListener('click', (event) => {
-        dotNetCallbackRef.invokeMethodAsync('CloseMobileOutline');
-        setTimeout(() => {
-            scrollToTocItem(previewElement, event.target);
-        }, 200);
-    });
-}
-
-export { afterMarkdown, addOutlientClick }
+export { afterMarkdown }

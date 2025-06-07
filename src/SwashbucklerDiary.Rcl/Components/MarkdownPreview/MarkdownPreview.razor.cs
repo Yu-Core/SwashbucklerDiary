@@ -37,9 +37,6 @@ namespace SwashbucklerDiary.Rcl.Components
         private MarkdownPreviewJSModule MarkdownPreviewJSModule { get; set; } = default!;
 
         [Inject]
-        private NavigationManager NavigationManager { get; set; } = default!;
-
-        [Inject]
         private IThemeService ThemeService { get; set; } = default!;
 
         [CascadingParameter(Name = "Culture")]
@@ -87,12 +84,6 @@ namespace SwashbucklerDiary.Rcl.Components
             previewImageSrc = src;
             showPreviewImage = true;
             await InvokeAsync(StateHasChanged);
-        }
-
-        [JSInvokable]
-        public void NavigateToReplace(string url)
-        {
-            NavigationManager.NavigateTo(url, replace: true);
         }
 
         [JSInvokable]

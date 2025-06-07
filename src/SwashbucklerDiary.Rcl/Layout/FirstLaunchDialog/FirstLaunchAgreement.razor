@@ -6,9 +6,9 @@
     </div>
 
     <MContainer Class="d-flex justify-center mb-5">
-        <MMarkdownIt Class="text-subtitle-2 text--secondary"
-                     Source="@(I18n.T("You need to agree to the user agreement and privacy policy before using this app.If you do not agree, we regret that we are unable to provide you with services.\n\nYou can read [user agreement](https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/user-agreement/en-US.md) and [privacy policy](https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/privacy-policy/en-US.md) for more information. If you agree, please click\"Agree\"to start our service."))">
-        </MMarkdownIt>
+        <SimpleMarkdownPreview Class="text-subtitle-2 text--secondary"
+                               Value="@(I18n.T("You need to agree to the user agreement and privacy policy before using this app.If you do not agree, we regret that we are unable to provide you with services.\n\nYou can read [user agreement](https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/user-agreement/en-US.md) and [privacy policy](https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/privacy-policy/en-US.md) for more information. If you agree, please click\"Agree\"to start our service."))">
+        </SimpleMarkdownPreview>
     </MContainer>
 
     <div class="d-flex flex-column flex-sm-row-reverse">

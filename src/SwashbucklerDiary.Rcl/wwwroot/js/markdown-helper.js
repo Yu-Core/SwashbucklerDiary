@@ -1,7 +1,8 @@
-import { addOutlientClick } from './markdown-preview-helper.js'
+import { fixMobileOutlientClick } from './markdown/fixMarkdownOutline.js'
+
 function after(dotNetCallbackRef, element, outlineElement, copyCutPatch) {
     handleToolbar(dotNetCallbackRef, element);
-    addOutlientClick(dotNetCallbackRef, outlineElement, element);
+    fixMobileOutlientClick(dotNetCallbackRef, outlineElement, element);
     if (copyCutPatch) {
         fixCopyCut(dotNetCallbackRef, element);
     }

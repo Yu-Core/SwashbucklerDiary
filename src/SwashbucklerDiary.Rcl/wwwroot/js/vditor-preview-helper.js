@@ -1,32 +1,59 @@
-function previewVditor(dotNetCallbackRef, element, text, options, outline, outlineElement) {
-    if (!element) {
+import { fixOutlientClick } from './markdown/fixMarkdownOutline.js'
+
+function preview(dotNetCallbackRef, previewElement, text, options, outlineElement) {
+    if (!previewElement) {
         return;
     }
 
     if (!text) {
-        element.innerHTML = '';
+        previewElement.innerHTML = '';
         return;
     }
 
     let VditorOptions = {
         ...options,
         after: () => {
-            if (outline) {
-                outlineRender(element, outlineElement);
+            if (outlineElement) {
+                renderOutline(previewElement, outlineElement);
             }
-            handlePreviewElement(element);
-            handleAnchorScroll();
-            fixToc(element);
-            fixAnchorLink(element);
+            handlePreviewElement(previewElement);
+            handleUrlHash();
+            fixToc(previewElement);
+            fixAnchorLink(previewElement);
             dotNetCallbackRef.invokeMethodAsync('After');
         }
     }
-    Vditor.preview(element, text, VditorOptions);
+    Vditor.preview(previewElement, text, VditorOptions);
 }
 
-function outlineRender(previewElement, outlineElement) {
+async function md2htmlPreview(dotNetCallbackRef, previewElement, text, options) {
+    if (!previewElement) {
+        return;
+    }
+
+    if (!text) {
+        previewElement.innerHTML = '';
+        return;
+    }
+
+    let html = await Vditor.md2html(text, options);
+    previewElement.innerHTML = html;
+    previewElement.classList.add("vditor-reset");
+
+    handlePreviewElement(previewElement);
+    handleUrlHash();
+    fixToc(previewElement);
+    fixAnchorLink(previewElement);
+    dotNetCallbackRef.invokeMethodAsync('After');
+}
+
+function renderOutline(previewElement, outlineElement) {
+    if (!previewElement || !outlineElement) {
+        return;
+    }
+
     Vditor.outlineRender(previewElement, outlineElement);
-    addOutlientClick(outlineElement.firstElementChild, previewElement);
+    fixOutlientClick(outlineElement.firstElementChild, previewElement);
 }
 
 function renderLazyLoadingImage(element) {
@@ -87,7 +114,7 @@ function handleIframe(element) {
     });
 }
 
-function handleAnchorScroll() {
+function handleUrlHash() {
     if (!location.hash) return;
 
     const anchor = location.hash.substring(1); // 直接从第一个字符后开始截取，跳过"#"
@@ -97,33 +124,8 @@ function handleAnchorScroll() {
     }
 }
 
-function addOutlientClick(listenElement, previewElement) {
-    if (!listenElement || !previewElement) {
-        return;
-    }
-
-    listenElement.addEventListener('click', (event) => {
-        scrollToTocItem(previewElement, event.target);
-    });
-}
-
-function scrollToTocItem(previewElement, element) {
-    const tocItem = element.closest('[data-target-id]');
-    if (!tocItem) {
-        return;
-    }
-
-    const targetId = tocItem.getAttribute('data-target-id');
-    const targetElement = previewElement.querySelector('#' + targetId);
-    if (targetElement) {
-        setTimeout(() => {
-            targetElement.scrollIntoView();
-        }, 100);
-    }
-}
-
 function fixToc(previewElement) {
-    addOutlientClick(previewElement, previewElement);
+    fixOutlientClick(previewElement, previewElement);
 }
 
 function fixAnchorLink(element) {
@@ -137,4 +139,27 @@ function fixAnchorLink(element) {
     });
 }
 
-export { previewVditor, scrollToTocItem, renderLazyLoadingImage }
+function fixAnchorLinkNavigate(dotNetCallbackRef, element) {
+    element.addEventListener('click', function (event) {
+        var link = event.target.closest('a[href]');
+        if (!link) {
+            return;
+        }
+
+        let href = link.getAttribute('href');
+        if (href.startsWith('#')) {
+            event.preventDefault();
+            const url = location.origin + location.pathname + location.search + href;
+            dotNetCallbackRef.invokeMethodAsync('NavigateToReplace', url);
+
+            const targetElement = document.getElementById(href.substring(1));
+            if (targetElement) {
+                setTimeout(() => {
+                    targetElement.scrollIntoView();
+                }, 100);
+            }
+        }
+    });
+}
+
+export { preview, md2htmlPreview, renderLazyLoadingImage, renderOutline, fixAnchorLinkNavigate }

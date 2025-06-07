@@ -1,7 +1,11 @@
 @namespace SwashbucklerDiary.Rcl.Components
 
 <div class="@WrapClass">
-    <div @ref="outlineElementRef" class="@InternalOutlineClass" style="@InternalOutlineStyle "></div>
+    @if (Outline && !Simple)
+    {
+        <div @ref="outlineElementRef" class="@InternalOutlineClass" style="@InternalOutlineStyle "></div>
+    }
+
     <div @ref="Ref" class="@Class" style="@InternalStyle"></div>
 </div>
 
@@ -26,7 +30,7 @@
     string InternalOutlineStyle => new StyleBuilder()
         .Add("position", "sticky")
         .Add("top", "0px")
-        .AddIf("display", "block", Outline)
+        .Add("display", "block")
         .Add(OutlineStyle)
         .ToString();
 }

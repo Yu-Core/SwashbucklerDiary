@@ -7,11 +7,16 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         private string? previousValue;
 
+        private bool previousOutline;
+
         private bool afterFirstRender;
 
         private Lazy<DotNetObjectReference<object>> dotNetObjectReference = default!;
 
         private ElementReference outlineElementRef;
+
+        [Inject]
+        private NavigationManager NavigationManager { get; set; } = default!;
 
         [Inject]
         private VditorMarkdownPreviewJSModule VditorMarkdownPreviewJSModule { get; set; } = default!;
@@ -38,6 +43,9 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool RightOutline { get; set; }
 
         [Parameter]
+        public bool Simple { get; set; } = default!;
+
+        [Parameter]
         public Dictionary<string, object>? Options { get; set; }
 
         [Parameter]
@@ -52,6 +60,12 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 await OnAfter.InvokeAsync();
             }
+        }
+
+        [JSInvokable]
+        public void NavigateToReplace(string url)
+        {
+            NavigationManager.NavigateTo(url, replace: true);
         }
 
         public async Task RenderLazyLoadingImage()
@@ -73,7 +87,13 @@ namespace SwashbucklerDiary.Rcl.Components
             if (previousValue != Value)
             {
                 previousValue = Value;
-                await RenderingMarkdown();
+                await RenderMarkdown();
+            }
+
+            if (previousOutline != Outline)
+            {
+                previousOutline = Outline;
+                await RenderOutline();
             }
         }
 
@@ -84,18 +104,37 @@ namespace SwashbucklerDiary.Rcl.Components
             if (firstRender)
             {
                 afterFirstRender = true;
-                await RenderingMarkdown();
+                await VditorMarkdownPreviewJSModule.FixAnchorLinkNavigate(dotNetObjectReference.Value, Ref);
+                await RenderMarkdown();
             }
         }
 
-        private async Task RenderingMarkdown()
+        private async Task RenderMarkdown()
         {
             if (!afterFirstRender)
             {
                 return;
             }
 
-            await VditorMarkdownPreviewJSModule.PreviewVditor(dotNetObjectReference.Value, Ref, Value, Options, true, outlineElementRef);
+            if (Simple)
+            {
+                await VditorMarkdownPreviewJSModule.Md2HTMLPreview(dotNetObjectReference.Value, Ref, Value, Options);
+            }
+            else
+            {
+                await VditorMarkdownPreviewJSModule.Preview(dotNetObjectReference.Value, Ref, Value, Options, Outline ? outlineElementRef : null);
+            }
+        }
+
+        private async Task RenderOutline()
+        {
+            if (!afterFirstRender || !Outline || Simple)
+            {
+                return;
+            }
+
+            await Task.Delay(200);
+            await VditorMarkdownPreviewJSModule.RenderOutline(Ref, outlineElementRef);
         }
     }
 }
