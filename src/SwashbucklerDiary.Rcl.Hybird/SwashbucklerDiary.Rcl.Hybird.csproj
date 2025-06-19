@@ -11,10 +11,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="wwwroot\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="WebDav.Client" Version="2.8.0" />
 	</ItemGroup>
 

@@ -22,7 +22,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             => Value.UserAchievement.IsCompleted ? "rgba(var(--m-theme-inverse-surface))" : "rgba(var(--m-theme-surface-container-highest))";
 
         private string ProgressRateTextColor
-            => Value.UserAchievement.IsCompleted ? "rgba(var(--m-theme-inverse-on-surface))" : "";
+            => Value.UserAchievement.IsCompleted ? "rgba(var(--m-theme-inverse-on-surface))" : "rgba(var(--m-theme-on-surface))";
 
         private string ProgressRateText => GetProgressRateText(Value);
 

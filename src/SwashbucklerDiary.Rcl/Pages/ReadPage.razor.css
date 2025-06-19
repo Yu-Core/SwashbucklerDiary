@@ -1,7 +1,3 @@
-::deep .vditor-reset {
-    background-color: rgba(var(--m-theme-surface)) !important;
-}
-
 ::deep .vditor-reset img {
     cursor: pointer;
 }

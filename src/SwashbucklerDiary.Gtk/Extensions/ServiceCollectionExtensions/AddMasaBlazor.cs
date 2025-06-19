@@ -1,7 +1,6 @@
 using Masa.Blazor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 using SwashbucklerDiary.Gtk.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 

@@ -123,6 +123,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string? InternalClass => new CssBuilder()
             .Add("vditor")
+            .Add("vditor--dark", ThemeService.RealTheme == Shared.Theme.Dark)
             .Add(Class)
             .Add("first-line-indent", firstLineIndent)
             .Add("task-list-line-through", taskListLineThrough)

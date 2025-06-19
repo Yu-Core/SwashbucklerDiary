@@ -31,10 +31,6 @@
     overflow: visible;
 }
 
-::deep .vditor-reset {
-    background-color: rgba(var(--m-theme-surface)) !important;
-}
-
 @media (hover: none) {
     .write-chip-group {
         overflow-x: auto;

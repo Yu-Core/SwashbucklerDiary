@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SwashbucklerDiary.Gtk.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Rcl.Hybird.Essentials;
 using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Rcl.Services;
 
@@ -52,7 +53,7 @@ namespace SwashbucklerDiary.Gtk.Extensions
             services.AddSingleton<IDiaryFileManager, Services.DiaryFileManager>();
             services.AddSingleton<IAvatarService, Services.AvatarService>();
             services.AddScoped<ScreenshotJSModule>();
-            services.AddScoped<Rcl.Essentials.IScreenshot, Essentials.Screenshot>();
+            services.AddScoped<IScreenshot, Screenshot>();
             services.AddSingleton<IVersionUpdataManager, Services.VersionUpdataManager>();
             services.AddSingleton<IWebDAV, WebDAV>();
             services.AddSingleton<ILANSenderService, LANSenderService>();

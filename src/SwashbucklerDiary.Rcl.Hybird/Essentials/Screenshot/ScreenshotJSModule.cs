@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Shared;
 
-namespace SwashbucklerDiary.Gtk.Essentials
+namespace SwashbucklerDiary.Rcl.Hybird.Essentials
 {
     public class ScreenshotJSModule : JSModule
     {
@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
 
         public ScreenshotJSModule(IJSRuntime js,
             ILogger<ScreenshotJSModule> logger)
-            : base(js, "./js/screenshot.js")
+            : base(js, "./_content/SwashbucklerDiary.Rcl.Hybird/js/screenshot.js")
         {
             _logger = logger;
             _httpClient = new HttpClient();

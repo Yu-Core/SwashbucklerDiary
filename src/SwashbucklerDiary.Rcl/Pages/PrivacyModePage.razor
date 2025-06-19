@@ -194,15 +194,15 @@
 
     @if (Mobile)
     {
-        <MContainer Fluid>
-            <MButton Class="black-white-btn mb-2"
+        <div class="pa-3">
+            <MButton Class="inverse-surface mb-2"
                      Rounded="true"
                      Block="true"
                      Large="true"
                      OnClick="SwitchPrivacyMode">
                 @(I18n.T(SwitchPrivacyModeText))
             </MButton>
-        </MContainer>
+        </div>
     }
 
     <InputDialog @bind-Visible="showPrivacyModeFunctionSearchKeyDialog"

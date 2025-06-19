@@ -98,7 +98,7 @@
 /*配色*/
 
 .m-picker__body {
-    background: inherit;
+    background: initial;
 }
 
 .p-mobile-date-picker__content {
@@ -234,3 +234,7 @@
     .m-chip-group .m-slide-group__wrapper::-webkit-scrollbar {
         display: none;
     }
+
+.m-input--switch .m-input--switch__thumb {
+    color: #fff;
+}

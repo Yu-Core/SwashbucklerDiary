@@ -6,8 +6,16 @@
     border: none;
 }
 
+.vditor--fullscreen .vditor-toolbar {
+    background-color: rgba(var(--m-theme-surface));
+}
+
+.vditor--fullscreen .vditor-reset {
+    background-color: rgba(var(--m-theme-surface)) !important;
+}
+
 .vditor-toolbar {
-    background: rgba(var(--m-theme-surface)) !important;
+    background: initial;
     padding-left: 0px !important;
     border: none;
 }
@@ -26,6 +34,7 @@
 }
 
 .vditor-reset {
+    background: initial !important;
     border-radius: 8px;
     padding-left: 0px !important;
     padding-right: 0px !important;

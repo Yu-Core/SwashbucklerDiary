@@ -2,6 +2,7 @@ using Masa.Blazor;
 using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Rcl.Hybird.Essentials;
 using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Rcl.Services;
 
@@ -49,7 +50,7 @@ namespace SwashbucklerDiary.Maui.Extensions
             services.AddSingleton<IDiaryFileManager, Services.DiaryFileManager>();
             services.AddSingleton<IAvatarService, Services.AvatarService>();
             services.AddScoped<ScreenshotJSModule>();
-            services.AddScoped<Rcl.Essentials.IScreenshot, Essentials.Screenshot>();
+            services.AddScoped<Rcl.Essentials.IScreenshot, Rcl.Hybird.Essentials.Screenshot>();
             services.AddSingleton<IVersionUpdataManager, Services.VersionUpdataManager>();
             services.AddSingleton<IWebDAV, WebDAV>();
             services.AddSingleton<ILANSenderService, LANSenderService>();

@@ -8,8 +8,8 @@
 input[type=range] {
     --current-width: 0;
     --height: 4px;
-    --current-color: rgba(var(--m-theme-on-surface), var(--m-low-emphasis-opacity));
-    --current-track-color: currentColor;
+    --current-color: rgba(var(--m-theme-on-surface));
+    --current-track-color: rgba(var(--m-theme-on-surface), var(--m-low-emphasis-opacity));
     appearance: none;
     border-radius: 2px;
     height: 22px;

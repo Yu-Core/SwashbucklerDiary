@@ -1,6 +1,6 @@
 using SwashbucklerDiary.Rcl.Essentials;
 
-namespace SwashbucklerDiary.Gtk.Essentials
+namespace SwashbucklerDiary.Rcl.Hybird.Essentials
 {
     public class Screenshot : Rcl.Essentials.IScreenshot
     {
