@@ -89,7 +89,7 @@ function handleVideo(element) {
         if (video.hasAttribute('src')) {
             const url = new URL(video.src);
             if (!url.hash) {
-                video.src += '#t=0.1';
+                video.src = video.getAttribute("src") + '#t=0.1';
             }
 
             return;
@@ -98,9 +98,13 @@ function handleVideo(element) {
         const sources = video.querySelectorAll('source');
 
         sources.forEach(source => {
+            if (!source.hasAttribute('src')) {
+                return;
+            }
+
             const url = new URL(source.src);
             if (!url.hash) {
-                source.src += '#t=0.1';
+                source.src = video.getAttribute("src") + '#t=0.1';
             }
         });
     });
@@ -155,7 +159,7 @@ function fixAnchorLinkNavigate(dotNetCallbackRef, element) {
             url.hash = hash;
             dotNetCallbackRef.invokeMethodAsync('NavigateToReplace', url.toString());
 
-            const targetElement = document.getElementById(href.substring(1));
+            const targetElement = document.getElementById(hash.substring(1));
             if (targetElement) {
                 setTimeout(() => {
                     targetElement.scrollIntoView();
