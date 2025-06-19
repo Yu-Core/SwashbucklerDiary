@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwashbucklerDiary.Rcl", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwashbucklerDiary.Maui", "src\SwashbucklerDiary.Maui\SwashbucklerDiary.Maui.csproj", "{2C2C7E54-A56E-ABDC-0E00-280314915586}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwashbucklerDiary.Rcl.Client", "src\SwashbucklerDiary.Rcl.Client\SwashbucklerDiary.Rcl.Client.csproj", "{8F4685F7-8B34-62C6-6ADE-CD1958735A41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwashbucklerDiary.Rcl.Hybird", "src\SwashbucklerDiary.Rcl.Hybird\SwashbucklerDiary.Rcl.Hybird.csproj", "{A9044094-4558-CA43-D643-ECB29BD3CB99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +31,10 @@ Global
 		{2C2C7E54-A56E-ABDC-0E00-280314915586}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C2C7E54-A56E-ABDC-0E00-280314915586}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2C2C7E54-A56E-ABDC-0E00-280314915586}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{8F4685F7-8B34-62C6-6ADE-CD1958735A41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F4685F7-8B34-62C6-6ADE-CD1958735A41}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F4685F7-8B34-62C6-6ADE-CD1958735A41}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F4685F7-8B34-62C6-6ADE-CD1958735A41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9044094-4558-CA43-D643-ECB29BD3CB99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9044094-4558-CA43-D643-ECB29BD3CB99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9044094-4558-CA43-D643-ECB29BD3CB99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9044094-4558-CA43-D643-ECB29BD3CB99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
