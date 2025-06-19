@@ -64,6 +64,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private readonly string highlightSearchContainerClass = $"search-{Guid.NewGuid():N}";
 
+        private readonly string screenshotClass = $"screenshot-{Guid.NewGuid():N}";
+
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
 
@@ -260,7 +262,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 await markdownPreview.RenderLazyLoadingImage();
             }
 
-            var filePath = await ScreenshotService.CaptureAsync("#screenshot");
+            var filePath = await ScreenshotService.CaptureAsync($".{screenshotClass}");
             await PlatformIntegration.ShareFileAsync(I18n.T("Share"), filePath);
 
             await AlertService.StopLoading();
