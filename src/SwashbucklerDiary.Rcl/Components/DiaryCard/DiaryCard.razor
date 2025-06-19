@@ -75,11 +75,26 @@
     <MDivider Class="mx-4"></MDivider>
     <MListItem ThreeLine>
         <MListItemContent>
-            <MListItemTitle Class="diary-card__title">
-                @title
-            </MListItemTitle>
+            @if (!string.IsNullOrEmpty(Value.Title))
+            {
+                <MListItemTitle Class="diary-card__title">
+                    @Value.Title
+                </MListItemTitle>
+            }
+
             <MListItemSubtitle>
-                @text
+                @if (Markdown)
+                {
+                    <SimpleMarkdownPreview Value="@text"
+                                           Style="pointer-events:none;"
+                                           Patch="false">
+                    </SimpleMarkdownPreview>
+                }
+                else
+                {
+                    @text
+                }
+
             </MListItemSubtitle>
         </MListItemContent>
     </MListItem>

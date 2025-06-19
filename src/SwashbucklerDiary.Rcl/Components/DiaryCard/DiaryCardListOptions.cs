@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -8,8 +8,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public string? TimeFormat { get; set; }
 
-        public bool Template {  get; set; }
+        public bool Template { get; set; }
 
         public Guid? DefaultTemplateId { get; set; }
+
+        public bool Markdown { get; set; }
     }
 }

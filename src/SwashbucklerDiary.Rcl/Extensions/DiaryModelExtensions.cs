@@ -1,12 +1,12 @@
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
+using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Extensions
 {
     public static class DiaryModelExtensions
     {
-        const int maxDisplayTitleLength = 200;
-        const int maxDisplayContentLength = 2000;
+        const int maxDisplayContentLength = 300;
 
         public static string CreateCopyContent(this DiaryModel diary)
         {
@@ -18,46 +18,14 @@ namespace SwashbucklerDiary.Rcl.Extensions
             return diary.Title + "\n" + diary.Content;
         }
 
-        public static string? GetDisplayTitle(this DiaryModel diary)
+        public static string? GetDisplayContent(this DiaryModel diary)
         {
-            if (!string.IsNullOrWhiteSpace(diary.Title))
-            {
-                return diary.Title;
-            }
-            else
-            {
-                if (string.IsNullOrWhiteSpace(diary.Content))
-                {
-                    return string.Empty;
-                }
-
-                int length = GetDisplayTitleLengthFromContent(diary.Content, maxDisplayTitleLength);
-                if (length > 0)
-                {
-                    return diary.Content.Substring(0, length);
-                }
-                else
-                {
-                    return SubText(diary.Content, 0, maxDisplayTitleLength);
-                }
-            }
-        }
-
-        public static string? GetDisplayContent(this DiaryModel diary, int displayTitleLength)
-        {
-            if (string.IsNullOrWhiteSpace(diary.Content))
+            if (string.IsNullOrEmpty(diary.Content))
             {
                 return string.Empty;
             }
 
-            int startIndex = 0;
-            if (string.IsNullOrWhiteSpace(diary.Title) && displayTitleLength < diary.Content.Length)
-            {
-                startIndex = displayTitleLength;
-            }
-
-            string content = SubText(diary.Content, startIndex, maxDisplayContentLength);
-            return content;
+            return TruncateString(diary.Content, maxDisplayContentLength);
         }
 
         public static int GetWordCount(this DiaryModel diary)
@@ -82,54 +50,20 @@ namespace SwashbucklerDiary.Rcl.Extensions
             return $"[{i18n.T(diary.Template ? "Template reference" : "Diary reference")}](read/{diary.Id})";
         }
 
-        private static string SubText(string? text, int startIndex, int? length = null)
+        private static string TruncateString(string input, int maxLength)
         {
-            if (text == null)
+            if (string.IsNullOrEmpty(input))
             {
-                return string.Empty;
+                return input;
             }
 
-            int textLength = text.Length;
-
-            if (startIndex < 0 || startIndex >= textLength)
+            var stringInfo = new StringInfo(input);
+            if (stringInfo.LengthInTextElements <= maxLength)
             {
-                return string.Empty;
+                return input;
             }
 
-            if (length == null)
-            {
-                length = textLength - startIndex;
-            }
-            else if (length < 0)
-            {
-                return string.Empty;
-            }
-
-            int endIndex = startIndex + length.Value;
-
-            if (endIndex > textLength)
-            {
-                endIndex = textLength;
-            }
-
-            return text.Substring(startIndex, endIndex - startIndex);
-        }
-
-        private static int GetDisplayTitleLengthFromContent(string content, int maxLength)
-        {
-            maxLength = Math.Min(content.Length, maxLength);
-            char[] separators = [']', '。', '\n']; // 定义分隔符
-            int index = content.IndexOfAny(separators, 0, maxLength);
-            if (index == -1 || index == content.Length - 1)
-            {
-                index = content.IndexOf(". ", 0, maxLength);
-                if (index > -1)
-                {
-                    index++;
-                }
-            }
-
-            return (index != content.Length - 1 ? index : -1) + 1;
+            return stringInfo.SubstringByTextElements(0, maxLength) + "...";
         }
     }
 }

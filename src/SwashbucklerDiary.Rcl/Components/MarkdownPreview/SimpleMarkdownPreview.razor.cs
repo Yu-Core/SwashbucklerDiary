@@ -24,6 +24,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public string? Style { get; set; }
 
+        [Parameter]
+        public bool Patch { get; set; } = true;
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -52,7 +55,6 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.11.1" },
                 { "lang", lang },
                 { "theme", theme },
-                { "icon", "material" },
                 { "markdown", markdown },
             };
         }

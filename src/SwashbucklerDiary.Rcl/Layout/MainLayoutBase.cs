@@ -69,6 +69,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             _ = UpdateDocumentProperty(I18n.Culture);
 
             I18n.CultureChanged += HandleLanguageChanged;
+            ThemeService.OnChanged += HandleThemeChanged;
             SettingService.SettingsChanged += HandleSettingsChanged;
             VersionUpdataManager.AfterCheckFirstLaunch += HandleSponsorSupport;
         }
@@ -76,6 +77,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected virtual void OnDispose()
         {
             I18n.CultureChanged -= HandleLanguageChanged;
+            ThemeService.OnChanged -= HandleThemeChanged;
             SettingService.SettingsChanged -= HandleSettingsChanged;
             VersionUpdataManager.AfterCheckFirstLaunch -= HandleSponsorSupport;
         }
@@ -93,12 +95,18 @@ namespace SwashbucklerDiary.Rcl.Layout
             await UpdateDocumentProperty(I18n.Culture);
         }
 
+        protected async void HandleThemeChanged(Shared.Theme theme)
+        {
+            string mode = theme == Shared.Theme.Dark ? "dark" : "light";
+            await JSRuntime.EvaluateJavascript($"Vditor.setContentTheme('{mode}', '_content/{StaticWebAssets.RclAssemblyName}/npm/vditor/3.11.1/dist/css/content-theme');");
+        }
+
         protected async Task UpdateDocumentProperty(CultureInfo cultureInfo)
         {
             // When html lang is not English, the vertical position of Chinese characters and icons cannot be aligned
             //await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
             await JSRuntime.EvaluateJavascript($"document.title = '{I18n.T("Swashbuckler Diary")}';");
-        } 
+        }
 
         protected void HandleSettingsChanged()
         {

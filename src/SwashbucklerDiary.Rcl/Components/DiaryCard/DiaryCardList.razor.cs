@@ -1,4 +1,4 @@
-﻿using Masa.Blazor.Core;
+using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
@@ -89,6 +89,7 @@ namespace SwashbucklerDiary.Rcl.Components
             showLocation = SettingService.Get(s => s.DiaryCardLocation);
             options.TimeFormat = SettingService.Get(s => s.DiaryCardTimeFormat);
             urlScheme = SettingService.Get(s => s.UrlScheme);
+            options.Markdown = SettingService.Get(s => s.DiaryCardMarkdown);
             string defaultTemplateIdString = SettingService.Get(s => s.DefaultTemplateId);
             if (Guid.TryParse(defaultTemplateIdString, out var defaultTemplateId))
             {
@@ -103,8 +104,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
             privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
         }
-
-        private float ItemHeight => BreakpointService.Breakpoint.Xs ? 156.8f : (BreakpointService.Breakpoint.Sm ? 164.8f : 172.8f);
 
         private string? InternalClass => new CssBuilder()
             .Add("card-list__main")
@@ -210,7 +209,7 @@ namespace SwashbucklerDiary.Rcl.Components
             sortOptions = new()
             {
                 {"Time - Reverse order",it => it.OrderByDescending(d => d.CreateTime) },
-                {"Time - Positive order",it => it.OrderBy(d => d.CreateTime) },               
+                {"Time - Positive order",it => it.OrderBy(d => d.CreateTime) },
                 {"Update Time - Reverse order",it => it.OrderByDescending(d => d.UpdateTime) },
                 {"Update Time - Positive order",it => it.OrderBy(d => d.UpdateTime) },
             };

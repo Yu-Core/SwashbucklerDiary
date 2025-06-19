@@ -1,6 +1,9 @@
 import { fixOutlientClick } from './markdown/fixMarkdownOutline.js'
 
-function preview(dotNetCallbackRef, previewElement, text, options, outlineElement) {
+// Store event listeners to prevent duplicates
+const eventListeners = new WeakMap();
+
+function preview(dotNetCallbackRef, previewElement, text, options, outlineElement, patch) {
     if (!previewElement) {
         return;
     }
@@ -16,17 +19,22 @@ function preview(dotNetCallbackRef, previewElement, text, options, outlineElemen
             if (outlineElement) {
                 renderOutline(previewElement, outlineElement);
             }
-            handlePreviewElement(previewElement);
-            handleUrlHash();
-            fixToc(previewElement);
-            fixAnchorLink(previewElement);
+
+            processMediaElements(previewElement);
+            if (patch) {
+                handleUrlHash();
+                fixToc(previewElement);
+                fixAnchorLinks(previewElement);
+                fixAnchorLinkNavigate(dotNetCallbackRef, previewElement);
+            }
+
             dotNetCallbackRef.invokeMethodAsync('After');
         }
     }
     Vditor.preview(previewElement, text, VditorOptions);
 }
 
-async function md2htmlPreview(dotNetCallbackRef, previewElement, text, options) {
+async function md2htmlPreview(dotNetCallbackRef, previewElement, text, options, patch) {
     if (!previewElement) {
         return;
     }
@@ -39,11 +47,18 @@ async function md2htmlPreview(dotNetCallbackRef, previewElement, text, options) 
     let html = await Vditor.md2html(text, options);
     previewElement.innerHTML = html;
     previewElement.classList.add("vditor-reset");
+    if (options.theme) {
+        Vditor.setContentTheme(options.theme.current, options.theme.path);
+    }
 
-    handlePreviewElement(previewElement);
-    handleUrlHash();
-    fixToc(previewElement);
-    fixAnchorLink(previewElement);
+    processMediaElements(previewElement);
+    if (patch) {
+        handleUrlHash();
+        fixToc(previewElement);
+        fixAnchorLinks(previewElement);
+        fixAnchorLinkNavigate(dotNetCallbackRef, previewElement);
+    }
+
     dotNetCallbackRef.invokeMethodAsync('After');
 }
 
@@ -76,44 +91,36 @@ function renderLazyLoadingImage(element) {
     }
 }
 
-function handlePreviewElement(previewElement) {
-    handleVideo(previewElement);
-    handleIframe(previewElement);
+function processMediaElements(previewElement) {
+    processVideos(previewElement);
+    processIframes(previewElement);
 }
 
 //fix Video Not Display First Frame
-function handleVideo(element) {
-    const videos = element.querySelectorAll("video");
-    videos.forEach(video => {
-        video.playsInline = "true";
-        if (video.hasAttribute('src')) {
+function processVideos(element) {
+    element.querySelectorAll("video").forEach(video => {
+        video.playsInline = true;
+
+        if (video.src) {
             const url = new URL(video.src);
             if (!url.hash) {
-                video.src = video.getAttribute("src") + '#t=0.1';
+                video.src = `${video.src}#t=0.1`;
             }
-
             return;
         }
 
-        const sources = video.querySelectorAll('source');
-
-        sources.forEach(source => {
-            if (!source.hasAttribute('src')) {
-                return;
-            }
-
+        video.querySelectorAll('source[src]').forEach(source => {
             const url = new URL(source.src);
             if (!url.hash) {
-                source.src = video.getAttribute("src") + '#t=0.1';
+                source.src = `${source.src}#t=0.1`;
             }
         });
     });
 }
 
 //fix Iframe AllowFullscreen
-function handleIframe(element) {
-    const iframes = element.querySelectorAll("iframe");
-    iframes.forEach(iframe => {
+function processIframes(element) {
+    element.querySelectorAll("iframe").forEach(iframe => {
         iframe.allowFullscreen = true;
     });
 }
@@ -121,8 +128,7 @@ function handleIframe(element) {
 function handleUrlHash() {
     if (!location.hash) return;
 
-    let anchor = location.hash.substring(1); // 直接从第一个字符后开始截取，跳过"#"
-    anchor = decodeURIComponent(anchor);
+    const anchor = decodeURIComponent(location.hash.substring(1));
     const targetElement = document.getElementById(anchor);
     if (targetElement) {
         targetElement.scrollIntoView();
@@ -133,40 +139,40 @@ function fixToc(previewElement) {
     fixOutlientClick(previewElement, previewElement);
 }
 
-function fixAnchorLink(element) {
-    element.querySelectorAll("a").forEach(a => {
-        const href = a.getAttribute('href');
-        if (!href || !href.startsWith('#')) {
-            return;
-        }
-
-        a.href = decodeURIComponent(href);
+function fixAnchorLinks(element) {
+    element.querySelectorAll("a[href^='#']").forEach(a => {
+        a.href = decodeURIComponent(a.getAttribute('href'));
     });
 }
 
 function fixAnchorLinkNavigate(dotNetCallbackRef, element) {
-    element.addEventListener('click', function (event) {
-        var link = event.target.closest('a[href]');
+    const eventListener = eventListeners.get(element);
+    if (eventListener) {
+        return;
+    }
+
+    const clickHandler = (event) => {
+        const link = event.target.closest("a[href^='#']");
         if (!link) {
             return;
         }
 
-        let href = link.getAttribute('href');
-        if (href.startsWith('#')) {
-            event.preventDefault();
-            const hash = href;
-            const url = new URL(window.location.href);
-            url.hash = hash;
-            dotNetCallbackRef.invokeMethodAsync('NavigateToReplace', url.toString());
+        event.preventDefault();
+        const hash = link.getAttribute('href');
+        const url = new URL(window.location.href);
+        url.hash = hash;
+        dotNetCallbackRef.invokeMethodAsync('NavigateToReplace', url.toString());
 
-            const targetElement = document.getElementById(hash.substring(1));
-            if (targetElement) {
-                setTimeout(() => {
-                    targetElement.scrollIntoView();
-                }, 100);
-            }
+        const targetElement = document.getElementById(hash.substring(1));
+        if (targetElement) {
+            setTimeout(() => {
+                targetElement.scrollIntoView();
+            }, 100);
         }
-    });
+    }
+
+    element.addEventListener('click', clickHandler);
+    eventListeners.set(element, clickHandler);
 }
 
-export { preview, md2htmlPreview, renderLazyLoadingImage, renderOutline, fixAnchorLinkNavigate }
+export { preview, md2htmlPreview, renderLazyLoadingImage, renderOutline }

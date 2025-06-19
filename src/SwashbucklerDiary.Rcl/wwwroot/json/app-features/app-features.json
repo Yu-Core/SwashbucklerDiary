@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "Name": "User Setting",
     "Icon": "manage_accounts",
@@ -285,6 +285,12 @@
     "Name": "Diary card",
     "Icon": "mdi:mdi-card-text-outline",
     "Path": "Setting / Diary card",
+    "Href": "diaryCardSetting"
+  },
+  {
+    "Name": "Markdown",
+    "Icon": "markdown",
+    "Path": "Setting / Diary card / Markdown",
     "Href": "diaryCardSetting"
   },
   {

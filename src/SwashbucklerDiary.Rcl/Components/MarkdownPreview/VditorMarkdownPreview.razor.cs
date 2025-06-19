@@ -43,7 +43,10 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool RightOutline { get; set; }
 
         [Parameter]
-        public bool Simple { get; set; } = default!;
+        public bool Simple { get; set; }
+
+        [Parameter]
+        public bool Patch { get; set; } = true;
 
         [Parameter]
         public Dictionary<string, object>? Options { get; set; }
@@ -104,7 +107,6 @@ namespace SwashbucklerDiary.Rcl.Components
             if (firstRender)
             {
                 afterFirstRender = true;
-                await VditorMarkdownPreviewJSModule.FixAnchorLinkNavigate(dotNetObjectReference.Value, Ref);
                 await RenderMarkdown();
             }
         }
@@ -118,11 +120,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (Simple)
             {
-                await VditorMarkdownPreviewJSModule.Md2HTMLPreview(dotNetObjectReference.Value, Ref, Value, Options);
+                await VditorMarkdownPreviewJSModule.Md2HTMLPreview(dotNetObjectReference.Value, Ref, Value, Options, Patch);
             }
             else
             {
-                await VditorMarkdownPreviewJSModule.Preview(dotNetObjectReference.Value, Ref, Value, Options, Outline ? outlineElementRef : null);
+                await VditorMarkdownPreviewJSModule.Preview(dotNetObjectReference.Value, Ref, Value, Options, Outline ? outlineElementRef : null, Patch);
             }
         }
 
