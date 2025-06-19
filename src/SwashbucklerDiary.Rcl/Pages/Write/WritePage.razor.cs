@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class WritePage : ImportantComponentBase
     {
-        private readonly static string cssHref = $"_content/{Rcl.Essentials.StaticWebAssets.RclAssemblyName}/css/extend/masa-blazor-extend-enqueued-snackbars-write.css";
+        private static readonly string cssHref = $"_content/{Rcl.Essentials.StaticWebAssets.RclAssemblyName}/css/extend/masa-blazor-extend-enqueued-snackbars-write.css";
 
         private bool showMenu;
 
@@ -60,6 +60,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string? diaryTimeFormat;
 
         private Guid? defaultTemplateId;
+
+        private string? diaryInsertTimeFormat;
 
         private PeriodicTimer? timer;
 
@@ -166,6 +168,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 this.defaultTemplateId = defaultTemplateId;
             }
+
+            diaryInsertTimeFormat = SettingService.Get(it => it.DiaryInsertTimeFormat);
         }
 
         private List<TagModel> SelectedTags
@@ -452,7 +456,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task InsertTimestamp()
         {
-            string dateTimeNow = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+            string dateTimeNow = DateTime.Now.ToString(diaryInsertTimeFormat);
             await InsertValueAsync(dateTimeNow);
         }
 

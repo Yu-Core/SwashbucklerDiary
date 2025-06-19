@@ -87,7 +87,7 @@
 
             <MDivider Class="mx-5"></MDivider>
 
-            <MListItem OnClick="()=>showEditAutoSave=true">
+            <MListItem OnClick="() => showEditAutoSave = true">
                 <MListItemIcon>
                     <MIcon>
                         save_as
@@ -126,6 +126,22 @@
                     <MIcon>chevron_right</MIcon>
                 </MListItemAction>
             </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem OnClick="@(() => showDiaryInsertTimeFormat = true)">
+                <MListItemIcon>
+                    <MIcon>
+                        schedule
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Insert Time format"))
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
         </MList>
     </MCard>
 
@@ -133,7 +149,7 @@
            Elevation="0"
            Rounded="@("lg")">
         <MList>
-            <MListItem OnClick="@(()=>To("outlineSetting"))">
+            <MListItem OnClick="@(() => To("outlineSetting"))">
                 <MListItemIcon>
                     <MIcon>
                         format_list_bulleted
@@ -261,3 +277,9 @@
              Items="diaryTimeFormats"
              ItemText="it => I18n.TForTimeFormat(it.Key)">
 </RadioDialog>
+
+<DiaryInsertTimeFormatDialog @bind-Visible="showDiaryInsertTimeFormat"
+                             @bind-Value="@diaryInsertTimeFormat"
+                             @bind-Value:after="UpdateDiaryInsertTimeFormatSetting"
+                             OnReset="ResetDiaryInsertTimeFormatSetting">
+</DiaryInsertTimeFormatDialog>

@@ -1,0 +1,92 @@
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits DialogComponentBase
+
+<CustomMDialog MyValue="Visible"
+               MyValueChanged="InternalVisibleChanged"
+               ContentClass="rounded-lg"
+               MaxWidth="420"
+               DisableAutoFocus
+               OnBeforeShowContent="HandleOnBeforeShowContent">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @I18n.T("Insert Time format")
+            <MSpacer></MSpacer>
+            <MButton Icon
+                     OnClick="()=>showMore=true">
+                <MIcon>info</MIcon>
+            </MButton>
+            <MButton Icon
+                     OnClick="HandleOnCancel">
+                <MIcon>close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            <p class="text-h5 mb-4">@CurrentTimeText</p>
+
+            <CustomMTextField @ref="textField"
+                              @bind-Value="internalValue"
+                              OnEnter="HandleOnEnter"
+                              Dense
+                              MinHeight="44"
+                              Filled
+                              Rounded
+                              spellcheck="false">
+            </CustomMTextField>
+
+            <span class="subheading">@I18n.T("Add Time type")</span>
+
+            <MChipGroup Column="true">
+                @foreach (var item in timeMap)
+                {
+                    <MChip @key="item.Value"
+                           IsActive="false"
+                           OnClick="()=>AddTimeAsync(item.Value)">
+                        @(I18n.T(item.Key))
+                    </MChip>
+                }
+            </MChipGroup>
+        </MCardText>
+        <MCardActions Class="pt-0">
+            <MButton Text="true" OnClick="OnReset">
+                @(I18n.T("Restore the default"))
+            </MButton>
+            <MSpacer></MSpacer>
+            <MButton Text
+                     OnClick="HandleOnCancel">
+                @(I18n.T("Cancel"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="HandleOnOK">
+                @(I18n.T("Save"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</CustomMDialog>
+
+<CustomMDialog @bind-MyValue="showMore"
+               ContentClass="rounded-lg"
+               MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold">
+            @I18n.T("More")
+            <MSpacer></MSpacer>
+            <MButton Icon
+                     OnClick="()=>showMore=false">
+                <MIcon>close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText>
+            <p>
+                <a href="https://learn.microsoft.com/dotnet/standard/base-types/standard-date-and-time-format-strings" target="_blank">
+                    @I18n.T("Standard date and time format strings")
+                </a>
+            </p>
+            <p>
+                <a href="https://learn.microsoft.com/dotnet/standard/base-types/custom-date-and-time-format-strings" target="_blank">
+                    @I18n.T("Custom date and time format strings")
+                </a>
+            </p>
+        </MCardText>
+    </MCard>
+</CustomMDialog>

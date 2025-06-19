@@ -2,12 +2,12 @@
 @inherits FocusDialogComponentBase
 
 <CustomMDialog MyValue="Visible"
-                  MyValueChanged="VisibleChanged"
-                  ContentClass="rounded-lg"
-                  MaxWidth="480"
-                  DisableAutoFocus
-                  OnAfterShowContent="FocusAsync"
-                  OnBeforeShowContent="BeforeShowContent">
+               MyValueChanged="VisibleChanged"
+               ContentClass="rounded-lg"
+               MaxWidth="480"
+               DisableAutoFocus
+               OnAfterShowContent="FocusAsync"
+               OnBeforeShowContent="BeforeShowContent">
     <MForm @ref="@MForm"
            Model="@configModel"
            OnValidSubmit="HandleOnOK"

@@ -3,9 +3,9 @@ using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class TextareaJSModule : CustomJSModule
+    public class InputJSModule : CustomJSModule
     {
-        public TextareaJSModule(IJSRuntime js) : base(js, "js/mtextarea-helper.js")
+        public InputJSModule(IJSRuntime js) : base(js, "js/input-helper.js")
         {
         }
 

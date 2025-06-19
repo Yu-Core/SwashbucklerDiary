@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SwashbucklerDiary.Rcl.Components;
 
@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
         {
             services.TryAddScoped<ZoomJSModule>();
             services.TryAddScoped<MarkdownJSModule>();
-            services.TryAddScoped<TextareaJSModule>();
+            services.TryAddScoped<InputJSModule>();
             services.TryAddScoped<AudioInterop>();
             services.TryAddScoped<SwiperJsModule>();
             services.TryAddScoped<VditorMarkdownPreviewJSModule>();

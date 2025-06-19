@@ -16,6 +16,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showDiaryTimeFormat;
 
+        private bool showDiaryInsertTimeFormat;
+
         private bool firstLineIndent;
 
         private bool codeLineNumber;
@@ -30,6 +32,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? diaryTimeFormat;
 
+        private string? diaryInsertTimeFormat;
+
         private readonly Dictionary<string, int> editAutoSaveItems = new()
         {
             {"Close" ,0},
@@ -41,7 +45,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             {"60s" ,60},
         };
 
-        private readonly static Dictionary<string, string> diaryTimeFormats = new()
+        private static readonly Dictionary<string, string> diaryTimeFormats = new()
         {
             { "Year/Month/Day Week","yyyy/MM/dd dddd" },
             { "Year/Month/Day Hour:Minute","yyyy/MM/dd HH:mm" },
@@ -63,6 +67,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             taskListLineThrough = SettingService.Get(s => s.TaskListLineThrough);
             autoPlay = SettingService.Get(s => s.AutoPlay);
             diaryTimeFormat = SettingService.Get(s => s.DiaryTimeFormat);
+            diaryInsertTimeFormat = SettingService.Get(s => s.DiaryInsertTimeFormat);
         }
 
         private string? EditAutoSaveText => I18n.T(editAutoSaveItems.FirstOrDefault(it => it.Value == editAutoSave).Key);
@@ -77,6 +82,18 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task UpdateDiaryTimeFormatSetting(string value)
         {
             await SettingService.SetAsync(s => s.DiaryTimeFormat, value);
+        }
+
+        private async Task UpdateDiaryInsertTimeFormatSetting()
+        {
+            await SettingService.SetAsync(s => s.DiaryInsertTimeFormat, diaryInsertTimeFormat);
+        }
+
+        private async Task ResetDiaryInsertTimeFormatSetting()
+        {
+            showDiaryInsertTimeFormat = false;
+            await SettingService.RemoveAsync(it => it.DiaryInsertTimeFormat);
+            diaryInsertTimeFormat = SettingService.Get(s => s.DiaryInsertTimeFormat);
         }
     }
 }

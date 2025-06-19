@@ -341,6 +341,7 @@
   "Day": "Day",
   "Hour": "Hour",
   "Minute": "Minute",
+  "Second": "Second",
   "Week": "Week",
   "Please enter device name": "Please enter device name",
   "Please enter scan port": "Please enter scan port",
@@ -454,5 +455,10 @@
   "Create Time": "Create Time",
   "Update Time": "Update Time",
   "Export files": "Export files",
-  "No file": "No file"
+  "No file": "No file",
+  "Insert Time format": "Insert Time format",
+  "Add Time type": "Add Time type",
+  "Standard date and time format strings": "Standard date and time format strings",
+  "Custom date and time format strings": "Custom date and time format strings",
+  "More": "More"
 }

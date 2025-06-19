@@ -341,6 +341,7 @@
   "Day": "日",
   "Hour": "时",
   "Minute": "分",
+  "Second": "秒",
   "Week": "星期",
   "Please enter device name": "请输入设备名",
   "Please enter scan port": "请输入扫描端口",
@@ -454,5 +455,10 @@
   "Create Time": "创建时间",
   "Update Time": "更新时间",
   "Export files": "导出文件",
-  "No file": "暂无文件"
+  "No file": "暂无文件",
+  "Insert Time format": "插入时间格式",
+  "Add Time type": "添加时间类型",
+  "Standard date and time format strings": "标准日期和时间格式字符串",
+  "Custom date and time format strings": "自定义日期和时间格式字符串",
+  "More": "更多"
 }

@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private II18nService I18n { get; set; } = default!;
 
         [Inject]
-        private TextareaJSModule Module { get; set; } = default!;
+        private InputJSModule Module { get; set; } = default!;
 
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }

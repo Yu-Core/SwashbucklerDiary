@@ -185,6 +185,12 @@
     "Href": "diarySetting"
   },
   {
+    "Name": "Insert Time format",
+    "Icon": "schedule",
+    "Path": "Setting / Diary / Insert Time format",
+    "Href": "diarySetting"
+  },
+  {
     "Name": "Outline",
     "Icon": "format_list_bulleted",
     "Path": "Setting / Diary / Outline",
