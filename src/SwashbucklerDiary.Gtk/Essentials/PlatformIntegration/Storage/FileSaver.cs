@@ -29,7 +29,12 @@ namespace SwashbucklerDiary.Gtk.Essentials
             fileDialog.Modal = true;
             fileDialog.InitialName = name;
 
-            var file = await fileDialog.SaveAsync();
+            Gio.File? file = null;
+            try
+            {
+                file = await fileDialog.SaveAsync();
+            }
+            catch (Exception) { }
 
             string? filePath = file?.GetPath();
             if (string.IsNullOrEmpty(filePath))
@@ -46,8 +51,9 @@ namespace SwashbucklerDiary.Gtk.Essentials
             catch (Exception ex)
             {
                 Console.WriteLine("Error saving file: " + ex.Message);
-                return false;
             }
+
+            return false;
         }
     }
 }
