@@ -1,0 +1,1 @@
+Most of the content comes from https://github.com/dotnet/maui/tree/main/src/Core/src/Dispatching

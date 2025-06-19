@@ -1,0 +1,1 @@
+from https://github.com/jsuarezruiz/maui-linux/tree/main/src/BlazorWebView/src/SharedSource

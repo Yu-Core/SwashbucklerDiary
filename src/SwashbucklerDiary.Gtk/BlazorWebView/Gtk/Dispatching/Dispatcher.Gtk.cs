@@ -1,5 +1,3 @@
-using Microsoft.Maui.Controls.Compatibility.Platform.GTK;
-
 namespace Microsoft.Maui.Dispatching
 {
     /// <inheritdoc/>
@@ -113,7 +111,7 @@ namespace Microsoft.Maui.Dispatching
             var context = SynchronizationContext.Current;
             if (context == null)
             {
-                context = new GtkSynchronizationContext();
+                context = new GLib.Internal.MainLoopSynchronizationContext();
                 SynchronizationContext.SetSynchronizationContext(context);
             }
 
