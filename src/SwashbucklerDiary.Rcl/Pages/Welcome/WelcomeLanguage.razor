@@ -1,7 +1,7 @@
-@namespace SwashbucklerDiary.Rcl.Layout
+@namespace SwashbucklerDiary.Rcl.Pages
 
-<div class="@(ShowClass)" style="width:100%;max-width:420px;max-height:500px;overflow-y:auto;">
-    @foreach (var item in LanguageListItems)
+<div class="@Class" style="width:100%;max-width:420px;max-height:500px;overflow-y:auto;">
+    @foreach (var item in languageListItems)
     {
         <MButton @key="item"
                  Class="mb-5"
@@ -10,6 +10,8 @@
                  Block="true"
                  Outlined="true"
                  Large="true"
+                 Loading="loading && selectedLanguage == item.Value.Name"
+                 Disabled="disabled"
                  OnClick="item.OnClick">
             @(item.Text)
         </MButton>

@@ -1,0 +1,17 @@
+@page "/welcome"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<div class="fullscreen-background-overlay" style="background-color:@BackgroundColor;">
+    <ScrollContainer Class="d-flex align-center"
+                     Style="width:100%;"
+                     ContentClass="d-flex justify-center px-0">
+        <WelcomeLanguage Show="showLanguga"
+                         OnClick="SetLanguage">
+        </WelcomeLanguage>
+        <WelcomeAgreement Show="!showLanguga && showAgreement"
+                          OnOK="Argee"
+                          OnCancel="Disagree">
+        </WelcomeAgreement>
+    </ScrollContainer>
+</div>

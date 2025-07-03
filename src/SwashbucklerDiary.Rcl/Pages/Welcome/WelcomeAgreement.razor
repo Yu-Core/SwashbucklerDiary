@@ -1,15 +1,15 @@
-@namespace SwashbucklerDiary.Rcl.Layout
+@namespace SwashbucklerDiary.Rcl.Pages
 
-<div class="@(ShowClass)" style="width:100%;max-width:480px;">
+<div class="@Class" style="width:100%;max-width:480px;">
     <div class="text-h5 text-center mb-5" style="font-weight:700;">
         @(I18n.T("User Agreement and Privacy Policy"))
     </div>
 
-    <MContainer Class="d-flex justify-center mb-5">
+    <div Class="d-flex justify-center mb-5 pa-3">
         <SimpleMarkdownPreview Class="text-subtitle-2 text--secondary"
                                Value="@(I18n.T("You need to agree to the user agreement and privacy policy before using this app.If you do not agree, we regret that we are unable to provide you with services.\n\nYou can read [user agreement](https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/user-agreement/en-US.md) and [privacy policy](https://raw.githubusercontent.com/Yu-Core/SwashbucklerDiary/master/src/SwashbucklerDiary.Rcl/wwwroot/docs/privacy-policy/en-US.md) for more information. If you agree, please click\"Agree\"to start our service."))">
         </SimpleMarkdownPreview>
-    </MContainer>
+    </div>
 
     <div class="d-flex flex-column flex-sm-row-reverse">
         <MButton Class="inverse-surface mb-5 flex-grow-1 ml-sm-2"

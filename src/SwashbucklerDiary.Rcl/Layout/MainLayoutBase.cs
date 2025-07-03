@@ -71,7 +71,6 @@ namespace SwashbucklerDiary.Rcl.Layout
             I18n.CultureChanged += HandleLanguageChanged;
             ThemeService.OnChanged += HandleThemeChanged;
             SettingService.SettingsChanged += HandleSettingsChanged;
-            VersionUpdataManager.AfterCheckFirstLaunch += HandleSponsorSupport;
         }
 
         protected virtual void OnDispose()
@@ -79,7 +78,6 @@ namespace SwashbucklerDiary.Rcl.Layout
             I18n.CultureChanged -= HandleLanguageChanged;
             ThemeService.OnChanged -= HandleThemeChanged;
             SettingService.SettingsChanged -= HandleSettingsChanged;
-            VersionUpdataManager.AfterCheckFirstLaunch -= HandleSponsorSupport;
         }
 
         protected virtual async Task InitSettingsAsync()
@@ -87,6 +85,8 @@ namespace SwashbucklerDiary.Rcl.Layout
             await SettingService.InitializeAsync();
             await GlobalConfiguration.InitializeAsync();
             afterInitSetting = true;
+
+            DialogNotification();
         }
 
         protected async void HandleLanguageChanged(object? sender, EventArgs e)
@@ -117,7 +117,22 @@ namespace SwashbucklerDiary.Rcl.Layout
             //I18n.SetCulture(language);
         }
 
-        private async void HandleSponsorSupport()
+        protected void DialogNotification()
+        {
+            if (NavigationManager.GetBaseRelativePath() == "welcome")
+            {
+                return;
+            }
+
+            DialogNotificationCore();
+        }
+
+        protected virtual void DialogNotificationCore()
+        {
+            SponsorSupport();
+        }
+
+        private async void SponsorSupport()
         {
             DateTime currentTime = DateTime.Now;
             if (currentTime.Month == 1)

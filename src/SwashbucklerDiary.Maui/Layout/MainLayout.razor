@@ -1,4 +1,4 @@
-@inherits MainLayoutBase
+@inherits Rcl.Hybird.Layout.MainLayoutBase
 
 @if (afterInitSetting)
 {
@@ -6,8 +6,6 @@
         <CascadingValue Value="@I18n.Culture.Name" Name="Culture">
             <ErrorBoundary>
                 <ChildContent>
-                    <FirstLaunchDialog />
-
                     <MainLayoutNavDrawer Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutNavDrawer>
 
                     <MMain>

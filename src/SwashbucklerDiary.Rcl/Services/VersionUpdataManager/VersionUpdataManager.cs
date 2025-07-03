@@ -6,11 +6,7 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public abstract class VersionUpdataManager : IVersionUpdataManager
     {
-        public event Action? AfterFirstEnter;
-
         public event Action? AfterVersionUpdate;
-
-        public event Action? AfterCheckFirstLaunch;
 
         protected int updateCount;
 
@@ -68,11 +64,6 @@ namespace SwashbucklerDiary.Rcl.Services
             });
 
             InitializeVersionHandlers();
-        }
-
-        public void NotifyAfterFirstEnter()
-        {
-            AfterFirstEnter?.Invoke();
         }
 
         public async Task HandleVersionUpdate()
@@ -158,11 +149,6 @@ namespace SwashbucklerDiary.Rcl.Services
         protected virtual Task HandleVersionUpdate697()
         {
             return Task.CompletedTask;
-        }
-
-        public void NotifyAfterCheckFirstLaunch()
-        {
-            AfterCheckFirstLaunch?.Invoke();
         }
 
         private async Task HandleVersionUpdate809()

@@ -3,12 +3,10 @@ using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
-namespace SwashbucklerDiary.Rcl.Layout
+namespace SwashbucklerDiary.Rcl.Pages
 {
-    public partial class FirstLaunchDialog
+    public partial class Welcome
     {
-        private bool show = true;
-
         private bool showLanguga;
 
         private bool showAgreement;
@@ -17,19 +15,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         private IDiaryService DiaryService { get; set; } = default!;
 
         [Inject]
-        private ISettingService SettingService { get; set; } = default!;
-
-        [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
-
-        [Inject]
-        private II18nService I18n { get; set; } = default!;
-
-        [Inject]
-        private IVersionUpdataManager VersionManager { get; set; } = default!;
-
-        [Inject]
-        private IStaticWebAssets StaticWebAssets { get; set; } = default!;
 
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
@@ -39,6 +25,14 @@ namespace SwashbucklerDiary.Rcl.Layout
             base.OnInitialized();
 
             UpdateSettings();
+            NavigateController.AddHistoryAction(AppLifecycle.QuitApp);
+        }
+
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            NavigateController.RemoveHistoryAction(AppLifecycle.QuitApp);
         }
 
         private string BackgroundColor => ThemeService.RealTheme == Theme.Dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface;
@@ -50,8 +44,8 @@ namespace SwashbucklerDiary.Rcl.Layout
 
             if (setLang && agree)
             {
-                show = false;
-                VersionManager.NotifyAfterCheckFirstLaunch();
+                NavigateController.RemoveHistoryAction(AppLifecycle.QuitApp);
+                NavigationManager.NavigateTo("", replace: true);
             }
             else
             {
@@ -70,14 +64,9 @@ namespace SwashbucklerDiary.Rcl.Layout
 
             showLanguga = false;
             I18n.SetCulture(new(value));
-            Task insertTask = Task.Run(async () =>
-            {
-                await InsertDefaultDiaries();
-                VersionManager.NotifyAfterFirstEnter();
-            });
             Task[] tasks =
             [
-                insertTask,
+                InsertDefaultDiaries(),
                 SettingService.SetAsync(s => s.FirstSetLanguage, true),
                 SettingService.SetAsync(s => s.Language, value)
             ];
@@ -92,9 +81,9 @@ namespace SwashbucklerDiary.Rcl.Layout
             }
 
             showAgreement = false;
-            show = false;
             await SettingService.SetAsync(s => s.FirstAgree, true);
-            VersionManager.NotifyAfterCheckFirstLaunch();
+            NavigateController.RemoveHistoryAction(AppLifecycle.QuitApp);
+            NavigationManager.NavigateTo("", replace: true);
         }
 
         private void Disagree()

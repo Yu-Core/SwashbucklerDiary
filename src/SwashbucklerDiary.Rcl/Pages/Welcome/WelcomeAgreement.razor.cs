@@ -1,9 +1,10 @@
+using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 
-namespace SwashbucklerDiary.Rcl.Layout
+namespace SwashbucklerDiary.Rcl.Pages
 {
-    public partial class FirstLaunchAgreement
+    public partial class WelcomeAgreement
     {
         [Inject]
         private II18nService I18n { get; set; } = default!;
@@ -20,6 +21,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Parameter]
         public EventCallback OnCancel { get; set; }
 
-        private string ShowClass => Show ? "px-4" : "d-none";
+        private string Class => new CssBuilder()
+            .Add("px-4")
+            .Add("d-none", !Show)
+            .ToString();
     }
 }

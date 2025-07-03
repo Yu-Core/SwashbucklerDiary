@@ -59,6 +59,15 @@ namespace SwashbucklerDiary.Gtk
 
         private void HandleAppActivation()
         {
+            bool firstSetLanguage = Preferences.Default.Get<bool>(nameof(Setting.FirstSetLanguage), false);
+            bool firstAgree = Preferences.Default.Get<bool>(nameof(Setting.FirstAgree), false);
+            if (!firstSetLanguage || !firstAgree)
+            {
+                blazorWebView.StartPath = "/welcome";
+                AppActivation.Arguments = null;
+                return;
+            }
+
             var args = AppActivation.Arguments;
             if (args is null || args.Data is null)
             {

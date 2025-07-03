@@ -39,6 +39,15 @@ namespace SwashbucklerDiary.Maui
 
         private void HandleAppActivation()
         {
+            bool firstSetLanguage = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.FirstSetLanguage), false);
+            bool firstAgree = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.FirstAgree), false);
+            if (!firstSetLanguage || !firstAgree)
+            {
+                blazorWebView.StartPath = "/welcome";
+                AppActivation.Arguments = null;
+                return;
+            }
+
             var args = AppActivation.Arguments;
             if (args is null || args.Data is null)
             {

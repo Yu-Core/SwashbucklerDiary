@@ -35,7 +35,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
-            VersionManager.AfterFirstEnter += UpdateDiariesAndStateHasChanged;
             VersionManager.AfterVersionUpdate += UpdateDiariesAndStateHasChanged;
         }
 
@@ -43,7 +42,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.DisposeAsyncCore();
 
-            VersionManager.AfterFirstEnter -= UpdateDiariesAndStateHasChanged;
             VersionManager.AfterVersionUpdate -= UpdateDiariesAndStateHasChanged;
         }
 
@@ -59,7 +57,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.UpdateDiariesAsync();
 
-            templates =  await DiaryService.QueryTemplatesAsync();
+            templates = await DiaryService.QueryTemplatesAsync();
         }
 
         private string? SwiperActiveItemSelector
