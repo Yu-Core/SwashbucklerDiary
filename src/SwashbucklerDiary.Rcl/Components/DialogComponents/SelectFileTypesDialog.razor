@@ -34,30 +34,32 @@
                 </MButton>
             </MCardTitle>
             <MCardText Class="pb-0 px-0">
-                @foreach (var item in items)
-                {
-                    <MListItem Class="px-6"
-                               OnClick="@item.OnClick">
-                        <MListItemIcon>
-                            <MIcon>
-                                @(item.Icon)
-                            </MIcon>
-                        </MListItemIcon>
-                        <MListItemContent>
-                            <MListItemTitle>
-                                @(I18n.T(item.Text))
-                            </MListItemTitle>
-                        </MListItemContent>
-                        <MListItemAction>
-                            @if (internalValue.Contains(item.Value))
-                            {
+                <MList Class="py-0">
+                    @foreach (var item in items)
+                    {
+                        <MListItem Class="px-6"
+                                   OnClick="@item.OnClick">
+                            <MListItemIcon>
                                 <MIcon>
-                                    check
+                                    @(item.Icon)
                                 </MIcon>
-                            }
-                        </MListItemAction>
-                    </MListItem>
-                }
+                            </MListItemIcon>
+                            <MListItemContent>
+                                <MListItemTitle>
+                                    @(I18n.T(item.Text))
+                                </MListItemTitle>
+                            </MListItemContent>
+                            <MListItemAction>
+                                @if (internalValue.Contains(item.Value))
+                                {
+                                    <MIcon>
+                                        check
+                                    </MIcon>
+                                }
+                            </MListItemAction>
+                        </MListItem>
+                    }
+                </MList>
             </MCardText>
             <MCardActions>
                 @cardActionsContent

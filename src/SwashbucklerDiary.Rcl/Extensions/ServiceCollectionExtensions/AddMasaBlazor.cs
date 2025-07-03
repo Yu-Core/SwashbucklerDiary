@@ -22,6 +22,12 @@ namespace SwashbucklerDiary.Rcl.Extensions
                     {
                         { nameof(MBottomSheet.Eager), true }
                     }
+                },
+                {
+                    nameof(MList), new Dictionary<string, object?>()
+                    {
+                        { nameof(MList.Slim), true }
+                    }
                 }
             };
             options.ConfigureTheme(theme =>

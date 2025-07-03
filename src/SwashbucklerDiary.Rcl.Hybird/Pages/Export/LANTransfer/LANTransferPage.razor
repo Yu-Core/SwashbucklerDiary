@@ -1,10 +1,10 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MCard Class="my-list-card"
+<MCard Class="mb-5"
        Elevation="0"
        Rounded="@("lg")">
-    <MList>
+    <MList Class="py-0">
         @foreach (var item in DynamicLists)
         {
             <MListItem @key="item" OnClick="item.OnClick">
@@ -31,24 +31,26 @@
     </MList>
 </MCard>
 
-<MCard Class="my-list-card"
+<MCard Class="mb-5"
        Elevation="0"
        Rounded="@("lg")">
-    <MListItem OnClick="()=>ShowConfig=true">
-        <MListItemIcon>
-            <MIcon>
-                mdi:mdi-cog-transfer-outline
-            </MIcon>
-        </MListItemIcon>
-        <MListItemContent>
-            <MListItemTitle>
-                @(I18n.T("Setting"))
-            </MListItemTitle>
-        </MListItemContent>
-        <MListItemAction>
-            <MIcon>chevron_right</MIcon>
-        </MListItemAction>
-    </MListItem>
+    <MList Class="py-0">
+        <MListItem OnClick="()=>ShowConfig=true">
+            <MListItemIcon>
+                <MIcon>
+                    mdi:mdi-cog-transfer-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <MListItemTitle>
+                    @(I18n.T("Setting"))
+                </MListItemTitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>chevron_right</MIcon>
+            </MListItemAction>
+        </MListItem>
+    </MList>
 </MCard>
 
 <LANConfigDialog @bind-Visible="ShowConfig"

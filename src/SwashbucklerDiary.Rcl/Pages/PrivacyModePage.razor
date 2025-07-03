@@ -8,10 +8,10 @@
 @if (_isRender)
 {
     <ScrollContainer>
-        <MCard Class="my-list-card"
+        <MCard Class="mb-5"
                Elevation="0"
                Rounded="@("lg")">
-            <MList>
+            <MList Class="py-0">
                 <MListItem>
                     <MListItemIcon>
                         <MIcon>
@@ -58,10 +58,10 @@
             </MList>
         </MCard>
 
-        <MCard Class="my-list-card"
+        <MCard Class="mb-5"
                Elevation="0"
                Rounded="@("lg")">
-            <MList>
+            <MList Class="py-0">
                 <MListItem>
                     <MListItemIcon>
                         <MIcon>
@@ -106,7 +106,7 @@
                                 @(I18n.T("Enter keywords in the feature search to display privacy mode"))
                             </MListItemSubtitle>
                         </MListItemContent>
-                        <MListItemContent Class="setting-item-state">
+                        <MListItemContent Class="flex-none">
                             <MListItemSubtitle Class="font-weight-bold">
                                 @privacyModeFunctionSearchKey
                             </MListItemSubtitle>
@@ -127,7 +127,7 @@
                         <MListItemContent>
                             @(I18n.T("Set default entry password"))
                         </MListItemContent>
-                        <MListItemContent Class="setting-item-state">
+                        <MListItemContent Class="flex-none">
                             <MListItemSubtitle>
                                 @PrivacyModeEntrancePasswordSetStateText
                             </MListItemSubtitle>
@@ -142,46 +142,50 @@
 
         @if (Desktop)
         {
-            <MCard Class="my-list-card"
+            <MCard Class="mb-5"
                    Elevation="0"
                    Rounded="@("lg")">
-                <MListItem OnClick="SwitchPrivacyMode">
+                <MList Class="py-0">
+                    <MListItem OnClick="SwitchPrivacyMode">
+                        <MListItemIcon>
+                            <MIcon>
+                                swap_horiz
+                            </MIcon>
+                        </MListItemIcon>
+                        <MListItemContent>
+                            @(I18n.T(SwitchPrivacyModeText))
+                        </MListItemContent>
+                        <MListItemAction>
+                            <MIcon>chevron_right</MIcon>
+                        </MListItemAction>
+                    </MListItem>
+                </MList>
+            </MCard>
+        }
+
+        <MCard Class="mb-5"
+               Elevation="0"
+               Rounded="@("lg")">
+            <MList Class="py-0">
+                <MListItem OnClick="MoveOldPrivacyDiaries">
                     <MListItemIcon>
                         <MIcon>
-                            swap_horiz
+                            mdi:mdi-file-move-outline
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
-                        @(I18n.T(SwitchPrivacyModeText))
+                        <MListItemTitle>
+                            @(I18n.T("Move the old version of Privacy Diary"))
+                        </MListItemTitle>
+                        <MListItemSubtitle Class="text-caption-xs-only">
+                            @(I18n.T("Move the data from the old version of the privacy diary to the new version"))
+                        </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
                         <MIcon>chevron_right</MIcon>
                     </MListItemAction>
                 </MListItem>
-            </MCard>
-        }
-
-        <MCard Class="my-list-card"
-               Elevation="0"
-               Rounded="@("lg")">
-            <MListItem OnClick="MoveOldPrivacyDiaries">
-                <MListItemIcon>
-                    <MIcon>
-                        mdi:mdi-file-move-outline
-                    </MIcon>
-                </MListItemIcon>
-                <MListItemContent>
-                    <MListItemTitle>
-                        @(I18n.T("Move the old version of Privacy Diary"))
-                    </MListItemTitle>
-                    <MListItemSubtitle Class="text-caption-xs-only">
-                        @(I18n.T("Move the data from the old version of the privacy diary to the new version"))
-                    </MListItemSubtitle>
-                </MListItemContent>
-                <MListItemAction>
-                    <MIcon>chevron_right</MIcon>
-                </MListItemAction>
-            </MListItem>
+            </MList>
         </MCard>
 
         <MAlert Class="mb-5 text-subtitle-2 text--secondary text-pre-wrap"

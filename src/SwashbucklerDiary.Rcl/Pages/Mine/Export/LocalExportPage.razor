@@ -1,10 +1,11 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MCard Class="my-list-card"
+<MCard Class="mb-5"
        Elevation="0"
        Rounded="@("lg")">
-    <MList TwoLine>
+    <MList Class="py-0"
+           TwoLine>
         <MListItem OnClick="Export">
             <MListItemIcon>
                 <MIcon>
@@ -26,7 +27,7 @@
 
         <MDivider Class="mx-5"></MDivider>
 
-        <MListItem OnClick="()=>showImport=true">
+        <MListItem OnClick="() => showImport = true">
             <MListItemIcon>
                 <MIcon>
                     mdi:mdi-import
@@ -57,8 +58,8 @@
 </MultiListDialog>
 
 <CustomMDialog @bind-MyValue="showConfirmImport"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420">
+               ContentClass="rounded-lg"
+               MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold">
             @(I18n.T("Confirm import"))

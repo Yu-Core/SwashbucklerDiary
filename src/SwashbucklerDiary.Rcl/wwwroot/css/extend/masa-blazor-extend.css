@@ -180,14 +180,6 @@
         flex-grow: 1;
     }
 
-.m-application--is-ltr .m-card .m-list-item__action:first-child, .m-application--is-ltr .m-card .m-list-item__icon:first-child {
-    margin-right: 20px;
-}
-
-.m-application--is-rtl .m-card .m-list-item__action:first-child, .m-application--is-rtl .m-card .m-list-item__icon:first-child {
-    margin-left: 20px;
-}
-
 .m-list-item__subtitle {
     white-space: initial;
     -webkit-line-clamp: 5;

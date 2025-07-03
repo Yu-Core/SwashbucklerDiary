@@ -11,10 +11,10 @@
         @(I18n.T("General"))
     </div>
 
-    <MCard Class="my-list-card"
+    <MCard Class="mb-5"
            Elevation="0"
            Rounded="@("lg")">
-        <MList>
+        <MList Class="py-0">
             <MListItem OnClick="@(() => To("permissionSetting"))">
                 <MListItemIcon>
                     <MIcon>
@@ -40,7 +40,7 @@
                 <MListItemContent>
                     @(I18n.T("Clear cache"))
                 </MListItemContent>
-                <MListItemContent Class="setting-item-state">
+                <MListItemContent Class="flex-none">
                     <MListItemSubtitle>
                         @cacheSize
                     </MListItemSubtitle>
@@ -56,10 +56,10 @@
         @(I18n.T("Display"))
     </div>
 
-    <MCard Class="my-list-card"
+    <MCard Class="mb-5"
            Elevation="0"
            Rounded="@("lg")">
-        <MList>
+        <MList Class="py-0">
             <MListItem OnClick="@(() => To("indexSetting"))">
                 <MListItemIcon>
                     <MIcon>
@@ -90,10 +90,10 @@
         </MList>
     </MCard>
 
-    <MCard Class="my-list-card"
+    <MCard Class="mb-5"
            Elevation="0"
            Rounded="@("lg")">
-        <MList>
+        <MList Class="py-0">
             <MListItem OnClick="@(() => To("diarySetting"))">
                 <MListItemIcon>
                     <MIcon>
@@ -174,10 +174,10 @@
             @(I18n.T("Other"))
         </div>
 
-        <MCard Class="my-list-card"
+        <MCard Class="mb-5"
                Elevation="0"
                Rounded="@("lg")">
-            <MList>
+            <MList Class="py-0">
                 <MListItem OnClick="@(() => To("urlScheme"))">
                     <MListItemIcon>
                         <MIcon>

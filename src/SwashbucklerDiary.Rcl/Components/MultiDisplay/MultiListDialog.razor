@@ -8,7 +8,7 @@
                             ContentClass="rounded-t-lg">
             <MCard Class="rounded-t-lg py-2">
                 <MList>
-                    <div @onclick="HandleOnCancel" class="dynamic-list-item-collection">
+                    <div @onclick="HandleOnCancel">
                         @foreach (var item in DynamicListItems)
                         {
                             @if (item.Show)

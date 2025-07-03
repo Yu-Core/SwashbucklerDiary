@@ -113,10 +113,10 @@
                 </div>
 
                 <MCard @key="list"
-                       Class="my-list-card"
+                       Class="mb-5"
                        Elevation="0"
                        Rounded="@("lg")">
-                    <MList Class="dynamic-list-item-collection">
+                    <MList Class="py-0">
                         @foreach (var item in list.Value)
                         {
                             @if (item.Show)
@@ -155,16 +155,18 @@
                             <MCard @key="item"
                                    Elevation="0"
                                    Rounded="@("lg")">
-                                <MListItem OnClick="item.OnClick">
-                                    <MListItemIcon>
-                                        <MIcon>
-                                            @(item.Icon)
-                                        </MIcon>
-                                    </MListItemIcon>
-                                    <MListItemContent>
-                                        @(I18n.T(item.Text))
-                                    </MListItemContent>
-                                </MListItem>
+                                <MList Class="py-0">
+                                    <MListItem OnClick="item.OnClick">
+                                        <MListItemIcon>
+                                            <MIcon>
+                                                @(item.Icon)
+                                            </MIcon>
+                                        </MListItemIcon>
+                                        <MListItemContent>
+                                            @(I18n.T(item.Text))
+                                        </MListItemContent>
+                                    </MListItem>
+                                </MList>
                             </MCard>
                         }
                     }

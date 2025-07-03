@@ -7,24 +7,26 @@
        Rounded="@("lg")"
        @oncontextmenu="OpenMenu"
        __internal_preventDefault_oncontextmenu>
-    <MListItem>
-        <MListItemIcon>
-            <MIcon>
-                location_on
-            </MIcon>
-        </MListItemIcon>
-        <MListItemContent>
-            <MListItemTitle>
-                @(Value.Name)
-            </MListItemTitle>
-        </MListItemContent>
-        <MListItemAction @onclick:stopPropagation="true">
-            <MButton @attributes="@activatorAttributes"
-                     Icon="true"
-                     Small="true"
-                     OnClick="OpenMenu">
-                <MIcon>mdi:mdi-pencil-outline</MIcon>
-            </MButton>
-        </MListItemAction>
-    </MListItem>
+    <MList Class="py-0">
+        <MListItem>
+            <MListItemIcon>
+                <MIcon>
+                    location_on
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <MListItemTitle>
+                    @(Value.Name)
+                </MListItemTitle>
+            </MListItemContent>
+            <MListItemAction @onclick:stopPropagation="true">
+                <MButton @attributes="@activatorAttributes"
+                         Icon="true"
+                         Small="true"
+                         OnClick="OpenMenu">
+                    <MIcon>mdi:mdi-pencil-outline</MIcon>
+                </MButton>
+            </MListItemAction>
+        </MListItem>
+    </MList>
 </MCard>

@@ -7,10 +7,10 @@
 </MyAppBar>
 
 <ScrollContainer>
-    <MCard Class="my-list-card"
+    <MCard Class="mb-5"
            Elevation="0"
            Rounded="@("lg")">
-        <MList>
+        <MList Class="py-0">
             <MListItem OnClick="() => showDefaultTemplate = true">
                 <MListItemIcon>
                     <MIcon>
@@ -54,10 +54,10 @@
             </MListItem>
         </MList>
     </MCard>
-    <MCard Class="my-list-card"
+    <MCard Class="mb-5"
            Elevation="0"
            Rounded="@("lg")">
-        <MList>
+        <MList Class="py-0">
             <MListItem OnClick="() => showUseTemplateMethod = true">
                 <MListItemIcon>
                     <MIcon>
@@ -67,7 +67,7 @@
                 <MListItemContent>
                     @(I18n.T("Use Template Method"))
                 </MListItemContent>
-                <MListItemContent Class="setting-item-state">
+                <MListItemContent Class="flex-none">
                     <MListItemSubtitle>
                         @I18n.T(useTemplateKindItems.FirstOrDefault(it => it.Value == useTemplateMethod).Key)
                     </MListItemSubtitle>

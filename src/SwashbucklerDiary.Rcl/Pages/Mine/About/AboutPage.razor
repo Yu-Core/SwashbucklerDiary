@@ -48,10 +48,10 @@
     @foreach (var list in viewLists)
     {
         <MCard @key="list"
-               Class="my-list-card"
+               Class="mb-5"
                Elevation="0"
                Rounded="@("lg")">
-            <MList Class="dynamic-list-item-collection">
+            <MList Class="py-0">
                 @foreach (var item in list)
                 {
                     @if (item.Show)

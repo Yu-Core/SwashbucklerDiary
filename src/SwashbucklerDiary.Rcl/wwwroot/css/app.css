@@ -370,49 +370,12 @@ html {
     }
 }
 
-.setting-item-state {
+.flex-none {
     flex: none !important;
 }
 
-.my-list-card {
-    margin-bottom: 20px;
-}
-
-@media screen and (max-width:600px) {
-    .my-list-card .m-list {
-        padding-top: 0px;
-        padding-bottom: 0px;
-    }
-
-    .my-list-card .m-list-item:first-child {
-        border-top-left-radius: inherit;
-        border-top-right-radius: inherit;
-    }
-
-        .my-list-card .m-list-item:first-child::before {
-            border-top-left-radius: inherit;
-            border-top-right-radius: inherit;
-        }
-
-    .my-list-card .m-list-item:last-child {
-        border-bottom-left-radius: inherit;
-        border-bottom-right-radius: inherit;
-    }
-
-        .my-list-card .m-list-item:last-child::before {
-            border-bottom-left-radius: inherit;
-            border-bottom-right-radius: inherit;
-        }
-
-    .my-list-card .dynamic-list-item-collection .m-list-item:nth-last-child(2) {
-        border-bottom-left-radius: inherit;
-        border-bottom-right-radius: inherit;
-    }
-
-        .my-list-card .dynamic-list-item-collection .m-list-item:nth-last-child(2)::before {
-            border-bottom-left-radius: inherit;
-            border-bottom-right-radius: inherit;
-        }
+.m-card .m-list.py-0 {
+    overflow: hidden;
 }
 
 .m-list--nav .m-list-item, .m-list--nav .m-list-item:before {
@@ -425,7 +388,7 @@ html {
     }
 }
 
-.dynamic-list-item-collection > .m-divider__wrapper:last-child {
+.m-list .m-divider__wrapper:last-child {
     display: none !important;
 }
 

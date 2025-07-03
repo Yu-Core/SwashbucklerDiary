@@ -7,47 +7,51 @@
 </MyAppBar>
 
 <ScrollContainer>
-    <MCard Class="my-list-card"
+    <MCard Class="mb-5"
            Elevation="0"
            Rounded="@("lg")">
-        <MListItem OnClick="()=>showTimeout=true">
-            <MListItemIcon>
-                <MIcon>
-                    timer
-                </MIcon>
-            </MListItemIcon>
-            <MListItemContent>
-                @(I18n.T("Alert timeout"))
-            </MListItemContent>
-            <MListItemContent Class="setting-item-state">
-                <MListItemSubtitle>
-                    @TimeoutText
-                </MListItemSubtitle>
-            </MListItemContent>
-            <MListItemAction>
-                <MIcon>chevron_right</MIcon>
-            </MListItemAction>
-        </MListItem>
+        <MList Class="py-0">
+            <MListItem OnClick="() => showTimeout = true">
+                <MListItemIcon>
+                    <MIcon>
+                        timer
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Alert timeout"))
+                </MListItemContent>
+                <MListItemContent Class="flex-none">
+                    <MListItemSubtitle>
+                        @TimeoutText
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
     </MCard>
 
-    <MCard Class="my-list-card"
+    <MCard Class="mb-5"
            Elevation="0"
            Rounded="@("lg")">
-        <MListItem>
-            <MListItemIcon>
-                <MIcon>
-                    trophy
-                </MIcon>
-            </MListItemIcon>
-            <MListItemContent>
-                @(I18n.T("Achievement"))
-            </MListItemContent>
-            <MListItemAction>
-                <SettingSwitch @bind-Value="achievementsAlert"
-                               SettingKey="@nameof(Setting.AchievementsAlert)">
-                </SettingSwitch>
-            </MListItemAction>
-        </MListItem>
+        <MList Class="py-0">
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon>
+                        trophy
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    @(I18n.T("Achievement"))
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="achievementsAlert"
+                                   SettingKey="@nameof(Setting.AchievementsAlert)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+        </MList>
     </MCard>
 
 </ScrollContainer>
