@@ -8,8 +8,8 @@
                Scrollable="true"
                OnBeforeShowContent="BeforeShowContent">
     <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Select location"))
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Select location"))</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon
                      OnClick="() => showSearch = !showSearch">
@@ -21,33 +21,35 @@
             </MButton>
         </MCardTitle>
 
-        <MCardText Class="pb-0">
+        <MCardText Class="pb-0 px-0">
             @if (showSearch)
             {
-                <CustomMTextField @bind-Value="_searchText"
-                                  Class="mb-2"
-                                  OnInput="UpdateInternalItems"
-                                  Dense
-                                  TValue="string"
-                                  Filled
-                                  Rounded
-                                  Clearable
-                                  Color="currentColor"
-                                  HideDetails="@("auto")"
-                                  spellcheck="false"
-                                  Placeholder="@(I18n.T("Search"))"
-                                  PrependInnerIcon="search">
-                </CustomMTextField>
+                <div class="mb-2 px-6">
+                    <CustomMTextField @bind-Value="_searchText"
+                                      Class="mb-2"
+                                      OnInput="UpdateInternalItems"
+                                      Dense
+                                      TValue="string"
+                                      Filled
+                                      Rounded
+                                      Clearable
+                                      Color="currentColor"
+                                      HideDetails="@("auto")"
+                                      spellcheck="false"
+                                      Placeholder="@(I18n.T("Search"))"
+                                      PrependInnerIcon="search">
+                    </CustomMTextField>
+                </div>
             }
-            <div class="scroll-show" style="max-height:300px;">
+            <MList Class="py-0 scroll-show" Style="max-height:300px;">
                 <Virtualize Items="internalItems"
                             ItemSize="56"
                             Context="item">
                     <MListItem @key="item.Id"
-                               Class="mb-1 rounded"
+                               Class="px-10"
                                OnClick="() => SetSelectedLocation(item)">
                         <MListItemContent>
-                            @(item.Name)
+                            <wc-auto-scroll-text>@(item.Name)</wc-auto-scroll-text>
                         </MListItemContent>
 
                         <MListItemAction>
@@ -60,12 +62,12 @@
                         </MListItemAction>
                     </MListItem>
                 </Virtualize>
-            </div>
+            </MList>
         </MCardText>
         <MCardActions>
             <MButton Text="true"
                      OnClick="() => showAdd = true">
-                @(I18n.T("Add"))
+                <wc-auto-scroll-text fit-content="true" style="max-width:100px;">@(I18n.T("Add"))</wc-auto-scroll-text>
             </MButton>
             <MSpacer></MSpacer>
             <MButton Text="true"

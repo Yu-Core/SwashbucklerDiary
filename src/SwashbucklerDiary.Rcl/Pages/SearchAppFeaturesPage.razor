@@ -29,7 +29,7 @@
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("Privacy mode"))
+                            <wc-auto-scroll-text>@(I18n.T("Privacy mode"))</wc-auto-scroll-text>
                         </MListItemTitle>
                     </MListItemContent>
                 </MListItem>
@@ -54,10 +54,10 @@
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle Class="mb-2">
-                            @(I18n.T(item.Name))
+                            <wc-auto-scroll-text>@(I18n.T(item.Name))</wc-auto-scroll-text>
                         </MListItemTitle>
                         <MListItemSubtitle Class="text-caption-xs-only">
-                            @I18n.TForAppFeaturePath(item.Path)
+                            <wc-auto-scroll-text>@I18n.TForAppFeaturePath(item.Path)</wc-auto-scroll-text>
                         </MListItemSubtitle>
                     </MListItemContent>
                 </MListItem>

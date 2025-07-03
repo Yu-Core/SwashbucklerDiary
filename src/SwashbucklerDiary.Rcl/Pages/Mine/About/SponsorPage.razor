@@ -48,7 +48,7 @@
                                 </MIcon>
                             </MListItemIcon>
                             <MListItemContent>
-                                @(I18n.T(item.Text))
+                                <wc-auto-scroll-text>@(I18n.T(item.Text))</wc-auto-scroll-text>
                             </MListItemContent>
                             <MListItemAction>
                                 <MIcon>chevron_right</MIcon>
@@ -74,7 +74,7 @@
                     {
                         <MListItem>
                             <MListItemContent>
-                                @item
+                                <wc-auto-scroll-text>@item</wc-auto-scroll-text>
                             </MListItemContent>
                         </MListItem>
                     }

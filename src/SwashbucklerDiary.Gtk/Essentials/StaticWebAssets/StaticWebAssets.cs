@@ -23,7 +23,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
 
             if (!File.Exists(path))
             {
-                throw new Exception($"not find {path}");
+                throw new FileNotFoundException($"not find {path}");
             }
 
             return await File.ReadAllTextAsync(path).ConfigureAwait(false);

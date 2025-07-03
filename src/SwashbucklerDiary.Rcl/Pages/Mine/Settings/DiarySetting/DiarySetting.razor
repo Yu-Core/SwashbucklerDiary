@@ -18,7 +18,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Title"))
+                    <wc-auto-scroll-text>@(I18n.T("Title"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="title"
@@ -36,7 +36,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Markdown"))
+                    <wc-auto-scroll-text>@(I18n.T("Markdown"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="markdown"
@@ -54,7 +54,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Other information"))
+                    <wc-auto-scroll-text>@(I18n.T("Other information"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="otherInfo"
@@ -76,7 +76,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Weather and mood text"))
+                    <wc-auto-scroll-text>@(I18n.T("Weather and mood text"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="diaryIconText"
@@ -93,14 +93,16 @@
                         save_as
                     </MIcon>
                 </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Auto save"))
+                <MListItemContent Style="flex-basis:50%;">
+                    <wc-auto-scroll-text>@(I18n.T("Auto save"))</wc-auto-scroll-text>
                 </MListItemContent>
-                <MListItemContent Class="flex-none">
+
+                <MListItemContent Class="ml-2" Style="flex-basis:50%;">
                     <MListItemSubtitle>
-                        @EditAutoSaveText
+                        <wc-auto-scroll-text class="justify-end">@EditAutoSaveText</wc-auto-scroll-text>
                     </MListItemSubtitle>
                 </MListItemContent>
+
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
                 </MListItemAction>
@@ -114,14 +116,19 @@
                         calendar_clock
                     </MIcon>
                 </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Time format"))
+
+                <MListItemContent Style="flex-basis:50%;">
+                    <wc-auto-scroll-text>@(I18n.T("Time format"))</wc-auto-scroll-text>
                 </MListItemContent>
-                <MListItemContent Class="flex-none">
+
+                <MListItemContent Class="ml-2" Style="flex-basis:50%;">
                     <MListItemSubtitle>
-                        @(I18n.TForTimeFormat(DiaryTimeFormatKey))
+                        <wc-auto-scroll-text class="justify-end">
+                            @(I18n.TForTimeFormat(DiaryTimeFormatKey))
+                        </wc-auto-scroll-text>
                     </MListItemSubtitle>
                 </MListItemContent>
+                
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
                 </MListItemAction>
@@ -136,7 +143,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Insert Time format"))
+                    <wc-auto-scroll-text>@(I18n.T("Insert Time format"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
@@ -156,7 +163,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Outline"))
+                    <wc-auto-scroll-text>@(I18n.T("Outline"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
@@ -172,7 +179,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("First line indentation"))
+                    <wc-auto-scroll-text>@(I18n.T("First line indentation"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="firstLineIndent"
@@ -190,7 +197,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Code line number"))
+                    <wc-auto-scroll-text>@(I18n.T("Code line number"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="codeLineNumber"
@@ -208,7 +215,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Task list line-through"))
+                    <wc-auto-scroll-text>@(I18n.T("Task list line-through"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="taskListLineThrough"
@@ -230,7 +237,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Lazy image load"))
+                    <wc-auto-scroll-text>@(I18n.T("Lazy image load"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="imageLazy"
@@ -248,7 +255,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Audio and video auto play"))
+                    <wc-auto-scroll-text>@(I18n.T("Audio and video auto play"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="autoPlay"

@@ -6,10 +6,11 @@
 <CustomMDialog MyValue="Visible"
                MyValueChanged="InternalVisibleChanged"
                ContentClass="rounded-lg"
+               Scrollable
                MaxWidth="420">
     <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @Title
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@Title</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="HandleOnCancel">

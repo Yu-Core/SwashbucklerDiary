@@ -14,10 +14,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Export"))
+                    <wc-auto-scroll-text>@(I18n.T("Export"))</wc-auto-scroll-text>
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("txt, md, json, xlsx"))
+                    <wc-auto-scroll-text>@(I18n.T("txt, md, json, xlsx"))</wc-auto-scroll-text>
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -35,10 +35,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Import"))
+                    <wc-auto-scroll-text>@(I18n.T("Import"))</wc-auto-scroll-text>
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("Import zip files in the corresponding format"))
+                    <wc-auto-scroll-text>@(I18n.T("Import zip files in the corresponding format"))</wc-auto-scroll-text>
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -61,8 +61,8 @@
                ContentClass="rounded-lg"
                MaxWidth="420">
     <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Confirm import"))
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Confirm import"))</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon
                      OnClick="@(()=>showConfirmImport=false)">

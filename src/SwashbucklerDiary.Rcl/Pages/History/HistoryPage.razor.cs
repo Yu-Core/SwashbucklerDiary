@@ -3,6 +3,7 @@ using Masa.Blazor.Extensions;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
+using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -149,6 +150,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         }
 
         private void ToWrite()
-            => To($"write?CreateDate={SelectedDate}");
+            => To($"write?CreateDate={SelectedDate.ToString(CultureInfo.InvariantCulture)}");
     }
 }

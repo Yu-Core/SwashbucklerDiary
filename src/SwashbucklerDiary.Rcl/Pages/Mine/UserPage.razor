@@ -19,7 +19,7 @@
                 </MListItemIcon>
 
                 <MListItemContent>
-                    @(I18n.T("Avatar"))
+                    <wc-auto-scroll-text>@(I18n.T("Avatar"))</wc-auto-scroll-text>
                 </MListItemContent>
 
                 <MListItemAction>
@@ -40,13 +40,13 @@
                     </MIcon>
                 </MListItemIcon>
 
-                <MListItemContent Class="flex-basic-space">
-                    @(I18n.T("NickName"))
+                <MListItemContent Style="flex-basis:50%;">
+                    <wc-auto-scroll-text>@(I18n.T("NickName"))</wc-auto-scroll-text>
                 </MListItemContent>
 
-                <MListItemContent>
-                    <MListItemSubtitle Class="text-right">
-                        @NickName
+                <MListItemContent Class="ml-2" Style="flex-basis:50%;">
+                    <MListItemSubtitle>
+                        <wc-auto-scroll-text class="justify-end">@NickName</wc-auto-scroll-text>
                     </MListItemSubtitle>
                 </MListItemContent>
 
@@ -64,15 +64,15 @@
                     </MIcon>
                 </MListItemIcon>
 
-                <MListItemContent Class="flex-basic-space">
+                <MListItemContent Style="flex-basis:50%;">
                     <MListItemTitle>
-                        @(I18n.T("Sign"))
+                        <wc-auto-scroll-text>@(I18n.T("Sign"))</wc-auto-scroll-text>
                     </MListItemTitle>
                 </MListItemContent>
 
-                <MListItemContent>
-                    <MListItemSubtitle Class="text-right" Style="-webkit-line-clamp: 2;">
-                        @Sign
+                <MListItemContent Class="ml-2" Style="flex-basis:50%;">
+                    <MListItemSubtitle>
+                        <wc-auto-scroll-text class="justify-end">@Sign</wc-auto-scroll-text>
                     </MListItemSubtitle>
                 </MListItemContent>
 

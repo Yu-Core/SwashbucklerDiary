@@ -22,7 +22,10 @@ namespace SwashbucklerDiary.Rcl.Pages
         public EventCallback OnCancel { get; set; }
 
         private string Class => new CssBuilder()
-            .Add("px-4")
+            .Add("justify-center")
+            .Add("align-center")
+            .Add("fullscreen-height")
+            .Add("d-flex", Show)
             .Add("d-none", !Show)
             .ToString();
     }

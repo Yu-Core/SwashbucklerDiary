@@ -19,13 +19,13 @@
                 </MListItemAvatar>
                 <MListItemContent>
                     <MListItemTitle Class="text-h5 my-2 font-weight-bold">
-                        @(I18n.T("Swashbuckler Diary"))
+                        <wc-auto-scroll-text>@(I18n.T("Swashbuckler Diary"))</wc-auto-scroll-text>
                     </MListItemTitle>
                     <MListItemSubtitle Class="mb-2">
-                        version @AppVersion
+                        <wc-auto-scroll-text>version @AppVersion</wc-auto-scroll-text>
                     </MListItemSubtitle>
                     <MListItemSubtitle Class="mb-2">
-                        @(I18n.T("An open-source and cross-platform local diary APP"))
+                        <wc-auto-scroll-text>@(I18n.T("An open source, cross platform local diary application"))</wc-auto-scroll-text>
                     </MListItemSubtitle>
                     @if (PlatformIntegration.CurrentPlatform != AppDevicePlatform.Browser)
                     {

@@ -346,7 +346,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private string InternalGetExportFileName(string prefix, string suffix)
         {
-            string dataTime = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string dataTime = DateTime.Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture);
             string version = _platformIntegration.AppVersionString;
             return $"{prefix}_{dataTime}_v{version}{suffix}";
         }
@@ -555,7 +555,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 return dateTime;
             }
 
-            if (DateTime.TryParse(dateTimeString, out DateTime dateTime2))
+            if (DateTime.TryParse(dateTimeString, CultureInfo.InvariantCulture, out DateTime dateTime2))
             {
                 return dateTime2;
             }

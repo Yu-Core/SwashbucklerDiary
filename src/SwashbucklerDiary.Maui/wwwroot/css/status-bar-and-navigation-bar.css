@@ -102,6 +102,10 @@ body {
     right: calc(1rem + var(--sair));
 }
 
+.fullscreen-height{
+    height: var(--safe-area-height) !important;
+}
+
 @media screen and (max-width: 600px) {
     .right-bottom-float-area {
         bottom: calc(1rem + 56px + var(--saib)) !important;

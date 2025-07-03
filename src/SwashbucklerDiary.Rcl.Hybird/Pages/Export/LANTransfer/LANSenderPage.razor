@@ -35,10 +35,10 @@
                         </MListItemIcon>
                         <MListItemContent>
                             <MListItemTitle>
-                                @(item.DeviceName)
+                                <wc-auto-scroll-text>@(item.DeviceName)</wc-auto-scroll-text>
                             </MListItemTitle>
                             <MListItemSubtitle>
-                                @(item.IPAddress)
+                                <wc-auto-scroll-text>@(item.IPAddress)</wc-auto-scroll-text>
                             </MListItemSubtitle>
                         </MListItemContent>
                     </MListItem>
@@ -61,7 +61,7 @@
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("Searching for available devices"))
+                            <wc-auto-scroll-text>@(I18n.T("Searching for available devices"))</wc-auto-scroll-text>
                         </MListItemTitle>
                     </MListItemContent>
                 </MListItem>
@@ -78,7 +78,7 @@
                         </MListItemIcon>
                         <MListItemContent>
                             <MListItemTitle>
-                                @(I18n.T("There are currently no available devices"))
+                                <wc-auto-scroll-text>@(I18n.T("There are currently no available devices"))</wc-auto-scroll-text>
                             </MListItemTitle>
                         </MListItemContent>
                     </MListItem>

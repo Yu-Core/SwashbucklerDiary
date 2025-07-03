@@ -23,7 +23,6 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
 
             var masaBlazorBuilder = services.AddMasaBlazor(ServiceLifetime.Singleton);
             await masaBlazorBuilder.AddI18nForWasmAsync(Path.Combine(baseAddress, "_content", StaticWebAssets.RclAssemblyName, "i18n"));
-            await masaBlazorBuilder.AddI18nForWasmAsync(Path.Combine(baseAddress, "i18n"));
 
             return services;
         }

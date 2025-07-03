@@ -8,8 +8,8 @@
                Scrollable="true"
                OnBeforeShowContent="BeforeShowContent">
     <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Select tags"))
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Select tags"))</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="() => showSearch = !showSearch">
@@ -56,7 +56,7 @@
         <MCardActions>
             <MButton Text="true"
                      OnClick="() => showAddTag = true">
-                @(I18n.T("Add tags"))
+                <wc-auto-scroll-text fit-content="true" style="max-width:100px;">@(I18n.T("Add tags"))</wc-auto-scroll-text>
             </MButton>
             <MSpacer></MSpacer>
             <MButton Text="true"

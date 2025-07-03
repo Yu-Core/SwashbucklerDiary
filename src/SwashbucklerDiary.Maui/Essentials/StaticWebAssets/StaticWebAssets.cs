@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
@@ -25,7 +25,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             bool exists = await FileSystem.AppPackageFileExistsAsync(path).ConfigureAwait(false);
             if (!exists)
             {
-                throw new Exception($"not find {path}");
+                throw new FileNotFoundException($"not find {path}");
             }
 
             using var stream = await FileSystem.OpenAppPackageFileAsync(path).ConfigureAwait(false);

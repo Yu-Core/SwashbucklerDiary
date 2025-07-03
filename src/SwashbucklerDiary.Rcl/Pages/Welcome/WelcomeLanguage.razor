@@ -1,19 +1,24 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 
-<div class="@Class" style="width:100%;max-width:420px;max-height:500px;overflow-y:auto;">
-    @foreach (var item in languageListItems)
-    {
-        <MButton @key="item"
-                 Class="mb-5"
-                 Style="text-transform:none;"
-                 Rounded="true"
-                 Block="true"
-                 Outlined="true"
-                 Large="true"
-                 Loading="loading && selectedLanguage == item.Value.Name"
-                 Disabled="disabled"
-                 OnClick="item.OnClick">
-            @(item.Text)
-        </MButton>
-    }
+<div class="@Class" style="width:100%;">
+    <div class="d-flex justify-center scroll-show" style="width:100%;max-height:100%;overflow-y:auto;">
+        <div class="pa-4" style="width:100%;max-width:420px;height:fit-content;">
+            @foreach (var item in languageListItems)
+            {
+                <MButton @key="item"
+                         Class="mb-5"
+                         Style="text-transform:none;"
+                         Rounded="true"
+                         Block="true"
+                         Outlined="true"
+                         Large="true"
+                         Loading="loading && selectedLanguage == item.Value.Name"
+                         Disabled="disabled"
+                         OnClick="item.OnClick">
+                    @(item.Value.GetLanguageName())
+                </MButton>
+
+            }
+        </div>
+    </div>
 </div>

@@ -63,8 +63,6 @@ namespace SwashbucklerDiary.Rcl.Components
         private string MaxDateText
             => MaxDate == default ? I18n.T("End time") : MaxDate.ToString("d").Replace('/', '-');
 
-        private static DateOnly Today => DateOnly.FromDateTime(DateTime.Now);
-
         private void SetVisible(bool value)
         {
             if (value != Visible)

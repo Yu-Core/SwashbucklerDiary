@@ -8,8 +8,8 @@
                DisableAutoFocus
                OnBeforeShowContent="HandleOnBeforeShowContent">
     <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @I18n.T("Insert Time format")
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@I18n.T("Insert Time format")</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon
                      OnClick="()=>showMore=true">
@@ -50,7 +50,7 @@
         </MCardText>
         <MCardActions Class="pt-0">
             <MButton Text="true" OnClick="OnReset">
-                @(I18n.T("Restore the default"))
+                <wc-auto-scroll-text fit-content="true" style="max-width:100px;">@(I18n.T("Restore the default"))</wc-auto-scroll-text>
             </MButton>
             <MSpacer></MSpacer>
             <MButton Text
@@ -70,8 +70,8 @@
                ContentClass="rounded-lg"
                MaxWidth="420">
     <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @I18n.T("More")
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@I18n.T("More")</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon
                      OnClick="()=>showMore=false">

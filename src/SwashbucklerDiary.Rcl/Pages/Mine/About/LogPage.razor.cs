@@ -185,16 +185,16 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (DateOnlyMin != default)
             {
-                DateTime DateTimeMin = DateOnlyMin.ToDateTime(default);
-                Expression<Func<LogModel, bool>> expMinDate = it => it.Timestamp >= DateTimeMin;
+                DateTime dateTimeMin = DateOnlyMin.ToDateTime(default);
+                Expression<Func<LogModel, bool>> expMinDate = it => it.Timestamp >= dateTimeMin;
                 exp = exp.And(expMinDate);
             }
 
             if (DateOnlyMax != default)
             {
-                DateTime DateTimeMax = DateOnlyMax.ToDateTime(TimeOnly.MaxValue);
-                DateTimeMax = DateTimeMax.AddDays(1);
-                Expression<Func<LogModel, bool>> expMaxDate = it => it.Timestamp <= DateTimeMax;
+                DateTime dateTimeMax = DateOnlyMax.ToDateTime(TimeOnly.MaxValue);
+                dateTimeMax = dateTimeMax.AddDays(1);
+                Expression<Func<LogModel, bool>> expMaxDate = it => it.Timestamp <= dateTimeMax;
                 exp = exp.And(expMaxDate);
             }
 

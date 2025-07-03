@@ -1,4 +1,5 @@
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -15,8 +16,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LoadDataAsync()
         {
-            var path = $"docs/user-agreement/{I18n.Culture}.md";
-            content = await StaticWebAssets.ReadContentAsync(path);
+            content = await StaticWebAssets.ReadI18nContentAsync("docs/user-agreement/{0}.md", I18n.Culture);
         }
     }
 }

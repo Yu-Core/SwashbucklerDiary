@@ -33,8 +33,8 @@
     private RenderFragment GenCard(RenderFragment cardActionsContent) => __builder =>
     {
         <MCard Class="rounded-t-lg">
-            <MCardTitle Class="font-weight-bold">
-                @(I18n.T("Filter"))
+            <MCardTitle Class="font-weight-bold flex-nowrap">
+                <wc-auto-scroll-text>@(I18n.T("Filter"))</wc-auto-scroll-text>
                 <MSpacer></MSpacer>
                 <MButton Icon="true"
                          OnClick="HandleOnCancel">
@@ -92,7 +92,7 @@
                  Large="true"
                  Color="rgba(var(--m-theme-surface-container-high))"
                  OnClick="HandleOnReset">
-            @(I18n.T("Reset"))
+            <wc-auto-scroll-text class="justify-center">@(I18n.T("Reset"))</wc-auto-scroll-text>
         </MButton>
         <MButton Class="text-subtitle-1 flex-grow-1 mb-2"
                  Style="flex-basis:0;"
@@ -101,7 +101,7 @@
                  Large="true"
                  Color="rgba(var(--m-theme-surface-container-high))"
                  OnClick="HandleOnOK">
-            @(I18n.T("OK"))
+            <wc-auto-scroll-text class="justify-center">@(I18n.T("OK"))</wc-auto-scroll-text>
         </MButton>
     };
 

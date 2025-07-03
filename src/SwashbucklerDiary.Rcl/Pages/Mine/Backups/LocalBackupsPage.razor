@@ -13,10 +13,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Backup"))
+                    <wc-auto-scroll-text>@(I18n.T("Backup"))</wc-auto-scroll-text>
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("Save the zip file generated as a database file"))
+                    <wc-auto-scroll-text>@(I18n.T("Save the zip file generated as a database file"))</wc-auto-scroll-text>
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -34,10 +34,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Restore"))
+                    <wc-auto-scroll-text>@(I18n.T("Restore"))</wc-auto-scroll-text>
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("Select the zip file containing the database files"))
+                    <wc-auto-scroll-text>@(I18n.T("Select the zip file containing the database files"))</wc-auto-scroll-text>
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -51,8 +51,8 @@
                   ContentClass="rounded-lg"
                   MaxWidth="420">
     <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Backup"))
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Backup"))</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="@(()=>showBackups=false)">
@@ -81,8 +81,8 @@
                   ContentClass="rounded-lg"
                   MaxWidth="420">
     <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Confirm restore"))
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Confirm restore"))</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="@(()=>showRestore=false)">

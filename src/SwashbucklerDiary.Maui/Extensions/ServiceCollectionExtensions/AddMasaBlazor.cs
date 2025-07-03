@@ -26,7 +26,6 @@ namespace SwashbucklerDiary.Maui.Extensions
 
             var masaBlazorBuilder = services.AddMasaBlazor(ServiceLifetime.Singleton);
             masaBlazorBuilder.AddI18nForMauiBlazor($"wwwroot/_content/{StaticWebAssets.RclAssemblyName}/i18n");
-            masaBlazorBuilder.AddI18nForMauiBlazor($"wwwroot/i18n");
 
             return services;
         }

@@ -1,7 +1,8 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 
 <MTabs Value="Value"
        ValueChanged="ValueChanged"
+       Style="min-width: 0;"
        ActiveClass="text-h6 font-weight-bold"
        HideSlider>
     @foreach (var item in Items)
@@ -9,7 +10,7 @@
         <MTab @key="item"
               Class="my-tab"
               Ripple="false">
-            @(I18n.T(item.Text))
+            <wc-auto-scroll-text fit-content="true" style="max-width: 30vw;">@(I18n.T(item.Text))</wc-auto-scroll-text>
         </MTab>
     }
 </MTabs>

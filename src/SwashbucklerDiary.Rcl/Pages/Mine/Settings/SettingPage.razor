@@ -22,7 +22,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("System permission"))
+                    <wc-auto-scroll-text>@(I18n.T("System permission"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
@@ -37,14 +37,17 @@
                         mdi:mdi-trash-can-outline
                     </MIcon>
                 </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Clear cache"))
+
+                <MListItemContent Style="flex-basis:50%;">
+                    <wc-auto-scroll-text>@(I18n.T("Clear cache"))</wc-auto-scroll-text>
                 </MListItemContent>
-                <MListItemContent Class="flex-none">
+
+                <MListItemContent Class="ml-2" Style="flex-basis:50%;">
                     <MListItemSubtitle>
-                        @cacheSize
+                        <wc-auto-scroll-text class="justify-end">@cacheSize</wc-auto-scroll-text>
                     </MListItemSubtitle>
                 </MListItemContent>
+
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
                 </MListItemAction>
@@ -67,7 +70,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Home"))
+                    <wc-auto-scroll-text>@(I18n.T("Home"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
@@ -81,7 +84,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Calendar"))
+                    <wc-auto-scroll-text>@(I18n.T("Calendar"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
@@ -101,7 +104,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Diary"))
+                    <wc-auto-scroll-text>@(I18n.T("Diary"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
@@ -115,7 +118,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Template"))
+                    <wc-auto-scroll-text>@(I18n.T("Template"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
@@ -129,7 +132,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Snackbars"))
+                    <wc-auto-scroll-text>@(I18n.T("Snackbars"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
@@ -143,7 +146,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Diary card"))
+                    <wc-auto-scroll-text>@(I18n.T("Diary card"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
@@ -157,7 +160,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Statistics card"))
+                    <wc-auto-scroll-text>@(I18n.T("Statistics card"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="showStatisticsCard"
@@ -185,7 +188,7 @@
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
-                        Url Scheme
+                        <wc-auto-scroll-text>Url Scheme</wc-auto-scroll-text>
                     </MListItemContent>
                     <MListItemAction>
                         <MIcon>chevron_right</MIcon>
@@ -202,10 +205,10 @@
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("Quick record"))
+                            <wc-auto-scroll-text>@(I18n.T("Quick record"))</wc-auto-scroll-text>
                         </MListItemTitle>
                         <MListItemSubtitle>
-                            @(I18n.T("After opening the application, directly enter the editing page"))
+                            <wc-auto-scroll-text>@(I18n.T("After opening the application, directly enter the editing page"))</wc-auto-scroll-text>
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
@@ -224,8 +227,8 @@
                ContentClass="rounded-lg"
                MaxWidth="420">
     <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Clear cache"))
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Clear cache"))</wc-auto-scroll-text>
         </MCardTitle>
         <MCardText Class="pb-0">
             @(I18n.T("Are you sure to clear all caches?"))

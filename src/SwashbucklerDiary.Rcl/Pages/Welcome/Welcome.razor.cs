@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -34,8 +35,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             NavigateController.RemoveHistoryAction(AppLifecycle.QuitApp);
         }
-
-        private string BackgroundColor => ThemeService.RealTheme == Theme.Dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface;
 
         private void UpdateSettings()
         {
@@ -93,7 +92,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task InsertDefaultDiaries()
         {
-            string[] initWriteDocPaths = await StaticWebAssets.ReadJsonAsync<string[]>("json/Init-write-doc/doc-path.json");
+            string[] initWriteDocPaths = await StaticWebAssets.ReadJsonAsync<string[]>("json/init-write-doc/doc-path.json");
             var diaries = await GetDefaultDiaries(initWriteDocPaths);
             await DiaryService.AddAsync(diaries);
         }
@@ -103,8 +102,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             var diaries = new List<DiaryModel>();
             foreach (string path in paths)
             {
-                var uri = $"{path}{I18n.Culture}.md";
-                var content = await StaticWebAssets.ReadContentAsync(uri);
+                string content = await StaticWebAssets.ReadI18nContentAsync($"{path}/{{0}}.md", I18n.Culture);
+
                 var diary = new DiaryModel()
                 {
                     Content = content,

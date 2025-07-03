@@ -19,17 +19,17 @@
                 </MListItemIcon>
                 <MListItemContent>
                     <MListItemTitle>
-                        @(I18n.T("Default template"))
+                        <wc-auto-scroll-text>@(I18n.T("Default template"))</wc-auto-scroll-text>
                     </MListItemTitle>
                     <MListItemSubtitle>
-                        @(I18n.T("Automatically used when adding diary entries"))
+                        <wc-auto-scroll-text>@(I18n.T("Automatically used when adding diary entries"))</wc-auto-scroll-text>
                     </MListItemSubtitle>
                 </MListItemContent>
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
                 </MListItemAction>
             </MListItem>
-            
+
             <MDivider Class="mx-5"></MDivider>
 
             <MListItem>
@@ -40,10 +40,10 @@
                 </MListItemIcon>
                 <MListItemContent>
                     <MListItemTitle>
-                        @(I18n.T("Select template when create"))
+                        <wc-auto-scroll-text>@(I18n.T("Select template when create"))</wc-auto-scroll-text>
                     </MListItemTitle>
                     <MListItemSubtitle>
-                        @(I18n.T("Only effective when no default template is set"))
+                        <wc-auto-scroll-text>@(I18n.T("Only effective when no default template is set"))</wc-auto-scroll-text>
                     </MListItemSubtitle>
                 </MListItemContent>
                 <MListItemAction>
@@ -64,14 +64,19 @@
                         tactic
                     </MIcon>
                 </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Use Template Method"))
+
+                <MListItemContent Style="flex-basis:50%;">
+                    <wc-auto-scroll-text>@(I18n.T("Use Template Method"))</wc-auto-scroll-text>
                 </MListItemContent>
-                <MListItemContent Class="flex-none">
+
+                <MListItemContent Class="ml-2" Style="flex-basis:50%;">
                     <MListItemSubtitle>
-                        @I18n.T(useTemplateKindItems.FirstOrDefault(it => it.Value == useTemplateMethod).Key)
+                        <wc-auto-scroll-text class="justify-end">
+                            @I18n.T(useTemplateKindItems.FirstOrDefault(it => it.Value == useTemplateMethod).Key)
+                        </wc-auto-scroll-text>
                     </MListItemSubtitle>
                 </MListItemContent>
+                
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
                 </MListItemAction>

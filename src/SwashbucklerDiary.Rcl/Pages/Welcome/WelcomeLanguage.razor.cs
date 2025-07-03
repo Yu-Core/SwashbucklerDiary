@@ -26,10 +26,13 @@ namespace SwashbucklerDiary.Rcl.Pages
         public EventCallback<string> OnClick { get; set; }
 
         private string Class => new CssBuilder()
-            .Add("scroll-show")
-            .Add("px-4")
+            .Add("justify-center")
+            .Add("align-center")
+            .Add("fullscreen-height")
+            .Add("d-flex", Show)
             .Add("d-none", !Show)
             .ToString();
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -43,7 +46,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var list = I18n.SupportedCultures.OrderByDescending(it => it.Name);
             foreach (var culture in list)
             {
-                var item = new DynamicListItem<CultureInfo>(this, culture.NativeName, string.Empty, _ => HandleOnOK(culture.Name), culture);
+                var item = new DynamicListItem<CultureInfo>(this, string.Empty, string.Empty, _ => HandleOnOK(culture.Name), culture);
                 languageListItems.Add(item);
             }
 

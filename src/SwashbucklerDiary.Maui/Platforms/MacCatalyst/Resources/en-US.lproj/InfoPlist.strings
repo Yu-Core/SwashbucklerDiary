@@ -1,3 +1,2 @@
-/* French */
-CFBundleName="Swashbuckler Diary";
-CFBundleDisplayName="Swashbuckler Diary";
+CFBundleName = "Swashbuckler Diary";
+CFBundleDisplayName = "Swashbuckler Diary";

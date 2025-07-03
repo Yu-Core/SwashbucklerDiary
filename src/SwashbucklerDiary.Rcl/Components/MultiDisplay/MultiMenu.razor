@@ -26,8 +26,10 @@
                                                  Icon="true">
                                             <MIcon>@(item.Icon)</MIcon>
                                         </MButton>
-                                        <div class="title-container text-caption">
-                                            @(I18n.T(item.Text))
+                                        <div class="title-container text-caption" style="width:100%;">
+                                            <wc-auto-scroll-text class="justify-center">
+                                                @(I18n.T(item.Text))
+                                            </wc-auto-scroll-text>
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +72,7 @@
                                     </MIcon>
                                 </MListItemIcon>
                                 <MListItemContent Class="text-subtitle-2">
-                                    @(I18n.T(item.Text))
+                                    <wc-auto-scroll-text fit-content="true" style="max-width:200px;">@(I18n.T(item.Text))</wc-auto-scroll-text>
                                 </MListItemContent>
                             </MListItem>
                         }

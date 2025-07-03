@@ -180,13 +180,6 @@
         flex-grow: 1;
     }
 
-.m-list-item__subtitle {
-    white-space: initial;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-}
-
 .m-text-field .m-input__append-inner {
     margin-top: auto !important;
     margin-bottom: auto !important;
@@ -229,4 +222,8 @@
 
 .m-input--switch .m-input--switch__thumb {
     color: #fff;
+}
+
+.m-item-group.m-bottom-navigation .m-btn {
+    min-width: 50px;
 }

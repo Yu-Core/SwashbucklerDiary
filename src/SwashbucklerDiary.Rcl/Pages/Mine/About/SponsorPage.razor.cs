@@ -1,5 +1,6 @@
 using Masa.Blazor;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 
 namespace SwashbucklerDiary.Rcl.Pages
@@ -54,8 +55,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LoadDataAsync()
         {
-            var path = $"docs/why-develop/{I18n.Culture}.md";
-            whyDevelopDescription = await StaticWebAssets.ReadContentAsync(path);
+            whyDevelopDescription = await StaticWebAssets.ReadI18nContentAsync("docs/why-develop/{0}.md", I18n.Culture);
         }
     }
 }

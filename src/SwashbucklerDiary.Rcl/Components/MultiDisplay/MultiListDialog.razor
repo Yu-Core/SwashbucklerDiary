@@ -21,7 +21,7 @@
                                         </MIcon>
                                     </MListItemIcon>
                                     <MListItemContent>
-                                        @(I18n.T(item.Text))
+                                        <wc-auto-scroll-text>@(I18n.T(item.Text))</wc-auto-scroll-text>
                                     </MListItemContent>
                                 </MListItem>
 
@@ -50,8 +50,8 @@
                        ContentClass="rounded-lg"
                        MaxWidth="420">
             <MCard>
-                <MCardTitle Class="font-weight-bold">
-                    @Title
+                <MCardTitle Class="font-weight-bold flex-nowrap">
+                    <wc-auto-scroll-text>@Title</wc-auto-scroll-text>
                     <MSpacer></MSpacer>
                     <MButton Icon="true"
                              OnClick="HandleOnCancel">
@@ -74,7 +74,7 @@
                                     </MListItemIcon>
                                     <MListItemContent>
                                         <MListItemTitle>
-                                            @(I18n.T(item.Text))
+                                            <wc-auto-scroll-text>@(I18n.T(item.Text))</wc-auto-scroll-text>
                                         </MListItemTitle>
                                     </MListItemContent>
                                 </MListItem>

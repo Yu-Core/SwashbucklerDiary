@@ -6,54 +6,62 @@
        Rounded="@("lg")">
     <MListItem Dense="true">
         <MListItemContent Class="font-weight-bold">
-            @(I18n.T("Statistics"))
+            <wc-auto-scroll-text>@(I18n.T("Statistics"))</wc-auto-scroll-text>
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Diary count")): @(DiaryCount)
+            <wc-auto-scroll-text>@(I18n.T("Diary count")): @(DiaryCount)</wc-auto-scroll-text>
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Word count")): @(WordCount)
+            <wc-auto-scroll-text>@(I18n.T("Word count")): @(WordCount)</wc-auto-scroll-text>
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Active days")): @(ActiveDayCount)
+            <wc-auto-scroll-text>@(I18n.T("Active days")): @(ActiveDayCount)</wc-auto-scroll-text>
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            <span>
-                @(I18n.T("Most weather")):
-                <MIcon Class="mx-1" Size="20">
-                    @(MostWeatherIcon)
-                </MIcon>
-                @(MostWeatherText)
-            </span>
+            <wc-auto-scroll-text>
+                <span>
+                    @(I18n.T("Most weather")):
+                    <MIcon Class="mx-1" Size="20">
+                        @(MostWeatherIcon)
+                    </MIcon>
+                    @(MostWeatherText)
+                </span>
+            </wc-auto-scroll-text>
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            <span>
-                @(I18n.T("Most mood")):
-                <MIcon Class="mx-1" Size="20">
-                    @(MostMoodIcon)
-                </MIcon>
-                @(MostMoodText)
-            </span>
+            <wc-auto-scroll-text>
+                <span>
+                    @(I18n.T("Most mood")):
+                    <MIcon Class="mx-1" Size="20">
+                        @(MostMoodIcon)
+                    </MIcon>
+                    @(MostMoodText)
+                </span>
+            </wc-auto-scroll-text>
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Earliest date")): @(EarliestDate)
+            <wc-auto-scroll-text>
+                @(I18n.T("Earliest date")): @(EarliestDate)
+            </wc-auto-scroll-text>
         </MListItemContent>
     </MListItem>
     <MListItem Dense="true">
         <MListItemContent>
-            @(I18n.T("Last date")): @(LastDate)
+            <wc-auto-scroll-text>
+                @(I18n.T("Last date")): @(LastDate)
+            </wc-auto-scroll-text>
         </MListItemContent>
     </MListItem>
 </MCard>

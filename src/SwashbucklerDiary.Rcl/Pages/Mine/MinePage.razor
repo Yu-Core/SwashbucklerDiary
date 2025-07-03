@@ -3,10 +3,9 @@
 @inherits ImportantComponentBase
 
 <MyAppBar>
-    <MToolbarTitle Class="font-weight-bold">
-        @(I18n.T("Mine"))
+    <MToolbarTitle Class="font-weight-bold flex-grow-1">
+        <wc-auto-scroll-text>@(I18n.T("Mine"))</wc-auto-scroll-text>
     </MToolbarTitle>
-    <MSpacer></MSpacer>
     <MultiSearch OnSearch="Search"></MultiSearch>
 </MyAppBar>
 
@@ -26,7 +25,9 @@
                     </MListItemAvatar>
                     <MListItemContent>
                         <MListItemTitle Class="text-h6 font-weight-bold">
-                            @(userName ?? I18n.T("Swashbuckler Diary"))
+                            <wc-auto-scroll-text>
+                                @(userName ?? I18n.T("Swashbuckler Diary"))
+                            </wc-auto-scroll-text>
                         </MListItemTitle>
                         <MListItemSubtitle>
                             @(sign ?? I18n.T("After the incident, brush off your clothes and hide deep in your name"))
@@ -44,58 +45,58 @@
             <MList>
                 <MListItem>
                     <MListItemContent Class="text-center"
-                                      Style="display: grid;grid-template-columns: repeat(3, 1fr);">
+                                      Style="display: grid;grid-template-columns: repeat(3, 1fr);gap: 10px;">
                         <div>
                             <MListItemSubtitle>
-                                @(I18n.T("Diary count"))
+                                <wc-auto-scroll-text class="justify-center">@(I18n.T("Diary count"))</wc-auto-scroll-text>
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
-                                @diaryCount
+                                <wc-auto-scroll-text class="justify-center">@diaryCount</wc-auto-scroll-text>
                             </MListItemTitle>
                         </div>
                         <div>
                             <MListItemSubtitle>
-                                @(I18n.T("Word count"))
+                                <wc-auto-scroll-text class="justify-center">@(I18n.T("Word count"))</wc-auto-scroll-text>
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
-                                @wordCount
+                                <wc-auto-scroll-text class="justify-center">@wordCount</wc-auto-scroll-text>
                             </MListItemTitle>
                         </div>
                         <div>
                             <MListItemSubtitle>
-                                @(I18n.T("Active days"))
+                                 <wc-auto-scroll-text class="justify-center">@(I18n.T("Active days"))</wc-auto-scroll-text>
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
-                                @activeDayCount
+                                <wc-auto-scroll-text class="justify-center">@activeDayCount</wc-auto-scroll-text>
                             </MListItemTitle>
                         </div>
                     </MListItemContent>
                 </MListItem>
                 <MListItem>
                     <MListItemContent Class="text-center"
-                                      Style="display: grid;grid-template-columns: repeat(3, 1fr);">
+                                      Style="display: grid;grid-template-columns: repeat(3, 1fr);gap: 10px;">
                         <div>
                             <MListItemSubtitle>
-                                @(I18n.T("Image count"))
+                                 <wc-auto-scroll-text class="justify-center">@(I18n.T("Image count"))</wc-auto-scroll-text>
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
-                                @imageCount
+                                <wc-auto-scroll-text class="justify-center">@imageCount</wc-auto-scroll-text>
                             </MListItemTitle>
                         </div>
                         <div>
                             <MListItemSubtitle>
-                                @(I18n.T("Audio count"))
+                                 <wc-auto-scroll-text class="justify-center">@(I18n.T("Audio count"))</wc-auto-scroll-text>
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
-                                @audioCount
+                                <wc-auto-scroll-text class="justify-center">@audioCount</wc-auto-scroll-text>
                             </MListItemTitle>
                         </div>
                         <div>
                             <MListItemSubtitle>
-                                @(I18n.T("Video count"))
+                                 <wc-auto-scroll-text class="justify-center">@(I18n.T("Video count"))</wc-auto-scroll-text>
                             </MListItemSubtitle>
                             <MListItemTitle Class="mt-2 font-weight-bold text-h6">
-                                @videoCount
+                                <wc-auto-scroll-text class="justify-center">@videoCount</wc-auto-scroll-text>
                             </MListItemTitle>
                         </div>
                     </MListItemContent>
@@ -163,7 +164,7 @@
                                             </MIcon>
                                         </MListItemIcon>
                                         <MListItemContent>
-                                            @(I18n.T(item.Text))
+                                            <wc-auto-scroll-text>@(I18n.T(item.Text))</wc-auto-scroll-text>
                                         </MListItemContent>
                                     </MListItem>
                                 </MList>
@@ -184,7 +185,7 @@
              TItem="System.Globalization.CultureInfo"
              TItemValue="string"
              Items="I18n.SupportedCultures.OrderByDescending(it => it.Name)"
-             ItemText="c => c.NativeName"
+             ItemText="c => c.GetLanguageName()"
              ItemValue="c => c.Name">
 </RadioDialog>
 

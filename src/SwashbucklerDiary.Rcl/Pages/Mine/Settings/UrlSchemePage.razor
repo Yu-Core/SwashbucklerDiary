@@ -29,10 +29,10 @@
                            OnClick="()=>CopyAsync(item.Path)">
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T(item.Name))
+                            <wc-auto-scroll-text>@(I18n.T(item.Name))</wc-auto-scroll-text>
                         </MListItemTitle>
                         <MListItemSubtitle>
-                            @($"{UrlScheme}://{item.Path}")
+                            <wc-auto-scroll-text>@($"{UrlScheme}://{item.Path}")</wc-auto-scroll-text>
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>

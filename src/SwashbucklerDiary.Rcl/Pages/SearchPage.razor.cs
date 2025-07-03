@@ -205,15 +205,15 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (MinDate != default)
             {
-                DateTime DateTimeMin = MinDate.ToDateTime(default);
-                Expression<Func<DiaryModel, bool>> expMinDate = it => it.CreateTime >= DateTimeMin;
+                DateTime dateTimeMin = MinDate.ToDateTime(default);
+                Expression<Func<DiaryModel, bool>> expMinDate = it => it.CreateTime >= dateTimeMin;
                 exp = exp.And(expMinDate);
             }
 
             if (MaxDate != default)
             {
-                DateTime DateTimeMax = MaxDate.ToDateTime(TimeOnly.MaxValue);
-                Expression<Func<DiaryModel, bool>> expMaxDate = it => it.CreateTime <= DateTimeMax;
+                DateTime dateTimeMax = MaxDate.ToDateTime(TimeOnly.MaxValue);
+                Expression<Func<DiaryModel, bool>> expMaxDate = it => it.CreateTime <= dateTimeMax;
                 exp = exp.And(expMaxDate);
             }
 

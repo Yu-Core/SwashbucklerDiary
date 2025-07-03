@@ -5,22 +5,20 @@
        Elevation="0"
        Rounded="@("lg")">
     <MList Class="py-0">
-        <MListItem OnClick="()=>showConfig=true">
+        <MListItem OnClick="() => showConfig = true">
             <MListItemIcon>
                 <MIcon>
                     mdi:mdi-cog-sync-outline
                 </MIcon>
             </MListItemIcon>
 
-            <MListItemContent>
-                <MListItemTitle>
-                    @(I18n.T("Config"))
-                </MListItemTitle>
+            <MListItemContent Style="flex-basis:50%;">
+                <wc-auto-scroll-text>@(I18n.T("Config"))</wc-auto-scroll-text>
             </MListItemContent>
 
-            <MListItemContent>
-                <MListItemSubtitle Class="text-right">
-                    @ConfiguredText
+            <MListItemContent Class="ml-2" Style="flex-basis:50%;">
+                <MListItemSubtitle>
+                    <wc-auto-scroll-text class="justify-end">@ConfiguredText</wc-auto-scroll-text>
                 </MListItemSubtitle>
             </MListItemContent>
 
@@ -39,10 +37,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Upload"))
+                    <wc-auto-scroll-text>@(I18n.T("Upload"))</wc-auto-scroll-text>
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("Save the zip file generated as a database file"))
+                    <wc-auto-scroll-text>@(I18n.T("Save the zip file generated as a database file"))</wc-auto-scroll-text>
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -60,10 +58,10 @@
             </MListItemIcon>
             <MListItemContent>
                 <MListItemTitle>
-                    @(I18n.T("Pull"))
+                    <wc-auto-scroll-text>@(I18n.T("Pull"))</wc-auto-scroll-text>
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    @(I18n.T("Select the zip file containing the database files"))
+                    <wc-auto-scroll-text>@(I18n.T("Select the zip file containing the database files"))</wc-auto-scroll-text>
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -82,7 +80,7 @@
             </MIcon>
         </MListItemIcon>
         <MListItemContent>
-            @(I18n.T("Include media files"))
+            <wc-auto-scroll-text>@(I18n.T("Include media files"))</wc-auto-scroll-text>
         </MListItemContent>
         <MListItemAction>
             <SettingSwitch @bind-Value="includeDiaryResources"
@@ -98,11 +96,11 @@
 </WebDavConfigDialog>
 
 <CustomMDialog @bind-MyValue="showUpload"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420">
+               ContentClass="rounded-lg"
+               MaxWidth="420">
     <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Upload"))
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Upload"))</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="@(()=>showUpload=false)">
@@ -128,12 +126,12 @@
 </CustomMDialog>
 
 <CustomMDialog @bind-MyValue="showDownload"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420"
-                  Scrollable="true">
+               ContentClass="rounded-lg"
+               MaxWidth="420"
+               Scrollable="true">
     <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @(I18n.T("Pull"))
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Pull"))</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="()=>showDownload=false">
@@ -149,8 +147,8 @@
                            Class="mb-1 rounded"
                            OnClick="()=>Download(item)">
                     <MListItemContent>
-                        <MListItemTitle Class="webdav-list-item__title">
-                            @item
+                        <MListItemTitle>
+                            <wc-auto-scroll-text>@item</wc-auto-scroll-text>
                         </MListItemTitle>
                     </MListItemContent>
                 </MListItem>

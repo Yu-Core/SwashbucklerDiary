@@ -25,8 +25,8 @@
     private RenderFragment GenCard(RenderFragment cardActionsContent) => __builder =>
     {
         <MCard Class="rounded-t-lg">
-            <MCardTitle Class="font-weight-bold">
-                @(I18n.T("Select file types"))
+            <MCardTitle Class="font-weight-bold flex-nowrap">
+                <wc-auto-scroll-text>@(I18n.T("Select file types"))</wc-auto-scroll-text>
                 <MSpacer></MSpacer>
                 <MButton Icon="true"
                          OnClick="HandleOnCancel">
@@ -37,7 +37,7 @@
                 <MList Class="py-0">
                     @foreach (var item in items)
                     {
-                        <MListItem Class="px-6"
+                        <MListItem Class="px-10"
                                    OnClick="@item.OnClick">
                             <MListItemIcon>
                                 <MIcon>
@@ -46,7 +46,7 @@
                             </MListItemIcon>
                             <MListItemContent>
                                 <MListItemTitle>
-                                    @(I18n.T(item.Text))
+                                    <wc-auto-scroll-text>@(I18n.T(item.Text))</wc-auto-scroll-text>
                                 </MListItemTitle>
                             </MListItemContent>
                             <MListItemAction>

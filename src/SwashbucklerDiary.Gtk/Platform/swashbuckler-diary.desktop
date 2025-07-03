@@ -10,16 +10,66 @@ Terminal=false
 Type=Application
 
 # Translations:
-Comment[zh_CN]=一个开源、跨平台的本地日记应用
+Comment[de_DE]=Eine Open-Source und plattformübergreifende lokale Tagebuch-App
+Comment[en_US]=An open source, cross platform local diary application
+Comment[es_ES]=Una APP de diario local de código abierto y multiplataforma
+Comment[fr_FR]=Une application de journal locale open source et multiplateforme
+Comment[ja_JP]=オープンソースでクロスプラットフォームのローカル日記アプリ
+Comment[ko_KR]=오픈 소스 및 크로스 플랫폼 로컬 일기 앱
+Comment[pt_BR]=Um aplicativo de diário local de código aberto e multiplataforma
+Comment[ru_RU]=Локальное приложение для дневника с открытым исходным кодом и кроссплатформенное
+Comment[vi_VN]=Ứng dụng nhật ký cục bộ mã nguồn mở, đa nền tảng
+Comment[zh_CN]=一款开源、跨平台的本地日记应用
+Comment[zh_TW]=一款開源、跨平台的本地日記應用
+GenericName[de_DE]=Tagebuch
+GenericName[en_US]=Diary
+GenericName[es_ES]=Diario
+GenericName[fr_FR]=Journal
+GenericName[ja_JP]=日記
+GenericName[ko_KR]=일기
+GenericName[pt_BR]=Diário
+GenericName[ru_RU]=Дневник
+GenericName[vi_VN]=Nhật ký
 GenericName[zh_CN]=日记
+GenericName[zh_TW]=日記
+Name[de_DE]=Tagebuch eines Schwertkämpfers
+Name[en_US]=Swashbuckler Diary
+Name[es_ES]=Diario de Espadachín
+Name[fr_FR]=Journal du Mousquetaire
+Name[ja_JP]=剣客日記
+Name[ko_KR]=협객 일기
+Name[pt_BR]=Diário do Espadachim
+Name[ru_RU]=Дневник Сорвиголовы
+Name[vi_VN]=Nhật ký Hiệp khách
 Name[zh_CN]=侠客日记
+Name[zh_TW]=俠客日記
 
 [Desktop Action Search]
 Exec=/opt/apps/com.yucore.swashbucklerdiary/SwashbucklerDiary.Gtk --search %F
 Name=Search
+Name[de_DE]=Suchen
+Name[en_US]=Search
+Name[es_ES]=Buscar
+Name[fr_FR]=Rechercher
+Name[ja_JP]=検索
+Name[ko_KR]=검색
+Name[pt_BR]=Pesquisar
+Name[ru_RU]=Поиск
+Name[vi_VN]=Tìm kiếm
 Name[zh_CN]=搜索
+Name[zh_TW]=搜尋
 
 [Desktop Action Add]
 Exec=/opt/apps/com.yucore.swashbucklerdiary/SwashbucklerDiary.Gtk --write %F
 Name=Add
+Name[de_DE]=Hinzufügen
+Name[en_US]=Add
+Name[es_ES]=Añadir
+Name[fr_FR]=Ajouter
+Name[ja_JP]=追加
+Name[ko_KR]=추가
+Name[pt_BR]=Adicionar
+Name[ru_RU]=Добавить
+Name[vi_VN]=Thêm
 Name[zh_CN]=添加
+Name[zh_TW]=新增

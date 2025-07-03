@@ -17,16 +17,16 @@
                     </MIcon>
                 </MListItemIcon>
 
-                <MListItemContent>
-                    @(I18n.T("Camera permission"))
+                <MListItemContent Style="flex-basis:50%;">
+                    <wc-auto-scroll-text>@(I18n.T("Camera permission"))</wc-auto-scroll-text>
                 </MListItemContent>
 
-                <MListItemContent Class="flex-none">
+                <MListItemContent Class="ml-2" Style="flex-basis:50%;">
                     <MListItemSubtitle>
-                        @CameraPermission
+                        <wc-auto-scroll-text class="justify-end">@CameraPermission</wc-auto-scroll-text>
                     </MListItemSubtitle>
                 </MListItemContent>
-
+                
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
                 </MListItemAction>
@@ -41,13 +41,13 @@
                     </MIcon>
                 </MListItemIcon>
 
-                <MListItemContent>
-                    @(I18n.T("Storage permission"))
+                <MListItemContent Style="flex-basis:50%;">
+                    <wc-auto-scroll-text>@(I18n.T("Storage permission"))</wc-auto-scroll-text>
                 </MListItemContent>
 
-                <MListItemContent Class="flex-none">
+                <MListItemContent Class="ml-2" Style="flex-basis:50%;">
                     <MListItemSubtitle>
-                        @StoragePermission
+                        <wc-auto-scroll-text class="justify-end">@StoragePermission</wc-auto-scroll-text>
                     </MListItemSubtitle>
                 </MListItemContent>
 

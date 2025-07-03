@@ -1,4 +1,5 @@
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Shared;
 using System.Net.Http.Json;
 
@@ -164,8 +165,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private async Task HandleUpdateInstruction()
         {
-            var uri = $"docs/update-instruction/{_i18n.Culture}.md";
-            var content = await _staticWebAssets.ReadContentAsync(uri);
+            string content = await _staticWebAssets.ReadI18nContentAsync("docs/update-instruction/{0}.md", _i18n.Culture);
+
             var diary = new DiaryModel()
             {
                 Content = content,

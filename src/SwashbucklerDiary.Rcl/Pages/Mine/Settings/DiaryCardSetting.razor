@@ -18,7 +18,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Markdown"))
+                    <wc-auto-scroll-text>@(I18n.T("Markdown"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="diaryCardMarkdown"
@@ -36,7 +36,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Weather and mood icon"))
+                    <wc-auto-scroll-text>@(I18n.T("Weather and mood icon"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="diaryCardIcon"
@@ -54,7 +54,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Tag"))
+                    <wc-auto-scroll-text>@(I18n.T("Tag"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="diaryCardTags"
@@ -72,7 +72,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Location"))
+                    <wc-auto-scroll-text>@(I18n.T("Location"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="diaryCardLocation"
@@ -89,14 +89,19 @@
                         calendar_clock
                     </MIcon>
                 </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Time format"))
+
+                <MListItemContent Style="flex-basis:50%;">
+                    <wc-auto-scroll-text>@(I18n.T("Time format"))</wc-auto-scroll-text>
                 </MListItemContent>
-                <MListItemContent Class="flex-none">
+
+                <MListItemContent Class="ml-2" Style="flex-basis:50%;">
                     <MListItemSubtitle>
-                        @(I18n.TForTimeFormat(DiaryCardTimeFormatKey))
+                        <wc-auto-scroll-text class="justify-end">
+                            @(I18n.TForTimeFormat(DiaryCardTimeFormatKey))
+                        </wc-auto-scroll-text>
                     </MListItemSubtitle>
                 </MListItemContent>
+
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
                 </MListItemAction>

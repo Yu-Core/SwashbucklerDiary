@@ -26,7 +26,6 @@ namespace SwashbucklerDiary.Gtk.Extensions
 
             var masaBlazorBuilder = services.AddMasaBlazor(ServiceLifetime.Singleton);
             masaBlazorBuilder.AddI18nForServer($"wwwroot/_content/{Rcl.Essentials.StaticWebAssets.RclAssemblyName}/i18n");
-            masaBlazorBuilder.AddI18nForServer($"wwwroot/i18n");
 
             return services;
         }

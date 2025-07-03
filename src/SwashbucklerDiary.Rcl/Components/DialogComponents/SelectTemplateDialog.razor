@@ -1,4 +1,4 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
+@namespace SwashbucklerDiary.Rcl.Components
 @inherits DialogComponentBase
 
 <CustomMDialog MyValue="Visible"
@@ -19,10 +19,9 @@
 
         @if (!showSearch)
         {
-            <MToolbarTitle Class="font-weight-bold">
-                @(I18n.T("Select template"))
+            <MToolbarTitle Class="font-weight-bold flex-grow-1">
+                <wc-auto-scroll-text>@(I18n.T("Select template"))</wc-auto-scroll-text>
             </MToolbarTitle>
-            <MSpacer></MSpacer>
         }
 
         <VisibleTextField @bind-Visible="showSearch"

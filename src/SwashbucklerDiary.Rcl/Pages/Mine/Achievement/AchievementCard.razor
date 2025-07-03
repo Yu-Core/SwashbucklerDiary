@@ -16,11 +16,11 @@
 
             <MListItemContent>
                 <MListItemTitle Class="mb-4 font-weight-bold">
-                    @(I18n.T(Value.Name))
+                    <wc-auto-scroll-text>@(I18n.T(Value.Name))</wc-auto-scroll-text>
                 </MListItemTitle>
 
                 <MListItemSubtitle Class="mb-4">
-                    @(I18n.T(Value.Description))
+                    <wc-auto-scroll-text>@(I18n.T(Value.Description))</wc-auto-scroll-text>
                 </MListItemSubtitle>
 
                 <MProgressLinear Value="@ProgressRate"

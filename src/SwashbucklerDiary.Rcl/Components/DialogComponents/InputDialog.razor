@@ -9,8 +9,8 @@
                OnBeforeShowContent="HandleOnBeforeShowContent"
                OnAfterShowContent="FocusAsync">
     <MCard>
-        <MCardTitle Class="font-weight-bold">
-            @Title
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@Title</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon
                      OnClick="HandleOnCancel">

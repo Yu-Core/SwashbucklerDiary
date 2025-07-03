@@ -1,3 +1,2 @@
-/* French */
-CFBundleName="侠客日记";
-CFBundleDisplayName="侠客日记";
+CFBundleName = "侠客日记";
+CFBundleDisplayName = "侠客日记";

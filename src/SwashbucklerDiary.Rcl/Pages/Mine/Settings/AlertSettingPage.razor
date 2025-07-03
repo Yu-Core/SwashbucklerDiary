@@ -17,14 +17,17 @@
                         timer
                     </MIcon>
                 </MListItemIcon>
-                <MListItemContent>
-                    @(I18n.T("Alert timeout"))
+
+                <MListItemContent Style="flex-basis:50%;">
+                    <wc-auto-scroll-text>@(I18n.T("Alert timeout"))</wc-auto-scroll-text>
                 </MListItemContent>
-                <MListItemContent Class="flex-none">
+
+                <MListItemContent Class="ml-2" Style="flex-basis:50%;">
                     <MListItemSubtitle>
-                        @TimeoutText
+                        <wc-auto-scroll-text class="justify-end">@TimeoutText</wc-auto-scroll-text>
                     </MListItemSubtitle>
                 </MListItemContent>
+
                 <MListItemAction>
                     <MIcon>chevron_right</MIcon>
                 </MListItemAction>
@@ -43,7 +46,7 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    @(I18n.T("Achievement"))
+                    <wc-auto-scroll-text>@(I18n.T("Achievement"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
                     <SettingSwitch @bind-Value="achievementsAlert"

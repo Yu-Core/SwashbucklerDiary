@@ -20,10 +20,10 @@
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("The display is set to private"))
+                            <wc-auto-scroll-text>@(I18n.T("The display is set to private"))</wc-auto-scroll-text>
                         </MListItemTitle>
                         <MListItemSubtitle Class="text-caption-xs-only">
-                            @(I18n.T("Show the Set Private option in the diary menu"))
+                            <wc-auto-scroll-text>@(I18n.T("Show the Set Private option in the diary menu"))</wc-auto-scroll-text>
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
@@ -43,10 +43,10 @@
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("Enable dark mode"))
+                            <wc-auto-scroll-text>@(I18n.T("Enable dark mode"))</wc-auto-scroll-text>
                         </MListItemTitle>
                         <MListItemSubtitle Class="text-caption-xs-only">
-                            @(I18n.T("Enable dark mode when entering privacy mode"))
+                            <wc-auto-scroll-text>@(I18n.T("Enable dark mode when entering privacy mode"))</wc-auto-scroll-text>
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
@@ -68,14 +68,18 @@
                             mdi:mdi-location-enter
                         </MIcon>
                     </MListItemIcon>
+
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("Hide default entry"))
+                            <wc-auto-scroll-text>@(I18n.T("Hide default entry"))</wc-auto-scroll-text>
                         </MListItemTitle>
                         <MListItemSubtitle Class="text-caption-xs-only">
-                            @(I18n.T("After hiding, it can be accessed through function search, which is located in the upper right corner of the \"Mine\" page"))
+                            <wc-auto-scroll-text>
+                                @(I18n.T("After hiding, it can be accessed through function search, which is located in the upper right corner of the \"Mine\" page"))
+                            </wc-auto-scroll-text>
                         </MListItemSubtitle>
                     </MListItemContent>
+
                     <MListItemAction>
                         <MSwitch @bind-Value="hidePrivacyModeEntrance"
                                  TValue="bool"
@@ -98,19 +102,22 @@
                                 keyboard
                             </MIcon>
                         </MListItemIcon>
-                        <MListItemContent>
+
+                        <MListItemContent Style="flex-basis:50%;">
                             <MListItemTitle>
-                                @(I18n.T("Custom search keywords"))
+                                <wc-auto-scroll-text>@(I18n.T("Custom search keywords"))</wc-auto-scroll-text>
                             </MListItemTitle>
                             <MListItemSubtitle Class="text-caption-xs-only">
-                                @(I18n.T("Enter keywords in the feature search to display privacy mode"))
+                                <wc-auto-scroll-text>@(I18n.T("Enter keywords in the feature search to display privacy mode"))</wc-auto-scroll-text>
                             </MListItemSubtitle>
                         </MListItemContent>
-                        <MListItemContent Class="flex-none">
+
+                        <MListItemContent Class="ml-2" Style="flex-basis:50%;">
                             <MListItemSubtitle Class="font-weight-bold">
-                                @privacyModeFunctionSearchKey
+                                <wc-auto-scroll-text class="justify-end">@privacyModeFunctionSearchKey</wc-auto-scroll-text>
                             </MListItemSubtitle>
                         </MListItemContent>
+
                         <MListItemAction>
                             <MIcon>chevron_right</MIcon>
                         </MListItemAction>
@@ -124,14 +131,17 @@
                                 key
                             </MIcon>
                         </MListItemIcon>
-                        <MListItemContent>
-                            @(I18n.T("Set default entry password"))
+
+                        <MListItemContent Style="flex-basis:50%;">
+                            <wc-auto-scroll-text>@(I18n.T("Set default entry password"))</wc-auto-scroll-text>
                         </MListItemContent>
-                        <MListItemContent Class="flex-none">
+
+                        <MListItemContent Class="ml-2" Style="flex-basis:50%;">
                             <MListItemSubtitle>
-                                @PrivacyModeEntrancePasswordSetStateText
+                                <wc-auto-scroll-text class="justify-end">@PrivacyModeEntrancePasswordSetStateText</wc-auto-scroll-text>
                             </MListItemSubtitle>
                         </MListItemContent>
+
                         <MListItemAction>
                             <MIcon>chevron_right</MIcon>
                         </MListItemAction>
@@ -153,7 +163,7 @@
                             </MIcon>
                         </MListItemIcon>
                         <MListItemContent>
-                            @(I18n.T(SwitchPrivacyModeText))
+                            <wc-auto-scroll-text>@(I18n.T(SwitchPrivacyModeText))</wc-auto-scroll-text>
                         </MListItemContent>
                         <MListItemAction>
                             <MIcon>chevron_right</MIcon>
@@ -175,10 +185,10 @@
                     </MListItemIcon>
                     <MListItemContent>
                         <MListItemTitle>
-                            @(I18n.T("Move the old version of Privacy Diary"))
+                            <wc-auto-scroll-text>@(I18n.T("Move the old version of Privacy Diary"))</wc-auto-scroll-text>
                         </MListItemTitle>
                         <MListItemSubtitle Class="text-caption-xs-only">
-                            @(I18n.T("Move the data from the old version of the privacy diary to the new version"))
+                            <wc-auto-scroll-text>@(I18n.T("Move the data from the old version of the privacy diary to the new version"))</wc-auto-scroll-text>
                         </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
@@ -226,8 +236,8 @@
                    ContentClass="rounded-lg"
                    MaxWidth="420">
         <MCard>
-            <MCardTitle Class="font-weight-bold">
-                @(I18n.T("Hide default entry"))
+            <MCardTitle Class="font-weight-bold flex-nowrap">
+                <wc-auto-scroll-text>@(I18n.T("Hide default entry"))</wc-auto-scroll-text>
                 <MSpacer></MSpacer>
                 <MButton Icon="true"
                          OnClick="@(() => showHidePrivacyModeEntranceConfirmDialog = false)">
