@@ -21,7 +21,9 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0">
-            <p class="text-h5 mb-4">@CurrentTimeText</p>
+            <p class="text-h5 mb-4 font-italic font-weight-bold">
+                <CurrentTimeDisplay Format="@CurrentTimeFormat"></CurrentTimeDisplay>
+            </p>
 
             <CustomMTextField @ref="textField"
                               @bind-Value="internalValue"

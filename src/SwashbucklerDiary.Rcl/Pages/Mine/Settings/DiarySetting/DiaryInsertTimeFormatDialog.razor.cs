@@ -34,18 +34,18 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Parameter]
         public EventCallback OnReset { get; set; }
 
-        string CurrentTimeText
+        string? CurrentTimeFormat
         {
             get
             {
                 internalValue ??= string.Empty;
                 if (IsValidDateTimeFormat(internalValue))
                 {
-                    return DateTime.Now.ToString(internalValue);
+                    return internalValue;
                 }
                 else
                 {
-                    return DateTime.Now.ToString(Value);
+                    return Value;
                 }
             }
         }
