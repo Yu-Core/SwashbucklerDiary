@@ -1,0 +1,44 @@
+@namespace SwashbucklerDiary.Rcl.Layout
+@inherits MainLayoutNavBase
+
+<MNavigationDrawer App="true"
+                   Value="Show"
+                   Stateless="true"
+                   MiniVariant="true"
+                   MiniVariantWidth="76"
+                   Touchless="true"
+                   Style="top:initial !important;background-color:initial;">
+    <MList Nav Slim="false" Routable>
+        <MListItemGroup ActiveClass="material-symbols_active">
+            @foreach (var item in Items)
+            {
+                <MTooltip Right>
+                    <ActivatorContent>
+                        <MListItem @attributes="@context.Attrs"
+                                   Class="@ItemClass"
+                                   Ripple="false"
+                                   Href="@item.Href">
+                            <MListItemIcon>
+                                <MIcon Size="24">
+                                    @item.Icon
+                                </MIcon>
+                            </MListItemIcon>
+                        </MListItem>
+                    </ActivatorContent>
+                    <ChildContent>
+                        <span>@I18n.T(item.Text)</span>
+                    </ChildContent>
+                </MTooltip>
+            }
+        </MListItemGroup>
+    </MList>
+</MNavigationDrawer>
+
+@code {
+    private bool Show => BreakpointService.Breakpoint.SmAndUp && IsPermanentPath;
+
+    private string ItemClass => new CssBuilder()
+        .Add("rounded-lg")
+        .Add("mb-2")
+        .ToString();
+}

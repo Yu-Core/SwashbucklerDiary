@@ -558,7 +558,7 @@ html.m-overlay-scroll-blocked {
     font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
-.material-symbols_active {
+.material-symbols_active .m-icon {
     animation: fill 0.2s ease forwards;
 }
 

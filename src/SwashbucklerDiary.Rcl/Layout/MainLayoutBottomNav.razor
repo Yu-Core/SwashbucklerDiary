@@ -8,14 +8,19 @@
 
 <MBottomNavigation InputValue="Show"
                    Class="@Class"
+                   ActiveClass="material-symbols_active"
                    Style="background-color:initial;"
                    Mandatory="true"
+                   Routable
                    App="true">
     @foreach (var item in Items)
     {
-        <MainLayoutBottomNavItem @key="item.Href"
-                                 Value="item">
-        </MainLayoutBottomNavItem>
+        <MButton Ripple="false"
+                 Href="@item.Href">
+            <MIcon>
+                @item.Icon
+            </MIcon>
+        </MButton>
     }
 </MBottomNavigation>
 

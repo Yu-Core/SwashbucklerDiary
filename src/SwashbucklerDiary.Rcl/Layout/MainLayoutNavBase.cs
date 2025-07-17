@@ -9,6 +9,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         protected BreakpointService BreakpointService { get; set; } = default!;
 
+        [Inject]
+        protected II18nService I18n { get; set; } = default!;
+
         [CascadingParameter(Name = "Culture")]
         public string? Culture { get; set; }
 
