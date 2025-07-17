@@ -51,13 +51,16 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        private async void Close()
+        private void Close()
         {
-            MyVisible = false;
-            if (MyVisibleChanged.HasDelegate)
+            InvokeAsync(async () =>
             {
-                await MyVisibleChanged.InvokeAsync(false);
-            }
+                MyVisible = false;
+                if (MyVisibleChanged.HasDelegate)
+                {
+                    await MyVisibleChanged.InvokeAsync(false);
+                }
+            });
         }
     }
 }

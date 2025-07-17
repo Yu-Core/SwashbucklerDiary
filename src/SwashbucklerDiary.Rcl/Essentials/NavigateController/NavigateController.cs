@@ -251,8 +251,8 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
                 // 触发返回事件
                 waitNavigate = true;
-                var preventNavigation = await HandleNavigateActionAsync();
-                if (preventNavigation)
+                bool backPrevious = currentHistoryIndex - targetHistoryIndex == 1;
+                if (backPrevious && await HandleNavigateActionAsync())
                 {
                     context.PreventNavigation();
                 }

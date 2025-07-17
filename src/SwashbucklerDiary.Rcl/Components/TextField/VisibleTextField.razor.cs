@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -68,9 +68,12 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        private async void CloseSearch()
+        private void CloseSearch()
         {
-            await InternalVisibleChanged(false);
+            InvokeAsync(async () =>
+            {
+                await InternalVisibleChanged(false);
+            });
         }
     }
 }

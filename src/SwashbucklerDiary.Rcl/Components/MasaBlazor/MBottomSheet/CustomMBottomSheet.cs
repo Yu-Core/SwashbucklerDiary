@@ -65,13 +65,16 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        private async void Close()
+        private void Close()
         {
-            MyValue = false;
-            if (MyValueChanged.HasDelegate)
+            InvokeAsync(async () =>
             {
-                await MyValueChanged.InvokeAsync(false);
-            }
+                MyValue = false;
+                if (MyValueChanged.HasDelegate)
+                {
+                    await MyValueChanged.InvokeAsync(false);
+                }
+            });
         }
 
         private async Task HandleOnAfterShowContent(bool value)
