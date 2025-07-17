@@ -1,4 +1,4 @@
-﻿.loading-progress {
+.loading-progress {
     position: relative;
     display: block;
     width: 8rem;
@@ -162,5 +162,12 @@ code {
 
     90% {
         --percent: 90;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .vditor-toolbar {
+        bottom: var(--soft-keyboard-height);
+        transition: bottom 0.3s ease;
     }
 }
