@@ -112,6 +112,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
 - [betterSearch](https://github.com/jayZOU/betterSearch)
 - [Blazored LocalStorage](https://github.com/Blazored/LocalStorage)
+- [BlazorWebView.Gtk](https://github.com/Yu-Core/BlazorWebView.Gtk)
 - [Brotli](https://github.com/google/brotli)
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 - [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)

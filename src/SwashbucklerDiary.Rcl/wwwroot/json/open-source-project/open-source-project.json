@@ -20,6 +20,11 @@
     "Url": "https://github.com/Blazored/LocalStorage/blob/main/LICENSE"
   },
   {
+    "Name": "BlazorWebView.Gtk",
+    "License": "MIT license",
+    "Url": "https://github.com/Yu-Core/BlazorWebView.Gtk/blob/main/LICENSE.txt"
+  },
+  {
     "Name": "Brotli",
     "License": "MIT license",
     "Url": "https://github.com/google/brotli/blob/master/LICENSE"

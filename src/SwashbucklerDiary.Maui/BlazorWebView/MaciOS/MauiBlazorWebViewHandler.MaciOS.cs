@@ -1,4 +1,4 @@
-﻿using Foundation;
+using Foundation;
 using Microsoft.AspNetCore.Components.WebView;
 using Microsoft.AspNetCore.Components.WebView.Maui;
 using Microsoft.Extensions.Logging;
@@ -97,7 +97,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 {
                     using (var dic = new NSMutableDictionary<NSString, NSString>())
                     {
-                        dic.Add((NSString)"Content-Length", (NSString)(responseBytes.Length.ToString(CultureInfo.InvariantCulture)));
+                        dic.Add((NSString)"Content-Length", (NSString)responseBytes.Length.ToString(CultureInfo.InvariantCulture));
                         dic.Add((NSString)"Content-Type", (NSString)contentType);
                         // Disable local caching. This will prevent user scripts from executing correctly.
                         dic.Add((NSString)"Cache-Control", (NSString)"no-cache, max-age=0, must-revalidate, no-store");
@@ -206,7 +206,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 long numberOfBytesToRead = end - start + 1;
                 byte[] byteArray = new byte[numberOfBytesToRead];
                 contentStream.Seek(start, SeekOrigin.Begin);
-                int bytesRead = contentStream.Read(byteArray, 0, (int)(numberOfBytesToRead));
+                int bytesRead = contentStream.Read(byteArray, 0, (int)numberOfBytesToRead);
                 // 如果读取的字节数小于期望的字节数，说明到达了文件的末尾或发生了其他错误
                 if (bytesRead < numberOfBytesToRead)
                 {
@@ -236,7 +236,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
             ?? throw new Exception("Field BlazorInitScript does not exist");
 
         private readonly PropertyInfo AppOriginUriProperty = blazorWebViewHandlerType.GetProperty("AppOriginUri", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
-            ?? throw new Exception("Property BlazorInitScript does not exist");
+            ?? throw new Exception("Property AppOriginUri does not exist");
 
         private object WebviewManager => _webviewManagerField.GetValue(this);
 

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.WebView.Gtk;
 using Soup;
 using SwashbucklerDiary.Shared;
+using System.Reflection;
 using WebKit;
 
 namespace SwashbucklerDiary.Gtk.BlazorWebView
@@ -56,7 +57,7 @@ namespace SwashbucklerDiary.Gtk.BlazorWebView
 
         private static bool InterceptLocalFileRequest(string uri, out string filePath)
         {
-            if (!uri.StartsWith(GtkWebViewManager.AppOriginUri.ToString()))
+            if (!GtkWebViewManagerHelper.AppOriginUri.IsBaseOf(new Uri(uri)))
             {
                 filePath = string.Empty;
                 return false;
@@ -105,7 +106,7 @@ namespace SwashbucklerDiary.Gtk.BlazorWebView
             long numberOfBytesToRead = end - start + 1;
             byte[] byteArray = new byte[numberOfBytesToRead];
             contentStream.Seek(start, SeekOrigin.Begin);
-            int bytesRead = contentStream.Read(byteArray, 0, (int)(numberOfBytesToRead));
+            int bytesRead = contentStream.Read(byteArray, 0, (int)numberOfBytesToRead);
             // 如果读取的字节数小于期望的字节数，说明到达了文件的末尾或发生了其他错误
             if (bytesRead < numberOfBytesToRead)
             {
@@ -122,5 +123,13 @@ namespace SwashbucklerDiary.Gtk.BlazorWebView
             var bytes = GLib.Bytes.New(buffer);
             return Gio.MemoryInputStream.NewFromBytes(bytes);
         }
+    }
+
+    public static class GtkWebViewManagerHelper
+    {
+        private static readonly FieldInfo AppOriginUriField = typeof(GtkWebViewManager).GetField("AppOriginUri", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
+            ?? throw new Exception("Property AppOriginUri does not exist");
+
+        public static Uri AppOriginUri => (Uri)(AppOriginUriField.GetValue(null) ?? throw new Exception("Property AppOriginUri does not exist"));
     }
 }

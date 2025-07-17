@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Components.WebView.Gtk;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Gtk.BlazorWebView;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -77,7 +76,7 @@ namespace SwashbucklerDiary.Gtk.Services
 
         bool IsInternalUrl(string uriString, out string relativePath)
         {
-            string baseUriString = GtkWebViewManager.AppOriginUri.ToString();
+            string baseUriString = GtkWebViewManagerHelper.AppOriginUri.ToString();
             string absoluteUri = new Uri(new Uri(baseUriString), uriString).ToString();
             if (absoluteUri.StartsWith(baseUriString))
             {

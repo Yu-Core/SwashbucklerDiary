@@ -1,11 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
 		<OutputType>Exe</OutputType>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<DefineConstants>$(DefineConstants);GTK;WEBKIT_GTK</DefineConstants>
 		<ApplicationId>com.yucore.swashbucklerdiary</ApplicationId>
 		<CompressionEnabled>false</CompressionEnabled>
 		<Version>1.0.0</Version>
@@ -47,6 +46,7 @@
 		<PackageReference Include="GirCore.WebKit-6.0" Version="0.6.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView" Version="9.0.*" />
 		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="1.9.7" />
+		<PackageReference Include="Yu-Core.AspNetCore.Components.WebView.Gtk" Version="0.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>
