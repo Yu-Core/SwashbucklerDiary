@@ -2,11 +2,11 @@ import { previewImage } from './previewMediaElement.js';
 import { fixMobileOutlientClick } from './markdown/fixMarkdownOutline.js'
 
 function handleCopy(dotNetCallbackRef, element) {
-    element.addEventListener('click', function (event) {
-        if (event.target.closest('.vditor-copy')) {
+    element.querySelectorAll(".vditor-copy span").forEach(span => {
+        span.addEventListener('click', function (event) {
             dotNetCallbackRef.invokeMethodAsync("Copy");
-        }
-    });
+        });
+    })
 }
 
 function afterMarkdown(dotNetCallbackRef, element, autoPlay, outlineElement) {
