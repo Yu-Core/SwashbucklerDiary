@@ -22,7 +22,7 @@
 		<CompressionEnabled>false</CompressionEnabled>
 		<Nullable>enable</Nullable>
 		<NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
-		<MauiVersion>9.0.70</MauiVersion>
+		<MauiVersion>9.0.81</MauiVersion>
 
 		<!-- Display name -->
 		<ApplicationTitle>侠客日记</ApplicationTitle>
@@ -152,7 +152,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="12.1.0" />
 		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="2.0.0" />
 		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.4.6" />
 	</ItemGroup>
