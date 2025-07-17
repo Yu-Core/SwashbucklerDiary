@@ -105,16 +105,20 @@ jobs:
 
       # Publish MAUI Windows packaged
       - name: Publish MAUI Windows packaged
+        if: ${{ !inputs.prerelease }}
         run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64 -p:WindowsAppSDKSelfContained=true --sc -p:WindowsAppSdkDeploymentManagerInitialize=false
 
       # Update to Microsoft Store
       - name: Setup Microsoft Store Developer CLI
+        if: ${{ !inputs.prerelease }}
         uses: microsoft/setup-msstore-cli@v1
 
       - name: Configure Microsoft Store Developer CLI
+        if: ${{ !inputs.prerelease }}
         run: msstore reconfigure --tenantId ${{ secrets.PARTNER_CENTER_TENANT_ID }} --sellerId ${{ secrets.PARTNER_CENTER_SELLER_ID }} --clientId ${{ secrets.PARTNER_CENTER_CLIENT_ID }} --clientSecret ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
 
       - name: Update to Microsoft Store
+        if: ${{ !inputs.prerelease }}
         run: msstore publish ${{ env.CSPROJ_PATH }} -i ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win10-x64/AppPackages -id ${{ env.STORE_ID }}
 
       # Publish MAUI Windows unpackaged
