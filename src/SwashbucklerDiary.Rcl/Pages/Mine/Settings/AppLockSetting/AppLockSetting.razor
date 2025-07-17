@@ -1,0 +1,90 @@
+@page "/appLockSetting"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar Title="@(I18n.T("App lock"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MCard Class="mb-5"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList Class="py-0">
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon>
+                        dialpad
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <wc-auto-scroll-text>@(I18n.T("Number password"))</wc-auto-scroll-text>
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch Value="!string.IsNullOrEmpty(appLockNumberPassword)"
+                             TValue="bool"
+                             Readonly
+                             Dense="true"
+                             Inset="true"
+                             Color="@null"
+                             OnClick="()=>showNumberLock=true">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            @if (isBiometricSupported)
+            {
+                <MDivider Class="mx-5"></MDivider>
+
+                <MListItem>
+                    <MListItemIcon>
+                        <MIcon>
+                            fingerprint
+                        </MIcon>
+                    </MListItemIcon>
+                    <MListItemContent>
+                        <wc-auto-scroll-text>@(I18n.T("Fingerprint identification"))</wc-auto-scroll-text>
+                    </MListItemContent>
+                    <MListItemAction>
+                        <MSwitch Value="appLockBiometric"
+                                 TValue="bool"
+                                 Readonly
+                                 Dense="true"
+                                 Inset="true"
+                                 Color="@null"
+                                 OnClick="SetAppLockBiometricAsync">
+                        </MSwitch>
+                    </MListItemAction>
+                </MListItem>
+            }
+            
+        </MList>
+    </MCard>
+    <MSubheader>@I18n.T("Lock time")</MSubheader>
+    <MCard Class="mb-5"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList Class="py-0">
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon>
+                        arrow_forward
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <wc-auto-scroll-text>@(I18n.T("Lock when leaving the application"))</wc-auto-scroll-text>
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="lockAppWhenLeave"
+                                   SettingKey="@nameof(Setting.LockAppWhenLeave)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+</ScrollContainer>
+
+<NumberPasswordDialog @bind-Visible="showNumberLock"
+                      Value="@appLockNumberPassword"
+                      OnFinish="SetAppLockNumberPasswordAsync">
+</NumberPasswordDialog>

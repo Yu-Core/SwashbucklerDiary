@@ -22,13 +22,13 @@ namespace SwashbucklerDiary.Maui.Essentials
             }
 
             mainInstance.Activated += Activate;
-            Arguments = await CreateArguments(activatedArgs);
+            AppLifecycle.Default.ActivationArguments = await CreateArguments(activatedArgs);
         }
 
         private static async void Activate(object? sender, AppActivationArguments args)
         {
             var activationArguments = await CreateArguments(args);
-            OnActivated?.Invoke(activationArguments);
+            AppLifecycle.Default.Activate(activationArguments);
         }
 
         private static ValueTask<ActivationArguments> CreateArguments(AppActivationArguments args)
@@ -148,7 +148,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             }
         }
 
-        private readonly static MethodInfo ArgumentsToIdMethod = typeof(AppActionsExtensions).GetMethod("ArgumentsToId", BindingFlags.NonPublic | BindingFlags.Static)
+        private static readonly MethodInfo ArgumentsToIdMethod = typeof(AppActionsExtensions).GetMethod("ArgumentsToId", BindingFlags.NonPublic | BindingFlags.Static)
             ?? throw new Exception("Method ArgumentsToId does not exist");
         static string? ArgumentsToId(string arguments)
         {

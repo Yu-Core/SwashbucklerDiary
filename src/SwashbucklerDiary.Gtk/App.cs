@@ -92,14 +92,7 @@ namespace SwashbucklerDiary.Gtk
                     GLib.VariantType.NewArray(GLib.VariantType.String)
                 )?.GetStrv(out _) ?? [];
 
-                if (AppActivation.OnActivated is null)
-                {
-                    AppActivation.Launch(remainingArg);
-                }
-                else
-                {
-                    AppActivation.Activate(remainingArg);
-                }
+                AppActivation.LaunchOrActivate(remainingArg);
             }
 
             if (window is null)

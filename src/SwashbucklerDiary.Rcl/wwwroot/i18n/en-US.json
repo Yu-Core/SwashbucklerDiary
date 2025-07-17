@@ -473,5 +473,11 @@
   "Something went wrong": "Something went wrong",
   "This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).": "This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).",
   "Force refresh": "Force refresh",
-  "This file is using": "This file is using"
+  "This file is using": "This file is using",
+  "Authentication": "Authentication",
+  "App lock": "App lock",
+  "Number password": "Number password",
+  "Fingerprint identification": "Fingerprint identification",
+  "Lock time": "Lock time",
+  "Lock when leaving the application": "Lock when leaving the application"
 }

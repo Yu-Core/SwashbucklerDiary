@@ -11,14 +11,7 @@ namespace SwashbucklerDiary.Maui
 
         public override bool OpenUrl(UIApplication application, NSUrl url, NSDictionary options)
         {
-            if (AppActivation.OnActivated is null)
-            {
-                AppActivation.Launch(url);
-            }
-            else
-            {
-                AppActivation.Activate(url);
-            }
+            AppActivation.LaunchOrActivate(url);
 
             return true;
             //return base.OpenUrl(application, url, options);

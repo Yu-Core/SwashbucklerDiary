@@ -2,31 +2,22 @@ using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
-    public class AppLifecycle : IAppLifecycle
+    public class AppLifecycle : Rcl.Essentials.AppLifecycle
     {
-        public ActivationArguments? ActivationArguments
+        private static IAppLifecycle? defaultImplementation;
+
+        public static IAppLifecycle Default
+            => defaultImplementation ??= new AppLifecycle();
+
+        public override void QuitApp()
         {
-            get => AppActivation.Arguments;
-            set => AppActivation.Arguments = value;
+#if ANDROID
+            BackPressHelper.QuitApp();
+#else
+            Microsoft.Maui.Controls.Application.Current!.Quit();
+#endif
         }
 
-        public event Action<ActivationArguments>? OnActivated
-        {
-            add => AppActivation.OnActivated += value;
-            remove => AppActivation.OnActivated -= value;
-        }
 
-        public event Action? OnResumed;
-
-        public event Action? OnStopped;
-
-        public void Resume() => OnResumed?.Invoke();
-
-        public void Stop() => OnStopped?.Invoke();
-
-        public void QuitApp()
-        {
-            Application.Current!.Quit();
-        }
     }
 }

@@ -55,6 +55,9 @@ namespace SwashbucklerDiary.Rcl.Services
             nameof(Setting.PrivacyModeFunctionSearchKey),
             nameof(Setting.HidePrivacyModeEntrance),
             nameof(Setting.SetPrivacyDiary),
+            nameof(Setting.AppLockNumberPassword),
+            nameof(Setting.AppLockBiometric),
+            nameof(Setting.LockAppWhenLeave),
         ];
 
         public DiaryFileManager(IAppFileSystem appFileSystem,

@@ -1,17 +1,21 @@
 using Microsoft.AspNetCore.Components.Routing;
+using SwashbucklerDiary.Rcl.Essentials;
 using System.Reflection;
-using Application = Gtk.Application;
 
 namespace SwashbucklerDiary.Gtk.Essentials
 {
     public class NavigateController : Rcl.Essentials.NavigateController
     {
-        protected override Assembly[] Assemblies { get; } = [Routes.Assembly, .. Routes.AdditionalAssemblies];
+        public NavigateController(IAppLifecycle appLifecycle) : base(appLifecycle)
+        {
+        }
+
+        protected override IEnumerable<Assembly> Assemblies => Routes.Assemblies;
 
         protected override Task HandleNavigateToStackBottomPath(LocationChangingContext context)
         {
             context.PreventNavigation();
-            Application.GetDefault()?.Quit();
+            _appLifecycle.QuitApp();
             return Task.CompletedTask;
         }
     }

@@ -5,19 +5,39 @@ namespace SwashbucklerDiary.Gtk.Essentials
 {
     public static partial class AppActivation
     {
-        public static ActivationArguments? Arguments { get; set; }
-
-        public static Action<ActivationArguments>? OnActivated { get; set; }
-
-        public static void Launch(string[] args)
+        public static void LaunchOrActivate(ActivationArguments arguments)
         {
-            Arguments = CreateArguments(args);
+            if (!AppLifecycle.Default.IsLaunched)
+            {
+                AppLifecycle.Default.ActivationArguments = arguments;
+            }
+            else
+            {
+                AppLifecycle.Default.Activate(arguments);
+            }
         }
 
-        public static void Activate(string[] args)
+        public static void LaunchOrActivate(string[] args)
+        {
+            if (!AppLifecycle.Default.IsLaunched)
+            {
+                Launch(args);
+            }
+            else
+            {
+                Activate(args);
+            }
+        }
+
+        static void Launch(string[] args)
+        {
+            AppLifecycle.Default.ActivationArguments = CreateArguments(args);
+        }
+
+        static void Activate(string[] args)
         {
             var activationArguments = CreateArguments(args);
-            OnActivated?.Invoke(activationArguments);
+            AppLifecycle.Default.Activate(activationArguments);
         }
 
         private static ActivationArguments CreateArguments(string[] args)

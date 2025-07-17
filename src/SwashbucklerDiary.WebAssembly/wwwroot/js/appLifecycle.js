@@ -1,11 +1,16 @@
-﻿export const init = (dotnetObj, onStop, onResume) => {
+export const init = (dotnetObj) => {
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState !== 'visible') {
-            dotnetObj.invokeMethodAsync(onStop);
+            dotnetObj.invokeMethodAsync("Stop");
         } else {
-            dotnetObj.invokeMethodAsync(onResume);
+            dotnetObj.invokeMethodAsync("Resume");
         }
     });
+
+    const activationArgumentsString = sessionStorage.getItem('ActivationArguments');
+    if (activationArgumentsString) {
+        dotnetObj.invokeMethodAsync("SetActivationArgumentsFromJson", activationArgumentsString);
+    }
 }
 
 export const quit = () => {

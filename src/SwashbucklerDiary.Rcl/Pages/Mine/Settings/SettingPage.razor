@@ -171,55 +171,68 @@
         </MList>
     </MCard>
 
-    @if (PlatformIntegration.CurrentPlatform != AppDevicePlatform.Browser)
-    {
-        <div class="text-h6 setting-title">
-            @(I18n.T("Other"))
-        </div>
+    <div class="text-h6 setting-title">
+        @(I18n.T("Other"))
+    </div>
 
-        <MCard Class="mb-5"
-               Elevation="0"
-               Rounded="@("lg")">
-            <MList Class="py-0">
-                <MListItem OnClick="@(() => To("urlScheme"))">
-                    <MListItemIcon>
-                        <MIcon>
-                            mdi:mdi-link-variant
-                        </MIcon>
-                    </MListItemIcon>
-                    <MListItemContent>
-                        <wc-auto-scroll-text>Url Scheme</wc-auto-scroll-text>
-                    </MListItemContent>
-                    <MListItemAction>
-                        <MIcon>chevron_right</MIcon>
-                    </MListItemAction>
-                </MListItem>
-                
-                <MDivider Class="mx-5"></MDivider>
+    <MCard Class="mb-5"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList Class="py-0">
+            <MListItem OnClick="@(() => To("urlScheme"))">
+                <MListItemIcon>
+                    <MIcon>
+                        mdi:mdi-link-variant
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <wc-auto-scroll-text>Url Scheme</wc-auto-scroll-text>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
 
-                <MListItem>
-                    <MListItemIcon>
-                        <MIcon>
-                            flash_on
-                        </MIcon>
-                    </MListItemIcon>
-                    <MListItemContent>
-                        <MListItemTitle>
-                            <wc-auto-scroll-text>@(I18n.T("Quick record"))</wc-auto-scroll-text>
-                        </MListItemTitle>
-                        <MListItemSubtitle>
-                            <wc-auto-scroll-text>@(I18n.T("After opening the application, directly enter the editing page"))</wc-auto-scroll-text>
-                        </MListItemSubtitle>
-                    </MListItemContent>
-                    <MListItemAction>
-                        <SettingSwitch @bind-Value="showQuickRecord"
-                                       SettingKey="@nameof(Setting.QuickRecord)">
-                        </SettingSwitch>
-                    </MListItemAction>
-                </MListItem>
-            </MList>
-        </MCard>
-    }
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon>
+                        flash_on
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <MListItemTitle>
+                        <wc-auto-scroll-text>@(I18n.T("Quick record"))</wc-auto-scroll-text>
+                    </MListItemTitle>
+                    <MListItemSubtitle>
+                        <wc-auto-scroll-text>@(I18n.T("After opening the application, directly enter the editing page"))</wc-auto-scroll-text>
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="showQuickRecord"
+                                   SettingKey="@nameof(Setting.QuickRecord)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem OnClick="@(() => To("appLockSetting"))">
+                <MListItemIcon>
+                    <MIcon>
+                        lock
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <wc-auto-scroll-text>@(I18n.T("App lock"))</wc-auto-scroll-text>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
 
 </ScrollContainer>
 

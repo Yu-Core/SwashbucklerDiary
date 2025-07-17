@@ -51,6 +51,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         protected IThemeService ThemeService { get; set; } = default!;
 
+        [Inject]
+        private IAppLifecycle AppLifecycle { get; set; } = default!;
+
         public void Dispose()
         {
             OnDispose();
@@ -71,13 +74,21 @@ namespace SwashbucklerDiary.Rcl.Layout
             I18n.CultureChanged += HandleLanguageChanged;
             ThemeService.OnChanged += HandleThemeChanged;
             SettingService.SettingsChanged += HandleSettingsChanged;
+            AppLifecycle.OnStopped += HandleAppLifecycleOnStopped;
+            AppLifecycle.OnActivated += HandleActivated;
         }
+
+        protected abstract ActivationArguments CreateAppLockActivationArguments();
+
+        protected abstract void HandleSchemeActivation(ActivationArguments args, bool replace);
 
         protected virtual void OnDispose()
         {
             I18n.CultureChanged -= HandleLanguageChanged;
             ThemeService.OnChanged -= HandleThemeChanged;
             SettingService.SettingsChanged -= HandleSettingsChanged;
+            AppLifecycle.OnStopped -= HandleAppLifecycleOnStopped;
+            AppLifecycle.OnActivated -= HandleActivated;
         }
 
         protected virtual async Task InitSettingsAsync()
@@ -119,7 +130,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected void DialogNotification()
         {
-            if (NavigationManager.GetBaseRelativePath() == "welcome")
+            if (NavigationManager.GetBaseRelativePath().Equals("welcome", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -147,6 +158,77 @@ namespace SwashbucklerDiary.Rcl.Layout
                     await SettingService.SetAsync(key, currentTime);
                 }
             }
+        }
+
+        private void HandleAppLifecycleOnStopped()
+        {
+            if (NavigationManager.GetBaseRelativePath().Equals("applock", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            string appLockNumberPassword = SettingService.Get(it => it.AppLockNumberPassword);
+            bool appLockBiometric = SettingService.Get(it => it.AppLockBiometric);
+            bool useAppLock = !string.IsNullOrEmpty(appLockNumberPassword) || appLockBiometric;
+            bool lockAppWhenLeave = SettingService.Get(it => it.LockAppWhenLeave);
+            if (useAppLock && lockAppWhenLeave)
+            {
+                AppLifecycle.ActivationArguments = CreateAppLockActivationArguments();
+                NavigationManager.NavigateTo("appLock");
+            }
+        }
+
+        protected void HandleActivated(ActivationArguments? args)
+        {
+            if (NavigationManager.GetBaseRelativePath().Equals("welcome", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            if (args is null || args.Data is null)
+            {
+                return;
+            }
+
+            if (NavigateController.DisableNavigate)
+            {
+                AppLifecycle.ActivationArguments = args;
+                return;
+            }
+
+            bool replace = NavigationManager.GetBaseRelativePath().Equals("applock", StringComparison.InvariantCultureIgnoreCase);
+
+            switch (args.Kind)
+            {
+                case AppActivationKind.Share:
+                    HandleShareActivation(args, replace);
+                    break;
+                case AppActivationKind.Scheme:
+                    HandleSchemeActivation(args, replace);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        protected void HandleShareActivation(ActivationArguments args, bool replace)
+        {
+            if (NavigationManager.GetBaseRelativePath().Equals("write", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            AppLifecycle.ActivationArguments = args;
+            To("write", replace: replace);
+        }
+
+        protected void To(string uri, bool replace)
+        {
+            NavigationManager.NavigateTo(uri, new NavigationOptions()
+            {
+                ReplaceHistoryEntry = replace,
+                HistoryEntryState = replace ? "replace" : null
+            });
         }
     }
 }

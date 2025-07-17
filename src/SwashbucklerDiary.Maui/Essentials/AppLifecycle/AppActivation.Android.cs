@@ -9,13 +9,13 @@ namespace SwashbucklerDiary.Maui.Essentials
     {
         public static void Launch(Intent intent)
         {
-            Arguments = CreateArgumentsFromIntent(intent);
+            AppLifecycle.Default.ActivationArguments = CreateArgumentsFromIntent(intent);
         }
 
         public static void Activate(Intent intent)
         {
             var activationArguments = CreateArgumentsFromIntent(intent);
-            OnActivated?.Invoke(activationArguments);
+            AppLifecycle.Default.Activate(activationArguments);
         }
 
         private static ActivationArguments CreateArgumentsFromIntent(Intent intent)

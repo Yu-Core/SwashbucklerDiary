@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
@@ -7,13 +8,13 @@ namespace SwashbucklerDiary.Maui.Essentials
     {
         private readonly ILogger _logger;
 
-        private readonly Rcl.Essentials.IVersionTracking _versionTracking;
+        private readonly II18nService _i18n;
 
         public PlatformIntegration(ILogger<PlatformIntegration> logger,
-            Rcl.Essentials.IVersionTracking versionTracking)
+            II18nService i18n)
         {
             _logger = logger;
-            _versionTracking = versionTracking;
+            _i18n = i18n;
         }
     }
 }

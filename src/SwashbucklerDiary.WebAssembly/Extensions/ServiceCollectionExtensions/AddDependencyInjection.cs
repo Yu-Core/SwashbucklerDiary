@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddSingleton<ILogService, LogService>();
             services.AddSingleton<IResourceService, ResourceService>();
 
-            services.AddSingleton<IAppLifecycle, AppLifecycle>();
+            services.AddSingleton<IAppLifecycle, Essentials.AppLifecycle>();
             services.AddScoped<SystemThemeJSModule>();
             services.AddScoped<IThemeService, ThemeService>();
             services.AddSingleton<IAccessExternal, Services.AccessExternal>();

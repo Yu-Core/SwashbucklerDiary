@@ -341,8 +341,31 @@
     "Name": "Quick record",
     "Icon": "flash_on",
     "Path": "Setting / Quick record",
-    "Href": "setting",
-    "HidePlatforms": [ { "Platform": "Browser" } ]
+    "Href": "setting"
+  },
+  {
+    "Name": "App lock",
+    "Icon": "lock",
+    "Path": "Setting / App lock",
+    "Href": "setting"
+  },
+  {
+    "Name": "Number password",
+    "Icon": "dialpad",
+    "Path": "Setting / App lock / Number password",
+    "Href": "appLockSetting"
+  },
+  {
+    "Name": "Fingerprint identification",
+    "Icon": "fingerprint",
+    "Path": "Setting / App lock / Fingerprint identification",
+    "Href": "appLockSetting"
+  },
+  {
+    "Name": "Lock when leaving the application",
+    "Icon": "arrow_forward",
+    "Path": "Setting / App lock / Lock when leaving the application",
+    "Href": "appLockSetting"
   },
   {
     "Name": "View source",

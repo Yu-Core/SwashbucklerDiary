@@ -1,20 +1,25 @@
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Shared;
 using SwashbucklerDiary.WebAssembly.Extensions;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
-    public class AppLifecycle : IAppLifecycle
+    public class AppLifecycle : Rcl.Essentials.AppLifecycle
     {
-        public event Action<ActivationArguments>? OnActivated;
-
-        public event Action? OnResumed;
-
-        public event Action? OnStopped;
-
         private readonly Lazy<ValueTask<IJSInProcessObjectReference>> _module;
 
-        public ActivationArguments? ActivationArguments { get; set; }
+        private readonly JsonSerializerOptions jsonSerializerOptions = new()
+        {
+            PropertyNameCaseInsensitive = true,
+            Converters =
+            {
+                new JsonStringEnumConverter(),
+                new ObjectToInferredTypesConverter()
+            }
+        };
 
         public AppLifecycle(IJSRuntime jSRuntime)
         {
@@ -22,12 +27,24 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         }
 
         [JSInvokable]
-        public void Resume() => OnResumed?.Invoke();
+        public override void Resume() => base.Resume();
 
         [JSInvokable]
-        public void Stop() => OnStopped?.Invoke();
+        public override void Stop() => base.Stop();
 
-        public async void QuitApp()
+        [JSInvokable]
+        public void SetActivationArgumentsFromJson(string jsonString)
+        {
+            try
+            {
+                ActivationArguments = JsonSerializer.Deserialize<ActivationArguments>(jsonString, jsonSerializerOptions);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public override async void QuitApp()
         {
             var module = await _module.Value;
             module.InvokeVoid("quit");
@@ -37,7 +54,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         {
             var module = await _module.Value;
             var dotNetObject = DotNetObjectReference.Create(this);
-            module.InvokeVoid("init", dotNetObject, nameof(Stop), nameof(Resume));
+            module.InvokeVoid("init", dotNetObject);
         }
     }
 }

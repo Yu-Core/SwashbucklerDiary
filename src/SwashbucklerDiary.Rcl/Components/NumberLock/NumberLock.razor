@@ -1,0 +1,67 @@
+@namespace SwashbucklerDiary.Rcl.Components
+
+<MCard Class="@Class"
+       Style="@InternalStyle"
+       Elevation="0"
+       @attributes="Attributes">
+    <MCardTitle Class="justify-center">
+        @Title
+    </MCardTitle>
+    <MCardText>
+        <div class="d-flex flex-column align-center mb-6">
+            <div class="@($"progress-dots {(shake ? "shake" : "")}")">
+                @for (int i = 0; i < Length; i++)
+                {
+                    var temp = i;
+                    <MIcon>@(temp < (Value?.Length ?? 0) ? "fiber_manual_record-fill" : "fiber_manual_record")</MIcon>
+                }
+            </div>
+
+            <div class="keypad" style="max-width:fit-content;">
+                @for (int i = 1; i <= 9; i++)
+                {
+                    var temp = i;
+                    <MButton Fab
+                             Large
+                             Class="ma-2 text-h6"
+                             OnClick="() => PressNumber(temp)">
+                        @temp
+                    </MButton>
+                }
+
+                <MButton Fab
+                         Icon
+                         Large
+                         Class="ma-2"
+                         Style="@ExtraButtonStyle"
+                         OnClick="ExtraButtonOnClick">
+                    <MIcon>@ExtraButtonIconName</MIcon>
+                </MButton>
+
+                <MButton Fab
+                         Large
+                         Class="ma-2 text-h6"
+                         OnClick="() => PressNumber(0)">
+                    0
+                </MButton>
+
+                <MButton Fab Large Icon Class="ma-2" OnClick="Backspace">
+                    <MIcon>backspace</MIcon>
+                </MButton>
+
+            </div>
+        </div>
+    </MCardText>
+</MCard>
+
+@code
+{
+    private string InternalStyle => new StyleBuilder()
+        .Add("background-color", "initial")
+        .Add(Style)
+        .ToString();
+
+    private string ExtraButtonStyle => new StyleBuilder()
+        .AddIf("visibility", "hidden", !ExtraButton)
+        .ToString();
+}

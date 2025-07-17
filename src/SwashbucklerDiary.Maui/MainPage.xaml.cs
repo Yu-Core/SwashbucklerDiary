@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components.WebView;
-using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui
 {
@@ -44,14 +44,27 @@ namespace SwashbucklerDiary.Maui
             if (!firstSetLanguage || !firstAgree)
             {
                 blazorWebView.StartPath = "/welcome";
-                AppActivation.Arguments = null;
+                Essentials.AppLifecycle.Default.ActivationArguments = null;
                 return;
             }
 
-            var args = AppActivation.Arguments;
+            var args = Essentials.AppLifecycle.Default.ActivationArguments;
+            if (args is null || args.Data is null || args.Kind == AppActivationKind.Launch)
+            {
+                QuickRecord();
+            }
+
+            string appLockNumberPassword = Preferences.Default.Get<string>(nameof(Setting.AppLockNumberPassword), string.Empty);
+            bool appLockBiometric = Preferences.Default.Get<bool>(nameof(Setting.AppLockBiometric), false);
+            bool useAppLock = !string.IsNullOrEmpty(appLockNumberPassword) || appLockBiometric;
+            if (useAppLock)
+            {
+                blazorWebView.StartPath = "/appLock";
+                return;
+            }
+
             if (args is null || args.Data is null)
             {
-                HandleDefault();
                 return;
             }
 
@@ -62,9 +75,6 @@ namespace SwashbucklerDiary.Maui
                     break;
                 case AppActivationKind.Scheme:
                     HandleScheme(args);
-                    break;
-                default:
-                    HandleDefault();
                     break;
             }
         }
@@ -77,7 +87,7 @@ namespace SwashbucklerDiary.Maui
                 blazorWebView.StartPath = path;
             }
 
-            AppActivation.Arguments = null;
+            Essentials.AppLifecycle.Default.ActivationArguments = null;
         }
 
         private void HandleShare(ActivationArguments args)
@@ -85,17 +95,16 @@ namespace SwashbucklerDiary.Maui
             blazorWebView.StartPath = "/write";
         }
 
-        private void HandleDefault()
-        {
-            QuickRecord();
-        }
-
         private void QuickRecord()
         {
             var quickRecord = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.QuickRecord), false);
             if (quickRecord)
             {
-                blazorWebView.StartPath = "/write";
+                Essentials.AppLifecycle.Default.ActivationArguments = new()
+                {
+                    Kind = AppActivationKind.Scheme,
+                    Data = $"{SchemeConstants.SwashbucklerDiary}://write"
+                };
             }
         }
     }

@@ -126,6 +126,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [maui-linux](https://github.com/jsuarezruiz/maui-linux)
 - [Microsoft.Data.Sqlite](https://github.com/dotnet/efcore#microsoftdatasqlite)
 - [panzoom](https://github.com/anvaka/panzoom)
+- [Plugin.Maui.Biometric](https://github.com/FreakyAli/Plugin.Maui.Biometric)
 - [Serilog](https://github.com/serilog/serilog)
 - [Serilog.Extensions.Logging](https://github.com/serilog/serilog-extensions-logging)
 - [Serilog.Sinks.Debug](https://github.com/serilog/serilog-sinks-debug)

@@ -1,4 +1,4 @@
-﻿using Blazored.LocalStorage;
+using Blazored.LocalStorage;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -14,7 +14,10 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         private readonly JsonSerializerOptions jsonSerializerOptions = new()
         {
-            PropertyNameCaseInsensitive = true
+            PropertyNameCaseInsensitive = true,
+            Converters = {
+                new ObjectToInferredTypesConverter()
+            }
         };
 
         private Dictionary<string, object> settings = [];
@@ -27,7 +30,6 @@ namespace SwashbucklerDiary.WebAssembly.Services
             IJSRuntime jSRuntime) :
             base(localStorage)
         {
-            jsonSerializerOptions.Converters.Add(new ObjectToInferredTypesConverter());
             _module = new(() => ((IJSInProcessRuntime)jSRuntime).ImportJsModule("js/setting.js"));
         }
 

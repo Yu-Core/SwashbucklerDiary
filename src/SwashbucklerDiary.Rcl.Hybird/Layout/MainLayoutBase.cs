@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Hybird.Layout
 {
@@ -15,25 +16,12 @@ namespace SwashbucklerDiary.Rcl.Hybird.Layout
         [Inject]
         protected IAppLifecycle AppLifecycle { get; set; } = default!;
 
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            AppLifecycle.OnActivated += HandleActivated;
-        }
-
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
 
             await VersionUpdataManager.HandleVersionUpdate();
             await InitSettingsAsync();
-        }
-
-        protected override void OnDispose()
-        {
-            AppLifecycle.OnActivated -= HandleActivated;
-            base.OnDispose();
         }
 
         protected override void DialogNotificationCore()
@@ -81,43 +69,22 @@ namespace SwashbucklerDiary.Rcl.Hybird.Layout
         }
 #endif
 
-        protected void HandleActivated(ActivationArguments? args)
+        protected override ActivationArguments CreateAppLockActivationArguments()
         {
-            if (args is null || args.Data is null)
+            var relativePath = NavigationManager.GetBaseRelativePath();
+            return new ActivationArguments()
             {
-                return;
-            }
-
-            switch (args.Kind)
-            {
-                case AppActivationKind.Share:
-                    HandleShare(args);
-                    break;
-                case AppActivationKind.Scheme:
-                    HandleScheme(args);
-                    break;
-                default:
-                    break;
-            }
+                Kind = AppActivationKind.Scheme,
+                Data = $"{SchemeConstants.SwashbucklerDiary}://{relativePath}"
+            };
         }
 
-        protected void HandleShare(ActivationArguments args)
-        {
-            if (NavigationManager.GetBaseRelativePath() == "write")
-            {
-                return;
-            }
-
-            AppLifecycle.ActivationArguments = args;
-            NavigationManager.NavigateTo("write");
-        }
-
-        protected void HandleScheme(ActivationArguments args)
+        protected override void HandleSchemeActivation(ActivationArguments args, bool replace)
         {
             string? uriString = args?.Data as string;
             if (NavigateController.CheckUrlScheme(uriString, out var path))
             {
-                NavigationManager.NavigateTo(path.TrimStart('/'));
+                To(path.TrimStart('/'), replace: replace);
             }
         }
     }

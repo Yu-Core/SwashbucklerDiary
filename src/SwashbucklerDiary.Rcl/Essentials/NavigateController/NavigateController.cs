@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
@@ -17,13 +17,10 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         protected IJSRuntime _jSRuntime = default!;
 
-        protected List<string> historyPaths = [];
-
-        protected List<string> pageCachePaths = [];
-
-        protected List<string> permanentPaths = [];
-
-        protected List<string> NotUpdatePagePaths = [];
+        protected List<PathString> historyPaths = [];
+        protected List<PathString> pageCachePaths = [];
+        protected List<PathString> permanentPaths = [];
+        protected List<PathString> NotUpdatePagePaths = [];
 
         protected NavigationManager _navigationManager = default!;
 
@@ -31,20 +28,25 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         protected object _lock = new();
 
-        protected string? secondaryBackTargetUri;
+        protected PathString? secondaryBackTargetUri;
 
-        protected string? stackBottomPath;
+        protected PathString? stackBottomPath;
+
+        protected IAppLifecycle _appLifecycle;
 
         public bool IsInitialized { get; protected set; }
 
-        public bool CanPageUpdate { get; protected set; }
+        public bool AllowPageUpdate { get; protected set; }
 
-        public List<string> PageCachePaths => permanentPaths.Union(pageCachePaths).ToList();
+        public bool DisableNavigate { get; set; }
+
+        public List<string> PageCachePaths => permanentPaths.Union(pageCachePaths).Select(it => it.ToString()).ToList();
 
         public RouteMatcher RouteMatcher { get; }
 
-        public NavigateController()
+        public NavigateController(IAppLifecycle appLifecycle)
         {
+            _appLifecycle = appLifecycle;
             RouteMatcher = new RouteMatcher(Assemblies);
         }
 
@@ -61,7 +63,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
             GC.SuppressFinalize(this);
         }
 
-        public void Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> paths)
+        public void Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> permanentPaths)
         {
             if (IsInitialized) return;
 
@@ -69,7 +71,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
             {
                 if (!IsInitialized)
                 {
-                    InitCore(navigationManager, jSRuntime, paths);
+                    InitCore(navigationManager, jSRuntime, permanentPaths);
                     IsInitialized = true;
                 }
             }
@@ -83,26 +85,26 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         public void RemovePageCache(string url)
         {
-            var absolutePath = new Uri(url).AbsolutePath;
+            PathString absolutePath = new PathString(new Uri(url).AbsolutePath);
             pageCachePaths.Remove(absolutePath);
         }
 
-        protected abstract Assembly[] Assemblies { get; }
+        protected abstract IEnumerable<Assembly> Assemblies { get; }
 
         protected abstract Task HandleNavigateToStackBottomPath(LocationChangingContext context);
 
-        private void InitCore(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> paths)
+        private void InitCore(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> permanentPaths)
         {
             _navigationManager = navigationManager;
             _jSRuntime = jSRuntime;
-            permanentPaths = paths.ToList();
+            this.permanentPaths = permanentPaths.Select(it => new PathString(it)).ToList();
             // Insert a uri on the previous page. This can ensure that OnLocationChanging will definitely trigger
             var uri = _navigationManager.Uri;
-            var absolutePath = new Uri(uri).AbsolutePath;
+            PathString absolutePath = new PathString(new Uri(uri).AbsolutePath);
             var stackBottomUri = _navigationManager.ToAbsoluteUri(NavigateControllerHelper.StackBottomRelativePath);
-            stackBottomPath = stackBottomUri.AbsolutePath;
+            stackBottomPath = new PathString(stackBottomUri.AbsolutePath);
 
-            CanPageUpdate = false;
+            AllowPageUpdate = false;
             //When the current page is not a 'stack bottom page', there is no need to replace it
             if (stackBottomPath != absolutePath)
             {
@@ -112,10 +114,10 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
             historyPaths.Add(stackBottomPath);
 
-            if (!permanentPaths.Contains(absolutePath))
+            if (!this.permanentPaths.Contains(absolutePath))
             {
                 _navigationManager.NavigateTo("");
-                var homePageAbsolutePath = _navigationManager.ToAbsoluteUri("").AbsolutePath;
+                PathString homePageAbsolutePath = new PathString(_navigationManager.ToAbsoluteUri("").AbsolutePath);
                 historyPaths.Add(homePageAbsolutePath);
                 NotUpdatePagePaths.Add(homePageAbsolutePath);
             }
@@ -134,24 +136,24 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(secondaryBackTargetUri))
+            if (secondaryBackTargetUri is not null)
             {
-                var uri = secondaryBackTargetUri;
+                PathString uri = secondaryBackTargetUri;
                 secondaryBackTargetUri = null;
-                CanPageUpdate = true;
+                AllowPageUpdate = true;
                 if (uri != _navigationManager.Uri)
                 {
                     Task.Run(() =>
                     {
-                        _navigationManager.NavigateTo(uri);
+                        _navigationManager.NavigateTo(uri.ToString());
                     });
                 }
             }
 
-            var currentPath = _navigationManager.GetAbsolutePath();
+            PathString currentPath = new(_navigationManager.GetAbsolutePath());
             if (NotUpdatePagePaths.Remove(currentPath) && NotUpdatePagePaths.Count == 0)
             {
-                CanPageUpdate = true;
+                AllowPageUpdate = true;
             }
 
         }
@@ -171,9 +173,9 @@ namespace SwashbucklerDiary.Rcl.Essentials
             }
 
             var targetUri = _navigationManager.ToAbsoluteUri(context.TargetLocation).ToString();
-            var targetPath = new Uri(targetUri).AbsolutePath;
+            PathString targetPath = new PathString(new Uri(targetUri).AbsolutePath);
             var currentUri = _navigationManager.Uri;
-            var currentPath = new Uri(_navigationManager.Uri).AbsolutePath;
+            var currentPath = new PathString(new Uri(_navigationManager.Uri).AbsolutePath);
 
             //路由不存在的页面禁止跳转
             var route = _navigationManager.ToRoute(targetUri);
@@ -189,6 +191,12 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
             if (currentHistoryIndex == targetHistoryIndex)
             {
+                if (DisableNavigate)
+                {
+                    context.PreventNavigation();
+                    return;
+                }
+
                 //路径不变
                 if (targetPath == currentPath)
                 {
@@ -231,6 +239,13 @@ namespace SwashbucklerDiary.Rcl.Essentials
             //页面后退
             else if (currentHistoryIndex > targetHistoryIndex)
             {
+                if (DisableNavigate)
+                {
+                    _appLifecycle.QuitApp();
+                    context.PreventNavigation();
+                    return;
+                }
+
                 // 触发返回事件
                 waitNavigate = true;
                 var preventNavigation = await HandleNavigateActionAsync();
@@ -263,7 +278,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
                             secondaryBackTargetUri = targetUri;
                             if (!historyPaths.Contains(targetPath) && isPermanentPath)
                             {
-                                CanPageUpdate = false;
+                                AllowPageUpdate = false;
                             }
 
                             await _jSRuntime.HistoryGo(targetHistoryIndex - currentHistoryIndex);
@@ -287,6 +302,18 @@ namespace SwashbucklerDiary.Rcl.Essentials
             //页面前进
             else
             {
+                if (DisableNavigate)
+                {
+                    context.PreventNavigation();
+                    return;
+                }
+
+                if (context.HistoryEntryState == "replace")
+                {
+                    historyPaths.Remove(currentPath);
+                    RemovePageCache(currentUri);
+                }
+
                 historyPaths.Add(targetPath);
                 AddPageCache(targetPath);
             }
@@ -331,7 +358,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
             return historyAction.PreventNavigation;
         }
 
-        private void AddPageCache(string path)
+        private void AddPageCache(PathString path)
         {
             if (!permanentPaths.Contains(path))
             {

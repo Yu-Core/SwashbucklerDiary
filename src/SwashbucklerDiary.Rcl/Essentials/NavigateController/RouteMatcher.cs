@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Routing.Template;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
         private readonly List<string> routeTemplates = [];
         private readonly DefaultInlineConstraintResolver constraintResolver;
 
-        public RouteMatcher(Assembly[] assemblies)
+        public RouteMatcher(IEnumerable<Assembly> assemblies)
         {
             routeTemplates = GetRouteTemplates(assemblies);
 
@@ -64,7 +64,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
             return false;
         }
 
-        private static List<string> GetRouteTemplates(Assembly[] assemblies)
+        private static List<string> GetRouteTemplates(IEnumerable<Assembly> assemblies)
         {
             var routes = new List<string>();
 

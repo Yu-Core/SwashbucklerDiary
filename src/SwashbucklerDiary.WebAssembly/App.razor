@@ -1,4 +1,4 @@
-﻿<Router AppAssembly="@typeof(MainLayoutBase).Assembly" AdditionalAssemblies="[typeof(App).Assembly]">
+<Router AppAssembly="@typeof(MainLayoutBase).Assembly" AdditionalAssemblies="[typeof(App).Assembly]">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
@@ -11,3 +11,10 @@
     </NotFound>
 </Router>
 
+@code {
+    static System.Reflection.Assembly Assembly { get; } = typeof(MainLayoutBase).Assembly;
+
+    static IEnumerable<System.Reflection.Assembly> AdditionalAssemblies { get; } = [typeof(App).Assembly];
+
+    public static IEnumerable<System.Reflection.Assembly> Assemblies { get; } = [Assembly, .. AdditionalAssemblies];
+}

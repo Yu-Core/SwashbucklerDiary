@@ -12,7 +12,9 @@
 </Router>
 
 @code{
-    public static System.Reflection.Assembly Assembly { get; } = typeof(MainLayoutBase).Assembly;
+    static System.Reflection.Assembly Assembly { get; } = typeof(Rcl.Layout.MainLayoutBase).Assembly;
 
-    public static IEnumerable<System.Reflection.Assembly> AdditionalAssemblies { get; } = [typeof(Routes).Assembly, typeof(BackupsPage).Assembly];
+    static IEnumerable<System.Reflection.Assembly> AdditionalAssemblies { get; } = [typeof(Routes).Assembly, typeof(Rcl.Hybird.Layout.MainLayoutBase).Assembly];
+
+    public static IEnumerable<System.Reflection.Assembly> Assemblies { get; } = [Assembly, .. AdditionalAssemblies];
 }

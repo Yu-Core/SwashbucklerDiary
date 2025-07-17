@@ -13,14 +13,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             var activationArguments = await ConvertActivationArguments(action.Id);
             if (activationArguments is null) return;
 
-            if (AppActivation.OnActivated is null)
-            {
-                AppActivation.Arguments = activationArguments;
-            }
-            else
-            {
-                AppActivation.OnActivated.Invoke(activationArguments);
-            }
+            AppActivation.LaunchOrActivate(activationArguments);
         }
 
         public static async Task<ActivationArguments?> ConvertActivationArguments(string id)

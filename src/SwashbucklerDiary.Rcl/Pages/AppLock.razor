@@ -1,0 +1,24 @@
+@page "/appLock"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<div class="d-flex justify-center align-center fullscreen-height" style="width:100%;">
+    @if (!string.IsNullOrEmpty(appLockNumberPassword))
+    {
+        <NumberLock Title="@I18n.T("Please enter password")"
+                    ExtraButton="@(isBiometricSupported && appLockBiometric)"
+                    ExtraButtonIconName="fingerprint"
+                    ExtraButtonOnClick="BiometricAuthenticateAsync"
+                    OnFinish="HandleNumberLockOnFinish">
+        </NumberLock>
+    }
+    else if (appLockBiometric)
+    {
+        <MButton Outlined
+                 XLarge
+                 Fab
+                 OnClick="BiometricAuthenticateAsync">
+            <MIcon>fingerprint</MIcon>
+        </MButton>
+    }
+</div>

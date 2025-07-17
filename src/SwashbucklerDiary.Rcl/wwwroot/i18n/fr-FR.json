@@ -473,5 +473,11 @@
   "Something went wrong": "Quelque chose s'est mal passé",
   "This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).": "Cela pourrait être un problème de cache du navigateur. Actualisez et réessayez, ou rechargez manuellement ({0} pour Windows, {1} pour macOS).",
   "Force refresh": "Forcer l'actualisation",
-  "This file is using": "Ce fichier est utilisé"
+  "This file is using": "Ce fichier est utilisé",
+  "Authentication": "Authentification",
+  "App lock": "Verrouillage d'application",
+  "Number password": "Mot de passe numérique",
+  "Fingerprint identification": "Identification par empreinte digitale",
+  "Lock time": "Temps de verrouillage",
+  "Lock when leaving the application": "Verrouiller en quittant l'application"
 }

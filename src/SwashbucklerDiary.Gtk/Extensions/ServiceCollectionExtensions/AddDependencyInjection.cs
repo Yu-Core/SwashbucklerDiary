@@ -47,7 +47,7 @@ namespace SwashbucklerDiary.Gtk.Extensions
             services.AddSingleton<ILogService, LogService>();
             services.AddSingleton<IResourceService, ResourceService>();
 
-            services.AddSingleton<IAppLifecycle, AppLifecycle>();
+            services.AddSingleton<IAppLifecycle>(sp => Essentials.AppLifecycle.Default);
             services.AddSingleton<IThemeService, ThemeService>();
             services.AddSingleton<IAccessExternal, Services.AccessExternal>();
             services.AddSingleton<IDiaryFileManager, Services.DiaryFileManager>();

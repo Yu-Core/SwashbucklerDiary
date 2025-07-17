@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Essentials
@@ -7,13 +7,15 @@ namespace SwashbucklerDiary.Rcl.Essentials
     {
         bool IsInitialized { get; }
 
-        bool CanPageUpdate { get; }
+        bool AllowPageUpdate { get; }
+
+        bool DisableNavigate { get; set; }
 
         List<string> PageCachePaths { get; }
 
         RouteMatcher RouteMatcher { get; }
 
-        void Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> uris);
+        void Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> permanentPaths);
 
         void RemovePageCache(string url);
 

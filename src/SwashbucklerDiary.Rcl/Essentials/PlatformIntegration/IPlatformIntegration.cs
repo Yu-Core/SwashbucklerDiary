@@ -132,5 +132,9 @@ namespace SwashbucklerDiary.Rcl.Essentials
         /// 打开平台设置
         /// </summary>
         Task ShowSettingsUI();
+
+        ValueTask<bool> IsBiometricSupported();
+
+        Task<bool> BiometricAuthenticateAsync();
     }
 }

@@ -71,14 +71,27 @@ namespace SwashbucklerDiary.Gtk
             if (!firstSetLanguage || !firstAgree)
             {
                 blazorWebView.StartPath = "/welcome";
-                AppActivation.Arguments = null;
+                Essentials.AppLifecycle.Default.ActivationArguments = null;
                 return;
             }
 
-            var args = AppActivation.Arguments;
+            var args = Essentials.AppLifecycle.Default.ActivationArguments;
+            if (args is null || args.Data is null || args.Kind == AppActivationKind.Launch)
+            {
+                QuickRecord();
+            }
+
+            string appLockNumberPassword = Preferences.Default.Get<string>(nameof(Setting.AppLockNumberPassword), string.Empty);
+            bool appLockBiometric = Preferences.Default.Get<bool>(nameof(Setting.AppLockBiometric), false);
+            bool useAppLock = !string.IsNullOrEmpty(appLockNumberPassword) || appLockBiometric;
+            if (useAppLock)
+            {
+                blazorWebView.StartPath = "/appLock";
+                return;
+            }
+
             if (args is null || args.Data is null)
             {
-                HandleDefault();
                 return;
             }
 
@@ -86,9 +99,6 @@ namespace SwashbucklerDiary.Gtk
             {
                 case AppActivationKind.Scheme:
                     HandleScheme(args);
-                    break;
-                default:
-                    HandleDefault();
                     break;
             }
         }
@@ -101,12 +111,7 @@ namespace SwashbucklerDiary.Gtk
                 blazorWebView.StartPath = path;
             }
 
-            AppActivation.Arguments = null;
-        }
-
-        private void HandleDefault()
-        {
-            QuickRecord();
+            Essentials.AppLifecycle.Default.ActivationArguments = null;
         }
 
         private void QuickRecord()

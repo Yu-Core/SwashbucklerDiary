@@ -55,5 +55,8 @@ namespace SwashbucklerDiary.Rcl.Services
         public string DefaultTemplateId { get; set; } = string.Empty;
         public bool DiaryCardMarkdown { get; set; }
         public string DiaryInsertTimeFormat { get; set; } = "yyyy/MM/dd HH:mm:ss";
+        public string AppLockNumberPassword { get; set; } = string.Empty;
+        public bool AppLockBiometric { get; set; }
+        public bool LockAppWhenLeave { get; set; }
     }
 }

@@ -1,8 +1,8 @@
-﻿namespace SwashbucklerDiary.Rcl.Essentials
+namespace SwashbucklerDiary.Rcl.Essentials
 {
     public class HistoryAction
     {
-        public string? Path { get; set; }
+        public PathString? Path { get; set; }
 
         public bool PreventNavigation { get; set; } = true;
 

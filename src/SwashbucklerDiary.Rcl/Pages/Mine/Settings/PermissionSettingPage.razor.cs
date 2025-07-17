@@ -50,7 +50,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async void UpdatePermissionStates()
         {
             await UpdatePermissionStatesAsync();
-            StateHasChanged();
+            await InvokeAsync(StateHasChanged);
         }
 
         private async Task UpdatePermissionStatesAsync()

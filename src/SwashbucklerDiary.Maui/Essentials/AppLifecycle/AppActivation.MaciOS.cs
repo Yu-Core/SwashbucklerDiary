@@ -6,15 +6,27 @@ namespace SwashbucklerDiary.Maui.Essentials
 {
     public static partial class AppActivation
     {
-        public static void Launch(NSUrl nSUrl)
+        public static void LaunchOrActivate(NSUrl nSUrl)
         {
-            Arguments = CreateArgumentsFromNSUrl(nSUrl);
+            if (!AppLifecycle.Default.IsLaunched)
+            {
+                Launch(nSUrl);
+            }
+            else
+            {
+                Activate(nSUrl);
+            }
         }
 
-        public static void Activate(NSUrl nSUrl)
+        static void Launch(NSUrl nSUrl)
+        {
+            AppLifecycle.Default.ActivationArguments = CreateArgumentsFromNSUrl(nSUrl);
+        }
+
+        static void Activate(NSUrl nSUrl)
         {
             var activationArguments = CreateArgumentsFromNSUrl(nSUrl);
-            OnActivated?.Invoke(activationArguments);
+            AppLifecycle.Default.Activate(activationArguments);
         }
 
         private static ActivationArguments CreateArgumentsFromNSUrl(NSUrl nSUrl)

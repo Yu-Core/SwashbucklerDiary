@@ -3,29 +3,14 @@ using Application = Gtk.Application;
 
 namespace SwashbucklerDiary.Gtk.Essentials
 {
-    public class AppLifecycle : IAppLifecycle
+    public class AppLifecycle : Rcl.Essentials.AppLifecycle
     {
-        public ActivationArguments? ActivationArguments
-        {
-            get => AppActivation.Arguments;
-            set => AppActivation.Arguments = value;
-        }
+        private static IAppLifecycle? defaultImplementation;
 
-        public event Action<ActivationArguments>? OnActivated
-        {
-            add => AppActivation.OnActivated += value;
-            remove => AppActivation.OnActivated -= value;
-        }
+        public static IAppLifecycle Default
+            => defaultImplementation ??= new AppLifecycle();
 
-        public event Action? OnResumed;
-
-        public event Action? OnStopped;
-
-        public void Resume() => OnResumed?.Invoke();
-
-        public void Stop() => OnStopped?.Invoke();
-
-        public void QuitApp()
+        public override void QuitApp()
         {
             Application.GetDefault()?.Quit();
         }

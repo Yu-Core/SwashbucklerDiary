@@ -18,14 +18,12 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
 
-        [Inject]
-        private IThemeService ThemeService { get; set; } = default!;
-
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
             UpdateSettings();
+            NavigateController.DisableNavigate = true;
             NavigateController.AddHistoryAction(AppLifecycle.QuitApp);
         }
 
@@ -81,6 +79,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             showAgreement = false;
             await SettingService.SetAsync(s => s.FirstAgree, true);
+
+            NavigateController.DisableNavigate = false;
             NavigateController.RemoveHistoryAction(AppLifecycle.QuitApp);
             NavigationManager.NavigateTo("", replace: true);
         }

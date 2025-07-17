@@ -473,5 +473,11 @@
   "Something went wrong": "出了点意外",
   "This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).": "可能是浏览器缓存的问题。刷新并重试，或手动强制刷新 （{0} 对于Windows， {1} 对于macOS）。",
   "Force refresh": "强制刷新",
-  "This file is using": "这个文件正在被使用"
+  "This file is using": "这个文件正在被使用",
+  "Authentication": "身份验证",
+  "App lock": "应用锁",
+  "Number password": "数字密码",
+  "Fingerprint identification": "指纹识别",
+  "Lock time": "锁定时间",
+  "Lock when leaving the application": "离开应用时锁定"
 }

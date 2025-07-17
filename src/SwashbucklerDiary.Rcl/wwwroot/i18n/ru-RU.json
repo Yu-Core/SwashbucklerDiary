@@ -473,5 +473,11 @@
   "Something went wrong": "Что-то пошло не так",
   "This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).": "Это может быть проблемой кеша браузера. Обновите и попробуйте снова или перезагрузите вручную ({0} для Windows, {1} для macOS).",
   "Force refresh": "Принудительное обновление",
-  "This file is using": "Этот файл используется"
+  "This file is using": "Этот файл используется",
+  "Authentication": "Аутентификация",
+  "App lock": "Блокировка приложения",
+  "Number password": "Цифровой пароль",
+  "Fingerprint identification": "Идентификация по отпечатку пальца",
+  "Lock time": "Время блокировки",
+  "Lock when leaving the application": "Блокировать при выходе из приложения"
 }

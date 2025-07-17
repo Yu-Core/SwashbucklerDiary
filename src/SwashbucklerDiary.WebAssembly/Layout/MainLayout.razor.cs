@@ -5,6 +5,7 @@ using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Layout;
 using SwashbucklerDiary.Shared;
 using SwashbucklerDiary.WebAssembly.Essentials;
+using SwashbucklerDiary.WebAssembly.Extensions;
 
 namespace SwashbucklerDiary.WebAssembly.Layout
 {
@@ -41,7 +42,26 @@ namespace SwashbucklerDiary.WebAssembly.Layout
             await Task.WhenAll(
                 InitThemeAsync(),
                 InitLanguageAsync(),
-                ((AppLifecycle)AppLifecycle).InitializedAsync());
+                ((Essentials.AppLifecycle)AppLifecycle).InitializedAsync());
+        }
+
+        protected override ActivationArguments CreateAppLockActivationArguments()
+        {
+            return new ActivationArguments()
+            {
+                Kind = AppActivationKind.Scheme,
+                Data = NavigationManager.Uri
+            };
+        }
+
+        protected override void HandleSchemeActivation(ActivationArguments args, bool replace)
+        {
+            string? uriString = args?.Data as string;
+
+            if (NavigateController.CheckUrlScheme(NavigationManager, uriString))
+            {
+                To(uriString, replace: replace);
+            }
         }
 
         private async void ThemeChanged(Theme theme)
