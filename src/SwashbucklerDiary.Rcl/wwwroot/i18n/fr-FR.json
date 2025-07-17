@@ -472,5 +472,6 @@
   "Returning again will exit the application": "Revenir à nouveau quittera l'application",
   "Something went wrong": "Quelque chose s'est mal passé",
   "This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).": "Cela pourrait être un problème de cache du navigateur. Actualisez et réessayez, ou rechargez manuellement ({0} pour Windows, {1} pour macOS).",
-  "Force refresh": "Forcer l'actualisation"
+  "Force refresh": "Forcer l'actualisation",
+  "This file is using": "Ce fichier est utilisé"
 }

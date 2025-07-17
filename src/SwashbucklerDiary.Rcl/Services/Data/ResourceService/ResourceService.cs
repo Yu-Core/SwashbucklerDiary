@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Repository;
+using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
 
@@ -44,6 +44,11 @@ namespace SwashbucklerDiary.Rcl.Services
         public Task<ResourceModel> FindIncludesAsync(string id)
         {
             return _resourceRepository.FindIncludesAsync(id);
+        }
+
+        public Task<List<Guid>> GetDiaryIdsAsync(string id)
+        {
+            return _resourceRepository.GetDiaryIdsAsync(id);
         }
 
         private void DeleteResourceFiles(List<string?> resourceUris)

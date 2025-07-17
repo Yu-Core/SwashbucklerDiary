@@ -472,5 +472,6 @@
   "Returning again will exit the application": "Trở lại lần nữa sẽ thoát ứng dụng",
   "Something went wrong": "Đã xảy ra lỗi",
   "This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).": "Có thể do bộ nhớ đệm trình duyệt. Làm mới và thử lại, hoặc tải lại thủ công ({0} cho Windows, {1} cho macOS).",
-  "Force refresh": "Tải lại cưỡng chế"
+  "Force refresh": "Tải lại cưỡng chế",
+  "This file is using": "Tập tin này đang được sử dụng"
 }

@@ -472,5 +472,6 @@
   "Returning again will exit the application": "再返回一次将退出应用",
   "Something went wrong": "出了点意外",
   "This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).": "可能是浏览器缓存的问题。刷新并重试，或手动强制刷新 （{0} 对于Windows， {1} 对于macOS）。",
-  "Force refresh": "强制刷新"
+  "Force refresh": "强制刷新",
+  "This file is using": "这个文件正在被使用"
 }

@@ -472,5 +472,6 @@
   "Returning again will exit the application": "もう一度戻るとアプリケーションが終了します",
   "Something went wrong": "問題が発生しました",
   "This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).": "これはブラウザのキャッシュの問題である可能性があります。更新して再試行するか、手動で強制的に再読み込みしてください（Windowsの場合は{0}、macOSの場合は{1}）。",
-  "Force refresh": "強制更新"
+  "Force refresh": "強制更新",
+  "This file is using": "このファイルは使用されています"
 }

@@ -472,5 +472,6 @@
   "Returning again will exit the application": "再返回一次將退出應用",
   "Something went wrong": "出了點意外",
   "This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).": "可能是瀏覽器快取的問題。重新整理並重試，或手動強制重新整理 （{0} 對於Windows， {1} 對於macOS）。",
-  "Force refresh": "強制重新整理"
+  "Force refresh": "強制重新整理",
+  "This file is using": "這個檔案正在被使用"
 }

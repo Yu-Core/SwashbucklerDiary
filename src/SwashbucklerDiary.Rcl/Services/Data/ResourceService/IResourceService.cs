@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Services
@@ -8,5 +8,7 @@ namespace SwashbucklerDiary.Rcl.Services
         Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> func);
 
         Task<ResourceModel> FindIncludesAsync(string id);
+
+        Task<List<Guid>> GetDiaryIdsAsync(string id);
     }
 }

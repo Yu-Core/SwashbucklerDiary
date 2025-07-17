@@ -117,18 +117,21 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public List<ResourceModel> GetDiaryResources(string content)
         {
+            var resourceUris = new HashSet<string>();
             var resources = new List<ResourceModel>();
             string pattern = $@"(?<=\(|"")({customPathPrefix}\S+?)(?=\)|"")";
 
-            MatchCollection matches = Regex.Matches(content, pattern);
-
-            foreach (Match match in matches.Cast<Match>())
+            foreach (Match match in Regex.Matches(content, pattern))
             {
-                resources.Add(new()
+                string uri = match.Value;
+                if (resourceUris.Add(uri))
                 {
-                    ResourceType = GetResourceKind(match.Value),
-                    ResourceUri = match.Value,
-                });
+                    resources.Add(new()
+                    {
+                        ResourceType = GetResourceKind(uri),
+                        ResourceUri = uri,
+                    });
+                }
             }
 
             return resources;

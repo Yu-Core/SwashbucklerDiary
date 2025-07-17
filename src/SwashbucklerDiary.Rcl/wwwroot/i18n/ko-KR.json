@@ -472,5 +472,6 @@
   "Returning again will exit the application": "다시 뒤로가기를 누르면 애플리케이션이 종료됩니다",
   "Something went wrong": "문제가 발생했습니다",
   "This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).": "브라우저 캐시 문제일 수 있습니다. 새로 고침 후 다시 시도하거나 수동으로 강제 새로 고침하세요 (Windows의 경우 {0}, macOS의 경우 {1}).",
-  "Force refresh": "강제 새로 고침"
+  "Force refresh": "강제 새로 고침",
+  "This file is using": "이 파일은 사용 중입니다"
 }

@@ -1,7 +1,6 @@
 using Masa.Blazor;
 using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
-using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -98,8 +97,28 @@ namespace SwashbucklerDiary.Rcl.Components
             menuItems =
             [
                 new(this, "View Used", "file_export", ViewReferenced),
-                new(this, "Save", "mdi:mdi-tray-arrow-down", Save)
+                new(this, "Save", "mdi:mdi-tray-arrow-down", Save),
+                new(this, "Delete", "mdi:mdi-delete-outline", Delete)
             ];
+        }
+
+        private async Task Delete()
+        {
+            List<Guid> diaryIds = await ResourceService.GetDiaryIdsAsync(SelectedItem.ResourceUri);
+            if (diaryIds.Count > 0)
+            {
+                await AlertService.Info(I18n.T("This file is using"));
+            }
+            else
+            {
+                var flag = await ResourceService.DeleteUnusedResourcesAsync(it => it.ResourceUri == SelectedItem.ResourceUri);
+                if (flag)
+                {
+                    loadedItems.Remove(SelectedItem);
+                    Value.Remove(SelectedItem);
+                    await AlertService.Success(I18n.T("Delete successfully"));
+                }
+            }
         }
 
         private async Task Save()
@@ -119,8 +138,9 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            var resource = await ResourceService.FindIncludesAsync(SelectedItem.ResourceUri);
-            int count = resource?.Diaries?.Count ?? 0;
+            List<Guid> diaryIds = await ResourceService.GetDiaryIdsAsync(SelectedItem.ResourceUri);
+
+            int count = diaryIds.Count;
             if (count < 1)
             {
                 await AlertService.Info(I18n.T("This file is not used"));
@@ -128,11 +148,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             else if (count == 1)
             {
-                var diary = resource?.Diaries?.FirstOrDefault();
-                if (diary is not null)
-                {
-                    To($"read/{diary.Id}");
-                }
+                To($"read/{diaryIds[0]}");
             }
             else if (count > 1)
             {
