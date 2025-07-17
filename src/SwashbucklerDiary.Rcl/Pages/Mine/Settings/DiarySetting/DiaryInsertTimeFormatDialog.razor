@@ -6,6 +6,7 @@
                ContentClass="rounded-lg"
                MaxWidth="420"
                DisableAutoFocus
+               OnMousedownPreventDefault
                OnBeforeShowContent="HandleOnBeforeShowContent">
     <MCard>
         <MCardTitle Class="font-weight-bold flex-nowrap">
@@ -68,7 +69,9 @@
 
 <CustomMDialog @bind-MyValue="showMore"
                ContentClass="rounded-lg"
-               MaxWidth="420">
+               MaxWidth="420"
+               DisableAutoFocus
+               OnMousedownPreventDefault>
     <MCard>
         <MCardTitle Class="font-weight-bold flex-nowrap">
             <wc-auto-scroll-text>@I18n.T("More")</wc-auto-scroll-text>
