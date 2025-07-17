@@ -27,6 +27,11 @@ namespace SwashbucklerDiary.Maui.Essentials
 
         private static async void Activate(object? sender, AppActivationArguments args)
         {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Application.Current?.ActivateWindow(Application.Current.Windows[0]);
+            });
+
             var activationArguments = await CreateArguments(args);
             AppLifecycle.Default.Activate(activationArguments);
         }
