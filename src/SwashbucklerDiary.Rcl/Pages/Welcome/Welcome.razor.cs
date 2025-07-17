@@ -22,9 +22,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
-            UpdateSettings();
             NavigateController.DisableNavigate = true;
             NavigateController.AddHistoryAction(AppLifecycle.QuitApp);
+            UpdateSettings();
         }
 
         protected override async ValueTask DisposeAsyncCore()
@@ -41,6 +41,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (setLang && agree)
             {
+                NavigateController.DisableNavigate = false;
                 NavigateController.RemoveHistoryAction(AppLifecycle.QuitApp);
                 NavigationManager.NavigateTo("", replace: true);
             }

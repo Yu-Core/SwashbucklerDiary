@@ -34,13 +34,13 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         protected IAppLifecycle _appLifecycle;
 
+        public event Action<List<string>>? PageCachePathsChanged;
+
         public bool IsInitialized { get; protected set; }
 
         public bool AllowPageUpdate { get; protected set; }
 
         public bool DisableNavigate { get; set; }
-
-        public List<string> PageCachePaths => permanentPaths.Union(pageCachePaths).Select(it => it.ToString()).ToList();
 
         public RouteMatcher RouteMatcher { get; }
 
@@ -87,7 +87,10 @@ namespace SwashbucklerDiary.Rcl.Essentials
         {
             PathString absolutePath = new PathString(new Uri(url).AbsolutePath);
             pageCachePaths.Remove(absolutePath);
+            PageCachePathsChanged?.Invoke(PageCachePaths);
         }
+
+        protected List<string> PageCachePaths => [.. permanentPaths.Union(pageCachePaths).Select(it => it.ToString())];
 
         protected abstract IEnumerable<Assembly> Assemblies { get; }
 
@@ -292,6 +295,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
                             var clearPaths = historyPaths.GetRange(startIndex, count);
                             historyPaths.RemoveRange(startIndex, count);
                             pageCachePaths.RemoveAll(clearPaths.Contains);
+                            PageCachePathsChanged?.Invoke(PageCachePaths);
                             historyActions.RemoveAll(it => !string.IsNullOrEmpty(it.Path) && clearPaths.Contains(it.Path));
                         }
                     }
@@ -311,11 +315,12 @@ namespace SwashbucklerDiary.Rcl.Essentials
                 if (context.HistoryEntryState == "replace")
                 {
                     historyPaths.Remove(currentPath);
-                    RemovePageCache(currentUri);
+                    pageCachePaths.Remove(currentPath);
                 }
 
                 historyPaths.Add(targetPath);
                 AddPageCache(targetPath);
+                PageCachePathsChanged?.Invoke(PageCachePaths);
             }
         }
 

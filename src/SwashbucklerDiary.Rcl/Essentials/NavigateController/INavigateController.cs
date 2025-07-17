@@ -5,13 +5,13 @@ namespace SwashbucklerDiary.Rcl.Essentials
 {
     public interface INavigateController
     {
+        event Action<List<string>>? PageCachePathsChanged;
+
         bool IsInitialized { get; }
 
         bool AllowPageUpdate { get; }
 
         bool DisableNavigate { get; set; }
-
-        List<string> PageCachePaths { get; }
 
         RouteMatcher RouteMatcher { get; }
 
