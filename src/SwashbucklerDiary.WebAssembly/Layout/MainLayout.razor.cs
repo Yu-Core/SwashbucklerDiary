@@ -58,7 +58,7 @@ namespace SwashbucklerDiary.WebAssembly.Layout
         {
             string? uriString = args?.Data as string;
 
-            if (NavigateController.CheckUrlScheme(NavigationManager, uriString))
+            if (uriString is not null && NavigateController.CheckUrlScheme(NavigationManager, uriString))
             {
                 To(uriString, replace: replace);
             }
@@ -74,7 +74,7 @@ namespace SwashbucklerDiary.WebAssembly.Layout
         private async Task InitThemeAsync()
         {
             ThemeService.OnChanged += ThemeChanged;
-            await SystemThemeJSModule.InitializedAsync();
+            await SystemThemeJSModule.Init();
             var theme = SettingService.Get(s => s.Theme);
             ThemeService.SetTheme(theme);
         }

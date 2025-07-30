@@ -7,10 +7,7 @@ export const init = (dotnetObj) => {
         }
     });
 
-    const activationArgumentsString = sessionStorage.getItem('ActivationArguments');
-    if (activationArgumentsString) {
-        dotnetObj.invokeMethodAsync("SetActivationArgumentsFromJson", activationArgumentsString);
-    }
+    return sessionStorage.getItem('ActivationArguments') || null;
 }
 
 export const quit = () => {

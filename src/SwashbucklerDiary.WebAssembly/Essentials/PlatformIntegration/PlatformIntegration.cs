@@ -6,10 +6,10 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
     {
         private readonly ILogger _logger;
 
-        private readonly PlatformIntegrationJsModule _jsModule;
+        private readonly PlatformIntegrationJSModule _jsModule;
 
         public PlatformIntegration(ILogger<PlatformIntegration> logger,
-            PlatformIntegrationJsModule jsModule)
+            PlatformIntegrationJSModule jsModule)
         {
             _logger = logger;
             _jsModule = jsModule;

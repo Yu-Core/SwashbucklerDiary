@@ -10,11 +10,11 @@ namespace SwashbucklerDiary.Rcl.Essentials
         public event Action? OnResumed;
         public event Action? OnStopped;
 
-        public virtual void Activate(ActivationArguments arguments)
+        public void Activate(ActivationArguments arguments)
             => OnActivated?.Invoke(arguments);
-        public virtual void Resume()
+        public void Resume()
             => OnResumed?.Invoke();
-        public virtual void Stop()
+        public void Stop()
             => OnStopped?.Invoke();
 
         public abstract void QuitApp();

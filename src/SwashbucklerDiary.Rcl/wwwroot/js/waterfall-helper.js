@@ -1,40 +1,40 @@
-﻿export function recordScrollInfo(selector) {
-    const element = document.querySelector(selector);
-    if (element) {
-        scrollListener(element, () => {
-            if (element.disallowRecordScrollInfo) {
+export function recordScrollInfo(selector) {
+    const el = document.querySelector(selector);
+    if (el) {
+        scrollListener(el, () => {
+            if (el.disallowRecordScrollInfo) {
                 return;
             }
 
-            element.previousScrollInfo = {
-                scrollHeight: element.scrollHeight,
-                scrollTop: element.scrollTop
+            el.previousScrollInfo = {
+                scrollHeight: el.scrollHeight,
+                scrollTop: el.scrollTop
             };
         });
     }
 }
 
 export function stopRecordScrollInfo(selector) {
-    const element = document.querySelector(selector);
-    if (element) {
-        element.disallowRecordScrollInfo = true;
+    const el = document.querySelector(selector);
+    if (el) {
+        el.disallowRecordScrollInfo = true;
     }
 
 }
 
 export function restoreScrollPosition(selector) {
-    const element = document.querySelector(selector);
-    if (element && element.previousScrollInfo) {
-        anchorScroll(element, element.previousScrollInfo);
+    const el = document.querySelector(selector);
+    if (el && el.previousScrollInfo) {
+        anchorScroll(el, el.previousScrollInfo);
     }
 
-    element.disallowRecordScrollInfo = false;
+    el.disallowRecordScrollInfo = false;
 }
 
-const scrollListener = (element, doSomething) => {
+const scrollListener = (el, doSomething) => {
     let ticking = false;
 
-    element.addEventListener("scroll", (event) => {
+    el.addEventListener("scroll", (event) => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 doSomething();
@@ -46,9 +46,9 @@ const scrollListener = (element, doSomething) => {
     });
 }
 
-const anchorScroll = (ele, scrollInfo) => {
-    const scrollTop = scrollInfo.scrollTop + ele.scrollHeight - scrollInfo.scrollHeight;
-    ele.scrollTo({
+const anchorScroll = (el, scrollInfo) => {
+    const scrollTop = scrollInfo.scrollTop + el.scrollHeight - scrollInfo.scrollHeight;
+    el.scrollTo({
         top: scrollTop,
         left: 0,
         behavior: "auto",

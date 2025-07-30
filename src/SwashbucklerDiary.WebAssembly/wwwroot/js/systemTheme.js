@@ -1,8 +1,8 @@
-export const registerForSystemThemeChanged = (dotnetObj, callbackMethodName) => {
+export const init = (dotnetObj) => {
     const media = matchMedia('(prefers-color-scheme: dark)');
     if (media && dotnetObj) {
         media.addEventListener('change', (e) => {
-            dotnetObj.invokeMethodAsync(callbackMethodName, e.matches);
+            dotnetObj.invokeMethodAsync('SystemThemeChange', e.matches);
         });
     }
 

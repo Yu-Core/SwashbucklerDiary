@@ -11,12 +11,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool afterFirstRender;
 
-        private Lazy<DotNetObjectReference<object>> dotNetObjectReference = default!;
+        private DotNetObjectReference<object>? _dotNetObjectReference;
 
         private ElementReference outlineElementRef;
-
-        [Inject]
-        private NavigationManager NavigationManager { get; set; } = default!;
 
         [Inject]
         private VditorMarkdownPreviewJSModule VditorMarkdownPreviewJSModule { get; set; } = default!;
@@ -76,13 +73,6 @@ namespace SwashbucklerDiary.Rcl.Components
             await VditorMarkdownPreviewJSModule.RenderLazyLoadingImage(Ref);
         }
 
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            dotNetObjectReference = new(() => DotNetObjectReference.Create<object>(this));
-        }
-
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
@@ -111,6 +101,13 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            _dotNetObjectReference?.Dispose();
+        }
+
         private async Task RenderMarkdown()
         {
             if (!afterFirstRender)
@@ -118,13 +115,14 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
+            _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
             if (Simple)
             {
-                await VditorMarkdownPreviewJSModule.Md2HTMLPreview(dotNetObjectReference.Value, Ref, Value, Options, Patch);
+                await VditorMarkdownPreviewJSModule.Md2HTMLPreview(_dotNetObjectReference, Ref, Value, Options, Patch);
             }
             else
             {
-                await VditorMarkdownPreviewJSModule.Preview(dotNetObjectReference.Value, Ref, Value, Options, Outline ? outlineElementRef : null, Patch);
+                await VditorMarkdownPreviewJSModule.Preview(_dotNetObjectReference, Ref, Value, Options, Outline ? outlineElementRef : null, Patch);
             }
         }
 

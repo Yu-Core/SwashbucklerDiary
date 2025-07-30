@@ -1,9 +1,11 @@
-﻿export function init(dotNetObjectReference, element, index) {
-    if (!element) {
+const _instances = new WeakMap();
+
+export function init(dotNetObjectReference, el, index) {
+    if (!el) {
         return;
     }
 
-    element.Swiper = new Swiper(element, {
+    const instance = new Swiper(el, {
         observer: true,
         observeParents: true,
         observeSlideChildren: true,
@@ -18,20 +20,32 @@
             },
         }
     });
+
+    _instances.set(el, instance);
 }
 
-export function slideTo(element, value) {
-    if (!element || !element.Swiper) {
+export function slideTo(el, value) {
+    if (!el) {
         return;
     }
 
-    element.Swiper.slideTo(value);
-}
-
-export function dispose(element) {
-    if (!element || !element.Swiper) {
+    const instance = _instances.get(el);
+    if (!instance) {
         return;
     }
 
-    element.Swiper.destroy(true, true);
+    instance.slideTo(value);
+}
+
+export function dispose(el) {
+    if (!el) {
+        return;
+    }
+
+    const instance = _instances.get(el);
+    if (!instance) {
+        return;
+    }
+
+    instance.destroy(true, true);
 }

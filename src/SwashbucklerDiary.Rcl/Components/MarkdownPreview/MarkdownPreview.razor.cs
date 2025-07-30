@@ -1,8 +1,6 @@
-using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -24,23 +22,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private ElementReference moblieOutlineContainerElement;
 
-        [Inject]
-        protected II18nService I18n { get; set; } = default!;
-
-        [Inject]
-        private IAlertService AlertService { get; set; } = default!;
-
-        [Inject]
-        private ISettingService SettingService { get; set; } = default!;
+        private DotNetObjectReference<object>? _dotNetObjectReference;
 
         [Inject]
         private MarkdownPreviewJSModule MarkdownPreviewJSModule { get; set; } = default!;
 
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
-
-        [CascadingParameter(Name = "Culture")]
-        public string? Culture { get; set; }
 
         [Parameter]
         public string? Value { get; set; }
@@ -111,11 +99,12 @@ namespace SwashbucklerDiary.Rcl.Components
             SetOptions();
         }
 
-        private string? InternalClass => new CssBuilder()
-            .Add(Class)
-            .Add("first-line-indent", FirstLineIndent)
-            .Add("task-list-line-through", TaskListLineThrough)
-            .ToString();
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            _dotNetObjectReference?.Dispose();
+        }
 
         private void ReadSettings()
         {
@@ -163,8 +152,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task HandleOnAfter()
         {
-            var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
-            await MarkdownPreviewJSModule.AfterMarkdown(dotNetObjectReference, vditorMarkdownPreview.Ref, autoPlay, moblieOutlineContainerElement);
+            _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
+            await MarkdownPreviewJSModule.AfterMarkdown(_dotNetObjectReference, vditorMarkdownPreview.Ref, autoPlay, moblieOutlineContainerElement);
 
             if (OnAfter.HasDelegate)
             {

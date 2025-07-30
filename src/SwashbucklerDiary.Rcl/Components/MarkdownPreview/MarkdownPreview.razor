@@ -1,4 +1,5 @@
 @namespace SwashbucklerDiary.Rcl.Components
+@inherits MyComponentBase
 
 <VditorMarkdownPreview @ref="vditorMarkdownPreview"
                        Value="@Value"
@@ -38,3 +39,11 @@
         </ScrollContainer>
     </div>
 </CustomMNavigationDrawer>
+
+@code {
+    private string? InternalClass => new CssBuilder()
+        .Add(Class)
+        .Add("first-line-indent", FirstLineIndent)
+        .Add("task-list-line-through", TaskListLineThrough)
+        .ToString();
+}

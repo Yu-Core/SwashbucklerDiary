@@ -33,12 +33,12 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             //跟随系统主题改变
             if (theme == Theme.System)
             {
-                _systemThemeJSModule.SystemThemeChanged += HandleAppThemeChanged;
+                _systemThemeJSModule.OnSystemThemeChanged += HandleAppThemeChanged;
             }
             //取消跟随系统主题改变
             else if (_theme == Theme.System)
             {
-                _systemThemeJSModule.SystemThemeChanged -= HandleAppThemeChanged;
+                _systemThemeJSModule.OnSystemThemeChanged -= HandleAppThemeChanged;
             }
 
             _theme = theme;

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -8,14 +9,14 @@ namespace SwashbucklerDiary.Rcl.Components
         {
         }
 
-        public async Task Init(string selector)
+        public async Task Init(ElementReference elementReference)
         {
-            await base.InvokeVoidAsync("init", selector);
+            await base.InvokeVoidAsync("init", elementReference);
         }
 
-        public async Task Reset(string selector)
+        public async Task Reset(ElementReference elementReference)
         {
-            await base.InvokeVoidAsync("reset", selector);
+            await base.InvokeVoidAsync("reset", elementReference);
         }
     }
 }

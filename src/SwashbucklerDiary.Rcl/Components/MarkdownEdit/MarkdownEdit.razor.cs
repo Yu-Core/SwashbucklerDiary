@@ -1,5 +1,4 @@
 using Masa.Blazor;
-using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Logging;
@@ -121,14 +120,12 @@ namespace SwashbucklerDiary.Rcl.Components
             SetOptions();
         }
 
-        private string? InternalClass => new CssBuilder()
-            .Add("vditor")
-            .Add("vditor--dark", ThemeService.RealTheme == Shared.Theme.Dark)
-            .Add(Class)
-            .Add("first-line-indent", firstLineIndent)
-            .Add("task-list-line-through", taskListLineThrough)
-            .Add("outline_hide", !Outline)
-            .ToString();
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            _dotNetObjectReference?.Dispose();
+        }
 
         private void ReadSettings()
         {
@@ -313,15 +310,6 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        //private async Task AddMediaFileAsync(ResourceModel? resource)
-        //{
-        //    if (resource is null) return;
-
-        //    string? insertContent = CreateInsertContent(resource.ResourceUri!, resource.ResourceType);
-        //    if (insertContent is null) return;
-
-        //    await InsertValueAsync(insertContent);
-        //}
         private async Task AddMediaFilesAsync(IEnumerable<ResourceModel>? resources)
         {
             string? insertContent = MediaResourceManager.CreateMediaFilesInsertContent(resources);

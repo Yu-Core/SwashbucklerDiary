@@ -11,18 +11,20 @@ namespace SwashbucklerDiary.Rcl.Hybird.Essentials
 
         private readonly ILogger<ScreenshotJSModule> _logger;
 
+        private readonly DotNetObjectReference<object>? _dotNetObjectReference;
+
         public ScreenshotJSModule(IJSRuntime js,
             ILogger<ScreenshotJSModule> logger)
             : base(js, "./_content/SwashbucklerDiary.Rcl.Hybird/js/screenshot.js")
         {
             _logger = logger;
             _httpClient = new HttpClient();
+            _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
         }
 
         public async Task<Stream> GetScreenshotStream(string selector)
         {
-            var dotNetCallbackRef = DotNetObjectReference.Create(this);
-            var dataReference = await InvokeAsync<IJSStreamReference>("getScreenshotStream", dotNetCallbackRef, nameof(HandleCorsUri), selector);
+            var dataReference = await InvokeAsync<IJSStreamReference>("getScreenshotStream", _dotNetObjectReference, nameof(HandleCorsUri), selector);
             return await dataReference.OpenReadStreamAsync(maxAllowedSize: 10_000_000);
         }
 
@@ -40,6 +42,13 @@ namespace SwashbucklerDiary.Rcl.Hybird.Essentials
             }
 
             return string.Empty;
+        }
+
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            _dotNetObjectReference?.Dispose();
         }
 
         private static string ConvertToBase64(string imagePath, byte[] imageBytes)

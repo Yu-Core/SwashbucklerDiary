@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -7,6 +7,8 @@ namespace SwashbucklerDiary.Rcl.Components
     public partial class IntersectElement : IAsyncDisposable
     {
         private ElementReference elementReference;
+
+        private DotNetObjectReference<IntersectInvoker>? _dotNetObjectReference;
 
         [Inject]
         private IntersectJSModule IntersectJSModule { get; set; } = default!;
@@ -26,6 +28,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public async ValueTask DisposeAsync()
         {
             await IntersectJSModule.UnobserveAsync(elementReference);
+            _dotNetObjectReference?.Dispose();
             GC.SuppressFinalize(this);
         }
 
@@ -35,8 +38,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (firstRender)
             {
-                var handle = DotNetObjectReference.Create(new IntersectInvoker(OnIntersectAsync));
-                await IntersectJSModule.ObserverAsync(elementReference, handle);
+                _dotNetObjectReference ??= DotNetObjectReference.Create(new IntersectInvoker(OnIntersectAsync));
+                await IntersectJSModule.ObserverAsync(elementReference, _dotNetObjectReference);
             }
         }
 

@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
                 return (I18nService)sp.GetRequiredService<I18n>();
             });
             services.AddSingleton<IVersionTracking, VersionTracking>();
-            services.AddSingleton<PlatformIntegrationJsModule>();
+            services.AddSingleton<PlatformIntegrationJSModule>();
             services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
             services.AddSingleton<IAppFileSystem, Essentials.AppFileSystem>();
             services.AddSingleton<IMediaResourceManager, Services.MediaResourceManager>();
@@ -44,6 +44,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddSingleton<ILogService, LogService>();
             services.AddSingleton<IResourceService, ResourceService>();
 
+            services.AddSingleton<AppLifecycleJSModule>();
             services.AddSingleton<IAppLifecycle, Essentials.AppLifecycle>();
             services.AddSingleton<SystemThemeJSModule>();
             services.AddSingleton<IThemeService, ThemeService>();

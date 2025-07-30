@@ -1,4 +1,4 @@
-﻿export function init(selector) {
+export function init(selector) {
     var betterSearch = new BetterSearchProxy({
         domContainer: selector
     });

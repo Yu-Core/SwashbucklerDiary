@@ -3,9 +3,9 @@ using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
-    public class PlatformIntegrationJsModule : JSModule
+    public class PlatformIntegrationJSModule : JSModule
     {
-        public PlatformIntegrationJsModule(IJSRuntime js) : base(js, "./js/platformIntegration.js")
+        public PlatformIntegrationJSModule(IJSRuntime js) : base(js, "./js/platformIntegration.js")
         {
         }
 

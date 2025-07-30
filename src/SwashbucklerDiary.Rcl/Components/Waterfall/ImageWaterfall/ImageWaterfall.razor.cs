@@ -1,4 +1,4 @@
-﻿using Microsoft.JSInterop;
+using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -7,6 +7,8 @@ namespace SwashbucklerDiary.Rcl.Components
         private bool showPreviewImage;
 
         private string? previewImageSrc;
+
+        private DotNetObjectReference<object>? _dotNetObjectReference;
 
         [JSInvokable]
         public async Task PreviewImage(string src)
@@ -22,10 +24,17 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (firstRender)
             {
-                var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
+                _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
                 //图片预览
-                await PreviewMediaElementJSModule.PreviewImage(dotNetObjectReference, elementReference);
+                await PreviewMediaElementJSModule.PreviewImage(_dotNetObjectReference, elementReference);
             }
+        }
+
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            _dotNetObjectReference?.Dispose();
         }
     }
 }

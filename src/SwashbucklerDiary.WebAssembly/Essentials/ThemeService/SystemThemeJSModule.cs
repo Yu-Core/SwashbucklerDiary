@@ -6,26 +6,35 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public class SystemThemeJSModule : JSModule
     {
+        private readonly DotNetObjectReference<object>? _dotNetObjectReference;
+
         public Theme SystemTheme { get; set; }
 
-        public event Action<Theme>? SystemThemeChanged;
+        public event Action<Theme>? OnSystemThemeChanged;
 
         public SystemThemeJSModule(IJSRuntime js) : base(js, "./js/systemTheme.js")
         {
-        }
-
-        public async Task InitializedAsync()
-        {
-            var dotNetObject = DotNetObjectReference.Create(this);
-            bool dark = await InvokeAsync<bool>("registerForSystemThemeChanged", [dotNetObject, nameof(OnSystemThemeChanged)]);
-            SystemTheme = dark ? Theme.Dark : Theme.Light;
+            _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
         }
 
         [JSInvokable]
-        public void OnSystemThemeChanged(bool isDarkTheme)
+        public void SystemThemeChange(bool isDarkTheme)
         {
             SystemTheme = isDarkTheme ? Theme.Dark : Theme.Light;
-            SystemThemeChanged?.Invoke(SystemTheme);
+            OnSystemThemeChanged?.Invoke(SystemTheme);
+        }
+
+        public async Task Init()
+        {
+            bool dark = await InvokeAsync<bool>("init", _dotNetObjectReference);
+            SystemTheme = dark ? Theme.Dark : Theme.Light;
+        }
+
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            _dotNetObjectReference?.Dispose();
         }
     }
 }

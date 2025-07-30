@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private BackTopButtonJSObjectReference? backTopButtonJSObjectReference;
 
-        private DotNetObjectReference<object>? _objRef;
+        private DotNetObjectReference<object>? _dotNetObjectReference;
 
         private MyFloatButton? myFloatButton;
 
@@ -41,8 +41,6 @@ namespace SwashbucklerDiary.Rcl.Components
         protected override void OnInitialized()
         {
             base.OnInitialized();
-
-            _objRef = DotNetObjectReference.Create<object>(this);
         }
 
         protected override async Task OnParametersSetAsync()
@@ -86,7 +84,8 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task AddScrollListener()
         {
             if (string.IsNullOrEmpty(Selector) || myFloatButton?.Ref is null) return;
-            backTopButtonJSObjectReference = await Module.Init(Selector, myFloatButton.Ref, _objRef);
+            _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
+            backTopButtonJSObjectReference = await Module.Init(Selector, myFloatButton.Ref, _dotNetObjectReference);
         }
 
         private async Task RemoveScrollListener()
@@ -108,7 +107,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 // ignore
             }
 
-            _objRef?.Dispose();
+            _dotNetObjectReference?.Dispose();
             GC.SuppressFinalize(this);
         }
     }

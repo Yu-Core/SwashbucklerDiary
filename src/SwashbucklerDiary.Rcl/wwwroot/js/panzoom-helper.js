@@ -1,10 +1,11 @@
-﻿export function init(selector) {
-    var el = document.querySelector(selector);
-    if (el == null) {
+const _instances = new WeakMap();
+
+export function init(el) {
+    if (!el) {
         return;
     }
 
-    el.panzoom = panzoom(el, {
+    const instance = panzoom(el, {
         maxZoom: 6,
         minZoom: 1,
         smoothScroll: false,
@@ -14,19 +15,25 @@
             return false; // tells the library to not preventDefault.
         },
         onDoubleClick: function (e) {
-            reset(selector);
+            reset(el);
             return true; // tells the library to not preventDefault, and not stop propagation
         }
     });
+
+    _instances.set(el, instance);
 }
 
-export function reset(selector) {
-    var el = document.querySelector(selector);
-    if (el == null) {
+export function reset(el) {
+    if (!el) {
         return;
     }
 
-    el.panzoom.zoomTo(0, 0, 1);
-    el.panzoom.moveTo(0, 0);
-    el.panzoom.zoomAbs(0, 0, 1);
+    const instance = _instances.get(el);
+    if (!instance) {
+        return;
+    }
+
+    instance.zoomTo(0, 0, 1);
+    instance.moveTo(0, 0);
+    instance.zoomAbs(0, 0, 1);
 }

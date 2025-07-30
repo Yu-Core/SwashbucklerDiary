@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -9,6 +9,8 @@ namespace SwashbucklerDiary.Rcl.Components
         private StringNumber previousvalue = 0;
 
         private int _registeredTabItemsIndex;
+
+        private DotNetObjectReference<object>? _dotNetObjectReference;
 
         [Inject]
         private SwiperJsModule SwiperJsModule { get; set; } = default!;
@@ -71,9 +73,16 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (firstRender)
             {
-                var dotNetObjectReference = DotNetObjectReference.Create<object>(this);
-                await SwiperJsModule.Init(dotNetObjectReference, Ref, Value.ToInt32());
+                _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
+                await SwiperJsModule.Init(_dotNetObjectReference, Ref, Value.ToInt32());
             }
+        }
+
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            _dotNetObjectReference?.Dispose();
         }
     }
 }
