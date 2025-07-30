@@ -82,20 +82,19 @@
                 </MListItemTitle>
             }
 
-            <MListItemSubtitle>
-                @if (Markdown)
-                {
-                    <SimpleMarkdownPreview Value="@text"
-                                           Style="pointer-events:none;"
-                                           Patch="false">
-                    </SimpleMarkdownPreview>
-                }
-                else
-                {
-                    @text
-                }
+            @if (Markdown)
+            {
+                <SimpleMarkdownPreview Value="@text"
+                                       Style="pointer-events:none;"
+                                       Patch="false">
+                </SimpleMarkdownPreview>
+            }
+            else
+            {
+                <MListItemSubtitle>@text</MListItemSubtitle>
+            }
 
-            </MListItemSubtitle>
+
         </MListItemContent>
     </MListItem>
     @if (Value.Tags is not null && Value.Tags.Count > 0)

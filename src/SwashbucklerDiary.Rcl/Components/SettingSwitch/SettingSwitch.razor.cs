@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+using Masa.Blazor;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -7,6 +8,12 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         [Inject]
         private ISettingService SettingService { get; set; } = default!;
+
+        [Inject]
+        MasaBlazor MasaBlazor { get; set; } = default!;
+
+        [CascadingParameter(Name = "MasaBlazorCascadingTheme")]
+        public string? MasaBlazorCascadingTheme { get; set; }
 
         [Parameter]
         public bool Value { get; set; }

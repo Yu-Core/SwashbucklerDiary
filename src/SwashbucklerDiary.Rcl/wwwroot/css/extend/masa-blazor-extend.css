@@ -110,9 +110,13 @@
         padding: 16px;
     }
 
+.m-overlay {
+    color: #fff;
+}
+
 .m-overlay__scrim {
     background-color: #000 !important;
-    background-color: #000 !important;
+    border-color: #000 !important;
 }
 
 .m-toolbar.m-sheet {
@@ -220,8 +224,8 @@
         display: none;
     }
 
-.m-input--switch .m-input--switch__thumb {
-    color: #fff;
+.m-input--switch.m-input--switch--inset .m-input--switch__thumb {
+    color: #fff !important;
 }
 
 .m-item-group.m-bottom-navigation .m-btn {

@@ -1,3 +1,4 @@
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 
@@ -17,6 +18,12 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
+
+        [Inject]
+        MasaBlazor MasaBlazor { get; set; } = default!;
+
+        [CascadingParameter(Name = "MasaBlazorCascadingTheme")]
+        public string? MasaBlazorCascadingTheme { get; set; }
 
         protected override void OnInitialized()
         {
