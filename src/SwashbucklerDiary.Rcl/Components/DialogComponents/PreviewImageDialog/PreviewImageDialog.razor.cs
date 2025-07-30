@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
         [Inject]
-        private ZoomJSModule Module { get; set; } = default!;
+        private PanzoomJSModule Module { get; set; } = default!;
 
         [Parameter]
         public string? Src { get; set; }
