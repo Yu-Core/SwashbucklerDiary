@@ -21,7 +21,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             isBiometricSupported = await PlatformIntegration.IsBiometricSupported();
             NavigateController.DisableNavigate = true;
-            NavigateController.AddHistoryAction(AppLifecycle.QuitApp);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -32,13 +31,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 await BiometricAuthenticateAsync();
             }
-        }
-
-        protected override async ValueTask DisposeAsyncCore()
-        {
-            await base.DisposeAsyncCore();
-
-            NavigateController.RemoveHistoryAction(AppLifecycle.QuitApp);
         }
 
         protected override void ReadSettings()
@@ -75,7 +67,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         private void VerificationSuccessful()
         {
             NavigateController.DisableNavigate = false;
-            NavigateController.RemoveHistoryAction(AppLifecycle.QuitApp);
 
             var args = AppLifecycle.ActivationArguments;
             AppLifecycle.ActivationArguments = null;

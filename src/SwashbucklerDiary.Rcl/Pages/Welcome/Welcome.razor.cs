@@ -22,7 +22,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
-            NavigateController.DisableNavigate = true;
             NavigateController.AddHistoryAction(AppLifecycle.QuitApp);
             UpdateSettings();
         }
@@ -41,7 +40,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (setLang && agree)
             {
-                NavigateController.DisableNavigate = false;
                 NavigateController.RemoveHistoryAction(AppLifecycle.QuitApp);
                 NavigationManager.NavigateTo("", replace: true);
             }
@@ -81,7 +79,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             showAgreement = false;
             await SettingService.SetAsync(s => s.FirstAgree, true);
 
-            NavigateController.DisableNavigate = false;
             NavigateController.RemoveHistoryAction(AppLifecycle.QuitApp);
             NavigationManager.NavigateTo("", replace: true);
         }
