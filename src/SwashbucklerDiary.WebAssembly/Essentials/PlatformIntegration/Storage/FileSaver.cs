@@ -1,5 +1,3 @@
-﻿using Microsoft.JSInterop;
-
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public partial class PlatformIntegration
@@ -17,8 +15,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
                 return false;
             }
 
-            var module = await Module;
-            module.InvokeVoid("saveFileAsync", name, sourceFilePath);
+            await _jsModule.SaveFileAsync(name, sourceFilePath);
             return true;
         }
     }

@@ -1,17 +1,15 @@
-﻿namespace SwashbucklerDiary.WebAssembly.Essentials
+namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public partial class PlatformIntegration
     {
-        public async ValueTask<bool> IsCaptureSupported()
+        public ValueTask<bool> IsCaptureSupported()
         {
-            var module = await Module;
-            return module.Invoke<bool>("isCaptureSupported");
+            return ValueTask.FromResult(false);
         }
 
-        public async Task<string?> CapturePhotoAsync()
+        public Task<string?> CapturePhotoAsync()
         {
-            var module = await Module;
-            return await module.InvokeAsync<string>("capturePhotoAsync", null);
+            return Task.FromResult<string?>(null);
         }
     }
 }

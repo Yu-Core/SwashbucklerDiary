@@ -1,5 +1,3 @@
-using Microsoft.JSInterop;
-
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public partial class PlatformIntegration
@@ -20,8 +18,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             var accept = string.Join(',', types);
             try
             {
-                var module = await Module;
-                var results = await module.InvokeAsync<string[]>("pickFilesAsync", accept, fileExtensions, multiple);
+                var results = await _jsModule.PickFilesAsync(accept, fileExtensions, multiple);
                 if (results is not null && results.Length > 0)
                 {
                     return results;

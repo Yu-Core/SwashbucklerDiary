@@ -1,32 +1,4 @@
-﻿export async function checkCameraPermission() {
-    try {
-        const permissionStatus = await navigator.permissions.query({ name: 'camera' });
-        return permissionStatus.state === 'granted';
-    } catch (error) {
-        console.error('无法检查摄像头权限', error);
-        return false;
-    }
-}
-
-export function isCaptureSupported() {
-    return false;
-}
-
-export async function tryCameraPermission() {
-    try {
-        // 使用 await 等待 Promise 解析
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        // 摄像头权限已授予，可以关闭或处理stream
-        stream.getTracks().forEach(track => track.stop());
-        return true; // 返回 true 表示权限已授予
-    } catch (error) {
-        // 摄像头权限被拒绝或出现错误
-        console.error('摄像头权限请求错误:', error);
-        return false; // 返回 false 表示权限未授予或出错
-    }
-}
-
-export function openUri(uri, blank) {
+export function openUri(uri) {
     return new Promise((resolve, reject) => {
         // 检测页面状态的标志
         let pageHiddenOrBlurred = false;
@@ -61,9 +33,7 @@ export function openUri(uri, blank) {
         // 创建并点击<a>元素以尝试打开链接
         const a = document.createElement("a");
         a.href = uri;
-        if (blank) {
-            a.target = "_blank";
-        }
+        a.target = "_blank";
         a.style.display = "none";
         document.body.appendChild(a);
         a.click();
@@ -79,10 +49,6 @@ export function openUri(uri, blank) {
         }, 1000);
     });
 };
-
-export function capturePhotoAsync() {
-    return '';
-}
 
 export async function setClipboard(text) {
     if (navigator.clipboard) {
@@ -284,3 +250,50 @@ function readFileAsArrayBuffer(file) {
         reader.readAsArrayBuffer(file);
     });
 }
+
+export async function isBiometricSupported() {
+    // 检查浏览器支持
+    if (!window.PublicKeyCredential || !navigator.credentials || !navigator.credentials.create) {
+        return false;
+    }
+
+    // 检查设备支持
+    const isAvailable = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+    if (!isAvailable) {
+        return false;
+    }
+
+    return true;
+}
+
+export async function biometricAuthenticateAsync() {
+    const isSupported = await isBiometricSupported();
+    if (!isSupported) {
+        return false;
+    }
+
+    try {
+        const options = {
+            publicKey: {
+                challenge: new Uint8Array(32).buffer, // 随机挑战值
+                rp: { id: window.location.hostname, name: document.title || 'This website' },
+                user: {
+                    id: new Uint8Array(16),
+                    name: 'user@example.com',
+                    displayName: 'visitor'
+                },
+                pubKeyCredParams: [{ type: "public-key", alg: -7 }],
+                timeout: 60000,
+                authenticatorSelection: {
+                    authenticatorAttachment: "platform",
+                    userVerification: "required"
+                }
+            }
+        };
+        await navigator.credentials.create(options);
+        return true;
+    } catch (error) {
+        console.error('Validation failed:', error);
+        return false;
+    }
+} 

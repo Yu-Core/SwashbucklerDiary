@@ -1,13 +1,10 @@
-using Microsoft.JSInterop;
-
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public partial class PlatformIntegration
     {
         public async Task SetClipboardAsync(string text)
         {
-            var module = await Module;
-            await module.InvokeVoidAsync("setClipboard", text);
+            await _jsModule.SetClipboard(text);
         }
 
         public async Task ShareFileAsync(string title, string path)
@@ -17,8 +14,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
                 return;
             }
 
-            var module = await Module;
-            await module.InvokeVoidAsync("shareFileAsync", title, path);
+            await _jsModule.ShareFileAsync(title, path);
         }
 
         public async Task ShareTextAsync(string title, string text)
@@ -28,8 +24,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
                 return;
             }
 
-            var module = await Module;
-            await module.InvokeVoidAsync("shareTextAsync", title, text);
+            await _jsModule.ShareTextAsync(title, text);
         }
     }
 }

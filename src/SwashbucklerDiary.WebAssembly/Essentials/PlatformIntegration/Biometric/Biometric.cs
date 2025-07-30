@@ -4,12 +4,12 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
     {
         public ValueTask<bool> IsBiometricSupported()
         {
-            return ValueTask.FromResult(false);
+            return _jsModule.IsBiometricSupported();
         }
 
-        public Task<bool> BiometricAuthenticateAsync()
+        public async Task<bool> BiometricAuthenticateAsync()
         {
-            return Task.FromResult(false);
+            return await _jsModule.BiometricAuthenticateAsync();
         }
     }
 }

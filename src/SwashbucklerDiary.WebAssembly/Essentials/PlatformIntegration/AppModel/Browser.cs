@@ -1,22 +1,21 @@
-﻿namespace SwashbucklerDiary.WebAssembly.Essentials
+namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public partial class PlatformIntegration
     {
         public Task<bool> OpenBrowser(string? url)
-            => OpenUri(url, true);
+            => OpenUri(url);
 
         private Task<bool> OpenLauncher(string? uri)
-            => OpenUri(uri, true);
+            => OpenUri(uri);
 
-        private async Task<bool> OpenUri(string? uri, bool blank)
+        private async Task<bool> OpenUri(string? uri)
         {
             if (string.IsNullOrEmpty(uri))
             {
                 return false;
             }
 
-            var module = await Module;
-            return await module.InvokeAsync<bool>("openUri", [uri, blank]);
+            return await _jsModule.OpenUri(uri);
         }
     }
 }
