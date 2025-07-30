@@ -117,6 +117,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 - [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)
 - [dotnet-packaging](https://github.com/quamotion/dotnet-packaging)
+- [Fly Gesture Unlock](https://github.com/feiafei27/fly-gesture-unlock)
 - [Gir.Core](https://github.com/gircore/gir.core)
 - [hash-wasm](https://github.com/Daninet/hash-wasm)
 - [html2canvas](https://github.com/niklasvh/html2canvas)

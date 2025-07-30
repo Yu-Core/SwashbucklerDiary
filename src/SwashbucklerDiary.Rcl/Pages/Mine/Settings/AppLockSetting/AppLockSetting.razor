@@ -13,9 +13,7 @@
         <MList Class="py-0">
             <MListItem>
                 <MListItemIcon>
-                    <MIcon>
-                        dialpad
-                    </MIcon>
+                    <MIcon>dialpad</MIcon>
                 </MListItemIcon>
                 <MListItemContent>
                     <wc-auto-scroll-text>@(I18n.T("Number password"))</wc-auto-scroll-text>
@@ -28,6 +26,27 @@
                              Inset="true"
                              Color="@MasaBlazor.Theme.CurrentTheme.OnSurface"
                              OnClick="()=>showNumberLock=true">
+                    </MSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon>apps</MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <wc-auto-scroll-text>@(I18n.T("Pattern password"))</wc-auto-scroll-text>
+                </MListItemContent>
+                <MListItemAction>
+                    <MSwitch Value="!string.IsNullOrEmpty(appLockPatternPassword)"
+                             TValue="bool"
+                             Readonly
+                             Dense="true"
+                             Inset="true"
+                             Color="@MasaBlazor.Theme.CurrentTheme.OnSurface"
+                             OnClick="()=>showPatternLock=true">
                     </MSwitch>
                 </MListItemAction>
             </MListItem>
@@ -88,3 +107,8 @@
                       Value="@appLockNumberPassword"
                       OnFinish="SetAppLockNumberPasswordAsync">
 </NumberPasswordDialog>
+
+<PatternPasswordDialog @bind-Visible="showPatternLock"
+                       Value="@appLockPatternPassword"
+                       OnFinish="SetAppLockPatternPasswordAsync">
+</PatternPasswordDialog>

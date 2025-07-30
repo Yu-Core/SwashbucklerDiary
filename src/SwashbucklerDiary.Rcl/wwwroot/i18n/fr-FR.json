@@ -479,5 +479,10 @@
   "Number password": "Mot de passe numérique",
   "Fingerprint identification": "Identification par empreinte digitale",
   "Lock time": "Temps de verrouillage",
-  "Lock when leaving the application": "Verrouiller en quittant l'application"
+  "Lock when leaving the application": "Verrouiller en quittant l'application",
+  "Other unlocking methods": "Autres méthodes de déverrouillage",
+  "Pattern password": "Mot de passe schéma",
+  "Please draw a pattern": "Veuillez dessiner un schéma",
+  "Please draw the pattern again": "Veuillez dessiner à nouveau le schéma",
+  "System fingerprint unlocking has been turned off, please use another unlocking method": "Le déverrouillage par empreinte digitale du système a été désactivé, veuillez utiliser une autre méthode de déverrouillage"
 }

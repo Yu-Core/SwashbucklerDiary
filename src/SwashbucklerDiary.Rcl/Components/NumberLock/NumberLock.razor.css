@@ -1,13 +1,10 @@
 .progress-dots {
-    display: flex;
-    justify-content: center;
     margin-bottom: 30px;
-    transition: all 0.3s;
 }
 
-    .progress-dots.shake {
-        animation: dotShake 0.4s;
-    }
+.progress-dots--shake {
+    animation: dotShake 0.4s;
+}
 
 @keyframes dotShake {
     0%, 100% {
@@ -28,5 +25,4 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     justify-items: center;
-    margin-bottom: 30px;
 }

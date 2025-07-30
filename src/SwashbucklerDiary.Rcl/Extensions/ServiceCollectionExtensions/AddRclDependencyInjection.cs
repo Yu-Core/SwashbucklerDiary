@@ -19,6 +19,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
             services.TryAddScoped<BetterSearchJSModule>();
             services.TryAddScoped<BackTopButtonJSModule>();
             services.TryAddScoped<WaterfallJSModule>();
+            services.TryAddScoped<GestureUnlockJSModule>();
             return services;
         }
     }

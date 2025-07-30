@@ -1,6 +1,6 @@
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class NumberLockFinishArguments
+    public class LockFinishArguments
     {
         public string? Value { get; set; }
 

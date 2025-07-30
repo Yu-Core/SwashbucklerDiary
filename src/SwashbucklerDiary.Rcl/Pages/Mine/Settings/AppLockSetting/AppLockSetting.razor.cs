@@ -8,11 +8,15 @@ namespace SwashbucklerDiary.Rcl.Pages
     {
         private string? appLockNumberPassword;
 
+        private string? appLockPatternPassword;
+
         private bool appLockBiometric;
 
         private bool lockAppWhenLeave;
 
         private bool showNumberLock;
+
+        private bool showPatternLock;
 
         private bool isBiometricSupported;
 
@@ -52,6 +56,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             appLockNumberPassword = SettingService.Get(it => it.AppLockNumberPassword);
             appLockBiometric = SettingService.Get(it => it.AppLockBiometric);
+            appLockPatternPassword = SettingService.Get(it => it.AppLockPatternPassword);
             lockAppWhenLeave = SettingService.Get(it => it.LockAppWhenLeave);
         }
 
@@ -68,6 +73,22 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 appLockNumberPassword = null;
                 await SettingService.RemoveAsync(it => it.AppLockNumberPassword);
+            }
+        }
+
+        private async Task SetAppLockPatternPasswordAsync(string value)
+        {
+            showPatternLock = false;
+
+            if (string.IsNullOrEmpty(appLockPatternPassword))
+            {
+                appLockPatternPassword = value;
+                await SettingService.SetAsync(it => it.AppLockPatternPassword, appLockPatternPassword);
+            }
+            else
+            {
+                appLockPatternPassword = null;
+                await SettingService.RemoveAsync(it => it.AppLockPatternPassword);
             }
         }
 

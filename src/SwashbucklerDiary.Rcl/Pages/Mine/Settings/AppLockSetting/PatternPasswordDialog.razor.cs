@@ -3,11 +3,11 @@ using SwashbucklerDiary.Rcl.Components;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
-    public partial class NumberPasswordDialog : DialogComponentBase
+    public partial class PatternPasswordDialog
     {
-        private string? numberLockValue;
-
         private string? firstValue;
+
+        private GestureUnlock? gestureUnlock;
 
         [Parameter]
         public string? Value { get; set; }
@@ -17,8 +17,12 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void HandleOnBeforeShowContent()
         {
-            numberLockValue = null;
             firstValue = null;
+        }
+
+        private void HandleOnAfterShowContent()
+        {
+            gestureUnlock?.Reset();
         }
 
         private async Task HandleNumberLockOnFinish(LockFinishArguments args)
@@ -44,7 +48,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (string.IsNullOrEmpty(firstValue))
             {
                 firstValue = args.Value;
-                numberLockValue = null;
+                gestureUnlock?.Reset();
+
                 return;
             }
 

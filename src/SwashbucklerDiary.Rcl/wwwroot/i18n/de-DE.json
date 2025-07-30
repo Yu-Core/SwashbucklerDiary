@@ -479,5 +479,10 @@
   "Number password": "Zahlenpasswort",
   "Fingerprint identification": "Fingerabdruckerkennung",
   "Lock time": "Sperrzeit",
-  "Lock when leaving the application": "Beim Verlassen der App sperren"
+  "Lock when leaving the application": "Beim Verlassen der App sperren",
+  "Other unlocking methods": "Andere Entsperrmethoden",
+  "Pattern password": "Musterpasswort",
+  "Please draw a pattern": "Bitte zeichnen Sie ein Muster",
+  "Please draw the pattern again": "Bitte zeichnen Sie das Muster erneut",
+  "System fingerprint unlocking has been turned off, please use another unlocking method": "Die Fingerabdruckentsperrung des Systems wurde deaktiviert, bitte verwenden Sie eine andere Entsperrmethode"
 }

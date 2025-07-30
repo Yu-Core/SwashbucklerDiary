@@ -1,6 +1,5 @@
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -23,15 +22,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public string? Title { get; set; }
 
-        [Parameter]
-        public bool ExtraButton { get; set; }
-
-        [Parameter]
-        public string? ExtraButtonIconName { get; set; }
-
-        [Parameter]
-        public EventCallback<MouseEventArgs> ExtraButtonOnClick { get; set; }
-
         [Parameter(CaptureUnmatchedValues = true)]
         public virtual IDictionary<string, object> Attributes { get; set; } = new Dictionary<string, object>();
 
@@ -39,7 +29,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public EventCallback<string> ValueChanged { get; set; }
 
         [Parameter]
-        public EventCallback<NumberLockFinishArguments> OnFinish { get; set; }
+        public EventCallback<LockFinishArguments> OnFinish { get; set; }
 
         private void PressNumber(int num)
         {
@@ -60,7 +50,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task CheckAsync()
         {
-            NumberLockFinishArguments args = new()
+            LockFinishArguments args = new()
             {
                 Value = Value
             };

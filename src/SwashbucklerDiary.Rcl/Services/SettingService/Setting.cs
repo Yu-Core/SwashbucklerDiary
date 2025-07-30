@@ -58,5 +58,6 @@ namespace SwashbucklerDiary.Rcl.Services
         public string AppLockNumberPassword { get; set; } = string.Empty;
         public bool AppLockBiometric { get; set; }
         public bool LockAppWhenLeave { get; set; }
+        public string AppLockPatternPassword { get; set; } = string.Empty;
     }
 }

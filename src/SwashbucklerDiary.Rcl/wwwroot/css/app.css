@@ -621,3 +621,9 @@ html.m-overlay-scroll-blocked {
     flex-wrap: wrap;
     justify-content: flex-end;
 }
+
+@media (min-width: 600px) {
+    .flex-sm-1 {
+        flex: 1;
+    }
+}

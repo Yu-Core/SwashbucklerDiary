@@ -1,3 +1,4 @@
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
@@ -10,7 +11,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? appLockNumberPassword;
 
-        private bool isBiometricSupported;
+        private string? appLockPatternPassword;
+
+        private StringNumber? tabs;
 
         [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
@@ -19,7 +22,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.OnInitializedAsync();
 
-            isBiometricSupported = await PlatformIntegration.IsBiometricSupported();
             NavigateController.DisableNavigate = true;
         }
 
@@ -39,25 +41,57 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             appLockBiometric = SettingService.Get(it => it.AppLockBiometric);
             appLockNumberPassword = SettingService.Get(it => it.AppLockNumberPassword);
+            appLockPatternPassword = SettingService.Get(it => it.AppLockPatternPassword);
         }
+
+        private bool HasAppLockExcludeBiometric
+            => !string.IsNullOrEmpty(appLockNumberPassword)
+            || !string.IsNullOrEmpty(appLockPatternPassword);
 
         private async Task BiometricAuthenticateAsync()
         {
-            if (!appLockBiometric || !isBiometricSupported)
+            if (!appLockBiometric)
             {
                 return;
             }
 
-            bool isSuccess = await PlatformIntegration.BiometricAuthenticateAsync();
-            if (isSuccess)
+            // 假如开启指纹解锁，又在系统设置中移除指纹，将关闭指纹解锁，如果没有其他验证方式，直接通过验证
+            bool isBiometricSupported = await PlatformIntegration.IsBiometricSupported();
+            if (isBiometricSupported)
+            {
+                bool isSuccess = await PlatformIntegration.BiometricAuthenticateAsync();
+                if (isSuccess)
+                {
+                    VerificationSuccessful();
+                }
+            }
+            else
+            {
+                appLockBiometric = false;
+                await SettingService.RemoveAsync(it => it.AppLockBiometric);
+                if (HasAppLockExcludeBiometric)
+                {
+                    await AlertService.Info(I18n.T("System fingerprint unlocking has been turned off, please use another unlocking method"));
+                }
+                else
+                {
+                    VerificationSuccessful();
+                }
+            }
+        }
+
+        private void HandleNumberLockOnFinish(LockFinishArguments args)
+        {
+            args.IsFail = args.Value != appLockNumberPassword;
+            if (!args.IsFail)
             {
                 VerificationSuccessful();
             }
         }
 
-        private void HandleNumberLockOnFinish(NumberLockFinishArguments args)
+        public void HandlePatternLockOnFinish(LockFinishArguments args)
         {
-            args.IsFail = args.Value != appLockNumberPassword;
+            args.IsFail = args.Value != appLockPatternPassword;
             if (!args.IsFail)
             {
                 VerificationSuccessful();
@@ -78,6 +112,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 To("");
             }
+        }
+
+        private void ExitApp()
+        {
+            AppLifecycle.QuitApp();
         }
     }
 }

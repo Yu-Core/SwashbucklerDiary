@@ -82,8 +82,10 @@ namespace SwashbucklerDiary.Gtk
             }
 
             string appLockNumberPassword = Preferences.Default.Get<string>(nameof(Setting.AppLockNumberPassword), string.Empty);
+            string appLockPatternPassword = Preferences.Default.Get<string>(nameof(Setting.AppLockPatternPassword), string.Empty);
             bool appLockBiometric = Preferences.Default.Get<bool>(nameof(Setting.AppLockBiometric), false);
-            bool useAppLock = !string.IsNullOrEmpty(appLockNumberPassword) || appLockBiometric;
+            bool useAppLock = !string.IsNullOrEmpty(appLockNumberPassword)
+                || !string.IsNullOrEmpty(appLockPatternPassword);
             if (useAppLock)
             {
                 blazorWebView.StartPath = "/appLock";

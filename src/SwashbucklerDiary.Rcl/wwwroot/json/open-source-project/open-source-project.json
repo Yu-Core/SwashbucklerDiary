@@ -45,6 +45,11 @@
     "Url": "https://github.com/quamotion/dotnet-packaging/blob/master/LICENSE"
   },
   {
+    "Name": "Fly Gesture Unlock",
+    "License": "MIT license",
+    "Url": "https://github.com/feiafei27/fly-gesture-unlock/blob/master/LICENSE"
+  },
+  {
     "Name": "Gir.Core",
     "License": "MIT license",
     "Url": "https://github.com/gircore/gir.core/blob/main/license.txt"

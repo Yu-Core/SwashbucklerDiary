@@ -1,0 +1,26 @@
+@namespace SwashbucklerDiary.Rcl.Components
+@inherits MyComponentBase
+
+<MCard Class="@Class"
+       Style="@InternalStyle"
+       Elevation="0"
+       @attributes="Attributes">
+    <MCardTitle Class="justify-center">
+        @Title
+    </MCardTitle>
+    <MCardText>
+        <div class="d-flex flex-column align-center">
+            <div @ref="elementReference"
+                 style="width:300px;height:300px;">
+            </div>
+        </div>
+    </MCardText>
+</MCard>
+
+
+@code {
+    private string InternalStyle => new StyleBuilder()
+        .Add("background-color", "initial")
+        .Add(Style)
+        .ToString();
+}

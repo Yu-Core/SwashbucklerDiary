@@ -479,5 +479,10 @@
   "Number password": "数字パスワード",
   "Fingerprint identification": "指紋認証",
   "Lock time": "ロック時間",
-  "Lock when leaving the application": "アプリ終了時にロック"
+  "Lock when leaving the application": "アプリ終了時にロック",
+  "Other unlocking methods": "その他のロック解除方法",
+  "Pattern password": "パターンパスワード",
+  "Please draw a pattern": "パターンを描いてください",
+  "Please draw the pattern again": "もう一度パターンを描いてください",
+  "System fingerprint unlocking has been turned off, please use another unlocking method": "システムの指紋認証が無効になっています。他のロック解除方法を使用してください"
 }

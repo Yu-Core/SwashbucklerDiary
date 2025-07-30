@@ -479,5 +479,10 @@
   "Number password": "Цифровой пароль",
   "Fingerprint identification": "Идентификация по отпечатку пальца",
   "Lock time": "Время блокировки",
-  "Lock when leaving the application": "Блокировать при выходе из приложения"
+  "Lock when leaving the application": "Блокировать при выходе из приложения",
+  "Other unlocking methods": "Другие методы разблокировки",
+  "Pattern password": "Графический пароль",
+  "Please draw a pattern": "Пожалуйста, нарисуйте узор",
+  "Please draw the pattern again": "Пожалуйста, нарисуйте узор снова",
+  "System fingerprint unlocking has been turned off, please use another unlocking method": "Разблокировка по отпечатку пальца системы отключена, используйте другой метод разблокировки"
 }

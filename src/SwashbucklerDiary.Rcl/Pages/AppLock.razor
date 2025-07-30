@@ -3,22 +3,90 @@
 @inherits ImportantComponentBase
 
 <div class="d-flex justify-center align-center fullscreen-height" style="width:100%;">
-    @if (!string.IsNullOrEmpty(appLockNumberPassword))
-    {
-        <NumberLock Title="@I18n.T("Please enter password")"
-                    ExtraButton="@(isBiometricSupported && appLockBiometric)"
-                    ExtraButtonIconName="fingerprint"
-                    ExtraButtonOnClick="BiometricAuthenticateAsync"
-                    OnFinish="HandleNumberLockOnFinish">
-        </NumberLock>
-    }
-    else if (appLockBiometric)
-    {
-        <MButton Outlined
-                 XLarge
-                 Fab
-                 OnClick="BiometricAuthenticateAsync">
-            <MIcon>fingerprint</MIcon>
-        </MButton>
-    }
+    <div class="d-flex justify-center scroll-show" style="width:100%;max-height:100%;overflow-y:auto;">
+        <div class="d-flex flex-column flex-sm-row" style="width:100%;height:fit-content;">
+            @if (HasAppLockExcludeBiometric)
+            {
+                <div class="flex-sm-1 mb-5 mb-sm-0">
+
+                    <MWindow Value="tabs"
+                             Style="background-color:initial;"
+                             Touchless>
+                        @if (!string.IsNullOrEmpty(appLockNumberPassword))
+                        {
+                            <MWindowItem Value="@("numberPassword")" Transition="">
+                                <NumberLock Title="@I18n.T("Please enter password")"
+                                            OnFinish="HandleNumberLockOnFinish">
+                                </NumberLock>
+                            </MWindowItem>
+                        }
+
+                        @if (!string.IsNullOrEmpty(appLockPatternPassword))
+                        {
+                            <MWindowItem Value="@("patternPassword")"
+                                         Transition="">
+                                <GestureUnlock Title="@I18n.T("Please draw a pattern")"
+                                               OnFinish="HandlePatternLockOnFinish">
+                                </GestureUnlock>
+                            </MWindowItem>
+                        }
+                    </MWindow>
+                </div>
+            }
+
+            <div class="flex-sm-1 d-flex justify-center align-center flex-column">
+                @if (HasAppLockExcludeBiometric)
+                {
+                    <div class="text--secondary mb-4">@I18n.T("Other unlocking methods") / @I18n.T("Quit")</div>
+                }
+
+                <MItemGroup @bind-Value="tabs"
+                            ActiveClass="d-none"
+                            Mandatory>
+                    <div class="d-flex flex-wrap justify-center">
+                        @if (appLockBiometric)
+                        {
+                            <MButton Class="ma-2"
+                                     Outlined
+                                     Fab
+                                     OnClick="BiometricAuthenticateAsync">
+                                <MIcon>fingerprint</MIcon>
+                            </MButton>
+                        }
+
+                        @if (!string.IsNullOrEmpty(appLockNumberPassword))
+                        {
+                            <MItem Value="@("numberPassword")">
+                                <MButton Class="@($"ma-2 {context.ActiveClass}")"
+                                         Outlined
+                                         Fab
+                                         OnClick="context.Toggle">
+                                    <MIcon>dialpad</MIcon>
+                                </MButton>
+                            </MItem>
+                        }
+
+                        @if (!string.IsNullOrEmpty(appLockPatternPassword))
+                        {
+                            <MItem Value="@("patternPassword")">
+                                <MButton Class="@($"ma-2 {context.ActiveClass}")"
+                                         Outlined
+                                         Fab
+                                         OnClick="context.Toggle">
+                                    <MIcon>apps</MIcon>
+                                </MButton>
+                            </MItem>
+                        }
+                        
+                        <MButton Class="ma-2"
+                                 Outlined
+                                 Fab
+                                 OnClick="ExitApp">
+                            <MIcon>exit_to_app</MIcon>
+                        </MButton>
+                    </div>
+                </MItemGroup>
+            </div>
+        </div>
+    </div>
 </div>

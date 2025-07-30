@@ -54,6 +54,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
 
+        [Inject]
+        private IPlatformIntegration PlatformIntegration { get; set; } = default!;
+
         public void Dispose()
         {
             OnDispose();
@@ -160,7 +163,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             }
         }
 
-        private void HandleAppLifecycleOnStopped()
+        private async void HandleAppLifecycleOnStopped()
         {
             if (NavigationManager.GetBaseRelativePath().Equals("applock", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -168,8 +171,12 @@ namespace SwashbucklerDiary.Rcl.Layout
             }
 
             string appLockNumberPassword = SettingService.Get(it => it.AppLockNumberPassword);
+            string appLockPatternPassword = SettingService.Get(it => it.AppLockPatternPassword);
             bool appLockBiometric = SettingService.Get(it => it.AppLockBiometric);
-            bool useAppLock = !string.IsNullOrEmpty(appLockNumberPassword) || appLockBiometric;
+            bool isBiometricSupported = await PlatformIntegration.IsBiometricSupported();
+            bool useAppLock = !string.IsNullOrEmpty(appLockNumberPassword)
+                || !string.IsNullOrEmpty(appLockPatternPassword)
+                || (appLockBiometric && isBiometricSupported);
             bool lockAppWhenLeave = SettingService.Get(it => it.LockAppWhenLeave);
             if (useAppLock && lockAppWhenLeave)
             {

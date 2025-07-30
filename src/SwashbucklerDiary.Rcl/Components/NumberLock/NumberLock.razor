@@ -8,8 +8,8 @@
         @Title
     </MCardTitle>
     <MCardText>
-        <div class="d-flex flex-column align-center mb-6">
-            <div class="@($"progress-dots {(shake ? "shake" : "")}")">
+        <div class="d-flex flex-column align-center">
+            <div class="@($"progress-dots {(shake ? "progress-dots--shake" : "")}")">
                 @for (int i = 0; i < Length; i++)
                 {
                     var temp = i;
@@ -17,7 +17,7 @@
                 }
             </div>
 
-            <div class="keypad" style="max-width:fit-content;">
+            <div class="keypad">
                 @for (int i = 1; i <= 9; i++)
                 {
                     var temp = i;
@@ -30,12 +30,9 @@
                 }
 
                 <MButton Fab
-                         Icon
                          Large
                          Class="ma-2"
-                         Style="@ExtraButtonStyle"
-                         OnClick="ExtraButtonOnClick">
-                    <MIcon>@ExtraButtonIconName</MIcon>
+                         Style="visibility:hidden;">
                 </MButton>
 
                 <MButton Fab
@@ -59,9 +56,5 @@
     private string InternalStyle => new StyleBuilder()
         .Add("background-color", "initial")
         .Add(Style)
-        .ToString();
-
-    private string ExtraButtonStyle => new StyleBuilder()
-        .AddIf("visibility", "hidden", !ExtraButton)
         .ToString();
 }

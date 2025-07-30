@@ -56,6 +56,7 @@ namespace SwashbucklerDiary.Rcl.Services
             nameof(Setting.HidePrivacyModeEntrance),
             nameof(Setting.SetPrivacyDiary),
             nameof(Setting.AppLockNumberPassword),
+            nameof(Setting.AppLockPatternPassword),
             nameof(Setting.AppLockBiometric),
             nameof(Setting.LockAppWhenLeave),
         ];

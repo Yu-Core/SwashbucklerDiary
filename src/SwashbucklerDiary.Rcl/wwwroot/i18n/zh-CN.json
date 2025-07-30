@@ -479,5 +479,10 @@
   "Number password": "数字密码",
   "Fingerprint identification": "指纹识别",
   "Lock time": "锁定时间",
-  "Lock when leaving the application": "离开应用时锁定"
+  "Lock when leaving the application": "离开应用时锁定",
+  "Other unlocking methods": "其他解锁方式",
+  "Pattern password": "图案密码",
+  "Please draw a pattern": "请绘制图案",
+  "Please draw the pattern again": "请再次绘制图案",
+  "System fingerprint unlocking has been turned off, please use another unlocking method": "系统指纹解锁已关闭，请使用其他解锁方式"
 }

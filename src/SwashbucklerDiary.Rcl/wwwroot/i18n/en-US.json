@@ -479,5 +479,10 @@
   "Number password": "Number password",
   "Fingerprint identification": "Fingerprint identification",
   "Lock time": "Lock time",
-  "Lock when leaving the application": "Lock when leaving the application"
+  "Lock when leaving the application": "Lock when leaving the application",
+  "Other unlocking methods": "Other unlocking methods",
+  "Pattern password": "Pattern password",
+  "Please draw a pattern": "Please draw a pattern",
+  "Please draw the pattern again": "Please draw the pattern again",
+  "System fingerprint unlocking has been turned off, please use another unlocking method": "System fingerprint unlocking has been turned off, please use another unlocking method"
 }
