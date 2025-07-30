@@ -1,7 +1,8 @@
 @namespace SwashbucklerDiary.Rcl.Components
 @inherits MyComponentBase
 
-<CustomPPageContainer @ref="pPageContainer"
-                      PageUpdate="NavigateController.AllowPageUpdate">
+<PPageContainerReplacement @ref="pPageContainerReplacement"
+                           PageUpdate="NavigateController.AllowPageUpdate"
+                           OnLocationChanged="HandlePageCacheUpdate">
     @ChildContent
-</CustomPPageContainer>
+</PPageContainerReplacement>

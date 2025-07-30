@@ -5,8 +5,6 @@ namespace SwashbucklerDiary.Rcl.Essentials
 {
     public interface INavigateController
     {
-        event Action<List<string>>? PageCachePathsChanged;
-
         bool IsInitialized { get; }
 
         bool AllowPageUpdate { get; }
@@ -14,6 +12,8 @@ namespace SwashbucklerDiary.Rcl.Essentials
         bool DisableNavigate { get; set; }
 
         RouteMatcher RouteMatcher { get; }
+
+        List<string> PageCachePaths { get; }
 
         void Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> permanentPaths);
 

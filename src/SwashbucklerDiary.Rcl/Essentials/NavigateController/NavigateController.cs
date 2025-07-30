@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
         protected IJSRuntime _jSRuntime = default!;
 
         protected List<PathString> historyPaths = [];
-        protected List<PathString> pageCachePaths = [];
+        protected HashSet<PathString> pageCachePaths = [];
         protected List<PathString> permanentPaths = [];
         protected List<PathString> NotUpdatePagePaths = [];
 
@@ -34,8 +34,6 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         protected IAppLifecycle _appLifecycle;
 
-        public event Action<List<string>>? PageCachePathsChanged;
-
         public bool IsInitialized { get; protected set; }
 
         public bool AllowPageUpdate { get; protected set; }
@@ -43,6 +41,8 @@ namespace SwashbucklerDiary.Rcl.Essentials
         public bool DisableNavigate { get; set; }
 
         public RouteMatcher RouteMatcher { get; }
+
+        public List<string> PageCachePaths => [.. permanentPaths.Union(pageCachePaths).Select(it => it.ToString())];
 
         public NavigateController(IAppLifecycle appLifecycle)
         {
@@ -87,10 +87,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
         {
             PathString absolutePath = new PathString(new Uri(url).AbsolutePath);
             pageCachePaths.Remove(absolutePath);
-            PageCachePathsChanged?.Invoke(PageCachePaths);
         }
-
-        protected List<string> PageCachePaths => [.. permanentPaths.Union(pageCachePaths).Select(it => it.ToString())];
 
         protected abstract IEnumerable<Assembly> Assemblies { get; }
 
@@ -294,8 +291,8 @@ namespace SwashbucklerDiary.Rcl.Essentials
                             int count = currentHistoryIndex - targetHistoryIndex;
                             var clearPaths = historyPaths.GetRange(startIndex, count);
                             historyPaths.RemoveRange(startIndex, count);
-                            pageCachePaths.RemoveAll(clearPaths.Contains);
-                            PageCachePathsChanged?.Invoke(PageCachePaths);
+                            pageCachePaths.RemoveWhere(clearPaths.Contains);
+                            AddPageCache(targetPath);
                             historyActions.RemoveAll(it => !string.IsNullOrEmpty(it.Path) && clearPaths.Contains(it.Path));
                         }
                     }
@@ -320,7 +317,6 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
                 historyPaths.Add(targetPath);
                 AddPageCache(targetPath);
-                PageCachePathsChanged?.Invoke(PageCachePaths);
             }
         }
 

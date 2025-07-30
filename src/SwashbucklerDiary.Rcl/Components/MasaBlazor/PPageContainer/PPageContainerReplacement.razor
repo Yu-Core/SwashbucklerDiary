@@ -1,0 +1,18 @@
+@namespace SwashbucklerDiary.Rcl.Components
+@inherits PatternPathComponentBase
+
+<div class="@GetClass()"
+     style="@GetStyle()"
+     id="@Id"
+     @ref="Ref"
+     @attributes="Attributes">
+    @foreach (var path in _patternPaths.OrderBy(u => u.CreatedAt))
+    {
+        <div class="@_block.Element("item").AppendClasses(("d-none", path.Pattern != _currentPatternPath?.Pattern))"
+             @key="path.Pattern">
+            <MShouldRender Value="@(path.Pattern == GetCurrentPatternPath().Pattern)">
+                @ChildContent
+            </MShouldRender>
+        </div>
+    }
+</div>
