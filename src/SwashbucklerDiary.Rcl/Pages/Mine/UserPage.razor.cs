@@ -108,7 +108,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (string.IsNullOrEmpty(photoPath))
             {
-                await AlertService.Error(I18n.T("Change failed"));
                 return;
             }
 
