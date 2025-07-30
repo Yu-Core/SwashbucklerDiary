@@ -62,7 +62,7 @@ namespace SwashbucklerDiary.Maui.Services
                 filePath = LocalFileWebAccessHelper.UrlRelativePathToFilePath(relativePath);
                 if (string.IsNullOrEmpty(filePath))
                 {
-                    filePath = await CopyPackageFileAndCreateTempFileAsync(urlString);
+                    filePath = await CopyPackageFileAndCreateTempFileAsync(relativePath);
                 }
             }
             else
