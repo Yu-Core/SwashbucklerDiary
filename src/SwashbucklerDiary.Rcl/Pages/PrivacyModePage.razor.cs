@@ -171,5 +171,13 @@ namespace SwashbucklerDiary.Rcl.Pages
                 await AlertService.Info(I18n.T("No diary that needs to be moved"));
             }
         }
+
+        private async Task ResetPassword()
+        {
+            showPrivacyModeEntrancePasswordDialog = false;
+            privacyModeEntrancePassword = string.Empty;
+
+            await SettingService.RemoveAsync(s => s.PrivacyModeEntrancePassword);
+        }
     }
 }

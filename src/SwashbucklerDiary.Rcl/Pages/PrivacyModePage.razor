@@ -229,7 +229,8 @@
     <PasswordDialog @bind-Visible="showPrivacyModeEntrancePasswordDialog"
                     Title="@(I18n.T("Set default entry password"))"
                     MaxLength="20"
-                    OnOK="SetPassword">
+                    OnOK="SetPassword"
+                    OnReset="ResetPassword">
     </PasswordDialog>
 
     <CustomMDialog @bind-MyValue="showHidePrivacyModeEntranceConfirmDialog"

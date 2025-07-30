@@ -30,6 +30,9 @@ namespace SwashbucklerDiary.Rcl.Components
         public EventCallback<string> OnOK { get; set; }
 
         [Parameter]
+        public EventCallback OnReset { get; set; }
+
+        [Parameter]
         public int MaxLength { get; set; } = 20;
 
         class Model
@@ -40,7 +43,7 @@ namespace SwashbucklerDiary.Rcl.Components
             public string? Password { get; set; }
 
             [Required(ErrorMessage = "Please enter password")]
-            [Compare("Password",ErrorMessage = "The two passwords are inconsistent")]
+            [Compare("Password", ErrorMessage = "The two passwords are inconsistent")]
             public string? PasswordConfirmation { get; set; }
         }
 
