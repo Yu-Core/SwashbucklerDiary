@@ -56,13 +56,13 @@ namespace SwashbucklerDiary.Rcl.Repository
                 .Select(r => r.ResourceUri)
                 .ToListAsync();
             var resourceUris2 = await notCurrentDb.Queryable<ResourceModel>()
-                .LeftJoin<DiaryResourceModel>((r, dr) => r.ResourceUri == dr.ResourceUri)
+                .InnerJoin<DiaryResourceModel>((r, dr) => r.ResourceUri == dr.ResourceUri)
                 .Where(expression2)
-                .Where((r, dr) => dr.ResourceUri == null) // 只选择没有匹配的记录
                 .Select(r => r.ResourceUri)
+                .Distinct()
                 .ToListAsync();
 
-            var trulyUnusedResources = resourceUris.Intersect(resourceUris2).ToList();
+            var trulyUnusedResources = resourceUris.Except(resourceUris2).ToList();
             return (resourceUris, trulyUnusedResources);
         }
     }
