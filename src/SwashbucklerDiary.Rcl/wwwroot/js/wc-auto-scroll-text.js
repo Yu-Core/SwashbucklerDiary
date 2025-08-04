@@ -1,6 +1,6 @@
 class AutoScrollText extends HTMLElement {
     static get observedAttributes() {
-        return ['scroll-speed', 'gap', 'animation-gap', 'fit-content'];
+        return ['scroll-speed', 'gap', 'animation-gap'];
     }
 
     constructor() {
@@ -10,10 +10,10 @@ class AutoScrollText extends HTMLElement {
         this._prevScrollingState = false;
         this._resizeObserver = null;
         this._mutationObserver = null;
+        this._resizeTimeout = null;
         this._scrollSpeed = 60; // 默认值：60像素/秒
         this._gap = 20;  // 默认值：20像素间隔
         this._animationGap = 1;  // 默认值：1秒
-        this._fitContent = null;
         this._paused = false;
     }
 
@@ -42,8 +42,8 @@ class AutoScrollText extends HTMLElement {
             this._gap = parseFloat(newValue) || 20;
         } else if (name === 'animation-gap') {
             this._animationGap = parseFloat(newValue) || 1;
-        } else if (name === 'fit-content') {
-            this._fitContent = newValue;
+        } else {
+            return;
         }
 
         // 仅在滚动状态下更新动画
@@ -70,8 +70,11 @@ class AutoScrollText extends HTMLElement {
     setupResizeObserver() {
         // 监听容器大小变化
         this._resizeObserver = new ResizeObserver(entries => {
-            this.render();
-            this.setupScroll();
+            clearTimeout(this._resizeTimeout);
+            this._resizeTimeout = setTimeout(() => {
+                this.render();
+                this.setupScroll();
+            }, 300);
         });
 
         this._resizeObserver.observe(this);
@@ -79,14 +82,18 @@ class AutoScrollText extends HTMLElement {
 
     render() {
         const text = this.textContent.trim();
-        const hostWidth = this._fitContent ? "fit-content" : "100%";
-        const hostAfterContent = this._fitContent ? text : "0";
+        const maxWidthStyle = getComputedStyle(this).maxWidth;
+        const fitContent = maxWidthStyle !== "none";
+        const hostWidth = fitContent ? "fit-content" : "100%";
+        const hostAfterContent = fitContent ? text : "0";
+        const maxWidth = fitContent ? `max-width: ${maxWidthStyle};` : "";
 
         this.shadowRoot.innerHTML = `
                     <style>
                         :host {
                             display: block;
                             width: ${hostWidth};
+                            ${maxWidth}
                             overflow: hidden;
                             position: relative;
                         }
@@ -150,14 +157,14 @@ class AutoScrollText extends HTMLElement {
             // 计算动画时间（总距离 / 速度）
             const animationDuration = totalDistance / this._scrollSpeed + this._animationGap;
 
-            // 不包含动画间隔时间的百分比
-            const totalProgressPercentage = ((animationDuration - this._animationGap) / animationDuration) * 100;
+            // 动画间隔时间所占百分比
+            const animationGapDurationPercentage = (this._animationGap / animationDuration) * 100;
 
             // 关键帧动画
             const keyframes = `
                         @keyframes scroll {
-                            0% { transform: translateX(0); }
-                            ${totalProgressPercentage}%, 100% { transform: translateX(-${totalDistance}px); }
+                            0% , ${animationGapDurationPercentage}% { transform: translateX(0); }
+                            100% { transform: translateX(-${totalDistance}px); }
                         }
                     `;
 
