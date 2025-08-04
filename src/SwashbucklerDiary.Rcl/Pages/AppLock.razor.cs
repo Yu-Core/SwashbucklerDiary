@@ -2,6 +2,7 @@ using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -9,9 +10,13 @@ namespace SwashbucklerDiary.Rcl.Pages
     {
         private bool appLockBiometric;
 
-        private string? appLockNumberPassword;
+        private string appLockNumberPassword = string.Empty;
 
-        private string? appLockPatternPassword;
+        private string appLockPatternPassword = string.Empty;
+
+        private string appLockNumberPasswordSalt = string.Empty;
+
+        private string appLockPatternPasswordSalt = string.Empty;
 
         private StringNumber? tabs;
 
@@ -42,6 +47,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             appLockBiometric = SettingService.Get(it => it.AppLockBiometric);
             appLockNumberPassword = SettingService.Get(it => it.AppLockNumberPassword);
             appLockPatternPassword = SettingService.Get(it => it.AppLockPatternPassword);
+            appLockNumberPasswordSalt = SettingService.Get(it => it.AppLockNumberPasswordSalt);
+            appLockPatternPasswordSalt = SettingService.Get(it => it.AppLockPatternPasswordSalt);
         }
 
         private bool HasAppLockExcludeBiometric
@@ -82,7 +89,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void HandleNumberLockOnFinish(LockFinishArguments args)
         {
-            args.IsFail = args.Value != appLockNumberPassword;
+            args.IsFail = !PasswordHasher.VerifyPassword(args.Value ?? string.Empty, appLockNumberPassword, appLockNumberPasswordSalt); ;
             if (!args.IsFail)
             {
                 VerificationSuccessful();
@@ -91,7 +98,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         public void HandlePatternLockOnFinish(LockFinishArguments args)
         {
-            args.IsFail = args.Value != appLockPatternPassword;
+            args.IsFail = !PasswordHasher.VerifyPassword(args.Value ?? string.Empty, appLockPatternPassword, appLockPatternPasswordSalt);
             if (!args.IsFail)
             {
                 VerificationSuccessful();

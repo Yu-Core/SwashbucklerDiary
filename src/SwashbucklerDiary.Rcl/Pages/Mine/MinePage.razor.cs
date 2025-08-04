@@ -6,7 +6,6 @@ using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
-using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -22,7 +21,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? avatar;
 
-        private string? privacyModeEntrancePassword;
+        private string privacyModeEntrancePassword = string.Empty;
+
+        private string? privacyModeEntrancePasswordSalt;
 
         private bool showLanguage;
 
@@ -135,6 +136,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
             hidePrivacyModeEntrance = SettingService.Get(s => s.HidePrivacyModeEntrance);
             privacyModeEntrancePassword = SettingService.Get(s => s.PrivacyModeEntrancePassword);
+            privacyModeEntrancePasswordSalt = SettingService.Get(s => s.PrivacyModeEntrancePasswordSalt);
         }
 
         private void LoadView()
@@ -310,8 +312,21 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            string salt = nameof(Setting.PrivacyModeEntrancePassword);
-            if (privacyModeEntrancePassword != (value + salt).MD5Encrytp32())
+            bool isSuccess;
+
+            string? salt = privacyModeEntrancePasswordSalt;
+            if (string.IsNullOrEmpty(salt))
+            {
+                // Compatible with old versions
+                salt = nameof(Setting.PrivacyModeEntrancePassword);
+                isSuccess = privacyModeEntrancePassword == (value + salt).MD5Encrytp32();
+            }
+            else
+            {
+                isSuccess = PasswordHasher.VerifyPassword(value, privacyModeEntrancePassword, salt);
+            }
+
+            if (!isSuccess)
             {
                 await AlertService.Error(I18n.T("Password error"));
                 return;

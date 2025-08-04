@@ -140,8 +140,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             showPrivacyModeEntrancePasswordDialog = false;
             privacyModeEntrancePassword = value;
 
-            string salt = nameof(Setting.PrivacyModeEntrancePassword);
-            await SettingService.SetAsync(s => s.PrivacyModeEntrancePassword, (value + salt).MD5Encrytp32());
+            string hashedPassword = PasswordHasher.HashPasswordWithSalt(value, out string saltBase64);
+
+            await SettingService.SetAsync(s => s.PrivacyModeEntrancePassword, hashedPassword);
+            await SettingService.SetAsync(s => s.PrivacyModeEntrancePasswordSalt, saltBase64);
             await AlertService.Success(I18n.T("Password set successfully"));
         }
 

@@ -1,6 +1,7 @@
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -66,12 +67,14 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (string.IsNullOrEmpty(appLockNumberPassword))
             {
-                appLockNumberPassword = value;
-                await SettingService.SetAsync(it => it.AppLockNumberPassword, appLockNumberPassword);
+                appLockNumberPassword = PasswordHasher.HashPasswordWithSalt(value, out string saltBase64);
+
+                await SettingService.SetAsync(s => s.AppLockNumberPassword, appLockNumberPassword);
+                await SettingService.SetAsync(s => s.AppLockNumberPasswordSalt, saltBase64);
             }
             else
             {
-                appLockNumberPassword = null;
+                appLockNumberPassword = string.Empty;
                 await SettingService.RemoveAsync(it => it.AppLockNumberPassword);
             }
         }
@@ -82,12 +85,14 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (string.IsNullOrEmpty(appLockPatternPassword))
             {
-                appLockPatternPassword = value;
-                await SettingService.SetAsync(it => it.AppLockPatternPassword, appLockPatternPassword);
+                appLockPatternPassword = PasswordHasher.HashPasswordWithSalt(value, out string saltBase64);
+
+                await SettingService.SetAsync(s => s.AppLockPatternPassword, appLockPatternPassword);
+                await SettingService.SetAsync(s => s.AppLockPatternPasswordSalt, saltBase64);
             }
             else
             {
-                appLockPatternPassword = null;
+                appLockPatternPassword = string.Empty;
                 await SettingService.RemoveAsync(it => it.AppLockPatternPassword);
             }
         }
