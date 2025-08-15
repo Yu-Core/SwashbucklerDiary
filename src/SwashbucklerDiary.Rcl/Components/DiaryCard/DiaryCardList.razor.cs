@@ -146,7 +146,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             var text = SelectedItem.CreateCopyContent();
             await PlatformIntegration.SetClipboardAsync(text);
-            await AlertService.Success(I18n.T("Copy successfully"));
+            await AlertService.SuccessAsync(I18n.T("Copy successfully"));
         }
 
         private async Task OpenTagDialog()
@@ -163,11 +163,11 @@ namespace SwashbucklerDiary.Rcl.Components
             await InvokeAsync(StateHasChanged);
             if (privacyMode)
             {
-                await AlertService.Success(I18n.T("Removed from privacy mode"));
+                await AlertService.SuccessAsync(I18n.T("Removed from privacy mode"));
             }
             else
             {
-                await AlertService.Success(I18n.T("Moved to privacy mode"));
+                await AlertService.SuccessAsync(I18n.T("Moved to privacy mode"));
             }
         }
 
@@ -187,13 +187,13 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 if (RemoveSelectedItem())
                 {
-                    await AlertService.Success(I18n.T("Delete successfully"));
+                    await AlertService.SuccessAsync(I18n.T("Delete successfully"));
                     await InvokeAsync(StateHasChanged);
                 }
             }
             else
             {
-                await AlertService.Error(I18n.T("Delete failed"));
+                await AlertService.ErrorAsync(I18n.T("Delete failed"));
             }
         }
 
@@ -243,7 +243,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             var text = SelectedItem.GetReferenceText(I18n);
             await PlatformIntegration.SetClipboardAsync(text);
-            await AlertService.Success(I18n.T("Copy successfully"));
+            await AlertService.SuccessAsync(I18n.T("Copy successfully"));
         }
 
         private async Task CopyExternalLink()
@@ -259,7 +259,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             await PlatformIntegration.SetClipboardAsync(text);
-            await AlertService.Success(I18n.T("Copy successfully"));
+            await AlertService.SuccessAsync(I18n.T("Copy successfully"));
         }
 
         private async void ClickCard(DiaryModel diary)

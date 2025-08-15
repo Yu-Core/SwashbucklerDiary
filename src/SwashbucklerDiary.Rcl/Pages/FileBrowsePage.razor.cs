@@ -91,7 +91,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (flag)
             {
                 await UpdateResourcesAsync();
-                await AlertService.Success(I18n.T("Delete successfully"));
+                await AlertService.SuccessAsync(I18n.T("Delete successfully"));
             }
         }
 
@@ -102,27 +102,27 @@ namespace SwashbucklerDiary.Rcl.Pages
             var permission = await PlatformIntegration.TryStorageWritePermission();
             if (!permission)
             {
-                await AlertService.Info(I18n.T("Please grant permission for storage writing"));
+                await AlertService.InfoAsync(I18n.T("Please grant permission for storage writing"));
                 return;
             }
 
-            await AlertService.StartLoading();
+            AlertService.StartLoading();
             try
             {
                 var resources = await ResourceService.QueryAsync(it => resourceKinds.Contains(it.ResourceType));
                 if (resources.Count == 0)
                 {
-                    await AlertService.Info(I18n.T("No file"));
+                    await AlertService.InfoAsync(I18n.T("No file"));
                     return;
                 }
 
-                var path = DiaryFileManager.ExportResourceFile(resources);
+                var path = await DiaryFileManager.ExportResourceFileAsync(resources);
                 if (!string.IsNullOrEmpty(path))
                 {
                     bool flag = await PlatformIntegration.SaveFileAsync(path);
                     if (flag)
                     {
-                        await AlertService.Success(I18n.T("Export successfully"));
+                        await AlertService.SuccessAsync(I18n.T("Export successfully"));
                         await HandleAchievements(Achievement.Export);
                     }
                 }
@@ -130,11 +130,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             catch (Exception e)
             {
                 Logger.LogError(e, "Create file wrong");
-                await AlertService.Error(I18n.T("Export failed"));
+                await AlertService.ErrorAsync(I18n.T("Export failed"));
             }
             finally
             {
-                await AlertService.StopLoading();
+                AlertService.StopLoading();
             }
         }
     }

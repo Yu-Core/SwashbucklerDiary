@@ -15,9 +15,9 @@ namespace SwashbucklerDiary.WebAssembly.Services
         {
         }
 
-        public override async Task<string> SetAvatarByCapture()
+        public override async Task<string> SetAvatarByCaptureAsync()
         {
-            await _alertService.Error(_i18n.T("Not supported on the current platform"));
+            await _alertService.ErrorAsync(_i18n.T("Not supported on the current platform"));
             return string.Empty;
 
             //bool isCaptureSupported = await _platformIntegration.IsCaptureSupported();

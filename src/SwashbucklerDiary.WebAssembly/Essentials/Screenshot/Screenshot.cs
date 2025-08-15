@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         {
             //var base64 = await ScreenshotToBase64(selector);
             //return await _appFileSystem.CreateTempFileAsync(screenshotFileName, Convert.FromBase64String(base64));
-            await _alertService.Error(_i18n.T("Not supported on the current platform"));
+            await _alertService.ErrorAsync(_i18n.T("Not supported on the current platform"));
             return string.Empty;
         }
 

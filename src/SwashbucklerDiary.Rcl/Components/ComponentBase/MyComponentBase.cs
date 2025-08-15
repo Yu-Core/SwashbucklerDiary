@@ -56,7 +56,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected Task ToDo()
         {
-            return AlertService.Info(I18n.T("This feature is currently unavailable"), I18n.T("Please look forward"));
+            return AlertService.InfoAsync(I18n.T("This feature is currently unavailable"), I18n.T("Please look forward"));
         }
 
         protected void To(string url, bool cacheCurrentURL = true)
@@ -85,7 +85,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             foreach (var item in messages)
             {
-                await AlertService.Info(I18n.T("Achieving Achievements"), I18n.T(item));
+                await AlertService.InfoAsync(I18n.T("Achieving Achievements"), I18n.T(item));
             }
         }
 

@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
                 return false;
             }
 
-            return await _jsModule.OpenUri(uri);
+            return await _jsModule.OpenUri(uri).ConfigureAwait(false);
         }
     }
 }

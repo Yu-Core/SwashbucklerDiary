@@ -1,4 +1,4 @@
-﻿using Blazored.LocalStorage;
+using Blazored.LocalStorage;
 using SwashbucklerDiary.Rcl.Essentials;
 using System.Text.Json;
 
@@ -6,54 +6,49 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public class Preferences : IPreferences
     {
-        private readonly ISyncLocalStorageService _localStorage;
+        private readonly ILocalStorageService _localStorage;
 
-        public Preferences(ISyncLocalStorageService localStorage)
+        public Preferences(ILocalStorageService localStorage)
         {
             _localStorage = localStorage;
         }
 
-        public virtual Task ClearAsync()
+        public virtual async Task ClearAsync()
         {
-            _localStorage.Clear();
-            return Task.CompletedTask;
+            await _localStorage.ClearAsync().ConfigureAwait(false);
         }
 
-        public Task<bool> ContainsKey(string key)
+        public async Task<bool> ContainsKey(string key)
         {
-            var result = _localStorage.ContainKey(key);
-            return Task.FromResult(result);
+            return await _localStorage.ContainKeyAsync(key).ConfigureAwait(false);
         }
 
-        public virtual Task<T> GetAsync<T>(string key, T defaultValue)
+        public virtual async Task<T> GetAsync<T>(string key, T defaultValue)
         {
-            string result = _localStorage.GetItemAsString(key);
+            string? result = await _localStorage.GetItemAsStringAsync(key).ConfigureAwait(false);
             if (result is null)
             {
-                return Task.FromResult(defaultValue);
+                return defaultValue;
             }
 
             T t = JsonSerializer.Deserialize<T>(result) ?? default!;
-            return Task.FromResult(t);
+            return t;
         }
 
-        public virtual Task RemoveAsync(string key)
+        public virtual async Task RemoveAsync(string key)
         {
-            _localStorage.RemoveItem(key);
-            return Task.CompletedTask;
+            await _localStorage.RemoveItemAsync(key).ConfigureAwait(false);
         }
 
-        public virtual Task RemoveAsync(IEnumerable<string> keys)
+        public virtual async Task RemoveAsync(IEnumerable<string> keys)
         {
-            _localStorage.RemoveItems(keys);
-            return Task.CompletedTask;
+            await _localStorage.RemoveItemsAsync(keys).ConfigureAwait(false);
         }
 
-        public virtual Task SetAsync<T>(string key, T value)
+        public virtual async Task SetAsync<T>(string key, T value)
         {
             string json = JsonSerializer.Serialize(value);
-            _localStorage.SetItemAsString(key, json);
-            return Task.CompletedTask;
+            await _localStorage.SetItemAsStringAsync(key, json).ConfigureAwait(false);
         }
     }
 }

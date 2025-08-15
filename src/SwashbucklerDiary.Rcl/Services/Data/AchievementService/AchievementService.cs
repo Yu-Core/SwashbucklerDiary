@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Repository;
+using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Services
@@ -26,16 +26,16 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task<List<string>> UpdateUserState(Achievement type)
         {
-            var userState = await _userStateModelRepository.InsertOrUpdateAsync(type);
+            var userState = await _userStateModelRepository.InsertOrUpdateAsync(type).ConfigureAwait(false);
             UserStateChanged?.Invoke(userState);
-            return await CheckAchievement(userState!);
+            return await CheckAchievement(userState!).ConfigureAwait(false);
         }
 
         public async Task<List<string>> UpdateUserState(Achievement type, int count)
         {
-            var userState = await _userStateModelRepository.InsertOrUpdateAsync(type, count);
+            var userState = await _userStateModelRepository.InsertOrUpdateAsync(type, count).ConfigureAwait(false);
             UserStateChanged?.Invoke(userState);
-            return await CheckAchievement(userState!);
+            return await CheckAchievement(userState!).ConfigureAwait(false);
         }
 
         private async Task<List<string>> CheckAchievement(UserStateModel userState)
@@ -45,14 +45,14 @@ namespace SwashbucklerDiary.Rcl.Services
             List<string> messages = [];
             foreach (var item in achievements)
             {
-                var userAchievement = await _userAchievementRepository.GetFirstAsync(it => it.AchievementName == item.Name);
+                var userAchievement = await _userAchievementRepository.GetFirstAsync(it => it.AchievementName == item.Name).ConfigureAwait(false);
                 if (userAchievement == null)
                 {
                     userAchievement = new UserAchievementModel()
                     {
                         AchievementName = item.Name
                     };
-                    userAchievement = await _userAchievementRepository.InsertReturnEntityAsync(userAchievement);
+                    userAchievement = await _userAchievementRepository.InsertReturnEntityAsync(userAchievement).ConfigureAwait(false);
                 }
 
                 if (userAchievement.IsCompleted)
@@ -73,14 +73,14 @@ namespace SwashbucklerDiary.Rcl.Services
                     userAchievement.CompletedTime = DateTime.Now;
                 }
 
-                await _userAchievementRepository.UpdateAsync(userAchievement);
+                await _userAchievementRepository.UpdateAsync(userAchievement).ConfigureAwait(false);
             }
             return messages;
         }
 
         public async Task<List<AchievementModel>> GetAchievements()
         {
-            var userAchievements = await _userAchievementRepository.GetListAsync();
+            var userAchievements = await _userAchievementRepository.GetListAsync().ConfigureAwait(false);
             foreach (var item in Achievements)
             {
                 item.UserAchievement = userAchievements.FirstOrDefault(it => it.AchievementName == item.Name) ?? new();

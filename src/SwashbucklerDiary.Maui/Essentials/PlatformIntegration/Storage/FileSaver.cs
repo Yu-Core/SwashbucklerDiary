@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Storage;
-using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui.Storage;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
@@ -22,24 +21,18 @@ namespace SwashbucklerDiary.Maui.Essentials
             using FileStream stream = File.OpenRead(sourceFilePath);
             //Cannot save an existing file
             //https://github.com/CommunityToolkit/Maui/issues/1049
-            var isSuccess = await SaveFileAsync(name, stream);
+            var isSuccess = await SaveFileAsync(name, stream).ConfigureAwait(false);
             return isSuccess;
         }
 
         public async Task<bool> SaveFileAsync(string name, Stream stream)
         {
-            try
+            FileSaverResult? fileSaverResult = await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                FileSaverResult? fileSaverResult = await FileSaver.Default.SaveAsync(name, stream, default);
+                return FileSaver.Default.SaveAsync(name, stream, default);
+            }).ConfigureAwait(false);
 
-                return fileSaverResult.IsSuccessful;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "SaveFileAsync fail");
-            }
-
-            return false;
+            return fileSaverResult.IsSuccessful;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
 
             try
             {
-                var file = await fileDialog.OpenAsync();
+                var file = await fileDialog.OpenAsync().ConfigureAwait(false);
                 var filePath = file?.GetPath();
                 if (PlatformIntegrationHelper.ValidFileExtension(filePath, fileExtensions))
                 {
@@ -35,7 +35,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
 
             try
             {
-                var files = await fileDialog.OpenMultipleAsync();
+                var files = await fileDialog.OpenMultipleAsync().ConfigureAwait(false);
                 if (files is not null)
                 {
                     uint fileCount = files.GetNItems();

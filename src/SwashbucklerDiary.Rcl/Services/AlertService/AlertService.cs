@@ -1,6 +1,7 @@
 using Masa.Blazor;
 using Masa.Blazor.Popup.Components;
 using Masa.Blazor.Presets;
+using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
@@ -12,14 +13,18 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private readonly ISettingService _settingService = default!;
 
+        private readonly INavigateController _navigateController = default!;
+
         public AlertService(IPopupService popupService,
             BreakpointService breakpointService,
-            ISettingService settingService)
+            ISettingService settingService,
+            INavigateController navigateController)
         {
             _popupService = popupService;
             _breakpointService = breakpointService;
             _breakpointService.BreakpointChanged += OnBreakpointChanged;
             _settingService = settingService;
+            _navigateController = navigateController;
         }
 
         private void OnBreakpointChanged(object? sender, MyBreakpointChangedEventArgs e)
@@ -53,27 +58,28 @@ namespace SwashbucklerDiary.Rcl.Services
                 Type = type,
                 Timeout = timeout < 1 ? 2000 : timeout,
                 Closeable = _breakpointService.Breakpoint.SmAndUp
-            });
+            }).ConfigureAwait(false);
         }
 
-        public Task Error(string? message) => Error(null, message);
+        public Task ErrorAsync(string? message) => ErrorAsync(null, message);
 
-        public Task Error(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Error);
+        public Task ErrorAsync(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Error);
 
-        public Task Info(string? message) => Info(null, message);
+        public Task InfoAsync(string? message) => InfoAsync(null, message);
 
-        public Task Info(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Info);
+        public Task InfoAsync(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Info);
 
-        public Task Success(string? message) => Success(null, message);
+        public Task SuccessAsync(string? message) => SuccessAsync(null, message);
 
-        public Task Success(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Success);
+        public Task SuccessAsync(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Success);
 
-        public Task Warning(string? message) => Warning(null, message);
+        public Task WarningAsync(string? message) => WarningAsync(null, message);
 
-        public Task Warning(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Warning);
+        public Task WarningAsync(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Warning);
 
-        public Task StartLoading(bool opacity = true)
+        public void StartLoading(bool opacity = true)
         {
+            _navigateController.DisableNavigate = true;
             _popupService.ShowProgressCircular(options =>
             {
                 options.Size = 48;
@@ -83,13 +89,12 @@ namespace SwashbucklerDiary.Rcl.Services
                     options.Color = null;
                 }
             });
-            return Task.CompletedTask;
         }
 
-        public Task StopLoading()
+        public void StopLoading()
         {
+            _navigateController.DisableNavigate = false;
             _popupService.HideProgressCircular();
-            return Task.CompletedTask;
         }
     }
 }

@@ -6,24 +6,24 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task EnqueueSnackbarAsync(string? title, string? message);
 
-        Task Success(string? message);
+        Task SuccessAsync(string? message);
 
-        Task Success(string? title, string? message);
+        Task SuccessAsync(string? title, string? message);
 
-        Task Error(string? message);
+        Task ErrorAsync(string? message);
 
-        Task Error(string? title, string? message);
+        Task ErrorAsync(string? title, string? message);
 
-        Task Info(string? message);
+        Task InfoAsync(string? message);
 
-        Task Info(string? title, string? message);
+        Task InfoAsync(string? title, string? message);
 
-        Task Warning(string? message);
+        Task WarningAsync(string? message);
 
-        Task Warning(string? title, string? message);
+        Task WarningAsync(string? title, string? message);
 
-        Task StartLoading(bool opacity = true);
+        void StartLoading(bool opacity = true);
 
-        Task StopLoading();
+        void StopLoading();
     }
 }

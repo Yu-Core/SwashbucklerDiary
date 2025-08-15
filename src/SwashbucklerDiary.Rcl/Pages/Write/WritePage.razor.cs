@@ -378,7 +378,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 if (!isSuccess)
                 {
-                    await AlertService.Error(I18n.T("Add failed"));
+                    await AlertService.ErrorAsync(I18n.T("Add failed"));
                 }
                 else
                 {
@@ -390,7 +390,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 bool isSuccess = await DiaryService.UpdateIncludesAsync(diary);
                 if (!isSuccess)
                 {
-                    await AlertService.Error(I18n.T("Change failed"));
+                    await AlertService.ErrorAsync(I18n.T("Change failed"));
                 }
                 else
                 {
@@ -524,23 +524,30 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            string? insertContent = null;
-            if (args.Kind == ShareActivationKind.Text)
-            {
-                insertContent = args.Data as string;
-            }
-            else if (args.Kind == ShareActivationKind.FilePaths)
-            {
-                var filePaths = (List<string?>)args.Data;
-                insertContent = await MediaResourceManager.CreateMediaFilesInsertContentAsync(filePaths);
-            }
+            AlertService.StartLoading();
 
-            if (insertContent is null)
+            try
             {
-                return;
-            }
+                string? insertContent = null;
+                if (args.Kind == ShareActivationKind.Text)
+                {
+                    insertContent = args.Data as string;
+                }
+                else if (args.Kind == ShareActivationKind.FilePaths)
+                {
+                    var filePaths = (List<string?>)args.Data;
+                    insertContent = await MediaResourceManager.CreateMediaFilesInsertContentAsync(filePaths);
+                }
 
-            await InsertValueAsync(insertContent);
+                if (insertContent is not null)
+                {
+                    await InsertValueAsync(insertContent);
+                }
+            }
+            finally
+            {
+                AlertService.StopLoading();
+            }
         }
 
         private Task UseTemplate(DiaryModel template)

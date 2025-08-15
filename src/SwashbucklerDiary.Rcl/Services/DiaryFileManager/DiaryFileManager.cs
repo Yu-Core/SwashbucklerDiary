@@ -92,31 +92,31 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileSystem.ClearFolder(outputFolder);
+                await _appFileSystem.ClearFolderAsync(outputFolder).ConfigureAwait(false);
             }
 
             string databasePath = GetCurrentDatabasePath();
             var destFileName = Path.Combine(outputFolder, DatabaseFilename);
-            File.Copy(databasePath, destFileName);
+            await Task.Run(() => _appFileSystem.FileCopy(databasePath, destFileName)).ConfigureAwait(false);
             if (copyResources)
             {
-                await CopyDiaryResourceAsync(outputFolder);
-                CopyAvatar(outputFolder);
+                await CopyDiaryResourceAsync(outputFolder).ConfigureAwait(false);
+                await CopyAvatarAsync(outputFolder).ConfigureAwait(false);
             }
 
-            CreateSettingsFile(outputFolder);
-            CreateExportVersionInfo(outputFolder, ".db3");
+            await CreateSettingsFileAsync(outputFolder).ConfigureAwait(false);
+            await CreateExportVersionInfoAsync(outputFolder, ".db3").ConfigureAwait(false);
 
             if (File.Exists(zipFilePath))
             {
                 File.Delete(zipFilePath);
             }
 
-            ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
+            await Task.Run(() => ZipFile.CreateFromDirectory(outputFolder, zipFilePath)).ConfigureAwait(false);
             return zipFilePath;
         }
 
-        public Task<string> ExportJsonAsync(List<DiaryModel> diaries)
+        public async Task<string> ExportJsonAsync(List<DiaryModel> diaries)
         {
             string outputFolder = Path.Combine(_appFileSystem.CacheDirectory, "Json");
             string zipFilePath = Path.Combine(_appFileSystem.CacheDirectory, $"{exportFileNamePrefix}Json.zip");
@@ -129,7 +129,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileSystem.ClearFolder(outputFolder);
+                await _appFileSystem.ClearFolderAsync(outputFolder).ConfigureAwait(false);
             }
 
             foreach (var item in diaries)
@@ -138,12 +138,12 @@ namespace SwashbucklerDiary.Rcl.Services
                 string filePath = Path.Combine(outputFolder, fileName);
 
                 string content = JsonSerializer.Serialize(item, jsonSerializerOptions);
-                WriteToFile(filePath, content);
+                await WriteToFileAsync(filePath, content).ConfigureAwait(false);
             }
 
-            CopyDiaryResource(diaries, outputFolder);
+            await CopyDiaryResourceAsync(diaries, outputFolder).ConfigureAwait(false);
 
-            CreateExportVersionInfo(outputFolder, fileSuffix);
+            await CreateExportVersionInfoAsync(outputFolder, fileSuffix).ConfigureAwait(false);
 
             if (File.Exists(zipFilePath))
             {
@@ -151,8 +151,8 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             // 将所有json文件添加到压缩包中
-            ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
-            return Task.FromResult(zipFilePath);
+            await Task.Run(() => ZipFile.CreateFromDirectory(outputFolder, zipFilePath)).ConfigureAwait(false);
+            return zipFilePath;
         }
 
         public Task<string> ExportMdAsync(List<DiaryModel> diaries)
@@ -161,7 +161,7 @@ namespace SwashbucklerDiary.Rcl.Services
         public Task<string> ExportTxtAsync(List<DiaryModel> diaries)
             => ExportTextFileAsync(diaries, "Txt", ".txt");
 
-        private Task<string> ExportTextFileAsync(List<DiaryModel> diaries, string name, string fileExtension)
+        private async Task<string> ExportTextFileAsync(List<DiaryModel> diaries, string name, string fileExtension)
         {
             string outputFolder = Path.Combine(_appFileSystem.CacheDirectory, name);
             string zipFilePath = Path.Combine(_appFileSystem.CacheDirectory, $"{exportFileNamePrefix}{name}.zip");
@@ -172,25 +172,25 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileSystem.ClearFolder(outputFolder);
+                await _appFileSystem.ClearFolderAsync(outputFolder).ConfigureAwait(false);
             }
 
             foreach (var item in diaries)
             {
                 string fileName = item.CreateTime.ToString(exportFileNameDateTimeFormat) + fileExtension;
                 string filePath = Path.Combine(outputFolder, fileName);
-                WriteToFile(filePath, item.Content);
+                await WriteToFileAsync(filePath, item.Content).ConfigureAwait(false);
             }
 
-            CopyDiaryResource(diaries, outputFolder);
+            await CopyDiaryResourceAsync(diaries, outputFolder).ConfigureAwait(false);
 
             if (File.Exists(zipFilePath))
             {
                 File.Delete(zipFilePath);
             }
 
-            ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
-            return Task.FromResult(zipFilePath);
+            await Task.Run(() => ZipFile.CreateFromDirectory(outputFolder, zipFilePath)).ConfigureAwait(false);
+            return zipFilePath;
         }
 
         public Task<string> ExportXlsxAsync(List<DiaryModel> diaries)
@@ -202,37 +202,50 @@ namespace SwashbucklerDiary.Rcl.Services
                 File.Delete(filePath);
             }
 
-            var dataTable = new DataTable();
-            dataTable.Columns.Add(_i18n.T("Time"));
-            dataTable.Columns.Add(_i18n.T("Weather"));
-            dataTable.Columns.Add(_i18n.T("Mood"));
-            dataTable.Columns.Add(_i18n.T("Location"));
-            dataTable.Columns.Add(_i18n.T("Tag"));
-            dataTable.Columns.Add(_i18n.T("Title"));
-            dataTable.Columns.Add(_i18n.T("Content"));
+            var timeCol = _i18n.T("Time");
+            var weatherCol = _i18n.T("Weather");
+            var moodCol = _i18n.T("Mood");
+            var locationCol = _i18n.T("Location");
+            var tagCol = _i18n.T("Tag");
+            var titleCol = _i18n.T("Title");
+            var contentCol = _i18n.T("Content");
 
-            foreach (var item in diaries)
+            return Task.Run(() =>
             {
-                var time = item.CreateTime.ToString("yyyy/MM/dd HH:mm:ss");
-                var weather = item.Weather is null ? string.Empty : _i18n.T(item.Weather);
-                var mood = item.Mood is null ? string.Empty : _i18n.T(item.Mood);
-                var location = item.Location ?? string.Empty;
-                var tags = string.Empty;
-                if (item.Tags is not null && item.Tags.Count > 0)
+                using var workbook = new XLWorkbook();
+                var worksheet = workbook.Worksheets.Add("Sheet1");
+
+                // 添加表头
+                worksheet.Cell(1, 1).Value = timeCol;
+                worksheet.Cell(1, 2).Value = weatherCol;
+                worksheet.Cell(1, 3).Value = moodCol;
+                worksheet.Cell(1, 4).Value = locationCol;
+                worksheet.Cell(1, 5).Value = tagCol;
+                worksheet.Cell(1, 6).Value = titleCol;
+                worksheet.Cell(1, 7).Value = contentCol;
+
+                // 处理数据行
+                for (int i = 0; i < diaries.Count; i++)
                 {
-                    tags = string.Join(", ", item.Tags.Select(it => it.Name));
+                    var item = diaries[i];
+                    int row = i + 2;
+
+                    worksheet.Cell(row, 1).Value = item.CreateTime.ToString("yyyy/MM/dd HH:mm:ss");
+                    worksheet.Cell(row, 2).Value = item.Weather is null ? string.Empty : _i18n.T(item.Weather);
+                    worksheet.Cell(row, 3).Value = item.Mood is null ? string.Empty : _i18n.T(item.Mood);
+                    worksheet.Cell(row, 4).Value = item.Location ?? string.Empty;
+
+                    worksheet.Cell(row, 5).Value = item.Tags is not null && item.Tags.Count > 0
+                        ? string.Join(", ", item.Tags.Select(it => it.Name))
+                        : string.Empty;
+
+                    worksheet.Cell(row, 6).Value = item.Title ?? string.Empty;
+                    worksheet.Cell(row, 7).Value = item.Content ?? string.Empty;
                 }
 
-                var title = item.Title ?? string.Empty;
-                var content = item.Content ?? string.Empty;
-
-                dataTable.Rows.Add(time, weather, mood, location, tags, title, content);
-            }
-
-            using var workbook = new XLWorkbook();
-            var worksheet = workbook.Worksheets.Add(dataTable, "Sheet1");
-            workbook.SaveAs(filePath);
-            return Task.FromResult(filePath);
+                workbook.SaveAs(filePath);
+                return filePath;
+            });
         }
 
         protected void CopyUriFileToOutFolder(string uri, string outFolder)
@@ -255,10 +268,10 @@ namespace SwashbucklerDiary.Rcl.Services
                 Directory.CreateDirectory(outFileDir);
             }
 
-            File.Copy(filePath, outFilePath, true);
+            _appFileSystem.FileCopy(filePath, outFilePath);
         }
 
-        private static void WriteToFile(string fileName, string? content)
+        private static async Task WriteToFileAsync(string fileName, string? content)
         {
             int suffix = 1;
             string newFileName = fileName;
@@ -274,10 +287,10 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             using StreamWriter writer = new(newFileName);
-            writer.Write(content);
+            await writer.WriteAsync(content).ConfigureAwait(false);
         }
 
-        private void CreateExportVersionInfo(string outputFolder, string fileSuffix)
+        private async Task CreateExportVersionInfoAsync(string outputFolder, string fileSuffix)
         {
             var exportVersionInfo = new ExportVersionInfo()
             {
@@ -292,18 +305,18 @@ namespace SwashbucklerDiary.Rcl.Services
 
             // 将 JSON 字符串写入文件
             var jsonPath = Path.Combine(outputFolder, versionInfoFileName);
-            File.WriteAllText(jsonPath, jsonString);
+            await File.WriteAllTextAsync(jsonPath, jsonString).ConfigureAwait(false);
         }
 
-        private void CreateSettingsFile(string outputFolder)
+        private async Task CreateSettingsFileAsync(string outputFolder)
         {
             var settingsObject = _settingService.SaveSettingsToObject(it => !excludedSettings.Contains(it));
             string jsonString = JsonSerializer.Serialize(settingsObject);
             var settingsFilePath = Path.Combine(outputFolder, settingsFileName);
-            File.WriteAllText(settingsFilePath, jsonString);
+            await File.WriteAllTextAsync(settingsFilePath, jsonString).ConfigureAwait(false);
         }
 
-        private void CopyAvatar(string outputFolder)
+        private async Task CopyAvatarAsync(string outputFolder)
         {
             var avatar = _settingService.Get(it => it.Avatar, null);
             if (string.IsNullOrEmpty(avatar))
@@ -311,32 +324,38 @@ namespace SwashbucklerDiary.Rcl.Services
                 return;
             }
 
-            CopyUriFileToOutFolder(avatar, outputFolder);
+            await Task.Run(() =>
+            {
+                CopyUriFileToOutFolder(avatar, outputFolder);
+            }).ConfigureAwait(false);
         }
 
-        private void CopyDiaryResource(List<DiaryModel> diaries, string outputFolder)
+        private async Task CopyDiaryResourceAsync(List<DiaryModel> diaries, string outputFolder)
         {
             var resources = diaries.SelectMany(a => a.Resources ?? []).Distinct().ToList();
-            CopyDiaryResource(resources, outputFolder);
+            await CopyDiaryResource(resources, outputFolder).ConfigureAwait(false);
         }
 
         private async Task CopyDiaryResourceAsync(string outputFolder)
         {
-            var resources = await _resourceService.QueryAsync();
-            CopyDiaryResource(resources, outputFolder);
+            var resources = await _resourceService.QueryAsync().ConfigureAwait(false);
+            await CopyDiaryResource(resources, outputFolder).ConfigureAwait(false);
         }
 
-        protected void CopyDiaryResource(List<ResourceModel> resources, string outputFolder)
+        protected async Task CopyDiaryResource(List<ResourceModel> resources, string outputFolder)
         {
-            foreach (var resource in resources)
+            await Task.Run(() =>
             {
-                if (resource.ResourceUri is null)
+                Parallel.ForEach(resources, (resource, _) =>
                 {
-                    continue;
-                }
+                    if (resource.ResourceUri is null)
+                    {
+                        return;
+                    }
 
-                CopyUriFileToOutFolder(resource.ResourceUri, outputFolder);
-            }
+                    CopyUriFileToOutFolder(resource.ResourceUri, outputFolder);
+                });
+            }).ConfigureAwait(false);
         }
 
         public string GetExportFileName(ExportKind exportKind)
@@ -361,8 +380,8 @@ namespace SwashbucklerDiary.Rcl.Services
         public async Task<bool> ImportDBAsync(Stream stream)
         {
             string fileName = Guid.NewGuid().ToString() + ".zip";
-            string path = await _appFileSystem.CreateTempFileAsync(fileName, stream);
-            var flag = await ImportDBAsync(path);
+            string path = await _appFileSystem.CreateTempFileAsync(fileName, stream).ConfigureAwait(false);
+            var flag = await ImportDBAsync(path).ConfigureAwait(false);
             File.Delete(path);
             return flag;
         }
@@ -382,10 +401,10 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileSystem.ClearFolder(outputFolder);
+                await _appFileSystem.ClearFolderAsync(outputFolder).ConfigureAwait(false);
             }
 
-            ZipFile.ExtractToDirectory(filePath, outputFolder);
+            await Task.Run(() => ZipFile.ExtractToDirectory(filePath, outputFolder)).ConfigureAwait(false);
 
             Version? version = GetVersion(outputFolder);
 
@@ -396,28 +415,28 @@ namespace SwashbucklerDiary.Rcl.Services
                 return false;
             }
 
-            File.Copy(dbFiles[0], GetCurrentDatabasePath(), true);
+            await Task.Run(() => _appFileSystem.FileCopy(dbFiles[0], GetCurrentDatabasePath())).ConfigureAwait(false);
             if (version is null)
             {
-                await AllUseNewResourceUriAsync();
-                RestoreOldDiaryResource(outputFolder);
+                await AllUseNewResourceUriAsync().ConfigureAwait(false);
+                await RestoreOldDiaryResourceAsync(outputFolder).ConfigureAwait(false);
             }
             else
             {
-                RestoreDiaryResource(outputFolder);
+                await RestoreDiaryResourceAsync(outputFolder).ConfigureAwait(false);
                 if (version < new Version("1.17.0"))
                 {
-                    await UpdateTemplateForOldDiaryAsync();
+                    await UpdateTemplateForOldDiaryAsync().ConfigureAwait(false);
                 }
             }
 
             string previousAvatarUri = _settingService.Get(s => s.Avatar);
-            await ReadSettingsFile(outputFolder);
-            await RestoreAvatar(outputFolder, previousAvatarUri);
+            await ReadSettingsFileAsync(outputFolder).ConfigureAwait(false);
+            RestoreAvatar(outputFolder, previousAvatarUri);
             return true;
         }
 
-        private async Task ReadSettingsFile(string outputFolder)
+        private async Task ReadSettingsFileAsync(string outputFolder)
         {
             var settingsJsonPath = Path.Combine(outputFolder, settingsFileName);
             if (!File.Exists(settingsJsonPath)) return;
@@ -426,7 +445,7 @@ namespace SwashbucklerDiary.Rcl.Services
             var settingsObject = JsonSerializer.Deserialize<Setting>(stream);
             if (settingsObject is null) return;
 
-            await _settingService.SetSettingsFromObjectAsync(settingsObject, it => !excludedSettings.Contains(it));
+            await _settingService.SetSettingsFromObjectAsync(settingsObject, it => !excludedSettings.Contains(it)).ConfigureAwait(false);
         }
 
         private static Version? GetVersion(string outputFolder)
@@ -465,7 +484,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileSystem.ClearFolder(outputFolder);
+                await _appFileSystem.ClearFolderAsync(outputFolder).ConfigureAwait(false);
             }
 
             ZipFile.ExtractToDirectory(filePath, outputFolder);
@@ -482,7 +501,7 @@ namespace SwashbucklerDiary.Rcl.Services
             foreach (string jsonFile in jsonFiles)
             {
                 using FileStream openStream = File.OpenRead(jsonFile);
-                var diary = await JsonSerializer.DeserializeAsync<DiaryModel>(openStream);
+                var diary = await JsonSerializer.DeserializeAsync<DiaryModel>(openStream).ConfigureAwait(false);
                 if (diary is not null)
                 {
                     diaries.Add(diary);
@@ -491,15 +510,15 @@ namespace SwashbucklerDiary.Rcl.Services
 
             if (version is null)
             {
-                UseNewResourceUri(diaries);
-                RestoreOldDiaryResource(outputFolder);
+                await UseNewResourceUriAsync(diaries).ConfigureAwait(false);
+                await RestoreOldDiaryResourceAsync(outputFolder).ConfigureAwait(false);
             }
             else
             {
-                RestoreDiaryResource(outputFolder);
+                await RestoreDiaryResourceAsync(outputFolder).ConfigureAwait(false);
             }
 
-            return await _diaryService.ImportAsync(diaries);
+            return await _diaryService.ImportAsync(diaries).ConfigureAwait(false);
         }
 
         public async Task<bool> ImportMdAsync(string filePath)
@@ -517,10 +536,10 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileSystem.ClearFolder(outputFolder);
+                await _appFileSystem.ClearFolderAsync(outputFolder).ConfigureAwait(false);
             }
 
-            ZipFile.ExtractToDirectory(filePath, outputFolder);
+            await Task.Run(() => ZipFile.ExtractToDirectory(filePath, outputFolder)).ConfigureAwait(false);
 
             string[] mdFilePaths = Directory.GetFiles(outputFolder, "*.md", SearchOption.AllDirectories);
             if (mdFilePaths.Length == 0)
@@ -531,7 +550,7 @@ namespace SwashbucklerDiary.Rcl.Services
             var diaries = new List<DiaryModel>();
             foreach (string mdFilePath in mdFilePaths)
             {
-                var diary = ConvertToDiary(mdFilePath);
+                var diary = await ConvertToDiaryAsync(mdFilePath).ConfigureAwait(false);
 
                 if (diary is not null)
                 {
@@ -539,18 +558,18 @@ namespace SwashbucklerDiary.Rcl.Services
                 }
             }
 
-            RestoreDiaryResource(outputFolder);
+            await RestoreDiaryResourceAsync(outputFolder).ConfigureAwait(false);
 
-            return await _diaryService.ImportAsync(diaries);
+            return await _diaryService.ImportAsync(diaries).ConfigureAwait(false);
         }
 
-        private DiaryModel ConvertToDiary(string filePath)
+        private async Task<DiaryModel> ConvertToDiaryAsync(string filePath)
         {
             var diary = new DiaryModel();
             var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
             string dateTimeString = fileNameWithoutExtension.Split('(')[0];
             diary.CreateTime = diary.UpdateTime = ConvertToDateTime(dateTimeString);
-            diary.Content = File.ReadAllText(filePath);
+            diary.Content = await File.ReadAllTextAsync(filePath).ConfigureAwait(false);
             diary.Resources = _mediaResourceManager.GetDiaryResources(diary.Content);
             return diary;
         }
@@ -570,10 +589,10 @@ namespace SwashbucklerDiary.Rcl.Services
             return DateTime.Now;
         }
 
-        protected void RestoreDiaryResource(string outputFolder)
-            => RestoreFolders(outputFolder, _mediaResourceManager.MediaResourceFolders.Values);
+        protected Task RestoreDiaryResourceAsync(string outputFolder)
+            => RestoreFoldersAsync(outputFolder, _mediaResourceManager.MediaResourceFolders.Values);
 
-        protected void RestoreFolders(string outputFolder, IEnumerable<string> folderNames)
+        protected async Task RestoreFoldersAsync(string outputFolder, IEnumerable<string> folderNames)
         {
             foreach (var item in folderNames)
             {
@@ -584,11 +603,11 @@ namespace SwashbucklerDiary.Rcl.Services
                 }
 
                 var targetDir = Path.Combine(_appFileSystem.AppDataDirectory, item);
-                _appFileSystem.MoveFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
+                await _appFileSystem.MoveFolderAsync(sourceDir, targetDir, SearchOption.TopDirectoryOnly).ConfigureAwait(false);
             }
         }
 
-        protected void RestoreOldDiaryResource(string outputFolder)
+        protected async Task RestoreOldDiaryResourceAsync(string outputFolder)
         {
             var sourceDir = Path.Combine(outputFolder, "Image");
             if (!Directory.Exists(sourceDir))
@@ -597,10 +616,10 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             var targetDir = Path.Combine(_appFileSystem.AppDataDirectory, "Image");
-            _appFileSystem.MoveFolder(sourceDir, targetDir, SearchOption.TopDirectoryOnly);
+            await _appFileSystem.MoveFolderAsync(sourceDir, targetDir, SearchOption.TopDirectoryOnly).ConfigureAwait(false);
         }
 
-        private async Task RestoreAvatar(string outputFolder, string previousAvatarUri)
+        private void RestoreAvatar(string outputFolder, string previousAvatarUri)
         {
             string avatarUri = _settingService.Get(s => s.Avatar);
             string avatarFileName = Path.GetFileName(avatarUri);
@@ -616,7 +635,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 File.Delete(targetFilePath);
             }
 
-            await _appFileSystem.FileMoveAsync(sourceFilePath, targetFilePath);
+            _appFileSystem.FileMove(sourceFilePath, targetFilePath);
             if (avatarUri != previousAvatarUri)
             {
                 string previousAvatarPath = _mediaResourceManager.UrlRelativePathToFilePath(previousAvatarUri);
@@ -627,26 +646,29 @@ namespace SwashbucklerDiary.Rcl.Services
             }
         }
 
-        public void UseNewResourceUri(List<DiaryModel> diaries)
+        public async Task UseNewResourceUriAsync(List<DiaryModel> diaries)
         {
-            foreach (var diary in diaries)
+            await Task.Run(() =>
             {
-                if (!string.IsNullOrEmpty(diary.Content))
+                foreach (var diary in diaries)
                 {
-                    diary.Content = diary.Content.Replace("appdata:///", "appdata/");
-                    diary.Resources = _mediaResourceManager.GetDiaryResources(diary.Content);
-                }
+                    if (!string.IsNullOrEmpty(diary.Content))
+                    {
+                        diary.Content = diary.Content.Replace("appdata:///", "appdata/");
+                        diary.Resources = _mediaResourceManager.GetDiaryResources(diary.Content);
+                    }
 
-                diary.UpdateTime = DateTime.Now;
-            }
+                    diary.UpdateTime = DateTime.Now;
+                }
+            }).ConfigureAwait(false);
         }
 
         public async Task AllUseNewResourceUriAsync()
         {
-            var diaries = await _diaryService.QueryDiariesAsync();
-            await _resourceService.DeleteAsync(it => it.ResourceUri.StartsWith("appdata:///"));
-            UseNewResourceUri(diaries);
-            await _diaryService.UpdateIncludesAsync(diaries);
+            var diaries = await _diaryService.QueryDiariesAsync().ConfigureAwait(false);
+            await _resourceService.DeleteAsync(it => it.ResourceUri.StartsWith("appdata:///")).ConfigureAwait(false);
+            await UseNewResourceUriAsync(diaries).ConfigureAwait(false);
+            await _diaryService.UpdateIncludesAsync(diaries).ConfigureAwait(false);
         }
 
         private string GetCurrentDatabasePath()
@@ -658,11 +680,11 @@ namespace SwashbucklerDiary.Rcl.Services
         public async Task UpdateTemplateForOldDiaryAsync()
         {
 #pragma warning disable CS0472
-            await _diaryService.UpdateAsync(it => new() { Template = false }, it => it.Template == null);
+            await _diaryService.UpdateAsync(it => new() { Template = false }, it => it.Template == null).ConfigureAwait(false);
 #pragma warning restore CS0472
         }
 
-        public string ExportResourceFile(List<ResourceModel> resources)
+        public async Task<string> ExportResourceFileAsync(List<ResourceModel> resources)
         {
             string outputFolder = Path.Combine(_appFileSystem.CacheDirectory, "ResourceFile");
             string zipFilePath = Path.Combine(_appFileSystem.CacheDirectory, $"{exportFileNamePrefix}ResourceFile.zip");
@@ -673,17 +695,17 @@ namespace SwashbucklerDiary.Rcl.Services
             }
             else
             {
-                _appFileSystem.ClearFolder(outputFolder);
+                await _appFileSystem.ClearFolderAsync(outputFolder).ConfigureAwait(false);
             }
 
-            CopyDiaryResource(resources, outputFolder);
+            await CopyDiaryResource(resources, outputFolder).ConfigureAwait(false);
 
             if (File.Exists(zipFilePath))
             {
                 File.Delete(zipFilePath);
             }
 
-            ZipFile.CreateFromDirectory(outputFolder, zipFilePath);
+            await Task.Run(() => ZipFile.CreateFromDirectory(outputFolder, zipFilePath)).ConfigureAwait(false);
             return zipFilePath;
         }
     }

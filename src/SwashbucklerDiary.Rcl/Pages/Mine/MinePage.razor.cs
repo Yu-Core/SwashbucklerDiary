@@ -214,7 +214,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             await PlatformIntegration.SetClipboardAsync(mail);
-            await AlertService.Success(I18n.T("The email address has been copied to the clipboard."));
+            await AlertService.SuccessAsync(I18n.T("The email address has been copied to the clipboard."));
         }
 
         private async Task ToGithub()
@@ -246,7 +246,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             var qqGroup = FeedbackTypeDatas["QQ Group"];
             await PlatformIntegration.SetClipboardAsync(qqGroup);
-            await AlertService.Success(I18n.T("The QQ group number has been copied to the clipboard."));
+            await AlertService.SuccessAsync(I18n.T("The QQ group number has been copied to the clipboard."));
         }
 
         private void Search(string? value)
@@ -328,7 +328,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (!isSuccess)
             {
-                await AlertService.Error(I18n.T("Password error"));
+                await AlertService.ErrorAsync(I18n.T("Password error"));
                 return;
             }
 

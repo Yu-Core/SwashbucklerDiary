@@ -81,16 +81,18 @@ namespace SwashbucklerDiary.Rcl.Pages
         }
 
         private Task PickPhoto()
-            => SetAvatar(AvatarService.SetAvatarByPickPhoto);
+            => SetAvatar(AvatarService.SetAvatarByPickPhotoAsync);
 
         private Task OnCapture()
-            => SetAvatar(AvatarService.SetAvatarByCapture);
+            => SetAvatar(AvatarService.SetAvatarByCaptureAsync);
 
         private async Task SetAvatar(Func<Task<string>> func)
         {
             showEditAvatar = false;
-            await AlertService.StartLoading();
             StateHasChanged();
+
+            AlertService.StartLoading();
+
             string? photoPath = null;
             try
             {
@@ -98,12 +100,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             catch (Exception e)
             {
-                await AlertService.Error(I18n.T("Change failed"));
+                await AlertService.ErrorAsync(I18n.T("Change failed"));
                 Logger.LogError(e, I18n.T("Change failed"));
             }
             finally
             {
-                await AlertService.StopLoading();
+                AlertService.StopLoading();
             }
 
             if (string.IsNullOrEmpty(photoPath))

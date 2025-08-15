@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<string> ExportXlsxAsync(List<DiaryModel> diaries);
 
-        string ExportResourceFile(List<ResourceModel> resources);
+        Task<string> ExportResourceFileAsync(List<ResourceModel> resources);
 
         Task<bool> ImportDBAsync(string filePath);
 
@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<bool> ImportMdAsync(string filePath);
 
-        void UseNewResourceUri(List<DiaryModel> diaries);
+        Task UseNewResourceUriAsync(List<DiaryModel> diaries);
 
         Task AllUseNewResourceUriAsync();
 

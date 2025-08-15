@@ -4,7 +4,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
     {
         private async Task<string?> PickFileAsync(IEnumerable<string> types, string[] fileExtensions)
         {
-            var results = await PickFilesAsync(types, fileExtensions, false);
+            var results = await PickFilesAsync(types, fileExtensions, false).ConfigureAwait(false);
             if (results is null || !results.Any())
             {
                 return null;
@@ -18,7 +18,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             var accept = string.Join(',', types);
             try
             {
-                var results = await _jsModule.PickFilesAsync(accept, fileExtensions, multiple);
+                var results = await _jsModule.PickFilesAsync(accept, fileExtensions, multiple).ConfigureAwait(false);
                 if (results is not null && results.Length > 0)
                 {
                     return results;

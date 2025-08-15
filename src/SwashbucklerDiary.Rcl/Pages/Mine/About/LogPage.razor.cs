@@ -99,7 +99,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             if (logs.Count == 0)
             {
-                await AlertService.Info(I18n.T("No logs"));
+                await AlertService.InfoAsync(I18n.T("No logs"));
                 return;
             }
 
@@ -112,7 +112,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             showShare = false;
             if (logs.Count == 0)
             {
-                await AlertService.Info(I18n.T("No logs"));
+                await AlertService.InfoAsync(I18n.T("No logs"));
                 return string.Empty;
             }
 
@@ -164,11 +164,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (flag)
             {
                 logs = [];
-                await AlertService.Success(I18n.T("Delete successfully"));
+                await AlertService.SuccessAsync(I18n.T("Delete successfully"));
             }
             else
             {
-                await AlertService.Error(I18n.T("Delete failed"));
+                await AlertService.ErrorAsync(I18n.T("Delete failed"));
             }
         }
 

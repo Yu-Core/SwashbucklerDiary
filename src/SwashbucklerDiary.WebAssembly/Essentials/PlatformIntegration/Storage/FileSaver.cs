@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
                 return false;
             }
 
-            await _jsModule.SaveFileAsync(name, sourceFilePath);
+            await _jsModule.SaveFileAsync(name, sourceFilePath).ConfigureAwait(false);
             return true;
         }
     }

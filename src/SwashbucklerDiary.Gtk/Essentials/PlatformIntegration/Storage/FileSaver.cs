@@ -42,18 +42,9 @@ namespace SwashbucklerDiary.Gtk.Essentials
                 return false;
             }
 
-            try
-            {
-                using var fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
-                await stream.CopyToAsync(fileStream);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error saving file: " + ex.Message);
-            }
-
-            return false;
+            using var fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
+            await stream.CopyToAsync(fileStream);
+            return true;
         }
     }
 }

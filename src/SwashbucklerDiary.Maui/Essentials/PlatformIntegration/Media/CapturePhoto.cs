@@ -1,4 +1,4 @@
-﻿namespace SwashbucklerDiary.Maui.Essentials
+namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
@@ -9,7 +9,7 @@
 
         public async Task<string?> CapturePhotoAsync()
         {
-            FileResult? photo = await MediaPicker.Default.CapturePhotoAsync();
+            FileResult? photo = await MediaPicker.Default.CapturePhotoAsync().ConfigureAwait(false);
             return photo?.FullPath;
         }
     }

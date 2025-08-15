@@ -38,7 +38,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (string.IsNullOrEmpty(Src))
             {
-                await AlertService.Error(I18n.T("File does not exist"));
+                await AlertService.ErrorAsync(I18n.T("File does not exist"));
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (string.IsNullOrEmpty(Src))
             {
-                await AlertService.Error(I18n.T("File does not exist"));
+                await AlertService.ErrorAsync(I18n.T("File does not exist"));
                 return;
             }
 

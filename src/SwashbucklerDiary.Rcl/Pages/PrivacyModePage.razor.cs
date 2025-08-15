@@ -144,7 +144,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             await SettingService.SetAsync(s => s.PrivacyModeEntrancePassword, hashedPassword);
             await SettingService.SetAsync(s => s.PrivacyModeEntrancePasswordSalt, saltBase64);
-            await AlertService.Success(I18n.T("Password set successfully"));
+            await AlertService.SuccessAsync(I18n.T("Password set successfully"));
         }
 
         private async Task SwitchHidePrivacyModeEntrance()
@@ -168,16 +168,22 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task MoveOldPrivacyDiaries()
         {
-            await AlertService.StartLoading();
-            var isSuccess = await DiaryService.MovePrivacyDiariesAsync();
-            await AlertService.StopLoading();
-            if (isSuccess)
+            AlertService.StartLoading();
+            try
             {
-                await AlertService.Success(I18n.T("Successfully moved"));
+                var isSuccess = await DiaryService.MovePrivacyDiariesAsync();
+                if (isSuccess)
+                {
+                    await AlertService.SuccessAsync(I18n.T("Successfully moved"));
+                }
+                else
+                {
+                    await AlertService.InfoAsync(I18n.T("No diary that needs to be moved"));
+                }
             }
-            else
+            finally
             {
-                await AlertService.Info(I18n.T("No diary that needs to be moved"));
+                AlertService.StopLoading();
             }
         }
 

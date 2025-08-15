@@ -13,126 +13,139 @@ namespace SwashbucklerDiary.Rcl.Essentials
         public async Task<string> CreateTempFileAsync(string fileName, string contents)
         {
             string path = Path.Combine(CacheDirectory, fileName);
-            await File.WriteAllTextAsync(path, contents);
+            await File.WriteAllTextAsync(path, contents).ConfigureAwait(false);
             return path;
         }
 
         public async Task<string> CreateTempFileAsync(string fileName, byte[] contents)
         {
             string path = Path.Combine(CacheDirectory, fileName);
-            await File.WriteAllBytesAsync(path, contents);
+            await File.WriteAllBytesAsync(path, contents).ConfigureAwait(false);
             return path;
         }
 
         public async Task<string> CreateTempFileAsync(string fileName, Stream stream)
         {
             string path = Path.Combine(CacheDirectory, fileName);
-            using (var fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
+
+            if (stream.CanSeek && stream.Position != 0)
+                stream.Position = 0;
+
+            await using (var fileStream = new FileStream(
+                path,
+                FileMode.Create,
+                FileAccess.Write,
+                FileShare.None,
+                bufferSize: 1024 * 1024,
+                FileOptions.SequentialScan | FileOptions.Asynchronous))
             {
-                await stream.CopyToAsync(fileStream);
+                await stream.CopyToAsync(fileStream).ConfigureAwait(false);
             }
             return path;
         }
 
-        public async Task FileCopyAsync(string targetFilePath, string sourceFilePath)
-        {
-            using Stream sourceStream = File.OpenRead(sourceFilePath);
-            await FileCopyAsync(targetFilePath, sourceStream);
-        }
-
-        public async Task FileCopyAsync(string targetFilePath, Stream sourceStream)
+        public void FileCopy(string sourceFilePath, string targetFilePath)
         {
             CreateFileDirectory(targetFilePath);
-
-            using (FileStream localFileStream = File.OpenWrite(targetFilePath))
-            {
-                await sourceStream.CopyToAsync(localFileStream, 1024 * 1024);
-            }
-            ;
+            File.Copy(sourceFilePath, targetFilePath, true);
         }
 
-        public void ClearFolder(string folderPath, List<string>? exceptPaths = null)
+        public async Task FileCopyAsync(Stream sourceStream, string targetFilePath)
         {
-            if (!Directory.Exists(folderPath))
-            {
-                return;
-            }
+            // 参数校验
+            ArgumentNullException.ThrowIfNull(sourceStream);
+            if (string.IsNullOrWhiteSpace(targetFilePath))
+                throw new ArgumentException("File path cannot be empty", nameof(targetFilePath));
 
-            DirectoryInfo directory = new(folderPath);
+            // 确保目录存在
+            var directory = Path.GetDirectoryName(targetFilePath);
+            if (!string.IsNullOrEmpty(directory)) Directory.CreateDirectory(directory);
 
-            var files = directory.GetFiles();
-            if (exceptPaths != null && exceptPaths.Count != 0)
+            if (!File.Exists(targetFilePath))
             {
-                files = directory.GetFiles().Where(it => !exceptPaths.Contains(it.FullName)).ToArray();
-            }
+                // 重置源流位置（如果可搜索）
+                if (sourceStream.CanSeek && sourceStream.Position != 0)
+                    sourceStream.Position = 0;
 
-            // 删除文件夹中的所有文件
-            foreach (FileInfo file in files)
-            {
-                try
-                {
-                    file.Delete();
-                }
-                catch (Exception)
-                {
-                }
-            }
-
-            // 删除文件夹中的所有子文件夹
-            foreach (DirectoryInfo subDirectory in directory.GetDirectories())
-            {
-                ClearFolder(subDirectory.FullName);
-                try
-                {
-                    subDirectory.Delete();
-                }
-                catch (Exception)
-                {
-                }
-            }
-        }
-
-        public long GetFolderSize(string path)
-        {
-            long len = 0;
-            //判断该路径是否存在（是否为文件夹）
-            if (!Directory.Exists(path))
-            {
-                //查询文件的大小
-                if (File.Exists(path))
-                {
-                    len = FileSize(path);
-                }
+                await using var fileStream = new FileStream(
+                    targetFilePath,
+                    FileMode.Create,
+                    FileAccess.Write,
+                    FileShare.None,
+                    bufferSize: 1024 * 1024,
+                    FileOptions.SequentialScan | FileOptions.Asynchronous);
+                await sourceStream.CopyToAsync(fileStream, 1024 * 1024).ConfigureAwait(false);
             }
             else
             {
-                //定义一个DirectoryInfo对象
-                DirectoryInfo dir = new DirectoryInfo(path);
-
-                //通过GetFiles方法，获取di目录中的所有文件的大小
-                foreach (FileInfo fi in dir.GetFiles())
-                {
-                    len += fi.Length;
-                }
-                //获取di中所有的文件夹，并存到一个新的对象数组中，以进行递归
-                DirectoryInfo[] dirs = dir.GetDirectories();
-                if (dirs.Length > 0)
-                {
-                    for (int i = 0; i < dirs.Length; i++)
-                    {
-                        len += GetFolderSize(dirs[i].FullName);
-                    }
-                }
+                var fileName = $"{Guid.NewGuid().ToString("N")}{Path.GetExtension(targetFilePath)}";
+                var temp = await CreateTempFileAsync(fileName, sourceStream).ConfigureAwait(false);
+                await Task.Run(() => File.Copy(temp, targetFilePath, true)).ConfigureAwait(false);
             }
-
-            return len;
         }
 
-        private static long FileSize(string filePath)
+        public async Task ClearFolderAsync(string folderPath, List<string>? exceptPaths = null)
         {
-            //定义一个FileInfo对象，是指与filePath所指向的文件相关联，以获取其大小
-            FileInfo fileInfo = new(filePath);
-            return fileInfo.Length;
+            if (!Directory.Exists(folderPath)) return;
+
+            var directory = new DirectoryInfo(folderPath);
+            var filesToDelete = directory.EnumerateFiles("*", SearchOption.AllDirectories);
+
+            if (exceptPaths is { Count: > 0 })
+            {
+                var exceptPathsSet = exceptPaths.ToHashSet(StringComparer.OrdinalIgnoreCase);
+                filesToDelete = filesToDelete.Where(file => !exceptPathsSet.Contains(file.FullName));
+            }
+
+            await Task.Run(() =>
+            {
+                Parallel.ForEach(filesToDelete, file =>
+                {
+                    try { file.Delete(); }
+                    catch { /* Ignore */ }
+                });
+            }).ConfigureAwait(false);
+
+            var dirsToDelete = directory.EnumerateDirectories("*", SearchOption.AllDirectories);
+            await Task.Run(async () =>
+            {
+                foreach (DirectoryInfo subDirectory in dirsToDelete)
+                {
+                    await ClearFolderAsync(subDirectory.FullName).ConfigureAwait(false);
+                    try
+                    {
+                        subDirectory.Delete();
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }).ConfigureAwait(false);
+        }
+
+        public async Task<long> GetFolderSize(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                return 0;
+            }
+
+            var rootDir = new DirectoryInfo(path);
+            long totalSize = 0;
+
+            // 并行处理文件大小计算
+            await Task.Run(() =>
+            {
+                // 获取所有文件（包括子目录）
+                var allFiles = rootDir.GetFiles("*.*", SearchOption.AllDirectories);
+
+                Parallel.ForEach(allFiles, file =>
+                {
+                    Interlocked.Add(ref totalSize, file.Length);
+                });
+            }).ConfigureAwait(false);
+
+            return totalSize;
         }
 
         private static void CreateFileDirectory(string filePath)
@@ -144,42 +157,17 @@ namespace SwashbucklerDiary.Rcl.Essentials
             }
         }
 
-        public Task FileMoveAsync(string sourceFilePath, string targetFilePath)
+        public void FileMove(string sourceFilePath, string targetFilePath)
         {
             CreateFileDirectory(targetFilePath);
             File.Move(sourceFilePath, targetFilePath);
-            return Task.CompletedTask;
-        }
-
-        public void CopyFolder(string sourceFolder, string destinationFolder, SearchOption searchOption)
-        {
-            // 获取源文件夹中的所有文件
-            string[] files = Directory.GetFiles(sourceFolder, "*", searchOption);
-
-            foreach (string file in files)
-            {
-                // 获取文件在源文件夹中的相对路径
-                string relativePath = Path.GetRelativePath(sourceFolder, file);
-
-                // 构建目标文件的路径
-                string destinationPath = Path.Combine(destinationFolder, relativePath);
-
-                // 确保目标文件夹存在
-                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
-
-                // 复制文件
-                if (!File.Exists(destinationPath))
-                {
-                    File.Copy(file, destinationPath);
-                }
-            }
         }
 
         public void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption, bool fileOverwrite = false)
         {
-            string[] files = Directory.GetFiles(sourceFolder, "*", searchOption);
+            var files = Directory.EnumerateFiles(sourceFolder, "*", searchOption);
 
-            foreach (string file in files)
+            Parallel.ForEach(files, file =>
             {
                 string relativePath = Path.GetRelativePath(sourceFolder, file);
 
@@ -195,20 +183,28 @@ namespace SwashbucklerDiary.Rcl.Essentials
                     }
                     else
                     {
-                        continue;
+                        return;
                     }
                 }
 
                 File.Move(file, destinationPath);
-            }
+            });
         }
 
-        public void ClearCache()
-            => ClearFolder(CacheDirectory);
-
-        public string GetCacheSize()
+        public async Task MoveFolderAsync(string sourceFolder, string destinationFolder, SearchOption searchOption, bool fileOverwrite = false)
         {
-            long fileSizeInBytes = GetFolderSize(CacheDirectory);
+            await Task.Run(() =>
+            {
+                MoveFolder(sourceFolder, destinationFolder, searchOption, fileOverwrite);
+            }).ConfigureAwait(false);
+        }
+
+        public Task ClearCacheAsync()
+            => ClearFolderAsync(CacheDirectory);
+
+        public async Task<string> GetCacheSizeAsync()
+        {
+            long fileSizeInBytes = await GetFolderSize(CacheDirectory);
             return ConvertBytesToReadable(fileSizeInBytes);
         }
 

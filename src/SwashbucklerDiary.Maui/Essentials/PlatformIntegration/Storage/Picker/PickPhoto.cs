@@ -22,12 +22,15 @@ namespace SwashbucklerDiary.Maui.Essentials
         public async Task<string?> PickPhotoAsync()
         {
 #if MACCATALYST || WINDOWS
-            return await PickFileAsync(imageTypes, PlatformIntegrationHelper.ImageFileExtensions);
+            return await PickFileAsync(imageTypes, PlatformIntegrationHelper.ImageFileExtensions).ConfigureAwait(false);
 #elif ANDROID || IOS
-            FileResult? fileResult = await MediaFilePicker.Default.PickPhotoAsync();
+            FileResult? fileResult = await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                return MediaFilePicker.Default.PickPhotoAsync();
+            }).ConfigureAwait(false);
             return fileResult?.FullPath;
 #else
-            FileResult? fileResult = await MediaPicker.Default.PickPhotoAsync();
+            FileResult? fileResult = await MediaPicker.Default.PickPhotoAsync().ConfigureAwait(false);
             return fileResult?.FullPath;
 #endif
         }
@@ -35,9 +38,12 @@ namespace SwashbucklerDiary.Maui.Essentials
         public async Task<IEnumerable<string>?> PickMultiplePhotoAsync()
         {
 #if MACCATALYST || WINDOWS || TIZEN
-            return await PickMultipleFileAsync(imageTypes, PlatformIntegrationHelper.ImageFileExtensions);
+            return await PickMultipleFileAsync(imageTypes, PlatformIntegrationHelper.ImageFileExtensions).ConfigureAwait(false);
 #elif ANDROID || IOS
-            var fileResults = await MediaFilePicker.Default.PickMultiplePhotoAsync();
+            var fileResults = await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                return MediaFilePicker.Default.PickMultiplePhotoAsync();
+            }).ConfigureAwait(false);
             if (fileResults is null)
             {
                 return null;

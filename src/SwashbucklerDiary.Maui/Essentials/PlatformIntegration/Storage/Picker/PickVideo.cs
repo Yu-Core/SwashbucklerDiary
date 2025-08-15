@@ -21,10 +21,16 @@ namespace SwashbucklerDiary.Maui.Essentials
 #if MACCATALYST
             return await PickFileAsync(videoTypes, PlatformIntegrationHelper.VideoFileExtensions);
 #elif ANDROID || IOS
-            FileResult? fileResult = await MediaFilePicker.Default.PickVideoAsync();
+            FileResult? fileResult = await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                return MediaFilePicker.Default.PickVideoAsync();
+            });
             return fileResult?.FullPath;
 #else
-            FileResult? fileResult = await MediaPicker.Default.PickVideoAsync();
+            FileResult? fileResult = await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                return MediaPicker.Default.PickVideoAsync();
+            });
             return fileResult?.FullPath;
 #endif
         }
@@ -32,9 +38,12 @@ namespace SwashbucklerDiary.Maui.Essentials
         public async Task<IEnumerable<string>?> PickMultipleVideoAsync()
         {
 #if MACCATALYST || WINDOWS || TIZEN
-            return await PickMultipleFileAsync(videoTypes, PlatformIntegrationHelper.VideoFileExtensions);
+            return await PickMultipleFileAsync(videoTypes, PlatformIntegrationHelper.VideoFileExtensions).ConfigureAwait(false);
 #elif ANDROID || IOS
-            var fileResults = await MediaFilePicker.Default.PickMultipleVideoAsync();
+            var fileResults = await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                return MediaFilePicker.Default.PickMultipleVideoAsync();
+            }).ConfigureAwait(false);
             if (fileResults is null)
             {
                 return null;

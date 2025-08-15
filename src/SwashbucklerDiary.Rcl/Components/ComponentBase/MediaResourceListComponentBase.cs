@@ -107,7 +107,7 @@ namespace SwashbucklerDiary.Rcl.Components
             List<Guid> diaryIds = await ResourceService.GetDiaryIdsAsync(SelectedItem.ResourceUri);
             if (diaryIds.Count > 0)
             {
-                await AlertService.Info(I18n.T("This file is using"));
+                await AlertService.InfoAsync(I18n.T("This file is using"));
             }
             else
             {
@@ -116,7 +116,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 {
                     loadedItems.Remove(SelectedItem);
                     Value.Remove(SelectedItem);
-                    await AlertService.Success(I18n.T("Delete successfully"));
+                    await AlertService.SuccessAsync(I18n.T("Delete successfully"));
                 }
             }
         }
@@ -143,7 +143,7 @@ namespace SwashbucklerDiary.Rcl.Components
             int count = diaryIds.Count;
             if (count < 1)
             {
-                await AlertService.Info(I18n.T("This file is not used"));
+                await AlertService.InfoAsync(I18n.T("This file is not used"));
                 return;
             }
             else if (count == 1)

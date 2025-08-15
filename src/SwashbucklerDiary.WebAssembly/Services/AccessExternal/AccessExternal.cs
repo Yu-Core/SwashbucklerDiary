@@ -1,4 +1,4 @@
-﻿using Microsoft.JSInterop;
+using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.WebAssembly.Extensions;
 
@@ -30,15 +30,15 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         public override async Task<bool> OpenAppStoreAppDetails()
         {
-            var appIds = await AppIds;
-            var module = await Module;
+            var appIds = await AppIds.ConfigureAwait(false);
+            var module = await Module.ConfigureAwait(false);
             return module.Invoke<bool>("openAppStoreAppDetails", appIds);
         }
 
         public override async Task<bool> JoinQQGroup()
         {
-            var joinQQGroupUrl = await JoinQQGroupUrl;
-            return await _platformIntegration.OpenBrowser(joinQQGroupUrl);
+            var joinQQGroupUrl = await JoinQQGroupUrl.ConfigureAwait(false);
+            return await _platformIntegration.OpenBrowser(joinQQGroupUrl).ConfigureAwait(false);
         }
     }
 }

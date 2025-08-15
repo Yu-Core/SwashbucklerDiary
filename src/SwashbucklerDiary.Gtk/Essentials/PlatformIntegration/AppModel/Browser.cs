@@ -9,17 +9,19 @@ namespace SwashbucklerDiary.Gtk.Essentials
             return OpenLauncher(uriString);
         }
 
-        public static async Task<bool> OpenLauncher(string? uriString)
+        public static Task<bool> OpenLauncher(string? uriString)
         {
+            bool isSuccess = false;
             if (Uri.TryCreate(uriString, UriKind.Absolute, out var uri))
             {
-                return await GTKTryOpenAsync(uri);
+                isSuccess = GTKTryOpen(uri);
+
             }
 
-            return false;
+            return Task.FromResult(isSuccess);
         }
 
-        static Task<bool> GTKTryOpenAsync(Uri uri)
+        static bool GTKTryOpen(Uri uri)
         {
             try
             {
@@ -29,11 +31,11 @@ namespace SwashbucklerDiary.Gtk.Essentials
                 process.StartInfo.FileName = "xdg-open";
                 process.StartInfo.Arguments = uri.ToString();
                 bool isSuccess = process.Start();
-                return Task.FromResult(isSuccess);
+                return isSuccess;
             }
             catch (Exception)
             {
-                return Task.FromResult(false);
+                return false;
             }
         }
     }

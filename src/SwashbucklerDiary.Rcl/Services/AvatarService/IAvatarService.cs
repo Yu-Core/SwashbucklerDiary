@@ -1,9 +1,9 @@
-﻿namespace SwashbucklerDiary.Rcl.Services
+namespace SwashbucklerDiary.Rcl.Services
 {
     public interface IAvatarService
     {
-        Task<string> SetAvatarByPickPhoto();
+        Task<string> SetAvatarByPickPhotoAsync();
 
-        Task<string> SetAvatarByCapture();
+        Task<string> SetAvatarByCaptureAsync();
     }
 }

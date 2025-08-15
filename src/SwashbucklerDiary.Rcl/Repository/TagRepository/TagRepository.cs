@@ -60,7 +60,8 @@ namespace SwashbucklerDiary.Rcl.Repository
                     TagId = t.Id,
                     Count = SqlFunc.AggregateCount(d.Id)
                 })
-                .ToListAsync();
+                .ToListAsync()
+                .ConfigureAwait(false);
             return result.ToDictionary(it => it.TagId, it => it.Count);
         }
     }

@@ -48,7 +48,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             var text = $"{UrlScheme}://{path}";
             await PlatformIntegration.SetClipboardAsync(text);
-            await AlertService.Success(I18n.T("Copy successfully"));
+            await AlertService.SuccessAsync(I18n.T("Copy successfully"));
         }
     }
 }

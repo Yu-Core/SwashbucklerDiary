@@ -1,4 +1,4 @@
-﻿namespace SwashbucklerDiary.Maui.Essentials
+namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
@@ -11,11 +11,11 @@
 
             try
             {
-                return await Browser.Default.OpenAsync(url, BrowserLaunchMode.External);
+                return await Browser.Default.OpenAsync(url, BrowserLaunchMode.External).ConfigureAwait(false);
             }
             catch (Exception)
             {
-                return await Browser.Default.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
+                return await Browser.Default.OpenAsync(url, BrowserLaunchMode.SystemPreferred).ConfigureAwait(false);
             }
         }
     }

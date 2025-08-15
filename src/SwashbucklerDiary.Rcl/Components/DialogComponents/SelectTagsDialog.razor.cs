@@ -90,7 +90,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (Items.Any(it => it.Name == tagName))
             {
-                await AlertService.Warning(I18n.T("Tag already exists"), I18n.T("Do not add again"));
+                await AlertService.WarningAsync(I18n.T("Tag already exists"), I18n.T("Do not add again"));
                 return;
             }
 
@@ -101,7 +101,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var flag = await TagService.AddAsync(tag);
             if (!flag)
             {
-                await AlertService.Error(I18n.T("Add failed"));
+                await AlertService.ErrorAsync(I18n.T("Add failed"));
                 return;
             }
 

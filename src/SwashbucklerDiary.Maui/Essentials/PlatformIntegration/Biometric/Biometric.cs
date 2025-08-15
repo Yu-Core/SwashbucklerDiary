@@ -7,8 +7,8 @@ namespace SwashbucklerDiary.Maui.Essentials
         public async ValueTask<bool> IsBiometricSupported()
         {
             var biometric = BiometricAuthenticationService.Default;
-            var enrolledTypes = await biometric.GetEnrolledBiometricTypesAsync();
-            var result = await biometric.GetAuthenticationStatusAsync();
+            var enrolledTypes = await biometric.GetEnrolledBiometricTypesAsync().ConfigureAwait(false);
+            var result = await biometric.GetAuthenticationStatusAsync().ConfigureAwait(false);
 
             bool isSupported = BiometricAuthenticationService.Default.IsPlatformSupported &&
                 !enrolledTypes.Contains(BiometricType.None) &&
@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             request.Description = _i18n.T("Authentication");
 #endif
 
-            var response = await BiometricAuthenticationService.Default.AuthenticateAsync(request, CancellationToken.None);
+            var response = await BiometricAuthenticationService.Default.AuthenticateAsync(request, CancellationToken.None).ConfigureAwait(false);
 
             return response.Status == BiometricResponseStatus.Success;
         }

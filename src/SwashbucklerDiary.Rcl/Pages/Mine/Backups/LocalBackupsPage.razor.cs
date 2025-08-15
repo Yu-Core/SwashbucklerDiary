@@ -21,19 +21,26 @@ namespace SwashbucklerDiary.Rcl.Pages
             var flag = await PlatformIntegration.TryStorageWritePermission();
             if (!flag)
             {
-                await AlertService.Info(I18n.T("Please grant permission for storage writing"));
+                await AlertService.InfoAsync(I18n.T("Please grant permission for storage writing"));
                 return;
             }
 
-            string filePath = await DiaryFileManager.ExportDBAsync(true);
-            string name = DiaryFileManager.GetBackupFileName();
-            bool isSuccess = await PlatformIntegration.SaveFileAsync(name, filePath);
-            if (!isSuccess)
+            AlertService.StartLoading();
+
+            try
             {
-                return;
+                string filePath = await DiaryFileManager.ExportDBAsync(true);
+                string name = DiaryFileManager.GetBackupFileName();
+                bool isSuccess = await PlatformIntegration.SaveFileAsync(name, filePath);
+                if (isSuccess)
+                {
+                    await AlertService.SuccessAsync(I18n.T("Backup successful"));
+                }
             }
-
-            await AlertService.Success(I18n.T("Backup successful"));
+            finally
+            {
+                AlertService.StopLoading();
+            }
         }
 
         private async Task Restore()
@@ -51,20 +58,31 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task ConfirmRestore()
         {
             showRestore = false;
+            StateHasChanged();
+
             if (string.IsNullOrEmpty(restoreFilePath))
             {
-                await AlertService.Error(I18n.T("Restore failed"));
+                await AlertService.ErrorAsync(I18n.T("Restore failed"));
                 return;
             }
 
-            bool flag = await DiaryFileManager.ImportDBAsync(restoreFilePath);
-            if (flag)
+            AlertService.StartLoading();
+
+            try
             {
-                await AlertService.Success(I18n.T("Restore successfully"));
+                bool flag = await DiaryFileManager.ImportDBAsync(restoreFilePath);
+                if (flag)
+                {
+                    await AlertService.SuccessAsync(I18n.T("Restore successfully"));
+                }
+                else
+                {
+                    await AlertService.ErrorAsync(I18n.T("Restore failed"));
+                }
             }
-            else
+            finally
             {
-                await AlertService.Error(I18n.T("Restore failed"));
+                AlertService.StopLoading();
             }
         }
     }

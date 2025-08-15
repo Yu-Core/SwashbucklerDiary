@@ -126,27 +126,33 @@ namespace SwashbucklerDiary.Rcl.Pages
             SelectedDate = DateOnly.FromDateTime(DateTime.Now);
         }
 
-        private async void ConfirmMerge()
+        private async Task ConfirmMerge()
         {
             showConfirmMerge = false;
+            StateHasChanged();
+
             if (SelectedDiaries.Count < 2)
             {
                 return;
             }
 
-            await AlertService.StartLoading();
+            AlertService.StartLoading();
 
-            var diaries = SelectedDiaries.OrderBy(it => it.CreateTime).ToList();
-            string content = string.Join("\n", diaries.Select(it => it.Content));
-            var firstDiary = diaries.First();
-            firstDiary.Content = content;
-            diaries.Remove(firstDiary);
-            await DiaryService.UpdateAsync(firstDiary, it => it.Content!);
-            await DiaryService.DeleteAsync(diaries);
-            await UpdateDiariesAsync();
-
-            await AlertService.StopLoading();
-            StateHasChanged();
+            try
+            {
+                var diaries = SelectedDiaries.OrderBy(it => it.CreateTime).ToList();
+                string content = string.Join("\n", diaries.Select(it => it.Content));
+                var firstDiary = diaries.First();
+                firstDiary.Content = content;
+                diaries.Remove(firstDiary);
+                await DiaryService.UpdateAsync(firstDiary, it => it.Content!);
+                await DiaryService.DeleteAsync(diaries);
+                await UpdateDiariesAsync();
+            }
+            finally
+            {
+                AlertService.StopLoading();
+            }
         }
 
         private void ToWrite()

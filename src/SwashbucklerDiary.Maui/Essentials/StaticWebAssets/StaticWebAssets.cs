@@ -30,7 +30,7 @@ namespace SwashbucklerDiary.Maui.Essentials
 
             using var stream = await FileSystem.OpenAppPackageFileAsync(path).ConfigureAwait(false);
             using var reader = new StreamReader(stream);
-            return reader.ReadToEnd();
+            return await reader.ReadToEndAsync().ConfigureAwait(false);
         }
     }
 }

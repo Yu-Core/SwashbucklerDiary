@@ -4,7 +4,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
     {
         public async Task SetClipboardAsync(string text)
         {
-            await _jsModule.SetClipboard(text);
+            await _jsModule.SetClipboard(text).ConfigureAwait(false);
         }
 
         public async Task ShareFileAsync(string title, string path)
@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
                 return;
             }
 
-            await _jsModule.ShareFileAsync(title, path);
+            await _jsModule.ShareFileAsync(title, path).ConfigureAwait(false);
         }
 
         public async Task ShareTextAsync(string title, string text)
@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
                 return;
             }
 
-            await _jsModule.ShareTextAsync(title, text);
+            await _jsModule.ShareTextAsync(title, text).ConfigureAwait(false);
         }
     }
 }

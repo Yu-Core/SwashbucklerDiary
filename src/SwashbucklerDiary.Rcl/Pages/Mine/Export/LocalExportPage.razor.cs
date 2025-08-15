@@ -53,17 +53,23 @@ namespace SwashbucklerDiary.Rcl.Pages
             var flag = await PlatformIntegration.TryStorageWritePermission();
             if (!flag)
             {
-                await AlertService.Info(I18n.T("Please grant permission for storage writing"));
+                await AlertService.InfoAsync(I18n.T("Please grant permission for storage writing"));
                 return;
             }
 
-            await AlertService.StartLoading();
-            diaries = await DiaryService.QueryDiariesAsync();
-            await AlertService.StopLoading();
+            AlertService.StartLoading();
+            try
+            {
+                diaries = await DiaryService.QueryDiariesAsync();
+            }
+            finally
+            {
+                AlertService.StopLoading();
+            }
 
             if (diaries.Count == 0)
             {
-                await AlertService.Info(I18n.T("No diary"));
+                await AlertService.InfoAsync(I18n.T("No diary"));
                 return;
             }
 
@@ -91,10 +97,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             showConfirmImport = false;
             if (string.IsNullOrEmpty(importFilePath))
             {
-                await AlertService.Error(I18n.T("Import failed"));
+                await AlertService.ErrorAsync(I18n.T("Import failed"));
                 return;
             }
 
+            AlertService.StartLoading();
             try
             {
                 bool isSuccess = false;
@@ -109,18 +116,22 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 if (!isSuccess)
                 {
-                    await AlertService.Error(I18n.T("Import failed"));
+                    await AlertService.ErrorAsync(I18n.T("Import failed"));
                 }
                 else
                 {
-                    await AlertService.Success(I18n.T("Import successfully"));
+                    await AlertService.SuccessAsync(I18n.T("Import successfully"));
                 }
 
             }
             catch (Exception e)
             {
                 Logger.LogError(e, "Export Import Fail");
-                await AlertService.Error(I18n.T("Import failed"));
+                await AlertService.ErrorAsync(I18n.T("Import failed"));
+            }
+            finally
+            {
+                AlertService.StopLoading();
             }
         }
     }

@@ -268,45 +268,32 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        private async Task AddImageAsync()
-        {
-            try
-            {
-                var resources = await MediaResourceManager.AddMultipleImageAsync();
-                await AddMediaFilesAsync(resources);
-            }
-            catch (Exception e)
-            {
-                await AlertService.Error(I18n.T("Add failed"));
-                Logger.LogError(e, I18n.T("Add failed"));
-            }
-        }
+        private Task AddImageAsync()
+            => AddMediaFilesAsync(MediaResourceManager.AddMultipleImageAsync);
 
-        private async Task AddAudioAsync()
-        {
-            try
-            {
-                var resources = await MediaResourceManager.AddMultipleAudioAsync();
-                await AddMediaFilesAsync(resources);
-            }
-            catch (Exception e)
-            {
-                await AlertService.Error(I18n.T("Add failed"));
-                Logger.LogError(e, I18n.T("Add failed"));
-            }
-        }
+        private Task AddAudioAsync()
+            => AddMediaFilesAsync(MediaResourceManager.AddMultipleAudioAsync);
 
-        private async Task AddVideoAsync()
+        private Task AddVideoAsync()
+            => AddMediaFilesAsync(MediaResourceManager.AddMultipleVideoAsync);
+
+        private async Task AddMediaFilesAsync(Func<Task<IEnumerable<ResourceModel>?>> func)
         {
+            AlertService.StartLoading();
+
             try
             {
-                var resources = await MediaResourceManager.AddMultipleVideoAsync();
+                var resources = await func.Invoke();
                 await AddMediaFilesAsync(resources);
             }
             catch (Exception e)
             {
-                await AlertService.Error(I18n.T("Add failed"));
+                await AlertService.ErrorAsync(I18n.T("Add failed"));
                 Logger.LogError(e, I18n.T("Add failed"));
+            }
+            finally
+            {
+                AlertService.StopLoading();
             }
         }
 
@@ -323,39 +310,50 @@ namespace SwashbucklerDiary.Rcl.Components
             await Module.Upload(mMarkdown.Ref, inputFile?.Element);
         }
 
-        private async void LoadFiles(InputFileChangeEventArgs e)
+        private async Task LoadFiles(InputFileChangeEventArgs e)
         {
-            List<string?> filePaths = [];
-            foreach (var browserFile in e.GetMultipleFiles())
+            AlertService.StartLoading();
+
+            try
             {
-                var kind = MediaResourceManager.GetResourceKind(browserFile.Name);
-                if (kind == MediaResource.Unknown)
+                List<string?> filePaths = [];
+                foreach (var browserFile in e.GetMultipleFiles())
                 {
-                    continue;
+                    var kind = MediaResourceManager.GetResourceKind(browserFile.Name);
+                    if (kind == MediaResource.Unknown)
+                    {
+                        continue;
+                    }
+
+                    try
+                    {
+                        var filePath = await AppFileManager.CreateTempFileAsync(browserFile.Name, browserFile.OpenReadStream(maxAllowedSize));
+                        filePaths.Add(filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogInformation(ex, "OpenReadStream error");
+                    }
+                }
+                if (filePaths.Count == 0)
+                {
+                    AlertService.StopLoading();
+                    return;
                 }
 
-                try
+                var insertContent = await MediaResourceManager.CreateMediaFilesInsertContentAsync(filePaths);
+                if (string.IsNullOrEmpty(insertContent))
                 {
-                    var filePath = await AppFileManager.CreateTempFileAsync(browserFile.Name, browserFile.OpenReadStream(maxAllowedSize));
-                    filePaths.Add(filePath);
+                    AlertService.StopLoading();
+                    return;
                 }
-                catch (Exception ex)
-                {
-                    Logger.LogInformation(ex, "OpenReadStream error");
-                }
-            }
-            if (filePaths.Count == 0)
-            {
-                return;
-            }
 
-            var insertContent = await MediaResourceManager.CreateMediaFilesInsertContentAsync(filePaths);
-            if (string.IsNullOrEmpty(insertContent))
-            {
-                return;
+                await InsertValueAsync(insertContent);
             }
-
-            await InsertValueAsync(insertContent);
+            finally
+            {
+                AlertService.StopLoading();
+            }
         }
 
         private async Task Focus()

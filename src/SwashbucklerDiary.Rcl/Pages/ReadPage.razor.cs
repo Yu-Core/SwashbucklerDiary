@@ -217,12 +217,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             bool flag = await DiaryService.DeleteAsync(diary);
             if (flag)
             {
-                await AlertService.Success(I18n.T("Delete successfully"));
+                await AlertService.SuccessAsync(I18n.T("Delete successfully"));
                 await NavigateToBack();
             }
             else
             {
-                await AlertService.Error(I18n.T("Delete failed"));
+                await AlertService.ErrorAsync(I18n.T("Delete failed"));
             }
         }
 
@@ -243,7 +243,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             var content = diary.CreateCopyContent();
             await PlatformIntegration.SetClipboardAsync(content);
-            await AlertService.Success(I18n.T("Copy successfully"));
+            await AlertService.SuccessAsync(I18n.T("Copy successfully"));
         }
 
         private async Task ShareText()
@@ -253,20 +253,24 @@ namespace SwashbucklerDiary.Rcl.Pages
             await HandleAchievements(Achievement.Share);
         }
 
-        private async void ShareImage()
+        private async Task ShareImage()
         {
-            await AlertService.StartLoading();
+            AlertService.StartLoading();
 
-            if (enableMarkdown && markdownPreview is not null)
+            try
             {
-                await markdownPreview.RenderLazyLoadingImage();
+                if (enableMarkdown && markdownPreview is not null)
+                {
+                    await markdownPreview.RenderLazyLoadingImage();
+                }
+
+                var filePath = await ScreenshotService.CaptureAsync($".{screenshotClass}");
+                await PlatformIntegration.ShareFileAsync(I18n.T("Share"), filePath);
             }
-
-            var filePath = await ScreenshotService.CaptureAsync($".{screenshotClass}");
-            await PlatformIntegration.ShareFileAsync(I18n.T("Share"), filePath);
-
-            await AlertService.StopLoading();
-            await InvokeAsync(StateHasChanged);
+            finally
+            {
+                AlertService.StopLoading();
+            }
 
             await HandleAchievements(Achievement.Share);
         }
@@ -290,11 +294,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             await DiaryService.MovePrivacyDiaryAsync(diary, !privacyMode);
             if (privacyMode)
             {
-                await AlertService.Success(I18n.T("Removed from privacy mode"));
+                await AlertService.SuccessAsync(I18n.T("Removed from privacy mode"));
             }
             else
             {
-                await AlertService.Success(I18n.T("Moved to privacy mode"));
+                await AlertService.SuccessAsync(I18n.T("Moved to privacy mode"));
             }
         }
 
@@ -317,7 +321,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var hash = await JS.EvaluateJavascript<string>("window.location.hash");
             var text = $"[{I18n.T(diary.Template ? "Template reference" : "Diary reference")}](read/{diary.Id}{hash})";
             await PlatformIntegration.SetClipboardAsync(text);
-            await AlertService.Success(I18n.T("Copy successfully"));
+            await AlertService.SuccessAsync(I18n.T("Copy successfully"));
         }
 
         private async Task CopyExternalLink()
@@ -334,7 +338,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             await PlatformIntegration.SetClipboardAsync(text);
-            await AlertService.Success(I18n.T("Copy successfully"));
+            await AlertService.SuccessAsync(I18n.T("Copy successfully"));
         }
 
         private async Task HandleFirstQuery()
@@ -364,11 +368,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 if (diary.Template)
                 {
-                    await AlertService.Info(I18n.T("This template is not referenced"));
+                    await AlertService.InfoAsync(I18n.T("This template is not referenced"));
                 }
                 else
                 {
-                    await AlertService.Info(I18n.T("This diary is not referenced"));
+                    await AlertService.InfoAsync(I18n.T("This diary is not referenced"));
                 }
             }
             else

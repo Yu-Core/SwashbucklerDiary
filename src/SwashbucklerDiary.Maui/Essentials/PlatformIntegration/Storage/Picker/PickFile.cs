@@ -16,9 +16,15 @@ namespace SwashbucklerDiary.Maui.Essentials
             try
             {
 #if ANDROID
-                var fileResult = await AndroidFilePicker.Default.PickAsync(options);
+                var fileResult = await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    return AndroidFilePicker.Default.PickAsync(options);
+                });
 #else
-                var fileResult = await FilePicker.Default.PickAsync(options);
+                var fileResult = await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    return FilePicker.Default.PickAsync(options);
+                });
 #endif
                 if (fileResult is not null)
                 {
@@ -41,9 +47,15 @@ namespace SwashbucklerDiary.Maui.Essentials
             PickOptions options = GetPickOptions(types);
 
 #if ANDROID
-            var fileResults = await AndroidFilePicker.Default.PickMultipleAsync(options);
+            var fileResults = await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                return AndroidFilePicker.Default.PickMultipleAsync(options);
+            });
 #else
-            var fileResults = await FilePicker.Default.PickMultipleAsync(options);
+            var fileResults = await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                return FilePicker.Default.PickMultipleAsync(options);
+            });
 #endif
             if (fileResults is null)
             {

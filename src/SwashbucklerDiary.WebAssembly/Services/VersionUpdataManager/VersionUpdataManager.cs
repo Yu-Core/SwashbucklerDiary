@@ -1,4 +1,4 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.WebAssembly.Services
@@ -23,13 +23,13 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         public override async Task ToUpdate()
         {
-            await _platformIntegration.OpenBrowser("https://github.com/Yu-Core/SwashbucklerDiary/tree/gh-pages");
+            await _platformIntegration.OpenBrowser("https://github.com/Yu-Core/SwashbucklerDiary/tree/gh-pages").ConfigureAwait(false);
         }
 
         protected override async Task HandleVersionUpdate697()
         {
             string[] keys = ["ThemeState", "Date"];
-            await _settingService.RemoveAsync(keys);
+            await _settingService.RemoveAsync(keys).ConfigureAwait(false);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -58,7 +58,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             exportDiaries = await DiaryService.QueryDiariesAsync(expression);
             if (exportDiaries.Count == 0)
             {
-                await AlertService.Info(I18n.T("No diary"));
+                await AlertService.InfoAsync(I18n.T("No diary"));
                 return;
             }
 

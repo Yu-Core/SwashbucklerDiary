@@ -78,7 +78,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 await SettingService.RemoveAsync(it => it.AppLockBiometric);
                 if (HasAppLockExcludeBiometric)
                 {
-                    await AlertService.Info(I18n.T("System fingerprint unlocking has been turned off, please use another unlocking method"));
+                    await AlertService.InfoAsync(I18n.T("System fingerprint unlocking has been turned off, please use another unlocking method"));
                 }
                 else
                 {

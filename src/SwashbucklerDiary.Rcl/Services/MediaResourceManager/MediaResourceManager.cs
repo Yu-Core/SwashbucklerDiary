@@ -42,20 +42,20 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task<ResourceModel?> AddAudioAsync()
         {
-            string? filePath = await _platformIntegration.PickAudioAsync();
-            return await AddMediaFileAsync(filePath);
+            string? filePath = await _platformIntegration.PickAudioAsync().ConfigureAwait(false);
+            return await AddMediaFileAsync(filePath).ConfigureAwait(false);
         }
 
         public async Task<ResourceModel?> AddImageAsync()
         {
-            string? filePath = await _platformIntegration.PickPhotoAsync();
-            return await AddMediaFileAsync(filePath);
+            string? filePath = await _platformIntegration.PickPhotoAsync().ConfigureAwait(false);
+            return await AddMediaFileAsync(filePath).ConfigureAwait(false);
         }
 
         public async Task<ResourceModel?> AddVideoAsync()
         {
-            string? filePath = await _platformIntegration.PickVideoAsync();
-            return await AddMediaFileAsync(filePath);
+            string? filePath = await _platformIntegration.PickVideoAsync().ConfigureAwait(false);
+            return await AddMediaFileAsync(filePath).ConfigureAwait(false);
         }
 
         private async Task<ResourceModel?> AddMediaFileAsync(string? filePath)
@@ -71,7 +71,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 return null;
             }
 
-            string? uri = await CreateMediaResourceFileAsync(kind, filePath);
+            string? uri = await CreateMediaResourceFileAsync(kind, filePath).ConfigureAwait(false);
             if (string.IsNullOrEmpty(uri))
             {
                 return null;
@@ -94,25 +94,25 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task<bool> ShareImageAsync(string title, string url)
         {
-            var filePath = await GetResourceFilePathAsync(url);
+            var filePath = await GetResourceFilePathAsync(url).ConfigureAwait(false);
             if (string.IsNullOrEmpty(filePath))
             {
                 return false;
             }
 
-            await _platformIntegration.ShareFileAsync(title, filePath);
+            await _platformIntegration.ShareFileAsync(title, filePath).ConfigureAwait(false);
             return true;
         }
 
         public async Task<bool> SaveFileAsync(string url)
         {
-            var filePath = await GetResourceFilePathAsync(url);
+            var filePath = await GetResourceFilePathAsync(url).ConfigureAwait(false);
             if (string.IsNullOrEmpty(filePath))
             {
                 return false;
             }
 
-            return await _platformIntegration.SaveFileAsync(filePath);
+            return await _platformIntegration.SaveFileAsync(filePath).ConfigureAwait(false);
         }
 
         public List<ResourceModel> GetDiaryResources(string content)
@@ -166,7 +166,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 string fileName = Path.GetFileName(filePath);
                 string extension = StaticContentProvider.GetResponseExtensionOrDefault(audioFile.Tag.Pictures[0].MimeType);
                 string pictureFileName = $"{fileName}{extension}";
-                pictureUri = await GetAudioFilePicturePath(pictureFileName, audioFile.Tag.Pictures[0].Data.Data);
+                pictureUri = await GetAudioFilePicturePath(pictureFileName, audioFile.Tag.Pictures[0].Data.Data).ConfigureAwait(false);
             }
 
             return new()
@@ -186,7 +186,7 @@ namespace SwashbucklerDiary.Rcl.Services
             string filePath = Path.Combine(_appFileSystem.CacheDirectory, fileName);
             if (!File.Exists(filePath))
             {
-                await File.WriteAllBytesAsync(filePath, data);
+                await File.WriteAllBytesAsync(filePath, data).ConfigureAwait(false);
             }
 
             return FilePathToUrlRelativePath(filePath);
@@ -202,7 +202,7 @@ namespace SwashbucklerDiary.Rcl.Services
             List<ResourceModel> resources = [];
             foreach (var filePath in filePaths)
             {
-                var resource = await AddMediaFileAsync(filePath);
+                var resource = await AddMediaFileAsync(filePath).ConfigureAwait(false);
 
                 if (resource is null)
                 {
@@ -221,27 +221,25 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task<IEnumerable<ResourceModel>?> AddMultipleImageAsync()
         {
-            var filePaths = await _platformIntegration.PickMultiplePhotoAsync();
-            return await AddMediaFilesAsync(filePaths);
+            var filePaths = await _platformIntegration.PickMultiplePhotoAsync().ConfigureAwait(false);
+            return await AddMediaFilesAsync(filePaths).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<ResourceModel>?> AddMultipleAudioAsync()
         {
-            var filePaths = await _platformIntegration.PickMultipleAudioAsync();
-            return await AddMediaFilesAsync(filePaths);
+            var filePaths = await _platformIntegration.PickMultipleAudioAsync().ConfigureAwait(false);
+            return await AddMediaFilesAsync(filePaths).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<ResourceModel>?> AddMultipleVideoAsync()
         {
-            var filePaths = await _platformIntegration.PickMultipleVideoAsync();
-            return await AddMediaFilesAsync(filePaths);
+            var filePaths = await _platformIntegration.PickMultipleVideoAsync().ConfigureAwait(false);
+            return await AddMediaFilesAsync(filePaths).ConfigureAwait(false);
         }
-
-
 
         public async Task<string?> CreateMediaFilesInsertContentAsync(List<string?> filePaths)
         {
-            var resources = await AddMediaFilesAsync(filePaths);
+            var resources = await AddMediaFilesAsync(filePaths).ConfigureAwait(false);
             return CreateMediaFilesInsertContent(resources);
         }
 

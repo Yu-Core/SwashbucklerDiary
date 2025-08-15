@@ -54,12 +54,9 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 await JSModule.Freeze(elementReference);
                 await JSModule.SetStatus(elementReference, "error");
-                _ = Task.Run(async () =>
-                {
-                    await Task.Delay(600);
-                    await JSModule.UnFreeze(elementReference);
-                    await JSModule.Reset(elementReference);
-                });
+                await Task.Delay(600);
+                await JSModule.UnFreeze(elementReference);
+                await JSModule.Reset(elementReference);
             }
         }
 

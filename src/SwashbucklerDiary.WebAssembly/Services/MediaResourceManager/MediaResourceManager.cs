@@ -38,11 +38,11 @@ namespace SwashbucklerDiary.WebAssembly.Services
             {
                 if (sourceFilePath.StartsWith(FileSystem.CacheDirectory))
                 {
-                    await _appFileSystem.FileMoveAsync(sourceFilePath, targetFilePath);
+                    _appFileSystem.FileMove(sourceFilePath, targetFilePath);
                 }
                 else
                 {
-                    await _appFileSystem.FileCopyAsync(targetFilePath, sourceFilePath);
+                    _appFileSystem.FileCopy(sourceFilePath, targetFilePath);
                 }
 
                 //由于设置的从memfs(内存)到idbfs(indexedDB)的同步时间为1s，拦截请求(service worker)那里会找不到文件，所以此处应立即同步
@@ -76,7 +76,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
             }
             else
             {
-                await _alertService.Error(_i18n.T("External files are not supported"));
+                await _alertService.ErrorAsync(_i18n.T("External files are not supported"));
                 return string.Empty;
             }
         }

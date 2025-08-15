@@ -157,13 +157,13 @@ namespace SwashbucklerDiary.Rcl.Repository
             var db = Context.AsTenant().GetConnection("0");
             var privacyDb = Context.AsTenant().GetConnection("1");
             var (from, to) = toPrivacyMode ? (db, privacyDb) : (privacyDb, db);
-            bool flag = await InternalImportAsync(to, [diary]);
+            bool flag = await InternalImportAsync(to, [diary]).ConfigureAwait(false);
             if (!flag)
             {
                 return false;
             }
 
-            bool flag2 = await InternalDeleteAsync(from, [diary]);
+            bool flag2 = await InternalDeleteAsync(from, [diary]).ConfigureAwait(false);
             if (!flag2)
             {
                 return false;
@@ -177,7 +177,7 @@ namespace SwashbucklerDiary.Rcl.Repository
             var db = Context.AsTenant().GetConnection("0");
             var privacyDb = Context.AsTenant().GetConnection("1");
 
-            var diaries = await InternalGetListAsync(db, it => it.Private == true);
+            var diaries = await InternalGetListAsync(db, it => it.Private == true).ConfigureAwait(false);
 
             if (diaries.Count == 0)
             {
@@ -185,13 +185,13 @@ namespace SwashbucklerDiary.Rcl.Repository
             }
 
             diaries.ForEach(it => it.Private = false);
-            bool flag = await InternalImportAsync(privacyDb, diaries);
+            bool flag = await InternalImportAsync(privacyDb, diaries).ConfigureAwait(false);
             if (!flag)
             {
                 return false;
             }
 
-            bool flag2 = await InternalDeleteAsync(db, diaries);
+            bool flag2 = await InternalDeleteAsync(db, diaries).ConfigureAwait(false);
             if (!flag2)
             {
                 return false;

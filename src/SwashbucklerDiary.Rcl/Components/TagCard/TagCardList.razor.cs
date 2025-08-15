@@ -1,4 +1,4 @@
-﻿using Masa.Blazor;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -66,13 +66,13 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 if (RemoveSelectedItem())
                 {
-                    await AlertService.Success(I18n.T("Delete successfully"));
+                    await AlertService.SuccessAsync(I18n.T("Delete successfully"));
                     StateHasChanged();
                 }
             }
             else
             {
-                await AlertService.Error(I18n.T("Delete failed"));
+                await AlertService.ErrorAsync(I18n.T("Delete failed"));
             }
         }
 
@@ -86,7 +86,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (Value.Any(it => it.Name == tagName))
             {
-                await AlertService.Warning(I18n.T("Tag already exists"), I18n.T("Do not add again"));
+                await AlertService.WarningAsync(I18n.T("Tag already exists"), I18n.T("Do not add again"));
                 return;
             }
 
@@ -95,7 +95,7 @@ namespace SwashbucklerDiary.Rcl.Components
             bool flag = await TagService.UpdateAsync(SelectedItem, it => new { it.Name, it.UpdateTime });
             if (!flag)
             {
-                await AlertService.Error(I18n.T("Change failed"));
+                await AlertService.ErrorAsync(I18n.T("Change failed"));
             }
         }
 
@@ -143,7 +143,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var diaries = newTag.Diaries;
             if (diaries is null || diaries.Count == 0)
             {
-                await AlertService.Info(I18n.T("No diary"));
+                await AlertService.InfoAsync(I18n.T("No diary"));
                 return;
             }
 

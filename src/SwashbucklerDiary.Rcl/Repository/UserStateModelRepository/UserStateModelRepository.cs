@@ -1,4 +1,4 @@
-﻿using SqlSugar;
+using SqlSugar;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Repository
@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public async Task<UserStateModel> InsertOrUpdateAsync(Achievement type)
         {
-            var userState = await base.GetFirstAsync(it => it.Type == type);
+            var userState = await base.GetFirstAsync(it => it.Type == type).ConfigureAwait(false);
             if (userState == null)
             {
                 UserStateModel newUserState = new()
@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.Rcl.Repository
                     Type = type,
                     Count = 1,
                 };
-                await base.InsertAsync(newUserState);
+                await base.InsertAsync(newUserState).ConfigureAwait(false);
                 return newUserState;
             }
             else
@@ -27,7 +27,8 @@ namespace SwashbucklerDiary.Rcl.Repository
                 await base.Context.Updateable<UserStateModel>()
                 .SetColumns(it => it.Count == it.Count + 1)
                 .Where(it => it.Type == type)
-                .ExecuteCommandAsync();
+                .ExecuteCommandAsync()
+                .ConfigureAwait(false);
                 return new()
                 {
                     Type = type,
@@ -44,17 +45,18 @@ namespace SwashbucklerDiary.Rcl.Repository
                 Type = type,
                 Count = count
             };
-            var oldUserState = await base.GetFirstAsync(it => it.Type == type);
+            var oldUserState = await base.GetFirstAsync(it => it.Type == type).ConfigureAwait(false);
             if (oldUserState == null)
             {
-                await base.InsertAsync(userState);
+                await base.InsertAsync(userState).ConfigureAwait(false);
             }
             else
             {
                 await base.Context.Updateable(userState)
                     .UpdateColumns(it => new { it.Count })
                     .Where(it => it.Type == type)
-                    .ExecuteCommandAsync();
+                    .ExecuteCommandAsync()
+                    .ConfigureAwait(false);
             }
 
             return userState;

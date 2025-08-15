@@ -1,4 +1,4 @@
-﻿namespace SwashbucklerDiary.Maui.Essentials
+namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
@@ -9,7 +9,7 @@
                 return true;
             }
 
-            return await CheckPermission<Permissions.StorageWrite>();
+            return await CheckPermission<Permissions.StorageWrite>().ConfigureAwait(false);
         }
 
         public async Task<bool> TryStorageWritePermission()
@@ -19,7 +19,7 @@
                 return true;
             }
 
-            return await TryPermission<Permissions.StorageWrite>();
+            return await TryPermission<Permissions.StorageWrite>().ConfigureAwait(false);
         }
     }
 }

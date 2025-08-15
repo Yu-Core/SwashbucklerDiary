@@ -25,13 +25,13 @@ namespace SwashbucklerDiary.Rcl.Services
         public async Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> expression)
         {
             bool privacyMode = _settingService.GetTemp(it => it.PrivacyMode);
-            var (currentUnusedResourceUris, trulyUnusedResourceUris) = await _resourceRepository.QueryUnusedResourcesAsync(expression, privacyMode);
+            var (currentUnusedResourceUris, trulyUnusedResourceUris) = await _resourceRepository.QueryUnusedResourcesAsync(expression, privacyMode).ConfigureAwait(false);
             if (currentUnusedResourceUris is null || currentUnusedResourceUris.Count == 0)
             {
                 return false;
             }
 
-            var flag = await _resourceRepository.DeleteByIdAsync(currentUnusedResourceUris);
+            var flag = await _resourceRepository.DeleteByIdAsync(currentUnusedResourceUris).ConfigureAwait(false);
             if (!flag)
             {
                 return false;

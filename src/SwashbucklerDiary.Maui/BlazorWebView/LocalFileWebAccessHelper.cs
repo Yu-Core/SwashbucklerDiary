@@ -1,14 +1,15 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
+using System.Collections.Concurrent;
 
 namespace SwashbucklerDiary.Maui.BlazorWebView
 {
     public static class LocalFileWebAccessHelper
     {
-        public static Dictionary<string, string> AppFilePathMap { get; } = new()
+        public static ConcurrentDictionary<string, string> AppFilePathMap { get; } = new(new Dictionary<string, string>()
         {
             { FileSystem.AppDataDirectory, $"{AppFileSystem.AppDataVirtualDirectoryName}/" },
             { FileSystem.CacheDirectory, $"{AppFileSystem.CacheVirtualDirectoryName}/" },
-        };
+        });
 
         private const string otherFileUrlPrefix = "file/";
 

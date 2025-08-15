@@ -14,7 +14,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             }
 #if WINDOWS
             var uri = PlatformIntegrationHelper.CreateMailToUri(subject, body, recipients);
-            return await Launcher.TryOpenAsync(uri);
+            return await Launcher.TryOpenAsync(uri).ConfigureAwait(false);
 #else
             var message = new EmailMessage
             {
@@ -22,7 +22,7 @@ namespace SwashbucklerDiary.Maui.Essentials
                 Body = body,
                 To = recipients
             };
-            await Email.Default.ComposeAsync(message);
+            await Email.Default.ComposeAsync(message).ConfigureAwait(false);
             return true;
 #endif
         }

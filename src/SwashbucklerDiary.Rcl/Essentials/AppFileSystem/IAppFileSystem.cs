@@ -12,29 +12,28 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         Task<string> CreateTempFileAsync(string fileName, Stream stream);
 
-        Task FileCopyAsync(string targetFilePath, string sourceFilePath);
+        void FileCopy(string sourceFilePath, string targetFilePath);
 
-        Task FileCopyAsync(string targetFilePath, Stream sourceStream);
+        Task FileCopyAsync(Stream sourceStream, string targetFilePath);
 
-        Task FileMoveAsync(string sourceFilePath, string targetFilePath);
+        void FileMove(string sourceFilePath, string targetFilePath);
 
-        void ClearFolder(string folderPath, List<string>? exceptPaths = null);
+        Task ClearFolderAsync(string folderPath, List<string>? exceptPaths = null);
 
-        long GetFolderSize(string folderPath);
-
-        void CopyFolder(string sourceFolder, string destinationFolder, SearchOption searchOption);
+        Task<long> GetFolderSize(string folderPath);
 
         void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption, bool fileOverwrite = false);
 
+        Task MoveFolderAsync(string sourceFolder, string destinationFolder, SearchOption searchOption, bool fileOverwrite = false);
         /// <summary>
         /// 清除缓存
         /// </summary>
-        void ClearCache();
+        Task ClearCacheAsync();
 
         /// <summary>
         /// 获取缓存大小
         /// </summary>
         /// <returns></returns>
-        string GetCacheSize();
+        Task<string> GetCacheSizeAsync();
     }
 }

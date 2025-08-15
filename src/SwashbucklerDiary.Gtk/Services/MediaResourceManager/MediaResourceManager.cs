@@ -28,7 +28,8 @@ namespace SwashbucklerDiary.Gtk.Services
             }
 
             using Stream stream = File.OpenRead(sourceFilePath);
-            var fn = stream.CreateMD5() + Path.GetExtension(sourceFilePath);
+            var md5 = await stream.CreateMD5().ConfigureAwait(false);
+            var fn = md5 + Path.GetExtension(sourceFilePath);
             var targetFilePath = Path.Combine(targetDirectoryPath, fn);
 
             if (!File.Exists(targetFilePath))
@@ -36,13 +37,11 @@ namespace SwashbucklerDiary.Gtk.Services
                 if (sourceFilePath.StartsWith(FileSystem.CacheDirectory))
                 {
                     stream.Close();
-                    await _appFileSystem.FileMoveAsync(sourceFilePath, targetFilePath);
+                    _appFileSystem.FileMove(sourceFilePath, targetFilePath);
                 }
                 else
                 {
-                    //将流的位置重置为起始位置
-                    stream.Seek(0, SeekOrigin.Begin);
-                    await _appFileSystem.FileCopyAsync(targetFilePath, stream);
+                    await _appFileSystem.FileCopyAsync(stream, targetFilePath).ConfigureAwait(false);
                 }
             }
 
@@ -63,12 +62,12 @@ namespace SwashbucklerDiary.Gtk.Services
             }
             else
             {
-                filePath = await DownloadFileAndCreateTempFileAsync(urlString);
+                filePath = await DownloadFileAndCreateTempFileAsync(urlString).ConfigureAwait(false);
             }
 
             if (string.IsNullOrEmpty(filePath))
             {
-                await _alertService.Error(_i18n.T("File does not exist"));
+                await _alertService.ErrorAsync(_i18n.T("File does not exist"));
             }
 
             return filePath;
@@ -95,9 +94,9 @@ namespace SwashbucklerDiary.Gtk.Services
             string filePath = string.Empty;
             try
             {
-                using Stream stream = await _httpClient.GetStreamAsync(url);
+                using Stream stream = await _httpClient.GetStreamAsync(url).ConfigureAwait(false);
                 var fileName = Path.GetFileName(url);
-                filePath = await _appFileSystem.CreateTempFileAsync(fileName, stream);
+                filePath = await _appFileSystem.CreateTempFileAsync(fileName, stream).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -106,7 +105,6 @@ namespace SwashbucklerDiary.Gtk.Services
 
             return filePath;
         }
-
 
         public override string UrlRelativePathToFilePath(string urlRelativePath)
             => LocalFileWebAccessHelper.UrlRelativePathToFilePath(urlRelativePath);

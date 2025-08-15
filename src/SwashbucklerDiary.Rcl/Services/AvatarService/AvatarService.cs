@@ -38,20 +38,20 @@ namespace SwashbucklerDiary.Rcl.Services
             targetDirectoryPath = Path.Combine(_appFileSystem.AppDataDirectory, AvatarDirectoryName);
         }
 
-        public abstract Task<string> SetAvatarByCapture();
+        public abstract Task<string> SetAvatarByCaptureAsync();
 
-        public async Task<string> SetAvatarByPickPhoto()
+        public async Task<string> SetAvatarByPickPhotoAsync()
         {
-            string? photoPath = await _platformIntegration.PickPhotoAsync();
+            string? photoPath = await _platformIntegration.PickPhotoAsync().ConfigureAwait(false);
             if (string.IsNullOrEmpty(photoPath))
             {
                 return string.Empty;
             }
 
-            return await SetAvatar(photoPath);
+            return await SetAvatarAsync(photoPath);
         }
 
-        protected async Task<string> SetAvatar(string filePath)
+        protected async Task<string> SetAvatarAsync(string filePath)
         {
             string previousAvatarUri = _settingService.Get(s => s.Avatar);
             string previousAvatarPath = _mediaResourceManager.UrlRelativePathToFilePath(previousAvatarUri);
@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 File.Delete(previousAvatarPath);
             }
 
-            string uri = await _mediaResourceManager.CreateMediaResourceFileAsync(targetDirectoryPath, filePath) ?? string.Empty;
+            string uri = await _mediaResourceManager.CreateMediaResourceFileAsync(targetDirectoryPath, filePath).ConfigureAwait(false) ?? string.Empty;
             await _settingService.SetAsync(s => s.Avatar, uri);
             return uri;
         }

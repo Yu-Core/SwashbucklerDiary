@@ -71,11 +71,11 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             foreach (var handler in _versionHandlers)
             {
-                await HandleVersionUpdate(handler.Key.ToString(), handler.Value);
+                await HandleVersionUpdate(handler.Key.ToString(), handler.Value).ConfigureAwait(false);
             }
 
-            var version = await _staticWebAssets.ReadJsonAsync<string>("docs/update-instruction/version.json");
-            await HandleVersionUpdate(version, HandleUpdateInstruction);
+            var version = await _staticWebAssets.ReadJsonAsync<string>("docs/update-instruction/version.json").ConfigureAwait(false);
+            await HandleVersionUpdate(version, HandleUpdateInstruction).ConfigureAwait(false);
             if (updateCount > 0)
             {
                 AfterVersionUpdate?.Invoke();
@@ -87,7 +87,7 @@ namespace SwashbucklerDiary.Rcl.Services
             var url = _i18n.Culture.Name == "zh-CN"
                 ? zh_CNLatestVersionApiUrl
                 : LatestVersionApiUrl;
-            var release = await HttpClient.GetFromJsonAsync<Release>(url);
+            var release = await HttpClient.GetFromJsonAsync<Release>(url).ConfigureAwait(false);
             if (release is null || release.Tag_Name is null)
             {
                 throw new Exception("Tag format error");
@@ -155,63 +155,63 @@ namespace SwashbucklerDiary.Rcl.Services
         private async Task HandleVersionUpdate809()
         {
             var uri = $"docs/vditor-tutorial/{_i18n.Culture}.md";
-            var content = await _staticWebAssets.ReadContentAsync(uri);
+            var content = await _staticWebAssets.ReadContentAsync(uri).ConfigureAwait(false);
             var diary = new DiaryModel()
             {
                 Content = content,
             };
-            await _diaryService.AddAsync(diary);
+            await _diaryService.AddAsync(diary).ConfigureAwait(false);
         }
 
         private async Task HandleUpdateInstruction()
         {
-            string content = await _staticWebAssets.ReadI18nContentAsync("docs/update-instruction/{0}.md", _i18n.Culture);
+            string content = await _staticWebAssets.ReadI18nContentAsync("docs/update-instruction/{0}.md", _i18n.Culture).ConfigureAwait(false);
 
             var diary = new DiaryModel()
             {
                 Content = content,
             };
-            await _diaryService.AddAsync(diary);
+            await _diaryService.AddAsync(diary).ConfigureAwait(false);
         }
 
         private async Task HandleVersionUpdate878()
         {
             string[] keys = ["PrivacyMode", "PrivatePassword"];
-            await _settingService.RemoveAsync(keys);
+            await _settingService.RemoveAsync(keys).ConfigureAwait(false);
         }
 
         private async Task HandleVersionUpdate1015()
         {
             var oldKey = "DiaryCardDateFormat";
-            var oldValue = await _settingService.GetAsync(oldKey, string.Empty);
+            var oldValue = await _settingService.GetAsync(oldKey, string.Empty).ConfigureAwait(false);
             if (!string.IsNullOrEmpty(oldValue))
             {
-                await _settingService.RemoveAsync(oldKey);
-                await _settingService.SetAsync("DiaryCardTimeFormat", oldValue);
+                await _settingService.RemoveAsync(oldKey).ConfigureAwait(false);
+                await _settingService.SetAsync("DiaryCardTimeFormat", oldValue).ConfigureAwait(false);
             }
         }
 
         private async Task HandleVersionUpdate1055()
         {
-            await _diaryService.MovePrivacyDiariesAsync();
+            await _diaryService.MovePrivacyDiariesAsync().ConfigureAwait(false);
         }
 
         private async Task HandleVersionUpdate1132()
         {
             var oldKey = "UserName";
-            var oldValue = await _settingService.GetAsync(oldKey, string.Empty);
+            var oldValue = await _settingService.GetAsync(oldKey, string.Empty).ConfigureAwait(false);
             if (!string.IsNullOrEmpty(oldValue))
             {
-                await _settingService.RemoveAsync(oldKey);
-                await _settingService.SetAsync("NickName", oldValue);
+                await _settingService.RemoveAsync(oldKey).ConfigureAwait(false);
+                await _settingService.SetAsync("NickName", oldValue).ConfigureAwait(false);
             }
         }
 
         private async Task HandleVersionUpdate1170()
         {
-            await _diaryFileManager.UpdateTemplateForOldDiaryAsync();
+            await _diaryFileManager.UpdateTemplateForOldDiaryAsync().ConfigureAwait(false);
             _settingService.SetTemp(it => it.PrivacyMode, true);
-            await _diaryFileManager.UpdateTemplateForOldDiaryAsync();
+            await _diaryFileManager.UpdateTemplateForOldDiaryAsync().ConfigureAwait(false);
             _settingService.SetTemp(it => it.PrivacyMode, false);
         }
     }

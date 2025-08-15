@@ -31,7 +31,7 @@ namespace SwashbucklerDiary.Rcl.Components
             if (Text is not null)
             {
                 await PlatformIntegration.SetClipboardAsync(Text);
-                await AlertService.Success(I18n.T("Copy successfully"));
+                await AlertService.SuccessAsync(I18n.T("Copy successfully"));
             }
         }
 

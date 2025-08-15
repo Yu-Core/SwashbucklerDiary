@@ -22,8 +22,8 @@ namespace SwashbucklerDiary.Gtk.Services
 
         public override async Task<bool> JoinQQGroup()
         {
-            var joinQQGroupUrl = await JoinQQGroupUrl;
-            return await _platformIntegration.OpenBrowser(joinQQGroupUrl);
+            var joinQQGroupUrl = await JoinQQGroupUrl.ConfigureAwait(false);
+            return await _platformIntegration.OpenBrowser(joinQQGroupUrl).ConfigureAwait(false);
         }
     }
 }

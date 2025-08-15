@@ -29,14 +29,14 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public override async Task<List<ResourceModel>> GetListAsync()
         {
-            var resources = await base.Context.Queryable<ResourceModel>().ToListAsync();
+            var resources = await base.Context.Queryable<ResourceModel>().ToListAsync().ConfigureAwait(false);
             resources.Reverse();
             return resources;
         }
 
         public override async Task<List<ResourceModel>> GetListAsync(Expression<Func<ResourceModel, bool>> expression)
         {
-            var resources = await base.Context.Queryable<ResourceModel>().Where(expression).ToListAsync();
+            var resources = await base.Context.Queryable<ResourceModel>().Where(expression).ToListAsync().ConfigureAwait(false); ;
             resources.Reverse();
             return resources;
         }
@@ -54,13 +54,15 @@ namespace SwashbucklerDiary.Rcl.Repository
                 .Where(expression2)
                 .Where((r, dr) => dr.ResourceUri == null) // 只选择没有匹配的记录
                 .Select(r => r.ResourceUri)
-                .ToListAsync();
+                .ToListAsync()
+                .ConfigureAwait(false);
             var resourceUris2 = await notCurrentDb.Queryable<ResourceModel>()
                 .InnerJoin<DiaryResourceModel>((r, dr) => r.ResourceUri == dr.ResourceUri)
                 .Where(expression2)
                 .Select(r => r.ResourceUri)
                 .Distinct()
-                .ToListAsync();
+                .ToListAsync()
+                .ConfigureAwait(false);
 
             var trulyUnusedResources = resourceUris.Except(resourceUris2).ToList();
             return (resourceUris, trulyUnusedResources);

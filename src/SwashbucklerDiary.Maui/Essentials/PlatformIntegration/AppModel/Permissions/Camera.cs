@@ -1,15 +1,15 @@
-﻿namespace SwashbucklerDiary.Maui.Essentials
+namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-        public async Task<bool> CheckCameraPermission()
+        public Task<bool> CheckCameraPermission()
         {
-            return await CheckPermission<Permissions.Camera>();
+            return CheckPermission<Permissions.Camera>();
         }
 
-        public async Task<bool> TryCameraPermission()
+        public Task<bool> TryCameraPermission()
         {
-            return await TryPermission<Permissions.Camera>();
+            return TryPermission<Permissions.Camera>();
         }
     }
 }

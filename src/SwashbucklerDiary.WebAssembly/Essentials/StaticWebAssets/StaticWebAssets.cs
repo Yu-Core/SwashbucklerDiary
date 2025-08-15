@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Json;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
@@ -15,14 +15,14 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         public override async Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true, JsonSerializerOptions? jsonSerializerOptions = null)
         {
             string path = RelativePathToPath(relativePath, isRcl);
-            var result = await _httpClient.GetFromJsonAsync<T>(path, jsonSerializerOptions ?? DefaultJsonSerializerOptions);
+            var result = await _httpClient.GetFromJsonAsync<T>(path, jsonSerializerOptions ?? DefaultJsonSerializerOptions).ConfigureAwait(false);
             return result ?? throw new($"{relativePath} deserialize fail");
         }
 
         public override async Task<string> ReadContentAsync(string relativePath, bool isRcl = true)
         {
             string path = RelativePathToPath(relativePath, isRcl);
-            var result = await _httpClient.GetStringAsync(path);
+            var result = await _httpClient.GetStringAsync(path).ConfigureAwait(false);
             return result ?? throw new Exception($"not find json {path}");
         }
 

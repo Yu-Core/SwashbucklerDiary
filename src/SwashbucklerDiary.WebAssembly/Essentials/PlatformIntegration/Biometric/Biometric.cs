@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 
         public async Task<bool> BiometricAuthenticateAsync()
         {
-            return await _jsModule.BiometricAuthenticateAsync();
+            return await _jsModule.BiometricAuthenticateAsync().ConfigureAwait(false);
         }
     }
 }

@@ -1,5 +1,6 @@
 using Blazored.LocalStorage;
 using Microsoft.JSInterop;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using SwashbucklerDiary.WebAssembly.Essentials;
@@ -10,7 +11,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
 {
     public class SettingService : Preferences, ISettingService
     {
-        private readonly Lazy<ValueTask<IJSInProcessObjectReference>> _module;
+        private readonly Lazy<ValueTask<IJSObjectReference>> _module;
 
         private readonly JsonSerializerOptions jsonSerializerOptions = new()
         {
@@ -26,17 +27,17 @@ namespace SwashbucklerDiary.WebAssembly.Services
         public Dictionary<string, object> TempSettings { get; set; } = [];
         public Action? SettingsChanged { get; set; }
 
-        public SettingService(ISyncLocalStorageService localStorage,
+        public SettingService(ILocalStorageService localStorage,
             IJSRuntime jSRuntime) :
             base(localStorage)
         {
-            _module = new(() => ((IJSInProcessRuntime)jSRuntime).ImportJsModule("js/setting.js"));
+            _module = new(() => jSRuntime.ImportJsModule("js/setting.js"));
         }
 
         public async Task InitializeAsync()
         {
-            await ISettingService.DefalutInitializeAsync(DefalutSettings);
-            settings = await ReadSettings();
+            await ISettingService.DefalutInitializeAsync(DefalutSettings).ConfigureAwait(false);
+            settings = await ReadSettings().ConfigureAwait(false);
         }
 
         public T Get<T>(string key)
@@ -72,7 +73,7 @@ namespace SwashbucklerDiary.WebAssembly.Services
 
         public override async Task<T> GetAsync<T>(string key, T defaultValue)
         {
-            var value = await base.GetAsync<T>(key, defaultValue);
+            var value = await base.GetAsync<T>(key, defaultValue).ConfigureAwait(false);
             settings[key] = value;
             return value;
         }
@@ -104,8 +105,8 @@ namespace SwashbucklerDiary.WebAssembly.Services
         {
             List<string> keys = DefalutSettings.Keys.ToList();
 
-            var module = await _module.Value;
-            var serialisedData = module.Invoke<string>("readSettings", keys);
+            var module = await _module.Value.ConfigureAwait(false);
+            var serialisedData = await module.InvokeAsync<string>("readSettings", keys).ConfigureAwait(false);
             try
             {
                 return JsonSerializer.Deserialize<Dictionary<string, object>>(serialisedData, jsonSerializerOptions) ?? [];

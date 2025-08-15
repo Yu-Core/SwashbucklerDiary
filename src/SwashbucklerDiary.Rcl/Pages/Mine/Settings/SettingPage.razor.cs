@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.OnInitializedAsync();
 
-            UpdateCacheSize();
+            await UpdateCacheSize();
         }
 
         protected override void ReadSettings()
@@ -32,17 +32,17 @@ namespace SwashbucklerDiary.Rcl.Pages
             showQuickRecord = SettingService.Get(s => s.QuickRecord);
         }
 
-        private void UpdateCacheSize()
+        private async Task UpdateCacheSize()
         {
-            cacheSize = AppFileSystem.GetCacheSize();
+            cacheSize = await AppFileSystem.GetCacheSizeAsync();
         }
 
         private async Task ClearCache()
         {
             showClearCache = false;
-            AppFileSystem.ClearCache();
-            UpdateCacheSize();
-            await AlertService.Success(I18n.T("Clean up successfully"));
+            await AppFileSystem.ClearCacheAsync();
+            await UpdateCacheSize();
+            await AlertService.SuccessAsync(I18n.T("Clean up successfully"));
         }
     }
 }

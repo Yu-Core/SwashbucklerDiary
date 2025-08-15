@@ -63,7 +63,7 @@ namespace SwashbucklerDiary.Rcl.Components
         [JSInvokable]
         public async Task Copy()
         {
-            await AlertService.Success(I18n.T("Copy successfully"));
+            await AlertService.SuccessAsync(I18n.T("Copy successfully"));
         }
 
         [JSInvokable]

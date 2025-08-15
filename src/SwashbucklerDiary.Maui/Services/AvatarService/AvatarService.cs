@@ -15,26 +15,26 @@ namespace SwashbucklerDiary.Maui.Services
         {
         }
 
-        public override async Task<string> SetAvatarByCapture()
+        public override async Task<string> SetAvatarByCaptureAsync()
         {
             bool isCaptureSupported = await _platformIntegration.IsCaptureSupported();
             if (!isCaptureSupported)
             {
-                await _alertService.Error(_i18n.T("The current platform is unable to take photos"));
+                await _alertService.ErrorAsync(_i18n.T("The current platform is unable to take photos"));
                 return string.Empty;
             }
 
             var cameraPermission = await _platformIntegration.TryCameraPermission();
             if (!cameraPermission)
             {
-                await _alertService.Info(_i18n.T("Please grant permission for the camera"));
+                await _alertService.InfoAsync(_i18n.T("Please grant permission for the camera"));
                 return string.Empty;
             }
 
             var writePermission = await _platformIntegration.TryStorageWritePermission();
             if (!writePermission)
             {
-                await _alertService.Info(_i18n.T("Please grant permission for storage writing"));
+                await _alertService.InfoAsync(_i18n.T("Please grant permission for storage writing"));
                 return string.Empty;
             }
 
@@ -44,7 +44,7 @@ namespace SwashbucklerDiary.Maui.Services
                 return string.Empty;
             }
 
-            return await SetAvatar(photoPath);
+            return await SetAvatarAsync(photoPath);
         }
     }
 }
