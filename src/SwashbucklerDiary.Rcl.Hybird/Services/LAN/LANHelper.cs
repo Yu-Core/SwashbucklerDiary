@@ -7,9 +7,15 @@ namespace SwashbucklerDiary.Rcl.Services
     {
         public static string GetLocalIPv4Address()
         {
-            using Socket s = new(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            s.Connect(new IPEndPoint(IPAddress.Parse("8.8.8.8"), 53));
-            return ((IPEndPoint)s.LocalEndPoint!).Address.ToString();
+            using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.Connect("8.8.8.8", 53);
+
+            if (socket.LocalEndPoint is not IPEndPoint endPoint)
+            {
+                throw new InvalidOperationException("Failed to retrieve local IPv4 endpoint.");
+            }
+
+            return endPoint.Address.ToString();
         }
     }
 }

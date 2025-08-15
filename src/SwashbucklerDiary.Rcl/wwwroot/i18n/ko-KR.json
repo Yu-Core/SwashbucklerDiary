@@ -484,5 +484,9 @@
   "Pattern password": "패턴 비밀번호",
   "Please draw a pattern": "패턴을 그려주세요",
   "Please draw the pattern again": "패턴을 다시 그려주세요",
-  "System fingerprint unlocking has been turned off, please use another unlocking method": "시스템 지문 잠금 해제가 비활성화되었습니다. 다른 잠금 해제 방법을 사용하세요"
+  "System fingerprint unlocking has been turned off, please use another unlocking method": "시스템 지문 잠금 해제가 비활성화되었습니다. 다른 잠금 해제 방법을 사용하세요",
+  "Target does not exist": "대상이 존재하지 않습니다",
+  "Connection exception": "연결 예외",
+  "Generating": "생성 중",
+  "Importing": "가져오는 중"
 }

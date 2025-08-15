@@ -484,5 +484,9 @@
   "Pattern password": "Senha de padrão",
   "Please draw a pattern": "Por favor, desenhe um padrão",
   "Please draw the pattern again": "Por favor, desenhe o padrão novamente",
-  "System fingerprint unlocking has been turned off, please use another unlocking method": "O desbloqueio por impressão digital do sistema foi desativado, por favor use outro método de desbloqueio"
+  "System fingerprint unlocking has been turned off, please use another unlocking method": "O desbloqueio por impressão digital do sistema foi desativado, por favor use outro método de desbloqueio",
+  "Target does not exist": "O alvo não existe",
+  "Connection exception": "Exceção de conexão",
+  "Generating": "Gerando",
+  "Importing": "Importando"
 }

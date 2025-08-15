@@ -35,4 +35,7 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Components\DialogComponents\TransferDialog\" />
+	</ItemGroup>
 </Project>

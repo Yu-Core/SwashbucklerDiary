@@ -484,5 +484,9 @@
   "Pattern password": "Musterpasswort",
   "Please draw a pattern": "Bitte zeichnen Sie ein Muster",
   "Please draw the pattern again": "Bitte zeichnen Sie das Muster erneut",
-  "System fingerprint unlocking has been turned off, please use another unlocking method": "Die Fingerabdruckentsperrung des Systems wurde deaktiviert, bitte verwenden Sie eine andere Entsperrmethode"
+  "System fingerprint unlocking has been turned off, please use another unlocking method": "Die Fingerabdruckentsperrung des Systems wurde deaktiviert, bitte verwenden Sie eine andere Entsperrmethode",
+  "Target does not exist": "Ziel existiert nicht",
+  "Connection exception": "Verbindungsausnahme",
+  "Generating": "Wird generiert",
+  "Importing": "Wird importiert"
 }

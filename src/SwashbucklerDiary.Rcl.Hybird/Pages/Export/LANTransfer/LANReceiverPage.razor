@@ -28,10 +28,9 @@
 
 </ScrollContainer>
 
-<TransferDialog @bind-Visible="showTransferDialog"
+<TransferDialog @ref="transferDialog"
+                @bind-Visible="showTransferDialog"
+                MaxPercentage="@maxPercentage"
                 Title="@(I18n.T(transferDialogTitle))"
-                Ps="ps"
-                Bytes="bytes"
-                TotalBytes="totalBytes"
                 OnCancel="CancelReceive">
 </TransferDialog>

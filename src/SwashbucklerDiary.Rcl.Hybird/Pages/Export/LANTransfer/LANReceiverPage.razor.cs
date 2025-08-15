@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Services;
+using System.Net.Sockets;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class LANReceiverPage
     {
-        private int ps;
+        private TransferDialog? transferDialog;
 
-        private long totalBytes;
-
-        private long bytes;
+        private double maxPercentage = 99;
 
         private readonly string multicastAddress = "239.0.0.1";
 
@@ -37,10 +37,11 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
-            LANReceiverService.ReceiveStart += ReceiveStart;
-            LANReceiverService.ReceiveAborted += ReceiveAborted;
-            LANReceiverService.ReceiveCompleted += ReceiveCompleted;
-            LANReceiverService.ReceiveProgressChanged += ReceiveProgressChanged;
+            LANReceiverService.ReceiveStart += HandleReceiveStarted;
+            LANReceiverService.ReceiveAborted += HandleReceiveAborted;
+            LANReceiverService.ReceiveCanceled += HandleReceiveCanceled;
+            LANReceiverService.ReceiveCompleted += HandleReceiveCompleted;
+            LANReceiverService.ConnectFailed += HandleConnectFailed;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -49,7 +50,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                await InitializeLANReceiverService();
+                await InitializeLANReceiverServiceAsync();
                 StateHasChanged();
             }
         }
@@ -60,10 +61,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             showTransferDialog = false;
             LANReceiverService.Dispose();
-            LANReceiverService.ReceiveStart -= ReceiveStart;
-            LANReceiverService.ReceiveAborted -= ReceiveAborted;
-            LANReceiverService.ReceiveCompleted -= ReceiveCompleted;
-            LANReceiverService.ReceiveProgressChanged -= ReceiveProgressChanged;
+            LANReceiverService.ReceiveStart -= HandleReceiveStarted;
+            LANReceiverService.ReceiveAborted -= HandleReceiveAborted;
+            LANReceiverService.ReceiveCanceled -= HandleReceiveCanceled;
+            LANReceiverService.ReceiveCompleted -= HandleReceiveCompleted;
+            LANReceiverService.ConnectFailed -= HandleConnectFailed;
         }
 
         protected override void ReadSettings()
@@ -75,19 +77,25 @@ namespace SwashbucklerDiary.Rcl.Pages
             deviceName = SettingService.Get(s => s.LANDeviceName);
         }
 
-        private async Task InitializeLANReceiverService()
+        private async Task InitializeLANReceiverServiceAsync()
         {
             try
             {
-                LANReceiverService.Initialize(multicastAddress, multicastPort, tcpPort, deviceName);
+                LANReceiverService.Start(multicastAddress, multicastPort, deviceName, tcpPort, new Progress<TransferProgressArguments>(HandleProgressChanged));
+                return;
+            }
+            catch (SocketException e) when (e.SocketErrorCode == SocketError.NetworkUnreachable)
+            {
+                await AlertService.ErrorAsync(I18n.T("No network connection"));
             }
             catch (Exception e)
             {
                 Logger.LogError(e, "LANReceiverService initialize error");
-                await AlertService.Error(I18n.T("No network connection"));
-                await Task.Delay(1000);
-                await NavigateToBack();
+                await AlertService.ErrorAsync(e.ToString());
             }
+
+            await Task.Delay(1000);
+            await NavigateToBack();
         }
 
         private async Task CancelReceive()
@@ -101,77 +109,86 @@ namespace SwashbucklerDiary.Rcl.Pages
             await NavigateToBack();
         }
 
-        private void ReceiveStart()
+        private void HandleReceiveStarted()
         {
             LANReceiverService.CancelMulticast();
-            ResetSendProgress();
+            ResetProgress();
             showTransferDialog = true;
             InvokeAsync(StateHasChanged);
         }
 
-        private void ReceiveProgressChanged(long readLength, long allLength)
+        private void HandleProgressChanged(TransferProgressArguments args)
         {
-            //只有每次传输大于512k且达到1%以上才会刷新进度
-            var percentage = (int)((double)readLength / allLength * 100);
-            bool refresh = (percentage - ps > 1 && readLength / 1024 - bytes > 512) || percentage == 100;
-
-            if (refresh)
-            {
-                //在传输完成后，日记没有导入完之前，进度要保持在99%
-                ps = percentage < 100 ? percentage : 99; //传输完成百分比
-                bytes = readLength < allLength ? readLength / 1024 : (allLength / 1024) - 1; //当前已经传输的Kb
-                totalBytes = allLength / 1024; //文件总大小Kb
-                InvokeAsync(StateHasChanged);
-            }
+            transferDialog?.SetProgress(args.TransferredBytes, args.TotalBytes);
         }
 
-        private void ReceiveAborted()
+        private void HandleReceiveAborted()
         {
             InvokeAsync(async () =>
             {
-                if (showTransferDialog)
-                {
-                    transferDialogTitle = "Receive failed";
-                    await AlertService.Error(I18n.T("Receive failed"));
-                }
-                else
-                {
-                    transferDialogTitle = "Receive canceled";
-                    await AlertService.Error(I18n.T("Receive canceled"));
-                }
+                transferDialogTitle = "Receive failed";
+                await AlertService.ErrorAsync(I18n.T("Receive failed"));
 
                 StateHasChanged();
             });
         }
 
-        private void ReceiveCompleted(string path)
+        private void HandleReceiveCompleted(string path)
         {
             InvokeAsync(async () =>
             {
+                AlertService.StartLoading(I18n.T("Importing"));
+
                 bool isSuccess = await DiaryFileManager.ImportJsonAsync(path);
 
                 if (!isSuccess)
                 {
                     transferDialogTitle = "Import failed";
-                    await AlertService.Error(I18n.T("Import failed"));
+                    await AlertService.ErrorAsync(I18n.T("Import failed"));
                 }
                 else
                 {
-                    ps = 100;
-                    bytes = totalBytes;
+                    maxPercentage = 100;
                     transferDialogTitle = "Receive successfully";
-                    await AlertService.Success(I18n.T("Receive successfully"));
+                    await AlertService.SuccessAsync(I18n.T("Receive successfully"));
                 }
+
+                AlertService.StopLoading();
 
                 StateHasChanged();
             });
         }
 
-        private void ResetSendProgress()
+        private void ResetProgress()
         {
-            ps = 0;
-            bytes = 0;
-            totalBytes = 0;
+            maxPercentage = 99;
+            transferDialog?.SetProgress(0, 0);
+        }
+
+        private void HandleReceiveCanceled()
+        {
+            InvokeAsync(async () =>
+            {
+                transferDialogTitle = "Receive canceled";
+                await AlertService.ErrorAsync(I18n.T("Receive canceled"));
+
+                StateHasChanged();
+            });
+        }
+
+        private async void HandleConnectFailed(SocketException e)
+        {
+            if (e.SocketErrorCode == SocketError.NetworkUnreachable)
+            {
+                await AlertService.ErrorAsync(I18n.T("No network connection"));
+            }
+            else
+            {
+                await AlertService.ErrorAsync(I18n.T("Connection exception"));
+            }
+
+            await Task.Delay(1000);
+            await NavigateToBack();
         }
     }
 }

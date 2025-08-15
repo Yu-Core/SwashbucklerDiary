@@ -16,7 +16,7 @@
                 </span>
                 <MSpacer></MSpacer>
                 <MButton Icon="true"
-                         OnClick="LANSenderService.SearchDevices">
+                         OnClick="InitializeLANSenderService">
                     <MIcon>refresh</MIcon>
                 </MButton>
             </MSubheader>
@@ -88,10 +88,8 @@
     </MCard>
 </ScrollContainer>
 
-<TransferDialog @bind-Visible="showTransferDialog"
+<TransferDialog @ref="transferDialog"
+                @bind-Visible="showTransferDialog"
                 Title="@(I18n.T(transferDialogTitle))"
-                Ps="ps"
-                Bytes="bytes"
-                TotalBytes="totalBytes"
                 OnCancel="CancelSend">
 </TransferDialog>

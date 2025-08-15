@@ -1,26 +1,22 @@
+using System.Net.Sockets;
+
 namespace SwashbucklerDiary.Rcl.Services
 {
     public interface ILANReceiverService
     {
-        event Action<long, long>? ReceiveProgressChanged;
-
         event Action? ReceiveStart;
-
+        event Action? ReceiveCanceled;
         event Action? ReceiveAborted;
-
         event Action<string>? ReceiveCompleted;
+        event Action<SocketException>? ConnectFailed;
 
         bool IsMulticasting { get; }
 
         bool IsReceiving { get; }
 
-        void Initialize(string multicastAddress, int multicastPort, int tcpPort, string? deviceName);
+        void Start(string multicastAddress, int multicastPort, string? deviceName, int tcpPort, IProgress<TransferProgressArguments> progress);
 
         void Dispose();
-
-        void Multicast();
-
-        void Receive();
 
         void CancelMulticast();
 

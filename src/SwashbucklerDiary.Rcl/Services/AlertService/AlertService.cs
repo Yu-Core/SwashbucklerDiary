@@ -77,11 +77,12 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public Task WarningAsync(string? title, string? message) => EnqueueSnackbarAsync(title, message, AlertTypes.Warning);
 
-        public void StartLoading(bool opacity = true)
+        public void StartLoading(string? content = null, bool opacity = true)
         {
             _navigateController.DisableNavigate = true;
-            _popupService.ShowProgressCircular(options =>
+            _popupService.ShowLoader(options =>
             {
+                options.Content = content;
                 options.Size = 48;
                 if (!opacity)
                 {
@@ -94,7 +95,7 @@ namespace SwashbucklerDiary.Rcl.Services
         public void StopLoading()
         {
             _navigateController.DisableNavigate = false;
-            _popupService.HideProgressCircular();
+            _popupService.HideLoader();
         }
     }
 }

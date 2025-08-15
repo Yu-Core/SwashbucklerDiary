@@ -1,0 +1,28 @@
+@namespace SwashbucklerDiary.Rcl.Services
+@using Masa.Blazor.Popup.Components
+@inherits ProgressCircular
+
+<MOverlay Value="@Visible"
+          Class="@Class"
+          Color="@BackgroundColor"
+          Opacity="@BackgroundOpacity"
+          ScrimClass="@ScrimClass"
+          Style="@ComputedStyle"
+          ZIndex="@ZIndex">
+    <div class="d-flex flex-column align-center">
+        <MProgressCircular Indeterminate
+                           Class="mb-4"
+                           Color="@Color"
+                           Size="@Size"
+                           Width="@Width">
+        </MProgressCircular>
+        <span>@Content</span>
+    </div>
+</MOverlay>
+
+@code{
+    [Parameter, EditorRequired]
+    public string? Content { get; set; }
+
+    private string ComputedStyle => $"position: fixed;{Style}";
+}

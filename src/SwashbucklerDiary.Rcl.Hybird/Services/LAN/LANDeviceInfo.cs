@@ -1,6 +1,6 @@
 using SwashbucklerDiary.Shared;
 
-namespace SwashbucklerDiary.Rcl.Models
+namespace SwashbucklerDiary.Rcl.Services
 {
     public class LANDeviceInfo
     {
@@ -9,5 +9,7 @@ namespace SwashbucklerDiary.Rcl.Models
         public string? IPAddress { get; set; }
 
         public AppDevicePlatform DevicePlatform { get; set; }
+
+        public DateTime LastSeen { get; set; }
     }
 }

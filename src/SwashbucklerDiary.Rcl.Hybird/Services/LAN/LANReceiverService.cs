@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
+using System.Buffers;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -11,13 +11,11 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public class LANReceiverService : ILANReceiverService
     {
-        public event Action<long, long>? ReceiveProgressChanged;
-
         public event Action? ReceiveStart;
-
         public event Action? ReceiveAborted;
-
+        public event Action? ReceiveCanceled;
         public event Action<string>? ReceiveCompleted;
+        public event Action<SocketException>? ConnectFailed;
 
         private IPAddress? _multicastAddress; // UDP组播地址
 
@@ -29,6 +27,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private TcpListener? tcpListener;
 
+        private LANDeviceInfo? lanDeviceInfo;
+
         private CancellationTokenSource? udpClientCTS;
 
         private CancellationTokenSource? tcpClientCTS;
@@ -39,11 +39,9 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private readonly IAppFileSystem _appFileSystem;
 
-        private LANDeviceInfo? lanDeviceInfo;
+        public bool IsMulticasting => udpClientCTS is not null && !udpClientCTS.IsCancellationRequested;
 
-        public bool IsMulticasting => !udpClientCTS?.IsCancellationRequested ?? false;
-
-        public bool IsReceiving => !tcpClientCTS?.IsCancellationRequested ?? false;
+        public bool IsReceiving => tcpClientCTS is not null && !tcpClientCTS.IsCancellationRequested;
 
         public LANReceiverService(
             IPlatformIntegration platformIntegration,
@@ -59,9 +57,10 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             udpClientCTS?.Cancel();
             tcpClientCTS?.Cancel();
+
             if (udpClient is not null)
             {
-                udpClient.Close();
+                udpClient.Dispose();
                 udpClient = null;
             }
 
@@ -72,7 +71,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
         }
 
-        public void Initialize(string multicastAddress, int multicastPort, int tcpPort, string? deviceName)
+        public void Start(string multicastAddress, int multicastPort, string? deviceName, int tcpPort, IProgress<TransferProgressArguments> progress)
         {
             _multicastAddress = IPAddress.Parse(multicastAddress);
             _multicastPort = multicastPort;
@@ -89,11 +88,11 @@ namespace SwashbucklerDiary.Rcl.Services
             var ipEndPoint = new IPEndPoint(IPAddress.Any, _tcpPort);
             tcpListener = new(ipEndPoint);
 
-            Receive();
+            Receive(progress);
             Multicast();
         }
 
-        public void Multicast()
+        private void Multicast()
         {
             if (udpClient is null)
             {
@@ -105,7 +104,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 return;
             }
 
-            if (udpClientCTS is not null && !udpClientCTS.IsCancellationRequested)
+            if (IsMulticasting)
             {
                 return;
             }
@@ -114,36 +113,48 @@ namespace SwashbucklerDiary.Rcl.Services
 
             Task.Run(async () =>
             {
-                string jsonLANDeviceInfo = JsonSerializer.Serialize(lanDeviceInfo);
-                byte[] data = Encoding.UTF8.GetBytes(jsonLANDeviceInfo);
-
                 try
                 {
+                    var json = JsonSerializer.Serialize(lanDeviceInfo);
+                    var data = Encoding.UTF8.GetBytes(json);
+                    var iPEndPoint = new IPEndPoint(_multicastAddress, _multicastPort);
+
                     while (IsMulticasting)
                     {
-                        await udpClient.SendAsync(data, new IPEndPoint(_multicastAddress, _multicastPort), udpClientCTS.Token);
+                        await udpClient.SendAsync(data, iPEndPoint, udpClientCTS.Token).ConfigureAwait(false);
                         await Task.Delay(1000);
                     }
                 }
+                catch (OperationCanceledException)
+                {
+                    _logger.LogInformation("LAN Multicast cancel");
+                }
+                catch (SocketException e)
+                {
+                    _logger.LogError(e, "LAN Multicast error");
+                    ConnectFailed?.Invoke(e);
+                }
                 catch (Exception e)
                 {
-                    _logger.LogInformation(e, "stop multicast");
+                    _logger.LogError(e, "LAN Multicast error");
                 }
                 finally
                 {
                     udpClientCTS?.Cancel();
+                    udpClientCTS?.Dispose();
+                    udpClientCTS = null;
                 }
             });
         }
 
-        public void Receive()
+        private void Receive(IProgress<TransferProgressArguments> progress)
         {
             if (tcpListener is null)
             {
                 return;
             }
 
-            if (tcpClientCTS is not null && !tcpClientCTS.IsCancellationRequested)
+            if (IsReceiving)
             {
                 return;
             }
@@ -155,52 +166,84 @@ namespace SwashbucklerDiary.Rcl.Services
                 try
                 {
                     tcpListener.Start();
-                    using TcpClient handler = await tcpListener.AcceptTcpClientAsync(tcpClientCTS.Token);
-                    await using NetworkStream stream = handler.GetStream();
+
+                    using var handler = await tcpListener.AcceptTcpClientAsync(tcpClientCTS.Token).ConfigureAwait(false);
+                    await using var stream = handler.GetStream();
+
                     ReceiveStart?.Invoke();
 
-                    // 接收文件大小
-                    byte[] fileSizeBytes = new byte[8];
-                    await stream.ReadExactlyAsync(fileSizeBytes, tcpClientCTS.Token);
-                    long fileSize = BitConverter.ToInt64(fileSizeBytes, 0);
+                    // 读取文件大小
+                    var sizeBuffer = new byte[8];
+                    await stream.ReadExactlyAsync(sizeBuffer, tcpClientCTS.Token).ConfigureAwait(false);
+                    var fileSize = BitConverter.ToInt64(sizeBuffer);
 
                     // 接收文件名长度和文件名
                     byte[] fileNameLengthBytes = new byte[4];
-                    await stream.ReadExactlyAsync(fileNameLengthBytes, tcpClientCTS.Token);
+                    await stream.ReadExactlyAsync(fileNameLengthBytes, tcpClientCTS.Token).ConfigureAwait(false);
                     int fileNameLength = BitConverter.ToInt32(fileNameLengthBytes, 0);
                     byte[] fileNameBytes = new byte[fileNameLength];
-                    await stream.ReadExactlyAsync(fileNameBytes, tcpClientCTS.Token);
+                    await stream.ReadExactlyAsync(fileNameBytes, tcpClientCTS.Token).ConfigureAwait(false);
                     string fileName = Encoding.UTF8.GetString(fileNameBytes);
 
-                    var path = Path.Combine(_appFileSystem.CacheDirectory, Guid.NewGuid().ToString() + ".zip");
-                    using FileStream fileStream = File.Create(path);
-                    byte[] buffer = new byte[1024 * 1024];
-                    int bytesRead;
-                    var readLength = 0;
-                    while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        readLength += bytesRead;
-                        await fileStream.WriteAsync(buffer.AsMemory(0, bytesRead), tcpClientCTS.Token);
-                        ReceiveProgressChanged?.Invoke(readLength, fileSize);
-                    }
+                    var tempPath = Path.Combine(_appFileSystem.CacheDirectory, $"{Guid.NewGuid()}.zip");
+                    await using var fileStream = File.Create(tempPath);
+                    byte[] buffer = ArrayPool<byte>.Shared.Rent(1024 * 1024);
 
-                    if (fileSize != fileStream.Length)
+                    try
                     {
-                        throw new Exception();
-                    }
+                        long totalBytesRead = 0;
+                        int bytesRead;
+                        var lastReportTime = DateTime.MinValue;
 
-                    //接收成功
-                    ReceiveCompleted?.Invoke(path);
+                        while ((bytesRead = await stream.ReadAsync(buffer).ConfigureAwait(false)) > 0)
+                        {
+                            await fileStream.WriteAsync(buffer.AsMemory(0, bytesRead), tcpClientCTS.Token).ConfigureAwait(false);
+                            totalBytesRead += bytesRead;
+
+                            // 限制进度更新频率，避免过度触发事件
+                            if (DateTime.Now - lastReportTime > TimeSpan.FromMilliseconds(100) ||
+                                totalBytesRead == fileSize)
+                            {
+                                progress?.Report(new(totalBytesRead, fileSize));
+                                lastReportTime = DateTime.Now;
+                            }
+                        }
+
+                        if (totalBytesRead != fileSize)
+                        {
+                            ReceiveCanceled?.Invoke();
+                        }
+                        else
+                        {
+                            ReceiveCompleted?.Invoke(tempPath);
+                        }
+                    }
+                    finally
+                    {
+                        ArrayPool<byte>.Shared.Return(buffer);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    _logger.LogInformation("LAN Receive cancel");
+                    ReceiveCanceled?.Invoke();
+                }
+                catch (SocketException e)
+                {
+                    _logger.LogError(e, "LAN Receive error");
+                    ConnectFailed?.Invoke(e);
                 }
                 catch (Exception e)
                 {
-                    _logger.LogInformation(e, "stop receive");
+                    _logger.LogError(e, "LAN Receive error");
                     ReceiveAborted?.Invoke();
                 }
                 finally
                 {
                     tcpListener?.Stop();
                     tcpClientCTS?.Cancel();
+                    tcpClientCTS?.Dispose();
+                    tcpClientCTS = null;
                 }
             });
         }

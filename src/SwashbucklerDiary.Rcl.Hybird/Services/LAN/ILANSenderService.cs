@@ -1,4 +1,4 @@
-using SwashbucklerDiary.Rcl.Models;
+using System.Net.Sockets;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
@@ -8,25 +8,23 @@ namespace SwashbucklerDiary.Rcl.Services
 
         bool IsSending { get; }
 
-        event Action<LANDeviceInfo>? LANDeviceFound;
-
+        event Action<LANDeviceInfo> DeviceDiscovered;
+        event Action<LANDeviceInfo> DeviceTimeouted;
         event Action? SearchEnded;
-
-        event Action<long, long>? SendProgressChanged;
-
+        event Action? SendCanceled;
         event Action? SendAborted;
-
         event Action? SendCompleted;
-
-        void Initialize(string multicastAddress, int multicastPort, int tcpPort, int millisecondsOutTime);
+        event Action<SocketException>? ConnectFailed;
 
         void Dispose();
 
-        void SearchDevices();
+        void Start(string multicastAddress, int multicastPort, int millisecondsOutTime, int tcpPort);
+
+        void Search();
 
         void CancelSearch();
 
-        void Send(string ipAddress, string filePath);
+        Task SendAsync(string ipAddress, string filePath, IProgress<TransferProgressArguments> progress);
 
         void CancelSend();
     }

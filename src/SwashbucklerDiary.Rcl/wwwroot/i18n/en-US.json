@@ -484,5 +484,9 @@
   "Pattern password": "Pattern password",
   "Please draw a pattern": "Please draw a pattern",
   "Please draw the pattern again": "Please draw the pattern again",
-  "System fingerprint unlocking has been turned off, please use another unlocking method": "System fingerprint unlocking has been turned off, please use another unlocking method"
+  "System fingerprint unlocking has been turned off, please use another unlocking method": "System fingerprint unlocking has been turned off, please use another unlocking method",
+  "Target does not exist": "Target does not exist",
+  "Connection exception": "Connection exception",
+  "Generating": "Generating",
+  "Importing": "Importing"
 }

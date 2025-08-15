@@ -484,5 +484,9 @@
   "Pattern password": "Mật khẩu hình mẫu",
   "Please draw a pattern": "Vui lòng vẽ hình mẫu",
   "Please draw the pattern again": "Vui lòng vẽ lại hình mẫu",
-  "System fingerprint unlocking has been turned off, please use another unlocking method": "Tính năng mở khóa bằng vân tay hệ thống đã bị tắt, vui lòng sử dụng phương thức mở khóa khác"
+  "System fingerprint unlocking has been turned off, please use another unlocking method": "Tính năng mở khóa bằng vân tay hệ thống đã bị tắt, vui lòng sử dụng phương thức mở khóa khác",
+  "Target does not exist": "Mục tiêu không tồn tại",
+  "Connection exception": "Ngoại lệ kết nối",
+  "Generating": "Đang tạo",
+  "Importing": "Đang nhập"
 }

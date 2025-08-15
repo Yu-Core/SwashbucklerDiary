@@ -22,7 +22,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task WarningAsync(string? title, string? message);
 
-        void StartLoading(bool opacity = true);
+        void StartLoading(string? content = null, bool opacity = true);
 
         void StopLoading();
     }

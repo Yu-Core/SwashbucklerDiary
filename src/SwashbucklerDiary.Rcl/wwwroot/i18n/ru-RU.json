@@ -484,5 +484,9 @@
   "Pattern password": "Графический пароль",
   "Please draw a pattern": "Пожалуйста, нарисуйте узор",
   "Please draw the pattern again": "Пожалуйста, нарисуйте узор снова",
-  "System fingerprint unlocking has been turned off, please use another unlocking method": "Разблокировка по отпечатку пальца системы отключена, используйте другой метод разблокировки"
+  "System fingerprint unlocking has been turned off, please use another unlocking method": "Разблокировка по отпечатку пальца системы отключена, используйте другой метод разблокировки",
+  "Target does not exist": "Цель не существует",
+  "Connection exception": "Исключение соединения",
+  "Generating": "Генерация",
+  "Importing": "Импортирование"
 }

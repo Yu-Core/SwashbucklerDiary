@@ -2,18 +2,14 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Extensions;
-using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
+using System.Net.Sockets;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
     public partial class LANSenderPage : ImportantComponentBase
     {
-        private int ps;
-
-        private long totalBytes;
-
-        private long bytes;
+        private TransferDialog? transferDialog;
 
         private string? filePath;
 
@@ -27,7 +23,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showTransferDialog;
 
-        private string transferDialogTitle = "Sending";
+        private string? transferDialogTitle;
 
         private readonly List<LANDeviceInfoListItem> lanDeviceInfoListItems = [];
 
@@ -64,11 +60,13 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
-            LANSenderService.LANDeviceFound += LANDeviceFound;
-            LANSenderService.SearchEnded += SearchEnded;
-            LANSenderService.SendProgressChanged += SendProgressChanged;
-            LANSenderService.SendCompleted += SendingCompleted;
-            LANSenderService.SendAborted += SendAborted;
+            LANSenderService.DeviceDiscovered += HandleDeviceDiscovered;
+            LANSenderService.DeviceTimeouted += HandleDeviceTimeouted;
+            LANSenderService.SearchEnded += HandleSearchEnded;
+            LANSenderService.SendCompleted += HandleSendingCompleted;
+            LANSenderService.SendAborted += HandleSendAborted;
+            LANSenderService.SendCanceled += HandleSendCanceled;
+            LANSenderService.ConnectFailed += HandleConnectFailed;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -88,11 +86,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             showTransferDialog = false;
             LANSenderService.Dispose();
-            LANSenderService.LANDeviceFound -= LANDeviceFound;
-            LANSenderService.SearchEnded -= SearchEnded;
-            LANSenderService.SendProgressChanged -= SendProgressChanged;
-            LANSenderService.SendCompleted -= SendingCompleted;
-            LANSenderService.SendAborted -= SendAborted;
+            LANSenderService.DeviceDiscovered -= HandleDeviceDiscovered;
+            LANSenderService.DeviceTimeouted -= HandleDeviceTimeouted;
+            LANSenderService.SearchEnded -= HandleSearchEnded;
+            LANSenderService.SendCompleted -= HandleSendingCompleted;
+            LANSenderService.SendAborted -= HandleSendAborted;
+            LANSenderService.SendCanceled -= HandleSendCanceled;
+            LANSenderService.ConnectFailed -= HandleConnectFailed;
         }
 
         protected override void ReadSettings()
@@ -107,15 +107,21 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             try
             {
-                LANSenderService.Initialize(multicastAddress, multicastPort, tcpPort, millisecondsOutTime);
+                LANSenderService.Start(multicastAddress, multicastPort, millisecondsOutTime, tcpPort);
+                return;
+            }
+            catch (SocketException e) when (e.SocketErrorCode == SocketError.NetworkUnreachable)
+            {
+                await AlertService.ErrorAsync(I18n.T("No network connection"));
             }
             catch (Exception e)
             {
                 Logger.LogError(e, "LANSenderService initialize error");
-                await AlertService.Error(I18n.T("No network connection"));
-                await Task.Delay(1000);
-                await NavigateToBack();
+                await AlertService.ErrorAsync(e.ToString());
             }
+
+            await Task.Delay(1000);
+            await NavigateToBack();
         }
 
         private async Task Send(string? ipAddress)
@@ -130,16 +136,14 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            ResetSendProgress();
-            showTransferDialog = true;
-            StateHasChanged();
-
+            AlertService.StartLoading(I18n.T("Generating"));
             if (filePath == null)
             {
                 var diaries = await DiaryService.QueryDiariesAsync();
                 if (diaries.Count == 0)
                 {
-                    await AlertService.Info(I18n.T("No diary"));
+                    await AlertService.InfoAsync(I18n.T("No diary"));
+                    AlertService.StopLoading();
                     return;
                 }
 
@@ -147,10 +151,17 @@ namespace SwashbucklerDiary.Rcl.Pages
                 filePath = await DiaryFileManager.ExportJsonAsync(diaries);
             }
 
-            LANSenderService.Send(ipAddress, filePath);
+            AlertService.StopLoading();
+
+            ResetProgress();
+            transferDialogTitle = "Sending";
+            showTransferDialog = true;
+            StateHasChanged();
+
+            await LANSenderService.SendAsync(ipAddress, filePath, new Progress<TransferProgressArguments>(HandleProgressChanged));
         }
 
-        private void LANDeviceFound(LANDeviceInfo deviceInfo)
+        private void HandleDeviceDiscovered(LANDeviceInfo deviceInfo)
         {
             if (!lanDeviceInfoListItems.Any(it => it.IPAddress == deviceInfo.IPAddress))
             {
@@ -165,46 +176,27 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        private void SendProgressChanged(long readLength, long allLength)
+        private void HandleProgressChanged(TransferProgressArguments args)
         {
-            //只有每次传输大于512k且达到1%以上才会刷新进度
-            var percentage = (int)(((double)readLength / allLength) * 100);
-            bool refresh = (percentage - ps > 1 && readLength / 1024 - bytes > 512) || percentage == 100;
-
-            if (refresh)
-            {
-                ps = percentage; //传输完成百分比
-                bytes = readLength / 1024; //当前已经传输的Kb
-                totalBytes = allLength / 1024; //文件总大小Kb
-                InvokeAsync(StateHasChanged);
-            }
+            transferDialog?.SetProgress(args.TransferredBytes, args.TotalBytes);
         }
 
-        private void SendingCompleted()
+        private void HandleSendingCompleted()
         {
             InvokeAsync(async () =>
             {
                 transferDialogTitle = "Send successfully";
-                await AlertService.Success(I18n.T("Send successfully"));
+                await AlertService.SuccessAsync(I18n.T("Send successfully"));
                 StateHasChanged();
             });
         }
 
-        private void SendAborted()
+        private void HandleSendAborted()
         {
             InvokeAsync(async () =>
             {
-                if (showTransferDialog)
-                {
-                    transferDialogTitle = "Send failed";
-                    await AlertService.Error(I18n.T("Send failed"));
-                }
-                else
-                {
-                    transferDialogTitle = "Send canceled";
-                    await AlertService.Error(I18n.T("Send canceled"));
-                }
-
+                transferDialogTitle = "Send failed";
+                await AlertService.ErrorAsync(I18n.T("Send failed"));
                 StateHasChanged();
             });
         }
@@ -220,16 +212,54 @@ namespace SwashbucklerDiary.Rcl.Pages
             await NavigateToBack();
         }
 
-        private void SearchEnded()
+        private void HandleSearchEnded()
         {
             InvokeAsync(StateHasChanged);
         }
 
-        private void ResetSendProgress()
+        private void ResetProgress()
         {
-            ps = 0;
-            bytes = 0;
-            totalBytes = 0;
+            transferDialog?.SetProgress(0, 0);
+        }
+
+        private void HandleSendCanceled()
+        {
+            InvokeAsync(async () =>
+            {
+                transferDialogTitle = "Send canceled";
+                await AlertService.ErrorAsync(I18n.T("Send canceled"));
+                StateHasChanged();
+            });
+        }
+
+        private async void HandleConnectFailed(SocketException e)
+        {
+            if (e.SocketErrorCode == SocketError.ConnectionRefused)
+            {
+                await AlertService.ErrorAsync(I18n.T("Target does not exist"));
+                return;
+            }
+            else if (e.SocketErrorCode == SocketError.NetworkUnreachable)
+            {
+                await AlertService.ErrorAsync(I18n.T("No network connection"));
+            }
+            else
+            {
+                await AlertService.ErrorAsync(I18n.T("Connection exception"));
+            }
+
+            await Task.Delay(1000);
+            await NavigateToBack();
+        }
+
+        private void HandleDeviceTimeouted(LANDeviceInfo deviceInfo)
+        {
+            var item = lanDeviceInfoListItems.FirstOrDefault(it => it.IPAddress == deviceInfo.IPAddress);
+            if (item != null)
+            {
+                lanDeviceInfoListItems.Remove(item);
+                InvokeAsync(StateHasChanged);
+            }
         }
     }
 }
