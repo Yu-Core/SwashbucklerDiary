@@ -1,4 +1,4 @@
-﻿using Microsoft.JSInterop;
+using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.WebAssembly.Extensions
 {
@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
         public static async Task<IServiceCollection> AddFileSystem(this IServiceCollection services)
         {
             var JS = services.BuildServiceProvider().GetRequiredService<IJSRuntime>();
-            await JS.InvokeVoidAsync("MEMFileSystem.init");
+            await JS.InvokeVoidAsync("WasmFileSystem.init");
             return services;
         }
     }

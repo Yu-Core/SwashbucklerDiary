@@ -1,3 +1,5 @@
+const FS = Blazor.runtime.Module.FS;
+
 export function openUri(uri) {
     return new Promise((resolve, reject) => {
         // 检测页面状态的标志
@@ -104,9 +106,9 @@ export async function shareTextAsync(title, text) {
 export async function shareFileAsync(title, path) {
     if (navigator.share) {
         try {
-            if (Blazor.runtime.Module.FS.analyzePath(path).exists) {
+            if (FS.analyzePath(path).exists) {
                 const fileName = path.split('/').pop();
-                const data = Blazor.runtime.Module.FS.readFile(path);
+                const data = FS.readFile(path);
                 const file = new File([data], fileName, { type: 'image/png' });
                 await navigator.share({
                     title: title,
@@ -123,7 +125,7 @@ export async function shareFileAsync(title, path) {
 
 export function saveFileAsync(fileName, filePath) {
     const path = `/${filePath}`;
-    const fileData = Blazor.runtime.Module.FS.readFile(path);
+    const fileData = FS.readFile(path);
     var blob = new Blob([fileData], { type: 'application/octet-stream' });
     const url = URL.createObjectURL(blob);
 
@@ -146,6 +148,12 @@ export function pickFilesAsync(accept, fileExtensions, multiple = false) {
         input.multiple = multiple; // Set based on the parameter
         input.style.display = 'none';
 
+        const generateRandomFolderName = () => {
+            const timestamp = Date.now();
+            const randomPart = Math.random().toString(36).substring(2, 10);
+            return `folder_${timestamp}_${randomPart}`;
+        };
+
         const handleFiles = async () => {
             const files = input.files;
             input.remove();
@@ -163,14 +171,18 @@ export function pickFilesAsync(accept, fileExtensions, multiple = false) {
                 }
 
                 try {
-                    const md5 = await calculateMD5.readFile(file);
-                    const fileName = `${md5}${fileExtension}`;
+                    const fileName = file.name;
                     const contents = await readFileAsArrayBuffer(file);
 
-                    const filePath = `cache/${fileName}`;
-                    Blazor.runtime.Module.FS.writeFile(filePath, new Uint8Array(contents), { encoding: 'binary' });
+                    const randomFolderName = generateRandomFolderName();
+                    const folderPath = `/cache/${randomFolderName}`;
+                    FS.mkdir(folderPath);
+
+                    const filePath = `${folderPath}/${fileName}`;
+                    FS.writeFile(filePath, new Uint8Array(contents), { encoding: 'binary' });
                     results.push(filePath);
-                } catch {
+                } catch (e) {
+                    console.error(e);
                     results.push(""); // In case of error, add an empty string for the file
                 }
             }
@@ -201,45 +213,6 @@ export function pickFilesAsync(accept, fileExtensions, multiple = false) {
         input.click();
     });
 }
-
-const calculateMD5 = {
-    chunkSize: 64 * 1024 * 1024,
-    fileReader: new FileReader(),
-    hasher: null,
-
-    hashChunk: function (chunk) {
-        return new Promise((resolve, reject) => {
-            this.fileReader.onload = async (e) => {
-                const view = new Uint8Array(e.target.result);
-                this.hasher.update(view);
-                resolve();
-            };
-
-            this.fileReader.readAsArrayBuffer(chunk);
-        });
-    },
-
-    readFile: async function (file) {
-        if (this.hasher) {
-            this.hasher.init();
-        } else {
-            this.hasher = await hashwasm.createMD5();
-        }
-
-        const chunkNumber = Math.floor(file.size / this.chunkSize);
-
-        for (let i = 0; i <= chunkNumber; i++) {
-            const chunk = file.slice(
-                this.chunkSize * i,
-                Math.min(this.chunkSize * (i + 1), file.size)
-            );
-            await this.hashChunk(chunk);
-        }
-
-        const hash = this.hasher.digest();
-        return Promise.resolve(hash);
-    }
-};
 
 // Utility function to read file as array buffer
 function readFileAsArrayBuffer(file) {

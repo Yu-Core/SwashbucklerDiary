@@ -119,7 +119,6 @@
 - [dotnet-packaging](https://github.com/quamotion/dotnet-packaging)
 - [Fly Gesture Unlock](https://github.com/feiafei27/fly-gesture-unlock)
 - [Gir.Core](https://github.com/gircore/gir.core)
-- [hash-wasm](https://github.com/Daninet/hash-wasm)
 - [html2canvas](https://github.com/niklasvh/html2canvas)
 - [Markdown Guide](https://github.com/mattcone/markdown-guide)
 - [MASA.Blazor](https://github.com/BlazorComponent/MASA.Blazor)

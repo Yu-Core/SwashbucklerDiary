@@ -1,4 +1,4 @@
-﻿window.MEMFileSystem = {
+window.WasmFileSystem = {
     init: async function () {
         const deleteDatabase = (dbName) => {
             return new Promise((res, rej) => {
@@ -15,30 +15,27 @@
             FS.mkdir('/appdata');
             FS.mkdir('/cache');
             // Mount IDBFS to MEMFS
-            FS.mount(FS.filesystems.IDBFS, {}, '/appdata');
-            FS.mount(FS.filesystems.IDBFS, {}, '/cache');
+            FS.mount(FS.filesystems.IDBFS,{
+                autoPersist: true
+            }, '/appdata');
+            FS.mount(FS.filesystems.IDBFS, {
+                autoPersist: true
+            }, '/cache');
             // Synchronize IDBFS to MEMFS
-            FS.syncfs(true, () => {
+            FS.syncfs(true, (err) => {
+                if (err) console.error(err);
                 res();
-                // Synchronize MEMFS content to IDBFS periodically
-                setInterval(() => {
-                    if (this.synchronizing) return;
-
-                    this.synchronizing = true;
-                    FS.syncfs((err) => {
-                        this.synchronizing = false;
-                    });
-                }, 1000);
             });
         });
     },
     syncfs: function () {
         return new Promise((res) => {
             if (this.synchronizing) return res();
-            this.syncInProgress = true;
+            this.synchronizing = true;
             const FS = Blazor.runtime.Module.FS;
             FS.syncfs((err) => {
-                this.syncInProgress = false;
+                this.synchronizing = false;
+                if (err) console.error(err);
                 res();
             });
         });

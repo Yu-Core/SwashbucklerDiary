@@ -379,10 +379,11 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task<bool> ImportDBAsync(Stream stream)
         {
-            string fileName = Guid.NewGuid().ToString() + ".zip";
+            string fileName = Guid.NewGuid().ToString("N") + ".zip";
             string path = await _appFileSystem.CreateTempFileAsync(fileName, stream).ConfigureAwait(false);
             var flag = await ImportDBAsync(path).ConfigureAwait(false);
             File.Delete(path);
+            await _appFileSystem.SyncFS();
             return flag;
         }
 
@@ -433,6 +434,7 @@ namespace SwashbucklerDiary.Rcl.Services
             string previousAvatarUri = _settingService.Get(s => s.Avatar);
             await ReadSettingsFileAsync(outputFolder).ConfigureAwait(false);
             RestoreAvatar(outputFolder, previousAvatarUri);
+            await _appFileSystem.SyncFS();
             return true;
         }
 

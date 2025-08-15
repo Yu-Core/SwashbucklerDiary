@@ -6,6 +6,8 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         public string CacheDirectory { get; }
 
+        Task SyncFS();
+
         Task<string> CreateTempFileAsync(string fileName, string contents);
 
         Task<string> CreateTempFileAsync(string fileName, byte[] contents);

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Diagnostics;
@@ -12,6 +13,8 @@ namespace SwashbucklerDiary.Rcl.Extensions
         public static IServiceCollection AddSqlSugarConfig(this IServiceCollection services, string connectionString, string privacyConnectionString)
         {
             ISettingService? settingService = null;
+            IAppFileSystem? appFileSystem = null;
+
             var configureExternalServices = new ConfigureExternalServices
             {
                 //注意:  这儿AOP设置不能少
@@ -94,6 +97,14 @@ namespace SwashbucklerDiary.Rcl.Extensions
                         //Debug.WriteLine(sql);//输出sql
                         Debug.WriteLine(UtilMethods.GetSqlString(DbType.Sqlite, sql, pars));//输出sql
                     };
+
+                    if (OperatingSystem.IsBrowser())
+                    {
+                        db.GetConnection(config.ConfigId).Aop.DataChangesExecuted = (_, _) =>
+                        {
+                            _ = appFileSystem?.SyncFS();
+                        };
+                    }
                 }
 #endif
                 if (settingService is not null)
@@ -130,6 +141,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
             services.AddSingleton<ISqlSugarClient>(sp =>
             {
                 settingService = sp.GetService<ISettingService>();
+                appFileSystem = sp.GetService<IAppFileSystem>();
                 return sqlSugar;
             });//这边是SqlSugarScope用AddSingleton
             return services;

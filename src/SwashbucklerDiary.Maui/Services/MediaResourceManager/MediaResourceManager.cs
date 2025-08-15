@@ -2,7 +2,6 @@ using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Maui.BlazorWebView;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Services
 {
@@ -18,34 +17,6 @@ namespace SwashbucklerDiary.Maui.Services
             : base(platformIntegration, appFileSystem, alertService, i18nService, logger)
         {
             _httpClient = new HttpClient();
-        }
-
-        public override async Task<string?> CreateMediaResourceFileAsync(string targetDirectoryPath, string? sourceFilePath)
-        {
-            if (string.IsNullOrEmpty(sourceFilePath))
-            {
-                return null;
-            }
-
-            using Stream stream = File.OpenRead(sourceFilePath);
-            var md5 = await stream.CreateMD5().ConfigureAwait(false);
-            var fn = md5 + Path.GetExtension(sourceFilePath);
-            var targetFilePath = Path.Combine(targetDirectoryPath, fn);
-
-            if (!File.Exists(targetFilePath))
-            {
-                if (sourceFilePath.StartsWith(FileSystem.CacheDirectory))
-                {
-                    stream.Close();
-                    _appFileSystem.FileMove(sourceFilePath, targetFilePath);
-                }
-                else
-                {
-                    await _appFileSystem.FileCopyAsync(stream, targetFilePath).ConfigureAwait(false);
-                }
-            }
-
-            return LocalFileWebAccessHelper.FilePathToUrlRelativePath(targetFilePath);
         }
 
         protected override async Task<string> GetResourceFilePathAsync(string? urlString)

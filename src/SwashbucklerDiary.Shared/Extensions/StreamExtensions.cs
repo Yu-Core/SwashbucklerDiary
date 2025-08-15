@@ -1,26 +1,33 @@
+using System.Buffers;
 using System.Security.Cryptography;
 
 namespace SwashbucklerDiary.Shared
 {
     public static class StreamExtensions
     {
-        public static async Task<string> CreateMD5(this Stream stream, int bufferSize = 1024 * 1024)
+        public static async Task<string> CreateSHA256Async(
+            this Stream stream,
+            int bufferSize = 1024 * 1024,
+            CancellationToken cancellationToken = default)
         {
-            using MD5 md5 = MD5.Create();
-            byte[] buffer = new byte[bufferSize];
-            int bytesRead;
+            using var incrementalHash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(bufferSize); // 使用缓冲池减少GC压力
 
-            while ((bytesRead = await stream.ReadAsync(buffer)) > 0)
+            try
             {
-                md5.TransformBlock(buffer, 0, bytesRead, null, 0);
+                int bytesRead;
+                while ((bytesRead = await stream.ReadAsync(buffer, cancellationToken).ConfigureAwait(false)) > 0)
+                {
+                    incrementalHash.AppendData(buffer, 0, bytesRead);
+                }
+
+                byte[] hash = incrementalHash.GetHashAndReset();
+                return Convert.ToHexStringLower(hash);
             }
-
-            md5.TransformFinalBlock([], 0, 0);
-
-            stream.Seek(0, SeekOrigin.Begin);
-
-            byte[] hash = md5.Hash ?? [];
-            return Convert.ToHexStringLower(hash);
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer); // 确保归还缓冲区
+            }
         }
     }
 }

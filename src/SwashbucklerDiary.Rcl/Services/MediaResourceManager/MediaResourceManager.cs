@@ -90,7 +90,43 @@ namespace SwashbucklerDiary.Rcl.Services
             return CreateMediaResourceFileAsync(targetDirectoryPath, sourceFilePath);
         }
 
-        public abstract Task<string?> CreateMediaResourceFileAsync(string targetDirectoryPath, string? sourceFilePath);
+        public async Task<string?> CreateMediaResourceFileAsync(string targetDirectoryPath, string? sourceFilePath)
+        {
+            if (string.IsNullOrEmpty(sourceFilePath))
+            {
+                return null;
+            }
+
+            string sha256;
+
+            await using (var stream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read, FileShare.Read,
+                    bufferSize: 1024 * 1024, useAsync: true))
+            {
+                sha256 = await stream.CreateSHA256Async().ConfigureAwait(false);
+            }
+
+            var fn = sha256 + Path.GetExtension(sourceFilePath);
+            var targetFilePath = Path.Combine(targetDirectoryPath, fn);
+
+            if (!File.Exists(targetFilePath))
+            {
+                await Task.Run(() =>
+                {
+                    if (sourceFilePath.StartsWith(_appFileSystem.CacheDirectory))
+                    {
+                        _appFileSystem.FileMove(sourceFilePath, targetFilePath);
+                    }
+                    else
+                    {
+                        _appFileSystem.FileCopy(sourceFilePath, targetFilePath);
+                    }
+                }).ConfigureAwait(false);
+
+                await _appFileSystem.SyncFS().ConfigureAwait(false);
+            }
+
+            return FilePathToUrlRelativePath(targetFilePath);
+        }
 
         public async Task<bool> ShareImageAsync(string title, string url)
         {
@@ -181,12 +217,13 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected abstract Task<string> GetResourceFilePathAsync(string urlString);
 
-        protected virtual async Task<string> GetAudioFilePicturePath(string fileName, byte[] data)
+        protected async Task<string> GetAudioFilePicturePath(string fileName, byte[] data)
         {
             string filePath = Path.Combine(_appFileSystem.CacheDirectory, fileName);
             if (!File.Exists(filePath))
             {
                 await File.WriteAllBytesAsync(filePath, data).ConfigureAwait(false);
+                await _appFileSystem.SyncFS().ConfigureAwait(false);
             }
 
             return FilePathToUrlRelativePath(filePath);

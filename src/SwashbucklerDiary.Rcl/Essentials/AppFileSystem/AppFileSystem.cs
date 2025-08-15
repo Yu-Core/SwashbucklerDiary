@@ -10,6 +10,11 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         public abstract string CacheDirectory { get; }
 
+        public virtual Task SyncFS()
+        {
+            return Task.CompletedTask;
+        }
+
         public async Task<string> CreateTempFileAsync(string fileName, string contents)
         {
             string path = Path.Combine(CacheDirectory, fileName);

@@ -55,11 +55,6 @@
     "Url": "https://github.com/gircore/gir.core/blob/main/license.txt"
   },
   {
-    "Name": "hash-wasm",
-    "License": "MIT license",
-    "Url": "https://github.com/Daninet/hash-wasm/blob/master/LICENSE"
-  },
-  {
     "Name": "html2canvas",
     "License": "MIT license",
     "Url": "https://github.com/niklasvh/html2canvas/blob/master/LICENSE"
