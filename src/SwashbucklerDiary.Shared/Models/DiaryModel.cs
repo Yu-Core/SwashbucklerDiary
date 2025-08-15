@@ -17,6 +17,9 @@ namespace SwashbucklerDiary.Shared
         [Obsolete("Privacy mode no requires it after 1.3.9")]
         public bool Private { get; set; }
 
+        /// <summary>
+        /// It was added later, so it may be null in SQL. 
+        /// </summary>
         public bool Template { get; set; }
 
         public List<TagModel>? Tags { get; set; }

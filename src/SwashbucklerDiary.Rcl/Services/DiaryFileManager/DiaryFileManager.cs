@@ -425,10 +425,6 @@ namespace SwashbucklerDiary.Rcl.Services
             else
             {
                 await RestoreDiaryResourceAsync(outputFolder).ConfigureAwait(false);
-                if (version < new Version("1.17.0"))
-                {
-                    await UpdateTemplateForOldDiaryAsync().ConfigureAwait(false);
-                }
             }
 
             string previousAvatarUri = _settingService.Get(s => s.Avatar);
@@ -677,13 +673,6 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             bool privacyMode = _settingService.GetTemp(it => it.PrivacyMode);
             return privacyMode ? PrivacyDatabasePath : DatabasePath;
-        }
-
-        public async Task UpdateTemplateForOldDiaryAsync()
-        {
-#pragma warning disable CS0472
-            await _diaryService.UpdateAsync(it => new() { Template = false }, it => it.Template == null).ConfigureAwait(false);
-#pragma warning restore CS0472
         }
 
         public async Task<string> ExportResourceFileAsync(List<ResourceModel> resources)

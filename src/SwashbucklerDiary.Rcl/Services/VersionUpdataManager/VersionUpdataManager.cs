@@ -115,7 +115,6 @@ namespace SwashbucklerDiary.Rcl.Services
             AddVersionHandler("1.01.5", HandleVersionUpdate1015);
             AddVersionHandler("1.05.5", HandleVersionUpdate1055);
             AddVersionHandler("1.13.2", HandleVersionUpdate1132);
-            AddVersionHandler("1.17.0", HandleVersionUpdate1170);
         }
 
         protected void AddVersionHandler(string versionString, Func<Task> handler)
@@ -205,14 +204,6 @@ namespace SwashbucklerDiary.Rcl.Services
                 await _settingService.RemoveAsync(oldKey).ConfigureAwait(false);
                 await _settingService.SetAsync("NickName", oldValue).ConfigureAwait(false);
             }
-        }
-
-        private async Task HandleVersionUpdate1170()
-        {
-            await _diaryFileManager.UpdateTemplateForOldDiaryAsync().ConfigureAwait(false);
-            _settingService.SetTemp(it => it.PrivacyMode, true);
-            await _diaryFileManager.UpdateTemplateForOldDiaryAsync().ConfigureAwait(false);
-            _settingService.SetTemp(it => it.PrivacyMode, false);
         }
     }
 }

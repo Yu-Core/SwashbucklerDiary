@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
+#pragma warning disable CS0472 // 由于此类型的值永不等于 "null"，该表达式的结果始终相同
     public class DiaryService : BaseDataService<DiaryModel>, IDiaryService
     {
         private readonly IDiaryRepository _iDiaryRepository;
@@ -61,12 +62,12 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public Task<List<DiaryModel>> QueryDiariesAsync()
         {
-            return QueryAsync(it => !it.Template);
+            return QueryAsync(it => it.Template == null || it.Template == false);
         }
 
         public Task<List<DiaryModel>> QueryDiariesAsync(Expression<Func<DiaryModel, bool>> expression)
         {
-            expression = expression.And(it => !it.Template);
+            expression = expression.And(it => it.Template == null || it.Template == false);
             return QueryAsync(expression);
         }
 

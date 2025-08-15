@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Repository
 {
+#pragma warning disable CS0472 // 由于此类型的值永不等于 "null"，该表达式的结果始终相同
     public class TagRepository : BaseRepository<TagModel>, ITagRepository
     {
         public TagRepository(ISqlSugarClient context) : base(context)
@@ -39,7 +40,7 @@ namespace SwashbucklerDiary.Rcl.Repository
         {
             Expression<Func<TagModel, List<DiaryModel>>> expression =
                 t => t.Diaries!
-                .Where(d => !d.Template)
+                .Where(d => d.Template == null || d.Template == false)
                 .OrderByDescending(d => d.CreateTime)
                 .ToList();
             return Context.Queryable<TagModel>()
@@ -53,7 +54,7 @@ namespace SwashbucklerDiary.Rcl.Repository
             var result = await Context.Queryable<TagModel>()
                 .LeftJoin<DiaryTagModel>((t, dt) => t.Id == dt.TagId)
                 .LeftJoin<DiaryModel>((t, dt, d) => dt.DiaryId == d.Id)
-                .Where((t, dt, d) => !d.Template)
+                .Where((t, dt, d) => d.Template == null || d.Template == false)
                 .GroupBy(t => t.Id)
                 .Select((t, dt, d) => new
                 {
