@@ -81,17 +81,30 @@ jobs:
 
       # Publish MAUI Android
       - name: Publish MAUI Android
-        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c:Release -p:AndroidPackageFormat=apk -f:net${{ env.DOTNET_VERSION }}-android -r android-arm64 --sc -p:PublishTrimmed=true -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=${{secrets.ANDROIDSIGNINGKEYSTORE}} -p:AndroidSigningKeyAlias=${{secrets.ANDROIDSIGNINGKEYALIAS}} -p:AndroidSigningKeyPass=${{secrets.ANDROIDSIGNINGKEYPASS}} -p:AndroidSigningStorePass=${{secrets.ANDROIDSIGNINGSTOREPASS}} --no-restore --output Releases
+        run: |
+          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c:Release -p:AndroidPackageFormat=apk -f:net${{ env.DOTNET_VERSION }}-android -r android-arm64 --sc -p:PublishTrimmed=true -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=${{secrets.ANDROIDSIGNINGKEYSTORE}} -p:AndroidSigningKeyAlias=${{secrets.ANDROIDSIGNINGKEYALIAS}} -p:AndroidSigningKeyPass=${{secrets.ANDROIDSIGNINGKEYPASS}} -p:AndroidSigningStorePass=${{secrets.ANDROIDSIGNINGSTOREPASS}} --no-restore
+          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c:Release -p:AndroidPackageFormat=apk -f:net${{ env.DOTNET_VERSION }}-android -r android-x64 --sc -p:PublishTrimmed=true -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=${{secrets.ANDROIDSIGNINGKEYSTORE}} -p:AndroidSigningKeyAlias=${{secrets.ANDROIDSIGNINGKEYALIAS}} -p:AndroidSigningKeyPass=${{secrets.ANDROIDSIGNINGKEYPASS}} -p:AndroidSigningStorePass=${{secrets.ANDROIDSIGNINGSTOREPASS}} --no-restore
 
       - name: Rename apk
-        run: ren Releases/*Signed.apk ${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk
+        run:  |
+          ren ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-arm64/publish ${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk
+          ren ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-x64/publish ${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-x64.apk
 
       # Update to Github Releases
-      - uses: svenstaro/upload-release-action@v2
+      - name: Update android-arm64 to Github Releases
+        uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: Releases/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk
-          file_glob: true
+          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-arm64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk
+          release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
+          tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
+          prerelease: ${{ inputs.prerelease }}
+
+      - name: Update android-x64 to Github Releases
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-arm64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-x64.apk
           release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
           prerelease: ${{ inputs.prerelease }}
@@ -203,8 +216,8 @@ jobs:
 
       - name: Rename pkg
         run: |
-          mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-arm64/publish/*.pkg ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-arm64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalys-arm64.pkg
-          mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-x64/publish/*.pkg ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-x64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalys-x64.pkg
+          mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-arm64/publish/*.pkg ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-arm64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalyst-arm64.pkg
+          mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-x64/publish/*.pkg ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-x64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalyst-x64.pkg
 
       # Publish MAUI iOS
       - name: Publish MAUI iOS

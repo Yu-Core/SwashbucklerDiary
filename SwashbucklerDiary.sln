@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Itms", "Solution Itms", "{181F89D9-8AD0-4ED6-A9EB-17828B68BF67}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		download-guide.md = download-guide.md
 		README.en-US.md = README.en-US.md
 		README.md = README.md
 	EndProjectSection

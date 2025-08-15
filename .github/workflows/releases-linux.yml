@@ -31,8 +31,10 @@ jobs:
       - name: Setup dotnet-packaging
         run: |
           dotnet tool install --global dotnet-deb
+          dotnet tool install --global dotnet-rpm
           cd ${{ env.CSPROJ_PATH }}
           dotnet deb install
+          dotnet rpm install
           cd ${{ github.workspace }}
 
       # Get the commit count and format the version
@@ -52,21 +54,33 @@ jobs:
           sed -i "s/<Version>.*<\/Version>/<Version>${{ env.FORMATTED_VERSION }}<\/Version>/" \
           ${{ env.CSPROJ_FILE_PATH }}
 
-      # Publish deb Package
+      # Publish Package
       - name: Publish
         run: |
           dotnet restore ${{ env.CSPROJ_FILE_PATH }} -r linux-x64
           dotnet msbuild ${{ env.CSPROJ_FILE_PATH }} /t:CreateDeb /p:TargetFramework=net${{ env.DOTNET_VERSION }} /p:RuntimeIdentifier=linux-x64 /p:Configuration=Release /p:SelfContained=true
+          dotnet msbuild ${{ env.CSPROJ_FILE_PATH }} /t:CreateRpm /p:TargetFramework=net${{ env.DOTNET_VERSION }} /p:RuntimeIdentifier=linux-x64 /p:Configuration=Release /p:SelfContained=true
 
-      - name: Rename deb
+      - name: Rename
         run: |
           mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/*.deb ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/${{ env.APP_NAME }}-${{ env.FORMATTED_VERSION }}-linux-x64.deb
+          mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/*.rpm ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/${{ env.APP_NAME }}-${{ env.FORMATTED_VERSION }}-linux-x64.rpm
 
       # Update to Github Releases
-      - uses: svenstaro/upload-release-action@v2
+      - name: Update linux-x64 deb to Github Releases
+        uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/*.deb
+          file_glob: true
+          release_name: ${{ env.FORMATTED_VERSION }}
+          tag: v${{ env.FORMATTED_VERSION }}
+
+      - name: Update linux-x64 rpm to Github Releases
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}/linux-x64/*.rpm
           file_glob: true
           release_name: ${{ env.FORMATTED_VERSION }}
           tag: v${{ env.FORMATTED_VERSION }}
