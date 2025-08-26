@@ -9,8 +9,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool previousOutline;
 
-        private bool afterFirstRender;
-
         private DotNetObjectReference<object>? _dotNetObjectReference;
 
         private ElementReference outlineElementRef;
@@ -94,9 +92,9 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender)
+            if (!IsDisposed && firstRender)
             {
-                afterFirstRender = true;
+                _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
                 await RenderMarkdown();
             }
         }
@@ -106,16 +104,16 @@ namespace SwashbucklerDiary.Rcl.Components
             await base.DisposeAsyncCore();
 
             _dotNetObjectReference?.Dispose();
+            _dotNetObjectReference = null;
         }
 
         private async Task RenderMarkdown()
         {
-            if (!afterFirstRender)
+            if (_dotNetObjectReference is null)
             {
                 return;
             }
 
-            _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
             if (Simple)
             {
                 await VditorMarkdownPreviewJSModule.Md2HTMLPreview(_dotNetObjectReference, Ref, Value, Options, Patch);
@@ -128,7 +126,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task RenderOutline()
         {
-            if (!afterFirstRender || !Outline || Simple)
+            if (_dotNetObjectReference is null || !Outline || Simple)
             {
                 return;
             }
