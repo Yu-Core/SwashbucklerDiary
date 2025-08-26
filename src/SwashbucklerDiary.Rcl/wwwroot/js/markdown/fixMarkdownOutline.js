@@ -18,7 +18,7 @@ function scrollToTargetItem(previewElement, element) {
     const targetElement = previewElement.querySelector('#' + targetId);
     if (targetElement) {
         setTimeout(() => {
-            targetElement.scrollIntoView();
+            targetElement.scrollIntoView({ behavior: "smooth" });
         }, 100);
     }
 }

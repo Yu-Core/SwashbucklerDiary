@@ -131,7 +131,7 @@ function handleUrlHash() {
     const anchor = decodeURIComponent(location.hash.substring(1));
     const targetElement = document.getElementById(anchor);
     if (targetElement) {
-        targetElement.scrollIntoView();
+        targetElement.scrollIntoView({ behavior: "smooth" });
     }
 }
 
@@ -166,7 +166,7 @@ function fixAnchorLinkNavigate(dotNetCallbackRef, element) {
         const targetElement = document.getElementById(hash.substring(1));
         if (targetElement) {
             setTimeout(() => {
-                targetElement.scrollIntoView();
+                targetElement.scrollIntoView({ behavior: "smooth" });
             }, 100);
         }
     }

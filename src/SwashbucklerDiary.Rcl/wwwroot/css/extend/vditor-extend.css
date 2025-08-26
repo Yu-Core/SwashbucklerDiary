@@ -38,8 +38,6 @@
     border-radius: 8px;
     padding-left: 0px !important;
     padding-right: 0px !important;
-    --editor-bottom: 48px !important;
-    scroll-behavior: smooth;
 }
 
     .vditor-reset *::-webkit-scrollbar {
