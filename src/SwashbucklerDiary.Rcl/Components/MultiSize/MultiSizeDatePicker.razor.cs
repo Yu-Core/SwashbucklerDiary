@@ -4,6 +4,14 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class MultiSizeDatePicker : DialogComponentBase
     {
+        private DateOnly mobileMin;
+
+        private DateOnly mobileMax;
+
+        private DateOnly? desktopMin;
+
+        private DateOnly? desktopMax;
+
         [Parameter]
         public DateOnly Value { get; set; }
 
@@ -16,13 +24,15 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public DateOnly? Max { get; set; }
 
-        private DateOnly MobileMin => Min ?? default;
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
 
-        private DateOnly MobileMax => Max ?? default;
-
-        private DateOnly? DesktopMin => Min == default(DateOnly) ? null : Min;
-
-        private DateOnly? DesktopMax => Max == default(DateOnly) ? null : Max;
+            mobileMin = (Min is null || Min == default) ? DateOnly.FromDateTime(DateTime.Now.AddYears(-100)) : Min.Value;
+            desktopMin = Min == default(DateOnly) ? null : Min;
+            mobileMax = (Max is null || Max == default) ? DateOnly.FromDateTime(DateTime.Now.AddYears(100)) : Max.Value;
+            desktopMax = Max == default(DateOnly) ? null : Max;
+        }
 
         private async Task UpdateDisplay(bool value)
         {
