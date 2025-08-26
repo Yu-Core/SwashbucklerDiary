@@ -52,10 +52,10 @@
               Value="diaries">
 </ExportDialog>
 
-<MultiListDialog @bind-Visible="showImport"
+<MultiSizeListDialog @bind-Visible="showImport"
                  Title="@(I18n.T("Select the import file format"))"
                  DynamicListItems="importTypes">
-</MultiListDialog>
+</MultiSizeListDialog>
 
 <CustomMDialog @bind-MyValue="showConfirmImport"
                ContentClass="rounded-lg"

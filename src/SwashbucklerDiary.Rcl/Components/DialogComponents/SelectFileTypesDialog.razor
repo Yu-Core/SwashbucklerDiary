@@ -1,7 +1,7 @@
 @namespace SwashbucklerDiary.Rcl.Components
 @inherits DialogComponentBase
 
-<MultiDisplay>
+<MultiSizeDisplay>
     <MobileContent>
         <CustomMBottomSheet MyValue="Visible"
                             MyValueChanged="InternalVisibleChanged"
@@ -19,7 +19,7 @@
             @GenCard(GenDesktopCardActionsContent())
         </CustomMDialog>
     </DesktopContent>
-</MultiDisplay>
+</MultiSizeDisplay>
 
 @code {
     private RenderFragment GenCard(RenderFragment cardActionsContent) => __builder =>

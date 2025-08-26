@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class MultiSearch
+    public partial class MultiSizeSearch
     {
         private string? searchText;
 

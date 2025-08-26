@@ -4,7 +4,7 @@ using SwashbucklerDiary.Rcl.Models;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class MultiMenu : DialogComponentBase
+    public partial class MultiSizeMenu : DialogComponentBase
     {
         private CustomMBottomSheet? mBottomSheetExtension;
 

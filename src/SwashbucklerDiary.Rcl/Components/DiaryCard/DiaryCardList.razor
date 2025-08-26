@@ -19,13 +19,13 @@
     </div>
     @if (ShowStatisticsCard)
     {
-        <MultiDisplay MdAndUp="true">
+        <MultiSizeDisplay MdAndUp="true">
             <DesktopContent>
                 <div class="card-list__assist-info">
                     <DiaryStatisticsCard Value="Value"></DiaryStatisticsCard>
                 </div>
             </DesktopContent>
-        </MultiDisplay>
+        </MultiSizeDisplay>
     }
 </div>
 
@@ -60,7 +60,7 @@
              ItemText="it => I18n.TForOrder(it)">
 </RadioDialog>
 
-<MultiMenu @bind-Visible="showMenu"
+<MultiSizeMenu @bind-Visible="showMenu"
            DynamicListItems="menuItems"
            ActivatorAttributes="menuActivatorAttributes">
-</MultiMenu>
+</MultiSizeMenu>

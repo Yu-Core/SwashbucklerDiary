@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class MultiDatePicker : DialogComponentBase
+    public partial class MultiSizeDatePicker : DialogComponentBase
     {
         [Parameter]
         public DateOnly Value { get; set; }

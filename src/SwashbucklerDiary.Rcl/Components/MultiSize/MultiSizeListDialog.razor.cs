@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class MultiListDialog : DialogComponentBase
+    public partial class MultiSizeListDialog : DialogComponentBase
     {
         [Parameter]
         public string? Title { get; set; }

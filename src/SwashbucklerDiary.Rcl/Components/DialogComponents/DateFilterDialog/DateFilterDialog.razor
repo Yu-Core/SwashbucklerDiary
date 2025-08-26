@@ -1,7 +1,7 @@
 @namespace SwashbucklerDiary.Rcl.Components
 @inherits DialogComponentBase
 
-<MultiDisplay>
+<MultiSizeDisplay>
     <MobileContent>
         <CustomMBottomSheet MyValue="Visible"
                             MyValueChanged="InternalVisibleChanged"
@@ -17,17 +17,17 @@
             @GenCard(GenDesktopCardActionsContent())
         </CustomMDialog>
     </DesktopContent>
-</MultiDisplay>
+</MultiSizeDisplay>
 
-<MultiDatePicker @bind-Visible="showMinDate"
+<MultiSizeDatePicker @bind-Visible="showMinDate"
                  @bind-Value="MinDate"
                  Max="MaxDate">
-</MultiDatePicker>
+</MultiSizeDatePicker>
 
-<MultiDatePicker @bind-Visible="showMaxDate"
+<MultiSizeDatePicker @bind-Visible="showMaxDate"
                  @bind-Value="MaxDate"
                  Min="MinDate">
-</MultiDatePicker>
+</MultiSizeDatePicker>
 
 @code {
     private RenderFragment GenCard(RenderFragment cardActionsContent) => __builder =>

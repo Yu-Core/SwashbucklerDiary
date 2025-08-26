@@ -31,22 +31,22 @@
             </MIcon>
         </MButton>
 
-        <MultiMenu @bind-Visible="showMenu"
+        <MultiSizeMenu @bind-Visible="showMenu"
                    DynamicListItems="menuItems">
             <ActivatorContent>
                 <MButton @attributes="@context.Attrs"
                          Icon="true">
-                    <MultiDisplay>
+                    <MultiSizeDisplay>
                         <DesktopContent>
                             <MIcon>more_horiz</MIcon>
                         </DesktopContent>
                         <MobileContent>
                             <MIcon>more_vert</MIcon>
                         </MobileContent>
-                    </MultiDisplay>
+                    </MultiSizeDisplay>
                 </MButton>
             </ActivatorContent>
-        </MultiMenu>
+        </MultiSizeMenu>
     </MyAppBar>
 }
 
@@ -170,10 +170,10 @@
     </BackTopButton>
 </div>
 
-<MultiListDialog @bind-Visible="showShare"
+<MultiSizeListDialog @bind-Visible="showShare"
                  Title="@(I18n.T("Choose how to Share"))"
                  DynamicListItems="shareItems">
-</MultiListDialog>
+</MultiSizeListDialog>
 
 <DeleteDialog @bind-Visible="showDelete"
               Title="@(I18n.T("Delete a diary"))"

@@ -3,7 +3,7 @@ using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class MultiDisplay : IDisposable
+    public partial class MultiSizeDisplay : IDisposable
     {
         private bool IsDesktop => MdAndUp ? BreakpointService.Breakpoint.MdAndUp : BreakpointService.Breakpoint.SmAndUp;
 

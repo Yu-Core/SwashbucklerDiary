@@ -6,7 +6,7 @@
     <MToolbarTitle Class="font-weight-bold flex-grow-1">
         <wc-auto-scroll-text>@(I18n.T("Mine"))</wc-auto-scroll-text>
     </MToolbarTitle>
-    <MultiSearch OnSearch="Search"></MultiSearch>
+    <MultiSizeSearch OnSearch="Search"></MultiSizeSearch>
 </MyAppBar>
 
 <ScrollContainer @ref="scrollContainer">
@@ -105,7 +105,7 @@
         </MCard>
     </div>
 
-    <MultiDisplay>
+    <MultiSizeDisplay>
         <DesktopContent>
             @foreach (var list in ViewLists)
             {
@@ -174,7 +174,7 @@
                 }
             </div>
         </MobileContent>
-    </MultiDisplay>
+    </MultiSizeDisplay>
 
 </ScrollContainer>
 
@@ -198,10 +198,10 @@
              Items="themeItems">
 </RadioDialog>
 
-<MultiListDialog @bind-Visible="showFeedback"
+<MultiSizeListDialog @bind-Visible="showFeedback"
                  Title="@(I18n.T("Contact information"))"
                  DynamicListItems="FeedbackTypes">
-</MultiListDialog>
+</MultiSizeListDialog>
 
 <PreviewImageDialog @bind-Visible="showPreviewImage"
                     Src="@avatar">

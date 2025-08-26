@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class MultiTimePicker : DialogComponentBase
+    public partial class MultiSizeTimePicker : DialogComponentBase
     {
         [Parameter]
         public TimeOnly Value { get; set; }

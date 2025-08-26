@@ -40,22 +40,22 @@
             </MIcon>
         </MButton>
 
-        <MultiMenu @bind-Visible="showMenu"
+        <MultiSizeMenu @bind-Visible="showMenu"
                    DynamicListItems="menuItems">
             <ActivatorContent>
                 <MButton @attributes="@context.Attrs"
                          Icon="true">
-                    <MultiDisplay>
+                    <MultiSizeDisplay>
                         <DesktopContent>
                             <MIcon>more_horiz</MIcon>
                         </DesktopContent>
                         <MobileContent>
                             <MIcon>more_vert</MIcon>
                         </MobileContent>
-                    </MultiDisplay>
+                    </MultiSizeDisplay>
                 </MButton>
             </ActivatorContent>
-        </MultiMenu>
+        </MultiSizeMenu>
     </MyAppBar>
 
     <ScrollContainer ContentClass="d-flex flex-column pt-0 pb-sm-5"
@@ -197,13 +197,13 @@
                       @bind-Value="diary.Location">
 </SelectLocationDialog>
 
-<MultiDatePicker @bind-Visible="showDate"
+<MultiSizeDatePicker @bind-Visible="showDate"
                  @bind-Value="SelectedDate">
-</MultiDatePicker>
+</MultiSizeDatePicker>
 
-<MultiTimePicker @bind-Visible="showTime"
+<MultiSizeTimePicker @bind-Visible="showTime"
                  @bind-Value="SelectedTime">
-</MultiTimePicker>
+</MultiSizeTimePicker>
 
 <SelectDiaryDialog @bind-Visible="showReference"
                    @bind-Tags="tags"

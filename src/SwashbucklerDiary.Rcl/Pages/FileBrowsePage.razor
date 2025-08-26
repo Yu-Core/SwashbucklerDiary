@@ -9,22 +9,22 @@
 
     <MSpacer></MSpacer>
 
-    <MultiMenu @bind-Visible="showMenu"
+    <MultiSizeMenu @bind-Visible="showMenu"
                DynamicListItems="menuItems">
         <ActivatorContent>
             <MButton @attributes="@context.Attrs"
                      Icon="true">
-                <MultiDisplay>
+                <MultiSizeDisplay>
                     <DesktopContent>
                         <MIcon>more_horiz</MIcon>
                     </DesktopContent>
                     <MobileContent>
                         <MIcon>more_vert</MIcon>
                     </MobileContent>
-                </MultiDisplay>
+                </MultiSizeDisplay>
             </MButton>
         </ActivatorContent>
-    </MultiMenu>
+    </MultiSizeMenu>
 </MyAppBar>
 
 <SwiperTabItems @bind-Value="tab">

@@ -1,11 +1,11 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits DialogComponentBase
 
-<MultiListDialog Visible="Visible"
+<MultiSizeListDialog Visible="Visible"
                  VisibleChanged="InternalVisibleChanged"
                  Title="@(I18n.T("Select a time range"))"
                  DynamicListItems="exportTimeItems">
-</MultiListDialog>
+</MultiSizeListDialog>
 
 <ExportDialog @bind-Visible="showExport"
               Value="exportDiaries">
