@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 
@@ -59,6 +60,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public EventCallback OnAfter { get; set; }
+
+        [Parameter]
+        public EventCallback<MouseEventArgs> OnDblClick { get; set; }
 
         [JSInvokable]
         public async Task Copy()

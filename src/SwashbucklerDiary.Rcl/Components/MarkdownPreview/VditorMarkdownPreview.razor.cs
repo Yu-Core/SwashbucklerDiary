@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -48,6 +49,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public EventCallback OnAfter { get; set; }
+
+        [Parameter]
+        public EventCallback<MouseEventArgs> OnDblClick { get; set; }
 
         public ElementReference Ref { get; set; }
 

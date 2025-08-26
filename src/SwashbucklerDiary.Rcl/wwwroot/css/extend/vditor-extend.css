@@ -77,9 +77,23 @@
     background-color: initial;
 }
 
+    .vditor-outline span {
+        user-select: none !important;
+    }
+
     .vditor-outline::-webkit-scrollbar {
         display: initial !important;
     }
+
+    .vditor-outline li > span {
+        padding: 0;
+    }
+
+        .vditor-outline li > span > svg {
+            width: 24px;
+            height: 24px;
+            padding: 6px;
+        }
 
 .vditor-outline__title {
     display: none;

@@ -127,7 +127,7 @@
             </MTextField>
         }
 
-        <div class="my-sm-3 user-select" @ondblclick="ToWrite">
+        <div class="my-sm-3 user-select">
             @if (enableMarkdown)
             {
                 <MarkdownPreview @ref="markdownPreview"
@@ -139,12 +139,14 @@
                                  TaskListLineThrough="taskListLineThrough"
                                  Outline="outline"
                                  RightOutline="rightOutline"
-                                 OnAfter="HandleFirstQuery">
+                                 OnAfter="HandleFirstQuery"
+                                 OnDblClick="ToWrite">
                 </MarkdownPreview>
             }
             else
             {
-                <div class="@($"text-preview {highlightSearchContainerClass}")">
+                <div @ondblclick="ToWrite"
+                     class="@($"text-preview {highlightSearchContainerClass}")">
                     @(diary.Content)
                 </div>
             }
