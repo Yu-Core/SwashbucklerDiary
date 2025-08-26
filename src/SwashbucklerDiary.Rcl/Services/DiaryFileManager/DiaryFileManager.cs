@@ -250,7 +250,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected void CopyUriFileToOutFolder(string uri, string outFolder)
         {
-            var filePath = _mediaResourceManager.UrlRelativePathToFilePath(uri);
+            var filePath = _mediaResourceManager.RelativeUrlToFilePath(uri);
             if (!File.Exists(filePath))
             {
                 return;
@@ -636,7 +636,7 @@ namespace SwashbucklerDiary.Rcl.Services
             _appFileSystem.FileMove(sourceFilePath, targetFilePath);
             if (avatarUri != previousAvatarUri)
             {
-                string previousAvatarPath = _mediaResourceManager.UrlRelativePathToFilePath(previousAvatarUri);
+                string previousAvatarPath = _mediaResourceManager.RelativeUrlToFilePath(previousAvatarUri);
                 if (File.Exists(previousAvatarPath))
                 {
                     File.Delete(previousAvatarPath);

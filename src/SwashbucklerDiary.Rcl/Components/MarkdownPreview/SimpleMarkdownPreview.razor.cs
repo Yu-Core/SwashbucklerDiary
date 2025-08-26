@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -23,6 +24,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public string? Style { get; set; }
+
+        [Parameter]
+        public Dictionary<string, object>? Options { get; set; }
 
         [Parameter]
         public bool Patch { get; set; } = true;
@@ -57,6 +61,11 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "theme", theme },
                 { "markdown", markdown },
             };
+
+            if (Options is not null)
+            {
+                _options = _options.DeepMerge(Options);
+            }
         }
     }
 }

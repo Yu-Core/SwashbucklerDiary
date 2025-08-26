@@ -57,8 +57,7 @@
 </HighlightSearchTextField>
 
 <ScrollContainer Id="@scrollContainerId"
-                 ContentClass="pb-5"
-                 ContentStyle="padding-top:0px;">
+                 ContentClass="py-0">
     <div class="@screenshotClass">
         <div class="d-flex align-center px-3 flex-wrap">
             @if (diaryTimeFormat?.Contains("yyyy/MM/dd") ?? false)
@@ -127,7 +126,7 @@
             </MTextField>
         }
 
-        <div class="my-sm-3 user-select">
+        <div class="user-select">
             @if (enableMarkdown)
             {
                 <MarkdownPreview @ref="markdownPreview"
@@ -152,18 +151,21 @@
             }
         </div>
 
-        <div class="pl-2">
-            <MChipGroup Column="true">
-                @foreach (var item in Tags)
-                {
-                    <MChip @key="item.Id"
-                           IsActive="false"
-                           Href="@($"tagDetails/{item.Id}")">
-                        @(item.Name)
-                    </MChip>
-                }
-            </MChipGroup>
-        </div>
+        @if (Tags.Count > 0)
+        {
+            <div class="pl-2 pb-3">
+                <MChipGroup Column="true">
+                    @foreach (var item in Tags)
+                    {
+                        <MChip @key="item.Id"
+                               IsActive="false"
+                               Href="@($"tagDetails/{item.Id}")">
+                            @(item.Name)
+                        </MChip>
+                    }
+                </MChipGroup>
+            </div>
+        }
     </div>
 </ScrollContainer>
 

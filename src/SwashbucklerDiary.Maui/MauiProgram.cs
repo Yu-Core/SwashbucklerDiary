@@ -1,7 +1,6 @@
 using CommunityToolkit.Maui;
 using MauiBlazorToolkit.Extensions;
 using Microsoft.AspNetCore.Components.WebView.Maui;
-using SwashbucklerDiary.Maui.BlazorWebView;
 using SwashbucklerDiary.Maui.Essentials;
 using SwashbucklerDiary.Maui.Extensions;
 using SwashbucklerDiary.Rcl.Extensions;
@@ -34,11 +33,6 @@ namespace SwashbucklerDiary.Maui
                 });
 
             builder.Services.AddMauiBlazorWebView();
-
-            builder.Services.ConfigureMauiHandlers(delegate (IMauiHandlersCollection handlers)
-            {
-                handlers.AddHandler<IBlazorWebView>((IServiceProvider _) => new MauiBlazorWebViewHandler());
-            });
 
 #if IOS || MACCATALYST
             BlazorWebViewHandler.BlazorWebViewMapper.AppendToMapping(nameof(IBlazorWebView.HostPage), (handler, view) =>

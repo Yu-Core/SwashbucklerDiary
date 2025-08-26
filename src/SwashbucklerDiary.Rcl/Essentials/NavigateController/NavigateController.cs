@@ -366,5 +366,10 @@ namespace SwashbucklerDiary.Rcl.Essentials
                 pageCachePaths.Add(path);
             }
         }
+
+        public virtual Task BackPressed()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -54,7 +54,7 @@ namespace SwashbucklerDiary.Rcl.Services
         protected async Task<string> SetAvatarAsync(string filePath)
         {
             string previousAvatarUri = _settingService.Get(s => s.Avatar);
-            string previousAvatarPath = _mediaResourceManager.UrlRelativePathToFilePath(previousAvatarUri);
+            string previousAvatarPath = _mediaResourceManager.RelativeUrlToFilePath(previousAvatarUri);
             if (File.Exists(previousAvatarPath))
             {
                 File.Delete(previousAvatarPath);

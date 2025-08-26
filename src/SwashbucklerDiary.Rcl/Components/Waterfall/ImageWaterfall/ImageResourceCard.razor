@@ -1,8 +1,8 @@
-﻿@namespace SwashbucklerDiary.Rcl.Components
-@inherits CardComponentBase<ResourceModel>
+@namespace SwashbucklerDiary.Rcl.Components
+@inherits MediaResourceComponentBase
 
 <img @oncontextmenu="OpenMenu"
      @oncontextmenu:preventDefault="true"
      @attributes="activatorAttributes"
      class="image-card rounded-lg"
-     src="@Value.ResourceUri" />
+     src="@mediaResourcePath?.DisPlayedUrl" />

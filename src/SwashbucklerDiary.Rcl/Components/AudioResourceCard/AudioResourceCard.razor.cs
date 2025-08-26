@@ -8,7 +8,7 @@ using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class AudioResourceCard : CardComponentBase<ResourceModel>
+    public partial class AudioResourceCard : MediaResourceComponentBase
     {
         private bool isPlaying;
 
@@ -26,11 +26,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
         ResourceModel? previousValue;
 
-        [Inject]
-        private AudioInterop AudioInterop { get; set; } = default!;
+        MediaResourcePath? albumCoverResourcePath;
 
         [Inject]
-        private IMediaResourceManager MediaResourceManager { get; set; } = default!;
+        private AudioInterop AudioInterop { get; set; } = default!;
 
         private string InputStyle => StyleBuilder.Create()
             .Add("--current-width", (CurrentTime / duration * 100).ToString("0.00", CultureInfo.InvariantCulture) + "%")
@@ -38,7 +37,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private double CurrentTime => seekingTime ?? currentTime;
 
-        private string? AlbumCoverSrc => !string.IsNullOrEmpty(audioFileInfo.PictureUri) ? audioFileInfo.PictureUri : "_content/SwashbucklerDiary.Rcl/img/albumCover.jpeg";
+        private string? AlbumCoverSrc
+            => albumCoverResourcePath?.DisPlayedUrl ?? "_content/SwashbucklerDiary.Rcl/img/albumCover.jpeg";
 
         private string? Title => !string.IsNullOrEmpty(audioFileInfo.Title) ? audioFileInfo.Title : I18n.T("Unknown title");
 
@@ -54,6 +54,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 if (Value.ResourceUri is not null)
                 {
                     audioFileInfo = await MediaResourceManager.GetAudioFileInfo(Value.ResourceUri);
+                    albumCoverResourcePath = MediaResourceManager.ToMediaResourcePath(NavigationManager, audioFileInfo.PictureUri);
                 }
             }
         }

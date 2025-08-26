@@ -26,5 +26,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
         void RemoveHistoryAction(Action action);
 
         void RemoveHistoryAction(Func<Task> func);
+
+        Task BackPressed();
     }
 }

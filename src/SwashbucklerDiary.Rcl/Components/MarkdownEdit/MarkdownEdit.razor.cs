@@ -151,6 +151,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var previewMarkdown = new Dictionary<string, object?>()
             {
                 { "toc", true },
+                { "linkBase", MediaResourceManager.LinkBase },
                 { "mark", true }
             };
             var preview = new Dictionary<string, object?>()

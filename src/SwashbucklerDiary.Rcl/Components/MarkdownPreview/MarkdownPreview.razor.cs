@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -30,6 +31,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
+
+        [Inject]
+        private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
@@ -130,10 +134,11 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 { "lineNumber", codeLineNumber }
             };
-            var markdown = new Dictionary<string, object>()
+            var markdown = new Dictionary<string, object?>()
             {
                 { "toc", true },
                 { "mark", true },
+                { "linkBase", MediaResourceManager.LinkBase }
             };
 
             _options = new()
@@ -157,7 +162,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task HandleOnAfter()
         {
             _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
-            await MarkdownPreviewJSModule.AfterMarkdown(_dotNetObjectReference, vditorMarkdownPreview.Ref, autoPlay, moblieOutlineContainerElement);
+            await MarkdownPreviewJSModule.AfterMarkdown(_dotNetObjectReference, vditorMarkdownPreview.Ref, autoPlay, moblieOutlineContainerElement, MediaResourceManager.LinkBase);
 
             if (OnAfter.HasDelegate)
             {

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -8,7 +9,11 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         private bool isInitialized;
 
+        private string? _previousSrc;
+
         private ElementReference elementReference;
+
+        private MediaResourcePath? mediaResourcePath;
 
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
@@ -16,8 +21,22 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private PanzoomJSModule Module { get; set; } = default!;
 
+        [Inject]
+        private IPlatformIntegration PlatformIntegration { get; set; } = default!;
+
         [Parameter]
         public string? Src { get; set; }
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+
+            if (_previousSrc != Src)
+            {
+                _previousSrc = Src;
+                mediaResourcePath = MediaResourceManager.ToMediaResourcePath(NavigationManager, Src);
+            }
+        }
 
         protected async Task BeforeShowContent()
         {
@@ -36,28 +55,49 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task SaveToLocal()
         {
-            if (string.IsNullOrEmpty(Src))
+            string? filePath = await GetFilePathAsync();
+
+            if (string.IsNullOrEmpty(filePath))
             {
-                await AlertService.ErrorAsync(I18n.T("File does not exist"));
                 return;
             }
 
-            await MediaResourceManager.SaveFileAsync(Src);
+            await PlatformIntegration.SaveFileAsync(filePath);
         }
 
         private async Task Share()
         {
-            if (string.IsNullOrEmpty(Src))
+            string? filePath = await GetFilePathAsync();
+
+            if (string.IsNullOrEmpty(filePath))
             {
-                await AlertService.ErrorAsync(I18n.T("File does not exist"));
                 return;
             }
 
-            var isSuccess = await MediaResourceManager.ShareImageAsync(I18n.T("Share"), Src);
-            if (isSuccess)
+            await PlatformIntegration.ShareFileAsync(I18n.T("Share"), filePath);
+            _ = HandleAchievements(Achievement.Share);
+        }
+
+        async Task<string?> GetFilePathAsync()
+        {
+            string? filePath = null;
+
+            AlertService.StartLoading();
+            try
             {
-                await HandleAchievements(Achievement.Share);
+                filePath = await MediaResourceManager.ToFilePathAsync(mediaResourcePath);
             }
+            finally
+            {
+                AlertService.StopLoading();
+            }
+
+            if (string.IsNullOrEmpty(filePath))
+            {
+                await AlertService.ErrorAsync(I18n.T("File does not exist"));
+            }
+
+            return filePath;
         }
     }
 }

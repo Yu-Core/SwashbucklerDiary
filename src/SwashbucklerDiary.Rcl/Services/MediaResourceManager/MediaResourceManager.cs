@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
@@ -12,8 +13,6 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IAppFileSystem _appFileSystem;
 
-        protected readonly IAlertService _alertService;
-
         protected readonly II18nService _i18n;
 
         protected readonly ILogger _logger;
@@ -27,15 +26,15 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public Dictionary<MediaResource, string> MediaResourceFolders => _mediaResourceFolders;
 
+        public virtual string? LinkBase => "";
+
         public MediaResourceManager(IPlatformIntegration mauiPlatformService,
             IAppFileSystem appFileSystem,
-            IAlertService alertService,
             II18nService i18nService,
             ILogger<MediaResourceManager> logger)
         {
             _platformIntegration = mauiPlatformService;
             _appFileSystem = appFileSystem;
-            _alertService = alertService;
             _i18n = i18nService;
             _logger = logger;
         }
@@ -125,30 +124,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 await _appFileSystem.SyncFS().ConfigureAwait(false);
             }
 
-            return FilePathToUrlRelativePath(targetFilePath);
-        }
-
-        public async Task<bool> ShareImageAsync(string title, string url)
-        {
-            var filePath = await GetResourceFilePathAsync(url).ConfigureAwait(false);
-            if (string.IsNullOrEmpty(filePath))
-            {
-                return false;
-            }
-
-            await _platformIntegration.ShareFileAsync(title, filePath).ConfigureAwait(false);
-            return true;
-        }
-
-        public async Task<bool> SaveFileAsync(string url)
-        {
-            var filePath = await GetResourceFilePathAsync(url).ConfigureAwait(false);
-            if (string.IsNullOrEmpty(filePath))
-            {
-                return false;
-            }
-
-            return await _platformIntegration.SaveFileAsync(filePath).ConfigureAwait(false);
+            return FilePathToRelativeUrl(targetFilePath);
         }
 
         public List<ResourceModel> GetDiaryResources(string content)
@@ -189,14 +165,14 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task<AudioFileInfo> GetAudioFileInfo(string uri)
         {
-            string? filePath = UrlRelativePathToFilePath(uri);
+            string? filePath = RelativeUrlToFilePath(uri);
             if (!File.Exists(filePath))
             {
                 return new();
             }
 
             var audioFile = TagLib.File.Create(filePath);
-            string pictureUri = string.Empty;
+            string? pictureUri = null;
             if (audioFile.Tag.Pictures.Length > 0)
             {
                 string fileName = Path.GetFileName(filePath);
@@ -215,9 +191,9 @@ namespace SwashbucklerDiary.Rcl.Services
             };
         }
 
-        protected abstract Task<string> GetResourceFilePathAsync(string urlString);
+        public abstract Task<string?> ToFilePathAsync(MediaResourcePath? mediaResourcePath);
 
-        protected async Task<string> GetAudioFilePicturePath(string fileName, byte[] data)
+        protected async Task<string?> GetAudioFilePicturePath(string fileName, byte[] data)
         {
             string filePath = Path.Combine(_appFileSystem.CacheDirectory, fileName);
             if (!File.Exists(filePath))
@@ -226,7 +202,8 @@ namespace SwashbucklerDiary.Rcl.Services
                 await _appFileSystem.SyncFS().ConfigureAwait(false);
             }
 
-            return FilePathToUrlRelativePath(filePath);
+            var relativePath = FilePathToRelativeUrl(filePath);
+            return relativePath;
         }
 
         public async Task<IEnumerable<ResourceModel>?> AddMediaFilesAsync(IEnumerable<string?>? filePaths)
@@ -252,9 +229,9 @@ namespace SwashbucklerDiary.Rcl.Services
             return resources;
         }
 
-        public abstract string UrlRelativePathToFilePath(string urlRelativePath);
+        public abstract string RelativeUrlToFilePath(string urlRelativePath);
 
-        public abstract string FilePathToUrlRelativePath(string filePath);
+        public abstract string FilePathToRelativeUrl(string filePath);
 
         public async Task<IEnumerable<ResourceModel>?> AddMultipleImageAsync()
         {
@@ -300,5 +277,39 @@ namespace SwashbucklerDiary.Rcl.Services
                 _ => null
             };
         }
+
+        public virtual string? ReplaceDisplayedUrlToRelativeUrl(string? content) => content;
+
+        protected virtual string? RelativeUrlToDisplayedUrl(string? content) => content;
+
+        public MediaResourcePath? ToMediaResourcePath(NavigationManager navigationManager, string? url)
+        {
+            url = ReplaceDisplayedUrlToRelativeUrl(url);
+
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return null;
+            }
+
+            var absoluteUri = navigationManager.ToAbsoluteUri(url).ToString();
+            string? relativePath;
+
+            try
+            {
+                relativePath = navigationManager.ToBaseRelativePath(absoluteUri);
+            }
+            catch (ArgumentException) // 捕获特定异常
+            {
+                relativePath = null; // 或设置降级值，如 url（原始URL）
+            }
+
+            return new MediaResourcePath
+            {
+                Url = absoluteUri,
+                RelativePathOfBaseUri = relativePath,
+                DisPlayedUrl = string.IsNullOrEmpty(relativePath) ? absoluteUri : RelativeUrlToDisplayedUrl(relativePath)
+            };
+        }
     }
 }
+

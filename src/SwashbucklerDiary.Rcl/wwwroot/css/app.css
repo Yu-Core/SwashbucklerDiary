@@ -493,7 +493,8 @@ html.m-overlay-scroll-blocked {
 .text-preview {
     padding-top: 10px;
     padding-left: 12px;
-    padding-right: 24px;
+    padding-right: 12px;
+    padding-bottom:12px;
     white-space: break-spaces;
     word-break: break-all;
     align-self: stretch;
@@ -537,7 +538,7 @@ html.m-overlay-scroll-blocked {
 }
 
 .md-preview__outline {
-    height: calc(100vh - 64px - 20px - 24px - 8px);
+    height: calc(100vh - 64px - 32px - 28px - 22px - 60px);
 }
 
 .diary-info-btn {

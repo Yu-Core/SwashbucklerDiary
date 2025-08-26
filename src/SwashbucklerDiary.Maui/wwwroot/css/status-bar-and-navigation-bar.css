@@ -90,7 +90,7 @@ body {
 }
 
 .md-preview__outline {
-    height: calc(var(--safe-area-height) - 64px - 20px - 24px - 8px);
+    height: calc(var(--safe-area-height) - 64px - 32px - 28px - 22px - 60px);
 }
 
 .m-menu__content {

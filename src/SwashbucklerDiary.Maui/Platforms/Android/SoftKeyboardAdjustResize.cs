@@ -8,61 +8,109 @@ using View = Android.Views.View;
 namespace SwashbucklerDiary.Maui
 {
 #nullable disable
-    public class SoftKeyboardAdjustResize
+    public class SoftKeyboardAdjustResize : IDisposable
     {
-        Activity _activity;
-        bool _edgeToEdge;
-        FrameLayout.LayoutParams frameLayoutParams;
-        int usableHeightPrevious = 0;
-        Rect rect = new();
-        View mChildOfContent;
+        private readonly WeakReference<Activity> _activityRef;
+        private readonly bool _edgeToEdge;
+        private readonly FrameLayout.LayoutParams _frameLayoutParams;
+        private readonly View _childOfContent;
+        private readonly Rect _rect = new();
+        private int _usableHeightPrevious;
+        private bool _disposed;
 
         public SoftKeyboardAdjustResize(Activity activity, bool edgeToEdge = true)
         {
-            _activity = activity;
+            ArgumentNullException.ThrowIfNull(activity);
+
+            _activityRef = new WeakReference<Activity>(activity);
             _edgeToEdge = edgeToEdge;
-            mChildOfContent = _activity.FindViewById<FrameLayout>(Id.Content).GetChildAt(0);
-            mChildOfContent.ViewTreeObserver.GlobalLayout += (s, e) => PossiblyResizeChildOfContent();
-            frameLayoutParams = (FrameLayout.LayoutParams)mChildOfContent?.LayoutParameters;
+
+            var contentFrameLayout = activity.FindViewById<FrameLayout>(Id.Content)
+                ?? throw new InvalidOperationException("Content FrameLayout not found.");
+
+            _childOfContent = contentFrameLayout.GetChildAt(0)
+                ?? throw new InvalidOperationException("Content FrameLayout has no child.");
+
+            _frameLayoutParams = (FrameLayout.LayoutParams)_childOfContent.LayoutParameters
+                ?? throw new InvalidOperationException("Child view does not have LayoutParameters.");
+
+            _childOfContent.ViewTreeObserver.GlobalLayout += HandleGlobalLayout;
             SetBackgroundColor(Android.Graphics.Color.White);
+        }
+
+        private void HandleGlobalLayout(object sender, EventArgs e)
+        {
+            PossiblyResizeChildOfContent();
         }
 
         public void OnStop()
         {
-            mChildOfContent.RequestLayout();
+            _childOfContent.RequestLayout();
         }
 
-        void PossiblyResizeChildOfContent()
+        private void PossiblyResizeChildOfContent()
         {
-            _activity.FindViewById<FrameLayout>(Id.Content).GetWindowVisibleDisplayFrame(rect);
-            var usableHeightNow = rect.Height();
-            if (usableHeightNow != usableHeightPrevious)
+            if (!_activityRef.TryGetTarget(out Activity activity))
+                return;
+
+            activity.FindViewById<FrameLayout>(Id.Content)?.GetWindowVisibleDisplayFrame(_rect);
+            var usableHeightNow = _rect.Height();
+
+            if (usableHeightNow == _usableHeightPrevious)
+                return;
+
+            var rootView = _childOfContent.RootView;
+            if (rootView == null)
+                return;
+
+            int usableHeightSansKeyboard = rootView.Height;
+            int heightDifference = usableHeightSansKeyboard - usableHeightNow;
+
+            if (_edgeToEdge)
             {
-                int usableHeightSansKeyboard = mChildOfContent.RootView.Height;
-                int heightDifference = usableHeightSansKeyboard - usableHeightNow;
-                if (_edgeToEdge)
+                var statusBarInsets = activity.GetStatusBarInsets();
+                var navigationBarInsets = activity.GetNavigationBarInsets();
+                _frameLayoutParams.Height = usableHeightNow + statusBarInsets.Top + navigationBarInsets.Bottom;
+
+                if (heightDifference > usableHeightSansKeyboard / 4)
                 {
-                    frameLayoutParams.Height = usableHeightNow + _activity.GetStatusBarInsets().Top + _activity.GetNavigationBarInsets().Bottom;
-                    if (heightDifference > usableHeightSansKeyboard / 4)
+                    rootView.Top = -statusBarInsets.Top;
+                    _childOfContent.Layout(_rect.Left, _rect.Top, _rect.Right, _rect.Bottom);
+                }
+            }
+            else
+            {
+                _frameLayoutParams.Height = usableHeightNow;
+            }
+
+            _childOfContent.RequestLayout();
+            _usableHeightPrevious = usableHeightNow;
+        }
+
+        private void SetBackgroundColor(Android.Graphics.Color color)
+        {
+            _childOfContent.RootView?.SetBackgroundColor(color);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    if (_childOfContent != null)
                     {
-                        //Resolve anomalies during screen rotation
-                        mChildOfContent.RootView.Top = -_activity.GetStatusBarInsets().Top;
-                        mChildOfContent.Layout(rect.Left, rect.Top, rect.Right, rect.Bottom);
+                        _childOfContent.ViewTreeObserver.GlobalLayout -= HandleGlobalLayout;
                     }
                 }
-                else
-                {
-                    frameLayoutParams.Height = usableHeightNow;
-                }
-
-                mChildOfContent.RequestLayout();
-                usableHeightPrevious = usableHeightNow;
+                _disposed = true;
             }
-        }
-
-        void SetBackgroundColor(Android.Graphics.Color color)
-        {
-            mChildOfContent.RootView.SetBackgroundColor(color);
         }
     }
 }

@@ -9,7 +9,7 @@ function handleCopy(dotNetCallbackRef, element) {
     })
 }
 
-function afterMarkdown(dotNetCallbackRef, element, autoPlay, outlineElement) {
+function afterMarkdown(dotNetCallbackRef, element, autoPlay, outlineElement, linkBase) {
     if (!element) {
         return;
     }
@@ -19,6 +19,10 @@ function afterMarkdown(dotNetCallbackRef, element, autoPlay, outlineElement) {
 
     if (autoPlay) {
         handleAutoPlay(element);
+    }
+
+    if (linkBase) {
+        handleLinkBase(element, linkBase);
     }
 
     renderMobileOutline(dotNetCallbackRef, element, outlineElement);
@@ -33,6 +37,26 @@ function handleAutoPlay(element) {
         // play() possible error
         mediaElement.autoplay = true;
     }
+}
+
+function handleLinkBase(element, linkBase) {
+    if (!element) {
+        return;
+    }
+    element.querySelectorAll("a").forEach(a => {
+        let href = a.href;
+
+        // 删除指定的基础路径
+        if (href.startsWith(linkBase)) {
+            href = href.substring(linkBase.length);
+
+            if (href.startsWith('/')) {
+                href = href.substring(1);
+            }
+
+            a.href = href;
+        }
+    })
 }
 
 function renderMobileOutline(dotNetCallbackRef, previewElement, outlineElement) {

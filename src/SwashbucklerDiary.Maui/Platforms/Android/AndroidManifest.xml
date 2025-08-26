@@ -4,7 +4,8 @@
 				 android:icon="@mipmap/appicon"
 				 android:roundIcon="@mipmap/appicon_round"
 				 android:supportsRtl="true"
-				 android:hardwareAccelerated="true">
+				 android:hardwareAccelerated="true"
+				 android:usesCleartextTraffic="true">
 	</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />

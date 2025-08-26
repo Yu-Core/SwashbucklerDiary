@@ -19,8 +19,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? sign;
 
-        private string? avatar;
-
         private string privacyModeEntrancePassword = string.Empty;
 
         private string? privacyModeEntrancePasswordSalt;
@@ -50,6 +48,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private int audioCount;
 
         private int videoCount;
+
+        private MediaResourcePath? avatarResourceInfo;
 
         private ScrollContainer scrollContainer = default!;
 
@@ -83,6 +83,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         [Inject]
         protected IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
+
+        [Inject]
+        private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
         protected override void OnInitialized()
         {
@@ -132,7 +135,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             userName = SettingService.Get(s => s.NickName, null);
             sign = SettingService.Get(s => s.Sign, null);
             theme = (Theme)SettingService.Get(s => s.Theme);
-            avatar = SettingService.Get(s => s.Avatar);
+            string? avatar = SettingService.Get(s => s.Avatar);
+            avatarResourceInfo = MediaResourceManager.ToMediaResourcePath(NavigationManager, avatar);
             privacyMode = SettingService.GetTemp(s => s.PrivacyMode);
             hidePrivacyModeEntrance = SettingService.Get(s => s.HidePrivacyModeEntrance);
             privacyModeEntrancePassword = SettingService.Get(s => s.PrivacyModeEntrancePassword);

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
 
@@ -5,6 +6,8 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public interface IMediaResourceManager
     {
+        string? LinkBase { get; }
+
         Dictionary<MediaResource, string> MediaResourceFolders { get; }
 
         /// <summary>
@@ -47,21 +50,6 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<string?> CreateMediaResourceFileAsync(string targetDirectoryPath, string? sourceFilePath);
 
-        /// <summary>
-        /// 分享图片
-        /// </summary>
-        /// <param name="title"></param>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        Task<bool> ShareImageAsync(string title, string url);
-
-        /// <summary>
-        /// 保存图片
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        Task<bool> SaveFileAsync(string url);
-
         Task<AudioFileInfo> GetAudioFileInfo(string uri);
 
         Task<IEnumerable<ResourceModel>?> AddMediaFilesAsync(IEnumerable<string?> filePaths);
@@ -70,8 +58,14 @@ namespace SwashbucklerDiary.Rcl.Services
 
         string? CreateMediaFilesInsertContent(IEnumerable<ResourceModel>? resources);
 
-        string UrlRelativePathToFilePath(string urlRelativePath);
+        string RelativeUrlToFilePath(string urlRelativePath);
 
-        string FilePathToUrlRelativePath(string filePath);
+        string FilePathToRelativeUrl(string filePath);
+
+        MediaResourcePath? ToMediaResourcePath(NavigationManager navigationManager, string? url);
+
+        Task<string?> ToFilePathAsync(MediaResourcePath? mediaResourcePath);
+
+        string? ReplaceDisplayedUrlToRelativeUrl(string? content);
     }
 }

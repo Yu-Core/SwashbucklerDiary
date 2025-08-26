@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.WebView;
 using UIKit;
 using WebKit;
 
-namespace SwashbucklerDiary.Maui.BlazorWebView
+namespace SwashbucklerDiary.Maui
 {
     // Fix iframe unable to open in webview
     internal class WebViewNavigationDelegate : WKNavigationDelegate
@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
                 }
                 else
                 {
-                    strategy = new Uri(MauiBlazorWebViewHandler.BaseUri).IsBaseOf(uri) ?
+                    strategy = new Uri(BlazorWebViewHelper.AppOrigin).IsBaseOf(uri) ?
                         UrlLoadingStrategy.OpenInWebView :
                         UrlLoadingStrategy.OpenExternally;
                 }
@@ -78,7 +78,7 @@ namespace SwashbucklerDiary.Maui.BlazorWebView
         {
             // We need to intercept the redirects to the app scheme because Safari will block them.
             // We will handle these redirects through the Navigation Manager.
-            if (_currentUri?.Host == MauiBlazorWebViewHandler.AppHostAddress)
+            if (_currentUri?.Host == BlazorWebViewHelper.AppHostAddress)
             {
                 var uri = _currentUri;
                 _currentUri = null;

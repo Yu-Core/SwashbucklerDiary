@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Routing;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using System.Reflection;
 
 namespace SwashbucklerDiary.Maui.Essentials
@@ -17,6 +18,18 @@ namespace SwashbucklerDiary.Maui.Essentials
             context.PreventNavigation();
             _appLifecycle.QuitApp();
             return Task.CompletedTask;
+        }
+
+        public override async Task BackPressed()
+        {
+            if (IsInitialized)
+            {
+                await _jSRuntime.HistoryBack();
+            }
+            else
+            {
+                _appLifecycle.QuitApp();
+            }
         }
     }
 }

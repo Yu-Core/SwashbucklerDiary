@@ -7,13 +7,18 @@
         <div @ref="outlineElementRef" class="@InternalOutlineClass" style="@InternalOutlineStyle "></div>
     }
 
-    <div @ref="Ref" class="@Class" style="@InternalStyle" @ondblclick="OnDblClick"></div>
+    <div @ref="Ref" class="@InternalClass" style="@InternalStyle" @ondblclick="OnDblClick"></div>
 </div>
 
 @code {
     string? WrapClass => new CssBuilder()
         .Add("d-flex")
         .Add("flex-row-reverse", RightOutline)
+        .ToString();
+
+    string? InternalClass => new CssBuilder()
+        .Add("pb-3")
+        .Add(Class)
         .ToString();
 
     string InternalStyle => new StyleBuilder()

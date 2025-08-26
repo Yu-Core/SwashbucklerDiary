@@ -117,6 +117,7 @@
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 - [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)
 - [dotnet-packaging](https://github.com/quamotion/dotnet-packaging)
+- [EmbedIO](https://github.com/unosquare/embedio)
 - [Fly Gesture Unlock](https://github.com/feiafei27/fly-gesture-unlock)
 - [Gir.Core](https://github.com/gircore/gir.core)
 - [html2canvas](https://github.com/niklasvh/html2canvas)

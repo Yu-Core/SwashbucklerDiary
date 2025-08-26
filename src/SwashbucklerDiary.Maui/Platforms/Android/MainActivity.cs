@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Views;
 using AndroidX.Activity;
 using SwashbucklerDiary.Maui.Essentials;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 using Intent = Android.Content.Intent;
 
@@ -70,9 +71,12 @@ namespace SwashbucklerDiary.Maui
 
         class OnBackPressedCallback(bool enabled) : AndroidX.Activity.OnBackPressedCallback(enabled)
         {
+            private readonly Lazy<INavigateController> _navigateController = new(() => IPlatformApplication.Current!.Services.GetRequiredService<INavigateController>());
+            private INavigateController NavigateController => _navigateController.Value;
+
             public override void HandleOnBackPressed()
             {
-                BackPressHelper.BackPressed();
+                NavigateController.BackPressed();
             }
         }
     }

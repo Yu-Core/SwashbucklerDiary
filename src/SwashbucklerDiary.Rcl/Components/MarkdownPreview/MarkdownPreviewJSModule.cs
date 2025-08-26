@@ -9,9 +9,13 @@ namespace SwashbucklerDiary.Rcl.Components
         {
         }
 
-        public async Task AfterMarkdown(DotNetObjectReference<object> dotNetObjectReference, ElementReference element, bool autoPlay, ElementReference outlineElement)
+        public async Task AfterMarkdown(DotNetObjectReference<object> dotNetObjectReference,
+            ElementReference element,
+            bool autoPlay,
+            ElementReference outlineElement,
+            string? linkBase)
         {
-            await InvokeVoidAsync("afterMarkdown", [dotNetObjectReference, element, autoPlay, outlineElement]);
+            await InvokeVoidAsync("afterMarkdown", [dotNetObjectReference, element, autoPlay, outlineElement, linkBase]);
         }
     }
 }

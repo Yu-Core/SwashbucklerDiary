@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components.WebView;
 using Microsoft.AspNetCore.Components.WebView.Gtk;
 using Microsoft.Extensions.DependencyInjection;
-using SwashbucklerDiary.Gtk.BlazorWebView;
 using SwashbucklerDiary.Gtk.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
@@ -42,7 +41,6 @@ namespace SwashbucklerDiary.Gtk
             _navigateController = serviceProvider.GetRequiredService<INavigateController>();
             blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializing;
             blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;
-            blazorWebView.BlazorWebViewWebResourceRequested += BlazorWebViewWebResourceRequested;
         }
 
         private void BlazorWebViewInitialized(object? sender, BlazorWebViewInitializedEventArgs e)
@@ -57,11 +55,6 @@ namespace SwashbucklerDiary.Gtk
         private void BlazorWebViewInitializing(object? sender, BlazorWebViewInitializingEventArgs e)
         {
             HandleAppActivation();
-        }
-
-        private void BlazorWebViewWebResourceRequested(object? sender, BlazorWebViewWebResourceRequestedEventArgs e)
-        {
-            e.Handled = LocalFileWebAccessHelper.InterceptCustomPathRequest(e.Request);
         }
 
         private void HandleAppActivation()

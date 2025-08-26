@@ -13,14 +13,14 @@ using SwashbucklerDiary.Rcl.Essentials;
 using View = Android.Views.View;
 using WebView = Android.Webkit.WebView;
 
-namespace SwashbucklerDiary.Maui.BlazorWebView;
+namespace SwashbucklerDiary.Maui;
 
 #nullable disable
 internal class MauiBlazorWebChromeClient : WebChromeClient
 {
     private readonly WebChromeClient _blazorWebChromeClient;
     private WeakReference<Activity> _activityRef;
-    private readonly WebView _webView;
+    private WeakReference<WebView> _webViewRef;
 
     View _customView;
     ICustomViewCallback _videoViewCallback;
@@ -36,7 +36,7 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
     {
         _blazorWebChromeClient = blazorWebChromeClient;
         SetContext(mauiContext);
-        _webView = webView;
+        _webViewRef = new(webView);
     }
 
     // OnShowCustomView operate the perform call back to video view functionality
@@ -69,7 +69,13 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             await Task.Delay(200);
-            _webView.EvaluateJavascript(@"
+
+            _webViewRef.TryGetTarget(out WebView webView);
+
+            if (webView is null)
+                return;
+
+            webView.EvaluateJavascript(@"
 				(function() {
                     const fullscreenElement = document.fullscreenElement;
                     if (fullscreenElement && fullscreenElement.nodeName === 'VIDEO') {
@@ -194,6 +200,14 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
         => _blazorWebChromeClient.OnGeolocationPermissionsShowPrompt(origin, callback);
     public override void OnPermissionRequest(PermissionRequest request)
         => _blazorWebChromeClient.OnPermissionRequest(request);
+
+    protected override void Dispose(bool disposing)
+    {
+        if (!disposing)
+            return;
+
+        _blazorWebChromeClient?.Dispose();
+    }
 
     void SetContext(IMauiContext mauiContext)
     {

@@ -1,6 +1,7 @@
 using Masa.Blazor;
 using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -33,6 +34,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         protected IDiaryService DiaryService { get; set; } = default!;
+
+        [Inject]
+        private IPlatformIntegration PlatformIntegration { get; set; } = default!;
 
         [CascadingParameter(Name = "ScrollElementId")]
         public string? ScrollElementId { get; set; }
@@ -128,7 +132,26 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            await MediaResourceManager.SaveFileAsync(SelectedItem.ResourceUri);
+            string? filePath = null;
+
+            AlertService.StartLoading();
+            try
+            {
+                var mediaResourcePath = MediaResourceManager.ToMediaResourcePath(NavigationManager, SelectedItem.ResourceUri);
+                filePath = await MediaResourceManager.ToFilePathAsync(mediaResourcePath);
+            }
+            finally
+            {
+                AlertService.StopLoading();
+            }
+
+            if (string.IsNullOrEmpty(filePath))
+            {
+                await AlertService.ErrorAsync(I18n.T("File does not exist"));
+                return;
+            }
+
+            await PlatformIntegration.SaveFileAsync(filePath);
         }
 
         private async Task ViewReferenced()

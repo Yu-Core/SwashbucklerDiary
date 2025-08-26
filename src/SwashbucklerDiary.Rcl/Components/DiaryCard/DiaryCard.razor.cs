@@ -16,14 +16,32 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private DiaryModel? previousValue;
 
+        private Dictionary<string, object>? _markdownOptions;
+
         [Inject]
         private IGlobalConfiguration GlobalConfiguration { get; set; } = default!;
+
+        [Inject]
+        private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
         [CascadingParameter]
         public DiaryCardListOptions DiaryCardListOptions { get; set; } = default!;
 
         [Parameter]
         public EventCallback<DiaryModel> OnClick { get; set; }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            _markdownOptions = new()
+            {
+                ["markdown"] = new Dictionary<string, object?>()
+                {
+                    ["linkBase"] = MediaResourceManager.LinkBase
+                }
+            };
+        }
 
         protected override void OnParametersSet()
         {

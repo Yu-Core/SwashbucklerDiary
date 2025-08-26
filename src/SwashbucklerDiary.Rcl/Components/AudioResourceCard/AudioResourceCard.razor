@@ -1,7 +1,7 @@
 @namespace SwashbucklerDiary.Rcl.Components
 @using SwashbucklerDiary.Rcl.Events
 @using System.Globalization
-@inherits CardComponentBase<ResourceModel>
+@inherits MediaResourceComponentBase
 
 <MCard @oncontextmenu="OpenMenu"
        @attributes="activatorAttributes"
@@ -28,7 +28,7 @@
                 <MListItemSubtitle Class="text-subtitle-2">@Artists</MListItemSubtitle>
 
                 <audio @ref="audioElementRef"
-                       src="@Value.ResourceUri"
+                       src="@mediaResourcePath?.DisPlayedUrl"
                        @oncustomdurationchange="@HandleOnDurationChange"
                        @oncustomtimeupdate="@HandleOnTimeUpdate"
                        @oncustomplaybackratechange="@HandleOnPlaybackRateChange"

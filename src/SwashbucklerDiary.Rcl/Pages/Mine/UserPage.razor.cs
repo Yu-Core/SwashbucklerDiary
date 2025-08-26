@@ -21,6 +21,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showEditSign;
 
+        private MediaResourcePath? avatarResourceInfo;
+
         private List<DynamicListItem> editAvatarMethods = [];
 
         [Inject]
@@ -28,6 +30,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         [Inject]
         private ILogger<UserPage> Logger { get; set; } = default!;
+
+        [Inject]
+        private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -42,7 +47,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             userName = SettingService.Get(s => s.NickName, default!);
             sign = SettingService.Get(s => s.Sign, default!);
-            avatar = SettingService.Get(s => s.Avatar);
+            var avatarValue = SettingService.Get(s => s.Avatar);
+            SetAvatar(avatarValue);
         }
 
         private string? NickName => userName ?? I18n.T("Swashbuckler Diary");
@@ -81,12 +87,12 @@ namespace SwashbucklerDiary.Rcl.Pages
         }
 
         private Task PickPhoto()
-            => SetAvatar(AvatarService.SetAvatarByPickPhotoAsync);
+            => SetAvatarAsync(AvatarService.SetAvatarByPickPhotoAsync);
 
         private Task OnCapture()
-            => SetAvatar(AvatarService.SetAvatarByCaptureAsync);
+            => SetAvatarAsync(AvatarService.SetAvatarByCaptureAsync);
 
-        private async Task SetAvatar(Func<Task<string>> func)
+        private async Task SetAvatarAsync(Func<Task<string>> func)
         {
             showEditAvatar = false;
             StateHasChanged();
@@ -113,9 +119,15 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
-            avatar = photoPath;
+            SetAvatar(photoPath);
             StateHasChanged();
             await HandleAchievements(Achievement.Avatar);
+        }
+
+        private void SetAvatar(string value)
+        {
+            avatar = value;
+            avatarResourceInfo = MediaResourceManager.ToMediaResourcePath(NavigationManager, avatar);
         }
     }
 }

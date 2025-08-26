@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Rcl.Services
                     continue;
                 }
 
-                var path = _mediaResourceManager.UrlRelativePathToFilePath(resourceUri);
+                var path = _mediaResourceManager.RelativeUrlToFilePath(resourceUri);
                 if (!string.IsNullOrEmpty(path))
                 {
                     File.Delete(path);
