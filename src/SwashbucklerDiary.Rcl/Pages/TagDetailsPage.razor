@@ -1,4 +1,4 @@
-﻿@page "/tagDetails/{id:guid}"
+@page "/tagDetails/{id:guid}"
 @inherits DiariesPageComponentBase
 
 <MyAppBar Title="@tagName"
@@ -11,8 +11,7 @@
 </ScrollContainer>
 
 <div class="right-bottom-float-area">
-    <BackTopButton Class="mb-2"
-                   Selector="@scrollContainerSelector">
+    <BackTopButton Selector="@scrollContainerSelector">
     </BackTopButton>
     <MyFloatButton Icon="mdi:mdi-pencil"
                    OnClick="ToWrite">

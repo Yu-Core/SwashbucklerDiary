@@ -32,7 +32,7 @@
         </MButton>
 
         <MultiSizeMenu @bind-Visible="showMenu"
-                   DynamicListItems="menuItems">
+                       DynamicListItems="menuItems">
             <ActivatorContent>
                 <MButton @attributes="@context.Attrs"
                          Icon="true">
@@ -67,21 +67,21 @@
                     @(diary.CreateTime.ToString("yyyy/MM/dd"))
                 </span>
             }
-            
+
             @if (diaryTimeFormat?.Contains("HH:mm") ?? false)
             {
                 <span class="font-weight-bold mr-5">
                     @(diary.CreateTime.ToString("HH:mm"))
                 </span>
             }
-            
+
             @if (diaryTimeFormat?.Contains("dddd") ?? false)
             {
                 <span class="text-subtitle-2">
                     @(I18n.ToWeek(diary.CreateTime))
                 </span>
             }
-            
+
             <MSpacer></MSpacer>
 
             <span class="text-subtitle-2">
@@ -168,11 +168,16 @@
 <div class="right-bottom-float-area">
     <BackTopButton Selector="@scrollContainerSelector">
     </BackTopButton>
+
+    <MyFloatButton Icon="format_list_bulleted"
+                   Show="!BreakpointService.Breakpoint.MdAndUp && enableMarkdown && outline"
+                   OnClick="()=>showMoblieOutline=true">
+    </MyFloatButton>
 </div>
 
 <MultiSizeListDialog @bind-Visible="showShare"
-                 Title="@(I18n.T("Choose how to Share"))"
-                 DynamicListItems="shareItems">
+                     Title="@(I18n.T("Choose how to Share"))"
+                     DynamicListItems="shareItems">
 </MultiSizeListDialog>
 
 <DeleteDialog @bind-Visible="showDelete"

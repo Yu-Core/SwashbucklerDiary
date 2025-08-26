@@ -120,6 +120,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             AppLifecycle.OnResumed += ResumeApp;
             AppLifecycle.OnActivated += HandleActivated;
             NavigateController.AddHistoryAction(LeavePageSaveDiary, false);
+            BreakpointService.BreakpointChanged += HandleBreakpointChange;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -147,6 +148,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             AppLifecycle.OnStopped -= LeaveAppSaveDiary;
             AppLifecycle.OnResumed -= ResumeApp;
             AppLifecycle.OnActivated -= HandleActivated;
+            BreakpointService.BreakpointChanged -= HandleBreakpointChange;
             timer?.Dispose();
         }
 
@@ -304,8 +306,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, OtherInfoSwitchText, "info", ()=> SettingChange(nameof(Setting.OtherInfo), ref showOtherInfo)),
                 new(this, TemplateSwitchText, TemplateSwitchIcon, ()=> diary.Template = !diary.Template),
                 new(this, "Reference diary", "format_quote", ()=> showReference = true),
-                new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!BreakpointService.Breakpoint.MdAndUp && enableMarkdown),
-                new(this, OutlineText, "format_list_bulleted", ()=> SettingChange(nameof(Setting.Outline), ref outline), ()=>BreakpointService.Breakpoint.MdAndUp),
+                new(this, OutlineText, "format_list_bulleted", ()=> SettingChange(nameof(Setting.Outline), ref outline), ()=>enableMarkdown),
             ];
         }
 
@@ -575,6 +576,16 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 diary.Tags = (diary.Tags ?? []).Union(template.Tags ?? []).ToList();
             }
+        }
+
+        private void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)
+        {
+            if (!e.MdAndUpChanged)
+            {
+                return;
+            }
+
+            InvokeAsync(StateHasChanged);
         }
 
         private async Task InsertReferenceAsync(DiaryModel value)

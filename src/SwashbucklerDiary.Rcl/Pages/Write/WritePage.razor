@@ -171,6 +171,13 @@
     </ScrollContainer>
 </div>
 
+<div class="right-bottom-float-area">
+    <MyFloatButton Icon="format_list_bulleted"
+                   Show="!BreakpointService.Breakpoint.MdAndUp && enableMarkdown && outline"
+                   OnClick="()=>showMoblieOutline=true">
+    </MyFloatButton>
+</div>
+
 <SelectTemplateDialog @bind-Visible="showTemplate"
                       @bind-Tags="tags"
                       ExcludeItem="diary"

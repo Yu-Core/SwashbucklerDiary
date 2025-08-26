@@ -1,16 +1,20 @@
 @namespace SwashbucklerDiary.Rcl.Components
 
-<MButton @ref="mButton"
-         @attributes="@Attributes"
-         Class="@InternalClass"
-         Elevation="@Elevation"
-         Width="Size"
-         Height="Size"
-         Show="Show"
-         Fab
-         Large="Desktop"
-         OnClick="OnClick">
-    <MIcon>
-        @Icon
-    </MIcon>
-</MButton>
+<ExpandTransition>
+    <MSheet Style="background-color:transparent;"
+            Show="Show">
+        <MButton @ref="mButton"
+                 @attributes="@Attributes"
+                 Class="@InternalClass"
+                 Elevation="@Elevation"
+                 Width="Size"
+                 Height="Size"
+                 Fab
+                 Large="Desktop"
+                 OnClick="OnClick">
+            <MIcon>
+                @Icon
+            </MIcon>
+        </MButton>
+    </MSheet>
+</ExpandTransition>

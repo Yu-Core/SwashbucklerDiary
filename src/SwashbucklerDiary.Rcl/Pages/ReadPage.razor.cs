@@ -90,6 +90,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             scrollContainerSelector = $"#{scrollContainerId}";
             LoadView();
+            BreakpointService.BreakpointChanged += HandleBreakpointChange;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -105,6 +106,13 @@ namespace SwashbucklerDiary.Rcl.Pages
                     await HandleFirstQuery();
                 }
             }
+        }
+
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            BreakpointService.BreakpointChanged -= HandleBreakpointChange;
         }
 
         protected override void ReadSettings()
@@ -187,13 +195,12 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, "Copy","content_copy", OnCopy),
                 new(this, TopText,"vertical_align_top", OnTopping),
                 new(this, "Export","mdi:mdi-export", OpenExportDialog),
-                new(this, MarkdownText,MarkdownIcon, MarkdownChanged),
+                new(this, MarkdownText,MarkdownIcon, ()=> SettingChange(nameof(Setting.Markdown), ref enableMarkdown)),
                 new(this, "Copy reference", "format_quote", CopyReference),
                 new(this, "Copy external link", "mdi:mdi-link-variant", CopyExternalLink),
                 new(this, "Look up", "quick_reference_all", OpenSearch),
                 new(this, "View referenced", "file_export", ViewReferenced),
-                new(this, "Outline", "format_list_bulleted", ()=>showMoblieOutline=true, ()=>!BreakpointService.Breakpoint.MdAndUp && enableMarkdown),
-                new(this, OutlineText, "format_list_bulleted", OutlineChanged, ()=>BreakpointService.Breakpoint.MdAndUp && enableMarkdown),
+                new(this, OutlineText, "format_list_bulleted", ()=> SettingChange(nameof(Setting.Outline), ref outline), ()=>enableMarkdown),
                 new(this, DefaultTemplateText, "space_dashboard", SetDefaultTemplateAsync, ()=>diary.Template),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
             ];
@@ -275,18 +282,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             await HandleAchievements(Achievement.Share);
         }
 
-        private async Task MarkdownChanged()
+        private Task SettingChange(string key, ref bool value)
         {
-            enableMarkdown = !enableMarkdown;
-            await SettingService.SetAsync(s => s.Markdown, enableMarkdown);
-            StateHasChanged();
-        }
-
-        private async Task OutlineChanged()
-        {
-            outline = !outline;
-            await SettingService.SetAsync(s => s.Outline, outline);
-            StateHasChanged();
+            value = !value;
+            return SettingService.SetAsync(key, value);
         }
 
         private async Task DiaryPrivacyChanged()
@@ -393,6 +392,16 @@ namespace SwashbucklerDiary.Rcl.Pages
                 defaultTemplateId = diary.Id;
                 await SettingService.SetAsync(it => it.DefaultTemplateId, defaultTemplateId.ToString());
             }
+        }
+
+        private void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)
+        {
+            if (!e.MdAndUpChanged)
+            {
+                return;
+            }
+
+            InvokeAsync(StateHasChanged);
         }
     }
 }

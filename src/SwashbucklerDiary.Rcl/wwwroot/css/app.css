@@ -279,8 +279,9 @@ html {
 }
 
 .right-bottom-float-area {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr; 
+    row-gap: 8px;
     position: fixed;
     z-index: 1;
     bottom: 1rem;

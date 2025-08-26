@@ -157,6 +157,7 @@
 
 @media screen and (min-width:960px) {
     .vditor-outline {
+        display: block !important;
         margin-right: 1em;
         --border-color: #d1d5da;
     }
