@@ -1,6 +1,34 @@
 {
+  "lang": "en-US",
+  "dir": "ltr",
   "name": "Swashbuckler Diary",
+  "name_localized": {
+    "de-DE": "Tagebuch eines Schwertkämpfers",
+    "en-US": "Swashbuckler Diary",
+    "es-ES": "Diario de Espadachín",
+    "fr-FR": "Journal du Mousquetaire",
+    "ja-JP": "剣客日記",
+    "ko-KR": "협객 일기",
+    "pt-BR": "Diário do Espadachim",
+    "ru-RU": "Дневник Сорвиголовы",
+    "vi-VN": "Nhật ký Hiệp khách",
+    "zh-CN": "侠客日记",
+    "zh-TW": "俠客日記"
+  },
   "short_name": "Swashbuckler Diary",
+  "short_name_localized": {
+    "de-DE": "Tagebuch eines Schwertkämpfers",
+    "en-US": "Swashbuckler Diary",
+    "es-ES": "Diario de Espadachín",
+    "fr-FR": "Journal du Mousquetaire",
+    "ja-JP": "剣客日記",
+    "ko-KR": "협객 일기",
+    "pt-BR": "Diário do Espadachim",
+    "ru-RU": "Дневник Сорвиголовы",
+    "vi-VN": "Nhật ký Hiệp khách",
+    "zh-CN": "侠客日记",
+    "zh-TW": "俠客日記"
+  },
   "id": "./",
   "start_url": "./",
   "display": "standalone",
@@ -22,6 +50,19 @@
   "shortcuts": [
     {
       "name": "Search",
+      "name_localized": {
+        "de-DE": "Suchen",
+        "en-US": "Search",
+        "es-ES": "Buscar",
+        "fr-FR": "Rechercher",
+        "ja-JP": "検索",
+        "ko-KR": "검색",
+        "pt-BR": "Pesquisar",
+        "ru-RU": "Поиск",
+        "vi-VN": "Tìm kiếm",
+        "zh-CN": "搜索",
+        "zh-TW": "搜尋"
+      },
       "url": "./search",
       "icons": [
         {
@@ -32,6 +73,19 @@
     },
     {
       "name": "Add",
+      "name_localized": {
+        "de-DE": "Hinzufügen",
+        "en-US": "Add",
+        "es-ES": "Añadir",
+        "fr-FR": "Ajouter",
+        "ja-JP": "追加",
+        "ko-KR": "추가",
+        "pt-BR": "Adicionar",
+        "ru-RU": "Добавить",
+        "vi-VN": "Thêm",
+        "zh-CN": "添加",
+        "zh-TW": "新增"
+      },
       "url": "./write",
       "icons": [
         {
