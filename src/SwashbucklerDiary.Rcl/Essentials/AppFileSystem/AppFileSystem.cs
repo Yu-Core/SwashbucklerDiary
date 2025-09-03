@@ -139,10 +139,9 @@ namespace SwashbucklerDiary.Rcl.Essentials
                     continue;
 
                 ClearDirectoryInternal(absolutePath, excludePaths);
+                try { Directory.Delete(subDir); }
+                catch { }
             }
-
-            try { Directory.Delete(directory); }
-            catch { }
         }
 
         public async Task<long> GetFolderSize(string path)

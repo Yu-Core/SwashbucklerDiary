@@ -601,7 +601,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 }
 
                 var targetDir = Path.Combine(_appFileSystem.AppDataDirectory, item);
-                await _appFileSystem.MoveFolderAsync(sourceDir, targetDir, SearchOption.TopDirectoryOnly).ConfigureAwait(false);
+                await _appFileSystem.MoveFolderAsync(sourceDir, targetDir, SearchOption.AllDirectories).ConfigureAwait(false);
             }
         }
 

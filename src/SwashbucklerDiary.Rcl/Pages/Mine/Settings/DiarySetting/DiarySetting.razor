@@ -263,6 +263,30 @@
                     </SettingSwitch>
                 </MListItemAction>
             </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon>
+                        raw_on
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <MListItemTitle>
+                        <wc-auto-scroll-text>@(I18n.T("Keep the original file name"))</wc-auto-scroll-text>
+                    </MListItemTitle>
+                    <MListItemSubtitle>
+                        <wc-auto-scroll-text>
+                            @(I18n.T("When adding files, use the original file name. The same file will no longer be kept in one copy."))</wc-auto-scroll-text>
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="originalFileName"
+                                   SettingKey="@nameof(Setting.OriginalFileName)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
         </MList>
     </MCard>
 </ScrollContainer>

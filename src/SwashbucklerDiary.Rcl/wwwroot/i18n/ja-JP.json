@@ -491,5 +491,7 @@
   "Importing": "インポート中",
   "Filter conditions": "フィルター条件",
   "All comply": "すべて満たす",
-  "Any one": "いずれか"
+  "Any one": "いずれか",
+  "Keep the original file name": "元のファイル名を保持する",
+  "When adding files, use the original file name. The same file will no longer be kept in one copy.": "ファイルを追加する際は、元のファイル名を使用します。同じファイルはもはや1つのコピーで保存されません。"
 }

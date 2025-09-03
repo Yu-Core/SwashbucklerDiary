@@ -491,5 +491,7 @@
   "Importing": "Importing",
   "Filter conditions": "Filter conditions",
   "All comply": "All comply",
-  "Any one": "Any one"
+  "Any one": "Any one",
+  "Keep the original file name": "Keep the original file name",
+  "When adding files, use the original file name. The same file will no longer be kept in one copy.": "When adding files, use the original file name. The same file will no longer be kept in one copy."
 }

@@ -13,7 +13,8 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
         protected MediaResourceManager(IPlatformIntegration mauiPlatformService,
             IAppFileSystem appFileSystem,
             II18nService i18nService,
-            ILogger<Rcl.Services.MediaResourceManager> logger) : base(mauiPlatformService, appFileSystem, i18nService, logger)
+            ISettingService settingService,
+            ILogger<Rcl.Services.MediaResourceManager> logger) : base(mauiPlatformService, appFileSystem, i18nService, settingService, logger)
         {
             _httpClient = new HttpClient();
 

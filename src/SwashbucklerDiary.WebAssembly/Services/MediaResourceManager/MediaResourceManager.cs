@@ -8,8 +8,9 @@ namespace SwashbucklerDiary.WebAssembly.Services
         public MediaResourceManager(IPlatformIntegration platformIntegration,
             IAppFileSystem appFileSystem,
             II18nService i18nService,
+            ISettingService settingService,
             ILogger<MediaResourceManager> logger) :
-            base(platformIntegration, appFileSystem, i18nService, logger)
+            base(platformIntegration, appFileSystem, i18nService, settingService, logger)
         {
         }
 

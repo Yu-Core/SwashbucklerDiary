@@ -491,5 +491,7 @@
   "Importing": "Đang nhập",
   "Filter conditions": "Điều kiện lọc",
   "All comply": "Tất cả tuân thủ",
-  "Any one": "Bất kỳ"
+  "Any one": "Bất kỳ",
+  "Keep the original file name": "Giữ tên tệp gốc",
+  "When adding files, use the original file name. The same file will no longer be kept in one copy.": "Khi thêm tệp, hãy sử dụng tên tệp gốc. Tệp giống nhau sẽ không còn được giữ lại dưới dạng một bản sao nữa."
 }

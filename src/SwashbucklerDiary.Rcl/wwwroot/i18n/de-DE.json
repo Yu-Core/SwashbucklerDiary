@@ -491,5 +491,7 @@
   "Importing": "Wird importiert",
   "Filter conditions": "Filterbedingungen",
   "All comply": "Alle erfüllen",
-  "Any one": "Beliebige"
+  "Any one": "Beliebige",
+  "Keep the original file name": "Den ursprünglichen Dateinamen beibehalten",
+  "When adding files, use the original file name. The same file will no longer be kept in one copy.": "Wenn Sie Dateien hinzufügen, verwenden Sie den ursprünglichen Dateinamen. Die gleiche Datei wird nicht länger in einer Kopie aufbewahrt."
 }

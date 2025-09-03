@@ -154,7 +154,8 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "linkBase", MediaResourceManager.LinkBase },
                 { "mark", true },
                 { "sup", true },
-                { "sub", true }
+                { "sub", true },
+                { "imgPathAllowSpace", true }
             };
             var preview = new Dictionary<string, object?>()
             {

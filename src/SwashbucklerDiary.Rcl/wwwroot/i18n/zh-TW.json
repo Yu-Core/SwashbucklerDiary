@@ -491,5 +491,7 @@
   "Importing": "正在導入",
   "Filter conditions": "篩選條件",
   "All comply": "全部符合",
-  "Any one": "任意一個"
+  "Any one": "任意一個",
+  "Keep the original file name": "保留原始檔案名稱",
+  "When adding files, use the original file name. The same file will no longer be kept in one copy.": "新增檔案時，使用原始檔案名稱。相同檔案將不再只保留一份。"
 }

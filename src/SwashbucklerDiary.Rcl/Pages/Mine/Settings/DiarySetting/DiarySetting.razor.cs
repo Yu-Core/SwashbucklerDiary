@@ -30,6 +30,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool autoPlay;
 
+        private bool originalFileName;
+
         private string? diaryTimeFormat;
 
         private string? diaryInsertTimeFormat;
@@ -68,6 +70,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             autoPlay = SettingService.Get(s => s.AutoPlay);
             diaryTimeFormat = SettingService.Get(s => s.DiaryTimeFormat);
             diaryInsertTimeFormat = SettingService.Get(s => s.DiaryInsertTimeFormat);
+            originalFileName = SettingService.Get(s => s.OriginalFileName);
         }
 
         private string? EditAutoSaveText => I18n.T(editAutoSaveItems.FirstOrDefault(it => it.Value == editAutoSave).Key);

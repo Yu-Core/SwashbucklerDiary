@@ -491,5 +491,8 @@
   "Importing": "Импортирование",
   "Filter conditions": "Условия фильтра",
   "All comply": "Все соответствуют",
-  "Any one": "Любое"
+  "Any one": "Любое",
+  "Keep the original file name": "Сохранить исходное имя файла",
+  "When adding files, use the original file name. The same file will no longer be kept in one copy.": "При добавлении файлов используйте исходное имя файла. Одинаковый файл больше не будет храниться в одном экземпляре."
+
 }

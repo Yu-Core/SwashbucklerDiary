@@ -159,7 +159,8 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "mark", true },
                 { "linkBase", MediaResourceManager.LinkBase },
                 { "sup", true },
-                { "sub", true }
+                { "sub", true },
+                { "imgPathAllowSpace", true }
             };
 
             _options = new()

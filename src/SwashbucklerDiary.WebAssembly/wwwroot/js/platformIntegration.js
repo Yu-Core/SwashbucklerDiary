@@ -140,19 +140,13 @@ export function saveFileAsync(fileName, filePath) {
     URL.revokeObjectURL(url);
 }
 
-export function pickFilesAsync(accept, fileExtensions, multiple = false) {
+export function pickFilesAsync(dotNetObj, accept, fileExtensions, multiple = false) {
     return new Promise((resolve) => {
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = accept;
         input.multiple = multiple; // Set based on the parameter
         input.style.display = 'none';
-
-        const generateRandomFolderName = () => {
-            const timestamp = Date.now();
-            const randomPart = Math.random().toString(36).substring(2, 10);
-            return `folder_${timestamp}_${randomPart}`;
-        };
 
         const handleFiles = async () => {
             const files = input.files;
@@ -174,7 +168,7 @@ export function pickFilesAsync(accept, fileExtensions, multiple = false) {
                     const fileName = file.name;
                     const contents = await readFileAsArrayBuffer(file);
 
-                    const randomFolderName = generateRandomFolderName();
+                    const randomFolderName = await dotNetObj.invokeMethodAsync("RandomName");
                     const folderPath = `/cache/${randomFolderName}`;
                     FS.mkdir(folderPath);
 

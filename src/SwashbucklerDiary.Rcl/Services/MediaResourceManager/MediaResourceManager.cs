@@ -15,6 +15,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly II18nService _i18n;
 
+        protected readonly ISettingService _settingService;
+
         protected readonly ILogger _logger;
 
         protected static readonly Dictionary<MediaResource, string> _mediaResourceFolders = new()
@@ -31,11 +33,13 @@ namespace SwashbucklerDiary.Rcl.Services
         public MediaResourceManager(IPlatformIntegration mauiPlatformService,
             IAppFileSystem appFileSystem,
             II18nService i18nService,
+            ISettingService settingService,
             ILogger<MediaResourceManager> logger)
         {
             _platformIntegration = mauiPlatformService;
             _appFileSystem = appFileSystem;
             _i18n = i18nService;
+            _settingService = settingService;
             _logger = logger;
         }
 
@@ -96,18 +100,25 @@ namespace SwashbucklerDiary.Rcl.Services
                 return null;
             }
 
-            string sha256;
+            bool useOriginalFileName = _settingService.Get(it => it.OriginalFileName);
 
-            await using (var stream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read, FileShare.Read,
-                    bufferSize: 1024 * 1024, useAsync: true))
+            string targetFilePath;
+            if (useOriginalFileName)
             {
-                sha256 = await stream.CreateSHA256Async().ConfigureAwait(false);
+                var fn = Path.GetFileName(sourceFilePath);
+                string folderName = Guid.NewGuid().ToString("N");
+                targetFilePath = Path.Combine(targetDirectoryPath, folderName, fn);
+            }
+            else
+            {
+                await using var stream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read, FileShare.Read,
+                        bufferSize: 1024 * 1024, useAsync: true);
+                string sha256 = await stream.CreateSHA256Async().ConfigureAwait(false);
+                var fn = sha256 + Path.GetExtension(sourceFilePath);
+                targetFilePath = Path.Combine(targetDirectoryPath, fn);
             }
 
-            var fn = sha256 + Path.GetExtension(sourceFilePath);
-            var targetFilePath = Path.Combine(targetDirectoryPath, fn);
-
-            if (!File.Exists(targetFilePath))
+            if (useOriginalFileName || !File.Exists(targetFilePath))
             {
                 await Task.Run(() =>
                 {
@@ -131,7 +142,7 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             var resourceUris = new HashSet<string>();
             var resources = new List<ResourceModel>();
-            string pattern = $@"(?<=\(|"")({customPathPrefix}\S+?)(?=\)|"")";
+            string pattern = @$"(?<=\(|"")({customPathPrefix}.+?\.[a-zA-Z]+)(?=\)|"")";
 
             foreach (Match match in Regex.Matches(content, pattern))
             {
