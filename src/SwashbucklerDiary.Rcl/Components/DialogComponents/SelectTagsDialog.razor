@@ -20,7 +20,7 @@
                 <MIcon>close</MIcon>
             </MButton>
         </MCardTitle>
-        <MCardText Class="pb-0">
+        <MCardText Class="pb-0 d-flex flex-column">
             @if (showSearch)
             {
                 <CustomMTextField @bind-Value="_searchText"
@@ -38,7 +38,7 @@
                                   PrependInnerIcon="search">
                 </CustomMTextField>
             }
-            <div class="scroll-show" style="max-height:200px;">
+            <div class="scroll-show flex-grow-1" style="overflow-y:auto;">
                 <MChipGroup @bind-Values="SelectedTagIds"
                             Column="true"
                             Multiple="true">
