@@ -1,15 +1,19 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Shared
 {
     public static class ExpressionExtensions
     {
-        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>>? left, Expression<Func<T, bool>> right)
+        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>>? left, Expression<Func<T, bool>>? right)
         {
             Expression<Func<T, bool>>? exp;
             if (left == null)
             {
                 exp = right;
+            }
+            else if (right == null)
+            {
+                exp = left;
             }
             else
             {
@@ -23,7 +27,7 @@ namespace SwashbucklerDiary.Shared
             return exp.ToExpression();
         }
 
-        public static Expression<Func<T, bool>> AndIF<T>(this Expression<Func<T, bool>> left, bool isAnd, Expression<Func<T, bool>> right)
+        public static Expression<Func<T, bool>>? AndIF<T>(this Expression<Func<T, bool>> left, bool isAnd, Expression<Func<T, bool>> right)
         {
             Expression<Func<T, bool>>? exp;
             if (isAnd)

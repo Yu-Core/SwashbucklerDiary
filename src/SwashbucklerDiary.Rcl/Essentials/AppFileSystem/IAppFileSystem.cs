@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         void FileMove(string sourceFilePath, string targetFilePath);
 
-        Task ClearFolderAsync(string folderPath, List<string>? exceptPaths = null);
+        Task ClearFolderAsync(string folderPath, List<string>? excludeFiles = null);
 
         Task<long> GetFolderSize(string folderPath);
 

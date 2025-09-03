@@ -115,13 +115,10 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             else
             {
-                var flag = await ResourceService.DeleteUnusedResourcesAsync(it => it.ResourceUri == SelectedItem.ResourceUri);
-                if (flag)
-                {
-                    loadedItems.Remove(SelectedItem);
-                    Value.Remove(SelectedItem);
-                    await AlertService.SuccessAsync(I18n.T("Delete successfully"));
-                }
+                await ResourceService.DeleteUnusedResourcesAsync(it => it.ResourceUri == SelectedItem.ResourceUri);
+                loadedItems.Remove(SelectedItem);
+                Value.Remove(SelectedItem);
+                await AlertService.SuccessAsync(I18n.T("Delete successfully"));
             }
         }
 

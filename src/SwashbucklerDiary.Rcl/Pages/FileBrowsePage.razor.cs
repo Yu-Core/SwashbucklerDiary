@@ -87,11 +87,18 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             showDelete = false;
             StateHasChanged();
-            var flag = await ResourceService.DeleteUnusedResourcesAsync(_ => true);
-            if (flag)
+
+            AlertService.StartLoading();
+
+            try
             {
+                await ResourceService.DeleteAllUnusedResourcesWithFilesAsync();
                 await UpdateResourcesAsync();
                 await AlertService.SuccessAsync(I18n.T("Delete successfully"));
+            }
+            finally
+            {
+                AlertService.StopLoading();
             }
         }
 

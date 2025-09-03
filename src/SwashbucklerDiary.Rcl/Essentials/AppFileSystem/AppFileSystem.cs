@@ -89,43 +89,60 @@ namespace SwashbucklerDiary.Rcl.Essentials
             }
         }
 
-        public async Task ClearFolderAsync(string folderPath, List<string>? exceptPaths = null)
+        public async Task ClearFolderAsync(string targetDirectory, List<string>? excludeFiles = null)
         {
-            if (!Directory.Exists(folderPath)) return;
-
-            var directory = new DirectoryInfo(folderPath);
-            var filesToDelete = directory.EnumerateFiles("*", SearchOption.AllDirectories);
-
-            if (exceptPaths is { Count: > 0 })
-            {
-                var exceptPathsSet = exceptPaths.ToHashSet(StringComparer.OrdinalIgnoreCase);
-                filesToDelete = filesToDelete.Where(file => !exceptPathsSet.Contains(file.FullName));
-            }
+            if (!Directory.Exists(targetDirectory)) return;
 
             await Task.Run(() =>
             {
-                Parallel.ForEach(filesToDelete, file =>
-                {
-                    try { file.Delete(); }
-                    catch { /* Ignore */ }
-                });
-            }).ConfigureAwait(false);
+                var excludePaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-            var dirsToDelete = directory.EnumerateDirectories("*", SearchOption.AllDirectories);
-            await Task.Run(async () =>
-            {
-                foreach (DirectoryInfo subDirectory in dirsToDelete)
+                if (excludeFiles is not null && excludeFiles.Count != 0)
                 {
-                    await ClearFolderAsync(subDirectory.FullName).ConfigureAwait(false);
-                    try
+                    foreach (var file in excludeFiles)
                     {
-                        subDirectory.Delete();
-                    }
-                    catch (Exception)
-                    {
+                        try
+                        {
+                            string absolutePath = Path.GetFullPath(file);
+                            excludePaths.Add(absolutePath);
+                        }
+                        catch
+                        {
+                            // 忽略无效的路径
+                        }
                     }
                 }
+                ClearDirectoryInternal(targetDirectory, excludePaths);
             }).ConfigureAwait(false);
+        }
+
+        private static void ClearDirectoryInternal(string directory, HashSet<string> excludePaths)
+        {
+            // 处理文件
+            foreach (var file in Directory.GetFiles(directory))
+            {
+                string absolutePath = Path.GetFullPath(file);
+                if (excludePaths.Contains(absolutePath))
+                    continue;
+
+                try { File.Delete(absolutePath); }
+                catch { }
+            }
+
+            // 递归处理子目录
+            foreach (var subDir in Directory.GetDirectories(directory))
+            {
+                string absolutePath = Path.GetFullPath(subDir);
+
+                // 检查是否在排除列表中
+                if (excludePaths.Contains(absolutePath))
+                    continue;
+
+                ClearDirectoryInternal(absolutePath, excludePaths);
+            }
+
+            try { Directory.Delete(directory); }
+            catch { }
         }
 
         public async Task<long> GetFolderSize(string path)

@@ -5,7 +5,9 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public interface IResourceService : IBaseDataService<ResourceModel>
     {
-        Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> func);
+        Task DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> func);
+
+        Task DeleteAllUnusedResourcesWithFilesAsync();
 
         Task<ResourceModel> FindIncludesAsync(string id);
 

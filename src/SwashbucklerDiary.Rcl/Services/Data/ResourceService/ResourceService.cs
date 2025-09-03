@@ -1,3 +1,4 @@
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
@@ -12,33 +13,32 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly ISettingService _settingService;
 
+        protected readonly IAppFileSystem _appFileSystem;
+
         public ResourceService(IResourceRepository resourceRepository,
             IMediaResourceManager mediaResourceManager,
-            ISettingService settingService)
+            ISettingService settingService,
+            IAppFileSystem appFileSystem)
         {
             base._iBaseRepository = resourceRepository;
             _resourceRepository = resourceRepository;
             _mediaResourceManager = mediaResourceManager;
             _settingService = settingService;
+            _appFileSystem = appFileSystem;
         }
 
-        public async Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> expression)
+        public async Task DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> expression)
         {
+            await _resourceRepository.DeleteUnusedResourcesAsync(expression).ConfigureAwait(false);
+        }
+
+        public async Task DeleteAllUnusedResourcesWithFilesAsync()
+        {
+            await _resourceRepository.DeleteUnusedResourcesAsync(_ => true).ConfigureAwait(false);
+
             bool privacyMode = _settingService.GetTemp(it => it.PrivacyMode);
-            var (currentUnusedResourceUris, trulyUnusedResourceUris) = await _resourceRepository.QueryUnusedResourcesAsync(expression, privacyMode).ConfigureAwait(false);
-            if (currentUnusedResourceUris is null || currentUnusedResourceUris.Count == 0)
-            {
-                return false;
-            }
-
-            var flag = await _resourceRepository.DeleteByIdAsync(currentUnusedResourceUris).ConfigureAwait(false);
-            if (!flag)
-            {
-                return false;
-            }
-
-            DeleteResourceFiles(trulyUnusedResourceUris);
-            return true;
+            var trulyUsedResourceUris = await _resourceRepository.QueryTrulyUsedResourcesAsync(privacyMode).ConfigureAwait(false);
+            await DeleteResourceFiles(trulyUsedResourceUris).ConfigureAwait(false);
         }
 
         public Task<ResourceModel> FindIncludesAsync(string id)
@@ -51,20 +51,15 @@ namespace SwashbucklerDiary.Rcl.Services
             return _resourceRepository.GetDiaryIdsAsync(id);
         }
 
-        private void DeleteResourceFiles(List<string?> resourceUris)
+        private async Task DeleteResourceFiles(List<string> resourceUris)
         {
-            foreach (var resourceUri in resourceUris)
+            var filePaths = resourceUris
+                .Select(it => _mediaResourceManager.RelativeUrlToFilePath(it))
+                .Where(it => !string.IsNullOrEmpty(it))
+                .ToList();
+            foreach (var folderName in _mediaResourceManager.MediaResourceFolders.Values)
             {
-                if (resourceUri is null)
-                {
-                    continue;
-                }
-
-                var path = _mediaResourceManager.RelativeUrlToFilePath(resourceUri);
-                if (!string.IsNullOrEmpty(path))
-                {
-                    File.Delete(path);
-                }
+                await _appFileSystem.ClearFolderAsync(Path.Combine(_appFileSystem.AppDataDirectory, folderName), filePaths).ConfigureAwait(false);
             }
         }
     }
