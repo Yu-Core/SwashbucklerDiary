@@ -43,12 +43,11 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public async Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>>? expression)
         {
-            Expression<Func<ResourceModel, bool>> expression2 = r => true;
-            expression2 = expression2.And(expression);
+            expression ??= r => true;
 
             var resourceUris = await base.Context.Queryable<ResourceModel>()
                 .LeftJoin<DiaryResourceModel>((r, dr) => r.ResourceUri == dr.ResourceUri)
-                .Where(expression2)
+                .Where(expression)
                 .Where((r, dr) => dr.ResourceUri == null) // 只选择没有匹配的记录
                 .Select(r => r.ResourceUri)
                 .ToArrayAsync()

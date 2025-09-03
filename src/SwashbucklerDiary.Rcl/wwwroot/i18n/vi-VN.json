@@ -488,5 +488,8 @@
   "Target does not exist": "Mục tiêu không tồn tại",
   "Connection exception": "Ngoại lệ kết nối",
   "Generating": "Đang tạo",
-  "Importing": "Đang nhập"
+  "Importing": "Đang nhập",
+  "Filter conditions": "Điều kiện lọc",
+  "All comply": "Tất cả tuân thủ",
+  "Any one": "Bất kỳ"
 }

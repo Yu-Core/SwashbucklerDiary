@@ -6,7 +6,10 @@
                   TValue="string"
                   Value="Value"
                   ValueChanged="ValueChanged"
+                  Values="Values"
+                  ValuesChanged="ValuesChanged"
                   Title="@(I18n.T("Select weather"))"
+                  Multiple="Multiple"
                   ShowText="ShowText"
                   ShowTextChanged="ShowTextChanged"
                   Items="GlobalConfiguration.WeatherIcons"
@@ -26,6 +29,15 @@
 
     [Parameter]
     public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public List<string> Values { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<List<string>> ValuesChanged { get; set; }
+
+    [Parameter]
+    public bool Multiple { get; set; }
 
     [Parameter]
     public bool ShowText { get; set; }

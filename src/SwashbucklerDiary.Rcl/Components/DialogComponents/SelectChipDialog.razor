@@ -26,16 +26,19 @@
         <MCardText Class="scroll-show pb-0 mb-5" Style="max-height:300px;">
             <MChipGroup Value="internalValue"
                         ValueChanged="InternalValueChanged"
+                        Values="internalValues"
+                        ValuesChanged="InternalValuesChanged"
                         Class="@(InternalShowText ? "" : "m-chip-group--icon")"
                         Column="true"
-                        Mandatory="Mandatory">
+                        Mandatory="Mandatory"
+                        Multiple="Multiple">
                 @foreach (var item in Items)
                 {
                     <MChip @key="item.Key"
                            Value="@item.Key"
                            Filter="InternalShowText"
                            Outlined="!InternalShowText"
-                           OnClick="HandleOnCancel">
+                           OnClick="CloseOnContentClick">
                         <MIcon Left="InternalShowText">
                             @InternalItemIcon(item)
                         </MIcon>

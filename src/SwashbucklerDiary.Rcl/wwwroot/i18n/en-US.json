@@ -488,5 +488,8 @@
   "Target does not exist": "Target does not exist",
   "Connection exception": "Connection exception",
   "Generating": "Generating",
-  "Importing": "Importing"
+  "Importing": "Importing",
+  "Filter conditions": "Filter conditions",
+  "All comply": "All comply",
+  "Any one": "Any one"
 }

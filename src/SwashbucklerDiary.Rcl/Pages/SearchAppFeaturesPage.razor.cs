@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components;
+using SqlSugar;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Pages
@@ -86,39 +86,34 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void UpdateAppFeatures(List<AppFeature> appFeatures)
         {
-            Expression<Func<AppFeature, bool>> exp = GetExpression();
+            Expression<Func<AppFeature, bool>> exp = CreateExpression();
             _appFeatures = appFeatures.Where(exp.Compile()).ToList();
         }
 
         private void UpdateAppFeatures()
             => UpdateAppFeatures(allAppFeatures);
 
-        private Expression<Func<AppFeature, bool>> GetExpression()
+        private Expression<Func<AppFeature, bool>> CreateExpression()
         {
-            Expression<Func<AppFeature, bool>>? exp = null;
+            var expable = Expressionable.Create<AppFeature>();
 
             if (!string.IsNullOrWhiteSpace(search))
             {
                 Expression<Func<AppFeature, bool>> expSearch
                     = it => I18n.T(it.Name ?? string.Empty).Contains(search, StringComparison.CurrentCultureIgnoreCase)
                     || I18n.T(it.Path ?? string.Empty).Contains(search, StringComparison.CurrentCultureIgnoreCase);
-                exp = exp.And(expSearch);
+                expable.And(expSearch);
 
                 Expression<Func<AppFeature, bool>> expPlatform
                     = it => FilterPlatform(it);
-                exp = exp.And(expPlatform);
+                expable.And(expPlatform);
                 Expression<Func<AppFeature, bool>> expBreakpoint
                     = it => it.HideBreakpoints == null
                     || !it.HideBreakpoints.Contains(BreakpointService.Breakpoint.Name.ToString());
-                exp = exp.And(expBreakpoint);
+                expable.And(expBreakpoint);
             }
 
-            if (exp == null)
-            {
-                return it => false;
-            }
-
-            return exp;
+            return expable.ToExpression();
         }
 
         private void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)

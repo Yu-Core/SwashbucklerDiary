@@ -1,5 +1,6 @@
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using SqlSugar;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
@@ -22,6 +23,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private bool showFileTypes;
 
         private bool showIconText;
+
+        private bool showFilterCondition;
 
         private string? search;
 
@@ -49,11 +52,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.RegisterWatchers(watcher);
 
             watcher.Watch<List<TagModel>>(nameof(SelectedTags), UpdateDiariesAndStateHasChangedAsync)
-                   .Watch<string?>(nameof(SelectedWeather), UpdateDiariesAndStateHasChangedAsync)
-                   .Watch<string?>(nameof(SelectedMood), UpdateDiariesAndStateHasChangedAsync)
-                   .Watch<string?>(nameof(SelectedLocation), UpdateDiariesAndStateHasChangedAsync)
+                   .Watch<List<string>>(nameof(SelectedWeathers), UpdateDiariesAndStateHasChangedAsync)
+                   .Watch<List<string>>(nameof(SelectedMoods), UpdateDiariesAndStateHasChangedAsync)
+                   .Watch<List<string>>(nameof(SelectedLocations), UpdateDiariesAndStateHasChangedAsync)
                    .Watch<List<MediaResource>>(nameof(SelectedFileTypes), UpdateDiariesAndStateHasChangedAsync)
-                   .Watch<DateFilterForm>(nameof(DateFilterForm), UpdateDiariesAndStateHasChangedAsync);
+                   .Watch<DateFilterForm>(nameof(DateFilterForm), UpdateDiariesAndStateHasChangedAsync)
+                   .Watch<SearchFilterConditionForm>(nameof(SearchFilterConditionForm), UpdateDiariesAndStateHasChangedAsync);
         }
 
         protected override void ReadSettings()
@@ -65,12 +69,16 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override async Task UpdateDiariesAsync()
         {
-            Expression<Func<DiaryModel, bool>> exp = GetExpression();
+            if (!(IsTagsFiltered || IsWeatherFiltered || IsMoodFiltered || IsLocationFiltered || IsFileTypeFiltered || IsTimeFiltered || IsSearchFiltered))
+            {
+                Diaries = [];
+                return;
+            }
+
+            Expression<Func<DiaryModel, bool>> exp = CreateExpression();
             var diaries = await DiaryService.QueryDiariesAsync(exp);
-            var tagNames = SelectedTags.Select(it => it.Name).ToList();
-            Diaries = diaries.WhereIF(IsTagsFiltered, it => it.Tags != null && tagNames.All(tagName => it.Tags.Any(tag => tag.Name == tagName)))
-                .WhereIF(IsFileTypeFiltered, it => it.Resources != null && SelectedFileTypes.All(fileType => it.Resources.Any(r => r.ResourceType == fileType)))
-                .OrderByDescending(it => it.CreateTime)
+
+            Diaries = diaries.OrderByDescending(it => it.CreateTime)
                 .ToList();
         }
 
@@ -80,11 +88,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool IsTagsFiltered => SelectedTags.Count > 0;
 
-        private bool IsWeatherFiltered => SelectedWeather is not null;
+        private bool IsWeatherFiltered => SelectedWeathers.Count > 0;
 
-        private bool IsMoodFiltered => SelectedMood is not null;
+        private bool IsMoodFiltered => SelectedMoods.Count > 0;
 
-        private bool IsLocationFiltered => !string.IsNullOrEmpty(SelectedLocation);
+        private bool IsLocationFiltered => SelectedLocations.Count > 0;
 
         private bool IsFileTypeFiltered => SelectedFileTypes.Count > 0;
 
@@ -96,25 +104,25 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private List<TagModel> SelectedTags
         {
-            get => GetValue<List<TagModel>>() ?? [];
+            get => GetValue<List<TagModel>>([])!;
             set => SetValue(value);
         }
 
-        private string? SelectedWeather
+        private List<string> SelectedWeathers
         {
-            get => GetValue<string?>();
+            get => GetValue<List<string>>([])!;
             set => SetValue(value);
         }
 
-        private string? SelectedMood
+        private List<string> SelectedMoods
         {
-            get => GetValue<string?>();
+            get => GetValue<List<string>>([])!;
             set => SetValue(value);
         }
 
-        private string? SelectedLocation
+        private List<string> SelectedLocations
         {
-            get => GetValue<string>();
+            get => GetValue<List<string>>([])!;
             set => SetValue(value);
         }
 
@@ -127,6 +135,13 @@ namespace SwashbucklerDiary.Rcl.Pages
         private DateFilterForm DateFilterForm
         {
             get => GetValue<DateFilterForm>(new())!;
+            set => SetValue(value);
+        }
+
+
+        private SearchFilterConditionForm SearchFilterConditionForm
+        {
+            get => GetValue<SearchFilterConditionForm>(new())!;
             set => SetValue(value);
         }
 
@@ -160,61 +175,88 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task ClearFilter()
         {
             SetValueWithNoEffect<List<TagModel>>([], nameof(SelectedTags));
-            SetValueWithNoEffect<string>(null, nameof(SelectedWeather));
-            SetValueWithNoEffect<string>(null, nameof(SelectedMood));
-            SetValueWithNoEffect<string>(null, nameof(SelectedLocation));
+            SetValueWithNoEffect<List<string>>([], nameof(SelectedWeathers));
+            SetValueWithNoEffect<List<string>>([], nameof(SelectedMoods));
+            SetValueWithNoEffect<List<string>>([], nameof(SelectedLocations));
             SetValueWithNoEffect<List<MediaResource>>([], nameof(SelectedFileTypes));
             SetValueWithNoEffect<DateFilterForm>(new(), nameof(DateFilterForm));
             await UpdateDiariesAsync();
         }
 
-        private Expression<Func<DiaryModel, bool>> GetExpression()
+        private Expression<Func<DiaryModel, bool>> CreateExpression()
         {
-            Expression<Func<DiaryModel, bool>>? exp = null;
+            var expable = Expressionable.Create<DiaryModel>();
 
             if (IsTagsFiltered)
             {
-                exp = exp.And(it => true);
+                var selectedTagIds = SelectedTags.Select(t => t.Id).ToList();
+                Expression<Func<DiaryModel, bool>>? expTags = SearchFilterConditionForm.Tags == FilterCondition.AllComply
+                    ? it => it.Id == SqlFunc.Subqueryable<DiaryTagModel>()
+                        .Where(dt => selectedTagIds.Contains(dt.TagId))
+                        .GroupBy(dt => dt.DiaryId)
+                        .Having(dt => SqlFunc.AggregateCount(dt.DiaryId) == selectedTagIds.Count)
+                        .Select(dt => dt.DiaryId)
+                    : it => it.Tags.Any(tag => selectedTagIds.Contains(tag.Id));
+
+                expable.And(expTags);
             }
 
             if (IsWeatherFiltered)
             {
-                Expression<Func<DiaryModel, bool>> expWeather
-                    = it => it.Weather == SelectedWeather;
-                exp = exp.And(expWeather);
+                Expression<Func<DiaryModel, bool>> expWeather = SearchFilterConditionForm.Weathers == FilterCondition.AllComply
+                    ? SelectedWeathers.Count > 1
+                        ? it => false
+                        : it => it.Weather == SelectedWeathers.First()
+                    : it => SelectedWeathers.Contains(it.Weather);
+                expable.And(expWeather);
             }
 
             if (IsMoodFiltered)
             {
-                Expression<Func<DiaryModel, bool>> expMood
-                    = it => it.Mood == SelectedMood;
-                exp = exp.And(expMood);
+                Expression<Func<DiaryModel, bool>> expMood = SearchFilterConditionForm.Moods == FilterCondition.AllComply
+                    ? SelectedMoods.Count > 1
+                        ? it => false
+                        : it => it.Mood == SelectedMoods.First()
+                    : it => SelectedMoods.Contains(it.Mood);
+                expable.And(expMood);
             }
 
             if (IsLocationFiltered)
             {
-                Expression<Func<DiaryModel, bool>> expLocation
-                    = it => it.Location == SelectedLocation;
-                exp = exp.And(expLocation);
+                Expression<Func<DiaryModel, bool>> expLocation = SearchFilterConditionForm.Locations == FilterCondition.AllComply
+                    ? SelectedLocations.Count > 1
+                        ? it => false
+                        : it => it.Location == SelectedLocations.First()
+                    : it => SelectedLocations.Contains(it.Location);
+                expable.And(expLocation);
             }
 
             if (IsFileTypeFiltered)
             {
-                exp = exp.And(it => true);
+                Expression<Func<DiaryModel, bool>> expFiles = SearchFilterConditionForm.FileTypes == FilterCondition.AllComply
+                    ? it => it.Id == SqlFunc.Subqueryable<DiaryResourceModel>()
+                        .LeftJoin<ResourceModel>((dr, r) => dr.ResourceUri == r.ResourceUri)
+                        .Where((dr, r) => SelectedFileTypes.Contains(r.ResourceType))
+                        .GroupBy((dr, r) => dr.DiaryId)
+                        .Having(dr => SqlFunc.MappingColumn<bool>($"COUNT(DISTINCT `r`.`ResourceType`) = {SelectedFileTypes.Count}"))
+                        .Select(dr => dr.DiaryId)
+                    : it => it.Resources.Any(r => SelectedFileTypes.Contains(r.ResourceType));
+
+                expable.And(expFiles);
             }
 
             if (MinDate != default)
             {
                 DateTime dateTimeMin = MinDate.ToDateTime(default);
                 Expression<Func<DiaryModel, bool>> expMinDate = it => it.CreateTime >= dateTimeMin;
-                exp = exp.And(expMinDate);
+                expable.And(expMinDate);
             }
 
             if (MaxDate != default)
             {
                 DateTime dateTimeMax = MaxDate.ToDateTime(TimeOnly.MaxValue);
                 Expression<Func<DiaryModel, bool>> expMaxDate = it => it.CreateTime <= dateTimeMax;
-                exp = exp.And(expMaxDate);
+                expable.And(expMaxDate);
             }
 
             if (IsSearchFiltered)
@@ -222,21 +264,22 @@ namespace SwashbucklerDiary.Rcl.Pages
                 Expression<Func<DiaryModel, bool>> expSearch
                     = it => (it.Title ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase)
                     || (it.Content ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase);
-                exp = exp.And(expSearch);
+                expable.And(expSearch);
             }
 
-            if (exp == null)
-            {
-                return it => false;
-            }
-
-            return exp;
+            return expable.ToExpression();
         }
 
         private void ToRead(DiaryModel diary)
         {
             string? queryParameters = string.IsNullOrWhiteSpace(search) ? null : $"?query={search}";
             To($"read/{diary.Id}{queryParameters}");
+        }
+
+        private void SaveSearchFilterCondition(SearchFilterConditionForm form)
+        {
+            showFilterCondition = false;
+            SearchFilterConditionForm = form;
         }
     }
 }

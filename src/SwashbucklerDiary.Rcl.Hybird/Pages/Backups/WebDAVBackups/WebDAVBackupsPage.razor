@@ -138,11 +138,11 @@
                 <MIcon>close</MIcon>
             </MButton>
         </MCardTitle>
-        <MCardText Class="scroll-show pb-0 mb-5"
-                   Style="max-height:300px;">
-            <MList Class="py-0">
+        <MCardText Class="pb-0 mb-5 d-flex flex-column">
+            <MList Class="py-0 scroll-show flex-grow-1"
+                   Style="overflow-y:auto;">
                 <Virtualize Items="fileList"
-                            ItemSize="56"
+                            ItemSize="64"
                             Context="item">
                     <MListItem @key="item"
                                Class="mb-1 rounded"

@@ -1,3 +1,4 @@
+using SqlSugar;
 using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
@@ -67,8 +68,10 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public Task<List<DiaryModel>> QueryDiariesAsync(Expression<Func<DiaryModel, bool>> expression)
         {
-            expression = expression.And(it => it.Template == null || it.Template == false);
-            return QueryAsync(expression);
+            var expable = Expressionable.Create<DiaryModel>();
+            expable.And(expression);
+            expable.And(it => it.Template == null || it.Template == false);
+            return QueryAsync(expable.ToExpression());
         }
 
         public Task<List<DiaryModel>> QueryTemplatesAsync()
@@ -78,8 +81,10 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public Task<List<DiaryModel>> QueryTemplatesAsync(Expression<Func<DiaryModel, bool>> expression)
         {
-            expression = expression.And(it => it.Template);
-            return QueryAsync(expression);
+            var expable = Expressionable.Create<DiaryModel>();
+            expable.And(expression);
+            expable.And(it => it.Template == null || it.Template == false);
+            return QueryAsync(expable.ToExpression());
         }
     }
 }

@@ -1,0 +1,91 @@
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits DialogComponentBase
+
+<MultiSizeDisplay>
+    <MobileContent>
+        <CustomMBottomSheet MyValue="Visible"
+                            MyValueChanged="InternalVisibleChanged"
+                            ContentClass="rounded-t-lg"
+                            Scrollable
+                            OnBeforeShowContent="BeforeShowContent">
+            @GenCard(GenMobileCardActionsContent())
+        </CustomMBottomSheet>
+    </MobileContent>
+    <DesktopContent>
+        <CustomMDialog MyValue="Visible"
+                       MyValueChanged="InternalVisibleChanged"
+                       ContentClass="rounded-lg"
+                       MaxWidth="420"
+                       Scrollable
+                       OnBeforeShowContent="BeforeShowContent">
+            @GenCard(GenDesktopCardActionsContent())
+        </CustomMDialog>
+    </DesktopContent>
+</MultiSizeDisplay>
+
+@code {
+    private RenderFragment GenCard(RenderFragment cardActionsContent) => __builder =>
+    {
+        <MCard Class="rounded-t-lg">
+            <MCardTitle Class="font-weight-bold flex-nowrap">
+                <wc-auto-scroll-text>@(I18n.T("Filter conditions"))</wc-auto-scroll-text>
+                <MSpacer></MSpacer>
+                <MButton Icon="true"
+                         OnClick="HandleOnCancel">
+                    <MIcon>close</MIcon>
+                </MButton>
+            </MCardTitle>
+            <MCardText Class="pb-0">
+                <MSubheader>@I18n.T("Tag")</MSubheader>
+                <FilterConditionChipGroup @bind-Value="internalValue.Tags"></FilterConditionChipGroup>
+                <MSubheader>@I18n.T("Weather")</MSubheader>
+                <FilterConditionChipGroup @bind-Value="internalValue.Weathers"></FilterConditionChipGroup>
+                <MSubheader>@I18n.T("Mood")</MSubheader>
+                <FilterConditionChipGroup @bind-Value="internalValue.Moods"></FilterConditionChipGroup>
+                <MSubheader>@I18n.T("Location")</MSubheader>
+                <FilterConditionChipGroup @bind-Value="internalValue.Locations"></FilterConditionChipGroup>
+                <MSubheader>@I18n.T("File")</MSubheader>
+                <FilterConditionChipGroup @bind-Value="internalValue.FileTypes"></FilterConditionChipGroup>
+            </MCardText>
+            <MCardActions>
+                @cardActionsContent
+            </MCardActions>
+        </MCard>
+    };
+
+    private RenderFragment GenMobileCardActionsContent() => __builder =>
+    {
+        <MButton Class="text-subtitle-1 flex-grow-1 mb-2"
+                 Style="flex-basis:0;"
+                 Rounded="true"
+                 Depressed="true"
+                 Large="true"
+                 Color="rgba(var(--m-theme-surface-container-high))"
+                 OnClick="HandleOnCancel">
+            <wc-auto-scroll-text class="justify-center">@(I18n.T("Cancel"))</wc-auto-scroll-text>
+        </MButton>
+        <MButton Class="text-subtitle-1 flex-grow-1 mb-2"
+                 Style="flex-basis:0;"
+                 Rounded="true"
+                 Depressed="true"
+                 Large="true"
+                 Color="rgba(var(--m-theme-surface-container-high))"
+                 OnClick="HandleOnOK">
+            <wc-auto-scroll-text class="justify-center">@(I18n.T("OK"))</wc-auto-scroll-text>
+        </MButton>
+    };
+
+    private RenderFragment GenDesktopCardActionsContent() => __builder =>
+    {
+        <MSpacer></MSpacer>
+        <MButton Text="true"
+                 OnClick="HandleOnCancel">
+            @(I18n.T("Cancel"))
+        </MButton>
+        <MButton Text="true"
+                 Color="primary"
+                 OnClick="HandleOnOK">
+            @(I18n.T("OK"))
+        </MButton>
+    };
+}

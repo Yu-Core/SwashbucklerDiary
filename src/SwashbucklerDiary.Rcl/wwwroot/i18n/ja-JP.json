@@ -488,5 +488,8 @@
   "Target does not exist": "ターゲットが存在しません",
   "Connection exception": "接続例外",
   "Generating": "生成中",
-  "Importing": "インポート中"
+  "Importing": "インポート中",
+  "Filter conditions": "フィルター条件",
+  "All comply": "すべて満たす",
+  "Any one": "いずれか"
 }

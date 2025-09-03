@@ -22,9 +22,8 @@
             </MSubheader>
 
             <div>
-                <Virtualize Items="lanDeviceInfoListItems"
-                            ItemSize="56"
-                            Context="item">
+                @foreach (var item in lanDeviceInfoListItems)
+                {
                     <MListItem @key="item.IPAddress"
                                Class="mb-1 rounded"
                                OnClick="item.OnClick">
@@ -47,7 +46,7 @@
                     {
                         <MDivider Class="mx-5"></MDivider>
                     }
-                </Virtualize>
+                }
             </div>
 
             @if (LANSenderService.IsSearching)

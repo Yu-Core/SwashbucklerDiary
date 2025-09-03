@@ -1,6 +1,7 @@
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using SqlSugar;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
@@ -118,26 +119,21 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void UpdateInternalItems()
         {
-            Expression<Func<TagModel, bool>> exp = GetExpression();
+            Expression<Func<TagModel, bool>> exp = CreateExpression();
             internalItems = Items.Where(exp.Compile()).ToList();
         }
 
-        private Expression<Func<TagModel, bool>> GetExpression()
+        private Expression<Func<TagModel, bool>> CreateExpression()
         {
-            Expression<Func<TagModel, bool>>? exp = null;
+            var expable = Expressionable.Create<TagModel>();
             if (!string.IsNullOrWhiteSpace(_searchText))
             {
                 Expression<Func<TagModel, bool>> expSearch
                     = it => !string.IsNullOrEmpty(it.Name) && (it.Name.Contains(_searchText) || SelectedTagIds.Any(t => t.ToString() == it.Id.ToString()));
-                exp = exp.And(expSearch);
+                expable.And(expSearch);
             }
 
-            if (exp == null)
-            {
-                return it => true;
-            }
-
-            return exp;
+            return expable.ToExpression();
         }
     }
 }

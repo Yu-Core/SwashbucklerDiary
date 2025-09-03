@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using SqlSugar;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Models;
@@ -174,20 +175,20 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateLogsAsync()
         {
-            Expression<Func<LogModel, bool>> exp = GetExpression();
+            Expression<Func<LogModel, bool>> exp = CerateExpression();
             var logs = await LogService.QueryAsync(exp);
             this.logs = logs.OrderByDescending(it => it.Timestamp).ToList();
         }
 
-        private Expression<Func<LogModel, bool>> GetExpression()
+        private Expression<Func<LogModel, bool>> CerateExpression()
         {
-            Expression<Func<LogModel, bool>>? exp = null;
+            var expable = Expressionable.Create<LogModel>();
 
             if (DateOnlyMin != default)
             {
                 DateTime dateTimeMin = DateOnlyMin.ToDateTime(default);
                 Expression<Func<LogModel, bool>> expMinDate = it => it.Timestamp >= dateTimeMin;
-                exp = exp.And(expMinDate);
+                expable.And(expMinDate);
             }
 
             if (DateOnlyMax != default)
@@ -195,7 +196,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 DateTime dateTimeMax = DateOnlyMax.ToDateTime(TimeOnly.MaxValue);
                 dateTimeMax = dateTimeMax.AddDays(1);
                 Expression<Func<LogModel, bool>> expMaxDate = it => it.Timestamp <= dateTimeMax;
-                exp = exp.And(expMaxDate);
+                expable.And(expMaxDate);
             }
 
 
@@ -203,17 +204,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 Expression<Func<LogModel, bool>> expSearch
                     = it => (it.RenderedMessage ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase);
-                exp = exp.And(expSearch);
+                expable.And(expSearch);
             }
 
-            if (exp == null)
-            {
-                return it => true;
-            }
-            else
-            {
-                return exp;
-            }
+            return expable.ToExpression();
         }
     }
 }

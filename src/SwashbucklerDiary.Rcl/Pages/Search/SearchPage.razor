@@ -13,6 +13,11 @@
                               Placeholder="@(I18n.T("Please enter diary keywords"))"
                               OnInput="UpdateDiariesAsync">
         </TransparentTextField>
+
+        <MButton Icon="true"
+                 OnClick="()=>showFilterCondition=true">
+            <MIcon>mdi:mdi-filter-cog-outline</MIcon>
+        </MButton>
     </ChildContent>
     <ExtensionContent>
         <MChip Class="mr-2"
@@ -58,17 +63,20 @@
 </SelectTagsDialog>
 
 <SelectWeatherDialog @bind-Visible="showWeather"
-                     @bind-Value="@SelectedWeather"
-                     @bind-ShowText="showIconText">
+                     @bind-Values="@SelectedWeathers"
+                     @bind-ShowText="showIconText"
+                     Multiple>
 </SelectWeatherDialog>
 
 <SelectMoodDialog @bind-Visible="showMood"
-                  @bind-Value="@SelectedMood"
-                  @bind-ShowText="showIconText">
+                  @bind-Values="@SelectedMoods"
+                  @bind-ShowText="showIconText"
+                  Multiple>
 </SelectMoodDialog>
 
 <SelectLocationDialog @bind-Visible="showLocation"
-                      @bind-Value="SelectedLocation">
+                      @bind-Values="SelectedLocations"
+                      Multiple>
 </SelectLocationDialog>
 
 <SelectFileTypesDialog @bind-Visible="showFileTypes"
@@ -78,3 +86,8 @@
 <DateFilterDialog @bind-Visible="showTime"
                   @bind-Value="DateFilterForm">
 </DateFilterDialog>
+
+<SearchFilterConditionDialog @bind-Visible="showFilterCondition"
+                             Value="SearchFilterConditionForm"
+                             OnOk="SaveSearchFilterCondition">
+</SearchFilterConditionDialog>

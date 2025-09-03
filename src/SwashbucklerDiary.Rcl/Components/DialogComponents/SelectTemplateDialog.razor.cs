@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
+using SqlSugar;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
@@ -48,32 +49,27 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task UpdateItemsAsync()
         {
-            Expression<Func<DiaryModel, bool>> exp = GetExpression();
+            Expression<Func<DiaryModel, bool>> exp = CreateExpression();
             items = await DiaryService.QueryTemplatesAsync(exp);
         }
 
-        private Expression<Func<DiaryModel, bool>> GetExpression()
+        private Expression<Func<DiaryModel, bool>> CreateExpression()
         {
-            Expression<Func<DiaryModel, bool>>? exp = null;
+            var expable = Expressionable.Create<DiaryModel>();
             if (!string.IsNullOrWhiteSpace(search))
             {
                 Expression<Func<DiaryModel, bool>> expSearch
                     = it => (it.Title ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase)
                     || (it.Content ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase);
-                exp = exp.And(expSearch);
+                expable.And(expSearch);
             }
 
             if (ExcludeItem is not null)
             {
-                exp = exp.And(it => it.Id != ExcludeItem.Id);
+                expable.And(it => it.Id != ExcludeItem.Id);
             }
 
-            if (exp == null)
-            {
-                return it => true;
-            }
-
-            return exp;
+            return expable.ToExpression();
         }
     }
 }

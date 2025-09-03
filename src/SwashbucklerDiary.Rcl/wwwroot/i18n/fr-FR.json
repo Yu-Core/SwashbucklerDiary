@@ -488,5 +488,8 @@
   "Target does not exist": "La cible n'existe pas",
   "Connection exception": "Exception de connexion",
   "Generating": "Génération en cours",
-  "Importing": "Importation en cours"
+  "Importing": "Importation en cours",
+  "Filter conditions": "Conditions de filtrage",
+  "All comply": "Toutes respectées",
+  "Any one": "N'importe laquelle"
 }

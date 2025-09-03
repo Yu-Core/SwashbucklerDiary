@@ -6,6 +6,7 @@ namespace SwashbucklerDiary.Rcl.Components
     public partial class SelectChipDialog<TValue> : DialogComponentBase
     {
         private StringNumber? internalValue;
+        private List<StringNumber> internalValues = [];
 
         [Parameter]
         public string? Title { get; set; }
@@ -22,6 +23,19 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public EventCallback<TValue> ValueChanged { get; set; }
+
+        [Parameter]
+        public List<TValue> Values
+        {
+            get => GetValue<List<TValue>>([])!;
+            set => SetValue(value);
+        }
+
+        [Parameter]
+        public EventCallback<List<TValue>> ValuesChanged { get; set; }
+
+        [Parameter]
+        public bool Multiple { get; set; }
 
         [Parameter]
         public bool Mandatory { get; set; }
@@ -48,11 +62,18 @@ namespace SwashbucklerDiary.Rcl.Components
             base.RegisterWatchers(watcher);
 
             watcher.Watch<TValue>(nameof(Value), UpdateInternalValue, immediate: true);
+            watcher.Watch<List<TValue>>(nameof(Values), UpdateInternalValues, immediate: true);
         }
 
         private void UpdateInternalValue()
         {
             internalValue = Items.FirstOrDefault(it => EqualityComparer<TValue>.Default.Equals(Value, InternalItemValue(it))).Key;
+        }
+
+        private void UpdateInternalValues()
+        {
+            HashSet<TValue> valuesSet = new HashSet<TValue>(Values);
+            internalValues = Items.Where(it => valuesSet.Contains(InternalItemValue(it))).Select(it => (StringNumber)it.Key).ToList();
         }
 
         private async Task InternalValueChanged(StringNumber? value)
@@ -64,9 +85,24 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (ValueChanged.HasDelegate)
             {
-                string? stringValue = value?.ToString();
-                var item = Items.FirstOrDefault(it => it.Key == stringValue);
+                var item = Items.FirstOrDefault(it => it.Key == value);
                 await ValueChanged.InvokeAsync(InternalItemValue(item));
+            }
+        }
+
+        private async Task InternalValuesChanged(List<StringNumber> values)
+        {
+            if (ValuesChanged.HasDelegate)
+            {
+                List<TValue> result = new List<TValue>();
+
+                foreach (var key in values)
+                {
+                    var item = Items.FirstOrDefault(it => it.Key == key);
+                    result.Add(InternalItemValue(item));
+                }
+
+                await ValuesChanged.InvokeAsync(result);
             }
         }
 
@@ -119,6 +155,16 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             await SettingService.SetAsync(it => it.DiaryIconText, (bool)ShowText);
+        }
+
+        private async Task CloseOnContentClick()
+        {
+            if (Multiple)
+            {
+                return;
+            }
+
+            await InternalVisibleChanged(false);
         }
     }
 }

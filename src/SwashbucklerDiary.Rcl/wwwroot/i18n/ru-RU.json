@@ -488,5 +488,8 @@
   "Target does not exist": "Цель не существует",
   "Connection exception": "Исключение соединения",
   "Generating": "Генерация",
-  "Importing": "Импортирование"
+  "Importing": "Импортирование",
+  "Filter conditions": "Условия фильтра",
+  "All comply": "Все соответствуют",
+  "Any one": "Любое"
 }

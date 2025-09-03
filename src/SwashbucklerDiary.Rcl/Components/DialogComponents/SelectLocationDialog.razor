@@ -21,7 +21,7 @@
             </MButton>
         </MCardTitle>
 
-        <MCardText Class="pb-0 px-0">
+        <MCardText Class="pb-0 px-0 d-flex flex-column">
             @if (showSearch)
             {
                 <div class="mb-2 px-6">
@@ -41,28 +41,37 @@
                     </CustomMTextField>
                 </div>
             }
-            <MList Class="py-0 scroll-show" Style="max-height:300px;">
-                <Virtualize Items="internalItems"
-                            ItemSize="56"
-                            Context="item">
-                    <MListItem @key="item.Id"
-                               Class="px-10" 
-                               TwoLine
-                               OnClick="() => SetSelectedLocation(item)">
-                        <MListItemContent>
-                            @(item.Name)
-                        </MListItemContent>
+            <MList Class="py-0 d-flex flex-column flex-grow-1"
+                   Flat>
+                <MListItemGroup @bind-Value="internalValue"
+                                @bind-Values="internalValues"
+                                Class="scroll-show flex-grow-1"
+                                Style="overflow-y:auto;"
+                                Multiple="Multiple">
+                    <Virtualize Items="internalItems"
+                                ItemSize="64"
+                                Context="item">
+                        <MListItem @key="item.Id"
+                                   Class="px-10"
+                                   TwoLine
+                                   Value="item.Name">
+                            <ItemContent>
+                                <MListItemContent>
+                                    @(item.Name)
+                                </MListItemContent>
 
-                        <MListItemAction>
-                            @if (item.Name == selectedLocation)
-                            {
-                                <MIcon>
-                                    check
-                                </MIcon>
-                            }
-                        </MListItemAction>
-                    </MListItem>
-                </Virtualize>
+                                <MListItemAction>
+                                    @if (context.Active)
+                                    {
+                                        <MIcon>
+                                            check
+                                        </MIcon>
+                                    }
+                                </MListItemAction>
+                            </ItemContent>
+                        </MListItem>
+                    </Virtualize>
+                </MListItemGroup>
             </MList>
         </MCardText>
         <MCardActions>

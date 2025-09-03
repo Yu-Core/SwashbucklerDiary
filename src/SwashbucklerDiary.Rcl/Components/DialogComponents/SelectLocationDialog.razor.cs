@@ -1,4 +1,5 @@
 using DocumentFormat.OpenXml.Spreadsheet;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -13,7 +14,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private string? _searchText;
 
-        private string? selectedLocation;
+        private StringNumber? internalValue;
+
+        private List<StringNumber> internalValues = [];
 
         private List<LocationModel> internalItems = [];
 
@@ -29,10 +32,19 @@ namespace SwashbucklerDiary.Rcl.Components
         public EventCallback<string> ValueChanged { get; set; }
 
         [Parameter]
+        public List<string> Values { get; set; } = [];
+
+        [Parameter]
+        public EventCallback<List<string>> ValuesChanged { get; set; }
+
+        [Parameter]
         public List<LocationModel> Items { get; set; } = [];
 
         [Parameter]
         public EventCallback<List<LocationModel>> ItemsChanged { get; set; }
+
+        [Parameter]
+        public bool Multiple { get; set; }
 
         protected override void OnInitialized()
         {
@@ -59,13 +71,9 @@ namespace SwashbucklerDiary.Rcl.Components
         private void BeforeShowContent()
         {
             _searchText = string.Empty;
-            selectedLocation = Value;
+            internalValue = Value;
+            internalValues = [.. Values];
             internalItems = Items;
-        }
-
-        private void SetSelectedLocation(LocationModel location)
-        {
-            selectedLocation = selectedLocation == location.Name ? null : location.Name;
         }
 
         private async Task SaveAdd(string name)
@@ -93,7 +101,15 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             Items.Insert(0, location);
-            selectedLocation = location.Name;
+            if (!Multiple)
+            {
+                internalValue = location.Name;
+            }
+            else
+            {
+                internalValues.Add(location.Name);
+            }
+
             UpdateInternalItems(_searchText);
             StateHasChanged();
         }
@@ -101,10 +117,22 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task HandleOnOK()
         {
             await InternalVisibleChanged(false);
-            Value = selectedLocation;
-            if (ValueChanged.HasDelegate)
+
+            if (!Multiple)
             {
-                await ValueChanged.InvokeAsync(selectedLocation);
+                Value = internalValue?.ToString();
+                if (ValueChanged.HasDelegate)
+                {
+                    await ValueChanged.InvokeAsync(Value);
+                }
+            }
+            else
+            {
+                Values = internalValues.Select(it => it.ToString()).ToList();
+                if (ValuesChanged.HasDelegate)
+                {
+                    await ValuesChanged.InvokeAsync(Values);
+                }
             }
         }
 
@@ -116,7 +144,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             else
             {
-                internalItems = Items.Where(it => !string.IsNullOrEmpty(it.Name) && (it.Name.Contains(searchText) || it.Name == selectedLocation)).ToList();
+                internalItems = Items.Where(it => !string.IsNullOrEmpty(it.Name) && (it.Name.Contains(searchText) || it.Name == internalValue)).ToList();
             }
         }
     }

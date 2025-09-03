@@ -488,5 +488,8 @@
   "Target does not exist": "目标不存在",
   "Connection exception": "连接异常",
   "Generating": "正在生成",
-  "Importing": "正在导入"
+  "Importing": "正在导入",
+  "Filter conditions": "过滤条件",
+  "All comply": "全部符合",
+  "Any one": "任意一个"
 }

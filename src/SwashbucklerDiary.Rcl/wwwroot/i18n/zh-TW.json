@@ -488,5 +488,8 @@
   "Target does not exist": "目標不存在",
   "Connection exception": "連接異常",
   "Generating": "正在生成",
-  "Importing": "正在導入"
+  "Importing": "正在導入",
+  "Filter conditions": "篩選條件",
+  "All comply": "全部符合",
+  "Any one": "任意一個"
 }

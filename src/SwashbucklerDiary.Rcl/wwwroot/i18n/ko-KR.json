@@ -488,5 +488,8 @@
   "Target does not exist": "대상이 존재하지 않습니다",
   "Connection exception": "연결 예외",
   "Generating": "생성 중",
-  "Importing": "가져오는 중"
+  "Importing": "가져오는 중",
+  "Filter conditions": "필터 조건",
+  "All comply": "모두 충족",
+  "Any one": "아무거나"
 }
