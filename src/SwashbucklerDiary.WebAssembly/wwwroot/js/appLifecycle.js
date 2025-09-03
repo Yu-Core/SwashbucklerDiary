@@ -7,7 +7,9 @@ export const init = (dotnetObj) => {
         }
     });
 
-    return sessionStorage.getItem('ActivationArguments') || null;
+    const args = sessionStorage.getItem('ActivationArguments');
+    sessionStorage.removeItem('ActivationArguments');
+    return args || null;
 }
 
 export const quit = () => {
