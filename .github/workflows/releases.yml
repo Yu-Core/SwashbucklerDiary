@@ -87,8 +87,8 @@ jobs:
 
       - name: Rename apk
         run:  |
-          ren ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-arm64/publish ${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk
-          ren ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-x64/publish ${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-x64.apk
+          ren ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-arm64/publish/*Signed.apk ${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk
+          ren ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-x64/publish/*Signed.apk ${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-x64.apk
 
       # Update to Github Releases
       - name: Update android-arm64 to Github Releases
@@ -104,7 +104,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-arm64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-x64.apk
+          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-x64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-x64.apk
           release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
           tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
           prerelease: ${{ inputs.prerelease }}
