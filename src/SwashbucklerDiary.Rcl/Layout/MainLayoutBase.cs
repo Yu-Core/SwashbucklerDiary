@@ -112,7 +112,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected async void HandleThemeChanged(Shared.Theme theme)
         {
             string mode = theme == Shared.Theme.Dark ? "dark" : "light";
-            await JSRuntime.EvaluateJavascript($"Vditor.setContentTheme('{mode}', '_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.1/dist/css/content-theme');");
+            await JSRuntime.EvaluateJavascript($"Vditor.setContentTheme('{mode}', '_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2/dist/css/content-theme');");
         }
 
         protected async Task UpdateDocumentProperty(CultureInfo cultureInfo)

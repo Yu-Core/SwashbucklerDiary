@@ -1,4 +1,4 @@
-document.body.insertAdjacentHTML('afterBegin', `<svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg">
+document.body.insertAdjacentHTML('afterbegin', `<svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <symbol id="vditor-icon-image" viewBox="0 0 32 32">
       <path d="m28.44444,28.44445l-24.88888,0l0,-24.88889l24.88888,0m0,-3.55556l-24.88888,0a3.55555,3.55556 0 0 0 -3.55555,3.55556l0,24.88889a3.55555,3.55556 0 0 0 3.55555,3.55556l24.88888,0a3.55555,3.55556 0 0 0 3.55555,-3.55556l0,-24.88889a3.55555,3.55556 0 0 0 -3.55555,-3.55556m-8.96,16.51556l-4.88889,6.29333l-3.48444,-4.19556l-4.88889,6.27556l19.55555,0l-6.29333,-8.37333z"></path>

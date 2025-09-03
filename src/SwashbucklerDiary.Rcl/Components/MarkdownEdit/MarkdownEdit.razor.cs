@@ -142,7 +142,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var previewTheme = new Dictionary<string, object?>()
             {
                 { "current", theme },
-                { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.1/dist/css/content-theme" }
+                { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2/dist/css/content-theme" }
             };
             var previewHljs = new Dictionary<string, object>()
             {
@@ -152,7 +152,9 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 { "toc", true },
                 { "linkBase", MediaResourceManager.LinkBase },
-                { "mark", true }
+                { "mark", true },
+                { "sup", true },
+                { "sub", true }
             };
             var preview = new Dictionary<string, object?>()
             {
@@ -221,7 +223,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "mode", "ir" },
                 { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list", "check", "indent", "outdent", btnTable, "code", "inline-code", "link", btnImage, btnAudio, btnVideo, "undo", "redo", "fullscreen", btnUpload }},
                 { "placeholder", I18n.T("Please enter content") },
-                { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.1" },
+                { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2" },
                 { "lang", lang },
                 { "icon","material" },
                 { "theme", theme },
