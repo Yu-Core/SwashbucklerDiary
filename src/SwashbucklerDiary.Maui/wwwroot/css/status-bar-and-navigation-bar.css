@@ -90,7 +90,7 @@ body {
 }
 
 .md-preview__outline {
-    height: calc(var(--safe-area-height) - 64px - 32px - 28px - 22px - 60px);
+    height: calc(var(--safe-area-height) - 64px);
 }
 
 .m-menu__content {
@@ -102,7 +102,7 @@ body {
     right: calc(1rem + var(--sair));
 }
 
-.fullscreen-height{
+.fullscreen-height {
     height: var(--safe-area-height) !important;
 }
 

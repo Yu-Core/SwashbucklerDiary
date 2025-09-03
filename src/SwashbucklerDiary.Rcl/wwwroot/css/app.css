@@ -538,12 +538,21 @@ html.m-overlay-scroll-blocked {
 }
 
 .md-preview__outline {
-    height: calc(100vh - 64px - 32px - 28px - 22px - 60px);
+    height: calc(100vh - 64px);
+    display: block;
+    position: sticky;
+    top: 0px;
 }
 
-.diary-info-btn {
-    max-width: 100%;
-}
+    .md-preview__outline + * {
+        min-width: 0px;
+        flex-basis: 0;
+        flex-grow: 1;
+    }
+
+    .diary-info-btn {
+        max-width: 100%;
+    }
 
     .diary-info-btn .m-btn__content {
         max-width: 100%;
@@ -607,7 +616,11 @@ html.m-overlay-scroll-blocked {
         text-align: center;
     }
 
-.vditor.outline_hide .vditor-outline {
+.vditor-outline_hide .vditor-outline {
+    display: none !important;
+}
+
+.vditor-outline_hide.vditor-outline {
     display: none !important;
 }
 

@@ -13,10 +13,9 @@ namespace SwashbucklerDiary.Rcl.Components
             ElementReference element,
             string? value,
             Dictionary<string, object>? options,
-            ElementReference? outlineElement,
             bool patch)
         {
-            await InvokeVoidAsync("preview", [dotNetObjectReference, element, value, options, outlineElement, patch]);
+            await InvokeVoidAsync("preview", [dotNetObjectReference, element, value, options, patch]);
         }
 
         public async Task Md2HTMLPreview(DotNetObjectReference<object> dotNetObjectReference,

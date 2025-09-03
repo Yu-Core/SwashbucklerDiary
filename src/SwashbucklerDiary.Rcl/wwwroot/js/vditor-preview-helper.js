@@ -3,7 +3,7 @@ import { fixOutlientClick } from './markdown/fixMarkdownOutline.js'
 // Store event listeners to prevent duplicates
 const eventListeners = new WeakMap();
 
-function preview(dotNetCallbackRef, previewElement, text, options, outlineElement, patch) {
+function preview(dotNetCallbackRef, previewElement, text, options, patch) {
     if (!previewElement) {
         return;
     }
@@ -16,10 +16,6 @@ function preview(dotNetCallbackRef, previewElement, text, options, outlineElemen
     let VditorOptions = {
         ...options,
         after: () => {
-            if (outlineElement) {
-                renderOutline(previewElement, outlineElement);
-            }
-
             processMediaElements(previewElement);
             if (patch) {
                 handleUrlHash();

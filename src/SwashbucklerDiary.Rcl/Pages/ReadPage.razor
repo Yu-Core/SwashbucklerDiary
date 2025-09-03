@@ -57,115 +57,122 @@
 </HighlightSearchTextField>
 
 <ScrollContainer Id="@scrollContainerId"
-                 ContentClass="pt-0 pb-6">
-    <div class="@screenshotClass">
-        <div class="d-flex align-center px-3 flex-wrap">
-            @if (diaryTimeFormat?.Contains("yyyy/MM/dd") ?? false)
-            {
-                <span class="text-h6 font-weight-bold mr-3">
-                    @(diary.CreateTime.ToString("yyyy/MM/dd"))
-                </span>
-            }
+                 ContentClass="py-0">
+    <div class="@BodyWrapClass">
+        <div @ref="outlineElement"
+             class="@OutlineClass">
+        </div>
 
-            @if (diaryTimeFormat?.Contains("HH:mm") ?? false)
-            {
-                <span class="font-weight-bold mr-5">
-                    @(diary.CreateTime.ToString("HH:mm"))
-                </span>
-            }
+        <div class="@($"{screenshotClass} pb-6")">
+            <div class="d-flex align-center px-3 flex-wrap">
+                @if (diaryTimeFormat?.Contains("yyyy/MM/dd") ?? false)
+                {
+                    <span class="text-h6 font-weight-bold mr-3">
+                        @(diary.CreateTime.ToString("yyyy/MM/dd"))
+                    </span>
+                }
 
-            @if (diaryTimeFormat?.Contains("dddd") ?? false)
-            {
+                @if (diaryTimeFormat?.Contains("HH:mm") ?? false)
+                {
+                    <span class="font-weight-bold mr-5">
+                        @(diary.CreateTime.ToString("HH:mm"))
+                    </span>
+                }
+
+                @if (diaryTimeFormat?.Contains("dddd") ?? false)
+                {
+                    <span class="text-subtitle-2">
+                        @(I18n.ToWeek(diary.CreateTime))
+                    </span>
+                }
+
+                <MSpacer></MSpacer>
+
                 <span class="text-subtitle-2">
-                    @(I18n.ToWeek(diary.CreateTime))
+                    @(CounterValue())
                 </span>
+            </div>
+
+            <div>
+                @if (ShowWeather)
+                {
+                    <DiaryInfoButton Icon="@WeatherIcon"
+                                     Text="@WeatherText">
+                    </DiaryInfoButton>
+                }
+
+                @if (ShowMood)
+                {
+                    <DiaryInfoButton Icon="@MoodIcon"
+                                     Text="@MoodText">
+                    </DiaryInfoButton>
+                }
+
+                @if (ShowLocation)
+                {
+                    <DiaryInfoButton Icon="location_on"
+                                     Text="@LocationText">
+                    </DiaryInfoButton>
+                }
+            </div>
+
+            @if (ShowTitle)
+            {
+                <MTextField Value="@(diary.Title)"
+                            TValue="string"
+                            Class="pb-0 my-sm-4 user-select font-weight-bold"
+                            Solo="true"
+                            Flat="true"
+                            BackgroundColor="transparent"
+                            HideDetails="@("auto")"
+                            Dense="true"
+                            Readonly="true"
+                            maxlength="20">
+                </MTextField>
             }
 
-            <MSpacer></MSpacer>
+            <div class="user-select">
+                @if (enableMarkdown)
+                {
+                    <MarkdownPreview @ref="markdownPreview"
+                                     @bind-MobileOutline="showMoblieOutline"
+                                     Value="@(diary.Content)"
+                                     Class="@($"px-3 {highlightSearchContainerClass}")"
+                                     Style="padding-top:10px"
+                                     FirstLineIndent="firstLineIndent"
+                                     TaskListLineThrough="taskListLineThrough"
+                                     Outline="outline"
+                                     OutlineElement="outlineElement"
+                                     RightOutline="rightOutline"
+                                     OnAfter="HandleFirstQuery"
+                                     OnDblClick="ToWrite">
+                    </MarkdownPreview>
+                }
+                else
+                {
+                    <div @ondblclick="ToWrite"
+                         class="@($"text-preview {highlightSearchContainerClass}")">
+                        @(diary.Content)
+                    </div>
+                }
+            </div>
 
-            <span class="text-subtitle-2">
-                @(CounterValue())
-            </span>
-        </div>
-
-        <div>
-            @if (ShowWeather)
+            @if (Tags.Count > 0)
             {
-                <DiaryInfoButton Icon="@WeatherIcon"
-                                 Text="@WeatherText">
-                </DiaryInfoButton>
-            }
-
-            @if (ShowMood)
-            {
-                <DiaryInfoButton Icon="@MoodIcon"
-                                 Text="@MoodText">
-                </DiaryInfoButton>
-            }
-
-            @if (ShowLocation)
-            {
-                <DiaryInfoButton Icon="location_on"
-                                 Text="@LocationText">
-                </DiaryInfoButton>
-            }
-        </div>
-
-        @if (ShowTitle)
-        {
-            <MTextField Value="@(diary.Title)"
-                        TValue="string"
-                        Class="pb-0 my-sm-4 user-select font-weight-bold"
-                        Solo="true"
-                        Flat="true"
-                        BackgroundColor="transparent"
-                        HideDetails="@("auto")"
-                        Dense="true"
-                        Readonly="true"
-                        maxlength="20">
-            </MTextField>
-        }
-
-        <div class="user-select">
-            @if (enableMarkdown)
-            {
-                <MarkdownPreview @ref="markdownPreview"
-                                 @bind-MobileOutline="showMoblieOutline"
-                                 Value="@(diary.Content)"
-                                 Class="@($"px-3 {highlightSearchContainerClass}")"
-                                 Style="padding-top:10px"
-                                 FirstLineIndent="firstLineIndent"
-                                 TaskListLineThrough="taskListLineThrough"
-                                 Outline="outline"
-                                 RightOutline="rightOutline"
-                                 OnAfter="HandleFirstQuery"
-                                 OnDblClick="ToWrite">
-                </MarkdownPreview>
-            }
-            else
-            {
-                <div @ondblclick="ToWrite"
-                     class="@($"text-preview {highlightSearchContainerClass}")">
-                    @(diary.Content)
+                <div class="pl-2 pb-3">
+                    <MChipGroup Column="true">
+                        @foreach (var item in Tags)
+                        {
+                            <MChip @key="item.Id"
+                                   IsActive="false"
+                                   Href="@($"tagDetails/{item.Id}")">
+                                @(item.Name)
+                            </MChip>
+                        }
+                    </MChipGroup>
                 </div>
             }
         </div>
-
-        @if (Tags.Count > 0)
-        {
-            <div class="pl-2 pb-3">
-                <MChipGroup Column="true">
-                    @foreach (var item in Tags)
-                    {
-                        <MChip @key="item.Id"
-                               IsActive="false"
-                               Href="@($"tagDetails/{item.Id}")">
-                            @(item.Name)
-                        </MChip>
-                    }
-                </MChipGroup>
-            </div>
-        }
     </div>
 </ScrollContainer>
 
@@ -193,3 +200,17 @@
 <ExportDialog @bind-Visible="showExport"
               Value="exportDiaries">
 </ExportDialog>
+
+@code {
+    string? BodyWrapClass => new CssBuilder()
+        .Add("d-flex")
+        .Add("flex-row-reverse", rightOutline)
+        .ToString();
+
+    string OutlineClass => new CssBuilder()
+        .Add("vditor-outline")
+        .Add("vditor-outline--right", rightOutline)
+        .Add("vditor-outline_hide", !outline)
+        .Add("md-preview__outline")
+        .ToString();
+}

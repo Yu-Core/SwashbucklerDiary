@@ -8,11 +8,7 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         private string? previousValue;
 
-        private bool previousOutline;
-
         private DotNetObjectReference<object>? _dotNetObjectReference;
-
-        private ElementReference outlineElementRef;
 
         [Inject]
         private VditorMarkdownPreviewJSModule VditorMarkdownPreviewJSModule { get; set; } = default!;
@@ -25,18 +21,6 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public string? Style { get; set; }
-
-        [Parameter]
-        public string? OutlineClass { get; set; }
-
-        [Parameter]
-        public string? OutlineStyle { get; set; }
-
-        [Parameter]
-        public bool Outline { get; set; }
-
-        [Parameter]
-        public bool RightOutline { get; set; }
 
         [Parameter]
         public bool Simple { get; set; }
@@ -84,12 +68,6 @@ namespace SwashbucklerDiary.Rcl.Components
                 previousValue = Value;
                 await RenderMarkdown();
             }
-
-            if (previousOutline != Outline)
-            {
-                previousOutline = Outline;
-                await RenderOutline();
-            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -124,19 +102,8 @@ namespace SwashbucklerDiary.Rcl.Components
             }
             else
             {
-                await VditorMarkdownPreviewJSModule.Preview(_dotNetObjectReference, Ref, Value, Options, Outline ? outlineElementRef : null, Patch);
+                await VditorMarkdownPreviewJSModule.Preview(_dotNetObjectReference, Ref, Value, Options, Patch);
             }
-        }
-
-        private async Task RenderOutline()
-        {
-            if (_dotNetObjectReference is null || !Outline || Simple)
-            {
-                return;
-            }
-
-            await Task.Delay(200);
-            await VditorMarkdownPreviewJSModule.RenderOutline(Ref, outlineElementRef);
         }
     }
 }

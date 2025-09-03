@@ -56,6 +56,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private MarkdownPreview markdownPreview = default!;
 
+        private ElementReference outlineElement;
+
         private List<DynamicListItem> menuItems = [];
 
         private List<DynamicListItem> shareItems = [];

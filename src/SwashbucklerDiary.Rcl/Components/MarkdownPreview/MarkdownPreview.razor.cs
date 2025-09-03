@@ -26,6 +26,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private DotNetObjectReference<object>? _dotNetObjectReference;
 
+        private bool previousOutline;
+
         [Inject]
         private MarkdownPreviewJSModule MarkdownPreviewJSModule { get; set; } = default!;
 
@@ -34,6 +36,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
+
+        [Inject]
+        private VditorMarkdownPreviewJSModule VditorMarkdownPreviewJSModule { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
@@ -58,6 +63,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Parameter]
         public bool? MobileOutline { get; set; }
+
+        [Parameter]
+        public ElementReference OutlineElement { get; set; }
 
         [Parameter]
         public EventCallback<bool?> MobileOutlineChanged { get; set; }
@@ -114,6 +122,17 @@ namespace SwashbucklerDiary.Rcl.Components
             _dotNetObjectReference?.Dispose();
         }
 
+        protected override async Task OnParametersSetAsync()
+        {
+            await base.OnParametersSetAsync();
+
+            if (previousOutline != Outline)
+            {
+                previousOutline = Outline;
+                await RenderOutline();
+            }
+        }
+
         private void ReadSettings()
         {
             autoPlay = SettingService.Get(s => s.AutoPlay);
@@ -164,7 +183,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task HandleOnAfter()
         {
             _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
-            await MarkdownPreviewJSModule.AfterMarkdown(_dotNetObjectReference, vditorMarkdownPreview.Ref, autoPlay, moblieOutlineContainerElement, MediaResourceManager.LinkBase);
+            await MarkdownPreviewJSModule.AfterMarkdown(_dotNetObjectReference, vditorMarkdownPreview.Ref, autoPlay, OutlineElement.Context is null ? null : OutlineElement, moblieOutlineContainerElement, MediaResourceManager.LinkBase);
 
             if (OnAfter.HasDelegate)
             {
@@ -179,6 +198,18 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 await MobileOutlineChanged.InvokeAsync(value);
             }
+        }
+
+        private async Task RenderOutline()
+        {
+            if (!Outline
+                || vditorMarkdownPreview?.Ref.Context is null
+                || OutlineElement.Context is null)
+            {
+                return;
+            }
+
+            await VditorMarkdownPreviewJSModule.RenderOutline(vditorMarkdownPreview.Ref, OutlineElement);
         }
     }
 }

@@ -1,21 +1,9 @@
 @namespace SwashbucklerDiary.Rcl.Components
 @inherits MyComponentBase
 
-<div class="@WrapClass">
-    @if (Outline && !Simple)
-    {
-        <div @ref="outlineElementRef" class="@InternalOutlineClass" style="@InternalOutlineStyle "></div>
-    }
-
-    <div @ref="Ref" class="@InternalClass" style="@InternalStyle" @ondblclick="OnDblClick"></div>
-</div>
+<div @ref="Ref" class="@InternalClass" style="@InternalStyle" @ondblclick="OnDblClick"></div>
 
 @code {
-    string? WrapClass => new CssBuilder()
-        .Add("d-flex")
-        .Add("flex-row-reverse", RightOutline)
-        .ToString();
-
     string? InternalClass => new CssBuilder()
         .Add("pb-3")
         .Add(Class)
@@ -26,17 +14,4 @@
         .Add("min-width", "1px")
         .Add(Style)
         .Build();
-
-    string InternalOutlineClass => new CssBuilder()
-        .Add("vditor-outline")
-        .Add(OutlineClass)
-        .Add("vditor-outline--right", RightOutline)
-        .ToString();
-
-    string InternalOutlineStyle => new StyleBuilder()
-        .Add("position", "sticky")
-        .Add("top", "0px")
-        .Add("display", "block")
-        .Add(OutlineStyle)
-        .ToString();
 }
