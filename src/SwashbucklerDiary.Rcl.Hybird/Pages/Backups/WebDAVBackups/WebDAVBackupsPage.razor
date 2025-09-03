@@ -140,19 +140,22 @@
         </MCardTitle>
         <MCardText Class="scroll-show pb-0 mb-5"
                    Style="max-height:300px;">
-            <Virtualize Items="fileList"
-                        ItemSize="56"
-                        Context="item">
-                <MListItem @key="item"
-                           Class="mb-1 rounded"
-                           OnClick="()=>Download(item)">
-                    <MListItemContent>
-                        <MListItemTitle>
-                            <wc-auto-scroll-text>@item</wc-auto-scroll-text>
-                        </MListItemTitle>
-                    </MListItemContent>
-                </MListItem>
-            </Virtualize>
+            <MList Class="py-0">
+                <Virtualize Items="fileList"
+                            ItemSize="56"
+                            Context="item">
+                    <MListItem @key="item"
+                               Class="mb-1 rounded"
+                               TwoLine
+                               OnClick="()=>Download(item)">
+                        <MListItemContent>
+                            <MListItemTitle>
+                                @item
+                            </MListItemTitle>
+                        </MListItemContent>
+                    </MListItem>
+                </Virtualize>
+            </MList>
         </MCardText>
     </MCard>
 </CustomMDialog>

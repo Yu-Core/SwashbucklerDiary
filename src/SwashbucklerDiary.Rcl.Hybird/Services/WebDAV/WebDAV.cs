@@ -30,14 +30,14 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             ArgumentNullException.ThrowIfNull(webDavClient, nameof(webDavClient));
 
-            var result = await webDavClient.Propfind(folderName);
+            var result = await webDavClient.Propfind($"{webDavFolderName}/");
             if (result.IsSuccessful)
             {
                 return result.Resources
                     .Where(it => !it.IsCollection)
-                    .Where(it => Path.GetExtension(it.DisplayName) == ".zip")
+                    .Where(it => it.Uri.EndsWith(".zip"))
                     .OrderByDescending(it => it.LastModifiedDate)
-                    .Select(it => it.DisplayName)
+                    .Select(it => Uri.UnescapeDataString(Path.GetFileName(it.Uri)))
                     .ToList();
             }
             else
@@ -59,7 +59,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             var webDavClient = GetWebDavClient(uri, userName, password);
-            var result = await webDavClient.Propfind(webDavFolderName);
+            var result = await webDavClient.Propfind($"{webDavFolderName}/");
             if (!result.IsSuccessful)
             {
                 if (result.StatusCode != (int)HttpStatusCode.NotFound)

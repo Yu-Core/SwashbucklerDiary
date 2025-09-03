@@ -63,6 +63,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task<bool> SetWebDav(WebDavConfigForm webDavConfig)
         {
+            AlertService.StartLoading();
+
             try
             {
                 await WebDAVService.Set(webDavConfig.ServerAddress, webDavConfig.Account, webDavConfig.Password);
@@ -88,19 +90,32 @@ namespace SwashbucklerDiary.Rcl.Pages
                 await AlertService.ErrorAsync(I18n.T("Configuration failed for unknown reasons"));
                 Logger.LogError(e, "SaveWebDavConfig Unknown");
             }
+            finally
+            {
+                AlertService.StopLoading();
+            }
 
             return false;
         }
 
         private async Task OpenUploadDialog()
         {
-            var flag = await Check();
-            if (!flag)
-            {
-                return;
-            }
+            AlertService.StartLoading();
 
-            showUpload = true;
+            try
+            {
+                var flag = await Check();
+                if (!flag)
+                {
+                    return;
+                }
+
+                showUpload = true;
+            }
+            finally
+            {
+                AlertService.StopLoading();
+            }
         }
 
         private async Task Upload()
@@ -127,7 +142,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 }
                 catch (Exception e)
                 {
-                    await AlertService.ErrorAsync(I18n.T("Upload failed"));
+                    await AlertService.ErrorAsync($"{I18n.T("Upload failed")}\n{e}");
                     Logger.LogError(e, $"Backups Upload Fail");
                 }
             }
@@ -139,29 +154,36 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task OpenDownloadDialog()
         {
-            var flag = await Check();
-            if (!flag)
-            {
-                return;
-            }
-
-            showDownload = true;
-            StateHasChanged();
+            AlertService.StartLoading();
             try
             {
-                fileList = await WebDAVService.GetZipFileListAsync(webDavFolderName);
-            }
-            catch (HttpRequestException e)
-            {
-                await AlertService.ErrorAsync(I18n.T("Network error"));
-                Logger.LogError(e, $"OpenDownloadDialog {nameof(HttpRequestException)}");
-            }
-            catch (Exception e)
-            {
-                await AlertService.ErrorAsync(I18n.T("Pull failed"));
-                Logger.LogError(e, $"Backups Download Fail");
-            }
+                var flag = await Check();
+                if (!flag)
+                {
+                    return;
+                }
 
+                showDownload = true;
+                StateHasChanged();
+                try
+                {
+                    fileList = await WebDAVService.GetZipFileListAsync(webDavFolderName);
+                }
+                catch (HttpRequestException e)
+                {
+                    await AlertService.ErrorAsync(I18n.T("Network error"));
+                    Logger.LogError(e, $"OpenDownloadDialog {nameof(HttpRequestException)}");
+                }
+                catch (Exception e)
+                {
+                    await AlertService.ErrorAsync($"{I18n.T("Pull failed")}\n{e}");
+                    Logger.LogError(e, $"Backups Download Fail");
+                }
+            }
+            finally
+            {
+                AlertService.StopLoading();
+            }
         }
 
         private async Task Download(string fileName)
@@ -183,7 +205,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             catch (Exception e)
             {
-                await AlertService.ErrorAsync(I18n.T("Pull failed"));
+                await AlertService.ErrorAsync($"{I18n.T("Pull failed")}\n{e}");
                 Logger.LogError(e, "WebDAV Download fail");
             }
             finally

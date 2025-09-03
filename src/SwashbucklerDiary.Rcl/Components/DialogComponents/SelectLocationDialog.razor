@@ -46,10 +46,11 @@
                             ItemSize="56"
                             Context="item">
                     <MListItem @key="item.Id"
-                               Class="px-10"
+                               Class="px-10" 
+                               TwoLine
                                OnClick="() => SetSelectedLocation(item)">
                         <MListItemContent>
-                            <wc-auto-scroll-text>@(item.Name)</wc-auto-scroll-text>
+                            @(item.Name)
                         </MListItemContent>
 
                         <MListItemAction>
