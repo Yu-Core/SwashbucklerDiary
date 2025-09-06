@@ -11,6 +11,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? appLockPatternPassword;
 
+        private string? appLockNumberPasswordSalt;
+
+        private string? appLockPatternPasswordSalt;
+
         private bool appLockBiometric;
 
         private bool lockAppWhenLeave;
@@ -58,19 +62,22 @@ namespace SwashbucklerDiary.Rcl.Pages
             appLockNumberPassword = SettingService.Get(it => it.AppLockNumberPassword);
             appLockBiometric = SettingService.Get(it => it.AppLockBiometric);
             appLockPatternPassword = SettingService.Get(it => it.AppLockPatternPassword);
+            appLockNumberPasswordSalt = SettingService.Get(it => it.AppLockNumberPasswordSalt);
+            appLockPatternPasswordSalt = SettingService.Get(it => it.AppLockPatternPasswordSalt);
             lockAppWhenLeave = SettingService.Get(it => it.LockAppWhenLeave);
         }
 
-        private async Task SetAppLockNumberPasswordAsync(string value)
+        private async Task SetAppLockNumberPasswordAsync(string password)
         {
             showNumberLock = false;
 
-            if (string.IsNullOrEmpty(appLockNumberPassword))
+            if (string.IsNullOrEmpty(appLockNumberPassword) || string.IsNullOrEmpty(appLockNumberPasswordSalt))
             {
-                appLockNumberPassword = PasswordHasher.HashPasswordWithSalt(value, out string saltBase64);
+                // 设置密码
+                appLockNumberPassword = PasswordHasher.HashPasswordWithSalt(password, out appLockNumberPasswordSalt);
 
                 await SettingService.SetAsync(s => s.AppLockNumberPassword, appLockNumberPassword);
-                await SettingService.SetAsync(s => s.AppLockNumberPasswordSalt, saltBase64);
+                await SettingService.SetAsync(s => s.AppLockNumberPasswordSalt, appLockNumberPasswordSalt);
             }
             else
             {
@@ -79,22 +86,42 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        private async Task SetAppLockPatternPasswordAsync(string value)
+        private bool ValidateNumberPassword(string password)
+        {
+            if (string.IsNullOrEmpty(appLockNumberPassword) || string.IsNullOrEmpty(appLockNumberPasswordSalt))
+            {
+                return false;
+            }
+
+            return PasswordHasher.VerifyPassword(password, appLockNumberPassword, appLockNumberPasswordSalt);
+        }
+
+        private async Task SetAppLockPatternPasswordAsync(string password)
         {
             showPatternLock = false;
 
-            if (string.IsNullOrEmpty(appLockPatternPassword))
+            if (string.IsNullOrEmpty(appLockPatternPassword) || string.IsNullOrEmpty(appLockPatternPasswordSalt))
             {
-                appLockPatternPassword = PasswordHasher.HashPasswordWithSalt(value, out string saltBase64);
+                appLockPatternPassword = PasswordHasher.HashPasswordWithSalt(password, out appLockPatternPasswordSalt);
 
                 await SettingService.SetAsync(s => s.AppLockPatternPassword, appLockPatternPassword);
-                await SettingService.SetAsync(s => s.AppLockPatternPasswordSalt, saltBase64);
+                await SettingService.SetAsync(s => s.AppLockPatternPasswordSalt, appLockPatternPasswordSalt);
             }
             else
             {
                 appLockPatternPassword = string.Empty;
                 await SettingService.RemoveAsync(it => it.AppLockPatternPassword);
             }
+        }
+
+        private bool ValidatePatternPassword(string password)
+        {
+            if (string.IsNullOrEmpty(appLockPatternPassword) || string.IsNullOrEmpty(appLockPatternPasswordSalt))
+            {
+                return false;
+            }
+
+            return PasswordHasher.VerifyPassword(password, appLockPatternPassword, appLockPatternPasswordSalt);
         }
 
         private async Task SetAppLockBiometricAsync()

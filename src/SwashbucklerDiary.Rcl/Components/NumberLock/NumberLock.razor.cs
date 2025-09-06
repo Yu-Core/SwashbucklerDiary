@@ -50,6 +50,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task CheckAsync()
         {
+            if (string.IsNullOrEmpty(Value))
+            {
+                return;
+            }
+
             LockFinishArguments args = new()
             {
                 Value = Value

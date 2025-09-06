@@ -15,18 +15,21 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Parameter]
         public EventCallback<string> OnFinish { get; set; }
 
+        [Parameter]
+        public Func<string, bool>? OnValidate { get; set; }
+
         private void HandleOnBeforeShowContent()
         {
             numberLockValue = null;
             firstValue = null;
         }
 
-        private async Task HandleNumberLockOnFinish(LockFinishArguments args)
+        private async Task HandleOnFinish(LockFinishArguments args)
         {
             // 验证密码
             if (!string.IsNullOrEmpty(Value))
             {
-                if (Value != args.Value)
+                if (OnValidate is not null && !OnValidate.Invoke(args.Value))
                 {
                     args.IsFail = true;
                     return;
@@ -34,7 +37,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
                 if (OnFinish.HasDelegate)
                 {
-                    await OnFinish.InvokeAsync(Value);
+                    await OnFinish.InvokeAsync(args.Value);
                 }
 
                 return;
