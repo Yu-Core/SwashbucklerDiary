@@ -1,5 +1,6 @@
 import { previewImage } from './previewMediaElement.js';
-import { fixOutlientClick, fixMobileOutlientClick } from './markdown/fixMarkdownOutline.js'
+import { fixMobileOutlientClick } from './markdown/fixMarkdownOutline.js'
+import { renderOutline } from './vditor-preview-helper.js'
 
 function handleCopy(dotNetCallbackRef, element) {
     element.querySelectorAll(".vditor-copy span").forEach(span => {
@@ -25,7 +26,8 @@ function afterMarkdown(dotNetCallbackRef, element, autoPlay, outlineElement, mob
         handleLinkBase(element, linkBase);
     }
 
-    renderOutline(dotNetCallbackRef, element, outlineElement, moblieOutlineElement);
+    renderOutline(element, outlineElement);
+    renderMobileOutline(dotNetCallbackRef, element, moblieOutlineElement);
 }
 
 function handleAutoPlay(element) {
@@ -59,14 +61,13 @@ function handleLinkBase(element, linkBase) {
     })
 }
 
-function renderOutline(dotNetCallbackRef, previewElement, outlineElement, moblieOutlineElement) {
-    if (outlineElement) {
-        Vditor.outlineRender(previewElement, outlineElement);
-        fixOutlientClick(outlineElement.firstElementChild, previewElement);
+function renderMobileOutline(dotNetCallbackRef, previewElement, moblieOutlineElement) {
+    if (!previewElement || !moblieOutlineElement) {
+        return;
     }
 
     Vditor.outlineRender(previewElement, moblieOutlineElement);
     fixMobileOutlientClick(dotNetCallbackRef, moblieOutlineElement.firstElementChild, previewElement);
 }
 
-export { afterMarkdown }
+export { afterMarkdown, renderOutline }

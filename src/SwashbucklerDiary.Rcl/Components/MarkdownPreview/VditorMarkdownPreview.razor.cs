@@ -10,8 +10,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private DotNetObjectReference<object>? _dotNetObjectReference;
 
-        [Inject]
-        private VditorMarkdownPreviewJSModule VditorMarkdownPreviewJSModule { get; set; } = default!;
+        private VditorMarkdownPreviewJSModule? jSModule;
 
         [Parameter]
         public string? Value { get; set; }
@@ -56,7 +55,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public async Task RenderLazyLoadingImage()
         {
-            await VditorMarkdownPreviewJSModule.RenderLazyLoadingImage(Ref);
+            if (jSModule is not null)
+            {
+                await jSModule.RenderLazyLoadingImage(Ref);
+            }
         }
 
         protected override async Task OnParametersSetAsync()
@@ -77,6 +79,7 @@ namespace SwashbucklerDiary.Rcl.Components
             if (!IsDisposed && firstRender)
             {
                 _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
+                jSModule = new VditorMarkdownPreviewJSModule(JS);
                 await RenderMarkdown();
             }
         }
@@ -85,24 +88,28 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await base.DisposeAsyncCore();
 
+            if (jSModule is not null)
+            {
+                await (jSModule as IAsyncDisposable).DisposeAsync();
+            }
+
             _dotNetObjectReference?.Dispose();
-            _dotNetObjectReference = null;
         }
 
         private async Task RenderMarkdown()
         {
-            if (_dotNetObjectReference is null)
+            if (IsDisposed || jSModule is null || _dotNetObjectReference is null)
             {
                 return;
             }
 
             if (Simple)
             {
-                await VditorMarkdownPreviewJSModule.Md2HTMLPreview(_dotNetObjectReference, Ref, Value, Options, Patch);
+                await jSModule.Md2HTMLPreview(_dotNetObjectReference, Ref, Value, Options, Patch);
             }
             else
             {
-                await VditorMarkdownPreviewJSModule.Preview(_dotNetObjectReference, Ref, Value, Options, Patch);
+                await jSModule.Preview(_dotNetObjectReference, Ref, Value, Options, Patch);
             }
         }
     }

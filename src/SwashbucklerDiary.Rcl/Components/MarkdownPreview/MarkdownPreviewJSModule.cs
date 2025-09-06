@@ -18,5 +18,10 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await InvokeVoidAsync("afterMarkdown", [dotNetObjectReference, element, autoPlay, outlineElement, moblieOutlineElement, linkBase]);
         }
+
+        public async Task RenderOutline(ElementReference element, ElementReference? outlineElement)
+        {
+            await InvokeVoidAsync("renderOutline", [element, outlineElement]);
+        }
     }
 }

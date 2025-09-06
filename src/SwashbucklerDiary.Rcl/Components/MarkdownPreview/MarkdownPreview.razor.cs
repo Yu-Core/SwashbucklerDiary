@@ -37,9 +37,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
-        [Inject]
-        private VditorMarkdownPreviewJSModule VditorMarkdownPreviewJSModule { get; set; } = default!;
-
         [Parameter]
         public string? Value { get; set; }
 
@@ -210,7 +207,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 return;
             }
 
-            await VditorMarkdownPreviewJSModule.RenderOutline(vditorMarkdownPreview.Ref, OutlineElement);
+            await MarkdownPreviewJSModule.RenderOutline(vditorMarkdownPreview.Ref, OutlineElement);
         }
     }
 }
