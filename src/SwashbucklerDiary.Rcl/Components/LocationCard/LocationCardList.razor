@@ -5,7 +5,8 @@
     <div class="card-list__main">
         <Virtualize Items="InternalValue"
                     ItemSize="60"
-                    Context="item">
+                    Context="item"
+                    OverscanCount="30">
             <LocationCard @key="item.Id"
                           Value="item"
                           OnMenu="OpenMenu">

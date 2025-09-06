@@ -83,7 +83,7 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             var expable = Expressionable.Create<DiaryModel>();
             expable.And(expression);
-            expable.And(it => it.Template == null || it.Template == false);
+            expable.And(it => it.Template);
             return QueryAsync(expable.ToExpression());
         }
     }

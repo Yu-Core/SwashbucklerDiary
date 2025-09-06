@@ -2,6 +2,7 @@ using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SqlSugar;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
@@ -69,12 +70,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         protected override async Task UpdateDiariesAsync()
         {
-            if (!(IsTagsFiltered || IsWeatherFiltered || IsMoodFiltered || IsLocationFiltered || IsFileTypeFiltered || IsTimeFiltered || IsSearchFiltered))
-            {
-                Diaries = [];
-                return;
-            }
-
             Expression<Func<DiaryModel, bool>> exp = CreateExpression();
             var diaries = await DiaryService.QueryDiariesAsync(exp);
 
@@ -267,7 +262,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 expable.And(expSearch);
             }
 
-            return expable.ToExpression();
+            return expable.ToExpression(false);
         }
 
         private void ToRead(DiaryModel diary)
