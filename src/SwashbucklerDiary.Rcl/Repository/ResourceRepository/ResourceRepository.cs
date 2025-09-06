@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Rcl.Repository
             return resources;
         }
 
-        public async Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>>? expression)
+        public async Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>>? expression = null)
         {
             expression ??= r => true;
 

@@ -34,7 +34,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task DeleteAllUnusedResourcesWithFilesAsync()
         {
-            await _resourceRepository.DeleteUnusedResourcesAsync(_ => true).ConfigureAwait(false);
+            await _resourceRepository.DeleteUnusedResourcesAsync().ConfigureAwait(false);
 
             bool privacyMode = _settingService.GetTemp(it => it.PrivacyMode);
             var trulyUsedResourceUris = await _resourceRepository.QueryTrulyUsedResourcesAsync(privacyMode).ConfigureAwait(false);

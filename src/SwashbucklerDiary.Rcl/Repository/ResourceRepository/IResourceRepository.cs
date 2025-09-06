@@ -5,7 +5,7 @@ namespace SwashbucklerDiary.Rcl.Repository
 {
     public interface IResourceRepository : IBaseRepository<ResourceModel>
     {
-        Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>> expression);
+        Task<bool> DeleteUnusedResourcesAsync(Expression<Func<ResourceModel, bool>>? expression = null);
 
         /// <summary>
         /// Query used resources include privacy mode
