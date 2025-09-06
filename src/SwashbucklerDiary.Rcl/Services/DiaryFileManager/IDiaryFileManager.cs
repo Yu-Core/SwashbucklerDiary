@@ -31,5 +31,7 @@ namespace SwashbucklerDiary.Rcl.Services
         Task UseNewResourceUriAsync(List<DiaryModel> diaries);
 
         Task AllUseNewResourceUriAsync();
+
+        Task UpdateAllDiariesResourcesAsync();
     }
 }

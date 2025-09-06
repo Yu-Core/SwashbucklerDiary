@@ -177,6 +177,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                     "Other",
                     new()
                     {
+                        new(this,"Fix Tool","build",() => To("fixTool")),
                         new(this,"Contact us","mail",() => showFeedback = true),
                         new(this,"About","info",() => To("about")),
                     }

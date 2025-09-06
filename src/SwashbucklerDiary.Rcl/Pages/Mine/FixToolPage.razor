@@ -1,0 +1,70 @@
+@page "/fixTool"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar Title="@(I18n.T("Fix Tool"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MCard Class="mb-5"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList Class="py-0">
+            <MListItem OnClick="FixEarlyImagesNotDisplay">
+                <MListItemContent>
+                    <MListItemTitle>
+                        <wc-auto-scroll-text>@(I18n.T("Fix early images not displaying"))</wc-auto-scroll-text>
+                    </MListItemTitle>
+                    <MListItemSubtitle>
+                        <wc-auto-scroll-text>@(I18n.T("This situation may occur with diaries before version 0.65.5"))</wc-auto-scroll-text>
+                    </MListItemSubtitle>
+                </MListItemContent>
+
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <MCard Class="mb-5"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList Class="py-0">
+            <MListItem OnClick="FixPrivacyModeDisplayError">
+                <MListItemContent>
+                    <MListItemTitle>
+                        <wc-auto-scroll-text>@(I18n.T("Fix privacy mode diary to display in normal mode"))</wc-auto-scroll-text>
+                    </MListItemTitle>
+                    <MListItemSubtitle>
+                        <wc-auto-scroll-text>@(I18n.T("This situation may occur with diaries before version 1.3.9"))</wc-auto-scroll-text>
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+
+    <MCard Class="mb-5"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList Class="py-0">
+            <MListItem OnClick="FixAudioVdieoRecord">
+                <MListItemContent>
+                    <MListItemTitle>
+                        <wc-auto-scroll-text>@(I18n.T("Fix audio and video files not being recorded"))</wc-auto-scroll-text>
+                    </MListItemTitle>
+                    <MListItemSubtitle>
+                        <wc-auto-scroll-text>@(I18n.T("This situation only occurs when adding diaries containing audio and video files in version 1.25.9"))</wc-auto-scroll-text>
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
+</ScrollContainer>

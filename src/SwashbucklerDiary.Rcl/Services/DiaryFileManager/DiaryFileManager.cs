@@ -699,5 +699,21 @@ namespace SwashbucklerDiary.Rcl.Services
             await Task.Run(() => ZipFile.CreateFromDirectory(outputFolder, zipFilePath)).ConfigureAwait(false);
             return zipFilePath;
         }
+
+        public async Task UpdateAllDiariesResourcesAsync()
+        {
+            var diaries = await _diaryService.QueryDiariesAsync().ConfigureAwait(false);
+            await Task.Run(() =>
+            {
+                foreach (var diary in diaries)
+                {
+                    if (!string.IsNullOrEmpty(diary.Content))
+                    {
+                        diary.Resources = _mediaResourceManager.GetDiaryResources(diary.Content);
+                    }
+                }
+            }).ConfigureAwait(false);
+            await _diaryService.UpdateIncludesAsync(diaries).ConfigureAwait(false);
+        }
     }
 }

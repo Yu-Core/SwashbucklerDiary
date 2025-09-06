@@ -142,7 +142,7 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             var resourceUris = new HashSet<string>();
             var resources = new List<ResourceModel>();
-            string pattern = @$"(?<=\(|"")({customPathPrefix}.+?\.[a-zA-Z]+)(?=\)|"")";
+            string pattern = @$"(?<=\(|"")({customPathPrefix}.+?\.\S+?)(?=\)|"")";
 
             foreach (Match match in Regex.Matches(content, pattern))
             {

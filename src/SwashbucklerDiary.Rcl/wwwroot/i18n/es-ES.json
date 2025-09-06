@@ -493,5 +493,14 @@
   "All comply": "Cumplen todas",
   "Any one": "Cualquiera",
   "Keep the original file name": "Mantener el nombre de archivo original",
-  "When adding files, use the original file name. The file of same Sha256 will no longer be saved as only one copy.": "Al agregar archivos, utilice el nombre de archivo original. Los archivos con el mismo Sha256 ya no se guardarán como una sola copia."
+  "When adding files, use the original file name. The file of same Sha256 will no longer be saved as only one copy.": "Al agregar archivos, utilice el nombre de archivo original. Los archivos con el mismo Sha256 ya no se guardarán como una sola copia.",
+  "Fix early images not displaying": "Corregir que no se muestren las imágenes tempranas",
+  "This situation may occur with diaries before version 0.65.5": "Esta situación puede ocurrir con diarios anteriores a la versión 0.65.5",
+  "Fix privacy mode diary to display in normal mode": "Corregir que el diario en modo privado se muestre en modo normal",
+  "This situation may occur with diaries before version 1.3.9": "Esta situación puede ocurrir con diarios anteriores a la versión 1.3.9",
+  "Fix audio and video files not being recorded": "Corregir que los archivos de audio y video no se registren",
+  "This situation only occurs when adding diaries containing audio and video files in version 1.25.9": "Esta situación solo ocurre cuando se agregan diarios que contienen archivos de audio y video en la versión 1.25.9",
+  "Fixing in progress": "Se está corregiendo",
+  "Fix completed": "Corrección completada",
+  "Fix Tool": "Outil de réparation"
 }

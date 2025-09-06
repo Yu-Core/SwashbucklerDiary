@@ -493,5 +493,14 @@
   "All comply": "全部符合",
   "Any one": "任意一個",
   "Keep the original file name": "保留原始檔案名稱",
-  "When adding files, use the original file name. The file of same Sha256 will no longer be saved as only one copy.": "新增檔案時，使用原始檔案名稱。具有相同 Sha256 的檔案將不再只儲存一份。"
+  "When adding files, use the original file name. The file of same Sha256 will no longer be saved as only one copy.": "新增檔案時，使用原始檔案名稱。具有相同 Sha256 的檔案將不再只儲存一份。",
+  "Fix early images not displaying": "修復早期圖片不顯示",
+  "This situation may occur with diaries before version 0.65.5": "包含 0.65.5 版本以前的日記可能會出現這種情況",
+  "Fix privacy mode diary to display in normal mode": "修復隱私模式日記顯示在正常模式",
+  "This situation may occur with diaries before version 1.3.9": "包含 1.3.9 版本以前的日記可能會出現這種情況",
+  "Fix audio and video files not being recorded": "修復音視頻文件未被記錄",
+  "This situation only occurs when adding diaries containing audio and video files in version 1.25.9": "僅在 1.25.9 版本添加過包含音視頻文件的日記會出現這種情況",
+  "Fixing in progress": "正在修復",
+  "Fix completed": "修復完成",
+  "Fix Tool": "修復工具"
 }

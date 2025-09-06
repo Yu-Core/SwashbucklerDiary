@@ -493,5 +493,14 @@
   "All comply": "Tất cả tuân thủ",
   "Any one": "Bất kỳ",
   "Keep the original file name": "Giữ tên tệp gốc",
-  "When adding files, use the original file name. The file of same Sha256 will no longer be saved as only one copy.": "Khi thêm tệp, hãy sử dụng tên tệp gốc. Các tệp có Sha256 giống nhau sẽ không còn được lưu trữ chỉ dưới dạng một bản sao."
+  "When adding files, use the original file name. The file of same Sha256 will no longer be saved as only one copy.": "Khi thêm tệp, hãy sử dụng tên tệp gốc. Các tệp có Sha256 giống nhau sẽ không còn được lưu trữ chỉ dưới dạng một bản sao.",
+  "Fix early images not displaying": "Sửa lỗi hình ảnh ban đầu không hiển thị",
+  "This situation may occur with diaries before version 0.65.5": "Trường hợp này có thể xảy ra với các nhật ký trước phiên bản 0.65.5",
+  "Fix privacy mode diary to display in normal mode": "Sửa lỗi nhật ký chế độ riêng tư hiển thị trong chế độ bình thường",
+  "This situation may occur with diaries before version 1.3.9": "Trường hợp này có thể xảy ra với các nhật ký trước phiên bản 1.3.9",
+  "Fix audio and video files not being recorded": "Sửa lỗi tệp âm thanh và video không được ghi lại",
+  "This situation only occurs when adding diaries containing audio and video files in version 1.25.9": "Trường hợp này chỉ xảy ra khi thêm nhật ký chứa tệp âm thanh và video trong phiên bản 1.25.9",
+  "Fixing in progress": "Đang sửa lỗi",
+  "Fix completed": "Đã sửa xong",
+  "Fix Tool": "Công cụ sửa chữa"
 }
