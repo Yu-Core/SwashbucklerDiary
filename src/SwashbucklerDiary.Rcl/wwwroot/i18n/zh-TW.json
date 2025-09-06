@@ -493,5 +493,5 @@
   "All comply": "全部符合",
   "Any one": "任意一個",
   "Keep the original file name": "保留原始檔案名稱",
-  "When adding files, use the original file name. The same file will no longer be kept in one copy.": "新增檔案時，使用原始檔案名稱。相同檔案將不再只保留一份。"
+  "When adding files, use the original file name. The file of same Sha256 will no longer be saved as only one copy.": "新增檔案時，使用原始檔案名稱。具有相同 Sha256 的檔案將不再只儲存一份。"
 }

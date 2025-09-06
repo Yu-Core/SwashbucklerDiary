@@ -493,5 +493,5 @@
   "All comply": "Todos atendem",
   "Any one": "Qualquer um",
   "Keep the original file name": "Manter o nome do arquivo original",
-  "When adding files, use the original file name. The same file will no longer be kept in one copy.": "Ao adicionar arquivos, use o nome do arquivo original. O mesmo arquivo não será mais mantido em uma única cópia."
+  "When adding files, use the original file name. The file of same Sha256 will no longer be saved as only one copy.": "Ao adicionar arquivos, use o nome do arquivo original. Arquivos com o mesmo Sha256 não serão mais salvos como apenas uma cópia."
 }

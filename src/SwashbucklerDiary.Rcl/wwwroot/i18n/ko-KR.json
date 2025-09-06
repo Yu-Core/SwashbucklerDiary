@@ -493,5 +493,5 @@
   "All comply": "모두 충족",
   "Any one": "아무거나",
   "Keep the original file name": "원본 파일 이름 유지",
-  "When adding files, use the original file name. The same file will no longer be kept in one copy.": "파일을 추가할 때 원본 파일 이름을 사용합니다. 동일한 파일은 더 이상 한 개의 복사본으로 보관되지 않습니다."
+  "When adding files, use the original file name. The file of same Sha256 will no longer be saved as only one copy.": "파일을 추가할 때 원본 파일 이름을 사용합니다. 동일한 Sha256 파일은 더 이상 단일 복사본으로 저장되지 않습니다."
 }

@@ -493,5 +493,5 @@
   "All comply": "すべて満たす",
   "Any one": "いずれか",
   "Keep the original file name": "元のファイル名を保持する",
-  "When adding files, use the original file name. The same file will no longer be kept in one copy.": "ファイルを追加する際は、元のファイル名を使用します。同じファイルはもはや1つのコピーで保存されません。"
+  "When adding files, use the original file name. The file of same Sha256 will no longer be saved as only one copy.": "ファイルを追加する際は、元のファイル名を使用します。同じ Sha256 のファイルは、もはや 1 つのコピーのみとして保存されません。"
 }

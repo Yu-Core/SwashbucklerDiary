@@ -493,6 +493,6 @@
   "All comply": "Все соответствуют",
   "Any one": "Любое",
   "Keep the original file name": "Сохранить исходное имя файла",
-  "When adding files, use the original file name. The same file will no longer be kept in one copy.": "При добавлении файлов используйте исходное имя файла. Одинаковый файл больше не будет храниться в одном экземпляре."
+  "When adding files, use the original file name. The file of same Sha256 will no longer be saved as only one copy.": "При добавлении файлов используйте исходное имя файла. Файлы с одинаковым Sha256 больше не будут сохраняться в виде только одной копии."
 
 }
