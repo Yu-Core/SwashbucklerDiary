@@ -165,7 +165,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         private async void HandleAppLifecycleOnStopped()
         {
-            if (NavigationManager.GetBaseRelativePath().Equals("applock", StringComparison.InvariantCultureIgnoreCase))
+            if (NavigateController.DisableNavigate)
             {
                 return;
             }

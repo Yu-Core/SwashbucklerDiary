@@ -43,7 +43,7 @@ namespace SwashbucklerDiary.Rcl.Components
             base.Visible = value;
             if (value)
             {
-                NavigateController.AddHistoryAction(Close);
+                NavigateController.AddHistoryAction(Close, isDialog: true);
             }
             else
             {

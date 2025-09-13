@@ -6,6 +6,8 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         public bool PreventNavigation { get; set; } = true;
 
+        public bool IsDialog { get; set; }
+
         public Action? Action { get; set; }
 
         public Func<Task>? Func { get; set; }

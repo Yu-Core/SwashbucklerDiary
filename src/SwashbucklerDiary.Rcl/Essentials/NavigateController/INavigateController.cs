@@ -19,9 +19,9 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         void RemovePageCache(string url);
 
-        void AddHistoryAction(Action action, bool preventNavigation = true);
+        void AddHistoryAction(Action action, bool preventNavigation = true, bool isDialog = false);
 
-        void AddHistoryAction(Func<Task> func, bool preventNavigation = true);
+        void AddHistoryAction(Func<Task> func, bool preventNavigation = true, bool isDialog = false);
 
         void RemoveHistoryAction(Action action);
 

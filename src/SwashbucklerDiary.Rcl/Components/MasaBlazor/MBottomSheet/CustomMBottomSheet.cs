@@ -57,7 +57,7 @@ namespace SwashbucklerDiary.Rcl.Components
             base.Value = value;
             if (value)
             {
-                NavigateController.AddHistoryAction(Close);
+                NavigateController.AddHistoryAction(Close, isDialog: true);
             }
             else
             {

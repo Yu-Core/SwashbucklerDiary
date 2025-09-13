@@ -50,11 +50,11 @@ namespace SwashbucklerDiary.Rcl.Essentials
             RouteMatcher = new RouteMatcher(Assemblies);
         }
 
-        public void AddHistoryAction(Action action, bool preventNavigation = true)
-            => AddHistoryAction(action, null, preventNavigation);
+        public void AddHistoryAction(Action action, bool preventNavigation = true, bool isDialog = false)
+            => AddHistoryAction(action, null, preventNavigation, isDialog);
 
-        public void AddHistoryAction(Func<Task> func, bool preventNavigation = true)
-            => AddHistoryAction(null, func, preventNavigation);
+        public void AddHistoryAction(Func<Task> func, bool preventNavigation = true, bool isDialog = false)
+            => AddHistoryAction(null, func, preventNavigation, isDialog);
 
         public void Dispose()
         {
@@ -309,6 +309,11 @@ namespace SwashbucklerDiary.Rcl.Essentials
                     return;
                 }
 
+                historyActions.Where(it => it.IsDialog).ToList().ForEach(historyAction =>
+                {
+                    historyAction.Action?.Invoke();
+                });
+
                 if (context.HistoryEntryState == "replace")
                 {
                     historyPaths.Remove(currentPath);
@@ -320,13 +325,14 @@ namespace SwashbucklerDiary.Rcl.Essentials
             }
         }
 
-        private void AddHistoryAction(Action? action = null, Func<Task>? func = null, bool preventNavigation = true)
+        private void AddHistoryAction(Action? action = null, Func<Task>? func = null, bool preventNavigation = true, bool isDialog = false)
         {
             var path = _navigationManager.GetAbsolutePath();
             historyActions.Add(new()
             {
                 Path = path,
                 PreventNavigation = preventNavigation,
+                IsDialog = isDialog,
                 Action = action,
                 Func = func
             });
