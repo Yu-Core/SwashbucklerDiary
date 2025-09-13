@@ -200,8 +200,7 @@
     "Name": "Display outline",
     "Icon": "format_list_bulleted",
     "Path": "Setting / Diary / Outline / Display outline",
-    "Href": "outlineSetting",
-    "HideBreakpoints": [ "Xs", "Sm" ]
+    "Href": "outlineSetting"
   },
   {
     "Name": "Position on the right",
