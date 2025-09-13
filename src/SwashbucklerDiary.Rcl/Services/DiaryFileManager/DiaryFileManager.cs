@@ -655,8 +655,6 @@ namespace SwashbucklerDiary.Rcl.Services
                         diary.Content = diary.Content.Replace("appdata:///", "appdata/");
                         diary.Resources = _mediaResourceManager.GetDiaryResources(diary.Content);
                     }
-
-                    diary.UpdateTime = DateTime.Now;
                 }
             }).ConfigureAwait(false);
         }
