@@ -181,7 +181,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             if (useAppLock && lockAppWhenLeave)
             {
                 AppLifecycle.ActivationArguments = CreateAppLockActivationArguments();
-                NavigationManager.NavigateTo("appLock");
+                NavigationManager.NavigateTo("appLock?IsLeave=true");
             }
         }
 
