@@ -3,6 +3,7 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background: rgba(var(--m-theme-surface));
     overscroll-behavior: none;
+    word-break: break-all;
 }
 
 h1:focus {
