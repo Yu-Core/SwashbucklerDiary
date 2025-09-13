@@ -104,13 +104,13 @@
 </ScrollContainer>
 
 <NumberPasswordDialog @bind-Visible="showNumberLock"
-                      Value="appLockNumberPassword"
+                      Value="@appLockNumberPassword"
                       OnValidate="ValidateNumberPassword"
                       OnFinish="SetAppLockNumberPasswordAsync">
 </NumberPasswordDialog>
 
 <PatternPasswordDialog @bind-Visible="showPatternLock"
-                       Value="appLockPatternPassword"
+                       Value="@appLockPatternPassword"
                        OnValidate="ValidatePatternPassword"
                        OnFinish="SetAppLockPatternPasswordAsync">
 </PatternPasswordDialog>
