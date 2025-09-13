@@ -38,7 +38,8 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 ["markdown"] = new Dictionary<string, object?>()
                 {
-                    ["linkBase"] = MediaResourceManager.LinkBase
+                    ["linkBase"] = MediaResourceManager.LinkBase,
+                    ["imgPathAllowSpace"] = true
                 }
             };
         }
