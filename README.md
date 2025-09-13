@@ -18,7 +18,7 @@
 
 </div>
 
-## 🌏️ 在线预览
+## 🔗 在线预览
 [在线演示地址（GitHub Pages）](https://yu-core.github.io/SwashbucklerDiary/)
 
 ## 🛠️ 主要技术栈
@@ -84,11 +84,27 @@
 ## 🖥 支持的平台
 - Windows (Windows 11和Windows 10版本 1809 或更高版本)
 - Android (Android 8.0 (API 26) 或更高版本)
-- ~~iOS (iOS 14 或更高版本)~~
+- ~~iOS (iOS 14 或更高版本) (虚拟机可运行，物理机未经测试)~~
 - macOS (macOS 11 或更高版本)
 - ~~Tizen (暂不支持)~~
 - Web
 - Linux
+
+## 🌏️ 支持的语言
+
+| 代码    | 语言             | 查看                                                             |
+| ------- | ---------------- | ---------------------------------------------------------------- |
+| de-DE   | 德语             | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/de-DE.json)      |
+| en-US   | 英语（美国）       | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/en-US.json)      |
+| es-ES   | 西班牙语（西班牙） | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/es-ES.json)      |
+| fr-FR   | 法语（法国）       | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/fr-FR.json)      |
+| ja-JP   | 日语             | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/ja-JP.json)      |
+| ko-KR   | 朝鲜语/韩语        | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/ko-KR.json)      |
+| pt-BR   | 葡萄牙语（巴西）   | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/pt-BR.json)      |
+| ru-RU   | 俄语              | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/ru-RU.json)      |
+| vi-VN   | 越南语            | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/vi-VN.json)      |
+| zh-CN   | 中文（简体）       | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/zh-CN.json)      |
+| zh-TW   | 中文（繁体）       | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/zh-TW.json)      |
 
 ## ⌨️ 开发环境
 
@@ -112,7 +128,7 @@
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
 - [betterSearch](https://github.com/jayZOU/betterSearch)
 - [Blazored LocalStorage](https://github.com/Blazored/LocalStorage)
-- [BlazorWebView.Gtk](https://github.com/Yu-Core/BlazorWebView.Gtk)
+- [AspNetCore.Components.WebView.Gtk](https://github.com/Yu-Core/AspNetCore.Components.WebView.Gtk)
 - [Brotli](https://github.com/google/brotli)
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 - [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)

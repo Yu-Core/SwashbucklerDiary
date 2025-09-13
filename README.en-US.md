@@ -84,11 +84,26 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 ## 🖥 Supported Platforms
 - Windows (Windows 11 and Windows 10 version 1809 or higher)
 - Android (Android 8.0 (API 26) or higher)
-- iOS (iOS 14 or higher)
+- ~~iOS (iOS 14 or higher) (Virtual machine can run, physical machine has not been tested)~~
 - macOS (macOS 11 or higher)
 - ~~Tizen (Not supported temporarily)~~
 - Web
 - Linux
+
+## 🌏️ Supported Languages
+| Code  | Language               | View                                                             |
+| ----- | ---------------------- | ---------------------------------------------------------------- |
+| de-DE | German                 | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/de-DE.json)      |
+| en-US | English (United States)| [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/en-US.json)      |
+| es-ES | Spanish (Spain)        | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/es-ES.json)      |
+| fr-FR | French (France)        | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/fr-FR.json)      |
+| ja-JP | Japanese               | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/ja-JP.json)      |
+| ko-KR | Korean                 | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/ko-KR.json)      |
+| pt-BR | Portuguese (Brazil)    | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/pt-BR.json)      |
+| ru-RU | Russian                | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/ru-RU.json)      |
+| vi-VN | Vietnamese             | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/vi-VN.json)      |
+| zh-CN | Chinese (Simplified)   | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/zh-CN.json)      |
+| zh-TW | Chinese (Traditional)  | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/zh-TW.json)      |
 
 ## ⌨️ Development Environment
 
@@ -112,7 +127,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [ASP.NET Core](https://github.com/dotnet/aspnetcore)
 - [betterSearch](https://github.com/jayZOU/betterSearch)
 - [Blazored LocalStorage](https://github.com/Blazored/LocalStorage)
-- [BlazorWebView.Gtk](https://github.com/Yu-Core/BlazorWebView.Gtk)
+- [AspNetCore.Components.WebView.Gtk](https://github.com/Yu-Core/AspNetCore.Components.WebView.Gtk)
 - [Brotli](https://github.com/google/brotli)
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 - [CommunityToolkit.Maui](https://github.com/CommunityToolkit/Maui)

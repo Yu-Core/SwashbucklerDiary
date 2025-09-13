@@ -1,4 +1,4 @@
-﻿Function description
+Function description
 
 Swashbuckler Diary is an open source, cross platform local diary application.
 
@@ -19,6 +19,5 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 * Support text and image sharing
 * Support webdav backup
 * Synchronous transmission under the same local area network
-* Perfect immersive status bar navigation bar experience
 
 The function is very simple. I believe that you can use it very quickly if you are smart.

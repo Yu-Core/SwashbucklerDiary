@@ -20,9 +20,9 @@
     "Url": "https://github.com/Blazored/LocalStorage/blob/main/LICENSE"
   },
   {
-    "Name": "BlazorWebView.Gtk",
+    "Name": "AspNetCore.Components.WebView.Gtk",
     "License": "MIT license",
-    "Url": "https://github.com/Yu-Core/BlazorWebView.Gtk/blob/main/LICENSE.txt"
+    "Url": "https://github.com/Yu-Core/AspNetCore.Components.WebView.Gtk/blob/main/LICENSE.txt"
   },
   {
     "Name": "Brotli",
