@@ -15,6 +15,7 @@ namespace SwashbucklerDiary.Gtk.Extensions
         {
             services.AddSingleton<GtkSystemThemeManager>();
 
+            services.AddSingleton<IProxyService, Rcl.Hybird.Services.ProxyService>();
             services.AddSingleton<IStaticWebAssets, Essentials.StaticWebAssets>();
             services.AddSingleton<ISettingService, Services.SettingService>();
             services.AddSingleton<INavigateController, Essentials.NavigateController>();

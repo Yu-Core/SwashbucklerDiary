@@ -502,5 +502,7 @@
   "This situation only occurs when adding diaries containing audio and video files in version 1.25.9": "僅在 1.25.9 版本添加過包含音視頻文件的日記會出現這種情況",
   "Fixing in progress": "正在修復",
   "Fix completed": "修復完成",
-  "Fix Tool": "修復工具"
+  "Fix Tool": "修復工具",
+  "Link card": "卡片連結",
+  "Generate card style links for hyperlinks": "為超連結產生卡片式連結"
 }

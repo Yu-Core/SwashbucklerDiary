@@ -502,5 +502,7 @@
   "This situation only occurs when adding diaries containing audio and video files in version 1.25.9": "1.25.9 バージョンで音声およびビデオファイルを含む日記を追加した場合にのみ、この状況が発生します",
   "Fixing in progress": "修正作業中",
   "Fix completed": "修正完了",
-  "Fix Tool": "修復ツール"
+  "Fix Tool": "修復ツール",
+  "Link card": "リンクカード",
+  "Generate card style links for hyperlinks": "ハイパーリンク用のカードスタイルのリンクを生成する"
 }

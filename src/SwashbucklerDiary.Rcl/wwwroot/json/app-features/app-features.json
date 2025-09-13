@@ -240,6 +240,12 @@
     "Href": "diarySetting"
   },
   {
+    "Name": "Link card",
+    "Icon": "stack",
+    "Path": "Setting / Diary / Link card",
+    "Href": "diarySetting"
+  },
+  {
     "Name": "Keep the original file name",
     "Icon": "raw_on",
     "Path": "Setting / Diary / Keep the original file name",

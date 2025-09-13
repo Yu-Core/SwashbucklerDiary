@@ -14,6 +14,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool imageLazy;
 
+        private bool linkCard;
+
         private bool showPreviewImage;
 
         private string? previewImageSrc;
@@ -36,6 +38,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
+
+        [Inject]
+        private IProxyService ProxyService { get; set; } = default!;
 
         [Parameter]
         public string? Value { get; set; }
@@ -62,7 +67,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool? MobileOutline { get; set; }
 
         [Parameter]
-        public ElementReference OutlineElement { get; set; }
+        public ElementReference? OutlineElement { get; set; }
 
         [Parameter]
         public EventCallback<bool?> MobileOutlineChanged { get; set; }
@@ -135,41 +140,45 @@ namespace SwashbucklerDiary.Rcl.Components
             autoPlay = SettingService.Get(s => s.AutoPlay);
             codeLineNumber = SettingService.Get(s => s.CodeLineNumber);
             imageLazy = SettingService.Get(s => s.ImageLazy);
+            linkCard = SettingService.Get(s => s.LinkCard);
         }
 
         private void SetOptions()
         {
-            string lang = I18n.Culture.Name.Replace("-", "_");
-            string mode = ThemeService.RealTheme == Shared.Theme.Dark ? "dark" : "light";
-            var theme = new Dictionary<string, object?>()
-            {
-                { "current", mode },
-                { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2/dist/css/content-theme" }
-            };
-            var hljs = new Dictionary<string, object>()
-            {
-                { "lineNumber", codeLineNumber }
-            };
-            var markdown = new Dictionary<string, object?>()
-            {
-                { "toc", true },
-                { "mark", true },
-                { "linkBase", MediaResourceManager.LinkBase },
-                { "sup", true },
-                { "sub", true },
-                { "imgPathAllowSpace", true }
-            };
+            var mode = ThemeService.RealTheme == Shared.Theme.Dark ? "dark" : "light";
 
             _options = new()
             {
-                { "mode", mode },
-                { "anchor", 2 },
-                { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2" },
-                { "lang", lang },
-                { "theme", theme },
-                { "icon", "material" },
-                { "hljs", hljs },
-                { "markdown", markdown },
+                ["mode"] = mode,
+                ["anchor"] = 2,
+                ["cdn"] = $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2",
+                ["lang"] = I18n.Culture.Name.Replace("-", "_"),
+                ["theme"] = new Dictionary<string, object?>()
+                {
+                    { "current", mode },
+                    { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2/dist/css/content-theme" }
+                },
+                ["icon"] = "material",
+                ["hljs"] = new Dictionary<string, object>()
+                {
+                    ["lineNumber"] = codeLineNumber
+                },
+                ["markdown"] = new Dictionary<string, object?>()
+                {
+                    ["toc"] = true,
+                    ["mark"] = true,
+                    ["linkBase"] = MediaResourceManager.LinkBase,
+                    ["sup"] = true,
+                    ["sub"] = true,
+                    ["imgPathAllowSpace"] = true
+                },
+                ["render"] = new Dictionary<string, object?>()
+                {
+                    ["media"] = new Dictionary<string, object?>()
+                    {
+                        ["enable"] = false,
+                    }
+                },
             };
 
             if (imageLazy)
@@ -181,7 +190,15 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task HandleOnAfter()
         {
             _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
-            await MarkdownPreviewJSModule.AfterMarkdown(_dotNetObjectReference, vditorMarkdownPreview.Ref, autoPlay, OutlineElement.Context is null ? null : OutlineElement, moblieOutlineContainerElement, MediaResourceManager.LinkBase);
+            await MarkdownPreviewJSModule.AfterMarkdown(_dotNetObjectReference, vditorMarkdownPreview.Ref, new()
+            {
+                OutlineElement = OutlineElement,
+                MoblieOutlineElement = moblieOutlineContainerElement,
+                AutoPlay = autoPlay,
+                LinkBase = MediaResourceManager.LinkBase,
+                ProxyUrl = ProxyService.ProxyUrl,
+                LinkCard = linkCard
+            });
 
             if (OnAfter.HasDelegate)
             {
@@ -202,7 +219,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             if (!Outline
                 || vditorMarkdownPreview?.Ref.Context is null
-                || OutlineElement.Context is null)
+                || OutlineElement is null)
             {
                 return;
             }

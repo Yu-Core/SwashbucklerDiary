@@ -1,6 +1,7 @@
 import { previewImage } from './previewMediaElement.js';
 import { fixMobileOutlientClick } from './markdown/fixMarkdownOutline.js'
 import { renderOutline } from './vditor-preview-helper.js'
+import { renderLinkCards } from './link-card.js'
 
 function handleCopy(dotNetCallbackRef, element) {
     element.querySelectorAll(".vditor-copy span").forEach(span => {
@@ -10,7 +11,7 @@ function handleCopy(dotNetCallbackRef, element) {
     })
 }
 
-function afterMarkdown(dotNetCallbackRef, element, autoPlay, outlineElement, moblieOutlineElement, linkBase) {
+function afterMarkdown(dotNetCallbackRef, element, options) {
     if (!element) {
         return;
     }
@@ -18,16 +19,20 @@ function afterMarkdown(dotNetCallbackRef, element, autoPlay, outlineElement, mob
     handleCopy(dotNetCallbackRef, element);
     previewImage(dotNetCallbackRef, element);
 
-    if (autoPlay) {
+    if (options.autoPlay) {
         handleAutoPlay(element);
     }
 
-    if (linkBase) {
-        handleLinkBase(element, linkBase);
+    if (options.linkBase) {
+        handleLinkBase(element, options.linkBase);
     }
 
-    renderOutline(element, outlineElement);
-    renderMobileOutline(dotNetCallbackRef, element, moblieOutlineElement);
+    renderOutline(element, options.outlineElement);
+    renderMobileOutline(dotNetCallbackRef, element, options.moblieOutlineElement);
+
+    if (options.linkCard) {
+        handleLinkCard(element, options.proxyUrl);
+    }
 }
 
 function handleAutoPlay(element) {
@@ -68,6 +73,25 @@ function renderMobileOutline(dotNetCallbackRef, previewElement, moblieOutlineEle
 
     Vditor.outlineRender(previewElement, moblieOutlineElement);
     fixMobileOutlientClick(dotNetCallbackRef, moblieOutlineElement.firstElementChild, previewElement);
+}
+
+function handleLinkCard(element, proxyUrl) {
+    if (!element) return;
+    const options = {
+        proxyUrl: 'https://api.allorigins.win/raw?url=',
+        faviconSrc: "_content/SwashbucklerDiary.Rcl/img/link.svg"
+    };
+    if (proxyUrl) {
+        options.proxyUrl = proxyUrl;
+    }
+
+    const baseURI = document.baseURI;
+    const links = Array.from(element.querySelectorAll("a"))
+        .filter(link => {
+            const href = link.href;
+            return href && href.startsWith('http') && !href.startsWith(baseURI);
+        });
+    renderLinkCards(links, options);
 }
 
 export { afterMarkdown, renderOutline }

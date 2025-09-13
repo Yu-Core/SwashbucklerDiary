@@ -502,5 +502,7 @@
   "This situation only occurs when adding diaries containing audio and video files in version 1.25.9": "Cette situation ne se produit que lorsqu'on ajoute des journaux contenant des fichiers audio et vidéo dans la version 1.25.9",
   "Fixing in progress": "Correction en cours",
   "Fix completed": "Correction terminée",
-  "Fix Tool": "Outil de réparation"
+  "Fix Tool": "Outil de réparation",
+  "Link card": "Carte de lien",
+  "Generate card style links for hyperlinks": "Générer des liens de style de carte pour les hyperliens"
 }

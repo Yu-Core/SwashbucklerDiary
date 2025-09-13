@@ -30,6 +30,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool autoPlay;
 
+        private bool linkCard;
+
         private bool originalFileName;
 
         private string? diaryTimeFormat;
@@ -70,6 +72,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             autoPlay = SettingService.Get(s => s.AutoPlay);
             diaryTimeFormat = SettingService.Get(s => s.DiaryTimeFormat);
             diaryInsertTimeFormat = SettingService.Get(s => s.DiaryInsertTimeFormat);
+            linkCard = SettingService.Get(s => s.LinkCard);
             originalFileName = SettingService.Get(s => s.OriginalFileName);
         }
 

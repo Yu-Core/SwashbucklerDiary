@@ -502,5 +502,7 @@
   "This situation only occurs when adding diaries containing audio and video files in version 1.25.9": "Такая ситуация возникает только при добавлении дневников, содержащих аудио- и видеофайлы, в версии 1.25.9",
   "Fixing in progress": "Исправляется",
   "Fix completed": "Исправление завершено",
-  "Fix Tool": "Инструмент почистки"
+  "Fix Tool": "Инструмент почистки",
+  "Link card": "Карточка ссылки",
+  "Generate card style links for hyperlinks": "Создайте ссылки в стиле карточек для гиперссылок"
 }

@@ -63,5 +63,6 @@ namespace SwashbucklerDiary.Rcl.Services
         public string AppLockNumberPasswordSalt { get; set; } = string.Empty;
         public string AppLockPatternPasswordSalt { get; set; } = string.Empty;
         public bool OriginalFileName { get; set; }
+        public bool LinkCard { get; set; } = true;
     }
 }

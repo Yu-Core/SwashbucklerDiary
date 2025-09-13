@@ -1,7 +1,6 @@
 using EmbedIO;
 using EmbedIO.Cors;
 using System.Net;
-using System.Net.Sockets;
 
 namespace SwashbucklerDiary.Rcl.Hybird.Services
 {
@@ -9,14 +8,13 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
     {
         const string basePath = "http://localhost";
         private WebServer? server;
-        private CancellationTokenSource? cts;
 
         public LocalFileWebAssetServer(Dictionary<string, string> routeFileSystemPathMap)
         {
             StartWebServer(routeFileSystemPathMap);
         }
 
-        public string UrlPrefix { get; } = $"{basePath}:{GetAvailablePort(IPAddress.Loopback)}";
+        public string UrlPrefix { get; } = $"{basePath}:{IPAddress.Loopback.GetAvailablePort()}";
 
         private void StartWebServer(Dictionary<string, string> routeFileSystemPathMap)
         {
@@ -29,29 +27,16 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
             .WithUrlPrefix(UrlPrefix))
             .WithCors(CorsModule.All)
             .WithStaticFolder(routeFileSystemPathMap);
-            cts = new CancellationTokenSource();
 
-            Task.Run(() =>
-            {
-                server.RunAsync(cts.Token);
-            }, cts.Token);
-        }
-
-        static int GetAvailablePort(IPAddress ip)
-        {
-            using TcpListener l = new TcpListener(ip, 0);
-            l.Start();
-            int port = ((IPEndPoint)l.LocalEndpoint).Port;
-            l.Stop();
-            return port;
+            server.RunAsync();
         }
 
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {
-                cts?.Cancel();
                 server?.Dispose();
+                server = null;
             }
         }
 

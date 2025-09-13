@@ -502,5 +502,7 @@
   "This situation only occurs when adding diaries containing audio and video files in version 1.25.9": "Trường hợp này chỉ xảy ra khi thêm nhật ký chứa tệp âm thanh và video trong phiên bản 1.25.9",
   "Fixing in progress": "Đang sửa lỗi",
   "Fix completed": "Đã sửa xong",
-  "Fix Tool": "Công cụ sửa chữa"
+  "Fix Tool": "Công cụ sửa chữa",
+  "Link card": "Thẻ liên kết",
+  "Generate card style links for hyperlinks": "Tạo các liên kết kiểu thẻ cho các liên kết siêu"
 }

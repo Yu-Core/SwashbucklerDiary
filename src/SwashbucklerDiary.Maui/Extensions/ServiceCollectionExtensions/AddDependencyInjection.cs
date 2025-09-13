@@ -12,6 +12,7 @@ namespace SwashbucklerDiary.Maui.Extensions
     {
         public static IServiceCollection AddDependencyInjection(this IServiceCollection services)
         {
+            services.AddSingleton<IProxyService, Rcl.Hybird.Services.ProxyService>();
             services.AddSingleton<IStaticWebAssets, Essentials.StaticWebAssets>();
             services.AddSingleton<ISettingService, Services.SettingService>();
             services.AddSingleton<INavigateController, Essentials.NavigateController>();

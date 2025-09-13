@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.WebView;
+using Microsoft.AspNetCore.Components.WebView;
 using Microsoft.Maui.Platform;
 using Microsoft.UI.Windowing;
 using Microsoft.Web.WebView2.Core;
@@ -20,7 +20,6 @@ namespace SwashbucklerDiary.Maui
             e.WebView.DefaultBackgroundColor = _backgroundColor.ToWindowsColor();
             e.WebView.CoreWebView2.ContainsFullScreenElementChanged += FullScreen;
             e.WebView.AllowDrop = true;
-            e.WebView.CoreWebView2.Settings.UserAgent += " Android Mobile";
         }
 
         private void FullScreen(CoreWebView2 coreWebView2, object args)

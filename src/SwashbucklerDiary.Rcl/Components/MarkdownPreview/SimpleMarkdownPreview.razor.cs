@@ -40,28 +40,32 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void SetOptions()
         {
-            string lang = I18n.Culture.Name.Replace("-", "_");
             string mode = ThemeService.RealTheme == Shared.Theme.Dark ? "dark" : "light";
-            var theme = new Dictionary<string, object?>()
-            {
-                { "current", mode },
-                { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2/dist/css/content-theme" }
-            };
-            var markdown = new Dictionary<string, object>()
-            {
-                { "toc", true },
-                { "mark", true },
-                { "sup", true },
-                { "sub", true }
-            };
 
             _options = new()
             {
-                { "mode", mode },
-                { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2" },
-                { "lang", lang },
-                { "theme", theme },
-                { "markdown", markdown },
+                ["mode"] = mode,
+                ["cdn"] = $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2",
+                ["lang"] = I18n.Culture.Name.Replace("-", "_"),
+                ["theme"] = new Dictionary<string, object?>()
+                {
+                    { "current", mode },
+                    { "path", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2/dist/css/content-theme" }
+                },
+                ["markdown"] = new Dictionary<string, object?>()
+                {
+                    ["toc"] = true,
+                    ["mark"] = true,
+                    ["sup"] = true,
+                    ["sub"] = true,
+                },
+                ["render"] = new Dictionary<string, object?>()
+                {
+                    ["media"] = new Dictionary<string, object?>()
+                    {
+                        ["enable"] = false,
+                    }
+                },
             };
 
             if (Options is not null)
