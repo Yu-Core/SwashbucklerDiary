@@ -686,10 +686,11 @@ html.m-overlay-scroll-blocked {
 
 .link-card__content {
     padding: 16px;
-    flex-grow: 1;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
 }
 
 .link-card__title {
@@ -700,6 +701,8 @@ html.m-overlay-scroll-blocked {
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .link-card__description {
@@ -709,6 +712,7 @@ html.m-overlay-scroll-blocked {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
     opacity: var(--m-medium-emphasis-opacity);
 }
 

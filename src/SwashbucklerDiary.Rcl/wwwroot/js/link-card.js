@@ -1,5 +1,64 @@
 const cache = {};
 
+const resolveUrl = (u, base) => {
+    if (!u) return '';
+    try {
+        return new URL(u, base).href;
+    } catch {
+        return u;
+    }
+};
+
+const getMetaContent = (doc, property) => {
+    const element = doc.querySelector(`meta[property="og:${property}"], meta[name="og:${property}"]`);
+    return element ? element.getAttribute('content') : null;
+};
+
+const getTitle = (doc) => {
+    const ogTitle = getMetaContent(doc, 'title');
+    if (ogTitle) return ogTitle;
+    const docTitle = doc.title;
+    if (docTitle && docTitle.length > 0) {
+        return docTitle;
+    }
+    return null;
+}
+
+const getDescription = (doc) => {
+    const ogDescription = getMetaContent(doc, 'description');
+    if (ogDescription) return ogDescription;
+    const metaDescriptionElement = document.querySelector('meta[name="description"]');
+    if (metaDescriptionElement && metaDescriptionElement.content.length > 0) {
+        return metaDescriptionElement.content;
+    }
+    return null;
+}
+
+const getImage = (doc, base) => {
+    const ogImage = getMetaContent(doc, 'image');
+    if (ogImage) return resolveUrl(ogImage, base);
+    return null;
+}
+
+const getFavicon = (doc, base) => {
+    const iconElement = doc.querySelector('link[rel="icon"], link[rel="shortcut icon"]')
+    if (iconElement) {
+        const href = iconElement.getAttribute('href')
+        return resolveUrl(href || 'favicon.ico', base);
+    }
+    return null;
+}
+
+function isNormalUrl(str) {
+    try {
+        const url = new URL(str);
+        // 限制只允许 http/https
+        return url.protocol === "http:" || url.protocol === "https:";
+    } catch (e) {
+        return false;
+    }
+}
+
 class LinkCardRender {
     constructor(options = {}) {
         this.options = {
@@ -85,38 +144,31 @@ class LinkCardRender {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
 
-            const getMetaContent = (property) => {
-                const element = doc.querySelector(`meta[property="og:${property}"], meta[name="og:${property}"]`);
-                return element ? element.getAttribute('content') : null;
-            };
-
-            const resolveUrl = (relativeUrl) => {
-                return relativeUrl && !relativeUrl.startsWith('http')
-                    ? new URL(relativeUrl, new URL(url).origin).href
-                    : relativeUrl;
-            };
-
             // 获取标题
-            result.title = getMetaContent('title') || doc.querySelector('title')?.textContent || url;
+            result.title = getTitle(doc, 'title') || url;
 
             // 获取描述
-            result.description = getMetaContent('description') ||
-                doc.querySelector('meta[name="description"]')?.getAttribute('content');
-
-            if (!result.description) {
+            const description = getDescription(doc, 'description');
+            if (description) {
+                result.description = description;
+            } else {
                 return result;
             }
 
+            const urlObj = new URL(url);
+            const base = urlObj.origin + urlObj.pathname;
+
             // 获取图片
-            let image = getMetaContent('image');
-            result.image = image ? this.getUrl(resolveUrl(image)) : '';
+            const image = getImage(doc, base);
+            if (image) {
+                result.image = this.getUrl(image);
+            }
 
             // 获取网站图标
-            let favicon = doc.querySelector('link[rel="icon"], link[rel="shortcut icon"]')?.getAttribute('href');
-            favicon = resolveUrl(favicon || `${new URL(url).origin}/favicon.ico`);
-
-            // 处理 favicon
-            result.favicon = this.getUrl(favicon);
+            const favicon = getFavicon(doc, base);
+            if (favicon) {
+                result.favicon = this.getUrl(favicon);
+            }
 
         } catch (error) {
             console.warn('LinkCard Error: Failed to parse', error);
@@ -125,9 +177,8 @@ class LinkCardRender {
         return result;
     }
 
-
     getUrl(url) {
-        if (this.options.proxyUrl) {
+        if (this.options.proxyUrl && isNormalUrl(url)) {
             return this.options.proxyUrl + encodeURIComponent(url);
         }
 

@@ -109,6 +109,14 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
             // 设置状态码
             context.Response.StatusCode = (int)responseMessage.StatusCode;
 
+            // 设置MIME 类型
+            var contentType = responseMessage.Content.Headers.ContentType?.ToString();
+            if (contentType is not null)
+            {
+                context.Response.Headers.Remove("Content-Type");
+                context.Response.ContentType = contentType;
+            }
+
             // 写回响应内容
             using var responseStream = await responseMessage.Content.ReadAsStreamAsync();
             await responseStream.CopyToAsync(context.Response.OutputStream);
@@ -117,7 +125,7 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
         static readonly string[] unsafeHeaders =
         [
             "Host", "Connection", "Content-Length",
-            "Accept-Encoding", "TE", "Upgrade", "Proxy-Connection",
+            "TE", "Upgrade", "Proxy-Connection",
             "Origin", "User-Agent"
         ];
 
