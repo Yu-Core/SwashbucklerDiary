@@ -17,35 +17,24 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         public async Task<string> CreateTempFileAsync(string fileName, string contents)
         {
-            string path = Path.Combine(CacheDirectory, fileName);
+            string path = CreateTempFilePath(fileName);
             await File.WriteAllTextAsync(path, contents).ConfigureAwait(false);
             return path;
         }
 
         public async Task<string> CreateTempFileAsync(string fileName, byte[] contents)
         {
-            string path = Path.Combine(CacheDirectory, fileName);
+            string path = CreateTempFilePath(fileName);
             await File.WriteAllBytesAsync(path, contents).ConfigureAwait(false);
             return path;
         }
 
         public async Task<string> CreateTempFileAsync(string fileName, Stream stream)
         {
-            string path = Path.Combine(CacheDirectory, fileName);
+            string path = CreateTempFilePath(fileName);
 
-            if (stream.CanSeek && stream.Position != 0)
-                stream.Position = 0;
+            await FileCopyAsync(stream, path);
 
-            await using (var fileStream = new FileStream(
-                path,
-                FileMode.Create,
-                FileAccess.Write,
-                FileShare.None,
-                bufferSize: 1024 * 1024,
-                FileOptions.SequentialScan | FileOptions.Asynchronous))
-            {
-                await stream.CopyToAsync(fileStream).ConfigureAwait(false);
-            }
             return path;
         }
 
@@ -55,38 +44,42 @@ namespace SwashbucklerDiary.Rcl.Essentials
             File.Copy(sourceFilePath, targetFilePath, true);
         }
 
-        public async Task FileCopyAsync(Stream sourceStream, string targetFilePath)
+        public async Task FileCopyAsync(Stream stream, string path)
         {
-            // 参数校验
-            ArgumentNullException.ThrowIfNull(sourceStream);
-            if (string.IsNullOrWhiteSpace(targetFilePath))
-                throw new ArgumentException("File path cannot be empty", nameof(targetFilePath));
+            // 复位流
+            if (stream.CanSeek)
+                stream.Position = 0;
 
-            // 确保目录存在
-            var directory = Path.GetDirectoryName(targetFilePath);
-            if (!string.IsNullOrEmpty(directory)) Directory.CreateDirectory(directory);
-
-            if (!File.Exists(targetFilePath))
+            // 自动 bufferSize
+            int bufferSize = 81920; // 默认 80KB
+            try
             {
-                // 重置源流位置（如果可搜索）
-                if (sourceStream.CanSeek && sourceStream.Position != 0)
-                    sourceStream.Position = 0;
-
-                await using var fileStream = new FileStream(
-                    targetFilePath,
-                    FileMode.Create,
-                    FileAccess.Write,
-                    FileShare.None,
-                    bufferSize: 1024 * 1024,
-                    FileOptions.SequentialScan | FileOptions.Asynchronous);
-                await sourceStream.CopyToAsync(fileStream, 1024 * 1024).ConfigureAwait(false);
+                if (stream.CanSeek)
+                {
+                    long length = stream.Length;
+                    bufferSize = length switch
+                    {
+                        < 1 * 1024 * 1024 => 81920,         // < 1MB → 80KB
+                        < 100 * 1024 * 1024 => 1024 * 1024, // 1MB~100MB → 1MB
+                        _ => 4 * 1024 * 1024                // ≥100MB → 4MB
+                    };
+                }
             }
-            else
+            catch
             {
-                var fileName = $"{Guid.NewGuid().ToString("N")}{Path.GetExtension(targetFilePath)}";
-                var temp = await CreateTempFileAsync(fileName, sourceStream).ConfigureAwait(false);
-                await Task.Run(() => File.Copy(temp, targetFilePath, true)).ConfigureAwait(false);
+                // 有些流不支持 Length，保持默认
             }
+
+            // 写文件
+            await using var fileStream = new FileStream(
+                path,
+                FileMode.Create,
+                FileAccess.Write,
+                FileShare.None,
+                bufferSize,
+                FileOptions.Asynchronous | FileOptions.SequentialScan);
+
+            await stream.CopyToAsync(fileStream, bufferSize).ConfigureAwait(false);
         }
 
         public async Task ClearFolderAsync(string targetDirectory, List<string>? excludeFiles = null)
@@ -242,6 +235,16 @@ namespace SwashbucklerDiary.Rcl.Essentials
             }
 
             return $"{size.ToString("0.#")} {sizes[i]}";
+        }
+
+        protected string CreateTempFilePath(string fileName)
+        {
+            // 在缓存目录下创建一个唯一的子目录
+            string uniqueDir = Path.Combine(CacheDirectory, Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(uniqueDir);
+
+            // 拼接最终路径
+            return Path.Combine(uniqueDir, fileName);
         }
     }
 }
