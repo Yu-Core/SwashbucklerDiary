@@ -655,6 +655,7 @@ html.m-overlay-scroll-blocked {
     text-decoration: none;
     background-color: rgba(var(--m-theme-surface-container-low));
     color: rgba(var(--m-theme-on-surface), var(--m-high-emphasis-opacity)) !important;
+    word-break: break-all;
 }
 
     .link-card:hover {
@@ -676,6 +677,7 @@ html.m-overlay-scroll-blocked {
         height: 100%;
         object-fit: cover;
         transition: transform 0.3s;
+        border-radius: 8px;
     }
 
 .link-card:hover .link-card__image img {
