@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Components.Routing;
 using SwashbucklerDiary.Rcl.Essentials;
 using System.Reflection;
 
@@ -11,12 +10,5 @@ namespace SwashbucklerDiary.Gtk.Essentials
         }
 
         protected override IEnumerable<Assembly> Assemblies => Routes.Assemblies;
-
-        protected override Task HandleNavigateToStackBottomPath(LocationChangingContext context)
-        {
-            context.PreventNavigation();
-            _appLifecycle.QuitApp();
-            return Task.CompletedTask;
-        }
     }
 }

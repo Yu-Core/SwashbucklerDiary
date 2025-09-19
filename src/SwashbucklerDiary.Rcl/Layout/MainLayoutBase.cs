@@ -71,7 +71,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             base.OnInitialized();
 
             permanentPaths = navigationButtons.Select(it => NavigationManager.ToAbsoluteUri(it.Href).AbsolutePath).ToList();
-            NavigateController.Init(NavigationManager, JSRuntime, permanentPaths);
+
             _ = UpdateDocumentProperty(I18n.Culture);
 
             I18n.CultureChanged += HandleLanguageChanged;
@@ -79,6 +79,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             SettingService.SettingsChanged += HandleSettingsChanged;
             AppLifecycle.OnStopped += HandleAppLifecycleOnStopped;
             AppLifecycle.OnActivated += HandleActivated;
+            NavigateController.OnBackPressed += HandleBackPressed;
         }
 
         protected abstract ActivationArguments CreateAppLockActivationArguments();
@@ -92,6 +93,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             SettingService.SettingsChanged -= HandleSettingsChanged;
             AppLifecycle.OnStopped -= HandleAppLifecycleOnStopped;
             AppLifecycle.OnActivated -= HandleActivated;
+            NavigateController.OnBackPressed -= HandleBackPressed;
         }
 
         protected virtual async Task InitSettingsAsync()
@@ -236,6 +238,11 @@ namespace SwashbucklerDiary.Rcl.Layout
                 ReplaceHistoryEntry = replace,
                 HistoryEntryState = replace ? "replace" : null
             });
+        }
+
+        private async void HandleBackPressed()
+        {
+            await JSRuntime.HistoryBack();
         }
     }
 }

@@ -1,21 +1,14 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-
 namespace SwashbucklerDiary.Rcl.Essentials
 {
     public interface INavigateController
     {
-        bool IsInitialized { get; }
-
-        bool AllowPageUpdate { get; }
-
         bool DisableNavigate { get; set; }
-
         RouteMatcher RouteMatcher { get; }
 
-        List<string> PageCachePaths { get; }
-
-        void Init(NavigationManager navigationManager, IJSRuntime jSRuntime, IEnumerable<string> permanentPaths);
+        event Action<HistoryAction>? OnHistoryActionAdded;
+        event Action<Func<HistoryAction, bool>>? OnHistoryActionRemoved;
+        event Action<string>? OnPageCacheRemoved;
+        event Action? OnBackPressed;
 
         void RemovePageCache(string url);
 
@@ -27,6 +20,6 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         void RemoveHistoryAction(Func<Task> func);
 
-        Task BackPressed();
+        void BackPressed();
     }
 }
