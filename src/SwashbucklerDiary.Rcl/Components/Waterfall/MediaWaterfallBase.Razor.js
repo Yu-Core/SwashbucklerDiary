@@ -1,7 +1,7 @@
-export function recordScrollInfo(selector) {
+export function startRecordScrollInfo(selector) {
     const el = document.querySelector(selector);
     if (el) {
-        scrollListener(el, () => {
+        addScrollListener(el, () => {
             if (el.disallowRecordScrollInfo) {
                 return;
             }
@@ -25,13 +25,13 @@ export function stopRecordScrollInfo(selector) {
 export function restoreScrollPosition(selector) {
     const el = document.querySelector(selector);
     if (el && el.previousScrollInfo) {
-        anchorScroll(el, el.previousScrollInfo);
+        scrollToPosition(el, el.previousScrollInfo);
     }
 
     el.disallowRecordScrollInfo = false;
 }
 
-const scrollListener = (el, doSomething) => {
+const addScrollListener = (el, doSomething) => {
     let ticking = false;
 
     el.addEventListener("scroll", (event) => {
@@ -46,7 +46,7 @@ const scrollListener = (el, doSomething) => {
     });
 }
 
-const anchorScroll = (el, scrollInfo) => {
+const scrollToPosition = (el, scrollInfo) => {
     const scrollTop = scrollInfo.scrollTop + el.scrollHeight - scrollInfo.scrollHeight;
     el.scrollTo({
         top: scrollTop,

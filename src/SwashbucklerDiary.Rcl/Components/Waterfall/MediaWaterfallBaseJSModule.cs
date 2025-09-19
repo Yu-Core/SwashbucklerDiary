@@ -8,9 +8,9 @@ namespace SwashbucklerDiary.Rcl.Components
         {
         }
 
-        public async Task RecordScrollInfo(string selector)
+        public async Task StartRecordScrollInfo(string selector)
         {
-            await InvokeVoidAsync("recordScrollInfo", selector);
+            await InvokeVoidAsync("startRecordScrollInfo", selector);
         }
 
         public async Task StopRecordScrollInfo(string selector)

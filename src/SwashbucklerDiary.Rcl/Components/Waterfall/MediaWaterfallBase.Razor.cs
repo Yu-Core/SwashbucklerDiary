@@ -11,6 +11,8 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         protected bool contentLoading;
 
+        protected string? previousPath;
+
         protected string? thisPagePath;
 
         protected ElementReference elementReference = default!;
@@ -34,7 +36,7 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
-            thisPagePath = NavigationManager.GetAbsolutePath();
+            previousPath = thisPagePath = NavigationManager.GetAbsolutePath();
             BreakpointService.BreakpointChanged += HandleBreakpointChange;
             NavigationManager.LocationChanged += NavigationManagerOnLocationChanged;
         }
@@ -50,7 +52,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
                 if (!string.IsNullOrEmpty(ScrollElementId))
                 {
-                    await jSModule.RecordScrollInfo($"#{ScrollElementId}");
+                    await jSModule.StartRecordScrollInfo($"#{ScrollElementId}");
                 }
             }
         }
@@ -79,13 +81,21 @@ namespace SwashbucklerDiary.Rcl.Components
         protected virtual async void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
             var currentPath = NavigationManager.GetAbsolutePath();
-            if (thisPagePath != currentPath)
+            if (currentPath == previousPath)
             {
-                await StopRecordScrollInfo();
+                return;
             }
-            else
+
+            var tempPreviousPath = previousPath;
+            previousPath = currentPath;
+
+            if (thisPagePath == currentPath)
             {
                 await RestoreScrollPosition();
+            }
+            else if (thisPagePath == tempPreviousPath)
+            {
+                await StopRecordScrollInfo();
             }
         }
 
