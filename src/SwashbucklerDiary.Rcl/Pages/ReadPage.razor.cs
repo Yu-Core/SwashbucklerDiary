@@ -36,6 +36,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool rightOutline;
 
+        private bool imageLazy;
+
         private bool afterFirstQuery;
 
         private bool highlightSearchAutofocus = true;
@@ -129,6 +131,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             rightOutline = SettingService.Get(s => s.RigthOutline);
             urlScheme = SettingService.Get(s => s.UrlScheme);
             diaryTimeFormat = SettingService.Get(s => s.DiaryTimeFormat);
+            imageLazy = SettingService.Get(s => s.ImageLazy);
             string defaultTemplateIdString = SettingService.Get(s => s.DefaultTemplateId);
             if (Guid.TryParse(defaultTemplateIdString, out var defaultTemplateId))
             {
@@ -268,7 +271,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             try
             {
-                if (enableMarkdown && markdownPreview is not null)
+                if (enableMarkdown
+                    && imageLazy
+                    && markdownPreview is not null)
                 {
                     await markdownPreview.RenderLazyLoadingImage();
                 }
