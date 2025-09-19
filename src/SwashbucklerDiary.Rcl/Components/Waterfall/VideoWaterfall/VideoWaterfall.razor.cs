@@ -1,4 +1,4 @@
-﻿namespace SwashbucklerDiary.Rcl.Components
+namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class VideoWaterfall : MediaWaterfallBase
     {
@@ -6,9 +6,11 @@
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender)
+            if (!IsDisposed
+                && previewMediaElementJSModule is not null
+                && firstRender)
             {
-                await PreviewMediaElementJSModule.PreviewVideo(elementReference);
+                await previewMediaElementJSModule.PreviewVideo(elementReference);
             }
         }
     }

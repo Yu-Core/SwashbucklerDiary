@@ -1,7 +1,7 @@
-import { previewImage } from './previewMediaElement.js';
-import { fixMobileOutlientClick } from './markdown/fixMarkdownOutline.js'
-import { renderOutline } from './vditor-preview-helper.js'
-import { renderLinkCards } from './link-card.js'
+import { previewImage } from '../../js/previewMediaElement.js';
+import { fixMobileOutlientClick } from '../../js/markdown/fixMarkdownOutline.js'
+import { renderOutline } from './VditorMarkdownPreview.razor.js'
+import { renderLinkCards } from '../../js/link-card.js'
 
 function handleCopy(dotNetCallbackRef, element) {
     element.querySelectorAll(".vditor-copy span").forEach(span => {

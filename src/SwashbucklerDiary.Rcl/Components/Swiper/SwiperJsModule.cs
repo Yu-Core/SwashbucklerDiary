@@ -5,7 +5,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public class SwiperJsModule : CustomJSModule
     {
-        public SwiperJsModule(IJSRuntime js) : base(js, "js/swiper-helper.js")
+        public SwiperJsModule(IJSRuntime js) : base(js, "Components/Swiper/SwiperTabItems.razor.js")
         {
         }
 

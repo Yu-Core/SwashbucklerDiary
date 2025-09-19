@@ -6,14 +6,14 @@
     <MyAppBar>
         <TransparentTextField Value="@Value"
                               ValueChanged="HandleValueChanged"
-                              OnInput="HighlightSearch"
+                              OnInput="Search"
                               Clearable="false"
                               Autofocus="Autofocus"
                               Placeholder="@I18n.T("Look it up on the page")">
         </TransparentTextField>
         @if (!string.IsNullOrWhiteSpace(Value))
         {
-            <div class="px-3">@(CurrentNumber)/@(Count)</div>
+            <div class="px-3">@(searchIndex + 1)/@(count)</div>
         }
         <MButton Icon="true"
                  OnClick="Up">

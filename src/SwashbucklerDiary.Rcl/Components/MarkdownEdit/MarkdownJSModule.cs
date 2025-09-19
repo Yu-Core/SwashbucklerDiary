@@ -5,7 +5,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public class MarkdownJSModule : CustomJSModule
     {
-        public MarkdownJSModule(IJSRuntime js) : base(js, "js/markdown-helper.js")
+        public MarkdownJSModule(IJSRuntime js) : base(js, "Components/MarkdownEdit/MarkdownEdit.razor.js")
         {
         }
 

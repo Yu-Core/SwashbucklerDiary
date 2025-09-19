@@ -1,4 +1,4 @@
-import { default as GestureUnlockRenderer }  from '../npm/fly-gesture-unlock@1.0.1/dist/fly-gesture-unlock.min.js'
+import GestureUnlockRenderer  from '../../npm/fly-gesture-unlock@1.0.1/dist/fly-gesture-unlock.min.js'
 
 const _instances = new WeakMap();
 

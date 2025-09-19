@@ -1,6 +1,7 @@
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -10,8 +11,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private DotNetObjectReference<object>? dotNetObjectReference;
 
-        [Inject]
-        private GestureUnlockJSModule JSModule { get; set; } = default!;
+        private GestureUnlockJSModule? jSModule;
 
         [Inject]
         private MasaBlazor MasaBlazor { get; set; } = default!;
@@ -40,6 +40,8 @@ namespace SwashbucklerDiary.Rcl.Components
         [JSInvokable]
         public async Task OnEnd(string[] value)
         {
+            if (jSModule is null) return;
+
             LockFinishArguments args = new()
             {
                 Value = string.Join("", value)
@@ -52,17 +54,17 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (args.IsFail)
             {
-                await JSModule.Freeze(elementReference);
-                await JSModule.SetStatus(elementReference, "error");
+                await jSModule.Freeze(elementReference);
+                await jSModule.SetStatus(elementReference, "error");
                 await Task.Delay(600);
-                await JSModule.UnFreeze(elementReference);
-                await JSModule.Reset(elementReference);
+                await jSModule.UnFreeze(elementReference);
+                await jSModule.Reset(elementReference);
             }
         }
 
-        public void Reset()
+        public async Task Reset()
         {
-            Render();
+            await Render();
         }
 
         protected override void OnInitialized()
@@ -72,18 +74,20 @@ namespace SwashbucklerDiary.Rcl.Components
             MasaBlazor.OnThemeChange += HandleOnThemeChange;
         }
 
-        private void HandleOnThemeChange(Theme theme)
+        private async void HandleOnThemeChange(Theme theme)
         {
-            Render();
+            await Render();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender)
+            if (firstRender && !IsDisposed)
             {
-                Render();
+                dotNetObjectReference = DotNetObjectReference.Create<object>(this);
+                jSModule = new(JS);
+                await Render();
             }
         }
 
@@ -92,13 +96,18 @@ namespace SwashbucklerDiary.Rcl.Components
             await base.DisposeAsyncCore();
 
             dotNetObjectReference?.Dispose();
+            await jSModule.TryDisposeAsync();
             MasaBlazor.OnThemeChange -= HandleOnThemeChange;
         }
 
-        private async void Render()
+        private async Task Render()
         {
-            dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
-            await JSModule.Init(dotNetObjectReference, elementReference, Options, MatrixFactoryOptions);
+            if (jSModule is null || dotNetObjectReference is null)
+            {
+                return;
+            }
+
+            await jSModule.Init(dotNetObjectReference, elementReference, Options, MatrixFactoryOptions);
         }
     }
 }

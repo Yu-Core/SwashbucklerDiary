@@ -5,7 +5,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public class VditorMarkdownPreviewJSModule : CustomJSModule
     {
-        public VditorMarkdownPreviewJSModule(IJSRuntime js) : base(js, "js/vditor-preview-helper.js")
+        public VditorMarkdownPreviewJSModule(IJSRuntime js) : base(js, "Components/MarkdownPreview/VditorMarkdownPreview.razor.js")
         {
         }
 
@@ -13,18 +13,18 @@ namespace SwashbucklerDiary.Rcl.Components
             ElementReference element,
             string? value,
             Dictionary<string, object>? options,
-            bool patch)
+            bool optimize)
         {
-            await InvokeVoidAsync("preview", [dotNetObjectReference, element, value, options, patch]);
+            await InvokeVoidAsync("preview", [dotNetObjectReference, element, value, options, optimize]);
         }
 
         public async Task Md2HTMLPreview(DotNetObjectReference<object> dotNetObjectReference,
             ElementReference element,
             string? value,
             Dictionary<string, object>? options,
-            bool patch)
+            bool optimize)
         {
-            await InvokeVoidAsync("md2htmlPreview", [dotNetObjectReference, element, value, options, patch]);
+            await InvokeVoidAsync("md2htmlPreview", [dotNetObjectReference, element, value, options, optimize]);
         }
 
         public async Task RenderLazyLoadingImage(ElementReference element)

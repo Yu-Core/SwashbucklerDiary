@@ -29,7 +29,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public Dictionary<string, object>? Options { get; set; }
 
         [Parameter]
-        public bool Patch { get; set; } = true;
+        public bool Optimize { get; set; } = true;
 
         protected override void OnInitialized()
         {

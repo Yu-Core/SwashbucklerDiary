@@ -50,11 +50,11 @@
     </MyAppBar>
 }
 
-<HighlightSearchTextField @bind-Visible="showHighlightSearch"
+<HighlightSearch @bind-Visible="showHighlightSearch"
                           @bind-Value="@search"
                           Selector="@($".{highlightSearchContainerClass}")"
                           Autofocus="highlightSearchAutofocus">
-</HighlightSearchTextField>
+</HighlightSearch>
 
 <ScrollContainer Id="@scrollContainerId"
                  ContentClass="py-0">

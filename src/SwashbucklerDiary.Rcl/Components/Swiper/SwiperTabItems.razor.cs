@@ -1,6 +1,7 @@
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -12,8 +13,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private DotNetObjectReference<object>? _dotNetObjectReference;
 
-        [Inject]
-        private SwiperJsModule SwiperJsModule { get; set; } = default!;
+        private SwiperJsModule? jsModule;
 
         [Parameter]
         public StringNumber Value { get; set; } = 0;
@@ -63,7 +63,8 @@ namespace SwashbucklerDiary.Rcl.Components
             if (previousvalue != Value)
             {
                 previousvalue = Value;
-                await SwiperJsModule.SlideToAsync(Ref, Value.ToInt32());
+                if (jsModule is null) return;
+                await jsModule.SlideToAsync(Ref, Value.ToInt32());
             }
         }
 
@@ -71,10 +72,11 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender)
+            if (!IsDisposed && firstRender)
             {
-                _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
-                await SwiperJsModule.Init(_dotNetObjectReference, Ref, Value.ToInt32());
+                jsModule = new(JS);
+                _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
+                await jsModule.Init(_dotNetObjectReference, Ref, Value.ToInt32());
             }
         }
 
@@ -83,6 +85,7 @@ namespace SwashbucklerDiary.Rcl.Components
             await base.DisposeAsyncCore();
 
             _dotNetObjectReference?.Dispose();
+            await jsModule.TryDisposeAsync();
         }
     }
 }

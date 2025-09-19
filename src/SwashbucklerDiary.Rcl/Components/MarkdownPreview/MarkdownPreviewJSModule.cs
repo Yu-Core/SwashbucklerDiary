@@ -5,7 +5,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public class MarkdownPreviewJSModule : CustomJSModule
     {
-        public MarkdownPreviewJSModule(IJSRuntime js) : base(js, "js/markdown-preview-helper.js")
+        public MarkdownPreviewJSModule(IJSRuntime js) : base(js, "Components/MarkdownPreview/MarkdownPreview.razor.js")
         {
         }
 
@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Rcl.Components
             await InvokeVoidAsync("afterMarkdown", [dotNetObjectReference, element, options]);
         }
 
-        public async Task RenderOutline(ElementReference element, ElementReference? outlineElement)
+        public async Task RenderOutline(ElementReference? element, ElementReference? outlineElement)
         {
             await InvokeVoidAsync("renderOutline", [element, outlineElement]);
         }

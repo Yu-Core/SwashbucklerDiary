@@ -2,13 +2,12 @@ using Masa.Blazor.Core;
 using Masa.Blazor.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class BackTopButton : IAsyncDisposable
+    public partial class BackTopButton : MyComponentBase, IAsyncDisposable
     {
-        private bool isRendered;
-
         private bool _show;
 
         private string? _previousSelector;
@@ -19,11 +18,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private MyFloatButton? myFloatButton;
 
-        [Inject]
-        IJSRuntime JS { get; set; } = default!;
-
-        [Inject]
-        BackTopButtonJSModule Module { get; set; } = default!;
+        private BackTopButtonJSModule? jSModule;
 
         [Parameter]
         public string? Class { get; set; }
@@ -49,11 +44,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (_previousSelector != Selector)
             {
-                if (isRendered)
-                {
-                    await RemoveScrollListener();
-                    await AddScrollListener();
-                }
+                await RemoveScrollListener();
+                await AddScrollListener();
 
                 _previousSelector = Selector;
             }
@@ -63,11 +55,21 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender)
+            if (!IsDisposed && firstRender)
             {
-                isRendered = true;
+                jSModule = new(JS);
+                _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
                 await AddScrollListener();
             }
+        }
+
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            _dotNetObjectReference?.Dispose();
+            await RemoveScrollListener();
+            await jSModule.TryDisposeAsync();
         }
 
         private string InternalClass => new CssBuilder()
@@ -83,32 +85,24 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task AddScrollListener()
         {
-            if (string.IsNullOrEmpty(Selector) || myFloatButton?.Ref is null) return;
-            _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
-            backTopButtonJSObjectReference = await Module.Init(Selector, myFloatButton.Ref, _dotNetObjectReference);
+            if (IsDisposed
+                || jSModule is null
+                || _dotNetObjectReference is null
+                || string.IsNullOrEmpty(Selector)
+                || myFloatButton?.Ref is null) return;
+
+            backTopButtonJSObjectReference = await jSModule.Init(Selector, myFloatButton.Ref, _dotNetObjectReference);
         }
 
         private async Task RemoveScrollListener()
         {
-            if (backTopButtonJSObjectReference is null || string.IsNullOrEmpty(_previousSelector)) return;
+            if (IsDisposed
+                || backTopButtonJSObjectReference is null
+                || string.IsNullOrEmpty(_previousSelector)) return;
+
             _show = false;
             await backTopButtonJSObjectReference.RemoveScrollListener();
             await backTopButtonJSObjectReference.DisposeAsync();
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            try
-            {
-                await RemoveScrollListener();
-            }
-            catch (JSDisconnectedException)
-            {
-                // ignore
-            }
-
-            _dotNetObjectReference?.Dispose();
-            GC.SuppressFinalize(this);
         }
     }
 }

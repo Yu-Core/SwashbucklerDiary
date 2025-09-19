@@ -7,7 +7,7 @@ using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public abstract class MediaWaterfallBase : MediaResourceListComponentBase
+    public abstract partial class MediaWaterfallBase : MediaResourceListComponentBase
     {
         protected bool contentLoading;
 
@@ -15,14 +15,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected ElementReference elementReference = default!;
 
+        protected PreviewMediaElementJSModule? previewMediaElementJSModule;
+
+        protected MediaWaterfallBaseJSModule? jSModule;
+
         [Inject]
         protected BreakpointService BreakpointService { get; set; } = default!;
-
-        [Inject]
-        protected PreviewMediaElementJSModule PreviewMediaElementJSModule { get; set; } = default!;
-
-        [Inject]
-        protected WaterfallJSModule WaterfallJSModule { get; set; } = default!;
 
         protected string WrapStyle => StyleBuilder.Create()
             .AddIf("opacity", "0", contentLoading)
@@ -45,9 +43,15 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender && !string.IsNullOrEmpty(ScrollElementId))
+            if (!IsDisposed && firstRender)
             {
-                await WaterfallJSModule.RecordScrollInfo($"#{ScrollElementId}");
+                jSModule = new(JS);
+                previewMediaElementJSModule = new(JS);
+
+                if (!string.IsNullOrEmpty(ScrollElementId))
+                {
+                    await jSModule.RecordScrollInfo($"#{ScrollElementId}");
+                }
             }
         }
 
@@ -57,6 +61,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
             BreakpointService.BreakpointChanged -= HandleBreakpointChange;
             NavigationManager.LocationChanged -= NavigationManagerOnLocationChanged;
+
+            await jSModule.TryDisposeAsync();
+            await previewMediaElementJSModule.TryDisposeAsync();
         }
 
         protected async void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)
@@ -84,17 +91,27 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task StopRecordScrollInfo()
         {
-            if (string.IsNullOrEmpty(ScrollElementId)) return;
-            await WaterfallJSModule.StopRecordScrollInfo($"#{ScrollElementId}");
+            if (string.IsNullOrEmpty(ScrollElementId)
+                || jSModule is null)
+            {
+                return;
+            }
+
+            await jSModule.StopRecordScrollInfo($"#{ScrollElementId}");
             contentLoading = true;
             await InvokeAsync(StateHasChanged);
         }
 
         private async Task RestoreScrollPosition()
         {
-            if (string.IsNullOrEmpty(ScrollElementId)) return;
+            if (string.IsNullOrEmpty(ScrollElementId)
+                || jSModule is null)
+            {
+                return;
+            }
+
             await Task.Delay(300);
-            await WaterfallJSModule.RestoreScrollPosition($"#{ScrollElementId}");
+            await jSModule.RestoreScrollPosition($"#{ScrollElementId}");
             contentLoading = false;
             await InvokeAsync(StateHasChanged);
         }

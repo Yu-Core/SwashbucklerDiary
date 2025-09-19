@@ -5,7 +5,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public class GestureUnlockJSModule : CustomJSModule
     {
-        public GestureUnlockJSModule(IJSRuntime js) : base(js, "js/fly-gesture-unlock-helper.js")
+        public GestureUnlockJSModule(IJSRuntime js) : base(js, "Components/GestureUnlock/GestureUnlock.razor.js")
         {
         }
 

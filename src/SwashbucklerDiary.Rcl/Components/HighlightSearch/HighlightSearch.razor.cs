@@ -1,20 +1,27 @@
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class HighlightSearchTextField : OpenCloseComponentBase
+    public partial class HighlightSearch : OpenCloseComponentBase
     {
         private bool _visible;
+
+        private int count;
+
+        private int searchIndex;
 
         private string? _previousSelector;
 
         private string? _previousValue;
 
-        private BetterSearchJSObjectReferenceProxy? _betterSearchProxy;
+        private HighlightSearchJSObjectReferenceProxy? _betterSearchProxy;
 
-        [Inject]
-        private BetterSearchJSModule BetterSearchJSModule { get; set; } = default!;
+        private HighlightSearchJSModule? jSModule;
+
+        private DotNetObjectReference<object>? _dotNetObjectReference;
 
         [Parameter]
         public override bool Visible
@@ -35,6 +42,18 @@ namespace SwashbucklerDiary.Rcl.Components
         [Parameter]
         public bool Autofocus { get; set; } = true;
 
+        [JSInvokable]
+        public void UpdateSearchIndex(int value)
+        {
+            searchIndex = value;
+        }
+
+        [JSInvokable]
+        public void UpdateCount(int value)
+        {
+            count = value;
+        }
+
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
@@ -43,11 +62,6 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 _previousSelector = Selector;
 
-                if (_betterSearchProxy is null)
-                {
-                    return;
-                }
-
                 await InitBetterSearchAsync();
             }
 
@@ -55,12 +69,7 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 _previousValue = Value;
 
-                if (_betterSearchProxy is null)
-                {
-                    return;
-                }
-
-                await HighlightSearch(Value);
+                await Search(Value);
             }
         }
 
@@ -68,12 +77,15 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender)
+            if (!IsDisposed && firstRender)
             {
+                jSModule = new(JS);
+                _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
+
                 await InitBetterSearchAsync();
                 if (!string.IsNullOrWhiteSpace(Value))
                 {
-                    await HighlightSearch(Value);
+                    await Search(Value);
                     StateHasChanged();
                 }
             }
@@ -87,23 +99,24 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 NavigateController.RemoveHistoryAction(CloseSearch);
             }
+
+            _dotNetObjectReference?.Dispose();
+            await jSModule.TryDisposeAsync();
         }
-
-        private int Count => _betterSearchProxy?.Count ?? 0;
-
-        private int CurrentNumber => Count == 0 ? 0 : _betterSearchProxy!.SearchIndex + 1;
 
         private async Task InitBetterSearchAsync()
         {
+            if (IsDisposed || jSModule is null || _dotNetObjectReference is null) return;
+
             if (_betterSearchProxy is not null)
             {
-                await _betterSearchProxy.Clear();
+                await _betterSearchProxy.DisposeAsync();
             }
 
-            _betterSearchProxy = await BetterSearchJSModule.Init(Selector);
+            _betterSearchProxy = await jSModule.Init(Selector, _dotNetObjectReference);
         }
 
-        private async Task HighlightSearch(string? text)
+        private async Task Search(string? text)
         {
             if (_betterSearchProxy is null) return;
             if (string.IsNullOrWhiteSpace(text))

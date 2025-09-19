@@ -3,9 +3,9 @@ using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class PanzoomJSModule : CustomJSModule
+    public class PreviewImageDialogJSModule : CustomJSModule
     {
-        public PanzoomJSModule(IJSRuntime js) : base(js, "js/panzoom-helper.js")
+        public PreviewImageDialogJSModule(IJSRuntime js) : base(js, "Components/DialogComponents/PreviewImageDialog/PreviewImageDialog.razor.js")
         {
         }
 

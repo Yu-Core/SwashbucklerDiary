@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -33,14 +34,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private ElementReference moblieOutlineElement;
 
+        private MarkdownJSModule? jSModule;
+
         [Inject]
         private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
         [Inject]
         private IAppFileSystem AppFileManager { get; set; } = default!;
-
-        [Inject]
-        private MarkdownJSModule Module { get; set; } = default!;
 
         [Inject]
         private ILogger<MarkdownEdit> Logger { get; set; } = default!;
@@ -115,9 +115,19 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             base.OnInitialized();
 
-            _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
             ReadSettings();
             SetOptions();
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+
+            if (firstRender)
+            {
+                _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
+                jSModule = new(JS);
+            }
         }
 
         protected override async ValueTask DisposeAsyncCore()
@@ -125,6 +135,7 @@ namespace SwashbucklerDiary.Rcl.Components
             await base.DisposeAsyncCore();
 
             _dotNetObjectReference?.Dispose();
+            await jSModule.TryDisposeAsync();
         }
 
         private void ReadSettings()
@@ -240,14 +251,19 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task AfterMarkdownRender()
         {
+            if (jSModule is null)
+            {
+                return;
+            }
+
             if (_dotNetObjectReference is not null)
             {
-                await Module.After(_dotNetObjectReference, mMarkdown.Ref, moblieOutlineElement, PlatformIntegration.CurrentPlatform == AppDevicePlatform.macOS);
+                await jSModule.After(_dotNetObjectReference, mMarkdown.Ref, moblieOutlineElement, PlatformIntegration.CurrentPlatform == AppDevicePlatform.macOS);
             }
 
             if (Autofocus)
             {
-                await Module.FocusToEnd(mMarkdown.Ref);
+                await jSModule.FocusToEnd(mMarkdown.Ref);
             }
 
             if (OnAfter.HasDelegate)
@@ -256,7 +272,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
-        private async void HandleToolbarButtonClick(string btnName)
+        private async Task HandleToolbarButtonClick(string btnName)
         {
             switch (btnName)
             {
@@ -285,20 +301,23 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             AlertService.StartLoading();
 
-            try
+            await Task.Run(async () =>
             {
-                var resources = await func.Invoke();
-                await AddMediaFilesAsync(resources);
-            }
-            catch (Exception e)
-            {
-                await AlertService.ErrorAsync(I18n.T("Add failed"));
-                Logger.LogError(e, I18n.T("Add failed"));
-            }
-            finally
-            {
-                AlertService.StopLoading();
-            }
+                try
+                {
+                    var resources = await func.Invoke();
+                    await AddMediaFilesAsync(resources);
+                }
+                catch (Exception e)
+                {
+                    await AlertService.ErrorAsync(I18n.T("Add failed"));
+                    Logger.LogError(e, I18n.T("Add failed"));
+                }
+                finally
+                {
+                    AlertService.StopLoading();
+                }
+            });
         }
 
         private async Task AddMediaFilesAsync(IEnumerable<ResourceModel>? resources)
@@ -311,7 +330,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task HandleBeforeAllUpload()
         {
-            await Module.Upload(mMarkdown.Ref, inputFile?.Element);
+            if (jSModule is null)
+            {
+                return;
+            }
+
+            await jSModule.Upload(mMarkdown.Ref, inputFile?.Element);
         }
 
         private async Task LoadFiles(InputFileChangeEventArgs e)
@@ -362,7 +386,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task Focus()
         {
-            await Module.Focus(mMarkdown.Ref);
+            if (jSModule is null)
+            {
+                return;
+            }
+
+            await jSModule.Focus(mMarkdown.Ref);
         }
 
         private async Task InternalMobileOutlineChanged(bool? value)
@@ -376,7 +405,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task SetMoblieOutlineAsync()
         {
-            await Module.SetMoblieOutline(mMarkdown.Ref, moblieOutlineElement);
+            if (jSModule is null)
+            {
+                return;
+            }
+
+            await jSModule.SetMoblieOutline(mMarkdown.Ref, moblieOutlineElement);
         }
     }
 }

@@ -1,9 +1,9 @@
-import { fixOutlientClick } from './markdown/fixMarkdownOutline.js'
+import { fixOutlientClick } from '../../js/markdown/fixMarkdownOutline.js'
 
 // Store event listeners to prevent duplicates
 const eventListeners = new WeakMap();
 
-function preview(dotNetCallbackRef, previewElement, text, options, patch) {
+function preview(dotNetCallbackRef, previewElement, text, options, optimize) {
     if (!previewElement) {
         return;
     }
@@ -17,7 +17,7 @@ function preview(dotNetCallbackRef, previewElement, text, options, patch) {
         ...options,
         after: () => {
             processMediaElements(previewElement);
-            if (patch) {
+            if (optimize) {
                 handleUrlHash();
                 fixToc(previewElement);
                 fixAnchorLinks(previewElement);

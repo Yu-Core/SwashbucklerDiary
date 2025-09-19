@@ -23,9 +23,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             firstValue = null;
         }
 
-        private void HandleOnAfterShowContent()
+        private async Task HandleOnAfterShowContent()
         {
-            gestureUnlock?.Reset();
+            if (gestureUnlock is null) return;
+
+            await gestureUnlock.Reset();
         }
 
         private async Task HandleOnFinish(LockFinishArguments args)
@@ -51,7 +53,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (string.IsNullOrEmpty(firstValue))
             {
                 firstValue = args.Value;
-                gestureUnlock?.Reset();
+                if (gestureUnlock is not null)
+                {
+                    await gestureUnlock.Reset();
+                }
 
                 return;
             }

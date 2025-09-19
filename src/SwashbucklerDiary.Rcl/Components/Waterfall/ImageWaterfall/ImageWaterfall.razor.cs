@@ -22,11 +22,13 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender)
+            if (!IsDisposed
+                && previewMediaElementJSModule is not null
+                && firstRender)
             {
-                _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
+                _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
                 //图片预览
-                await PreviewMediaElementJSModule.PreviewImage(_dotNetObjectReference, elementReference);
+                await previewMediaElementJSModule.PreviewImage(_dotNetObjectReference, elementReference);
             }
         }
 

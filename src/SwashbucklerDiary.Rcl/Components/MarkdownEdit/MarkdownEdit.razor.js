@@ -1,4 +1,4 @@
-import { fixMobileOutlientClick } from './markdown/fixMarkdownOutline.js'
+import { fixMobileOutlientClick } from '../../js/markdown/fixMarkdownOutline.js'
 
 function after(dotNetCallbackRef, element, outlineElement, copyCutPatch) {
     handleToolbar(dotNetCallbackRef, element);

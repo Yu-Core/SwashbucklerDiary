@@ -2,9 +2,9 @@ using Microsoft.JSInterop;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public class WaterfallJSModule : CustomJSModule
+    public class MediaWaterfallBaseJSModule : CustomJSModule
     {
-        public WaterfallJSModule(IJSRuntime js) : base(js, "js/waterfall-helper.js")
+        public MediaWaterfallBaseJSModule(IJSRuntime js) : base(js, "Components/Waterfall/MediaWaterfallBase.Razor.js")
         {
         }
 

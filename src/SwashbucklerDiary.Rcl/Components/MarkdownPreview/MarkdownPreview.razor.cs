@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -24,14 +25,13 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private Dictionary<string, object>? _options;
 
-        private ElementReference moblieOutlineContainerElement;
+        private ElementReference? moblieOutlineElement;
 
         private DotNetObjectReference<object>? _dotNetObjectReference;
 
         private bool previousOutline;
 
-        [Inject]
-        private MarkdownPreviewJSModule MarkdownPreviewJSModule { get; set; } = default!;
+        private MarkdownPreviewJSModule? jSModule;
 
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
@@ -117,11 +117,20 @@ namespace SwashbucklerDiary.Rcl.Components
             SetOptions();
         }
 
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+
+            _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
+            jSModule = new(JS);
+        }
+
         protected override async ValueTask DisposeAsyncCore()
         {
             await base.DisposeAsyncCore();
 
             _dotNetObjectReference?.Dispose();
+            await jSModule.TryDisposeAsync();
         }
 
         protected override async Task OnParametersSetAsync()
@@ -189,11 +198,15 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task HandleOnAfter()
         {
-            _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
-            await MarkdownPreviewJSModule.AfterMarkdown(_dotNetObjectReference, vditorMarkdownPreview.Ref, new()
+            if (IsDisposed || jSModule is null || _dotNetObjectReference is null)
+            {
+                return;
+            }
+
+            await jSModule.AfterMarkdown(_dotNetObjectReference, vditorMarkdownPreview.Ref, new()
             {
                 OutlineElement = OutlineElement,
-                MoblieOutlineElement = moblieOutlineContainerElement,
+                MoblieOutlineElement = moblieOutlineElement,
                 AutoPlay = autoPlay,
                 LinkBase = MediaResourceManager.LinkBase,
                 ProxyUrl = ProxyService.ProxyUrl,
@@ -217,14 +230,12 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task RenderOutline()
         {
-            if (!Outline
-                || vditorMarkdownPreview?.Ref.Context is null
-                || OutlineElement is null)
+            if (IsDisposed || !Outline || jSModule is null)
             {
                 return;
             }
 
-            await MarkdownPreviewJSModule.RenderOutline(vditorMarkdownPreview.Ref, OutlineElement);
+            await jSModule.RenderOutline(vditorMarkdownPreview.Ref, OutlineElement);
         }
     }
 }

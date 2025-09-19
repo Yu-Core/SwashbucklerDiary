@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -15,11 +16,10 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private MediaResourcePath? mediaResourcePath;
 
-        [Inject]
-        private IMediaResourceManager MediaResourceManager { get; set; } = default!;
+        private PreviewImageDialogJSModule? jSModule;
 
         [Inject]
-        private PanzoomJSModule Module { get; set; } = default!;
+        private IMediaResourceManager MediaResourceManager { get; set; } = default!;
 
         [Inject]
         private IPlatformIntegration PlatformIntegration { get; set; } = default!;
@@ -38,11 +38,28 @@ namespace SwashbucklerDiary.Rcl.Components
             }
         }
 
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+
+            if (!IsDisposed && firstRender)
+            {
+                jSModule = new(JS);
+            }
+        }
+
+        protected override async ValueTask DisposeAsyncCore()
+        {
+            await base.DisposeAsyncCore();
+
+            await jSModule.TryDisposeAsync();
+        }
+
         protected async Task BeforeShowContent()
         {
-            if (!isInitialized)
+            if (!isInitialized && jSModule is not null)
             {
-                await Module.Init(elementReference);
+                await jSModule.Init(elementReference);
                 isInitialized = true;
             }
         }
@@ -50,7 +67,10 @@ namespace SwashbucklerDiary.Rcl.Components
         protected override async Task InternalVisibleChanged(bool value)
         {
             await base.InternalVisibleChanged(value);
-            await Module.Reset(elementReference);
+            if (!value && jSModule is not null)
+            {
+                await jSModule.Reset(elementReference);
+            }
         }
 
         private async Task SaveToLocal()

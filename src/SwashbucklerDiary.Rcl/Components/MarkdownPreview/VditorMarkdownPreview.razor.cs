@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using SwashbucklerDiary.Rcl.Extensions;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -25,7 +26,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public bool Simple { get; set; }
 
         [Parameter]
-        public bool Patch { get; set; } = true;
+        public bool Optimize { get; set; } = true;
 
         [Parameter]
         public Dictionary<string, object>? Options { get; set; }
@@ -79,7 +80,7 @@ namespace SwashbucklerDiary.Rcl.Components
             if (!IsDisposed && firstRender)
             {
                 _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
-                jSModule = new VditorMarkdownPreviewJSModule(JS);
+                jSModule = new(JS);
                 await RenderMarkdown();
             }
         }
@@ -88,12 +89,8 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await base.DisposeAsyncCore();
 
-            if (jSModule is not null)
-            {
-                await (jSModule as IAsyncDisposable).DisposeAsync();
-            }
-
             _dotNetObjectReference?.Dispose();
+            await jSModule.TryDisposeAsync();
         }
 
         private async Task RenderMarkdown()
@@ -105,11 +102,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (Simple)
             {
-                await jSModule.Md2HTMLPreview(_dotNetObjectReference, Ref, Value, Options, Patch);
+                await jSModule.Md2HTMLPreview(_dotNetObjectReference, Ref, Value, Options, Optimize);
             }
             else
             {
-                await jSModule.Preview(_dotNetObjectReference, Ref, Value, Options, Patch);
+                await jSModule.Preview(_dotNetObjectReference, Ref, Value, Options, Optimize);
             }
         }
     }

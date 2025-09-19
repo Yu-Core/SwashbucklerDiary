@@ -5,7 +5,7 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public class BackTopButtonJSModule : CustomJSModule
     {
-        public BackTopButtonJSModule(IJSRuntime js) : base(js, "Components/FloatButton/BackTopButton.razor.js")
+        public BackTopButtonJSModule(IJSRuntime js) : base(js, "Components/BackTopButton/BackTopButton.razor.js")
         {
         }
 
