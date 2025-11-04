@@ -82,8 +82,10 @@
 </ScrollContainer>
 
 <MultiSizeListDialog @bind-Visible="showSourceCode"
-                 Title="@(I18n.T("View source"))"
-                 DynamicListItems="codeSourceListItems">
+                     Title="@(I18n.T("View source"))"
+                     DynamicListItems="codeSourceListItems">
 </MultiSizeListDialog>
 
-<UpdateDialog @bind-Visible="showUpdate"></UpdateDialog>
+<UpdateDialog @bind-Visible="showUpdate"
+              Value="lastRelease">
+</UpdateDialog>

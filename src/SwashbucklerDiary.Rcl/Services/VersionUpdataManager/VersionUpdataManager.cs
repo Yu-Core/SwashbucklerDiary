@@ -35,11 +35,6 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private readonly SortedDictionary<Version, Func<Task>> _versionHandlers = [];
 
-        private class Release
-        {
-            public string? Tag_Name { get; set; }
-        }
-
         public VersionUpdataManager(IDiaryService diaryService,
             IResourceService resourceService,
             ISettingService settingService,
@@ -82,7 +77,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
         }
 
-        public async Task<bool> CheckForUpdates()
+        public async Task<Release?> GetLastReleaseAsync()
         {
             var url = _i18n.Culture.Name == "zh-CN"
                 ? zh_CNLatestVersionApiUrl
@@ -95,12 +90,12 @@ namespace SwashbucklerDiary.Rcl.Services
 
             var latestVersion = new Version(release.Tag_Name.TrimStart('v'));
             var currentVersion = new Version(_versionTracking.CurrentVersion);
-            if (latestVersion.CompareTo(currentVersion) > 0)
+            if (latestVersion > currentVersion)
             {
-                return true;
+                return release;
             }
 
-            return false;
+            return null;
         }
 
         public abstract Task ToUpdate();

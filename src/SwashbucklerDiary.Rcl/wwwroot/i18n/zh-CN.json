@@ -317,7 +317,6 @@
   "End time": "终止时间",
   "QQ Group": "QQ交流群",
   "This is the latest version": "当前已是最新版本",
-  "Latest version detected, do you go to update? (If no new version is found, it may be under review)": "检测到最新版本，是否前往更新？（如未发现新版本，可能正在审核）",
   "VersionUpdate.Check failed": "检测失败，原因未知",
   "No more prompts next time": "下次不再提示",
   "List of available devices": "可用设备列表",
@@ -504,5 +503,8 @@
   "Fix completed": "修复完成",
   "Fix Tool": "修复工具",
   "Link card": "卡片链接",
-  "Generate card style links for hyperlinks": "为超链接生成卡片式链接"
+  "Generate card style links for hyperlinks": "为超链接生成卡片式链接",
+  "Update available": "有可用更新",
+  "Go to update": "前往更新",
+  "Remind me later": "稍后提醒"
 }

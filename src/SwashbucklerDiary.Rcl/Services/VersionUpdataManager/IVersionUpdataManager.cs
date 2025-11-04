@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task HandleVersionUpdate();
 
-        Task<bool> CheckForUpdates();
+        Task<Release?> GetLastReleaseAsync();
 
         Task ToUpdate();
     }

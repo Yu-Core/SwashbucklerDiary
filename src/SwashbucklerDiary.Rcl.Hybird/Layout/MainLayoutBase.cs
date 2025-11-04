@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Hybird.Layout
@@ -9,6 +10,8 @@ namespace SwashbucklerDiary.Rcl.Hybird.Layout
     public class MainLayoutBase : Rcl.Layout.MainLayoutBase
     {
         protected bool showUpdate;
+
+        protected Release? lastRelease;
 
         [Inject]
         protected ILogger<MainLayoutBase> Logger { get; set; } = default!;
@@ -24,21 +27,30 @@ namespace SwashbucklerDiary.Rcl.Hybird.Layout
             await InitSettingsAsync();
         }
 
-        protected override void DialogNotificationCore()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            base.DialogNotificationCore();
+            await base.OnAfterRenderAsync(firstRender);
 
-            CheckForUpdates();
+            if (firstRender)
+            {
+                await CheckForUpdates();
+            }
         }
 
 #if DEBUG
-        protected void CheckForUpdates()
+        protected Task CheckForUpdates()
         {
+            return Task.CompletedTask;
         }
 #else
-        protected async void CheckForUpdates()
+        protected async Task CheckForUpdates()
         {
-            bool notPrompt = SettingService.Get(it => it.UpdateNotPrompt);
+            if (NavigationManager.GetBaseRelativePath().Equals("welcome", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            bool notPrompt = await SettingService.GetAsync(nameof(Setting.UpdateNotPrompt), false);
             if (notPrompt)
             {
                 return;
@@ -55,8 +67,8 @@ namespace SwashbucklerDiary.Rcl.Hybird.Layout
 
             try
             {
-                bool hasNewVersion = await VersionUpdataManager.CheckForUpdates();
-                if (hasNewVersion)
+                lastRelease = await VersionUpdataManager.GetLastReleaseAsync();
+                if (lastRelease is not null)
                 {
                     showUpdate = true;
                     await InvokeAsync(StateHasChanged);

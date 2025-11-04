@@ -5,18 +5,22 @@
                MyValueChanged="InternalVisibleChanged"
                ContentClass="rounded-lg"
                Eager="false"
+               Scrollable
                MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold flex-nowrap">
-            <wc-auto-scroll-text>@(I18n.T("Check for updates"))</wc-auto-scroll-text>
+            <wc-auto-scroll-text>@(I18n.T("Update available"))</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon="true"
                      OnClick="HandleOnCancel">
                 <MIcon>close</MIcon>
             </MButton>
         </MCardTitle>
-        <MCardText Class="pb-0">
-            <div class="text-subtitle-1">@(I18n.T("Latest version detected, do you go to update? (If no new version is found, it may be under review)"))</div>
+        <MCardText Class="pb-0 d-flex flex-column">
+            <p class="mb-0">@Value?.Tag_Name</p>
+            <div class="scroll-show flex-grow-1" style="overflow-y:auto;white-space:pre;">
+                @Value?.Body
+            </div>
             <MCheckbox @bind-Value="notPrompt"
                        TValue="bool"
                        Dense="true"
@@ -29,16 +33,17 @@
                 </LabelContent>
             </MCheckbox>
         </MCardText>
+        
         <MCardActions>
             <MSpacer></MSpacer>
             <MButton Text="true"
                      OnClick="HandleOnCancel">
-                @(I18n.T("Cancel"))
+                @(I18n.T("Remind me later"))
             </MButton>
             <MButton Text="true"
                      Color="primary"
                      OnClick="ToUpdate">
-                @(I18n.T("OK"))
+                @(I18n.T("Go to update"))
             </MButton>
         </MCardActions>
     </MCard>

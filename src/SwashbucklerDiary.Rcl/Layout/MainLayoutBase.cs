@@ -82,6 +82,15 @@ namespace SwashbucklerDiary.Rcl.Layout
             NavigateController.OnBackPressed += HandleBackPressed;
         }
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
+            {
+                await SponsorSupport();
+            }
+        }
+
         protected abstract ActivationArguments CreateAppLockActivationArguments();
 
         protected abstract void HandleSchemeActivation(ActivationArguments args, bool replace);
@@ -101,8 +110,6 @@ namespace SwashbucklerDiary.Rcl.Layout
             await SettingService.InitializeAsync();
             await GlobalConfiguration.InitializeAsync();
             afterInitSetting = true;
-
-            DialogNotification();
         }
 
         protected async void HandleLanguageChanged(object? sender, EventArgs e)
@@ -133,23 +140,13 @@ namespace SwashbucklerDiary.Rcl.Layout
             //I18n.SetCulture(language);
         }
 
-        protected void DialogNotification()
+        private async Task SponsorSupport()
         {
             if (NavigationManager.GetBaseRelativePath().Equals("welcome", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
 
-            DialogNotificationCore();
-        }
-
-        protected virtual void DialogNotificationCore()
-        {
-            SponsorSupport();
-        }
-
-        private async void SponsorSupport()
-        {
             DateTime currentTime = DateTime.Now;
             if (currentTime.Month == 1)
             {

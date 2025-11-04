@@ -317,7 +317,6 @@
   "End time": "終了時間",
   "QQ Group": "QQグループ",
   "This is the latest version": "これは最新バージョンです",
-  "Latest version detected, do you go to update? (If no new version is found, it may be under review)": "最新バージョンが検出されました、更新しますか？（新しいバージョンが見つからない場合、審査中かもしれません）",
   "VersionUpdate.Check failed": "チェックに失敗しました、原因不明",
   "No more prompts next time": "次回から表示しない",
   "List of available devices": "利用可能なデバイスのリスト",

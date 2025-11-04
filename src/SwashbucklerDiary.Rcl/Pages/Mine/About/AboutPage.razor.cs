@@ -15,6 +15,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showUpdate;
 
+        private Release? lastRelease;
+
         private List<DynamicListItem> codeSourceListItems = [];
 
         private List<List<DynamicListItem>> viewLists = [];
@@ -88,8 +90,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             try
             {
-                bool hasNewVersion = await VersionUpdataManager.CheckForUpdates();
-                if (!hasNewVersion)
+                lastRelease = await VersionUpdataManager.GetLastReleaseAsync();
+                if (lastRelease is null)
                 {
                     await AlertService.InfoAsync(I18n.T("This is the latest version"));
                 }

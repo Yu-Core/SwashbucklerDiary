@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -9,6 +9,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         private IVersionUpdataManager VersionUpdataManager { get; set; } = default!;
+
+        [Parameter]
+        public Release? Value { get; set; }
 
         protected override void OnInitialized()
         {
