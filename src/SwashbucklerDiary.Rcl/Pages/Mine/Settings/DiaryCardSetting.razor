@@ -14,6 +14,24 @@
             <MListItem>
                 <MListItemIcon>
                     <MIcon>
+                        title
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <wc-auto-scroll-text>@(I18n.T("Auto title"))</wc-auto-scroll-text>
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="diaryCardAutoTitle"
+                                   SettingKey="@nameof(Setting.DiaryCardAutoTitle)">
+                    </SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon>
                         markdown
                     </MIcon>
                 </MListItemIcon>

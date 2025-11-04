@@ -8,6 +8,8 @@ namespace SwashbucklerDiary.Rcl.Components
 {
     public partial class DiaryCard : CardComponentBase<DiaryModel>
     {
+        private string? title;
+
         private string? text;
 
         private string? weatherIcon;
@@ -62,12 +64,14 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool Markdown => DiaryCardListOptions.Markdown;
 
+        private bool AutoTitle => DiaryCardListOptions.AutoTitle;
+
         private void SetContent()
         {
             if (previousValue != Value)
             {
                 previousValue = Value;
-                text = Value.GetDisplayContent();
+                (title, text) = Value.GetDisplayTitleAndContent(Markdown || !AutoTitle);
                 weatherIcon = string.IsNullOrWhiteSpace(Value.Weather) ? null : GlobalConfiguration.GetWeatherIcon(Value.Weather);
                 moodIcon = string.IsNullOrWhiteSpace(Value.Mood) ? null : GlobalConfiguration.GetMoodIcon(Value.Mood);
             }

@@ -90,6 +90,7 @@ namespace SwashbucklerDiary.Rcl.Components
             options.TimeFormat = SettingService.Get(s => s.DiaryCardTimeFormat);
             urlScheme = SettingService.Get(s => s.UrlScheme);
             options.Markdown = SettingService.Get(s => s.DiaryCardMarkdown);
+            options.AutoTitle = SettingService.Get(s => s.DiaryCardAutoTitle);
             string defaultTemplateIdString = SettingService.Get(s => s.DefaultTemplateId);
             if (Guid.TryParse(defaultTemplateIdString, out var defaultTemplateId))
             {

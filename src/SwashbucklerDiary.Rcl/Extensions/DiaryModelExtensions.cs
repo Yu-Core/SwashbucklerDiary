@@ -6,6 +6,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
 {
     public static class DiaryModelExtensions
     {
+        const int maxDisplayTitleLength = 100;
         const int maxDisplayContentLength = 300;
 
         public static string CreateCopyContent(this DiaryModel diary)
@@ -18,14 +19,54 @@ namespace SwashbucklerDiary.Rcl.Extensions
             return diary.Title + "\n" + diary.Content;
         }
 
-        public static string? GetDisplayContent(this DiaryModel diary)
+        public static (string Title, string Content) GetDisplayTitleAndContent(this DiaryModel diary,bool notExtractTitle)
         {
-            if (string.IsNullOrEmpty(diary.Content))
+            string titleResult = string.Empty;
+            string contentResult = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(diary.Content))
+                return (string.Empty, string.Empty);
+
+            var content = diary.Content.Trim();
+
+            // 如果原本有标题
+            if (notExtractTitle || !string.IsNullOrWhiteSpace(diary.Title))
             {
-                return string.Empty;
+                titleResult = Truncate(diary.Title, maxDisplayTitleLength);
+                contentResult = Truncate(content, maxDisplayContentLength);
+                return (titleResult, contentResult);
             }
 
-            return TruncateString(diary.Content, maxDisplayContentLength);
+            // 没标题时，手动找第一行
+            int newLineIndex = content.IndexOf('\n');
+
+            if (newLineIndex < 0)
+            {
+                // content 只有一行 -> 不生成标题
+                titleResult = string.Empty;
+                contentResult = Truncate(content, maxDisplayContentLength);
+            }
+            else
+            {
+                // 多行内容 -> 第一行做标题，第二行起做内容
+                string firstLine = content[..newLineIndex].Trim();
+                string remaining = (newLineIndex + 1 < content.Length)
+                    ? content[(newLineIndex + 1)..].Trim()
+                    : string.Empty;
+
+                titleResult = Truncate(firstLine, maxDisplayTitleLength);
+                contentResult = Truncate(remaining, maxDisplayContentLength);
+            }
+
+            return (titleResult, contentResult);
+        }
+
+        private static string Truncate(string? text, int maxLength)
+        {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+
+            return text.Length <= maxLength ? text : text[..maxLength] + "...";
         }
 
         public static int GetWordCount(this DiaryModel diary)
@@ -48,22 +89,6 @@ namespace SwashbucklerDiary.Rcl.Extensions
         public static string GetReferenceText(this DiaryModel diary, II18nService i18n)
         {
             return $"[{i18n.T(diary.Template ? "Template reference" : "Diary reference")}](read/{diary.Id})";
-        }
-
-        private static string TruncateString(string input, int maxLength)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                return input;
-            }
-
-            var stringInfo = new StringInfo(input);
-            if (stringInfo.LengthInTextElements <= maxLength)
-            {
-                return input;
-            }
-
-            return stringInfo.SubstringByTextElements(0, maxLength) + "...";
         }
     }
 }

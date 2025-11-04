@@ -305,6 +305,12 @@
     "Href": "diaryCardSetting"
   },
   {
+    "Name": "Auto title",
+    "Icon": "title",
+    "Path": "Setting / Diary card / Auto title",
+    "Href": "diaryCardSetting"
+  },
+  {
     "Name": "Markdown",
     "Icon": "markdown",
     "Path": "Setting / Diary card / Markdown",

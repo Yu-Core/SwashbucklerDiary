@@ -13,5 +13,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public Guid? DefaultTemplateId { get; set; }
 
         public bool Markdown { get; set; }
-    }
+
+        public bool AutoTitle { get; set; }
+        }
 }
