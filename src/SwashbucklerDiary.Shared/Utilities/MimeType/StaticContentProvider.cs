@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
@@ -487,6 +487,12 @@ namespace SwashbucklerDiary.Shared
             public bool TryGetExtension(string contentType, [MaybeNullWhen(false)] out string extension)
             {
                 var extensions = Mappings.Where(it => it.Value == contentType).Select(it => it.Key).ToList();
+                if (extensions.Count == 0)
+                {
+                    extension = string.IsNullOrEmpty(contentType) ? null : "." + contentType.Split('/').Last().Split(';').First();
+                    return extension is not null;
+                }
+
                 extension = extensions.FirstOrDefault(it => contentType.EndsWith(it.TrimStart('.')));
                 if (extension is not null)
                 {

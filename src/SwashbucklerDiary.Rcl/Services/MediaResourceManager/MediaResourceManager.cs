@@ -187,9 +187,10 @@ namespace SwashbucklerDiary.Rcl.Services
             if (audioFile.Tag.Pictures.Length > 0)
             {
                 string fileName = Path.GetFileName(filePath);
-                string extension = StaticContentProvider.GetResponseExtensionOrDefault(audioFile.Tag.Pictures[0].MimeType);
+                var picture = audioFile.Tag.Pictures[0];
+                string extension = StaticContentProvider.GetResponseExtensionOrDefault(picture.MimeType);
                 string pictureFileName = $"{fileName}{extension}";
-                pictureUri = await GetAudioFilePicturePath(pictureFileName, audioFile.Tag.Pictures[0].Data.Data).ConfigureAwait(false);
+                pictureUri = await GetAudioFilePicturePath(pictureFileName, picture.Data.Data).ConfigureAwait(false);
             }
 
             return new()
@@ -206,7 +207,10 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected async Task<string?> GetAudioFilePicturePath(string fileName, byte[] data)
         {
-            string filePath = Path.Combine(_appFileSystem.CacheDirectory, fileName);
+            string dir = Path.Combine(_appFileSystem.CacheDirectory, "AlbumCover");
+            Directory.CreateDirectory(dir);
+
+            string filePath = Path.Combine(dir, fileName);
             if (!File.Exists(filePath))
             {
                 await File.WriteAllBytesAsync(filePath, data).ConfigureAwait(false);
