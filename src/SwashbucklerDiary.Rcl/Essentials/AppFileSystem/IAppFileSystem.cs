@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         void FileCopy(string sourceFilePath, string targetFilePath);
 
-        Task FileCopyAsync(Stream sourceStream, string targetFilePath);
+        Task CopyFileAsync(string sourcePath, string destinationPath);
 
         void FileMove(string sourceFilePath, string targetFilePath);
 

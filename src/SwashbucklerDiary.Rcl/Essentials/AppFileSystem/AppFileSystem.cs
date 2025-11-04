@@ -33,7 +33,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
         {
             string path = CreateTempFilePath(fileName);
 
-            await FileCopyAsync(stream, path);
+            await CopyStreamToFileAsync(stream, path);
 
             return path;
         }
@@ -44,42 +44,52 @@ namespace SwashbucklerDiary.Rcl.Essentials
             File.Copy(sourceFilePath, targetFilePath, true);
         }
 
-        public async Task FileCopyAsync(Stream stream, string path)
+        public async Task CopyFileAsync(string sourcePath, string destinationPath)
         {
-            // 复位流
-            if (stream.CanSeek)
-                stream.Position = 0;
+            if (string.IsNullOrWhiteSpace(sourcePath))
+                throw new ArgumentException("源文件路径不能为空。", nameof(sourcePath));
 
-            // 自动 bufferSize
-            int bufferSize = 81920; // 默认 80KB
-            try
-            {
-                if (stream.CanSeek)
-                {
-                    long length = stream.Length;
-                    bufferSize = length switch
-                    {
-                        < 1 * 1024 * 1024 => 81920,         // < 1MB → 80KB
-                        < 100 * 1024 * 1024 => 1024 * 1024, // 1MB~100MB → 1MB
-                        _ => 4 * 1024 * 1024                // ≥100MB → 4MB
-                    };
-                }
-            }
-            catch
-            {
-                // 有些流不支持 Length，保持默认
-            }
+            if (string.IsNullOrWhiteSpace(destinationPath))
+                throw new ArgumentException("目标文件路径不能为空。", nameof(destinationPath));
 
-            // 写文件
-            await using var fileStream = new FileStream(
-                path,
-                FileMode.Create,
-                FileAccess.Write,
-                FileShare.None,
-                bufferSize,
-                FileOptions.Asynchronous | FileOptions.SequentialScan);
+            if (!File.Exists(sourcePath))
+                throw new FileNotFoundException("源文件不存在。", sourcePath);
 
-            await stream.CopyToAsync(fileStream, bufferSize).ConfigureAwait(false);
+            string? destDir = Path.GetDirectoryName(destinationPath);
+            if (!string.IsNullOrEmpty(destDir) && !Directory.Exists(destDir))
+                Directory.CreateDirectory(destDir);
+
+            long fileSize = new FileInfo(sourcePath).Length;
+            int bufferSize = GetOptimalBufferSize(fileSize);
+
+            using FileStream sourceStream = new FileStream(sourcePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, useAsync: true);
+            await CopyStreamToFileAsync(sourceStream, destinationPath, bufferSize);
+        }
+
+        /// <summary>
+        /// 异步复制流到文件（可自定义缓冲区）。
+        /// </summary>
+        private async Task CopyStreamToFileAsync(Stream sourceStream, string destinationPath, int bufferSize = 131072)
+        {
+            if (sourceStream == null)
+                throw new ArgumentNullException(nameof(sourceStream));
+
+            if (string.IsNullOrWhiteSpace(destinationPath))
+                throw new ArgumentException("目标文件路径不能为空。", nameof(destinationPath));
+
+            string? destDir = Path.GetDirectoryName(destinationPath);
+            if (!string.IsNullOrEmpty(destDir) && !Directory.Exists(destDir))
+                Directory.CreateDirectory(destDir);
+
+            using FileStream destinationStream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize, useAsync: true);
+            await sourceStream.CopyToAsync(destinationStream, bufferSize);
+        }
+
+        private static int GetOptimalBufferSize(long fileSize)
+        {
+            if (fileSize < 10 * 1024 * 1024) return 64 * 1024;      // <10MB → 64KB
+            if (fileSize < 100 * 1024 * 1024) return 256 * 1024;    // 10~100MB → 256KB
+            return 1 * 1024 * 1024;                                 // >100MB → 1MB
         }
 
         public async Task ClearFolderAsync(string targetDirectory, List<string>? excludeFiles = null)

@@ -120,17 +120,14 @@ namespace SwashbucklerDiary.Rcl.Services
 
             if (useOriginalFileName || !File.Exists(targetFilePath))
             {
-                await Task.Run(() =>
+                if (sourceFilePath.StartsWith(_appFileSystem.CacheDirectory))
                 {
-                    if (sourceFilePath.StartsWith(_appFileSystem.CacheDirectory))
-                    {
-                        _appFileSystem.FileMove(sourceFilePath, targetFilePath);
-                    }
-                    else
-                    {
-                        _appFileSystem.FileCopy(sourceFilePath, targetFilePath);
-                    }
-                }).ConfigureAwait(false);
+                    await Task.Run(() => _appFileSystem.FileMove(sourceFilePath, targetFilePath)).ConfigureAwait(false);
+                }
+                else
+                {
+                    await _appFileSystem.CopyFileAsync(sourceFilePath, targetFilePath).ConfigureAwait(false);
+                }
 
                 await _appFileSystem.SyncFS().ConfigureAwait(false);
             }

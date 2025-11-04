@@ -17,7 +17,7 @@ await builder.Services.AddFileSystem();
 
 await builder.Services.AddMasaBlazorConfig(builder.HostEnvironment.BaseAddress);
 
-builder.Services.AddSqlSugarConfig($"Data Source={SQLiteConstants.DatabasePath}", $"Data Source={SQLiteConstants.PrivacyDatabasePath}");
+builder.Services.AddSqlSugarConfig(SQLiteConstants.ConnectionString, SQLiteConstants.PrivacyConnectionString);
 
 builder.Services.AddSerilogConfig();
 

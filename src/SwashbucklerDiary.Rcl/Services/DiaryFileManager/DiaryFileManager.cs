@@ -1,4 +1,5 @@
 using ClosedXML.Excel;
+using Microsoft.Data.Sqlite;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 using System.Data;
@@ -41,7 +42,7 @@ namespace SwashbucklerDiary.Rcl.Services
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         };
 
-        protected abstract string DatabaseFilename { get; }
+        protected string DatabaseFilename => SQLiteConstants.DatabaseFilename;
 
         protected abstract string DatabasePath { get; }
 
@@ -97,7 +98,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
             string databasePath = GetCurrentDatabasePath();
             var destFileName = Path.Combine(outputFolder, DatabaseFilename);
-            await Task.Run(() => _appFileSystem.FileCopy(databasePath, destFileName)).ConfigureAwait(false);
+            SqliteConnection.ClearAllPools();
+            await _appFileSystem.CopyFileAsync(databasePath,destFileName).ConfigureAwait(false);
             if (copyResources)
             {
                 await CopyDiaryResourceAsync(outputFolder).ConfigureAwait(false);
@@ -416,7 +418,8 @@ namespace SwashbucklerDiary.Rcl.Services
                 return false;
             }
 
-            await Task.Run(() => _appFileSystem.FileCopy(dbFiles[0], GetCurrentDatabasePath())).ConfigureAwait(false);
+            SqliteConnection.ClearAllPools();
+            await _appFileSystem.CopyFileAsync(dbFiles[0], GetCurrentDatabasePath()).ConfigureAwait(false);
             if (version is null)
             {
                 await AllUseNewResourceUriAsync().ConfigureAwait(false);
