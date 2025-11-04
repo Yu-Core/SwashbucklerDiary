@@ -1,30 +1,41 @@
 @inherits Rcl.Hybird.Layout.MainLayoutBase
 
-@if (afterInitSetting)
-{
-    <MApp>
-        <CascadingValue Value="@I18n.Culture.Name" Name="Culture">
-            <ErrorBoundary>
-                <ChildContent>
-                    <MainLayoutNavDrawer Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutNavDrawer>
+<MApp>
+    <CascadingValue Value="@I18n.Culture.Name" Name="Culture">
+        <ErrorBoundary>
+            <ChildContent>
+                <MainLayoutNavDrawer Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutNavDrawer>
 
-                    <MMain>
-                        <PageCacheContainer PermanentPaths="permanentPaths">
+                <MMain>
+                    <PageCacheContainer PermanentPaths="permanentPaths">
+                        @if (afterInitConfig)
+                        {
                             @Body
-                        </PageCacheContainer>
-                    </MMain>
+                        }
+                        else
+                        {
+                            <div class="d-flex justify-center align-center" style="width:100%;height:100%;">
+                                <MProgressCircular Size="40"
+                                                   Indeterminate="true">
+                                </MProgressCircular>
+                            </div>
+                        }
+                    </PageCacheContainer>
+                </MMain>
 
-                    <MainLayoutBottomNav Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutBottomNav>
+                <MainLayoutBottomNav Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutBottomNav>
 
+                @if (afterInitConfig)
+                {
                     <UpdateDialog @bind-Visible="showUpdate" Value="lastRelease"></UpdateDialog>
                     <PermissionSnackbar></PermissionSnackbar>
                     <SponsorSupportSnackbar @bind-Visible="showSponsorSupport"></SponsorSupportSnackbar>
-                </ChildContent>
+                }
+            </ChildContent>
 
-                <ErrorContent>
-                    <ErrorDialog Exception="@context"></ErrorDialog>
-                </ErrorContent>
-            </ErrorBoundary>
-        </CascadingValue>
-    </MApp>
-}
+            <ErrorContent>
+                <ErrorDialog Exception="@context"></ErrorDialog>
+            </ErrorContent>
+        </ErrorBoundary>
+    </CascadingValue>
+</MApp>

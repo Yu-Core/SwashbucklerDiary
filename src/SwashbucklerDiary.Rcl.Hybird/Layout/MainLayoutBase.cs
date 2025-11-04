@@ -19,22 +19,11 @@ namespace SwashbucklerDiary.Rcl.Hybird.Layout
         [Inject]
         protected IAppLifecycle AppLifecycle { get; set; } = default!;
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task DialogNotificationCoreAsync()
         {
-            await base.OnInitializedAsync();
+            await base.DialogNotificationCoreAsync();
 
-            await VersionUpdataManager.HandleVersionUpdate();
-            await InitSettingsAsync();
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-
-            if (firstRender)
-            {
-                await CheckForUpdates();
-            }
+            await CheckForUpdates();
         }
 
 #if DEBUG
@@ -45,11 +34,6 @@ namespace SwashbucklerDiary.Rcl.Hybird.Layout
 #else
         protected async Task CheckForUpdates()
         {
-            if (NavigationManager.GetBaseRelativePath().Equals("welcome", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return;
-            }
-
             bool notPrompt = await SettingService.GetAsync(nameof(Setting.UpdateNotPrompt), false);
             if (notPrompt)
             {

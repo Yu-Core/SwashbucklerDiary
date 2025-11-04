@@ -4,42 +4,54 @@
     <meta name="theme-color" content="@themeColor">
 </HeadContent>
 
-@if (afterInitSetting)
-{
-    <MApp>
-        <CascadingValue Value="@I18n.Culture.ToString()" Name="Culture">
-            <MErrorHandler DisablePopupIfErrorContentRender>
-                <ChildContent>
-                    <MainLayoutNavDrawer Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutNavDrawer>
+<MApp>
+    <CascadingValue Value="@I18n.Culture.ToString()" Name="Culture">
+        <MErrorHandler DisablePopupIfErrorContentRender>
+            <ChildContent>
+                <MainLayoutNavDrawer Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutNavDrawer>
 
-                    <MMain>
-                        <PageCacheContainer PermanentPaths="permanentPaths">
+                <MMain>
+                    <PageCacheContainer PermanentPaths="permanentPaths">
+                        @if (afterInitConfig)
+                        {
                             @Body
-                        </PageCacheContainer>
-                    </MMain>
+                        }
+                        else
+                        {
+                            <div class="d-flex justify-center align-center" style="width:100%;height:100%;">
+                                <MProgressCircular Size="40"
+                                                   Indeterminate="true">
+                                </MProgressCircular>
+                            </div>
+                        }
+                    </PageCacheContainer>
+                </MMain>
 
-                    <MainLayoutBottomNav Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutBottomNav>
+                <MainLayoutBottomNav Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutBottomNav>
 
-                    <PwaSnackbar OnRefresh="@RefreshToSkipWaiting"></PwaSnackbar>
+                <PwaSnackbar OnRefresh="@RefreshToSkipWaiting"></PwaSnackbar>
+                @if (afterInitConfig)
+                {
                     <SponsorSupportSnackbar @bind-Visible="showSponsorSupport"></SponsorSupportSnackbar>
-                </ChildContent>
-                <ErrorContent>
-                    <MContainer Class="fill-height justify-center">
-                        <div style="white-space: pre-wrap; max-width: 100vw;">
-                            <h1 class="error--text text-center mb-6">@(I18n.T("Something went wrong"))</h1>
-                            <p class="error--text" style="font-size: 1rem;">@context.Message</p>
-                            <p class="info--text">@((MarkupString)I18n.T("This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).", "<kbd>Ctrl+F5</kbd>", "<kbd>Command+Shift+R</kbd>"))</p>
-                            <MButton Block
-                                     Class="text-capitalize"
-                                     Large
-                                     Color="primary"
-                                     OnClick="ForceRefresh">
-                                @I18n.T("Force refresh")
-                            </MButton>
-                        </div>
-                    </MContainer>
-                </ErrorContent>
-            </MErrorHandler>
-        </CascadingValue>
-    </MApp>
-}
+                }
+                
+            </ChildContent>
+            <ErrorContent>
+                <MContainer Class="fill-height justify-center">
+                    <div style="white-space: pre-wrap; max-width: 100vw;">
+                        <h1 class="error--text text-center mb-6">@(I18n.T("Something went wrong"))</h1>
+                        <p class="error--text" style="font-size: 1rem;">@context.Message</p>
+                        <p class="info--text">@((MarkupString)I18n.T("This could be a browser cache issue. Refresh and try again, or manually hard reload ({0} for Windows, {1} for macOS).", "<kbd>Ctrl+F5</kbd>", "<kbd>Command+Shift+R</kbd>"))</p>
+                        <MButton Block
+                                 Class="text-capitalize"
+                                 Large
+                                 Color="primary"
+                                 OnClick="ForceRefresh">
+                            @I18n.T("Force refresh")
+                        </MButton>
+                    </div>
+                </MContainer>
+            </ErrorContent>
+        </MErrorHandler>
+    </CascadingValue>
+</MApp>

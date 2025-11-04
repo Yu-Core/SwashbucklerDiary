@@ -22,23 +22,21 @@ namespace SwashbucklerDiary.WebAssembly.Layout
         [Inject]
         private IVersionTracking VersionTracking { get; set; } = default!;
 
-        protected override async Task OnInitializedAsync()
-        {
-            await base.OnInitializedAsync();
-
-            await InitSettingsAsync();
-            await InitVersionUpdateAsync();
-        }
-
         protected override void OnDispose()
         {
             ThemeService.OnChanged -= ThemeChanged;
             base.OnDispose();
         }
 
-        protected override async Task InitSettingsAsync()
+        protected override async Task InitVersionUpdate()
         {
-            await base.InitSettingsAsync();
+            await ((VersionTracking)VersionTracking).Track();
+            await base.InitVersionUpdate();
+        }
+
+        protected override async Task InitConfigAsync()
+        {
+            await base.InitConfigAsync();
             await Task.WhenAll(
                 InitThemeAsync(),
                 InitLanguageAsync(),
@@ -84,12 +82,6 @@ namespace SwashbucklerDiary.WebAssembly.Layout
             var language = SettingService.Get(s => s.Language);
             I18n.SetCulture(new(language));
             return Task.CompletedTask;
-        }
-
-        private async Task InitVersionUpdateAsync()
-        {
-            await ((VersionTracking)VersionTracking).Track();
-            await VersionUpdataManager.HandleVersionUpdate();
         }
 
         private async Task ForceRefresh()

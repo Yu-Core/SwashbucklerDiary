@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 {
     public abstract partial class MainLayoutBase : LayoutComponentBase, IDisposable
     {
-        protected bool afterInitSetting;
+        protected bool afterInitConfig;
 
         protected bool showSponsorSupport;
 
@@ -57,6 +57,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         private IPlatformIntegration PlatformIntegration { get; set; } = default!;
 
+        [Inject]
+        private IAlertService AlertService { get; set; } = default!;
+
         public void Dispose()
         {
             OnDispose();
@@ -82,13 +85,15 @@ namespace SwashbucklerDiary.Rcl.Layout
             NavigateController.OnBackPressed += HandleBackPressed;
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override async Task OnInitializedAsync()
         {
-            await base.OnAfterRenderAsync(firstRender);
-            if (firstRender)
-            {
-                await SponsorSupport();
-            }
+            await base.OnInitializedAsync();
+
+            await InitVersionUpdate();
+            await InitConfigAsync();
+            StateHasChanged();
+
+            await DialogNotificationAsync();
         }
 
         protected abstract ActivationArguments CreateAppLockActivationArguments();
@@ -105,11 +110,11 @@ namespace SwashbucklerDiary.Rcl.Layout
             NavigateController.OnBackPressed -= HandleBackPressed;
         }
 
-        protected virtual async Task InitSettingsAsync()
+        protected virtual async Task InitConfigAsync()
         {
             await SettingService.InitializeAsync();
             await GlobalConfiguration.InitializeAsync();
-            afterInitSetting = true;
+            afterInitConfig = true;
         }
 
         protected async void HandleLanguageChanged(object? sender, EventArgs e)
@@ -143,13 +148,23 @@ namespace SwashbucklerDiary.Rcl.Layout
             });
         }
 
-        private async Task SponsorSupport()
+        protected async Task DialogNotificationAsync()
         {
             if (NavigationManager.GetBaseRelativePath().Equals("welcome", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
 
+            await DialogNotificationCoreAsync();
+        }
+
+        protected virtual async Task DialogNotificationCoreAsync()
+        {
+            await SponsorSupport();
+        }
+
+        private async Task SponsorSupport()
+        {
             DateTime currentTime = DateTime.Now;
             if (currentTime.Month == 1)
             {
@@ -243,6 +258,13 @@ namespace SwashbucklerDiary.Rcl.Layout
         private async void HandleBackPressed()
         {
             await JSRuntime.HistoryBack();
+        }
+
+        protected virtual async Task InitVersionUpdate()
+        {
+            AlertService.StartLoading(I18n.T("Upgrading and optimizing in progress. Please wait..."));
+            await VersionUpdataManager.HandleVersionUpdate();
+            AlertService.StopLoading();
         }
     }
 }

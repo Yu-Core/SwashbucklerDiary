@@ -126,19 +126,20 @@ namespace SwashbucklerDiary.Rcl.Services
                 return;
             }
 
-            bool first = _versionTracking.IsFirstLaunchForCurrentVersion;
-            if (!first)
+            if (new Version(previousVersionString) >= new Version(versionString))
             {
                 return;
             }
 
-            if (new Version(previousVersionString) >= new Version(versionString))
+            bool alreadyUpdated = await _settingService.GetAsync($"VersionUpdate_{versionString}", false).ConfigureAwait(false);
+            if(alreadyUpdated)
             {
                 return;
             }
 
             updateCount++;
             await func.Invoke();
+            await _settingService.SetAsync($"VersionUpdate_{versionString}", true).ConfigureAwait(false);
         }
 
         protected virtual Task HandleVersionUpdate697()
