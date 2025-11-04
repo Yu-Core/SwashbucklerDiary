@@ -12,13 +12,17 @@ namespace SwashbucklerDiary.Maui
 
         private readonly INavigateController _navigateController;
 
+        private readonly IAppLifecycle _appLifecycle;
+
         public MainPage(Color backgroundColor,
-            INavigateController navigateController)
+            INavigateController navigateController,
+            IAppLifecycle appLifecycle)
         {
             InitializeComponent();
 
             _backgroundColor = backgroundColor;
             _navigateController = navigateController;
+            _appLifecycle = appLifecycle;
 
             blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializingCore;
             blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;
@@ -39,21 +43,32 @@ namespace SwashbucklerDiary.Maui
 
         private void HandleAppActivation()
         {
+            // Welcome Page
             bool firstSetLanguage = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.FirstSetLanguage), false);
             bool firstAgree = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.FirstAgree), false);
             if (!firstSetLanguage || !firstAgree)
             {
                 blazorWebView.StartPath = "/welcome";
-                Essentials.AppLifecycle.Default.ActivationArguments = null;
+                _appLifecycle.ActivationArguments = null;
                 return;
             }
 
-            var args = Essentials.AppLifecycle.Default.ActivationArguments;
+            var args = _appLifecycle.ActivationArguments;
+            // Quick Record
             if (args is null || args.Data is null || args.Kind == AppActivationKind.Launch)
             {
-                QuickRecord();
+                var quickRecord = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.QuickRecord), false);
+                if (quickRecord)
+                {
+                    args = _appLifecycle.ActivationArguments = new()
+                    {
+                        Kind = AppActivationKind.Scheme,
+                        Data = $"{SchemeConstants.SwashbucklerDiary}://write"
+                    };
+                }
             }
 
+            // App lock
             string appLockNumberPassword = Preferences.Default.Get<string>(nameof(Setting.AppLockNumberPassword), string.Empty);
             string appLockPatternPassword = Preferences.Default.Get<string>(nameof(Setting.AppLockPatternPassword), string.Empty);
             bool appLockBiometric = Preferences.Default.Get<bool>(nameof(Setting.AppLockBiometric), false);
@@ -90,25 +105,12 @@ namespace SwashbucklerDiary.Maui
                 blazorWebView.StartPath = path;
             }
 
-            Essentials.AppLifecycle.Default.ActivationArguments = null;
+            _appLifecycle.ActivationArguments = null;
         }
 
         private void HandleShare(ActivationArguments args)
         {
             blazorWebView.StartPath = "/write";
-        }
-
-        private void QuickRecord()
-        {
-            var quickRecord = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.QuickRecord), false);
-            if (quickRecord)
-            {
-                Essentials.AppLifecycle.Default.ActivationArguments = new()
-                {
-                    Kind = AppActivationKind.Scheme,
-                    Data = $"{SchemeConstants.SwashbucklerDiary}://write"
-                };
-            }
         }
     }
 }

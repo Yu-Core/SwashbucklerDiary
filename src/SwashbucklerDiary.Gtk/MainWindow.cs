@@ -5,6 +5,7 @@ using SwashbucklerDiary.Gtk.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Gtk
 {
@@ -15,6 +16,8 @@ namespace SwashbucklerDiary.Gtk
         private readonly INavigateController _navigateController;
 
         private readonly Microsoft.AspNetCore.Components.WebView.Gtk.BlazorWebView blazorWebView;
+
+        private readonly IAppLifecycle _appLifecycle;
 
         public MainWindow(
             global::Gtk.Application application,
@@ -39,6 +42,7 @@ namespace SwashbucklerDiary.Gtk
 
             _backgroundColor = backgroundColor;
             _navigateController = serviceProvider.GetRequiredService<INavigateController>();
+            _appLifecycle = serviceProvider.GetRequiredService<IAppLifecycle>();
             blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializing;
             blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;
         }
@@ -59,26 +63,38 @@ namespace SwashbucklerDiary.Gtk
 
         private void HandleAppActivation()
         {
+            // Welcome Page
             bool firstSetLanguage = Preferences.Default.Get<bool>(nameof(Setting.FirstSetLanguage), false);
             bool firstAgree = Preferences.Default.Get<bool>(nameof(Setting.FirstAgree), false);
             if (!firstSetLanguage || !firstAgree)
             {
                 blazorWebView.StartPath = "/welcome";
-                Essentials.AppLifecycle.Default.ActivationArguments = null;
+                _appLifecycle.ActivationArguments = null;
                 return;
             }
 
-            var args = Essentials.AppLifecycle.Default.ActivationArguments;
+            var args = _appLifecycle.ActivationArguments;
+            // Quick Record
             if (args is null || args.Data is null || args.Kind == AppActivationKind.Launch)
             {
-                QuickRecord();
+                var quickRecord = Preferences.Default.Get<bool>(nameof(Setting.QuickRecord), false);
+                if (quickRecord)
+                {
+                    args = _appLifecycle.ActivationArguments = new()
+                    {
+                        Kind = AppActivationKind.Scheme,
+                        Data = $"{SchemeConstants.SwashbucklerDiary}://write"
+                    };
+                }
             }
 
+            // App lock
             string appLockNumberPassword = Preferences.Default.Get<string>(nameof(Setting.AppLockNumberPassword), string.Empty);
             string appLockPatternPassword = Preferences.Default.Get<string>(nameof(Setting.AppLockPatternPassword), string.Empty);
             bool appLockBiometric = Preferences.Default.Get<bool>(nameof(Setting.AppLockBiometric), false);
             bool useAppLock = !string.IsNullOrEmpty(appLockNumberPassword)
-                || !string.IsNullOrEmpty(appLockPatternPassword);
+                || !string.IsNullOrEmpty(appLockPatternPassword)
+                || appLockBiometric;
             if (useAppLock)
             {
                 blazorWebView.StartPath = "/appLock";
@@ -106,17 +122,7 @@ namespace SwashbucklerDiary.Gtk
                 blazorWebView.StartPath = path;
             }
 
-            Essentials.AppLifecycle.Default.ActivationArguments = null;
-        }
-
-        private void QuickRecord()
-        {
-            var settingService = blazorWebView.Services.GetRequiredService<ISettingService>();
-            var quickRecord = settingService.Get(it => it.QuickRecord);
-            if (quickRecord)
-            {
-                blazorWebView.StartPath = "/write";
-            }
+            _appLifecycle.ActivationArguments = null;
         }
     }
 }
