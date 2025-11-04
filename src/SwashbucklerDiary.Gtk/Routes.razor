@@ -1,4 +1,4 @@
-<Router AppAssembly="@Assembly" AdditionalAssemblies="@AdditionalAssemblies">
+<Router AppAssembly="@AppAssembly" AdditionalAssemblies="@AdditionalAssemblies">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
@@ -11,10 +11,10 @@
     </NotFound>
 </Router>
 
-@code{
-    static System.Reflection.Assembly Assembly { get; } = typeof(Rcl.Layout.MainLayoutBase).Assembly;
+@code {
+    static System.Reflection.Assembly AppAssembly { get; } = typeof(Rcl._Imports).Assembly;
 
-    static IEnumerable<System.Reflection.Assembly> AdditionalAssemblies { get; } = [typeof(Routes).Assembly, typeof(Rcl.Hybird.Layout.MainLayoutBase).Assembly];
+    static IEnumerable<System.Reflection.Assembly> AdditionalAssemblies { get; } = [typeof(_Imports).Assembly, typeof(Rcl.Hybird._Imports).Assembly];
 
-    public static IEnumerable<System.Reflection.Assembly> Assemblies { get; } = [Assembly, .. AdditionalAssemblies];
+    public static IEnumerable<System.Reflection.Assembly> Assemblies { get; } = [AppAssembly, .. AdditionalAssemblies];
 }
