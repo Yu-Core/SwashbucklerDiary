@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/Solution Itms/">
+    <File Path=".editorconfig" />
+    <File Path="download-guide.md" />
+    <File Path="README.en-US.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Solution Itms/ISSUE_TEMPLATE/">
+    <File Path=".github/ISSUE_TEMPLATE/bug_report.yml" />
+    <File Path=".github/ISSUE_TEMPLATE/feature_request.yml" />
+  </Folder>
+  <Folder Name="/Solution Itms/workflows/">
+    <File Path=".github/workflows/gh-pages.yml" />
+    <File Path=".github/workflows/releases-linux.yml" />
+    <File Path=".github/workflows/releases.yml" />
+    <File Path=".github/workflows/sync-gitee-pages.yml" />
+    <File Path=".github/workflows/upload-msstore-msix-to-release.yml" />
+  </Folder>
+  <Project Path="src/Serilog.Sinks.SQLite.Simplified/Serilog.Sinks.SQLite.Simplified.csproj" />
+  <Project Path="src/SwashbucklerDiary.Gtk/SwashbucklerDiary.Gtk.csproj" />
+  <Project Path="src/SwashbucklerDiary.Maui/SwashbucklerDiary.Maui.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="src/SwashbucklerDiary.Rcl.Hybird/SwashbucklerDiary.Rcl.Hybird.csproj" />
+  <Project Path="src/SwashbucklerDiary.Rcl/SwashbucklerDiary.Rcl.csproj" />
+  <Project Path="src/SwashbucklerDiary.Shared/SwashbucklerDiary.Shared.csproj" />
+  <Project Path="src/SwashbucklerDiary.WebAssembly/SwashbucklerDiary.WebAssembly.csproj" />
+</Solution>
