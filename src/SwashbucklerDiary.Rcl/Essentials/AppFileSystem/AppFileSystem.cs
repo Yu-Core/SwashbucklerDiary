@@ -181,13 +181,13 @@ namespace SwashbucklerDiary.Rcl.Essentials
             }
         }
 
-        public void FileMove(string sourceFilePath, string targetFilePath)
+        public void FileMove(string sourceFilePath, string targetFilePath, bool overwrite = false)
         {
             CreateFileDirectory(targetFilePath);
-            File.Move(sourceFilePath, targetFilePath);
+            File.Move(sourceFilePath, targetFilePath, overwrite);
         }
 
-        public void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption, bool fileOverwrite = false)
+        public void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption = SearchOption.AllDirectories, bool fileOverwrite = false)
         {
             var files = Directory.EnumerateFiles(sourceFolder, "*", searchOption);
 
@@ -215,7 +215,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
             });
         }
 
-        public async Task MoveFolderAsync(string sourceFolder, string destinationFolder, SearchOption searchOption, bool fileOverwrite = false)
+        public async Task MoveFolderAsync(string sourceFolder, string destinationFolder, SearchOption searchOption = SearchOption.AllDirectories, bool fileOverwrite = false)
         {
             await Task.Run(() =>
             {

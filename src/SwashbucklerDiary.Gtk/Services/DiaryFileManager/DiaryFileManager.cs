@@ -11,8 +11,9 @@ namespace SwashbucklerDiary.Gtk.Services
             IMediaResourceManager mediaResourceManager,
             IDiaryService diaryService,
             IResourceService resourceService,
-            ISettingService settingService)
-            : base(appFileSystem, platformIntegration, i18nService, mediaResourceManager, diaryService, resourceService, settingService)
+            ISettingService settingService,
+            IAvatarService avatarService)
+            : base(appFileSystem, platformIntegration, i18nService, mediaResourceManager, diaryService, resourceService, settingService, avatarService)
         {
         }
 

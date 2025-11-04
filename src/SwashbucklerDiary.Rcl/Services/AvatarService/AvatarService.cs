@@ -16,10 +16,8 @@ namespace SwashbucklerDiary.Rcl.Services
         protected readonly IAlertService _alertService;
 
         protected readonly IAppFileSystem _appFileSystem;
-
-        protected readonly string targetDirectoryPath;
-
         public static string AvatarDirectoryName { get; } = "Avatar";
+        public string AvatarDirectoryPath { get; }
 
         public AvatarService(ISettingService settingService,
             IMediaResourceManager mediaResourceManager,
@@ -35,7 +33,7 @@ namespace SwashbucklerDiary.Rcl.Services
             _alertService = alertService;
             _appFileSystem = appFileSystem;
 
-            targetDirectoryPath = Path.Combine(_appFileSystem.AppDataDirectory, AvatarDirectoryName);
+            AvatarDirectoryPath = Path.Combine(_mediaResourceManager.AssistDirectoryPath, AvatarDirectoryName);
         }
 
         public abstract Task<string> SetAvatarByCaptureAsync();
@@ -60,7 +58,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 File.Delete(previousAvatarPath);
             }
 
-            string uri = await _mediaResourceManager.CreateMediaResourceFileAsync(targetDirectoryPath, filePath).ConfigureAwait(false) ?? string.Empty;
+            string uri = await _mediaResourceManager.CreateMediaResourceFileAsync(AvatarDirectoryPath, filePath).ConfigureAwait(false) ?? string.Empty;
             await _settingService.SetAsync(s => s.Avatar, uri);
             return uri;
         }

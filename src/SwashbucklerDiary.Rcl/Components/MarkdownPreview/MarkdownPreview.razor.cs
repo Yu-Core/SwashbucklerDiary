@@ -176,7 +176,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 {
                     ["toc"] = true,
                     ["mark"] = true,
-                    ["linkBase"] = MediaResourceManager.LinkBase,
+                    ["linkBase"] = MediaResourceManager.MarkdownLinkBase,
                     ["sup"] = true,
                     ["sub"] = true,
                     ["imgPathAllowSpace"] = true
@@ -208,7 +208,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 OutlineElement = OutlineElement,
                 MoblieOutlineElement = moblieOutlineElement,
                 AutoPlay = autoPlay,
-                LinkBase = MediaResourceManager.LinkBase,
+                LinkBase = MediaResourceManager.MarkdownLinkBase,
                 ProxyUrl = ProxyService.ProxyUrl,
                 LinkCard = linkCard
             });

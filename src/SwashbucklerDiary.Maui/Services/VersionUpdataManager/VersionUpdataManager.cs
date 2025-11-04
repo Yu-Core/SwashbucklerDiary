@@ -1,6 +1,8 @@
+using Microsoft.Data.SqlClient;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Pages;
 using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Shared;
 using System.Text.Json;
 
 namespace SwashbucklerDiary.Maui.Services
@@ -23,8 +25,10 @@ namespace SwashbucklerDiary.Maui.Services
             IAccessExternal accessExternal,
             IAlertService alertService,
             IStaticWebAssets staticWebAssets,
-            IPlatformIntegration platformIntegration) :
-            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager, staticWebAssets)
+            IPlatformIntegration platformIntegration,
+            IAppFileSystem appFileSystem,
+            IAvatarService avatarService) :
+            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager, staticWebAssets, appFileSystem, avatarService)
         {
             _accessExternal = accessExternal;
             _alertService = alertService;
@@ -102,5 +106,36 @@ namespace SwashbucklerDiary.Maui.Services
                 await _alertService.ErrorAsync(_i18n.T("Failed to open the application store"));
             }
         }
+
+#if IOS || MACCATALYST
+        protected override async Task HandleVersionUpdate1291()
+        {
+            Dictionary<string, string> directoryPaths = new()
+            {
+                ["Image"] = _mediaResourceManager.MediaResourceDirectoryPaths[MediaResource.Image],
+                ["Video"] = _mediaResourceManager.MediaResourceDirectoryPaths[MediaResource.Video],
+                ["Avatar"] = _avatarService.AvatarDirectoryPath,
+            };
+            foreach (var item in directoryPaths)
+            {
+                var oldPath = Path.Combine(FileSystem.AppDataDirectory, item.Key.ToString());
+                if (Directory.Exists(oldPath))
+                {
+                    await _appFileSystem.MoveFolderAsync(oldPath, item.Value).ConfigureAwait(false);
+                }
+            }
+
+            SqlConnection.ClearAllPools();
+            await Task.Run(() =>
+            {
+                var oldDatabasePath = Path.Combine(FileSystem.AppDataDirectory, SQLiteConstants.DatabaseFilename);
+                _appFileSystem.FileMove(oldDatabasePath, SQLiteConstants.DatabasePath, true);
+                var oldPrivacyDatabasePath = Path.Combine(FileSystem.AppDataDirectory, SQLiteConstants.PrivacyDatabaseFilename);
+                _appFileSystem.FileMove(oldPrivacyDatabasePath, SQLiteConstants.PrivacyDatabasePath, true);
+            });
+
+            await base.HandleVersionUpdate1291();
+        }
+#endif
     }
 }

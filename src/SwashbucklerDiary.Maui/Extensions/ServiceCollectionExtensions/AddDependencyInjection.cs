@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Maui.Extensions
             });
             services.AddSingleton<Rcl.Essentials.IVersionTracking, Essentials.VersionTracking>();
             services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
-            services.AddSingleton<IAppFileSystem, Essentials.AppFileSystem>();
+            services.AddSingleton<IAppFileSystem>(sp=> Essentials.AppFileSystem.Default);
             services.AddSingleton<IMediaResourceManager, Services.MediaResourceManager>();
             services.AddSingleton<BreakpointService>();
 

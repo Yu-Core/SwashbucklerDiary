@@ -57,9 +57,9 @@ namespace SwashbucklerDiary.Rcl.Services
                 .Select(it => _mediaResourceManager.RelativeUrlToFilePath(it))
                 .Where(it => !string.IsNullOrEmpty(it))
                 .ToList();
-            foreach (var folderName in _mediaResourceManager.MediaResourceFolders.Values)
+            foreach (var directoryPath in _mediaResourceManager.MediaResourceDirectoryPaths.Values)
             {
-                await _appFileSystem.ClearFolderAsync(Path.Combine(_appFileSystem.AppDataDirectory, folderName), filePaths).ConfigureAwait(false);
+                await _appFileSystem.ClearFolderAsync(directoryPath, filePaths).ConfigureAwait(false);
             }
         }
     }

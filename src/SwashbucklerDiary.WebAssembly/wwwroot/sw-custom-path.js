@@ -31,7 +31,7 @@ function getFileFromIndexedDB(key) {
         let dbName;
         for (var i = 0; i < dbNames.length; i++) {
             if (key.startsWith(dbNames[i] + '/')) {
-                dbName = dbNames[i];
+                dbName = dbNames[i] + "/Assist/";
                 break;
             }
         }

@@ -162,7 +162,7 @@ namespace SwashbucklerDiary.Rcl.Components
             var previewMarkdown = new Dictionary<string, object?>()
             {
                 { "toc", true },
-                { "linkBase", MediaResourceManager.LinkBase },
+                { "linkBase", MediaResourceManager.MarkdownLinkBase },
                 { "mark", true },
                 { "sup", true },
                 { "sub", true },

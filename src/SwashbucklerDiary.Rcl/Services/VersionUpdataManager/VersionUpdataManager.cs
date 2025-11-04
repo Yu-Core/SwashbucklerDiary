@@ -1,3 +1,4 @@
+using Masa.Blazor;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Shared;
@@ -31,6 +32,10 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly IStaticWebAssets _staticWebAssets;
 
+        protected readonly IAppFileSystem _appFileSystem;
+
+        protected readonly IAvatarService _avatarService;
+
         private readonly Lazy<HttpClient> _httpClient;
 
         private readonly SortedDictionary<Version, Func<Task>> _versionHandlers = [];
@@ -42,7 +47,9 @@ namespace SwashbucklerDiary.Rcl.Services
             II18nService i18n,
             IVersionTracking versionTracking,
             IDiaryFileManager diaryFileManager,
-            IStaticWebAssets staticWebAssets)
+            IStaticWebAssets staticWebAssets,
+            IAppFileSystem appFileSystem,
+            IAvatarService avatarService)
         {
             _diaryService = diaryService;
             _resourceService = resourceService;
@@ -52,6 +59,8 @@ namespace SwashbucklerDiary.Rcl.Services
             _versionTracking = versionTracking;
             _diaryFileManager = diaryFileManager;
             _staticWebAssets = staticWebAssets;
+            _appFileSystem = appFileSystem;
+            _avatarService = avatarService;
             _httpClient = new(() =>
             {
                 var httpClient = new HttpClient();
@@ -110,6 +119,7 @@ namespace SwashbucklerDiary.Rcl.Services
             AddVersionHandler("1.01.5", HandleVersionUpdate1015);
             AddVersionHandler("1.05.5", HandleVersionUpdate1055);
             AddVersionHandler("1.13.2", HandleVersionUpdate1132);
+            AddVersionHandler("1.29.1", HandleVersionUpdate1291);
         }
 
         protected void AddVersionHandler(string versionString, Func<Task> handler)
@@ -199,6 +209,25 @@ namespace SwashbucklerDiary.Rcl.Services
             {
                 await _settingService.RemoveAsync(oldKey).ConfigureAwait(false);
                 await _settingService.SetAsync("NickName", oldValue).ConfigureAwait(false);
+            }
+        }
+
+        protected virtual async Task HandleVersionUpdate1291()
+        {
+            Dictionary<string, string> directoryPaths = new()
+            {
+                ["Image"] = _mediaResourceManager.MediaResourceDirectoryPaths[MediaResource.Image],
+                ["Audio"] = _mediaResourceManager.MediaResourceDirectoryPaths[MediaResource.Audio],
+                ["Video"] = _mediaResourceManager.MediaResourceDirectoryPaths[MediaResource.Video],
+                ["Avatar"] = _avatarService.AvatarDirectoryPath,
+            };
+            foreach (var item in directoryPaths)
+            {
+                var oldPath = Path.Combine(_appFileSystem.AppDataDirectory, item.Key.ToString());
+                if (Directory.Exists(oldPath))
+                {
+                    await _appFileSystem.MoveFolderAsync(oldPath, item.Value).ConfigureAwait(false);
+                }
             }
         }
     }

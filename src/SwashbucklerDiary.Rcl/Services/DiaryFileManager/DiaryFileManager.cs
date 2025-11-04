@@ -26,6 +26,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly ISettingService _settingService;
 
+        protected readonly IAvatarService _avatarService;
+
         protected const string exportFileNamePrefix = "SwashbucklerDiaryExport";
 
         protected const string backupFileNamePrefix = "SwashbucklerDiaryBackup";
@@ -71,7 +73,8 @@ namespace SwashbucklerDiary.Rcl.Services
             IMediaResourceManager mediaResourceManager,
             IDiaryService diaryService,
             IResourceService resourceService,
-            ISettingService settingService)
+            ISettingService settingService,
+            IAvatarService avatarService)
         {
             _appFileSystem = appFileSystem;
             _platformIntegration = platformIntegration;
@@ -80,6 +83,7 @@ namespace SwashbucklerDiary.Rcl.Services
             _diaryService = diaryService;
             _resourceService = resourceService;
             _settingService = settingService;
+            _avatarService = avatarService;
         }
 
         public async Task<string> ExportDBAsync(bool copyResources)
@@ -590,20 +594,17 @@ namespace SwashbucklerDiary.Rcl.Services
             return DateTime.Now;
         }
 
-        protected Task RestoreDiaryResourceAsync(string outputFolder)
-            => RestoreFoldersAsync(outputFolder, _mediaResourceManager.MediaResourceFolders.Values);
-
-        protected async Task RestoreFoldersAsync(string outputFolder, IEnumerable<string> folderNames)
+        protected async Task RestoreDiaryResourceAsync(string outputFolder)
         {
-            foreach (var item in folderNames)
+            foreach (var item in _mediaResourceManager.MediaResourceDirectoryPaths)
             {
-                var sourceDir = Path.Combine(outputFolder, AppFileSystem.AppDataVirtualDirectoryName, item);
+                var sourceDir = Path.Combine(outputFolder, AppFileSystem.AppDataVirtualDirectoryName, item.Key.ToString());
                 if (!Directory.Exists(sourceDir))
                 {
                     continue;
                 }
 
-                var targetDir = Path.Combine(_appFileSystem.AppDataDirectory, item);
+                var targetDir = item.Value;
                 await _appFileSystem.MoveFolderAsync(sourceDir, targetDir, SearchOption.AllDirectories).ConfigureAwait(false);
             }
         }
@@ -630,7 +631,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 return;
             }
 
-            string targetFilePath = Path.Combine(_appFileSystem.AppDataDirectory, AvatarService.AvatarDirectoryName, avatarFileName);
+            string targetFilePath = Path.Combine(_avatarService.AvatarDirectoryPath, avatarFileName);
             if (File.Exists(targetFilePath))
             {
                 File.Delete(targetFilePath);

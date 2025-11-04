@@ -15,8 +15,10 @@ namespace SwashbucklerDiary.WebAssembly.Services
             IVersionTracking versionTracking,
             IDiaryFileManager diaryFileManager,
             IPlatformIntegration platformIntegration,
-            IStaticWebAssets staticWebAssets) :
-            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager, staticWebAssets)
+            IStaticWebAssets staticWebAssets,
+            IAppFileSystem appFileSystem,
+            IAvatarService avatarService) :
+            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager, staticWebAssets, appFileSystem, avatarService)
         {
             _platformIntegration = platformIntegration;
         }

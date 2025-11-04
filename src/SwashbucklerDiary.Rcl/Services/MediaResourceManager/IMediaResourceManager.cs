@@ -6,9 +6,11 @@ namespace SwashbucklerDiary.Rcl.Services
 {
     public interface IMediaResourceManager
     {
-        string? LinkBase { get; }
+        string? MarkdownLinkBase { get; }
 
-        Dictionary<MediaResource, string> MediaResourceFolders { get; }
+        string AssistDirectoryPath { get; }
+
+        Dictionary<MediaResource, string> MediaResourceDirectoryPaths { get; }
 
         /// <summary>
         /// 添加图片

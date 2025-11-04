@@ -1,10 +1,12 @@
-﻿namespace SwashbucklerDiary.Maui
+using SwashbucklerDiary.Maui.Essentials;
+
+namespace SwashbucklerDiary.Maui
 {
     public class SQLiteConstants : Rcl.SQLiteConstants
     {
-        public readonly static string DatabasePath = Path.Combine(FileSystem.AppDataDirectory, DatabaseFilename);
+        public readonly static string DatabasePath = Path.Combine(AppFileSystem.Default.AppDataDirectory, DatabaseFilename);
 
-        public readonly static string PrivacyDatabasePath = Path.Combine(FileSystem.AppDataDirectory, PrivacyDatabaseFilename);
+        public static readonly string PrivacyDatabasePath = Path.Combine(AppFileSystem.Default.AppDataDirectory, PrivacyDatabaseFilename);
 
         public readonly static string ConnectionString = GetConnectionString(DatabasePath);
 

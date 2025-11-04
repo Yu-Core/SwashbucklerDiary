@@ -7,7 +7,6 @@ namespace SwashbucklerDiary.Gtk.Services
     public class VersionUpdataManager : Rcl.Services.VersionUpdataManager
     {
         private readonly IPlatformIntegration _platformIntegration;
-        private readonly IAppFileSystem _appFileSystem;
 
         public VersionUpdataManager(IDiaryService diaryService,
             IResourceService resourceService,
@@ -18,11 +17,11 @@ namespace SwashbucklerDiary.Gtk.Services
             IDiaryFileManager diaryFileManager,
             IPlatformIntegration platformIntegration,
             IStaticWebAssets staticWebAssets,
-            IAppFileSystem appFileSystem) :
-            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager, staticWebAssets)
+            IAppFileSystem appFileSystem,
+            IAvatarService avatarService) :
+            base(diaryService, resourceService, settingService, mediaResourceManager, i18n, versionTracking, diaryFileManager, staticWebAssets, appFileSystem, avatarService)
         {
             _platformIntegration = platformIntegration;
-            _appFileSystem = appFileSystem;
         }
 
         public override async Task ToUpdate()

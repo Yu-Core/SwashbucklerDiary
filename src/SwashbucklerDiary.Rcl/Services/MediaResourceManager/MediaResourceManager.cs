@@ -19,16 +19,18 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected readonly ILogger _logger;
 
-        protected static readonly Dictionary<MediaResource, string> _mediaResourceFolders = new()
-        {
-            { MediaResource.Image, "Image" },
-            { MediaResource.Audio, "Audio" },
-            { MediaResource.Video, "Video" },
-        };
+        protected static readonly MediaResource[] _mediaResources =
+        [
+            MediaResource.Image,
+            MediaResource.Audio,
+            MediaResource.Video,
+        ];
 
-        public Dictionary<MediaResource, string> MediaResourceFolders => _mediaResourceFolders;
+        public Dictionary<MediaResource, string> MediaResourceDirectoryPaths { get; } = [];
 
-        public virtual string? LinkBase => "";
+        public virtual string? MarkdownLinkBase => "";
+
+        public string AssistDirectoryPath { get; }
 
         public MediaResourceManager(IPlatformIntegration mauiPlatformService,
             IAppFileSystem appFileSystem,
@@ -41,6 +43,17 @@ namespace SwashbucklerDiary.Rcl.Services
             _i18n = i18nService;
             _settingService = settingService;
             _logger = logger;
+
+            AssistDirectoryPath = Path.Combine(_appFileSystem.AppDataDirectory, "Assist");
+            if (!Directory.Exists(AssistDirectoryPath))
+            {
+                Directory.CreateDirectory(AssistDirectoryPath);
+            }
+
+            foreach (var item in _mediaResources)
+            {
+                MediaResourceDirectoryPaths[item] = Path.Combine(AssistDirectoryPath, item.ToString());
+            }
         }
 
         public async Task<ResourceModel?> AddAudioAsync()
@@ -89,7 +102,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         protected Task<string?> CreateMediaResourceFileAsync(MediaResource mediaResource, string? sourceFilePath)
         {
-            var targetDirectoryPath = Path.Combine(_appFileSystem.AppDataDirectory, MediaResourceFolders[mediaResource]);
+            var targetDirectoryPath = MediaResourceDirectoryPaths[mediaResource];
             return CreateMediaResourceFileAsync(targetDirectoryPath, sourceFilePath);
         }
 

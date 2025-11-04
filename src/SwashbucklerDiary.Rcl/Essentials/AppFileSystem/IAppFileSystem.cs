@@ -18,15 +18,15 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         Task CopyFileAsync(string sourcePath, string destinationPath);
 
-        void FileMove(string sourceFilePath, string targetFilePath);
+        void FileMove(string sourceFilePath, string targetFilePath, bool overwrite = false);
 
         Task ClearFolderAsync(string folderPath, List<string>? excludeFiles = null);
 
         Task<long> GetFolderSize(string folderPath);
 
-        void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption, bool fileOverwrite = false);
+        void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption = SearchOption.AllDirectories, bool fileOverwrite = false);
 
-        Task MoveFolderAsync(string sourceFolder, string destinationFolder, SearchOption searchOption, bool fileOverwrite = false);
+        Task MoveFolderAsync(string sourceFolder, string destinationFolder, SearchOption searchOption = SearchOption.AllDirectories, bool fileOverwrite = false);
         /// <summary>
         /// 清除缓存
         /// </summary>

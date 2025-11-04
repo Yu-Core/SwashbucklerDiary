@@ -20,14 +20,14 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
 
             _routeFileSystemPathMap = new()
             {
-                { $"/{AppFileSystem.AppDataVirtualDirectoryName}", appFileSystem.AppDataDirectory },
+                { $"/{AppFileSystem.AppDataVirtualDirectoryName}", AssistDirectoryPath },
                 { $"/{AppFileSystem.CacheVirtualDirectoryName}", appFileSystem.CacheDirectory },
             };
 
             localFileWebAssetServer = new(_routeFileSystemPathMap);
         }
 
-        public override string? LinkBase => localFileWebAssetServer?.UrlPrefix;
+        public override string? MarkdownLinkBase => localFileWebAssetServer?.UrlPrefix;
 
         public override async Task<string?> ToFilePathAsync(MediaResourcePath? path)
         {
