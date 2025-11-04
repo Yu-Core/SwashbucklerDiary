@@ -146,18 +146,40 @@ namespace SwashbucklerDiary.Rcl.Services
 
             foreach (Match match in Regex.Matches(content, pattern))
             {
-                string uri = match.Value;
-                if (resourceUris.Add(uri))
+                string path = GetPathOnly(match.Value).TrimStart('/');
+                if (path == string.Empty)
+                {
+                    continue;
+                }
+
+                if (resourceUris.Add(path))
                 {
                     resources.Add(new()
                     {
-                        ResourceType = GetResourceKind(uri),
-                        ResourceUri = uri,
+                        ResourceType = GetResourceKind(path),
+                        ResourceUri = path,
                     });
                 }
             }
 
             return resources;
+        }
+
+        static string GetPathOnly(string url, string baseUrl = "http://localhost")
+        {
+            if (string.IsNullOrWhiteSpace(url))
+                return string.Empty;
+
+            try
+            {
+                // 创建绝对 URI（即使输入是相对 URL 也能正常解析）
+                var uri = new Uri(new Uri(baseUrl), url);
+                return uri.AbsolutePath;
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
 
         public MediaResource GetResourceKind(string uri)
