@@ -1,4 +1,7 @@
-﻿const dbNames = ["/appdata", "/cache"];
+﻿const routeMap = new Map([
+    ['/appdata', '/appdata/Assets'],
+    ['/cache', '/cache']
+]);
 const storeName = "FILE_DATA";
 
 function intercept(requestUrl) {
@@ -8,12 +11,13 @@ function intercept(requestUrl) {
 
     const href = self.location.href;
     const directory = href.substring(0, href.lastIndexOf('/'));
-    for (var i = 0; i < dbNames.length; i++) {
-        const prefix = directory + dbNames[i] + '/';
+    for (let route of routeMap.keys()) {
+        const prefix = directory + route + '/';
         if (requestUrl.startsWith(prefix)) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -21,7 +25,16 @@ function getIndexedDBFilePath(urlString) {
     const url = new URL(urlString);
     const urlPath = url.origin + url.pathname; //Exclude hash and search
     const href = self.location.href;
-    return urlPath.substring(href.lastIndexOf('/'), urlPath.length);
+    const path = urlPath.substring(href.lastIndexOf('/'), urlPath.length);
+    for (const [prefix, replacement] of routeMap.entries()) {
+        if (path.startsWith(prefix)) {
+            // 替换前缀
+            return path.replace(prefix, replacement);
+        }
+    }
+
+    // 如果没有匹配，返回原始路径
+    return path;
 }
 
 function getFileFromIndexedDB(key) {
@@ -29,12 +42,13 @@ function getFileFromIndexedDB(key) {
         // Open IndexedDB and retrieve the file
 
         let dbName;
-        for (var i = 0; i < dbNames.length; i++) {
-            if (key.startsWith(dbNames[i] + '/')) {
-                dbName = dbNames[i] + "/Assist/";
+        for (let route of routeMap.keys()) {
+            if (key.startsWith(route + '/')) {
+                dbName = route;
                 break;
             }
         }
+
         const request = indexedDB.open(dbName, 21);
         request.onerror = () => {
             reject('Database failed to open');
@@ -46,6 +60,9 @@ function getFileFromIndexedDB(key) {
             const fileRequest = objectStore.get(key);
 
             fileRequest.onsuccess = () => {
+                if (!fileRequest.result) {
+                    reject('File retrieval failed');
+                }
                 const fileName = key.split('/').pop();
                 const contents = fileRequest.result.contents;
                 var file = new File([contents], fileName);

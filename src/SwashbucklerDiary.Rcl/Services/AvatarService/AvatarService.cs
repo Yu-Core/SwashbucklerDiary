@@ -33,7 +33,7 @@ namespace SwashbucklerDiary.Rcl.Services
             _alertService = alertService;
             _appFileSystem = appFileSystem;
 
-            AvatarDirectoryPath = Path.Combine(_mediaResourceManager.AssistDirectoryPath, AvatarDirectoryName);
+            AvatarDirectoryPath = Path.Combine(_mediaResourceManager.AssetsDirectoryPath, AvatarDirectoryName);
         }
 
         public abstract Task<string> SetAvatarByCaptureAsync();

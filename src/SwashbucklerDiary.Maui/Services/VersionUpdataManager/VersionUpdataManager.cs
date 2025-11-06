@@ -126,13 +126,12 @@ namespace SwashbucklerDiary.Maui.Services
             }
 
             SqlConnection.ClearAllPools();
-            await Task.Run(() =>
-            {
-                var oldDatabasePath = Path.Combine(FileSystem.AppDataDirectory, SQLiteConstants.DatabaseFilename);
-                _appFileSystem.FileMove(oldDatabasePath, SQLiteConstants.DatabasePath, true);
-                var oldPrivacyDatabasePath = Path.Combine(FileSystem.AppDataDirectory, SQLiteConstants.PrivacyDatabaseFilename);
-                _appFileSystem.FileMove(oldPrivacyDatabasePath, SQLiteConstants.PrivacyDatabasePath, true);
-            });
+            var oldDatabasePath = Path.Combine(FileSystem.AppDataDirectory, SQLiteConstants.DatabaseFilename);
+            await _appFileSystem.CopyFileAsync(oldDatabasePath, SQLiteConstants.DatabasePath).ConfigureAwait(false);
+            File.Delete(oldDatabasePath);
+            var oldPrivacyDatabasePath = Path.Combine(FileSystem.AppDataDirectory, SQLiteConstants.PrivacyDatabaseFilename);
+            await _appFileSystem.CopyFileAsync(oldPrivacyDatabasePath, SQLiteConstants.PrivacyDatabasePath).ConfigureAwait(false);
+            File.Delete(oldPrivacyDatabasePath);
 
             await base.HandleVersionUpdate1291();
         }

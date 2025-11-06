@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         }
 
         [JSInvokable]
-        public static string RandomName()
+        public string RandomName()
         {
             return Guid.NewGuid().ToString("N");
         }

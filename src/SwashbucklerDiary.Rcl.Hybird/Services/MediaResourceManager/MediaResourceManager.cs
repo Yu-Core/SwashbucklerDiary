@@ -8,7 +8,6 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
     {
         private readonly HttpClient _httpClient;
         private readonly LocalFileWebAssetServer localFileWebAssetServer;
-        private readonly Dictionary<string, string> _routeFileSystemPathMap;
 
         protected MediaResourceManager(IPlatformIntegration mauiPlatformService,
             IAppFileSystem appFileSystem,
@@ -18,13 +17,7 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
         {
             _httpClient = new HttpClient();
 
-            _routeFileSystemPathMap = new()
-            {
-                { $"/{AppFileSystem.AppDataVirtualDirectoryName}", AssistDirectoryPath },
-                { $"/{AppFileSystem.CacheVirtualDirectoryName}", appFileSystem.CacheDirectory },
-            };
-
-            localFileWebAssetServer = new(_routeFileSystemPathMap);
+            localFileWebAssetServer = new(routeFilePathMap);
         }
 
         public override string? MarkdownLinkBase => localFileWebAssetServer?.UrlPrefix;
@@ -66,65 +59,6 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
             return filePath;
         }
 
-        // 将真实的文件路径转化为 URL 相对路径
-        public override string FilePathToRelativeUrl(string filePath)
-        {
-            if (string.IsNullOrEmpty(filePath))
-            {
-                return string.Empty;
-            }
-
-            // 查找匹配的最长路径前缀
-            var match = _routeFileSystemPathMap
-                .Where(pair => filePath.StartsWith(pair.Value, StringComparison.OrdinalIgnoreCase))
-                .OrderByDescending(pair => pair.Value.Length)
-                .FirstOrDefault();
-
-            if (match.Equals(default(KeyValuePair<string, string>)))
-            {
-                return string.Empty;
-            }
-
-            // 获取相对路径部分并转换分隔符
-            var relativePath = filePath.Substring(match.Value.Length)
-                .TrimStart(Path.DirectorySeparatorChar)
-                .Replace(Path.DirectorySeparatorChar, '/');
-
-            // 组合URL并确保不以/开头
-            return $"{match.Key.TrimStart('/')}/{relativePath}".TrimEnd('/');
-        }
-
-        // 将相对URL转换为文件路径
-        public override string RelativeUrlToFilePath(string relativeUrl)
-        {
-            if (string.IsNullOrEmpty(relativeUrl))
-            {
-                return string.Empty;
-            }
-
-            // 标准化URL输入
-            var normalizedUrl = $"{Uri.UnescapeDataString(relativeUrl).Trim('/')}";
-
-            // 查找匹配的最长路由前缀
-            var match = _routeFileSystemPathMap
-                .Where(pair => normalizedUrl.StartsWith($"{pair.Key.TrimStart('/')}/", StringComparison.OrdinalIgnoreCase))
-                .OrderByDescending(pair => pair.Key.Length)
-                .FirstOrDefault();
-
-            if (match.Equals(default(KeyValuePair<string, string>)))
-            {
-                return string.Empty;
-            }
-
-            // 获取URL剩余部分并转换分隔符
-            var remainingPath = normalizedUrl.Substring(match.Key.Length)
-                .TrimStart('/')
-                .Replace('/', Path.DirectorySeparatorChar);
-
-            // 组合文件路径
-            return Path.Combine(match.Value, remainingPath);
-        }
-
         public override string? ReplaceDisplayedUrlToRelativeUrl(string? content)
         {
             if (string.IsNullOrEmpty(content))
@@ -143,7 +77,7 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
             }
 
             var normalizedUrl = $"/{relativePath.Trim('/')}";
-            if (_routeFileSystemPathMap.Keys.Any(it => normalizedUrl.StartsWith($"{it}/", StringComparison.OrdinalIgnoreCase)))
+            if (routeFilePathMap.Keys.Any(it => normalizedUrl.StartsWith($"{it}/", StringComparison.OrdinalIgnoreCase)))
             {
                 return $"{localFileWebAssetServer.UrlPrefix}/{relativePath}";
             }

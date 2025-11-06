@@ -14,10 +14,6 @@ namespace SwashbucklerDiary.WebAssembly.Services
         {
         }
 
-        public override string RelativeUrlToFilePath(string urlRelativePath) => urlRelativePath;
-
-        public override string FilePathToRelativeUrl(string filePath) => filePath;
-
         public override async Task<string?> ToFilePathAsync(MediaResourcePath? path)
         {
             if (path is null)

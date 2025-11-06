@@ -26,11 +26,13 @@ namespace SwashbucklerDiary.Rcl.Services
             MediaResource.Video,
         ];
 
+        protected Dictionary<string, string> routeFilePathMap;
+
         public Dictionary<MediaResource, string> MediaResourceDirectoryPaths { get; } = [];
 
         public virtual string? MarkdownLinkBase => "";
 
-        public string AssistDirectoryPath { get; }
+        public string AssetsDirectoryPath { get; }
 
         public MediaResourceManager(IPlatformIntegration mauiPlatformService,
             IAppFileSystem appFileSystem,
@@ -44,16 +46,22 @@ namespace SwashbucklerDiary.Rcl.Services
             _settingService = settingService;
             _logger = logger;
 
-            AssistDirectoryPath = Path.Combine(_appFileSystem.AppDataDirectory, "Assist");
-            if (!Directory.Exists(AssistDirectoryPath))
+            AssetsDirectoryPath = Path.Combine(_appFileSystem.AppDataDirectory, "Assets");
+            if (!Directory.Exists(AssetsDirectoryPath))
             {
-                Directory.CreateDirectory(AssistDirectoryPath);
+                Directory.CreateDirectory(AssetsDirectoryPath);
             }
 
             foreach (var item in _mediaResources)
             {
-                MediaResourceDirectoryPaths[item] = Path.Combine(AssistDirectoryPath, item.ToString());
+                MediaResourceDirectoryPaths[item] = Path.Combine(AssetsDirectoryPath, item.ToString());
             }
+
+            routeFilePathMap = new()
+            {
+                { $"/{AppFileSystem.AppDataVirtualDirectoryName}", AssetsDirectoryPath },
+                { $"/{AppFileSystem.CacheVirtualDirectoryName}", appFileSystem.CacheDirectory },
+            };
         }
 
         public async Task<ResourceModel?> AddAudioAsync()
@@ -276,9 +284,64 @@ namespace SwashbucklerDiary.Rcl.Services
             return resources;
         }
 
-        public abstract string RelativeUrlToFilePath(string urlRelativePath);
+        // 将真实的文件路径转化为 URL 相对路径
+        public string FilePathToRelativeUrl(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return string.Empty;
+            }
 
-        public abstract string FilePathToRelativeUrl(string filePath);
+            // 查找匹配的最长路径前缀
+            var match = routeFilePathMap
+                .Where(pair => filePath.StartsWith(pair.Value, StringComparison.OrdinalIgnoreCase))
+                .OrderByDescending(pair => pair.Value.Length)
+                .FirstOrDefault();
+
+            if (match.Equals(default(KeyValuePair<string, string>)))
+            {
+                return string.Empty;
+            }
+
+            // 获取相对路径部分并转换分隔符
+            var relativePath = filePath.Substring(match.Value.Length)
+                .TrimStart(Path.DirectorySeparatorChar)
+                .Replace(Path.DirectorySeparatorChar, '/');
+
+            // 组合URL并确保不以/开头
+            return $"{match.Key.TrimStart('/')}/{relativePath}".TrimEnd('/');
+        }
+
+        // 将相对URL转换为文件路径
+        public string RelativeUrlToFilePath(string relativeUrl)
+        {
+            if (string.IsNullOrEmpty(relativeUrl))
+            {
+                return string.Empty;
+            }
+
+            // 标准化URL输入
+            var normalizedUrl = $"{Uri.UnescapeDataString(relativeUrl).Trim('/')}";
+
+            // 查找匹配的最长路由前缀
+            var match = routeFilePathMap
+                .Where(pair => normalizedUrl.StartsWith($"{pair.Key.TrimStart('/')}/", StringComparison.OrdinalIgnoreCase))
+                .OrderByDescending(pair => pair.Key.Length)
+                .FirstOrDefault();
+
+            if (match.Equals(default(KeyValuePair<string, string>)))
+            {
+                return string.Empty;
+            }
+
+            // 获取URL剩余部分并转换分隔符
+            var remainingPath = normalizedUrl.Substring(match.Key.Length)
+                .TrimStart('/')
+                .Replace('/', Path.DirectorySeparatorChar);
+
+            // 组合文件路径
+            return Path.Combine(match.Value, remainingPath);
+        }
 
         public async Task<IEnumerable<ResourceModel>?> AddMultipleImageAsync()
         {

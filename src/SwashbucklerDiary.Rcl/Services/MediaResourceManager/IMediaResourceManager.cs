@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Rcl.Services
     {
         string? MarkdownLinkBase { get; }
 
-        string AssistDirectoryPath { get; }
+        string AssetsDirectoryPath { get; }
 
         Dictionary<MediaResource, string> MediaResourceDirectoryPaths { get; }
 
