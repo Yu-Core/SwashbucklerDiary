@@ -2,6 +2,7 @@ using DeepCloner.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using System.Text.Json;
 
@@ -22,7 +23,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private const string webDavFolderName = "SwashbucklerDiary";
 
-        private List<string> fileList = [];
+        private List<WebDAVFileInfo> fileList = [];
 
         [Inject]
         private IWebDAV WebDAVService { get; set; } = default!;
@@ -47,6 +48,16 @@ namespace SwashbucklerDiary.Rcl.Pages
         private bool Configured => !string.IsNullOrEmpty(configModel.ServerAddress);
 
         private string ConfiguredText => Configured ? I18n.T("Configured") : I18n.T("Not configured");
+
+        private string GeFileSize(WebDAVFileInfo fileInfo)
+            => fileInfo.Length is long size
+            ? AppFileSystem.ConvertBytesToReadable(size)
+            : I18n.T("Unknown size");
+
+        private string GetLastModified(WebDAVFileInfo fileInfo)
+            => fileInfo.LastModified is DateTime dt
+            ? dt.ToString("yyyy-MM-dd")
+            : I18n.T("Unknown time");
 
         private async Task SaveWebDavConfig(WebDavConfigForm webDavConfig)
         {

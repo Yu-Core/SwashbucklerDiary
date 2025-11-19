@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
         }
 
-        public async Task<List<string>> GetZipFileListAsync(string folderName)
+        public async Task<List<WebDAVFileInfo>> GetZipFileListAsync(string folderName)
         {
             ArgumentNullException.ThrowIfNull(webDavClient, nameof(webDavClient));
 
@@ -37,7 +37,12 @@ namespace SwashbucklerDiary.Rcl.Services
                     .Where(it => !it.IsCollection)
                     .Where(it => it.Uri.EndsWith(".zip"))
                     .OrderByDescending(it => it.LastModifiedDate)
-                    .Select(it => Uri.UnescapeDataString(Path.GetFileName(it.Uri)))
+                    .Select(it => new WebDAVFileInfo()
+                    {
+                        Name  = Uri.UnescapeDataString(Path.GetFileName(it.Uri)),
+                        Length = it.ContentLength,
+                        LastModified = it.LastModifiedDate
+                    })
                     .ToList();
             }
             else

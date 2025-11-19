@@ -138,22 +138,32 @@
                 <MIcon>close</MIcon>
             </MButton>
         </MCardTitle>
-        <MCardText Class="pb-0 mb-5 d-flex flex-column">
+        <MCardText Class="pb-0 px-0 mb-5 d-flex flex-column">
             <MList Class="py-0 scroll-show flex-grow-1"
                    Style="overflow-y:auto;">
                 <Virtualize Items="fileList"
                             ItemSize="64"
                             Context="item"
                             OverscanCount="30">
-                    <MListItem @key="item"
-                               Class="mb-1 rounded"
-                               TwoLine
-                               OnClick="()=>Download(item)">
+                    <MListItem Class="rounded"
+                               OnClick="()=>Download(item.Name)">
+                        <MListItemAvatar>
+                            <MIcon>
+                                folder_zip
+                            </MIcon>
+                        </MListItemAvatar>
+
                         <MListItemContent>
-                            <MListItemTitle>
-                                @item
-                            </MListItemTitle>
+                            <MListItemTitle Class="two-line">@item.Name</MListItemTitle>
+
+                            <MListItemSubtitle>@GeFileSize(item) · @GetLastModified(item)</MListItemSubtitle>
                         </MListItemContent>
+
+                        <MListItemAction>
+                            <MButton Icon>
+                                <MIcon>download</MIcon>
+                            </MButton>
+                        </MListItemAction>
                     </MListItem>
                 </Virtualize>
             </MList>

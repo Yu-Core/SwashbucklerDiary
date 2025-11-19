@@ -232,7 +232,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
             return ConvertBytesToReadable(fileSizeInBytes);
         }
 
-        protected static string ConvertBytesToReadable(long bytes)
+        public static string ConvertBytesToReadable(long bytes)
         {
             string[] sizes = ["B", "KB", "MB", "GB", "TB"];
             int i = 0;

@@ -10,6 +10,6 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task UploadAsync(string destFileName, Stream stream);
 
-        Task<List<string>> GetZipFileListAsync(string folderName);
+        Task<List<WebDAVFileInfo>> GetZipFileListAsync(string folderName);
     }
 }

@@ -728,3 +728,10 @@ html.m-overlay-scroll-blocked {
     height: 16px;
     margin-right: 6px;
 }
+
+.two-line {
+    white-space: initial;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+}
