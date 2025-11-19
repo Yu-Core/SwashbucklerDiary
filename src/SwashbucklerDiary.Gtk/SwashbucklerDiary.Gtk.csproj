@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<OutputType>Exe</OutputType>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
@@ -40,13 +40,13 @@
 			<LinuxPath>/usr/share/applications/swashbuckler-diary.desktop</LinuxPath>
 		</Content>
 	</ItemGroup>
-
+	
 	<ItemGroup>
 		<PackageReference Include="GirCore.Gtk-4.0" Version="0.6.3" />
 		<PackageReference Include="GirCore.WebKit-6.0" Version="0.6.3" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebView" Version="9.0.*" />
-		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="1.9.7" />
-		<PackageReference Include="Yu-Core.AspNetCore.Components.WebView.Gtk" Version="0.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebView" Version="10.0.*" />
+		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="2.0.1" />
+		<PackageReference Include="Yu-Core.AspNetCore.Components.WebView.Gtk" Version="0.1.5" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -14,7 +14,7 @@
 ![Release Download](https://img.shields.io/github/downloads/Yu-Core/SwashbucklerDiary/total?style=flat-square)
 [![Release Version](https://img.shields.io/github/v/release/Yu-Core/SwashbucklerDiary?style=flat-square&color=3cb371)](https://github.com/Yu-Core/SwashbucklerDiary/releases/latest)
 <a href="https://hellogithub.com/repository/f4e1065b09114738915da27ef18ba09b" target="_blank"><img src="https://api.hellogithub.com/v1/widgets/recommend.svg?rid=f4e1065b09114738915da27ef18ba09b&claim_uid=jhAc53UNagbM7I9&theme=small" alt="Featured｜HelloGitHub" /></a>
-[![NET 9.0](https://img.shields.io/badge/dotnet-9.0-purple.svg?style=flat-square&color=512bd4)](https://learn.microsoft.com/zh-cn/dotnet/core/whats-new/dotnet-9)
+[![NET 10.0](https://img.shields.io/badge/dotnet-10.0-purple.svg?style=flat-square&color=512bd4)](https://learn.microsoft.com/zh-cn/dotnet/core/whats-new/dotnet-10)
 
 </div>
 
@@ -86,7 +86,6 @@
 - Android (Android 8.0 (API 26) 或更高版本)
 - ~~iOS (iOS 14 或更高版本) (虚拟机可运行，物理机未经测试)~~
 - macOS (macOS 11 或更高版本)
-- ~~Tizen (暂不支持)~~
 - Web
 - Linux
 
