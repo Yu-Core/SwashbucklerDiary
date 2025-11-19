@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Extensions
 {
@@ -10,6 +11,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
         {
             services.TryAddScoped<InputJSModule>();
             services.TryAddScoped<AudioInterop>();
+            services.TryAddScoped<ScreenshotJSModule>();
             return services;
         }
     }

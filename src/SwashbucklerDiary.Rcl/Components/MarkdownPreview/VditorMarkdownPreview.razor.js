@@ -67,7 +67,7 @@ function renderOutline(previewElement, outlineElement) {
     fixOutlientClick(outlineElement.firstElementChild, previewElement);
 }
 
-function renderLazyLoadingImage(element) {
+async function renderLazyLoadingImage(element) {
     if (!element) {
         return;
     }
@@ -76,15 +76,18 @@ function renderLazyLoadingImage(element) {
         return;
     }
 
-    if (window.vditorImageIntersectionObserver) {
-        window.vditorImageIntersectionObserver.disconnect();
-        element.querySelectorAll("img").forEach((imgElement) => {
-            if (imgElement.getAttribute("data-src")) {
-                imgElement.src = imgElement.getAttribute("data-src");
-                imgElement.removeAttribute("data-src");
-            }
-        });
-    }
+    const imgs = element.querySelectorAll("img[data-src]");
+    await Promise.all(Array.from(imgs).map(loadImageImmediately));
+}
+
+function loadImageImmediately(img) {
+    return new Promise((resolve) => {
+        const src = img.getAttribute("data-src");
+        if (!src) return resolve();
+        img.src = src;
+        img.removeAttribute("data-src");
+        img.onload = img.onerror = () => resolve();
+    });
 }
 
 function processMediaElements(previewElement) {

@@ -1,3 +1,11 @@
-::deep .vditor-reset img {
-    cursor: pointer;
+::deep .screenshot {
+    background-color: rgba(var(--m-theme-surface));
 }
+
+::deep .vditor-reset {
+    overflow: initial;
+}
+
+    ::deep .vditor-reset img {
+        cursor: pointer;
+    }

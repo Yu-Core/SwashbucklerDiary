@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
-using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
+using System.Diagnostics;
 
 namespace SwashbucklerDiary.Rcl.Pages
 {
@@ -278,8 +278,23 @@ namespace SwashbucklerDiary.Rcl.Pages
                     await markdownPreview.RenderLazyLoadingImage();
                 }
 
+                DateTime beforDT = System.DateTime.Now;
+
+                //耗时巨大的代码  
                 var filePath = await ScreenshotService.CaptureAsync($".{screenshotClass}");
-                await PlatformIntegration.ShareFileAsync(I18n.T("Share"), filePath);
+
+                DateTime afterDT = System.DateTime.Now;
+                TimeSpan ts = afterDT.Subtract(beforDT);
+                Debug.WriteLine("DateTime总共花费{0}ms.", ts.TotalMilliseconds);
+                
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    await PlatformIntegration.ShareFileAsync(I18n.T("Share"), filePath);
+                }
+                else
+                {
+                    await AlertService.ErrorAsync("文件过大");
+                }
             }
             finally
             {

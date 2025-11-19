@@ -53,8 +53,7 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
 
             services.AddSingleton<IDiaryFileManager, Services.DiaryFileManager>();
             services.AddSingleton<IAvatarService, Services.AvatarService>();
-            services.AddSingleton<ScreenshotJSModule>();
-            services.AddSingleton<IScreenshot, Screenshot>();
+            services.AddScoped<IScreenshot, Screenshot>();
             services.AddSingleton<IVersionUpdataManager, Services.VersionUpdataManager>();
 
             return services;
