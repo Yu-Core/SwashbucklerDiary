@@ -32,8 +32,8 @@
   "id": "./",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f7f9fc",
-  "theme_color": "#f7f9fc",
+  "background_color": "#f4f7fa",
+  "theme_color": "#f4f7fa",
   "prefer_related_applications": false,
   "icons": [
     {
