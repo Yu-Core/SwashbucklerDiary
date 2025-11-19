@@ -180,7 +180,7 @@ html {
 .diary-card {
     width: 100%;
     margin-bottom: 20px;
-    padding: 0px 0px 8px !important;
+    padding: 8px 0px !important;
 }
 
 @media screen and (min-width:600px) {
