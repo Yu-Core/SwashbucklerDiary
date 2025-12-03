@@ -27,7 +27,7 @@ const getTitle = (doc) => {
 const getDescription = (doc) => {
     const ogDescription = getMetaContent(doc, 'description');
     if (ogDescription) return ogDescription;
-    const metaDescriptionElement = document.querySelector('meta[name="description"]');
+    const metaDescriptionElement = doc.querySelector('meta[name="description"]');
     if (metaDescriptionElement && metaDescriptionElement.content.length > 0) {
         return metaDescriptionElement.content;
     }
