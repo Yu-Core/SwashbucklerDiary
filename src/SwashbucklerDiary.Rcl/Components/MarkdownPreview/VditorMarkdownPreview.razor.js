@@ -20,7 +20,6 @@ function preview(dotNetCallbackRef, previewElement, text, options, optimize) {
             if (optimize) {
                 handleUrlHash();
                 fixToc(previewElement);
-                fixAnchorLinks(previewElement);
                 fixAnchorLinkNavigate(dotNetCallbackRef, previewElement);
             }
 
@@ -51,7 +50,6 @@ async function md2htmlPreview(dotNetCallbackRef, previewElement, text, options, 
     if (patch) {
         handleUrlHash();
         fixToc(previewElement);
-        fixAnchorLinks(previewElement);
         fixAnchorLinkNavigate(dotNetCallbackRef, previewElement);
     }
 
@@ -138,12 +136,6 @@ function fixToc(previewElement) {
     fixOutlientClick(previewElement, previewElement);
 }
 
-function fixAnchorLinks(element) {
-    element.querySelectorAll("a[href^='#']").forEach(a => {
-        a.href = decodeURIComponent(a.getAttribute('href'));
-    });
-}
-
 function fixAnchorLinkNavigate(dotNetCallbackRef, element) {
     const eventListener = eventListeners.get(element);
     if (eventListener) {
@@ -162,7 +154,7 @@ function fixAnchorLinkNavigate(dotNetCallbackRef, element) {
         url.hash = hash;
         dotNetCallbackRef.invokeMethodAsync('NavigateToReplace', url.toString());
 
-        const targetElement = document.getElementById(hash.substring(1));
+        const targetElement = document.querySelector(decodeURIComponent(hash));
         if (targetElement) {
             setTimeout(() => {
                 targetElement.scrollIntoView({ behavior: "smooth" });
