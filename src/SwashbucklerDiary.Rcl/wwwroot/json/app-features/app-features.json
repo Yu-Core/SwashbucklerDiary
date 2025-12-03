@@ -305,9 +305,9 @@
     "Href": "diaryCardSetting"
   },
   {
-    "Name": "Auto title",
+    "Name": "Default title",
     "Icon": "title",
-    "Path": "Setting / Diary card / Auto title",
+    "Path": "Setting / Diary card / Default title",
     "Href": "diaryCardSetting"
   },
   {

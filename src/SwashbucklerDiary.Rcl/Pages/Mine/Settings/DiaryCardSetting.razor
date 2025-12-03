@@ -18,11 +18,11 @@
                     </MIcon>
                 </MListItemIcon>
                 <MListItemContent>
-                    <wc-auto-scroll-text>@(I18n.T("Auto title"))</wc-auto-scroll-text>
+                    <wc-auto-scroll-text>@(I18n.T("Default title"))</wc-auto-scroll-text>
                 </MListItemContent>
                 <MListItemAction>
-                    <SettingSwitch @bind-Value="diaryCardAutoTitle"
-                                   SettingKey="@nameof(Setting.DiaryCardAutoTitle)">
+                    <SettingSwitch @bind-Value="diaryCardDefaultTitle"
+                                   SettingKey="@nameof(Setting.DiaryCardDefaultTitle)">
                     </SettingSwitch>
                 </MListItemAction>
             </MListItem>
