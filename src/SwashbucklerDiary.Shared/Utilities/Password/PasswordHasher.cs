@@ -18,14 +18,13 @@ namespace SwashbucklerDiary.Shared
         // 使用 PBKDF2 哈希密码
         public static byte[] HashPassword(string password, byte[] salt, int iterations = 10000, int hashLength = 32)
         {
-            using (var pbkdf2 = new Rfc2898DeriveBytes(
+            return Rfc2898DeriveBytes.Pbkdf2(
                 password: password,
                 salt: salt,
                 iterations: iterations,
-                hashAlgorithm: HashAlgorithmName.SHA256))
-            {
-                return pbkdf2.GetBytes(hashLength);
-            }
+                hashAlgorithm: HashAlgorithmName.SHA256,
+                outputLength: hashLength
+            );
         }
 
         // 将字节数组转换为Base64字符串

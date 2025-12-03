@@ -17,7 +17,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="10.0.*" />
 		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.*" />
 		<PackageReference Include="Serilog" Version="4.3.1-dev-02395" />
-		<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
 		<PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
 		<PackageReference Include="SqlSugarCoreNoDrive.Aot" Version="5.1.4.186" />

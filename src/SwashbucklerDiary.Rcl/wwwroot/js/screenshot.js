@@ -1,4 +1,4 @@
-import { snapdom } from '../npm/snapdom@2.0.0-dev.2/dist/snapdom.min.js';
+import { snapdom } from '../npm/snapdom@2.0.1/dist/snapdom.min.js';
 
 export async function getScreenshotStream(selector, proxyUrl) {
     const el = document.querySelector(selector);
