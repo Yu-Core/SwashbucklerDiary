@@ -501,5 +501,12 @@
   "Fix completed": "Đã sửa xong",
   "Fix Tool": "Công cụ sửa chữa",
   "Link card": "Thẻ liên kết",
-  "Generate card style links for hyperlinks": "Tạo các liên kết kiểu thẻ cho các liên kết siêu"
+  "Generate card style links for hyperlinks": "Tạo các liên kết kiểu thẻ cho các liên kết siêu",
+  "Update available": "Có bản cập nhật",
+  "Go to update": "Đi đến cập nhật",
+  "Remind me later": "Nhắc tôi sau",
+  "Upgrading and optimizing in progress. Please wait...": "Đang nâng cấp và tối ưu hóa. Vui lòng chờ...",
+  "Auto title": "Tiêu đề tự động",
+  "Unknown size": "Kích thước không xác định",
+  "Unknown time": "Thời gian không xác định"
 }

@@ -501,5 +501,12 @@
   "Fix completed": "Fix completed",
   "Fix Tool": "Fix Tool",
   "Link card": "Link card",
-  "Generate card style links for hyperlinks": "Generate card style links for hyperlinks"
+  "Generate card style links for hyperlinks": "Generate card style links for hyperlinks",
+  "Update available": "Update available",
+  "Go to update": "Go to update",
+  "Remind me later": "Remind me later",
+  "Upgrading and optimizing in progress. Please wait...": "Upgrading and optimizing in progress. Please wait...",
+  "Auto title": "Auto title",
+  "Unknown size": "Unknown size",
+  "Unknown time": "Unknown time"
 }

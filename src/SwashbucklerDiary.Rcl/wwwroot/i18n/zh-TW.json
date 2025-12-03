@@ -501,5 +501,12 @@
   "Fix completed": "修復完成",
   "Fix Tool": "修復工具",
   "Link card": "卡片連結",
-  "Generate card style links for hyperlinks": "為超連結產生卡片式連結"
+  "Generate card style links for hyperlinks": "為超連結產生卡片式連結",
+  "Update available": "有可用更新",
+  "Go to update": "前往更新",
+  "Remind me later": "稍後提醒",
+  "Upgrading and optimizing in progress. Please wait...": "正在升級優化中，請稍候...",
+  "Auto title": "自動標題",
+  "Unknown size": "未知大小",
+  "Unknown time": "未知時間"
 }

@@ -501,5 +501,12 @@
   "Fix completed": "Corrección completada",
   "Fix Tool": "Outil de réparation",
   "Link card": "Tarjeta de enlace",
-  "Generate card style links for hyperlinks": "Generar enlaces con estilo de tarjeta para hipervínculos"
+  "Generate card style links for hyperlinks": "Generar enlaces con estilo de tarjeta para hipervínculos",
+  "Update available": "Actualización disponible",
+  "Go to update": "Ir a actualizar",
+  "Remind me later": "Recordarme más tarde",
+  "Upgrading and optimizing in progress. Please wait...": "Actualización y optimización en curso. Por favor espere...",
+  "Auto title": "Título automático",
+  "Unknown size": "Tamaño desconocido",
+  "Unknown time": "Tiempo desconocido"
 }

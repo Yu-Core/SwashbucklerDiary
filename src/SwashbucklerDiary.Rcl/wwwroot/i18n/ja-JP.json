@@ -501,5 +501,12 @@
   "Fix completed": "修正完了",
   "Fix Tool": "修復ツール",
   "Link card": "リンクカード",
-  "Generate card style links for hyperlinks": "ハイパーリンク用のカードスタイルのリンクを生成する"
+  "Generate card style links for hyperlinks": "ハイパーリンク用のカードスタイルのリンクを生成する",
+  "Update available": "利用可能な更新",
+  "Go to update": "更新へ移動",
+  "Remind me later": "後で通知",
+  "Upgrading and optimizing in progress. Please wait...": "アップグレードと最適化を実行中です。お待ちください...",
+  "Auto title": "自動タイトル",
+  "Unknown size": "不明なサイズ",
+  "Unknown time": "不明な時間"
 }
