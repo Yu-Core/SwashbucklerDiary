@@ -60,11 +60,6 @@
     "Url": "https://github.com/gircore/gir.core/blob/main/license.txt"
   },
   {
-    "Name": "html2canvas",
-    "License": "MIT license",
-    "Url": "https://github.com/niklasvh/html2canvas/blob/master/LICENSE"
-  },
-  {
     "Name": "Markdown Guide",
     "License": "MIT license",
     "Url": "https://github.com/mattcone/markdown-guide/blob/master/LICENSE.txt"
@@ -123,6 +118,11 @@
     "Name": "Serilog.Sinks.SQLite.Maui",
     "License": "Apache-2.0 license",
     "Url": "https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui/blob/dev/LICENSE"
+  },
+  {
+    "Name": "snapdom",
+    "License": "MIT license",
+    "Url": "https://github.com/zumerlab/snapdom/blob/main/LICENSE"
   },
   {
     "Name": "SQLitePCLRaw",
