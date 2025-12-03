@@ -13,8 +13,6 @@ namespace SwashbucklerDiary.Rcl.Layout
     {
         protected bool afterInitConfig;
 
-        protected bool showSponsorSupport;
-
         protected readonly List<NavigationButton> navigationButtons = [
             new("Diary", "book", ""),
             new("Calendar", "schedule", "history"),
@@ -158,26 +156,9 @@ namespace SwashbucklerDiary.Rcl.Layout
             await DialogNotificationCoreAsync();
         }
 
-        protected virtual async Task DialogNotificationCoreAsync()
+        protected virtual Task DialogNotificationCoreAsync()
         {
-            await SponsorSupport();
-        }
-
-        private async Task SponsorSupport()
-        {
-            DateTime currentTime = DateTime.Now;
-            if (currentTime.Month == 1)
-            {
-                string key = "LastShowForSponsorSupport";
-                DateTime lastShowTime = SettingService.Get(key, DateTime.MinValue);
-
-                if (currentTime.Year != lastShowTime.Year)
-                {
-                    showSponsorSupport = true;
-                    await InvokeAsync(StateHasChanged);
-                    await SettingService.SetAsync(key, currentTime);
-                }
-            }
+            return Task.CompletedTask;
         }
 
         private async void HandleAppLifecycleOnStopped()

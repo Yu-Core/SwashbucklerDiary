@@ -410,8 +410,6 @@
   "Successfully moved": "移动成功",
   "No diary that needs to be moved": "没有需要移动的日记",
   "Privacy mode data from version 1.3.9 and earlier will be automatically migrated to the new version of privacy mode after the update. \nIf the old privacy data is obtained by restoring backups or importing, it will be displayed together with the regular diary. Please click the migration button above to move them to privacy mode.": "1.3.9版本及以前的隐私模式数据，在更新后会自动迁移到新版本的隐私模式中。\n如果是通过恢复备份或导入而来的旧的隐私数据，会与普通日记一起显示，请点击上方的迁移按钮，将它们移动到隐私模式。",
-  "Support it": "支持一下",
-  "If you think this software is pretty good, you can donate and support it. Your support is the greatest motivation for developers.": "如果你觉得此软件还不错的话，可以捐助支持一下。你的支持就是开发者最大的动力。",
   "Feature search": "功能搜索",
   "Create diary": "创建日记",
   "Select weather": "选择天气",
