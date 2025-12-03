@@ -41,6 +41,9 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [Tencent App Store](https://sj.qq.com/appdetail/com.yucore.swashbucklerdiary)
 - [HUAWEI AppGallery](https://appgallery.huawei.com/app/C107898911)
 
+## ⬇️ [Download Guide](./doc/download-guide.md)
+See details [./download-guide.md](./download-guide.md) 
+
 ## ✨ Characteristics
 * Minimalist UI design
 * Markdown real-time rendering
@@ -60,7 +63,6 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 * Synchronous transmission under the same local area network
 
 ## 🧩 Screenshot
-
 <table>
     <tr>
         <td><img src="./res/screenshots/Windows(1).png"/></td>
@@ -105,13 +107,11 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 | zh-TW | Chinese (Traditional)  | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/zh-TW.json)      |
 
 ## ⌨️ Development Environment
-
-[Visual Studio 2022](https://learn.microsoft.com/en-us/visualstudio/install/install-visual-studio?view=vs-2022) 或 [Visual Studio Code](https://code.visualstudio.com/docs)
+[Visual Studio 2026](https://learn.microsoft.com/visualstudio/install/install-visual-studio?view=visualstudio)
 
 - System requirements
 
     - Windows 10 version 1909 or higher: Home, Professional, Education, and Enterprise
-    - macOS Ventura 13.5 or higher
 
 - Workload
 
@@ -120,6 +120,23 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
     - Desktop and mobile apps
         - Mobile development using .NET / .NET Multi platform App UI development
         - .NET Desktop Development
+
+[Visual Studio Code](https://code.visualstudio.com/docs)
+
+- Basic environment
+ 
+    - [.Net 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+    - [libwebkitgtk-6.0-4(Optional)](https://packages.ubuntu.com/jammy/libwebkitgtk-6.0-4) (For develop Linux)
+    - [OpenJDK 17(Optional)](https://learn.microsoft.com/zh-cn/java/openjdk/download#openjdk-17) (For develop Android)
+    - [Xcode(Optional)](https://developer.apple.com/xcode) (For develop macOS)
+
+- Extension
+
+    - [C# Dev Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit)
+    - [.NET MAUI](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-maui)
+
+## 🏗️ [Project structure](./directory-structure.md)
+See details [./directory-structure.md](./directory-structure.md)  
 
 ## 🙏 Thanks to the following Open Source Projects
 - [.NET MAUI](https://github.com/dotnet/maui)
@@ -137,7 +154,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [Markdown Guide](https://github.com/mattcone/markdown-guide)
 - [MASA.Blazor](https://github.com/BlazorComponent/MASA.Blazor)
 - [MauiBlazorToolkit](https://github.com/Yu-Core/MauiBlazorToolkit)
-- [maui-linux](https://github.com/jsuarezruiz/maui-linux)
+- [maui-linux](https://github.com/MauiGtk/maui-linux)
 - [Microsoft.Data.Sqlite](https://github.com/dotnet/efcore#microsoftdatasqlite)
 - [panzoom](https://github.com/anvaka/panzoom)
 - [Plugin.Maui.Biometric](https://github.com/FreakyAli/Plugin.Maui.Biometric)

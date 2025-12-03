@@ -41,6 +41,9 @@
 - [应用宝](https://sj.qq.com/appdetail/com.yucore.swashbucklerdiary)
 - [华为应用市场](https://appgallery.huawei.com/app/C107898911)
 
+## ⬇️ [下载指南](./doc/download-guide.md)
+详见 [./download-guide.md](./download-guide.md) 
+
 ## ✨ 特点
 * 极简风格的UI设计
 * Markdown即时渲染
@@ -60,7 +63,6 @@
 * 同一局域网下同步传输
 
 ## 🧩 截图
-
 <table>
     <tr>
         <td><img src="./res/screenshots/Windows(1).png"/></td>
@@ -90,7 +92,6 @@
 - Linux
 
 ## 🌏️ 支持的语言
-
 | 代码    | 语言             | 查看                                                             |
 | ------- | ---------------- | ---------------------------------------------------------------- |
 | de-DE   | 德语             | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/de-DE.json)      |
@@ -106,13 +107,11 @@
 | zh-TW   | 中文（繁体）       | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/zh-TW.json)      |
 
 ## ⌨️ 开发环境
-
-[Visual Studio 2022](https://learn.microsoft.com/zh-cn/visualstudio/install/install-visual-studio?view=vs-2022) 或 [Visual Studio Code](https://code.visualstudio.com/docs)
+[Visual Studio 2026](https://learn.microsoft.com/visualstudio/install/install-visual-studio?view=visualstudio)
 
 - 系统要求
 
     - Windows 10 版本 1909 或更高版本：家庭版、专业版、教育版和企业版。
-    - macOS Ventura 13.5 或更高版本
 
 - 工作负荷
 
@@ -121,6 +120,23 @@
     - 桌面应用和移动应用
         - 使用 .NET 的移动开发 / .NET Multi-platform App UI 开发
         - .NET 桌面开发
+     
+[Visual Studio Code](https://code.visualstudio.com/docs)
+
+- 基础环境
+ 
+    - [.Net 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+    - [libwebkitgtk-6.0-4（可选）](https://packages.ubuntu.com/jammy/libwebkitgtk-6.0-4) (For develop Linux)
+    - [OpenJDK 17（可选）](https://learn.microsoft.com/zh-cn/java/openjdk/download#openjdk-17) (For develop Android)
+    - [Xcode（可选）](https://developer.apple.com/xcode) (For develop macOS)
+
+- 扩展
+
+    - [C# Dev Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit)
+    - [.NET MAUI](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-maui)
+
+## 🏗️ [项目结构](./directory-structure.md)
+详见 [./directory-structure.md](./directory-structure.md)  
 
 ## 🙏 感谢以下开源项目
 - [.NET MAUI](https://github.com/dotnet/maui)
@@ -138,7 +154,7 @@
 - [Markdown Guide](https://github.com/mattcone/markdown-guide)
 - [MASA.Blazor](https://github.com/BlazorComponent/MASA.Blazor)
 - [MauiBlazorToolkit](https://github.com/Yu-Core/MauiBlazorToolkit)
-- [maui-linux](https://github.com/jsuarezruiz/maui-linux)
+- [maui-linux](https://github.com/MauiGtk/maui-linux)
 - [Microsoft.Data.Sqlite](https://github.com/dotnet/efcore#microsoftdatasqlite)
 - [panzoom](https://github.com/anvaka/panzoom)
 - [Plugin.Maui.Biometric](https://github.com/FreakyAli/Plugin.Maui.Biometric)
