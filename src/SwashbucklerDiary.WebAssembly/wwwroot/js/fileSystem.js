@@ -30,15 +30,13 @@ window.WasmFileSystem = {
     },
     syncfs: function () {
         return new Promise((res) => {
-            if (this.synchronizing) return res();
-            this.synchronizing = true;
             const FS = Blazor.runtime.Module.FS;
-            FS.syncfs((err) => {
-                this.synchronizing = false;
-                if (err) console.error(err);
-                res();
-            });
+            if (FS.syncFSRequests === 0) {
+                FS.syncfs((err) => {
+                    if (err) console.error(err);
+                    res();
+                });
+            }
         });
-    },
-    synchronizing: false
+    }
 };

@@ -88,25 +88,30 @@ namespace SwashbucklerDiary.Rcl.Extensions
             ,
             db =>
             {
-#if DEBUG
                 //单例参数配置，所有上下文生效
                 foreach (var config in configs)
                 {
+#if DEBUG
                     db.GetConnection(config.ConfigId).Aop.OnLogExecuting = (sql, pars) =>
                     {
                         //Debug.WriteLine(sql);//输出sql
                         Debug.WriteLine(UtilMethods.GetSqlString(DbType.Sqlite, sql, pars));//输出sql
                     };
-
+#endif
                     if (OperatingSystem.IsBrowser())
                     {
-                        db.GetConnection(config.ConfigId).Aop.DataChangesExecuted = (_, _) =>
+                        db.GetConnection(config.ConfigId).Aop.OnLogExecuted = async (sql, pars) =>
                         {
-                            _ = appFileSystem?.SyncFS();
+                            if (!sql.StartsWith("SELECT", StringComparison.OrdinalIgnoreCase)
+                                && appFileSystem is not null)
+                            {
+                                await Task.Delay(500);
+                                await appFileSystem.SyncFS();
+                            }
                         };
                     }
                 }
-#endif
+
                 if (settingService is not null)
                 {
                     bool privacyMode = settingService.GetTemp(it => it.PrivacyMode);
