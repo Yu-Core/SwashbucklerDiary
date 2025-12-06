@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Components;
-using SqlSugar;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Pages
@@ -95,25 +96,26 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private Expression<Func<AppFeature, bool>> CreateExpression()
         {
-            var expable = Expressionable.Create<AppFeature>();
+            var builder = ExpressionBuilder.Create<AppFeature>();
 
             if (!string.IsNullOrWhiteSpace(search))
             {
                 Expression<Func<AppFeature, bool>> expSearch
                     = it => I18n.T(it.Name ?? string.Empty).Contains(search, StringComparison.CurrentCultureIgnoreCase)
-                    || I18n.T(it.Path ?? string.Empty).Contains(search, StringComparison.CurrentCultureIgnoreCase);
-                expable.And(expSearch);
+                    || I18n.TForAppFeaturePath(it.Path ?? string.Empty).Contains(search, StringComparison.CurrentCultureIgnoreCase);
+                builder.And(expSearch);
 
                 Expression<Func<AppFeature, bool>> expPlatform
                     = it => FilterPlatform(it);
-                expable.And(expPlatform);
+                builder.And(expPlatform);
+
                 Expression<Func<AppFeature, bool>> expBreakpoint
                     = it => it.HideBreakpoints == null
                     || !it.HideBreakpoints.Contains(BreakpointService.Breakpoint.Name.ToString());
-                expable.And(expBreakpoint);
+                builder.And(expBreakpoint);
             }
 
-            return expable.ToExpression();
+            return builder.ToExpression();
         }
 
         private void HandleBreakpointChange(object? sender, MyBreakpointChangedEventArgs e)
