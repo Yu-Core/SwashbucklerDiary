@@ -76,7 +76,13 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
                     proxyRequest.Headers.TryAddWithoutValidation(headerName, request.Headers[headerName]);
             }
 
+            // 修改请求头
+            proxyRequest.Headers.Remove("User-Agent");
             proxyRequest.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36");
+            if (OperatingSystem.IsLinux())
+            {
+                proxyRequest.Headers.Remove("Accept-Encoding");
+            }
 
             // 如果有请求体，则转发
             if (request.ContentLength64 > 0)
@@ -117,6 +123,12 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
                 context.Response.ContentType = contentType;
             }
 
+            // iOS or MacCatalyst
+            if (OperatingSystem.IsIOS())
+            {
+                context.Response.Headers.Remove("Content-Encoding");
+            }
+
             // 写回响应内容
             using var responseStream = await responseMessage.Content.ReadAsStreamAsync();
             await responseStream.CopyToAsync(context.Response.OutputStream);
@@ -126,7 +138,7 @@ namespace SwashbucklerDiary.Rcl.Hybird.Services
         [
             "Host", "Connection", "Content-Length",
             "TE", "Upgrade", "Proxy-Connection",
-            "Origin", "User-Agent"
+            "Origin"
         ];
 
         private static bool IsUnsafeHeader(string header)

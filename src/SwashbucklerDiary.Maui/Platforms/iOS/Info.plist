@@ -63,5 +63,10 @@
 		</array>
 		<key>NSFaceIDUsageDescription</key>
 		<string>Need your face to unlock! </string>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+		</dict>
 	</dict>
 </plist>
