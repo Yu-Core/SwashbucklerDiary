@@ -4,11 +4,11 @@
 
 ## Update Time
 
-2025.12.06
+2025.12.08
 
 ## Preface
 
-Special thanks to the patrons and encouragers `烽火入眉弯`, `AgSnP`, `无名侠客`, `*.`, `*G`, `x*x`, `*班`, and others.
+Special thanks to the patrons and encouragers `烽火入眉弯`, `AgSnP`, `无名侠客`, `*.`, `*G`, `x*x`, `*班`, `郑山` and others.
 
 The project's development is inseparable from everyone's support. Friends who are interested can support it [Sponsor](sponsor).
 
