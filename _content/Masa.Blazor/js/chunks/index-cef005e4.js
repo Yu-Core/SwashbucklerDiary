@@ -1,0 +1,2 @@
+var n=function(n,u,l){var t=null,r=null,i=function(){t&&(clearTimeout(t),r=null,t=null)},a=function(){if(!u)return n.apply(this,arguments);var a=this,e=arguments,f=l&&!t;return i(),r=function(){n.apply(a,e)},t=setTimeout(function(){if(t=null,!f){var n=r;return r=null,n()}},u),f?r():void 0};return a.cancel=i,a.flush=function(){var n=r;i(),n&&n()},a};export{n as f};
+//# sourceMappingURL=index-cef005e4.js.map

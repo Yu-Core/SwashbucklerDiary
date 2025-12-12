@@ -1,0 +1,162 @@
+[
+  {
+    "Name": ".NET MAUI",
+    "License": "MIT license",
+    "Url": "https://github.com/dotnet/maui/blob/main/LICENSE.txt"
+  },
+  {
+    "Name": "ASP.NET Core",
+    "License": "MIT license",
+    "Url": "https://github.com/dotnet/aspnetcore/blob/main/LICENSE.txt"
+  },
+  {
+    "Name": "betterSearch",
+    "License": "MIT license",
+    "Url": "https://github.com/jayZOU/betterSearch/blob/master/LICENSE"
+  },
+  {
+    "Name": "Blazored LocalStorage",
+    "License": "MIT license",
+    "Url": "https://github.com/Blazored/LocalStorage/blob/main/LICENSE"
+  },
+  {
+    "Name": "AspNetCore.Components.WebView.Gtk",
+    "License": "MIT license",
+    "Url": "https://github.com/Yu-Core/AspNetCore.Components.WebView.Gtk/blob/main/LICENSE.txt"
+  },
+  {
+    "Name": "Brotli",
+    "License": "MIT license",
+    "Url": "https://github.com/google/brotli/blob/master/LICENSE"
+  },
+  {
+    "Name": "ClosedXML",
+    "License": "MIT license",
+    "Url": "https://github.com/ClosedXML/ClosedXML/blob/develop/LICENSE"
+  },
+  {
+    "Name": "CommunityToolkit.Maui",
+    "License": "MIT license",
+    "Url": "https://github.com/CommunityToolkit/Maui/blob/main/LICENSE"
+  },
+  {
+    "Name": "dotnet-packaging",
+    "License": "MIT license",
+    "Url": "https://github.com/quamotion/dotnet-packaging/blob/master/LICENSE"
+  },
+  {
+    "Name": "EmbedIO",
+    "License": "MIT license",
+    "Url": "https://github.com/unosquare/embedio/blob/master/LICENSE"
+  },
+  {
+    "Name": "Fly Gesture Unlock",
+    "License": "MIT license",
+    "Url": "https://github.com/feiafei27/fly-gesture-unlock/blob/master/LICENSE"
+  },
+  {
+    "Name": "Gir.Core",
+    "License": "MIT license",
+    "Url": "https://github.com/gircore/gir.core/blob/main/license.txt"
+  },
+  {
+    "Name": "Markdown Guide",
+    "License": "MIT license",
+    "Url": "https://github.com/mattcone/markdown-guide/blob/master/LICENSE.txt"
+  },
+  {
+    "Name": "MASA.Blazor",
+    "License": "MIT license",
+    "Url": "https://github.com/BlazorComponent/MASA.Blazor/blob/main/LICENSE"
+  },
+  {
+    "Name": "MauiBlazorToolkit",
+    "License": "MIT license",
+    "Url": "https://github.com/Yu-Core/MauiBlazorToolkit/blob/master/LICENSE"
+  },
+  {
+    "Name": "maui-linux",
+    "License": "MIT license",
+    "Url": "https://github.com/MauiGtk/maui-linux/blob/main/LICENSE.txt"
+  },
+  {
+    "Name": "Microsoft.Data.Sqlite",
+    "License": "MIT license",
+    "Url": "https://github.com/dotnet/efcore/blob/main/LICENSE.txt"
+  },
+  {
+    "Name": "panzoom",
+    "License": "MIT license",
+    "Url": "https://github.com/anvaka/panzoom/blob/main/LICENSE"
+  },
+  {
+    "Name": "Plugin.Maui.Biometric",
+    "License": "MIT license",
+    "Url": "https://github.com/FreakyAli/Plugin.Maui.Biometric/blob/master/LICENSE"
+  },
+  {
+    "Name": "Serilog",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/serilog/serilog/blob/dev/LICENSE"
+  },
+  {
+    "Name": "Serilog.Extensions.Logging",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/serilog/serilog-extensions-logging/blob/dev/LICENSE"
+  },
+  {
+    "Name": "Serilog.Sinks.Debug",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/serilog/serilog-sinks-debug/blob/dev/LICENSE"
+  },
+  {
+    "Name": "Serilog.Sinks.SQLite",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/saleem-mirza/serilog-sinks-sqlite/blob/dev/LICENSE"
+  },
+  {
+    "Name": "Serilog.Sinks.SQLite.Maui",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui/blob/dev/LICENSE"
+  },
+  {
+    "Name": "snapdom",
+    "License": "MIT license",
+    "Url": "https://github.com/zumerlab/snapdom/blob/main/LICENSE"
+  },
+  {
+    "Name": "SQLitePCLRaw",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/ericsink/SQLitePCL.raw/blob/master/LICENSE.TXT"
+  },
+  {
+    "Name": "SqlSugar",
+    "License": "MIT license",
+    "Url": "https://github.com/DotNetNext/SqlSugar/blob/master/LICENSE"
+  },
+  {
+    "Name": "Swiper",
+    "License": "MIT license",
+    "Url": "https://github.com/nolimits4web/swiper/blob/master/LICENSE"
+  },
+  {
+    "Name": "Taglib-sharp",
+    "License": "LGPL-2.1 license",
+    "Url": "https://github.com/mono/taglib-sharp/blob/main/COPYING"
+  },
+  {
+    "Name": "WebDavClient",
+    "License": "MIT license",
+    "Url": "https://github.com/skazantsev/WebDavClient/blob/main/LICENSE.txt"
+  },
+  {
+    "Name": "wc-waterfall",
+    "License": "MIT license",
+    "Url": "https://github.com/huodoushigemi/wc-flow-layout/blob/main/LICENSE"
+  },
+  {
+    "Name": "Vditor",
+    "License": "MIT license",
+    "Url": "https://github.com/Vanessa219/vditor/blob/master/LICENSE"
+  }
+]

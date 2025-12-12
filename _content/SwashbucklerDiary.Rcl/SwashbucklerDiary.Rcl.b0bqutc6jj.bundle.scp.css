@@ -1,0 +1,178 @@
+/* _content/SwashbucklerDiary.Rcl/Components/AudioResourceCard/AudioResourceCard.razor.rz.scp.css */
+.player-duration-bar[b-0vc2116zhn] {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 8px;
+    align-items: center;
+}
+
+input[type=range][b-0vc2116zhn] {
+    --current-width: 0;
+    --height: 4px;
+    --current-color: rgba(var(--m-theme-on-surface));
+    --current-track-color: rgba(var(--m-theme-on-surface), var(--m-low-emphasis-opacity));
+    appearance: none;
+    border-radius: 2px;
+    height: 22px;
+    width: 100%;
+    background: transparent;
+    outline: none;
+    position: relative;
+}
+
+input[type="range"][b-0vc2116zhn]:before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: var(--current-width);
+    height: var(--height);
+    background-color: var(--current-color);
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+input[type=range][b-0vc2116zhn]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: var(--height);
+    cursor: pointer;
+    animation: 0.2s;
+    box-shadow: 0 0 0 black;
+    background: var(--current-track-color);
+    border-radius: 2px;
+    border: 0 solid black;
+}
+
+input[type=range][b-0vc2116zhn]::-webkit-slider-thumb {
+    position: relative;
+    box-shadow: 0 0 0 black;
+    border: 0 solid black;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: var(--current-color);
+    cursor: pointer;
+    -webkit-appearance: none;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+input[type="range"]:hover[b-0vc2116zhn] {
+    cursor: pointer;
+}
+
+input[type=range][b-0vc2116zhn]::-moz-range-track {
+    width: 100%;
+    height: var(--height);
+    cursor: pointer;
+    animation: 0.2s;
+    box-shadow: 0 0 0 black;
+    background: var(--current-track-color);
+    border-radius: 2px;
+    border: 0 solid black;
+}
+
+input[type=range][b-0vc2116zhn]::-moz-range-thumb {
+    box-shadow: 0 0 0 black;
+    border: 0 solid black;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: var(--current-color);
+    cursor: pointer;
+}
+
+input[type="range"][b-0vc2116zhn]::-moz-range-progress {
+    background-color: var(--current-color);
+    border-radius: 2px;
+    height: var(--height);
+}
+/* _content/SwashbucklerDiary.Rcl/Components/NumberLock/NumberLock.razor.rz.scp.css */
+.progress-dots[b-19bwl06zwm] {
+    margin-bottom: 30px;
+}
+
+.progress-dots--shake[b-19bwl06zwm] {
+    animation: dotShake-b-19bwl06zwm 0.4s;
+}
+
+@keyframes dotShake-b-19bwl06zwm {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    20%, 60% {
+        transform: translateX(-3px);
+    }
+
+    40%, 80% {
+        transform: translateX(3px);
+    }
+}
+
+.keypad[b-19bwl06zwm] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    justify-items: center;
+}
+/* _content/SwashbucklerDiary.Rcl/Pages/History/HistoryPage.razor.rz.scp.css */
+.float-calendar[b-8l4hbvo626]  input {
+    cursor: pointer;
+}
+/* _content/SwashbucklerDiary.Rcl/Pages/ReadPage.razor.rz.scp.css */
+[b-i04eun7ay5] .screenshot {
+    background-color: rgba(var(--m-theme-surface));
+}
+
+[b-i04eun7ay5] .vditor-reset {
+    overflow: initial;
+}
+
+    [b-i04eun7ay5] .vditor-reset img {
+        cursor: pointer;
+    }
+/* _content/SwashbucklerDiary.Rcl/Pages/Write/WritePage.razor.rz.scp.css */
+[b-eatvlywi1t] .m-input__control {
+    flex-grow: 1;
+}
+
+[b-eatvlywi1t] .m-input__slot {
+    flex-grow: 1;
+}
+
+[b-eatvlywi1t] .m-text-field__details {
+    flex-grow: 0;
+}
+
+.write-input-wrap[b-eatvlywi1t] {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    min-height: 0;
+    overflow: auto;
+}
+
+[b-eatvlywi1t] .write-markdown-wrap {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    min-height: 0;
+}
+
+[b-eatvlywi1t] .write-markdown {
+    flex-grow: 1;
+    min-height: 0;
+}
+
+@media (hover: none) {
+    .write-chip-group[b-eatvlywi1t] {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+.write-chip-group[b-eatvlywi1t]  .m-chip {
+    margin: 4px 8px 4px 0;
+}

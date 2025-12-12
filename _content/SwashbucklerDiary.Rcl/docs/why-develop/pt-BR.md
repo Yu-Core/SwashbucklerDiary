@@ -1,0 +1,5 @@
+Por que desenvolver este aplicativo de diário? No ensino médio, eu adorava escrever um diário, anotando coisas que pareciam insignificantes e um pouco bobas. Hoje, quando as releio ocasionalmente, elas se tornaram lembranças preciosas. Portanto, esse bom hábito de escrever um diário deve ser mantido. Nesta era, usa-se menos papel e caneta, e aplicativos de diário, mais fáceis de organizar, tornaram-se o padrão.
+
+Tentei muitos aplicativos de diário, mas sempre sentia que faltava alguma coisa. Exigem cadastro, são pagos, têm anúncios, a interface é confusa, as funções são básicas, a operação é complicada... sempre parecia ter pelo menos um desses problemas. Era realmente difícil escrever um diário direito. Então decidi criar um eu mesmo.
+
+Ao fazer este aplicativo de diário, quero que cada pessoa que ama escrever um diário possa recuperar a alegria de fazê-lo. Se você achar ele bom, pode fazer uma doação para nos ajudar a desenvolver e manter melhor este projeto. Obrigado pelo apoio contínuo. Que todos nós possamos nos tornar os heróis de nossos corações em nosso próprio mundo.
