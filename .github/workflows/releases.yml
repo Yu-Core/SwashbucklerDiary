@@ -3,29 +3,66 @@ name: releases
 on:
   workflow_dispatch:
     inputs:
-      prerelease:
-        description: 'Pre-Release'
-        required: false
+      upload:
         type: boolean
+        default: true
+        description: Upload GitHub Release or Microsoft Store
 
 env:
   DOTNET_NOLOGO: true                     # Disable the .NET logo
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
   DOTNET_CLI_TELEMETRY_OPTOUT: true       # Disable sending .NET CLI telemetry
   DOTNET_VERSION: '10.0'
-  CSPROJ_PATH: 'src/SwashbucklerDiary.Maui'
-  CSPROJ_FILE_PATH: 'src/SwashbucklerDiary.Maui/SwashbucklerDiary.Maui.csproj'
+  MAUI_CSPROJ_PATH: 'src/SwashbucklerDiary.Maui'
+  MAUI_CSPROJ_FILE_PATH: 'src/SwashbucklerDiary.Maui/SwashbucklerDiary.Maui.csproj'
+  GTK_CSPROJ_PATH: 'src/SwashbucklerDiary.Gtk'
+  GTK_CSPROJ_FILE_PATH: 'src/SwashbucklerDiary.Gtk/SwashbucklerDiary.Gtk.csproj'
+  ARTIFACT_PATH: 'artifacts'
   APP_NAME: 'SwashbucklerDiary'
   STORE_ID: '9P6PBVBF466L'
 
 jobs:
-  WindowsAndAndroid:
-    runs-on: windows-latest
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      displayVersion: ${{ steps.v.outputs.displayVersion }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - id: v
+        shell: bash
+        run: |
+          c=$(git rev-list --count HEAD)
+          echo "version=$c" >> $GITHUB_OUTPUT
+          echo "displayVersion=$((c/1000)).$((c%1000/10)).$((c%10))" >> $GITHUB_OUTPUT
+
+  build-maui:
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: android, arch: arm64, runner: windows-latest, ext: apk, glob: '*Signed.apk' }
+          - { os: android, arch: x64, runner: windows-latest, ext: apk, glob: '*Signed.apk' }
+          - { os: ios, arch: arm64, runner: macos-15, ext: ipa, glob: '*.ipa' }
+          - { os: maccatalyst, arch: arm64, runner: macos-15, ext: pkg, glob: '*.pkg' }
+          - { os: maccatalyst, arch: x64, runner: macos-15, ext: pkg, glob: '*.pkg' }
+          - { os: windows, arch: x64, runner: windows-latest, ext: msix, packaged: true }
+          - { os: windows, arch: x64, runner: windows-latest, ext: zip, packaged: false }
+
+    runs-on: ${{ matrix.runner }}
     steps:
       # Checkout the code
       - uses: actions/checkout@v4
         with:
            fetch-depth: 0
+
+      # Create Artifact Directory
+      - name: Create Artifact Directory
+        shell: bash
+        run: mkdir -p ${{ env.ARTIFACT_PATH }}
 
       # Install .NET SDK
       - name: Setup .NET SDK
@@ -33,215 +70,268 @@ jobs:
         with:
            dotnet-version: '${{ env.DOTNET_VERSION }}.x'
 
+      # Install MAUI Workloads
+      - name: Install MAUI Workloads
+        run: |
+          dotnet workload install maui --ignore-failed-sources
+
       # Install JDK
       - name: Setup JDK
+        if: matrix.os == 'android'
         uses: actions/setup-java@v4
         with:
           distribution: "microsoft"
           java-version: "17"
-         
-      # Install MAUI Workloads
-      - name: Install MAUI Workloads
-        run: |
-          dotnet workload install android --ignore-failed-sources
-          dotnet workload install maui --ignore-failed-sources
 
-      # Get the commit count and format the version
-      - name: Get commit count and format version
-        id: version
-        shell: bash
-        run: |
-          commit_count=$(git rev-list --count HEAD)
-          major=$((commit_count / 1000))
-          minor=$((commit_count % 1000 / 10))
-          patch=$((commit_count % 10))
-          formatted_version="$major.$minor.$patch"
-          echo "APPLICATION_DISPLAY_VERSION=$formatted_version" >> $GITHUB_ENV
-          echo "APPLICATION_VERSION=$commit_count" >> $GITHUB_ENV
+      # Update Xcode
+      - name: Setup Xcode
+        if: matrix.os == 'ios' || matrix.os == 'maccatalyst'
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+           xcode-version: latest-stable
+
+      # Decode Android Keystore
+      - name: Decode Android Keystore
+        if: matrix.os == 'android'
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileDir: ${{ env.MAUI_CSPROJ_PATH }}
+          fileName: ${{secrets.ANDROIDSIGNINGKEYSTORE}}
+          encodedString: ${{ secrets.KEYSTORE_BASE64 }}
 
       # Replace the version in the csproj file
       - name: Version the app
         uses: managedcode/MAUIAppVersion@v1
         with: 
-          csproj: ${{ env.CSPROJ_FILE_PATH }}
-          version: ${{ env.APPLICATION_VERSION }}
-          displayVersion: ${{ env.APPLICATION_DISPLAY_VERSION }}
-
-      # Decode Keystore
-      - name: Decode Keystore
-        id: decode_keystore
-        uses: timheuer/base64-to-file@v1
-        with:
-          fileDir: ${{ env.CSPROJ_PATH }}
-          fileName: ${{secrets.ANDROIDSIGNINGKEYSTORE}}
-          encodedString: ${{ secrets.KEYSTORE_BASE64 }}
-
-      # Publish MAUI Android
-      - name: Publish MAUI Android
-        run: |
-          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c:Release -p:AndroidPackageFormat=apk -f:net${{ env.DOTNET_VERSION }}-android -r android-arm64 --sc -p:PublishTrimmed=true -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=${{secrets.ANDROIDSIGNINGKEYSTORE}} -p:AndroidSigningKeyAlias=${{secrets.ANDROIDSIGNINGKEYALIAS}} -p:AndroidSigningKeyPass=${{secrets.ANDROIDSIGNINGKEYPASS}} -p:AndroidSigningStorePass=${{secrets.ANDROIDSIGNINGSTOREPASS}}
-          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -c:Release -p:AndroidPackageFormat=apk -f:net${{ env.DOTNET_VERSION }}-android -r android-x64 --sc -p:PublishTrimmed=true -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=${{secrets.ANDROIDSIGNINGKEYSTORE}} -p:AndroidSigningKeyAlias=${{secrets.ANDROIDSIGNINGKEYALIAS}} -p:AndroidSigningKeyPass=${{secrets.ANDROIDSIGNINGKEYPASS}} -p:AndroidSigningStorePass=${{secrets.ANDROIDSIGNINGSTOREPASS}}
-
-      - name: Rename apk
-        run:  |
-          ren ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-arm64/publish/*Signed.apk ${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk
-          ren ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-x64/publish/*Signed.apk ${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-x64.apk
-
-      # Update to Github Releases
-      - name: Update android-arm64 to Github Releases
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-arm64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-arm64.apk
-          release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
-          tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
-          prerelease: ${{ inputs.prerelease }}
-
-      - name: Update android-x64 to Github Releases
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-android/android-x64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-android-x64.apk
-          release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
-          tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
-          prerelease: ${{ inputs.prerelease }}
+          csproj: ${{ env.MAUI_CSPROJ_FILE_PATH }}
+          version: ${{ needs.prepare.outputs.version }}
+          displayVersion: ${{ needs.prepare.outputs.displayVersion }}
 
       # Replace the version in Package.appxmanifest
       - name: Update version in Package.appxmanifest
+        if: matrix.os == 'windows'
         shell: bash
         run: |
-          sed -i "s/Version=\"0\.0\.0\.0\"/Version=\"${{ env.APPLICATION_DISPLAY_VERSION }}.0\"/" \
-          ${{ env.CSPROJ_PATH }}/Platforms/Windows/Package.appxmanifest
+          sed -i "s/Version=\"0\.0\.0\.0\"/Version=\"${{ needs.prepare.outputs.displayVersion }}.0\"/" \
+          ${{ env.MAUI_CSPROJ_PATH }}/Platforms/Windows/Package.appxmanifest
+
+      # Publish MAUI Android
+      - name: Publish MAUI Android
+        if: matrix.os == 'android'
+        shell: bash
+        run: |
+          dotnet publish ${{ env.MAUI_CSPROJ_FILE_PATH }} \
+            -c Release \
+            -f net${{ env.DOTNET_VERSION }}-${{ matrix.os }} \
+            -r ${{ matrix.os }}-${{ matrix.arch }} \
+            --sc \
+            -p:PublishTrimmed=true \
+            -p:AndroidPackageFormat=apk \
+            -p:AndroidKeyStore=true \
+            -p:AndroidSigningKeyStore=${{ secrets.ANDROIDSIGNINGKEYSTORE }} \
+            -p:AndroidSigningKeyAlias=${{ secrets.ANDROIDSIGNINGKEYALIAS }} \
+            -p:AndroidSigningKeyPass=${{ secrets.ANDROIDSIGNINGKEYPASS }} \
+            -p:AndroidSigningStorePass=${{ secrets.ANDROIDSIGNINGSTOREPASS }}
+
+      # Publish MAUI MacCatalyst
+      - name: Publish MAUI MacCatalyst
+        if: matrix.os == 'maccatalyst'
+        run: |
+          dotnet publish ${{ env.MAUI_CSPROJ_FILE_PATH }} \
+            -c:Release \
+            -f:net${{ env.DOTNET_VERSION }}-${{ matrix.os }} \
+            -p:RuntimeIdentifier=${{ matrix.os }}-${{ matrix.arch }} \
+            --sc \
+            -p:PublishTrimmed=true
+
+      # Publish MAUI iOS
+      - name: Publish MAUI iOS
+        if: matrix.os == 'ios'
+        run: |
+          dotnet publish ${{ env.MAUI_CSPROJ_FILE_PATH }} \
+            -c:Release \
+            -f:net${{ env.DOTNET_VERSION }}-${{ matrix.os }} \
+            -p:RuntimeIdentifier=${{ matrix.os }}-${{ matrix.arch }} \
+            --sc \
+            -p:EnableCodeSigning=false \
+            -p:EnableOnDemandResources=false \
+            -p:MtouchUseLlvm=false \
+            -p:AotAssemblies=true
 
       # Publish MAUI Windows packaged
       - name: Publish MAUI Windows packaged
-        if: ${{ !inputs.prerelease }}
-        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:WindowsAppSDKSelfContained=true --sc -p:WindowsAppSdkDeploymentManagerInitialize=false
-
-      # Update to Microsoft Store
-      - name: Setup Microsoft Store Developer CLI
-        if: ${{ !inputs.prerelease }}
-        uses: microsoft/setup-msstore-cli@v1
-
-      - name: Configure Microsoft Store Developer CLI
-        if: ${{ !inputs.prerelease }}
-        run: msstore reconfigure --tenantId ${{ secrets.PARTNER_CENTER_TENANT_ID }} --sellerId ${{ secrets.PARTNER_CENTER_SELLER_ID }} --clientId ${{ secrets.PARTNER_CENTER_CLIENT_ID }} --clientSecret ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
-
-      - name: Update to Microsoft Store
-        if: ${{ !inputs.prerelease }}
-        run: msstore publish ${{ env.CSPROJ_PATH }} -i ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win-x64/AppPackages -id ${{ env.STORE_ID }}
+        if: matrix.os == 'windows' && matrix.packaged == true
+        shell: pwsh
+        run: |
+          dotnet publish ${{ env.MAUI_CSPROJ_FILE_PATH }} `
+            -c Release `
+            -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 `
+            --sc `
+            -p:WindowsAppSDKSelfContained=true `
+            -p:WindowsAppSdkDeploymentManagerInitialize=false
 
       # Publish MAUI Windows unpackaged
       - name: Publish MAUI Windows unpackaged
-        run: dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 -c Release -p:WindowsPackageType=None -p:WindowsAppSDKSelfContained=true --sc
-
-      - name: Generate compressed file
+        if: matrix.os == 'windows' && matrix.packaged == false
         shell: pwsh
         run: |
-          Rename-Item -Path "${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win-x64/publish" -NewName "${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-windows-x64"
-          Compress-Archive -Path "${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win-x64/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-windows-x64" -DestinationPath "${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-windows-x64.zip" -CompressionLevel Optimal
+          dotnet publish ${{ env.MAUI_CSPROJ_FILE_PATH }} `
+            -c Release `
+            -f net${{ env.DOTNET_VERSION }}-windows10.0.19041.0 `
+            --sc `
+            -p:WindowsAppSDKSelfContained=true `
+            -p:WindowsPackageType=None
+
+      # Generate Windows unpackaged compressed file
+      - name: Generate Windows unpackaged compressed file
+        if: matrix.os == 'windows' && matrix.packaged == false
+        shell: pwsh
+        run: |
+          $publishPath = "${{ env.MAUI_CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win-x64/publish"
+          $targetDirName = "${{ env.APP_NAME }}-${{ needs.prepare.outputs.displayVersion }}-windows-x64"
+          $targetDirPath = Join-Path (Split-Path $publishPath -Parent) $targetDirName
+          $zipPath = "${{ env.ARTIFACT_PATH }}/$targetDirName.zip"
+          Rename-Item -Path $publishPath -NewName $targetDirName -Force
+          Compress-Archive -Path $targetDirPath -DestinationPath $zipPath -Force -CompressionLevel Optimal
+
+      # Move Publish File
+      - name: Move Publish File
+        if: ${{ matrix.os != 'windows' }} 
+        shell: bash
+        run: |
+          file=$(find "${{ env.MAUI_CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-${{ matrix.os }}/${{ matrix.os }}-${{ matrix.arch }}/publish" -name "${{ matrix.glob }}" -type f | head -1)
+          mv "$file" "${{ env.ARTIFACT_PATH }}/${{ env.APP_NAME }}-${{ needs.prepare.outputs.displayVersion }}-${{ matrix.os }}-${{ matrix.arch }}.${{ matrix.ext }}"
+      
+      # Move Windows packaged Publish File
+      - name: Move Windows packaged Publish File
+        if: matrix.os == 'windows' && matrix.packaged == true
+        shell: bash
+        run: |
+          file=$(find "${{ env.MAUI_CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-windows10.0.19041.0/win-x64/AppPackages" -name "*.msix" -type f | head -1)
+          mv "$file" "${{ env.ARTIFACT_PATH }}/${{ env.APP_NAME }}-${{ needs.prepare.outputs.displayVersion }}-${{ matrix.os }}-${{ matrix.arch }}.msix"
+   
+      # Upload Artifact
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.ext }}
+          path: ${{ env.ARTIFACT_PATH }}/
+
+  build-linux:
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: linux, arch: arm64, runner: ubuntu-latest, ext: deb, t: CreateDeb }
+          - { os: linux, arch: arm64, runner: ubuntu-latest, ext: rpm, t: CreateRpm }
+          - { os: linux, arch: x64, runner: ubuntu-latest, ext: deb, t: CreateDeb }
+          - { os: linux, arch: x64, runner: ubuntu-latest, ext: rpm, t: CreateRpm }
+
+    runs-on: ${{ matrix.runner }}
+    steps:
+      # Checkout the code
+      - uses: actions/checkout@v4
+        with:
+           fetch-depth: 0
+
+      # Create Artifact Directory
+      - name: Create Artifact Directory
+        shell: bash
+        run: mkdir -p ${{ env.ARTIFACT_PATH }}
+        
+      # Install .NET SDK
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+           dotnet-version: '${{ env.DOTNET_VERSION }}.x'
+
+      # Install Packing Tools
+      - name: Setup dotnet-packaging
+        run: |
+          dotnet tool install --global dotnet-${{ matrix.ext }}
+          cd ${{ env.GTK_CSPROJ_PATH }}
+          dotnet ${{ matrix.ext }} install
+          cd ${{ github.workspace }}
+
+      # Replace the version in the csproj file
+      - name: Update version in csproj
+        run: |
+          sed -i "s/<Version>.*<\/Version>/<Version>${{ needs.prepare.outputs.displayVersion }}<\/Version>/" \
+          ${{ env.GTK_CSPROJ_FILE_PATH }}
+
+      # Publish Package
+      - name: Publish
+        run: |
+          dotnet restore ${{ env.GTK_CSPROJ_FILE_PATH }} -r ${{ matrix.os }}-${{ matrix.arch }}
+          dotnet msbuild ${{ env.GTK_CSPROJ_FILE_PATH }} \
+            /t:${{ matrix.t }} \
+            /p:TargetFramework=net${{ env.DOTNET_VERSION }} \
+            /p:RuntimeIdentifier=${{ matrix.os }}-${{ matrix.arch }} \
+            /p:Configuration=Release \
+            /p:SelfContained=true
+
+      # Move Publish File
+      - name: Move Publish File
+        run: |
+          mv ${{env.GTK_CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}/${{ matrix.os }}-${{ matrix.arch }}/*.${{ matrix.ext }} \
+            "${{ env.ARTIFACT_PATH }}/${{ env.APP_NAME }}-${{ needs.prepare.outputs.displayVersion }}-${{ matrix.os }}-${{ matrix.arch }}.${{ matrix.ext }}"
+
+      # Upload Artifact
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.ext }}
+          path: ${{ env.ARTIFACT_PATH }}/
+
+  upload_Microsoft_Store:
+    if: inputs.upload
+    needs:
+      - prepare
+      - build-maui
+    runs-on: windows-latest
+
+    steps:
+      # Download Msix Artifacts
+      - name: Download Msix Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ${{ env.ARTIFACT_PATH }}
+          pattern: '*-msix'
+          merge-multiple: true
+
+      # Update to Microsoft Store
+      - name: Setup Microsoft Store Developer CLI
+        uses: microsoft/setup-msstore-cli@v1
+
+      - name: Configure Microsoft Store Developer CLI
+        run: msstore reconfigure --tenantId ${{ secrets.PARTNER_CENTER_TENANT_ID }} --sellerId ${{ secrets.PARTNER_CENTER_SELLER_ID }} --clientId ${{ secrets.PARTNER_CENTER_CLIENT_ID }} --clientSecret ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
+
+      - name: Update to Microsoft Store
+        run: msstore publish ${{ env.MAUI_CSPROJ_PATH }} -i ${{ env.ARTIFACT_PATH }} -id ${{ env.STORE_ID }}
+
+  upload_Github_Release:
+    if: inputs.upload
+    needs:
+      - prepare
+      - build-maui
+      - build-linux
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download All Artifacts
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ${{ env.ARTIFACT_PATH }}
+          pattern: '!*-msix'
+          merge-multiple: true
 
       # Update to Github Releases
       - uses: svenstaro/upload-release-action@v2
         with:
             repo_token: ${{ secrets.GITHUB_TOKEN }}
-            file: ${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-windows-x64.zip
+            file: "${{ env.ARTIFACT_PATH }}/*"
             file_glob: true
-            release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
-            tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
-            prerelease: ${{ inputs.prerelease }}
-  macOSAndiOS:
-    runs-on: macos-15
-    steps:
-      # Checkout the code
-      - uses: actions/checkout@v4
-        with:
-           fetch-depth: 0
-
-      # Update Xcode
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-           xcode-version: latest-stable
-
-      # Install .NET SDK
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-           dotnet-version: '${{ env.DOTNET_VERSION }}.x'
-
-      # Install MAUI Workloads
-      - name: Install MAUI Workloads
-        run: |
-          dotnet workload install maui --ignore-failed-sources
-
-      # Get the commit count and format the version
-      - name: Get commit count and format version
-        id: version
-        shell: bash
-        run: |
-          commit_count=$(git rev-list --count HEAD)
-          major=$((commit_count / 1000))
-          minor=$((commit_count % 1000 / 10))
-          patch=$((commit_count % 10))
-          formatted_version="$major.$minor.$patch"
-          echo "APPLICATION_DISPLAY_VERSION=$formatted_version" >> $GITHUB_ENV
-          echo "APPLICATION_VERSION=$commit_count" >> $GITHUB_ENV
-
-      # Replace the version in the csproj file
-      - name: Version the app
-        uses: managedcode/MAUIAppVersion@v1
-        with: 
-          csproj: ${{ env.CSPROJ_FILE_PATH }}
-          version: ${{ env.APPLICATION_VERSION }}
-          displayVersion: ${{ env.APPLICATION_DISPLAY_VERSION }}
-
-      # Publish MAUI MacCatalyst
-      - name: Publish MAUI MacCatalyst
-        run: |
-          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -p:RuntimeIdentifier=maccatalyst-arm64 --sc -p:PublishTrimmed=true
-          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-maccatalyst -c:Release -p:RuntimeIdentifier=maccatalyst-x64 --sc -p:PublishTrimmed=true
-
-      - name: Rename pkg
-        run: |
-          mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-arm64/publish/*.pkg ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-arm64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalyst-arm64.pkg
-          mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-x64/publish/*.pkg ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-x64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-maccatalyst-x64.pkg
-
-      # Publish MAUI iOS
-      - name: Publish MAUI iOS
-        run: |
-          dotnet publish ${{ env.CSPROJ_FILE_PATH }} -f:net${{ env.DOTNET_VERSION }}-ios -c:Release -p:RuntimeIdentifier=ios-arm64 -p:EnableCodeSigning=false -p:EnableOnDemandResources=false -p:MtouchUseLlvm=false -p:AotAssemblies=true
-
-      - name: Rename ipa
-        run: |
-          mv ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-ios/ios-arm64/publish/*.ipa ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-ios/ios-arm64/publish/${{ env.APP_NAME }}-${{ env.APPLICATION_DISPLAY_VERSION }}-ios-arm64.ipa
-      
-      # Update to Github Releases
-      - name: Update maccatalyst-arm64 to Github Releases
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{env.CSPROJ_PATH}}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-arm64/publish/*.pkg
-          file_glob: true
-          release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
-          tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
-          prerelease: ${{ inputs.prerelease }}
-
-      - name: Update maccatalyst-x64 to Github Releases
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-maccatalyst/maccatalyst-x64/publish/*.pkg
-          file_glob: true
-          release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
-          tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
-          prerelease: ${{ inputs.prerelease }}
-
-      - name: Update ios-arm64 to Github Releases
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.CSPROJ_PATH }}/bin/Release/net${{ env.DOTNET_VERSION }}-ios/ios-arm64/publish/*.ipa
-          file_glob: true
-          release_name: ${{ env.APPLICATION_DISPLAY_VERSION }}
-          tag: v${{ env.APPLICATION_DISPLAY_VERSION }}
-          prerelease: ${{ inputs.prerelease }}
+            release_name: ${{ needs.prepare.outputs.displayVersion }}
+            tag: v${{ needs.prepare.outputs.displayVersion }}
