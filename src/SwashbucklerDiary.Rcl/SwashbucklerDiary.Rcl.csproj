@@ -10,8 +10,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="ClosedXML" Version="0.105.0" />
-		<PackageReference Include="Masa.Blazor" Version="1.11.5" />
-		<PackageReference Include="Masa.Blazor.MobileComponents" Version="1.11.5" />
+		<PackageReference Include="Masa.Blazor" Version="1.11.9" />
+		<PackageReference Include="Masa.Blazor.MobileComponents" Version="1.11.9" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.*" />
 		<PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.2.2" />
 		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="10.0.*" />

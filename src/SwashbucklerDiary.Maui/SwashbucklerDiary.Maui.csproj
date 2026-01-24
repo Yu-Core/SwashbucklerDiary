@@ -20,7 +20,7 @@
 		<CompressionEnabled>false</CompressionEnabled>
 		<Nullable>enable</Nullable>
 		<NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
-		<MauiVersion>10.0.11</MauiVersion>
+		<MauiVersion>10.0.30</MauiVersion>
 
 		<!-- Display name -->
 		<ApplicationTitle>侠客日记</ApplicationTitle>
