@@ -148,7 +148,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private void SetOptions()
         {
-            string lang = I18n.Culture.Name.Replace("-", "_");
+            string lang = I18n.Culture.ToVditorLang();
             string theme = ThemeService.RealTheme == Shared.Theme.Dark ? "dark" : "light";
             var previewTheme = new Dictionary<string, object?>()
             {

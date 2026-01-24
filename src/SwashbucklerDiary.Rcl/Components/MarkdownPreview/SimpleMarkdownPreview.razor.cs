@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -46,7 +47,7 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 ["mode"] = mode,
                 ["cdn"] = $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2",
-                ["lang"] = I18n.Culture.Name.Replace("-", "_"),
+                ["lang"] = I18n.Culture.ToVditorLang(),
                 ["theme"] = new Dictionary<string, object?>()
                 {
                     { "current", mode },
