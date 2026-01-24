@@ -18,7 +18,7 @@
                         @foreach (var item in splits)
                         {
                             bool isFirst = splits.FirstOrDefault() == item;
-                            <span class="@($"mr-2 {(isFirst ? "" : "text-caption")}")"
+                            <span class="@($"me-2 {(isFirst ? "" : "text-caption")}")"
                                   style="@(isFirst ? "font-size:1.1rem;" : "")">
                                 @item
                             </span>
@@ -29,7 +29,7 @@
                 <div class="d-flex flex-shrink-0">
                     @if (!string.IsNullOrEmpty(weatherIcon))
                     {
-                        <MIcon Class="diary-card-icon mr-2"
+                        <MIcon Class="diary-card-icon me-2"
                                Style="font-size:20px;">
                             @weatherIcon
                         </MIcon>
@@ -37,7 +37,7 @@
 
                     @if (!string.IsNullOrEmpty(moodIcon))
                     {
-                        <MIcon Class="diary-card-icon mr-2"
+                        <MIcon Class="diary-card-icon me-2"
                                Style="font-size:20px;">
                             @moodIcon
                         </MIcon>
@@ -105,7 +105,7 @@
                 @foreach (var item in Value.Tags)
                 {
                     <MChip @key="item.Id"
-                           Class="mr-2">
+                           Class="me-2">
                         @(item.Name)
                     </MChip>
                 }

@@ -87,13 +87,14 @@
 - Windows (Windows 11和Windows 10版本 1809 或更高版本)
 - Android (Android 8.0 (API 26) 或更高版本)
 - ~~iOS (iOS 14 或更高版本) (虚拟机可运行，物理机未经测试)~~
-- macOS (macOS 11 或更高版本)
+- macOS (macOS 12 或更高版本)
 - Web
 - Linux
 
 ## 🌏️ 支持的语言
 | 代码    | 语言             | 查看                                                             |
 | ------- | ---------------- | ---------------------------------------------------------------- |
+| ar-EG   | 阿拉伯语（埃及）   | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/ar-EG.json)      |
 | de-DE   | 德语             | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/de-DE.json)      |
 | en-US   | 英语（美国）       | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/en-US.json)      |
 | es-ES   | 西班牙语（西班牙） | [查看](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/es-ES.json)      |

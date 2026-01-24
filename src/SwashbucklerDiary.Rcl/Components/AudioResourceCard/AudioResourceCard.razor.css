@@ -23,7 +23,7 @@ input[type="range"]:before {
     position: absolute;
     content: "";
     top: 50%;
-    left: 0;
+    /*left: 0;*/
     transform: translateY(-50%);
     width: var(--current-width);
     height: var(--height);

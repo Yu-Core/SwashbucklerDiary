@@ -3,6 +3,7 @@
   "dir": "ltr",
   "name": "Swashbuckler Diary",
   "name_localized": {
+    "ar-EG": "يوميات السَّيْف",
     "de-DE": "Tagebuch eines Schwertkämpfers",
     "en-US": "Swashbuckler Diary",
     "es-ES": "Diario de Espadachín",
@@ -17,6 +18,7 @@
   },
   "short_name": "Swashbuckler Diary",
   "short_name_localized": {
+    "ar-EG": "يوميات السَّيْف",
     "de-DE": "Tagebuch eines Schwertkämpfers",
     "en-US": "Swashbuckler Diary",
     "es-ES": "Diario de Espadachín",
@@ -51,6 +53,7 @@
     {
       "name": "Search",
       "name_localized": {
+        "ar-EG": "بحث",
         "de-DE": "Suchen",
         "en-US": "Search",
         "es-ES": "Buscar",
@@ -74,6 +77,7 @@
     {
       "name": "Add",
       "name_localized": {
+        "ar-EG": "إضافة",
         "de-DE": "Hinzufügen",
         "en-US": "Add",
         "es-ES": "Añadir",

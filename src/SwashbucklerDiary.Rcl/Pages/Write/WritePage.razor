@@ -41,7 +41,7 @@
         </MButton>
 
         <MultiSizeMenu @bind-Visible="showMenu"
-                   DynamicListItems="menuItems">
+                       DynamicListItems="menuItems">
             <ActivatorContent>
                 <MButton @attributes="@context.Attrs"
                          Icon="true">
@@ -64,14 +64,14 @@
             <div class="d-flex align-center px-3 flex-wrap">
                 @if (diaryTimeFormat?.Contains("yyyy/MM/dd") ?? false)
                 {
-                    <button class="d-flex align-center text-h6 font-weight-bold mr-3" @onclick="()=>showDate=true">
+                    <button class="d-flex align-center text-h6 font-weight-bold me-3" @onclick="() => showDate = true">
                         @(diary.CreateTime.ToString("yyyy/MM/dd"))
                     </button>
                 }
 
                 @if (diaryTimeFormat?.Contains("HH:mm") ?? false)
                 {
-                    <button class="d-flex align-center font-weight-bold mr-5" @onclick="()=>showTime=true">
+                    <button class="d-flex align-center font-weight-bold me-5" @onclick="() => showTime = true">
                         @(diary.CreateTime.ToString("HH:mm"))
                     </button>
                 }
@@ -82,10 +82,10 @@
                         @(I18n.ToWeek(diary.CreateTime))
                     </span>
                 }
-                
+
                 <MSpacer></MSpacer>
 
-                <span class="text-subtitle-2">
+                <span class="text-subtitle-2" style="direction:ltr;">
                     @(CounterValue())
                 </span>
             </div>
@@ -205,11 +205,11 @@
 </SelectLocationDialog>
 
 <MultiSizeDatePicker @bind-Visible="showDate"
-                 @bind-Value="SelectedDate">
+                     @bind-Value="SelectedDate">
 </MultiSizeDatePicker>
 
 <MultiSizeTimePicker @bind-Visible="showTime"
-                 @bind-Value="SelectedTime">
+                     @bind-Value="SelectedTime">
 </MultiSizeTimePicker>
 
 <SelectDiaryDialog @bind-Visible="showReference"
@@ -223,7 +223,7 @@
 </MOverlay>
 
 @code {
-    private string WrapStyle => new StyleBuilder()
+    private string? WrapStyle => new StyleBuilder()
         .Add("height", "100%")
         .AddIf("opacity", "0", waitSelectTemplate)
         .Build();

@@ -102,6 +102,11 @@ body {
     right: calc(1rem + var(--sair));
 }
 
+.m-application--is-rtl .right-bottom-float-area {
+    right: unset;
+    left: calc(1rem + var(--sail));
+}
+
 .fullscreen-height {
     height: var(--safe-area-height) !important;
 }

@@ -15,6 +15,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private SwiperJsModule? jsModule;
 
+        [Inject]
+        private MasaBlazor MasaBlazor { get; set; } = default!;
+
         [Parameter]
         public StringNumber Value { get; set; } = 0;
 
@@ -56,6 +59,13 @@ namespace SwashbucklerDiary.Rcl.Components
             ChildTabItems.Remove(tabItem);
         }
 
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            MasaBlazor.RTLChanged += HandleRTLChanged;
+        }
+
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
@@ -84,8 +94,19 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             await base.DisposeAsyncCore();
 
+            MasaBlazor.RTLChanged -= HandleRTLChanged;
             _dotNetObjectReference?.Dispose();
             await jsModule.TryDisposeAsync();
+        }
+
+        private void HandleRTLChanged(object? sender, EventArgs e)
+        {
+            InvokeAsync(async () =>
+            {
+                if (jsModule is null || _dotNetObjectReference is null) return;
+                await jsModule.DisposeAsync(Ref);
+                await jsModule.Init(_dotNetObjectReference, Ref, Value.ToInt32());
+            });
         }
     }
 }

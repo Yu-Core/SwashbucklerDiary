@@ -1,6 +1,6 @@
 class AutoScrollText extends HTMLElement {
     static get observedAttributes() {
-        return ['scroll-speed', 'gap', 'animation-gap'];
+        return ['scroll-speed', 'gap', 'animation-gap', 'text-ltr'];
     }
 
     constructor() {
@@ -15,6 +15,7 @@ class AutoScrollText extends HTMLElement {
         this._gap = 20;  // 默认值：20像素间隔
         this._animationGap = 1;  // 默认值：1秒
         this._paused = false;
+        this._textLtr = false;
     }
 
     connectedCallback() {
@@ -42,6 +43,10 @@ class AutoScrollText extends HTMLElement {
             this._gap = parseFloat(newValue) || 20;
         } else if (name === 'animation-gap') {
             this._animationGap = parseFloat(newValue) || 1;
+        } else if (name === 'text-ltr') {
+            this._textLtr = newValue !== null && newValue !== 'false';
+            this.render();
+            return;
         } else {
             return;
         }
@@ -87,6 +92,9 @@ class AutoScrollText extends HTMLElement {
         const hostWidth = fitContent ? "fit-content" : "100%";
         const hostAfterContent = fitContent ? text : "0";
         const maxWidth = fitContent ? `max-width: ${maxWidthStyle};` : "";
+        const direction = getComputedStyle(this).direction;
+        const leftRight = direction === "rtl" ? "right: 0;" : "left: 0;";
+        const textDirection = this._textLtr ? "direction: ltr;" : "";
 
         this.shadowRoot.innerHTML = `
                     <style>
@@ -113,13 +121,17 @@ class AutoScrollText extends HTMLElement {
                             height: 100%;
                             white-space: nowrap;
                             position: absolute;
-                            left: 0;
+                            ${leftRight}
                             top: 0;
                             will-change: transform;
                         }
                         
                         .gap {
                             display: inline-block;
+                        }
+
+                        .text {
+                            ${textDirection}
                         }
                     </style>
                     
@@ -160,11 +172,14 @@ class AutoScrollText extends HTMLElement {
             // 动画间隔时间所占百分比
             const animationGapDurationPercentage = (this._animationGap / animationDuration) * 100;
 
+            const direction = getComputedStyle(this).direction;
+            const translateTotalDistance = (direction === "rtl" ? 1 : -1) * totalDistance;
+
             // 关键帧动画
             const keyframes = `
                         @keyframes scroll {
                             0% , ${animationGapDurationPercentage}% { transform: translateX(0); }
-                            100% { transform: translateX(-${totalDistance}px); }
+                            100% { transform: translateX(${translateTotalDistance}px); }
                         }
                     `;
 

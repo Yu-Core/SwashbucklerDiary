@@ -1,3 +1,4 @@
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Extensions;
@@ -81,6 +82,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         [Inject]
         private BreakpointService BreakpointService { get; set; } = default!;
+
+        [Inject]
+        private MasaBlazor MasaBlazor { get; set; } = default!;
 
         [Parameter]
         public Guid Id { get; set; }
@@ -286,7 +290,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 DateTime afterDT = System.DateTime.Now;
                 TimeSpan ts = afterDT.Subtract(beforDT);
                 Debug.WriteLine("DateTime总共花费{0}ms.", ts.TotalMilliseconds);
-                
+
                 if (!string.IsNullOrEmpty(filePath))
                 {
                     await PlatformIntegration.ShareFileAsync(I18n.T("Share"), filePath);

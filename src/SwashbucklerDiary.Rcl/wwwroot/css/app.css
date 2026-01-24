@@ -213,7 +213,9 @@ html {
     position: sticky;
     top: 0;
     width: 300px;
-    margin-left: 16px;
+    margin-inline-start: 16px;
+    -webkit-margin-start: 16px;
+    -moz-margin-start: 16px;
     height: calc(100vh - 64px - 24px);
 }
 
@@ -290,6 +292,11 @@ html {
     width: auto;
 }
 
+.m-application--is-rtl .right-bottom-float-area {
+    right: unset;
+    left: 1rem;
+}
+
 @media screen and (max-width:600px) {
     .right-bottom-float-area {
         bottom: calc(1rem + 56px) !important;
@@ -356,7 +363,7 @@ html {
     display: none !important;
     font-weight: 700 !important;
     padding-bottom: 20px;
-    padding-left: 4px;
+    padding-inline-start: 4px;
 }
 
 @media screen and (min-width:600px) {
@@ -734,4 +741,14 @@ html.m-overlay-scroll-blocked {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     display: -webkit-box;
+}
+
+.m-application--is-rtl .m-toolbar .material-symbols-mirror,
+.m-application--is-rtl .m-list-item .material-symbols-mirror {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
 }

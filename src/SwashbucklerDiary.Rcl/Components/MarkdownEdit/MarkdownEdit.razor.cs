@@ -51,6 +51,9 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private IThemeService ThemeService { get; set; } = default!;
 
+        [Inject]
+        private MasaBlazor MasaBlazor { get; set; } = default!;
+
         [Parameter]
         public string? Value { get; set; }
 

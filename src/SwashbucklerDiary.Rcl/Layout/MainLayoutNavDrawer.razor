@@ -7,12 +7,13 @@
                    MiniVariant="true"
                    MiniVariantWidth="76"
                    Touchless="true"
+                   Right="@RTL"
                    Style="top:initial !important;background-color:initial;">
     <MList Nav Slim="false" Routable>
         <MListItemGroup ActiveClass="material-symbols_active">
             @foreach (var item in Items)
             {
-                <MTooltip Right>
+                <MTooltip Right="@(!RTL)" Left="@RTL">
                     <ActivatorContent>
                         <MListItem @attributes="@context.Attrs"
                                    Class="@ItemClass"
@@ -35,6 +36,9 @@
 </MNavigationDrawer>
 
 @code {
+    [Parameter]
+    public bool RTL { get; set; }
+
     private bool Show => BreakpointService.Breakpoint.SmAndUp && IsPermanentPath;
 
     private string ItemClass => new CssBuilder()

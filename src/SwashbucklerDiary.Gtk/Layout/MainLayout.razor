@@ -4,7 +4,10 @@
     <CascadingValue Value="@I18n.Culture.Name" Name="Culture">
         <ErrorBoundary>
             <ChildContent>
-                <MainLayoutNavDrawer Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutNavDrawer>
+                <MainLayoutNavDrawer Items="navigationButtons"
+                                     IsPermanentPath="IsPermanentPath"
+                                     RTL="@MasaBlazor.RTL">
+                </MainLayoutNavDrawer>
 
                 <MMain>
                     <PageCacheContainer PermanentPaths="permanentPaths">

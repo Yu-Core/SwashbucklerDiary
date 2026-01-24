@@ -2,6 +2,7 @@ using Masa.Blazor;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
+using System.Globalization;
 
 namespace SwashbucklerDiary.Maui.Extensions
 {
@@ -15,7 +16,10 @@ namespace SwashbucklerDiary.Maui.Extensions
                 Rcl.Extensions.ServiceCollectionExtensions.ConfigMasaBlazorOptions(options);
                 //The reason for setting i18n here is because the Android back button requires i18n to be used
                 var language = Microsoft.Maui.Storage.Preferences.Get(nameof(Setting.Language), "zh-CN");
-                options.Locale = new(language, "en-US");
+                var culture = new CultureInfo(language);
+                options.Locale = new(culture);
+                options.RTL = culture.TextInfo.IsRightToLeft;
+
                 return options;
             });
 

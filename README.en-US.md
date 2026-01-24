@@ -87,13 +87,14 @@ See details [./download-guide.md](./download-guide.md)
 - Windows (Windows 11 and Windows 10 version 1809 or higher)
 - Android (Android 8.0 (API 26) or higher)
 - ~~iOS (iOS 14 or higher) (Virtual machine can run, physical machine has not been tested)~~
-- macOS (macOS 11 or higher)
+- macOS (macOS 12 or higher)
 - Web
 - Linux
 
 ## 🌏️ Supported Languages
 | Code  | Language               | View                                                             |
 | ----- | ---------------------- | ---------------------------------------------------------------- |
+| ar-EG | Arabic (Egypt)         | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/ar-EG.json)      |
 | de-DE | German                 | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/de-DE.json)      |
 | en-US | English (United States)| [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/en-US.json)      |
 | es-ES | Spanish (Spain)        | [View](./src/SwashbucklerDiary.Rcl/wwwroot/i18n/es-ES.json)      |

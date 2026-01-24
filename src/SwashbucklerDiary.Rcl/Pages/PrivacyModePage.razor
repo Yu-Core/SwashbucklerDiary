@@ -86,8 +86,7 @@
                                  Readonly="true"
                                  OnClick="SwitchHidePrivacyModeEntrance"
                                  Dense="true"
-                                 Inset="true"
-                                 Color="@MasaBlazor.Theme.CurrentTheme.OnSurface">
+                                 Inset="true">
                         </MSwitch>
                     </MListItemAction>
                 </MListItem>
@@ -112,7 +111,7 @@
                             </MListItemSubtitle>
                         </MListItemContent>
 
-                        <MListItemContent Class="ml-2" Style="flex-basis:50%;">
+                        <MListItemContent Class="ms-2" Style="flex-basis:50%;">
                             <MListItemSubtitle Class="font-weight-bold">
                                 <wc-auto-scroll-text class="justify-end">@privacyModeFunctionSearchKey</wc-auto-scroll-text>
                             </MListItemSubtitle>
@@ -136,7 +135,7 @@
                             <wc-auto-scroll-text>@(I18n.T("Set default entry password"))</wc-auto-scroll-text>
                         </MListItemContent>
 
-                        <MListItemContent Class="ml-2" Style="flex-basis:50%;">
+                        <MListItemContent Class="ms-2" Style="flex-basis:50%;">
                             <MListItemSubtitle>
                                 <wc-auto-scroll-text class="justify-end">@PrivacyModeEntrancePasswordSetStateText</wc-auto-scroll-text>
                             </MListItemSubtitle>
@@ -254,7 +253,7 @@
                 </div>
                 <div class="d-flex align-end">
                     @(I18n.T("Current key"))
-                    <div class="font-weight-bold text-h6 ml-2">@privacyModeFunctionSearchKey</div>
+                    <div class="font-weight-bold text-h6 ms-2">@privacyModeFunctionSearchKey</div>
                 </div>
             </MCardText>
             <MCardActions>

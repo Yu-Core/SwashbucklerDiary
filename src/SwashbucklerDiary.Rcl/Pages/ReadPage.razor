@@ -67,14 +67,14 @@
             <div class="d-flex align-center px-3 flex-wrap">
                 @if (diaryTimeFormat?.Contains("yyyy/MM/dd") ?? false)
                 {
-                    <span class="text-h6 font-weight-bold mr-3">
+                    <span class="text-h6 font-weight-bold me-3">
                         @(diary.CreateTime.ToString("yyyy/MM/dd"))
                     </span>
                 }
 
                 @if (diaryTimeFormat?.Contains("HH:mm") ?? false)
                 {
-                    <span class="font-weight-bold mr-5">
+                    <span class="font-weight-bold me-5">
                         @(diary.CreateTime.ToString("HH:mm"))
                     </span>
                 }
@@ -88,7 +88,7 @@
 
                 <MSpacer></MSpacer>
 
-                <span class="text-subtitle-2">
+                <span class="text-subtitle-2" style="direction:ltr;">
                     @(CounterValue())
                 </span>
             </div>
@@ -143,7 +143,7 @@
                                      TaskListLineThrough="taskListLineThrough"
                                      Outline="outline"
                                      OutlineElement="outlineElement"
-                                     RightOutline="rightOutline"
+                                     RightOutline="rightOutline != MasaBlazor.RTL"
                                      OnAfter="HandleFirstQuery"
                                      OnDblClick="ToWrite">
                     </MarkdownPreview>

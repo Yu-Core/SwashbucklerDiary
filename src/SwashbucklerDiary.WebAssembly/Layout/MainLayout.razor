@@ -8,7 +8,10 @@
     <CascadingValue Value="@I18n.Culture.ToString()" Name="Culture">
         <MErrorHandler DisablePopupIfErrorContentRender>
             <ChildContent>
-                <MainLayoutNavDrawer Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutNavDrawer>
+                <MainLayoutNavDrawer Items="navigationButtons"
+                                     IsPermanentPath="IsPermanentPath"
+                                     RTL="@MasaBlazor.RTL">
+                </MainLayoutNavDrawer>
 
                 <MMain>
                     <PageCacheContainer PermanentPaths="permanentPaths">

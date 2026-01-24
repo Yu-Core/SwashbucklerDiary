@@ -1,4 +1,3 @@
-using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Services;
 
@@ -8,9 +7,6 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         [Inject]
         private ISettingService SettingService { get; set; } = default!;
-
-        [Inject]
-        MasaBlazor MasaBlazor { get; set; } = default!;
 
         [CascadingParameter(Name = "MasaBlazorCascadingTheme")]
         public string? MasaBlazorCascadingTheme { get; set; }
@@ -26,7 +22,7 @@ namespace SwashbucklerDiary.Rcl.Components
         public string SettingKey { get; set; } = string.Empty;
 
         [Parameter]
-        public EventCallback<(string?, bool)> OnChange { get; set; }
+        public EventCallback<(string, bool)> OnChange { get; set; }
 
         private async Task HandleOnChange(bool value)
         {

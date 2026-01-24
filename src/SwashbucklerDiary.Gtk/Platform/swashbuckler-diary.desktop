@@ -10,6 +10,7 @@ Terminal=false
 Type=Application
 
 # Translations:
+Comment[ar-EG]=تطبيق يوميات محلي مفتوح المصدر ومتعدد المنصات
 Comment[de_DE]=Eine Open-Source und plattformübergreifende lokale Tagebuch-App
 Comment[en_US]=An open source, cross platform local diary application
 Comment[es_ES]=Una APP de diario local de código abierto y multiplataforma
@@ -21,6 +22,7 @@ Comment[ru_RU]=Локальное приложение для дневника �
 Comment[vi_VN]=Ứng dụng nhật ký cục bộ mã nguồn mở, đa nền tảng
 Comment[zh_CN]=一款开源、跨平台的本地日记应用
 Comment[zh_TW]=一款開源、跨平台的本地日記應用
+GenericName[ar-EG]=يوميات
 GenericName[de_DE]=Tagebuch
 GenericName[en_US]=Diary
 GenericName[es_ES]=Diario
@@ -32,6 +34,7 @@ GenericName[ru_RU]=Дневник
 GenericName[vi_VN]=Nhật ký
 GenericName[zh_CN]=日记
 GenericName[zh_TW]=日記
+Name[ar-EG]=يوميات السَّيْف
 Name[de_DE]=Tagebuch eines Schwertkämpfers
 Name[en_US]=Swashbuckler Diary
 Name[es_ES]=Diario de Espadachín
@@ -47,6 +50,7 @@ Name[zh_TW]=俠客日記
 [Desktop Action Search]
 Exec=/opt/apps/com.yucore.swashbucklerdiary/SwashbucklerDiary.Gtk --search %F
 Name=Search
+Name[ar-EG]=بحث
 Name[de_DE]=Suchen
 Name[en_US]=Search
 Name[es_ES]=Buscar
@@ -62,6 +66,7 @@ Name[zh_TW]=搜尋
 [Desktop Action Add]
 Exec=/opt/apps/com.yucore.swashbucklerdiary/SwashbucklerDiary.Gtk --write %F
 Name=Add
+Name[ar-EG]=إضافة
 Name[de_DE]=Hinzufügen
 Name[en_US]=Add
 Name[es_ES]=Añadir

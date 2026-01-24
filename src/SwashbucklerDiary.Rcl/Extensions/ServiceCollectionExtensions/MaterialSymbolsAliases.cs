@@ -4,6 +4,8 @@ namespace SwashbucklerDiary.Rcl.Extensions
 {
     public class MaterialSymbolsAliases : IconAliases
     {
+        private static readonly string[] RtlIconFilters = ["left", "right", "arrow", "format", "before", "next", "sort", "toc", "list"];
+
         public MaterialSymbolsAliases()
         {
             Complete = "check";
@@ -51,6 +53,11 @@ namespace SwashbucklerDiary.Rcl.Extensions
             {
                 List<string> classes = [];
                 classes.Add("material-symbols-rounded");
+
+                if (RtlIconFilters.Any(it => icon.Contains(it)))
+                {
+                    classes.Add("material-symbols-mirror");
+                }
 
                 string[] splits = icon.Split('-');
                 if (splits.Length > 1 && splits[1] == "fill")

@@ -73,8 +73,6 @@ namespace SwashbucklerDiary.Rcl.Layout
 
             permanentPaths = navigationButtons.Select(it => NavigationManager.ToAbsoluteUri(it.Href).AbsolutePath).ToList();
 
-            _ = UpdateDocumentProperty(I18n.Culture);
-
             I18n.CultureChanged += HandleLanguageChanged;
             ThemeService.OnChanged += HandleThemeChanged;
             SettingService.SettingsChanged += HandleSettingsChanged;
@@ -117,6 +115,7 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected async void HandleLanguageChanged(object? sender, EventArgs e)
         {
+            MasaBlazor.RTL = I18n.Culture.TextInfo.IsRightToLeft;
             await InvokeAsync(StateHasChanged);
             await UpdateDocumentProperty(I18n.Culture);
         }

@@ -224,10 +224,6 @@
         display: none;
     }
 
-.m-input--switch.m-input--switch--inset .m-input--switch__thumb {
-    color: #fff !important;
-}
-
 .m-item-group.m-bottom-navigation .m-btn {
     min-width: 50px;
 }
