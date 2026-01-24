@@ -9,6 +9,7 @@
 		<WasmBuildNative>true</WasmBuildNative>
 		<NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
 		<BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+		<OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
 		
 		<!-- workaround for publish -->
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>

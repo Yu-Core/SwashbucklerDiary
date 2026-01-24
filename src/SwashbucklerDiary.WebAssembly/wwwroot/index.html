@@ -8,6 +8,7 @@
     <meta name="description" content="An open source, cross platform local diary application">
     <title>Swashbuckler Diary</title>
     <base />
+    <link rel="preload" id="webassembly" />
     <script type="text/javascript">
         // Single Page Apps for GitHub Pages
         // MIT License
@@ -62,6 +63,7 @@
     <link href="SwashbucklerDiary.WebAssembly.styles.css" rel="stylesheet" />
     <link href="_content/SwashbucklerDiary.Rcl/css/app.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/app.css" />
+    <script type="importmap"></script>
 </head>
 
 <body>
@@ -87,7 +89,7 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="js/sw.js"></script>
-    <script src="_framework/blazor.webassembly.es2019.js" autostart="false"></script>
+    <script src="_framework/blazor.webassembly.es2019#[.{fingerprint}].js" autostart="false"></script>
     <script src="_content/Masa.Blazor/js/masa-blazor.js"></script>
     <script src="_content/SwashbucklerDiary.Rcl/npm/vditor@3.11.2/dist/index.min.js"></script>
     <script src="_content/SwashbucklerDiary.Rcl/npm/swiper@7.4.1/swiper-bundle.min.js"></script>
