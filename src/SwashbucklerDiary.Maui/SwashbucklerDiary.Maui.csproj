@@ -53,7 +53,7 @@
 	</PropertyGroup>
 
 	<!-- 在 Android 上使用 CoreCLR -->
-	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' != 'Debug' ">
 		<UseMonoRuntime>false</UseMonoRuntime>
 	</PropertyGroup>
 
