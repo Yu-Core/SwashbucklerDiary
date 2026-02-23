@@ -22,6 +22,10 @@
 		<ApplicationId>com.yucore.swashbucklerdiarydebug</ApplicationId>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<DebDependency Include="libwebkitgtk-6.0-4" />
 	</ItemGroup>

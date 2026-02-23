@@ -16,6 +16,10 @@
 		<EmccExtraLDFlags>-s WARN_ON_UNDEFINED_SYMBOLS=0 -lidbfs.js</EmccExtraLDFlags>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\Serilog.Sinks.SQLite.Simplified\Serilog.Sinks.SQLite.Simplified.csproj" />
 		<ProjectReference Include="..\SwashbucklerDiary.Rcl.Web\SwashbucklerDiary.Rcl.Web.csproj" />

@@ -57,6 +57,10 @@
 		<UseMonoRuntime>false</UseMonoRuntime>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+	</PropertyGroup>
+
 	<!-- Android -->
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net10.0-android')) != true">
 		<Compile Remove="**\**\*.Android.cs" />

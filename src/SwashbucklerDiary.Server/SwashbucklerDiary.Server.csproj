@@ -14,6 +14,10 @@
 		<ApplicationId>com.yucore.swashbucklerdiarydebug</ApplicationId>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\Maui.Essentials\Maui.Essentials.csproj" />
 		<ProjectReference Include="..\SwashbucklerDiary.Rcl.Web\SwashbucklerDiary.Rcl.Web.csproj" />
