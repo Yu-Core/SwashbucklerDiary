@@ -16,9 +16,6 @@ namespace SwashbucklerDiary.Rcl.Hybird.Layout
         protected ILogger<MainLayoutBase> Logger { get; set; } = default!;
 
         [Inject]
-        protected IAppLifecycle AppLifecycle { get; set; } = default!;
-
-        [Inject]
         protected RouteMatcher RouteMatcher { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()

@@ -50,13 +50,16 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected IThemeService ThemeService { get; set; } = default!;
 
         [Inject]
-        private IAppLifecycle AppLifecycle { get; set; } = default!;
+        protected IAppLifecycle AppLifecycle { get; set; } = default!;
 
         [Inject]
-        private IPlatformIntegration PlatformIntegration { get; set; } = default!;
+        protected IPlatformIntegration PlatformIntegration { get; set; } = default!;
 
         [Inject]
-        private IAlertService AlertService { get; set; } = default!;
+        protected IAlertService AlertService { get; set; } = default!;
+
+        [Inject]
+        protected IAppLockService AppLockService { get; set; } = default!;
 
         public void Dispose()
         {
@@ -79,6 +82,18 @@ namespace SwashbucklerDiary.Rcl.Layout
             AppLifecycle.OnStopped += HandleAppLifecycleOnStopped;
             AppLifecycle.OnActivated += HandleActivated;
             NavigateController.OnBackPressed += HandleBackPressed;
+            AppLockService.ValidationSucceeded += HandleValidationSucceeded;
+        }
+
+        private Task HandleValidationSucceeded(AppLockEventArgs args)
+        {
+            if (!args.IsAppLaunch)
+            {
+                return Task.CompletedTask;
+            }
+
+            InvokeAsync(DialogNotificationCoreAsync);
+            return Task.CompletedTask;
         }
 
         protected abstract void HandleSchemeActivation(ActivationArguments args, bool replace);
@@ -91,6 +106,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             AppLifecycle.OnStopped -= HandleAppLifecycleOnStopped;
             AppLifecycle.OnActivated -= HandleActivated;
             NavigateController.OnBackPressed -= HandleBackPressed;
+            AppLockService.ValidationSucceeded -= HandleValidationSucceeded;
         }
 
         protected async Task InternalOnInitializedAsync()
@@ -146,7 +162,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected async Task DialogNotificationAsync()
         {
             var route = NavigationManager.GetRoute();
-            if (route == "/welcome")
+            if (route == "/welcome" || route == "/appLock")
             {
                 return;
             }
@@ -177,7 +193,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             if (useAppLock && lockAppWhenLeave)
             {
                 var returnUrl = NavigationManager.GetBaseRelativePath();
-                NavigationManager.NavigateTo($"appLock?IsLeave=true&returnUrl={Uri.EscapeDataString(returnUrl)}");
+                NavigationManager.NavigateTo($"appLock?IsAppLaunch=false&returnUrl={Uri.EscapeDataString(returnUrl)}");
             }
         }
 

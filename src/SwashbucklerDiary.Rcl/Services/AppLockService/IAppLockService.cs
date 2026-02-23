@@ -2,9 +2,9 @@
 {
     public interface IAppLockService
     {
-        event Func<Task>? ValidationSucceeded;
+        event Func<AppLockEventArgs, Task>? ValidationSucceeded;
         event Action? LockChanged;
-        Task OnValidationSucceededAsync();
+        Task OnValidationSucceededAsync(AppLockEventArgs args);
         void OnLockChanged();
     }
 }

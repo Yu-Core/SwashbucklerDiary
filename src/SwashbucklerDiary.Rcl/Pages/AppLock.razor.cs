@@ -32,7 +32,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private IAppLockService AppLockService { get; set; } = default!;
 
         [SupplyParameterFromQuery]
-        private bool IsLeave { get; set; }
+        private bool IsAppLaunch { get; set; } = true;
 
         [SupplyParameterFromQuery]
         private string? ReturnUrl { get; set; }
@@ -49,7 +49,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender && !IsLeave)
+            if (firstRender && IsAppLaunch)
             {
                 await BiometricAuthenticateAsync();
             }
@@ -131,7 +131,10 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             NavigateController.DisableNavigate = false;
 
-            await AppLockService.OnValidationSucceededAsync();
+            await AppLockService.OnValidationSucceededAsync(new()
+            {
+                IsAppLaunch = IsAppLaunch
+            });
 
             var args = AppLifecycle.ActivationArguments;
             AppLifecycle.ActivationArguments = null;

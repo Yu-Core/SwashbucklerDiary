@@ -21,8 +21,13 @@ namespace SwashbucklerDiary.Server.Layout
         {
             base.OnInitialized();
 
-            AppLockService.ValidationSucceeded += SetCookieAsync;
+            AppLockService.ValidationSucceeded += HandleValidationSucceeded;
             AppLockService.LockChanged += HandleAppLockChanged;
+        }
+
+        private async Task HandleValidationSucceeded(AppLockEventArgs _)
+        {
+            await SetCookieAsync();
         }
 
         private async Task SetCookieAsync()
@@ -51,7 +56,7 @@ namespace SwashbucklerDiary.Server.Layout
         {
             base.OnDispose();
 
-            AppLockService.ValidationSucceeded -= SetCookieAsync;
+            AppLockService.ValidationSucceeded -= HandleValidationSucceeded;
             AppLockService.LockChanged -= HandleAppLockChanged;
         }
     }
