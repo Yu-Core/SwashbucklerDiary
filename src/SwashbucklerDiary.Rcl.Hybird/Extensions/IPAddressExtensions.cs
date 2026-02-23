@@ -1,7 +1,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace SwashbucklerDiary.Rcl.Hybird
+namespace SwashbucklerDiary.Rcl.Hybird.Extensions
 {
     public static class IPAddressExtensions
     {

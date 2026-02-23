@@ -16,10 +16,19 @@ namespace SwashbucklerDiary.Rcl.Extensions
 
         public static string ToRoute(this NavigationManager navigationManager, string uriString)
         {
-            var absolutePath = new Uri(uriString).AbsolutePath;
-            var basePath = new Uri(navigationManager.BaseUri).AbsolutePath;
-            var route = absolutePath.Substring(basePath.Length - 1);
-            return route;
+            var abs = navigationManager.ToAbsoluteUri(uriString).ToString();
+            return navigationManager.ToRouteCore(abs);
+        }
+
+        public static string GetRoute(this NavigationManager navigationManager)
+        {
+            return navigationManager.ToRouteCore(navigationManager.Uri);
+        }
+
+        private static string ToRouteCore(this NavigationManager navigationManager, string absoluteUri)
+        {
+            var relative = navigationManager.ToBaseRelativePath(absoluteUri);
+            return '/' + relative.Split('?', '#')[0].TrimEnd('/');
         }
     }
 }

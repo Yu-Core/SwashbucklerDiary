@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public string? IPAddress { get; set; }
 
-        public AppDevicePlatform DevicePlatform { get; set; }
+        public AppPlatform DevicePlatform { get; set; }
 
         public DateTime LastSeen { get; set; }
     }

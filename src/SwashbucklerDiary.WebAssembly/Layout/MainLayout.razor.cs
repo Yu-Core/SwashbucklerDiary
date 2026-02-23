@@ -1,31 +1,20 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using SwashbucklerDiary.Rcl;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Rcl.Layout;
-using SwashbucklerDiary.Shared;
 using SwashbucklerDiary.WebAssembly.Essentials;
-using SwashbucklerDiary.WebAssembly.Extensions;
 
 namespace SwashbucklerDiary.WebAssembly.Layout
 {
-    public partial class MainLayout : MainLayoutBase
+    public partial class MainLayout : Rcl.Web.Layout.MainLayoutBase
     {
-        private string? themeColor;
-
-        [Inject]
-        private SystemThemeJSModule SystemThemeJSModule { get; set; } = default!;
-
-        [Inject]
-        private IAppLifecycle AppLifecycle { get; set; } = default!;
-
         [Inject]
         private IVersionTracking VersionTracking { get; set; } = default!;
 
-        protected override void OnDispose()
+        protected override async Task OnInitializedAsync()
         {
-            ThemeService.OnChanged -= ThemeChanged;
-            base.OnDispose();
+            await base.OnInitializedAsync();
+
+            await InternalOnInitializedAsync();
         }
 
         protected override async Task InitVersionUpdate()
@@ -36,57 +25,8 @@ namespace SwashbucklerDiary.WebAssembly.Layout
 
         protected override async Task InitConfigAsync()
         {
+            await ((Services.SettingService)SettingService).InitializeAsync();
             await base.InitConfigAsync();
-            await Task.WhenAll(
-                InitThemeAsync(),
-                InitLanguageAsync(),
-                ((Essentials.AppLifecycle)AppLifecycle).InitializedAsync());
-        }
-
-        protected override ActivationArguments CreateAppLockActivationArguments()
-        {
-            return new ActivationArguments()
-            {
-                Kind = AppActivationKind.Scheme,
-                Data = NavigationManager.Uri
-            };
-        }
-
-        protected override void HandleSchemeActivation(ActivationArguments args, bool replace)
-        {
-            string? uriString = args?.Data as string;
-
-            if (uriString is not null && NavigateController.CheckUrlScheme(NavigationManager, uriString))
-            {
-                To(uriString, replace: replace);
-            }
-        }
-
-        private async void ThemeChanged(Theme theme)
-        {
-            MasaBlazor.SetTheme(theme == Theme.Dark);
-            themeColor = theme == Theme.Dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface;
-            await InvokeAsync(StateHasChanged);
-        }
-
-        private async Task InitThemeAsync()
-        {
-            ThemeService.OnChanged += ThemeChanged;
-            await SystemThemeJSModule.Init();
-            var theme = SettingService.Get(s => s.Theme);
-            ThemeService.SetTheme(theme);
-        }
-
-        private Task InitLanguageAsync()
-        {
-            var language = SettingService.Get(s => s.Language);
-            I18n.SetCulture(new(language));
-            return Task.CompletedTask;
-        }
-
-        private async Task ForceRefresh()
-        {
-            await JSRuntime.InvokeVoidAsync("forceRefresh");
         }
 
         private async Task RefreshToSkipWaiting()

@@ -1,6 +1,7 @@
 <Solution>
-  <Project Path="src/Serilog.Sinks.SQLite.Simplified/Serilog.Sinks.SQLite.Simplified.csproj" />
-  <Project Path="src/SwashbucklerDiary.Rcl/SwashbucklerDiary.Rcl.csproj" />
-  <Project Path="src/SwashbucklerDiary.Shared/SwashbucklerDiary.Shared.csproj" />
-  <Project Path="src/SwashbucklerDiary.WebAssembly/SwashbucklerDiary.WebAssembly.csproj" />
+	<Project Path="src/Serilog.Sinks.SQLite.Simplified/Serilog.Sinks.SQLite.Simplified.csproj" />
+	<Project Path="src/SwashbucklerDiary.Rcl/SwashbucklerDiary.Rcl.csproj" />
+	<Project Path="src/SwashbucklerDiary.Rcl.Web/SwashbucklerDiary.Rcl.Web.csproj" />
+	<Project Path="src/SwashbucklerDiary.Shared/SwashbucklerDiary.Shared.csproj" />
+	<Project Path="src/SwashbucklerDiary.WebAssembly/SwashbucklerDiary.WebAssembly.csproj" />
 </Solution>

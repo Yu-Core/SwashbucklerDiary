@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public override Task<bool> InsertAsync(DiaryModel model)
         {
-            return base.Context.InsertNav(model)
+            return Context.InsertNav(model)
             .Include(it => it.Tags)
             .Include(it => it.Resources)
             .ExecuteCommandAsync();
@@ -20,7 +20,7 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public override Task<bool> DeleteAsync(DiaryModel model)
         {
-            return base.Context.DeleteNav(model)
+            return Context.DeleteNav(model)
                 .Include(it => it.Tags, new DeleteNavOptions()
                 {
                     ManyToManyIsDeleteA = true
@@ -64,7 +64,7 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public async Task<List<TagModel>> GetTagsAsync(Guid id)
         {
-            return await base.Context.Queryable<DiaryTagModel>()
+            return await Context.Queryable<DiaryTagModel>()
                 .Where(dt => dt.DiaryId == id)
                 .LeftJoin<TagModel>((dt, t) => dt.TagId == t.Id)
                 .Select((dt, t) => t)
@@ -73,7 +73,7 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public override Task<List<DiaryModel>> GetListAsync()
         {
-            return base.Context.Queryable<DiaryModel>()
+            return Context.Queryable<DiaryModel>()
                 .Includes(it => it.Tags)
                 .Includes(it => it.Resources)
                 .OrderByDescending(it => it.CreateTime)
@@ -81,7 +81,7 @@ namespace SwashbucklerDiary.Rcl.Repository
         }
 
         public override Task<List<DiaryModel>> GetListAsync(Expression<Func<DiaryModel, bool>> expression)
-            => InternalGetListAsync(base.Context, expression);
+            => InternalGetListAsync(Context, expression);
 
         private static Task<List<DiaryModel>> InternalGetListAsync(ISqlSugarClient context, Expression<Func<DiaryModel, bool>> expression)
         {
@@ -95,7 +95,7 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public Task<bool> UpdateIncludesAsync(DiaryModel model)
         {
-            return base.Context.UpdateNav(model)
+            return Context.UpdateNav(model)
             .Include(it => it.Tags, new UpdateNavOptions
             {
                 ManyToManyIsUpdateA = true
@@ -110,7 +110,7 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public Task<bool> UpdateIncludesAsync(List<DiaryModel> models)
         {
-            return base.Context.UpdateNav(models)
+            return Context.UpdateNav(models)
             .Include(it => it.Tags, new UpdateNavOptions
             {
                 ManyToManyIsUpdateA = true
@@ -125,13 +125,13 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public Task<bool> UpdateTagsAsync(DiaryModel model)
         {
-            return base.Context.UpdateNav(model)
+            return Context.UpdateNav(model)
             .Include(it => it.Tags)
             .ExecuteCommandAsync();
         }
 
         public Task<bool> ImportAsync(List<DiaryModel> diaries)
-            => InternalImportAsync(base.Context, diaries);
+            => InternalImportAsync(Context, diaries);
 
         public static Task<bool> InternalImportAsync(ISqlSugarClient context, List<DiaryModel> diaries)
         {

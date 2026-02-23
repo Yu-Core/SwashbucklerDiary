@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Rcl.Hybird.Extensions;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Hybird.Layout
 {
@@ -18,6 +17,16 @@ namespace SwashbucklerDiary.Rcl.Hybird.Layout
 
         [Inject]
         protected IAppLifecycle AppLifecycle { get; set; } = default!;
+
+        [Inject]
+        protected RouteMatcher RouteMatcher { get; set; } = default!;
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+
+            await InternalOnInitializedAsync();
+        }
 
         protected override async Task DialogNotificationCoreAsync()
         {
@@ -65,20 +74,10 @@ namespace SwashbucklerDiary.Rcl.Hybird.Layout
         }
 #endif
 
-        protected override ActivationArguments CreateAppLockActivationArguments()
-        {
-            var relativePath = NavigationManager.GetBaseRelativePath();
-            return new ActivationArguments()
-            {
-                Kind = AppActivationKind.Scheme,
-                Data = $"{SchemeConstants.SwashbucklerDiary}://{relativePath}"
-            };
-        }
-
         protected override void HandleSchemeActivation(ActivationArguments args, bool replace)
         {
             string? uriString = args?.Data as string;
-            if (NavigateController.CheckUrlScheme(uriString, out var path))
+            if (RouteMatcher.CheckUrlScheme(uriString, out var path))
             {
                 To(path.TrimStart('/'), replace: replace);
             }

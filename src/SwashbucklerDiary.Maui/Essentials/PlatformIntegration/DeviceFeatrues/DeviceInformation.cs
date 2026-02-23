@@ -4,15 +4,15 @@ namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-        public AppDevicePlatform CurrentPlatform
+        public AppPlatform CurrentPlatform
 #if WINDOWS
-           => AppDevicePlatform.Windows;
+           => AppPlatform.Windows;
 #elif ANDROID
-           => AppDevicePlatform.Android;
+           => AppPlatform.Android;
 #elif MACCATALYST
-           => AppDevicePlatform.macOS;
+           => AppPlatform.macOS;
 #elif IOS
-           => AppDevicePlatform.iOS;
+           => AppPlatform.iOS;
 #elif TIZEN
            => AppDevicePlatform.Tizen;
 #else

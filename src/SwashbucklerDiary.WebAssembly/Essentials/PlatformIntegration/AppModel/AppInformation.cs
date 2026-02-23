@@ -9,15 +9,6 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
         public static string VersionString => version?.ToString() ?? string.Empty;
         public static string BuildString => version.Revision.ToString(CultureInfo.InvariantCulture);
 
-        public string AppVersionString
-            => VersionString;
-
-        public Task ShowSettingsUI()
-        {
-            //TODO: Browser environment cannot open browser settings, But it can be done through browser plugins or tampermonkey scripts
-            //return OpenUri("edge://settings/profiles", true);
-
-            return Task.CompletedTask;
-        }
+        public override string AppVersionString => VersionString;
     }
 }

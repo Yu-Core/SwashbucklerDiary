@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Maui
 
         private readonly IAppLifecycle _appLifecycle;
 
-        private readonly INavigateController _navigateController;
+        private readonly RouteMatcher _routeMatcher;
 
         private readonly IThemeService _themeService;
 
@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Maui
         private readonly II18nService _i18n;
 
         public App(IAppLifecycle appLifecycle,
-            INavigateController navigateController,
+            RouteMatcher routeMatcher,
             IThemeService themeService,
             Masa.Blazor.MasaBlazor masaBlazor,
             II18nService i18n)
@@ -29,7 +29,7 @@ namespace SwashbucklerDiary.Maui
             InitializeComponent();
 
             _themeService = themeService;
-            _navigateController = navigateController;
+            _routeMatcher = routeMatcher;
             _masaBlazor = masaBlazor;
             _appLifecycle = appLifecycle;
             _i18n = i18n;
@@ -39,7 +39,7 @@ namespace SwashbucklerDiary.Maui
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            var window = new Window(new MainPage(backgroundColor, _navigateController, _appLifecycle));
+            var window = new Window(new MainPage(backgroundColor, _routeMatcher, _appLifecycle));
             window.Resumed += (s, e) => _appLifecycle.Resume();
             window.Stopped += (s, e) => _appLifecycle.Stop();
             window.Created += WindowCreated;

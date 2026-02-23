@@ -1,7 +1,6 @@
 using Masa.Blazor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using SwashbucklerDiary.Gtk.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 using System.Globalization;
 
@@ -15,7 +14,7 @@ namespace SwashbucklerDiary.Gtk.Extensions
             {
                 MasaBlazorOptions options = new MasaBlazorOptions();
                 Rcl.Extensions.ServiceCollectionExtensions.ConfigMasaBlazorOptions(options);
-                var language = Preferences.Default.Get(nameof(Setting.Language), "zh-CN");
+                var language = Microsoft.Maui.Storage.Preferences.Default.Get(nameof(Setting.Language), "zh-CN");
                 var culture = new CultureInfo(language);
                 options.Locale = new(culture);
                 options.RTL = culture.TextInfo.IsRightToLeft;

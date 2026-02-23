@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+
+		<ApplicationId>com.yucore.swashbucklerdiary</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<!-- Debug configuration settings -->
+		<ApplicationId>com.yucore.swashbucklerdiarydebug</ApplicationId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Maui.Essentials\Maui.Essentials.csproj" />
+		<ProjectReference Include="..\SwashbucklerDiary.Rcl.Web\SwashbucklerDiary.Rcl.Web.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="2.0.1" />
+		<PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+	</ItemGroup>
+
+	<Import Project="..\Maui.Essentials\AssemblyAttributes.targets" />
+</Project>

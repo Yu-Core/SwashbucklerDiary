@@ -22,7 +22,8 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 [Live Demo（GitHub Pages）](https://yu-core.github.io/SwashbucklerDiary/)
 
 ## 🛠️ Main Technology Stack
-- [Blazor Hybrid](https://learn.microsoft.com/aspnet/core/blazor/hybrid/) 
+- [Blazor Hybrid](https://learn.microsoft.com/aspnet/core/blazor/hybrid/)
+- [Blazor Server](https://learn.microsoft.com/aspnet/core/blazor/hosting-models#blazor-server)
 - [Blazor WebAssembly](https://learn.microsoft.com/aspnet/core/blazor/hosting-models#blazor-webassembly)
 - [Gir.Core](https://gircore.github.io/)
 - [Masa Blazor](https://docs.masastack.com/blazor/introduction/why-masa-blazor) 

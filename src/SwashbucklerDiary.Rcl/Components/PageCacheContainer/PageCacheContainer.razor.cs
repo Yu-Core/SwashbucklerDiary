@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -27,6 +28,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         private IPlatformIntegration PlatformIntegration { get; set; } = default!;
+
+        [Inject]
+        private RouteMatcher RouteMatcher { get; set; } = default!;
 
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
@@ -97,6 +101,7 @@ namespace SwashbucklerDiary.Rcl.Components
             }
 
             historyPaths.Add(stackBottomPath);
+            AddPageCache(stackBottomPath);
 
             if (!permanentPaths.Contains(absolutePath))
             {
@@ -163,7 +168,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             //路由不存在的页面禁止跳转
             var route = NavigationManager.ToRoute(targetUri);
-            if (!NavigateController.RouteMatcher.IsMatch(route))
+            if (!RouteMatcher.IsMatch(route))
             {
                 context.PreventNavigation();
                 return;
@@ -329,7 +334,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected async Task HandleNavigateToStackBottomPath(LocationChangingContext context)
         {
-            if (PlatformIntegration.CurrentPlatform != Shared.AppDevicePlatform.Browser)
+            if (!PlatformIntegration.CurrentPlatform.IsBrowser())
             {
                 context.PreventNavigation();
                 AppLifecycle.QuitApp();

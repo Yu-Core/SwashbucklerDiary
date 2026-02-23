@@ -1,6 +1,7 @@
-using System.Diagnostics;
+using Microsoft.Maui.Storage;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
+using System.Diagnostics;
 
 namespace SwashbucklerDiary.Gtk.Services
 {
@@ -36,7 +37,7 @@ namespace SwashbucklerDiary.Gtk.Services
                 return;
             }
 
-            string _oldAppDataParentDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppInfo.PackageName);
+            string _oldAppDataParentDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Microsoft.Maui.ApplicationModel.AppInfo.PackageName);
             if (!Path.Exists(_oldAppDataParentDirectory))
             {
                 return;

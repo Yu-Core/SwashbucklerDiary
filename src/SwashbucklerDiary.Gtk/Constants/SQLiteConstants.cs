@@ -1,4 +1,4 @@
-using Microsoft.Data.Sqlite;
+using Microsoft.Maui.Storage;
 
 namespace SwashbucklerDiary.Gtk
 {

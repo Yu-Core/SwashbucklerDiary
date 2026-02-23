@@ -7,22 +7,37 @@ namespace SwashbucklerDiary.Rcl.Repository
     {
         public BaseRepository(ISqlSugarClient context) : base(context)
         {
-            base.Context = context;
+        }
+
+        public override ISqlSugarClient Context
+        {
+            get
+            {
+                if (base.Context is SqlSugarScope)
+                {
+                    return base.Context;
+                }
+                else
+                {
+                    return base.Context.CopyNew();
+                }
+            }
+            set => base.Context = value;
         }
 
         public virtual Task<int> CountAsync()
         {
-            return base.Context.Queryable<T>().CountAsync();
+            return Context.Queryable<T>().CountAsync();
         }
 
         public Task<bool> DeleteAsync()
         {
-            return base.Context.Deleteable<T>().ExecuteCommandHasChangeAsync();
+            return Context.Deleteable<T>().ExecuteCommandHasChangeAsync();
         }
 
         public Task<bool> UpdateAsync(T entity, Expression<Func<T, object>> columns)
         {
-            return base.Context.Updateable(entity).UpdateColumns(columns).ExecuteCommandHasChangeAsync();
+            return Context.Updateable(entity).UpdateColumns(columns).ExecuteCommandHasChangeAsync();
         }
     }
 }

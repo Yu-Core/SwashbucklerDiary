@@ -27,14 +27,19 @@ namespace SwashbucklerDiary.Rcl.Extensions
             return value;
         }
 
-        public static string GetPlatformIcon(this IGlobalConfiguration globalConfiguration, AppDevicePlatform devicePlatform)
+        public static string GetPlatformIcon(this IGlobalConfiguration globalConfiguration, AppPlatform appPlatform)
         {
-            if (!globalConfiguration.DevicePlatformIcons.TryGetValue(devicePlatform, out string? value))
+            if (globalConfiguration.AppPlatformIcons.TryGetValue(appPlatform, out string? value))
             {
-                return errorIcon;
+                return value;
             }
 
-            return value;
+            if (globalConfiguration.AppPlatformIcons.TryGetValue(AppPlatform.Unknown, out string? value2))
+            {
+                return value2;
+            }
+
+            return errorIcon;
         }
     }
 }

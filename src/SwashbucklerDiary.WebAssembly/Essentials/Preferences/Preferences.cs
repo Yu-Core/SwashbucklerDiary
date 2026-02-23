@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             _localStorage = localStorage;
         }
 
-        public virtual async Task ClearAsync()
+        public async Task ClearAsync()
         {
             await _localStorage.ClearAsync().ConfigureAwait(false);
         }
@@ -23,7 +23,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             return await _localStorage.ContainKeyAsync(key).ConfigureAwait(false);
         }
 
-        public virtual async Task<T> GetAsync<T>(string key, T defaultValue)
+        public async Task<T> GetAsync<T>(string key, T defaultValue)
         {
             string? result = await _localStorage.GetItemAsStringAsync(key).ConfigureAwait(false);
             if (result is null)
@@ -35,17 +35,17 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             return t;
         }
 
-        public virtual async Task RemoveAsync(string key)
+        public async Task RemoveAsync(string key)
         {
             await _localStorage.RemoveItemAsync(key).ConfigureAwait(false);
         }
 
-        public virtual async Task RemoveAsync(IEnumerable<string> keys)
+        public async Task RemoveAsync(IEnumerable<string> keys)
         {
             await _localStorage.RemoveItemsAsync(keys).ConfigureAwait(false);
         }
 
-        public virtual async Task SetAsync<T>(string key, T value)
+        public async Task SetAsync<T>(string key, T value)
         {
             string json = JsonSerializer.Serialize(value);
             await _localStorage.SetItemAsStringAsync(key, json).ConfigureAwait(false);

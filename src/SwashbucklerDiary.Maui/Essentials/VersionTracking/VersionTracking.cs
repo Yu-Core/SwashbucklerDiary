@@ -2,34 +2,39 @@
 {
     public class VersionTracking : Rcl.Essentials.IVersionTracking
     {
-        private static IVersionTracking VersionTrackingDefault => Microsoft.Maui.ApplicationModel.VersionTracking.Default;
+        private readonly IVersionTracking _versionTracking;
 
-        public bool IsFirstLaunchEver => VersionTrackingDefault.IsFirstLaunchEver;
+        public VersionTracking()
+        {
+            _versionTracking = Microsoft.Maui.ApplicationModel.VersionTracking.Default;
+        }
 
-        public bool IsFirstLaunchForCurrentVersion => VersionTrackingDefault.IsFirstLaunchForCurrentVersion;
+        public bool IsFirstLaunchEver => _versionTracking.IsFirstLaunchEver;
 
-        public bool IsFirstLaunchForCurrentBuild => VersionTrackingDefault.IsFirstLaunchForCurrentBuild;
+        public bool IsFirstLaunchForCurrentVersion => _versionTracking.IsFirstLaunchForCurrentVersion;
 
-        public string CurrentVersion => VersionTrackingDefault.CurrentVersion;
+        public bool IsFirstLaunchForCurrentBuild => _versionTracking.IsFirstLaunchForCurrentBuild;
 
-        public string CurrentBuild => VersionTrackingDefault.CurrentBuild;
+        public string CurrentVersion => _versionTracking.CurrentVersion;
 
-        public string? PreviousVersion => VersionTrackingDefault.PreviousVersion;
+        public string CurrentBuild => _versionTracking.CurrentBuild;
 
-        public string? PreviousBuild => VersionTrackingDefault.PreviousBuild;
+        public string? PreviousVersion => _versionTracking.PreviousVersion;
 
-        public string? FirstInstalledVersion => VersionTrackingDefault.FirstInstalledVersion;
+        public string? PreviousBuild => _versionTracking.PreviousBuild;
 
-        public string? FirstInstalledBuild => VersionTrackingDefault.FirstInstalledBuild;
+        public string? FirstInstalledVersion => _versionTracking.FirstInstalledVersion;
 
-        public IReadOnlyList<string> VersionHistory => VersionTrackingDefault.VersionHistory;
+        public string? FirstInstalledBuild => _versionTracking.FirstInstalledBuild;
 
-        public IReadOnlyList<string> BuildHistory => VersionTrackingDefault.BuildHistory;
+        public IReadOnlyList<string> VersionHistory => _versionTracking.VersionHistory;
+
+        public IReadOnlyList<string> BuildHistory => _versionTracking.BuildHistory;
 
         public bool IsFirstLaunchForBuild(string build)
-            => VersionTrackingDefault.IsFirstLaunchForBuild(build);
+            => _versionTracking.IsFirstLaunchForBuild(build);
 
         public bool IsFirstLaunchForVersion(string version)
-            => VersionTrackingDefault.IsFirstLaunchForVersion(version);
+            => _versionTracking.IsFirstLaunchForVersion(version);
     }
 }

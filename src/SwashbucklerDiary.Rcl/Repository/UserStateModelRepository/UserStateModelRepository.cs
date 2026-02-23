@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Rcl.Repository
             }
             else
             {
-                await base.Context.Updateable<UserStateModel>()
+                await Context.Updateable<UserStateModel>()
                 .SetColumns(it => it.Count == it.Count + 1)
                 .Where(it => it.Type == type)
                 .ExecuteCommandAsync()
@@ -52,7 +52,7 @@ namespace SwashbucklerDiary.Rcl.Repository
             }
             else
             {
-                await base.Context.Updateable(userState)
+                await Context.Updateable(userState)
                     .UpdateColumns(it => new { it.Count })
                     .Where(it => it.Type == type)
                     .ExecuteCommandAsync()

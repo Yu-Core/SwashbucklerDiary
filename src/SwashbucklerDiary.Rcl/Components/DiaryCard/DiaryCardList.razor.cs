@@ -250,7 +250,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task CopyExternalLink()
         {
             string text;
-            if (PlatformIntegration.CurrentPlatform == AppDevicePlatform.Browser)
+            if (PlatformIntegration.CurrentPlatform.IsBrowser())
             {
                 text = NavigationManager.ToAbsoluteUri($"read/{SelectedItem.Id}").ToString();
             }

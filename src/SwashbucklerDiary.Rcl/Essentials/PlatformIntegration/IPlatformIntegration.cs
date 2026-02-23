@@ -4,7 +4,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
 {
     public interface IPlatformIntegration
     {
-        AppDevicePlatform CurrentPlatform { get; }
+        AppPlatform CurrentPlatform { get; }
 
         string AppVersionString { get; }
 

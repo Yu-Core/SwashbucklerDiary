@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components.WebView;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Rcl.Hybird.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -10,18 +10,18 @@ namespace SwashbucklerDiary.Maui
     {
         private readonly Color _backgroundColor;
 
-        private readonly INavigateController _navigateController;
+        private readonly RouteMatcher _routeMatcher;
 
         private readonly IAppLifecycle _appLifecycle;
 
         public MainPage(Color backgroundColor,
-            INavigateController navigateController,
+            RouteMatcher routeMatcher,
             IAppLifecycle appLifecycle)
         {
             InitializeComponent();
 
             _backgroundColor = backgroundColor;
-            _navigateController = navigateController;
+            _routeMatcher = routeMatcher;
             _appLifecycle = appLifecycle;
 
             blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializingCore;
@@ -100,7 +100,7 @@ namespace SwashbucklerDiary.Maui
         private void HandleScheme(ActivationArguments args)
         {
             string? uriString = args.Data as string;
-            if (_navigateController.CheckUrlScheme(uriString, out var path))
+            if (_routeMatcher.CheckUrlScheme(uriString, out var path))
             {
                 blazorWebView.StartPath = path;
             }

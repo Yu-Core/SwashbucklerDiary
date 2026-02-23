@@ -25,8 +25,8 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected override void OnInitialized()
         {
-            LoadView();
             base.OnInitialized();
+            LoadView();
         }
 
         private void LoadView()

@@ -1,0 +1,10 @@
+{
+  "Unknown": "mdi:mdi-monitor-cellphone",
+  "Windows": "mdi:mdi-microsoft-windows",
+  "Android": "mdi:mdi-android",
+  "iOS": "mdi:mdi-apple-ios",
+  "MacOS": "mdi:mdi-apple",
+  "Tizen": "mdi:mdi-alpha-t",
+  "BrowserWasm": "language",
+  "Linux": "mdi:mdi-linux"
+}

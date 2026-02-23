@@ -3,6 +3,7 @@ using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Repository;
 using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Rcl.Web.Essentials;
 using SwashbucklerDiary.WebAssembly.Essentials;
 
 namespace SwashbucklerDiary.WebAssembly.Extensions
@@ -13,8 +14,10 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
         {
             services.AddSingleton<IProxyService, Services.ProxyService>();
             services.AddSingleton<IStaticWebAssets, Essentials.StaticWebAssets>();
+            services.AddSingleton<IPreferences, Essentials.Preferences>();
             services.AddSingleton<ISettingService, Services.SettingService>();
-            services.AddSingleton<INavigateController, Essentials.NavigateController>();
+            services.AddSingleton<RouteMatcher>(_ => new RouteMatcher(App.Assemblies));
+            services.AddSingleton<INavigateController, NavigateController>();
             services.AddSingleton<IGlobalConfiguration, GlobalConfiguration>();
             services.AddSingleton<IAlertService, AlertService>();
             services.AddSingleton<II18nService>(sp =>
@@ -22,11 +25,12 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
                 return (I18nService)sp.GetRequiredService<I18n>();
             });
             services.AddSingleton<IVersionTracking, VersionTracking>();
-            services.AddSingleton<PlatformIntegrationJSModule>();
-            services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
+            services.AddSingleton<Essentials.PlatformIntegrationJSModule>();
+            services.AddSingleton<IPlatformIntegration, Essentials.PlatformIntegration>();
             services.AddSingleton<IAppFileSystem, Essentials.AppFileSystem>();
-            services.AddSingleton<IMediaResourceManager, Services.MediaResourceManager>();
+            services.AddSingleton<IMediaResourceManager, Rcl.Web.Services.MediaResourceManager>();
             services.AddSingleton<BreakpointService>();
+            services.AddSingleton<IAppLockService, AppLockService>();
 
             services.AddRclDependencyInjection();
 
@@ -46,10 +50,10 @@ namespace SwashbucklerDiary.WebAssembly.Extensions
             services.AddSingleton<IResourceService, ResourceService>();
 
             services.AddSingleton<AppLifecycleJSModule>();
-            services.AddSingleton<IAppLifecycle, Essentials.AppLifecycle>();
+            services.AddSingleton<IAppLifecycle, Rcl.Web.Essentials.AppLifecycle>();
             services.AddSingleton<SystemThemeJSModule>();
             services.AddSingleton<IThemeService, ThemeService>();
-            services.AddSingleton<IAccessExternal, Services.AccessExternal>();
+            services.AddSingleton<IAccessExternal, Rcl.Web.Services.AccessExternal>();
 
             services.AddSingleton<IDiaryFileManager, Services.DiaryFileManager>();
             services.AddSingleton<IAvatarService, Services.AvatarService>();

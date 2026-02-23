@@ -59,14 +59,18 @@ namespace SwashbucklerDiary.Rcl.Components
             return AlertService.InfoAsync(I18n.T("This feature is currently unavailable"), I18n.T("Please look forward"));
         }
 
-        protected void To(string url, bool cacheCurrentURL = true)
+        protected void To(string url, bool cacheCurrentURL = true, bool replace = false)
         {
             if (!cacheCurrentURL)
             {
                 NavigateController.RemovePageCache(NavigationManager.Uri);
             }
 
-            NavigationManager.NavigateTo(url);
+            NavigationManager.NavigateTo(url, new NavigationOptions()
+            {
+                ReplaceHistoryEntry = replace,
+                HistoryEntryState = replace ? "replace" : null
+            });
         }
 
         protected virtual async Task HandleAchievements(Achievement type)

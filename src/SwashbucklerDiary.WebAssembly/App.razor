@@ -12,9 +12,9 @@
 </Router>
 
 @code {
-    static System.Reflection.Assembly AppAssembly { get; } = typeof(Rcl._Imports).Assembly;
+    static System.Reflection.Assembly AppAssembly { get; } = typeof(_Imports).Assembly;
 
-    static IEnumerable<System.Reflection.Assembly> AdditionalAssemblies { get; } = [typeof(_Imports).Assembly];
+    static IEnumerable<System.Reflection.Assembly> AdditionalAssemblies { get; } = [typeof(Rcl._Imports).Assembly, typeof(Rcl.Web._Imports).Assembly];
 
     public static IEnumerable<System.Reflection.Assembly> Assemblies { get; } = [AppAssembly, .. AdditionalAssemblies];
 }

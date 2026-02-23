@@ -11,18 +11,20 @@
   </Folder>
   <Folder Name="/Solution Itms/workflows/">
     <File Path=".github/workflows/gh-pages.yml" />
-    <File Path=".github/workflows/releases-linux.yml" />
     <File Path=".github/workflows/releases.yml" />
     <File Path=".github/workflows/sync-gitee-pages.yml" />
     <File Path=".github/workflows/upload-msstore-msix-to-release.yml" />
   </Folder>
+  <Project Path="src/Maui.Essentials/Maui.Essentials.csproj" />
   <Project Path="src/Serilog.Sinks.SQLite.Simplified/Serilog.Sinks.SQLite.Simplified.csproj" />
   <Project Path="src/SwashbucklerDiary.Gtk/SwashbucklerDiary.Gtk.csproj" />
   <Project Path="src/SwashbucklerDiary.Maui/SwashbucklerDiary.Maui.csproj">
     <Deploy />
   </Project>
   <Project Path="src/SwashbucklerDiary.Rcl.Hybird/SwashbucklerDiary.Rcl.Hybird.csproj" />
+  <Project Path="src/SwashbucklerDiary.Rcl.Web/SwashbucklerDiary.Rcl.Web.csproj" Id="f4e57259-49ae-465f-8e60-7347cc3ad9f8" />
   <Project Path="src/SwashbucklerDiary.Rcl/SwashbucklerDiary.Rcl.csproj" />
+  <Project Path="src/SwashbucklerDiary.Server/SwashbucklerDiary.Server.csproj" Id="d088b9e7-f81c-4052-8475-32ab60552dbc" />
   <Project Path="src/SwashbucklerDiary.Shared/SwashbucklerDiary.Shared.csproj" />
   <Project Path="src/SwashbucklerDiary.WebAssembly/SwashbucklerDiary.WebAssembly.csproj" />
 </Solution>

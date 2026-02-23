@@ -1,14 +1,10 @@
-using System.Reflection;
-
 namespace SwashbucklerDiary.Rcl.Essentials
 {
-    public abstract class NavigateController : INavigateController
+    public class NavigateController : INavigateController
     {
         protected IAppLifecycle _appLifecycle;
 
         public bool DisableNavigate { get; set; }
-
-        public RouteMatcher RouteMatcher { get; }
 
         public event Action<HistoryAction>? OnHistoryActionAdded;
         public event Action<Func<HistoryAction, bool>>? OnHistoryActionRemoved;
@@ -18,7 +14,6 @@ namespace SwashbucklerDiary.Rcl.Essentials
         public NavigateController(IAppLifecycle appLifecycle)
         {
             _appLifecycle = appLifecycle;
-            RouteMatcher = new RouteMatcher(Assemblies);
         }
 
         public void AddHistoryAction(Action action, bool preventNavigation = true, bool isDialog = false)
@@ -37,8 +32,6 @@ namespace SwashbucklerDiary.Rcl.Essentials
         {
             OnPageCacheRemoved?.Invoke(url);
         }
-
-        protected abstract IEnumerable<Assembly> Assemblies { get; }
 
         private void AddHistoryAction(Action? action = null, Func<Task>? func = null, bool preventNavigation = true, bool isDialog = false)
         {

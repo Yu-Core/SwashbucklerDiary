@@ -353,7 +353,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             string text;
             var hash = await JS.EvaluateJavascript<string>("window.location.hash");
-            if (PlatformIntegration.CurrentPlatform == AppDevicePlatform.Browser)
+            if (PlatformIntegration.CurrentPlatform.IsBrowser())
             {
                 text = NavigationManager.ToAbsoluteUri($"read/{Id}{hash}").ToString();
             }

@@ -1,0 +1,7 @@
+<Solution>
+	<Project Path="src/Maui.Essentials/Maui.Essentials.csproj" />
+	<Project Path="src/SwashbucklerDiary.Rcl/SwashbucklerDiary.Rcl.csproj" />
+	<Project Path="src/SwashbucklerDiary.Rcl.Web/SwashbucklerDiary.Rcl.Web.csproj" />
+	<Project Path="src/SwashbucklerDiary.Shared/SwashbucklerDiary.Shared.csproj" />
+	<Project Path="src/SwashbucklerDiary.Server/SwashbucklerDiary.Server.csproj" />
+</Solution>

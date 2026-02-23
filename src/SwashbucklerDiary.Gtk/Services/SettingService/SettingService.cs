@@ -1,26 +1,17 @@
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Gtk.Services
 {
-    public class SettingService : Essentials.Preferences, ISettingService
+    public class SettingService : Rcl.Services.SettingService, ISettingService
     {
-        public Dictionary<string, object> DefalutSettings { get; set; } = [];
-        public Dictionary<string, object> TempSettings { get; set; } = [];
-        public Action? SettingsChanged { get; set; }
-
-        public T Get<T>(string key)
+        public SettingService(IPreferences preferences) : base(preferences)
         {
-            if (DefalutSettings.TryGetValue(key, out var defaultValue))
-            {
-                return Get(key, (T)defaultValue);
-            }
-
-            return default!;
         }
 
-        public T Get<T>(string key, T defaultValue)
+        public override T Get<T>(string key, T defaultValue)
         {
-            return Default.Get(key, defaultValue);
+            return Microsoft.Maui.Storage.Preferences.Default.Get(key, defaultValue);
         }
     }
 }

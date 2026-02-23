@@ -1,18 +1,10 @@
-using SwashbucklerDiary.Rcl.Essentials;
-
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
-    public partial class PlatformIntegration : IPlatformIntegration
+    public partial class PlatformIntegration : Rcl.Web.Essentials.PlatformIntegration
     {
-        private readonly ILogger _logger;
-
-        private readonly PlatformIntegrationJSModule _jsModule;
-
         public PlatformIntegration(ILogger<PlatformIntegration> logger,
-            PlatformIntegrationJSModule jsModule)
+            PlatformIntegrationJSModule jsModule) : base(logger, jsModule)
         {
-            _logger = logger;
-            _jsModule = jsModule;
         }
     }
 }

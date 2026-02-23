@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Components.WebView;
 using Microsoft.AspNetCore.Components.WebView.Gtk;
 using Microsoft.Extensions.DependencyInjection;
-using SwashbucklerDiary.Gtk.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Rcl.Hybird.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Gtk
     {
         private readonly Gdk.RGBA _backgroundColor;
 
-        private readonly INavigateController _navigateController;
+        private readonly RouteMatcher _routeMatcher;
 
         private readonly Microsoft.AspNetCore.Components.WebView.Gtk.BlazorWebView blazorWebView;
 
@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Gtk
             this.SetChild(blazorWebView);
 
             _backgroundColor = backgroundColor;
-            _navigateController = serviceProvider.GetRequiredService<INavigateController>();
+            _routeMatcher = serviceProvider.GetRequiredService<RouteMatcher>();
             _appLifecycle = serviceProvider.GetRequiredService<IAppLifecycle>();
             blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializing;
             blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;
@@ -64,8 +64,8 @@ namespace SwashbucklerDiary.Gtk
         private void HandleAppActivation()
         {
             // Welcome Page
-            bool firstSetLanguage = Preferences.Default.Get<bool>(nameof(Setting.FirstSetLanguage), false);
-            bool firstAgree = Preferences.Default.Get<bool>(nameof(Setting.FirstAgree), false);
+            bool firstSetLanguage = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.FirstSetLanguage), false);
+            bool firstAgree = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.FirstAgree), false);
             if (!firstSetLanguage || !firstAgree)
             {
                 blazorWebView.StartPath = "/welcome";
@@ -77,7 +77,7 @@ namespace SwashbucklerDiary.Gtk
             // Quick Record
             if (args is null || args.Data is null || args.Kind == AppActivationKind.Launch)
             {
-                var quickRecord = Preferences.Default.Get<bool>(nameof(Setting.QuickRecord), false);
+                var quickRecord = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.QuickRecord), false);
                 if (quickRecord)
                 {
                     args = _appLifecycle.ActivationArguments = new()
@@ -89,9 +89,9 @@ namespace SwashbucklerDiary.Gtk
             }
 
             // App lock
-            string appLockNumberPassword = Preferences.Default.Get<string>(nameof(Setting.AppLockNumberPassword), string.Empty);
-            string appLockPatternPassword = Preferences.Default.Get<string>(nameof(Setting.AppLockPatternPassword), string.Empty);
-            bool appLockBiometric = Preferences.Default.Get<bool>(nameof(Setting.AppLockBiometric), false);
+            string appLockNumberPassword = Microsoft.Maui.Storage.Preferences.Default.Get<string>(nameof(Setting.AppLockNumberPassword), string.Empty);
+            string appLockPatternPassword = Microsoft.Maui.Storage.Preferences.Default.Get<string>(nameof(Setting.AppLockPatternPassword), string.Empty);
+            bool appLockBiometric = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.AppLockBiometric), false);
             bool useAppLock = !string.IsNullOrEmpty(appLockNumberPassword)
                 || !string.IsNullOrEmpty(appLockPatternPassword)
                 || appLockBiometric;
@@ -117,7 +117,7 @@ namespace SwashbucklerDiary.Gtk
         private void HandleScheme(ActivationArguments args)
         {
             string? uriString = args.Data as string;
-            if (_navigateController.CheckUrlScheme(uriString, out var path))
+            if (_routeMatcher.CheckUrlScheme(uriString, out var path))
             {
                 blazorWebView.StartPath = path;
             }

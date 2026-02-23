@@ -11,7 +11,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public Dictionary<string, string> MoodIcons { get; set; } = [];
 
-        public Dictionary<AppDevicePlatform, string> DevicePlatformIcons { get; set; } = [];
+        public Dictionary<AppPlatform, string> AppPlatformIcons { get; set; } = [];
 
         public List<AchievementModel> Achievements { get; set; } = [];
 
@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             WeatherIcons = await _staticWebAssets.ReadJsonAsync<Dictionary<string, string>>("json/icon/weather-icons.json");
             MoodIcons = await _staticWebAssets.ReadJsonAsync<Dictionary<string, string>>("json/icon/mood-icons.json");
-            DevicePlatformIcons = await _staticWebAssets.ReadJsonAsync<Dictionary<AppDevicePlatform, string>>("json/icon/device-platform-icons.json");
+            AppPlatformIcons = await _staticWebAssets.ReadJsonAsync<Dictionary<AppPlatform, string>>("json/icon/app-platform-icons.json");
             Achievements = await _staticWebAssets.ReadJsonAsync<List<AchievementModel>>("json/achievement/achievements.json");
         }
     }

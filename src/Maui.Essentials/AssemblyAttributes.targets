@@ -1,0 +1,30 @@
+<Project>
+	<!-- This is required because the "GetAssemblyAttributes" target does not have an open DependsOnTargets. -->
+	<Target Name="_GetAssemblyAttributesBeforeTarget"
+            BeforeTargets="GetAssemblyAttributes"
+            DependsOnTargets="_MauiGetAssemblyAttributes" />
+
+	<Target Name="_MauiGetAssemblyAttributes">
+		<!-- 添加 ApplicationId 的验证 -->
+		<Error Condition="'$(ApplicationId)' == ''" Text="The applicationId property must be set. Please check the project configuration." />
+		
+		<ItemGroup>
+			<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+				<_Parameter1>Microsoft.Maui.ApplicationModel.AppInfo.PackageName</_Parameter1>
+				<_Parameter2>$(ApplicationId)</_Parameter2>
+			</AssemblyAttribute>
+			<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+				<_Parameter1>Microsoft.Maui.ApplicationModel.AppInfo.PublisherName</_Parameter1>
+				<_Parameter2>$(PublisherName)</_Parameter2>
+			</AssemblyAttribute>
+			<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+				<_Parameter1>Microsoft.Maui.ApplicationModel.AppInfo.Name</_Parameter1>
+				<_Parameter2>$(ApplicationTitle)</_Parameter2>
+			</AssemblyAttribute>
+			<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+				<_Parameter1>Microsoft.Maui.ApplicationModel.AppInfo.Version</_Parameter1>
+				<_Parameter2>$(Version)</_Parameter2>
+			</AssemblyAttribute>
+		</ItemGroup>
+	</Target>
+</Project>

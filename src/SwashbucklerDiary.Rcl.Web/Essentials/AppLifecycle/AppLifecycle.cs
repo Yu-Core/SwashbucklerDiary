@@ -1,0 +1,31 @@
+namespace SwashbucklerDiary.Rcl.Web.Essentials
+{
+    public class AppLifecycle : Rcl.Essentials.AppLifecycle, IDisposable
+    {
+        private readonly AppLifecycleJSModule _jSModule;
+
+        public AppLifecycle(AppLifecycleJSModule jSModule)
+        {
+            _jSModule = jSModule;
+            _jSModule.OnResumed += Resume;
+            _jSModule.OnStopped += Stop;
+        }
+
+        public override async void QuitApp()
+        {
+            await _jSModule.Quit();
+        }
+
+        public async Task InitializedAsync()
+        {
+            await _jSModule.Init();
+        }
+
+        public void Dispose()
+        {
+            _jSModule.OnResumed -= Resume;
+            _jSModule.OnStopped -= Stop;
+            GC.SuppressFinalize(this);
+        }
+    }
+}

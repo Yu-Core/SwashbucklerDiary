@@ -81,19 +81,6 @@ namespace SwashbucklerDiary.Rcl.Layout
             NavigateController.OnBackPressed += HandleBackPressed;
         }
 
-        protected override async Task OnInitializedAsync()
-        {
-            await base.OnInitializedAsync();
-
-            await InitVersionUpdate();
-            await InitConfigAsync();
-            StateHasChanged();
-
-            await DialogNotificationAsync();
-        }
-
-        protected abstract ActivationArguments CreateAppLockActivationArguments();
-
         protected abstract void HandleSchemeActivation(ActivationArguments args, bool replace);
 
         protected virtual void OnDispose()
@@ -106,18 +93,29 @@ namespace SwashbucklerDiary.Rcl.Layout
             NavigateController.OnBackPressed -= HandleBackPressed;
         }
 
+        protected async Task InternalOnInitializedAsync()
+        {
+            await InitVersionUpdate();
+            await InitConfigAsync();
+            StateHasChanged();
+
+            await DialogNotificationAsync();
+        }
+
         protected virtual async Task InitConfigAsync()
         {
-            await SettingService.InitializeAsync();
             await GlobalConfiguration.InitializeAsync();
             afterInitConfig = true;
         }
 
-        protected async void HandleLanguageChanged(object? sender, EventArgs e)
+        protected void HandleLanguageChanged(object? sender, EventArgs e)
         {
-            MasaBlazor.RTL = I18n.Culture.TextInfo.IsRightToLeft;
-            await InvokeAsync(StateHasChanged);
-            await UpdateDocumentProperty(I18n.Culture);
+            InvokeAsync(async () =>
+            {
+                MasaBlazor.RTL = I18n.Culture.TextInfo.IsRightToLeft;
+                await UpdateDocumentProperty(I18n.Culture);
+                StateHasChanged();
+            });
         }
 
         protected async void HandleThemeChanged(Shared.Theme theme)
@@ -147,7 +145,8 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected async Task DialogNotificationAsync()
         {
-            if (NavigationManager.GetBaseRelativePath().Equals("welcome", StringComparison.InvariantCultureIgnoreCase))
+            var route = NavigationManager.GetRoute();
+            if (route == "/welcome")
             {
                 return;
             }
@@ -177,14 +176,15 @@ namespace SwashbucklerDiary.Rcl.Layout
             bool lockAppWhenLeave = SettingService.Get(it => it.LockAppWhenLeave);
             if (useAppLock && lockAppWhenLeave)
             {
-                AppLifecycle.ActivationArguments = CreateAppLockActivationArguments();
-                NavigationManager.NavigateTo("appLock?IsLeave=true");
+                var returnUrl = NavigationManager.GetBaseRelativePath();
+                NavigationManager.NavigateTo($"appLock?IsLeave=true&returnUrl={Uri.EscapeDataString(returnUrl)}");
             }
         }
 
         protected void HandleActivated(ActivationArguments? args)
         {
-            if (NavigationManager.GetBaseRelativePath().Equals("welcome", StringComparison.InvariantCultureIgnoreCase))
+            var route = NavigationManager.GetRoute();
+            if (route == "/welcome")
             {
                 return;
             }
@@ -200,7 +200,7 @@ namespace SwashbucklerDiary.Rcl.Layout
                 return;
             }
 
-            bool replace = NavigationManager.GetBaseRelativePath().Equals("applock", StringComparison.InvariantCultureIgnoreCase);
+            bool replace = route == "/appLock";
 
             switch (args.Kind)
             {
@@ -217,7 +217,8 @@ namespace SwashbucklerDiary.Rcl.Layout
 
         protected void HandleShareActivation(ActivationArguments args, bool replace)
         {
-            if (NavigationManager.GetBaseRelativePath().Equals("write", StringComparison.InvariantCultureIgnoreCase))
+            var route = NavigationManager.GetRoute();
+            if (route == "/write")
             {
                 return;
             }

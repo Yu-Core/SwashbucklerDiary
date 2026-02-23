@@ -5,9 +5,11 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<CompressionEnabled>false</CompressionEnabled>
 	</PropertyGroup>
+
 	<ItemGroup>
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
+	
 	<ItemGroup>
 		<PackageReference Include="ClosedXML" Version="0.105.0" />
 		<PackageReference Include="Masa.Blazor" Version="1.11.9" />

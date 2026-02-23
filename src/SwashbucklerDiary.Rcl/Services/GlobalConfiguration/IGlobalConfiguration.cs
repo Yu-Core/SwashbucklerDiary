@@ -8,7 +8,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Dictionary<string, string> MoodIcons { get; set; }
 
-        Dictionary<AppDevicePlatform, string> DevicePlatformIcons { get; set; }
+        Dictionary<AppPlatform, string> AppPlatformIcons { get; set; }
 
         List<AchievementModel> Achievements { get; set; }
 

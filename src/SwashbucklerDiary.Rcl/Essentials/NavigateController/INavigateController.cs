@@ -3,7 +3,6 @@ namespace SwashbucklerDiary.Rcl.Essentials
     public interface INavigateController
     {
         bool DisableNavigate { get; set; }
-        RouteMatcher RouteMatcher { get; }
 
         event Action<HistoryAction>? OnHistoryActionAdded;
         event Action<Func<HistoryAction, bool>>? OnHistoryActionRemoved;

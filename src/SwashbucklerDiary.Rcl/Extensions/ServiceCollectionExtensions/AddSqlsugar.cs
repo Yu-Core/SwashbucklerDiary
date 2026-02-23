@@ -10,55 +10,57 @@ namespace SwashbucklerDiary.Rcl.Extensions
 {
     public static partial class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddSqlSugarConfig(this IServiceCollection services, string connectionString, string privacyConnectionString)
+        public static IServiceCollection AddSqlSugarConfig(this IServiceCollection services,
+            string connectionString,
+            string privacyConnectionString,
+            ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
         {
-            ISettingService? settingService = null;
-            IAppFileSystem? appFileSystem = null;
-
-            var configureExternalServices = new ConfigureExternalServices
+            services.Add<ISqlSugarClient>(sp =>
             {
-                //注意:  这儿AOP设置不能少
-                EntityService = (p, column) =>
+                var configureExternalServices = new ConfigureExternalServices
                 {
-                    if (column.PropertyName.ToLower() == "id") //是id的设为主键
+                    //注意:  这儿AOP设置不能少
+                    EntityService = (p, column) =>
                     {
-                        column.IsPrimarykey = true;
-                        if (column.PropertyInfo.PropertyType == typeof(int)) //是id并且是int的是自增
+                        if (column.PropertyName.ToLower() == "id") //是id的设为主键
                         {
-                            column.IsIdentity = true;
+                            column.IsPrimarykey = true;
+                            if (column.PropertyInfo.PropertyType == typeof(int)) //是id并且是int的是自增
+                            {
+                                column.IsIdentity = true;
+                            }
+                        }
+
+                        column.IfTable<DiaryModel>()
+                        .ManyToMany(it => it.Tags, typeof(DiaryTagModel), nameof(DiaryTagModel.DiaryId), nameof(DiaryTagModel.TagId))
+                        .ManyToMany(it => it.Resources, typeof(DiaryResourceModel), nameof(DiaryResourceModel.DiaryId), nameof(DiaryResourceModel.ResourceUri));
+
+                        column.IfTable<LogModel>()
+                        .UpdateProperty(it => it.Level, it =>
+                        {
+                            it.DataType = "varchar(10)";
+                        });
+
+                        column.IfTable<ResourceModel>()
+                        .UpdateProperty(it => it.ResourceUri, it =>
+                        {
+                            it.IsPrimarykey = true;
+                        })
+                        .ManyToMany(it => it.Diaries, typeof(DiaryResourceModel), nameof(ResourceModel.ResourceUri), nameof(DiaryResourceModel.DiaryId));
+
+                        column.IfTable<TagModel>()
+                        .ManyToMany(it => it.Diaries, typeof(DiaryTagModel), nameof(DiaryTagModel.TagId), nameof(DiaryTagModel.DiaryId));
+
+                        /***高版C#写法***/
+                        //支持string?和string  
+                        if (column.IsPrimarykey == false && new NullabilityInfoContext()
+                         .Create(p).WriteState is NullabilityState.Nullable)
+                        {
+                            column.IsNullable = true;
                         }
                     }
-
-                    column.IfTable<DiaryModel>()
-                    .ManyToMany(it => it.Tags, typeof(DiaryTagModel), nameof(DiaryTagModel.DiaryId), nameof(DiaryTagModel.TagId))
-                    .ManyToMany(it => it.Resources, typeof(DiaryResourceModel), nameof(DiaryResourceModel.DiaryId), nameof(DiaryResourceModel.ResourceUri));
-
-                    column.IfTable<LogModel>()
-                    .UpdateProperty(it => it.Level, it =>
-                    {
-                        it.DataType = "varchar(10)";
-                    });
-
-                    column.IfTable<ResourceModel>()
-                    .UpdateProperty(it => it.ResourceUri, it =>
-                    {
-                        it.IsPrimarykey = true;
-                    })
-                    .ManyToMany(it => it.Diaries, typeof(DiaryResourceModel), nameof(ResourceModel.ResourceUri), nameof(DiaryResourceModel.DiaryId));
-
-                    column.IfTable<TagModel>()
-                    .ManyToMany(it => it.Diaries, typeof(DiaryTagModel), nameof(DiaryTagModel.TagId), nameof(DiaryTagModel.DiaryId));
-
-                    /***高版C#写法***/
-                    //支持string?和string  
-                    if (column.IsPrimarykey == false && new NullabilityInfoContext()
-                     .Create(p).WriteState is NullabilityState.Nullable)
-                    {
-                        column.IsNullable = true;
-                    }
-                }
-            };
-            var configs = new List<ConnectionConfig>(){
+                };
+                var configs = new List<ConnectionConfig>(){
                     new ConnectionConfig(){
                         ConfigId="0",
                         DbType = DbType.Sqlite,
@@ -84,50 +86,55 @@ namespace SwashbucklerDiary.Rcl.Extensions
                         }
                     }
                 };
-            SqlSugarScope sqlSugar = new(configs
-            ,
-            db =>
-            {
-                //单例参数配置，所有上下文生效
-                foreach (var config in configs)
+
+                Action<SqlSugarClient> configAction = db =>
                 {
+
+                    ISettingService? settingService = sp.GetService<ISettingService>();
+                    IAppFileSystem? appFileSystem = sp.GetService<IAppFileSystem>();
+
+                    //单例参数配置，所有上下文生效
+                    foreach (var config in configs)
+                    {
 #if DEBUG
-                    db.GetConnection(config.ConfigId).Aop.OnLogExecuting = (sql, pars) =>
-                    {
-                        //Debug.WriteLine(sql);//输出sql
-                        Debug.WriteLine(UtilMethods.GetSqlString(DbType.Sqlite, sql, pars));//输出sql
-                    };
-#endif
-                    if (OperatingSystem.IsBrowser())
-                    {
-                        db.GetConnection(config.ConfigId).Aop.OnLogExecuted = async (sql, pars) =>
+                        db.GetConnection(config.ConfigId).Aop.OnLogExecuting = (sql, pars) =>
                         {
-                            if (!sql.StartsWith("SELECT", StringComparison.OrdinalIgnoreCase)
-                                && appFileSystem is not null)
-                            {
-                                await Task.Delay(500);
-                                await appFileSystem.SyncFS();
-                            }
+                            //Debug.WriteLine(sql);//输出sql
+                            Debug.WriteLine(UtilMethods.GetSqlString(DbType.Sqlite, sql, pars));//输出sql
                         };
+#endif
+                        if (OperatingSystem.IsBrowser())
+                        {
+                            db.GetConnection(config.ConfigId).Aop.OnLogExecuted = async (sql, pars) =>
+                            {
+                                if (!sql.StartsWith("SELECT", StringComparison.OrdinalIgnoreCase)
+                                    && appFileSystem is not null)
+                                {
+                                    await Task.Delay(500);
+                                    await appFileSystem.SyncFS();
+                                }
+                            };
+                        }
                     }
-                }
 
-                if (settingService is not null)
-                {
-                    bool privacyMode = settingService.GetTemp(it => it.PrivacyMode);
-                    string configId = privacyMode ? "1" : "0";
-                    string? currentConfigId = db.CurrentConnectionConfig.ConfigId.ToString();
-                    if (configId != currentConfigId)
+                    if (settingService is not null)
                     {
-                        db.ChangeDatabase(configId);
+                        bool privacyMode = settingService.GetTemp(it => it.PrivacyMode);
+                        string configId = privacyMode ? "1" : "0";
+                        string? currentConfigId = db.CurrentConnectionConfig.ConfigId.ToString();
+                        if (configId != currentConfigId)
+                        {
+                            db.ChangeDatabase(configId);
+                        }
                     }
-                }
-            }
+                };
 
-            );
+                ISqlSugarClient sqlSugar = serviceLifetime == ServiceLifetime.Transient
+                ? new SqlSugarScope(configs, configAction)
+                : new SqlSugarClient(configs, configAction);
 
-            // 创建表
-            Type[] types = {
+                // 创建表
+                Type[] types = {
                     typeof(DiaryModel),
                     typeof(TagModel),
                     typeof(DiaryTagModel),
@@ -138,18 +145,18 @@ namespace SwashbucklerDiary.Rcl.Extensions
                     typeof(ResourceModel),
                     typeof(DiaryResourceModel),
                 };
-            foreach (var config in configs)
-            {
-                sqlSugar.GetConnection(config.ConfigId).CodeFirst.InitTables(types);
-            }
-
-            services.AddSingleton<ISqlSugarClient>(sp =>
-            {
-                settingService = sp.GetService<ISettingService>();
-                appFileSystem = sp.GetService<IAppFileSystem>();
+                foreach (var config in configs)
+                {
+                    sqlSugar.AsTenant().GetConnection(config.ConfigId).CodeFirst.InitTables(types);
+                }
                 return sqlSugar;
-            });//这边是SqlSugarScope用AddSingleton
+            }, serviceLifetime);//这边是SqlSugarScope用AddSingleton
             return services;
+        }
+
+        private static void Add<TService>(this IServiceCollection services, Func<IServiceProvider, TService> implementationFactory, ServiceLifetime lifetime) where TService : class
+        {
+            services.Add(new ServiceDescriptor(typeof(TService), implementationFactory, lifetime));
         }
     }
 }

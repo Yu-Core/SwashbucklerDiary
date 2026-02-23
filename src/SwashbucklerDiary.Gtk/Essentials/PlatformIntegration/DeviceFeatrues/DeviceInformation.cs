@@ -4,8 +4,8 @@ namespace SwashbucklerDiary.Gtk.Essentials
 {
     public partial class PlatformIntegration
     {
-        public AppDevicePlatform CurrentPlatform
-            => OperatingSystem.IsLinux() ? AppDevicePlatform.Linux : AppDevicePlatform.Unknown;
+        public AppPlatform CurrentPlatform
+            => OperatingSystem.IsLinux() ? AppPlatform.Linux : AppPlatform.Unknown;
 
         public string DeviceName => GLib.Functions.GetHostName();
     }

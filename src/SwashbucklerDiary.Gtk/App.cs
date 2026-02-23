@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Gtk
 {
     public class App
     {
-        private static readonly string applicationId = AppInfo.PackageName;
+        private static readonly string applicationId = Microsoft.Maui.ApplicationModel.AppInfo.PackageName;
 
         private readonly global::Gtk.Application app;
 
@@ -108,7 +108,7 @@ namespace SwashbucklerDiary.Gtk
         {
             _themeService.OnChanged += ThemeChanged;
 
-            var themeInt = Preferences.Default.Get<int>(nameof(Setting.Theme), 0);
+            var themeInt = Microsoft.Maui.Storage.Preferences.Default.Get<int>(nameof(Setting.Theme), 0);
             var theme = (Theme)themeInt;
             _themeService.SetTheme(theme);
 

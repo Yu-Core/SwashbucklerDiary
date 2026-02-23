@@ -45,12 +45,6 @@ namespace SwashbucklerDiary.Rcl.Pages
             LoadView();
         }
 
-        protected override async Task OnInitializedAsync()
-        {
-            await HandleAchievements(Achievement.Log);
-            await base.OnInitializedAsync();
-        }
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
@@ -58,6 +52,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (firstRender)
             {
                 await UpdateLogsAsync();
+                await HandleAchievements(Achievement.Log);
                 StateHasChanged();
             }
         }

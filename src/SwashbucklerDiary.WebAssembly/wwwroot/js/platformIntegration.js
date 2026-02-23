@@ -1,211 +1,75 @@
+import {
+    openUri,
+    setClipboard,
+    shareText,
+    internalShareFile,
+    internalDownloadFile,
+    internalChooseFiles,
+    isBiometricSupported,
+    biometricAuthenticateAsync
+} from "../_content/SwashbucklerDiary.Rcl.Web/js/platformIntegration.js"
+
 const FS = Blazor.runtime.Module.FS;
 
-export function openUri(uri) {
-    return new Promise((resolve, reject) => {
-        // 检测页面状态的标志
-        let pageHiddenOrBlurred = false;
-
-        // 处理页面状态变化的事件
-        function handlePageChange() {
-            pageHiddenOrBlurred = true;
-            cleanup();
-            // 页面状态变化，认为链接被打开了
-            resolve(true);
-        }
-
-        // 移除事件监听并清理
-        function cleanup() {
-            window.removeEventListener('blur', handlePageChange);
-            window.removeEventListener('pagehide', handlePageChange);
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        }
-
-        // 处理页面可见性变化的事件
-        function handleVisibilityChange() {
-            if (document.hidden) {
-                handlePageChange();
-            }
-        }
-
-        // 监听页面状态变化的事件
-        window.addEventListener('blur', handlePageChange);
-        window.addEventListener('pagehide', handlePageChange);
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-
-        // 创建并点击<a>元素以尝试打开链接
-        const a = document.createElement("a");
-        a.href = uri;
-        a.target = "_blank";
-        a.style.display = "none";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-
-        // 设置超时检查
-        setTimeout(() => {
-            cleanup();
-            if (!pageHiddenOrBlurred) {
-                // 如果指定时间内页面状态没有变化，认为链接没有被打开
-                reject(false);
-            }
-        }, 1000);
-    });
-};
-
-export async function setClipboard(text) {
-    if (navigator.clipboard) {
-        try {
-            await navigator.clipboard.writeText(text);
-            return;
-        } catch (e) {
-            console.warn('Clipboard API fail，use execCommand:', e);
-        }
+async function shareFile(title, filePath, fileName, mimeType) {
+    const pathInfo = FS.analyzePath(filePath);
+    if (!pathInfo.exists) {
+        console.warn(`The file does not exist: ${filePath}`);
+        return;
     }
 
-    execCommandCopy(text);
+    const fileData = FS.readFile(filePath);
+    await internalShareFile(title, fileData, fileName, mimeType);
 }
 
-function execCommandCopy(text) {
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-
-    document.body.appendChild(textarea);
-
-    textarea.select();
-    textarea.setSelectionRange(0, textarea.value.length); // 兼容移动设备
-
-    try {
-        const success = document.execCommand('copy');
-        if (!success) {
-            console.warn('Copy failed, please check your browser permissions or try other methods');
-        }
-    } catch (err) {
-        console.error('Copy failed:', err);
-    } finally {
-        document.body.removeChild(textarea);
+function downloadFile(fileName, filePath) {
+    const pathInfo = FS.analyzePath(filePath);
+    if (!pathInfo.exists) {
+        console.warn(`The file does not exist: ${filePath}`);
+        return;
     }
-}
 
-export async function shareTextAsync(title, text) {
-    if (navigator.share) {
-        try {
-            await navigator.share({
-                title: title,
-                text: text
-            })
-            console.log('Thanks for sharing!');
-        } catch (e) {
-            console.error(e);
-        }
-    }
-}
-
-export async function shareFileAsync(title, path) {
-    if (navigator.share) {
-        try {
-            if (FS.analyzePath(path).exists) {
-                const fileName = path.split('/').pop();
-                const data = FS.readFile(path);
-                const file = new File([data], fileName, { type: 'image/png' });
-                await navigator.share({
-                    title: title,
-                    files: [file]
-                })
-                console.log('Thanks for sharing!');
-            }
-
-        } catch (e) {
-            console.error(e);
-        }
-    }
-}
-
-export function saveFileAsync(fileName, filePath) {
-    const path = `/${filePath}`;
-    const fileData = FS.readFile(path);
+    const fileData = FS.readFile(filePath);
     var blob = new Blob([fileData], { type: 'application/octet-stream' });
     const url = URL.createObjectURL(blob);
 
-    const a = document.createElement('a');
-    a.download = fileName;
-    a.href = url;
-    a.style.display = 'none';
+    internalDownloadFile(fileName, url);
 
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
     URL.revokeObjectURL(url);
 }
 
-export function pickFilesAsync(dotNetObj, accept, fileExtensions, multiple = false) {
-    return new Promise((resolve) => {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = accept;
-        input.multiple = multiple; // Set based on the parameter
-        input.style.display = 'none';
+async function chooseFiles(dotNetObj, accept, fileExtensions, multiple = false) {
+    const files = await internalChooseFiles(accept, multiple);
 
-        const handleFiles = async () => {
-            const files = input.files;
-            input.remove();
-            const results = [];
+    const results = [];
 
-            if (files.length === 0) {
-                resolve(results);
-                return;
-            }
+    if (files.length === 0) {
+        return results;
+    }
 
-            for (const file of files) {
-                const fileExtension = file.name.substring(file.name.lastIndexOf("."));
-                if (fileExtensions && fileExtensions.indexOf(fileExtension) < 0) {
-                    continue;
-                }
+    for (const file of files) {
+        const fileExtension = file.name.substring(file.name.lastIndexOf("."));
+        if (fileExtensions && fileExtensions.indexOf(fileExtension) < 0) {
+            continue;
+        }
 
-                try {
-                    const fileName = file.name;
-                    const contents = await readFileAsArrayBuffer(file);
+        try {
+            const fileName = file.name;
+            const contents = await readFileAsArrayBuffer(file);
 
-                    const randomFolderName = await dotNetObj.invokeMethodAsync("RandomName");
-                    const folderPath = `/cache/${randomFolderName}`;
-                    FS.mkdir(folderPath);
+            const randomFolderName = await dotNetObj.invokeMethodAsync("RandomName");
+            const folderPath = `/cache/${randomFolderName}`;
+            FS.mkdir(folderPath);
 
-                    const filePath = `${folderPath}/${fileName}`;
-                    FS.writeFile(filePath, new Uint8Array(contents), { encoding: 'binary' });
-                    results.push(filePath);
-                } catch (e) {
-                    console.error(e);
-                    results.push(""); // In case of error, add an empty string for the file
-                }
-            }
+            const filePath = `${folderPath}/${fileName}`;
+            FS.writeFile(filePath, new Uint8Array(contents), { encoding: 'binary' });
+            results.push(filePath);
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
-            resolve(results);
-        };
-
-        const handleVisibilityChange = () => {
-            if (document.visibilityState === "visible") {
-                afterChooseFiles();
-            }
-        };
-
-        const afterChooseFiles = () => {
-            window.removeEventListener("focus", afterChooseFiles);
-            document.removeEventListener("touchstart", afterChooseFiles);
-            document.removeEventListener("visibilitychange", handleVisibilityChange);
-            input.removeEventListener("change", afterChooseFiles);
-
-            setTimeout(handleFiles, 200);
-        };
-
-        window.addEventListener("focus", afterChooseFiles, { once: true });
-        document.addEventListener("touchstart", afterChooseFiles, { once: true });
-        document.addEventListener("visibilitychange", handleVisibilityChange);
-        input.addEventListener("change", afterChooseFiles, { once: true });
-
-        input.click();
-    });
+    return results;
 }
 
 // Utility function to read file as array buffer
@@ -218,49 +82,13 @@ function readFileAsArrayBuffer(file) {
     });
 }
 
-export async function isBiometricSupported() {
-    // 检查浏览器支持
-    if (!window.PublicKeyCredential || !navigator.credentials || !navigator.credentials.create) {
-        return false;
-    }
-
-    // 检查设备支持
-    const isAvailable = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
-    if (!isAvailable) {
-        return false;
-    }
-
-    return true;
+export {
+    openUri,
+    setClipboard,
+    shareText,
+    shareFile,
+    downloadFile,
+    chooseFiles,
+    isBiometricSupported,
+    biometricAuthenticateAsync
 }
-
-export async function biometricAuthenticateAsync() {
-    const isSupported = await isBiometricSupported();
-    if (!isSupported) {
-        return false;
-    }
-
-    try {
-        const options = {
-            publicKey: {
-                challenge: new Uint8Array(32).buffer, // 随机挑战值
-                rp: { id: window.location.hostname, name: document.title || 'This website' },
-                user: {
-                    id: new Uint8Array(16),
-                    name: 'user@example.com',
-                    displayName: 'visitor'
-                },
-                pubKeyCredParams: [{ type: "public-key", alg: -7 }],
-                timeout: 60000,
-                authenticatorSelection: {
-                    authenticatorAttachment: "platform",
-                    userVerification: "required"
-                }
-            }
-        };
-        await navigator.credentials.create(options);
-        return true;
-    } catch (error) {
-        console.error('Validation failed:', error);
-        return false;
-    }
-} 

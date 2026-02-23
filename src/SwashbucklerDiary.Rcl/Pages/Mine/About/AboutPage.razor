@@ -27,7 +27,7 @@
                     <MListItemSubtitle Class="mb-2">
                         <wc-auto-scroll-text>@(I18n.T("An open source, cross platform local diary application"))</wc-auto-scroll-text>
                     </MListItemSubtitle>
-                    @if (PlatformIntegration.CurrentPlatform != AppDevicePlatform.Browser)
+                    @if (!PlatformIntegration.CurrentPlatform.IsBrowser())
                     {
                         <MListItemSubtitle>
                             <a href="https://beian.miit.gov.cn/" target="_blank" class="text--disabled text-decoration-none" style="font-size:0.75rem;">

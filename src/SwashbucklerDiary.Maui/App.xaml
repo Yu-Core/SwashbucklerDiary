@@ -10,18 +10,6 @@
             <Color x:Key="PageBackgroundColor">white</Color>
             <Color x:Key="PrimaryTextColor">black</Color>
 
-            <Style TargetType="Label">
-                <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />
-                <Setter Property="FontFamily" Value="OpenSansRegular" />
-            </Style>
-
-            <Style TargetType="Button">
-                <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />
-                <Setter Property="FontFamily" Value="OpenSansRegular" />
-                <Setter Property="BackgroundColor" Value="#000" />
-                <Setter Property="Padding" Value="14,10" />
-            </Style>
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

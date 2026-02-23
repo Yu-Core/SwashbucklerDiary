@@ -1,3 +1,5 @@
+using Microsoft.Maui.Storage;
+
 namespace SwashbucklerDiary.Gtk.Essentials
 {
     public class AppFileSystem : Rcl.Essentials.AppFileSystem

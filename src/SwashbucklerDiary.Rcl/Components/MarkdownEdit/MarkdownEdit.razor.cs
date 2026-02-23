@@ -261,7 +261,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
             if (_dotNetObjectReference is not null)
             {
-                await jSModule.After(_dotNetObjectReference, mMarkdown.Ref, moblieOutlineElement, PlatformIntegration.CurrentPlatform == AppDevicePlatform.macOS);
+                await jSModule.After(_dotNetObjectReference, mMarkdown.Ref, moblieOutlineElement, PlatformIntegration.CurrentPlatform == AppPlatform.macOS);
             }
 
             if (Autofocus)

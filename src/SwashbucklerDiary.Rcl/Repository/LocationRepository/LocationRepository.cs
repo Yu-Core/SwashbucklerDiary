@@ -12,14 +12,14 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public override Task<List<LocationModel>> GetListAsync()
         {
-            return base.Context.Queryable<LocationModel>()
+            return Context.Queryable<LocationModel>()
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
 
         public override Task<List<LocationModel>> GetListAsync(Expression<Func<LocationModel, bool>> expression)
         {
-            return base.Context.Queryable<LocationModel>()
+            return Context.Queryable<LocationModel>()
                 .Where(expression)
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();

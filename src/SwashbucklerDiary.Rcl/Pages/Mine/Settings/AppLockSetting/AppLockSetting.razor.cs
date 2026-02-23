@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
@@ -26,6 +27,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
+
+        [Inject]
+        private IAppLockService AppLockService { get; set; } = default!;
 
         [CascadingParameter(Name = "MasaBlazorCascadingTheme")]
         public string? MasaBlazorCascadingTheme { get; set; }
@@ -80,6 +84,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 appLockNumberPassword = string.Empty;
                 await SettingService.RemoveAsync(it => it.AppLockNumberPassword);
             }
+
+            AppLockService.OnLockChanged();
         }
 
         private bool ValidateNumberPassword(string password)
@@ -108,6 +114,8 @@ namespace SwashbucklerDiary.Rcl.Pages
                 appLockPatternPassword = string.Empty;
                 await SettingService.RemoveAsync(it => it.AppLockPatternPassword);
             }
+
+            AppLockService.OnLockChanged();
         }
 
         private bool ValidatePatternPassword(string password)
@@ -132,6 +140,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 appLockBiometric = !appLockBiometric;
                 await SettingService.SetAsync(it => it.AppLockBiometric, appLockBiometric);
+                AppLockService.OnLockChanged();
             }
         }
 

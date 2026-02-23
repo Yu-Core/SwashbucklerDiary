@@ -252,7 +252,7 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             string deviceName = _platformIntegration.DeviceName;
             string ipAddress = LANHelper.GetLocalIPv4Address();
-            AppDevicePlatform devicePlatform = _platformIntegration.CurrentPlatform;
+            AppPlatform devicePlatform = _platformIntegration.CurrentPlatform;
 
             return new()
             {

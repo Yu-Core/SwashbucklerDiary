@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool achievementsAlert;
 
-        private readonly Dictionary<string, int> timeoutItems = [];
+        private Dictionary<string, int> timeoutItems = [];
 
         protected override void OnInitialized()
         {
@@ -36,10 +36,13 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private void InitTimeoutItems()
         {
+            Dictionary<string, int> items = [];
             for (int i = 0; i < 5; i++)
             {
-                timeoutItems.Add($"{i + 1}s", (i + 1) * 1000);
+                items.Add($"{i + 1}s", (i + 1) * 1000);
             }
+
+            timeoutItems = items;
         }
     }
 }

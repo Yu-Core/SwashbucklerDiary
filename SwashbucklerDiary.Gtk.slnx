@@ -1,6 +1,7 @@
 <Solution>
-  <Project Path="src/SwashbucklerDiary.Gtk/SwashbucklerDiary.Gtk.csproj" />
-  <Project Path="src/SwashbucklerDiary.Rcl.Hybird/SwashbucklerDiary.Rcl.Hybird.csproj" />
-  <Project Path="src/SwashbucklerDiary.Rcl/SwashbucklerDiary.Rcl.csproj" />
-  <Project Path="src/SwashbucklerDiary.Shared/SwashbucklerDiary.Shared.csproj" />
+	<Project Path="src/Maui.Essentials/Maui.Essentials.csproj" />
+	<Project Path="src/SwashbucklerDiary.Gtk/SwashbucklerDiary.Gtk.csproj" />
+	<Project Path="src/SwashbucklerDiary.Rcl.Hybird/SwashbucklerDiary.Rcl.Hybird.csproj" />
+	<Project Path="src/SwashbucklerDiary.Rcl/SwashbucklerDiary.Rcl.csproj" />
+	<Project Path="src/SwashbucklerDiary.Shared/SwashbucklerDiary.Shared.csproj" />
 </Solution>

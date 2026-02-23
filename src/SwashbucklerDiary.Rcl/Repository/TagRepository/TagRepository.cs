@@ -13,14 +13,14 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public override Task<List<TagModel>> GetListAsync()
         {
-            return base.Context.Queryable<TagModel>()
+            return Context.Queryable<TagModel>()
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
         }
 
         public override Task<List<TagModel>> GetListAsync(Expression<Func<TagModel, bool>> expression)
         {
-            return base.Context.Queryable<TagModel>()
+            return Context.Queryable<TagModel>()
                 .Where(expression)
                 .OrderByDescending(it => it.CreateTime)
                 .ToListAsync();
@@ -28,7 +28,7 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public override Task<bool> DeleteAsync(TagModel tag)
         {
-            return base.Context.DeleteNav(tag)
+            return Context.DeleteNav(tag)
                 .Include(it => it.Diaries, new DeleteNavOptions()
                 {
                     ManyToManyIsDeleteA = true

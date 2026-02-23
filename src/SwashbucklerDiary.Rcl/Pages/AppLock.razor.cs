@@ -2,6 +2,8 @@ using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
@@ -23,8 +25,17 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private IAppLifecycle AppLifecycle { get; set; } = default!;
 
+        [Inject]
+        private RouteMatcher RouteMatcher { get; set; } = default!;
+
+        [Inject]
+        private IAppLockService AppLockService { get; set; } = default!;
+
         [SupplyParameterFromQuery]
         private bool IsLeave { get; set; }
+
+        [SupplyParameterFromQuery]
+        private string? ReturnUrl { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -80,7 +91,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 bool isSuccess = await PlatformIntegration.BiometricAuthenticateAsync();
                 if (isSuccess)
                 {
-                    VerificationSuccessful();
+                    await VerificationSuccessful();
                 }
             }
             else
@@ -93,43 +104,50 @@ namespace SwashbucklerDiary.Rcl.Pages
                 }
                 else
                 {
-                    VerificationSuccessful();
+                    await VerificationSuccessful();
                 }
             }
         }
 
-        private void HandleNumberLockOnFinish(LockFinishArguments args)
+        private async Task HandleNumberLockOnFinish(LockFinishArguments args)
         {
             args.IsFail = !PasswordHasher.VerifyPassword(args.Value ?? string.Empty, appLockNumberPassword, appLockNumberPasswordSalt); ;
             if (!args.IsFail)
             {
-                VerificationSuccessful();
+                await VerificationSuccessful();
             }
         }
 
-        public void HandlePatternLockOnFinish(LockFinishArguments args)
+        public async Task HandlePatternLockOnFinish(LockFinishArguments args)
         {
             args.IsFail = !PasswordHasher.VerifyPassword(args.Value ?? string.Empty, appLockPatternPassword, appLockPatternPasswordSalt);
             if (!args.IsFail)
             {
-                VerificationSuccessful();
+                await VerificationSuccessful();
             }
         }
 
-        private void VerificationSuccessful()
+        private async Task VerificationSuccessful()
         {
             NavigateController.DisableNavigate = false;
+
+            await AppLockService.OnValidationSucceededAsync();
 
             var args = AppLifecycle.ActivationArguments;
             AppLifecycle.ActivationArguments = null;
             if (args is not null && args.Kind != AppActivationKind.Launch)
             {
                 AppLifecycle.Activate(args);
+                return;
             }
-            else
+
+            if (ReturnUrl is not null && RouteMatcher.CheckRouter(NavigationManager.ToRoute(ReturnUrl)))
             {
-                To("");
+                To(ReturnUrl, replace: true);
+                return;
             }
+
+            To("");
         }
 
         private void ExitApp()

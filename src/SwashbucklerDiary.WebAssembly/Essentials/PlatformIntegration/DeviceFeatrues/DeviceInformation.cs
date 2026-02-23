@@ -4,9 +4,7 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public partial class PlatformIntegration
     {
-        public AppDevicePlatform CurrentPlatform
-            => AppDevicePlatform.Browser;
-
-        public string DeviceName => string.Empty;
+        public override AppPlatform CurrentPlatform
+            => AppPlatform.BrowserWasm;
     }
 }

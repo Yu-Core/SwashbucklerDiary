@@ -29,14 +29,14 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public override async Task<List<ResourceModel>> GetListAsync()
         {
-            var resources = await base.Context.Queryable<ResourceModel>().ToListAsync().ConfigureAwait(false);
+            var resources = await Context.Queryable<ResourceModel>().ToListAsync().ConfigureAwait(false);
             resources.Reverse();
             return resources;
         }
 
         public override async Task<List<ResourceModel>> GetListAsync(Expression<Func<ResourceModel, bool>> expression)
         {
-            var resources = await base.Context.Queryable<ResourceModel>().Where(expression).ToListAsync().ConfigureAwait(false); ;
+            var resources = await Context.Queryable<ResourceModel>().Where(expression).ToListAsync().ConfigureAwait(false); ;
             resources.Reverse();
             return resources;
         }
@@ -45,7 +45,7 @@ namespace SwashbucklerDiary.Rcl.Repository
         {
             expression ??= r => true;
 
-            var resourceUris = await base.Context.Queryable<ResourceModel>()
+            var resourceUris = await Context.Queryable<ResourceModel>()
                 .LeftJoin<DiaryResourceModel>((r, dr) => r.ResourceUri == dr.ResourceUri)
                 .Where(expression)
                 .Where((r, dr) => dr.ResourceUri == null) // 只选择没有匹配的记录

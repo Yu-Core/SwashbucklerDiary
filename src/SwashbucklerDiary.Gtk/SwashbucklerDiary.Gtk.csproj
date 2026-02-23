@@ -5,10 +5,11 @@
 		<OutputType>Exe</OutputType>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<ApplicationId>com.yucore.swashbucklerdiary</ApplicationId>
 		<CompressionEnabled>false</CompressionEnabled>
+		
+		<ApplicationId>com.yucore.swashbucklerdiary</ApplicationId>
 		<Version>1.0.0</Version>
-
+		
 		<!-- https://github.com/qmfrederik/dotnet-packaging -->
 		<PackagePrefix>$(ApplicationId)</PackagePrefix>
 		<Prefix>/opt/apps/$(ApplicationId)</Prefix>
@@ -20,13 +21,6 @@
 		<!-- Debug configuration settings -->
 		<ApplicationId>com.yucore.swashbucklerdiarydebug</ApplicationId>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
-			<_Parameter1>PackageName</_Parameter1>
-			<_Parameter2>$(ApplicationId)</_Parameter2>
-		</AssemblyAttribute>
-	</ItemGroup>
 
 	<ItemGroup>
 		<DebDependency Include="libwebkitgtk-6.0-4" />
@@ -50,7 +44,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Maui.Essentials\Maui.Essentials.csproj" />
 		<ProjectReference Include="..\SwashbucklerDiary.Rcl.Hybird\SwashbucklerDiary.Rcl.Hybird.csproj" />
 	</ItemGroup>
 
+	<Import Project="..\Maui.Essentials\AssemblyAttributes.targets" />
 </Project>

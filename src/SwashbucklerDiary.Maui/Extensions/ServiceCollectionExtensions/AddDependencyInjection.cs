@@ -14,8 +14,10 @@ namespace SwashbucklerDiary.Maui.Extensions
         {
             services.AddSingleton<IProxyService, Rcl.Hybird.Services.ProxyService>();
             services.AddSingleton<IStaticWebAssets, Essentials.StaticWebAssets>();
+            services.AddSingleton<Rcl.Essentials.IPreferences, Essentials.Preferences>();
             services.AddSingleton<ISettingService, Services.SettingService>();
-            services.AddSingleton<INavigateController, Essentials.NavigateController>();
+            services.AddSingleton<RouteMatcher>(_ => new RouteMatcher(Routes.Assemblies));
+            services.AddSingleton<INavigateController, NavigateController>();
             services.AddSingleton<IGlobalConfiguration, GlobalConfiguration>();
             services.AddSingleton<IAlertService, AlertService>();
             services.AddSingleton<II18nService>(sp =>
@@ -24,9 +26,10 @@ namespace SwashbucklerDiary.Maui.Extensions
             });
             services.AddSingleton<Rcl.Essentials.IVersionTracking, Essentials.VersionTracking>();
             services.AddSingleton<IPlatformIntegration, PlatformIntegration>();
-            services.AddSingleton<IAppFileSystem>(sp=> Essentials.AppFileSystem.Default);
+            services.AddSingleton<IAppFileSystem>(sp => Essentials.AppFileSystem.Default);
             services.AddSingleton<IMediaResourceManager, Services.MediaResourceManager>();
             services.AddSingleton<BreakpointService>();
+            services.AddSingleton<IAppLockService, AppLockService>();
 
             services.AddRclDependencyInjection();
 

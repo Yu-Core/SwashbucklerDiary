@@ -1,5 +1,6 @@
 using EmbedIO;
 using EmbedIO.Cors;
+using SwashbucklerDiary.Rcl.Hybird.Extensions;
 using System.Net;
 
 namespace SwashbucklerDiary.Rcl.Hybird.Services
