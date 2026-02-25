@@ -1,4 +1,5 @@
-﻿using SwashbucklerDiary.Rcl.Essentials;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Server.Middleware
@@ -55,9 +56,14 @@ namespace SwashbucklerDiary.Server.Middleware
                     || appLockBiometric;
                 if (useAppLock)
                 {
-                    var returnUrl = $"{context.Request.Path}{context.Request.QueryString}".TrimStart('/');
+                    string returnUrl = $"{context.Request.Path}{context.Request.QueryString}".TrimStart('/');
+                    string redirectUrl = "/appLock";
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        redirectUrl = QueryHelpers.AddQueryString(redirectUrl, "returnUrl", returnUrl);
+                    }
 
-                    context.Response.Redirect($"/appLock?returnUrl={Uri.EscapeDataString(returnUrl)}");
+                    context.Response.Redirect(redirectUrl);
                     return;
                 }
             }
