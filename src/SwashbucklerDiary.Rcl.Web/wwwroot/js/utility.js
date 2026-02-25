@@ -57,3 +57,13 @@ function forceRefresh() {
         window.visualViewport.addEventListener('scroll', updateObstruction);
     }
 }());
+
+// Setting document.title doesn't change the tab's text after pressing back in the browser
+// https://stackoverflow.com/questions/72982365/
+(function () {
+    window.addEventListener('popstate', function (event) {
+        const title = document.title;
+        document.title = '';
+        document.title = title;
+    });
+}());
