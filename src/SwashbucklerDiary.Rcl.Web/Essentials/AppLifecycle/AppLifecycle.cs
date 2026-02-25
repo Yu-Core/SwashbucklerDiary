@@ -7,8 +7,8 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
         public AppLifecycle(AppLifecycleJSModule jSModule)
         {
             _jSModule = jSModule;
-            _jSModule.OnResumed += Resume;
-            _jSModule.OnStopped += Stop;
+            _jSModule.Resumed += NotifyResumed;
+            _jSModule.Stopped += NotifyStopped;
         }
 
         public override async void QuitApp()
@@ -23,8 +23,8 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
 
         public void Dispose()
         {
-            _jSModule.OnResumed -= Resume;
-            _jSModule.OnStopped -= Stop;
+            _jSModule.Resumed -= NotifyResumed;
+            _jSModule.Stopped -= NotifyStopped;
             GC.SuppressFinalize(this);
         }
     }

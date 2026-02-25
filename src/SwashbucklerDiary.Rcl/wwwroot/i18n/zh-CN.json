@@ -510,5 +510,9 @@
   "Unknown size": "未知大小",
   "Unknown time": "未知时间",
   "Share fail": "分享失败",
-  "Please use the latest browser or access in HTTPS mode": "请使用最新浏览器或在https模式下访问"
+  "Please use the latest browser or access in HTTPS mode": "请使用最新浏览器或在https模式下访问",
+  "Set application lock": "设置应用锁",
+  "For first-time use, it is recommended to set an app lock to protect privacy. After activation, identity verification is required every time the application is accessed.": "首次使用，建议设置应用锁以保护隐私。开启后，每次进入应用需验证身份。",
+  "Set up now": "立即设置",
+  "Do not remind again": "不再提醒"
 }

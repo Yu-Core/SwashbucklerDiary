@@ -23,7 +23,7 @@ namespace SwashbucklerDiary.Maui.Layout
                 AppLifecycle.ActivationArguments = null;
                 if (args is not null && args.Kind != AppActivationKind.Launch)
                 {
-                    AppLifecycle.Activate(args);
+                    AppLifecycle.NotifyActivated(args);
                 }
             }
         }

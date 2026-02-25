@@ -31,7 +31,8 @@
                 </MMain>
 
                 <MainLayoutBottomNav Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutBottomNav>
-
+                
+                <SetAppLockAlertDialog @bind-Visible="showSetAppLockAlert"></SetAppLockAlertDialog>
             </ChildContent>
             <ErrorContent>
                 <MContainer Class="fill-height justify-center">

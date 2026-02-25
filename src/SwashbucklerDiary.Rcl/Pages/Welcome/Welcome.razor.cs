@@ -80,6 +80,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             await SettingService.SetAsync(s => s.FirstAgree, true);
 
             NavigateController.RemoveHistoryAction(AppLifecycle.QuitApp);
+
+            AppLifecycle.NotifyAfterFirstEntered();
+
             NavigationManager.NavigateTo("", replace: true);
         }
 

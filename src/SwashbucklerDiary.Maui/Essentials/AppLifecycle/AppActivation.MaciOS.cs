@@ -26,7 +26,7 @@ namespace SwashbucklerDiary.Maui.Essentials
         static void Activate(NSUrl nSUrl)
         {
             var activationArguments = CreateArgumentsFromNSUrl(nSUrl);
-            AppLifecycle.Default.Activate(activationArguments);
+            AppLifecycle.Default.NotifyActivated(activationArguments);
         }
 
         private static ActivationArguments CreateArgumentsFromNSUrl(NSUrl nSUrl)

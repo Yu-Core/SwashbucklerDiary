@@ -1,8 +1,6 @@
 using Masa.Blazor;
-using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
-using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
@@ -27,23 +25,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         ];
 
         private List<DiaryModel> templates = [];
-
-        [Inject]
-        private IVersionUpdataManager VersionManager { get; set; } = default!;
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            VersionManager.AfterVersionUpdate += UpdateDiariesAndStateHasChanged;
-        }
-
-        protected override async ValueTask DisposeAsyncCore()
-        {
-            await base.DisposeAsyncCore();
-
-            VersionManager.AfterVersionUpdate -= UpdateDiariesAndStateHasChanged;
-        }
 
         protected override void ReadSettings()
         {
@@ -97,12 +78,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             string? queryParameters = string.IsNullOrWhiteSpace(value) ? null : $"?query={value}";
             To($"search{queryParameters}");
-        }
-
-        private async void UpdateDiariesAndStateHasChanged()
-        {
-            await UpdateDiariesAsync();
-            await InvokeAsync(StateHasChanged);
         }
     }
 }

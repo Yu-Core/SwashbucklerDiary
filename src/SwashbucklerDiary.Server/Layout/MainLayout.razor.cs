@@ -6,6 +6,8 @@ namespace SwashbucklerDiary.Server.Layout
 {
     public partial class MainLayout : Rcl.Web.Layout.MainLayoutBase
     {
+        private bool showSetAppLockAlert;
+
         [Inject]
         private IApiAuthService ApiAuthService { get; set; } = default!;
 
@@ -20,6 +22,26 @@ namespace SwashbucklerDiary.Server.Layout
 
             AppLockService.ValidationSucceeded += HandleValidationSucceeded;
             AppLockService.LockChanged += HandleAppLockChanged;
+            AppLifecycle.AfterFirstEntered += HandleAfterFirstEntered;
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+
+            if (HttpContext is null)
+            {
+                await InternalOnInitializedAsync();
+            }
+        }
+
+        protected override void OnDispose()
+        {
+            base.OnDispose();
+
+            AppLockService.ValidationSucceeded -= HandleValidationSucceeded;
+            AppLockService.LockChanged -= HandleAppLockChanged;
+            AppLifecycle.AfterFirstEntered -= HandleAfterFirstEntered;
         }
 
         private async Task HandleValidationSucceeded(AppLockEventArgs _)
@@ -39,22 +61,12 @@ namespace SwashbucklerDiary.Server.Layout
             InvokeAsync(SetCookieAsync);
         }
 
-        protected override async Task OnInitializedAsync()
+        private void HandleAfterFirstEntered()
         {
-            await base.OnInitializedAsync();
-
-            if (HttpContext is null)
+            InvokeAsync(() =>
             {
-                await InternalOnInitializedAsync();
-            }
-        }
-
-        protected override void OnDispose()
-        {
-            base.OnDispose();
-
-            AppLockService.ValidationSucceeded -= HandleValidationSucceeded;
-            AppLockService.LockChanged -= HandleAppLockChanged;
+                showSetAppLockAlert = true;
+            });
         }
     }
 }

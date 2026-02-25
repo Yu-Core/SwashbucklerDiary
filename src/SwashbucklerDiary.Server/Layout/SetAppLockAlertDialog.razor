@@ -1,0 +1,35 @@
+﻿@inherits DialogComponentBase
+
+<CustomMDialog MyValue="Visible"
+               MyValueChanged="InternalVisibleChanged"
+               ContentClass="rounded-lg"
+               Persistent="true"
+               Scrollable="true"
+               MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Set application lock"))</wc-auto-scroll-text>
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="HandleOnCancel">
+                <MIcon>close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            @(I18n.T("For first-time use, it is recommended to set an app lock to protect privacy. After activation, identity verification is required every time the application is accessed."))
+        </MCardText>
+        
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text="true"
+                     OnClick="HandleOnCancel">
+                @(I18n.T("Do not remind again"))
+            </MButton>
+            <MButton Text="true"
+                     Color="primary"
+                     OnClick="ToSet">
+                @(I18n.T("Set up now"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</CustomMDialog>

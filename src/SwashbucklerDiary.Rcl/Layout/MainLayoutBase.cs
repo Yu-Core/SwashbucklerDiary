@@ -79,8 +79,8 @@ namespace SwashbucklerDiary.Rcl.Layout
             I18n.CultureChanged += HandleLanguageChanged;
             ThemeService.OnChanged += HandleThemeChanged;
             SettingService.SettingsChanged += HandleSettingsChanged;
-            AppLifecycle.OnStopped += HandleAppLifecycleOnStopped;
-            AppLifecycle.OnActivated += HandleActivated;
+            AppLifecycle.Stopped += HandleAppLifecycleOnStopped;
+            AppLifecycle.Activated += HandleActivated;
             NavigateController.OnBackPressed += HandleBackPressed;
             AppLockService.ValidationSucceeded += HandleValidationSucceeded;
         }
@@ -103,8 +103,8 @@ namespace SwashbucklerDiary.Rcl.Layout
             I18n.CultureChanged -= HandleLanguageChanged;
             ThemeService.OnChanged -= HandleThemeChanged;
             SettingService.SettingsChanged -= HandleSettingsChanged;
-            AppLifecycle.OnStopped -= HandleAppLifecycleOnStopped;
-            AppLifecycle.OnActivated -= HandleActivated;
+            AppLifecycle.Stopped -= HandleAppLifecycleOnStopped;
+            AppLifecycle.Activated -= HandleActivated;
             NavigateController.OnBackPressed -= HandleBackPressed;
             AppLockService.ValidationSucceeded -= HandleValidationSucceeded;
         }

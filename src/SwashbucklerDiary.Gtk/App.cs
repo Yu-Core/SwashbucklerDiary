@@ -67,8 +67,8 @@ namespace SwashbucklerDiary.Gtk
             window = new MainWindow(app, _serviceProvider, backgroundColor);
 
             windowLifecycleHelper = new WindowLifecycleHelper(window);
-            windowLifecycleHelper.Resumed += (s, e) => _appLifecycle.Resume();
-            windowLifecycleHelper.Stopped += (s, e) => _appLifecycle.Stop();
+            windowLifecycleHelper.Resumed += (s, e) => _appLifecycle.NotifyResumed();
+            windowLifecycleHelper.Stopped += (s, e) => _appLifecycle.NotifyStopped();
 
             window.Present();
         }

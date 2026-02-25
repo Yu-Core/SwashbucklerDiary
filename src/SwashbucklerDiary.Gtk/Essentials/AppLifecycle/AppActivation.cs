@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
             }
             else
             {
-                AppLifecycle.Default.Activate(arguments);
+                AppLifecycle.Default.NotifyActivated(arguments);
             }
         }
 
@@ -37,7 +37,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
         static void Activate(string[] args)
         {
             var activationArguments = CreateArguments(args);
-            AppLifecycle.Default.Activate(activationArguments);
+            AppLifecycle.Default.NotifyActivated(activationArguments);
         }
 
         private static ActivationArguments CreateArguments(string[] args)

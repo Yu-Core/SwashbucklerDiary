@@ -116,9 +116,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             base.OnInitialized();
 
             LoadView();
-            AppLifecycle.OnStopped += LeaveAppSaveDiary;
-            AppLifecycle.OnResumed += ResumeApp;
-            AppLifecycle.OnActivated += HandleActivated;
+            AppLifecycle.Stopped += LeaveAppSaveDiary;
+            AppLifecycle.Resumed += ResumeApp;
+            AppLifecycle.Activated += HandleActivated;
             NavigateController.AddHistoryAction(LeavePageSaveDiary, false);
             BreakpointService.BreakpointChanged += HandleBreakpointChange;
         }
@@ -145,9 +145,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.DisposeAsyncCore();
 
-            AppLifecycle.OnStopped -= LeaveAppSaveDiary;
-            AppLifecycle.OnResumed -= ResumeApp;
-            AppLifecycle.OnActivated -= HandleActivated;
+            AppLifecycle.Stopped -= LeaveAppSaveDiary;
+            AppLifecycle.Resumed -= ResumeApp;
+            AppLifecycle.Activated -= HandleActivated;
             BreakpointService.BreakpointChanged -= HandleBreakpointChange;
             timer?.Dispose();
         }

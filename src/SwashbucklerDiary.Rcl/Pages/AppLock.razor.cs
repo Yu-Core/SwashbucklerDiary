@@ -42,7 +42,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await base.OnInitializedAsync();
 
             NavigateController.DisableNavigate = true;
-            AppLifecycle.OnResumed += HandleOnResumed;
+            AppLifecycle.Resumed += HandleOnResumed;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -59,7 +59,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.DisposeAsyncCore();
 
-            AppLifecycle.OnResumed -= HandleOnResumed;
+            AppLifecycle.Resumed -= HandleOnResumed;
         }
 
         protected override void ReadSettings()
@@ -140,7 +140,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             AppLifecycle.ActivationArguments = null;
             if (args is not null && args.Kind != AppActivationKind.Launch)
             {
-                AppLifecycle.Activate(args);
+                AppLifecycle.NotifyActivated(args);
                 return;
             }
 

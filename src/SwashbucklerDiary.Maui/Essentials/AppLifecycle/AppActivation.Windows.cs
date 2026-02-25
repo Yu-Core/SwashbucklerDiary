@@ -33,7 +33,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             });
 
             var activationArguments = await CreateArguments(args);
-            AppLifecycle.Default.Activate(activationArguments);
+            AppLifecycle.Default.NotifyActivated(activationArguments);
         }
 
         private static ValueTask<ActivationArguments> CreateArguments(AppActivationArguments args)

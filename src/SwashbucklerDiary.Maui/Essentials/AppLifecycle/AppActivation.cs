@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Maui.Essentials
             }
             else
             {
-                AppLifecycle.Default.Activate(arguments);
+                AppLifecycle.Default.NotifyActivated(arguments);
             }
         }
     }

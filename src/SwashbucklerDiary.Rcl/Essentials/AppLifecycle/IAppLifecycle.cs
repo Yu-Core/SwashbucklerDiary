@@ -6,17 +6,21 @@ namespace SwashbucklerDiary.Rcl.Essentials
 
         ActivationArguments? ActivationArguments { get; set; }
 
-        event Action<ActivationArguments>? OnActivated;
+        event Action? AfterFirstEntered;
 
-        event Action? OnResumed;
+        event Action<ActivationArguments>? Activated;
 
-        event Action? OnStopped;
+        event Action? Resumed;
 
-        void Activate(ActivationArguments arguments);
+        event Action? Stopped;
 
-        void Resume();
+        void NotifyActivated(ActivationArguments arguments);
 
-        void Stop();
+        void NotifyAfterFirstEntered();
+
+        void NotifyResumed();
+
+        void NotifyStopped();
 
         /// <summary>
         /// 退出应用

@@ -1,9 +1,9 @@
 export const init = (dotnetObj) => {
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState !== 'visible') {
-            dotnetObj.invokeMethodAsync("Stop");
+            dotnetObj.invokeMethodAsync("OnStopped");
         } else {
-            dotnetObj.invokeMethodAsync("Resume");
+            dotnetObj.invokeMethodAsync("OnResumed");
         }
     });
 }

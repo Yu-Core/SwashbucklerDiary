@@ -40,8 +40,8 @@ namespace SwashbucklerDiary.Maui
         protected override Window CreateWindow(IActivationState? activationState)
         {
             var window = new Window(new MainPage(backgroundColor, _routeMatcher, _appLifecycle));
-            window.Resumed += (s, e) => _appLifecycle.Resume();
-            window.Stopped += (s, e) => _appLifecycle.Stop();
+            window.Resumed += (s, e) => _appLifecycle.NotifyResumed();
+            window.Stopped += (s, e) => _appLifecycle.NotifyStopped();
             window.Created += WindowCreated;
             window.Title = _i18n.T("Swashbuckler Diary");
             _i18n.CultureChanged += (_, _) => SetTitle();

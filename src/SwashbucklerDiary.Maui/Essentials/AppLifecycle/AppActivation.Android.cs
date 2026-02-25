@@ -15,7 +15,7 @@ namespace SwashbucklerDiary.Maui.Essentials
         public static void Activate(Intent intent)
         {
             var activationArguments = CreateArgumentsFromIntent(intent);
-            AppLifecycle.Default.Activate(activationArguments);
+            AppLifecycle.Default.NotifyActivated(activationArguments);
         }
 
         private static ActivationArguments CreateArgumentsFromIntent(Intent intent)

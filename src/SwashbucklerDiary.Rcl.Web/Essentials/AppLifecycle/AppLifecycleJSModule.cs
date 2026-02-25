@@ -6,8 +6,8 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
     public class AppLifecycleJSModule : JSModule
     {
         private readonly DotNetObjectReference<object>? _dotNetObjectReference;
-        public event Action? OnResumed;
-        public event Action? OnStopped;
+        public event Action? Resumed;
+        public event Action? Stopped;
 
         public AppLifecycleJSModule(IJSRuntime js) : base(js, $"./_content/SwashbucklerDiary.Rcl.Web/js/appLifecycle.js")
         {
@@ -15,10 +15,10 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
         }
 
         [JSInvokable]
-        public void Resume() => OnResumed?.Invoke();
+        public void OnResumed() => Resumed?.Invoke();
 
         [JSInvokable]
-        public void Stop() => OnStopped?.Invoke();
+        public void OnStopped() => Stopped?.Invoke();
 
         public ValueTask Init()
         {

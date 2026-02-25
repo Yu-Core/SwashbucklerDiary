@@ -38,14 +38,14 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             base.OnInitialized();
 
-            AppLifecycle.OnResumed += UpdateIsBiometricSupported;
+            AppLifecycle.Resumed += UpdateIsBiometricSupported;
         }
 
         protected override async ValueTask DisposeAsyncCore()
         {
             await base.DisposeAsyncCore();
 
-            AppLifecycle.OnResumed -= UpdateIsBiometricSupported;
+            AppLifecycle.Resumed -= UpdateIsBiometricSupported;
         }
 
         protected override async Task OnInitializedAsync()

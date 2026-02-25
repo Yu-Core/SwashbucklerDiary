@@ -1,4 +1,3 @@
-using Masa.Blazor;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Shared;
@@ -142,7 +141,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             bool alreadyUpdated = await _settingService.GetAsync($"VersionUpdate_{versionString}", false).ConfigureAwait(false);
-            if(alreadyUpdated)
+            if (alreadyUpdated)
             {
                 return;
             }
