@@ -106,7 +106,7 @@ namespace SwashbucklerDiary.Gtk
 
         private void InitTheme()
         {
-            _themeService.OnChanged += ThemeChanged;
+            _themeService.ThemeChanged += ThemeChanged;
 
             var themeInt = Microsoft.Maui.Storage.Preferences.Default.Get<int>(nameof(Setting.Theme), 0);
             var theme = (Theme)themeInt;

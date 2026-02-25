@@ -16,10 +16,10 @@ namespace SwashbucklerDiary.Maui
         {
             var themeService = IPlatformApplication.Current.Services.GetRequiredService<IThemeService>();
             var mChildOfContent = activity.FindViewById<FrameLayout>(Id.Content)?.GetChildAt(0);
-            HandleOnThemeChanged(themeService.RealTheme);
-            themeService.OnChanged += HandleOnThemeChanged;
+            HandleThemeChanged(themeService.RealTheme);
+            themeService.ThemeChanged += HandleThemeChanged;
 
-            void HandleOnThemeChanged(Shared.Theme theme)
+            void HandleThemeChanged(Shared.Theme theme)
             {
                 var color = theme == Shared.Theme.Dark ? darkColor : lightColor;
                 mChildOfContent?.RootView?.SetBackgroundColor(color);

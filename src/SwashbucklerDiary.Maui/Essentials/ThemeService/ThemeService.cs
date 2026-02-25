@@ -7,7 +7,7 @@ namespace SwashbucklerDiary.Maui.Essentials
     {
         private Theme? _theme;
 
-        public event Action<Theme>? OnChanged;
+        public event Action<Theme>? ThemeChanged;
 
         public Theme RealTheme => _theme switch
         {
@@ -46,7 +46,7 @@ namespace SwashbucklerDiary.Maui.Essentials
 
         private void InternalNotifyStateChanged()
         {
-            OnChanged?.Invoke(RealTheme);
+            ThemeChanged?.Invoke(RealTheme);
         }
     }
 }

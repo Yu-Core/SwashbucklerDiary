@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
 
         private readonly SystemThemeJSModule _systemThemeJSModule;
 
-        public event Action<Theme>? OnChanged;
+        public event Action<Theme>? ThemeChanged;
 
         public Theme RealTheme => _theme switch
         {
@@ -33,12 +33,12 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
             //跟随系统主题改变
             if (theme == Theme.System)
             {
-                _systemThemeJSModule.OnSystemThemeChanged += HandleAppThemeChanged;
+                _systemThemeJSModule.SystemThemeChanged += HandleAppThemeChanged;
             }
             //取消跟随系统主题改变
             else if (_theme == Theme.System)
             {
-                _systemThemeJSModule.OnSystemThemeChanged -= HandleAppThemeChanged;
+                _systemThemeJSModule.SystemThemeChanged -= HandleAppThemeChanged;
             }
 
             _theme = theme;
@@ -53,7 +53,7 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
 
         private void InternalNotifyStateChanged()
         {
-            OnChanged?.Invoke(RealTheme);
+            ThemeChanged?.Invoke(RealTheme);
         }
     }
 }

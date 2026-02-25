@@ -77,7 +77,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             permanentPaths = navigationButtons.Select(it => NavigationManager.ToAbsoluteUri(it.Href).AbsolutePath).ToList();
 
             I18n.CultureChanged += HandleLanguageChanged;
-            ThemeService.OnChanged += HandleThemeChanged;
+            ThemeService.ThemeChanged += HandleThemeChanged;
             SettingService.SettingsChanged += HandleSettingsChanged;
             AppLifecycle.Stopped += HandleAppLifecycleOnStopped;
             AppLifecycle.Activated += HandleActivated;
@@ -101,7 +101,7 @@ namespace SwashbucklerDiary.Rcl.Layout
         protected virtual void OnDispose()
         {
             I18n.CultureChanged -= HandleLanguageChanged;
-            ThemeService.OnChanged -= HandleThemeChanged;
+            ThemeService.ThemeChanged -= HandleThemeChanged;
             SettingService.SettingsChanged -= HandleSettingsChanged;
             AppLifecycle.Stopped -= HandleAppLifecycleOnStopped;
             AppLifecycle.Activated -= HandleActivated;

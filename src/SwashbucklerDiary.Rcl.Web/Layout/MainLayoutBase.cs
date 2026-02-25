@@ -19,7 +19,7 @@ namespace SwashbucklerDiary.Rcl.Web.Layout
 
         protected override void OnDispose()
         {
-            ThemeService.OnChanged -= ThemeChanged;
+            ThemeService.ThemeChanged -= ThemeChanged;
             base.OnDispose();
         }
 
@@ -59,7 +59,7 @@ namespace SwashbucklerDiary.Rcl.Web.Layout
 
         private async Task InitThemeAsync()
         {
-            ThemeService.OnChanged += ThemeChanged;
+            ThemeService.ThemeChanged += ThemeChanged;
             await SystemThemeJSModule.Init();
             var theme = SettingService.Get(s => s.Theme);
             ThemeService.SetTheme(theme);

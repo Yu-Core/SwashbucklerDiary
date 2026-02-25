@@ -10,7 +10,7 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
 
         public Theme SystemTheme { get; set; }
 
-        public event Action<Theme>? OnSystemThemeChanged;
+        public event Action<Theme>? SystemThemeChanged;
 
         public SystemThemeJSModule(IJSRuntime js) : base(js, "./_content/SwashbucklerDiary.Rcl.Web/js/systemTheme.js")
         {
@@ -18,10 +18,10 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
         }
 
         [JSInvokable]
-        public void SystemThemeChange(bool isDarkTheme)
+        public void OnSystemThemeChanged(bool isDarkTheme)
         {
             SystemTheme = isDarkTheme ? Theme.Dark : Theme.Light;
-            OnSystemThemeChanged?.Invoke(SystemTheme);
+            SystemThemeChanged?.Invoke(SystemTheme);
         }
 
         public async Task Init()

@@ -6,7 +6,7 @@ namespace SwashbucklerDiary.Rcl.Essentials
     {
         Theme RealTheme { get; }
 
-        event Action<Theme>? OnChanged;
+        event Action<Theme>? ThemeChanged;
 
         void SetTheme(Theme theme);
     }

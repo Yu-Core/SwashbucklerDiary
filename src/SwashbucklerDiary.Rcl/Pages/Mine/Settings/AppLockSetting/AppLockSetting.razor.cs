@@ -85,7 +85,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 await SettingService.RemoveAsync(it => it.AppLockNumberPassword);
             }
 
-            AppLockService.OnLockChanged();
+            AppLockService.NotifyLockChanged();
         }
 
         private bool ValidateNumberPassword(string password)
@@ -115,7 +115,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 await SettingService.RemoveAsync(it => it.AppLockPatternPassword);
             }
 
-            AppLockService.OnLockChanged();
+            AppLockService.NotifyLockChanged();
         }
 
         private bool ValidatePatternPassword(string password)
@@ -140,7 +140,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 appLockBiometric = !appLockBiometric;
                 await SettingService.SetAsync(it => it.AppLockBiometric, appLockBiometric);
-                AppLockService.OnLockChanged();
+                AppLockService.NotifyLockChanged();
             }
         }
 

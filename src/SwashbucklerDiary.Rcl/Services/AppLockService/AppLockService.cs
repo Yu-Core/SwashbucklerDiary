@@ -5,7 +5,7 @@
         public event Func<AppLockEventArgs, Task>? ValidationSucceeded;
         public event Action? LockChanged;
 
-        public void OnLockChanged()
+        public void NotifyLockChanged()
         {
             LockChanged?.Invoke();
         }

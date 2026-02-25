@@ -5,6 +5,6 @@
         event Func<AppLockEventArgs, Task>? ValidationSucceeded;
         event Action? LockChanged;
         Task OnValidationSucceededAsync(AppLockEventArgs args);
-        void OnLockChanged();
+        void NotifyLockChanged();
     }
 }

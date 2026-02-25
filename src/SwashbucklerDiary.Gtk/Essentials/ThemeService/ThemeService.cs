@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
 
         private readonly GtkSystemThemeManager _gtkSystemThemeManager;
 
-        public event Action<Theme>? OnChanged;
+        public event Action<Theme>? ThemeChanged;
 
         public Theme RealTheme => _theme switch
         {
@@ -53,7 +53,7 @@ namespace SwashbucklerDiary.Gtk.Essentials
 
         private void InternalNotifyStateChanged()
         {
-            OnChanged?.Invoke(RealTheme);
+            ThemeChanged?.Invoke(RealTheme);
         }
     }
 }

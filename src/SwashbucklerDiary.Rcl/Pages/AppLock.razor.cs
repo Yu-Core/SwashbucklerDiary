@@ -42,7 +42,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             await base.OnInitializedAsync();
 
             NavigateController.DisableNavigate = true;
-            AppLifecycle.Resumed += HandleOnResumed;
+            AppLifecycle.Resumed += HandleResumed;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -59,7 +59,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             await base.DisposeAsyncCore();
 
-            AppLifecycle.Resumed -= HandleOnResumed;
+            AppLifecycle.Resumed -= HandleResumed;
         }
 
         protected override void ReadSettings()
@@ -158,7 +158,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             AppLifecycle.QuitApp();
         }
 
-        private void HandleOnResumed()
+        private void HandleResumed()
         {
             InvokeAsync(BiometricAuthenticateAsync);
         }

@@ -60,7 +60,7 @@ namespace SwashbucklerDiary.Maui
             var theme = (Theme)themeInt;
             _themeService.SetTheme(theme);
 
-            _themeService.OnChanged += ThemeChanged;
+            _themeService.ThemeChanged += ThemeChanged;
 
             bool dark = _themeService.RealTheme == Shared.Theme.Dark;
             backgroundColor = Color.FromArgb(dark ? ThemeColor.DarkSurface : ThemeColor.LightSurface);
