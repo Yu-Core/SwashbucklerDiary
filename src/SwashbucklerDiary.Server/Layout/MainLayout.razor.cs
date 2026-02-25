@@ -7,9 +7,6 @@ namespace SwashbucklerDiary.Server.Layout
     public partial class MainLayout : Rcl.Web.Layout.MainLayoutBase
     {
         [Inject]
-        private IAppLockService AppLockService { get; set; } = default!;
-
-        [Inject]
         private IApiAuthService ApiAuthService { get; set; } = default!;
 
         [Inject]
