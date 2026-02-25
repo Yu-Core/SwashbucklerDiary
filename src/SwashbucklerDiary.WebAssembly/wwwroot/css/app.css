@@ -164,10 +164,3 @@ code {
         --percent: 90;
     }
 }
-
-@media screen and (max-width: 600px) {
-    .vditor-toolbar {
-        bottom: var(--soft-keyboard-height);
-        transition: bottom 0.3s ease;
-    }
-}

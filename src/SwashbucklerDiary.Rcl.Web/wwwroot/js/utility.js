@@ -38,10 +38,11 @@ function forceRefresh() {
     window.location.reload();
 }
 
-// 获取软键盘高度，Android WebView无效，Android Chrome、Edge、Firefox有效
 (function () {
     if (window.visualViewport) {
-        const setSoftKeyboardHeight = () => {
+        const updateObstruction = () => {
+            document.documentElement.style.setProperty('--safe-area-height', `${window.visualViewport.height}px`);
+
             const keyboardHeight = window.innerHeight - window.visualViewport.height;
             if (keyboardHeight > 0) {
                 document.documentElement.style.setProperty('--soft-keyboard-height', `${keyboardHeight}px`);
@@ -50,8 +51,9 @@ function forceRefresh() {
             }
         }
 
-        setSoftKeyboardHeight();
+        updateObstruction();
 
-        window.visualViewport.addEventListener('resize', setSoftKeyboardHeight);
+        window.visualViewport.addEventListener('resize', updateObstruction);
+        window.visualViewport.addEventListener('scroll', updateObstruction);
     }
 }());

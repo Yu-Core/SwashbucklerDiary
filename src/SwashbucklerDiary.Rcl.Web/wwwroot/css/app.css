@@ -1,0 +1,35 @@
+html {
+    --safe-area-height: 100vh;
+    --safe-area-height: 100dvh;
+}
+
+.m-application__wrap {
+    min-height: var(--safe-area-height);
+}
+
+.m-snack:not(.m-enqueued-snackbar, .m-snack--absolute) {
+    height: var(--safe-area-height);
+}
+
+.vditor--fullscreen {
+    height: calc(var(--safe-area-height) - var(--vditor-toolbar-height)) !important;
+}
+
+.card-list__assist-info {
+    height: calc(var(--safe-area-height) - 64px - 24px);
+}
+
+.md-preview__outline {
+    height: calc(var(--safe-area-height) - 64px);
+}
+
+.fullscreen-height {
+    height: var(--safe-area-height) !important;
+}
+
+@media screen and (max-width: 600px) {
+    .vditor-toolbar {
+        bottom: var(--soft-keyboard-height);
+        transition: bottom 0.3s ease;
+    }
+}

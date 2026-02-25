@@ -15,9 +15,6 @@ namespace SwashbucklerDiary.Rcl.Web.Layout
         protected SystemThemeJSModule SystemThemeJSModule { get; set; } = default!;
 
         [Inject]
-        protected IAppLifecycle AppLifecycle { get; set; } = default!;
-
-        [Inject]
         private RouteMatcher RouteMatcher { get; set; } = default!;
 
         protected override void OnDispose()
