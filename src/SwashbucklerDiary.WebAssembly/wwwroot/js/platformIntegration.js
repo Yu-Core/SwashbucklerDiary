@@ -12,14 +12,23 @@ import {
 const FS = Blazor.runtime.Module.FS;
 
 async function shareFile(title, filePath, fileName, mimeType) {
-    const pathInfo = FS.analyzePath(filePath);
-    if (!pathInfo.exists) {
-        console.warn(`The file does not exist: ${filePath}`);
-        return;
-    }
+    try {
+        // 检查文件是否存在
+        const pathInfo = FS.analyzePath(filePath);
+        if (!pathInfo.exists) {
+            console.warn(`The file does not exist: ${filePath}`);
+            return false;
+        }
 
-    const fileData = FS.readFile(filePath);
-    await internalShareFile(title, fileData, fileName, mimeType);
+        // 读取文件数据
+        const fileData = FS.readFile(filePath);
+
+        // 调用内部分享函数，并返回其布尔结果
+        return await internalShareFile(title, fileData, fileName, mimeType);
+    } catch (err) {
+        console.error('Share failed:', err);
+        return false;
+    }
 }
 
 function downloadFile(fileName, filePath) {

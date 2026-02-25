@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Services;
 
 namespace SwashbucklerDiary.Rcl.Web.Essentials
 {
@@ -9,11 +10,15 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
 
         private readonly PlatformIntegrationJSModule _jsModule;
 
+        private readonly IAlertService _alertService;
+
         public PlatformIntegration(ILogger<PlatformIntegration> logger,
-            PlatformIntegrationJSModule jsModule)
+            PlatformIntegrationJSModule jsModule,
+            IAlertService alertService)
         {
             _logger = logger;
             _jsModule = jsModule;
+            _alertService = alertService;
         }
     }
 }

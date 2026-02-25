@@ -12,15 +12,17 @@ import {
 async function shareFile(title, url, fileName, mimeType) {
     try {
         const res = await fetch(url);
-
         if (!res.ok) {
             console.error(`HTTP error: ${res.status}`);
+            return false;
         }
 
-        const fileData = res.blob();
-        await internalShareFile(title, fileData, fileName, mimeType);
+        const fileData = await res.blob();
+        // internalShareFile 已经处理了 Web Share API 支持和分享过程，并返回 boolean
+        return await internalShareFile(title, fileData, fileName, mimeType);
     } catch (err) {
         console.error("Share failed", err);
+        return false;
     }
 }
 

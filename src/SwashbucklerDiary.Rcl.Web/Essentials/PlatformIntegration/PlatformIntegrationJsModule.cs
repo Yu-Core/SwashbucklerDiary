@@ -19,14 +19,14 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
             return InvokeVoidAsync("setClipboard", text);
         }
 
-        public ValueTask ShareTextAsync(string title, string text)
+        public ValueTask<bool> ShareTextAsync(string title, string text)
         {
-            return InvokeVoidAsync("shareText", title, text);
+            return InvokeAsync<bool>("shareText", title, text);
         }
 
-        public ValueTask ShareFileAsync(string title, string path, string fileName, string mimeType)
+        public ValueTask<bool> ShareFileAsync(string title, string path, string fileName, string mimeType)
         {
-            return InvokeVoidAsync("shareFile", title, path, fileName, mimeType);
+            return InvokeAsync<bool>("shareFile", title, path, fileName, mimeType);
         }
 
         public ValueTask SaveFileAsync(string fileName, string filePath)

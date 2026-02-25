@@ -18,7 +18,12 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
 
             string fileName = Path.GetFileName(path);
             string mimeType = StaticContentProvider.GetResponseContentTypeOrDefault(fileName);
-            await _jsModule.ShareFileAsync(title, path, fileName, mimeType).ConfigureAwait(false);
+            bool isSuccess = await _jsModule.ShareFileAsync(title, path, fileName, mimeType).ConfigureAwait(false);
+
+            if (!isSuccess)
+            {
+                await _alertService.ErrorAsync("Share fail", "Please use the latest browser or access in HTTPS mode");
+            }
         }
 
         public async Task ShareTextAsync(string title, string text)
@@ -28,7 +33,12 @@ namespace SwashbucklerDiary.Rcl.Web.Essentials
                 return;
             }
 
-            await _jsModule.ShareTextAsync(title, text).ConfigureAwait(false);
+            bool isSuccess = await _jsModule.ShareTextAsync(title, text).ConfigureAwait(false);
+
+            if (!isSuccess)
+            {
+                await _alertService.ErrorAsync("Share fail", "Please use the latest browser or access in HTTPS mode");
+            }
         }
     }
 }

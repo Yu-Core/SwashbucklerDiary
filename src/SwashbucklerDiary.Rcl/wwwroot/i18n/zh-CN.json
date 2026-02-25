@@ -508,5 +508,7 @@
   "Upgrading and optimizing in progress. Please wait...": "正在升级优化中，请稍候…",
   "Default title": "默认标题",
   "Unknown size": "未知大小",
-  "Unknown time": "未知时间"
+  "Unknown time": "未知时间",
+  "Share fail": "分享失败",
+  "Please use the latest browser or access in HTTPS mode": "请使用最新浏览器或在https模式下访问"
 }

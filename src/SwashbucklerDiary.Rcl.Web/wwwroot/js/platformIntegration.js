@@ -95,49 +95,45 @@ function execCommandCopy(text) {
     }
 }
 
-function shareText(title, text) {
+async function shareText(title, text) {
     if (!navigator.share) {
         console.warn('Web Share API is not supported in this browser');
-        return;
+        return false;
     }
 
-    navigator.share({
-        title,
-        text
-    }).catch(err => {
-        console.error('Share failed:', error);
-    });
+    try {
+        await navigator.share({ title, text });
+        return true;
+    } catch (err) {
+        console.error('Share failed:', err);
+        return false;
+    }
 }
 
 async function internalShareFile(title, data, fileName, mimeType) {
-    // 检查是否支持 Web Share API
     if (!navigator.share) {
         console.warn('Web Share API is not supported in this browser');
-        return;
+        return false;
     }
 
     try {
         const file = new File([data], fileName, { type: mimeType });
-
-        // 准备分享数据
         const shareData = {
             title: title,
             files: [file]
         };
 
-        // 检查是否可以分享这些文件
         if (navigator.canShare && !navigator.canShare(shareData)) {
             console.error('Cannot share this file type:', mimeType);
-            return;
+            return false;
         }
 
-        // 执行分享
         await navigator.share(shareData);
-        return;
+        return true;
 
     } catch (error) {
         console.error('Share failed:', error);
-        return;
+        return false;
     }
 }
 
