@@ -1,6 +1,4 @@
 using Masa.Blazor;
-using Masa.Blazor.Popup.Components;
-using Masa.Blazor.Presets;
 using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Rcl.Services
@@ -22,26 +20,8 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             _popupService = popupService;
             _breakpointService = breakpointService;
-            _breakpointService.BreakpointChanged += OnBreakpointChanged;
             _settingService = settingService;
             _navigateController = navigateController;
-        }
-
-        private void OnBreakpointChanged(object? sender, MyBreakpointChangedEventArgs e)
-        {
-            if (!e.SmAndUpChanged)
-            {
-                return;
-            }
-
-            _popupService.Close(typeof(EnqueuedSnackbars));
-
-            var parameters = new Dictionary<string, object?>()
-            {
-                {nameof(EnqueuedSnackbars.Position), _breakpointService.Breakpoint.SmAndUp ? SnackPosition.BottomCenter : SnackPosition.TopCenter}
-            };
-
-            _popupService.Open(typeof(EnqueuedSnackbars), parameters);
         }
 
         public Task EnqueueSnackbarAsync(string? message) => EnqueueSnackbarAsync(null, message);
