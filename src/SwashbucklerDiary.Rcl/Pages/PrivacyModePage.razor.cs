@@ -40,9 +40,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
 
-        [CascadingParameter(Name = "MasaBlazorCascadingTheme")]
-        public string? MasaBlazorCascadingTheme { get; set; }
-
         protected override void OnInitialized()
         {
             base.OnInitialized();

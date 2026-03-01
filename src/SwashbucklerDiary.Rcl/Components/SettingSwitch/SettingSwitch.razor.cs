@@ -8,9 +8,6 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private ISettingService SettingService { get; set; } = default!;
 
-        [CascadingParameter(Name = "MasaBlazorCascadingTheme")]
-        public string? MasaBlazorCascadingTheme { get; set; }
-
         [Parameter]
         public bool Value { get; set; }
 

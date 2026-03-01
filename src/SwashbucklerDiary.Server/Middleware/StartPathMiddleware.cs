@@ -50,10 +50,8 @@ namespace SwashbucklerDiary.Server.Middleware
             {
                 string appLockNumberPassword = Microsoft.Maui.Storage.Preferences.Default.Get<string>(nameof(Setting.AppLockNumberPassword), string.Empty);
                 string appLockPatternPassword = Microsoft.Maui.Storage.Preferences.Default.Get<string>(nameof(Setting.AppLockPatternPassword), string.Empty);
-                bool appLockBiometric = Microsoft.Maui.Storage.Preferences.Default.Get<bool>(nameof(Setting.AppLockBiometric), false);
                 bool useAppLock = !string.IsNullOrEmpty(appLockNumberPassword)
-                    || !string.IsNullOrEmpty(appLockPatternPassword)
-                    || appLockBiometric;
+                    || !string.IsNullOrEmpty(appLockPatternPassword);
                 if (useAppLock)
                 {
                     string returnUrl = $"{context.Request.Path}{context.Request.QueryString}".TrimStart('/');

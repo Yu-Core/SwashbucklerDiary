@@ -31,9 +31,6 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private IAppLockService AppLockService { get; set; } = default!;
 
-        [CascadingParameter(Name = "MasaBlazorCascadingTheme")]
-        public string? MasaBlazorCascadingTheme { get; set; }
-
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -67,6 +64,10 @@ namespace SwashbucklerDiary.Rcl.Pages
             lockAppWhenLeave = SettingService.Get(it => it.LockAppWhenLeave);
         }
 
+        private bool HasAppLockExcludeBiometric
+            => !string.IsNullOrEmpty(appLockNumberPassword)
+            || !string.IsNullOrEmpty(appLockPatternPassword);
+
         private async Task SetAppLockNumberPasswordAsync(string password)
         {
             showNumberLock = false;
@@ -83,6 +84,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 appLockNumberPassword = string.Empty;
                 await SettingService.RemoveAsync(it => it.AppLockNumberPassword);
+                await CheckIfNeedRemoveAppLockBiometricAsync();
             }
 
             AppLockService.NotifyLockChanged();
@@ -113,6 +115,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 appLockPatternPassword = string.Empty;
                 await SettingService.RemoveAsync(it => it.AppLockPatternPassword);
+                await CheckIfNeedRemoveAppLockBiometricAsync();
             }
 
             AppLockService.NotifyLockChanged();
@@ -135,6 +138,12 @@ namespace SwashbucklerDiary.Rcl.Pages
                 return;
             }
 
+            if (!HasAppLockExcludeBiometric)
+            {
+                await AlertService.InfoAsync(I18n.T("Fingerprint recognition cannot be used alone, please set at least one other unlocking method"));
+                return;
+            }
+
             bool isSuccess = await PlatformIntegration.BiometricAuthenticateAsync();
             if (isSuccess)
             {
@@ -153,6 +162,17 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task UpdateIsBiometricSupportedAsync()
         {
             isBiometricSupported = await PlatformIntegration.IsBiometricSupported();
+        }
+
+        private async Task CheckIfNeedRemoveAppLockBiometricAsync()
+        {
+            if (HasAppLockExcludeBiometric)
+            {
+                return;
+            }
+
+            appLockBiometric = false;
+            await SettingService.RemoveAsync(it => it.AppLockBiometric);
         }
     }
 }

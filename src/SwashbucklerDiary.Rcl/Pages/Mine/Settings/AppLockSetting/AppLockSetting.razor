@@ -60,7 +60,12 @@
                         </MIcon>
                     </MListItemIcon>
                     <MListItemContent>
-                        <wc-auto-scroll-text>@(I18n.T("Fingerprint identification"))</wc-auto-scroll-text>
+                        <MListItemTitle>
+                            <wc-auto-scroll-text>@(I18n.T("Fingerprint identification"))</wc-auto-scroll-text>
+                        </MListItemTitle>
+                        <MListItemSubtitle>
+                            <wc-auto-scroll-text>@(I18n.T("Fingerprint recognition cannot be used alone, please set at least one other unlocking method"))</wc-auto-scroll-text>
+                        </MListItemSubtitle>
                     </MListItemContent>
                     <MListItemAction>
                         <MSwitch Value="appLockBiometric"

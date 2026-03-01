@@ -21,10 +21,8 @@
     if (route != '/appLock') {
         const appLockNumberPassword = localStorage.getItem('AppLockNumberPassword');
         const appLockPatternPassword = localStorage.getItem('AppLockPatternPassword');
-        const appLockBiometric = localStorage.getItem('AppLockBiometric');
         if (appLockNumberPassword
-            || appLockPatternPassword
-            || appLockBiometric === 'true') {
+            || appLockPatternPassword) {
             const returnUrl = window.location.href.replace(document.baseURI, '');
             window.location.replace(`appLock?returnUrl=${encodeURIComponent(returnUrl)}`);
         }

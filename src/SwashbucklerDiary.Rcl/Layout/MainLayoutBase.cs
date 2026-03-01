@@ -184,11 +184,8 @@ namespace SwashbucklerDiary.Rcl.Layout
 
             string appLockNumberPassword = SettingService.Get(it => it.AppLockNumberPassword);
             string appLockPatternPassword = SettingService.Get(it => it.AppLockPatternPassword);
-            bool appLockBiometric = SettingService.Get(it => it.AppLockBiometric);
-            bool isBiometricSupported = await PlatformIntegration.IsBiometricSupported();
             bool useAppLock = !string.IsNullOrEmpty(appLockNumberPassword)
-                || !string.IsNullOrEmpty(appLockPatternPassword)
-                || (appLockBiometric && isBiometricSupported);
+                || !string.IsNullOrEmpty(appLockPatternPassword);
             bool lockAppWhenLeave = SettingService.Get(it => it.LockAppWhenLeave);
             if (useAppLock && lockAppWhenLeave)
             {
