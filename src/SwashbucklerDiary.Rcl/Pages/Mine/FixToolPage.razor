@@ -67,4 +67,24 @@
             </MListItem>
         </MList>
     </MCard>
+
+    <MCard Class="mb-5"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList Class="py-0">
+            <MListItem OnClick="FixDiaryReferenceLink">
+                <MListItemContent>
+                    <MListItemTitle>
+                        <wc-auto-scroll-text>@(I18n.T("Align the old version diary reference link with the new version"))</wc-auto-scroll-text>
+                    </MListItemTitle>
+                    <MListItemSubtitle>
+                        <wc-auto-scroll-text>@(I18n.T("Before version 1.33.9, diaries that have inserted diary references may experience this situation. Of course, the old version diary citation link can still work"))</wc-auto-scroll-text>
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
 </ScrollContainer>

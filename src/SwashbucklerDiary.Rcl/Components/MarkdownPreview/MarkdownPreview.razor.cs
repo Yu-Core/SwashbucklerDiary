@@ -4,6 +4,7 @@ using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -210,7 +211,8 @@ namespace SwashbucklerDiary.Rcl.Components
                 AutoPlay = autoPlay,
                 LinkBase = MediaResourceManager.MarkdownLinkBase,
                 ProxyUrl = ProxyService.ProxyUrl,
-                LinkCard = linkCard
+                LinkCard = linkCard,
+                Schemes = SchemeConstants.Schemes
             });
 
             if (OnAfter.HasDelegate)

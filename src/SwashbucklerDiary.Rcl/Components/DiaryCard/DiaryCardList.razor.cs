@@ -242,7 +242,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task CopyReference()
         {
-            var text = SelectedItem.GetReferenceText(I18n);
+            var text = SelectedItem.GetReferenceText(I18n, urlScheme);
             await PlatformIntegration.SetClipboardAsync(text);
             await AlertService.SuccessAsync(I18n.T("Copy successfully"));
         }

@@ -344,7 +344,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             // NavigationManager.Uri may not contain hash
             var hash = await JS.EvaluateJavascript<string>("window.location.hash");
-            var text = $"[{I18n.T(diary.Template ? "Template reference" : "Diary reference")}](read/{diary.Id}{hash})";
+            var text = diary.GetReferenceText(I18n, urlScheme, hash);
             await PlatformIntegration.SetClipboardAsync(text);
             await AlertService.SuccessAsync(I18n.T("Copy successfully"));
         }

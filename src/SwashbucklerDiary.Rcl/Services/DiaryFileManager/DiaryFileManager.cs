@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO.Compression;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace SwashbucklerDiary.Rcl.Services
 {
@@ -648,7 +649,7 @@ namespace SwashbucklerDiary.Rcl.Services
             }
         }
 
-        public async Task UseNewResourceUriAsync(List<DiaryModel> diaries)
+        private async Task UseNewResourceUriAsync(List<DiaryModel> diaries)
         {
             await Task.Run(() =>
             {
@@ -716,6 +717,25 @@ namespace SwashbucklerDiary.Rcl.Services
                 }
             }).ConfigureAwait(false);
             await _diaryService.UpdateIncludesAsync(diaries).ConfigureAwait(false);
+        }
+
+        public async Task AllUseNewDiaryReferenceLinkAsync()
+        {
+            string urlscheme = await _settingService.GetAsync("UrlScheme", SchemeConstants.SwashbucklerDiary);
+            var diaries = await _diaryService.QueryDiariesAsync().ConfigureAwait(false);
+            string pattern = @"\[([^\]\n]*)]\(read/([^)\n]*)\)";
+            string replacement = $"[$1]({urlscheme}://read/$2)";
+            await Task.Run(() =>
+            {
+                foreach (var diary in diaries)
+                {
+                    if (!string.IsNullOrEmpty(diary.Content))
+                    {
+                        diary.Content = Regex.Replace(diary.Content, pattern, replacement);
+                    }
+                }
+            }).ConfigureAwait(false);
+            await _diaryService.UpdateAsync(diaries, it => new { it.Content }).ConfigureAwait(false);
         }
     }
 }

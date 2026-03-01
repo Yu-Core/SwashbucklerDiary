@@ -10,5 +10,6 @@ namespace SwashbucklerDiary.Rcl.Components
         public string? LinkBase { get; set; }
         public string? ProxyUrl { get; set; }
         public bool LinkCard { get; set; }
+        public string[] Schemes { get; set; } = [];
     }
 }

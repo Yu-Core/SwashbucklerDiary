@@ -39,5 +39,10 @@ namespace SwashbucklerDiary.Rcl.Repository
         {
             return Context.Updateable(entity).UpdateColumns(columns).ExecuteCommandHasChangeAsync();
         }
+
+        public Task<bool> UpdateAsync(List<T> updateObjs, Expression<Func<T, object>> columns)
+        {
+            return Context.Updateable(updateObjs).UpdateColumns(columns).ExecuteCommandHasChangeAsync();
+        }
     }
 }

@@ -515,5 +515,7 @@
   "For first-time use, it is recommended to set an app lock to protect privacy. After activation, identity verification is required every time the application is accessed.": "首次使用，建议设置应用锁以保护隐私。开启后，每次进入应用需验证身份。",
   "Set up now": "立即设置",
   "Do not remind again": "不再提醒",
-  "Fingerprint recognition cannot be used alone, please set at least one other unlocking method": "指纹识别不能单独使用，请至少设置一种其他的解锁方式"
+  "Fingerprint recognition cannot be used alone, please set at least one other unlocking method": "指纹识别不能单独使用，请至少设置一种其他的解锁方式",
+  "Align the old version diary reference link with the new version": "将旧版日记引用链接与新版一致",
+  "Before version 1.33.9, diaries that have inserted diary references may experience this situation. Of course, the old version diary citation link can still work": "在1.33.9版本之前，插入过日记引用的日记可能会出现这种情况。当然，旧版日记引用链接依然可以工作"
 }

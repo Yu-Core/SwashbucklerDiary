@@ -11,5 +11,7 @@ namespace SwashbucklerDiary.Rcl.Repository
         Task<int> CountAsync();
 
         Task<bool> UpdateAsync(T entity, Expression<Func<T, object>> columns);
+
+        Task<bool> UpdateAsync(List<T> updateObjs, Expression<Func<T, object>> columns);
     }
 }

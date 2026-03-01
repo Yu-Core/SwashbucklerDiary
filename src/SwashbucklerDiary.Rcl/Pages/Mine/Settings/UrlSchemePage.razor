@@ -2,23 +2,32 @@
 @namespace SwashbucklerDiary.Rcl.Pages
 @inherits ImportantComponentBase
 
-<MyAppBar Title="Url Scheme"
-          OnClick="NavigateToBack">
-</MyAppBar>
+<MToolbar Elevation="0" Extended>
+    <ChildContent>
+        <MButton Icon="true"
+                 OnClick="NavigateToBack">
+            <MIcon>arrow_back</MIcon>
+        </MButton>
+        <MToolbarTitle Class="font-weight-bold flex-grow-1">
+            <wc-auto-scroll-text>Url Scheme</wc-auto-scroll-text>
+        </MToolbarTitle>
+    </ChildContent>
+    <ExtensionContent>
+        <MChipGroup @bind-Value="UrlScheme"
+                    Class="mb-2"
+                    Mandatory>
+            @foreach (var item in SchemeConstants.Schemes)
+            {
+                <MChip Value="item"
+                       Filter>
+                    @item
+                </MChip>
+            }
+        </MChipGroup>
+    </ExtensionContent>
+</MToolbar>
 
 <ScrollContainer>
-    <MChipGroup @bind-Value="UrlScheme"
-                Class="mb-2"
-                Mandatory>
-        @foreach (var item in SchemeConstants.Schemes)
-        {
-            <MChip Value="item"
-                   Filter>
-                @item
-            </MChip>
-        }
-    </MChipGroup>
-
     <MCard Class="mb-5"
            Elevation="0"
            Rounded="@("lg")">

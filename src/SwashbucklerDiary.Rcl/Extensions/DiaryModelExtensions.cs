@@ -1,6 +1,5 @@
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
-using System.Globalization;
 
 namespace SwashbucklerDiary.Rcl.Extensions
 {
@@ -19,7 +18,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
             return diary.Title + "\n" + diary.Content;
         }
 
-        public static (string Title, string Content) GetDisplayTitleAndContent(this DiaryModel diary,bool notExtractTitle)
+        public static (string Title, string Content) GetDisplayTitleAndContent(this DiaryModel diary, bool notExtractTitle)
         {
             string titleResult = string.Empty;
             string contentResult = string.Empty;
@@ -86,9 +85,12 @@ namespace SwashbucklerDiary.Rcl.Extensions
             return diaries.Sum(d => d.GetWordCount());
         }
 
-        public static string GetReferenceText(this DiaryModel diary, II18nService i18n)
+        public static string GetReferenceText(this DiaryModel diary, II18nService i18n, string? urlScheme, string? hash = null)
         {
-            return $"[{i18n.T(diary.Template ? "Template reference" : "Diary reference")}](read/{diary.Id})";
+            string title = diary.GetDisplayTitleAndContent(false).Title
+                ?? i18n.T(diary.Template ? "Template reference" : "Diary reference");
+            string url = $"{urlScheme}://read/{diary.Id}{hash}";
+            return $"[{title}]({url})";
         }
     }
 }

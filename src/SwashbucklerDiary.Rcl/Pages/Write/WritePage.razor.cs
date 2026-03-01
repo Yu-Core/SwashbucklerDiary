@@ -63,6 +63,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private string? diaryInsertTimeFormat;
 
+        private string? urlScheme;
+
         private PeriodicTimer? timer;
 
         private MarkdownEdit markdownEdit = default!;
@@ -165,6 +167,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             selectTemplateWhenCreate = SettingService.Get(it => it.SelectTemplateWhenCreate);
             outline = SettingService.Get(it => it.Outline);
             diaryTimeFormat = SettingService.Get(it => it.DiaryTimeFormat);
+            urlScheme = SettingService.Get(s => s.UrlScheme);
             string defaultTemplateIdString = SettingService.Get(s => s.DefaultTemplateId);
             if (Guid.TryParse(defaultTemplateIdString, out var defaultTemplateId))
             {
@@ -591,7 +594,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         private async Task InsertReferenceAsync(DiaryModel value)
         {
             showReference = false;
-            var text = value.GetReferenceText(I18n);
+            var text = value.GetReferenceText(I18n, urlScheme);
             await InsertValueAsync(text);
         }
     }

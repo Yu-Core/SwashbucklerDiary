@@ -27,6 +27,8 @@ function afterMarkdown(dotNetCallbackRef, element, options) {
         handleLinkBase(element, options.linkBase);
     }
 
+    handleUrlScheme(element, options.schemes);
+
     renderOutline(element, options.outlineElement);
     renderMobileOutline(dotNetCallbackRef, element, options.moblieOutlineElement);
 
@@ -44,6 +46,31 @@ function handleAutoPlay(element) {
         // play() possible error
         mediaElement.autoplay = true;
     }
+}
+
+function handleUrlScheme(element, schemes) {
+    if (!element) {
+        return;
+    }
+
+    const prefixes = schemes.map(scheme => `${scheme}://`);
+    const links = element.querySelectorAll('a');
+
+    links.forEach(link => {
+        const originalHref = link.getAttribute('href');
+
+        if (!originalHref) {
+            return;
+        }
+
+        for (let prefix of prefixes) {
+            if (originalHref.startsWith(prefix)) {
+                const newHref = originalHref.substring(prefix.length);
+                link.setAttribute('href', newHref);
+                break;
+            }
+        }
+    });
 }
 
 function handleLinkBase(element, linkBase) {

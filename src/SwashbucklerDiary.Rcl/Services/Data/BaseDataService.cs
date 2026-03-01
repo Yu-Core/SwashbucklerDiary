@@ -92,6 +92,11 @@ namespace SwashbucklerDiary.Rcl.Services
             return _iBaseRepository.UpdateAsync(entity, columns);
         }
 
+        public Task<bool> UpdateAsync(List<TEntity> updateObjs, Expression<Func<TEntity, object>> columns)
+        {
+            return _iBaseRepository.UpdateAsync(updateObjs, columns);
+        }
+
         public Task<bool> UpdateAsync(Expression<Func<TEntity, TEntity>> columns, Expression<Func<TEntity, bool>> whereExpression)
         {
             return _iBaseRepository.UpdateAsync(columns, whereExpression);

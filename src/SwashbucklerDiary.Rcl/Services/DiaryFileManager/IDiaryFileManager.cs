@@ -28,10 +28,10 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<bool> ImportMdAsync(string filePath);
 
-        Task UseNewResourceUriAsync(List<DiaryModel> diaries);
-
         Task AllUseNewResourceUriAsync();
 
         Task UpdateAllDiariesResourcesAsync();
+
+        Task AllUseNewDiaryReferenceLinkAsync();
     }
 }

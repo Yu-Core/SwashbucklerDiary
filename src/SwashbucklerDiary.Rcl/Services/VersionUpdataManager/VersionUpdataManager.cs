@@ -119,6 +119,7 @@ namespace SwashbucklerDiary.Rcl.Services
             AddVersionHandler("1.05.5", HandleVersionUpdate1055);
             AddVersionHandler("1.13.2", HandleVersionUpdate1132);
             AddVersionHandler("1.29.1", HandleVersionUpdate1291);
+            AddVersionHandler("1.33.9", HandleVersionUpdate1339);
         }
 
         protected void AddVersionHandler(string versionString, Func<Task> handler)
@@ -228,6 +229,11 @@ namespace SwashbucklerDiary.Rcl.Services
                     await _appFileSystem.MoveFolderAsync(oldPath, item.Value).ConfigureAwait(false);
                 }
             }
+        }
+
+        private async Task HandleVersionUpdate1339()
+        {
+            await _diaryFileManager.AllUseNewDiaryReferenceLinkAsync().ConfigureAwait(false);
         }
     }
 }

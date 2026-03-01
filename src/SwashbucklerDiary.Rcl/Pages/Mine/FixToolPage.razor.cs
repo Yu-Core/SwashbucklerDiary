@@ -13,11 +13,11 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task FixEarlyImagesNotDisplay()
         {
-            AlertService.StartLoading("正在修复");
+            AlertService.StartLoading("Fixing in progress");
             try
             {
                 await DiaryFileManager.AllUseNewResourceUriAsync();
-                await AlertService.SuccessAsync("修复完成");
+                await AlertService.SuccessAsync("Fix completed");
             }
             finally
             {
@@ -45,6 +45,20 @@ namespace SwashbucklerDiary.Rcl.Pages
             try
             {
                 await DiaryFileManager.UpdateAllDiariesResourcesAsync();
+                await AlertService.SuccessAsync(I18n.T("Fix completed"));
+            }
+            finally
+            {
+                AlertService.StopLoading();
+            }
+        }
+
+        private async Task FixDiaryReferenceLink()
+        {
+            AlertService.StartLoading(I18n.T("Fixing in progress"));
+            try
+            {
+                await DiaryFileManager.AllUseNewDiaryReferenceLinkAsync();
                 await AlertService.SuccessAsync(I18n.T("Fix completed"));
             }
             finally
