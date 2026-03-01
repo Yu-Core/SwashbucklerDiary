@@ -103,7 +103,7 @@ namespace SwashbucklerDiary.Rcl.Services
             string databasePath = GetCurrentDatabasePath();
             var destFileName = Path.Combine(outputFolder, DatabaseFilename);
             SqliteConnection.ClearAllPools();
-            await _appFileSystem.CopyFileAsync(databasePath,destFileName).ConfigureAwait(false);
+            await _appFileSystem.CopyFileAsync(databasePath, destFileName).ConfigureAwait(false);
             if (copyResources)
             {
                 await CopyDiaryResourceAsync(outputFolder).ConfigureAwait(false);
@@ -352,7 +352,7 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             await Task.Run(() =>
             {
-                Parallel.ForEach(resources, (resource, _) =>
+                foreach (var resource in resources)
                 {
                     if (resource.ResourceUri is null)
                     {
@@ -360,7 +360,7 @@ namespace SwashbucklerDiary.Rcl.Services
                     }
 
                     CopyUriFileToOutFolder(resource.ResourceUri, outputFolder);
-                });
+                }
             }).ConfigureAwait(false);
         }
 

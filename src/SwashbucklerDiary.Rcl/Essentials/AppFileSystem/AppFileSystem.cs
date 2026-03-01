@@ -150,26 +150,23 @@ namespace SwashbucklerDiary.Rcl.Essentials
         public async Task<long> GetFolderSize(string path)
         {
             if (!Directory.Exists(path))
-            {
                 return 0;
-            }
 
-            var rootDir = new DirectoryInfo(path);
-            long totalSize = 0;
+            long total = 0;
 
-            // 并行处理文件大小计算
             await Task.Run(() =>
             {
-                // 获取所有文件（包括子目录）
-                var allFiles = rootDir.GetFiles("*.*", SearchOption.AllDirectories);
-
-                Parallel.ForEach(allFiles, file =>
+                foreach (var file in Directory.EnumerateFiles(path, "*", SearchOption.AllDirectories))
                 {
-                    Interlocked.Add(ref totalSize, file.Length);
-                });
+                    try
+                    {
+                        total += new FileInfo(file).Length;
+                    }
+                    catch { }
+                }
             }).ConfigureAwait(false);
 
-            return totalSize;
+            return total;
         }
 
         private static void CreateFileDirectory(string filePath)
@@ -187,32 +184,46 @@ namespace SwashbucklerDiary.Rcl.Essentials
             File.Move(sourceFilePath, targetFilePath, overwrite);
         }
 
-        public void MoveFolder(string sourceFolder, string destinationFolder, SearchOption searchOption = SearchOption.AllDirectories, bool fileOverwrite = false)
+        public void MoveFolder(
+            string sourceFolder,
+            string destinationFolder,
+            SearchOption searchOption = SearchOption.AllDirectories,
+            bool fileOverwrite = false)
         {
-            var files = Directory.EnumerateFiles(sourceFolder, "*", searchOption);
+            if (!Directory.Exists(sourceFolder))
+                return;
 
-            Parallel.ForEach(files, file =>
+            if (Path.GetFullPath(destinationFolder)
+                .StartsWith(Path.GetFullPath(sourceFolder), StringComparison.OrdinalIgnoreCase))
             {
-                string relativePath = Path.GetRelativePath(sourceFolder, file);
+                throw new InvalidOperationException("Destination folder cannot be inside source folder.");
+            }
 
-                string destinationPath = Path.Combine(destinationFolder, relativePath);
+            var files = Directory
+                .EnumerateFiles(sourceFolder, "*", searchOption)
+                .ToList(); // 固定文件集合
 
-                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
-
-                if (File.Exists(destinationPath))
+            foreach (var file in files)
+            {
+                try
                 {
-                    if (fileOverwrite)
+                    string relativePath = Path.GetRelativePath(sourceFolder, file);
+                    string destinationPath = Path.Combine(destinationFolder, relativePath);
+
+                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
+
+                    if (File.Exists(destinationPath))
                     {
+                        if (!fileOverwrite)
+                            continue;
+
                         File.Delete(destinationPath);
                     }
-                    else
-                    {
-                        return;
-                    }
-                }
 
-                File.Move(file, destinationPath);
-            });
+                    File.Move(file, destinationPath);
+                }
+                catch { }
+            }
         }
 
         public async Task MoveFolderAsync(string sourceFolder, string destinationFolder, SearchOption searchOption = SearchOption.AllDirectories, bool fileOverwrite = false)
