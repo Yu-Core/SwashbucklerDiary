@@ -162,7 +162,7 @@ internal class MauiBlazorWebChromeClient : WebChromeClient
 
     // See: https://github.com/dotnet/maui/issues/6565
     public override JniPeerMembers JniPeerMembers => _blazorWebChromeClient.JniPeerMembers;
-    public override Bitmap DefaultVideoPoster => _blazorWebChromeClient.DefaultVideoPoster;
+    public override Bitmap DefaultVideoPoster => Bitmap.CreateBitmap(1, 1, Bitmap.Config.Argb8888);
     public override View VideoLoadingProgressView => _blazorWebChromeClient.VideoLoadingProgressView;
     public override void GetVisitedHistory(IValueCallback callback)
         => _blazorWebChromeClient.GetVisitedHistory(callback);

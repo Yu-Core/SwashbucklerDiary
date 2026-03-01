@@ -57,6 +57,7 @@
     }
 
     .vditor-reset video {
+        background-color: #000;
         border-radius: 8px;
         max-height: unset;
     }
