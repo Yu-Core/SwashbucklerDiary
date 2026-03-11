@@ -736,6 +736,15 @@ html.m-overlay-scroll-blocked {
     margin-right: 6px;
 }
 
+.link-card__url-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .two-line {
     white-space: initial;
     -webkit-line-clamp: 2;

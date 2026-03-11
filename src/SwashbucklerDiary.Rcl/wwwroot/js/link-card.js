@@ -119,7 +119,7 @@ class LinkCardRender {
             <div class="link-card__description">${data.description}</div>
             <div class="link-card__url">
                 <img class="link-card__favicon" src="${data.favicon}" alt="favicon" onerror="${this.options.faviconSrc ? `this.src='${this.options.faviconSrc}';this.removeAttribute('onerror');` : "this.display='none'"}">
-                ${domain}
+                <span class="link-card__url-text">${domain}</span>
             </div>
         </div>
         ${data.image ? `
