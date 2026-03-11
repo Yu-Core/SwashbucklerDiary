@@ -9,6 +9,13 @@ namespace SwashbucklerDiary.Maui
     {
         private static AppWindow? AppWindow => (Application.Current?.Windows[0]?.Handler?.PlatformView as Microsoft.UI.Xaml.Window)?.AppWindow;
 
+        private void Initialize()
+        {
+            // https://github.com/dotnet/maui/issues/10141
+            // BlazorWebView_BlazorWebViewInitializing is too late.
+            Environment.SetEnvironmentVariable("WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS", "--disable-features=AutoupgradeMixedContent");
+        }
+
         private partial void BlazorWebViewInitializing(object? sender, BlazorWebViewInitializingEventArgs e)
         {
         }
