@@ -5,15 +5,14 @@
                MyValueChanged="InternalVisibleChanged"
                ContentClass="rounded-lg"
                MaxWidth="420"
-               DisableAutoFocus
-               OnMousedownPreventDefault
                OnBeforeShowContent="HandleOnBeforeShowContent">
     <MCard>
         <MCardTitle Class="font-weight-bold flex-nowrap">
             <wc-auto-scroll-text>@I18n.T("Insert Time format")</wc-auto-scroll-text>
             <MSpacer></MSpacer>
             <MButton Icon
-                     OnClick="()=>showMore=true">
+                     OnClick="()=>showMore=true"
+                     __internal_preventDefault_onmousedown>
                 <MIcon>info</MIcon>
             </MButton>
             <MButton Icon
@@ -43,6 +42,7 @@
                 {
                     <MChip @key="item.Value"
                            IsActive="false"
+                           __internal_preventDefault_onmousedown
                            OnClick="()=>AddTimeAsync(item.Value)">
                         @(I18n.T(item.Key))
                     </MChip>

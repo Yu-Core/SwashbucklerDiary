@@ -18,13 +18,13 @@
 
         <MSpacer></MSpacer>
 
-        <CustomMButton Icon="true"
-                       OnMousedownPreventDefault="true"
-                       OnClick="InsertTimestamp">
+        <MButton Icon="true"
+                       OnClick="InsertTimestamp"
+                       __internal_preventDefault_onmousedown>
             <MIcon>
                 schedule
             </MIcon>
-        </CustomMButton>
+        </MButton>
 
         <MButton Icon="true"
                  OnClick="() => showTemplate = true">
