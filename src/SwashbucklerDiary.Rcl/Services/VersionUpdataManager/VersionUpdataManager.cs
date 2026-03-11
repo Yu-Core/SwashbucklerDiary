@@ -234,6 +234,7 @@ namespace SwashbucklerDiary.Rcl.Services
         private async Task HandleVersionUpdate1339()
         {
             await _diaryFileManager.AllUseNewDiaryReferenceLinkAsync().ConfigureAwait(false);
+            await _diaryFileManager.UpdateAllDiariesResourcesAsync().ConfigureAwait(false);
         }
     }
 }

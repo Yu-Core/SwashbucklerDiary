@@ -87,4 +87,24 @@
             </MListItem>
         </MList>
     </MCard>
+    
+    <MCard Class="mb-5"
+           Elevation="0"
+           Rounded="@("lg")">
+        <MList Class="py-0">
+            <MListItem OnClick="FixMediaFileRecordAfterDiaryMerged">
+                <MListItemContent>
+                    <MListItemTitle>
+                        <wc-auto-scroll-text>@(I18n.T("Fix media files not recorded after diary merge"))</wc-auto-scroll-text>
+                    </MListItemTitle>
+                    <MListItemSubtitle>
+                        <wc-auto-scroll-text>@(I18n.T("Before version 1.33.9, diaries that used merged diaries may experience this situation"))</wc-auto-scroll-text>
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
+        </MList>
+    </MCard>
 </ScrollContainer>

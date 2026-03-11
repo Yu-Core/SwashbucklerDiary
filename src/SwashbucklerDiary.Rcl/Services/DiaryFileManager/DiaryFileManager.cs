@@ -737,5 +737,32 @@ namespace SwashbucklerDiary.Rcl.Services
             }).ConfigureAwait(false);
             await _diaryService.UpdateAsync(diaries, it => new { it.Content }).ConfigureAwait(false);
         }
+
+        public async Task MergedDiariesAsync(List<DiaryModel> diaries)
+        {
+            if (diaries.Count < 2) return;
+
+            diaries = diaries.OrderBy(it => it.CreateTime).ToList();
+            string content = string.Join("\n", diaries.Select(it => it.Content));
+            var tags = diaries
+                .Where(d => d.Tags != null)
+                .SelectMany(d => d.Tags ?? [])
+                .DistinctBy(t => t.Name)
+                .ToList();
+            var resources = diaries
+                .Where(d => d.Resources != null)
+                .SelectMany(d => d.Resources ?? [])
+                .DistinctBy(t => t.ResourceUri)
+                .ToList();
+
+            var firstDiary = diaries.First();
+            firstDiary.Content = content;
+            firstDiary.Tags = tags;
+            firstDiary.Resources = resources;
+
+            await _diaryService.UpdateIncludesAsync(firstDiary);
+            diaries.Remove(firstDiary);
+            await _diaryService.DeleteAsync(diaries);
+        }
     }
 }

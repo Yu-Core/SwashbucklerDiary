@@ -1,7 +1,9 @@
 using Masa.Blazor;
 using Masa.Blazor.Extensions;
+using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Models;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Globalization;
 
@@ -30,6 +32,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         private Guid datePickerKey = Guid.NewGuid();
 
         private List<DynamicListItem> menuItems = [];
+
+        [Inject]
+        private IDiaryFileManager DiaryFileManager { get; set; } = default!;
 
         protected override List<DiaryModel> Diaries
         {
@@ -140,13 +145,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             try
             {
-                var diaries = SelectedDiaries.OrderBy(it => it.CreateTime).ToList();
-                string content = string.Join("\n", diaries.Select(it => it.Content));
-                var firstDiary = diaries.First();
-                firstDiary.Content = content;
-                diaries.Remove(firstDiary);
-                await DiaryService.UpdateAsync(firstDiary, it => it.Content!);
-                await DiaryService.DeleteAsync(diaries);
+                await DiaryFileManager.MergedDiariesAsync(SelectedDiaries);
                 await UpdateDiariesAsync();
             }
             finally

@@ -66,5 +66,19 @@ namespace SwashbucklerDiary.Rcl.Pages
                 AlertService.StopLoading();
             }
         }
+
+        private async Task FixMediaFileRecordAfterDiaryMerged()
+        {
+            AlertService.StartLoading(I18n.T("Fixing in progress"));
+            try
+            {
+                await DiaryFileManager.UpdateAllDiariesResourcesAsync();
+                await AlertService.SuccessAsync(I18n.T("Fix completed"));
+            }
+            finally
+            {
+                AlertService.StopLoading();
+            }
+        }
     }
 }
