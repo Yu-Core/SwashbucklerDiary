@@ -146,6 +146,17 @@
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net10.0-android')) != true AND $(TargetFramework.StartsWith('net10.0-ios')) != true">
 		<Content Remove="wwwroot\css\status-bar-and-navigation-bar.css" />
 		<None Include="wwwroot\css\status-bar-and-navigation-bar.css" />
+		<Content Remove="wwwroot\css\status-bar-and-navigation-bar.empty.css" />
+		<Content Include="wwwroot\css\status-bar-and-navigation-bar.empty.css" >
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+			<Link>wwwroot\css\status-bar-and-navigation-bar.css</Link>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net10.0-android')) == true Or $(TargetFramework.StartsWith('net10.0-ios')) == true">
+		<Content Remove="wwwroot\css\status-bar-and-navigation-bar.empty.css" />
+		<None Include="wwwroot\css\status-bar-and-navigation-bar.empty.css" />
 	</ItemGroup>
 
 	<ItemGroup>
