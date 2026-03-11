@@ -92,54 +92,57 @@ class AutoScrollText extends HTMLElement {
         const hostWidth = fitContent ? "fit-content" : "100%";
         const hostAfterContent = fitContent ? text : "0";
         const maxWidth = fitContent ? `max-width: ${maxWidthStyle};` : "";
-        const direction = getComputedStyle(this).direction;
-        const leftRight = direction === "rtl" ? "right: 0;" : "left: 0;";
         const textDirection = this._textLtr ? "direction: ltr;" : "";
 
         this.shadowRoot.innerHTML = `
-                    <style>
-                        :host {
-                            display: block;
-                            width: ${hostWidth};
-                            ${maxWidth}
-                            overflow: hidden;
-                            position: relative;
-                        }
+<style>
+:host {
+    display: block;
+    width: ${hostWidth};
+    ${maxWidth}
+    overflow: hidden;
+    position: relative;
+}
 
-                        :host::after{
-                            content: "${hostAfterContent}";
-                            white-space: nowrap;
-                            display: block;
-                            visibility: hidden;
-                        }
+:host::after{
+    content: "${hostAfterContent}";
+    white-space: nowrap;
+    display: block;
+    visibility: hidden;
+}
                         
-                        .container {
-                            display: inline-flex;
-                            justify-content: inherit;
-                            align-items: center;
-                            min-width: 100%;
-                            height: 100%;
-                            white-space: nowrap;
-                            position: absolute;
-                            ${leftRight}
-                            top: 0;
-                            will-change: transform;
-                        }
-                        
-                        .gap {
-                            display: inline-block;
-                        }
+.container {
+    display: inline-flex;
+    justify-content: inherit;
+    align-items: center;
+    min-width: 100%;
+    height: 100%;
+    white-space: nowrap;
+    position: absolute;
+    left: 0;
+    top: 0;
+    will-change: transform;
+}
 
-                        .text {
-                            ${textDirection}
-                        }
-                    </style>
+:host-context([dir="rtl"]) .container {
+    left: initial;
+    right: 0;
+}
+                        
+.gap {
+    display: inline-block;
+}
+
+.text {
+    ${textDirection}
+}
+</style>
                     
-                    <div class="container">
-                        <span class="text">${text}</span>
-                        <span class="gap"></span>
-                        <span class="text">${text}</span>
-                    </div>
+<div class="container">
+    <span class="text">${text}</span>
+    <span class="gap"></span>
+    <span class="text">${text}</span>
+</div>
                 `;
     }
 
@@ -149,7 +152,11 @@ class AutoScrollText extends HTMLElement {
         const gapSpan = this.shadowRoot.querySelector('.gap');
 
         // 清除旧动画
-        container.style.animation = 'none';
+        container.classList.remove('container__scroll');
+        const scrollAnimationStyle = this.shadowRoot.querySelector('.scroll-animation');
+        if (scrollAnimationStyle) {
+            scrollAnimationStyle.remove();
+        }
 
         // 设置间隔大小
         gapSpan.style.width = `${this._gap}px`;
@@ -171,24 +178,34 @@ class AutoScrollText extends HTMLElement {
 
             // 动画间隔时间所占百分比
             const animationGapDurationPercentage = (this._animationGap / animationDuration) * 100;
-
-            const direction = getComputedStyle(this).direction;
-            const translateTotalDistance = (direction === "rtl" ? 1 : -1) * totalDistance;
+            const translateTotalDistance =  -1 * totalDistance;
+            const rtlTranslateTotalDistance = totalDistance;
 
             // 关键帧动画
             const keyframes = `
-                        @keyframes scroll {
-                            0% , ${animationGapDurationPercentage}% { transform: translateX(0); }
-                            100% { transform: translateX(${translateTotalDistance}px); }
-                        }
+@keyframes scroll-ltr {
+    0% , ${animationGapDurationPercentage}% { transform: translateX(0); }
+    100% { transform: translateX(${translateTotalDistance}px); }
+}
+@keyframes scroll-rtl {
+    0% , ${animationGapDurationPercentage}% { transform: translateX(0); }
+    100% { transform: translateX(${rtlTranslateTotalDistance}px); }
+}
+.container__scroll {
+    animation: scroll-ltr ${animationDuration}s linear infinite
+}
+:host-context([dir="rtl"]) .container__scroll {
+    animation: scroll-rtl ${animationDuration}s linear infinite
+}
                     `;
 
             const style = document.createElement('style');
+            style.classList.add('scroll-animation');
             style.textContent = keyframes;
             this.shadowRoot.appendChild(style);
 
             // 应用动画
-            container.style.animation = `scroll ${animationDuration}s linear infinite`;
+            container.classList.add('container__scroll');
             gapSpan.style.display = 'inline-block';
             container.querySelectorAll('.text')[1].style.display = 'inline';
 
@@ -201,7 +218,7 @@ class AutoScrollText extends HTMLElement {
         } else {
             // 文本宽度小于容器宽度时不滚动
             container.style.transform = 'none';
-            container.style.animation = 'none';
+            container.classList.remove('container__scroll');
             gapSpan.style.display = 'none';
             container.querySelectorAll('.text')[1].style.display = 'none';
         }
@@ -237,7 +254,7 @@ class AutoScrollText extends HTMLElement {
 
         const container = this.shadowRoot.querySelector('.container');
         // 重新开始动画
-        container.style.animation = 'none';
+        container.classList.remove('container__scroll');
         setTimeout(() => {
             this.setupScroll();
         }, 10);

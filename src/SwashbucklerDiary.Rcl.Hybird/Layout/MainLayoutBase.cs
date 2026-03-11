@@ -23,6 +23,8 @@ namespace SwashbucklerDiary.Rcl.Hybird.Layout
             await base.OnInitializedAsync();
 
             await InternalOnInitializedAsync();
+
+            await UpdateDocumentProperty(I18n.Culture);
         }
 
         protected override async Task DialogNotificationCoreAsync()

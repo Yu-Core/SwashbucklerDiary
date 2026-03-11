@@ -129,8 +129,8 @@ namespace SwashbucklerDiary.Rcl.Layout
             InvokeAsync(async () =>
             {
                 MasaBlazor.RTL = I18n.Culture.TextInfo.IsRightToLeft;
-                await UpdateDocumentProperty(I18n.Culture);
                 StateHasChanged();
+                await UpdateDocumentProperty(I18n.Culture);
             });
         }
 
@@ -145,6 +145,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             // When html lang is not English, the vertical position of Chinese characters and icons cannot be aligned
             //await JSRuntime.EvaluateJavascript($"document.documentElement.lang = '{cultureInfo.Name}';");
             await JSRuntime.EvaluateJavascript($"document.title = '{I18n.T("Swashbuckler Diary")}';");
+            await JSRuntime.EvaluateJavascript($"document.dir = '{(MasaBlazor.RTL ? "rtl" : "ltr")}';");
         }
 
         protected void HandleSettingsChanged()
