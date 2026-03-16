@@ -4,33 +4,28 @@ namespace SwashbucklerDiary.Maui.Essentials
 {
     public class StaticWebAssets : Rcl.Essentials.StaticWebAssets
     {
-        public override async Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true, JsonSerializerOptions? jsonSerializerOptions = null)
+        protected override async Task<T> ReadJsonAsyncCore<T>(string relativePath, JsonSerializerOptions options)
         {
-            var contents = await ReadContentAsync(relativePath, isRcl).ConfigureAwait(false);
-            return JsonSerializer.Deserialize<T>(contents, jsonSerializerOptions ?? DefaultJsonSerializerOptions) ?? throw new($"{relativePath} deserialize fail");
+            using var stream = await ReadStreamAsync(relativePath).ConfigureAwait(false);
+            return await JsonSerializer.DeserializeAsync<T>(stream, options).ConfigureAwait(false)
+                   ?? throw new JsonException($"Failed to deserialize json file: {relativePath}");
         }
 
-        public override async Task<string> ReadContentAsync(string relativePath, bool isRcl = true)
+        protected override async Task<string> ReadTextAsyncCore(string relativePath)
         {
-            string path;
-            if (isRcl)
-            {
-                path = $"wwwroot/_content/{RclAssemblyName}/{relativePath}";
-            }
-            else
-            {
-                path = $"wwwroot/{relativePath}";
-            }
-
-            bool exists = await FileSystem.AppPackageFileExistsAsync(path).ConfigureAwait(false);
-            if (!exists)
-            {
-                throw new FileNotFoundException($"not find {path}");
-            }
-
-            using var stream = await FileSystem.OpenAppPackageFileAsync(path).ConfigureAwait(false);
+            using var stream = await ReadStreamAsync(relativePath).ConfigureAwait(false);
             using var reader = new StreamReader(stream);
             return await reader.ReadToEndAsync().ConfigureAwait(false);
+        }
+
+        private static async Task<Stream> ReadStreamAsync(string relativePath)
+        {
+            string path = Path.Combine("wwwroot", relativePath);
+            bool exists = await FileSystem.AppPackageFileExistsAsync(path).ConfigureAwait(false);
+            if (!exists)
+                throw new FileNotFoundException($"File not found.", path);
+
+            return await FileSystem.OpenAppPackageFileAsync(path).ConfigureAwait(false);
         }
     }
 }

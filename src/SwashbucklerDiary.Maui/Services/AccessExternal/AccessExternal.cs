@@ -23,18 +23,18 @@ namespace SwashbucklerDiary.Maui.Services
 #if ANDROID || IOS
             _joinQQGroupUrl = new(() =>
             {
-                var qqGroupUrls = _staticWebAssets.ReadJsonAsync<Dictionary<AppPlatform, string>>("json/qq-group/qq-group.json", false).Result;
+                var qqGroupUrls = _staticWebAssets.ReadJsonAsync<Dictionary<AppPlatform, string>>("json/qq-group/qq-group.json").Result;
                 return qqGroupUrls[_platformIntegration.CurrentPlatform];
             });
 #else
-            _joinQQGroupUrl = new(() => _staticWebAssets.ReadJsonAsync<string>("json/qq-group/qq-group.json").Result);
+            _joinQQGroupUrl = new(() => _staticWebAssets.ReadRclJsonAsync<string>("json/qq-group/qq-group.json").Result);
 #endif
             //读取应用商店的AppId
             //目前只有Windows和Android
 #if WINDOWS || ANDROID
             _appId = new(() =>
             {
-                var appIds = _staticWebAssets.ReadJsonAsync<Dictionary<AppPlatform, string>>("json/app-id/app-id.json").Result;
+                var appIds = _staticWebAssets.ReadRclJsonAsync<Dictionary<AppPlatform, string>>("json/app-id/app-id.json").Result;
                 return appIds[_platformIntegration.CurrentPlatform];
             });
 #else

@@ -93,7 +93,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task InsertDefaultDiaries()
         {
-            string[] initWriteDocPaths = await StaticWebAssets.ReadJsonAsync<string[]>("json/init-write-doc/doc-path.json");
+            string[] initWriteDocPaths = await StaticWebAssets.ReadRclJsonAsync<string[]>("json/init-write-doc/doc-path.json");
             var diaries = await GetDefaultDiaries(initWriteDocPaths);
             await DiaryService.AddAsync(diaries);
         }
@@ -103,7 +103,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             var diaries = new List<DiaryModel>();
             foreach (string path in paths)
             {
-                string content = await StaticWebAssets.ReadI18nContentAsync($"{path}/{{0}}.md", I18n.Culture);
+                string content = await StaticWebAssets.ReadRclI18nTextAsync($"{path}/{{0}}.md", I18n.Culture);
 
                 var diary = new DiaryModel()
                 {

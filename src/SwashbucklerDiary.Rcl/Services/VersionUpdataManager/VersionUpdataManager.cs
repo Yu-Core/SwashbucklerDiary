@@ -77,7 +77,7 @@ namespace SwashbucklerDiary.Rcl.Services
                 await HandleVersionUpdate(handler.Key.ToString(), handler.Value).ConfigureAwait(false);
             }
 
-            var version = await _staticWebAssets.ReadJsonAsync<string>("docs/update-instruction/version.json").ConfigureAwait(false);
+            var version = await _staticWebAssets.ReadRclJsonAsync<string>("docs/update-instruction/version.json").ConfigureAwait(false);
             await HandleVersionUpdate(version, HandleUpdateInstruction).ConfigureAwait(false);
             if (updateCount > 0)
             {
@@ -160,7 +160,7 @@ namespace SwashbucklerDiary.Rcl.Services
         private async Task HandleVersionUpdate809()
         {
             var uri = $"docs/vditor-tutorial/{_i18n.Culture}.md";
-            var content = await _staticWebAssets.ReadContentAsync(uri).ConfigureAwait(false);
+            var content = await _staticWebAssets.ReadRclTextAsync(uri).ConfigureAwait(false);
             var diary = new DiaryModel()
             {
                 Content = content,
@@ -170,7 +170,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private async Task HandleUpdateInstruction()
         {
-            string content = await _staticWebAssets.ReadI18nContentAsync("docs/update-instruction/{0}.md", _i18n.Culture).ConfigureAwait(false);
+            string content = await _staticWebAssets.ReadRclI18nTextAsync("docs/update-instruction/{0}.md", _i18n.Culture).ConfigureAwait(false);
 
             var diary = new DiaryModel()
             {

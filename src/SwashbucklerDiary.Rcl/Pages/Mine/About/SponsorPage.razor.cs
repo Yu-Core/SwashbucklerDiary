@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LoadViewAsync()
         {
-            var sponsorTypes = await StaticWebAssets.ReadJsonAsync<List<CodeSource>>("json/sponsor/sponsor-type.json");
+            var sponsorTypes = await StaticWebAssets.ReadRclJsonAsync<List<CodeSource>>("json/sponsor/sponsor-type.json");
             List<DynamicListItem> listItems = [];
             foreach (var item in sponsorTypes)
             {
@@ -50,12 +50,12 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
             sponsorTypeListItems = listItems;
 
-            sponsors = await StaticWebAssets.ReadJsonAsync<List<string>>("json/sponsor/sponsor-list.json");
+            sponsors = await StaticWebAssets.ReadRclJsonAsync<List<string>>("json/sponsor/sponsor-list.json");
         }
 
         private async Task LoadDataAsync()
         {
-            whyDevelopDescription = await StaticWebAssets.ReadI18nContentAsync("docs/why-develop/{0}.md", I18n.Culture);
+            whyDevelopDescription = await StaticWebAssets.ReadRclI18nTextAsync("docs/why-develop/{0}.md", I18n.Culture);
         }
     }
 }

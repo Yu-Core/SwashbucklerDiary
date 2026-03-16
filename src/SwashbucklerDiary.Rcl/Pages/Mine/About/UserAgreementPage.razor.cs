@@ -16,7 +16,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LoadDataAsync()
         {
-            content = await StaticWebAssets.ReadI18nContentAsync("docs/user-agreement/{0}.md", I18n.Culture);
+            content = await StaticWebAssets.ReadRclI18nTextAsync("docs/user-agreement/{0}.md", I18n.Culture);
         }
     }
 }

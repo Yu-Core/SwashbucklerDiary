@@ -18,8 +18,24 @@ namespace SwashbucklerDiary.Rcl.Essentials
             }
         };
 
-        public abstract Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true, JsonSerializerOptions? jsonSerializerOptions = null);
+        public Task<T> ReadRclJsonAsync<T>(string relativePath, string? assemblyName = null, JsonSerializerOptions? options = null)
+            => ReadJsonAsync<T>($"_content/{assemblyName ?? RclAssemblyName}/{relativePath}", options);
 
-        public abstract Task<string> ReadContentAsync(string relativePath, bool isRcl = true);
+        public Task<T> ReadJsonAsync<T>(string relativePath, JsonSerializerOptions? options = null)
+            => ReadJsonAsyncCore<T>(NormalizePath(relativePath), options ?? DefaultJsonSerializerOptions);
+
+        public Task<string> ReadRclTextAsync(string relativePath, string? assemblyName = null)
+            => ReadTextAsync($"_content/{assemblyName ?? RclAssemblyName}/{relativePath}");
+
+        public Task<string> ReadTextAsync(string relativePath)
+            => ReadTextAsyncCore(NormalizePath(relativePath));
+
+        protected abstract Task<T> ReadJsonAsyncCore<T>(string relativePath, JsonSerializerOptions options);
+        protected abstract Task<string> ReadTextAsyncCore(string relativePath);
+
+        private static string NormalizePath(string filename) =>
+            filename
+                .Replace('\\', Path.DirectorySeparatorChar)
+                .Replace('/', Path.DirectorySeparatorChar);
     }
 }

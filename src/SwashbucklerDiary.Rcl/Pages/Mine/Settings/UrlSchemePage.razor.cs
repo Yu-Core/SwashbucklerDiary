@@ -41,7 +41,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task ReadJson()
         {
-            urlSchemePaths = await StaticWebAssets.ReadJsonAsync<List<UrlSchemePath>>("json/url-scheme/url-scheme-paths.json");
+            urlSchemePaths = await StaticWebAssets.ReadRclJsonAsync<List<UrlSchemePath>>("json/url-scheme/url-scheme-paths.json");
         }
 
         private async Task CopyAsync(string path)

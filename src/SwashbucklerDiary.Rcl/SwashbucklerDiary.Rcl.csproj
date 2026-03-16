@@ -28,12 +28,10 @@
 	<ItemGroup>
 		<ProjectReference Include="..\SwashbucklerDiary.Shared\SwashbucklerDiary.Shared.csproj" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-		<Content Update="wwwroot\**\*.json">
+	<ItemGroup Condition="'$(EnableCopyRclStaticFiles)' == 'true'">
+		<Content Update="wwwroot\**\*.json;wwwroot\**\*.md">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="wwwroot\**\*.md">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>wwwroot\_content\$(PackageId)\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
 		</Content>
 	</ItemGroup>
 </Project>

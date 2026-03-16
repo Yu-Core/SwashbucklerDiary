@@ -23,8 +23,8 @@ namespace SwashbucklerDiary.Rcl.Web.Services
             IJSRuntime jS
             ) : base(staticWebAssets, platformIntegration)
         {
-            _joinQQGroupUrl = new(() => _staticWebAssets.ReadJsonAsync<string>("json/qq-group/qq-group.json"));
-            _appIds = new(() => _staticWebAssets.ReadJsonAsync<Dictionary<string, string>>("json/app-id/app-id.json"));
+            _joinQQGroupUrl = new(() => _staticWebAssets.ReadRclJsonAsync<string>("json/qq-group/qq-group.json"));
+            _appIds = new(() => _staticWebAssets.ReadRclJsonAsync<Dictionary<string, string>>("json/app-id/app-id.json"));
             _module = new(() => jS.ImportJsModule("/_content/SwashbucklerDiary.Rcl.Web/js/accessExternal.js"));
         }
 

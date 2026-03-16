@@ -12,21 +12,16 @@ namespace SwashbucklerDiary.WebAssembly.Essentials
             _httpClient = httpClient;
         }
 
-        public override async Task<T> ReadJsonAsync<T>(string relativePath, bool isRcl = true, JsonSerializerOptions? jsonSerializerOptions = null)
+        protected override async Task<T> ReadJsonAsyncCore<T>(string relativePath, JsonSerializerOptions options)
         {
-            string path = RelativePathToPath(relativePath, isRcl);
-            var result = await _httpClient.GetFromJsonAsync<T>(path, jsonSerializerOptions ?? DefaultJsonSerializerOptions).ConfigureAwait(false);
-            return result ?? throw new($"{relativePath} deserialize fail");
+            return await _httpClient.GetFromJsonAsync<T>(relativePath, options).ConfigureAwait(false)
+                ?? throw new JsonException($"Failed to deserialize json from '{relativePath}'.");
         }
 
-        public override async Task<string> ReadContentAsync(string relativePath, bool isRcl = true)
+        protected override async Task<string> ReadTextAsyncCore(string relativePath)
         {
-            string path = RelativePathToPath(relativePath, isRcl);
-            var result = await _httpClient.GetStringAsync(path).ConfigureAwait(false);
-            return result ?? throw new Exception($"not find json {path}");
+            var result = await _httpClient.GetStringAsync(relativePath).ConfigureAwait(false);
+            return result ?? throw new FileNotFoundException($"File not found.", relativePath);
         }
-
-        private static string RelativePathToPath(string relativePath, bool isRcl)
-            => isRcl ? $"_content/{RclAssemblyName}/{relativePath}" : relativePath;
     }
 }

@@ -80,7 +80,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LoadAppFeatures()
         {
-            var appFeatures = await StaticWebAssets.ReadJsonAsync<List<AppFeature>>("json/app-features/app-features.json");
+            var appFeatures = await StaticWebAssets.ReadRclJsonAsync<List<AppFeature>>("json/app-features/app-features.json");
             allAppFeatures = appFeatures;
             UpdateAppFeatures(appFeatures);
         }

@@ -21,7 +21,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task ReadJson()
         {
-            openSourceProjects = await StaticWebAssets.ReadJsonAsync<List<OpenSourceProject>>("json/open-source-project/open-source-project.json");
+            openSourceProjects = await StaticWebAssets.ReadRclJsonAsync<List<OpenSourceProject>>("json/open-source-project/open-source-project.json");
         }
     }
 }

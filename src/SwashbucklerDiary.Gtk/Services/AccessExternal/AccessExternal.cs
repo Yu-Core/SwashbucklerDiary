@@ -12,7 +12,7 @@ namespace SwashbucklerDiary.Gtk.Services
             IStaticWebAssets staticWebAssets
             ) : base(staticWebAssets, platformIntegration)
         {
-            _joinQQGroupUrl = new(() => _staticWebAssets.ReadJsonAsync<string>("json/qq-group/qq-group.json"));
+            _joinQQGroupUrl = new(() => _staticWebAssets.ReadRclJsonAsync<string>("json/qq-group/qq-group.json"));
         }
 
         public override Task<bool> OpenAppStoreAppDetails()

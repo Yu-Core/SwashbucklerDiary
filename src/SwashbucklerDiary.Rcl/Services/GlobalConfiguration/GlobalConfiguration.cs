@@ -22,10 +22,10 @@ namespace SwashbucklerDiary.Rcl.Services
 
         public async Task InitializeAsync()
         {
-            WeatherIcons = await _staticWebAssets.ReadJsonAsync<Dictionary<string, string>>("json/icon/weather-icons.json");
-            MoodIcons = await _staticWebAssets.ReadJsonAsync<Dictionary<string, string>>("json/icon/mood-icons.json");
-            AppPlatformIcons = await _staticWebAssets.ReadJsonAsync<Dictionary<AppPlatform, string>>("json/icon/app-platform-icons.json");
-            Achievements = await _staticWebAssets.ReadJsonAsync<List<AchievementModel>>("json/achievement/achievements.json");
+            WeatherIcons = await _staticWebAssets.ReadRclJsonAsync<Dictionary<string, string>>("json/icon/weather-icons.json");
+            MoodIcons = await _staticWebAssets.ReadRclJsonAsync<Dictionary<string, string>>("json/icon/mood-icons.json");
+            AppPlatformIcons = await _staticWebAssets.ReadRclJsonAsync<Dictionary<AppPlatform, string>>("json/icon/app-platform-icons.json");
+            Achievements = await _staticWebAssets.ReadRclJsonAsync<List<AchievementModel>>("json/achievement/achievements.json");
         }
     }
 }

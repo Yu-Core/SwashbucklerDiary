@@ -6,10 +6,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<CompressionEnabled>false</CompressionEnabled>
-		
+
 		<ApplicationId>com.yucore.swashbucklerdiary</ApplicationId>
 		<Version>1.0.0</Version>
-		
+
 		<!-- https://github.com/qmfrederik/dotnet-packaging -->
 		<PackagePrefix>$(ApplicationId)</PackagePrefix>
 		<Prefix>/opt/apps/$(ApplicationId)</Prefix>
@@ -38,7 +38,7 @@
 			<LinuxPath>/usr/share/applications/swashbuckler-diary.desktop</LinuxPath>
 		</Content>
 	</ItemGroup>
-	
+
 	<ItemGroup>
 		<PackageReference Include="GirCore.Gtk-4.0" Version="0.7.0" />
 		<PackageReference Include="GirCore.WebKit-6.0" Version="0.7.0" />
@@ -50,6 +50,9 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Maui.Essentials\Maui.Essentials.csproj" />
 		<ProjectReference Include="..\SwashbucklerDiary.Rcl.Hybird\SwashbucklerDiary.Rcl.Hybird.csproj" />
+		<ProjectReference Include="..\SwashbucklerDiary.Rcl\SwashbucklerDiary.Rcl.csproj">
+			<AdditionalProperties>EnableCopyRclStaticFiles=true</AdditionalProperties>
+		</ProjectReference>
 	</ItemGroup>
 
 	<Import Project="..\Maui.Essentials\AssemblyAttributes.targets" />

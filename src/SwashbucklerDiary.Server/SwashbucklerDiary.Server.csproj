@@ -21,6 +21,9 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Maui.Essentials\Maui.Essentials.csproj" />
 		<ProjectReference Include="..\SwashbucklerDiary.Rcl.Web\SwashbucklerDiary.Rcl.Web.csproj" />
+		<ProjectReference Include="..\SwashbucklerDiary.Rcl\SwashbucklerDiary.Rcl.csproj">
+			<AdditionalProperties>EnableCopyRclStaticFiles=true</AdditionalProperties>
+		</ProjectReference>
 	</ItemGroup>
 	
 	<ItemGroup>

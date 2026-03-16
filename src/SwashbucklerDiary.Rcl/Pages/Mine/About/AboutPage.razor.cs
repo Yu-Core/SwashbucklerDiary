@@ -67,7 +67,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LoadViewAsync()
         {
-            var codeSources = await StaticWebAssets.ReadJsonAsync<List<CodeSource>>("json/code-source/code-source.json");
+            var codeSources = await StaticWebAssets.ReadRclJsonAsync<List<CodeSource>>("json/code-source/code-source.json");
             codeSourceListItems = codeSources.Select(it => new DynamicListItem(this, it.Name ?? string.Empty, it.Icon ?? string.Empty, () => ViewSourceCode(it.Url))).ToList();
         }
 

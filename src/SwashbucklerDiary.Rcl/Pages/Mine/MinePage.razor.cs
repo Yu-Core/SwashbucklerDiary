@@ -185,7 +185,7 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task LoadViewAsync()
         {
-            FeedbackTypeDatas = await StaticWebAssets.ReadJsonAsync<Dictionary<string, string>>("json/feedback-type/feedback-type.json");
+            FeedbackTypeDatas = await StaticWebAssets.ReadRclJsonAsync<Dictionary<string, string>>("json/feedback-type/feedback-type.json");
         }
 
         private async Task LanguageChanged(string value)
