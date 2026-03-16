@@ -2,26 +2,16 @@
 {
     public class MyBreakpointChangedEventArgs
     {
-        public bool XsChanged { get; set; }
-
-        public bool SmChanged { get; set; }
-
-        public bool MdChanged { get; set; }
-
-        public bool LgChanged { get; set; }
-
-        public bool XlChanged { get; set; }
-
-        public bool SmAndDownChanged { get; set; }
-
-        public bool SmAndUpChanged { get; set; }
-
-        public bool MdAndDownChanged { get; set; }
-
-        public bool MdAndUpChanged { get; set; }
-
-        public bool LgAndDownChanged { get; set; }
-
-        public bool LgAndUpChanged { get; set; }
+        public bool XsChanged { get; init; }
+        public bool SmChanged { get; init; }
+        public bool MdChanged { get; init; }
+        public bool LgChanged { get; init; }
+        public bool XlChanged { get; init; }
+        public bool SmAndDownChanged { get; init; }
+        public bool SmAndUpChanged { get; init; }
+        public bool MdAndDownChanged { get; init; }
+        public bool MdAndUpChanged { get; init; }
+        public bool LgAndDownChanged { get; init; }
+        public bool LgAndUpChanged { get; init; }
     }
 }
