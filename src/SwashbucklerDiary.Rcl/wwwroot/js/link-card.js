@@ -124,7 +124,7 @@ class LinkCardRender {
         </div>
         ${data.image ? `
         <div class="link-card__image">
-            <img src="${data.image}" alt="${data.title}" onerror="this.style.display='none'">
+            <img src="${data.image}" alt="${data.title}" onerror="this.parentElement.style.display='none'">
         </div>
         ` : ''}
     `;

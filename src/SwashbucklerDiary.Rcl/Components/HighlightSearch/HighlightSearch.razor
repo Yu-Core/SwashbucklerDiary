@@ -13,7 +13,7 @@
         </TransparentTextField>
         @if (!string.IsNullOrWhiteSpace(Value))
         {
-            <div class="px-3">@(searchIndex + 1)/@(count)</div>
+            <div class="px-3" style="flex: 0 0 auto;">@(searchIndex + 1)/@(count)</div>
         }
         <MButton Icon="true"
                  OnClick="Up">
