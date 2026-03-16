@@ -11,9 +11,9 @@ services.AddBlazorWebViewDeveloperTools();
 
 services.AddMasaBlazorConfig();
 
-services.AddSerilogConfig();
+services.AddSerilogConfig(SQLiteConstants.LogDatabasePath);
 
-services.AddSqlSugarConfig(SQLiteConstants.ConnectionString, SQLiteConstants.PrivacyConnectionString);
+services.AddSqlSugarConfig(SQLiteConstants.ConnectionString, SQLiteConstants.PrivacyConnectionString, SQLiteConstants.LogConnectionString);
 
 services.AddDependencyInjection();
 

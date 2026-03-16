@@ -147,7 +147,7 @@
 		<Content Remove="wwwroot\css\status-bar-and-navigation-bar.css" />
 		<None Include="wwwroot\css\status-bar-and-navigation-bar.css" />
 		<Content Remove="wwwroot\css\status-bar-and-navigation-bar.empty.css" />
-		<Content Include="wwwroot\css\status-bar-and-navigation-bar.empty.css" >
+		<Content Include="wwwroot\css\status-bar-and-navigation-bar.empty.css">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 			<Link>wwwroot\css\status-bar-and-navigation-bar.css</Link>
@@ -171,7 +171,6 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="14.0.1" />
 		<PackageReference Include="Plugin.Maui.Biometric" Version="0.1.0" />
-		<PackageReference Include="Serilog.Sinks.SQLite.Maui" Version="2.0.1" />
 		<PackageReference Include="Yu-Core.MauiBlazorToolkit" Version="1.4.8" />
 	</ItemGroup>
 

@@ -95,9 +95,19 @@
     "Url": "https://github.com/FreakyAli/Plugin.Maui.Biometric/blob/master/LICENSE"
   },
   {
+    "Name": "Raycoon.Serilog.Sinks.SQLite",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/RAYCOON/Serilog.Sinks.SQLite/blob/main/LICENSE"
+  },
+  {
     "Name": "Serilog",
     "License": "Apache-2.0 license",
     "Url": "https://github.com/serilog/serilog/blob/dev/LICENSE"
+  },
+  {
+    "Name": "Serilog.Enrichers.Thread",
+    "License": "Apache-2.0 license",
+    "Url": "https://github.com/serilog/serilog-enrichers-thread/blob/dev/LICENSE"
   },
   {
     "Name": "Serilog.Extensions.Logging",
@@ -108,16 +118,6 @@
     "Name": "Serilog.Sinks.Debug",
     "License": "Apache-2.0 license",
     "Url": "https://github.com/serilog/serilog-sinks-debug/blob/dev/LICENSE"
-  },
-  {
-    "Name": "Serilog.Sinks.SQLite",
-    "License": "Apache-2.0 license",
-    "Url": "https://github.com/saleem-mirza/serilog-sinks-sqlite/blob/dev/LICENSE"
-  },
-  {
-    "Name": "Serilog.Sinks.SQLite.Maui",
-    "License": "Apache-2.0 license",
-    "Url": "https://github.com/Yu-Core/Serilog-Sinks-SQLite-Maui/blob/dev/LICENSE"
   },
   {
     "Name": "snapdom",

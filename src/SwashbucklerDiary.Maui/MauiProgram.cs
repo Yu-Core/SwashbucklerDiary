@@ -50,9 +50,9 @@ namespace SwashbucklerDiary.Maui
 #endif
             builder.Services.AddMasaBlazorConfig();
 
-            builder.Services.AddSerilogConfig();
+            builder.Services.AddSerilogConfig(SQLiteConstants.LogDatabasePath);
 
-            builder.Services.AddSqlSugarConfig(SQLiteConstants.ConnectionString, SQLiteConstants.PrivacyConnectionString);
+            builder.Services.AddSqlSugarConfig(SQLiteConstants.ConnectionString, SQLiteConstants.PrivacyConnectionString, SQLiteConstants.LogConnectionString);
 
             builder.Services.AddDependencyInjection();
 

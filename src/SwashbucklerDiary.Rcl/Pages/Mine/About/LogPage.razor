@@ -56,20 +56,22 @@
 
 <ScrollContainer>
     <div class="px-4 text-subtitle-1 user-select" style="word-wrap:break-word;">
-        @foreach (var item in logs)
-        {
+        <Virtualize Items="logs"
+                    ItemSize="150"
+                    Context="item"
+                    OverscanCount="30">
             <div @key="item.Id">
                 <div class="mb-4 font-weight-bold">
                     <span>@item.Timestamp</span>
-                    <span>[@item.Level]</span>
+                    <span>[@item.LevelName]</span>
                 </div>
                 <div class="mb-10">
-                    @item.RenderedMessage
+                    @item.Message
                     <br />
                     @item.Exception
                 </div>
             </div>
-        }
+        </Virtualize>
     </div>
 
     <EmptyResult Show="!logs.Any()"

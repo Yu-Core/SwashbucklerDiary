@@ -16,7 +16,6 @@
     <File Path=".github/workflows/upload-msstore-msix-to-release.yml" />
   </Folder>
   <Project Path="src/Maui.Essentials/Maui.Essentials.csproj" />
-  <Project Path="src/Serilog.Sinks.SQLite.Simplified/Serilog.Sinks.SQLite.Simplified.csproj" />
   <Project Path="src/SwashbucklerDiary.Gtk/SwashbucklerDiary.Gtk.csproj" />
   <Project Path="src/SwashbucklerDiary.Maui/SwashbucklerDiary.Maui.csproj">
     <Deploy />

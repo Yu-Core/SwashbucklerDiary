@@ -13,6 +13,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
         public static IServiceCollection AddSqlSugarConfig(this IServiceCollection services,
             string connectionString,
             string privacyConnectionString,
+            string logConnectionString,
             ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             services.Add<ISqlSugarClient>(sp =>
@@ -35,12 +36,6 @@ namespace SwashbucklerDiary.Rcl.Extensions
                         .ManyToMany(it => it.Tags, typeof(DiaryTagModel), nameof(DiaryTagModel.DiaryId), nameof(DiaryTagModel.TagId))
                         .ManyToMany(it => it.Resources, typeof(DiaryResourceModel), nameof(DiaryResourceModel.DiaryId), nameof(DiaryResourceModel.ResourceUri));
 
-                        column.IfTable<LogModel>()
-                        .UpdateProperty(it => it.Level, it =>
-                        {
-                            it.DataType = "varchar(10)";
-                        });
-
                         column.IfTable<ResourceModel>()
                         .UpdateProperty(it => it.ResourceUri, it =>
                         {
@@ -60,9 +55,69 @@ namespace SwashbucklerDiary.Rcl.Extensions
                         }
                     }
                 };
+                var logConfigureExternalServices = new ConfigureExternalServices
+                {
+                    //注意:  这儿AOP设置不能少
+                    EntityService = (p, column) =>
+                    {
+                        if (column.PropertyName.ToLower() == "id") //是id的设为主键
+                        {
+                            column.IsPrimarykey = true;
+                            if (column.PropertyInfo.PropertyType == typeof(int)) //是id并且是int的是自增
+                            {
+                                column.IsIdentity = true;
+                            }
+                        }
+
+                        column.IfTable<LogModel>()
+                        .UpdateProperty(it => it.Timestamp, it =>
+                        {
+                            it.DataType = "TEXT";
+                        })
+                        .UpdateProperty(it => it.LevelName, it =>
+                        {
+                            it.DataType = "TEXT";
+                        })
+                        .UpdateProperty(it => it.Message, it =>
+                        {
+                            it.DataType = "TEXT";
+                            it.IsNullable = true;
+                        })
+                        .UpdateProperty(it => it.MessageTemplate, it =>
+                        {
+                            it.DataType = "TEXT";
+                            it.IsNullable = true;
+                        })
+                        .UpdateProperty(it => it.Exception, it =>
+                        {
+                            it.DataType = "TEXT";
+                            it.IsNullable = true;
+                        })
+                        .UpdateProperty(it => it.Properties, it =>
+                        {
+                            it.DataType = "TEXT";
+                            it.IsNullable = true;
+                        })
+                        .UpdateProperty(it => it.SourceContext, it =>
+                        {
+                            it.DataType = "TEXT";
+                            it.IsNullable = true;
+                        })
+                        .UpdateProperty(it => it.MachineName, it =>
+                        {
+                            it.DataType = "TEXT";
+                            it.IsNullable = true;
+                        })
+                        .UpdateProperty(it => it.ThreadId, it =>
+                        {
+                            it.DataType = "INTEGER";
+                            it.IsNullable = true;
+                        });
+                    }
+                };
                 var configs = new List<ConnectionConfig>(){
                     new ConnectionConfig(){
-                        ConfigId="0",
+                        ConfigId = SQLiteConstants.MainDatabaseFilename,
                         DbType = DbType.Sqlite,
                         ConnectionString = connectionString,
                         InitKeyType = InitKeyType.Attribute,
@@ -74,7 +129,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
                         }
                     },
                     new ConnectionConfig(){
-                        ConfigId="1",
+                        ConfigId = SQLiteConstants.PrivacyDatabaseFilename,
                         DbType = DbType.Sqlite,
                         ConnectionString = privacyConnectionString,
                         InitKeyType = InitKeyType.Attribute,
@@ -84,17 +139,28 @@ namespace SwashbucklerDiary.Rcl.Extensions
                         {
                             IsNoReadXmlDescription=true
                         }
+                    },
+                    new ConnectionConfig(){
+                        ConfigId = SQLiteConstants.LogDatabaseFilename,
+                        DbType = DbType.Sqlite,
+                        ConnectionString = logConnectionString,
+                        InitKeyType = InitKeyType.Attribute,
+                        IsAutoCloseConnection = true,
+                        ConfigureExternalServices = logConfigureExternalServices,
+                        MoreSettings=new ConnMoreSettings()
+                        {
+                            IsNoReadXmlDescription=true
+                        }
                     }
                 };
-
-                Action<SqlSugarClient> configAction = db =>
+                var dataConfigs = configs.Where(c => c.ConfigId.ToString() != SQLiteConstants.LogDatabaseFilename).ToList();
+                void ConfigAction(SqlSugarClient db)
                 {
-
                     ISettingService? settingService = sp.GetService<ISettingService>();
                     IAppFileSystem? appFileSystem = sp.GetService<IAppFileSystem>();
 
                     //单例参数配置，所有上下文生效
-                    foreach (var config in configs)
+                    foreach (var config in dataConfigs)
                     {
 #if DEBUG
                         db.GetConnection(config.ConfigId).Aop.OnLogExecuting = (sql, pars) =>
@@ -117,21 +183,27 @@ namespace SwashbucklerDiary.Rcl.Extensions
                         }
                     }
 
+                    string? currentConfigId = db.CurrentConnectionConfig.ConfigId.ToString();
+                    if (currentConfigId == SQLiteConstants.LogDatabaseFilename)
+                    {
+                        return;
+                    }
+
                     if (settingService is not null)
                     {
                         bool privacyMode = settingService.GetTemp(it => it.PrivacyMode);
-                        string configId = privacyMode ? "1" : "0";
-                        string? currentConfigId = db.CurrentConnectionConfig.ConfigId.ToString();
+                        string configId = privacyMode ? SQLiteConstants.PrivacyDatabaseFilename : SQLiteConstants.MainDatabaseFilename;
+
                         if (configId != currentConfigId)
                         {
                             db.ChangeDatabase(configId);
                         }
                     }
-                };
+                }
 
                 ISqlSugarClient sqlSugar = serviceLifetime == ServiceLifetime.Singleton
-                ? new SqlSugarScope(configs, configAction)
-                : new SqlSugarClient(configs, configAction);
+                ? new SqlSugarScope(configs, ConfigAction)
+                : new SqlSugarClient(configs, ConfigAction);
 
                 // 创建表
                 Type[] types = {
@@ -141,14 +213,16 @@ namespace SwashbucklerDiary.Rcl.Extensions
                     typeof(UserAchievementModel),
                     typeof(UserStateModel),
                     typeof(LocationModel),
-                    typeof(LogModel),
                     typeof(ResourceModel),
                     typeof(DiaryResourceModel),
                 };
-                foreach (var config in configs)
+
+                foreach (var config in dataConfigs)
                 {
                     sqlSugar.AsTenant().GetConnection(config.ConfigId).CodeFirst.InitTables(types);
                 }
+
+                sqlSugar.AsTenant().GetConnection(SQLiteConstants.LogDatabaseFilename).CodeFirst.InitTables<LogModel>();
                 return sqlSugar;
             }, serviceLifetime);//这边是SqlSugarScope用AddSingleton
             return services;

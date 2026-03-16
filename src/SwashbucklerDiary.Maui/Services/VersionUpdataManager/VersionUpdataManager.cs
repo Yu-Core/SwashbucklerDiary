@@ -126,7 +126,7 @@ namespace SwashbucklerDiary.Maui.Services
             }
 
             SqlConnection.ClearAllPools();
-            var oldDatabasePath = Path.Combine(FileSystem.AppDataDirectory, SQLiteConstants.DatabaseFilename);
+            var oldDatabasePath = Path.Combine(FileSystem.AppDataDirectory, SQLiteConstants.MainDatabaseFilename);
             await _appFileSystem.CopyFileAsync(oldDatabasePath, SQLiteConstants.DatabasePath).ConfigureAwait(false);
             File.Delete(oldDatabasePath);
             var oldPrivacyDatabasePath = Path.Combine(FileSystem.AppDataDirectory, SQLiteConstants.PrivacyDatabaseFilename);

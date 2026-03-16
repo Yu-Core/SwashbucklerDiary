@@ -17,9 +17,9 @@ await builder.Services.AddFileSystem();
 
 await builder.Services.AddMasaBlazorConfig(builder.HostEnvironment.BaseAddress);
 
-builder.Services.AddSqlSugarConfig(SQLiteConstants.ConnectionString, SQLiteConstants.PrivacyConnectionString);
+builder.Services.AddSqlSugarConfig(SQLiteConstants.ConnectionString, SQLiteConstants.PrivacyConnectionString, SQLiteConstants.LogConnectionString);
 
-builder.Services.AddSerilogConfig();
+builder.Services.AddSerilogConfig(SQLiteConstants.LogDatabasePath);
 
 builder.Services.AddDependencyInjection();
 

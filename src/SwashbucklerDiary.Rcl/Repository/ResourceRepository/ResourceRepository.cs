@@ -58,8 +58,8 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public async Task<List<string>> QueryTrulyUsedResourcesAsync(bool privacyMode)
         {
-            var db = Context.AsTenant().GetConnection("0");
-            var privacyDb = Context.AsTenant().GetConnection("1");
+            var db = Context.AsTenant().GetConnection(SQLiteConstants.MainDatabaseFilename);
+            var privacyDb = Context.AsTenant().GetConnection(SQLiteConstants.PrivacyDatabaseFilename);
             var (currentDb, notCurrentDb) = privacyMode ? (privacyDb, db) : (db, privacyDb);
 
             var resourceUris = await currentDb.Queryable<ResourceModel>()

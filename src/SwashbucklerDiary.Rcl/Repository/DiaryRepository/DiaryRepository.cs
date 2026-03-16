@@ -154,8 +154,8 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public async Task<bool> MovePrivacyDiaryAsync(DiaryModel diary, bool toPrivacyMode)
         {
-            var db = Context.AsTenant().GetConnection("0");
-            var privacyDb = Context.AsTenant().GetConnection("1");
+            var db = Context.AsTenant().GetConnection(SQLiteConstants.MainDatabaseFilename);
+            var privacyDb = Context.AsTenant().GetConnection(SQLiteConstants.PrivacyDatabaseFilename);
             var (from, to) = toPrivacyMode ? (db, privacyDb) : (privacyDb, db);
             bool flag = await InternalImportAsync(to, [diary]).ConfigureAwait(false);
             if (!flag)
@@ -174,8 +174,8 @@ namespace SwashbucklerDiary.Rcl.Repository
 #pragma warning disable CS0618 // 类型或成员已过时
         public async Task<bool> MovePrivacyDiariesAsync()
         {
-            var db = Context.AsTenant().GetConnection("0");
-            var privacyDb = Context.AsTenant().GetConnection("1");
+            var db = Context.AsTenant().GetConnection(SQLiteConstants.MainDatabaseFilename);
+            var privacyDb = Context.AsTenant().GetConnection(SQLiteConstants.PrivacyDatabaseFilename);
 
             var diaries = await InternalGetListAsync(db, it => it.Private == true).ConfigureAwait(false);
 

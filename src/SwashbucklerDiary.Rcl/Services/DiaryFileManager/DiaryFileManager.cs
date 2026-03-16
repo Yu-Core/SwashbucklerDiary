@@ -45,7 +45,7 @@ namespace SwashbucklerDiary.Rcl.Services
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         };
 
-        protected string DatabaseFilename => SQLiteConstants.DatabaseFilename;
+        protected string DatabaseFilename => SQLiteConstants.MainDatabaseFilename;
 
         protected abstract string DatabasePath { get; }
 

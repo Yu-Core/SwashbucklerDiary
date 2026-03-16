@@ -115,7 +115,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             StringBuilder text = new();
             foreach (var item in logs)
             {
-                var itemText = item.Timestamp + " " + item.RenderedMessage;
+                var itemText = item.Timestamp + " " + item.Message;
                 text.AppendLine(itemText);
             }
 
@@ -198,7 +198,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             if (IsSearchFiltered)
             {
                 Expression<Func<LogModel, bool>> expSearch
-                    = it => (it.RenderedMessage ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase);
+                    = it => (it.Message ?? string.Empty).Contains(search ?? string.Empty, StringComparison.CurrentCultureIgnoreCase);
                 expable.And(expSearch);
             }
 

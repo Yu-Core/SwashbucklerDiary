@@ -19,9 +19,9 @@ builder.Services.AddBlazoredLocalStorage();
 
 builder.Services.AddMasaBlazorConfig();
 
-builder.Services.AddSqlSugarConfig(SQLiteConstants.ConnectionString, SQLiteConstants.PrivacyConnectionString, ServiceLifetime.Scoped);
+builder.Services.AddSqlSugarConfig(SQLiteConstants.ConnectionString, SQLiteConstants.PrivacyConnectionString, SQLiteConstants.LogConnectionString, ServiceLifetime.Scoped);
 
-builder.Services.AddSerilogConfig();
+builder.Services.AddSerilogConfig(SQLiteConstants.LogDatabasePath);
 
 builder.Services.AddDependencyInjection();
 
