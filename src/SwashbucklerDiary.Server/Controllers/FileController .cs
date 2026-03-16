@@ -41,7 +41,6 @@ namespace SwashbucklerDiary.Server.Controllers
             if (!System.IO.File.Exists(fullPath))
                 return NotFound();
 
-            var fileInfo = new FileInfo(fullPath);
             var contentType = StaticContentProvider.GetResponseContentTypeOrDefault(fullPath);
 
             // Range 处理

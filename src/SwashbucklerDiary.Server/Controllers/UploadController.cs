@@ -9,7 +9,7 @@ namespace SwashbucklerDiary.Server.Controllers
     [Route("api/upload")]
     public class UploadController : ControllerBase
     {
-        [RequestSizeLimit(1024 * 1024 * 1024)] // 1GB，按需改
+        [RequestSizeLimit(4L * 1024 * 1024 * 1024)] // 4GB，按需改
         [HttpPost]
         public async Task<IActionResult> UploadMulti(List<IFormFile> files)
         {
