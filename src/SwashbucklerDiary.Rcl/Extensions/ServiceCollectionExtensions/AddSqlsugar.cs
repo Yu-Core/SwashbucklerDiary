@@ -13,7 +13,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
         public static IServiceCollection AddSqlSugarConfig(this IServiceCollection services,
             string connectionString,
             string privacyConnectionString,
-            ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
+            ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             services.Add<ISqlSugarClient>(sp =>
             {
@@ -129,7 +129,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
                     }
                 };
 
-                ISqlSugarClient sqlSugar = serviceLifetime == ServiceLifetime.Transient
+                ISqlSugarClient sqlSugar = serviceLifetime == ServiceLifetime.Singleton
                 ? new SqlSugarScope(configs, configAction)
                 : new SqlSugarClient(configs, configAction);
 
