@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Essentials;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Layout;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -30,8 +31,7 @@ namespace SwashbucklerDiary.Rcl.Hybird.Layout
         private void LoadView()
         {
             items = [];
-            if (PlatformIntegration.CurrentPlatform == AppPlatform.Windows
-                || PlatformIntegration.CurrentPlatform == AppPlatform.Android)
+            if (PlatformIntegration.CurrentPlatform.IsInAppStore())
             {
                 items.Add(new(this, "App store", "store", ToUpdate, UpdateMethod.AppStore));
             }

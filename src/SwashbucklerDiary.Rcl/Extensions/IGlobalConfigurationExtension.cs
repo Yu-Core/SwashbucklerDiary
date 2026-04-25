@@ -1,5 +1,5 @@
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Extensions
 {
@@ -27,14 +27,14 @@ namespace SwashbucklerDiary.Rcl.Extensions
             return value;
         }
 
-        public static string GetPlatformIcon(this IGlobalConfiguration globalConfiguration, AppPlatform appPlatform)
+        public static string GetPlatformIcon(this IGlobalConfiguration globalConfiguration, AppOperatingSystem appPlatform)
         {
             if (globalConfiguration.AppPlatformIcons.TryGetValue(appPlatform, out string? value))
             {
                 return value;
             }
 
-            if (globalConfiguration.AppPlatformIcons.TryGetValue(AppPlatform.Unknown, out string? value2))
+            if (globalConfiguration.AppPlatformIcons.TryGetValue(AppOperatingSystem.Unknown, out string? value2))
             {
                 return value2;
             }

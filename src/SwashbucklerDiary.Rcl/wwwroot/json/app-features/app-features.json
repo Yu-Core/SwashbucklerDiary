@@ -46,28 +46,28 @@
     "Icon": "mdi:mdi-cloud-sync-outline",
     "Path": "Backup / WebDAV",
     "Href": "backups?tabs=webDAV",
-    "HidePlatforms": [ { "Platform": "Browser" } ]
+    "HidePlatforms": [ { "$platform": "Browser" } ]
   },
   {
     "Name": "Config",
     "Icon": "mdi:mdi-cog-sync-outline",
     "Path": "Backup / WebDAV / Config",
     "Href": "backups?tabs=webDAV",
-    "HidePlatforms": [ { "Platform": "Browser" } ]
+    "HidePlatforms": [ { "$platform": "Browser" } ]
   },
   {
     "Name": "Upload",
     "Icon": "mdi:mdi-cloud-arrow-up-outline",
     "Path": "Backup / WebDAV / Upload",
     "Href": "backups?tabs=webDAV",
-    "HidePlatforms": [ { "Platform": "Browser" } ]
+    "HidePlatforms": [ { "$platform": "Browser" } ]
   },
   {
     "Name": "Pull",
     "Icon": "mdi:mdi-cloud-arrow-down-outline",
     "Path": "Backup / WebDAV / Pull",
     "Href": "backups?tabs=webDAV",
-    "HidePlatforms": [ { "Platform": "Browser" } ]
+    "HidePlatforms": [ { "$platform": "Browser" } ]
   },
   {
     "Name": "Local export",
@@ -92,7 +92,7 @@
     "Icon": "lan",
     "Path": "Export / LAN",
     "Href": "export?tabs=LAN",
-    "HidePlatforms": [ { "Platform": "Browser" } ]
+    "HidePlatforms": [ { "$platform": "Browser" } ]
   },
   {
     "Name": "Achievement",
@@ -123,7 +123,7 @@
     "Icon": "open_in_browser",
     "Path": "Setting / Update setting / Update method",
     "Href": "updateSetting",
-    "HidePlatforms": [ { "Platform": "Browser" } ]
+    "HidePlatforms": [ { "$platform": "Browser" } ]
   },
   {
     "Name": "System permission",
@@ -377,7 +377,7 @@
     "Icon": "mdi:mdi-link-variant",
     "Path": "Setting / Url Scheme",
     "Href": "urlScheme",
-    "HidePlatforms": [ { "Platform": "Browser" } ]
+    "HidePlatforms": [ { "$platform": "Browser" } ]
   },
   {
     "Name": "Quick record",

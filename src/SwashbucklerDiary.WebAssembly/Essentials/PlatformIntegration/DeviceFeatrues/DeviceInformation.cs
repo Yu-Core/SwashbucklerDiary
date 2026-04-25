@@ -1,10 +1,10 @@
-using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.WebAssembly.Essentials
 {
     public partial class PlatformIntegration
     {
-        public override AppPlatform CurrentPlatform
-            => AppPlatform.BrowserWasm;
+        public override AppPlatform CurrentPlatform { get; }
+            = new BlazorWebAssemblyAppPlatform();
     }
 }

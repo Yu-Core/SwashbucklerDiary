@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -334,7 +333,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         protected async Task HandleNavigateToStackBottomPath(LocationChangingContext context)
         {
-            if (!PlatformIntegration.CurrentPlatform.IsBrowser())
+            if (PlatformIntegration.CurrentPlatform.OS != AppOperatingSystem.Browser)
             {
                 context.PreventNavigation();
                 AppLifecycle.QuitApp();

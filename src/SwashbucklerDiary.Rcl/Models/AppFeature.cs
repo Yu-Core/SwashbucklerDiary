@@ -1,3 +1,5 @@
+using SwashbucklerDiary.Rcl.Essentials;
+
 namespace SwashbucklerDiary.Rcl.Models
 {
     public class AppFeature
@@ -10,20 +12,10 @@ namespace SwashbucklerDiary.Rcl.Models
 
         public string? Href { get; set; }
 
-        public PlatformInfo[]? DisplayPlatforms { get; set; }
+        public AppPlatform[]? DisplayPlatforms { get; set; }
 
-        public PlatformInfo[]? HidePlatforms { get; set; }
+        public AppPlatform[]? HidePlatforms { get; set; }
 
         public string[]? HideBreakpoints { get; set; }
-    }
-
-    public class PlatformInfo
-    {
-        public string? Platform { get; set; }
-
-        public string? VersionString { get; set; }
-
-        public Version? Version
-            => VersionString is null ? null : new Version(VersionString);
     }
 }

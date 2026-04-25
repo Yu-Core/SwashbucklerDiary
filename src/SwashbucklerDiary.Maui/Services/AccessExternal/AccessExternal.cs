@@ -1,6 +1,5 @@
 ﻿using MauiBlazorToolkit.Essentials;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Maui.Services
 {
@@ -56,19 +55,7 @@ namespace SwashbucklerDiary.Maui.Services
 #else
 
 #if WINDOWS
-            bool IsPackagedApp = false;
-            try
-            {
-                if (Windows.ApplicationModel.Package.Current is not null)
-                {
-                    IsPackagedApp = true;
-                }
-            }
-            catch
-            {
-            }
-
-            if (!IsPackagedApp)
+            if (_platformIntegration.CurrentPlatform is WinUIUnpackagedAppPlatform)
             {
                 return Task.FromResult(false);
             }

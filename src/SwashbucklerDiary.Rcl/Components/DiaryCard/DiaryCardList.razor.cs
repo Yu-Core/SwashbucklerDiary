@@ -1,5 +1,6 @@
 using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
@@ -250,7 +251,7 @@ namespace SwashbucklerDiary.Rcl.Components
         private async Task CopyLink()
         {
             string text;
-            if (PlatformIntegration.CurrentPlatform.IsBrowser())
+            if (PlatformIntegration.CurrentPlatform.OS == AppOperatingSystem.Browser)
             {
                 text = NavigationManager.ToAbsoluteUri($"read/{SelectedItem.Id}").ToString();
             }

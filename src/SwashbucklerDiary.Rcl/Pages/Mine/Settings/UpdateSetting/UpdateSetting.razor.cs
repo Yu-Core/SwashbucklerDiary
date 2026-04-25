@@ -1,4 +1,5 @@
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Pages
@@ -25,6 +26,16 @@ namespace SwashbucklerDiary.Rcl.Pages
             { "China Mobile Cloud Disk", UpdateMethod.ChinaMobileCloudDisk },
         };
 
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            if (PlatformIntegration.CurrentPlatform.IsInAppStore() == false)
+            {
+                updateMethodItems.Remove("App store");
+            }
+        }
+
         protected override void ReadSettings()
         {
             base.ReadSettings();
@@ -32,6 +43,11 @@ namespace SwashbucklerDiary.Rcl.Pages
             updatePrompt = SettingService.Get(s => s.UpdatePrompt);
             updatePromptInterval = SettingService.Get(s => s.UpdatePromptIntervalDay);
             updateMethod = (UpdateMethod)SettingService.Get(s => s.UpdateMethod);
+            if (PlatformIntegration.CurrentPlatform.IsInAppStore() == false
+                && updateMethod == UpdateMethod.AppStore)
+            {
+                updateMethod = UpdateMethod.AskEveryTime;
+            }
         }
 
         private string UpdatePromptFrequencyText => I18n.T(updatePromptIntervalItems.FirstOrDefault(i => i.Value == updatePromptInterval).Key ?? string.Empty);

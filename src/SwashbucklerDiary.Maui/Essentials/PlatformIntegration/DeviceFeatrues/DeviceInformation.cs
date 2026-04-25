@@ -1,23 +1,37 @@
-using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Maui.Essentials
 {
     public partial class PlatformIntegration
     {
-        public AppPlatform CurrentPlatform
+        public AppPlatform CurrentPlatform { get; }
 #if WINDOWS
-           => AppPlatform.Windows;
+           = DetectWindowsPackaged() ? new WinUIPackagedAppPlatform() : new WinUIUnpackagedAppPlatform();
 #elif ANDROID
-           => AppPlatform.Android;
+           = new AndroidAppPlatform();
 #elif MACCATALYST
-           => AppPlatform.macOS;
+           = new MacOSAppPlatform();
 #elif IOS
-           => AppPlatform.iOS;
-#elif TIZEN
-           => AppDevicePlatform.Tizen;
+           = new IOSAppPlatform();
 #else
-           => AppDevicePlatform.Unknown;
+           = new UnknownAppPlatform();
 #endif
         public string DeviceName => DeviceInfo.Current.Name;
+
+#if WINDOWS
+        private static bool DetectWindowsPackaged()
+        {
+            try
+            {
+                // 在 UWP 或打包的 .NET 应用中可调用
+                var package = Windows.ApplicationModel.Package.Current;
+                return package != null;
+            }
+            catch
+            {
+                return false; // 非打包环境
+            }
+        }
+#endif
     }
 }

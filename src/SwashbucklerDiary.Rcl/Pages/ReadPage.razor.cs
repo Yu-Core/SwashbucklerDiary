@@ -1,6 +1,7 @@
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using SwashbucklerDiary.Rcl.Components;
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -353,7 +354,7 @@ namespace SwashbucklerDiary.Rcl.Pages
         {
             string text;
             var hash = await JS.EvaluateJavascript<string>("window.location.hash");
-            if (PlatformIntegration.CurrentPlatform.IsBrowser())
+            if (PlatformIntegration.CurrentPlatform.OS == AppOperatingSystem.Browser)
             {
                 text = NavigationManager.ToAbsoluteUri($"read/{Id}{hash}").ToString();
             }

@@ -1,4 +1,4 @@
-using SwashbucklerDiary.Shared;
+using SwashbucklerDiary.Rcl.Essentials;
 
 namespace SwashbucklerDiary.Rcl.Web.Essentials
 {

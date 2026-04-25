@@ -1,3 +1,4 @@
+using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Services
@@ -8,7 +9,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Dictionary<string, string> MoodIcons { get; set; }
 
-        Dictionary<AppPlatform, string> AppPlatformIcons { get; set; }
+        Dictionary<AppOperatingSystem, string> AppPlatformIcons { get; set; }
 
         List<AchievementModel> Achievements { get; set; }
 

@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Shared;
 using System.Buffers;
 using System.Net;
 using System.Net.Sockets;
@@ -252,7 +251,7 @@ namespace SwashbucklerDiary.Rcl.Services
         {
             string deviceName = _platformIntegration.DeviceName;
             string ipAddress = LANHelper.GetLocalIPv4Address();
-            AppPlatform devicePlatform = _platformIntegration.CurrentPlatform;
+            var devicePlatform = _platformIntegration.CurrentPlatform.OS;
 
             return new()
             {

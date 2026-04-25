@@ -134,54 +134,31 @@ namespace SwashbucklerDiary.Rcl.Pages
             To("privacyMode");
         }
 
-        static bool FilterPlatform(AppFeature appFeature)
+        private bool FilterPlatform(AppFeature appFeature)
         {
+            var currentPlatformType = PlatformIntegration.CurrentPlatform.GetType();
             if (appFeature.HidePlatforms is not null)
             {
-                foreach (var item in appFeature.HidePlatforms)
+                foreach (var platform in appFeature.HidePlatforms)
                 {
-                    var platform = item.Platform;
-                    if (string.IsNullOrEmpty(platform)) continue;
-
-                    var version = item.Version;
-                    if (version is null)
+                    var platformType = platform.GetType();
+                    if (currentPlatformType == platformType
+                        || currentPlatformType.IsSubclassOf(platformType))
                     {
-                        if (OperatingSystem.IsOSPlatform(platform))
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        if (OperatingSystem.IsOSPlatformVersionAtLeast(platform, version.Major, version.Minor, version.Build, version.Revision))
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
             }
 
             if (appFeature.DisplayPlatforms is not null)
             {
-                foreach (var item in appFeature.DisplayPlatforms)
+                foreach (var platform in appFeature.DisplayPlatforms)
                 {
-                    var platform = item.Platform;
-                    if (string.IsNullOrEmpty(platform)) continue;
-
-                    var version = item.Version;
-                    if (version is null)
+                    var platformType = platform.GetType();
+                    if (currentPlatformType != platformType
+                        && !currentPlatformType.IsSubclassOf(platformType))
                     {
-                        if (!OperatingSystem.IsOSPlatform(platform))
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        if (!OperatingSystem.IsOSPlatformVersionAtLeast(platform, version.Major, version.Minor, version.Build, version.Revision))
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
             }
