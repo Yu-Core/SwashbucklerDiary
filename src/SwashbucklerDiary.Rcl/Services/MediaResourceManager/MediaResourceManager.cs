@@ -222,25 +222,33 @@ namespace SwashbucklerDiary.Rcl.Services
                 return new();
             }
 
-            var audioFile = TagLib.File.Create(filePath);
-            string? pictureUri = null;
-            if (audioFile.Tag.Pictures.Length > 0)
+            try
             {
-                string fileName = Path.GetFileName(filePath);
-                var picture = audioFile.Tag.Pictures[0];
-                string extension = StaticContentProvider.GetResponseExtensionOrDefault(picture.MimeType);
-                string pictureFileName = $"{fileName}{extension}";
-                pictureUri = await GetAudioFilePicturePath(pictureFileName, picture.Data.Data).ConfigureAwait(false);
-            }
+                var audioFile = TagLib.File.Create(filePath);
+                string? pictureUri = null;
+                if (audioFile.Tag.Pictures.Length > 0)
+                {
+                    string fileName = Path.GetFileName(filePath);
+                    var picture = audioFile.Tag.Pictures[0];
+                    string extension = StaticContentProvider.GetResponseExtensionOrDefault(picture.MimeType);
+                    string pictureFileName = $"{fileName}{extension}";
+                    pictureUri = await GetAudioFilePicturePath(pictureFileName, picture.Data.Data).ConfigureAwait(false);
+                }
 
-            return new()
+                return new()
+                {
+                    Title = audioFile.Tag.Title,
+                    Artists = audioFile.Tag.Performers,
+                    Album = audioFile.Tag.Album,
+                    Duration = audioFile.Properties.Duration,
+                    PictureUri = pictureUri
+                };
+            }
+            catch (Exception e)
             {
-                Title = audioFile.Tag.Title,
-                Artists = audioFile.Tag.Performers,
-                Album = audioFile.Tag.Album,
-                Duration = audioFile.Properties.Duration,
-                PictureUri = pictureUri
-            };
+                _logger.LogError(e, "TagLib create file fail");
+                return new();
+            }
         }
 
         public abstract Task<string?> ToFilePathAsync(MediaResourcePath? mediaResourcePath);

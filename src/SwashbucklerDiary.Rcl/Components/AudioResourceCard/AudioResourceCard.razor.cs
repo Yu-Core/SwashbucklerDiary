@@ -1,5 +1,6 @@
 using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Events;
 using SwashbucklerDiary.Rcl.Models;
 using SwashbucklerDiary.Rcl.Services;
@@ -30,6 +31,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         [Inject]
         private AudioInterop AudioInterop { get; set; } = default!;
+
+        [Inject]
+        private ILogger<AudioResourceCard> Logger { get; set; } = default!;
 
         private string InputStyle => StyleBuilder.Create()
             .Add("--current-width", (CurrentTime / duration * 100).ToString("0.00", CultureInfo.InvariantCulture) + "%")
@@ -111,14 +115,30 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task PlayOrPause()
         {
-            isPlaying = !isPlaying;
-            if (isPlaying)
+            try
             {
-                await AudioInterop.PlayAsync(audioElementRef);
+                // Check if media source is available
+                if (mediaResourcePath?.DisPlayedUrl == null)
+                {
+                    Logger.LogWarning("Audio source is not available");
+                    return;
+                }
+
+                if (isPlaying)
+                {
+                    await AudioInterop.PauseAsync(audioElementRef);
+                }
+                else
+                {
+                    await AudioInterop.PlayAsync(audioElementRef);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                await AudioInterop.PauseAsync(audioElementRef);
+                // If play fails (e.g., no valid source), reset the playing state
+                isPlaying = false;
+                // Log the error or handle it appropriately
+                Logger.LogError(ex, "Audio playback error: {Message}", ex.Message);
             }
         }
 
