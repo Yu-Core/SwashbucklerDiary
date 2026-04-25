@@ -18,7 +18,7 @@
         <MContainer Class="my-container"
                     Fluid="true">
             <HomeHead ShowDate="showDate"
-                       ShowWelcomeText="showWelcomeText">
+                      ShowWelcomeText="showWelcomeText">
             </HomeHead>
             <DiaryCardList @bind-Value="Diaries"
                            @bind-Tags="Tags">
@@ -51,17 +51,20 @@
     <BackTopButton Selector="@SwiperActiveItemSelector">
     </BackTopButton>
     <MWindow Value="tab" Style="overflow:unset;" Touchless>
-        <MWindowItem Transition="">
+        <MWindowItem Transition=""
+                     ReverseTransition="">
             <MyFloatButton Icon="mdi:mdi-pencil"
                            OnClick="@(()=>To("write"))">
             </MyFloatButton>
         </MWindowItem>
-        <MWindowItem Transition="">
+        <MWindowItem Transition=""
+                     ReverseTransition="">
             <MyFloatButton Icon="add"
                            OnClick="()=>showAddTag=true">
             </MyFloatButton>
         </MWindowItem>
-        <MWindowItem Transition="">
+        <MWindowItem Transition=""
+                     ReverseTransition="">
             <MyFloatButton Icon="mdi:mdi-pencil"
                            OnClick="@(() => To("write?Template=true"))">
             </MyFloatButton>
