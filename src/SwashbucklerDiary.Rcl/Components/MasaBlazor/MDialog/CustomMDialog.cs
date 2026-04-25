@@ -2,6 +2,7 @@ using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace SwashbucklerDiary.Rcl.Components
@@ -66,8 +67,9 @@ namespace SwashbucklerDiary.Rcl.Components
             await base.OnActiveUpdatedAsync(firstActive, active);
         }
 
+        [DynamicDependency("OverlayRef", typeof(MDialog))]
         private static readonly PropertyInfo overlayRefProperty = typeof(MDialog).GetProperty("OverlayRef", BindingFlags.NonPublic | BindingFlags.Instance)
-                        ?? throw new Exception("Property OverlayRef does not exist");
+            ?? throw new Exception("Property OverlayRef does not exist");
 
         private void SetValue(bool value)
         {
