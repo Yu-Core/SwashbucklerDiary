@@ -54,18 +54,23 @@
                 </MTextField>
             </MCardText>
             <MCardActions Class="pt-0">
-                <MButton Text="true" OnClick="OnReset">
-                    <wc-auto-scroll-text style="max-width:100px;">@(I18n.T("Restore the default"))</wc-auto-scroll-text>
-                </MButton>
-                <MSpacer></MSpacer>
-                <MButton Text="true" OnClick="HandleOnCancel">
-                    @(I18n.T("Cancel"))
-                </MButton>
-                <MButton Text="true"
-                         Type="submit"
-                         Color="primary">
-                    @(I18n.T("OK"))
-                </MButton>
+                <div class="m-card__actions__left">
+                    <MButton Text="true"
+                             OnClick="OnReset">
+                        <wc-auto-scroll-text>@(I18n.T("Restore the default"))</wc-auto-scroll-text>
+                    </MButton>
+                </div>
+                <div class="m-card__actions__right">
+                    <MButton Text="true"
+                             OnClick="HandleOnCancel">
+                        <wc-auto-scroll-text>@(I18n.T("Cancel"))</wc-auto-scroll-text>
+                    </MButton>
+                    <MButton Text="true"
+                             Type="submit"
+                             Color="primary">
+                        <wc-auto-scroll-text>@(I18n.T("OK"))</wc-auto-scroll-text>
+                    </MButton>
+                </div>
             </MCardActions>
         </MCard>
     </MForm>

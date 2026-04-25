@@ -248,8 +248,8 @@ html {
 }
 
 .my-container {
-    padding-left: 14px !important;
-    padding-right: 14px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
     box-sizing: border-box !important;
     position: absolute !important;
 }
@@ -464,18 +464,6 @@ html.m-overlay-scroll-blocked {
     object-fit: cover;
 }
 
-.mine-user-info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-@media (max-width: 600px) {
-    .mine-user-info {
-        grid-template-columns: 1fr;
-    }
-}
-
 @media (max-width: 600px) {
     .m-application .text-caption-xs-only {
         font-size: .8rem !important;
@@ -645,6 +633,10 @@ html.m-overlay-scroll-blocked {
     justify-content: flex-end;
 }
 
+    .m-card__actions * {
+        max-width: 100%;
+    }
+
 @media (min-width: 600px) {
     .flex-sm-1 {
         flex: 1;
@@ -760,4 +752,16 @@ html.m-overlay-scroll-blocked {
     transform: scaleX(-1);
     filter: FlipH;
     -ms-filter: "FlipH";
+}
+
+.m-card__actions__right {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.m-card__actions > .m-card__actions__left .m-btn.m-btn,
+.m-card__actions > .m-card__actions__right .m-btn.m-btn {
+    padding: 0 8px;
 }

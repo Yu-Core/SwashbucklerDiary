@@ -76,20 +76,23 @@
             </MList>
         </MCardText>
         <MCardActions>
-            <MButton Text="true"
-                     OnClick="() => showAdd = true">
-                <wc-auto-scroll-text style="max-width:100px;">@(I18n.T("Add"))</wc-auto-scroll-text>
-            </MButton>
-            <MSpacer></MSpacer>
-            <MButton Text="true"
-                     OnClick="HandleOnCancel">
-                @(I18n.T("Cancel"))
-            </MButton>
-            <MButton Text="true"
-                     Color="primary"
-                     OnClick="HandleOnOK">
-                @(I18n.T("OK"))
-            </MButton>
+            <div class="m-card__actions__left">
+                <MButton Text="true"
+                         OnClick="() => showAdd = true">
+                    <wc-auto-scroll-text>@(I18n.T("Add"))</wc-auto-scroll-text>
+                </MButton>
+            </div>
+            <div class="m-card__actions__right">
+                <MButton Text="true"
+                         OnClick="HandleOnCancel">
+                    <wc-auto-scroll-text>@(I18n.T("Cancel"))</wc-auto-scroll-text>
+                </MButton>
+                <MButton Text="true"
+                         Color="primary"
+                         OnClick="HandleOnOK">
+                    <wc-auto-scroll-text>@(I18n.T("OK"))</wc-auto-scroll-text>
+                </MButton>
+            </div>
         </MCardActions>
     </MCard>
 </CustomMDialog>

@@ -87,28 +87,24 @@ class AutoScrollText extends HTMLElement {
 
     render() {
         const text = this.textContent.trim();
-        const maxWidthStyle = getComputedStyle(this).maxWidth;
-        const fitContent = maxWidthStyle !== "none";
-        const hostWidth = fitContent ? "fit-content" : "100%";
-        const hostAfterContent = fitContent ? text : "0";
-        const maxWidth = fitContent ? `max-width: ${maxWidthStyle};` : "";
         const textDirection = this._textLtr ? "direction: ltr;" : "";
 
         this.shadowRoot.innerHTML = `
 <style>
 :host {
     display: block;
-    width: ${hostWidth};
-    ${maxWidth}
+    width: fit-content;
+    max-width: 100%;
     overflow: hidden;
     position: relative;
 }
 
-:host::after{
-    content: "${hostAfterContent}";
-    white-space: nowrap;
-    display: block;
+.placeholder{
     visibility: hidden;
+    overflow-wrap: anywhere;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
 }
                         
 .container {
@@ -119,14 +115,10 @@ class AutoScrollText extends HTMLElement {
     height: 100%;
     white-space: nowrap;
     position: absolute;
-    left: 0;
+    left: var(--container-left);
+    right: var(--container-right);
     top: 0;
     will-change: transform;
-}
-
-:host-context([dir="rtl"]) .container {
-    left: initial;
-    right: 0;
 }
                         
 .gap {
@@ -137,6 +129,8 @@ class AutoScrollText extends HTMLElement {
     ${textDirection}
 }
 </style>
+
+<div class="text placeholder">${text}</div>
                     
 <div class="container">
     <span class="text">${text}</span>
@@ -148,8 +142,8 @@ class AutoScrollText extends HTMLElement {
 
     setupScroll() {
         const container = this.shadowRoot.querySelector('.container');
-        const textSpan = this.shadowRoot.querySelector('.text');
-        const gapSpan = this.shadowRoot.querySelector('.gap');
+        const textSpan = container.querySelector('.text');
+        const gapSpan = container.querySelector('.gap');
 
         // 清除旧动画
         container.classList.remove('container__scroll');
@@ -192,10 +186,7 @@ class AutoScrollText extends HTMLElement {
     100% { transform: translateX(${rtlTranslateTotalDistance}px); }
 }
 .container__scroll {
-    animation: scroll-ltr ${animationDuration}s linear infinite
-}
-:host-context([dir="rtl"]) .container__scroll {
-    animation: scroll-rtl ${animationDuration}s linear infinite
+    animation: var(--container__scroll-keyframes) ${animationDuration}s linear infinite
 }
                     `;
 
@@ -261,5 +252,23 @@ class AutoScrollText extends HTMLElement {
 
         this.resume();
     }
+}
+if (!document.querySelector('#wc-auto-scroll-text-style')) {
+    const style = document.createElement('style');
+    style.id = 'wc-auto-scroll-text-style';
+    style.textContent = `
+html wc-auto-scroll-text {
+    --container-left: 0;
+    --container-right: initial;
+    --container__scroll-keyframes: scroll-ltr;
+}
+
+html[dir="rtl"] wc-auto-scroll-text {
+    --container-left: initial;
+    --container-right: 0;
+    --container__scroll-keyframes: scroll-rtl;
+}
+  `;
+    document.head.appendChild(style);
 }
 if (!customElements.get('wc-auto-scroll-text')) { customElements.define('wc-auto-scroll-text', AutoScrollText); }

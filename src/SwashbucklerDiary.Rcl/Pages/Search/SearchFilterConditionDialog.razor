@@ -62,7 +62,7 @@
                  Large="true"
                  Color="rgba(var(--m-theme-surface-container-high))"
                  OnClick="HandleOnCancel">
-            <wc-auto-scroll-text class="justify-center">@(I18n.T("Cancel"))</wc-auto-scroll-text>
+            <wc-auto-scroll-text class="justify-center" style="width:100%;">@(I18n.T("Cancel"))</wc-auto-scroll-text>
         </MButton>
         <MButton Class="text-subtitle-1 flex-grow-1 mb-2"
                  Style="flex-basis:0;"
@@ -71,7 +71,7 @@
                  Large="true"
                  Color="rgba(var(--m-theme-surface-container-high))"
                  OnClick="HandleOnOK">
-            <wc-auto-scroll-text class="justify-center">@(I18n.T("OK"))</wc-auto-scroll-text>
+            <wc-auto-scroll-text class="justify-center" style="width:100%;">@(I18n.T("OK"))</wc-auto-scroll-text>
         </MButton>
     };
 
@@ -80,12 +80,12 @@
         <MSpacer></MSpacer>
         <MButton Text="true"
                  OnClick="HandleOnCancel">
-            @(I18n.T("Cancel"))
+            <wc-auto-scroll-text>@(I18n.T("Cancel"))</wc-auto-scroll-text>
         </MButton>
         <MButton Text="true"
                  Color="primary"
                  OnClick="HandleOnOK">
-            @(I18n.T("OK"))
+            <wc-auto-scroll-text>@(I18n.T("OK"))</wc-auto-scroll-text>
         </MButton>
     };
 }
