@@ -44,7 +44,6 @@ namespace SwashbucklerDiary.Gtk
             _masaBlazor = _serviceProvider.GetRequiredService<Masa.Blazor.MasaBlazor>();
             _appLifecycle = _serviceProvider.GetRequiredService<IAppLifecycle>();
             InitTheme();
-            MigrateAppDataDirectory();
             AppActionsHelper.AddMainOptionEntries(app);
         }
 
@@ -120,15 +119,6 @@ namespace SwashbucklerDiary.Gtk
         private void ThemeChanged(Theme theme)
         {
             _masaBlazor.SetTheme(theme == Theme.Dark);
-        }
-
-        private void MigrateAppDataDirectory()
-        {
-            var versionUpdataManager = _serviceProvider.GetRequiredService<IVersionUpdataManager>();
-            if (versionUpdataManager is SwashbucklerDiary.Gtk.Services.VersionUpdataManager gtkVersionUpdataManager)
-            {
-                gtkVersionUpdataManager.MigrateAppDataDirectory();
-            }
         }
     }
 }
