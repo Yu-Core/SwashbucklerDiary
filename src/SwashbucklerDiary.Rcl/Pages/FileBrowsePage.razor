@@ -10,7 +10,7 @@
     <MSpacer></MSpacer>
 
     <MultiSizeMenu @bind-Visible="showMenu"
-               DynamicListItems="menuItems">
+                   DynamicListItems="menuItems">
         <ActivatorContent>
             <MButton @attributes="@context.Attrs"
                      Icon="true">
@@ -31,19 +31,25 @@
     <SwiperTabItem>
         <MContainer Class="my-container"
                     Fluid="true">
-            <ImageWaterfall Value="imageResources"></ImageWaterfall>
+            <ImageWaterfall Value="imageResources"
+                            ScrollElementSelector="@($"#{context.Id}")">
+            </ImageWaterfall>
         </MContainer>
     </SwiperTabItem>
     <SwiperTabItem>
         <MContainer Class="my-container"
                     Fluid="true">
-            <AudioResourceCardList Value="audioResources"></AudioResourceCardList>
+            <AudioResourceCardList Value="audioResources"
+                                   ScrollElementSelector="@($"#{context.Id}")">
+            </AudioResourceCardList>
         </MContainer>
     </SwiperTabItem>
     <SwiperTabItem>
         <MContainer Class="my-container"
                     Fluid="true">
-            <VideoWaterfall Value="videoResources"></VideoWaterfall>
+            <VideoWaterfall Value="videoResources"
+                            ScrollElementSelector="@($"#{context.Id}")">
+            </VideoWaterfall>
         </MContainer>
     </SwiperTabItem>
 </SwiperTabItems>

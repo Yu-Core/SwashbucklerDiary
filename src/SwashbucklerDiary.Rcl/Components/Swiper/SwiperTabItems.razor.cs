@@ -1,62 +1,32 @@
 using Masa.Blazor;
+using Masa.Blazor.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Extensions;
+using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
-    public partial class SwiperTabItems
+    public partial class SwiperTabItems : MItemGroup
     {
-        private StringNumber previousvalue = 0;
-
-        private int _registeredTabItemsIndex;
-
+        private bool _isRendered;
         private DotNetObjectReference<object>? _dotNetObjectReference;
-
         private SwiperJsModule? jsModule;
 
         [Inject]
         private MasaBlazor MasaBlazor { get; set; } = default!;
 
         [Parameter]
-        public StringNumber Value { get; set; } = 0;
+        public Dictionary<string, object>? Options { get; set; }
 
         [Parameter]
-        public EventCallback<StringNumber> ValueChanged { get; set; }
-
-        [Parameter]
-        public RenderFragment? ChildContent { get; set; }
-
-        public ElementReference Ref { get; set; }
-
-        public SwiperTabItem? ActiveItem
-            => ChildTabItems.Count == 0 ? null : ChildTabItems[Value.ToInt32()];
-
-        public List<SwiperTabItem> ChildTabItems { get; } = [];
+        public bool Pagination { get; set; }
 
         [JSInvokable]
         public async Task UpdateValue(int value)
         {
-            Value = value;
-            previousvalue = value;
-            if (ValueChanged.HasDelegate)
-            {
-                await ValueChanged.InvokeAsync(value);
-            }
-        }
-
-        public void RegisterTabItem(SwiperTabItem tabItem)
-        {
-            tabItem.Value ??= _registeredTabItemsIndex++;
-
-            if (ChildTabItems.Any(item => item.Value != null && item.Value.Equals(tabItem.Value))) return;
-
-            ChildTabItems.Add(tabItem);
-        }
-
-        public void UnregisterTabItem(SwiperTabItem tabItem)
-        {
-            ChildTabItems.Remove(tabItem);
+            if (value == Value) return;
+            await ToggleAsync(value);
         }
 
         protected override void OnInitialized()
@@ -66,27 +36,21 @@ namespace SwashbucklerDiary.Rcl.Components
             MasaBlazor.RTLChanged += HandleRTLChanged;
         }
 
-        protected override async Task OnParametersSetAsync()
+        protected override void OnParametersSet()
         {
-            await base.OnParametersSetAsync();
+            base.OnParametersSet();
 
-            if (previousvalue != Value)
-            {
-                previousvalue = Value;
-                if (jsModule is null) return;
-                await jsModule.SlideToAsync(Ref, Value.ToInt32());
-            }
+            Mandatory = true;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (!IsDisposed && firstRender)
+            if (firstRender)
             {
-                jsModule = new(JS);
-                _dotNetObjectReference = DotNetObjectReference.Create<object>(this);
-                await jsModule.Init(_dotNetObjectReference, Ref, Value.ToInt32());
+                _isRendered = true;
+                await InitSwiperAsync();
             }
         }
 
@@ -99,14 +63,76 @@ namespace SwashbucklerDiary.Rcl.Components
             await jsModule.TryDisposeAsync();
         }
 
+        protected override void OnInternalValuesChanged()
+        {
+            base.OnInternalValuesChanged();
+
+            if (jsModule is null || Value is null) return;
+            _ = jsModule.SlideToAsync(Ref, Value.ToInt32());
+        }
+
+        protected override IEnumerable<string> BuildComponentClass()
+        {
+            return base.BuildComponentClass().Concat(["swiper"]);
+        }
+
+        protected override IEnumerable<string?> BuildComponentStyle()
+        {
+            return base.BuildComponentStyle().Concat(
+                StyleBuilder.Create()
+                .Add("--swiper-pagination-color", "rgba(var(--m-theme-on-surface))")
+                .AddIf("direction", "rtl", MasaBlazor.RTL)
+                .GenerateCssStyles()
+            );
+        }
+
         private void HandleRTLChanged(object? sender, EventArgs e)
         {
             InvokeAsync(async () =>
             {
-                if (jsModule is null || _dotNetObjectReference is null) return;
-                await jsModule.DisposeAsync(Ref);
-                await jsModule.Init(_dotNetObjectReference, Ref, Value.ToInt32());
+                StateHasChanged();
+                await Task.Delay(16);
+                await InitSwiperAsync();
             });
         }
+
+        private async Task InitSwiperAsync()
+        {
+            if (!_isRendered)
+            {
+                return;
+            }
+
+            var options = new Dictionary<string, object>()
+            {
+                ["observer"] = true,
+                ["observeParents"] = true,
+                ["observeSlideChildren"] = true,
+                //["simulateTouch"] = false,
+                ["initialSlide"] = Value?.ToInt32() ?? 0,
+                ["resistanceRatio"] = 0.7,
+                ["speed"] = 250,
+            };
+
+            if (Pagination)
+            {
+                options["pagination"] = new Dictionary<string, object>()
+                {
+                    ["el"] = ".swiper-pagination",
+                    //["dynamicBullets"] = true,
+                };
+            }
+
+            if (Options is not null)
+            {
+                options = options.DeepMerge(Options);
+            }
+
+            jsModule ??= new(Js);
+            _dotNetObjectReference ??= DotNetObjectReference.Create<object>(this);
+
+            await jsModule.Init(_dotNetObjectReference, Ref, options);
+        }
+
     }
 }

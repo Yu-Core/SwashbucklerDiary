@@ -2,7 +2,7 @@
 @inherits CardListComponentBase<TagModel>
 
 <div class="card-list__wrap">
-    <div class="card-list__main">
+    <div class="card-list__content">
         <CascadingValue Value="options"
                         IsFixed="true">
             <Virtualize Items="InternalValue"
@@ -21,7 +21,7 @@
     {
         <MultiSizeDisplay MdAndUp="true">
             <DesktopContent>
-                <div class="card-list__assist-info">
+                <div class="card-list__sidebar">
                     <TagStatisticsCard Value="Value"
                                        Diaries="Diaries">
                     </TagStatisticsCard>

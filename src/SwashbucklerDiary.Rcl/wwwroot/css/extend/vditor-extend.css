@@ -74,6 +74,10 @@
         border-radius: 8px;
     }
 
+    .vditor-reset svg {
+        direction: initial;
+    }
+
 .vditor-ir__node--expand[data-type="code-block"] .vditor-ir__preview {
     display: none;
 }

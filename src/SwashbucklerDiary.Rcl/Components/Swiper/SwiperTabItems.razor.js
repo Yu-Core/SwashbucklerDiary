@@ -1,27 +1,20 @@
 const _instances = new WeakMap();
 
-export function init(dotNetObjectReference, el, index) {
+export function init(dotNetObjectReference, el, options) {
     if (!el) {
         return;
     }
 
-    const instance = new Swiper(el, {
-        observer: true,
-        observeParents: true,
-        observeSlideChildren: true,
-        //autoHeight: true,//自动高度
-        simulateTouch: false,//禁止鼠标模拟
-        initialSlide: index,//设定初始化时slide的索引
-        resistanceRatio: 0.7,
-        speed: 250,
-        on: {
-            slideChangeTransitionStart: function () {
-                dotNetObjectReference.invokeMethodAsync("UpdateValue", this.activeIndex);
-            },
-        }
-    });
+    const instance = _instances.get(el);
+    if (instance) {
+        instance.destroy(true, true);
+    }
 
-    _instances.set(el, instance);
+    const swiper = new Swiper(el, options);
+    swiper.on("slideChangeTransitionStart", function () {
+        dotNetObjectReference.invokeMethodAsync("UpdateValue", this.activeIndex);
+    });
+    _instances.set(el, swiper);
 }
 
 export function slideTo(el, value) {
@@ -37,7 +30,7 @@ export function slideTo(el, value) {
     instance.slideTo(value);
 }
 
-export function dispose(el) {
+export function destroy(el) {
     if (!el) {
         return;
     }

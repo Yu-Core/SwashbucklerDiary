@@ -1,3 +1,33 @@
 ﻿.float-calendar ::deep input {
     cursor: pointer;
 }
+
+.calendar-diary {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 960px) {
+    .calendar-diary {
+        flex-direction: row-reverse;
+    }
+
+        .calendar-diary ::deep .calendar-intersect {
+            position: sticky;
+            top: 0px;
+            width: 300px;
+            margin-inline-start: 16px;
+            -webkit-margin-start: 16px;
+            -moz-margin-start: 16px;
+        }
+
+        .calendar-diary ::deep .calendar {
+            position: sticky;
+            top: 0px;
+        }
+
+        .calendar-diary ::deep .diary-card-list {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+}

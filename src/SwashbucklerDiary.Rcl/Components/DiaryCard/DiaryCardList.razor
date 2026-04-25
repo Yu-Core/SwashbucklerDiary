@@ -1,37 +1,39 @@
 @namespace SwashbucklerDiary.Rcl.Components
 @inherits CardListComponentBase<DiaryModel>
 
-<div class="card-list__wrap">
-    <div class="@InternalClass">
-        <CascadingValue Value="options"
-                        IsFixed="true">
-            <Virtualize Items="InternalValue"
-                        ItemSize="100"
-                        Context="item"
-                        OverscanCount="30">
-                <DiaryCard @key="item.Id"
-                           Value="item"
-                           OnClick="ClickCard"
-                           OnMenu="OpenMenu">
-                </DiaryCard>
-            </Virtualize>
-        </CascadingValue>
+<div class="diary-card-list">
+    <div class="card-list__wrap">
+        <div class="@InternalClass">
+            <CascadingValue Value="options"
+                            IsFixed="true">
+                <Virtualize Items="InternalValue"
+                            ItemSize="100"
+                            Context="item"
+                            OverscanCount="30">
+                    <DiaryCard @key="item.Id"
+                               Value="item"
+                               OnClick="ClickCard"
+                               OnMenu="OpenMenu">
+                    </DiaryCard>
+                </Virtualize>
+            </CascadingValue>
+        </div>
+        @if (ShowStatisticsCard)
+        {
+            <MultiSizeDisplay MdAndUp="true">
+                <DesktopContent>
+                    <div class="card-list__sidebar diary-card-list__sidebar">
+                        <DiaryStatisticsCard Value="Value"></DiaryStatisticsCard>
+                    </div>
+                </DesktopContent>
+            </MultiSizeDisplay>
+        }
     </div>
-    @if (ShowStatisticsCard)
-    {
-        <MultiSizeDisplay MdAndUp="true">
-            <DesktopContent>
-                <div class="card-list__assist-info">
-                    <DiaryStatisticsCard Value="Value"></DiaryStatisticsCard>
-                </div>
-            </DesktopContent>
-        </MultiSizeDisplay>
-    }
-</div>
 
-<EmptyResult Show="Value.Count == 0"
-             Text="@(NotFoundText ?? I18n.T("No diary"))">
-</EmptyResult>
+    <EmptyResult Show="Value.Count == 0"
+                 Text="@(NotFoundText ?? I18n.T("No diary"))">
+    </EmptyResult>
+</div>
 
 <SelectTagsDialog @bind-Visible="showSelectTag"
                   @bind-Value="SelectedTags"

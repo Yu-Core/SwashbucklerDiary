@@ -85,7 +85,7 @@ body {
     right: var(--sair);
 }
 
-.card-list__assist-info {
+.card-list__sidebar {
     height: calc(var(--safe-area-height) - 64px - 24px);
 }
 

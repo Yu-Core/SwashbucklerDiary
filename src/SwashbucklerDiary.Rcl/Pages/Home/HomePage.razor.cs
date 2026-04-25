@@ -42,7 +42,9 @@ namespace SwashbucklerDiary.Rcl.Pages
         }
 
         private string? SwiperActiveItemSelector
-            => swiperTabItems is null || swiperTabItems.ActiveItem is null ? null : $"#{swiperTabItems.ActiveItem.Id}";
+            => swiperTabItems?.Items.FirstOrDefault(it => it.Value == tab) is SwiperTabItem swiperTabItem
+            ? $"#{swiperTabItem.Id}"
+            : null;
 
         private async Task SaveAddTag(string tagName)
         {

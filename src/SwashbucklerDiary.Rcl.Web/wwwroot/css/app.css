@@ -15,7 +15,7 @@ html {
     height: calc(var(--safe-area-height) - var(--vditor-toolbar-height)) !important;
 }
 
-.card-list__assist-info {
+.card-list__sidebar {
     height: calc(var(--safe-area-height) - 64px - 24px);
 }
 

@@ -12,30 +12,35 @@
             </ActivatorContent>
             <ChildContent>
                 <MCard Class="surface rounded-t-lg">
-                    <div class="multi-menu-moblie-container">
-                        @foreach (var item in DynamicListItems)
+                    <SwiperTabItems Pagination>
+                        @foreach (var items in DynamicListItems.Where(it => it.Show).Chunk(10))
                         {
-                            @if (item.Show)
-                            {
-                                <div class="menu-item">
-                                    <div class="content-container"
-                                         @onclick="item.OnClick">
-                                        <MButton Class="surface-container mb-2"
-                                                 Width="56"
-                                                 Height="56"
-                                                 Icon="true">
-                                            <MIcon>@(item.Icon)</MIcon>
-                                        </MButton>
-                                        <div class="title-container text-caption" style="width:100%;">
-                                            <wc-auto-scroll-text class="justify-center" style="width:100%;">
-                                                @(I18n.T(item.Text))
-                                            </wc-auto-scroll-text>
+                            <SwiperTabItem Style="height:auto;">
+                                <div class="multi-menu-moblie-container">
+                                    @foreach (var item in items)
+                                    {
+                                        <div class="menu-item">
+                                            <div class="content-container"
+                                                 @onclick="item.OnClick">
+                                                <MButton Class="surface-container mb-2"
+                                                         Width="56"
+                                                         Height="56"
+                                                         Icon="true">
+                                                    <MIcon>@(item.Icon)</MIcon>
+                                                </MButton>
+                                                <div class="title-container text-caption" style="width:100%;">
+                                                    <wc-auto-scroll-text class="justify-center" style="width:100%;">
+                                                        @(I18n.T(item.Text))
+                                                    </wc-auto-scroll-text>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 </div>
-                            }
+                            </SwiperTabItem>
                         }
-                    </div>
+                    </SwiperTabItems>
+                    
                 </MCard>
             </ChildContent>
         </CustomMBottomSheet>

@@ -107,7 +107,7 @@ namespace SwashbucklerDiary.Rcl.Components
         }
 
         private string? InternalClass => new CssBuilder()
-            .Add("card-list__main")
+            .Add("card-list__content")
             .Add("card-list__menu--active", showMenu)
             .Add("diary-card-list__icon--hidden", !showIcon)
             .Add("diary-card-list__tags--hidden", !showTags)

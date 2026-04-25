@@ -1,11 +1,18 @@
 @namespace SwashbucklerDiary.Rcl.Components
-@inherits MyComponentBase
+@inherits MItemGroup
 
-<div @ref="Ref" class="swiper">
+<div class="@GetClass()" style="@GetStyle()" id="@Id" @ref="Ref" @attributes="@Attributes">
     <div class="swiper-wrapper">
         <CascadingValue Value="this"
                         IsFixed="true">
-            @ChildContent
+            <CascadingValue Value="Value?.ToString()" Name="SwiperValue">
+                @ChildContent
+            </CascadingValue>
         </CascadingValue>
     </div>
+
+    @if (Pagination)
+    {
+        <div class="swiper-pagination"></div>
+    }
 </div>

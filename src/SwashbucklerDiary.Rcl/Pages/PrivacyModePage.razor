@@ -149,29 +149,6 @@
             </MList>
         </MCard>
 
-        @if (Desktop)
-        {
-            <MCard Class="mb-5"
-                   Elevation="0"
-                   Rounded="@("lg")">
-                <MList Class="py-0">
-                    <MListItem OnClick="SwitchPrivacyMode">
-                        <MListItemIcon>
-                            <MIcon>
-                                swap_horiz
-                            </MIcon>
-                        </MListItemIcon>
-                        <MListItemContent>
-                            <wc-auto-scroll-text>@(I18n.T(SwitchPrivacyModeText))</wc-auto-scroll-text>
-                        </MListItemContent>
-                        <MListItemAction>
-                            <MIcon>chevron_right</MIcon>
-                        </MListItemAction>
-                    </MListItem>
-                </MList>
-            </MCard>
-        }
-
         <MCard Class="mb-5"
                Elevation="0"
                Rounded="@("lg")">
@@ -212,6 +189,18 @@
                      Rounded="true"
                      Block="true"
                      Large="true"
+                     OnClick="SwitchPrivacyMode">
+                @(I18n.T(SwitchPrivacyModeText))
+            </MButton>
+        </div>
+    }
+    else
+    {
+        <div class="right-bottom-float-area">
+            <MButton Class="inverse-surface"
+                     Rounded="true"
+                     Large="true"
+                     LeftIconName="swap_horiz"
                      OnClick="SwitchPrivacyMode">
                 @(I18n.T(SwitchPrivacyModeText))
             </MButton>

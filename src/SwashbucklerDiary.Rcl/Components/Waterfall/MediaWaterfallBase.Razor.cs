@@ -24,7 +24,7 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         protected BreakpointService BreakpointService { get; set; } = default!;
 
-        protected string WrapStyle => StyleBuilder.Create()
+        protected string? WrapStyle => StyleBuilder.Create()
             .AddIf("opacity", "0", contentLoading)
             .Build();
 
@@ -50,9 +50,9 @@ namespace SwashbucklerDiary.Rcl.Components
                 jSModule = new(JS);
                 previewMediaElementJSModule = new(JS);
 
-                if (!string.IsNullOrEmpty(ScrollElementId))
+                if (!string.IsNullOrEmpty(ScrollElementSelector))
                 {
-                    await jSModule.StartRecordScrollInfo($"#{ScrollElementId}");
+                    await jSModule.StartRecordScrollInfo(ScrollElementSelector);
                 }
             }
         }
@@ -101,27 +101,27 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task StopRecordScrollInfo()
         {
-            if (string.IsNullOrEmpty(ScrollElementId)
+            if (string.IsNullOrEmpty(ScrollElementSelector)
                 || jSModule is null)
             {
                 return;
             }
 
-            await jSModule.StopRecordScrollInfo($"#{ScrollElementId}");
+            await jSModule.StopRecordScrollInfo(ScrollElementSelector);
             contentLoading = true;
             await InvokeAsync(StateHasChanged);
         }
 
         private async Task RestoreScrollPosition()
         {
-            if (string.IsNullOrEmpty(ScrollElementId)
+            if (string.IsNullOrEmpty(ScrollElementSelector)
                 || jSModule is null)
             {
                 return;
             }
 
             await Task.Delay(300);
-            await jSModule.RestoreScrollPosition($"#{ScrollElementId}");
+            await jSModule.RestoreScrollPosition(ScrollElementSelector);
             contentLoading = false;
             await InvokeAsync(StateHasChanged);
         }

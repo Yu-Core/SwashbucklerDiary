@@ -204,12 +204,12 @@ html {
     display: flex;
 }
 
-.card-list__main {
+.card-list__content {
     flex: 1;
     min-width: 1px;
 }
 
-.card-list__assist-info {
+.card-list__sidebar {
     position: sticky;
     top: 0;
     width: 300px;

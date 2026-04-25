@@ -9,9 +9,9 @@ namespace SwashbucklerDiary.Rcl.Components
         {
         }
 
-        public async Task Init(DotNetObjectReference<object> dotNetObjectReference, ElementReference element, int index)
+        public async Task Init(DotNetObjectReference<object> dotNetObjectReference, ElementReference element, Dictionary<string, object> options)
         {
-            await InvokeVoidAsync("init", [dotNetObjectReference, element, index]);
+            await InvokeVoidAsync("init", [dotNetObjectReference, element, options]);
         }
 
         public async Task SlideToAsync(ElementReference element, int index)
@@ -19,9 +19,9 @@ namespace SwashbucklerDiary.Rcl.Components
             await InvokeVoidAsync("slideTo", [element, index]);
         }
 
-        public async Task DisposeAsync(ElementReference element)
+        public async Task DestroyAsync(ElementReference element)
         {
-            await InvokeVoidAsync("dispose", element);
+            await InvokeVoidAsync("destroy", element);
         }
     }
 }

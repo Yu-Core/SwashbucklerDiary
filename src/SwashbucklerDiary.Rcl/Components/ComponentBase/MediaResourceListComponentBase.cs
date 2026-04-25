@@ -38,8 +38,8 @@ namespace SwashbucklerDiary.Rcl.Components
         [Inject]
         private IPlatformIntegration PlatformIntegration { get; set; } = default!;
 
-        [CascadingParameter(Name = "ScrollElementId")]
-        public string? ScrollElementId { get; set; }
+        [Parameter]
+        public string? ScrollElementSelector { get; set; }
 
         [Parameter]
         public List<ResourceModel> Value { get; set; } = [];

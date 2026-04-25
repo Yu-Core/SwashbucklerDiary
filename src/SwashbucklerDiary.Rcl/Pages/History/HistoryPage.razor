@@ -11,7 +11,7 @@
     }
     else
     {
-        <div class="float-calendar" style="cursor:pointer;" @onclick="()=>showFloatCalendar=true">
+        <div class="float-calendar" style="cursor:pointer;" @onclick="() => showFloatCalendar = true">
             <MTextField Value="SelectedDate"
                         Class="rounded-lg text-h6 font-weight-bold"
                         Dense="true"
@@ -33,7 +33,7 @@
     </MButton>
 
     <MultiSizeMenu @bind-Visible="showMenu"
-               DynamicListItems="menuItems">
+                   DynamicListItems="menuItems">
         <ActivatorContent>
             <MButton @attributes="@context.Attrs"
                      Icon="true">
@@ -51,24 +51,28 @@
 </MyAppBar>
 
 <ScrollContainer Id="@scrollContainerId">
-    <IntersectElement IntersectChanged="HandleIntersectChanged">
-        <MDatePicker @key="datePickerKey"
-                     @bind-Value="SelectedDate"
-                     Class="rounded-lg my-picker mb-5 pt-4"
-                     TValue="DateOnly"
-                     FullWidth="true"
-                     NoTitle="true"
-                     Color="primary"
-                     Events="eventsDates"
-                     EventColor='"primary"'
-                     FirstDayOfWeek="firstDayOfWeek"
-                     Locale="@(I18n.Culture.Name)">
-        </MDatePicker>
-    </IntersectElement>
+    <div class="calendar-diary">
+        <IntersectElement Class="calendar-intersect"
+                          IntersectChanged="HandleIntersectChanged">
+            <MDatePicker @key="datePickerKey"
+                         @bind-Value="SelectedDate"
+                         Class="rounded-lg my-picker mb-5 pt-4 calendar"
+                         TValue="DateOnly"
+                         FullWidth="true"
+                         NoTitle="true"
+                         Color="primary"
+                         Events="eventsDates"
+                         EventColor='"primary"'
+                         FirstDayOfWeek="firstDayOfWeek"
+                         Locale="@(I18n.Culture.Name)">
+            </MDatePicker>
+        </IntersectElement>
 
-    <DiaryCardList @bind-Value="SelectedDiaries"
-                   @bind-Tags="Tags">
-    </DiaryCardList>
+        <DiaryCardList @bind-Value="SelectedDiaries"
+                       @bind-Tags="Tags"
+                       HideStatisticsCard>
+        </DiaryCardList>
+    </div>
 </ScrollContainer>
 
 <div class="right-bottom-float-area">
@@ -91,8 +95,8 @@
 </ExportByTimeDialog>
 
 <CustomMDialog @bind-MyValue="showConfirmMerge"
-                  ContentClass="rounded-lg"
-                  MaxWidth="420">
+               ContentClass="rounded-lg"
+               MaxWidth="420">
     <MCard>
         <MCardTitle Class="font-weight-bold flex-nowrap">
             <wc-auto-scroll-text>@(I18n.T("Merge diaries"))</wc-auto-scroll-text>
