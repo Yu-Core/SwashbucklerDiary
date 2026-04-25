@@ -229,7 +229,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 new(this, "Export", "mdi:mdi-export", Export),
                 new(this, "Sort", "sort", OpenSortDialog),
                 new(this, "Copy reference", "format_quote", CopyReference),
-                new(this, "Copy external link", "mdi:mdi-link-variant", CopyExternalLink),
+                new(this, "Copy link", "mdi:mdi-link-variant", CopyLink),
                 new(this, DefaultTemplateText, "space_dashboard", SetDefaultTemplateAsync, ()=>SelectedItem.Template),
                 new(this, PrivateText, PrivateIcon, MovePrivacy, ()=>privacyMode || showSetPrivacy)
             ];
@@ -247,7 +247,7 @@ namespace SwashbucklerDiary.Rcl.Components
             await AlertService.SuccessAsync(I18n.T("Copy successfully"));
         }
 
-        private async Task CopyExternalLink()
+        private async Task CopyLink()
         {
             string text;
             if (PlatformIntegration.CurrentPlatform.IsBrowser())

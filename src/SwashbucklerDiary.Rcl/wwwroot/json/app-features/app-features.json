@@ -155,9 +155,9 @@
     "Href": "diarySetting"
   },
   {
-    "Name": "Markdown",
+    "Name": "Markdown render",
     "Icon": "markdown",
-    "Path": "Setting / Diary / Markdown",
+    "Path": "Setting / Diary / Markdown render",
     "Href": "diarySetting"
   },
   {
@@ -311,9 +311,9 @@
     "Href": "diaryCardSetting"
   },
   {
-    "Name": "Markdown",
+    "Name": "Markdown render",
     "Icon": "markdown",
-    "Path": "Setting / Diary card / Markdown",
+    "Path": "Setting / Diary card / Markdown render",
     "Href": "diaryCardSetting"
   },
   {

@@ -206,9 +206,9 @@ namespace SwashbucklerDiary.Rcl.Pages
                 new(this, "Export","mdi:mdi-export", OpenExportDialog),
                 new(this, MarkdownText,MarkdownIcon, ()=> SettingChange(nameof(Setting.Markdown), ref enableMarkdown)),
                 new(this, "Copy reference", "format_quote", CopyReference),
-                new(this, "Copy external link", "mdi:mdi-link-variant", CopyExternalLink),
+                new(this, "Copy link", "mdi:mdi-link-variant", CopyExternalLink),
                 new(this, "Look up", "quick_reference_all", OpenSearch),
-                new(this, "View referenced", "file_export", ViewReferenced),
+                new(this, "Referenced situation", "file_export", ReferencedSituation),
                 new(this, OutlineText, "format_list_bulleted", ()=> SettingChange(nameof(Setting.Outline), ref outline), ()=>enableMarkdown),
                 new(this, DefaultTemplateText, "space_dashboard", SetDefaultTemplateAsync, ()=>diary.Template),
                 new(this, PrivateText, PrivateIcon, DiaryPrivacyChanged,()=>privacyMode || showSetPrivacy)
@@ -385,7 +385,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             showHighlightSearch = true;
         }
 
-        private async Task ViewReferenced()
+        private async Task ReferencedSituation()
         {
             string referencedText = $"read/{diary.Id}";
             var exist = await DiaryService.AnyAsync(it => (it.Content ?? string.Empty).Contains(referencedText ?? string.Empty, StringComparison.CurrentCultureIgnoreCase));
