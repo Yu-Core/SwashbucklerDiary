@@ -1,11 +1,13 @@
 using SqlSugar;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 
 namespace SwashbucklerDiary.Rcl.Repository
 {
     public class UserStateModelRepository : BaseRepository<UserStateModel>, IUserStateModelRepository
     {
-        public UserStateModelRepository(ISqlSugarClient context) : base(context)
+        public UserStateModelRepository(ISqlSugarClient context,
+            ISettingService settingService) : base(context, settingService)
         {
         }
 

@@ -58,18 +58,17 @@ namespace SwashbucklerDiary.Maui.Services
 
         protected override async Task HandleVersionUpdate697()
         {
-            var webDAVServerAddressTask = _settingService.GetAsync<string>("WebDAVServerAddress", string.Empty);
-            var webDAVAccountTask = _settingService.GetAsync<string>("WebDAVAccount", string.Empty);
-            var webDAVPasswordTask = _settingService.GetAsync<string>("WebDAVPassword", string.Empty);
-            await Task.WhenAll(webDAVServerAddressTask, webDAVAccountTask, webDAVPasswordTask);
-            var webDAVServerAddress = webDAVServerAddressTask.Result;
+            var webDAVServerAddress = await _settingService.GetAsync<string>("WebDAVServerAddress", string.Empty);
+            var webDAVAccount = await _settingService.GetAsync<string>("WebDAVAccount", string.Empty);
+            var webDAVPassword = await _settingService.GetAsync<string>("WebDAVPassword", string.Empty);
+
             if (!string.IsNullOrEmpty(webDAVServerAddress))
             {
                 var config = new WebDavConfigForm()
                 {
-                    ServerAddress = webDAVServerAddressTask.Result,
-                    Account = webDAVAccountTask.Result,
-                    Password = webDAVPasswordTask.Result,
+                    ServerAddress = webDAVServerAddress,
+                    Account = webDAVAccount,
+                    Password = webDAVPassword,
                 };
                 string webDavConfigJson = JsonSerializer.Serialize(config);
                 await _settingService.SetAsync("WebDavConfig", webDavConfigJson);

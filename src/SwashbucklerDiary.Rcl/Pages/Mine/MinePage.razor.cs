@@ -254,10 +254,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private async Task UpdateStatisticalDataAsync()
         {
-            List<Task> tasks = [];
-            tasks.Add(UpdateDiaryStatisticalDataAsync());
-            tasks.Add(UpdateResourceStatisticalDataAsync());
-            await Task.WhenAll(tasks);
+            await UpdateDiaryStatisticalDataAsync();
+            await UpdateResourceStatisticalDataAsync();
         }
 
         private async Task UpdateDiaryStatisticalDataAsync()

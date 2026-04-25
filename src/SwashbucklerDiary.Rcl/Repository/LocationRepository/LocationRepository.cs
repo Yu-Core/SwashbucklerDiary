@@ -1,4 +1,5 @@
 ﻿using SqlSugar;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
 
@@ -6,7 +7,8 @@ namespace SwashbucklerDiary.Rcl.Repository
 {
     public class LocationRepository : BaseRepository<LocationModel>, ILocationRepository
     {
-        public LocationRepository(ISqlSugarClient context) : base(context)
+        public LocationRepository(ISqlSugarClient context,
+            ISettingService settingService) : base(context, settingService)
         {
         }
 

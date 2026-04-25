@@ -131,10 +131,9 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             if (firstRender)
             {
-                await Task.WhenAll(
-                    InitDiary(),
-                    InitTags(),
-                    InitTemplate());
+                await InitDiary();
+                await InitTags();
+                await InitTemplate();
 
                 InitCreateTime();
                 StateHasChanged();

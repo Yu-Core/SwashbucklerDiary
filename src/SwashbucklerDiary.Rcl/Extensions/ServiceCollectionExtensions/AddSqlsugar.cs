@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
 using SwashbucklerDiary.Rcl.Essentials;
-using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Diagnostics;
 using System.Reflection;
@@ -156,9 +155,6 @@ namespace SwashbucklerDiary.Rcl.Extensions
                 var dataConfigs = configs.Where(c => c.ConfigId.ToString() != SQLiteConstants.LogDatabaseFilename).ToList();
                 void ConfigAction(SqlSugarClient db)
                 {
-                    ISettingService? settingService = sp.GetService<ISettingService>();
-                    IAppFileSystem? appFileSystem = sp.GetService<IAppFileSystem>();
-
                     //单例参数配置，所有上下文生效
                     foreach (var config in dataConfigs)
                     {
@@ -173,6 +169,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
                         {
                             db.GetConnection(config.ConfigId).Aop.OnLogExecuted = async (sql, pars) =>
                             {
+                                IAppFileSystem? appFileSystem = sp.GetService<IAppFileSystem>();
                                 if (!sql.StartsWith("SELECT", StringComparison.OrdinalIgnoreCase)
                                     && appFileSystem is not null)
                                 {
@@ -180,23 +177,6 @@ namespace SwashbucklerDiary.Rcl.Extensions
                                     await appFileSystem.SyncFS();
                                 }
                             };
-                        }
-                    }
-
-                    string? currentConfigId = db.CurrentConnectionConfig.ConfigId.ToString();
-                    if (currentConfigId == SQLiteConstants.LogDatabaseFilename)
-                    {
-                        return;
-                    }
-
-                    if (settingService is not null)
-                    {
-                        bool privacyMode = settingService.GetTemp(it => it.PrivacyMode);
-                        string configId = privacyMode ? SQLiteConstants.PrivacyDatabaseFilename : SQLiteConstants.MainDatabaseFilename;
-
-                        if (configId != currentConfigId)
-                        {
-                            db.ChangeDatabase(configId);
                         }
                     }
                 }

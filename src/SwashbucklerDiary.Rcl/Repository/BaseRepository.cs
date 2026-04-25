@@ -1,29 +1,29 @@
 using SqlSugar;
+using SwashbucklerDiary.Rcl.Services;
 using System.Linq.Expressions;
 
 namespace SwashbucklerDiary.Rcl.Repository
 {
     public class BaseRepository<T> : SimpleClient<T>, IBaseRepository<T> where T : class, new()
     {
-        public BaseRepository(ISqlSugarClient context) : base(context)
+        private readonly ISettingService _settingService;
+
+        public BaseRepository(ISqlSugarClient context, ISettingService settingService) : base(context)
         {
+            _settingService = settingService;
+            Itenant = context.AsTenant();
         }
 
         public override ISqlSugarClient Context
         {
-            get
-            {
-                if (base.Context is SqlSugarScope)
-                {
-                    return base.Context;
-                }
-                else
-                {
-                    return base.Context.CopyNew();
-                }
-            }
+            get => Itenant.GetConnection(ConfigId);
             set => base.Context = value;
         }
+
+        private string ConfigId
+            => _settingService.GetTemp(it => it.PrivacyMode) ? SQLiteConstants.PrivacyDatabaseFilename : SQLiteConstants.MainDatabaseFilename;
+
+        public ITenant Itenant { get; set; }
 
         public virtual Task<int> CountAsync()
         {

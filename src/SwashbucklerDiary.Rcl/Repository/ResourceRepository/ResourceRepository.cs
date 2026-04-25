@@ -1,4 +1,5 @@
 using SqlSugar;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
 
@@ -6,7 +7,8 @@ namespace SwashbucklerDiary.Rcl.Repository
 {
     public class ResourceRepository : BaseRepository<ResourceModel>, IResourceRepository
     {
-        public ResourceRepository(ISqlSugarClient context) : base(context)
+        public ResourceRepository(ISqlSugarClient context,
+            ISettingService settingService) : base(context, settingService)
         {
         }
 
@@ -58,8 +60,8 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public async Task<List<string>> QueryTrulyUsedResourcesAsync(bool privacyMode)
         {
-            var db = Context.AsTenant().GetConnection(SQLiteConstants.MainDatabaseFilename);
-            var privacyDb = Context.AsTenant().GetConnection(SQLiteConstants.PrivacyDatabaseFilename);
+            var db = Itenant.GetConnection(SQLiteConstants.MainDatabaseFilename);
+            var privacyDb = Itenant.GetConnection(SQLiteConstants.PrivacyDatabaseFilename);
             var (currentDb, notCurrentDb) = privacyMode ? (privacyDb, db) : (db, privacyDb);
 
             var resourceUris = await currentDb.Queryable<ResourceModel>()

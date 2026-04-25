@@ -1,4 +1,5 @@
 using SqlSugar;
+using SwashbucklerDiary.Rcl.Services;
 using SwashbucklerDiary.Shared;
 using System.Linq.Expressions;
 
@@ -7,7 +8,8 @@ namespace SwashbucklerDiary.Rcl.Repository
 #pragma warning disable CS0472 // 由于此类型的值永不等于 "null"，该表达式的结果始终相同
     public class TagRepository : BaseRepository<TagModel>, ITagRepository
     {
-        public TagRepository(ISqlSugarClient context) : base(context)
+        public TagRepository(ISqlSugarClient context,
+            ISettingService settingService) : base(context, settingService)
         {
         }
 
