@@ -51,7 +51,6 @@ namespace SwashbucklerDiary.Gtk
         {
             e.WebView.SetBackgroundColor(_backgroundColor);
             var settings = e.WebView.GetSettings();
-            settings.UserAgent += " Android Mobile";
             settings.MediaPlaybackRequiresUserGesture = false;
             e.WebView.SetSettings(settings);
         }

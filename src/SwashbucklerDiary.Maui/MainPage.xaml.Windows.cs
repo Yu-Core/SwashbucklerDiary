@@ -25,13 +25,13 @@ namespace SwashbucklerDiary.Maui
             //https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2controller.defaultbackgroundcolor?view=webview2-dotnet-1.0.1370.28
 
             e.WebView.DefaultBackgroundColor = _backgroundColor.ToWindowsColor();
-            e.WebView.CoreWebView2.ContainsFullScreenElementChanged += FullScreen;
+            e.WebView.CoreWebView2.ContainsFullScreenElementChanged += CoreWebView2_ContainsFullScreenElementChanged;
             e.WebView.AllowDrop = true;
         }
 
-        private void FullScreen(CoreWebView2 coreWebView2, object args)
+        private void CoreWebView2_ContainsFullScreenElementChanged(CoreWebView2 sender, object args)
         {
-            if (coreWebView2.ContainsFullScreenElement)
+            if (sender.ContainsFullScreenElement)
             {
                 AppWindow?.SetPresenter(AppWindowPresenterKind.FullScreen);
             }
