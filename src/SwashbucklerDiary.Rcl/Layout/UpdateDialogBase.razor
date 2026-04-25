@@ -1,0 +1,53 @@
+@namespace SwashbucklerDiary.Rcl.Layout
+@inherits DialogComponentBase
+
+<CustomMDialog MyValue="Visible"
+               MyValueChanged="InternalVisibleChanged"
+               ContentClass="rounded-lg"
+               Eager="false"
+               Scrollable
+               MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Update available"))</wc-auto-scroll-text>
+            @if (Value?.Tag_Name?.TrimStart('v') is string version)
+            {
+                <MChip Color="primary"
+                       Small
+                       Tonal
+                       Class="ms-2"
+                       Style="min-width:fit-content;">
+                    @($"v{version}")
+                </MChip>
+            }
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="HandleOnCancel">
+                <MIcon>close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0 scroll-show user-select" Style="white-space:pre-wrap;">
+            @Value?.Body
+        </MCardText>
+        
+        <MCardActions>
+            <div class="m-card__actions__left">
+                <MButton Text="true"
+                         OnClick="HandleDoNotShowAgain">
+                    <wc-auto-scroll-text>@(I18n.T("Do not show again"))</wc-auto-scroll-text>
+                </MButton>
+            </div>
+            <div class="m-card__actions__right">
+                <MButton Text="true"
+                         OnClick="HandleOnCancel">
+                    <wc-auto-scroll-text>@(I18n.T("Remind me later"))</wc-auto-scroll-text>
+                </MButton>
+                <MButton Text="true"
+                         Color="primary"
+                         OnClick="HandleUpdate">
+                    <wc-auto-scroll-text>@(I18n.T("Go to update"))</wc-auto-scroll-text>
+                </MButton>
+            </div>
+        </MCardActions>
+    </MCard>
+</CustomMDialog>

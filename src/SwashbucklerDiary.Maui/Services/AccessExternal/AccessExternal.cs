@@ -50,7 +50,32 @@ namespace SwashbucklerDiary.Maui.Services
 #endif
 
         public override Task<bool> OpenAppStoreAppDetails()
-            => AppStoreLauncher.Default.TryOpenAsync(AppId);
+        {
+#if IOS || MACCATALYST
+            return Task.FromResult(false);
+#else
+
+#if WINDOWS
+            bool IsPackagedApp = false;
+            try
+            {
+                if (Windows.ApplicationModel.Package.Current is not null)
+                {
+                    IsPackagedApp = true;
+                }
+            }
+            catch
+            {
+            }
+
+            if (!IsPackagedApp)
+            {
+                return Task.FromResult(false);
+            }
+#endif
+            return AppStoreLauncher.Default.TryOpenAsync(AppId);
+#endif
+        }
 
 
     }

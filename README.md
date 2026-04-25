@@ -36,6 +36,7 @@
 - [![Microsoft 应用商店](https://get.microsoft.com/images/zh-cn%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
 - [GitHub 发行版](https://github.com/Yu-Core/SwashbucklerDiary/releases)
 - [123云盘](https://www.123912.com/s/eVjxjv-IfnX)
+- [中国移动云盘](https://yun.139.com/shareweb/#/w/i/2u8omYzvLhqdo) (提取码:3dgn)
 - [百度手机助手](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
 - [豌豆荚](https://www.wandoujia.com/apps/8369224)
 - [酷安](https://www.coolapk.com/apk/937401)

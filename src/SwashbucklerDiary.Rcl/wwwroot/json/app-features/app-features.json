@@ -101,6 +101,31 @@
     "Href": "achievement"
   },
   {
+    "Name": "Update setting",
+    "Icon": "update",
+    "Path": "Setting / Update setting",
+    "Href": "updateSetting"
+  },
+  {
+    "Name": "Update prompt",
+    "Icon": "notifications",
+    "Path": "Setting / Update setting / Update prompt",
+    "Href": "updateSetting"
+  },
+  {
+    "Name": "Check frequency",
+    "Icon": "schedule",
+    "Path": "Setting / Update setting / Check frequency",
+    "Href": "updateSetting"
+  },
+  {
+    "Name": "Update method",
+    "Icon": "open_in_browser",
+    "Path": "Setting / Update setting / Update method",
+    "Href": "updateSetting",
+    "HidePlatforms": [ { "Platform": "Browser" } ]
+  },
+  {
     "Name": "System permission",
     "Icon": "manage_accounts",
     "Path": "Setting / System permission",

@@ -1,5 +1,6 @@
 using Masa.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Extensions;
@@ -12,6 +13,10 @@ namespace SwashbucklerDiary.Rcl.Layout
     public abstract partial class MainLayoutBase : LayoutComponentBase, IDisposable
     {
         protected bool afterInitConfig;
+
+        protected bool showUpdate;
+
+        protected Release? lastRelease;
 
         protected readonly List<NavigationButton> navigationButtons = [
             new("Diary", "book", ""),
@@ -61,6 +66,9 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         protected IAppLockService AppLockService { get; set; } = default!;
 
+        [Inject]
+        protected ILogger<MainLayoutBase> Logger { get; set; } = default!;
+
         public void Dispose()
         {
             OnDispose();
@@ -83,6 +91,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             AppLifecycle.Activated += HandleActivated;
             NavigateController.OnBackPressed += HandleBackPressed;
             AppLockService.ValidationSucceeded += HandleValidationSucceeded;
+            VersionUpdataManager.OnCheckUpdate += HandleCheckUpdate;
         }
 
         private Task HandleValidationSucceeded(AppLockEventArgs args)
@@ -107,6 +116,7 @@ namespace SwashbucklerDiary.Rcl.Layout
             AppLifecycle.Activated -= HandleActivated;
             NavigateController.OnBackPressed -= HandleBackPressed;
             AppLockService.ValidationSucceeded -= HandleValidationSucceeded;
+            VersionUpdataManager.OnCheckUpdate -= HandleCheckUpdate;
         }
 
         protected async Task InternalOnInitializedAsync()
@@ -171,10 +181,53 @@ namespace SwashbucklerDiary.Rcl.Layout
             await DialogNotificationCoreAsync();
         }
 
-        protected virtual Task DialogNotificationCoreAsync()
+        protected virtual async Task DialogNotificationCoreAsync()
+        {
+            await CheckForUpdates(true);
+        }
+
+#if DEBUG
+        protected Task CheckForUpdates(bool autoCheck)
         {
             return Task.CompletedTask;
         }
+#else
+        protected async Task CheckForUpdates(bool autoCheck)
+        {
+            bool updatePrompt = await SettingService.GetAsync(nameof(Setting.UpdatePrompt), true);
+
+            if (!updatePrompt && autoCheck)
+            {
+                return;
+            }
+
+            int updatePromptIntervalDay = await SettingService.GetAsync(nameof(Setting.UpdatePromptIntervalDay), 1);
+            string key = "LastAutoCheckForUpdatesTime";
+            DateTime dateTime = await SettingService.GetAsync(key, DateTime.MinValue);
+            if (dateTime != DateTime.MinValue
+                && (DateTime.Now - dateTime).TotalDays < updatePromptIntervalDay
+                && autoCheck)
+            {
+                return;
+            }
+
+            await SettingService.SetAsync(key, DateTime.Now);
+
+            try
+            {
+                lastRelease = await VersionUpdataManager.GetLastReleaseAsync();
+                if (lastRelease is not null)
+                {
+                    showUpdate = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e, "VersionUpdate check failed");
+            }
+        }
+#endif
 
         private async void HandleAppLifecycleOnStopped()
         {
@@ -260,6 +313,11 @@ namespace SwashbucklerDiary.Rcl.Layout
             AlertService.StartLoading(I18n.T("Upgrading and optimizing in progress. Please wait..."));
             await VersionUpdataManager.HandleVersionUpdate();
             AlertService.StopLoading();
+        }
+
+        private async void HandleCheckUpdate()
+        {
+            await CheckForUpdates(false);
         }
     }
 }

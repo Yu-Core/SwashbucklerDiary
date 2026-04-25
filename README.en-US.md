@@ -36,6 +36,7 @@ Not all diaries are called daily records. This is a secret book of a swashbuckle
 - [![Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](https://apps.microsoft.com/store/detail/9P6PBVBF466L?launch=true&mode=full)
 - [GitHub Releases](https://github.com/Yu-Core/SwashbucklerDiary/releases)
 - [123pan](https://www.123912.com/s/eVjxjv-IfnX)
+- [China Mobile Cloud Disk](https://yun.139.com/shareweb/#/w/i/2u8omYzvLhqdo) (Extraction code: 3dgn)
 - [Baidu Mobile Assistant](https://shouji.baidu.com/detail/5000042660?source=appbaidu)
 - [Wandoujia](https://www.wandoujia.com/apps/8369224)
 - [CoolApk](https://www.coolapk.com/apk/937401)

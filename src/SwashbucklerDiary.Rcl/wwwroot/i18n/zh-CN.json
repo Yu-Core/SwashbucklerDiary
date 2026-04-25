@@ -318,7 +318,6 @@
   "QQ Group": "QQ交流群",
   "This is the latest version": "当前已是最新版本",
   "VersionUpdate.Check failed": "检测失败，原因未知",
-  "No more prompts next time": "下次不再提示",
   "List of available devices": "可用设备列表",
   "Searching for available devices": "正在搜索可用设备...",
   "There are currently no available devices": "暂无可用设备",
@@ -518,5 +517,18 @@
   "Align the old version diary reference link with the new version": "将旧版日记引用链接与新版一致",
   "Before version 1.33.9, diaries that have inserted diary references may experience this situation. Of course, the old version diary citation link can still work": "在1.33.9版本之前，插入过日记引用的日记可能会出现这种情况。当然，旧版日记引用链接依然可以工作",
   "Fix media files not recorded after diary merge": "修复日记合并后媒体文件未记录",
-  "Before version 1.33.9, diaries that used merged diaries may experience this situation": "在1.33.9版本之前，使用过合并日记的日记可能出现这种情况"
+  "Before version 1.33.9, diaries that used merged diaries may experience this situation": "在1.33.9版本之前，使用过合并日记的日记可能出现这种情况",
+  "Don't prompt again": "不再提示",
+  "Update setting": "更新设置",
+  "Update prompt": "更新提示",
+  "Check frequency": "检查频率",
+  "Update method": "更新方式",
+  "Daily": "每天",
+  "Weekly": "每周",
+  "Monthly": "每月",
+  "Ask every time": "每次询问",
+  "App store": "应用商店",
+  "China Mobile Cloud Disk": "中国移动云盘",
+  "The extracted code": "提取码",
+  "The extracted code has been copied to the clipboard. Click OK to go to the online disk link.": "提取码已复制到剪贴板，点击确定前往网盘链接"
 }

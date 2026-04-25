@@ -15,6 +15,22 @@
            Elevation="0"
            Rounded="@("lg")">
         <MList Class="py-0">
+            <MListItem OnClick="@(() => To("updateSetting"))">
+                <MListItemIcon>
+                    <MIcon>
+                        update
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <wc-auto-scroll-text>@(I18n.T("Update setting"))</wc-auto-scroll-text>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
             <MListItem OnClick="@(() => To("permissionSetting"))">
                 <MListItemIcon>
                     <MIcon>

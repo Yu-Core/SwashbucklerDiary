@@ -13,10 +13,6 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showSourceCode;
 
-        private bool showUpdate;
-
-        private Release? lastRelease;
-
         private List<DynamicListItem> codeSourceListItems = [];
 
         private List<List<DynamicListItem>> viewLists = [];
@@ -86,25 +82,9 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        private async Task CheckForUpdates()
+        private void CheckForUpdates()
         {
-            try
-            {
-                lastRelease = await VersionUpdataManager.GetLastReleaseAsync();
-                if (lastRelease is null)
-                {
-                    await AlertService.InfoAsync(I18n.T("This is the latest version"));
-                }
-                else
-                {
-                    showUpdate = true;
-                }
-            }
-            catch (Exception e)
-            {
-                await AlertService.ErrorAsync(I18n.T("VersionUpdate.Check failed"));
-                Logger.LogError(e, "VersionUpdate check failed");
-            }
+            VersionUpdataManager.CheckUpdates();
         }
 
         private async Task CopyRecordNumber()

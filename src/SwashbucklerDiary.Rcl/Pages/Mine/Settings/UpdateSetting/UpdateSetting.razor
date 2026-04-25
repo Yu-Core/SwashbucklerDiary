@@ -1,0 +1,95 @@
+@page "/updateSetting"
+@namespace SwashbucklerDiary.Rcl.Pages
+@inherits ImportantComponentBase
+
+<MyAppBar Title="@(I18n.T("Update setting"))"
+          OnClick="NavigateToBack">
+</MyAppBar>
+
+<ScrollContainer>
+    <MCard Class="mb-5" Elevation="0" Rounded="@("lg")">
+        <MList Class="py-0">
+
+            <MListItem>
+                <MListItemIcon>
+                    <MIcon>notifications</MIcon>
+                </MListItemIcon>
+                <MListItemContent>
+                    <wc-auto-scroll-text>@(I18n.T("Update prompt"))</wc-auto-scroll-text>
+                </MListItemContent>
+                <MListItemAction>
+                    <SettingSwitch @bind-Value="updatePrompt" SettingKey="@nameof(Setting.UpdatePrompt)"></SettingSwitch>
+                </MListItemAction>
+            </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem OnClick="@(() => showUpdatePromptIntervalDialog = true)">
+                <MListItemIcon>
+                    <MIcon>schedule</MIcon>
+                </MListItemIcon>
+
+                <MListItemContent Style="flex-basis:50%;">
+                    <wc-auto-scroll-text>@(I18n.T("Check frequency"))</wc-auto-scroll-text>
+                </MListItemContent>
+
+                <MListItemContent Class="ms-2" Style="flex-basis:50%;">
+                    <MListItemSubtitle>
+                        <wc-auto-scroll-text class="justify-end" style="width:100%;">@UpdatePromptFrequencyText</wc-auto-scroll-text>
+                    </MListItemSubtitle>
+                </MListItemContent>
+
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
+
+            @if (PlatformIntegration.CurrentPlatform.OS != AppOperatingSystem.Browser)
+            {
+                <MDivider Class="mx-5"></MDivider>
+
+                <MListItem OnClick="@(() => showUpdateMethodDialog = true)">
+                    <MListItemIcon>
+                        <MIcon>open_in_browser</MIcon>
+                    </MListItemIcon>
+                    <MListItemContent Style="flex-basis:50%;">
+                        <wc-auto-scroll-text>@(I18n.T("Update method"))</wc-auto-scroll-text>
+                    </MListItemContent>
+
+                    <MListItemContent Class="ms-2" Style="flex-basis:50%;">
+                        <MListItemSubtitle>
+                            <wc-auto-scroll-text class="justify-end" style="width:100%;">@UpdateMethodText</wc-auto-scroll-text>
+                        </MListItemSubtitle>
+                    </MListItemContent>
+
+                    <MListItemAction>
+                        <MIcon>chevron_right</MIcon>
+                    </MListItemAction>
+                </MListItem>
+            }
+        </MList>
+    </MCard>
+</ScrollContainer>
+
+<RadioDialog @bind-Value="updatePromptInterval"
+             @bind-Visible="showUpdatePromptIntervalDialog"
+             Title="@(I18n.T("Check frequency"))"
+             TItemValue="int"
+             TItem="KeyValuePair<string, int>"
+             OnChange="UpdatePromptIntervalChanged"
+             Items="updatePromptIntervalItems"
+             ItemText="it => I18n.T(it.Key)">
+</RadioDialog>
+
+@if (PlatformIntegration.CurrentPlatform.OS != AppOperatingSystem.Browser)
+{
+    <RadioDialog @bind-Value="updateMethod"
+                 @bind-Visible="showUpdateMethodDialog"
+                 Title="@(I18n.T("Update method"))"
+                 TItemValue="UpdateMethod"
+                 TItem="KeyValuePair<string, UpdateMethod>"
+                 OnChange="UpdateMethodChanged"
+                 Items="updateMethodItems"
+                 ItemText="it => I18n.T(it.Key)">
+    </RadioDialog>
+}

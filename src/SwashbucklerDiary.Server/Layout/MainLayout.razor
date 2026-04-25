@@ -32,6 +32,7 @@
 
                 <MainLayoutBottomNav Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutBottomNav>
                 
+                <UpdateDialog @bind-Visible="showUpdate" Value="lastRelease"></UpdateDialog>
                 <SetAppLockAlertDialog @bind-Visible="showSetAppLockAlert"></SetAppLockAlertDialog>
             </ChildContent>
             <ErrorContent>

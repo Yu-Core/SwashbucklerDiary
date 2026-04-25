@@ -31,7 +31,8 @@
                 </MMain>
 
                 <MainLayoutBottomNav Items="navigationButtons" IsPermanentPath="IsPermanentPath"></MainLayoutBottomNav>
-
+                
+                <UpdateDialog @bind-Visible="showUpdate" Value="lastRelease"></UpdateDialog>
                 <PwaSnackbar OnRefresh="@RefreshToSkipWaiting"></PwaSnackbar>
                 
             </ChildContent>

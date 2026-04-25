@@ -4,10 +4,12 @@ namespace SwashbucklerDiary.Rcl.Services
     {
         public event Action? AfterVersionUpdate;
 
+        public event Action? OnCheckUpdate;
+
         Task HandleVersionUpdate();
 
-        Task<Release?> GetLastReleaseAsync();
+        void CheckUpdates();
 
-        Task ToUpdate();
+        Task<Release?> GetLastReleaseAsync();
     }
 }

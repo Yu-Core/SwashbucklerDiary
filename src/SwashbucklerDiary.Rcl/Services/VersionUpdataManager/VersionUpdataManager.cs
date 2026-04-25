@@ -8,6 +8,7 @@ namespace SwashbucklerDiary.Rcl.Services
     public abstract class VersionUpdataManager : IVersionUpdataManager
     {
         public event Action? AfterVersionUpdate;
+        public event Action? OnCheckUpdate;
 
         protected int updateCount;
 
@@ -106,7 +107,10 @@ namespace SwashbucklerDiary.Rcl.Services
             return null;
         }
 
-        public abstract Task ToUpdate();
+        public void CheckUpdates()
+        {
+            OnCheckUpdate?.Invoke();
+        }
 
         protected HttpClient HttpClient => _httpClient.Value;
 

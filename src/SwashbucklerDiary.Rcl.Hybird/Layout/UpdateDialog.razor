@@ -1,0 +1,64 @@
+﻿@inherits UpdateDialogBase
+
+@base.BuildRenderTree
+
+<CustomMDialog @bind-MyValue="showUpdateMethodDialog"
+               ContentClass="rounded-lg"
+               MaxWidth="420"
+               Scrollable>
+    <MCard Class="rounded-t-lg">
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Update method"))</wc-auto-scroll-text>
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="HandleOnCancel">
+                <MIcon>close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="px-0 scroll-show">
+            <MList Class="py-0">
+                @foreach (var item in items)
+                {
+                    <MListItem Class="px-10"
+                               OnClick="@item.OnClick">
+                        <MListItemIcon>
+                            <MIcon>
+                                @(item.Icon)
+                            </MIcon>
+                        </MListItemIcon>
+                        <MListItemContent>
+                            <MListItemTitle>
+                                <wc-auto-scroll-text>@(I18n.T(item.Text))</wc-auto-scroll-text>
+                            </MListItemTitle>
+                        </MListItemContent>
+                    </MListItem>
+                }
+            </MList>
+        </MCardText>
+    </MCard>
+</CustomMDialog>
+
+<CustomMDialog @bind-MyValue="showChinaMobileCloudDiskDialog"
+               ContentClass="rounded-lg"
+               MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@($"{I18n.T("The extracted code")}: {ChinaMobileCloudDiskExtractCode}")</wc-auto-scroll-text>
+        </MCardTitle>
+        <MCardText Class="pb-0">
+            @I18n.T("The extracted code has been copied to the clipboard. Click OK to go to the online disk link.")
+        </MCardText>
+        <MCardActions>
+            <MSpacer></MSpacer>
+            <MButton Text="true"
+                     OnClick="()=>showChinaMobileCloudDiskDialog = false">
+                <wc-auto-scroll-text>@(I18n.T("Cancel"))</wc-auto-scroll-text>
+            </MButton>
+            <MButton Text="true"
+                     Color="primary"
+                     OnClick="ToChinaMobileCloudDisk">
+                <wc-auto-scroll-text>@(I18n.T("OK"))</wc-auto-scroll-text>
+            </MButton>
+        </MCardActions>
+    </MCard>
+</CustomMDialog>

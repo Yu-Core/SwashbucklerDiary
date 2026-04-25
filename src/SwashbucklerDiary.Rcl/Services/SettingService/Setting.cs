@@ -34,7 +34,10 @@ namespace SwashbucklerDiary.Rcl.Services
         public string DiarySort { get; set; } = string.Empty;
         public string TagSort { get; set; } = string.Empty;
         public string LocationSort { get; set; } = string.Empty;
-        public bool UpdateNotPrompt { get; set; }
+        public bool UpdatePrompt { get; set; } = true;
+        public int UpdatePromptIntervalDay { get; set; } = 1;
+        public int UpdateMethod { get; set; } = 0;
+        public DateTime LastUpdatePromptTime { get; set; } = DateTime.MinValue;
         public bool ImageLazy { get; set; } = true;
         public bool FirstLineIndent { get; set; }
         public bool CodeLineNumber { get; set; }
