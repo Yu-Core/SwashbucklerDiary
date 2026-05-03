@@ -9,6 +9,7 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: true       # Disable sending .NET CLI telemetry
   DOTNET_VERSION: '10.0'
   CSPROJ_FILE_PATH: 'src/SwashbucklerDiary.WebAssembly/SwashbucklerDiary.WebAssembly.csproj'
+  INDEX_HTML_PATH: 'src/SwashbucklerDiary.WebAssembly/wwwroot/index.html'
 
 jobs:
   deploy:
@@ -44,6 +45,13 @@ jobs:
         run: |
           sed -i "s/<Version>.*<\/Version>/<Version>${{ env.FORMATTED_VERSION }}<\/Version>/" \
           ${{ env.CSPROJ_FILE_PATH }}
+
+      # Rewrite the base href in the index.html file
+      - name: Rewrite base href
+        uses: SteveSandersonMS/ghaction-rewrite-base-href@v1.1.0
+        with:
+          html_path: ${{ env.INDEX_HTML_PATH }}
+          base_href: /SwashbucklerDiary/
 
       # Publish the site
       - name: Publish
