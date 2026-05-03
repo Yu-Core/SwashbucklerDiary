@@ -8,7 +8,6 @@ MimeType=x-scheme-handler/swashbuckler;x-scheme-handler/xiakeriji;
 Name=Swashbuckler Diary
 Terminal=false
 Type=Application
-StartupWMClass=com.yucore.swashbucklerdiary
 
 # Translations:
 Comment[ar-EG]=تطبيق يوميات محلي مفتوح المصدر ومتعدد المنصات

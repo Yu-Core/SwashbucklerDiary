@@ -34,8 +34,8 @@
 		<Content Include="Resources/AppIcon/swashbuckler-diary.png" CopyToPublishDirectory="PreserveNewest">
 			<LinuxPath>/usr/share/pixmaps/swashbuckler-diary.png</LinuxPath>
 		</Content>
-		<Content Include="Platform/swashbuckler-diary.desktop" CopyToPublishDirectory="PreserveNewest">
-			<LinuxPath>/usr/share/applications/swashbuckler-diary.desktop</LinuxPath>
+		<Content Include="Platform/com.yucore.swashbucklerdiary.desktop" CopyToPublishDirectory="PreserveNewest">
+			<LinuxPath>/usr/share/applications/com.yucore.swashbucklerdiary.desktop</LinuxPath>
 		</Content>
 	</ItemGroup>
 
