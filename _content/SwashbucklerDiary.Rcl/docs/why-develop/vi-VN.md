@@ -1,0 +1,5 @@
+Tại sao phát triển ứng dụng Nhật ký này? Hồi cấp hai, tôi rất thích viết nhật ký, ghi lại những chuyện nhỏ nhặt, ngớ ngẩn tưởng chừng như vụn vặt. Thỉnh thoảng giờ đọc lại, chúng đã trở thành kỷ niệm quý giá. Vì vậy, thói quen tốt này nên được duy trì. Thời đại ngày nay, giấy bút ít được sử dụng hơn, các ứng dụng Nhật ký dễ sắp xếp hơn đã trở thành xu hướng chính.
+
+Tôi đã thử rất nhiều ứng dụng Nhật ký, nhưng luôn cảm thấy thiếu một cái gì đó. Phải đăng nhập, phải trả phí, có quảng cáo, giao diện lộn xộn, chức năng đơn giản, thao tác rườm rà, luôn dính phải một trong những điều đó. Việc viết nhật ký thật sự rất khó. Thôi thì tự mình làm một cái vậy.
+
+Phát triển ứng dụng Nhật ký này, tôi muốn mỗi người yêu thích viết nhật ký đều có thể tìm lại niềm vui khi viết. Nếu cảm thấy nó hay, bạn có thể ủng hộ một khoản đóng góp để giúp chúng tôi phát triển và duy trì dự án này tốt hơn. Cảm ơn sự ủng hộ bền bỉ của mọi người. Mong rằng tất cả chúng ta đều có thể trở thành hiệp khách trong lòng mình giữa chốn giang hồ riêng.
