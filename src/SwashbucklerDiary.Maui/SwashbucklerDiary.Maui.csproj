@@ -44,7 +44,13 @@
 
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<!-- Debug configuration settings -->
-		<ApplicationId>com.yucore.swashbucklerdiarydebug</ApplicationId>
+		<ApplicationId>com.yucore.swashbucklerdiarydebug.local</ApplicationId>
+		<ApplicationTitle>侠客日记 Debug</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug' ">
+		<!-- Keep debug APKs self-contained when installed outside Visual Studio/adb fast deployment. -->
+		<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) or $(TargetFramework.Contains('-maccatalyst'))">
