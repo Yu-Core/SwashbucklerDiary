@@ -59,6 +59,9 @@ namespace SwashbucklerDiary.Gtk.Extensions
             services.AddScoped<IScreenshot, Screenshot>();
             services.AddSingleton<IVersionUpdataManager, Services.VersionUpdataManager>();
             services.AddSingleton<IWebDAV, WebDAV>();
+            services.AddSingleton<IDiarySyncService, WebDavDiarySyncService>();
+            services.AddSingleton<IWebDavDiarySyncScheduler, WebDavDiarySyncScheduler>();
+            services.AddSingleton<IWebDavIncrementalBackupService, WebDavIncrementalBackupService>();
             services.AddSingleton<ILANSenderService, LANSenderService>();
             services.AddSingleton<ILANReceiverService, LANReceiverService>();
             services.AddSingleton<IProxyService, ProxyService>();
