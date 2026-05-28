@@ -50,6 +50,27 @@
 
         <MDivider Class="mx-5"></MDivider>
 
+        <MListItem OnClick="RunBackup">
+            <MListItemIcon>
+                <MIcon>
+                    mdi:mdi-database-sync-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <MListItemTitle>
+                    <wc-auto-scroll-text>@(I18n.T("Backup now"))</wc-auto-scroll-text>
+                </MListItemTitle>
+                <MListItemSubtitle Class="text-caption-xs-only">
+                    <wc-auto-scroll-text>@(I18n.T("Run incremental backup immediately"))</wc-auto-scroll-text>
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>chevron_right</MIcon>
+            </MListItemAction>
+        </MListItem>
+
+        <MDivider Class="mx-5"></MDivider>
+
         <MListItem OnClick="SyncDiaries">
             <MListItemIcon>
                 <MIcon>
@@ -101,6 +122,45 @@
             <MListItemContent Class="ms-2" Style="flex-basis:50%;">
                 <MListItemSubtitle>
                     <wc-auto-scroll-text class="justify-end" style="width:100%;">@AutoSyncIntervalText</wc-auto-scroll-text>
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>chevron_right</MIcon>
+            </MListItemAction>
+        </MListItem>
+
+        <MDivider Class="mx-5"></MDivider>
+
+        <MListItem>
+            <MListItemIcon>
+                <MIcon>
+                    mdi:mdi-cloud-clock-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <wc-auto-scroll-text>@(I18n.T("Auto backup"))</wc-auto-scroll-text>
+            </MListItemContent>
+            <MListItemAction>
+                <SettingSwitch @bind-Value="autoBackup"
+                               SettingKey="@nameof(Setting.WebDAVBackupAuto)">
+                </SettingSwitch>
+            </MListItemAction>
+        </MListItem>
+
+        <MDivider Class="mx-5"></MDivider>
+
+        <MListItem OnClick="ToggleAutoBackupInterval">
+            <MListItemIcon>
+                <MIcon>
+                    mdi:mdi-timer-cog-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent Style="flex-basis:50%;">
+                <wc-auto-scroll-text>@(I18n.T("Auto backup interval"))</wc-auto-scroll-text>
+            </MListItemContent>
+            <MListItemContent Class="ms-2" Style="flex-basis:50%;">
+                <MListItemSubtitle>
+                    <wc-auto-scroll-text class="justify-end" style="width:100%;">@AutoBackupIntervalText</wc-auto-scroll-text>
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>

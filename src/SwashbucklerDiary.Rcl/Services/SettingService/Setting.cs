@@ -24,6 +24,9 @@ namespace SwashbucklerDiary.Rcl.Services
         public bool WebDAVDiarySyncAuto { get; set; }
         public int WebDAVDiarySyncIntervalMinutes { get; set; } = 30;
         public DateTime WebDAVDiarySyncLastSyncTime { get; set; } = DateTime.MinValue;
+        public bool WebDAVBackupAuto { get; set; }
+        public int WebDAVBackupIntervalHours { get; set; } = 24;
+        public DateTime WebDAVBackupLastBackupTime { get; set; } = DateTime.MinValue;
         public bool WelcomeText { get; set; }
         public bool IndexDate { get; set; }
         public bool DiaryCardIcon { get; set; } = true;

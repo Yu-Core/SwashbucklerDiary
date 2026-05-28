@@ -62,6 +62,7 @@ namespace SwashbucklerDiary.Gtk.Extensions
             services.AddSingleton<IDiarySyncService, WebDavDiarySyncService>();
             services.AddSingleton<IWebDavDiarySyncScheduler, WebDavDiarySyncScheduler>();
             services.AddSingleton<IWebDavIncrementalBackupService, WebDavIncrementalBackupService>();
+            services.AddSingleton<IWebDavBackupScheduler, WebDavBackupScheduler>();
             services.AddSingleton<ILANSenderService, LANSenderService>();
             services.AddSingleton<ILANReceiverService, LANReceiverService>();
             services.AddSingleton<IProxyService, ProxyService>();

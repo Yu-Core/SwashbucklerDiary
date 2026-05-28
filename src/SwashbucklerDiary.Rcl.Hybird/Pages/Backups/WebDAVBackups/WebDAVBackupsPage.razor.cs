@@ -23,6 +23,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private int autoSyncIntervalMinutes;
 
+        private bool autoBackup;
+
+        private int autoBackupIntervalHours;
+
         private WebDavConfigForm configModel = new();
 
         private const string webDavFolderName = "SwashbucklerDiary";
@@ -58,6 +62,8 @@ namespace SwashbucklerDiary.Rcl.Pages
             includeDiaryResources = SettingService.Get(s => s.WebDAVCopyResources);
             autoSync = SettingService.Get(s => s.WebDAVDiarySyncAuto);
             autoSyncIntervalMinutes = SettingService.Get(s => s.WebDAVDiarySyncIntervalMinutes, 30);
+            autoBackup = SettingService.Get(s => s.WebDAVBackupAuto);
+            autoBackupIntervalHours = SettingService.Get(s => s.WebDAVBackupIntervalHours, 24);
         }
 
         private bool Configured => !string.IsNullOrEmpty(configModel.ServerAddress);
@@ -65,6 +71,8 @@ namespace SwashbucklerDiary.Rcl.Pages
         private string ConfiguredText => Configured ? I18n.T("Configured") : I18n.T("Not configured");
 
         private string AutoSyncIntervalText => $"{autoSyncIntervalMinutes} {I18n.T("Minute")}";
+
+        private string AutoBackupIntervalText => $"{autoBackupIntervalHours} {I18n.T("Hour")}";
 
         private string GeFileSize(WebDavIncrementalBackupManifest manifest)
             => AppFileSystem.ConvertBytesToReadable(manifest.LegacyLength ?? manifest.Files.Sum(it => it.Length));
@@ -171,6 +179,38 @@ namespace SwashbucklerDiary.Rcl.Pages
                     await AlertService.ErrorAsync($"{I18n.T("Upload failed")}\n{e}");
                     Logger.LogError(e, $"Backups Upload Fail");
                 }
+            }
+            finally
+            {
+                AlertService.StopLoading();
+            }
+        }
+
+        private async Task RunBackup()
+        {
+            AlertService.StartLoading();
+
+            try
+            {
+                var flag = await Check();
+                if (!flag)
+                {
+                    return;
+                }
+
+                var manifest = await IncrementalBackupService.UploadAsync(includeDiaryResources);
+                await SettingService.SetAsync(s => s.WebDAVBackupLastBackupTime, DateTime.Now);
+                await AlertService.SuccessAsync($"{I18n.T("Incremental backup successfully")}\n{I18n.T("File")}: {manifest.Files.Count}");
+            }
+            catch (HttpRequestException e)
+            {
+                await AlertService.ErrorAsync(I18n.T("Network error"));
+                Logger.LogError(e, $"RunBackup {nameof(HttpRequestException)}");
+            }
+            catch (Exception e)
+            {
+                await AlertService.ErrorAsync($"{I18n.T("Upload failed")}\n{e}");
+                Logger.LogError(e, $"RunBackup fail");
             }
             finally
             {
@@ -286,6 +326,19 @@ namespace SwashbucklerDiary.Rcl.Pages
             };
 
             await SettingService.SetAsync(s => s.WebDAVDiarySyncIntervalMinutes, autoSyncIntervalMinutes);
+        }
+
+        private async Task ToggleAutoBackupInterval()
+        {
+            autoBackupIntervalHours = autoBackupIntervalHours switch
+            {
+                < 6 => 6,
+                < 12 => 12,
+                < 24 => 24,
+                _ => 1
+            };
+
+            await SettingService.SetAsync(s => s.WebDAVBackupIntervalHours, autoBackupIntervalHours);
         }
 
         private async Task<bool> Check()
