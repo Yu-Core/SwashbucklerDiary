@@ -350,7 +350,7 @@ namespace SwashbucklerDiary.Rcl.Services
 
         private static async Task CreateDeterministicZipAsync(string sourceFolder, string zipFilePath)
         {
-            var epoch = new DateTimeOffset(DateTime.UnixEpoch);
+            var zipEpoch = new DateTimeOffset(1980, 1, 1, 0, 0, 0, TimeSpan.Zero);
             await using var zipStream = new FileStream(zipFilePath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
             using var archive = new ZipArchive(zipStream, ZipArchiveMode.Create);
 
@@ -358,7 +358,7 @@ namespace SwashbucklerDiary.Rcl.Services
             {
                 string relativePath = Path.GetRelativePath(sourceFolder, filePath).Replace(Path.DirectorySeparatorChar, '/');
                 var entry = archive.CreateEntry(relativePath, CompressionLevel.NoCompression);
-                entry.LastWriteTime = epoch;
+                entry.LastWriteTime = zipEpoch;
 
                 await using var entryStream = entry.Open();
                 await using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
