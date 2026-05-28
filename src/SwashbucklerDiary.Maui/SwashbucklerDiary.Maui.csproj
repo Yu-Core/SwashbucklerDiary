@@ -44,14 +44,13 @@
 
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<!-- Debug configuration settings -->
-		<ApplicationId>com.yucore.swashbucklerdiarydebug.local</ApplicationId>
-		<ApplicationTitle>侠客日记 Debug</ApplicationTitle>
+		<ApplicationId>com.yucore.swashbucklerdiary.debug</ApplicationId>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug' ">
-		<!-- Keep debug APKs self-contained when installed outside Visual Studio/adb fast deployment. -->
+	<!-- Keep debug APKs self-contained when installed outside Visual Studio/adb fast deployment. -->
+	<!--<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug' ">
 		<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-	</PropertyGroup>
+	</PropertyGroup>-->
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) or $(TargetFramework.Contains('-maccatalyst'))">
 		<!--https://github.com/dotnet/maui/issues/23577-->

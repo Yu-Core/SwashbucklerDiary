@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="app_name">Journal du Mousquetaire</string>
+    <string name="app_name_debug">Journal du Mousquetaire Debug</string>
 </resources>
