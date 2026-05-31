@@ -19,7 +19,7 @@
 
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<!-- Debug configuration settings -->
-		<ApplicationId>com.yucore.swashbucklerdiarydebug</ApplicationId>
+		<ApplicationId>com.yucore.swashbucklerdiary.debug</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup>

@@ -23,7 +23,12 @@ namespace SwashbucklerDiary.Maui
         DataMimeTypes = ["image/*", "audio/*", "video/*"])]
     [IntentFilter([Platform.Intent.ActionAppAction],
         Categories = [Intent.CategoryDefault])]
-    [Activity(Label = "@string/app_name",
+    [Activity(
+#if DEBUG
+        Label = "@string/app_name_debug",
+#else
+        Label = "@string/app_name",
+#endif
         Theme = "@style/Maui.SplashTheme",
         MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density | ConfigChanges.KeyboardHidden | ConfigChanges.Keyboard | ConfigChanges.FontScale,

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="app_name">俠客日記</string>
+    <string name="app_name_debug">俠客日記 Debug</string>
 </resources>

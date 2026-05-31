@@ -3,7 +3,13 @@ using Android.Runtime;
 
 namespace SwashbucklerDiary.Maui
 {
-    [Application]
+    [Application(
+#if DEBUG
+        Label = "@string/app_name_debug"
+#else
+        Label = "@string/app_name"
+#endif
+        )]
     public class MainApplication : MauiApplication
     {
         public MainApplication(IntPtr handle, JniHandleOwnership ownership)
