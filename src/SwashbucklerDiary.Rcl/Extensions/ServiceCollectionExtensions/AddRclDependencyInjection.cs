@@ -12,6 +12,7 @@ namespace SwashbucklerDiary.Rcl.Extensions
             services.TryAddScoped<InputJSModule>();
             services.TryAddScoped<AudioInterop>();
             services.TryAddScoped<ScreenshotJSModule>();
+            services.TryAddSingleton<IWebDavDiarySyncScheduler, NoopWebDavDiarySyncScheduler>();
             return services;
         }
     }
