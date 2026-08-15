@@ -103,21 +103,30 @@ function renderMobileOutline(dotNetCallbackRef, previewElement, moblieOutlineEle
 }
 
 function handleLinkCard(element, proxyUrl) {
-    if (!element) return;
-    const options = {
-        proxyUrl: 'https://api.allorigins.win/raw?url=',
-        faviconSrc: "_content/SwashbucklerDiary.Rcl/img/link.svg"
-    };
-    if (proxyUrl) {
-        options.proxyUrl = proxyUrl;
+    if (!element) {
+        return;
     }
 
-    const baseURI = document.baseURI;
-    const links = Array.from(element.querySelectorAll("a"))
+    const options = {
+        proxyUrl: proxyUrl || 'https://api.allorigins.win/raw?url=',
+        faviconSrc: "_content/SwashbucklerDiary.Rcl/img/link.svg"
+    };
+
+    const links = Array.from(element.querySelectorAll("a[href]"))
         .filter(link => {
+            const parent = link.parentElement;
+            if (!parent || parent.childNodes.length !== 1) {
+                return false;
+            }
+
             const href = link.href;
-            return href && href.startsWith('http') && !href.startsWith(baseURI);
+            return href.startsWith('http') && !href.startsWith(document.baseURI);
         });
+
+    if (links.length === 0) {
+        return;
+    }
+
     renderLinkCards(links, options);
 }
 
