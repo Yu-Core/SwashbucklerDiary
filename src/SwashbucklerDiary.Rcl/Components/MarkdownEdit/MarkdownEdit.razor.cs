@@ -202,7 +202,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "name", "image" },
                 { "tipPosition", "n" },
                 { "tip", I18n.T("Add image") },
-                { "className", "" },
+                { "className", "keep-focus" },
                 { "icon", "<svg><use xlink:href=\"#vditor-icon-image\"></use></svg>" },
             };
 
@@ -212,7 +212,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "name", "audio" },
                 { "tipPosition", "n" },
                 { "tip", I18n.T("Add audio") },
-                { "className", "" },
+                { "className", "keep-focus" },
                 { "icon", "<svg><use xlink:href=\"#vditor-icon-audio\"></use></svg>" },
             };
             var btnVideo = new Dictionary<string, object?>()
@@ -221,7 +221,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 { "name", "video" },
                 { "tipPosition", "n" },
                 { "tip", I18n.T("Add video") },
-                { "className", "" },
+                { "className", "keep-focus" },
                 { "icon", "<svg><use xlink:href=\"#vditor-icon-video\"></use></svg>" },
             };
             var btnUpload = new Dictionary<string, object?>()

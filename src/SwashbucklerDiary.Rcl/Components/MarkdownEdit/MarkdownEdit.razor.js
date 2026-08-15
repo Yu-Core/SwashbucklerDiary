@@ -50,6 +50,7 @@ function handleToolbar(dotNetCallbackRef, domRef) {
     }
     //prevent Input Lose Focus
     toolbar.onmousedown = (e) => {
+        if (e.target.closest(".vditor-toolbar__item.keep-focus")) return;
         e.preventDefault();
     };
 
