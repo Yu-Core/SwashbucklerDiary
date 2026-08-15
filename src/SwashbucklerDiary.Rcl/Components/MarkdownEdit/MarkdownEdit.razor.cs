@@ -14,6 +14,8 @@ namespace SwashbucklerDiary.Rcl.Components
     {
         private const long maxAllowedSize = 512 * 1024 * 1024;
 
+        private bool _isEditorInitialized;
+
         private bool firstLineIndent;
 
         private bool codeLineNumber;
@@ -104,6 +106,11 @@ namespace SwashbucklerDiary.Rcl.Components
 
         public async Task InsertValueAsync(string value)
         {
+            if (!_isEditorInitialized)
+            {
+                return;
+            }
+
             if (string.IsNullOrEmpty(Value))
             {
                 await Focus();
@@ -112,7 +119,15 @@ namespace SwashbucklerDiary.Rcl.Components
             await mMarkdown.InsertValueAsync(value);
         }
 
-        public ValueTask<string?> GetValueAsync() => mMarkdown.GetValueAsync();
+        public ValueTask<string?> GetValueAsync()
+        {
+            if (!_isEditorInitialized)
+            {
+                return ValueTask.FromResult<string?>(null);
+            }
+
+            return mMarkdown.GetValueAsync();
+        }
 
         protected override void OnInitialized()
         {
@@ -254,6 +269,7 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private async Task AfterMarkdownRender()
         {
+            _isEditorInitialized = true;
             if (jSModule is null)
             {
                 return;
