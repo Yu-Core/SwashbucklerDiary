@@ -80,7 +80,6 @@ namespace SwashbucklerDiary.Rcl.Components
         {
             return base.BuildComponentStyle().Concat(
                 StyleBuilder.Create()
-                .Add("--swiper-pagination-color", "rgba(var(--m-theme-on-surface))")
                 .AddIf("direction", "rtl", MasaBlazor.RTL)
                 .GenerateCssStyles()
             );
@@ -91,7 +90,7 @@ namespace SwashbucklerDiary.Rcl.Components
             InvokeAsync(async () =>
             {
                 StateHasChanged();
-                await Task.Delay(16);
+                await Task.Delay(100);
                 await InitSwiperAsync();
             });
         }

@@ -1,18 +1,21 @@
 @namespace SwashbucklerDiary.Rcl.Components
 @inherits MItemGroup
 
-<div class="@GetClass()" style="@GetStyle()" id="@Id" @ref="Ref" @attributes="@Attributes">
-    <div class="swiper-wrapper">
-        <CascadingValue Value="this"
-                        IsFixed="true">
-            <CascadingValue Value="Value?.ToString()" Name="SwiperValue">
-                @ChildContent
-            </CascadingValue>
-        </CascadingValue>
-    </div>
+<CascadingValue Value="this"
+                IsFixed="true">
+    <CascadingValue Value="Value?.ToString()" Name="SwiperValue">
+        <CascadingValue Value="ComputedTheme" Name="MasaBlazorCascadingTheme">
+            <div class="@GetClass()" style="@GetStyle()" id="@Id" @ref="Ref" @attributes="@Attributes">
+                <div class="swiper-wrapper">
+                    @ChildContent
+                </div>
 
-    @if (Pagination)
-    {
-        <div class="swiper-pagination"></div>
-    }
-</div>
+                @if (Pagination)
+                {
+                    <div class="swiper-pagination"></div>
+                }
+            </div>
+        </CascadingValue>
+    </CascadingValue>
+</CascadingValue>
+
