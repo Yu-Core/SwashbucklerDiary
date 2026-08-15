@@ -14,15 +14,14 @@ namespace SwashbucklerDiary.Maui
 
         private readonly IAppLifecycle _appLifecycle;
 
-        public MainPage(Color backgroundColor,
-            RouteMatcher routeMatcher,
-            IAppLifecycle appLifecycle)
+        public MainPage(IServiceProvider serviceProvider,
+            Color backgroundColor)
         {
             InitializeComponent();
 
             _backgroundColor = backgroundColor;
-            _routeMatcher = routeMatcher;
-            _appLifecycle = appLifecycle;
+            _routeMatcher = serviceProvider.GetRequiredService<RouteMatcher>();
+            _appLifecycle = serviceProvider.GetRequiredService<IAppLifecycle>();
 
             blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializingCore;
             blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;

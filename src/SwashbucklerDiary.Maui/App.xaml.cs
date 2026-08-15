@@ -10,9 +10,9 @@ namespace SwashbucklerDiary.Maui
     {
         private Color backgroundColor = default!;
 
-        private readonly IAppLifecycle _appLifecycle;
+        private readonly IServiceProvider _serviceProvider;
 
-        private readonly RouteMatcher _routeMatcher;
+        private readonly IAppLifecycle _appLifecycle;
 
         private readonly IThemeService _themeService;
 
@@ -20,26 +20,22 @@ namespace SwashbucklerDiary.Maui
 
         private readonly II18nService _i18n;
 
-        public App(IAppLifecycle appLifecycle,
-            RouteMatcher routeMatcher,
-            IThemeService themeService,
-            Masa.Blazor.MasaBlazor masaBlazor,
-            II18nService i18n)
+        public App(IServiceProvider serviceProvider)
         {
             InitializeComponent();
 
-            _themeService = themeService;
-            _routeMatcher = routeMatcher;
-            _masaBlazor = masaBlazor;
-            _appLifecycle = appLifecycle;
-            _i18n = i18n;
+            _serviceProvider = serviceProvider;
+            _themeService = serviceProvider.GetRequiredService<IThemeService>();
+            _masaBlazor = serviceProvider.GetRequiredService<Masa.Blazor.MasaBlazor>();
+            _appLifecycle = serviceProvider.GetRequiredService<IAppLifecycle>();
+            _i18n = serviceProvider.GetRequiredService<II18nService>();
             InitTheme();
             InitAppActions();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            var window = new Window(new MainPage(backgroundColor, _routeMatcher, _appLifecycle));
+            var window = new Window(new MainPage(_serviceProvider, backgroundColor));
             window.Resumed += (s, e) => _appLifecycle.NotifyResumed();
             window.Stopped += (s, e) => _appLifecycle.NotifyStopped();
             window.Created += WindowCreated;
@@ -89,6 +85,10 @@ namespace SwashbucklerDiary.Maui
             {
                 Windows[0].Title = _i18n.T("Swashbuckler Diary");
             }
+
+#if WINDOWS
+            TitleBarButtonDirectionHelper.UpdateTitleBarButtonDirection(Windows[0], _i18n.Culture.TextInfo.IsRightToLeft);
+#endif
         }
     }
 }
