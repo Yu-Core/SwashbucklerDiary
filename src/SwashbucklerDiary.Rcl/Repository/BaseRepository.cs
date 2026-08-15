@@ -11,7 +11,6 @@ namespace SwashbucklerDiary.Rcl.Repository
         public BaseRepository(ISqlSugarClient context, ISettingService settingService) : base(context)
         {
             _settingService = settingService;
-            Itenant = context.AsTenant();
         }
 
         public override ISqlSugarClient Context
@@ -23,7 +22,7 @@ namespace SwashbucklerDiary.Rcl.Repository
         private string ConfigId
             => _settingService.GetTemp(it => it.PrivacyMode) ? SQLiteConstants.PrivacyDatabaseFilename : SQLiteConstants.MainDatabaseFilename;
 
-        public ITenant Itenant { get; set; }
+        public ITenant Itenant => base.Context.CopyNew();
 
         public virtual Task<int> CountAsync()
         {
