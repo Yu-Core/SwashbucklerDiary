@@ -38,12 +38,37 @@ function upload(element, inputFileElement) {
     inputFileElement.dispatchEvent(new CustomEvent('change'));
 }
 
+function getTooltipInfos(domRef) {
+    const infos = [];
+    const isHoverSupported = window.matchMedia('(hover: hover)').matches;
+    if (isHoverSupported) {
+        const toolbar = domRef.querySelector(".vditor-toolbar");
+        const tooltippedItems = toolbar.querySelectorAll('.vditor-tooltipped');
+        tooltippedItems.forEach(el => {
+            if (el.offsetParent === null) return; // Skip hidden elements
+            const activator = getSelectorWithDynamicId(el);
+            const text = el.getAttribute('aria-label');
+            infos.push({ activator, text });
+        })
+    }
+
+    return infos;
+
+    function getSelectorWithDynamicId(el) {
+        if (el.id) return `#${el.id}`;
+
+        const newId = `id-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+        el.id = newId;
+        return `#${newId}`;
+    }
+}
+
 function handleToolbar(dotNetCallbackRef, domRef) {
     if (!domRef) {
         return;
     }
     //点击Vditor工具栏，输入框不失去焦点
-    var toolbar = domRef.querySelector(".vditor-toolbar");
+    const toolbar = domRef.querySelector(".vditor-toolbar");
     if (!toolbar) {
         console.log("Vditor toolbar does not exist");
         return;
@@ -66,10 +91,11 @@ function handleToolbar(dotNetCallbackRef, domRef) {
     }
 
     const btnTable = toolbar.querySelector('button[data-type=table]');
-    if (!btnTable) return;
-    btnTable.addEventListener("click", () => {
-        dotNetCallbackRef.invokeMethodAsync("OpenAddTableDialog");
-    })
+    if (btnTable) {
+        btnTable.addEventListener("click", () => {
+            dotNetCallbackRef.invokeMethodAsync("OpenAddTableDialog");
+        })
+    }
 }
 
 function insertMiddleElement(parent, destination) {
@@ -97,7 +123,7 @@ function fixCopyCut(dotNetCallbackRef, element) {
     const items = element.querySelectorAll('.vditor-reset');
     const copy = (event) => {
         event.preventDefault();
-        
+
         const textData = event.clipboardData.getData('text/plain');
         if (textData) {
             setTimeout(() => {
@@ -111,4 +137,4 @@ function fixCopyCut(dotNetCallbackRef, element) {
     });
 }
 
-export { after, focus, focusToEnd, upload, setMoblieOutline }
+export { after, focus, focusToEnd, upload, setMoblieOutline, getTooltipInfos }

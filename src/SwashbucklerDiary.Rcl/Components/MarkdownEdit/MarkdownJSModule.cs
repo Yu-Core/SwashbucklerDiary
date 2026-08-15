@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using static SwashbucklerDiary.Rcl.Components.MarkdownEdit;
 
 namespace SwashbucklerDiary.Rcl.Components
 {
@@ -32,6 +33,11 @@ namespace SwashbucklerDiary.Rcl.Components
         public async Task SetMoblieOutline(ElementReference element, ElementReference outlineElement)
         {
             await base.InvokeVoidAsync("setMoblieOutline", [element, outlineElement]);
+        }
+
+        public ValueTask<TooltipInfo[]?> GetTooltipInfos(ElementReference element)
+        {
+            return base.InvokeAsync<TooltipInfo[]?>("getTooltipInfos", element);
         }
     }
 }

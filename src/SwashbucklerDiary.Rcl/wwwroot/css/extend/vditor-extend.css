@@ -14,6 +14,10 @@
     background-color: rgba(var(--m-theme-surface)) !important;
 }
 
+.vditor--fullscreen ~ .m-tooltip {
+    z-index: 90;
+}
+
 .vditor-toolbar {
     background: initial;
     padding: 0px !important;
@@ -32,6 +36,11 @@
 .vditor-toolbar-content {
     display: flex;
     flex-wrap: wrap;
+}
+
+.vditor-tooltipped::before,
+.vditor-tooltipped::after {
+    display: none !important;
 }
 
 .vditor-content {

@@ -26,6 +26,9 @@ namespace SwashbucklerDiary.Rcl.Components
 
         private bool showAddTable;
 
+        private TooltipInfo[] tooltipInfos = [];
+        public record class TooltipInfo(string Activator, string Text);
+
         private Dictionary<string, object>? _options;
 
         private MMarkdown mMarkdown = default!;
@@ -278,6 +281,7 @@ namespace SwashbucklerDiary.Rcl.Components
             if (_dotNetObjectReference is not null)
             {
                 await jSModule.After(_dotNetObjectReference, mMarkdown.Ref, moblieOutlineElement, PlatformIntegration.CurrentPlatform.OS == AppOperatingSystem.macOS);
+                tooltipInfos = await jSModule.GetTooltipInfos(mMarkdown.Ref) ?? [];
             }
 
             if (Autofocus)

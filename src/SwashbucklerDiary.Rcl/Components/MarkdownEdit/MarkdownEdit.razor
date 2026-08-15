@@ -43,9 +43,18 @@
             </ScrollContainer>
         </div>
     </CustomMNavigationDrawer>
+
+    @foreach (var item in tooltipInfos)
+    {
+        <MTooltip Activator="@item.Activator"
+                  Text="@item.Text"
+                  Bottom>
+        </MTooltip>
+    }
+    
 </div>
 
-@code{
+@code {
     private string? InternalClass => new CssBuilder()
             .Add("vditor")
             .Add("vditor--dark", ThemeService.RealTheme == Shared.Theme.Dark)
