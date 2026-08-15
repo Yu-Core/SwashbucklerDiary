@@ -108,7 +108,7 @@ namespace SwashbucklerDiary.Rcl.Components
                 ["observer"] = true,
                 ["observeParents"] = true,
                 ["observeSlideChildren"] = true,
-                //["simulateTouch"] = false,
+                ["simulateTouch"] = false,
                 ["initialSlide"] = Value?.ToInt32() ?? 0,
                 ["resistanceRatio"] = 0.7,
                 ["speed"] = 250,
