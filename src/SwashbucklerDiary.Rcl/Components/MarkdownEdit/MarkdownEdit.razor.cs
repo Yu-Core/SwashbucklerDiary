@@ -199,6 +199,16 @@ namespace SwashbucklerDiary.Rcl.Components
             {
                 { "isOpen", false }
             };
+            var btnIndent = new Dictionary<string, object?>()
+            {
+                { "hotkey", "⌥⌘I" },
+                { "name", "indent" },
+            };
+            var btnOutdent = new Dictionary<string, object?>()
+            {
+                { "hotkey", "⌥⌘O" },
+                { "name", "outdent" },
+            };
             var btnImage = new Dictionary<string, object?>()
             {
                 { "hotkey", "⇧⌘I" },
@@ -254,7 +264,7 @@ namespace SwashbucklerDiary.Rcl.Components
             _options = new()
             {
                 { "mode", "ir" },
-                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote","list", "ordered-list", "check", "indent", "outdent", btnTable, "code", "inline-code", "link", btnImage, btnAudio, btnVideo, "undo", "redo", "fullscreen", btnUpload }},
+                { "toolbar", new object[]{"headings", "bold", "italic", "strike", "line", "quote", "list", "ordered-list", "check", btnIndent, btnOutdent, btnTable, "code", "inline-code", "link", btnImage, btnAudio, btnVideo, "undo", "redo", "fullscreen", btnUpload }},
                 { "placeholder", I18n.T("Please enter content") },
                 { "cdn", $"_content/{StaticWebAssets.RclAssemblyName}/npm/vditor@3.11.2" },
                 { "lang", lang },
