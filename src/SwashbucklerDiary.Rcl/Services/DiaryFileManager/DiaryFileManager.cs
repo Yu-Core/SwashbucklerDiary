@@ -54,6 +54,9 @@ namespace SwashbucklerDiary.Rcl.Services
         protected static readonly List<string> excludedSettings =
         [
             nameof(Setting.WebDavConfig),
+            nameof(Setting.SyncDeviceId),
+            nameof(Setting.WebDAVDiarySyncLastPushTime),
+            nameof(Setting.WebDAVDiarySyncLastSyncTime),
             nameof(Setting.PrivacyModeEntrancePassword),
             nameof(Setting.PrivacyModeDark),
             nameof(Setting.PrivacyModeFunctionSearchKey),
@@ -120,6 +123,36 @@ namespace SwashbucklerDiary.Rcl.Services
             }
 
             await Task.Run(() => ZipFile.CreateFromDirectory(outputFolder, zipFilePath)).ConfigureAwait(false);
+            return zipFilePath;
+        }
+
+        public async Task<string> ExportDatabaseSnapshotAsync()
+        {
+            string outputFolder = Path.Combine(_appFileSystem.CacheDirectory, "DatabaseSnapshot");
+            string zipFilePath = Path.Combine(_appFileSystem.CacheDirectory, $"{backupFileNamePrefix}DatabaseSnapshot.zip");
+
+            if (!Directory.Exists(outputFolder))
+            {
+                Directory.CreateDirectory(outputFolder);
+            }
+            else
+            {
+                await _appFileSystem.ClearFolderAsync(outputFolder).ConfigureAwait(false);
+            }
+
+            string databasePath = GetCurrentDatabasePath();
+            var destFileName = Path.Combine(outputFolder, DatabaseFilename);
+            SqliteConnection.ClearAllPools();
+            await _appFileSystem.CopyFileAsync(databasePath, destFileName).ConfigureAwait(false);
+            await CreateSettingsFileAsync(outputFolder).ConfigureAwait(false);
+            await CreateExportVersionInfoAsync(outputFolder, ".db3", DateTime.UnixEpoch).ConfigureAwait(false);
+
+            if (File.Exists(zipFilePath))
+            {
+                File.Delete(zipFilePath);
+            }
+
+            await CreateDeterministicZipAsync(outputFolder, zipFilePath).ConfigureAwait(false);
             return zipFilePath;
         }
 
@@ -297,14 +330,14 @@ namespace SwashbucklerDiary.Rcl.Services
             await writer.WriteAsync(content).ConfigureAwait(false);
         }
 
-        private async Task CreateExportVersionInfoAsync(string outputFolder, string fileSuffix)
+        private async Task CreateExportVersionInfoAsync(string outputFolder, string fileSuffix, DateTime? dateTime = null)
         {
             var exportVersionInfo = new ExportVersionInfo()
             {
                 Version = _platformIntegration.AppVersionString,
                 FileSuffix = fileSuffix,
                 Platform = _platformIntegration.CurrentPlatform.ToString(),
-                DateTime = DateTime.Now,
+                DateTime = dateTime ?? DateTime.Now,
             };
 
             // 将对象序列化为 JSON 字符串
@@ -313,6 +346,24 @@ namespace SwashbucklerDiary.Rcl.Services
             // 将 JSON 字符串写入文件
             var jsonPath = Path.Combine(outputFolder, versionInfoFileName);
             await File.WriteAllTextAsync(jsonPath, jsonString).ConfigureAwait(false);
+        }
+
+        private static async Task CreateDeterministicZipAsync(string sourceFolder, string zipFilePath)
+        {
+            var zipEpoch = new DateTimeOffset(1980, 1, 1, 0, 0, 0, TimeSpan.Zero);
+            await using var zipStream = new FileStream(zipFilePath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+            using var archive = new ZipArchive(zipStream, ZipArchiveMode.Create);
+
+            foreach (var filePath in Directory.EnumerateFiles(sourceFolder, "*", SearchOption.AllDirectories).OrderBy(it => it, StringComparer.Ordinal))
+            {
+                string relativePath = Path.GetRelativePath(sourceFolder, filePath).Replace(Path.DirectorySeparatorChar, '/');
+                var entry = archive.CreateEntry(relativePath, CompressionLevel.NoCompression);
+                entry.LastWriteTime = zipEpoch;
+
+                await using var entryStream = entry.Open();
+                await using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                await fileStream.CopyToAsync(entryStream).ConfigureAwait(false);
+            }
         }
 
         private async Task CreateSettingsFileAsync(string outputFolder)
@@ -393,6 +444,9 @@ namespace SwashbucklerDiary.Rcl.Services
             await _appFileSystem.SyncFS();
             return flag;
         }
+
+        public Task<bool> ImportDatabaseSnapshotAsync(Stream stream)
+            => ImportDBAsync(stream);
 
         public async Task<bool> ImportDBAsync(string filePath)
         {
