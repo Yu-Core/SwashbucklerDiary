@@ -40,7 +40,109 @@
                     <wc-auto-scroll-text>@(I18n.T("Upload"))</wc-auto-scroll-text>
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    <wc-auto-scroll-text>@(I18n.T("Save the zip file generated as a database file"))</wc-auto-scroll-text>
+                    <wc-auto-scroll-text>@(I18n.T("Upload only changed backup files"))</wc-auto-scroll-text>
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>chevron_right</MIcon>
+            </MListItemAction>
+        </MListItem>
+
+        <MDivider Class="mx-5"></MDivider>
+
+        <MListItem OnClick="SyncDiaries">
+            <MListItemIcon>
+                <MIcon>
+                    mdi:mdi-sync
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <MListItemTitle>
+                    <wc-auto-scroll-text>@(I18n.T("Sync diaries"))</wc-auto-scroll-text>
+                </MListItemTitle>
+                <MListItemSubtitle Class="text-caption-xs-only">
+                    <wc-auto-scroll-text>@(I18n.T("Experimental incremental diary sync"))</wc-auto-scroll-text>
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>chevron_right</MIcon>
+            </MListItemAction>
+        </MListItem>
+
+        <MDivider Class="mx-5"></MDivider>
+
+        <MListItem>
+            <MListItemIcon>
+                <MIcon>
+                    mdi:mdi-sync-circle
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <wc-auto-scroll-text>@(I18n.T("Auto sync diaries"))</wc-auto-scroll-text>
+            </MListItemContent>
+            <MListItemAction>
+                <SettingSwitch @bind-Value="autoSync"
+                               SettingKey="@nameof(Setting.WebDAVDiarySyncAuto)">
+                </SettingSwitch>
+            </MListItemAction>
+        </MListItem>
+
+        <MDivider Class="mx-5"></MDivider>
+
+        <MListItem OnClick="ToggleAutoSyncInterval">
+            <MListItemIcon>
+                <MIcon>
+                    mdi:mdi-timer-sync-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent Style="flex-basis:50%;">
+                <wc-auto-scroll-text>@(I18n.T("Auto sync interval"))</wc-auto-scroll-text>
+            </MListItemContent>
+            <MListItemContent Class="ms-2" Style="flex-basis:50%;">
+                <MListItemSubtitle>
+                    <wc-auto-scroll-text class="justify-end" style="width:100%;">@AutoSyncIntervalText</wc-auto-scroll-text>
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>chevron_right</MIcon>
+            </MListItemAction>
+        </MListItem>
+
+        <MDivider Class="mx-5"></MDivider>
+
+        <MListItem OnClick="OpenDiagnosticsDialog">
+            <MListItemIcon>
+                <MIcon>
+                    mdi:mdi-cloud-search-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <MListItemTitle>
+                    <wc-auto-scroll-text>@(I18n.T("Diagnostics"))</wc-auto-scroll-text>
+                </MListItemTitle>
+                <MListItemSubtitle Class="text-caption-xs-only">
+                    <wc-auto-scroll-text>@(I18n.T("Check WebDAV backup status"))</wc-auto-scroll-text>
+                </MListItemSubtitle>
+            </MListItemContent>
+            <MListItemAction>
+                <MIcon>chevron_right</MIcon>
+            </MListItemAction>
+        </MListItem>
+
+        <MDivider Class="mx-5"></MDivider>
+
+        <MListItem OnClick="OpenSyncLogsDialog">
+            <MListItemIcon>
+                <MIcon>
+                    mdi:mdi-text-box-search-outline
+                </MIcon>
+            </MListItemIcon>
+            <MListItemContent>
+                <MListItemTitle>
+                    <wc-auto-scroll-text>@(I18n.T("Sync logs"))</wc-auto-scroll-text>
+                </MListItemTitle>
+                <MListItemSubtitle Class="text-caption-xs-only">
+                    <wc-auto-scroll-text>@(I18n.T("View recent sync activity"))</wc-auto-scroll-text>
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -61,7 +163,7 @@
                     <wc-auto-scroll-text>@(I18n.T("Pull"))</wc-auto-scroll-text>
                 </MListItemTitle>
                 <MListItemSubtitle Class="text-caption-xs-only">
-                    <wc-auto-scroll-text>@(I18n.T("Select the zip file containing the database files"))</wc-auto-scroll-text>
+                    <wc-auto-scroll-text>@(I18n.T("Select an incremental backup point"))</wc-auto-scroll-text>
                 </MListItemSubtitle>
             </MListItemContent>
             <MListItemAction>
@@ -125,6 +227,116 @@
     </MCard>
 </CustomMDialog>
 
+<CustomMDialog @bind-MyValue="showSyncLogs"
+               ContentClass="rounded-lg"
+               MaxWidth="520"
+               Scrollable="true">
+    <MCard>
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Sync logs"))</wc-auto-scroll-text>
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="()=>showSyncLogs=false">
+                <MIcon>close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pb-0 px-0 mb-5 d-flex flex-column">
+            @if (syncLogs.Count == 0)
+            {
+                <MListItem>
+                    <MListItemAvatar>
+                        <MIcon>mdi:mdi-text-box-remove-outline</MIcon>
+                    </MListItemAvatar>
+                    <MListItemContent>
+                        <MListItemTitle>@I18n.T("No sync logs")</MListItemTitle>
+                    </MListItemContent>
+                </MListItem>
+            }
+            <MList Class="py-0 scroll-show flex-grow-1"
+                   Style="overflow-y:auto;">
+                <Virtualize Items="syncLogs"
+                            ItemSize="76"
+                            Context="item"
+                            OverscanCount="20">
+                    <MListItem Class="rounded">
+                        <MListItemAvatar>
+                            <MIcon>@GetSyncLogIcon(item)</MIcon>
+                        </MListItemAvatar>
+                        <MListItemContent>
+                            <MListItemTitle Class="two-line">@GetSyncLogTitle(item)</MListItemTitle>
+                            <MListItemSubtitle>@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</MListItemSubtitle>
+                            <MListItemSubtitle>@GetSyncLogSubtitle(item)</MListItemSubtitle>
+                        </MListItemContent>
+                    </MListItem>
+                </Virtualize>
+            </MList>
+        </MCardText>
+    </MCard>
+</CustomMDialog>
+
+<CustomMDialog @bind-MyValue="showDiagnostics"
+               ContentClass="rounded-lg"
+               MaxWidth="420">
+    <MCard>
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Diagnostics"))</wc-auto-scroll-text>
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="()=>showDiagnostics=false">
+                <MIcon>close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="px-0 pb-0">
+            <MList Class="py-0">
+                <MListItem>
+                    <MListItemContent>
+                        <MListItemTitle>@I18n.T("Status")</MListItemTitle>
+                    </MListItemContent>
+                    <MListItemActionText>@DiagnosticsStatusText</MListItemActionText>
+                </MListItem>
+                <MDivider Class="mx-5"></MDivider>
+                <MListItem>
+                    <MListItemContent>
+                        <MListItemTitle>@I18n.T("Incremental backup")</MListItemTitle>
+                    </MListItemContent>
+                    <MListItemActionText>@(diagnostics?.IncrementalBackupCount ?? 0)</MListItemActionText>
+                </MListItem>
+                <MDivider Class="mx-5"></MDivider>
+                <MListItem>
+                    <MListItemContent>
+                        <MListItemTitle>@I18n.T("Legacy backup")</MListItemTitle>
+                    </MListItemContent>
+                    <MListItemActionText>@(diagnostics?.LegacyBackupCount ?? 0)</MListItemActionText>
+                </MListItem>
+                <MDivider Class="mx-5"></MDivider>
+                <MListItem>
+                    <MListItemContent>
+                        <MListItemTitle>@I18n.T("Latest backup")</MListItemTitle>
+                    </MListItemContent>
+                    <MListItemActionText>@DiagnosticsLatestBackupTimeText</MListItemActionText>
+                </MListItem>
+                <MDivider Class="mx-5"></MDivider>
+                <MListItem>
+                    <MListItemContent>
+                        <MListItemTitle>@I18n.T("Total size")</MListItemTitle>
+                    </MListItemContent>
+                    <MListItemActionText>@DiagnosticsTotalSizeText</MListItemActionText>
+                </MListItem>
+                @if (!string.IsNullOrWhiteSpace(diagnostics?.ErrorMessage))
+                {
+                    <MDivider Class="mx-5"></MDivider>
+                    <MListItem>
+                        <MListItemContent>
+                            <MListItemTitle>@I18n.T("Error")</MListItemTitle>
+                            <MListItemSubtitle>@diagnostics.ErrorMessage</MListItemSubtitle>
+                        </MListItemContent>
+                    </MListItem>
+                }
+            </MList>
+        </MCardText>
+    </MCard>
+</CustomMDialog>
+
 <CustomMDialog @bind-MyValue="showDownload"
                ContentClass="rounded-lg"
                MaxWidth="420"
@@ -139,24 +351,35 @@
             </MButton>
         </MCardTitle>
         <MCardText Class="pb-0 px-0 mb-5 d-flex flex-column">
+            @if (backupManifests.Count == 0)
+            {
+                <MListItem>
+                    <MListItemAvatar>
+                        <MIcon>mdi:mdi-cloud-question-outline</MIcon>
+                    </MListItemAvatar>
+                    <MListItemContent>
+                        <MListItemTitle>@I18n.T("No backup")</MListItemTitle>
+                    </MListItemContent>
+                </MListItem>
+            }
             <MList Class="py-0 scroll-show flex-grow-1"
                    Style="overflow-y:auto;">
-                <Virtualize Items="fileList"
+                <Virtualize Items="backupManifests"
                             ItemSize="64"
                             Context="item"
                             OverscanCount="30">
                     <MListItem Class="rounded"
-                               OnClick="()=>Download(item.Name)">
+                               OnClick="()=>Download(item)">
                         <MListItemAvatar>
                             <MIcon>
-                                folder_zip
+                                @GetBackupIcon(item)
                             </MIcon>
                         </MListItemAvatar>
 
                         <MListItemContent>
-                            <MListItemTitle Class="two-line">@item.Name</MListItemTitle>
+                            <MListItemTitle Class="two-line">@GetBackupTime(item)</MListItemTitle>
 
-                            <MListItemSubtitle>@GeFileSize(item) · @GetLastModified(item)</MListItemSubtitle>
+                            <MListItemSubtitle>@GeFileSize(item) / @I18n.T("File"): @GetFileCount(item)</MListItemSubtitle>
                         </MListItemContent>
 
                         <MListItemAction>
@@ -170,4 +393,3 @@
         </MCardText>
     </MCard>
 </CustomMDialog>
-

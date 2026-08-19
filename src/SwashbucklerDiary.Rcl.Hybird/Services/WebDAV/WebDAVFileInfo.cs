@@ -7,5 +7,7 @@
         public long? Length { get; set; }
 
         public DateTime? LastModified { get; set; }
+
+        public bool IsCollection { get; set; }
     }
 }
