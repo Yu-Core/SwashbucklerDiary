@@ -135,9 +135,11 @@ namespace SwashbucklerDiary.Rcl.Repository
         public Task<bool> ImportAsync(List<DiaryModel> diaries)
             => InternalImportAsync(Context, diaries);
 
-        public static Task<bool> InternalImportAsync(ISqlSugarClient context, List<DiaryModel> diaries)
+        public static async Task<bool> InternalImportAsync(ISqlSugarClient context, List<DiaryModel> diaries)
         {
-            return context.UpdateNav(diaries, new UpdateNavRootOptions()
+            MergeSameNameTags(context, diaries);
+
+            return await context.UpdateNav(diaries, new UpdateNavRootOptions()
             {
                 IsInsertRoot = true
             })
@@ -151,7 +153,57 @@ namespace SwashbucklerDiary.Rcl.Repository
                 ManyToManyIsUpdateA = true,
                 ManyToManyIsUpdateB = true
             })
-            .ExecuteCommandAsync();
+            .ExecuteCommandAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// UpdateNav matches many-to-many children only by primary key, so imported diaries
+        /// would insert duplicate tags when their Name matches an existing tag but their Id
+        /// comes from another database (e.g. a backup from another device). Remap same-name
+        /// imported tags to the existing tags (or to each other) before writing.
+        /// </summary>
+        private static void MergeSameNameTags(ISqlSugarClient context, List<DiaryModel> diaries)
+        {
+            var importedTags = diaries
+                .Where(it => it.Tags is not null)
+                .SelectMany(it => it.Tags!)
+                .ToList();
+
+            if (importedTags.Count == 0)
+            {
+                return;
+            }
+
+            var tagByName = new Dictionary<string, TagModel>();
+            foreach (var tag in context.Queryable<TagModel>().ToList())
+            {
+                if (tag.Name is not null)
+                {
+                    tagByName.TryAdd(tag.Name, tag);
+                }
+            }
+
+            foreach (var tag in importedTags)
+            {
+                if (tag.Name is not null && tagByName.TryGetValue(tag.Name, out var sameNameTag))
+                {
+                    // Link the imported diary to the existing tag instead of creating a duplicate
+                    tag.Id = sameNameTag.Id;
+                    tag.Name = sameNameTag.Name;
+                    tag.CreateTime = sameNameTag.CreateTime;
+                    tag.UpdateTime = sameNameTag.UpdateTime;
+                }
+                else if (tag.Name is not null)
+                {
+                    // Unify tags of the same name within the imported data itself
+                    tagByName.Add(tag.Name, tag);
+                }
+            }
+
+            foreach (var diary in diaries)
+            {
+                diary.Tags = diary.Tags?.DistinctBy(it => it.Id).ToList();
+            }
         }
 
         public async Task<bool> MovePrivacyDiaryAsync(DiaryModel diary, bool toPrivacyMode)
