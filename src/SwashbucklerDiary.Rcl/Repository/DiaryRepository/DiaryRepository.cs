@@ -137,7 +137,7 @@ namespace SwashbucklerDiary.Rcl.Repository
 
         public static async Task<bool> InternalImportAsync(ISqlSugarClient context, List<DiaryModel> diaries)
         {
-            MergeSameNameTags(context, diaries);
+            await MergeSameNameTagsAsync(context, diaries).ConfigureAwait(false);
 
             return await context.UpdateNav(diaries, new UpdateNavRootOptions()
             {
@@ -162,7 +162,7 @@ namespace SwashbucklerDiary.Rcl.Repository
         /// comes from another database (e.g. a backup from another device). Remap same-name
         /// imported tags to the existing tags (or to each other) before writing.
         /// </summary>
-        private static void MergeSameNameTags(ISqlSugarClient context, List<DiaryModel> diaries)
+        private static async Task MergeSameNameTagsAsync(ISqlSugarClient context, List<DiaryModel> diaries)
         {
             var importedTags = diaries
                 .Where(it => it.Tags is not null)
@@ -174,18 +174,31 @@ namespace SwashbucklerDiary.Rcl.Repository
                 return;
             }
 
+            var importedTagNames = importedTags
+                 .Select(t => t.Name)
+                 .Where(n => n is not null)
+                 .Distinct()
+                 .ToList();
+
+            var tags = await context.Queryable<TagModel>()
+                .Where(t => t.Name != null && importedTagNames.Contains(t.Name))
+                .OrderBy(t => t.CreateTime)
+                .ToListAsync();
+
             var tagByName = new Dictionary<string, TagModel>();
-            foreach (var tag in context.Queryable<TagModel>().ToList())
+            foreach (var tag in tags)
             {
-                if (tag.Name is not null)
-                {
-                    tagByName.TryAdd(tag.Name, tag);
-                }
+                tagByName.TryAdd(tag.Name!, tag);
             }
 
             foreach (var tag in importedTags)
             {
-                if (tag.Name is not null && tagByName.TryGetValue(tag.Name, out var sameNameTag))
+                if (tag.Name is null)
+                {
+                    continue;
+                }
+
+                if (tagByName.TryGetValue(tag.Name, out var sameNameTag))
                 {
                     // Link the imported diary to the existing tag instead of creating a duplicate
                     tag.Id = sameNameTag.Id;
@@ -193,7 +206,7 @@ namespace SwashbucklerDiary.Rcl.Repository
                     tag.CreateTime = sameNameTag.CreateTime;
                     tag.UpdateTime = sameNameTag.UpdateTime;
                 }
-                else if (tag.Name is not null)
+                else
                 {
                     // Unify tags of the same name within the imported data itself
                     tagByName.Add(tag.Name, tag);
