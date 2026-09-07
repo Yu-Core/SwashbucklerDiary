@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using SwashbucklerDiary.Rcl.Components;
 using SwashbucklerDiary.Rcl.Essentials;
 using SwashbucklerDiary.Rcl.Services;
+using SwashbucklerDiary.Shared;
 using System.Text.Json;
 
 namespace SwashbucklerDiary.Rcl.Pages
@@ -17,13 +18,25 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showDownload;
 
+        private bool showDiagnostics;
+
+        private bool showSyncLogs;
+
         private bool includeDiaryResources;
+
+        private bool autoSync;
+
+        private int autoSyncIntervalMinutes;
 
         private WebDavConfigForm configModel = new();
 
         private const string webDavFolderName = "SwashbucklerDiary";
 
-        private List<WebDAVFileInfo> fileList = [];
+        private List<WebDavIncrementalBackupManifest> backupManifests = [];
+
+        private WebDavBackupDiagnostics? diagnostics;
+
+        private List<SyncLogModel> syncLogs = [];
 
         [Inject]
         private IWebDAV WebDAVService { get; set; } = default!;
@@ -34,6 +47,18 @@ namespace SwashbucklerDiary.Rcl.Pages
         [Inject]
         private IDiaryFileManager DiaryFileManager { get; set; } = default!;
 
+        [Inject]
+        private IDiarySyncService DiarySyncService { get; set; } = default!;
+
+        [Inject]
+        private IWebDavDiarySyncScheduler DiarySyncScheduler { get; set; } = default!;
+
+        [Inject]
+        private IWebDavIncrementalBackupService IncrementalBackupService { get; set; } = default!;
+
+        [Inject]
+        private ISyncLogService SyncLogService { get; set; } = default!;
+
         protected override void ReadSettings()
         {
             var configJson = SettingService.Get(s => s.WebDavConfig);
@@ -43,21 +68,59 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
 
             includeDiaryResources = SettingService.Get(s => s.WebDAVCopyResources);
+            autoSync = SettingService.Get(s => s.WebDAVDiarySyncAuto);
+            autoSyncIntervalMinutes = SettingService.Get(s => s.WebDAVDiarySyncIntervalMinutes, 30);
         }
 
         private bool Configured => !string.IsNullOrEmpty(configModel.ServerAddress);
 
         private string ConfiguredText => Configured ? I18n.T("Configured") : I18n.T("Not configured");
 
-        private string GeFileSize(WebDAVFileInfo fileInfo)
-            => fileInfo.Length is long size
-            ? AppFileSystem.ConvertBytesToReadable(size)
-            : I18n.T("Unknown size");
+        private string AutoSyncIntervalText => $"{autoSyncIntervalMinutes} {I18n.T("Minute")}";
 
-        private string GetLastModified(WebDAVFileInfo fileInfo)
-            => fileInfo.LastModified is DateTime dt
-            ? dt.ToString("yyyy-MM-dd")
-            : I18n.T("Unknown time");
+        private string GeFileSize(WebDavIncrementalBackupManifest manifest)
+            => AppFileSystem.ConvertBytesToReadable(manifest.LegacyLength ?? manifest.Files.Sum(it => it.Length));
+
+        private int GetFileCount(WebDavIncrementalBackupManifest manifest)
+            => manifest.LegacyZip ? 1 : manifest.Files.Count;
+
+        private string GetBackupIcon(WebDavIncrementalBackupManifest manifest)
+            => manifest.LegacyZip ? "mdi:mdi-folder-zip-outline" : "mdi:mdi-database-sync-outline";
+
+        private string GetBackupTime(WebDavIncrementalBackupManifest manifest)
+            => manifest.CreatedAt.ToString("yyyy-MM-dd HH:mm");
+
+        private string DiagnosticsStatusText => diagnostics?.Success == true ? I18n.T("Normal") : I18n.T("Abnormal");
+
+        private string DiagnosticsLatestBackupTimeText => diagnostics?.LatestBackupTime?.ToString("yyyy-MM-dd HH:mm") ?? "-";
+
+        private string DiagnosticsTotalSizeText => AppFileSystem.ConvertBytesToReadable(diagnostics?.TotalSize ?? 0);
+
+        private static string GetSyncLogIcon(SyncLogModel log)
+            => log.Success ? "mdi:mdi-check-circle-outline" : "mdi:mdi-alert-circle-outline";
+
+        private string GetSyncLogTitle(SyncLogModel log)
+            => $"{I18n.T(log.Operation)} · {(log.Success ? I18n.T("Success") : I18n.T("Failed"))}";
+
+        private string GetSyncLogSubtitle(SyncLogModel log)
+        {
+            if (!string.IsNullOrWhiteSpace(log.Message))
+            {
+                return log.Message;
+            }
+
+            if (log.Operation.Contains("sync", StringComparison.OrdinalIgnoreCase))
+            {
+                return $"{I18n.T("Upload")}: {log.Pushed}, {I18n.T("Pull")}: {log.Pulled}, {I18n.T("Delete")}: {log.Deleted}, {I18n.T("Conflict")}: {log.Conflicts}";
+            }
+
+            if (log.Operation == "Diagnostics")
+            {
+                return $"{I18n.T("Incremental backup")}: {log.IncrementalBackupCount}, {I18n.T("Legacy backup")}: {log.LegacyBackupCount}";
+            }
+
+            return $"{I18n.T("File")}: {log.FileCount}";
+        }
 
         private async Task SaveWebDavConfig(WebDavConfigForm webDavConfig)
         {
@@ -137,22 +200,37 @@ namespace SwashbucklerDiary.Rcl.Pages
 
             try
             {
-                string filePath = await DiaryFileManager.ExportDBAsync(includeDiaryResources);
-                using var stream = File.OpenRead(filePath);
-                string fileName = DiaryFileManager.GetBackupFileName();
-                string destFileName = webDavFolderName + "/" + fileName;
                 try
                 {
-                    await WebDAVService.UploadAsync(destFileName, stream);
-                    await AlertService.SuccessAsync(I18n.T("Upload successfully"));
+                    var manifest = await IncrementalBackupService.UploadAsync(includeDiaryResources);
+                    await SyncLogService.AddLogAsync(new SyncLogModel()
+                    {
+                        Operation = "Backup upload",
+                        Success = true,
+                        FileCount = manifest.Files.Count,
+                        TotalSize = manifest.Files.Sum(it => it.Length)
+                    });
+                    await AlertService.SuccessAsync($"{I18n.T("Incremental backup successfully")}\n{I18n.T("File")}: {manifest.Files.Count}");
                 }
                 catch (HttpRequestException e)
                 {
+                    await SyncLogService.AddLogAsync(new SyncLogModel()
+                    {
+                        Operation = "Backup upload",
+                        Success = false,
+                        Message = e.Message
+                    });
                     await AlertService.ErrorAsync(I18n.T("Network error"));
                     Logger.LogError(e, $"OpenDownloadDialog {nameof(HttpRequestException)}");
                 }
                 catch (Exception e)
                 {
+                    await SyncLogService.AddLogAsync(new SyncLogModel()
+                    {
+                        Operation = "Backup upload",
+                        Success = false,
+                        Message = e.Message
+                    });
                     await AlertService.ErrorAsync($"{I18n.T("Upload failed")}\n{e}");
                     Logger.LogError(e, $"Backups Upload Fail");
                 }
@@ -178,7 +256,7 @@ namespace SwashbucklerDiary.Rcl.Pages
                 StateHasChanged();
                 try
                 {
-                    fileList = await WebDAVService.GetZipFileListAsync(webDavFolderName);
+                    backupManifests = await IncrementalBackupService.GetManifestsAsync();
                 }
                 catch (HttpRequestException e)
                 {
@@ -197,25 +275,77 @@ namespace SwashbucklerDiary.Rcl.Pages
             }
         }
 
-        private async Task Download(string fileName)
+        private async Task OpenDiagnosticsDialog()
+        {
+            AlertService.StartLoading();
+            try
+            {
+                var flag = await Check();
+                if (!flag)
+                {
+                    return;
+                }
+
+                diagnostics = await IncrementalBackupService.DiagnoseAsync();
+                await SyncLogService.AddLogAsync(new SyncLogModel()
+                {
+                    Operation = "Diagnostics",
+                    Success = diagnostics.Success,
+                    IncrementalBackupCount = diagnostics.IncrementalBackupCount,
+                    LegacyBackupCount = diagnostics.LegacyBackupCount,
+                    TotalSize = diagnostics.TotalSize,
+                    Message = diagnostics.ErrorMessage
+                });
+                showDiagnostics = true;
+            }
+            finally
+            {
+                AlertService.StopLoading();
+            }
+        }
+
+        private async Task Download(WebDavIncrementalBackupManifest manifest)
         {
             showDownload = false;
 
             AlertService.StartLoading();
-            var destFileName = webDavFolderName + "/" + fileName;
             try
             {
-                using var stream = await WebDAVService.DownloadAsync(destFileName);
-                await DiaryFileManager.ImportDBAsync(stream);
+                if (await DiarySyncService.HasLocalChangesAsync())
+                {
+                    await AlertService.ErrorAsync(I18n.T("Local diary changes are not synced. Sync diaries before pulling backup."));
+                    return;
+                }
+
+                await IncrementalBackupService.RestoreAsync(manifest);
+                await SyncLogService.AddLogAsync(new SyncLogModel()
+                {
+                    Operation = "Backup restore",
+                    Success = true,
+                    FileCount = GetFileCount(manifest),
+                    TotalSize = manifest.LegacyLength ?? manifest.Files.Sum(it => it.Length)
+                });
                 await AlertService.SuccessAsync(I18n.T("Pull successfully"));
             }
             catch (HttpRequestException e)
             {
+                await SyncLogService.AddLogAsync(new SyncLogModel()
+                {
+                    Operation = "Backup restore",
+                    Success = false,
+                    Message = e.Message
+                });
                 await AlertService.ErrorAsync(I18n.T("Network error"));
                 Logger.LogError(e, $"OpenDownloadDialog {nameof(HttpRequestException)}");
             }
             catch (Exception e)
             {
+                await SyncLogService.AddLogAsync(new SyncLogModel()
+                {
+                    Operation = "Backup restore",
+                    Success = false,
+                    Message = e.Message
+                });
                 await AlertService.ErrorAsync($"{I18n.T("Pull failed")}\n{e}");
                 Logger.LogError(e, "WebDAV Download fail");
             }
@@ -223,6 +353,74 @@ namespace SwashbucklerDiary.Rcl.Pages
             {
                 AlertService.StopLoading();
             }
+        }
+
+        private async Task SyncDiaries()
+        {
+            AlertService.StartLoading();
+
+            try
+            {
+                var flag = await Check();
+                if (!flag)
+                {
+                    return;
+                }
+
+                var result = await DiarySyncScheduler.RunOnceAsync(true);
+                if (result is null)
+                {
+                    await AlertService.ErrorAsync(I18n.T("Sync is already running"));
+                    return;
+                }
+
+                await SettingService.SetAsync(s => s.WebDAVDiarySyncLastSyncTime, DateTime.Now);
+                await AlertService.SuccessAsync($"{I18n.T("Sync successfully")}\n{I18n.T("Upload")}: {result.Pushed}, {I18n.T("Pull")}: {result.Pulled}, {I18n.T("Delete")}: {result.Deleted}, {I18n.T("Conflict")}: {result.Conflicts}");
+            }
+            catch (HttpRequestException e)
+            {
+                await SyncLogService.AddLogAsync(new SyncLogModel()
+                {
+                    Operation = "Manual sync",
+                    Success = false,
+                    Message = e.Message
+                });
+                await AlertService.ErrorAsync(I18n.T("Network error"));
+                Logger.LogError(e, $"SyncDiaries {nameof(HttpRequestException)}");
+            }
+            catch (Exception e)
+            {
+                await SyncLogService.AddLogAsync(new SyncLogModel()
+                {
+                    Operation = "Manual sync",
+                    Success = false,
+                    Message = e.Message
+                });
+                await AlertService.ErrorAsync($"{I18n.T("Sync failed")}\n{e}");
+                Logger.LogError(e, "SyncDiaries fail");
+            }
+            finally
+            {
+                AlertService.StopLoading();
+            }
+        }
+
+        private async Task OpenSyncLogsDialog()
+        {
+            syncLogs = await SyncLogService.QueryLatestAsync();
+            showSyncLogs = true;
+        }
+
+        private async Task ToggleAutoSyncInterval()
+        {
+            autoSyncIntervalMinutes = autoSyncIntervalMinutes switch
+            {
+                < 30 => 30,
+                < 60 => 60,
+                _ => 15
+            };
+
+            await SettingService.SetAsync(s => s.WebDAVDiarySyncIntervalMinutes, autoSyncIntervalMinutes);
         }
 
         private async Task<bool> Check()

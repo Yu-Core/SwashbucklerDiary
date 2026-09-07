@@ -19,6 +19,11 @@ namespace SwashbucklerDiary.Rcl.Services
         public bool FirstSetLanguage { get; set; }
         public bool FirstAgree { get; set; }
         public string WebDavConfig { get; set; } = string.Empty;
+        public string SyncDeviceId { get; set; } = string.Empty;
+        public DateTime WebDAVDiarySyncLastPushTime { get; set; } = DateTime.MinValue;
+        public bool WebDAVDiarySyncAuto { get; set; }
+        public int WebDAVDiarySyncIntervalMinutes { get; set; } = 30;
+        public DateTime WebDAVDiarySyncLastSyncTime { get; set; } = DateTime.MinValue;
         public bool WelcomeText { get; set; }
         public bool IndexDate { get; set; }
         public bool DiaryCardIcon { get; set; } = true;

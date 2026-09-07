@@ -43,6 +43,7 @@ namespace SwashbucklerDiary.Gtk.Extensions
             services.AddSingleton<ILocationRepository, LocationRepository>();
             services.AddSingleton<ILogRepository, LogRepository>();
             services.AddSingleton<IResourceRepository, ResourceRepository>();
+            services.AddSingleton<ISyncLogRepository, SyncLogRepository>();
 
             services.AddSingleton<ITagService, TagService>();
             services.AddSingleton<IDiaryService, DiaryService>();
@@ -50,6 +51,7 @@ namespace SwashbucklerDiary.Gtk.Extensions
             services.AddSingleton<ILocationService, LocationService>();
             services.AddSingleton<ILogService, LogService>();
             services.AddSingleton<IResourceService, ResourceService>();
+            services.AddSingleton<ISyncLogService, SyncLogService>();
 
             services.AddSingleton<IAppLifecycle>(sp => Essentials.AppLifecycle.Default);
             services.AddSingleton<IThemeService, ThemeService>();
@@ -59,6 +61,9 @@ namespace SwashbucklerDiary.Gtk.Extensions
             services.AddScoped<IScreenshot, Screenshot>();
             services.AddSingleton<IVersionUpdataManager, Services.VersionUpdataManager>();
             services.AddSingleton<IWebDAV, WebDAV>();
+            services.AddSingleton<IDiarySyncService, WebDavDiarySyncService>();
+            services.AddSingleton<IWebDavDiarySyncScheduler, WebDavDiarySyncScheduler>();
+            services.AddSingleton<IWebDavIncrementalBackupService, WebDavIncrementalBackupService>();
             services.AddSingleton<ILANSenderService, LANSenderService>();
             services.AddSingleton<ILANReceiverService, LANReceiverService>();
             services.AddSingleton<IProxyService, ProxyService>();

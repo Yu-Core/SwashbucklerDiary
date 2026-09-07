@@ -114,7 +114,19 @@ namespace SwashbucklerDiary.Rcl.Services
         public async Task SetSettingsFromObjectAsync(Setting obj, Func<string, bool>? func = null)
         {
             var properties = obj.GetType().GetProperties();
-            var setAsyncMethod = this.GetType()?.GetMethod(nameof(SetAsync))
+            var setAsyncMethod = this.GetType()
+                         .GetMethods()
+                         .FirstOrDefault(it =>
+                         {
+                             if (it.Name != nameof(SetAsync) || !it.IsGenericMethodDefinition)
+                             {
+                                 return false;
+                             }
+
+                             var parameters = it.GetParameters();
+                             return parameters.Length == 2
+                                 && parameters[0].ParameterType == typeof(string);
+                         })
                          ?? throw new InvalidOperationException($"{nameof(SetAsync)} does not exist");
             var getMethod = this.GetType()?.GetMethod(nameof(Get), [typeof(string)])
                          ?? throw new InvalidOperationException($"{nameof(Get)} does not exist");

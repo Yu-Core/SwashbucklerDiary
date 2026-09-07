@@ -19,6 +19,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<bool> MovePrivacyDiariesAsync();
 
+        Task<bool> DeleteFromSyncAsync(DiaryModel diary);
+
         Task<List<DiaryModel>> QueryDiariesAsync();
 
         Task<List<DiaryModel>> QueryDiariesAsync(Expression<Func<DiaryModel, bool>> expression);

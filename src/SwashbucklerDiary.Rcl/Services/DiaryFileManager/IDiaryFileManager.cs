@@ -10,6 +10,8 @@ namespace SwashbucklerDiary.Rcl.Services
 
         Task<string> ExportDBAsync(bool copyResources);
 
+        Task<string> ExportDatabaseSnapshotAsync();
+
         Task<string> ExportJsonAsync(List<DiaryModel> diaries);
 
         Task<string> ExportMdAsync(List<DiaryModel> diaries);
@@ -23,6 +25,8 @@ namespace SwashbucklerDiary.Rcl.Services
         Task<bool> ImportDBAsync(string filePath);
 
         Task<bool> ImportDBAsync(Stream stream);
+
+        Task<bool> ImportDatabaseSnapshotAsync(Stream stream);
 
         Task<bool> ImportJsonAsync(string filePath);
 
