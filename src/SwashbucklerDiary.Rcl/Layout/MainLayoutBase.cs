@@ -69,6 +69,12 @@ namespace SwashbucklerDiary.Rcl.Layout
         [Inject]
         protected ILogger<MainLayoutBase> Logger { get; set; } = default!;
 
+        [Inject]
+        protected IWebDavDiarySyncScheduler DiarySyncScheduler { get; set; } = default!;
+
+        [Inject]
+        protected IWebDavBackupScheduler BackupScheduler { get; set; } = default!;
+
         public void Dispose()
         {
             OnDispose();
@@ -123,6 +129,8 @@ namespace SwashbucklerDiary.Rcl.Layout
         {
             await InitVersionUpdate();
             await InitConfigAsync();
+            DiarySyncScheduler.Start();
+            BackupScheduler.Start();
             StateHasChanged();
 
             await DialogNotificationAsync();
