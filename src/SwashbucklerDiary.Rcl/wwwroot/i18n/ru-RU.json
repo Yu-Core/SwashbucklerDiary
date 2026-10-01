@@ -517,5 +517,12 @@
   "Align the old version diary reference link with the new version": "Выравнивание ссылки на запись дневника старой версии с новой версией",
   "Before version 1.33.9, diaries that have inserted diary references may experience this situation. Of course, the old version diary citation link can still work": "До версии 1.33.9 дневники, в которые вставлены ссылки на другие записи, могут столкнуться с этой ситуацией. Конечно, ссылка на цитату из старой версии дневника все еще может работать.",
   "Fix media files not recorded after diary merge": "Исправление проблемы с несохраненными медиафайлами после объединения дневников",
-  "Before version 1.33.9, diaries that used merged diaries may experience this situation": "До версии 1.33.9 дневники, в которых использовалось объединение, могут столкнуться с этой ситуацией."
+  "Before version 1.33.9, diaries that used merged diaries may experience this situation": "До версии 1.33.9 дневники, в которых использовалось объединение, могут столкнуться с этой ситуацией.",
+  "Choose the share style": "Выберите стиль поделиться",
+  "Default card": "Обычная карточка",
+  "Red column letter paper": "Бумага с красными столбцами",
+  "Plain ruled letter paper": "Простая линованная бумага",
+  "Bamboo shadow letter paper": "Бумага с тенями бамбука",
+  "Letter paper seal text": "Текст печати на бумаге",
+  "Please enter 1-2 Chinese characters": "Введите 1-2 китайских иероглифа"
 }

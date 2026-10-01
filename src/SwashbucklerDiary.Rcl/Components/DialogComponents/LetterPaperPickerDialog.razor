@@ -1,0 +1,75 @@
+@namespace SwashbucklerDiary.Rcl.Components
+@inherits DialogComponentBase
+
+@* 图片分享模板选择：四选一文字列表 + 单预览 *@
+
+<CustomMDialog MyValue="Visible"
+               MyValueChanged="InternalVisibleChanged"
+               ContentClass="rounded-lg"
+               MaxWidth="480"
+               Scrollable>
+    <MCard>
+        <MCardTitle Class="font-weight-bold flex-nowrap">
+            <wc-auto-scroll-text>@(I18n.T("Choose the share style"))</wc-auto-scroll-text>
+            <MSpacer></MSpacer>
+            <MButton Icon="true"
+                     OnClick="HandleOnCancel">
+                <MIcon>close</MIcon>
+            </MButton>
+        </MCardTitle>
+        <MCardText Class="pt-0">
+            <MRadioGroup Value="Value"
+                         TValue="LetterPaperTemplate"
+                         ValueChanged="HandleValueChanged"
+                         Class="mt-0"
+                         HideDetails="@("auto")"
+                         Mandatory="true">
+                <MRadio Value="LetterPaperTemplate.DefaultCard"
+                        Label="@(I18n.T("Default card"))"
+                        Color="rgba(var(--m-theme-on-surface))">
+                </MRadio>
+                <MRadio Value="LetterPaperTemplate.ZhuLan"
+                        Label="@(I18n.T("Red column letter paper"))"
+                        Color="rgba(var(--m-theme-on-surface))">
+                </MRadio>
+                <MRadio Value="LetterPaperTemplate.SuJian"
+                        Label="@(I18n.T("Plain ruled letter paper"))"
+                        Color="rgba(var(--m-theme-on-surface))">
+                </MRadio>
+                <MRadio Value="LetterPaperTemplate.ZhuYing"
+                        Label="@(I18n.T("Bamboo shadow letter paper"))"
+                        Color="rgba(var(--m-theme-on-surface))">
+                </MRadio>
+            </MRadioGroup>
+
+            <div class="letterpaper-preview-outer mt-4"
+                 style="width:270px;height:360px;margin:16px auto 0;">
+                <div class="letterpaper-preview-scaler" style="transform:scale(0.25);">
+                    <LetterPaper Template="@Value"
+                                 Content="@Content"
+                                 Title="@Title"
+                                 Date="@Date"
+                                 Weather="@Weather"
+                                 SealText="@SealText">
+                    </LetterPaper>
+                </div>
+            </div>
+        </MCardText>
+        <MCardActions Class="pt-0">
+            <MSpacer></MSpacer>
+            <MButton Text
+                     OnClick="HandleOnCancel">
+                @(I18n.T("Cancel"))
+            </MButton>
+            <MButton Text
+                     OnClick="HandleDownload">
+                @(I18n.T("Save"))
+            </MButton>
+            <MButton Text
+                     Color="primary"
+                     OnClick="HandleShare">
+                @(I18n.T("Share"))
+            </MButton>
+        </MCardActions>
+    </MCard>
+</CustomMDialog>

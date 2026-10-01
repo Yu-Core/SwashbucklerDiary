@@ -1,0 +1,201 @@
+/* 古风信笺纸分享模板
+   画布 1080×1440，坐标规格见 docs: 朱栏八行笺(01)/素笺横栏(02)/竹影雅笺(03) */
+
+@font-face {
+  font-family: 'LXGW WenKai';
+  src: url('../fonts/LXGWWenKai-Regular.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jiangxi Zhuokai';
+  src: url('../fonts/JiangxiZhuokai-Regular.woff2') format('woff2');
+  font-display: swap;
+}
+
+.letterpaper {
+  position: relative;
+  width: 1080px;
+  height: 1440px;
+  overflow: hidden;
+  font-family: 'LXGW WenKai', 'KaiTi', 'STKaiti', serif;
+  color: #4a4238;
+  -webkit-font-smoothing: antialiased;
+}
+
+.letterpaper-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.letterpaper-bg svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- 正文 ---------- */
+
+.letterpaper-body {
+  position: absolute;
+  margin: 0;
+  font-size: 32px;
+  white-space: pre-wrap;
+  text-align: justify;
+  text-justify: inter-ideograph;
+}
+
+/* 竖排：自右向左，栏宽由 line-height 决定 */
+.letterpaper-body--vertical {
+  writing-mode: vertical-rl;
+  line-height: 96.5px;
+  letter-spacing: 0.22em;
+}
+
+/* 03 竹影雅笺：六栏更宽 */
+.letterpaper-body--zhuying {
+  line-height: 128.7px;
+  left: 154px;
+  top: 190px;
+  width: 772px;
+  height: 1140px;
+}
+
+/* 横排：行高对齐淡墨横线 */
+.letterpaper-body--horizontal {
+  line-height: 60px;
+  font-size: 31px;
+  letter-spacing: 0.02em;
+}
+
+/* 01 朱栏八行笺：首列避开笺题"晴窗"（竖排下 text-indent 即首列下移） */
+.letterpaper-body--zhulan {
+  left: 154px;
+  top: 180px;
+  width: 772px;
+  height: 1140px;
+  text-indent: 70px;
+}
+
+.letterpaper-body--sujian {
+  left: 180px;
+  top: 186px;
+  width: 720px;
+  height: 960px;
+}
+
+/* ---------- 默认卡片（仅用于选择弹窗预览） ---------- */
+
+.letterpaper-card {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 72px 64px;
+  background: var(--m-theme-surface);
+  color: var(--m-theme-on-surface);
+}
+
+.letterpaper-card-date {
+  font-size: 34px;
+  font-weight: bold;
+  opacity: 0.9;
+}
+
+.letterpaper-card-title {
+  margin-top: 36px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.letterpaper-card-body {
+  margin-top: 36px;
+  font-size: 34px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  text-align: justify;
+}
+
+/* ---------- 标题（日记有标题时以首栏/首行呈现） ---------- */
+
+.letterpaper-title {
+  font-family: 'Jiangxi Zhuokai', 'LXGW WenKai', 'KaiTi', 'STKaiti', serif;
+  font-size: 36px;
+  color: #3f382e;
+}
+
+.letterpaper-body--horizontal .letterpaper-title {
+  font-size: 34px;
+}
+
+/* ---------- 日期 / 天气 ---------- */
+
+.letterpaper-date,
+.letterpaper-weather {
+  position: absolute;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: #6f6653;
+  white-space: nowrap;
+}
+
+.letterpaper-date--zhulan {
+  top: 1280px;
+  left: 0;
+  width: 912px;
+  text-align: right;
+  font-size: 22px;
+}
+
+.letterpaper-weather--zhulan {
+  top: 1307px;
+  left: 0;
+  width: 912px;
+  text-align: right;
+  font-size: 21px;
+}
+
+.letterpaper-date--sujian {
+  top: 139px;
+  left: 0;
+  width: 900px;
+  text-align: right;
+  font-size: 23px;
+  color: #8d8268;
+}
+
+.letterpaper-weather--sujian {
+  top: 139px;
+  left: 0;
+  width: 930px;
+  text-align: right;
+  font-size: 23px;
+  color: #8d8268;
+}
+
+/* 03 竹影雅笺：日期与天气同行排布（汉字日期较长，固定坐标会重叠） */
+.letterpaper-date--zhuying {
+  top: 46px;
+  left: 170px;
+  display: flex;
+  gap: 16px;
+  font-size: 22px;
+}
+
+/* ---------- 预览缩比 / 离屏截图 ---------- */
+
+.letterpaper-preview-outer {
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+}
+
+.letterpaper-preview-scaler {
+  transform-origin: top left;
+}
+
+.letterpaper-offscreen {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+  z-index: -1;
+  pointer-events: none;
+}
