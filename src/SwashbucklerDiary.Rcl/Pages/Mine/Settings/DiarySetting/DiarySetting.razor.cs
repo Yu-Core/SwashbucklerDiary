@@ -34,6 +34,10 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool originalFileName;
 
+        private string? letterPaperSealText;
+
+        private bool showEditLetterPaperSealText;
+
         private string? diaryTimeFormat;
 
         private string? diaryInsertTimeFormat;
@@ -74,6 +78,29 @@ namespace SwashbucklerDiary.Rcl.Pages
             diaryInsertTimeFormat = SettingService.Get(s => s.DiaryInsertTimeFormat);
             linkCard = SettingService.Get(s => s.LinkCard);
             originalFileName = SettingService.Get(s => s.OriginalFileName);
+            letterPaperSealText = SettingService.Get(s => s.LetterPaperSealText);
+        }
+
+        private string LetterPaperSealTextDisplay
+            => string.IsNullOrWhiteSpace(letterPaperSealText) ? I18n.T("Please enter 1-2 Chinese characters") : letterPaperSealText!;
+
+        private static bool IsCjkChar(char c)
+            => c is >= (char)0x4E00 and <= (char)0x9FFF or >= (char)0x3400 and <= (char)0x4DBF;
+
+        private async Task SaveLetterPaperSealText(string? value)
+        {
+            var text = (value ?? string.Empty).Trim();
+
+            // 空串表示清空、恢复各模板默认章文；非空则须为 1–2 个汉字
+            if (text.Length > 0 && (text.Any(c => !IsCjkChar(c)) || text.Length > 2))
+            {
+                await AlertService.ErrorAsync(I18n.T("Please enter 1-2 Chinese characters"));
+                return;
+            }
+
+            showEditLetterPaperSealText = false;
+            letterPaperSealText = text;
+            await SettingService.SetAsync(s => s.LetterPaperSealText, text);
         }
 
         private string? EditAutoSaveText => I18n.T(editAutoSaveItems.FirstOrDefault(it => it.Value == editAutoSave).Key);

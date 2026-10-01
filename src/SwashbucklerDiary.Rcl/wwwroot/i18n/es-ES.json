@@ -517,5 +517,12 @@
   "Align the old version diary reference link with the new version": "Alinear el enlace de referencia del diario de la versión anterior con la nueva versión",
   "Before version 1.33.9, diaries that have inserted diary references may experience this situation. Of course, the old version diary citation link can still work": "Antes de la versión 1.33.9, los diarios que tienen referencias insertadas pueden experimentar esta situación. Por supuesto, el enlace de cita del diario de la versión anterior aún puede funcionar.",
   "Fix media files not recorded after diary merge": "Corregir archivos multimedia no registrados después de fusionar el diario",
-  "Before version 1.33.9, diaries that used merged diaries may experience this situation": "Antes de la versión 1.33.9, los diarios que utilizaron diarios fusionados pueden experimentar esta situación."
+  "Before version 1.33.9, diaries that used merged diaries may experience this situation": "Antes de la versión 1.33.9, los diarios que utilizaron diarios fusionados pueden experimentar esta situación.",
+  "Choose the share style": "Elige el estilo para compartir",
+  "Default card": "Tarjeta predeterminada",
+  "Red column letter paper": "Papel de columnas rojas",
+  "Plain ruled letter paper": "Papel rayado sencillo",
+  "Bamboo shadow letter paper": "Papel de sombras de bambú",
+  "Letter paper seal text": "Texto del sello del papel de carta",
+  "Please enter 1-2 Chinese characters": "Introduce 1-2 caracteres chinos"
 }

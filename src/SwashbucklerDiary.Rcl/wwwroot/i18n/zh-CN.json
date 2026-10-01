@@ -530,5 +530,12 @@
   "App store": "应用商店",
   "China Mobile Cloud Disk": "中国移动云盘",
   "The extracted code": "提取码",
-  "The extracted code has been copied to the clipboard. Click OK to go to the online disk link.": "提取码已复制到剪贴板，点击确定前往网盘链接"
+  "The extracted code has been copied to the clipboard. Click OK to go to the online disk link.": "提取码已复制到剪贴板，点击确定前往网盘链接",
+  "Choose the share style": "选择分享样式",
+  "Default card": "默认卡片",
+  "Red column letter paper": "朱栏八行笺",
+  "Plain ruled letter paper": "素笺横栏",
+  "Bamboo shadow letter paper": "竹影雅笺",
+  "Letter paper seal text": "信笺印章文字",
+  "Please enter 1-2 Chinese characters": "请输入1-2个汉字"
 }

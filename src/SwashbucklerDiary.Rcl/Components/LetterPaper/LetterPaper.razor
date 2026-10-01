@@ -1,0 +1,56 @@
+@namespace SwashbucklerDiary.Rcl.Components
+@inherits MyComponentBase
+
+@* 古风信笺纸：SVG 背景内联，正文/日期/天气以 HTML 层叠加。
+   默认卡片分支仅用于选择弹窗预览，导出仍走日记内容容器 *@
+
+<div class="letterpaper">
+    @if (Template == LetterPaperTemplate.DefaultCard)
+    {
+        <div class="letterpaper-card">
+            <div class="letterpaper-card-date">@Date.ToString("yyyy/MM/dd")</div>
+            @if (TitleDisplay is not null)
+            {
+                <div class="letterpaper-card-title">@TitleDisplay</div>
+            }
+            @if (!string.IsNullOrEmpty(CardBodyDisplay))
+            {
+                <div class="letterpaper-card-body">@CardBodyDisplay</div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="letterpaper-bg">@((MarkupString)Svg)</div>
+
+        @if (Template == LetterPaperTemplate.SuJian)
+        {
+            <p class="letterpaper-body letterpaper-body--horizontal letterpaper-body--sujian">@BodyDisplay</p>
+            <span class="letterpaper-date letterpaper-date--sujian">@HanziDate</span>
+            @if (ShowWeather)
+            {
+                <span class="letterpaper-weather letterpaper-weather--sujian">@WeatherDisplay</span>
+            }
+        }
+        else if (Template == LetterPaperTemplate.ZhuYing)
+        {
+            <p class="letterpaper-body letterpaper-body--vertical letterpaper-body--zhuying">@BodyDisplay</p>
+            <span class="letterpaper-date letterpaper-date--zhuying">
+                <span>@HanziDate</span>
+                @if (ShowWeather)
+                {
+                    <span>@WeatherDisplay</span>
+                }
+            </span>
+        }
+        else
+        {
+            <p class="letterpaper-body letterpaper-body--vertical letterpaper-body--zhulan">@BodyDisplay</p>
+            <span class="letterpaper-date letterpaper-date--zhulan">@HanziDate</span>
+            @if (ShowWeather)
+            {
+                <span class="letterpaper-weather letterpaper-weather--zhulan">@WeatherDisplay</span>
+            }
+        }
+    }
+</div>

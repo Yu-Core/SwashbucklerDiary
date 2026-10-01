@@ -20,6 +20,8 @@ namespace SwashbucklerDiary.Rcl.Pages
 
         private bool showExport;
 
+        private bool showLetterPaperPicker;
+
         private bool enableMarkdown;
 
         private bool showSetPrivacy;
@@ -71,6 +73,12 @@ namespace SwashbucklerDiary.Rcl.Pages
         private readonly string highlightSearchContainerClass = $"search-{Guid.NewGuid():N}";
 
         private readonly string screenshotClass = $"screenshot-{Guid.NewGuid():N}";
+
+        private readonly string letterPaperCaptureClass = $"letterpaper-capture-{Guid.NewGuid():N}";
+
+        private LetterPaperTemplate letterPaperTemplate = LetterPaperTemplate.DefaultCard;
+
+        private string? letterPaperSealText;
 
         [Inject]
         private IDiaryService DiaryService { get; set; } = default!;
@@ -137,6 +145,7 @@ namespace SwashbucklerDiary.Rcl.Pages
             urlScheme = SettingService.Get(s => s.UrlScheme);
             diaryTimeFormat = SettingService.Get(s => s.DiaryTimeFormat);
             imageLazy = SettingService.Get(s => s.ImageLazy);
+            letterPaperSealText = SettingService.Get(s => s.LetterPaperSealText);
             string defaultTemplateIdString = SettingService.Get(s => s.DefaultTemplateId);
             if (Guid.TryParse(defaultTemplateIdString, out var defaultTemplateId))
             {
@@ -270,35 +279,61 @@ namespace SwashbucklerDiary.Rcl.Pages
             await HandleAchievements(Achievement.Share);
         }
 
-        private async Task ShareImage()
+        private void ShareImage()
+        {
+            showLetterPaperPicker = true;
+            StateHasChanged();
+        }
+
+        private Task HandleLetterPaperShare() => CaptureLetterPaperAsync(share: true);
+
+        private Task HandleLetterPaperDownload() => CaptureLetterPaperAsync(share: false);
+
+        private async Task CaptureLetterPaperAsync(bool share)
         {
             AlertService.StartLoading();
 
+            string? filePath = null;
+
             try
             {
-                if (enableMarkdown
-                    && imageLazy
-                    && markdownPreview is not null)
+                if (letterPaperTemplate == LetterPaperTemplate.DefaultCard)
                 {
-                    await markdownPreview.RenderLazyLoadingImage();
+                    if (enableMarkdown
+                        && imageLazy
+                        && markdownPreview is not null)
+                    {
+                        await markdownPreview.RenderLazyLoadingImage();
+                    }
+
+                    filePath = await ScreenshotService.CaptureAsync($".{screenshotClass}");
+                }
+                else
+                {
+                    filePath = await ScreenshotService.CaptureAsync($".{letterPaperCaptureClass}");
                 }
 
-                DateTime beforDT = System.DateTime.Now;
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    await AlertService.ErrorAsync("文件过大");
+                    return;
+                }
 
-                //耗时巨大的代码  
-                var filePath = await ScreenshotService.CaptureAsync($".{screenshotClass}");
-
-                DateTime afterDT = System.DateTime.Now;
-                TimeSpan ts = afterDT.Subtract(beforDT);
-                Debug.WriteLine("DateTime总共花费{0}ms.", ts.TotalMilliseconds);
-
-                if (!string.IsNullOrEmpty(filePath))
+                if (share)
                 {
                     await PlatformIntegration.ShareFileAsync(I18n.T("Share"), filePath);
                 }
                 else
                 {
-                    await AlertService.ErrorAsync("文件过大");
+                    bool saved = await PlatformIntegration.SaveFileAsync(filePath);
+                    if (saved)
+                    {
+                        await AlertService.SuccessAsync(I18n.T("Export successfully"));
+                    }
+                    else
+                    {
+                        await AlertService.ErrorAsync(I18n.T("Export failed"));
+                    }
                 }
             }
             finally
@@ -306,7 +341,10 @@ namespace SwashbucklerDiary.Rcl.Pages
                 AlertService.StopLoading();
             }
 
-            await HandleAchievements(Achievement.Share);
+            if (share)
+            {
+                await HandleAchievements(Achievement.Share);
+            }
         }
 
         private Task SettingChange(string key, ref bool value)
