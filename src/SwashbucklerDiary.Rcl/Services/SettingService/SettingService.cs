@@ -114,7 +114,8 @@ namespace SwashbucklerDiary.Rcl.Services
         public async Task SetSettingsFromObjectAsync(Setting obj, Func<string, bool>? func = null)
         {
             var properties = obj.GetType().GetProperties();
-            var setAsyncMethod = this.GetType()?.GetMethod(nameof(SetAsync))
+            // GetMethod(nameof(SetAsync)) alone is ambiguous (SetAsync<T>(string, T) and SetAsync<T>(Expression, T)) and throws AmbiguousMatchException.
+            var setAsyncMethod = this.GetType()?.GetMethod(nameof(SetAsync), 1, [typeof(string), Type.MakeGenericMethodParameter(0)])
                          ?? throw new InvalidOperationException($"{nameof(SetAsync)} does not exist");
             var getMethod = this.GetType()?.GetMethod(nameof(Get), [typeof(string)])
                          ?? throw new InvalidOperationException($"{nameof(Get)} does not exist");
