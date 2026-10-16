@@ -57,11 +57,7 @@ namespace SwashbucklerDiary.Rcl.Services
             ArgumentException.ThrowIfNullOrWhiteSpace(userName, nameof(userName));
             ArgumentException.ThrowIfNullOrWhiteSpace(password, nameof(password));
 
-            bool uriResult = Uri.TryCreate(baseAddress, UriKind.Absolute, out Uri? uri);
-            if (!uriResult || uri is null)
-            {
-                throw new ArgumentException(null, nameof(baseAddress));
-            }
+            Uri uri = NormalizeBaseAddress(baseAddress);
 
             var webDavClient = GetWebDavClient(uri, userName, password);
             var result = await webDavClient.Propfind($"{webDavFolderName}/");
@@ -92,6 +88,29 @@ namespace SwashbucklerDiary.Rcl.Services
             {
                 throw new WebDAVException(result.ToString());
             }
+        }
+
+        /// <summary>
+        /// HttpClient.BaseAddress 不以 / 结尾时，相对路径会替换掉最后一段路径
+        /// （例如 http://host/dav + SwashbucklerDiary/ => http://host/SwashbucklerDiary/），
+        /// 导致请求发到 WebDAV 目录之外，服务器返回 404/405。这里统一补上结尾的 /。
+        /// </summary>
+        private static Uri NormalizeBaseAddress(string? baseAddress)
+        {
+            if (!Uri.TryCreate(baseAddress?.Trim(), UriKind.Absolute, out Uri? uri)
+                || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+            {
+                throw new ArgumentException(null, nameof(baseAddress));
+            }
+
+            if (uri.AbsolutePath.EndsWith('/'))
+            {
+                return uri;
+            }
+
+            var builder = new UriBuilder(uri);
+            builder.Path += "/";
+            return builder.Uri;
         }
 
         private static WebDavClient GetWebDavClient(Uri uri, string userName, string password)
