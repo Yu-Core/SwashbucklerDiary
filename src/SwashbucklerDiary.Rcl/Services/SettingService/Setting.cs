@@ -68,5 +68,6 @@ namespace SwashbucklerDiary.Rcl.Services
         public bool OriginalFileName { get; set; }
         public bool LinkCard { get; set; } = true;
         public bool DiaryCardDefaultTitle { get; set; } = true;
+        public string LetterPaperSealText { get; set; } = string.Empty;
     }
 }

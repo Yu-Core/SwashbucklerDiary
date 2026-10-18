@@ -62,6 +62,27 @@
                     </SettingSwitch>
                 </MListItemAction>
             </MListItem>
+
+            <MDivider Class="mx-5"></MDivider>
+
+            <MListItem OnClick="@(() => showEditLetterPaperSealText = true)">
+                <MListItemIcon>
+                    <MIcon>
+                        mdi:mdi-stamper
+                    </MIcon>
+                </MListItemIcon>
+                <MListItemContent Style="flex-basis:50%;">
+                    <wc-auto-scroll-text>@(I18n.T("Letter paper seal text"))</wc-auto-scroll-text>
+                </MListItemContent>
+                <MListItemContent Class="ms-2" Style="flex-basis:50%;">
+                    <MListItemSubtitle>
+                        <wc-auto-scroll-text class="justify-end" style="width:100%;">@LetterPaperSealTextDisplay</wc-auto-scroll-text>
+                    </MListItemSubtitle>
+                </MListItemContent>
+                <MListItemAction>
+                    <MIcon>chevron_right</MIcon>
+                </MListItemAction>
+            </MListItem>
         </MList>
     </MCard>
 
@@ -337,3 +358,11 @@
                              @bind-Value:after="UpdateDiaryInsertTimeFormatSetting"
                              OnReset="ResetDiaryInsertTimeFormatSetting">
 </DiaryInsertTimeFormatDialog>
+
+<InputDialog @bind-Visible="showEditLetterPaperSealText"
+             Text="@letterPaperSealText"
+             Title="@(I18n.T("Letter paper seal text"))"
+             MaxLength="2"
+             Placeholder="@(I18n.T("Please enter 1-2 Chinese characters"))"
+             OnOK="SaveLetterPaperSealText">
+</InputDialog>

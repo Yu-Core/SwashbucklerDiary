@@ -1,0 +1,12 @@
+江西拙楷 (Jiangxi Zhuokai / jiangxizhuokai)
+============================================
+
+来源 (Upstream): https://github.com/wanderer-op/zhangkai
+打包版本: 江西拙楷 2.0 (Regular)
+
+本字体遵循 SIL Open Font License, Version 1.1（SIL OFL 1.1）授权：
+可免费商用、可随软件分发、可修改衍生（衍生字体须更换保留名并可同样以 OFL 分发）。
+
+许可证全文与 FAQ 见: https://openfontlicense.org/
+
+随本应用分发时保留原始字体的版权与许可声明。

@@ -517,5 +517,12 @@
   "Align the old version diary reference link with the new version": "이전 버전 일기 참조 링크를 새 버전에 맞춤",
   "Before version 1.33.9, diaries that have inserted diary references may experience this situation. Of course, the old version diary citation link can still work": "1.33.9 버전 이전에는 일기 참조가 삽입된 일기에서 이 상황이 발생할 수 있습니다. 물론 이전 버전의 일기 인용 링크는 여전히 작동합니다.",
   "Fix media files not recorded after diary merge": "일기 병합 후 미디어 파일이 기록되지 않는 문제 수정",
-  "Before version 1.33.9, diaries that used merged diaries may experience this situation": "1.33.9 버전 이전에는 일기 병합을 사용한 일기에서 이 상황이 발생할 수 있습니다."
+  "Before version 1.33.9, diaries that used merged diaries may experience this situation": "1.33.9 버전 이전에는 일기 병합을 사용한 일기에서 이 상황이 발생할 수 있습니다.",
+  "Choose the share style": "공유 스타일 선택",
+  "Default card": "기본 카드",
+  "Red column letter paper": "주란팔행지",
+  "Plain ruled letter paper": "소자횡란",
+  "Bamboo shadow letter paper": "죽영아지",
+  "Letter paper seal text": "편지지 인장 문자",
+  "Please enter 1-2 Chinese characters": "한자 1~2자를 입력하세요"
 }

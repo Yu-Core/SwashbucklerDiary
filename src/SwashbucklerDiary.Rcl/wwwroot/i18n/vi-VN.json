@@ -517,5 +517,12 @@
   "Align the old version diary reference link with the new version": "Căn chỉnh liên kết tham chiếu nhật ký phiên bản cũ với phiên bản mới",
   "Before version 1.33.9, diaries that have inserted diary references may experience this situation. Of course, the old version diary citation link can still work": "Trước phiên bản 1.33.9, những nhật ký có chèn tham chiếu nhật ký có thể gặp tình trạng này. Tất nhiên, liên kết trích dẫn nhật ký phiên bản cũ vẫn có thể hoạt động.",
   "Fix media files not recorded after diary merge": "Sửa lỗi tệp phương tiện không được ghi sau khi hợp nhất nhật ký",
-  "Before version 1.33.9, diaries that used merged diaries may experience this situation": "Trước phiên bản 1.33.9, những nhật ký đã sử dụng tính năng hợp nhất nhật ký có thể gặp tình trạng này."
+  "Before version 1.33.9, diaries that used merged diaries may experience this situation": "Trước phiên bản 1.33.9, những nhật ký đã sử dụng tính năng hợp nhất nhật ký có thể gặp tình trạng này.",
+  "Choose the share style": "Chọn kiểu chia sẻ",
+  "Default card": "Thẻ mặc định",
+  "Red column letter paper": "Giấy cột đỏ",
+  "Plain ruled letter paper": "Giấy kẻ đơn giản",
+  "Bamboo shadow letter paper": "Giấy bóng tre",
+  "Letter paper seal text": "Chữ con dấu trên giấy thư",
+  "Please enter 1-2 Chinese characters": "Vui lòng nhập 1-2 chữ Hán"
 }

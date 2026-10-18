@@ -191,6 +191,32 @@
                      DynamicListItems="shareItems">
 </MultiSizeListDialog>
 
+<LetterPaperPickerDialog @bind-Visible="showLetterPaperPicker"
+                         @bind-Value="letterPaperTemplate"
+                         Content="@diary.Content"
+                         Title="@diary.Title"
+                         Date="@diary.CreateTime"
+                         Weather="@diary.Weather"
+                         SealText="@letterPaperSealText"
+                         OnShare="HandleLetterPaperShare"
+                         OnDownload="HandleLetterPaperDownload">
+</LetterPaperPickerDialog>
+
+@* 离屏渲染的全尺寸信笺，供截图导出（1080×1440，不受预览缩放影响） *@
+@if (letterPaperTemplate != LetterPaperTemplate.DefaultCard)
+{
+    <div class="@($"letterpaper-offscreen {letterPaperCaptureClass}")"
+         aria-hidden="true">
+        <LetterPaper Template="letterPaperTemplate"
+                     Content="@diary.Content"
+                     Title="@diary.Title"
+                     Date="@diary.CreateTime"
+                     Weather="@diary.Weather"
+                     SealText="@letterPaperSealText">
+        </LetterPaper>
+    </div>
+}
+
 <DeleteDialog @bind-Visible="showDelete"
               Title="@(I18n.T("Delete a diary"))"
               Content="@(I18n.T("Please delete carefully, every diary is a precious memory.Once deleted, it cannot be restored."))"

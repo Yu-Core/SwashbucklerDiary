@@ -517,5 +517,12 @@
   "Align the old version diary reference link with the new version": "旧バージョンの日記参照リンクを新バージョンに合わせる",
   "Before version 1.33.9, diaries that have inserted diary references may experience this situation. Of course, the old version diary citation link can still work": "バージョン1.33.9以前では、日記参照が挿入されている日記でこの状況が発生する可能性があります。もちろん、旧バージョンの日記引用リンクは引き続き機能します。",
   "Fix media files not recorded after diary merge": "日記統合後にメディアファイルが記録されない問題を修正",
-  "Before version 1.33.9, diaries that used merged diaries may experience this situation": "バージョン1.33.9以前では、日記統合を使用した日記でこの状況が発生する可能性があります。"
+  "Before version 1.33.9, diaries that used merged diaries may experience this situation": "バージョン1.33.9以前では、日記統合を使用した日記でこの状況が発生する可能性があります。",
+  "Choose the share style": "共有スタイルを選択",
+  "Default card": "デフォルトカード",
+  "Red column letter paper": "朱欄八行箋",
+  "Plain ruled letter paper": "素箋横欄",
+  "Bamboo shadow letter paper": "竹影雅箋",
+  "Letter paper seal text": "便箋の印影文字",
+  "Please enter 1-2 Chinese characters": "1〜2文字の漢字を入力してください"
 }
