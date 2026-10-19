@@ -195,6 +195,9 @@ namespace SwashbucklerDiary.Rcl.Extensions
                     typeof(LocationModel),
                     typeof(ResourceModel),
                     typeof(DiaryResourceModel),
+                    typeof(SyncStateModel),
+                    typeof(SyncTombstoneModel),
+                    typeof(SyncConflictModel),
                 };
 
                 foreach (var config in dataConfigs)
